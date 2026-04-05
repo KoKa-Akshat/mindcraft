@@ -144,23 +144,44 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .pricing-note{margin-top:20px;font-size:13px;color:var(--mu);font-weight:600}
 
 
+/* BLOG PANEL */
+.blog-panel{background:#0D0F15;min-height:100vh;padding:clamp(60px,9vw,100px) 0;display:flex;flex-direction:column;justify-content:center}
+.blog-panel-head{display:flex;align-items:flex-end;justify-content:space-between;padding:0 clamp(24px,5vw,64px);max-width:1200px;margin:0 auto 36px;width:100%}
+.blog-panel-head h2{font-size:clamp(30px,4.5vw,48px);font-weight:900;color:#fff;letter-spacing:-.5px}
+.blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:8px 16px;border-radius:20px;transition:all .18s;white-space:nowrap}
+.blog-see-all:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+.blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:8px clamp(24px,5vw,64px) 20px;scrollbar-width:none;-ms-overflow-style:none}
+.blog-scroll::-webkit-scrollbar{display:none}
+.blog-card{flex-shrink:0;width:300px;background:#181B25;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.07);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;text-decoration:none}
+.blog-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.16)}
+.blog-card-img{height:170px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blog-card-body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
+.blog-card-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.blog-card-cat{font-size:10px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.2px}
+.blog-card-date{font-size:11px;color:rgba(255,255,255,.3);font-weight:700}
+.blog-card-title{font-size:16px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:10px;letter-spacing:-.2px}
+.blog-card-excerpt{font-size:12px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:600;margin-bottom:14px;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.blog-card-author{display:flex;align-items:center;gap:8px}
+.blog-card-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;background:linear-gradient(135deg,#3A8500,#1A3C2A);flex-shrink:0}
+.blog-card-author-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.45)}
+
 /* FAQ */
 .faq{background:#111;min-height:100vh;padding:clamp(56px,7vw,80px) clamp(24px,8vw,120px);display:flex;flex-direction:column;justify-content:center}
 .faq-in{max-width:1100px;width:100%;margin:0 auto}
 .faq-title{font-size:clamp(32px,4.5vw,52px);font-weight:900;color:#FFFFFF;margin-bottom:clamp(32px,4vw,48px);letter-spacing:-.5px}
-.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+.faq-list{display:flex;gap:64px;align-items:flex-start}
+.faq-col{flex:1;min-width:0}
 .faq-item{border-top:1px solid rgba(255,255,255,.08);cursor:pointer}
 .faq-item:last-child{border-bottom:1px solid rgba(255,255,255,.08)}
 .faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:24px;user-select:none}
 .faq-q-text{font-size:15px;font-weight:700;color:#FFFFFF;line-height:1.35;flex:1}
-.faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s ease;color:rgba(255,255,255,.5);font-size:18px;font-weight:300;line-height:1;font-family:sans-serif}
-.faq-item.open .faq-icon{border-color:var(--g);color:var(--g);transform:rotate(45deg)}
+.faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s,color .2s;color:rgba(255,255,255,.4);font-size:18px;font-weight:300;line-height:1;font-family:sans-serif}
+.faq-item.open .faq-icon{border-color:var(--g);color:var(--g)}
 .faq-q:hover .faq-q-text{color:rgba(255,255,255,.75)}
-.faq-q:hover .faq-icon{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.7)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
 .faq-a-inner{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;padding-bottom:16px;font-weight:600}
 .faq-item.open .faq-a{max-height:300px}
-@media(max-width:768px){.faq{padding:56px 24px}.faq-list{grid-template-columns:1fr}}
+@media(max-width:768px){.faq{padding:56px 24px}.faq-list{flex-direction:column;gap:0}}
 
 /* FOOTER */
 footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px) 40px}
@@ -203,8 +224,8 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
       <div class="fc" style="bottom:5%;left:24%;animation-delay:1.86s"><img src="img/stats.png"></div>
     </div>
     <div class="hero-text rv d1">
-      <h1><span style="display:block">crafting the minds</span><span style="display:block">of tomorrow</span></h1>
-      <p>College students who just aced high school. We don't just tutor. We teach you how to learn on your own. Forever.</p>
+      <h1><span style="display:block">we build</span><span style="display:block">better learners</span></h1>
+      <p>Tutoring that turns into lasting study skills, independent progress, and real confidence.</p>
       <div class="hb">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">Join MindCraft</a>
         <a href="#how" class="bw">See how it works</a>
@@ -633,89 +654,93 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl rv d2" style="margin-top:32px">Book free session &rarr;</a>
 </section>
 
+<section class="blog-panel" id="blog">
+  <div class="blog-panel-head rv">
+    <h2>Our Blog</h2>
+    <a href="blog.html" class="blog-see-all">See All &rarr;</a>
+  </div>
+  <div class="blog-scroll rv d1" id="blogScroll"></div>
+</section>
+
 <section class="faq" id="faq">
   <div class="faq-in">
     <h2 class="faq-title rv">FAQs</h2>
     <div class="faq-list">
 
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">How is MindCraft different from regular tutoring?</span>
-          <div class="faq-icon">+</div>
+      <div class="faq-col">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How is MindCraft different from regular tutoring?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">MindCraft turns every session into structured learning your child can build on. We don't just help in the moment — we organize, reinforce, and extend what they learn so progress continues between sessions.</p></div>
         </div>
-        <div class="faq-a"><p class="faq-a-inner">MindCraft turns every session into structured learning your child can build on. We don't just help in the moment — we organize, reinforce, and extend what they learn so progress continues between sessions.</p></div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">What actually happens in a session?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Students meet their tutor live, work through concepts, and build understanding step by step. After the session, everything is organized into clear notes and next steps so they know exactly what to review and practice.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Will this help my child become more independent?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Yes. Our goal is to help students rely less on tutors over time. Each session builds habits around thinking, reviewing, and practicing so they can move forward on their own.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How are tutors selected?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Our tutors are high-performing college students who recently mastered these subjects themselves. They understand exactly where students struggle and how to explain concepts clearly.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How do sessions fit into a busy schedule?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Sessions are flexible and scheduled around your availability. Most families choose one or two sessions per week depending on their needs.</p></div>
+        </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">What actually happens in a session?</span>
-          <div class="faq-icon">+</div>
+      <div class="faq-col">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Where do sessions take place?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Sessions are held live online through our platform, so students can join from anywhere.</p></div>
         </div>
-        <div class="faq-a"><p class="faq-a-inner">Students meet their tutor live, work through concepts, and build understanding step by step. After the session, everything is organized into clear notes and next steps so they know exactly what to review and practice.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">Will this help my child become more independent?</span>
-          <div class="faq-icon">+</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">What does my child get after each session?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Students leave with structured notes, clear takeaways, and personalized practice so they can keep improving between sessions.</p></div>
         </div>
-        <div class="faq-a"><p class="faq-a-inner">Yes. Our goal is to help students rely less on tutors over time. Each session builds habits around thinking, reviewing, and practicing so they can move forward on their own.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">How are tutors selected?</span>
-          <div class="faq-icon">+</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How do you track progress?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">We track what students understand, where they need reinforcement, and what they should focus on next. Progress becomes clear over time.</p></div>
         </div>
-        <div class="faq-a"><p class="faq-a-inner">Our tutors are high-performing college students who recently mastered these subjects themselves. They understand exactly where students struggle and how to explain concepts clearly.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">How do sessions fit into a busy schedule?</span>
-          <div class="faq-icon">+</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Is there a commitment required?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">No long-term commitment. You can start with a free session and continue based on what works best for your child.</p></div>
         </div>
-        <div class="faq-a"><p class="faq-a-inner">Sessions are flexible and scheduled around your availability. Most families choose one or two sessions per week depending on their needs.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">Where do sessions take place?</span>
-          <div class="faq-icon">+</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How do I get started?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Simply request a session through the site. We'll match your child with the right tutor and get them started.</p></div>
         </div>
-        <div class="faq-a"><p class="faq-a-inner">Sessions are held live online through our platform, so students can join from anywhere.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">What does my child get after each session?</span>
-          <div class="faq-icon">+</div>
-        </div>
-        <div class="faq-a"><p class="faq-a-inner">Students leave with structured notes, clear takeaways, and personalized practice so they can keep improving between sessions.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">How do you track progress?</span>
-          <div class="faq-icon">+</div>
-        </div>
-        <div class="faq-a"><p class="faq-a-inner">We track what students understand, where they need reinforcement, and what they should focus on next. Progress becomes clear over time.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">Is there a commitment required?</span>
-          <div class="faq-icon">+</div>
-        </div>
-        <div class="faq-a"><p class="faq-a-inner">No long-term commitment. You can start with a free session and continue based on what works best for your child.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-q-text">How do I get started?</span>
-          <div class="faq-icon">+</div>
-        </div>
-        <div class="faq-a"><p class="faq-a-inner">Simply request a session through the site. We'll match your child with the right tutor and get them started.</p></div>
       </div>
 
     </div>
@@ -765,9 +790,35 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
 
 function toggleFaq(el) {
   var item = el.parentElement;
+  var col = item.closest('.faq-col');
   var wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  col.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
   if (!wasOpen) item.classList.add('open');
+}
+
+// ── Blog panel cards ──
+var BLOG_ARTICLES = [
+  { id:1, title:'Our Mission & Vision', excerpt:'We started MindCraft with one belief: great tutoring should leave students more capable, not more dependent.', category:'Headquarters', date:'Apr 5, 2026', author:'Akshat K.', bg1:'#0A1F10', bg2:'#1A3C2A', accent:'#58CC02' },
+  { id:2, title:'MindCraft was in Beta at Macalester last week', excerpt:'We ran our first real-world beta at Macalester College. Here\'s what we learned and what comes next.', category:'Community', date:'Mar 28, 2026', author:'Akshat K.', bg1:'#0A1428', bg2:'#1A2A50', accent:'#4A7BF7' }
+];
+
+function miniSVG(accent) {
+  return '<svg viewBox="0 0 200 110" width="130" fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".18"><rect x="10" y="10" width="56" height="80" rx="9" fill="white"/><rect x="20" y="22" width="36" height="6" rx="3" fill="white" opacity=".7"/><rect x="20" y="34" width="28" height="4.5" rx="2.25" fill="white" opacity=".45"/><rect x="20" y="44" width="32" height="4.5" rx="2.25" fill="white" opacity=".4"/><rect x="20" y="58" width="22" height="18" rx="5" fill="'+accent+'" opacity=".55"/><rect x="80" y="8" width="110" height="56" rx="9" fill="white"/><rect x="92" y="20" width="72" height="6" rx="3" fill="white" opacity=".7"/><rect x="92" y="32" width="56" height="4.5" rx="2.25" fill="white" opacity=".45"/><rect x="92" y="42" width="64" height="4.5" rx="2.25" fill="white" opacity=".4"/><rect x="80" y="76" width="110" height="28" rx="7" fill="'+accent+'" opacity=".15"/><rect x="92" y="84" width="50" height="5" rx="2.5" fill="'+accent+'" opacity=".5"/></svg>';
+}
+
+var scroll = document.getElementById('blogScroll');
+if (scroll) {
+  scroll.innerHTML = BLOG_ARTICLES.map(function(a) {
+    return '<a href="article.html?id='+a.id+'" class="blog-card">'
+      +'<div class="blog-card-img" style="background:linear-gradient(145deg,'+a.bg1+','+a.bg2+')">'+miniSVG(a.accent)+'</div>'
+      +'<div class="blog-card-body">'
+        +'<div class="blog-card-meta"><span class="blog-card-cat">'+a.category+'</span><span class="blog-card-date">'+a.date+'</span></div>'
+        +'<div class="blog-card-title">'+a.title+'</div>'
+        +'<div class="blog-card-excerpt">'+a.excerpt+'</div>'
+        +'<div class="blog-card-author"><div class="blog-card-av">'+a.author.charAt(0)+'</div><span class="blog-card-author-name">'+a.author+'</span></div>'
+      +'</div>'
+    +'</a>';
+  }).join('');
 }
 </script>
 
