@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCraft — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#58CC02;--gd:#4CAD00;--gdd:#3A8500;
+  --navy:#1E2D4A;--navy-l:#253860;
+  --tx:#2C2C2C;--mu:#8A8F98;--li:#F7F8FA;
+  --w:#FFF;--bd:#E8EBF0;
+  --blue:#4A7BF7;--orange:#FF9800;--red:#FF4B4B;--purple:#9B59D0;
+  --f:'Nunito',sans-serif;--sidebar:256px
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f);color:var(--tx);background:var(--li);-webkit-font-smoothing:antialiased;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ─────────────────────────── */
+.sidebar{width:var(--sidebar);background:var(--navy);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:100}
+.sb-logo{padding:22px 22px 18px;font-size:19px;font-weight:900;display:flex;align-items:center;gap:9px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06)}
+.sb-logo span{color:var(--g)}
+.sb-logo img{width:24px;height:24px;filter:brightness(0) invert(1)}
+
+.sb-nav{flex:1;padding:10px 10px;overflow-y:auto}
+.sb-section-label{font-size:10px;font-weight:900;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:1.2px;padding:10px 12px 5px}
+.sb-item{display:flex;align-items:center;gap:11px;padding:10px 13px;border-radius:11px;font-size:13px;font-weight:700;color:rgba(255,255,255,.45);cursor:pointer;transition:all .15s;text-decoration:none;margin-bottom:1px}
+.sb-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8)}
+.sb-item.active{background:rgba(88,204,2,.15);color:var(--g)}
+.sb-item .icon{width:20px;text-align:center;font-size:14px;flex-shrink:0}
+.sb-chip{margin-left:auto;font-size:10px;font-weight:900;padding:2px 7px;border-radius:8px}
+.chip-red{background:rgba(255,75,75,.25);color:#FF8080}
+.chip-green{background:rgba(88,204,2,.2);color:var(--g)}
+.chip-blue{background:rgba(74,123,247,.2);color:#7AABFF}
+
+.sb-bottom{padding:10px 10px 18px;border-top:1px solid rgba(255,255,255,.06)}
+.sb-user{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;cursor:pointer;transition:background .15s}
+.sb-user:hover{background:rgba(255,255,255,.05)}
+.sb-avatar{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.sb-avatar img{width:100%;height:100%;object-fit:contain}
+.sb-name{font-size:13px;font-weight:800;color:#fff;line-height:1.2}
+.sb-role{font-size:10px;color:rgba(255,255,255,.3);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.sb-logout{font-size:11px;color:rgba(255,255,255,.25);padding:5px 12px;display:block;text-decoration:none;font-weight:700;transition:color .15s}
+.sb-logout:hover{color:rgba(255,255,255,.5)}
+
+/* ── MAIN ────────────────────────────── */
+.main{margin-left:var(--sidebar);flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* ── TOPBAR ──────────────────────────── */
+.topbar{height:58px;background:var(--w);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:50;flex-shrink:0}
+.topbar-crumb{font-size:13px;color:var(--mu);font-weight:700;display:flex;align-items:center;gap:6px}
+.topbar-crumb b{color:var(--tx)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.tb-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;transition:background .15s}
+.tb-icon:hover{background:var(--li)}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--red);border:2px solid var(--w)}
+.tb-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid var(--bd);cursor:pointer}
+.tb-avatar img{width:100%;height:100%;object-fit:contain}
+
+/* ── CONTENT ─────────────────────────── */
+.content{padding:26px 30px;flex:1}
+
+/* Welcome banner */
+.welcome{background:var(--navy);border-radius:18px;padding:26px 30px;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative}
+.welcome::after{content:'';position:absolute;top:-50px;right:180px;width:180px;height:180px;background:rgba(88,204,2,.06);border-radius:50%}
+.welcome-text h1{font-size:22px;font-weight:900;color:#fff;margin-bottom:5px}
+.welcome-text h1 em{color:var(--g);font-style:normal}
+.welcome-text p{font-size:13px;color:rgba(255,255,255,.45);font-weight:600}
+.welcome-right{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+.streak-pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 18px;text-align:center;flex-shrink:0}
+.streak-pill .s-num{font-size:22px;font-weight:900;color:#FFB020}
+.streak-pill .s-lbl{font-size:10px;color:rgba(255,255,255,.35);font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.welcome-img{width:66px;height:66px;object-fit:contain;opacity:.75}
+
+/* Stats row */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:var(--w);border-radius:14px;padding:18px 20px;border:1px solid var(--bd)}
+.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.stat-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.stat-tag{font-size:10px;font-weight:900;padding:3px 8px;border-radius:6px}
+.tag-g{background:rgba(88,204,2,.1);color:var(--gdd)}
+.tag-b{background:rgba(74,123,247,.1);color:var(--blue)}
+.tag-o{background:rgba(255,152,0,.1);color:#CC7700}
+.tag-p{background:rgba(155,89,208,.1);color:var(--purple)}
+.stat-num{font-size:28px;font-weight:900;line-height:1;margin-bottom:3px}
+.stat-lbl{font-size:11px;color:var(--mu);font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+
+/* Two-col layout */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+.card{background:var(--w);border-radius:16px;padding:22px;border:1px solid var(--bd)}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-head h3{font-size:14px;font-weight:900;color:var(--tx)}
+.card-head a{font-size:12px;color:var(--g);font-weight:800;text-decoration:none}
+.card-head a:hover{text-decoration:underline}
+
+/* AI badge */
+.ai-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(88,204,2,.1);color:var(--gdd);font-size:10px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:.3px;margin-bottom:10px}
+
+/* Session summary */
+.sess-meta{font-size:12px;color:var(--mu);font-weight:700;margin-bottom:4px}
+.sess-title{font-size:17px;font-weight:900;color:var(--tx);margin-bottom:14px;line-height:1.2}
+.sess-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.sess-row{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-radius:11px;background:var(--li)}
+.sess-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.sess-body strong{font-size:10px;font-weight:900;color:var(--tx);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:2px}
+.sess-body p{font-size:12px;color:var(--mu);margin:0;line-height:1.4;font-weight:600}
+.sess-conf{display:flex;align-items:center;gap:10px;padding-top:12px;border-top:1px solid var(--bd);margin-bottom:14px}
+.conf-label{font-size:11px;font-weight:800;color:var(--mu);white-space:nowrap}
+.conf-track{flex:1;height:7px;background:#EEF0F4;border-radius:4px;overflow:hidden}
+.conf-fill{height:100%;background:var(--g);border-radius:4px}
+.conf-pct{font-size:12px;font-weight:900;color:var(--gdd);white-space:nowrap}
+.sess-actions{display:flex;gap:7px;flex-wrap:wrap}
+.btn{padding:8px 14px;border-radius:9px;font-size:12px;font-weight:800;font-family:var(--f);cursor:pointer;text-decoration:none;transition:all .12s;border:none;display:inline-flex;align-items:center;gap:5px}
+.btn-g{background:var(--g);color:#fff;box-shadow:0 3px 0 var(--gd)}.btn-g:hover{transform:translateY(-1px)}
+.btn-o{background:var(--w);color:var(--tx);border:1.5px solid var(--bd)}.btn-o:hover{background:var(--li)}
+
+/* Upcoming session card */
+.upcoming-card{background:linear-gradient(135deg,#3A6AE8,#5B4FD4);border-radius:13px;padding:18px 20px;margin-bottom:12px;position:relative;overflow:hidden}
+.upcoming-card::after{content:'📹';position:absolute;right:14px;top:10px;font-size:26px;opacity:.25}
+.upcoming-card h4{font-size:15px;font-weight:900;color:#fff;margin-bottom:3px}
+.upcoming-card p{font-size:12px;color:rgba(255,255,255,.6);font-weight:600}
+.upcoming-chip{background:rgba(255,255,255,.15);color:#fff;font-size:11px;font-weight:800;padding:3px 11px;border-radius:16px;display:inline-block;margin-top:7px}
+.join-btn{width:100%;padding:12px;background:#fff;color:#3A6AE8;border:none;border-radius:10px;font-size:13px;font-weight:900;cursor:pointer;font-family:var(--f);margin-top:11px;transition:all .15s}
+.join-btn:hover{box-shadow:0 4px 14px rgba(58,106,232,.25);transform:translateY(-1px)}
+
+.sched-list{margin-top:4px}
+.sched-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.sched-row:last-child{border-bottom:none}
+.sched-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sched-info h5{font-size:12px;font-weight:800;color:var(--tx);line-height:1.3}
+.sched-info p{font-size:11px;color:var(--mu);font-weight:600}
+.sched-time{font-size:11px;font-weight:800;color:var(--mu);margin-left:auto;white-space:nowrap}
+
+/* Flashcard section */
+.section-block{background:var(--w);border-radius:16px;padding:22px;border:1px solid var(--bd);margin-bottom:22px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-head h3{font-size:14px;font-weight:900;color:var(--tx);display:flex;align-items:center;gap:8px}
+.section-head .due-chip{background:rgba(255,75,75,.1);color:var(--red);font-size:11px;font-weight:900;padding:3px 10px;border-radius:8px}
+.section-head a{font-size:12px;color:var(--g);font-weight:800;text-decoration:none;padding:7px 16px;border-radius:9px;background:rgba(88,204,2,.08);transition:background .15s}
+.section-head a:hover{background:rgba(88,204,2,.15)}
+
+.fc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.fc-card{border:1.5px solid var(--bd);border-radius:13px;padding:16px;cursor:pointer;transition:all .2s;position:relative;user-select:none}
+.fc-card:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 6px 20px rgba(88,204,2,.1)}
+.fc-card.flipped{background:rgba(88,204,2,.04);border-color:var(--g)}
+.fc-subj-tag{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;padding:3px 9px;border-radius:6px;margin-bottom:10px;display:inline-block}
+.fc-question{font-size:13px;font-weight:700;color:var(--tx);line-height:1.45;margin-bottom:8px}
+.fc-answer{font-size:12px;color:var(--gdd);font-weight:700;line-height:1.4;display:none}
+.fc-card.flipped .fc-question{display:none}
+.fc-card.flipped .fc-answer{display:block}
+.fc-hint{font-size:11px;color:var(--mu);font-weight:700}
+.fc-flip-label{position:absolute;top:10px;right:11px;font-size:10px;color:var(--mu);font-weight:700}
+.fc-card.flipped .fc-flip-label{color:var(--g)}
+
+/* Practice section */
+.subject-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.stab{padding:6px 13px;border-radius:9px;font-size:12px;font-weight:800;border:1.5px solid var(--bd);cursor:pointer;transition:all .12s;color:var(--mu);font-family:var(--f);background:var(--w)}
+.stab.active,.stab:hover{border-color:var(--g);color:var(--gdd);background:rgba(88,204,2,.06)}
+.problem-wrap{background:var(--li);border-radius:12px;padding:18px;border:1.5px dashed var(--bd)}
+.problem-label{font-size:10px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
+.problem-text{font-size:14px;font-weight:700;color:var(--tx);line-height:1.6;margin-bottom:14px}
+.problem-btns{display:flex;gap:8px}
+
+/* Session history */
+.hist-list{display:flex;flex-direction:column;gap:2px}
+.hist-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;cursor:pointer;transition:background .12s}
+.hist-item:hover{background:var(--li)}
+.hist-num{width:34px;height:34px;border-radius:9px;background:var(--li);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--mu);flex-shrink:0}
+.hist-info h5{font-size:13px;font-weight:800;color:var(--tx);margin-bottom:2px}
+.hist-info p{font-size:11px;color:var(--mu);font-weight:600}
+.hist-right{margin-left:auto;text-align:right}
+.hist-date{font-size:11px;color:var(--mu);font-weight:700}
+.hist-tag{font-size:10px;font-weight:900;padding:2px 8px;border-radius:6px;margin-top:3px;display:inline-block}
+
+/* Progress bars */
+.prog-list{display:flex;flex-direction:column;gap:0}
+.prog-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.prog-row:last-child{border-bottom:none}
+.prog-label{font-size:12px;font-weight:800;color:var(--tx);width:90px;flex-shrink:0}
+.prog-track{flex:1;height:9px;background:#EEF0F4;border-radius:5px;overflow:hidden}
+.prog-bar{height:100%;border-radius:5px}
+.prog-pct{font-size:12px;font-weight:900;width:34px;text-align:right;color:var(--tx)}
+
+/* Three-col for bottom row */
+.three-col{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:22px}
+
+/* Responsive */
+@media(max-width:1100px){.stats{grid-template-columns:1fr 1fr}.three-col{grid-template-columns:1fr}}
+@media(max-width:960px){.two-col{grid-template-columns:1fr}.fc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){.sidebar{display:none}.main{margin-left:0}.content{padding:18px 16px}.stats{grid-template-columns:1fr 1fr}.welcome-right{display:none}}
+@media(max-width:520px){.fc-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ──────────────────────── -->
+<div class="sidebar">
+  <a href="index.html" class="sb-logo">
+    <img src="img/reading.png" alt=""> Mind<span>Craft</span>
+  </a>
+
+  <div class="sb-nav" id="sbNav">
+    <div class="sb-section-label">Learn</div>
+    <a class="sb-item active" href="#" data-view="dashboard">
+      <span class="icon">📊</span> Dashboard
+    </a>
+    <a class="sb-item" href="#" data-view="sessions">
+      <span class="icon">📹</span> Sessions
+      <span class="sb-chip chip-blue">12</span>
+    </a>
+    <a class="sb-item" href="#" data-view="notes">
+      <span class="icon">📝</span> AI Notes
+      <span class="sb-chip chip-green">New</span>
+    </a>
+    <a class="sb-item" href="#" data-view="flashcards">
+      <span class="icon">🃏</span> Flashcards
+      <span class="sb-chip chip-red">8</span>
+    </a>
+    <a class="sb-item" href="#" data-view="practice">
+      <span class="icon">💪</span> Practice
+    </a>
+    <div class="sb-section-label">Track</div>
+    <a class="sb-item" href="#" data-view="progress">
+      <span class="icon">📈</span> Progress
+    </a>
+    <a class="sb-item" href="#" data-view="schedule">
+      <span class="icon">📅</span> Schedule
+    </a>
+    <a class="sb-item" href="#" data-view="parent">
+      <span class="icon">👨‍👩‍👧</span> Parent View
+    </a>
+  </div>
+
+  <div class="sb-bottom">
+    <div class="sb-user">
+      <div class="sb-avatar"><img src="img/graduate.png" alt=""></div>
+      <div>
+        <div class="sb-name">Amanda S.</div>
+        <div class="sb-role">Student</div>
+      </div>
+    </div>
+    <a href="index.html" class="sb-logout">← Back to home</a>
+  </div>
+</div>
+
+<!-- ── MAIN ────────────────────────── -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-crumb">MindCraft &nbsp;›&nbsp; <b id="topbarTitle">Dashboard</b></div>
+    <div class="topbar-right">
+      <div class="tb-icon">✉️<div class="notif-dot"></div></div>
+      <div class="tb-icon">🔔<div class="notif-dot"></div></div>
+      <div class="tb-avatar"><img src="img/graduate.png" alt=""></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── VIEW: DASHBOARD ──────────── -->
+    <div id="view-dashboard">
+
+      <!-- Welcome -->
+      <div class="welcome">
+        <div class="welcome-text">
+          <h1>Good afternoon, <em>Amanda!</em></h1>
+          <p>Next session in 2 days &nbsp;·&nbsp; 8 flashcards due today &nbsp;·&nbsp; 4 practice problems ready</p>
+        </div>
+        <div class="welcome-right">
+          <div class="streak-pill">
+            <div class="s-num">🔥 8</div>
+            <div class="s-lbl">Week Streak</div>
+          </div>
+          <img src="img/wizard.png" class="welcome-img" alt="">
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-top">
+            <div class="stat-icon" style="background:rgba(88,204,2,.1)">📚</div>
+            <span class="stat-tag tag-g">+2 this mo.</span>
+          </div>
+          <div class="stat-num" style="color:var(--g)">12</div>
+          <div class="stat-lbl">Sessions Done</div>
+        </div>
+        <div class="stat">
+          <div class="stat-top">
+            <div class="stat-icon" style="background:rgba(74,123,247,.1)">🃏</div>
+            <span class="stat-tag tag-b">Due today</span>
+          </div>
+          <div class="stat-num" style="color:var(--blue)">8</div>
+          <div class="stat-lbl">Cards to Review</div>
+        </div>
+        <div class="stat">
+          <div class="stat-top">
+            <div class="stat-icon" style="background:rgba(255,176,32,.1)">⚡</div>
+            <span class="stat-tag tag-o">Best yet</span>
+          </div>
+          <div class="stat-num" style="color:#E8A000">78%</div>
+          <div class="stat-lbl">Avg Confidence</div>
+        </div>
+        <div class="stat">
+          <div class="stat-top">
+            <div class="stat-icon" style="background:rgba(155,89,208,.1)">💪</div>
+            <span class="stat-tag tag-p">Ready</span>
+          </div>
+          <div class="stat-num" style="color:var(--purple)">4</div>
+          <div class="stat-lbl">Practice Problems</div>
+        </div>
+      </div>
+
+      <!-- Two-col: AI Summary + Upcoming -->
+      <div class="two-col">
+
+        <!-- AI Session Summary -->
+        <div class="card">
+          <div class="card-head">
+            <h3>Last Session</h3>
+            <a href="#" onclick="switchView('sessions');return false">View all →</a>
+          </div>
+          <div class="ai-badge">✦ AI Summary</div>
+          <div class="sess-meta">Session #12 &nbsp;·&nbsp; Apr 3 &nbsp;·&nbsp; with Akshat &nbsp;·&nbsp; 60 min</div>
+          <div class="sess-title">Algebra II — Quadratic Functions</div>
+          <div class="sess-rows">
+            <div class="sess-row">
+              <div class="sess-ico" style="background:rgba(88,204,2,.12)">📖</div>
+              <div class="sess-body">
+                <strong>Covered</strong>
+                <p>Vertex form, factoring, FOIL method, graphing parabolas</p>
+              </div>
+            </div>
+            <div class="sess-row">
+              <div class="sess-ico" style="background:rgba(255,152,0,.12)">⚡</div>
+              <div class="sess-body">
+                <strong>Needs work</strong>
+                <p>Completing the square — review this before next session</p>
+              </div>
+            </div>
+            <div class="sess-row">
+              <div class="sess-ico" style="background:rgba(74,123,247,.12)">🃏</div>
+              <div class="sess-body">
+                <strong>Generated for you</strong>
+                <p>8 flashcards &nbsp;·&nbsp; 4 practice problems &nbsp;·&nbsp; 1 summary doc</p>
+              </div>
+            </div>
+          </div>
+          <div class="sess-conf">
+            <span class="conf-label">Confidence</span>
+            <div class="conf-track"><div class="conf-fill" style="width:72%"></div></div>
+            <span class="conf-pct">72%</span>
+          </div>
+          <div class="sess-actions">
+            <a href="#" class="btn btn-g" onclick="switchView('notes');return false">📝 Review Notes</a>
+            <a href="#" class="btn btn-o" onclick="switchView('practice');return false">💪 Practice</a>
+            <a href="#" class="btn btn-o" onclick="switchView('flashcards');return false">🃏 Flashcards</a>
+          </div>
+        </div>
+
+        <!-- Upcoming -->
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="padding:18px 20px 0">
+            <div class="card-head">
+              <h3>Upcoming</h3>
+              <a href="#" onclick="switchView('schedule');return false">Full schedule →</a>
+            </div>
+          </div>
+          <div style="padding:0 18px 18px">
+            <div class="upcoming-card">
+              <h4>Algebra II — Session #13</h4>
+              <p>with Akshat Koirala</p>
+              <div class="upcoming-chip">Sat Apr 7 · 10:00 AM · 60 min</div>
+            </div>
+            <button class="join-btn" onclick="alert('Launching Zoom…')">📹 Join Session →</button>
+            <div class="sched-list" style="margin-top:14px">
+              <div class="sched-row">
+                <div class="sched-dot" style="background:var(--g)"></div>
+                <div class="sched-info"><h5>Geometry — Session #8</h5><p>with Maya</p></div>
+                <span class="sched-time">Apr 9 · 3pm</span>
+              </div>
+              <div class="sched-row">
+                <div class="sched-dot" style="background:var(--blue)"></div>
+                <div class="sched-info"><h5>Pre-Calculus Intro</h5><p>with Akshat</p></div>
+                <span class="sched-time">Apr 12 · 11am</span>
+              </div>
+              <div class="sched-row">
+                <div class="sched-dot" style="background:var(--orange)"></div>
+                <div class="sched-info"><h5>Statistics Review</h5><p>with Jordan</p></div>
+                <span class="sched-time">Apr 15 · 4pm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /two-col -->
+
+      <!-- Flashcards due -->
+      <div class="section-block">
+        <div class="section-head">
+          <h3>🃏 Flashcards Due <span class="due-chip">8 today</span></h3>
+          <a href="#" onclick="switchView('flashcards');return false">Start Review →</a>
+        </div>
+        <div class="fc-grid">
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">Algebra II</span>
+            <div class="fc-question">What is the vertex form of a quadratic equation?</div>
+            <div class="fc-answer">y = a(x − h)² + k, where (h, k) is the vertex and a determines the direction and width of the parabola.</div>
+            <div class="fc-hint">Hint: involves h and k values</div>
+          </div>
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(74,123,247,.1);color:var(--blue)">Geometry</span>
+            <div class="fc-question">State the Pythagorean theorem and when it applies.</div>
+            <div class="fc-answer">a² + b² = c², where c is the hypotenuse. Applies only to right triangles.</div>
+            <div class="fc-hint">Right triangles only</div>
+          </div>
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(255,152,0,.1);color:#CC7700">Algebra II</span>
+            <div class="fc-question">How do you complete the square for x² + 6x?</div>
+            <div class="fc-answer">Add (b/2)² = (6/2)² = 9 to both sides. Result: (x + 3)² − 9.</div>
+            <div class="fc-hint">Add (b/2)² to both sides</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practice -->
+      <div class="section-block">
+        <div class="section-head">
+          <h3>💪 Practice Problems</h3>
+          <a href="#" onclick="switchView('practice');return false">View all →</a>
+        </div>
+        <div class="subject-tabs">
+          <button class="stab active">All</button>
+          <button class="stab">Algebra II</button>
+          <button class="stab">Geometry</button>
+          <button class="stab">Statistics</button>
+        </div>
+        <div class="problem-wrap">
+          <div class="problem-label">Problem 1 of 4 · Algebra II · Generated from Session #12</div>
+          <div class="problem-text">Solve by completing the square: x² + 6x − 7 = 0. Show each step and verify your answer by substituting back into the original equation.</div>
+          <div class="problem-btns">
+            <button class="btn btn-g">Start Problem →</button>
+            <button class="btn btn-o">Skip</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /view-dashboard -->
+
+    <!-- ── VIEW: SESSIONS ───────────── -->
+    <div id="view-sessions" style="display:none">
+      <div class="card" style="margin-bottom:18px">
+        <div class="card-head"><h3>All Sessions</h3><span style="font-size:12px;color:var(--mu);font-weight:700">12 total</span></div>
+        <div class="hist-list">
+          <div class="hist-item">
+            <div class="hist-num">#12</div>
+            <div class="hist-info"><h5>Algebra II — Quadratic Functions</h5><p>with Akshat · 60 min</p></div>
+            <div class="hist-right">
+              <div class="hist-date">Apr 3, 2026</div>
+              <div class="hist-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">Notes ready</div>
+            </div>
+          </div>
+          <div class="hist-item">
+            <div class="hist-num">#11</div>
+            <div class="hist-info"><h5>Geometry — Circles & Arcs</h5><p>with Maya · 60 min</p></div>
+            <div class="hist-right">
+              <div class="hist-date">Mar 28, 2026</div>
+              <div class="hist-tag" style="background:rgba(74,123,247,.1);color:var(--blue)">Notes ready</div>
+            </div>
+          </div>
+          <div class="hist-item">
+            <div class="hist-num">#10</div>
+            <div class="hist-info"><h5>Statistics — Normal Distribution</h5><p>with Jordan · 45 min</p></div>
+            <div class="hist-right">
+              <div class="hist-date">Mar 22, 2026</div>
+              <div class="hist-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">Notes ready</div>
+            </div>
+          </div>
+          <div class="hist-item">
+            <div class="hist-num">#9</div>
+            <div class="hist-info"><h5>Algebra II — Factoring Polynomials</h5><p>with Akshat · 60 min</p></div>
+            <div class="hist-right">
+              <div class="hist-date">Mar 15, 2026</div>
+              <div class="hist-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">Notes ready</div>
+            </div>
+          </div>
+          <div class="hist-item">
+            <div class="hist-num">#8</div>
+            <div class="hist-info"><h5>Geometry — Triangle Congruence</h5><p>with Maya · 60 min</p></div>
+            <div class="hist-right">
+              <div class="hist-date">Mar 8, 2026</div>
+              <div class="hist-tag" style="background:rgba(74,123,247,.1);color:var(--blue)">Notes ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: AI NOTES ───────────── -->
+    <div id="view-notes" style="display:none">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><h3>Session #12 — Summary</h3></div>
+          <div class="ai-badge">✦ AI Generated</div>
+          <div class="sess-title" style="font-size:15px;margin-bottom:12px">Algebra II — Quadratic Functions</div>
+          <div style="font-size:14px;color:var(--tx);line-height:1.75;font-weight:600">
+            <p style="margin-bottom:10px">In this session, we explored quadratic functions in three forms: standard, vertex, and factored. The key insight is that all three forms represent the same parabola — choosing the right form depends on what information you need most quickly.</p>
+            <p style="margin-bottom:10px"><strong>Key concepts covered:</strong></p>
+            <div class="sess-rows">
+              <div class="sess-row"><div class="sess-ico" style="background:rgba(88,204,2,.12)">1</div><div class="sess-body"><strong>Vertex Form</strong><p>y = a(x−h)² + k — instantly tells you the vertex (h, k)</p></div></div>
+              <div class="sess-row"><div class="sess-ico" style="background:rgba(74,123,247,.12)">2</div><div class="sess-body"><strong>Factoring (FOIL)</strong><p>Finding roots by expressing as (x − r₁)(x − r₂) = 0</p></div></div>
+              <div class="sess-row"><div class="sess-ico" style="background:rgba(255,152,0,.12)">3</div><div class="sess-body"><strong>Completing the Square</strong><p>Transforming standard → vertex form. Needs more practice.</p></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Recent Notes</h3></div>
+          <div class="hist-list">
+            <div class="hist-item"><div class="hist-num" style="background:rgba(88,204,2,.1);color:var(--gdd)">12</div><div class="hist-info"><h5>Quadratic Functions</h5><p>Algebra II · Apr 3</p></div><div class="hist-right"><div class="hist-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">New</div></div></div>
+            <div class="hist-item"><div class="hist-num" style="background:rgba(74,123,247,.1);color:var(--blue)">11</div><div class="hist-info"><h5>Circles & Arcs</h5><p>Geometry · Mar 28</p></div></div>
+            <div class="hist-item"><div class="hist-num" style="background:rgba(155,89,208,.1);color:var(--purple)">10</div><div class="hist-info"><h5>Normal Distribution</h5><p>Statistics · Mar 22</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: FLASHCARDS ─────────── -->
+    <div id="view-flashcards" style="display:none">
+      <div class="section-block">
+        <div class="section-head">
+          <h3>🃏 All Flashcards <span class="due-chip">8 due today</span></h3>
+        </div>
+        <div class="subject-tabs">
+          <button class="stab active">All (24)</button>
+          <button class="stab">Algebra II (12)</button>
+          <button class="stab">Geometry (8)</button>
+          <button class="stab">Statistics (4)</button>
+        </div>
+        <div class="fc-grid">
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">Algebra II</span>
+            <div class="fc-question">What is the vertex form of a quadratic equation?</div>
+            <div class="fc-answer">y = a(x − h)² + k, where (h, k) is the vertex.</div>
+            <div class="fc-hint">Involves h and k values</div>
+          </div>
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">Algebra II</span>
+            <div class="fc-question">How do you complete the square for x² + 6x?</div>
+            <div class="fc-answer">Add (6/2)² = 9: result is (x + 3)² − 9</div>
+            <div class="fc-hint">Add (b/2)²</div>
+          </div>
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(74,123,247,.1);color:var(--blue)">Geometry</span>
+            <div class="fc-question">State the Pythagorean theorem.</div>
+            <div class="fc-answer">a² + b² = c². Applies to right triangles where c is the hypotenuse.</div>
+            <div class="fc-hint">Right triangles only</div>
+          </div>
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(74,123,247,.1);color:var(--blue)">Geometry</span>
+            <div class="fc-question">What is the sum of interior angles of any triangle?</div>
+            <div class="fc-answer">Always 180°, regardless of the type of triangle.</div>
+            <div class="fc-hint">Think about parallel lines</div>
+          </div>
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(155,89,208,.1);color:var(--purple)">Statistics</span>
+            <div class="fc-question">What does standard deviation measure?</div>
+            <div class="fc-answer">How spread out values are from the mean. A low SD means values cluster close to the mean.</div>
+            <div class="fc-hint">Spread around the mean</div>
+          </div>
+          <div class="fc-card" onclick="this.classList.toggle('flipped')">
+            <div class="fc-flip-label">tap to flip</div>
+            <span class="fc-subj-tag" style="background:rgba(88,204,2,.1);color:var(--gdd)">Algebra II</span>
+            <div class="fc-question">What is the discriminant and what does it tell you?</div>
+            <div class="fc-answer">b² − 4ac. If > 0: two real roots. If = 0: one root. If < 0: no real roots.</div>
+            <div class="fc-hint">Part of the quadratic formula</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: PRACTICE ───────────── -->
+    <div id="view-practice" style="display:none">
+      <div class="section-block">
+        <div class="section-head"><h3>💪 Practice Problems</h3><span style="font-size:12px;color:var(--mu);font-weight:700">4 ready · from last session</span></div>
+        <div class="subject-tabs">
+          <button class="stab active">All</button>
+          <button class="stab">Algebra II</button>
+          <button class="stab">Geometry</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="problem-wrap">
+            <div class="problem-label">Problem 1 of 4 · Algebra II</div>
+            <div class="problem-text">Solve by completing the square: x² + 6x − 7 = 0. Show each step and verify your answer by substituting back.</div>
+            <div class="problem-btns"><button class="btn btn-g">Start Problem →</button><button class="btn btn-o">Skip</button></div>
+          </div>
+          <div class="problem-wrap" style="opacity:.6">
+            <div class="problem-label">Problem 2 of 4 · Algebra II</div>
+            <div class="problem-text">Write the equation y = x² − 4x + 1 in vertex form. Identify the vertex and axis of symmetry.</div>
+            <div class="problem-btns"><button class="btn btn-o">Unlock after Problem 1</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: PROGRESS ───────────── -->
+    <div id="view-progress" style="display:none">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><h3>Confidence by Subject</h3></div>
+          <div class="prog-list">
+            <div class="prog-row">
+              <span class="prog-label">Algebra II</span>
+              <div class="prog-track"><div class="prog-bar" style="width:72%;background:var(--g)"></div></div>
+              <span class="prog-pct" style="color:var(--gdd)">72%</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-label">Geometry</span>
+              <div class="prog-track"><div class="prog-bar" style="width:85%;background:var(--blue)"></div></div>
+              <span class="prog-pct" style="color:var(--blue)">85%</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-label">Statistics</span>
+              <div class="prog-track"><div class="prog-bar" style="width:60%;background:var(--orange)"></div></div>
+              <span class="prog-pct" style="color:var(--orange)">60%</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-label">Pre-Calc</span>
+              <div class="prog-track"><div class="prog-bar" style="width:40%;background:var(--purple)"></div></div>
+              <span class="prog-pct" style="color:var(--purple)">40%</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Independence Score</h3></div>
+          <div style="text-align:center;padding:20px 0">
+            <div style="font-size:56px;font-weight:900;color:var(--g);line-height:1">68%</div>
+            <div style="font-size:13px;color:var(--mu);font-weight:700;margin-top:6px">Problem-solving independently</div>
+            <div style="font-size:12px;color:var(--mu);font-weight:600;margin-top:4px;max-width:200px;margin:8px auto 0">Up from 52% when you started. Keep going.</div>
+          </div>
+          <div class="conf-track" style="height:10px"><div class="conf-fill" style="width:68%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: SCHEDULE ───────────── -->
+    <div id="view-schedule" style="display:none">
+      <div class="card">
+        <div class="card-head"><h3>Upcoming Sessions</h3></div>
+        <div class="sched-list">
+          <div class="sched-row">
+            <div class="sched-dot" style="background:var(--blue)"></div>
+            <div class="sched-info"><h5>Algebra II — Session #13</h5><p>with Akshat · Zoom · 60 min</p></div>
+            <span class="sched-time">Sat Apr 7 · 10:00 AM</span>
+          </div>
+          <div class="sched-row">
+            <div class="sched-dot" style="background:var(--g)"></div>
+            <div class="sched-info"><h5>Geometry — Session #8</h5><p>with Maya · Zoom · 60 min</p></div>
+            <span class="sched-time">Wed Apr 9 · 3:00 PM</span>
+          </div>
+          <div class="sched-row">
+            <div class="sched-dot" style="background:var(--purple)"></div>
+            <div class="sched-info"><h5>Pre-Calculus Intro</h5><p>with Akshat · Zoom · 60 min</p></div>
+            <span class="sched-time">Sat Apr 12 · 11:00 AM</span>
+          </div>
+          <div class="sched-row">
+            <div class="sched-dot" style="background:var(--orange)"></div>
+            <div class="sched-info"><h5>Statistics Review</h5><p>with Jordan · Zoom · 45 min</p></div>
+            <span class="sched-time">Tue Apr 15 · 4:00 PM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: PARENT VIEW ────────── -->
+    <div id="view-parent" style="display:none">
+      <div class="welcome" style="margin-bottom:22px">
+        <div class="welcome-text">
+          <h1>Parent Report — <em>Amanda S.</em></h1>
+          <p>Week of Apr 1–7, 2026 &nbsp;·&nbsp; Auto-generated after each session</p>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><h3>This Week's Summary</h3><div class="ai-badge" style="margin:0">✦ AI Report</div></div>
+          <div class="sess-rows" style="margin-bottom:16px">
+            <div class="sess-row"><div class="sess-ico" style="background:rgba(88,204,2,.12)">📖</div><div class="sess-body"><strong>What was learned</strong><p>Quadratic functions in vertex & standard form, factoring, graphing parabolas</p></div></div>
+            <div class="sess-row"><div class="sess-ico" style="background:rgba(255,152,0,.12)">⚡</div><div class="sess-body"><strong>Where she struggled</strong><p>Completing the square — tutor recommends 10 min of practice before next session</p></div></div>
+            <div class="sess-row"><div class="sess-ico" style="background:rgba(74,123,247,.12)">🎯</div><div class="sess-body"><strong>Focus for next week</strong><p>Completing the square + discriminant interpretation</p></div></div>
+          </div>
+          <div class="sess-conf">
+            <span class="conf-label">Overall progress</span>
+            <div class="conf-track"><div class="conf-fill" style="width:68%"></div></div>
+            <span class="conf-pct">68%</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Independence Signal</h3></div>
+          <div style="text-align:center;padding:16px 0 20px">
+            <div style="font-size:48px;font-weight:900;color:var(--g)">↑ 16%</div>
+            <div style="font-size:13px;color:var(--mu);font-weight:700;margin-top:4px">Growth since first session</div>
+            <div style="font-size:12px;color:var(--mu);line-height:1.6;margin-top:10px;max-width:220px;margin-left:auto;margin-right:auto">Amanda is solving problems on her own more often. The goal is full independence — we're making real progress.</div>
+          </div>
+          <div class="conf-track" style="height:8px"><div class="conf-fill" style="width:68%"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--mu);font-weight:700;margin-top:6px"><span>Session 1: 52%</span><span>Today: 68%</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+var views = ['dashboard','sessions','notes','flashcards','practice','progress','schedule','parent'];
+var titles = {dashboard:'Dashboard',sessions:'Sessions',notes:'AI Notes',flashcards:'Flashcards',practice:'Practice',progress:'Progress',schedule:'Schedule',parent:'Parent View'};
+
+function switchView(name) {
+  views.forEach(function(v) {
+    var el = document.getElementById('view-' + v);
+    if (el) el.style.display = v === name ? 'block' : 'none';
+  });
+  document.querySelectorAll('.sb-item').forEach(function(item) {
+    item.classList.toggle('active', item.dataset.view === name);
+  });
+  document.getElementById('topbarTitle').textContent = titles[name] || name;
+  window.scrollTo(0, 0);
+}
+
+document.querySelectorAll('.sb-item[data-view]').forEach(function(item) {
+  item.addEventListener('click', function(e) {
+    e.preventDefault();
+    switchView(this.dataset.view);
+  });
+});
+
+document.querySelectorAll('.stab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var parent = this.closest('.subject-tabs');
+    parent.querySelectorAll('.stab').forEach(function(t) { t.classList.remove('active'); });
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
