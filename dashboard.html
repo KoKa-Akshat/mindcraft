@@ -26,8 +26,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(
 .notif-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:#FF4B4B;border:2px solid #fff}
 .nav-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#A8E063,var(--gd));border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;font-weight:900;color:#fff;letter-spacing:-.2px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
 
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:58px;left:0;bottom:0;width:220px;background:var(--w);border-right:1px solid var(--bd);padding:28px 14px;display:flex;flex-direction:column;gap:4px;z-index:50}
+.sb-label{font-size:10px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:1.2px;padding:0 10px;margin-bottom:6px;margin-top:4px}
+.sb-item{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:12px;font-size:14px;font-weight:700;color:var(--mu);cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;font-family:var(--f);width:100%;text-align:left}
+.sb-item:hover{background:var(--li);color:var(--tx)}
+.sb-item.active{background:rgba(88,204,2,.1);color:var(--gdd)}
+.sb-item svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;opacity:.8}
+.sb-item.active svg{opacity:1}
+
 /* ── PAGE ── */
-.page{max-width:960px;margin:0 auto;padding:82px 24px 64px}
+.page{max-width:960px;margin:0 auto;padding:82px 24px 64px;margin-left:220px}
 
 /* ── HERO ── */
 .hero{padding:36px 0 32px;border-bottom:1px solid var(--bd);margin-bottom:28px}
@@ -106,12 +115,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(
 
 /* ── RESPONSIVE ── */
 @media(max-width:720px){
+  .sidebar{display:none}
+  .page{margin-left:0}
   .grid{grid-template-columns:1fr}
   .hero-streak{display:none}
 }
 </style>
 </head>
 <body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <p class="sb-label">Tools</p>
+  <a href="#" class="sb-item">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="9" height="7" rx="1"/><rect x="13" y="3" width="9" height="7" rx="1"/><rect x="2" y="14" width="9" height="7" rx="1"/><rect x="13" y="14" width="9" height="7" rx="1"/></svg>
+    Flashcards
+  </a>
+  <a href="#" class="sb-item active">
+    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    Practice
+  </a>
+</aside>
 
 <!-- ── NAV ── -->
 <nav>
