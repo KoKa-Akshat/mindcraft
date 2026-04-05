@@ -11,8 +11,6 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--f);color:var(--tx);background:#E8EDE6;min-height:100vh;display:flex;-webkit-font-smoothing:antialiased}
 
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
 /* ── OUTER SHELL ── */
 .split{display:flex;width:100%;padding:16px;gap:14px;min-height:100vh}
 
@@ -27,16 +25,11 @@ body{font-family:var(--f);color:var(--tx);background:#E8EDE6;min-height:100vh;di
 .right{flex:1;border-radius:22px;background:var(--w);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 40px;box-shadow:0 4px 40px rgba(0,0,0,.07)}
 .form-wrap{width:100%;max-width:348px}
 
-/* ── MASCOT HEADER ── */
-.rc-hero{display:flex;align-items:center;gap:20px;margin-bottom:28px}
-.rc-mascot-wrap{position:relative;width:88px;height:88px;flex-shrink:0;display:flex;align-items:center;justify-content:center;animation:bob 3.2s ease-in-out infinite}
-.rc-mascot-wrap::before{content:'';position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(circle,rgba(88,204,2,.18) 0%,rgba(88,204,2,.07) 55%,transparent 75%)}
-.rc-mascot-wrap::after{content:'';position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(88,204,2,.2)}
-.rc-mascot{width:88px;height:88px;object-fit:contain;mix-blend-mode:multiply;position:relative;z-index:1}
-.rc-copy{display:flex;flex-direction:column;justify-content:center}
-.rc-brand-name{font-size:28px;font-weight:900;color:var(--forest);line-height:1.05;letter-spacing:-.4px}
+/* ── BRAND HEADER ── */
+.rc-hero{margin-bottom:28px}
+.rc-brand-name{font-size:32px;font-weight:900;color:var(--forest);line-height:1.05;letter-spacing:-.5px}
 .rc-brand-name span{color:var(--g)}
-.rc-tagline{font-size:13px;color:var(--mu);font-weight:700;line-height:1.4;margin-top:5px;white-space:nowrap}
+.rc-tagline{font-size:14px;color:var(--mu);font-weight:700;margin-top:6px}
 
 /* ── ROLE SELECTOR ── */
 .role-selector{display:flex;gap:0;margin-bottom:22px;background:#F4F4F4;border-radius:13px;padding:4px;border:2px solid var(--bd)}
@@ -94,15 +87,10 @@ body{font-family:var(--f);color:var(--tx);background:#E8EDE6;min-height:100vh;di
   <div class="right">
     <div class="form-wrap">
 
-      <!-- Mascot + brand tagline -->
+      <!-- Brand header -->
       <div class="rc-hero">
-        <div class="rc-mascot-wrap">
-          <img src="img/raccoon.png" class="rc-mascot" alt="MindCraft">
-        </div>
-        <div class="rc-copy">
-          <div class="rc-brand-name">Mind<span>Craft</span></div>
-          <p class="rc-tagline">Platform for Performance</p>
-        </div>
+        <div class="rc-brand-name">Mind<span>Craft</span></div>
+        <p class="rc-tagline">A Platform for Performance</p>
       </div>
 
       <!-- Role selector — text only -->
