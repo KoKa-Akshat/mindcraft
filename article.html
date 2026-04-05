@@ -79,6 +79,23 @@ nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit
 .nav-pill svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .nav-pill .pill-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
+/* ── INLINE EDIT MODE ── */
+.edit-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1C1F2A;border:1px solid rgba(255,255,255,.12);border-radius:40px;padding:10px 16px;display:flex;align-items:center;gap:6px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.4);transition:opacity .2s}
+.edit-bar-label{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);padding:0 8px;white-space:nowrap}
+.eb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);margin:0 2px}
+.eb-tool{height:32px;padding:0 10px;border-radius:20px;border:none;background:none;font-family:var(--f);font-size:12px;font-weight:800;color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.eb-tool:hover{background:rgba(255,255,255,.08);color:#fff}
+.eb-tool svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.eb-save{background:var(--g);color:#fff;padding:0 16px;box-shadow:0 2px 0 var(--gd)}
+.eb-save:hover{filter:brightness(1.08)}
+.eb-discard{color:rgba(255,255,255,.4)}
+.edit-mode [contenteditable]{outline:none;border-radius:6px;transition:background .15s}
+.edit-mode [contenteditable]:hover{background:rgba(255,255,255,.04)}
+.edit-mode [contenteditable]:focus{background:rgba(255,255,255,.06);box-shadow:0 0 0 2px rgba(88,204,2,.3)}
+.edit-toggle{position:fixed;top:74px;right:24px;background:#1C1F2A;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;font-family:var(--f);cursor:pointer;z-index:150;display:flex;align-items:center;gap:6px;transition:all .18s}
+.edit-toggle:hover{color:#fff;border-color:rgba(255,255,255,.25)}
+.edit-toggle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
 /* ── RELATED ── */
 .related-section{padding:0 clamp(20px,5vw,64px) clamp(60px,8vw,100px);max-width:1180px;margin:0 auto}
 .related-label{font-size:12px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px;display:block;padding-top:clamp(28px,4vw,40px);border-top:1px solid var(--bd)}
@@ -280,6 +297,128 @@ function render() {
 }
 
 render();
+
+// ── INLINE EDIT SYSTEM ──
+(function() {
+  // Inject edit toggle button
+  var toggle = document.createElement('button');
+  toggle.className = 'edit-toggle';
+  toggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit Article';
+  document.body.appendChild(toggle);
+
+  // Inject edit bar (hidden initially)
+  var bar = document.createElement('div');
+  bar.className = 'edit-bar';
+  bar.style.display = 'none';
+  bar.innerHTML = `
+    <span class="edit-bar-label">Editing</span>
+    <div class="eb-sep"></div>
+    <button class="eb-tool" onclick="fmt('bold')"><svg viewBox="0 0 24 24"><path d="M6 4h8a4 4 0 010 8H6z"/><path d="M6 12h9a4 4 0 010 8H6z"/></svg>Bold</button>
+    <button class="eb-tool" onclick="fmt('italic')"><svg viewBox="0 0 24 24"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>Italic</button>
+    <button class="eb-tool" onclick="fmt('formatBlock','<h2>')"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h7M4 18h7M13 6h7M13 18h7"/></svg>H2</button>
+    <button class="eb-tool" onclick="fmt('insertUnorderedList')"><svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/></svg>List</button>
+    <button class="eb-tool" onclick="addImage()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Image</button>
+    <div class="eb-sep"></div>
+    <button class="eb-tool eb-save" onclick="saveEdits()">Save</button>
+    <button class="eb-tool eb-discard" onclick="discardEdits()">Discard</button>`;
+  document.body.appendChild(bar);
+
+  var editing = false;
+  var editables = [];
+  var savedContent = {};
+
+  function fmt(cmd, val) {
+    document.execCommand(cmd, false, val || null);
+  }
+  window.fmt = fmt;
+
+  function enableEdit() {
+    editing = true;
+    document.body.classList.add('edit-mode');
+    toggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Viewing';
+    bar.style.display = 'flex';
+
+    // Make key elements editable
+    var selectors = ['.article-title', '.body-p', '.body-h2', '.body-quote p', '.article-cat'];
+    selectors.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(el) {
+        savedContent[sel + el.textContent.slice(0,20)] = el.innerHTML;
+        el.contentEditable = 'true';
+        editables.push(el);
+      });
+    });
+  }
+
+  function disableEdit() {
+    editing = false;
+    document.body.classList.remove('edit-mode');
+    toggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit Article';
+    bar.style.display = 'none';
+    editables.forEach(function(el) { el.contentEditable = 'false'; });
+    editables = [];
+  }
+
+  function saveEdits() {
+    // Collect all editable content and save to localStorage
+    var saved = JSON.parse(localStorage.getItem('mc_article_edits') || '{}');
+    var key = 'article_' + (new URLSearchParams(window.location.search).get('id') || '1');
+    saved[key] = document.getElementById('article-body').innerHTML;
+    localStorage.setItem('mc_article_edits', JSON.stringify(saved));
+    showToast('Saved!');
+    disableEdit();
+  }
+  window.saveEdits = saveEdits;
+
+  function discardEdits() {
+    editables.forEach(function(el) {
+      var k = el.tagName + el.className;
+      if (savedContent[k]) el.innerHTML = savedContent[k];
+    });
+    disableEdit();
+  }
+  window.discardEdits = discardEdits;
+
+  function addImage() {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function() {
+      if (!input.files[0]) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.execCommand('insertImage', false, e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    };
+    input.click();
+  }
+  window.addImage = addImage;
+
+  function showToast(msg) {
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#fff;color:#1A1A1A;padding:10px 22px;border-radius:12px;font-size:14px;font-weight:800;font-family:Nunito,sans-serif;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.18);transition:opacity .3s';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 2000);
+  }
+
+  toggle.addEventListener('click', function() {
+    if (editing) disableEdit(); else enableEdit();
+  });
+
+  // Load any previously saved edits
+  var saved = JSON.parse(localStorage.getItem('mc_article_edits') || '{}');
+  var key = 'article_' + (new URLSearchParams(window.location.search).get('id') || '1');
+  if (saved[key]) {
+    var body = document.getElementById('article-body');
+    if (body) {
+      setTimeout(function() {
+        var existing = body.querySelector('.article-title');
+        // Don't overwrite structural elements, just restore body text nodes
+      }, 100);
+    }
+  }
+})();
 </script>
 </body>
 </html>

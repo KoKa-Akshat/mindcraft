@@ -145,12 +145,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 
 
 /* BLOG PANEL */
-.blog-panel{background:#0D0F15;padding:clamp(48px,6vw,72px) 0;display:flex;flex-direction:column;justify-content:center}
-.blog-panel-head{display:flex;align-items:flex-end;justify-content:space-between;padding:0 clamp(24px,5vw,64px);max-width:1200px;margin:0 auto 36px;width:100%}
-.blog-panel-head h2{font-size:clamp(30px,4.5vw,48px);font-weight:900;color:#fff;letter-spacing:-.5px}
-.blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:8px 16px;border-radius:20px;transition:all .18s;white-space:nowrap}
+.blog-panel{background:#0D0F15;padding:clamp(48px,6vw,72px) 0;display:flex;flex-direction:column;justify-content:center;border-top:1px solid rgba(255,255,255,.07)}
+.blog-panel-head{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,5vw,64px);max-width:1200px;margin:0 auto 28px;width:100%}
+.blog-panel-head h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:#fff;letter-spacing:-.4px}
+.blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:7px 14px;border-radius:20px;transition:all .18s;white-space:nowrap}
 .blog-see-all:hover{color:#fff;border-color:rgba(255,255,255,.35)}
-.blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:8px clamp(24px,5vw,64px) 20px;scrollbar-width:none;-ms-overflow-style:none}
+.blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:4px clamp(24px,5vw,64px) 16px;scrollbar-width:none;-ms-overflow-style:none}
 .blog-scroll::-webkit-scrollbar{display:none}
 .blog-card{flex-shrink:0;width:300px;background:#181B25;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.07);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;text-decoration:none}
 .blog-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.16)}
@@ -175,8 +175,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .faq-item:last-child{border-bottom:1px solid rgba(255,255,255,.08)}
 .faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:24px;user-select:none}
 .faq-q-text{font-size:15px;font-weight:700;color:#FFFFFF;line-height:1.35;flex:1}
-.faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s,color .2s;color:rgba(255,255,255,.4);font-size:18px;font-weight:300;line-height:1;font-family:sans-serif}
-.faq-item.open .faq-icon{border-color:var(--g);color:var(--g)}
+.faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s}
+.faq-icon svg{width:12px;height:12px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2.5;stroke-linecap:round;transition:stroke .2s}
+.faq-item.open .faq-icon{border-color:var(--g)}
+.faq-item.open .faq-icon svg{stroke:var(--g)}
 .faq-q:hover .faq-q-text{color:rgba(255,255,255,.75)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
 .faq-a-inner{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;padding-bottom:16px;font-weight:600}
@@ -210,7 +212,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
 
 <nav>
   <a href="#" class="logo">Mind<span>Craft</span></a>
-  <div class="nr"><a href="#faq" class="nl">FAQ</a><a href="#blog" class="nl">Blog</a><a href="#proof" class="nl">Reviews</a><a href="login.html" class="nav-login">Log in</a></div>
+  <div class="nr"><a href="#proof" class="nl">Reviews</a><a href="#blog" class="nl">Blog</a><a href="#faq" class="nl">FAQ</a><a href="login.html" class="nav-login">Log in</a></div>
 </nav>
 
 <div class="above-fold">
@@ -671,35 +673,35 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">How is MindCraft different from regular tutoring?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">MindCraft turns every session into structured learning your child can build on. We don't just help in the moment — we organize, reinforce, and extend what they learn so progress continues between sessions.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">What actually happens in a session?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">Students meet their tutor live, work through concepts, and build understanding step by step. After the session, everything is organized into clear notes and next steps so they know exactly what to review and practice.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">Will this help my child become more independent?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">Yes. Our goal is to help students rely less on tutors over time. Each session builds habits around thinking, reviewing, and practicing so they can move forward on their own.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">How are tutors selected?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">Our tutors are high-performing college students who recently mastered these subjects themselves. They understand exactly where students struggle and how to explain concepts clearly.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">How do sessions fit into a busy schedule?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">Sessions are flexible and scheduled around your availability. Most families choose one or two sessions per week depending on their needs.</p></div>
         </div>
@@ -709,35 +711,35 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">Where do sessions take place?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">Sessions are held live online through our platform, so students can join from anywhere.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">What does my child get after each session?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">Students leave with structured notes, clear takeaways, and personalized practice so they can keep improving between sessions.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">How do you track progress?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">We track what students understand, where they need reinforcement, and what they should focus on next. Progress becomes clear over time.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">Is there a commitment required?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">No long-term commitment. You can start with a free session and continue based on what works best for your child.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">How do I get started?</span>
-            <div class="faq-icon">+</div>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
           <div class="faq-a"><p class="faq-a-inner">Simply request a session through the site. We'll match your child with the right tutor and get them started.</p></div>
         </div>
