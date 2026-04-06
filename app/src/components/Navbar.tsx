@@ -11,7 +11,7 @@ export default function Navbar({ user, onSignOut }: Props) {
 
   return (
     <nav className={s.nav}>
-      <a href="../index.html" className={s.logo}>Mind<span>Craft</span></a>
+      <a href="http://localhost:3000" className={s.logo}>Mind<span>Craft</span></a>
       <div className={s.right}>
         <div className={s.notif}>
           <svg viewBox="0 0 24 24">

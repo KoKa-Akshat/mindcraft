@@ -84,7 +84,7 @@ export default function Login() {
 
       {/* ── LEFT: tree image ── */}
       <div className={styles.left}>
-        <img src="../img/tree.jpg" className={styles.leftBg} alt="" />
+        <img src="/tree.jpg" className={styles.leftBg} alt="" />
         <div className={styles.leftOverlay} />
         <a href="../index.html" className={styles.leftLogo}>
           Mind<span>Craft</span>
