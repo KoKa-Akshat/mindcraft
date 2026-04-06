@@ -76,12 +76,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .subj-card{background:var(--w);border:2px solid var(--bd);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:12px;transition:all .2s}
 .subj-card:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 4px 16px rgba(88,204,2,.1)}
-.subj-card .si{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.subj-card .si img{width:30px;height:30px;object-fit:contain}
-.subj-card strong{font-size:15px;font-weight:800;color:var(--tx);display:block;line-height:1.2}
-.subj-card span{font-size:12px;color:var(--mu);font-weight:700}
-.subj-soon-link{grid-column:1/-1;text-align:center;padding:10px 0 2px}
-.subj-soon-link a{font-size:14px;color:var(--g);font-weight:800;text-decoration:none}.subj-soon-link a:hover{text-decoration:underline}
+.subj-card .si{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.subj-card .si img{width:38px;height:38px;object-fit:contain}
+.subj-card strong{font-size:15px;font-weight:800;color:var(--tx);display:block;line-height:1.2;margin-left:2px}
+.subj-card span{font-size:12px;color:var(--mu);font-weight:700;margin-left:2px}
+.find-tutor-link{font-size:12px;color:var(--g);font-weight:800;margin-left:2px;text-decoration:none;display:block;transition:opacity .15s}.find-tutor-link:hover{opacity:.7;text-decoration:underline}
 @media(max-width:768px){.subj-in{grid-template-columns:1fr}.subj-grid{grid-template-columns:1fr 1fr}}
 
 /* ALL CONTENT SECTIONS */
@@ -99,8 +98,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .hw-step-illo{width:70px;height:70px;border-radius:14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hw-step-text h4{font-size:16px;font-weight:900;color:#FFFFFF;margin-bottom:5px;line-height:1.2}
 .hw-step-text p{font-size:13px;color:#A8C9B4;line-height:1.55;margin:0}
-.hw-down{display:flex;justify-content:flex-start;padding:0 35px;height:28px;align-items:center}
+.hw-down{display:flex;justify-content:flex-start;padding:10px 35px;height:48px;align-items:center}
 .hw-cta{margin-top:0}
+@keyframes bounceCard{0%{opacity:0;transform:translateY(28px) scale(.95)}65%{transform:translateY(-5px) scale(1.015)}82%{transform:translateY(3px) scale(.998)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.hw-step.rv{opacity:0;transform:translateY(0)}
+.hw-step.rv.show{opacity:1;animation:bounceCard .7s cubic-bezier(.34,1.56,.64,1) both}
 @media(max-width:768px){.dk-in{grid-template-columns:1fr}}
 
 /* CONTENT SECTIONS */
@@ -145,7 +147,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 
 
 /* BLOG PANEL */
-.blog-panel{background:#0D0F15;padding:clamp(48px,6vw,72px) 0;display:flex;flex-direction:column;justify-content:center;border-top:1px solid rgba(255,255,255,.07)}
+.blog-faq-divider{background:#0D0F15;padding:0 clamp(24px,5vw,64px)}
+.blog-faq-divider hr{border:none;border-top:1px solid rgba(255,255,255,.18);max-width:1200px;margin:0 auto}
+.blog-panel{background:#0D0F15;padding:clamp(48px,6vw,72px) 0;display:flex;flex-direction:column;justify-content:center}
 .blog-panel-head{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,5vw,64px);max-width:1200px;margin:0 auto 28px;width:100%}
 .blog-panel-head h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:#fff;letter-spacing:-.4px}
 .blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:7px 14px;border-radius:20px;transition:all .18s;white-space:nowrap}
@@ -166,7 +170,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .blog-card-author-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.45)}
 
 /* FAQ */
-.faq{background:#111;min-height:100vh;padding:clamp(56px,7vw,80px) clamp(24px,8vw,120px);display:flex;flex-direction:column;justify-content:center}
+.faq{background:#111;min-height:100vh;padding:clamp(36px,4vw,52px) clamp(24px,8vw,120px) clamp(36px,4vw,52px);display:flex;flex-direction:column;justify-content:center}
 .faq-in{max-width:1100px;width:100%;margin:0 auto}
 .faq-title{font-size:clamp(32px,4.5vw,52px);font-weight:900;color:#FFFFFF;margin-bottom:clamp(32px,4vw,48px);letter-spacing:-.5px}
 .faq-list{display:flex;gap:64px;align-items:flex-start}
@@ -223,7 +227,6 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
       <div class="fc" style="top:6%;right:14%;animation-delay:0s"><img src="img/algebra.png"></div>
       <div class="fc" style="top:32%;left:7%;animation-delay:.62s"><img src="img/geometry.png"></div>
       <div class="fc" style="bottom:18%;right:10%;animation-delay:1.24s"><img src="img/trig.png"></div>
-      <div class="fc" style="bottom:22%;left:24%;animation-delay:1.86s"><img src="img/stats.png"></div>
     </div>
     <div class="hero-text rv d1">
       <h1><span style="display:block">we build</span><span style="display:block">better learners</span></h1>
@@ -242,42 +245,41 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
   <div class="subj-in">
     <div class="rv">
       <span class="subj-eyebrow">subjects</span>
-      <h2>we start with math.<br>more coming soon.</h2>
+      <h2>Math is just<br>the beginning.</h2>
     </div>
     <div class="subj-grid rv d1">
       <div class="subj-card">
         <div class="si" style="background:rgba(88,204,2,.12)"><img src="img/algebra.png" alt=""></div>
-        <div><strong>Algebra</strong><span>Available now</span></div>
+        <div><strong>Algebra</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
       </div>
       <div class="subj-card">
         <div class="si" style="background:rgba(74,123,247,.12)"><img src="img/geometry.png" alt=""></div>
-        <div><strong>Geometry</strong><span>Available now</span></div>
+        <div><strong>Geometry</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
       </div>
       <div class="subj-card">
         <div class="si" style="background:rgba(255,152,0,.12)"><img src="img/trig.png" alt=""></div>
-        <div><strong>Trigonometry</strong><span>Available now</span></div>
+        <div><strong>Trigonometry</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
       </div>
       <div class="subj-card">
         <div class="si" style="background:rgba(206,130,255,.12)"><img src="img/precalc.png" alt=""></div>
-        <div><strong>Pre-Calculus</strong><span>Available now</span></div>
+        <div><strong>Pre-Calculus</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
       </div>
       <div class="subj-card">
         <div class="si" style="background:rgba(255,75,75,.12)"><img src="img/calculus.png" alt=""></div>
-        <div><strong>Calculus</strong><span>Available now</span></div>
+        <div><strong>Calculus</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
       </div>
       <div class="subj-card">
         <div class="si" style="background:rgba(28,176,246,.12)"><img src="img/stats.png" alt=""></div>
-        <div><strong>Statistics</strong><span>Available now</span></div>
+        <div><strong>Statistics</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
       </div>
       <div class="subj-card soon">
         <div class="si" style="background:#F5F5F5"><img src="img/reading.png" alt=""></div>
-        <div><strong>Physics</strong><span>Coming soon</span></div>
+        <div><strong>Physics</strong><span>Launching soon</span></div>
       </div>
       <div class="subj-card soon">
         <div class="si" style="background:#F5F5F5"><img src="img/graduate.png" alt=""></div>
-        <div><strong>SAT Prep</strong><span>Coming soon</span></div>
+        <div><strong>SAT Prep</strong><span>Launching soon</span></div>
       </div>
-      <div class="subj-soon-link"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">More subjects coming. Get on the list →</a></div>
     </div>
   </div>
 </section>
@@ -531,13 +533,13 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
     <div>
       <span class="dk-eyebrow">the system</span>
       <h2 class="dk-head">how mindcraft works</h2>
-      <p class="dk-sub">Students join a session. Everything that follows is built to help them move forward.</p>
+      <p class="dk-sub">Students join a live session, and everything that follows is designed to turn that time into lasting progress.</p>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">First Class, On Us &rarr;</a>
     </div>
     <!-- Right: vertical step cards -->
     <div class="hw-flow rv d1">
       <!-- Step 1 -->
-      <div class="hw-step">
+      <div class="hw-step rv" style="transition-delay:.05s">
         <div class="hw-step-illo">
           <svg viewBox="0 0 100 100" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="36" r="18" fill="#58CC02" opacity=".22"/>
@@ -551,7 +553,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         </div>
         <div class="hw-step-text">
           <h4>join session</h4>
-          <p>Students meet their tutor live with full context of what they're working on.</p>
+          <p>Students meet their tutor live in a focused, context-rich session built around exactly what they need.</p>
         </div>
       </div>
       <!-- Down arrow -->
@@ -559,7 +561,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         <svg width="20" height="28" viewBox="0 0 20 28" fill="none"><path d="M10 2 L10 22" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" opacity=".5"/><path d="M4 16 L10 24 L16 16" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>
       </div>
       <!-- Step 2 -->
-      <div class="hw-step">
+      <div class="hw-step rv" style="transition-delay:.18s">
         <div class="hw-step-illo">
           <svg viewBox="0 0 100 100" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="20" y="18" width="60" height="68" rx="10" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
@@ -575,7 +577,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         </div>
         <div class="hw-step-text">
           <h4>structured learning</h4>
-          <p>Concepts are captured and turned into clear summaries, key ideas, and next steps.</p>
+          <p>Each session is captured and organized into clear summaries, key ideas, and practical next steps.</p>
         </div>
       </div>
       <!-- Down arrow -->
@@ -583,7 +585,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         <svg width="20" height="28" viewBox="0 0 20 28" fill="none"><path d="M10 2 L10 22" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" opacity=".5"/><path d="M4 16 L10 24 L16 16" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>
       </div>
       <!-- Step 3 -->
-      <div class="hw-step">
+      <div class="hw-step rv" style="transition-delay:.32s">
         <div class="hw-step-illo">
           <svg viewBox="0 0 100 100" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="16" y="50" width="68" height="38" rx="9" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
@@ -598,7 +600,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         </div>
         <div class="hw-step-text">
           <h4>practice &amp; progress</h4>
-          <p>Personalized practice is generated and progress builds visibly over every session.</p>
+          <p>Personalized review and practice carry the work forward, so progress becomes visible from one session to the next.</p>
         </div>
       </div>
     </div>
@@ -637,7 +639,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
         <li>Matched with your tutor</li>
         <li>No card required</li>
       </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:14px;display:block;font-size:15px;text-align:center">Book free session</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:14px;display:block;font-size:15px;text-align:center">First Class, On Us</a>
     </div>
     <div class="pc ft">
       <h3>1-on-1 sessions</h3>
@@ -653,9 +655,10 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
     </div>
   </div>
   <p class="pricing-note rv d2">Most tutors charge $60–$100/hr with no structured output. We built a system around it.</p>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl rv d2" style="margin-top:32px">Book free session &rarr;</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl rv d2" style="margin-top:32px">First Class, On Us &rarr;</a>
 </section>
 
+<div class="blog-faq-divider"><hr></div>
 <section class="blog-panel" id="blog">
   <div class="blog-panel-head rv">
     <h2>Our Blog</h2>
@@ -664,6 +667,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
   <div class="blog-scroll rv d1" id="blogScroll"></div>
 </section>
 
+<div class="blog-faq-divider"><hr></div>
 <section class="faq" id="faq">
   <div class="faq-in">
     <h2 class="faq-title rv">FAQs</h2>
@@ -753,14 +757,13 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
   <div class="ft-grid">
     <div class="ft-brand">
       <div class="fl">Mind<span>Craft</span></div>
-      <p>Crafting the minds of tomorrow.<br>St. Paul, MN &copy; 2026</p>
+      <p>We build better learners.<br>St. Paul, MN</p>
+      <p style="font-size:13px;color:#7EA896;margin-top:6px"><a href="mailto:joinmindcraft@gmail.com" style="color:#7EA896;text-decoration:none">joinmindcraft@gmail.com</a><br><a href="tel:+17633405616" style="color:#7EA896;text-decoration:none">+1 (763) 340-5616</a></p>
       <div class="ft-social">
-        <!-- Twitter/X -->
-        <a href="#" aria-label="Twitter">
+        <a href="https://x.com/KoiralaAks79907" target="_blank" rel="noopener" aria-label="Twitter">
           <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </a>
-        <!-- Instagram -->
-        <a href="#" aria-label="Instagram">
+        <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </a>
       </div>
@@ -776,8 +779,8 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
     </div>
     <div class="ft-col">
       <h5>Community</h5>
-      <a href="#">Blog</a>
-      <a href="#">Instagram</a>
+      <a href="blog.html">Blog</a>
+      <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
   <div class="ft-bottom">
@@ -792,9 +795,8 @@ document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
 
 function toggleFaq(el) {
   var item = el.parentElement;
-  var col = item.closest('.faq-col');
   var wasOpen = item.classList.contains('open');
-  col.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
   if (!wasOpen) item.classList.add('open');
 }
 

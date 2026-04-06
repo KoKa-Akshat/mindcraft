@@ -58,10 +58,18 @@ nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit
 .gallery-section{margin:40px 0}
 .gallery-label{font-size:11px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
 .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.gallery-placeholder{aspect-ratio:4/3;border-radius:12px;background:var(--card);border:1.5px dashed rgba(255,255,255,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--mu)}
-.gallery-placeholder svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5;opacity:.5}
-.gallery-placeholder span{font-size:12px;font-weight:700}
+.gallery-placeholder{aspect-ratio:4/3;border-radius:12px;background:var(--card);border:1.5px dashed rgba(255,255,255,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--mu);cursor:pointer;position:relative;overflow:hidden;transition:border-color .2s,background .2s}
+.gallery-placeholder:hover{border-color:rgba(88,204,2,.5);background:rgba(88,204,2,.04)}
+.gallery-placeholder:hover .gp-hint{opacity:1}
+.gallery-placeholder svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5;opacity:.5;transition:opacity .2s}
+.gallery-placeholder span{font-size:12px;font-weight:700;transition:opacity .2s}
+.gallery-placeholder:hover svg,.gallery-placeholder:hover span{opacity:.35}
+.gp-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
+.gp-hint-inner{background:rgba(88,204,2,.9);color:#fff;font-size:11px;font-weight:900;padding:6px 14px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
 .gallery-placeholder.wide{grid-column:span 2;aspect-ratio:8/4}
+.gallery-placeholder.filled{border:none;padding:0;background:none;cursor:default}
+.gallery-placeholder.filled:hover{border:none;background:none}
+.gallery-placeholder.filled img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block}
 .gallery-note{margin-top:10px;font-size:13px;color:var(--mu);font-weight:600;font-style:italic;text-align:center}
 
 /* ── SOURCES ── */
@@ -78,6 +86,13 @@ nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit
 .nav-pill.disabled{opacity:.3;pointer-events:none}
 .nav-pill svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .nav-pill .pill-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── HERO EDIT OVERLAY ── */
+.hero-edit-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:3;cursor:pointer}
+.hero-edit-hint-inner{background:rgba(0,0,0,.65);backdrop-filter:blur(4px);color:#fff;font-size:13px;font-weight:900;padding:10px 22px;border-radius:24px;display:flex;align-items:center;gap:8px;letter-spacing:.3px}
+.hero-edit-hint-inner svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.edit-mode .article-hero:hover .hero-edit-hint{opacity:1}
+.edit-mode .article-hero{cursor:pointer}
 
 /* ── INLINE EDIT MODE ── */
 .edit-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1C1F2A;border:1px solid rgba(255,255,255,.12);border-radius:40px;padding:10px 16px;display:flex;align-items:center;gap:6px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.4);transition:opacity .2s}
@@ -190,34 +205,47 @@ function heroSVG(accent) {
   </svg>`;
 }
 
+function gpCell(wide, label) {
+  var cls = 'gallery-placeholder' + (wide ? ' wide' : '');
+  return `<div class="${cls}" onclick="uploadGalleryPhoto(this)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    <span>${label}</span>
+    <div class="gp-hint"><div class="gp-hint-inner">Add Photo</div></div>
+  </div>`;
+}
+
 function galleryBlock() {
   return `<div class="gallery-section">
     <div class="gallery-label">Event Photos</div>
     <div class="gallery-grid">
-      <div class="gallery-placeholder wide">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>Featured photo</span>
-      </div>
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>Photo</span>
-      </div>
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>Photo</span>
-      </div>
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>Photo</span>
-      </div>
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>Photo</span>
-      </div>
+      ${gpCell(true, 'Featured photo')}
+      ${gpCell(false, 'Photo')}
+      ${gpCell(false, 'Photo')}
+      ${gpCell(false, 'Photo')}
+      ${gpCell(false, 'Photo')}
     </div>
-    <p class="gallery-note">Photos will be added here after the event.</p>
+    <p class="gallery-note">Click any slot to add a photo.</p>
   </div>`;
 }
+
+function uploadGalleryPhoto(cell) {
+  if (cell.classList.contains('filled')) return;
+  var input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = function() {
+    if (!input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      cell.classList.add('filled');
+      cell.innerHTML = '<img src="' + e.target.result + '" alt="Event photo">';
+      cell.onclick = null;
+    };
+    reader.readAsDataURL(input.files[0]);
+  };
+  input.click();
+}
+window.uploadGalleryPhoto = uploadGalleryPhoto;
 
 function renderBlock(b) {
   if (b.t === 'p')     return `<p class="body-p">${b.c}</p>`;
@@ -239,13 +267,19 @@ function render() {
 
   // Hero
   document.getElementById('hero-area').innerHTML = `
-    <div class="article-hero">
-      <div class="hero-bg" style="background:linear-gradient(145deg,${a.bg1} 0%,${a.bg2} 100%)"></div>
+    <div class="article-hero" id="article-hero-wrap">
+      <div class="hero-bg" id="hero-bg" style="background:linear-gradient(145deg,${a.bg1} 0%,${a.bg2} 100%)"></div>
       <div class="hero-overlay"></div>
-      <div class="hero-illo">${heroSVG(a.accent)}</div>
+      <div class="hero-illo" id="hero-illo">${heroSVG(a.accent)}</div>
       <div class="hero-badges">
         <span class="hbadge hbadge-cat">${a.category}</span>
         <span class="hbadge hbadge-date">${a.date}</span>
+      </div>
+      <div class="hero-edit-hint" id="hero-edit-hint">
+        <div class="hero-edit-hint-inner">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Replace Hero Image
+        </div>
       </div>
     </div>`;
 
@@ -347,6 +381,30 @@ render();
         editables.push(el);
       });
     });
+
+    // Wire hero image replacement
+    var heroWrap = document.getElementById('article-hero-wrap');
+    if (heroWrap && !heroWrap._editBound) {
+      heroWrap._editBound = true;
+      heroWrap.addEventListener('click', function(e) {
+        if (!editing) return;
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = function() {
+          if (!input.files[0]) return;
+          var reader = new FileReader();
+          reader.onload = function(ev) {
+            var bg = document.getElementById('hero-bg');
+            var illo = document.getElementById('hero-illo');
+            if (bg) { bg.style.background = 'none'; bg.style.backgroundImage = 'url(' + ev.target.result + ')'; bg.style.backgroundSize = 'cover'; bg.style.backgroundPosition = 'center'; }
+            if (illo) illo.style.display = 'none';
+          };
+          reader.readAsDataURL(input.files[0]);
+        };
+        input.click();
+      });
+    }
   }
 
   function disableEdit() {
