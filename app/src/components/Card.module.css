@@ -1,0 +1,76 @@
+.card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px 22px;
+  border: 1px solid #E8EAED;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.03);
+  font-family: 'Nunito', sans-serif;
+}
+.label {
+  font-size: 10px; font-weight: 900;
+  color: #8A8F98; text-transform: uppercase;
+  letter-spacing: 1.2px; margin-bottom: 14px;
+}
+.divider { height: 1px; background: #E8EAED; margin: 14px 0; }
+
+/* ── SESSION SUMMARY ── */
+.summaryHeader { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.tag { font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; background: rgba(88,204,2,.1); color: #3A8500; }
+.date { font-size: 12px; color: #8A8F98; font-weight: 700; }
+.title { font-size: 15px; font-weight: 900; color: #1A1A1A; margin-bottom: 10px; letter-spacing: -.2px; }
+.list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.list li { font-size: 13px; color: #555; font-weight: 600; display: flex; align-items: flex-start; gap: 7px; line-height: 1.5; }
+.list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #58CC02; flex-shrink: 0; margin-top: 5px; }
+
+/* ── PRACTICE READY ── */
+.practiceNum { font-size: 38px; font-weight: 900; color: #1A1A1A; letter-spacing: -1.5px; line-height: 1; margin-bottom: 3px; }
+.practiceNum span { font-size: 16px; font-weight: 700; color: #8A8F98; letter-spacing: 0; }
+.practiceSub { font-size: 13px; color: #8A8F98; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+
+/* ── BUTTONS ── */
+.btnGreen {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(88,204,2,.1); color: #3A8500;
+  border: none; border-radius: 10px;
+  padding: 10px 16px; font-size: 13px; font-weight: 800;
+  font-family: 'Nunito', sans-serif; cursor: pointer; transition: background .15s;
+}
+.btnGreen:hover { background: rgba(88,204,2,.18); }
+.btnOutline {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; color: #1A1A1A;
+  border: 1.5px solid #E8EAED; border-radius: 10px;
+  padding: 9px 16px; font-size: 13px; font-weight: 800;
+  font-family: 'Nunito', sans-serif; cursor: pointer; transition: all .15s;
+}
+.btnOutline:hover { border-color: #ccc; }
+
+/* ── EXPLORE CLASSES ── */
+.classRow { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
+.classRow + .classRow { border-top: 1px solid #E8EAED; }
+.classIcon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.classInfo { flex: 1; min-width: 0; }
+.classInfo strong { font-size: 14px; font-weight: 800; color: #1A1A1A; display: block; margin-bottom: 1px; }
+.classInfo span { font-size: 12px; color: #8A8F98; font-weight: 700; }
+.badge { font-size: 10px; font-weight: 900; padding: 3px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; flex-shrink: 0; }
+.badge_new  { background: rgba(88,204,2,.1);   color: #3A8500; }
+.badge_free { background: rgba(74,123,247,.1); color: #4A7BF7; }
+.badge_soon { background: #F5F5F5; color: #8A8F98; }
+
+/* ── MESSAGES ── */
+.msgRow { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; }
+.msgRow + .msgRow { border-top: 1px solid #E8EAED; }
+.msgAv {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; color: #fff; flex-shrink: 0;
+  background: linear-gradient(135deg, #3A8500, #1A3C2A);
+}
+.msgAvTutor { background: linear-gradient(135deg, #1E3A6A, #2A5AAF); }
+.msgBody { flex: 1; min-width: 0; }
+.msgMeta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+.msgName { font-size: 12px; font-weight: 800; color: #1A1A1A; }
+.msgTime { font-size: 11px; color: #8A8F98; font-weight: 600; }
+.msgText { font-size: 13px; color: #555; font-weight: 600; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.msgUnread .msgText { color: #1A1A1A; font-weight: 800; }
+.msgDot { width: 7px; height: 7px; border-radius: 50%; background: #58CC02; flex-shrink: 0; margin-top: 4px; }
