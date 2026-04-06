@@ -36,6 +36,20 @@
   font-size: 12px;
   font-weight: 700;
 }
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid #E8EAED;
+  border-top-color: #58CC02;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 @media (max-width: 720px) {
   .page { margin-left: 0; padding: 70px 16px 40px; }
   .grid { grid-template-columns: 1fr; }
