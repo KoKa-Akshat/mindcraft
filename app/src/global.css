@@ -1,0 +1,14 @@
+:root {
+  --g:      #58CC02;
+  --gd:     #4CAD00;
+  --gdd:    #3A8500;
+  --forest: #1A3C2A;
+  --tx:     #3C3C3C;
+  --mu:     #777;
+  --w:      #FFF;
+  --bd:     #E5E5E5;
+  --f:      'Nunito', sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--f); color: var(--tx); -webkit-font-smoothing: antialiased; }
