@@ -469,12 +469,7 @@ render();
   var key = 'article_' + (new URLSearchParams(window.location.search).get('id') || '1');
   if (saved[key]) {
     var body = document.getElementById('article-body');
-    if (body) {
-      setTimeout(function() {
-        var existing = body.querySelector('.article-title');
-        // Don't overwrite structural elements, just restore body text nodes
-      }, 100);
-    }
+    if (body) body.innerHTML = saved[key];
   }
 })();
 </script>
