@@ -11,5 +11,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // GitHub Pages SPA redirect fix
+      var redirect = sessionStorage.getItem('spa_redirect')
+      if (redirect) {
+        sessionStorage.removeItem('spa_redirect')
+        window.history.replaceState(null, '', redirect)
+      }
+    </script>
   </body>
 </html>
