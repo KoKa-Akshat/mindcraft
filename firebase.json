@@ -1,4 +1,11 @@
 {
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20"
+  },
   "hosting": [
     {
       "target": "app",
@@ -11,7 +18,7 @@
     {
       "target": "marketing",
       "public": ".",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "app/**"],
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "app/**", "functions/**"],
       "rewrites": []
     }
   ]
