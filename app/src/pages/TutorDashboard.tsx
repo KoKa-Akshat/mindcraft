@@ -4,7 +4,7 @@ import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import {
   collection, query, where, orderBy, getDocs,
-  doc, getDoc, updateDoc, serverTimestamp, limit,
+  doc, getDoc, limit,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
@@ -22,6 +22,7 @@ interface Session {
   duration: string
   status: 'scheduled' | 'completed' | 'cancelled'
   meetingUrl: string | null
+  summaryStatus?: 'pending' | 'draft' | 'published'
 }
 
 interface Student {
@@ -53,12 +54,13 @@ export default function TutorDashboard() {
   const user = useUser()
   const navigate = useNavigate()
 
-  const [sessions, setSessions]     = useState<Session[]>([])
-  const [students, setStudents]     = useState<Student[]>([])
+  const [sessions, setSessions]         = useState<Session[]>([])
+  const [toReview, setToReview]         = useState<Session[]>([])
+  const [students, setStudents]         = useState<Student[]>([])
   const [selectedStudent, setSelectedStudent] = useState<string>('')
-  const [uploading, setUploading]   = useState(false)
-  const [toast, setToast]           = useState('')
-  const [loading, setLoading]       = useState(true)
+  const [uploading, setUploading]       = useState(false)
+  const [toast, setToast]               = useState('')
+  const [loading, setLoading]           = useState(true)
   const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -69,18 +71,32 @@ export default function TutorDashboard() {
   }, [user, navigate])
 
   useEffect(() => {
-    getDocs(
-      query(
-        collection(db, 'sessions'),
-        where('tutorId', '==', user.uid),
-        where('status', '==', 'scheduled'),
-        orderBy('scheduledAt', 'asc'),
-        limit(10)
-      )
-    ).then(snap => {
-      setSessions(snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) })))
-      setLoading(false)
-    }).catch(() => setLoading(false))
+    const load = async () => {
+      try {
+        const [upSnap, doneSnap] = await Promise.all([
+          getDocs(query(
+            collection(db, 'sessions'),
+            where('tutorId', '==', user.uid),
+            where('status', '==', 'scheduled'),
+            orderBy('scheduledAt', 'asc'),
+            limit(10)
+          )),
+          getDocs(query(
+            collection(db, 'sessions'),
+            where('tutorId', '==', user.uid),
+            where('status', '==', 'completed'),
+            orderBy('scheduledAt', 'desc'),
+            limit(20)
+          )),
+        ])
+        setSessions(upSnap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) })))
+        const completed = doneSnap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) }))
+        setToReview(completed.filter(s => s.summaryStatus !== 'published'))
+      } finally {
+        setLoading(false)
+      }
+    }
+    load().catch(() => setLoading(false))
   }, [user])
 
   useEffect(() => {
@@ -104,7 +120,7 @@ export default function TutorDashboard() {
     setUploading(true)
     setTimeout(() => {
       setUploading(false)
-      showToast(`"${file.name}" uploaded (storage coming soon)`)
+      showToast(`"${file.name}" attached`)
       e.target.value = ''
     }, 1200)
   }
@@ -192,6 +208,45 @@ export default function TutorDashboard() {
         ) : (
           <div className={s.grid}>
             <div className={s.col}>
+              {/* Sessions to Review */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Sessions to Review</span>
+                  {toReview.length > 0 && (
+                    <span className={s.reviewBadge}>{toReview.length}</span>
+                  )}
+                </div>
+                {toReview.length === 0 ? (
+                  <div className={s.emptyState}>
+                    <span>All caught up</span>
+                    <p>Completed sessions pending your review will appear here.</p>
+                  </div>
+                ) : (
+                  <div className={s.sessionList}>
+                    {toReview.slice(0, 5).map(sess => (
+                      <Link key={sess.id} to={`/tutor/session/${sess.id}`} className={s.reviewRow}>
+                        <div className={s.sessionLeft}>
+                          <div className={s.sessionName}>{sess.studentName}</div>
+                          <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
+                          <div className={s.sessionDate}>{fmt(sess.scheduledAt)}</div>
+                        </div>
+                        <div className={s.sessionRight}>
+                          <span className={`${s.sessionBadge} ${
+                            sess.summaryStatus === 'draft' ? s.badgeDraft :
+                            sess.summaryStatus === 'pending' ? s.badgePending : s.badgeNeedsReview
+                          }`}>
+                            {sess.summaryStatus === 'draft' ? 'Draft' :
+                             sess.summaryStatus === 'pending' ? 'Has transcript' : 'Needs review'}
+                          </span>
+                          <span className={s.reviewArrow}>→</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Session Summary (existing) */}
               <div className={s.card}>
                 <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Session Summary</span>

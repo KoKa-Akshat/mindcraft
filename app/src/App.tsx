@@ -6,6 +6,7 @@ import { auth, db } from './firebase'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import TutorDashboard from './pages/TutorDashboard'
+import SessionDetail from './pages/SessionDetail'
 import Book from './pages/Book'
 import Admin from './pages/Admin'
 import Seed from './pages/Seed'
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
         <Route path="/tutor" element={<AuthGuard><TutorDashboard /></AuthGuard>} />
+        <Route path="/tutor/session/:id" element={<AuthGuard><SessionDetail /></AuthGuard>} />
         <Route path="/book" element={<Book />} />
         <Route path="/admin" element={<AuthGuard><Admin /></AuthGuard>} />
         <Route path="/seed" element={<Seed />} />

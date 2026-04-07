@@ -71,9 +71,10 @@ export function useStudentData(user: User | null): StudentData {
               )
             )
             if (!sessSnap.empty) {
+              // Only sessions that haven't ended yet (end = scheduledAt + 90min max)
               const upcoming = sessSnap.docs
                 .map(sd => ({ id: sd.id, ref: sd.ref, ...sd.data() }))
-                .filter((sd: any) => sd.scheduledAt > Date.now() - 2 * 60 * 60 * 1000)
+                .filter((sd: any) => (sd.endAt ?? sd.scheduledAt + 90 * 60 * 1000) > Date.now())
                 .sort((a: any, b: any) => a.scheduledAt - b.scheduledAt)[0] as any
               if (upcoming) {
                 const timeStr = new Date(upcoming.scheduledAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
@@ -89,7 +90,15 @@ export function useStudentData(user: User | null): StudentData {
                   updates.push(updateDoc(upcoming.ref, { studentId: user!.uid }))
                 }
                 await Promise.all(updates)
+              } else {
+                // No upcoming session — clear stale nextSession on user doc
+                if (d.nextSession) await updateDoc(ref, { nextSession: null })
+                nextSession = null
               }
+            } else if (d.nextSession) {
+              // No sessions at all — clear stale nextSession
+              await updateDoc(ref, { nextSession: null })
+              nextSession = null
             }
           }
 

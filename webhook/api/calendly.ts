@@ -78,6 +78,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!userSnap.empty) {
       const userDoc = userSnap.docs[0]
       await sessionRef.update({ studentId: userDoc.id })
+
+      // Auto-complete any past sessions for this student that are still 'scheduled'
+      const pastSnap = await db.collection('sessions')
+        .where('studentEmail', '==', studentEmail)
+        .where('status', '==', 'scheduled')
+        .get()
+      const now = Date.now()
+      const pastUpdates = pastSnap.docs
+        .filter(d => d.id !== sessionRef.id && (d.data().endAt ?? d.data().scheduledAt + 90 * 60 * 1000) < now)
+        .map(d => d.ref.update({ status: 'completed' }))
+      await Promise.all(pastUpdates)
+
       await userDoc.ref.update({
         nextSession: { subject, time: timeStr, tutor: tutorName, meetingUrl, scheduledAt: startTime.getTime() },
       })

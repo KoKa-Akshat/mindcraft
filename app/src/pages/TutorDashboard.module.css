@@ -186,6 +186,23 @@
 }
 .joinLink:hover { background: rgba(88,204,2,.2); }
 
+/* ── REVIEW ROWS ── */
+.reviewBadge {
+  font-size: 11px; font-weight: 900; background: rgba(255,180,0,.15);
+  color: #b07a00; padding: 3px 10px; border-radius: 20px;
+}
+.reviewRow {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-bottom: 1px solid var(--bd);
+  text-decoration: none; color: inherit; transition: background .1s;
+}
+.reviewRow:last-child { border-bottom: none; }
+.reviewRow:hover { background: var(--bg); border-radius: 10px; padding: 14px 10px; margin: 0 -10px; }
+.reviewArrow { font-size: 14px; color: var(--mu); margin-top: 4px; }
+.badgeDraft   { background: rgba(59,130,246,.1) !important; color: #1d5aab !important; }
+.badgePending { background: rgba(88,204,2,.12) !important; color: var(--gdd) !important; }
+.badgeNeedsReview { background: rgba(255,180,0,.12) !important; color: #b07a00 !important; }
+
 /* ── EMPTY STATE ── */
 .emptyState { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; text-align: center; gap: 6px; }
 .emptyState span { font-size: 13px; font-weight: 800; color: var(--mu); }
