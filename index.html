@@ -1,23 +1,827 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MindCraft</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-B4_Z-8GF.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-D6zD3RkE.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script>
-      // GitHub Pages SPA redirect fix
-      var redirect = sessionStorage.getItem('spa_redirect')
-      if (redirect) {
-        sessionStorage.removeItem('spa_redirect')
-        window.history.replaceState(null, '', redirect)
-      }
-    </script>
-  </body>
-</html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCraft: Crafting the minds of tomorrow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--g:#58CC02;--gd:#4CAD00;--gdd:#3A8500;--forest:#1A3C2A;--tx:#3C3C3C;--mu:#777;--w:#FFF;--bd:#E5E5E5;--f:'Nunito',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--f);color:var(--tx);background:var(--w);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.rv{opacity:0;transform:translateY(18px);transition:all .55s cubic-bezier(.22,1,.36,1)}.rv.show{opacity:1;transform:translateY(0)}.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:var(--w);border-bottom:2px solid var(--bd)}
+.logo{font-size:22px;font-weight:900;color:var(--forest);text-decoration:none}.logo span{color:var(--g)}
+.nr{display:flex;align-items:center;gap:6px}.nr a{text-decoration:none;font-size:14px;font-weight:700;padding:10px 16px;border-radius:16px;transition:all .15s}
+.nl{color:var(--g);text-transform:uppercase;letter-spacing:.5px}.nl:hover{background:rgba(88,204,2,.08)}
+.nav-login{background:var(--g)!important;color:var(--w)!important;font-weight:800!important;border-radius:14px!important;padding:8px 18px!important;font-size:13px!important;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 3px 0 var(--gd);border:none!important}.nav-login:hover{filter:brightness(1.05)!important;transform:translateY(-1px);box-shadow:0 4px 0 var(--gd)!important}
+.bg{background:var(--g);color:var(--w)!important;font-weight:800!important;border:none;padding:10px 20px;border-radius:16px;font-size:13px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 4px 0 var(--gd);transition:all .15s;display:inline-block;text-decoration:none;text-align:center;font-family:var(--f)}.bg:hover{filter:brightness(1.05);transform:translateY(-1px);box-shadow:0 5px 0 var(--gd)}.bg:active{transform:translateY(2px);box-shadow:0 1px 0 var(--gd)}
+.bw{background:var(--w);color:var(--gdd)!important;font-weight:800!important;border:2px solid var(--bd);padding:14px 32px;border-radius:16px;font-size:15px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 4px 0 var(--bd);transition:all .15s;display:inline-block;text-decoration:none;text-align:center;font-family:var(--f)}.bw:hover{background:#F7F7F7;transform:translateY(-1px)}
+.bl{padding:14px 32px;font-size:15px}
+
+/* ABOVE-FOLD: hero fills one full viewport */
+.above-fold{height:100vh;margin-top:56px;display:flex;flex-direction:column}
+
+/* HERO */
+.hero{flex:1;display:flex;justify-content:center;align-items:center;padding:0 24px;background:var(--w);overflow:hidden}
+.hero-in{max-width:1100px;width:100%;display:grid;grid-template-columns:1.25fr 1fr;gap:60px;align-items:center}
+.ha{display:flex;align-items:center;justify-content:center;position:relative;min-height:360px}
+.ha .mr{width:clamp(160px,26vw,220px);animation:bob 3s ease-in-out infinite;position:relative;z-index:2}
+.hero-text{text-align:center}
+.hero-text h1{font-size:clamp(34px,5vw,54px);font-weight:900;color:var(--tx);line-height:1.1;margin-bottom:18px;letter-spacing:-.5px}
+.hero-text p{font-size:17px;color:var(--mu);line-height:1.75;margin:0 auto 32px;max-width:380px}
+.hb{display:flex;flex-direction:column;gap:12px;max-width:300px;margin:0 auto}.hb a{text-align:center;width:100%}
+.fc{position:absolute;border-radius:16px;animation:bob 3s ease-in-out infinite;cursor:default;z-index:1;overflow:hidden}
+.fc img{width:clamp(55px,10vw,76px);display:block}
+
+/* LANDING ILLUSTRATION */
+.sec-illo{margin-top:24px;width:100%;max-width:420px}
+.sec-illo svg{width:100%;height:auto;display:block}
+
+/* LANDING SESSION SUMMARY CARD */
+.lp2{background:var(--w);border:1.5px solid #DDE2EF;border-radius:22px;padding:22px;box-shadow:0 16px 48px rgba(0,0,0,.09);width:100%;max-width:355px}
+.lp2-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.lp2-hd-logo{font-size:15px;font-weight:900;color:#1A3C2A}
+.lp2-hd-logo em{color:var(--g);font-style:normal}
+.lp2-hd-dots{font-size:20px;color:#BEC4D2;letter-spacing:3px;line-height:1}
+.lp2-done{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+.lp2-done-ck{width:22px;height:22px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:12px;font-weight:900}
+.lp2-done-text{font-size:13px;font-weight:800;color:var(--tx)}
+.lp2-sumbox{background:#EFF3FF;border-radius:12px;padding:13px 36px 13px 14px;margin-bottom:11px;position:relative}
+.lp2-sumbox h4{font-size:13px;font-weight:900;color:#2A3A6E;margin-bottom:4px}
+.lp2-sumbox p{font-size:12px;color:#6475A0;line-height:1.5;margin:0;font-weight:600}
+.lp2-sumbox-ck{position:absolute;top:12px;right:12px;color:#4A7BF7;font-weight:900;font-size:15px}
+.lp2-row-title{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:900;color:var(--tx);margin-bottom:8px}
+.lp2-row-title .spark{color:#E8A000;font-size:14px}
+.lp2-list{list-style:none;margin-bottom:11px;display:flex;flex-direction:column;gap:5px}
+.lp2-list li{font-size:12px;color:var(--mu);font-weight:600;display:flex;align-items:flex-start;gap:7px;line-height:1.45}
+.lp2-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:#C0C5D8;flex-shrink:0;margin-top:5px}
+.lp2-list li strong{color:var(--tx);font-weight:800}
+.lp2-prac{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--bd)}
+.lp2-prac-ico{width:28px;height:28px;background:rgba(74,123,247,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.lp2-prac-info strong{font-size:12px;font-weight:900;color:var(--tx);display:block}
+.lp2-prac-info span{font-size:11px;color:var(--mu);font-weight:700}
+.lp2-chart{margin-left:auto;font-size:20px}
+.lp2-upcoming{display:flex;align-items:center;justify-content:space-between;padding:10px 0 0;border-top:1px solid var(--bd)}
+.lp2-upcoming strong{font-size:12px;font-weight:900;color:var(--tx)}
+.lp2-upcoming span{font-size:11px;color:var(--mu);font-weight:700}
+
+/* SUBJECTS / CLASSES PANEL */
+.subj-panel{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:clamp(60px,9vw,100px) 24px;background:#FAFAFA}
+.subj-in{max-width:960px;width:100%;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(36px,6vw,80px);align-items:center}
+.subj-eyebrow{font-size:11px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:12px;opacity:.85}
+.subj-in h2{font-size:clamp(28px,4.5vw,40px);font-weight:900;line-height:1.2;color:var(--tx);margin-bottom:14px}
+.subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.subj-card{background:var(--w);border:2px solid var(--bd);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:12px;transition:all .2s}
+.subj-card:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 4px 16px rgba(88,204,2,.1)}
+.subj-card .si{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.subj-card .si img{width:38px;height:38px;object-fit:contain}
+.subj-card strong{font-size:15px;font-weight:800;color:var(--tx);display:block;line-height:1.2;margin-left:2px}
+.subj-card span{font-size:12px;color:var(--mu);font-weight:700;margin-left:2px}
+.find-tutor-link{font-size:12px;color:var(--g);font-weight:800;margin-left:2px;text-decoration:none;display:block;transition:opacity .15s}.find-tutor-link:hover{opacity:.7;text-decoration:underline}
+@media(max-width:768px){.subj-in{grid-template-columns:1fr}.subj-grid{grid-template-columns:1fr 1fr}}
+
+/* ALL CONTENT SECTIONS */
+.sec{min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center;background:var(--w)}
+.sec-bleed{padding-bottom:clamp(40px,6vw,64px)}
+
+/* HOW IT WORKS - left/right split */
+.dk{background:#1A3C2A;min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center}
+.dk-in{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center}
+.dk-eyebrow{font-size:11px;font-weight:900;color:#7FD94A;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:block}
+.dk-head{font-size:clamp(32px,5vw,48px);font-weight:900;color:#FFFFFF;line-height:1.1;margin-bottom:16px;letter-spacing:-.5px}
+.dk-sub{font-size:17px;color:#A8C9B4;line-height:1.7;max-width:400px;margin:0 0 40px}
+.hw-flow{display:flex;flex-direction:column;gap:0}
+.hw-step{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:18px;padding:20px 22px;display:flex;align-items:center;gap:18px}
+.hw-step-illo{width:70px;height:70px;border-radius:14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hw-step-text h4{font-size:16px;font-weight:900;color:#FFFFFF;margin-bottom:5px;line-height:1.2}
+.hw-step-text p{font-size:13px;color:#A8C9B4;line-height:1.55;margin:0}
+.hw-down{display:flex;justify-content:flex-start;padding:10px 35px;height:48px;align-items:center}
+.hw-cta{margin-top:0}
+@keyframes bounceCard{0%{opacity:0;transform:translateY(28px) scale(.95)}65%{transform:translateY(-5px) scale(1.015)}82%{transform:translateY(3px) scale(.998)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.hw-step.rv{opacity:0;transform:translateY(0)}
+.hw-step.rv.show{opacity:1;animation:bounceCard .7s cubic-bezier(.34,1.56,.64,1) both}
+@media(max-width:768px){.dk-in{grid-template-columns:1fr}}
+
+/* CONTENT SECTIONS */
+.sec{min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center;background:var(--w)}
+.sec-in{max-width:960px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,80px);align-items:center}
+.sec.flip .sec-in{direction:rtl}.sec.flip .sec-in>*{direction:ltr}
+.sec h2{font-size:clamp(28px,4.5vw,42px);font-weight:900;line-height:1.1;margin-bottom:18px;letter-spacing:-.3px}
+.sec p.d{font-size:18px;color:var(--mu);line-height:1.8;margin-bottom:16px}
+.sa{display:flex;align-items:center;justify-content:center}
+.sa svg{width:100%;max-width:520px;height:auto;display:block;overflow:visible}
+.cg{color:var(--g)}.cc{color:#FF4B4B}
+
+/* TESTIMONIALS - partial bleed */
+.proof{padding:clamp(80px,10vw,120px) 24px clamp(40px,6vw,64px);display:flex;flex-direction:column;align-items:center;background:#FAFAFA}
+.proof h2{font-size:clamp(28px,4.5vw,42px);font-weight:900;margin-bottom:8px;color:var(--tx);letter-spacing:-.3px}
+.proof h2 span{color:var(--g)}
+.proof .sub{font-size:17px;color:var(--mu);margin-bottom:40px}
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:820px;width:100%;margin:0 auto;text-align:left}
+.tc{background:var(--w);border-radius:20px;padding:28px 30px;border:2px solid var(--bd);display:flex;flex-direction:column;gap:14px;transition:transform .2s}
+.tc:hover{transform:translateY(-3px);border-color:#D0D0D0}
+.tc .qt{font-size:16px;line-height:1.75;font-weight:600;color:var(--tx);flex:1}
+.tc .au{font-size:14px;color:var(--mu);font-weight:700}
+.tc .au strong{color:var(--tx);font-weight:800;display:block;margin-bottom:2px}
+.tc-tag{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:20px}
+
+/* PRICING: full viewport */
+.pricing{min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--w)}
+.pricing h2{font-size:clamp(26px,4vw,38px);font-weight:900;margin-bottom:6px;letter-spacing:-.3px}
+.pricing .sub{font-size:16px;color:var(--mu);margin-bottom:32px;max-width:440px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px;margin:0 auto;width:100%}
+.pc{background:var(--w);border-radius:18px;padding:26px 22px;border:2px solid var(--bd);text-align:left;position:relative}
+.pc.ft{border-color:var(--g);box-shadow:0 0 0 2px var(--g),0 12px 36px rgba(88,204,2,.1)}
+.pc.ft::before{content:'RECOMMENDED';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--g);color:var(--w);padding:4px 16px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:.5px}
+.pc h3{font-size:17px;font-weight:900;margin-bottom:6px}
+.pc .pr{font-size:40px;font-weight:900;color:var(--g);margin-bottom:4px;line-height:1}.pc .pr span{font-size:15px;color:var(--mu);font-weight:600}
+.pc .pd{font-size:14px;color:var(--mu);margin-bottom:18px;line-height:1.5}
+.pc ul{list-style:none;text-align:left;margin-bottom:20px}
+.pc ul li{font-size:14px;padding:7px 0;display:flex;align-items:center;gap:7px;font-weight:600;border-bottom:1px solid #F4F4F4}
+.pc ul li:last-child{border-bottom:none}
+.pc ul li::before{content:'✓';color:var(--g);font-weight:900;font-size:15px;flex-shrink:0}
+.pricing-note{margin-top:20px;font-size:13px;color:var(--mu);font-weight:600}
+
+
+/* BLOG PANEL */
+.blog-faq-divider{background:#0D0F15;padding:0 clamp(24px,5vw,64px)}
+.blog-faq-divider hr{border:none;border-top:1px solid rgba(255,255,255,.18);max-width:1200px;margin:0 auto}
+.blog-panel{background:#0D0F15;padding:clamp(48px,6vw,72px) 0;display:flex;flex-direction:column;justify-content:center}
+.blog-panel-head{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,5vw,64px);max-width:1200px;margin:0 auto 28px;width:100%}
+.blog-panel-head h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:#fff;letter-spacing:-.4px}
+.blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:7px 14px;border-radius:20px;transition:all .18s;white-space:nowrap}
+.blog-see-all:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+.blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:4px clamp(24px,5vw,64px) 16px;scrollbar-width:none;-ms-overflow-style:none}
+.blog-scroll::-webkit-scrollbar{display:none}
+.blog-card{flex-shrink:0;width:300px;background:#181B25;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.07);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;text-decoration:none}
+.blog-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.16)}
+.blog-card-img{height:170px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blog-card-body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
+.blog-card-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.blog-card-cat{font-size:10px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.2px}
+.blog-card-date{font-size:11px;color:rgba(255,255,255,.3);font-weight:700}
+.blog-card-title{font-size:16px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:10px;letter-spacing:-.2px}
+.blog-card-excerpt{font-size:12px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:600;margin-bottom:14px;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.blog-card-author{display:flex;align-items:center;gap:8px}
+.blog-card-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;background:linear-gradient(135deg,#3A8500,#1A3C2A);flex-shrink:0}
+.blog-card-author-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.45)}
+
+/* FAQ */
+.faq{background:#111;min-height:100vh;padding:clamp(36px,4vw,52px) clamp(24px,8vw,120px) clamp(36px,4vw,52px);display:flex;flex-direction:column;justify-content:center}
+.faq-in{max-width:1100px;width:100%;margin:0 auto}
+.faq-title{font-size:clamp(32px,4.5vw,52px);font-weight:900;color:#FFFFFF;margin-bottom:clamp(32px,4vw,48px);letter-spacing:-.5px}
+.faq-list{display:flex;gap:64px;align-items:flex-start}
+.faq-col{flex:1;min-width:0}
+.faq-item{border-top:1px solid rgba(255,255,255,.08);cursor:pointer}
+.faq-item:last-child{border-bottom:1px solid rgba(255,255,255,.08)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:24px;user-select:none}
+.faq-q-text{font-size:15px;font-weight:700;color:#FFFFFF;line-height:1.35;flex:1}
+.faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s}
+.faq-icon svg{width:12px;height:12px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2.5;stroke-linecap:round;transition:stroke .2s}
+.faq-item.open .faq-icon{border-color:var(--g)}
+.faq-item.open .faq-icon svg{stroke:var(--g)}
+.faq-q:hover .faq-q-text{color:rgba(255,255,255,.75)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.faq-a-inner{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;padding-bottom:16px;font-weight:600}
+.faq-item.open .faq-a{max-height:300px}
+@media(max-width:768px){.faq{padding:56px 24px}.faq-list{flex-direction:column;gap:0}}
+
+/* FOOTER */
+footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px) 40px}
+.ft-grid{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ft-brand{display:flex;flex-direction:column;gap:12px}
+.ft-brand .fl{font-size:22px;font-weight:900;color:var(--w)}.ft-brand .fl span{color:var(--g)}
+.ft-brand p{font-size:14px;color:#7EA896;line-height:1.6;max-width:240px}
+.ft-social{display:flex;gap:12px;margin-top:4px}
+.ft-social a{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:background .15s;color:var(--w);text-decoration:none}
+.ft-social a:hover{background:rgba(255,255,255,.16)}
+.ft-social svg{width:18px;height:18px;fill:var(--w)}
+.ft-col h5{font-size:11px;font-weight:900;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+.ft-col a{display:block;font-size:15px;font-weight:700;color:#9EC4AF;text-decoration:none;margin-bottom:10px;transition:color .15s}
+.ft-col a:hover{color:var(--w)}
+.ft-bottom{max-width:960px;margin:28px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ft-bottom p{font-size:13px;color:rgba(255,255,255,.3);font-weight:600}
+@media(max-width:768px){.ft-grid{grid-template-columns:1fr 1fr}.ft-brand{grid-column:1/-1}}
+
+/* Accent line */
+.accent{max-width:120px;height:3px;background:var(--g);margin:0 auto;border-radius:2px;opacity:.3}
+
+@media(max-width:768px){.hero-in,.sec-in{grid-template-columns:1fr;gap:28px}.sec.flip .sec-in{direction:ltr}.hero-text{text-align:center}.hero-text p{margin:0 auto 28px}.hb{margin:0 auto}.ha{min-height:280px}.tg,.pg{grid-template-columns:1fr}.pg{max-width:340px;margin:0 auto}.nl{display:none}.fc{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Mind<span>Craft</span></a>
+  <div class="nr"><a href="#proof" class="nl">Reviews</a><a href="#blog" class="nl">Blog</a><a href="#faq" class="nl">FAQ</a><a href="https://koka-akshat.github.io/mindcraft/login" class="nav-login">Log in</a></div>
+</nav>
+
+<div class="above-fold">
+<section class="hero">
+  <div class="hero-in">
+    <div class="ha rv">
+      <img src="img/reading.png" class="mr" alt="MindCraft">
+      <div class="fc" style="top:6%;right:14%;animation-delay:0s"><img src="img/algebra.png"></div>
+      <div class="fc" style="top:32%;left:7%;animation-delay:.62s"><img src="img/geometry.png"></div>
+      <div class="fc" style="bottom:18%;right:10%;animation-delay:1.24s"><img src="img/trig.png"></div>
+    </div>
+    <div class="hero-text rv d1">
+      <h1><span style="display:block">we build</span><span style="display:block">better learners</span></h1>
+      <p>Tutoring that turns into lasting study skills, independent progress, and real confidence.</p>
+      <div class="hb">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">First Class, On Us</a>
+        <a href="#how" class="bw">See how it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- /above-fold -->
+
+<!-- ── SUBJECTS PANEL (Page 2) ── -->
+<section class="subj-panel">
+  <div class="subj-in">
+    <div class="rv">
+      <span class="subj-eyebrow">subjects</span>
+      <h2>Math is just<br>the beginning.</h2>
+    </div>
+    <div class="subj-grid rv d1">
+      <div class="subj-card">
+        <div class="si" style="background:rgba(88,204,2,.12)"><img src="img/algebra.png" alt=""></div>
+        <div><strong>Algebra</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
+      </div>
+      <div class="subj-card">
+        <div class="si" style="background:rgba(74,123,247,.12)"><img src="img/geometry.png" alt=""></div>
+        <div><strong>Geometry</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
+      </div>
+      <div class="subj-card">
+        <div class="si" style="background:rgba(255,152,0,.12)"><img src="img/trig.png" alt=""></div>
+        <div><strong>Trigonometry</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
+      </div>
+      <div class="subj-card">
+        <div class="si" style="background:rgba(206,130,255,.12)"><img src="img/precalc.png" alt=""></div>
+        <div><strong>Pre-Calculus</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
+      </div>
+      <div class="subj-card">
+        <div class="si" style="background:rgba(255,75,75,.12)"><img src="img/calculus.png" alt=""></div>
+        <div><strong>Calculus</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
+      </div>
+      <div class="subj-card">
+        <div class="si" style="background:rgba(28,176,246,.12)"><img src="img/stats.png" alt=""></div>
+        <div><strong>Statistics</strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="find-tutor-link">Find a Tutor</a></div>
+      </div>
+      <div class="subj-card soon">
+        <div class="si" style="background:#F5F5F5"><img src="img/reading.png" alt=""></div>
+        <div><strong>Physics</strong><span>Launching soon</span></div>
+      </div>
+      <div class="subj-card soon">
+        <div class="si" style="background:#F5F5F5"><img src="img/graduate.png" alt=""></div>
+        <div><strong>SAT Prep</strong><span>Launching soon</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec" id="how">
+  <div class="sec-in">
+    <!-- Left: text only -->
+    <div class="rv">
+      <h2 class="cg" style="font-size:clamp(30px,5vw,44px)">personal. proven. powerful.</h2>
+      <p class="d" style="font-size:17px;line-height:1.75;max-width:460px">Everything your child learns is captured, organized, and turned into personalized notes and practice they can revisit anytime.</p>
+    </div>
+
+    <!-- Right: dashboard UI mockup -->
+    <div class="sa rv d2">
+      <svg viewBox="0 0 520 380" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" style="overflow:visible;width:100%;max-width:520px;height:auto;display:block">
+        <defs>
+          <filter id="fcsh" x="-20%" y="-20%" width="140%" height="160%">
+            <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#0D1A3A" flood-opacity="0.09"/>
+          </filter>
+          <filter id="fcsm" x="-20%" y="-20%" width="140%" height="150%">
+            <feDropShadow dx="0" dy="3" stdDeviation="7" flood-color="#0D1A3A" flood-opacity="0.06"/>
+          </filter>
+        </defs>
+
+        <!-- Ambient glow -->
+        <circle cx="260" cy="200" r="200" fill="rgba(88,204,2,0.03)"/>
+        <circle cx="420" cy="80" r="100" fill="rgba(74,123,247,0.03)"/>
+
+        <!-- ── MAIN APP WINDOW ── -->
+        <g filter="url(#fcsh)">
+          <rect x="50" y="24" width="420" height="330" rx="16" fill="white" stroke="#EAECF4" stroke-width="1"/>
+        </g>
+        <!-- Titlebar -->
+        <rect x="50" y="24" width="420" height="40" rx="16" fill="#F8F9FC"/>
+        <rect x="50" y="48" width="420" height="16" fill="#F8F9FC"/>
+        <rect x="50" y="63" width="420" height="1" fill="#EAECF4"/>
+        <circle cx="74" cy="44" r="5.5" fill="#FF5F57"/>
+        <circle cx="91" cy="44" r="5.5" fill="#FEBC2E"/>
+        <circle cx="108" cy="44" r="5.5" fill="#28C840"/>
+        <rect x="170" y="36" width="100" height="16" rx="6" fill="white" stroke="#E0E4EF" stroke-width="1"/>
+        <rect x="182" y="42" width="50" height="5" rx="2.5" fill="#1E2D4A" opacity="0.35"/>
+        <rect x="238" y="42" width="20" height="5" rx="2.5" fill="#DDE2EE"/>
+
+        <!-- ── SIDEBAR ── -->
+        <rect x="50" y="64" width="108" height="290" fill="#F5F6FA"/>
+        <rect x="158" y="64" width="1" height="290" fill="#E8ECF4"/>
+        <rect x="58" y="80" width="3.5" height="22" rx="1.75" fill="#58CC02"/>
+        <rect x="70" y="85" width="72" height="7" rx="3.5" fill="#58CC02" opacity="0.65"/>
+        <rect x="70" y="118" width="64" height="6" rx="3" fill="#B0B8C8" opacity="0.55"/>
+        <rect x="70" y="144" width="58" height="6" rx="3" fill="#B0B8C8" opacity="0.5"/>
+        <rect x="70" y="170" width="68" height="6" rx="3" fill="#B0B8C8" opacity="0.45"/>
+        <rect x="70" y="196" width="54" height="6" rx="3" fill="#B0B8C8" opacity="0.4"/>
+        <rect x="70" y="222" width="62" height="6" rx="3" fill="#B0B8C8" opacity="0.35"/>
+        <rect x="70" y="248" width="50" height="6" rx="3" fill="#B0B8C8" opacity="0.3"/>
+
+        <!-- ── MAIN CONTENT ── -->
+        <!-- Session complete banner -->
+        <rect x="170" y="76" width="286" height="40" rx="10" fill="rgba(88,204,2,0.08)"/>
+        <circle cx="190" cy="96" r="10" fill="#58CC02"/>
+        <path d="M186 96 L190 100 L196 90" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="207" y="89" width="110" height="6" rx="3" fill="#2E7200" opacity="0.6"/>
+        <rect x="207" y="100" width="72" height="4.5" rx="2.25" fill="#58CC02" opacity="0.3"/>
+
+        <!-- Page heading -->
+        <rect x="170" y="130" width="140" height="8" rx="4" fill="#1E2D4A" opacity="0.5"/>
+        <rect x="170" y="145" width="90" height="5.5" rx="2.75" fill="#8895B0" opacity="0.45"/>
+
+        <!-- SESSION SUMMARY CARD -->
+        <g filter="url(#fcsm)">
+          <rect x="170" y="162" width="282" height="68" rx="12" fill="#EFF3FF" stroke="#DDE5FA" stroke-width="1"/>
+        </g>
+        <rect x="184" y="175" width="66" height="6" rx="3" fill="#4A7BF7" opacity="0.7"/>
+        <rect x="184" y="187" width="254" height="4.5" rx="2.25" fill="#B8C4E0"/>
+        <rect x="184" y="197" width="210" height="4.5" rx="2.25" fill="#B8C4E0"/>
+        <rect x="184" y="207" width="170" height="4.5" rx="2.25" fill="#B8C4E0"/>
+        <circle cx="432" cy="178" r="10" fill="rgba(74,123,247,0.12)"/>
+        <path d="M427 178 L431 182 L438 173" stroke="#4A7BF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- KEY CONCEPTS -->
+        <rect x="170" y="244" width="132" height="7" rx="3.5" fill="#1E2D4A" opacity="0.45"/>
+        <circle cx="181" cy="264" r="5" fill="#58CC02"/>
+        <rect x="194" y="260" width="150" height="5" rx="2.5" fill="#3C3C3C" opacity="0.42"/>
+        <circle cx="181" cy="281" r="5" fill="#58CC02"/>
+        <rect x="194" y="277" width="128" height="5" rx="2.5" fill="#3C3C3C" opacity="0.38"/>
+        <circle cx="181" cy="298" r="5" fill="#4A7BF7"/>
+        <rect x="194" y="294" width="140" height="5" rx="2.5" fill="#3C3C3C" opacity="0.38"/>
+
+        <!-- PRACTICE button -->
+        <rect x="170" y="318" width="136" height="28" rx="9" fill="#58CC02"/>
+        <rect x="182" y="329" width="112" height="5.5" rx="2.75" fill="rgba(255,255,255,0.78)"/>
+
+        <!-- PROGRESS CHART -->
+        <rect x="318" y="244" width="132" height="102" rx="12" fill="#F6F8FA" stroke="#EAECF4" stroke-width="1"/>
+        <rect x="330" y="256" width="60" height="6" rx="3" fill="#1E2D4A" opacity="0.4"/>
+        <rect x="330" y="268" width="40" height="4" rx="2" fill="#8895B0" opacity="0.45"/>
+        <polyline points="330,328 343,320 354,323 366,315 378,308 390,302 402,296 416,290 440,284" stroke="#58CC02" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M330,328 L343,320 L354,323 L366,315 L378,308 L390,302 L402,296 L416,290 L440,284 L440,338 L330,338 Z" fill="rgba(88,204,2,0.08)"/>
+
+        <!-- FLOATING BADGE: Flashcards -->
+        <g filter="url(#fcsm)">
+          <rect x="-2" y="130" width="140" height="46" rx="13" fill="white" stroke="#EAECF4" stroke-width="1"/>
+        </g>
+        <rect x="12" y="143" width="20" height="20" rx="6" fill="rgba(74,123,247,0.1)"/>
+        <rect x="16" y="148" width="12" height="8" rx="2" fill="#4A7BF7" opacity="0.5"/>
+        <rect x="38" y="147" width="80" height="5.5" rx="2.75" fill="#1E2D4A" opacity="0.5"/>
+        <rect x="38" y="158" width="58" height="4" rx="2" fill="#B8C4E0"/>
+
+        <!-- FLOATING BADGE: Review sheet -->
+        <g filter="url(#fcsm)">
+          <rect x="384" y="16" width="132" height="46" rx="13" fill="white" stroke="#EAECF4" stroke-width="1"/>
+        </g>
+        <rect x="398" y="29" width="20" height="20" rx="6" fill="rgba(255,152,0,0.1)"/>
+        <rect x="402" y="34" width="12" height="8" rx="2" fill="#FF9800" opacity="0.5"/>
+        <rect x="424" y="33" width="78" height="5.5" rx="2.75" fill="#1E2D4A" opacity="0.5"/>
+        <rect x="424" y="44" width="58" height="4" rx="2" fill="#B8C4E0"/>
+
+        <!-- Decorative dots -->
+        <circle cx="30" cy="50" r="5" fill="#58CC02" opacity="0.2"/>
+        <circle cx="14" cy="350" r="4" fill="#CE82FF" opacity="0.18"/>
+
+        <!-- Sparkles -->
+        <path d="M504 170 L506 164 L508 170 L514 172 L508 174 L506 180 L504 174 L498 172 Z" fill="#58CC02" opacity="0.28"/>
+        <path d="M10 280 L11.5 276 L13 280 L17 281.5 L13 283 L11.5 287 L10 283 L6 281.5 Z" fill="#4A7BF7" opacity="0.22"/>
+      </svg>
+
+    </div>
+  </div>
+</section>
+
+<div class="accent"></div>
+
+<section class="sec flip">
+  <div class="sec-in">
+    <!-- Left: transformation illustration -->
+    <div class="sa rv d2">
+      <svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" style="width:100%;max-width:520px;height:auto;display:block">
+        <defs>
+          <filter id="fsh2" x="-20%" y="-20%" width="140%" height="150%">
+            <feDropShadow dx="0" dy="3" stdDeviation="8" flood-color="#0D1A3A" flood-opacity="0.07"/>
+          </filter>
+          <filter id="fsh2s" x="-15%" y="-15%" width="130%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#0D1A3A" flood-opacity="0.05"/>
+          </filter>
+        </defs>
+
+        <!-- Ambient bg -->
+        <circle cx="100" cy="280" r="110" fill="rgba(255,152,0,0.04)"/>
+        <circle cx="360" cy="260" r="120" fill="rgba(88,204,2,0.04)"/>
+
+        <!-- ── LEFT SIDE: Chaos (scattered notes) ── -->
+        <!-- Tilted card 1 (warm orange tint) -->
+        <g filter="url(#fsh2s)" transform="rotate(-14 90 120)">
+          <rect x="18" y="80" width="110" height="76" rx="12" fill="white" stroke="#F0E8DC" stroke-width="1.5"/>
+        </g>
+        <rect x="30" y="94" width="55" height="4.5" rx="2.25" fill="#D4890A" opacity="0.5" transform="rotate(-14 57 96)"/>
+        <rect x="28" y="106" width="80" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.7" transform="rotate(-14 68 107)"/>
+        <rect x="30" y="116" width="65" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.7" transform="rotate(-14 62 117)"/>
+        <rect x="31" y="126" width="50" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.6" transform="rotate(-14 56 127)"/>
+        <!-- Question mark on chaos card 1 -->
+        <text x="105" y="148" font-size="22" font-family="sans-serif" fill="#D4890A" opacity="0.4" transform="rotate(-14 105 148)">?</text>
+
+        <!-- Tilted card 2 (purple tint) -->
+        <g filter="url(#fsh2s)" transform="rotate(9 100 220)">
+          <rect x="28" y="190" width="100" height="68" rx="12" fill="white" stroke="#EAE0F4" stroke-width="1.5"/>
+        </g>
+        <rect x="40" y="203" width="48" height="4.5" rx="2.25" fill="#9B59D0" opacity="0.45" transform="rotate(9 64 205)"/>
+        <rect x="38" y="215" width="72" height="3.5" rx="1.75" fill="#D8C8EC" opacity="0.7" transform="rotate(9 74 216)"/>
+        <rect x="40" y="225" width="56" height="3.5" rx="1.75" fill="#D8C8EC" opacity="0.6" transform="rotate(9 68 226)"/>
+        <text x="112" y="253" font-size="20" font-family="sans-serif" fill="#9B59D0" opacity="0.35" transform="rotate(9 112 253)">?</text>
+
+        <!-- Tilted card 3 (small, blue) -->
+        <g filter="url(#fsh2s)" transform="rotate(-7 80 300)">
+          <rect x="14" y="278" width="90" height="52" rx="10" fill="white" stroke="#DDE4F4" stroke-width="1.5"/>
+        </g>
+        <rect x="24" y="290" width="40" height="4" rx="2" fill="#4A7BF7" opacity="0.4" transform="rotate(-7 44 292)"/>
+        <rect x="24" y="301" width="64" height="3.5" rx="1.75" fill="#C8D4EE" opacity="0.6" transform="rotate(-7 56 302)"/>
+        <rect x="24" y="310" width="50" height="3.5" rx="1.75" fill="#C8D4EE" opacity="0.55" transform="rotate(-7 49 311)"/>
+
+        <!-- Chaos label -->
+        <text x="22" y="46" font-size="11" font-weight="700" font-family="sans-serif" fill="#B0937A" letter-spacing="1" opacity="0.7">BEFORE</text>
+        <rect x="22" y="50" width="100" height="2" rx="1" fill="#E8C99A" opacity="0.5"/>
+
+        <!-- ── CENTER: Transformation arrow ── -->
+        <ellipse cx="208" cy="170" rx="44" ry="24" fill="rgba(88,204,2,0.07)"/>
+        <line x1="148" y1="170" x2="264" y2="170" stroke="#58CC02" stroke-width="4" stroke-linecap="round"/>
+        <path d="M254 158 L270 170 L254 182" stroke="#58CC02" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="172" cy="170" r="4.5" fill="#58CC02" opacity="0.35"/>
+        <circle cx="196" cy="170" r="4.5" fill="#58CC02" opacity="0.55"/>
+        <circle cx="220" cy="170" r="4.5" fill="#58CC02" opacity="0.75"/>
+        <circle cx="244" cy="170" r="4.5" fill="#58CC02" opacity="0.95"/>
+        <text x="152" y="194" font-size="10" font-weight="700" font-family="sans-serif" fill="#58CC02" letter-spacing="1" opacity="0.6">PROGRESS OVER TIME</text>
+
+        <!-- ── RIGHT SIDE: Clarity (+50 from original) ── -->
+        <!-- AFTER label -->
+        <text x="336" y="46" font-size="11" font-weight="700" font-family="sans-serif" fill="#3A8500" letter-spacing="1" opacity="0.7">AFTER</text>
+        <rect x="336" y="50" width="100" height="2" rx="1" fill="#58CC02" opacity="0.4"/>
+
+        <!-- Card 1 -->
+        <g filter="url(#fsh2)">
+          <rect x="328" y="72" width="158" height="82" rx="14" fill="white" stroke="#E8F5E0" stroke-width="1.5"/>
+        </g>
+        <rect x="328" y="72" width="5" height="82" rx="2.5" fill="#58CC02"/>
+        <rect x="344" y="86" width="52" height="5" rx="2.5" fill="#2E7200" opacity="0.6"/>
+        <rect x="344" y="97" width="128" height="3.5" rx="1.75" fill="#B8D4AA"/>
+        <rect x="344" y="107" width="110" height="3.5" rx="1.75" fill="#B8D4AA"/>
+        <rect x="344" y="117" width="94" height="3.5" rx="1.75" fill="#B8D4AA"/>
+        <circle cx="462" cy="89" r="10" fill="rgba(88,204,2,0.12)"/>
+        <path d="M457 89 L461 93 L468 85" stroke="#58CC02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Card 2 -->
+        <g filter="url(#fsh2s)">
+          <rect x="338" y="172" width="140" height="66" rx="12" fill="white" stroke="#E0E8FA" stroke-width="1.5"/>
+        </g>
+        <rect x="338" y="172" width="5" height="66" rx="2.5" fill="#4A7BF7"/>
+        <rect x="353" y="184" width="44" height="4.5" rx="2.25" fill="#2040A0" opacity="0.5"/>
+        <rect x="353" y="195" width="108" height="3.5" rx="1.75" fill="#C8D4EE"/>
+        <rect x="353" y="205" width="88" height="3.5" rx="1.75" fill="#C8D4EE"/>
+        <rect x="353" y="218" width="48" height="12" rx="5" fill="rgba(74,123,247,0.1)"/>
+        <rect x="407" y="218" width="38" height="12" rx="5" fill="rgba(88,204,2,0.1)"/>
+        <rect x="356" y="222" width="42" height="4" rx="2" fill="#6A9BE8" opacity="0.6"/>
+        <rect x="410" y="222" width="32" height="4" rx="2" fill="#4CAD00" opacity="0.55"/>
+
+        <!-- Card 3 -->
+        <g filter="url(#fsh2s)">
+          <rect x="332" y="258" width="152" height="62" rx="12" fill="white" stroke="#E0EED8" stroke-width="1.5"/>
+        </g>
+        <rect x="332" y="258" width="5" height="62" rx="2.5" fill="#58CC02"/>
+        <rect x="347" y="269" width="40" height="4" rx="2" fill="#2E7200" opacity="0.5"/>
+        <rect x="347" y="278" width="126" height="32" rx="6" fill="#F4FAF0"/>
+        <polyline points="355,302 366,296 377,299 388,292 399,287 410,282 421,277 432,273 460,267" stroke="#58CC02" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M355,302 L366,296 L377,299 L388,292 L399,287 L410,282 L421,277 L432,273 L460,267 L460,310 L355,310 Z" fill="rgba(88,204,2,0.07)"/>
+
+        <!-- Sparkles -->
+        <path d="M308 52 L310 46 L312 52 L318 54 L312 56 L310 62 L308 56 L302 54 Z" fill="#58CC02" opacity="0.3"/>
+        <path d="M496 200 L498 195 L500 200 L505 202 L500 204 L498 209 L496 204 L491 202 Z" fill="#4A7BF7" opacity="0.28"/>
+      </svg>
+    </div>
+
+    <!-- Right: text -->
+    <div class="rv">
+      <h2 class="cg" style="font-size:clamp(30px,5vw,44px)">we help students learn how to learn</h2>
+      <p class="d" style="font-size:17px;line-height:1.75;max-width:460px">Each session builds habits around thinking, reviewing, and practicing in a way that continues outside the session. Over time, students rely less on help and more on their own understanding.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dk" id="steps">
+  <div class="dk-in rv">
+    <!-- Left: title + subtitle + CTA -->
+    <div>
+      <span class="dk-eyebrow">the system</span>
+      <h2 class="dk-head">how mindcraft works</h2>
+      <p class="dk-sub">Students join a live session, and everything that follows is designed to turn that time into lasting progress.</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">First Class, On Us &rarr;</a>
+    </div>
+    <!-- Right: vertical step cards -->
+    <div class="hw-flow rv d1">
+      <!-- Step 1 -->
+      <div class="hw-step rv" style="transition-delay:.05s">
+        <div class="hw-step-illo">
+          <svg viewBox="0 0 100 100" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="36" r="18" fill="#58CC02" opacity=".22"/>
+            <circle cx="50" cy="36" r="11" fill="#58CC02" opacity=".5"/>
+            <circle cx="50" cy="36" r="6" fill="#ADFB5A"/>
+            <path d="M34 60 C34 50 66 50 66 60" fill="#58CC02" opacity=".45"/>
+            <rect x="28" y="65" width="44" height="26" rx="7" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+            <rect x="36" y="72" width="22" height="4" rx="2" fill="#ADFB5A" opacity=".7"/>
+            <rect x="36" y="80" width="30" height="3" rx="1.5" fill="rgba(255,255,255,.3)"/>
+          </svg>
+        </div>
+        <div class="hw-step-text">
+          <h4>join session</h4>
+          <p>Students meet their tutor live in a focused, context-rich session built around exactly what they need.</p>
+        </div>
+      </div>
+      <!-- Down arrow -->
+      <div class="hw-down">
+        <svg width="20" height="28" viewBox="0 0 20 28" fill="none"><path d="M10 2 L10 22" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" opacity=".5"/><path d="M4 16 L10 24 L16 16" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>
+      </div>
+      <!-- Step 2 -->
+      <div class="hw-step rv" style="transition-delay:.18s">
+        <div class="hw-step-illo">
+          <svg viewBox="0 0 100 100" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="18" width="60" height="68" rx="10" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+            <rect x="20" y="18" width="5" height="68" rx="2.5" fill="#ADFB5A"/>
+            <rect x="34" y="30" width="36" height="5" rx="2.5" fill="#FFFFFF" opacity=".65"/>
+            <rect x="34" y="42" width="42" height="3.5" rx="1.75" fill="rgba(255,255,255,.3)"/>
+            <rect x="34" y="52" width="34" height="3.5" rx="1.75" fill="rgba(255,255,255,.3)"/>
+            <circle cx="70" cy="26" r="10" fill="rgba(88,204,2,.3)"/>
+            <path d="M65 26 L69 30 L76 22" stroke="#ADFB5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="34" y="64" width="26" height="11" rx="5" fill="rgba(88,204,2,.25)"/>
+            <rect x="64" y="64" width="20" height="11" rx="5" fill="rgba(255,255,255,.1)"/>
+          </svg>
+        </div>
+        <div class="hw-step-text">
+          <h4>structured learning</h4>
+          <p>Each session is captured and organized into clear summaries, key ideas, and practical next steps.</p>
+        </div>
+      </div>
+      <!-- Down arrow -->
+      <div class="hw-down">
+        <svg width="20" height="28" viewBox="0 0 20 28" fill="none"><path d="M10 2 L10 22" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" opacity=".5"/><path d="M4 16 L10 24 L16 16" stroke="#58CC02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>
+      </div>
+      <!-- Step 3 -->
+      <div class="hw-step rv" style="transition-delay:.32s">
+        <div class="hw-step-illo">
+          <svg viewBox="0 0 100 100" width="56" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="16" y="50" width="68" height="38" rx="9" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+            <polyline points="24,80 34,72 44,75 54,66 64,60 76,54" stroke="#ADFB5A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24,80 L34,72 L44,75 L54,66 L64,60 L76,54 L76,88 L24,88 Z" fill="rgba(88,204,2,.12)"/>
+            <rect x="16" y="20" width="32" height="24" rx="7" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+            <rect x="24" y="28" width="16" height="3.5" rx="1.75" fill="rgba(255,255,255,.5)"/>
+            <rect x="52" y="20" width="32" height="24" rx="7" fill="rgba(88,204,2,.18)" stroke="rgba(88,204,2,.35)" stroke-width="1.2"/>
+            <rect x="60" y="28" width="16" height="3.5" rx="1.75" fill="#ADFB5A" opacity=".7"/>
+            <path d="M47 29 L50 24 L53 29" stroke="#ADFB5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="hw-step-text">
+          <h4>practice &amp; progress</h4>
+          <p>Personalized review and practice carry the work forward, so progress becomes visible from one session to the next.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="proof" id="proof">
+  <h2 class="rv">students love mind<span>craft</span></h2>
+  <p class="sub rv d1">Real results from students and parents in St. Paul.</p>
+  <div class="tg rv d1">
+    <div class="tc">
+      <span class="tc-tag" style="background:rgba(88,204,2,0.1);color:var(--gdd)">Student</span>
+      <p class="qt">"I went from a C to a B+ in Algebra II in six weeks. The bigger thing is I stopped panicking before tests. I actually understand what I'm doing now."</p>
+      <div class="au"><strong>High school junior</strong> St. Paul, MN</div>
+    </div>
+    <div class="tc">
+      <span class="tc-tag" style="background:rgba(74,123,247,0.1);color:#2A50B0">Parent</span>
+      <p class="qt">"After every session my daughter got a summary of what was covered and what to review. I finally felt like I knew what was going on with her learning."</p>
+      <div class="au"><strong>Parent of a sophomore</strong> Highland Park, MN</div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <h2 class="rv">simple, honest pricing</h2>
+  <p class="sub rv d1">No contracts. No hidden fees. Cancel anytime.</p>
+  <div class="pg rv d1">
+    <div class="pc">
+      <h3>First session</h3>
+      <div class="pr">Free</div>
+      <p class="pd">Start with zero commitment</p>
+      <ul>
+        <li>Full 1-hour session</li>
+        <li>Matched with your tutor</li>
+        <li>No card required</li>
+      </ul>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:14px;display:block;font-size:15px;text-align:center">First Class, On Us</a>
+    </div>
+    <div class="pc ft">
+      <h3>1-on-1 sessions</h3>
+      <div class="pr">$60<span>/hr</span></div>
+      <p class="pd">The full MindCraft experience</p>
+      <ul>
+        <li>Same tutor every session</li>
+        <li>Session summary + notes</li>
+        <li>Flashcards + practice problems</li>
+        <li>Progress reports for parents</li>
+      </ul>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:14px;display:block;font-size:15px;text-align:center">Get started</a>
+    </div>
+  </div>
+</section>
+
+<div class="blog-faq-divider"><hr></div>
+<section class="blog-panel" id="blog">
+  <div class="blog-panel-head rv">
+    <h2>Our Blog</h2>
+    <a href="blog.html" class="blog-see-all">See All &rarr;</a>
+  </div>
+  <div class="blog-scroll rv d1" id="blogScroll"></div>
+</section>
+
+<div class="blog-faq-divider"><hr></div>
+<section class="faq" id="faq">
+  <div class="faq-in">
+    <h2 class="faq-title rv">FAQs</h2>
+    <div class="faq-list">
+
+      <div class="faq-col">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How is MindCraft different from regular tutoring?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">MindCraft turns every session into structured learning your child can build on. We don't just help in the moment — we organize, reinforce, and extend what they learn so progress continues between sessions.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">What actually happens in a session?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Students meet their tutor live, work through concepts, and build understanding step by step. After the session, everything is organized into clear notes and next steps so they know exactly what to review and practice.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Will this help my child become more independent?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Yes. Our goal is to help students rely less on tutors over time. Each session builds habits around thinking, reviewing, and practicing so they can move forward on their own.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How are tutors selected?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Our tutors are high-performing college students who recently mastered these subjects themselves. They understand exactly where students struggle and how to explain concepts clearly.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How do sessions fit into a busy schedule?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Sessions are flexible and scheduled around your availability. Most families choose one or two sessions per week depending on their needs.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-col">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Where do sessions take place?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Sessions are held live online through our platform, so students can join from anywhere.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">What does my child get after each session?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Students leave with structured notes, clear takeaways, and personalized practice so they can keep improving between sessions.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How do you track progress?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">We track what students understand, where they need reinforcement, and what they should focus on next. Progress becomes clear over time.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Is there a commitment required?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">No long-term commitment. You can start with a free session and continue based on what works best for your child.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How do I get started?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-a"><p class="faq-a-inner">Simply request a session through the site. We'll match your child with the right tutor and get them started.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <div class="fl">Mind<span>Craft</span></div>
+      <p>We build better learners.<br>St. Paul, MN</p>
+      <p style="font-size:13px;color:#7EA896;margin-top:6px"><a href="mailto:joinmindcraft@gmail.com" style="color:#7EA896;text-decoration:none">joinmindcraft@gmail.com</a><br><a href="tel:+17633405616" style="color:#7EA896;text-decoration:none">+1 (763) 340-5616</a></p>
+      <div class="ft-social">
+        <a href="https://x.com/KoiralaAks79907" target="_blank" rel="noopener" aria-label="Twitter">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="ft-col">
+      <h5>About</h5>
+      <a href="#">About us</a>
+    </div>
+    <div class="ft-col">
+      <h5>Tutoring</h5>
+      <a href="#">Get certified</a>
+      <a href="#">Become a tutor</a>
+    </div>
+    <div class="ft-col">
+      <h5>Community</h5>
+      <a href="blog.html">Blog</a>
+      <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p>MindCraft &copy; 2026 &middot; St. Paul, MN</p>
+    <p>Built for students who want to learn how to learn.</p>
+  </div>
+</footer>
+
+<script>
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(el){if(el.isIntersecting){el.target.classList.add('show');obs.unobserve(el.target)}})},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
+
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── Blog panel cards ──
+var BLOG_ARTICLES = [
+  { id:1, title:'Our Mission & Vision', excerpt:'MindCraft was created by educators who truly care about teaching — people who live for the moment a student finally gets it.', category:'Headquarters', date:'Apr 5, 2026', author:'Akshat K.', bg1:'#0A1F10', bg2:'#1A3C2A', accent:'#58CC02' },
+  { id:2, title:'MindCraft was in Beta at Macalester last week', excerpt:'Last week we attended a Beta.mn event at Macalester. Here\'s what we heard, and what it reinforced about the way we\'re building.', category:'Community', date:'Mar 28, 2026', author:'Akshat K.', bg1:'#0A1428', bg2:'#1A2A50', accent:'#4A7BF7' }
+];
+
+function miniSVG(accent) {
+  return '<svg viewBox="0 0 200 110" width="130" fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".18"><rect x="10" y="10" width="56" height="80" rx="9" fill="white"/><rect x="20" y="22" width="36" height="6" rx="3" fill="white" opacity=".7"/><rect x="20" y="34" width="28" height="4.5" rx="2.25" fill="white" opacity=".45"/><rect x="20" y="44" width="32" height="4.5" rx="2.25" fill="white" opacity=".4"/><rect x="20" y="58" width="22" height="18" rx="5" fill="'+accent+'" opacity=".55"/><rect x="80" y="8" width="110" height="56" rx="9" fill="white"/><rect x="92" y="20" width="72" height="6" rx="3" fill="white" opacity=".7"/><rect x="92" y="32" width="56" height="4.5" rx="2.25" fill="white" opacity=".45"/><rect x="92" y="42" width="64" height="4.5" rx="2.25" fill="white" opacity=".4"/><rect x="80" y="76" width="110" height="28" rx="7" fill="'+accent+'" opacity=".15"/><rect x="92" y="84" width="50" height="5" rx="2.5" fill="'+accent+'" opacity=".5"/></svg>';
+}
+
+var scroll = document.getElementById('blogScroll');
+if (scroll) {
+  scroll.innerHTML = BLOG_ARTICLES.map(function(a) {
+    return '<a href="article.html?id='+a.id+'" class="blog-card">'
+      +'<div class="blog-card-img" style="background:linear-gradient(145deg,'+a.bg1+','+a.bg2+')">'+miniSVG(a.accent)+'</div>'
+      +'<div class="blog-card-body">'
+        +'<div class="blog-card-meta"><span class="blog-card-cat">'+a.category+'</span><span class="blog-card-date">'+a.date+'</span></div>'
+        +'<div class="blog-card-title">'+a.title+'</div>'
+        +'<div class="blog-card-excerpt">'+a.excerpt+'</div>'
+        +'<div class="blog-card-author"><div class="blog-card-av">'+a.author.charAt(0)+'</div><span class="blog-card-author-name">'+a.author+'</span></div>'
+      +'</div>'
+    +'</a>';
+  }).join('');
+}
+</script>
+
+</body></html>
