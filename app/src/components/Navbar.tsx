@@ -8,10 +8,9 @@ interface Props {
 
 export default function Navbar({ user, onSignOut }: Props) {
   const initial = (user.displayName?.[0] || user.email?.[0] || 'A').toUpperCase()
-
   return (
     <nav className={s.nav}>
-      <a href="http://localhost:3000" className={s.logo}>Mind<span>Craft</span></a>
+      <a href="/" className={s.logo}>Mind<span>Craft</span></a>
       <div className={s.right}>
         <div className={s.notif}>
           <svg viewBox="0 0 24 24">
@@ -20,9 +19,7 @@ export default function Navbar({ user, onSignOut }: Props) {
           </svg>
           <div className={s.notifDot} />
         </div>
-        <div className={s.avatar} onClick={onSignOut} title="Sign out">
-          {initial}
-        </div>
+        <div className={s.avatar} onClick={onSignOut} title="Sign out">{initial}</div>
       </div>
     </nav>
   )

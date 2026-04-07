@@ -2,15 +2,6 @@ import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
-// ─────────────────────────────────────────────────────────────
-// STEP: Go to console.firebase.google.com
-//   1. Create a project called "mindcraft"
-//   2. Add a Web app (click </> icon)
-//   3. Copy the firebaseConfig object values below
-//   4. In Authentication → Sign-in method, enable:
-//        • Email/Password
-//        • Google
-// ─────────────────────────────────────────────────────────────
 const firebaseConfig = {
   apiKey:            "AIzaSyBetzXAekac3zTdzgJ3vGxqKCQAXc3tcsU",
   authDomain:        "mindcraft-93858.firebaseapp.com",
@@ -21,7 +12,6 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-
 export const auth = getAuth(app)
 export const googleProvider = new GoogleAuthProvider()
 export const db = getFirestore(app)

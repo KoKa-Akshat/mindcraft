@@ -1,0 +1,126 @@
+.shell { min-height: 100vh; background: var(--bg); color: var(--tx); }
+
+/* ── NAV ── */
+.nav {
+  height: 58px;
+  background: var(--w);
+  border-bottom: 1px solid var(--bd);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 48px);
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { font-size: 18px; font-weight: 900; color: var(--forest); text-decoration: none; cursor: pointer; }
+.logo span { color: var(--g); }
+.logo em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--mu); margin-left: 8px; }
+.navRight { display: flex; align-items: center; gap: 16px; }
+.navEmail { font-size: 12px; color: var(--mu); font-weight: 600; }
+.navLink { font-size: 13px; font-weight: 800; color: var(--gdd); text-decoration: none; }
+.navLink:hover { text-decoration: underline; }
+
+/* ── BODY ── */
+.body { max-width: 1100px; margin: 0 auto; padding: 32px clamp(16px, 4vw, 40px) 64px; }
+
+/* ── STATS ── */
+.stats { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+.statCard {
+  border-radius: 14px; padding: 16px 24px; min-width: 110px; text-align: center;
+}
+.statVal  { font-size: 28px; font-weight: 900; line-height: 1; }
+.statLabel { font-size: 11px; font-weight: 800; color: var(--mu); text-transform: uppercase; letter-spacing: .6px; margin-top: 4px; }
+.calendlyBtn {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-left: auto;
+  background: var(--w); border: 1.5px solid var(--bd);
+  border-radius: 12px; padding: 10px 18px;
+  font-size: 13px; font-weight: 800; color: var(--tx);
+  text-decoration: none; transition: border-color .15s;
+}
+.calendlyBtn:hover { border-color: #aaa; }
+
+/* ── TABS ── */
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+.tab {
+  padding: 9px 20px; border-radius: 10px;
+  font-size: 13px; font-weight: 800;
+  border: none; background: none; cursor: pointer;
+  color: var(--mu); font-family: var(--f); transition: all .15s;
+}
+.tab:hover { background: var(--w); color: var(--tx); }
+.tabActive { background: var(--w); color: var(--tx); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+
+/* ── TABLE ── */
+.tableWrap { background: var(--w); border-radius: 18px; border: 1px solid var(--bd); overflow: hidden; }
+.table { width: 100%; border-collapse: collapse; }
+.table thead tr { border-bottom: 1px solid var(--bd); }
+.table th {
+  text-align: left; padding: 14px 16px;
+  font-size: 10px; font-weight: 900; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .8px;
+}
+.table tbody tr { border-bottom: 1px solid var(--bd); transition: background .1s; }
+.table tbody tr:last-child { border-bottom: none; }
+.table tbody tr:hover { background: var(--bg); }
+.table td { padding: 14px 16px; font-size: 13px; font-weight: 600; vertical-align: middle; }
+.studentName  { font-weight: 800; color: var(--tx); }
+.studentEmail { font-size: 11px; color: var(--mu); font-weight: 600; margin-top: 2px; }
+.subject { font-size: 12px; font-weight: 800; color: var(--gdd); }
+.dateCell { font-size: 12px; color: var(--mu); white-space: nowrap; }
+.statusBadge { font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; text-transform: capitalize; }
+.zoomLink { font-size: 12px; font-weight: 800; color: #4A7BF7; text-decoration: none; }
+.zoomLink:hover { text-decoration: underline; }
+.noZoom { color: var(--bd); }
+.actions { display: flex; gap: 6px; }
+.actionBtn {
+  font-size: 11px; font-weight: 800; padding: 5px 12px;
+  border-radius: 8px; border: none; cursor: pointer;
+  font-family: var(--f); transition: opacity .15s;
+  background: rgba(88,204,2,.1); color: var(--gdd);
+}
+.actionBtn:hover { opacity: .8; }
+.cancelBtn { background: rgba(197,48,48,.08); color: #C53030; }
+.empty { padding: 48px; text-align: center; font-size: 14px; color: var(--mu); font-weight: 600; }
+
+/* ── FORM ── */
+.formCard {
+  background: var(--w); border-radius: 18px;
+  border: 1px solid var(--bd); padding: 32px;
+  max-width: 680px;
+}
+.formTitle { font-size: 20px; font-weight: 900; margin-bottom: 24px; letter-spacing: -.2px; }
+.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.fullWidth { grid-column: 1 / -1; }
+.field label {
+  display: block; font-size: 11px; font-weight: 800;
+  color: var(--mu); text-transform: uppercase;
+  letter-spacing: .6px; margin-bottom: 6px;
+}
+.field input, .field select {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid var(--bd); border-radius: 10px;
+  font-size: 14px; font-family: var(--f); font-weight: 600;
+  color: var(--tx); background: var(--w); outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--g); box-shadow: 0 0 0 3px rgba(88,204,2,.1);
+}
+.submitBtn {
+  padding: 14px 32px; background: var(--g); color: var(--w);
+  border: none; border-radius: 12px;
+  font-size: 14px; font-weight: 900; font-family: var(--f);
+  cursor: pointer; box-shadow: 0 4px 0 var(--gd); transition: all .15s;
+}
+.submitBtn:hover:not(:disabled) { filter: brightness(1.05); transform: translateY(-1px); }
+.submitBtn:disabled { opacity: .6; cursor: default; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: var(--tx); color: var(--w);
+  padding: 12px 24px; border-radius: 12px;
+  font-size: 14px; font-weight: 800;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  animation: fadeUp .2s ease;
+  z-index: 9999;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }

@@ -1,84 +1,122 @@
 .card {
-  background: #fff;
+  background: var(--w);
   border-radius: 18px;
   padding: 20px 22px;
-  border: 1px solid #E8EAED;
+  border: 1px solid var(--bd);
   box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.03);
-  font-family: 'Nunito', sans-serif;
 }
 .label {
   font-size: 10px; font-weight: 900;
-  color: #8A8F98; text-transform: uppercase;
+  color: var(--mu); text-transform: uppercase;
   letter-spacing: 1.2px; margin-bottom: 14px;
 }
-.divider { height: 1px; background: #E8EAED; margin: 14px 0; }
+.divider { height: 1px; background: var(--bd); margin: 14px 0; }
 
 /* ── SESSION SUMMARY ── */
 .summaryHeader { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.tag { font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; background: rgba(88,204,2,.1); color: #3A8500; }
-.date { font-size: 12px; color: #8A8F98; font-weight: 700; }
-.title { font-size: 15px; font-weight: 900; color: #1A1A1A; margin-bottom: 10px; letter-spacing: -.2px; }
+.tag { font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; background: rgba(88,204,2,.1); color: var(--gdd); }
+.date { font-size: 12px; color: var(--mu); font-weight: 700; }
+.title { font-size: 15px; font-weight: 900; color: var(--tx); margin-bottom: 10px; letter-spacing: -.2px; }
 .list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .list li { font-size: 13px; color: #555; font-weight: 600; display: flex; align-items: flex-start; gap: 7px; line-height: 1.5; }
-.list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #58CC02; flex-shrink: 0; margin-top: 5px; }
+.list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--g); flex-shrink: 0; margin-top: 5px; }
 
 /* ── PRACTICE READY ── */
-.practiceNum { font-size: 38px; font-weight: 900; color: #1A1A1A; letter-spacing: -1.5px; line-height: 1; margin-bottom: 3px; }
-.practiceNum span { font-size: 16px; font-weight: 700; color: #8A8F98; letter-spacing: 0; }
-.practiceSub { font-size: 13px; color: #8A8F98; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.practiceNum { font-size: 38px; font-weight: 900; color: var(--tx); letter-spacing: -1.5px; line-height: 1; margin-bottom: 3px; }
+.practiceNum span { font-size: 16px; font-weight: 700; color: var(--mu); letter-spacing: 0; }
+.practiceSub { font-size: 13px; color: var(--mu); font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
 
 /* ── BUTTONS ── */
-.btnGreen {
+.btnGreen, .btnOutline {
   display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(88,204,2,.1); color: #3A8500;
-  border: none; border-radius: 10px;
+  border-radius: 10px;
   padding: 10px 16px; font-size: 13px; font-weight: 800;
-  font-family: 'Nunito', sans-serif; cursor: pointer; transition: background .15s;
+  font-family: var(--f); cursor: pointer; transition: background .15s;
+  border: none;
 }
+.btnGreen { background: rgba(88,204,2,.1); color: var(--gdd); }
 .btnGreen:hover { background: rgba(88,204,2,.18); }
 .btnOutline {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: none; color: #1A1A1A;
-  border: 1.5px solid #E8EAED; border-radius: 10px;
-  padding: 9px 16px; font-size: 13px; font-weight: 800;
-  font-family: 'Nunito', sans-serif; cursor: pointer; transition: all .15s;
+  background: none; color: var(--tx);
+  border: 1.5px solid var(--bd); padding: 9px 16px;
+  transition: border-color .15s;
 }
 .btnOutline:hover { border-color: #ccc; }
 
-/* ── EXPLORE CLASSES ── */
-.classRow { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
-.classRow + .classRow { border-top: 1px solid #E8EAED; }
-.classIcon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
-.classInfo { flex: 1; min-width: 0; }
-.classInfo strong { font-size: 14px; font-weight: 800; color: #1A1A1A; display: block; margin-bottom: 1px; }
-.classInfo span { font-size: 12px; color: #8A8F98; font-weight: 700; }
-.badge { font-size: 10px; font-weight: 900; padding: 3px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; flex-shrink: 0; }
-.badge_new  { background: rgba(88,204,2,.1);   color: #3A8500; }
-.badge_free { background: rgba(74,123,247,.1); color: #4A7BF7; }
-.badge_soon { background: #F5F5F5; color: #8A8F98; }
+/* ── EXPLORE CLASSES (card grid) ── */
+.classCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.classCardTile {
+  border-radius: 14px;
+  border: 1px solid var(--bd);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: box-shadow .15s, transform .15s;
+}
+.classCardTile:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); transform: translateY(-2px); }
+.classCardThumb {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.classCardEmoji { font-size: 26px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
+.classCardBody { padding: 10px; }
+.classCardName { font-size: 12px; font-weight: 900; color: var(--tx); margin-bottom: 2px; line-height: 1.3; }
+.classCardSub  { font-size: 11px; color: var(--mu); font-weight: 600; }
+.classCardStart { font-size: 10px; color: var(--g); font-weight: 800; margin-top: 4px; }
+.badge { font-size: 9px; font-weight: 900; padding: 2px 7px; border-radius: 6px; text-transform: uppercase; letter-spacing: .4px; flex-shrink: 0; }
+.badgeOverlay { position: absolute; top: 7px; right: 7px; }
+.badge_new  { background: rgba(88,204,2,.18);   color: #fff; }
+.badge_free { background: rgba(74,123,247,.25); color: #fff; }
+.badge_soon { background: rgba(255,255,255,.2); color: #fff; }
+
+/* ── PRACTICE PROMPT ── */
+.promptBox {
+  background: rgba(88,204,2,.05);
+  border: 1px solid rgba(88,204,2,.15);
+  border-radius: 12px;
+  padding: 14px;
+}
+.promptLabel {
+  font-size: 10px; font-weight: 900;
+  color: var(--gdd); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 8px;
+}
+.promptText {
+  font-size: 12px; color: #444;
+  font-weight: 600; line-height: 1.6;
+}
 
 /* ── EMPTY STATE ── */
 .empty {
   display: flex; flex-direction: column; align-items: center;
   justify-content: center; padding: 28px 16px; text-align: center; gap: 6px;
 }
-.empty span { font-size: 13px; font-weight: 800; color: #8A8F98; }
+.empty span { font-size: 13px; font-weight: 800; color: var(--mu); }
 .empty p { font-size: 12px; color: #C4C9D4; font-weight: 600; line-height: 1.5; max-width: 220px; }
 
 /* ── MESSAGES ── */
 .msgRow { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; }
-.msgRow + .msgRow { border-top: 1px solid #E8EAED; }
+.msgRow + .msgRow { border-top: 1px solid var(--bd); }
 .msgAv {
   width: 30px; height: 30px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 11px; font-weight: 900; color: #fff; flex-shrink: 0;
-  background: linear-gradient(135deg, #3A8500, #1A3C2A);
+  background: linear-gradient(135deg, var(--gdd), var(--forest));
 }
 .msgAvTutor { background: linear-gradient(135deg, #1E3A6A, #2A5AAF); }
 .msgBody { flex: 1; min-width: 0; }
 .msgMeta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
-.msgName { font-size: 12px; font-weight: 800; color: #1A1A1A; }
-.msgTime { font-size: 11px; color: #8A8F98; font-weight: 600; }
+.msgName { font-size: 12px; font-weight: 800; color: var(--tx); }
+.msgTime { font-size: 11px; color: var(--mu); font-weight: 600; }
 .msgText { font-size: 13px; color: #555; font-weight: 600; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.msgUnread .msgText { color: #1A1A1A; font-weight: 800; }
-.msgDot { width: 7px; height: 7px; border-radius: 50%; background: #58CC02; flex-shrink: 0; margin-top: 4px; }
+.msgUnread .msgText { color: var(--tx); font-weight: 800; }
+.msgDot { width: 7px; height: 7px; border-radius: 50%; background: var(--g); flex-shrink: 0; margin-top: 4px; }

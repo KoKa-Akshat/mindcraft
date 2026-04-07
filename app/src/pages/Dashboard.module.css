@@ -1,8 +1,7 @@
 .shell {
-  font-family: 'Nunito', sans-serif;
-  background: #F5F6F8;
+  background: var(--bg);
   min-height: 100vh;
-  color: #1A1A1A;
+  color: var(--tx);
 }
 .page {
   margin-left: 220px;
@@ -14,11 +13,7 @@
   gap: 16px;
   align-items: stretch;
 }
-.col {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.col { display: flex; flex-direction: column; gap: 16px; }
 .placeholder {
   flex: 1;
   display: flex;
@@ -27,25 +22,16 @@
   align-items: center;
   min-height: 140px;
   border-radius: 18px;
-  border: 1.5px dashed #E8EAED;
-  background: transparent;
+  border: 1.5px dashed var(--bd);
   gap: 8px;
-  color: #E8EAED;
+  color: var(--bd);
 }
-.placeholder span {
-  font-size: 12px;
-  font-weight: 700;
-}
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-}
+.placeholder span { font-size: 12px; font-weight: 700; }
+.loading { display: flex; align-items: center; justify-content: center; height: 300px; }
 .spinner {
   width: 32px; height: 32px;
-  border: 3px solid #E8EAED;
-  border-top-color: #58CC02;
+  border: 3px solid var(--bd);
+  border-top-color: var(--g);
   border-radius: 50%;
   animation: spin .7s linear infinite;
 }

@@ -5,21 +5,20 @@
   height: 58px;
   background: rgba(255,255,255,.95);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid #E8EAED;
+  border-bottom: 1px solid var(--bd);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 clamp(20px, 4vw, 52px);
-  font-family: 'Nunito', sans-serif;
 }
 .logo {
   font-size: 20px;
   font-weight: 900;
-  color: #1A3C2A;
+  color: var(--forest);
   text-decoration: none;
   letter-spacing: -.3px;
 }
-.logo span { color: #58CC02; }
+.logo span { color: var(--g); }
 .right { display: flex; align-items: center; gap: 10px; }
 .notif {
   width: 36px; height: 36px;
@@ -27,10 +26,10 @@
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   position: relative;
-  color: #8A8F98;
+  color: var(--mu);
   transition: background .15s;
 }
-.notif:hover { background: #F5F6F8; }
+.notif:hover { background: var(--bg); }
 .notif svg {
   width: 18px; height: 18px;
   stroke: currentColor; fill: none;
@@ -41,17 +40,17 @@
   top: 7px; right: 7px;
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: #FF4B4B;
+  background: var(--red);
   border: 2px solid #fff;
 }
 .avatar {
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #A8E063, #4CAD00);
+  background: linear-gradient(135deg, #A8E063, var(--gd));
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   font-size: 14px; font-weight: 900; color: #fff;
-  font-family: 'Nunito', sans-serif;
+  font-family: var(--f);
   transition: opacity .15s;
 }
 .avatar:hover { opacity: .85; }

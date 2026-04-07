@@ -6,6 +6,22 @@
 <title>MindCraft — Article</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  var fbApp = firebase.initializeApp({
+    apiKey:            "AIzaSyBetzXAekac3zTdzgJ3vGxqKCQAXc3tcsU",
+    authDomain:        "mindcraft-93858.firebaseapp.com",
+    projectId:         "mindcraft-93858",
+    storageBucket:     "mindcraft-93858.firebasestorage.app",
+    messagingSenderId: "1024068467805",
+    appId:             "1:1024068467805:web:1fed20442356c7b757e1b4",
+  });
+  var fbAuth = firebase.auth();
+  var fbDb   = firebase.firestore();
+</script>
 <style>
 :root{
   --bg:#0D0F15;--bg2:#13161F;--card:#181B25;
@@ -340,8 +356,58 @@ function render() {
 
 render();
 
+// ── FIREBASE (CDN) ──
+// Auth & Firestore are loaded via scripts at bottom of body.
+// `fbApp`, `fbAuth`, `fbDb` are set there before this runs.
+
 // ── INLINE EDIT SYSTEM ──
 (function() {
+  var articleId = new URLSearchParams(window.location.search).get('id') || '1';
+
+  // ── Sign-in modal ──
+  var modal = document.createElement('div');
+  modal.id = 'signin-modal';
+  modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center';
+  modal.innerHTML = `
+    <div style="background:#1A1D26;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:36px;width:100%;max-width:360px;font-family:Nunito,sans-serif">
+      <div style="font-size:20px;font-weight:900;color:#fff;margin-bottom:6px">Sign in to edit</div>
+      <div style="font-size:14px;color:#8B93A8;font-weight:600;margin-bottom:24px">Use your MindCraft account</div>
+      <input id="si-email" type="email" placeholder="Email" style="width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:15px;font-family:Nunito,sans-serif;font-weight:600;outline:none;margin-bottom:12px">
+      <input id="si-pass" type="password" placeholder="Password" style="width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:15px;font-family:Nunito,sans-serif;font-weight:600;outline:none;margin-bottom:6px">
+      <div id="si-err" style="font-size:13px;color:#FC8181;font-weight:700;min-height:20px;margin-bottom:10px"></div>
+      <button id="si-btn" style="width:100%;padding:14px;background:#58CC02;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:900;font-family:Nunito,sans-serif;cursor:pointer">Sign in</button>
+      <button onclick="document.getElementById('signin-modal').style.display='none'" style="width:100%;padding:10px;background:none;border:none;color:#8B93A8;font-size:14px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer;margin-top:8px">Cancel</button>
+    </div>`;
+  document.body.appendChild(modal);
+
+  document.getElementById('si-btn').addEventListener('click', function() {
+    var email = document.getElementById('si-email').value.trim();
+    var pass  = document.getElementById('si-pass').value;
+    var err   = document.getElementById('si-err');
+    if (!email || !pass) { err.textContent = 'Please fill in both fields.'; return; }
+    var btn = document.getElementById('si-btn');
+    btn.textContent = 'Signing in…'; btn.disabled = true;
+    fbAuth.signInWithEmailAndPassword(email, pass)
+      .then(function() {
+        modal.style.display = 'none';
+        enableEdit();
+      })
+      .catch(function(e) {
+        err.textContent = e.code === 'auth/invalid-credential' ? 'Incorrect email or password.' : e.message;
+        btn.textContent = 'Sign in'; btn.disabled = false;
+      });
+  });
+
+  // ── Load saved content from Firestore (public read) ──
+  fbDb.collection('articles').doc(articleId).get().then(function(snap) {
+    if (snap.exists && snap.data().bodyHTML) {
+      var body = document.getElementById('article-body');
+      if (body) body.innerHTML = snap.data().bodyHTML;
+    }
+  }).catch(function() {
+    // Firestore not available — fall back to static content (already rendered)
+  });
+
   // Inject edit toggle button
   var toggle = document.createElement('button');
   toggle.className = 'edit-toggle';
@@ -425,13 +491,22 @@ render();
   }
 
   function saveEdits() {
-    // Collect all editable content and save to localStorage
-    var saved = JSON.parse(localStorage.getItem('mc_article_edits') || '{}');
-    var key = 'article_' + (new URLSearchParams(window.location.search).get('id') || '1');
-    saved[key] = document.getElementById('article-body').innerHTML;
-    localStorage.setItem('mc_article_edits', JSON.stringify(saved));
-    showToast('Saved!');
-    disableEdit();
+    var bodyHTML = document.getElementById('article-body').innerHTML;
+    var saveBtn = document.querySelector('.eb-save');
+    if (saveBtn) { saveBtn.textContent = 'Saving…'; saveBtn.disabled = true; }
+
+    fbDb.collection('articles').doc(articleId).set({
+      bodyHTML: bodyHTML,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true })
+      .then(function() {
+        showToast('Saved to cloud ☁️');
+        disableEdit();
+      })
+      .catch(function(e) {
+        showToast('Save failed: ' + e.message);
+        if (saveBtn) { saveBtn.textContent = 'Save'; saveBtn.disabled = false; }
+      });
   }
   window.saveEdits = saveEdits;
 
@@ -469,16 +544,15 @@ render();
   }
 
   toggle.addEventListener('click', function() {
-    if (editing) disableEdit(); else enableEdit();
+    if (editing) { disableEdit(); return; }
+    var user = fbAuth.currentUser;
+    if (user) {
+      enableEdit();
+    } else {
+      document.getElementById('signin-modal').style.display = 'flex';
+    }
   });
 
-  // Load any previously saved edits
-  var saved = JSON.parse(localStorage.getItem('mc_article_edits') || '{}');
-  var key = 'article_' + (new URLSearchParams(window.location.search).get('id') || '1');
-  if (saved[key]) {
-    var body = document.getElementById('article-body');
-    if (body) body.innerHTML = saved[key];
-  }
 })();
 </script>
 </body>

@@ -3,6 +3,11 @@ import s from './Card.module.css'
 
 interface Props { session: SessionSummary | null }
 
+function buildPrompt(session: SessionSummary): string {
+  const focus = session.bullets.slice(0, 2).join('; ').toLowerCase()
+  return `Review from your ${session.subject} session on ${session.date}: ${focus}. Work through the assigned problems focusing on accuracy before speed.`
+}
+
 export default function LastSession({ session }: Props) {
   if (!session) {
     return (
@@ -15,6 +20,7 @@ export default function LastSession({ session }: Props) {
       </div>
     )
   }
+
   return (
     <div className={s.card}>
       <p className={s.label}>Last Session</p>
@@ -26,6 +32,18 @@ export default function LastSession({ session }: Props) {
       <ul className={s.list}>
         {session.bullets.map((b, i) => <li key={i}>{b}</li>)}
       </ul>
+
+      <div className={s.divider} />
+
+      <div className={s.promptBox}>
+        <p className={s.promptLabel}>Practice Prompt</p>
+        <p className={s.promptText}>{buildPrompt(session)}</p>
+        <button className={s.btnGreen} style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
+          Start Practice Session →
+        </button>
+      </div>
+
+      <div className={s.divider} />
       <button className={s.btnOutline}>View Full Summary</button>
     </div>
   )

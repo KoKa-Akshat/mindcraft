@@ -1,0 +1,11 @@
+{
+  "name": "mindcraft-webhook",
+  "version": "1.0.0",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0",
+    "typescript": "^5.3.0"
+  }
+}

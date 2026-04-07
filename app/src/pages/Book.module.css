@@ -1,0 +1,170 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--tx);
+}
+
+/* ── NAV ── */
+.nav {
+  height: 62px;
+  background: var(--w);
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 6vw, 80px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-size: 20px; font-weight: 900;
+  color: var(--forest); text-decoration: none; letter-spacing: -.3px;
+}
+.logo span { color: var(--g); }
+.navCta {
+  font-size: 13px; font-weight: 800;
+  color: var(--gdd); text-decoration: none;
+  padding: 8px 16px;
+  background: rgba(88,204,2,.1);
+  border-radius: 10px;
+  transition: background .15s;
+}
+.navCta:hover { background: rgba(88,204,2,.18); }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0A1F10 0%, #1A3C2A 60%, #0D2818 100%);
+  padding: clamp(60px, 8vw, 100px) clamp(20px, 6vw, 80px);
+  text-align: center;
+}
+.heroInner { max-width: 680px; margin: 0 auto; }
+.heroPill {
+  display: inline-block;
+  background: rgba(88,204,2,.15);
+  color: var(--g);
+  font-size: 12px; font-weight: 900;
+  padding: 6px 16px;
+  border-radius: 20px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border: 1px solid rgba(88,204,2,.25);
+}
+.heroH1 {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -.5px;
+  margin-bottom: 20px;
+}
+.heroSub {
+  font-size: 16px;
+  color: rgba(255,255,255,.65);
+  font-weight: 600;
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── TAGLINE ── */
+.taglineWrap {
+  padding: 0 clamp(20px, 6vw, 80px);
+  margin-top: -36px;
+  position: relative;
+  z-index: 10;
+}
+.taglineCard {
+  background: var(--w);
+  border-radius: 20px;
+  border: 1px solid var(--bd);
+  box-shadow: 0 8px 40px rgba(0,0,0,.12);
+  padding: 28px 36px;
+}
+.taglineTitle {
+  font-size: 20px; font-weight: 900;
+  color: var(--tx); letter-spacing: -.3px;
+  margin-bottom: 6px;
+}
+.taglineSub { font-size: 14px; color: var(--mu); font-weight: 600; }
+
+/* ── SECTION ── */
+.section { max-width: 900px; margin: 0 auto; padding: clamp(40px, 5vw, 64px) clamp(20px, 6vw, 40px); }
+.sectionTitle {
+  font-size: 22px; font-weight: 900;
+  color: var(--tx); letter-spacing: -.3px;
+  margin-bottom: 24px;
+}
+
+/* ── TUTOR CARDS ── */
+.tutorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.tutorCard {
+  background: var(--w);
+  border-radius: 20px;
+  border: 1px solid var(--bd);
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: box-shadow .2s, transform .2s;
+}
+.tutorCard:hover { box-shadow: 0 8px 32px rgba(0,0,0,.1); transform: translateY(-3px); }
+.tutorHeader { display: flex; align-items: center; gap: 14px; }
+.avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900; color: #fff;
+  flex-shrink: 0;
+  font-family: var(--f);
+}
+.tutorName { font-size: 16px; font-weight: 900; color: var(--tx); }
+.tutorStat { font-size: 12px; color: var(--mu); font-weight: 700; margin-top: 2px; }
+.tutorBio  { font-size: 13px; color: #555; font-weight: 600; line-height: 1.6; }
+.subjects  { display: flex; flex-wrap: wrap; gap: 6px; }
+.subjectTag {
+  font-size: 11px; font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(88,204,2,.08);
+  color: var(--gdd);
+}
+.bookBtn {
+  width: 100%;
+  padding: 14px;
+  background: var(--g);
+  color: var(--w);
+  border: none;
+  border-radius: 12px;
+  font-size: 14px; font-weight: 900;
+  font-family: var(--f);
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--gd);
+  transition: all .15s;
+  margin-top: auto;
+}
+.bookBtn:hover { filter: brightness(1.05); transform: translateY(-1px); box-shadow: 0 5px 0 var(--gd); }
+.bookBtn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--gd); }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 32px;
+  font-size: 14px;
+  color: var(--mu);
+  font-weight: 600;
+  border-top: 1px solid var(--bd);
+}
+.footer a { color: var(--g); font-weight: 800; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .tutorGrid { grid-template-columns: 1fr; }
+}

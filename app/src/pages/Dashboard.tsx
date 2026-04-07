@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { onAuthStateChanged, signOut, User } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
+import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
@@ -12,27 +12,15 @@ import ExploreClasses from '../components/ExploreClasses'
 import Messages from '../components/Messages'
 import s from './Dashboard.module.css'
 
-function getGreeting() {
+function greeting() {
   const h = new Date().getHours()
-  if (h < 12) return 'Good morning'
-  if (h < 17) return 'Good afternoon'
-  return 'Good evening'
+  return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'
 }
 
 export default function Dashboard() {
-  const [user, setUser] = useState<User | null>(null)
+  const user = useUser()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    return onAuthStateChanged(auth, u => {
-      if (!u) navigate('/login', { replace: true })
-      else setUser(u)
-    })
-  }, [navigate])
-
-  const studentData = useStudentData(user!)
-
-  if (!user) return null
+  const data = useStudentData(user)
 
   return (
     <div className={s.shell}>
@@ -43,20 +31,17 @@ export default function Dashboard() {
       <Sidebar />
       <main className={s.page}>
         <HeroBar
-          greeting={getGreeting()}
-          name={studentData.displayName}
-          nextSession={studentData.nextSession}
-          streak={studentData.streak}
+          greeting={greeting()}
+          name={data.displayName}
+          nextSession={data.nextSession}
         />
-        {studentData.loading ? (
-          <div className={s.loading}>
-            <div className={s.spinner} />
-          </div>
+        {data.loading ? (
+          <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <div className={s.grid}>
             <div className={s.col}>
-              <LastSession session={studentData.lastSession} />
-              <PracticeReady count={studentData.practiceCount} session={studentData.lastSession} />
+              <LastSession session={data.lastSession} />
+              <PracticeReady count={data.practiceCount} session={data.lastSession} />
               <div className={s.placeholder}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
@@ -66,7 +51,7 @@ export default function Dashboard() {
             </div>
             <div className={s.col}>
               <ExploreClasses />
-              <Messages messages={studentData.messages} />
+              <Messages messages={data.messages} />
             </div>
           </div>
         )}

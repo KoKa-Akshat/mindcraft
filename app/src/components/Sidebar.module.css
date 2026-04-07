@@ -2,27 +2,26 @@
   position: fixed;
   top: 58px; left: 0; bottom: 0;
   width: 220px;
-  background: #fff;
-  border-right: 1px solid #E8EAED;
+  background: var(--w);
+  border-right: 1px solid var(--bd);
   padding: 28px 16px;
   display: flex;
   flex-direction: column;
   z-index: 50;
   gap: 2px;
   box-shadow: 2px 0 12px rgba(0,0,0,.03);
-  font-family: 'Nunito', sans-serif;
 }
 .label {
   font-size: 10px;
   font-weight: 900;
-  color: #8A8F98;
+  color: var(--mu);
   text-transform: uppercase;
   letter-spacing: 1.2px;
   padding: 0 10px;
   margin: 12px 0 4px;
 }
 .label:first-child { margin-top: 0; }
-.item {
+.item, .slack {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -30,37 +29,28 @@
   border-radius: 11px;
   font-size: 13px;
   font-weight: 700;
-  color: #8A8F98;
-  cursor: pointer;
   transition: all .15s;
   text-decoration: none;
-  font-family: 'Nunito', sans-serif;
+  font-family: var(--f);
+  cursor: pointer;
 }
-.item:hover { background: #F5F6F8; color: #1A1A1A; }
-.item.active { background: rgba(88,204,2,.1); color: #3A8500; }
+.item { color: var(--mu); }
+.item:hover { background: rgba(88,204,2,.06); color: var(--gdd); }
+.item.active { background: rgba(88,204,2,.12); color: var(--gdd); font-weight: 800; }
 .item svg {
   width: 16px; height: 16px;
   stroke: currentColor; fill: none;
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   flex-shrink: 0;
 }
-.divider { height: 1px; background: #E8EAED; margin: 10px 0; }
+.item.active svg, .item:hover svg { stroke: var(--g); }
+.divider { height: 1px; background: var(--bd); margin: 10px 0; }
 .slack {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 11px;
-  font-size: 13px;
-  font-weight: 800;
   color: #4A154B;
-  cursor: pointer;
-  transition: all .15s;
-  text-decoration: none;
+  font-weight: 800;
   background: rgba(74,21,75,.06);
   border: 1px solid rgba(74,21,75,.1);
   margin-top: 4px;
-  font-family: 'Nunito', sans-serif;
 }
 .slack:hover { background: rgba(74,21,75,.12); }
 .slackIcon { width: 16px; height: 16px; flex-shrink: 0; }
