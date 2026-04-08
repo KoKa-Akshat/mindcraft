@@ -30,6 +30,7 @@ export interface StudentData {
   lastSession: SessionSummary | null
   practiceCount: number
   messages: Message[]
+  tutorId: string | null
   loading: boolean
 }
 
@@ -41,7 +42,7 @@ function firstName(user: User | null): string {
 }
 
 export function useStudentData(user: User | null): StudentData {
-  const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'loading'>>({
+  const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'tutorId' | 'loading'>>({
     displayName: firstName(user),
     streak: 0,
     lastSession: null,
@@ -49,6 +50,7 @@ export function useStudentData(user: User | null): StudentData {
     messages: [],
   })
   const [nextSession, setNextSession] = useState<StudentData['nextSession']>(null)
+  const [tutorId, setTutorId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   // Listen to user doc
@@ -111,6 +113,7 @@ export function useStudentData(user: User | null): StudentData {
             scheduledAt: upcoming.scheduledAt,
           }
           setNextSession(ns)
+          setTutorId(upcoming.tutorId ?? null)
           // Link studentId if missing
           if (!upcoming.studentId) updateDoc(upcoming.ref, { studentId: user.uid }).catch(() => {})
         } else {
@@ -122,5 +125,5 @@ export function useStudentData(user: User | null): StudentData {
     return () => unsub()
   }, [user])
 
-  return { ...userData, nextSession, loading }
+  return { ...userData, nextSession, tutorId, loading }
 }

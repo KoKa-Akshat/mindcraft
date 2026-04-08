@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
@@ -58,13 +58,11 @@ export default function TutorDashboard() {
   const [toReview, setToReview]         = useState<Session[]>([])
   const [students, setStudents]         = useState<Student[]>([])
   const [selectedStudent, setSelectedStudent] = useState<string>('')
-  const [uploading, setUploading]       = useState(false)
   const [toast, setToast]               = useState('')
   const [loading, setLoading]           = useState(true)
   const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
   const [calendlyToken, setCalendlyToken] = useState('')
   const [connectingCalendly, setConnectingCalendly] = useState(false)
-  const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     getDoc(doc(db, 'users', user.uid)).then(snap => {
@@ -134,18 +132,7 @@ export default function TutorDashboard() {
     setTimeout(() => setToast(''), 3000)
   }
 
-  function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setUploading(true)
-    setTimeout(() => {
-      setUploading(false)
-      showToast(`"${file.name}" attached`)
-      e.target.value = ''
-    }, 1200)
-  }
-
-  const nextSession = sessions[0] ?? null
+const nextSession = sessions[0] ?? null
   const now = Date.now()
   const sessionLive = nextSession &&
     now >= nextSession.scheduledAt - FIFTEEN_MIN &&
@@ -213,12 +200,6 @@ export default function TutorDashboard() {
                 ? <a href={nextSession!.meetingUrl!} target="_blank" rel="noopener" className={`${s.btnPrimary} ${s.btnLive}`}>Join Session →</a>
                 : <button className={s.btnPrimary} disabled>Join Session →</button>
               }
-              <button className={s.btnSecondary} onClick={() => fileRef.current?.click()} disabled={uploading}>
-                {uploading ? 'Uploading…' : '↑ Upload Doc'}
-              </button>
-              <input ref={fileRef} type="file" style={{ display: 'none' }}
-                accept=".pdf,.doc,.docx,.txt,.png,.jpg"
-                onChange={handleUpload} />
             </div>
           </div>
         </div>
@@ -385,6 +366,11 @@ export default function TutorDashboard() {
                               <a href={sess.meetingUrl} target="_blank" rel="noopener" className={s.joinLink}>
                                 Join →
                               </a>
+                            )}
+                            {sess.studentId && (
+                              <Link to={`/chat/${sess.studentId}`} className={s.joinLink} style={{ background: 'rgba(59,130,246,.1)', color: '#1d5aab' }}>
+                                💬
+                              </Link>
                             )}
                           </div>
                         </div>

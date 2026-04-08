@@ -34,6 +34,7 @@ export default function Dashboard() {
           greeting={greeting()}
           name={data.displayName}
           nextSession={data.nextSession}
+          tutorId={data.tutorId}
         />
         {data.loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>

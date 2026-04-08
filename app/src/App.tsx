@@ -10,6 +10,7 @@ import SessionDetail from './pages/SessionDetail'
 import Book from './pages/Book'
 import Admin from './pages/Admin'
 import Seed from './pages/Seed'
+import Chat from './pages/Chat'
 
 export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="/book" element={<Book />} />
         <Route path="/admin" element={<AuthGuard><Admin /></AuthGuard>} />
         <Route path="/seed" element={<Seed />} />
+        <Route path="/chat/:partnerId" element={<AuthGuard><Chat /></AuthGuard>} />
         <Route path="/" element={<AuthGuard><RoleRedirect /></AuthGuard>} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

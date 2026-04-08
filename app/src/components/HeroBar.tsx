@@ -5,11 +5,12 @@ interface Props {
   greeting: string
   name: string
   nextSession: { subject: string; time: string; tutor: string; meetingUrl?: string | null; scheduledAt?: number } | null
+  tutorId?: string | null
 }
 
 const FIFTEEN_MIN = 15 * 60 * 1000
 
-export default function HeroBar({ greeting, name, nextSession }: Props) {
+export default function HeroBar({ greeting, name, nextSession, tutorId }: Props) {
   const navigate = useNavigate()
   const now = Date.now()
   const sessionMs = nextSession?.scheduledAt ?? 0
@@ -42,6 +43,11 @@ export default function HeroBar({ greeting, name, nextSession }: Props) {
               </button>
           }
           <button className={s.btnSecondary} onClick={() => navigate('/book')}>Book Session</button>
+          {tutorId && (
+            <button className={s.btnSecondary} onClick={() => navigate(`/chat/${tutorId}`)}>
+              💬 Message Tutor
+            </button>
+          )}
         </div>
       </div>
     </div>
