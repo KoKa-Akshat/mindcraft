@@ -3,8 +3,8 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import {
-  collection, query, where, orderBy, onSnapshot, getDocs,
-  doc, getDoc, limit,
+  collection, query, where, onSnapshot, getDocs,
+  doc, getDoc, updateDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
@@ -56,6 +56,7 @@ export default function TutorDashboard() {
 
   const [sessions, setSessions]         = useState<Session[]>([])
   const [toReview, setToReview]         = useState<Session[]>([])
+  const [studentIdByEmail, setStudentIdByEmail] = useState<Record<string, string>>({})
   const [students, setStudents]         = useState<Student[]>([])
   const [selectedStudent, setSelectedStudent] = useState<string>('')
   const [toast, setToast]               = useState('')
@@ -97,8 +98,8 @@ export default function TutorDashboard() {
     // Single query by tutorId only — no composite index needed, filter client-side
     const unsub = onSnapshot(
       query(collection(db, 'sessions'), where('tutorId', '==', user.uid)),
-      snap => {
-        const all = snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) }))
+      async snap => {
+        const all = snap.docs.map(d => ({ id: d.id, ref: d.ref, ...(d.data() as Omit<Session, 'id'>) }))
         const now = Date.now()
         const upcoming = all
           .filter(s => s.status === 'scheduled' && s.scheduledAt > now - 15 * 60 * 1000)
@@ -111,6 +112,25 @@ export default function TutorDashboard() {
         setSessions(upcoming)
         setToReview(completed.filter(s => s.summaryStatus !== 'published'))
         setLoading(false)
+
+        // Resolve studentId for sessions missing it
+        const missingEmails = [...new Set(
+          all.filter(s => !s.studentId && s.studentEmail).map(s => s.studentEmail)
+        )]
+        if (missingEmails.length === 0) return
+        const userSnap = await getDocs(
+          query(collection(db, 'users'), where('email', 'in', missingEmails.slice(0, 10)))
+        )
+        const map: Record<string, string> = {}
+        userSnap.docs.forEach(d => {
+          const email = d.data().email
+          if (email) map[email] = d.id
+        })
+        setStudentIdByEmail(prev => ({ ...prev, ...map }))
+        // Also backfill studentId on the session docs
+        all.filter(s => !s.studentId && s.studentEmail && map[s.studentEmail]).forEach(s => {
+          updateDoc((s as any).ref, { studentId: map[s.studentEmail] }).catch(() => {})
+        })
       },
       () => setLoading(false)
     )
@@ -367,8 +387,8 @@ const nextSession = sessions[0] ?? null
                                 Join →
                               </a>
                             )}
-                            {sess.studentId && (
-                              <Link to={`/chat/${sess.studentId}`} className={s.joinLink} style={{ background: 'rgba(59,130,246,.1)', color: '#1d5aab' }}>
+                            {(sess.studentId || studentIdByEmail[sess.studentEmail]) && (
+                              <Link to={`/chat/${sess.studentId || studentIdByEmail[sess.studentEmail]}`} className={s.joinLink} style={{ background: 'rgba(59,130,246,.1)', color: '#1d5aab' }}>
                                 💬
                               </Link>
                             )}
