@@ -4,10 +4,8 @@
   <meta charset="utf-8">
   <title>MindCraft</title>
   <script>
-    // Save the path and redirect to index.html
-    // GitHub Pages SPA fix
-    var path = window.location.pathname.replace('/mindcraft', '') || '/'
-    sessionStorage.setItem('spa_redirect', path + window.location.search)
+    // GitHub Pages SPA fix — save full path, redirect to app root
+    sessionStorage.setItem('spa_redirect', window.location.pathname + window.location.search)
     window.location.replace('/mindcraft/')
   </script>
 </head>

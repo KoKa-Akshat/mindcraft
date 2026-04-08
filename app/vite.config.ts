@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  // Makes /img/tree.jpg etc. accessible during dev from the parent folder
+  base: command === 'build' ? '/mindcraft/' : '/',
   server: {
     fs: { allow: ['..'] }
   }
-})
+}))

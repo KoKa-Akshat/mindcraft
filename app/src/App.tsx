@@ -35,9 +35,25 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>
 }
 
+// Root route: non-authed users see the landing page, authed users go to their dashboard
+function RootRoute() {
+  const [user, setUser] = useState<User | null | undefined>(undefined)
+  useEffect(() => onAuthStateChanged(auth, setUser), [])
+  if (user === undefined) return null
+  if (!user) {
+    window.location.replace(import.meta.env.BASE_URL + 'landing.html')
+    return null
+  }
+  return (
+    <UserContext.Provider value={user}>
+      <RoleRedirect />
+    </UserContext.Provider>
+  )
+}
+
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
@@ -46,7 +62,7 @@ export default function App() {
         <Route path="/book" element={<Book />} />
         <Route path="/admin" element={<AuthGuard><Admin /></AuthGuard>} />
         <Route path="/seed" element={<Seed />} />
-        <Route path="/" element={<AuthGuard><RoleRedirect /></AuthGuard>} />
+        <Route path="/" element={<RootRoute />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
