@@ -208,6 +208,18 @@
 .emptyState span { font-size: 13px; font-weight: 800; color: var(--mu); }
 .emptyState p { font-size: 12px; color: #C4C9D4; font-weight: 600; line-height: 1.5; max-width: 220px; margin: 0; }
 
+/* ── TOKEN INPUT ── */
+.tokenInput {
+  width: 100%; box-sizing: border-box;
+  background: var(--bg); border: 1.5px solid var(--bd);
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 13px; font-weight: 700; font-family: var(--f);
+  color: var(--tx); outline: none;
+  transition: border-color .15s;
+}
+.tokenInput:focus { border-color: var(--g); }
+.tokenInput::placeholder { color: #C4C9D4; }
+
 /* ── TOAST ── */
 .toast {
   position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);

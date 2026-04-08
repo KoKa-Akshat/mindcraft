@@ -61,14 +61,39 @@ export default function TutorDashboard() {
   const [uploading, setUploading]       = useState(false)
   const [toast, setToast]               = useState('')
   const [loading, setLoading]           = useState(true)
+  const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
+  const [calendlyToken, setCalendlyToken] = useState('')
+  const [connectingCalendly, setConnectingCalendly] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     getDoc(doc(db, 'users', user.uid)).then(snap => {
-      const role = snap.data()?.role
-      if (role !== 'tutor' && role !== 'admin') navigate('/dashboard', { replace: true })
+      const data = snap.data()
+      if (data?.role !== 'tutor' && data?.role !== 'admin') navigate('/dashboard', { replace: true })
+      if (data?.calendlyEmail) setCalendlyConnected(data.calendlyEmail)
     })
   }, [user, navigate])
+
+  async function handleConnectCalendly() {
+    if (!calendlyToken.trim()) return
+    setConnectingCalendly(true)
+    try {
+      const res = await fetch('https://mindcraft-webhook.vercel.app/api/register-calendly', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tutorId: user.uid, calendlyToken: calendlyToken.trim() }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      setCalendlyConnected(data.calendlyEmail)
+      setCalendlyToken('')
+      showToast('Calendly connected — bookings will now flow automatically')
+    } catch (err: any) {
+      showToast(err.message ?? 'Failed to connect Calendly')
+    } finally {
+      setConnectingCalendly(false)
+    }
+  }
 
   useEffect(() => {
     const load = async () => {
@@ -138,7 +163,7 @@ export default function TutorDashboard() {
   return (
     <div className={s.shell}>
       <nav className={s.nav}>
-        <Link to="/" className={s.logo}>Mind<span>Craft</span></Link>
+        <Link to="/login" className={s.logo}>Mind<span>Craft</span></Link>
         <div className={s.navRight}>
           <span className={s.navRole}>Tutor</span>
           <div className={s.avatar} onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
@@ -306,6 +331,39 @@ export default function TutorDashboard() {
             </div>
 
             <div className={s.col}>
+              {/* Connect Calendly */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Calendly</span>
+                  {calendlyConnected && <span className={s.reviewBadge} style={{ background: 'rgba(88,204,2,.12)', color: 'var(--gdd)' }}>Connected</span>}
+                </div>
+                {calendlyConnected ? (
+                  <div style={{ fontSize: 13, color: 'var(--mu)', fontWeight: 600 }}>
+                    ✓ {calendlyConnected} — bookings and Fireflies bot are wired automatically.
+                  </div>
+                ) : (
+                  <>
+                    <p style={{ fontSize: 12, color: 'var(--mu)', fontWeight: 600, marginBottom: 12, lineHeight: 1.5 }}>
+                      Paste your Calendly Personal Access Token to auto-register your bookings and Fireflies recording.
+                    </p>
+                    <input
+                      className={s.tokenInput}
+                      type="password"
+                      placeholder="eyJraWQi..."
+                      value={calendlyToken}
+                      onChange={e => setCalendlyToken(e.target.value)}
+                    />
+                    <button className={s.btnPrimary} style={{ marginTop: 10, width: '100%', justifyContent: 'center' }}
+                      onClick={handleConnectCalendly} disabled={connectingCalendly || !calendlyToken.trim()}>
+                      {connectingCalendly ? 'Connecting…' : 'Connect Calendly →'}
+                    </button>
+                    <p style={{ fontSize: 11, color: '#C4C9D4', marginTop: 8, fontWeight: 600 }}>
+                      Get it at calendly.com → Integrations → API & Webhooks
+                    </p>
+                  </>
+                )}
+              </div>
+
               <div className={s.card}>
                 <div className={s.cardLabel} style={{ marginBottom: 16 }}>Upcoming Sessions</div>
                 {sessions.length === 0 ? (

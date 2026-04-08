@@ -36,7 +36,10 @@ export default function HeroBar({ greeting, name, nextSession }: Props) {
         <div className={s.btns}>
           {canJoin
             ? <a href={nextSession!.meetingUrl!} target="_blank" rel="noopener" className={`${s.btnPrimary} ${s.btnLive}`}>Join Session →</a>
-            : <button className={s.btnPrimary} disabled style={{ opacity: .45, cursor: 'not-allowed', boxShadow: 'none' }}>Join Session →</button>
+            : <button className={s.btnPrimary} disabled style={{ opacity: .45, cursor: 'not-allowed', boxShadow: 'none' }}
+                title={nextSession ? `Activates 15 min before your session at ${nextSession.time}` : 'No session scheduled'}>
+                Join Session →
+              </button>
           }
           <button className={s.btnSecondary} onClick={() => navigate('/book')}>Book Session</button>
         </div>

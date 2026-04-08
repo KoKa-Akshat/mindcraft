@@ -14,7 +14,7 @@ import s from './Dashboard.module.css'
 
 function greeting() {
   const h = new Date().getHours()
-  return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'
+  return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'
 }
 
 export default function Dashboard() {

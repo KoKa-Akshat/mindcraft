@@ -43,40 +43,26 @@
 }
 .btnOutline:hover { border-color: #ccc; }
 
-/* ── EXPLORE CLASSES (card grid) ── */
-.classCardGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
+/* ── EXPLORE CLASSES (horizontal rows) ── */
+.classRowList { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
+.classRow {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 8px; border-radius: 12px;
+  cursor: pointer; transition: background .12s;
 }
-.classCardTile {
-  border-radius: 14px;
-  border: 1px solid var(--bd);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  transition: box-shadow .15s, transform .15s;
+.classRow:hover { background: var(--bg); }
+.classRowIcon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
 }
-.classCardTile:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); transform: translateY(-2px); }
-.classCardThumb {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.classCardEmoji { font-size: 26px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
-.classCardBody { padding: 10px; }
-.classCardName { font-size: 12px; font-weight: 900; color: var(--tx); margin-bottom: 2px; line-height: 1.3; }
-.classCardSub  { font-size: 11px; color: var(--mu); font-weight: 600; }
-.classCardStart { font-size: 10px; color: var(--g); font-weight: 800; margin-top: 4px; }
-.badge { font-size: 9px; font-weight: 900; padding: 2px 7px; border-radius: 6px; text-transform: uppercase; letter-spacing: .4px; flex-shrink: 0; }
-.badgeOverlay { position: absolute; top: 7px; right: 7px; }
-.badge_new  { background: rgba(88,204,2,.18);   color: #fff; }
-.badge_free { background: rgba(74,123,247,.25); color: #fff; }
-.badge_soon { background: rgba(255,255,255,.2); color: #fff; }
+.classRowBody { flex: 1; min-width: 0; }
+.classRowName { font-size: 13px; font-weight: 900; color: var(--tx); }
+.classRowSub  { font-size: 11px; color: var(--mu); font-weight: 600; margin-top: 1px; }
+.badge { font-size: 10px; font-weight: 900; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+.badge_new  { background: rgba(88,204,2,.12);   color: var(--gdd); }
+.badge_free { background: rgba(74,123,247,.12); color: #2A5AAF; }
+.badge_soon { background: rgba(160,160,160,.12); color: var(--mu); }
 
 /* ── PRACTICE PROMPT ── */
 .promptBox {

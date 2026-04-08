@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { SessionSummary } from '../hooks/useStudentData'
 import s from './Card.module.css'
 
@@ -9,6 +10,7 @@ function buildPrompt(session: SessionSummary): string {
 }
 
 export default function LastSession({ session }: Props) {
+  const navigate = useNavigate()
   if (!session) {
     return (
       <div className={s.card}>
@@ -44,7 +46,7 @@ export default function LastSession({ session }: Props) {
       </div>
 
       <div className={s.divider} />
-      <button className={s.btnOutline}>View Full Summary</button>
+      <button className={s.btnOutline} onClick={() => session.id && !session.id.startsWith('seed') && navigate(`/tutor/session/${session.id}`)}>View Full Summary</button>
     </div>
   )
 }

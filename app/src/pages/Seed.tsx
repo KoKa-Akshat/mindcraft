@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { auth, db } from '../firebase'
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, setDoc, updateDoc, serverTimestamp, deleteField } from 'firebase/firestore'
 
 export default function Seed() {
   const [status, setStatus] = useState('')
+  const navigate = useNavigate()
 
   async function run() {
     const user = auth.currentUser
@@ -76,24 +78,42 @@ export default function Seed() {
     }
   }
 
+  async function clear() {
+    const user = auth.currentUser
+    if (!user) { setStatus('Not logged in'); return }
+    setStatus('Clearing...')
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        lastSession: deleteField(),
+        nextSession: deleteField(),
+        streak: deleteField(),
+        practiceCount: deleteField(),
+        messages: deleteField(),
+      })
+      setStatus('✅ Cleared! Go to /dashboard')
+    } catch (e: any) {
+      setStatus('Error: ' + e.message)
+    }
+  }
+
+  const btn = (onClick: () => void, label: string, bg: string) => (
+    <button onClick={onClick} style={{
+      background: bg, color: '#fff', border: 'none',
+      borderRadius: 12, padding: '12px 28px',
+      fontFamily: 'Nunito, sans-serif', fontSize: 15, fontWeight: 900,
+      cursor: 'pointer', display: 'block', marginBottom: 12,
+    }}>{label}</button>
+  )
+
   return (
     <div style={{ fontFamily: 'Nunito, sans-serif', maxWidth: 480, margin: '80px auto', padding: '0 24px' }}>
       <h2 style={{ fontWeight: 900, marginBottom: 8 }}>Seed Firestore</h2>
       <p style={{ color: '#8A8F98', fontSize: 14, marginBottom: 24 }}>
-        Populates your account with a completed session, upcoming session, streak, practice count, and messages.
         Make sure you're logged in first.
       </p>
-      <button
-        onClick={run}
-        style={{
-          background: '#58CC02', color: '#fff', border: 'none',
-          borderRadius: 12, padding: '12px 28px',
-          fontFamily: 'Nunito, sans-serif', fontSize: 15, fontWeight: 900,
-          cursor: 'pointer', display: 'block', marginBottom: 16,
-        }}
-      >
-        Seed my account
-      </button>
+      {btn(() => navigate('/login'), 'Go to Login', '#1A2A6C')}
+      {btn(run, 'Seed my account', '#58CC02')}
+      {btn(clear, 'Clear seed data', '#E74C3C')}
       {status && (
         <p style={{ fontSize: 14, fontWeight: 700, color: status.startsWith('✅') ? '#3A8500' : '#D00' }}>
           {status}

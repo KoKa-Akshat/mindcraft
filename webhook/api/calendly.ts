@@ -95,6 +95,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     }
 
+    // Invite Fireflies bot to the meeting
+    if (meetingUrl && process.env.FIREFLIES_API_KEY) {
+      await fetch('https://api.fireflies.ai/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.FIREFLIES_API_KEY}`,
+        },
+        body: JSON.stringify({
+          query: `mutation { addToLiveMeeting(meeting_link: "${meetingUrl}") { success message } }`,
+        }),
+      }).catch(() => {}) // non-fatal — calendar invite is the primary mechanism
+    }
+
     return res.status(200).json({ ok: true, sessionId: sessionRef.id })
   }
 
