@@ -4,7 +4,7 @@ import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import {
   collection, query, where, onSnapshot, getDocs,
-  doc, getDoc, updateDoc,
+  doc, getDoc, updateDoc, deleteDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
@@ -145,14 +145,32 @@ export default function TutorDashboard() {
       .then(snap => {
         const list = snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Student, 'id'>) }))
         setStudents(list)
-        if (list.length > 0) setSelectedStudent(list[0].id)
       })
       .catch(() => {})
   }, [user])
 
+  // Default Session Summary to whoever's coming up next
+  useEffect(() => {
+    if (sessions.length === 0) return
+    const next = sessions[0]
+    const sid = next.studentId ?? studentIdByEmail[next.studentEmail] ?? null
+    if (sid) setSelectedStudent(sid)
+  }, [sessions, studentIdByEmail])
+
   function showToast(msg: string) {
     setToast(msg)
     setTimeout(() => setToast(''), 3000)
+  }
+
+  async function handleDeleteSession(id: string, e: React.MouseEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!window.confirm('Delete this session?')) return
+    try {
+      await deleteDoc(doc(db, 'sessions', id))
+    } catch {
+      showToast('Delete failed')
+    }
   }
 
 const nextSession = sessions[0] ?? null
@@ -276,7 +294,7 @@ const nextSession = sessions[0] ?? null
                     </div>
                   ) : (
                     <div className={s.sessionList}>
-                      {filtered.slice(0, 5).map(sess => (
+                      {filtered.slice(0, 4).map(sess => (
                         <Link key={sess.id} to={`/tutor/session/${sess.id}`} className={s.reviewRow}>
                           <div className={s.sessionLeft}>
                             <div className={s.sessionName}>{sess.studentName}</div>
@@ -291,6 +309,7 @@ const nextSession = sessions[0] ?? null
                               {sess.summaryStatus === 'draft' ? 'Draft' :
                                sess.summaryStatus === 'pending' ? 'Has transcript' : 'Needs review'}
                             </span>
+                            <button className={s.deleteRowBtn} onClick={e => handleDeleteSession(sess.id, e)} title="Delete">✕</button>
                             <span className={s.reviewArrow}>→</span>
                           </div>
                         </Link>

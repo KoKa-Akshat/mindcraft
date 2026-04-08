@@ -207,6 +207,13 @@
 .reviewRow:last-child { border-bottom: none; }
 .reviewRow:hover { background: var(--bg); border-radius: 10px; padding: 14px 10px; margin: 0 -10px; }
 .reviewArrow { font-size: 14px; color: var(--mu); margin-top: 4px; }
+.deleteRowBtn {
+  font-size: 11px; font-weight: 700; color: #c0392b;
+  background: rgba(192,57,43,.08); border: 1.5px solid rgba(192,57,43,.18);
+  border-radius: 6px; padding: 2px 7px; cursor: pointer; line-height: 1.6;
+  transition: background .15s;
+}
+.deleteRowBtn:hover { background: rgba(192,57,43,.18); }
 .badgeDraft   { background: rgba(59,130,246,.1) !important; color: #1d5aab !important; }
 .badgePending { background: rgba(88,204,2,.12) !important; color: var(--gdd) !important; }
 .badgeNeedsReview { background: rgba(255,180,0,.12) !important; color: #b07a00 !important; }
