@@ -186,7 +186,7 @@ const nextSession = sessions[0] ?? null
   return (
     <div className={s.shell}>
       <nav className={s.nav}>
-        <Link to="/login" className={s.logo}>Mind<span>Craft</span></Link>
+        <a href="https://koka-akshat.github.io/mindcraft/" className={s.logo}>Mind<span>Craft</span></a>
         <div className={s.navRight}>
           <span className={s.navRole}>Tutor</span>
           <div className={s.avatar} onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
