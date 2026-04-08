@@ -112,13 +112,13 @@ export default function Login() {
       <div className={s.left}>
         <img src="/tree.jpg" className={s.leftBg} alt="" />
         <div className={s.leftOverlay} />
-        <Link to="/" className={s.leftLogo}>Mind<span>Craft</span></Link>
+        <a href="https://koka-akshat.github.io/mindcraft/" className={s.leftLogo}>Mind<span>Craft</span></a>
       </div>
 
       <div className={s.right}>
         <div className={s.formWrap}>
           <div className={s.rcHero}>
-            <div className={s.rcBrandName}>Mind<span>Craft</span></div>
+            <a href="https://koka-akshat.github.io/mindcraft/" className={s.rcBrandName} style={{ textDecoration: 'none' }}>Mind<span>Craft</span></a>
             <p className={s.rcTagline}>A Platform for Performance</p>
           </div>
 
