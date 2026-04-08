@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/calendly.ts": { "maxDuration": 10 },
+    "api/fireflies.ts": { "maxDuration": 30 },
+    "api/generate-summary.ts": { "maxDuration": 30 },
+    "api/register-calendly.ts": { "maxDuration": 15 }
+  }
+}

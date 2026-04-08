@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCraft — Article</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  var fbApp = firebase.initializeApp({
+    apiKey:            "AIzaSyBetzXAekac3zTdzgJ3vGxqKCQAXc3tcsU",
+    authDomain:        "mindcraft-93858.firebaseapp.com",
+    projectId:         "mindcraft-93858",
+    storageBucket:     "mindcraft-93858.firebasestorage.app",
+    messagingSenderId: "1024068467805",
+    appId:             "1:1024068467805:web:1fed20442356c7b757e1b4",
+  });
+  var fbAuth = firebase.auth();
+  var fbDb   = firebase.firestore();
+</script>
+<style>
+:root{
+  --bg:#0D0F15;--bg2:#13161F;--card:#181B25;
+  --g:#58CC02;--gd:#4CAD00;--gdd:#3A8500;
+  --tx:#F0F2F8;--mu:#8B93A8;--bd:rgba(255,255,255,.08);
+  --f:'Nunito',sans-serif
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f);color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* ── NAV ── */
+nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,64px);position:sticky;top:0;z-index:100}
+.nav-logo{font-size:20px;font-weight:900;color:#fff;text-decoration:none;letter-spacing:-.3px}
+.nav-logo span{color:var(--g)}
+.back-link{font-size:14px;font-weight:700;color:var(--mu);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .15s}
+.back-link:hover{color:var(--tx)}
+.back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── HERO ── */
+.article-hero{position:relative;height:clamp(300px,42vw,480px);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:0}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.55) 100%)}
+.hero-badges{position:absolute;bottom:28px;left:clamp(20px,5vw,64px);display:flex;gap:10px;z-index:2}
+.hbadge{font-size:11px;font-weight:900;padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.hbadge-cat{background:rgba(255,255,255,.18);backdrop-filter:blur(8px);color:#fff}
+.hbadge-date{background:rgba(0,0,0,.4);backdrop-filter:blur(8px);color:rgba(255,255,255,.8);font-weight:700;text-transform:none;letter-spacing:0}
+.hero-illo{position:relative;z-index:1;opacity:.22}
+
+/* ── ARTICLE CONTAINER ── */
+.article-wrap{max-width:700px;margin:0 auto;padding:clamp(40px,6vw,72px) 24px clamp(60px,8vw,100px)}
+
+/* ── TITLE BLOCK ── */
+.article-cat{font-size:11px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:block}
+.article-title{font-size:clamp(28px,4.5vw,46px);font-weight:900;color:var(--tx);line-height:1.12;letter-spacing:-.6px;margin-bottom:20px}
+.article-byline{display:flex;align-items:center;gap:12px;padding-bottom:28px;border-bottom:1px solid var(--bd);margin-bottom:36px}
+.av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;flex-shrink:0}
+.av-green{background:linear-gradient(135deg,#3A8500,#1A3C2A)}
+.av-blue{background:linear-gradient(135deg,#1E3A6A,#2A5AAF)}
+.byline-name{font-size:15px;font-weight:800;color:var(--tx)}
+.byline-role{font-size:13px;color:var(--mu);font-weight:700;margin-top:1px}
+.byline-date{margin-left:auto;font-size:13px;color:var(--mu);font-weight:700}
+
+/* ── BODY BLOCKS ── */
+.body-p{font-size:17px;color:rgba(240,242,248,.82);line-height:1.82;font-weight:600;margin-bottom:26px}
+.body-h2{font-size:26px;font-weight:900;color:var(--tx);letter-spacing:-.3px;line-height:1.2;margin:40px 0 16px}
+.body-quote{border-left:4px solid var(--g);padding:18px 24px;margin:32px 0;background:rgba(88,204,2,.05);border-radius:0 12px 12px 0}
+.body-quote p{font-size:19px;font-weight:800;color:var(--tx);line-height:1.5;font-style:italic;letter-spacing:-.1px}
+
+/* ── GALLERY ── */
+.gallery-section{margin:40px 0}
+.gallery-label{font-size:11px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.gallery-placeholder{aspect-ratio:4/3;border-radius:12px;background:var(--card);border:1.5px dashed rgba(255,255,255,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--mu);cursor:pointer;position:relative;overflow:hidden;transition:border-color .2s,background .2s}
+.gallery-placeholder:hover{border-color:rgba(88,204,2,.5);background:rgba(88,204,2,.04)}
+.gallery-placeholder:hover .gp-hint{opacity:1}
+.gallery-placeholder svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5;opacity:.5;transition:opacity .2s}
+.gallery-placeholder span{font-size:12px;font-weight:700;transition:opacity .2s}
+.gallery-placeholder:hover svg,.gallery-placeholder:hover span{opacity:.35}
+.gp-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
+.gp-hint-inner{background:rgba(88,204,2,.9);color:#fff;font-size:11px;font-weight:900;padding:6px 14px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+.gallery-placeholder.wide{grid-column:span 2;aspect-ratio:8/4}
+.gallery-placeholder.filled{border:none;padding:0;background:none;cursor:default}
+.gallery-placeholder.filled:hover{border:none;background:none}
+.gallery-placeholder.filled img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block}
+.gallery-note{margin-top:10px;font-size:13px;color:var(--mu);font-weight:600;font-style:italic;text-align:center}
+
+/* ── SOURCES ── */
+.sources-section{margin-top:48px;padding-top:28px;border-top:1px solid var(--bd)}
+.sources-title{font-size:13px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+.sources-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.sources-list li a{font-size:14px;font-weight:700;color:var(--g);text-decoration:none;transition:opacity .15s}
+.sources-list li a:hover{opacity:.75;text-decoration:underline}
+
+/* ── PREV/NEXT ── */
+.nav-pills{display:flex;gap:10px;justify-content:center;margin:clamp(40px,5vw,56px) 0 clamp(48px,6vw,64px);flex-wrap:wrap}
+.nav-pill{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:40px;padding:12px 22px;font-size:14px;font-weight:800;color:var(--tx);text-decoration:none;cursor:pointer;transition:all .18s;max-width:300px}
+.nav-pill:hover{border-color:rgba(255,255,255,.18);background:var(--card2)}
+.nav-pill.disabled{opacity:.3;pointer-events:none}
+.nav-pill svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.nav-pill .pill-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── HERO EDIT OVERLAY ── */
+.hero-edit-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:3;cursor:pointer}
+.hero-edit-hint-inner{background:rgba(0,0,0,.65);backdrop-filter:blur(4px);color:#fff;font-size:13px;font-weight:900;padding:10px 22px;border-radius:24px;display:flex;align-items:center;gap:8px;letter-spacing:.3px}
+.hero-edit-hint-inner svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.edit-mode .article-hero:hover .hero-edit-hint{opacity:1}
+.edit-mode .article-hero{cursor:pointer}
+
+/* ── INLINE EDIT MODE ── */
+.edit-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1C1F2A;border:1px solid rgba(255,255,255,.12);border-radius:40px;padding:10px 16px;display:flex;align-items:center;gap:6px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.4);transition:opacity .2s}
+.edit-bar-label{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);padding:0 8px;white-space:nowrap}
+.eb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);margin:0 2px}
+.eb-tool{height:32px;padding:0 10px;border-radius:20px;border:none;background:none;font-family:var(--f);font-size:12px;font-weight:800;color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.eb-tool:hover{background:rgba(255,255,255,.08);color:#fff}
+.eb-tool svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.eb-save{background:var(--g);color:#fff;padding:0 16px;box-shadow:0 2px 0 var(--gd)}
+.eb-save:hover{filter:brightness(1.08)}
+.eb-discard{color:rgba(255,255,255,.4)}
+.edit-mode [contenteditable]{outline:none;border-radius:6px;transition:background .15s}
+.edit-mode [contenteditable]:hover{background:rgba(255,255,255,.04)}
+.edit-mode [contenteditable]:focus{background:rgba(255,255,255,.06);box-shadow:0 0 0 2px rgba(88,204,2,.3)}
+.edit-toggle{position:fixed;top:74px;right:24px;background:#1C1F2A;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;font-family:var(--f);cursor:pointer;z-index:150;display:flex;align-items:center;gap:6px;transition:all .18s}
+.edit-toggle:hover{color:#fff;border-color:rgba(255,255,255,.25)}
+.edit-toggle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── RELATED ── */
+.related-section{padding:0 clamp(20px,5vw,64px) clamp(60px,8vw,100px);max-width:1180px;margin:0 auto}
+.related-label{font-size:12px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px;display:block;padding-top:clamp(28px,4vw,40px);border-top:1px solid var(--bd)}
+.related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.rel-card{background:var(--card);border-radius:16px;overflow:hidden;cursor:pointer;border:1px solid var(--bd);transition:transform .2s,border-color .2s;display:flex;align-items:center;gap:0}
+.rel-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.14)}
+.rel-img{width:110px;min-height:90px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.rel-body{padding:16px 18px;flex:1}
+.rel-cat{font-size:10px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.rel-title{font-size:14px;font-weight:900;color:var(--tx);line-height:1.3}
+
+@media(max-width:600px){.gallery-grid{grid-template-columns:1fr 1fr}.gallery-placeholder.wide{grid-column:span 2}.related-grid{grid-template-columns:1fr}.rel-img{width:80px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Mind<span>Craft</span></a>
+  <a href="blog.html" class="back-link">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    All Articles
+  </a>
+</nav>
+
+<div id="hero-area"></div>
+<div class="article-wrap" id="article-body"></div>
+<div class="related-section" id="related-section"></div>
+
+<script>
+const ARTICLES = [
+  {
+    id: 1,
+    title: "Our Mission & Vision",
+    excerpt: "MindCraft was created by educators who truly care about teaching — people who live for the moment a student finally gets it. Here's what drives everything we build.",
+    category: "Headquarters",
+    date: "April 5, 2026",
+    author: { name: "Akshat K.", role: "Co-Founder", initial: "A" },
+    bg1: "#0A1F10", bg2: "#1A3C2A", accent: "#58CC02",
+    heroImg: "img/mission-hero.jpg",
+    avClass: "av-green",
+    sources: [],
+    body: [
+      { t:"p", c:"MindCraft was created by educators — tutors — who truly care about teaching. The person you will be speaking with is an educator who loves taking complex concepts and breaking them down for students, finding creative ways to help students see the light bulb go off. When you work one-on-one with a quality educator, the energy is contagious and curiosity grows." },
+      { t:"h2", c:"Teaching that creates moments" },
+      { t:"p", c:"A previous MindCraft tutor demonstrated logarithms using a story about stars — showing how the relationships found in the stars represent how numbers grow. These moments create long-lasting impressions and change how a student views a subject entirely. That is the kind of teaching we are here to build around." },
+      { t:"h2", c:"A philosophy built from experience" },
+      { t:"p", c:"The teaching philosophy developed at MindCraft is based upon years of experience. At Nepal Bal Mandir, we worked with students both in classroom settings and after school. Through serving as a college preceptor and tutor at the MAX Center, the goal was always the same: assist students in developing clear understanding and providing confidence in being able to solve problems." },
+      { t:"quote", c:"The goal was always the same — help students develop clear understanding and real confidence in their ability to move forward." },
+      { t:"p", c:"MindCraft's mission is to take this teaching philosophy and implement it within a structured educational environment. After each tutoring session, all of the information discussed will be documented and organized. Students will be able to review previously covered material, develop their weaknesses, and continue to build upon what they have already learned. Although technology supports the process, the core of what MindCraft does is provide students with good teaching and positive interactions with educators." },
+      { t:"h2", c:"What comes next" },
+      { t:"p", c:"We begin with mathematics because it shapes how students think. As we continue to develop the structure and systems for our program, we plan to expand beyond mathematics. We want to establish a system where students can confidently learn and practice with purpose and clarity in any subject area. This is just the beginning." }
+    ]
+  },
+  {
+    id: 2,
+    title: "MindCraft was in Beta at Macalester last week",
+    excerpt: "Last week we attended a Beta.mn event at Macalester. Founders, investors, and builders shared how they think about building with technology — and it reinforced a lot of what we believe about learning.",
+    category: "Community",
+    date: "March 28, 2026",
+    author: { name: "Akshat K.", role: "Co-Founder", initial: "A" },
+    bg1: "#0A1428", bg2: "#1A2A50", accent: "#4A7BF7",
+    heroImg: "img/beta-hero.jpg",
+    avClass: "av-blue",
+    hasGallery: true,
+    sources: [],
+    body: [
+      { t:"p", c:"Last week, we attended a Beta.mn event at Macalester where founders, investors, and builders across Minnesota shared what they are working on and how they are thinking about the future." },
+      { t:"h2", c:"What we went to do" },
+      { t:"p", c:"We went in with one goal. To listen, learn, and understand how people are building with technology in a way that actually creates value." },
+      { t:"h2", c:"What stood out" },
+      { t:"p", c:"What stood out was the clarity in how strong teams think. They start with real problems, build with intention, and refine quickly through feedback. There is a clear focus on systems that scale, not just one-time solutions." },
+      { t:"quote", c:"The future of learning will not be defined by access alone, but by how well students are supported in understanding, retaining, and applying what they learn." },
+      { t:"h2", c:"How it connects to MindCraft" },
+      { t:"p", c:"That thinking aligns closely with what we are building at MindCraft. We are designing a system where each tutoring session becomes something students can build on. Sessions lead to structured understanding, clear next steps, and a learning process that continues beyond the hour itself." },
+      { t:"gallery", c:"Photos from the Beta.mn event at Macalester." },
+      { t:"h2", c:"This is just the beginning" },
+      { t:"p", c:"Being in that room reinforced something important. We are continuing to build with that in mind. This is just the beginning." }
+    ]
+  }
+];
+
+function heroSVG(accent) {
+  return `<svg viewBox="0 0 520 280" width="380" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="60" y="40" width="120" height="160" rx="14" fill="white" opacity=".12"/>
+    <rect x="80" y="60" width="80" height="10" rx="5" fill="white" opacity=".5"/>
+    <rect x="80" y="78" width="64" height="7" rx="3.5" fill="white" opacity=".3"/>
+    <rect x="80" y="92" width="72" height="7" rx="3.5" fill="white" opacity=".28"/>
+    <rect x="80" y="116" width="48" height="30" rx="8" fill="${accent}" opacity=".35"/>
+    <rect x="220" y="28" width="200" height="110" rx="14" fill="white" opacity=".12"/>
+    <rect x="240" y="50" width="130" height="10" rx="5" fill="white" opacity=".5"/>
+    <rect x="240" y="68" width="100" height="7" rx="3.5" fill="white" opacity=".3"/>
+    <rect x="240" y="82" width="114" height="7" rx="3.5" fill="white" opacity=".28"/>
+    <rect x="220" y="158" width="200" height="80" rx="14" fill="${accent}" opacity=".12"/>
+    <rect x="240" y="176" width="90" height="8" rx="4" fill="${accent}" opacity=".5"/>
+    <rect x="240" y="192" width="68" height="6" rx="3" fill="white" opacity=".2"/>
+  </svg>`;
+}
+
+function gpCell(wide, label) {
+  var cls = 'gallery-placeholder' + (wide ? ' wide' : '');
+  return `<div class="${cls}" onclick="uploadGalleryPhoto(this)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    <span>${label}</span>
+    <div class="gp-hint"><div class="gp-hint-inner">Add Photo</div></div>
+  </div>`;
+}
+
+function galleryBlock() {
+  return `<div class="gallery-section">
+    <div class="gallery-label">Event Photos</div>
+    <div class="gallery-grid">
+      ${gpCell(true, 'Featured photo')}
+      ${gpCell(false, 'Photo')}
+      ${gpCell(false, 'Photo')}
+      ${gpCell(false, 'Photo')}
+      ${gpCell(false, 'Photo')}
+    </div>
+    <p class="gallery-note">Click any slot to add a photo.</p>
+  </div>`;
+}
+
+function uploadGalleryPhoto(cell) {
+  if (cell.classList.contains('filled')) return;
+  var input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = function() {
+    if (!input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      cell.classList.add('filled');
+      cell.innerHTML = '<img src="' + e.target.result + '" alt="Event photo">';
+      cell.onclick = null;
+    };
+    reader.readAsDataURL(input.files[0]);
+  };
+  input.click();
+}
+window.uploadGalleryPhoto = uploadGalleryPhoto;
+
+function renderBlock(b) {
+  if (b.t === 'p')     return `<p class="body-p">${b.c}</p>`;
+  if (b.t === 'h2')    return `<h2 class="body-h2">${b.c}</h2>`;
+  if (b.t === 'quote') return `<div class="body-quote"><p>${b.c}</p></div>`;
+  if (b.t === 'gallery') return galleryBlock();
+  return '';
+}
+
+function render() {
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const a = ARTICLES.find(x => x.id === id) || ARTICLES[0];
+  const idx = ARTICLES.indexOf(a);
+  const prev = ARTICLES[idx - 1] || null;
+  const next = ARTICLES[idx + 1] || null;
+
+  document.title = `MindCraft — ${a.title}`;
+
+  // Hero
+  var heroBgStyle = a.heroImg
+    ? `background:linear-gradient(145deg,${a.bg1} 0%,${a.bg2} 100%);background-image:url(${a.heroImg});background-size:cover;background-position:center`
+    : `background:linear-gradient(145deg,${a.bg1} 0%,${a.bg2} 100%)`;
+  var heroIlloStyle = a.heroImg ? 'display:none' : '';
+  document.getElementById('hero-area').innerHTML = `
+    <div class="article-hero" id="article-hero-wrap">
+      <div class="hero-bg" id="hero-bg" style="${heroBgStyle}"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-illo" id="hero-illo" style="${heroIlloStyle}">${heroSVG(a.accent)}</div>
+      <div class="hero-badges">
+        <span class="hbadge hbadge-cat">${a.category}</span>
+        <span class="hbadge hbadge-date">${a.date}</span>
+      </div>
+      <div class="hero-edit-hint" id="hero-edit-hint">
+        <div class="hero-edit-hint-inner">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Replace Hero Image
+        </div>
+      </div>
+    </div>`;
+
+  // Body
+  document.getElementById('article-body').innerHTML = `
+    <span class="article-cat">${a.category}</span>
+    <h1 class="article-title">${a.title}</h1>
+    <div class="article-byline">
+      <div class="av ${a.avClass}">${a.author.initial}</div>
+      <div>
+        <div class="byline-name">${a.author.name}</div>
+        <div class="byline-role">${a.author.role}</div>
+      </div>
+      <div class="byline-date">${a.date}</div>
+    </div>
+    ${a.body.map(renderBlock).join('')}
+    ${a.sources && a.sources.length ? `
+      <div class="sources-section">
+        <div class="sources-title">Sources</div>
+        <ul class="sources-list">
+          ${a.sources.map(s => `<li><a href="${s.url}" target="_blank" rel="noopener">${s.label}</a></li>`).join('')}
+        </ul>
+      </div>` : ''}
+    <div class="nav-pills">
+      ${prev
+        ? `<a href="article.html?id=${prev.id}" class="nav-pill"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span class="pill-text">${prev.title}</span></a>`
+        : `<span class="nav-pill disabled"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span>First article</span></span>`}
+      ${next
+        ? `<a href="article.html?id=${next.id}" class="nav-pill"><span class="pill-text">${next.title}</span><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>`
+        : `<span class="nav-pill disabled"><span>Latest article</span><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>`}
+    </div>`;
+
+  // Related
+  const related = ARTICLES.filter(x => x.id !== a.id).slice(0, 2);
+  if (related.length) {
+    document.getElementById('related-section').innerHTML = `
+      <span class="related-label">More from MindCraft</span>
+      <div class="related-grid">
+        ${related.map(r => `
+          <div class="rel-card" onclick="window.location='article.html?id=${r.id}'">
+            <div class="rel-img" style="background:linear-gradient(135deg,${r.bg1},${r.bg2})"></div>
+            <div class="rel-body">
+              <div class="rel-cat">${r.category}</div>
+              <div class="rel-title">${r.title}</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  }
+}
+
+render();
+
+// ── FIREBASE (CDN) ──
+// Auth & Firestore are loaded via scripts at bottom of body.
+// `fbApp`, `fbAuth`, `fbDb` are set there before this runs.
+
+// ── INLINE EDIT SYSTEM ──
+(function() {
+  var articleId = new URLSearchParams(window.location.search).get('id') || '1';
+
+  // ── Sign-in modal ──
+  var modal = document.createElement('div');
+  modal.id = 'signin-modal';
+  modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center';
+  modal.innerHTML = `
+    <div style="background:#1A1D26;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:36px;width:100%;max-width:360px;font-family:Nunito,sans-serif">
+      <div style="font-size:20px;font-weight:900;color:#fff;margin-bottom:6px">Sign in to edit</div>
+      <div style="font-size:14px;color:#8B93A8;font-weight:600;margin-bottom:24px">Use your MindCraft account</div>
+      <input id="si-email" type="email" placeholder="Email" style="width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:15px;font-family:Nunito,sans-serif;font-weight:600;outline:none;margin-bottom:12px">
+      <input id="si-pass" type="password" placeholder="Password" style="width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:15px;font-family:Nunito,sans-serif;font-weight:600;outline:none;margin-bottom:6px">
+      <div id="si-err" style="font-size:13px;color:#FC8181;font-weight:700;min-height:20px;margin-bottom:10px"></div>
+      <button id="si-btn" style="width:100%;padding:14px;background:#58CC02;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:900;font-family:Nunito,sans-serif;cursor:pointer">Sign in</button>
+      <button onclick="document.getElementById('signin-modal').style.display='none'" style="width:100%;padding:10px;background:none;border:none;color:#8B93A8;font-size:14px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer;margin-top:8px">Cancel</button>
+    </div>`;
+  document.body.appendChild(modal);
+
+  document.getElementById('si-btn').addEventListener('click', function() {
+    var email = document.getElementById('si-email').value.trim();
+    var pass  = document.getElementById('si-pass').value;
+    var err   = document.getElementById('si-err');
+    if (!email || !pass) { err.textContent = 'Please fill in both fields.'; return; }
+    var btn = document.getElementById('si-btn');
+    btn.textContent = 'Signing in…'; btn.disabled = true;
+    fbAuth.signInWithEmailAndPassword(email, pass)
+      .then(function() {
+        modal.style.display = 'none';
+        enableEdit();
+      })
+      .catch(function(e) {
+        err.textContent = e.code === 'auth/invalid-credential' ? 'Incorrect email or password.' : e.message;
+        btn.textContent = 'Sign in'; btn.disabled = false;
+      });
+  });
+
+  // ── Load saved content from Firestore (public read) ──
+  fbDb.collection('articles').doc(articleId).get().then(function(snap) {
+    if (snap.exists && snap.data().bodyHTML) {
+      var body = document.getElementById('article-body');
+      if (body) body.innerHTML = snap.data().bodyHTML;
+    }
+  }).catch(function() {
+    // Firestore not available — fall back to static content (already rendered)
+  });
+
+  // Inject edit toggle button
+  var toggle = document.createElement('button');
+  toggle.className = 'edit-toggle';
+  toggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit Article';
+  document.body.appendChild(toggle);
+
+  // Inject edit bar (hidden initially)
+  var bar = document.createElement('div');
+  bar.className = 'edit-bar';
+  bar.style.display = 'none';
+  bar.innerHTML = `
+    <span class="edit-bar-label">Editing</span>
+    <div class="eb-sep"></div>
+    <button class="eb-tool" onclick="fmt('bold')"><svg viewBox="0 0 24 24"><path d="M6 4h8a4 4 0 010 8H6z"/><path d="M6 12h9a4 4 0 010 8H6z"/></svg>Bold</button>
+    <button class="eb-tool" onclick="fmt('italic')"><svg viewBox="0 0 24 24"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>Italic</button>
+    <button class="eb-tool" onclick="fmt('formatBlock','<h2>')"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h7M4 18h7M13 6h7M13 18h7"/></svg>H2</button>
+    <button class="eb-tool" onclick="fmt('insertUnorderedList')"><svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/></svg>List</button>
+    <button class="eb-tool" onclick="addImage()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Image</button>
+    <div class="eb-sep"></div>
+    <button class="eb-tool eb-save" onclick="saveEdits()">Save</button>
+    <button class="eb-tool eb-discard" onclick="discardEdits()">Discard</button>`;
+  document.body.appendChild(bar);
+
+  var editing = false;
+  var editables = [];
+  var savedContent = {};
+
+  function fmt(cmd, val) {
+    document.execCommand(cmd, false, val || null);
+  }
+  window.fmt = fmt;
+
+  function enableEdit() {
+    editing = true;
+    document.body.classList.add('edit-mode');
+    toggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Viewing';
+    bar.style.display = 'flex';
+
+    // Make key elements editable
+    var selectors = ['.article-title', '.body-p', '.body-h2', '.body-quote p', '.article-cat'];
+    selectors.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(el) {
+        savedContent[sel + el.textContent.slice(0,20)] = el.innerHTML;
+        el.contentEditable = 'true';
+        editables.push(el);
+      });
+    });
+
+    // Wire hero image replacement
+    var heroWrap = document.getElementById('article-hero-wrap');
+    if (heroWrap && !heroWrap._editBound) {
+      heroWrap._editBound = true;
+      heroWrap.addEventListener('click', function(e) {
+        if (!editing) return;
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = function() {
+          if (!input.files[0]) return;
+          var reader = new FileReader();
+          reader.onload = function(ev) {
+            var bg = document.getElementById('hero-bg');
+            var illo = document.getElementById('hero-illo');
+            if (bg) { bg.style.background = 'none'; bg.style.backgroundImage = 'url(' + ev.target.result + ')'; bg.style.backgroundSize = 'cover'; bg.style.backgroundPosition = 'center'; }
+            if (illo) illo.style.display = 'none';
+          };
+          reader.readAsDataURL(input.files[0]);
+        };
+        input.click();
+      });
+    }
+  }
+
+  function disableEdit() {
+    editing = false;
+    document.body.classList.remove('edit-mode');
+    toggle.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit Article';
+    bar.style.display = 'none';
+    editables.forEach(function(el) { el.contentEditable = 'false'; });
+    editables = [];
+  }
+
+  function saveEdits() {
+    var bodyHTML = document.getElementById('article-body').innerHTML;
+    var saveBtn = document.querySelector('.eb-save');
+    if (saveBtn) { saveBtn.textContent = 'Saving…'; saveBtn.disabled = true; }
+
+    fbDb.collection('articles').doc(articleId).set({
+      bodyHTML: bodyHTML,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true })
+      .then(function() {
+        showToast('Saved to cloud ☁️');
+        disableEdit();
+      })
+      .catch(function(e) {
+        showToast('Save failed: ' + e.message);
+        if (saveBtn) { saveBtn.textContent = 'Save'; saveBtn.disabled = false; }
+      });
+  }
+  window.saveEdits = saveEdits;
+
+  function discardEdits() {
+    editables.forEach(function(el) {
+      var k = el.tagName + el.className;
+      if (savedContent[k]) el.innerHTML = savedContent[k];
+    });
+    disableEdit();
+  }
+  window.discardEdits = discardEdits;
+
+  function addImage() {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function() {
+      if (!input.files[0]) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.execCommand('insertImage', false, e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    };
+    input.click();
+  }
+  window.addImage = addImage;
+
+  function showToast(msg) {
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#fff;color:#1A1A1A;padding:10px 22px;border-radius:12px;font-size:14px;font-weight:800;font-family:Nunito,sans-serif;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.18);transition:opacity .3s';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 2000);
+  }
+
+  toggle.addEventListener('click', function() {
+    if (editing) { disableEdit(); return; }
+    var user = fbAuth.currentUser;
+    if (user) {
+      enableEdit();
+    } else {
+      document.getElementById('signin-modal').style.display = 'flex';
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "mindcraft-webhook",
+  "version": "1.0.0",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.85.0",
+    "firebase-admin": "^12.0.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0",
+    "typescript": "^5.3.0"
+  }
+}
