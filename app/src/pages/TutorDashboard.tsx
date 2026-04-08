@@ -3,7 +3,7 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import {
-  collection, query, where, orderBy, getDocs,
+  collection, query, where, orderBy, onSnapshot, getDocs,
   doc, getDoc, limit,
 } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -96,32 +96,27 @@ export default function TutorDashboard() {
   }
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const [upSnap, doneSnap] = await Promise.all([
-          getDocs(query(
-            collection(db, 'sessions'),
-            where('tutorId', '==', user.uid),
-            where('status', '==', 'scheduled'),
-            orderBy('scheduledAt', 'asc'),
-            limit(10)
-          )),
-          getDocs(query(
-            collection(db, 'sessions'),
-            where('tutorId', '==', user.uid),
-            where('status', '==', 'completed'),
-            orderBy('scheduledAt', 'desc'),
-            limit(20)
-          )),
-        ])
-        setSessions(upSnap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) })))
-        const completed = doneSnap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) }))
+    // Single query by tutorId only — no composite index needed, filter client-side
+    const unsub = onSnapshot(
+      query(collection(db, 'sessions'), where('tutorId', '==', user.uid)),
+      snap => {
+        const all = snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) }))
+        const now = Date.now()
+        const upcoming = all
+          .filter(s => s.status === 'scheduled' && s.scheduledAt > now - 15 * 60 * 1000)
+          .sort((a, b) => a.scheduledAt - b.scheduledAt)
+          .slice(0, 10)
+        const completed = all
+          .filter(s => s.status === 'completed')
+          .sort((a, b) => b.scheduledAt - a.scheduledAt)
+          .slice(0, 20)
+        setSessions(upcoming)
         setToReview(completed.filter(s => s.summaryStatus !== 'published'))
-      } finally {
         setLoading(false)
-      }
-    }
-    load().catch(() => setLoading(false))
+      },
+      () => setLoading(false)
+    )
+    return () => unsub()
   }, [user])
 
   useEffect(() => {

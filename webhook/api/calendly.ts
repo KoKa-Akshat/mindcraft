@@ -15,10 +15,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { event, payload } = req.body
 
   if (event === 'invitee.created') {
-    const { invitee, scheduled_event: scheduledEvent } = payload
-
-    const studentEmail: string = invitee.email
-    const studentName:  string = invitee.name
+    // Calendly v2 webhook: invitee fields are directly on payload, not nested under payload.invitee
+    const scheduledEvent = payload.scheduled_event
+    const studentEmail: string = payload.email
+    const studentName:  string = payload.name
     const startTime            = new Date(scheduledEvent.start_time as string)
     const endTime              = new Date(scheduledEvent.end_time   as string)
     const meetingUrl: string|null = scheduledEvent.location?.join_url ?? null
@@ -52,6 +52,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    // Deduplicate — skip if a session for this Calendly event already exists
+    const existingSnap = await db.collection('sessions')
+      .where('calendlyEventUri', '==', scheduledEvent.uri)
+      .limit(1).get()
+    if (!existingSnap.empty) {
+      return res.status(200).json({ ok: true, note: 'duplicate event ignored', sessionId: existingSnap.docs[0].id })
+    }
+
     const sessionRef = db.collection('sessions').doc()
     await sessionRef.set({
       studentEmail,
@@ -67,7 +75,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       date:               dateStr,
       meetingUrl,
       calendlyEventUri:   scheduledEvent.uri,
-      calendlyInviteeUri: invitee.uri,
+      calendlyInviteeUri: payload.uri,
       createdAt:          FieldValue.serverTimestamp(),
     })
 

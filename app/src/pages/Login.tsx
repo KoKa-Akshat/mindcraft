@@ -4,9 +4,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   sendPasswordResetEmail,
+  signOut,
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import s from './Login.module.css'
@@ -37,14 +38,31 @@ export default function Login() {
   const [loading, setLoading]   = useState(false)
   const navigate = useNavigate()
 
-  async function routeAfterLogin(uid: string) {
-    try {
-      const snap = await getDoc(doc(db, 'users', uid))
-      const role = snap.data()?.role
-      navigate(role === 'tutor' || role === 'admin' ? '/tutor' : '/dashboard', { replace: true })
-    } catch {
-      navigate('/dashboard', { replace: true })
+  async function routeAfterLogin(uid: string, isNewUser = false) {
+    const snap = await getDoc(doc(db, 'users', uid))
+    const firestoreRole = snap.data()?.role
+
+    if (isNewUser) {
+      // Create the user doc with the selected role
+      await setDoc(doc(db, 'users', uid), {
+        role,
+        email: auth.currentUser?.email ?? '',
+        displayName: auth.currentUser?.displayName ?? '',
+        createdAt: new Date().toISOString(),
+      })
+      navigate(role === 'tutor' ? '/tutor' : '/dashboard', { replace: true })
+      return
     }
+
+    // Sign-in: enforce role matches what user selected
+    if (firestoreRole && firestoreRole !== role) {
+      await signOut(auth)
+      setError(`This account is registered as a ${firestoreRole}. Please select the "${firestoreRole}" tab.`)
+      setLoading(false)
+      return
+    }
+
+    navigate(firestoreRole === 'tutor' || firestoreRole === 'admin' ? '/tutor' : '/dashboard', { replace: true })
   }
 
   async function handleSubmit() {
@@ -52,13 +70,15 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      const cred = mode === 'signin'
-        ? await signInWithEmailAndPassword(auth, email, password)
-        : await createUserWithEmailAndPassword(auth, email, password)
-      await routeAfterLogin(cred.user.uid)
+      if (mode === 'signin') {
+        const cred = await signInWithEmailAndPassword(auth, email, password)
+        await routeAfterLogin(cred.user.uid, false)
+      } else {
+        const cred = await createUserWithEmailAndPassword(auth, email, password)
+        await routeAfterLogin(cred.user.uid, true)
+      }
     } catch (e: any) {
       setError(friendlyError(e.code))
-    } finally {
       setLoading(false)
     }
   }
@@ -68,7 +88,8 @@ export default function Login() {
     setLoading(true)
     try {
       const cred = await signInWithPopup(auth, googleProvider)
-      await routeAfterLogin(cred.user.uid)
+      const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
+      await routeAfterLogin(cred.user.uid, isNew)
     } catch (e: any) {
       const msg = friendlyError(e.code)
       if (msg) setError(msg)

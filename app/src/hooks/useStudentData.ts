@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, writeBatch } from 'firebase/firestore'
+import { doc, setDoc, updateDoc, onSnapshot, serverTimestamp, collection, query, where, writeBatch } from 'firebase/firestore'
 import { db } from '../firebase'
 import { User } from 'firebase/auth'
 
@@ -41,132 +41,86 @@ function firstName(user: User | null): string {
 }
 
 export function useStudentData(user: User | null): StudentData {
-  const [data, setData] = useState<StudentData>({
+  const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'loading'>>({
     displayName: firstName(user),
     streak: 0,
-    nextSession: null,
     lastSession: null,
     practiceCount: 0,
     messages: [],
-    loading: true,
   })
+  const [nextSession, setNextSession] = useState<StudentData['nextSession']>(null)
+  const [loading, setLoading] = useState(true)
 
+  // Listen to user doc
   useEffect(() => {
     if (!user) return
-
-    async function load() {
-      const ref = doc(db, 'users', user!.uid)
-      try {
-        const snap = await getDoc(ref)
-
-        if (snap.exists()) {
-          const d = snap.data()
-          let nextSession = d.nextSession ?? null
-
-          if (user!.email) {
-            const sessSnap = await getDocs(
-              query(collection(db, 'sessions'),
-                where('studentEmail', '==', user!.email),
-                where('status', '==', 'scheduled')
-              )
-            )
-            if (!sessSnap.empty) {
-              // Only sessions that haven't ended yet (end = scheduledAt + 90min max)
-              const upcoming = sessSnap.docs
-                .map(sd => ({ id: sd.id, ref: sd.ref, ...sd.data() }))
-                .filter((sd: any) => (sd.endAt ?? sd.scheduledAt + 90 * 60 * 1000) > Date.now())
-                .sort((a: any, b: any) => a.scheduledAt - b.scheduledAt)[0] as any
-              if (upcoming) {
-                const timeStr = new Date(upcoming.scheduledAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-                nextSession = {
-                  subject: upcoming.subject,
-                  time: timeStr,
-                  tutor: upcoming.tutorName,
-                  meetingUrl: upcoming.meetingUrl ?? null,
-                  scheduledAt: upcoming.scheduledAt,
-                }
-                const updates: Promise<void>[] = [updateDoc(ref, { nextSession })]
-                if (!upcoming.studentId) {
-                  updates.push(updateDoc(upcoming.ref, { studentId: user!.uid }))
-                }
-                await Promise.all(updates)
-              } else {
-                // No upcoming session — clear stale nextSession on user doc
-                if (d.nextSession) await updateDoc(ref, { nextSession: null })
-                nextSession = null
-              }
-            } else if (d.nextSession) {
-              // No sessions at all — clear stale nextSession
-              await updateDoc(ref, { nextSession: null })
-              nextSession = null
-            }
+    const ref = doc(db, 'users', user.uid)
+    const unsub = onSnapshot(ref, async snap => {
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          uid: user.uid, email: user.email,
+          displayName: firstName(user), role: 'student',
+          streak: 0, practiceCount: 0, messages: [],
+          lastSession: null, nextSession: null,
+          createdAt: serverTimestamp(), lastActive: serverTimestamp(),
+        })
+        // Link pre-existing sessions
+        if (user.email) {
+          const pendingSnap = await new Promise<any>(res =>
+            onSnapshot(query(collection(db, 'sessions'), where('studentEmail', '==', user.email), where('studentId', '==', null)), res, () => res({ docs: [] }))
+          )
+          if (!pendingSnap.empty) {
+            const batch = writeBatch(db)
+            pendingSnap.docs.forEach((sd: any) => batch.update(sd.ref, { studentId: user.uid }))
+            await batch.commit()
           }
-
-          setData({
-            displayName: d.displayName || firstName(user),
-            streak: d.streak ?? 0,
-            nextSession,
-            lastSession: d.lastSession ?? null,
-            practiceCount: d.practiceCount ?? 0,
-            messages: d.messages ?? [],
-            loading: false,
-          })
-        } else {
-          await setDoc(ref, {
-            uid: user!.uid,
-            email: user!.email,
-            displayName: firstName(user),
-            role: 'student',
-            streak: 0,
-            practiceCount: 0,
-            messages: [],
-            lastSession: null,
-            nextSession: null,
-            createdAt: serverTimestamp(),
-            lastActive: serverTimestamp(),
-          })
-
-          let linkedNextSession: StudentData['nextSession'] = null
-          if (user!.email) {
-            const pendingSnap = await getDocs(
-              query(collection(db, 'sessions'),
-                where('studentEmail', '==', user!.email),
-                where('studentId', '==', null)
-              )
-            )
-            if (!pendingSnap.empty) {
-              const batch = writeBatch(db)
-              pendingSnap.docs.forEach(sessionDoc => {
-                batch.update(sessionDoc.ref, { studentId: user!.uid })
-                const d = sessionDoc.data()
-                if (d.status === 'scheduled' && !linkedNextSession) {
-                  const timeStr = new Date(d.scheduledAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-                  linkedNextSession = { subject: d.subject, time: timeStr, tutor: d.tutorName, meetingUrl: d.meetingUrl ?? null, scheduledAt: d.scheduledAt }
-                }
-              })
-              if (linkedNextSession) batch.update(ref, { nextSession: linkedNextSession })
-              await batch.commit()
-            }
-          }
-
-          setData({
-            displayName: firstName(user),
-            streak: 0,
-            nextSession: linkedNextSession,
-            lastSession: null,
-            practiceCount: 0,
-            messages: [],
-            loading: false,
-          })
         }
-      } catch (err) {
-        console.warn('Firestore load error:', err)
-        setData(prev => ({ ...prev, displayName: firstName(user), loading: false }))
+        return
       }
-    }
-
-    load()
+      const d = snap.data()
+      setUserData({
+        displayName: d.displayName || firstName(user),
+        streak: d.streak ?? 0,
+        lastSession: d.lastSession ?? null,
+        practiceCount: d.practiceCount ?? 0,
+        messages: d.messages ?? [],
+      })
+      setLoading(false)
+    }, () => setLoading(false))
+    return () => unsub()
   }, [user])
 
-  return data
+  // Listen to sessions collection — updates nextSession in real-time
+  useEffect(() => {
+    if (!user?.email) return
+    const unsub = onSnapshot(
+      query(collection(db, 'sessions'), where('studentEmail', '==', user.email)),
+      snap => {
+        const now = Date.now()
+        const upcoming = snap.docs
+          .map(sd => ({ id: sd.id, ref: sd.ref, ...sd.data() as any }))
+          .filter(sd => sd.status === 'scheduled' && (sd.endAt ?? sd.scheduledAt + 90 * 60 * 1000) > now)
+          .sort((a, b) => a.scheduledAt - b.scheduledAt)[0]
+
+        if (upcoming) {
+          const ns = {
+            subject: upcoming.subject,
+            time: new Date(upcoming.scheduledAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+            tutor: upcoming.tutorName,
+            meetingUrl: upcoming.meetingUrl ?? null,
+            scheduledAt: upcoming.scheduledAt,
+          }
+          setNextSession(ns)
+          // Link studentId if missing
+          if (!upcoming.studentId) updateDoc(upcoming.ref, { studentId: user.uid }).catch(() => {})
+        } else {
+          setNextSession(null)
+        }
+      },
+      () => {}
+    )
+    return () => unsub()
+  }, [user])
+
+  return { ...userData, nextSession, loading }
 }
