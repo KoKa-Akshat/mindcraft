@@ -4,6 +4,8 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Tutors can read their students' profiles
+      allow read: if request.auth != null;
     }
 
     match /articles/{articleId} {
@@ -12,7 +14,6 @@ service cloud.firestore {
     }
 
     match /sessions/{sessionId} {
-      // Student can read if matched by uid OR by email (for sessions before account creation)
       allow read: if request.auth != null && (
         resource.data.studentId == request.auth.uid ||
         resource.data.studentEmail == request.auth.token.email ||
@@ -27,6 +28,11 @@ service cloud.firestore {
         resource.data.tutorId == request.auth.uid ||
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
       );
+      // Tutors and admins can delete sessions
+      allow delete: if request.auth != null && (
+        resource.data.tutorId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
 
       match /messages/{messageId} {
         allow read, write: if request.auth != null && (
@@ -35,6 +41,26 @@ service cloud.firestore {
           get(/databases/$(database)/documents/sessions/$(sessionId)).data.tutorId == request.auth.uid
         );
       }
+    }
+
+    // Chat messages between tutor and student
+    match /chats/{chatId} {
+      allow read, write: if request.auth != null &&
+        chatId.matches('.*' + request.auth.uid + '.*');
+    }
+
+    match /chats/{chatId}/messages/{messageId} {
+      allow read, write: if request.auth != null &&
+        chatId.matches('.*' + request.auth.uid + '.*');
+    }
+
+    // Orphaned transcripts (written by server-side webhook only, tutors/admins can read)
+    match /transcripts/{transcriptId} {
+      allow read: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'tutor' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+      allow write: if false; // only webhook writes these
     }
   }
 }
