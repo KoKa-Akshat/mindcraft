@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx firebase-tools:*)",
+      "Bash(vercel --prod --cwd \"/Users/akoirala/Desktop/Business Ideas/mindcraft-site/webhook\")"
+    ]
+  }
+}
