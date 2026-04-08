@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '../firebase'
 import { useUser } from '../App'
@@ -55,6 +55,7 @@ export default function SessionDetail() {
   const [generating, setGenerating] = useState(false)
   const [card, setCard] = useState<SummaryCard>({ title: '', topics: [], homework: [], progress: '', tutorNote: '' })
   const [publishing, setPublishing] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [toast, setToast] = useState('')
 
   const fileRef = useRef<HTMLInputElement>(null)
@@ -114,6 +115,18 @@ export default function SessionDetail() {
       showToast(err.message ?? 'Generation failed')
     } finally {
       setGenerating(false)
+    }
+  }
+
+  async function handleDelete() {
+    if (!id || !window.confirm('Delete this session? This cannot be undone.')) return
+    setDeleting(true)
+    try {
+      await deleteDoc(doc(db, 'sessions', id))
+      navigate('/tutor', { replace: true })
+    } catch {
+      showToast('Delete failed')
+      setDeleting(false)
     }
   }
 
@@ -200,6 +213,9 @@ export default function SessionDetail() {
             <span className={`${s.statusBadge} ${isPublished ? s.badgePublished : hasDraft ? s.badgeDraft : s.badgePending}`}>
               {isPublished ? 'Published' : hasDraft ? 'Draft' : 'Pending Review'}
             </span>
+            <button className={s.btnDelete} onClick={handleDelete} disabled={deleting} title="Delete session">
+              {deleting ? '…' : 'Delete'}
+            </button>
           </div>
         </div>
 
