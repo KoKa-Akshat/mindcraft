@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '../firebase'
 import { useUser } from '../App'
@@ -119,13 +119,21 @@ export default function SessionDetail() {
   }
 
   async function handleDelete() {
-    if (!id || !window.confirm('Delete this session? This cannot be undone.')) return
+    if (!id || !session || !window.confirm('Delete this session? This cannot be undone.')) return
     setDeleting(true)
     try {
-      await deleteDoc(doc(db, 'sessions', id))
+      const res = await fetch('https://mindcraft-webhook.vercel.app/api/delete-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: id, tutorId: session.tutorId }),
+      })
+      if (!res.ok) {
+        const d = await res.json()
+        throw new Error(d.error)
+      }
       navigate('/tutor', { replace: true })
-    } catch {
-      showToast('Delete failed')
+    } catch (err: any) {
+      showToast(err.message ?? 'Delete failed')
       setDeleting(false)
     }
   }

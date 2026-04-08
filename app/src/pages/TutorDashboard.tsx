@@ -4,7 +4,7 @@ import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import {
   collection, query, where, onSnapshot, getDocs,
-  doc, getDoc, updateDoc, deleteDoc,
+  doc, getDoc, updateDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
@@ -176,9 +176,17 @@ export default function TutorDashboard() {
     e.stopPropagation()
     if (!window.confirm('Delete this session?')) return
     try {
-      await deleteDoc(doc(db, 'sessions', id))
-    } catch {
-      showToast('Delete failed')
+      const res = await fetch('https://mindcraft-webhook.vercel.app/api/delete-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: id, tutorId: user.uid }),
+      })
+      if (!res.ok) {
+        const d = await res.json()
+        throw new Error(d.error)
+      }
+    } catch (err: any) {
+      showToast(err.message ?? 'Delete failed')
     }
   }
 
