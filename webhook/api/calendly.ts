@@ -103,19 +103,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
     }
 
-    // Invite Fireflies bot to the meeting
+    // Invite Fireflies bot to the meeting and capture the meetingId for webhook matching
     if (meetingUrl && process.env.FIREFLIES_API_KEY) {
-      await fetch('https://api.fireflies.ai/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.FIREFLIES_API_KEY}`,
-        },
-        body: JSON.stringify({
-          query: `mutation { addToLiveMeeting(meeting_link: "${meetingUrl}") { success message } }`,
-        }),
-      }).catch(() => {}) // non-fatal — calendar invite is the primary mechanism
+      try {
+        const ffRes = await fetch('https://api.fireflies.ai/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.FIREFLIES_API_KEY}`,
+          },
+          body: JSON.stringify({
+            query: `mutation AddBot($url: String!) {
+              addToLiveMeeting(meeting_link: $url) { success message }
+            }`,
+            variables: { url: meetingUrl },
+          }),
+        })
+        const ffData = await ffRes.json()
+        console.log('Fireflies bot invite:', JSON.stringify(ffData))
+        // Store meetingUrl as firefliesMeetingUrl so webhook can match it
+        await sessionRef.update({ firefliesMeetingUrl: meetingUrl })
+      } catch (e) {
+        console.error('Fireflies invite failed:', e)
+      }
     }
+
+    // Auto-complete any of this tutor's past sessions still marked 'scheduled'
+    const allTutorSessions = await db.collection('sessions')
+      .where('tutorId', '==', tutorId)
+      .where('status', '==', 'scheduled')
+      .get()
+    const nowMs = Date.now()
+    const completions = allTutorSessions.docs
+      .filter(d => d.id !== sessionRef.id && (d.data().endAt ?? d.data().scheduledAt + 90 * 60 * 1000) < nowMs)
+      .map(d => d.ref.update({ status: 'completed', summaryStatus: d.data().summaryStatus ?? 'pending' }))
+    await Promise.all(completions)
 
     return res.status(200).json({ ok: true, sessionId: sessionRef.id })
   }

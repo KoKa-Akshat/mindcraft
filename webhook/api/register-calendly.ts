@@ -62,13 +62,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const hookData = await hookRes.json()
   const webhookUri = hookData.resource?.uri
 
+  // Register Fireflies webhook if not already done (global — only needs to happen once)
+  let firefliesWebhookStatus = 'skipped'
+  if (process.env.FIREFLIES_API_KEY) {
+    try {
+      const ffWebhookRes = await fetch('https://api.fireflies.ai/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.FIREFLIES_API_KEY}`,
+        },
+        body: JSON.stringify({
+          query: `mutation {
+            updateWebhook(webhook_url: "https://mindcraft-webhook.vercel.app/api/fireflies") {
+              id
+              url
+            }
+          }`,
+        }),
+      })
+      const ffWebhookData = await ffWebhookRes.json()
+      console.log('Fireflies webhook registration:', JSON.stringify(ffWebhookData))
+      firefliesWebhookStatus = ffWebhookData?.data?.updateWebhook?.url ?? 'registered'
+    } catch (e) {
+      console.error('Fireflies webhook registration failed:', e)
+      firefliesWebhookStatus = 'failed'
+    }
+  }
+
   // Save token + webhook info to tutor doc
   await db.collection('users').doc(tutorId).update({
     calendlyToken,
     calendlyEmail,
     calendlyWebhookUri: webhookUri,
     calendlyConnectedAt: new Date().toISOString(),
+    firefliesWebhookStatus,
   })
 
-  return res.status(200).json({ ok: true, calendlyEmail, webhookUri })
+  return res.status(200).json({ ok: true, calendlyEmail, webhookUri, firefliesWebhookStatus })
 }

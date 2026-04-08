@@ -104,8 +104,17 @@ export default function TutorDashboard() {
       async snap => {
         const all = snap.docs.map(d => ({ id: d.id, ref: d.ref, ...(d.data() as Omit<Session, 'id'>) }))
         const now = Date.now()
+
+        // Auto-complete any sessions whose end time has passed but are still 'scheduled'
+        all
+          .filter(s => s.status === 'scheduled' && (s.endAt ?? s.scheduledAt + 90 * 60 * 1000) < now)
+          .forEach(s => updateDoc((s as any).ref, {
+            status: 'completed',
+            summaryStatus: (s as any).summaryStatus ?? 'pending',
+          }).catch(() => {}))
+
         const upcoming = all
-          .filter(s => s.status === 'scheduled' && s.scheduledAt > now - 15 * 60 * 1000)
+          .filter(s => s.status === 'scheduled' && (s.endAt ?? s.scheduledAt + 90 * 60 * 1000) > now)
           .sort((a, b) => a.scheduledAt - b.scheduledAt)
           .slice(0, 10)
         const completed = all

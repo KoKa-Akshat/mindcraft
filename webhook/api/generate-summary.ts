@@ -20,62 +20,65 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
 
-  const { sessionId, tutorNotes } = req.body
-  if (!sessionId) return res.status(400).json({ error: 'Missing sessionId' })
+  try {
+    const { sessionId, tutorNotes } = req.body
+    if (!sessionId) return res.status(400).json({ error: 'Missing sessionId' })
 
-  const sessionSnap = await db.collection('sessions').doc(sessionId).get()
-  if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
+    const sessionSnap = await db.collection('sessions').doc(sessionId).get()
+    if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
 
-  const session = sessionSnap.data()!
-  const transcriptText = session.transcript?.fullText ?? ''
+    const session = sessionSnap.data()!
+    const transcriptText = session.transcript?.fullText ?? ''
+    const notes = tutorNotes || session.tutorNotes || ''
 
-  if (!transcriptText && !tutorNotes) {
-    return res.status(400).json({ error: 'No transcript or notes to generate from' })
-  }
+    // Build prompt from whatever we have — never block generation
+    const prompt = `You are a helpful tutor assistant for MindCraft, an online tutoring platform.
+Generate a concise, encouraging session summary card for the student based on what is available below.
 
-  const prompt = `You are a helpful tutor assistant for MindCraft, an online tutoring platform.
-Based on the tutoring session details below, generate a concise, encouraging session summary card for the student.
-
-Subject: ${session.subject || 'General'}
+Subject: ${session.subject || 'Tutoring Session'}
 Student: ${session.studentName || 'Student'}
 Date: ${session.date || ''}
 Duration: ${session.duration || ''}
-
-${transcriptText ? `SESSION TRANSCRIPT:\n${transcriptText.slice(0, 6000)}\n` : ''}
-${tutorNotes ? `TUTOR'S NOTES:\n${tutorNotes}\n` : ''}
+${transcriptText ? `\nSESSION TRANSCRIPT:\n${transcriptText.slice(0, 6000)}\n` : ''}
+${notes ? `\nTUTOR'S NOTES:\n${notes}\n` : ''}
+${!transcriptText && !notes ? '\n(No transcript or notes yet — generate a general placeholder summary based on the session details above)\n' : ''}
 
 Return ONLY valid JSON (no markdown, no explanation) with this exact structure:
 {
   "title": "Brief descriptive session title (max 8 words)",
-  "topics": ["topic covered 1", "topic covered 2", "topic covered 3"],
+  "topics": ["topic 1", "topic 2", "topic 3"],
   "homework": ["homework item 1", "homework item 2"],
-  "progress": "One clear sentence about how the student progressed in this session",
-  "tutorNote": "A warm 2-3 sentence personal note from tutor to student, encouraging and specific to what was covered"
+  "progress": "One sentence about student progress this session",
+  "tutorNote": "Warm 2-3 sentence personal note from tutor to student"
 }`
 
-  const message = await anthropic.messages.create({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 1024,
-    messages: [{ role: 'user', content: prompt }],
-  })
+    const message = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1024,
+      messages: [{ role: 'user', content: prompt }],
+    })
 
-  const text = message.content[0].type === 'text' ? message.content[0].text.trim() : ''
+    const text = message.content[0].type === 'text' ? message.content[0].text.trim() : ''
 
-  let summaryCard
-  try {
-    const match = text.match(/\{[\s\S]*\}/)
-    if (!match) throw new Error('No JSON found')
-    summaryCard = JSON.parse(match[0])
-  } catch {
-    return res.status(500).json({ error: 'Failed to parse AI response', raw: text })
+    let summaryCard
+    try {
+      const match = text.match(/\{[\s\S]*\}/)
+      if (!match) throw new Error('No JSON found')
+      summaryCard = JSON.parse(match[0])
+    } catch {
+      return res.status(500).json({ error: 'Failed to parse AI response', raw: text.slice(0, 200) })
+    }
+
+    // Save draft to session doc
+    await sessionSnap.ref.update({
+      summaryCard,
+      summaryStatus: 'draft',
+      tutorNotes: notes || null,
+    })
+
+    return res.status(200).json({ ok: true, summaryCard })
+  } catch (err: any) {
+    console.error('generate-summary error:', err)
+    return res.status(500).json({ error: err?.message ?? 'Internal server error' })
   }
-
-  // Save draft to session doc
-  await sessionSnap.ref.update({
-    summaryCard,
-    summaryStatus: 'draft',
-    tutorNotes: tutorNotes || session.tutorNotes || null,
-  })
-
-  return res.status(200).json({ ok: true, summaryCard })
 }
