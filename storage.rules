@@ -1,0 +1,18 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Chat file attachments — either participant can read/write
+    match /chat-files/{chatId}/{allPaths=**} {
+      allow read, write: if request.auth != null && (
+        chatId.split('_')[0] == request.auth.uid ||
+        chatId.split('_')[1] == request.auth.uid
+      );
+    }
+
+    // Session notes/attachments — tutor only
+    match /sessions/{sessionId}/{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
