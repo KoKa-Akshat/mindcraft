@@ -14,9 +14,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { action } = req.body
 
     if (action === 'delete-ghost') {
-      // Delete the ghost doc with zero (tio0) - the real one has capital O (tioO)
       await db.collection('users').doc('tio0JztTPqfqAIBVz5MxiXqAtn93').delete()
       return res.status(200).json({ ok: true, deleted: 'tio0JztTPqfqAIBVz5MxiXqAtn93' })
+    }
+
+    if (action === 'restore-tutor') {
+      // Copy calendly data from ghost tioO doc to real tio0 doc, then delete tioO
+      const ghostSnap = await db.collection('users').doc('tioOJztTPqfqAIBVz5MxiXqAtn93').get()
+      const ghostData = ghostSnap.exists ? ghostSnap.data() : {}
+
+      await db.collection('users').doc('tio0JztTPqfqAIBVz5MxiXqAtn93').set({
+        role: 'tutor',
+        email: 'joinmindcraft@gmail.com',
+        displayName: 'joinmindcraft',
+        calendlyEmail: ghostData?.calendlyEmail ?? 'joinmindcraft@gmail.com',
+        calendlyToken: ghostData?.calendlyToken ?? null,
+        calendlyWebhookUri: ghostData?.calendlyWebhookUri ?? null,
+        calendlyConnectedAt: ghostData?.calendlyConnectedAt ?? new Date().toISOString(),
+      }, { merge: true })
+
+      // Delete the fake tioO doc
+      if (ghostSnap.exists) {
+        await db.collection('users').doc('tioOJztTPqfqAIBVz5MxiXqAtn93').delete()
+      }
+
+      return res.status(200).json({ ok: true, action: 'restored tio0 as tutor, deleted tioO' })
     }
 
     return res.status(400).json({ error: 'Unknown action' })
