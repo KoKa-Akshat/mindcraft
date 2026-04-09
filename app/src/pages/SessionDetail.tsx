@@ -1,42 +1,61 @@
+/**
+ * SessionDetail.tsx
+ *
+ * Tutor-only review page for a completed session.
+ *
+ * Workflow:
+ *   1. Tutor views transcript (if Fireflies processed it) and adds notes
+ *   2. Clicks "Generate Summary" → AI creates a structured summary card
+ *   3. Tutor edits the card inline, then publishes it to the student
+ *
+ * On publish, the summary is written to both the session doc (summaryStatus: 'published')
+ * and the student's user doc (lastSession field) so it shows on their dashboard.
+ */
+
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '../firebase'
 import { useUser } from '../App'
+import { useToast } from '../hooks/useToast'
+import { fmtDateTime } from '../utils/format'
 import s from './SessionDetail.module.css'
 
-const GENERATE_URL = 'https://mindcraft-webhook.vercel.app/api/generate-summary'
+const GENERATE_URL  = 'https://mindcraft-webhook.vercel.app/api/generate-summary'
+const DELETE_URL    = 'https://mindcraft-webhook.vercel.app/api/delete-session'
 
+// Shape of the AI-generated summary card
 interface SummaryCard {
-  title: string
-  topics: string[]
-  homework: string[]
-  progress: string
+  title:     string
+  topics:    string[]
+  homework:  string[]
+  progress:  string
   tutorNote: string
 }
 
+// Shape of the session document as returned from Firestore
 interface SessionData {
-  studentName: string
-  studentEmail: string
-  studentId: string | null
-  subject: string
-  date: string
-  scheduledAt: number
-  duration: string
-  tutorId: string
-  tutorName: string
-  status: string
+  studentName:   string
+  studentEmail:  string
+  studentId:     string | null
+  subject:       string
+  date:          string
+  scheduledAt:   number
+  duration:      string
+  tutorId:       string
+  tutorName:     string
+  status:        string
   summaryStatus?: 'pending' | 'draft' | 'published'
-  summaryCard?: SummaryCard
-  tutorNotes?: string
+  summaryCard?:   SummaryCard
+  tutorNotes?:    string
   tutorNotesUrl?: string
-  transcript?: { fullText: string; sentences: any[]; summary: any; duration: number }
-}
-
-function fmt(ms: number) {
-  return new Date(ms).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
-    + ' at ' + new Date(ms).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+  transcript?: {
+    fullText:  string
+    sentences: any[]
+    summary:   any
+    duration:  number
+  }
 }
 
 export default function SessionDetail() {
@@ -52,11 +71,11 @@ export default function SessionDetail() {
   const [notesFile, setNotesFile] = useState<File | null>(null)
   const [uploadingFile, setUploadingFile] = useState(false)
 
+  const { toast, showToast } = useToast()
   const [generating, setGenerating] = useState(false)
-  const [card, setCard] = useState<SummaryCard>({ title: '', topics: [], homework: [], progress: '', tutorNote: '' })
+  const [card, setCard]             = useState<SummaryCard>({ title: '', topics: [], homework: [], progress: '', tutorNote: '' })
   const [publishing, setPublishing] = useState(false)
-  const [deleting, setDeleting] = useState(false)
-  const [toast, setToast] = useState('')
+  const [deleting, setDeleting]     = useState(false)
 
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -74,10 +93,6 @@ export default function SessionDetail() {
     }).catch(() => navigate('/tutor', { replace: true }))
   }, [id, user, navigate])
 
-  function showToast(msg: string) {
-    setToast(msg)
-    setTimeout(() => setToast(''), 3000)
-  }
 
   async function handleFileUpload() {
     if (!notesFile || !id) return
@@ -215,7 +230,7 @@ export default function SessionDetail() {
           <Link to="/tutor" className={s.back}>← Back</Link>
           <div className={s.headerInfo}>
             <h1>{session.studentName} <span>·</span> {session.subject}</h1>
-            <p>{fmt(session.scheduledAt)} · {session.duration}</p>
+            <p>{fmtDateTime(session.scheduledAt)} · {session.duration}</p>
           </div>
           <div className={s.headerRight}>
             <span className={`${s.statusBadge} ${isPublished ? s.badgePublished : hasDraft ? s.badgeDraft : s.badgePending}`}>

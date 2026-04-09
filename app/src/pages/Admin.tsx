@@ -1,3 +1,14 @@
+/**
+ * Admin.tsx
+ *
+ * Internal admin panel — accessible only to users with role: 'admin'.
+ *
+ * Features:
+ *   - View all sessions across all tutors and students
+ *   - Manually create sessions (useful for non-Calendly bookings)
+ *   - Update session status
+ */
+
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import {
@@ -6,27 +17,30 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
+import { useToast } from '../hooks/useToast'
+import { fmtDateTime } from '../utils/format'
 import s from './Admin.module.css'
 
-interface Session {
-  id: string
-  studentName: string
+// Admin sees a flattened view of sessions — simpler than tutor/student views
+interface AdminSession {
+  id:           string
+  studentName:  string
   studentEmail: string
-  studentId: string | null
-  tutorName: string
-  tutorId: string | null
-  subject: string
-  date: string
-  duration: string
-  scheduledAt: number
-  status: 'scheduled' | 'completed' | 'cancelled'
-  meetingUrl: string | null
+  studentId:    string | null
+  tutorName:    string
+  tutorId:      string | null
+  subject:      string
+  date:         string
+  duration:     string
+  scheduledAt:  number
+  status:       'scheduled' | 'completed' | 'cancelled'
+  meetingUrl:   string | null
 }
 
-interface Student {
-  id: string
+interface AdminStudent {
+  id:          string
   displayName: string
-  email: string
+  email:       string
 }
 
 const STATUS_COLOR: Record<string, string> = {
@@ -35,24 +49,21 @@ const STATUS_COLOR: Record<string, string> = {
   cancelled: '#8A8F98',
 }
 
-const SUBJECTS = ['AP Calculus', 'Pre-Calculus', 'Algebra', 'Statistics', 'AP Physics', 'Chemistry', 'SAT Prep', 'Other']
-
-function fmt(ms: number) {
-  const d = new Date(ms)
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' · ' +
-    d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-}
+const SUBJECTS = [
+  'AP Calculus', 'Pre-Calculus', 'Algebra', 'Statistics',
+  'AP Physics', 'Chemistry', 'SAT Prep', 'Other',
+]
 
 export default function Admin() {
   const user = useUser()
   const navigate = useNavigate()
 
-  const [sessions, setSessions]     = useState<Session[]>([])
-  const [students, setStudents]     = useState<Student[]>([])
-  const [tab, setTab]               = useState<'sessions' | 'new'>('sessions')
-  const [loading, setLoading]       = useState(true)
-  const [saving, setSaving]         = useState(false)
-  const [toast, setToast]           = useState('')
+  const { toast, showToast } = useToast()
+  const [sessions, setSessions] = useState<AdminSession[]>([])
+  const [students, setStudents] = useState<AdminStudent[]>([])
+  const [tab, setTab]           = useState<'sessions' | 'new'>('sessions')
+  const [loading, setLoading]   = useState(true)
+  const [saving, setSaving]     = useState(false)
 
   // New session form
   const [form, setForm] = useState({
@@ -71,7 +82,7 @@ export default function Admin() {
     const unsub = onSnapshot(
       query(collection(db, 'sessions'), orderBy('scheduledAt', 'desc')),
       snap => {
-        setSessions(snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Session, 'id'>) })))
+        setSessions(snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<AdminSession, 'id'>) })))
         setLoading(false)
       },
       () => setLoading(false)
@@ -86,11 +97,6 @@ export default function Admin() {
       ))
       .catch(() => {})
   }, [])
-
-  function showToast(msg: string) {
-    setToast(msg)
-    setTimeout(() => setToast(''), 3000)
-  }
 
   async function createSession() {
     if (!form.studentEmail || !form.date || !form.time) {
@@ -137,7 +143,7 @@ export default function Admin() {
     setSaving(false)
   }
 
-  async function updateStatus(id: string, status: Session['status']) {
+  async function updateStatus(id: string, status: AdminSession['status']) {
     await updateDoc(doc(db, 'sessions', id), { status })
     showToast(`Marked as ${status}`)
   }
@@ -207,7 +213,7 @@ export default function Admin() {
                         <div className={s.studentEmail}>{sess.studentEmail}</div>
                       </td>
                       <td><span className={s.subject}>{sess.subject}</span></td>
-                      <td className={s.dateCell}>{fmt(sess.scheduledAt)}</td>
+                      <td className={s.dateCell}>{fmtDateTime(sess.scheduledAt)}</td>
                       <td>{sess.duration}</td>
                       <td>
                         <span className={s.statusBadge} style={{ color: STATUS_COLOR[sess.status], background: STATUS_COLOR[sess.status] + '18' }}>

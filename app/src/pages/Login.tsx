@@ -17,15 +17,19 @@ type Mode = 'signin' | 'signup'
 
 function friendlyError(code: string) {
   switch (code) {
-    case 'auth/user-not-found':       return 'No account found with that email.'
-    case 'auth/wrong-password':       return 'Incorrect password. Try again.'
-    case 'auth/invalid-credential':   return 'Incorrect email or password.'
-    case 'auth/email-already-in-use': return 'An account with this email already exists.'
-    case 'auth/weak-password':        return 'Password must be at least 6 characters.'
-    case 'auth/invalid-email':        return 'Please enter a valid email address.'
-    case 'auth/too-many-requests':    return 'Too many attempts. Please wait a moment.'
-    case 'auth/popup-closed-by-user': return ''
-    default:                          return 'Something went wrong. Please try again.'
+    case 'auth/user-not-found':             return 'No account found with that email.'
+    case 'auth/wrong-password':             return 'Incorrect password. Try again.'
+    case 'auth/invalid-credential':         return 'Incorrect email or password.'
+    case 'auth/invalid-login-credentials':  return 'Incorrect email or password.'
+    case 'auth/account-exists-with-different-credential': return 'This email is linked to a different sign-in method. Try Google.'
+    case 'auth/email-already-in-use':       return 'An account with this email already exists.'
+    case 'auth/weak-password':              return 'Password must be at least 6 characters.'
+    case 'auth/invalid-email':              return 'Please enter a valid email address.'
+    case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
+    case 'auth/popup-closed-by-user':       return ''
+    case 'auth/popup-blocked':              return 'Pop-up was blocked. Allow pop-ups for this site.'
+    case 'auth/network-request-failed':     return 'Network error. Check your connection.'
+    default:                                return `Login failed (${code}). Please try again.`
   }
 }
 
@@ -39,6 +43,8 @@ export default function Login() {
   const navigate = useNavigate()
 
   async function routeAfterLogin(uid: string, isNewUser = false) {
+    // Ensure auth token is propagated to Firestore before reading
+    await auth.currentUser?.getIdToken(true)
     const snap = await getDoc(doc(db, 'users', uid))
     const firestoreRole = snap.data()?.role
 
@@ -78,7 +84,7 @@ export default function Login() {
         await routeAfterLogin(cred.user.uid, true)
       }
     } catch (e: any) {
-      setError(friendlyError(e.code))
+      setError(friendlyError(e.code ?? e.message ?? 'unknown'))
       setLoading(false)
     }
   }
@@ -91,7 +97,7 @@ export default function Login() {
       const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
       await routeAfterLogin(cred.user.uid, isNew)
     } catch (e: any) {
-      const msg = friendlyError(e.code)
+      const msg = friendlyError(e.code ?? e.message ?? 'unknown')
       if (msg) setError(msg)
       setLoading(false)
     }

@@ -1,22 +1,26 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { initializeApp, cert, getApps } from 'firebase-admin/app'
-import { getFirestore } from 'firebase-admin/firestore'
-import Anthropic from '@anthropic-ai/sdk'
+/**
+ * api/generate-summary.ts
+ *
+ * Generates an AI session summary card for a given session.
+ * Called by the tutor from the SessionDetail page after a session completes.
+ *
+ * Uses Claude Haiku to produce a structured JSON summary from:
+ *   - Fireflies transcript (if available)
+ *   - Tutor notes (if provided)
+ *   - Session metadata (always available as fallback)
+ *
+ * Saves the summary as a draft to Firestore. Tutor reviews and publishes separately.
+ */
 
-if (!getApps().length) {
-  initializeApp({ credential: cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!)) })
-}
-const db = getFirestore()
+import type { VercelRequest, VercelResponse } from '@vercel/node'
+import Anthropic from '@anthropic-ai/sdk'
+import { db } from '../lib/firebase'
+import { setCors } from '../lib/cors'
+
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
-function setCORS(res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-}
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  setCORS(res)
+  setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
 
@@ -27,11 +31,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const sessionSnap = await db.collection('sessions').doc(sessionId).get()
     if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
 
-    const session = sessionSnap.data()!
-    const transcriptText = session.transcript?.fullText ?? ''
-    const notes = tutorNotes || session.tutorNotes || ''
+    const session  = sessionSnap.data()!
+    const transcript = session.transcript?.fullText ?? ''
+    const notes      = tutorNotes || session.tutorNotes || ''
 
-    // Build prompt from whatever we have — never block generation
+    // Always generate — fall back to session metadata if transcript/notes aren't available yet
     const prompt = `You are a helpful tutor assistant for MindCraft, an online tutoring platform.
 Generate a concise, encouraging session summary card for the student based on what is available below.
 
@@ -39,37 +43,35 @@ Subject: ${session.subject || 'Tutoring Session'}
 Student: ${session.studentName || 'Student'}
 Date: ${session.date || ''}
 Duration: ${session.duration || ''}
-${transcriptText ? `\nSESSION TRANSCRIPT:\n${transcriptText.slice(0, 6000)}\n` : ''}
-${notes ? `\nTUTOR'S NOTES:\n${notes}\n` : ''}
-${!transcriptText && !notes ? '\n(No transcript or notes yet — generate a general placeholder summary based on the session details above)\n' : ''}
+${transcript ? `\nSESSION TRANSCRIPT:\n${transcript.slice(0, 6000)}\n` : ''}
+${notes      ? `\nTUTOR NOTES:\n${notes}\n`                            : ''}
+${!transcript && !notes ? '\n(No transcript or notes yet — write a warm placeholder based on session details above)\n' : ''}
 
-Return ONLY valid JSON (no markdown, no explanation) with this exact structure:
+Return ONLY valid JSON (no markdown, no extra text) with this exact shape:
 {
-  "title": "Brief descriptive session title (max 8 words)",
-  "topics": ["topic 1", "topic 2", "topic 3"],
-  "homework": ["homework item 1", "homework item 2"],
+  "title":    "Brief session title (max 8 words)",
+  "topics":   ["topic 1", "topic 2", "topic 3"],
+  "homework": ["item 1", "item 2"],
   "progress": "One sentence about student progress this session",
-  "tutorNote": "Warm 2-3 sentence personal note from tutor to student"
+  "tutorNote":"Warm 2-3 sentence personal note from tutor to student"
 }`
 
-    const message = await anthropic.messages.create({
+    const aiResponse = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 1024,
       messages: [{ role: 'user', content: prompt }],
     })
 
-    const text = message.content[0].type === 'text' ? message.content[0].text.trim() : ''
+    const raw = aiResponse.content[0].type === 'text' ? aiResponse.content[0].text.trim() : ''
 
-    let summaryCard
-    try {
-      const match = text.match(/\{[\s\S]*\}/)
-      if (!match) throw new Error('No JSON found')
-      summaryCard = JSON.parse(match[0])
-    } catch {
-      return res.status(500).json({ error: 'Failed to parse AI response', raw: text.slice(0, 200) })
+    // Extract JSON block from response
+    const jsonMatch = raw.match(/\{[\s\S]*\}/)
+    if (!jsonMatch) {
+      return res.status(500).json({ error: 'AI did not return valid JSON', raw: raw.slice(0, 200) })
     }
+    const summaryCard = JSON.parse(jsonMatch[0])
 
-    // Save draft to session doc
+    // Save as draft — tutor publishes to student in a separate step
     await sessionSnap.ref.update({
       summaryCard,
       summaryStatus: 'draft',

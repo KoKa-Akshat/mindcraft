@@ -1,52 +1,31 @@
+/**
+ * TutorDashboard.tsx
+ *
+ * Main dashboard for tutors. Shows:
+ *   - Sidebar: student list derived from their sessions (auto-populates as students book)
+ *   - Sessions to Review: completed sessions waiting for a summary
+ *   - Session Summary + Recent Chat: filtered to the selected student
+ *   - Upcoming Sessions: scheduled future sessions
+ *   - Calendly card: connect/display integration status
+ *
+ * Selecting a student in the sidebar filters ALL cards to that student.
+ * Selecting "All Students" resets filters.
+ */
+
 import { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import {
   collection, query, where, onSnapshot, getDocs,
-  doc, getDoc, updateDoc,
+  doc, getDoc, updateDoc, orderBy, limit,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
+import { useToast } from '../hooks/useToast'
+import { fmtDateTime, timeUntil } from '../utils/format'
+import type { Session, TutorStudent as Student } from '../types'
 import s from './TutorDashboard.module.css'
-
-interface Session {
-  id: string
-  studentName: string
-  studentEmail: string
-  studentId: string | null
-  subject: string
-  date: string
-  scheduledAt: number
-  endAt: number
-  duration: string
-  status: 'scheduled' | 'completed' | 'cancelled'
-  meetingUrl: string | null
-  summaryStatus?: 'pending' | 'draft' | 'published'
-}
-
-interface Student {
-  id: string
-  displayName: string
-  email: string
-  lastSession?: { title?: string; subject?: string; date?: string; bullets?: string[] }
-  messages?: { name: string; initial: string; isTutor: boolean; text: string; time: string }[]
-}
-
-function fmt(ms: number) {
-  return new Date(ms).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
-    + ' · ' + new Date(ms).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-}
-
-function timeUntil(ms: number) {
-  const diff = ms - Date.now()
-  if (diff < 0) return 'Now'
-  const h = Math.floor(diff / 3600000)
-  const m = Math.floor((diff % 3600000) / 60000)
-  if (h > 24) return `in ${Math.floor(h / 24)}d`
-  if (h > 0) return `in ${h}h ${m}m`
-  return `in ${m}m`
-}
 
 const FIFTEEN_MIN = 15 * 60 * 1000
 
@@ -54,16 +33,15 @@ export default function TutorDashboard() {
   const user = useUser()
   const navigate = useNavigate()
 
-  const [sessions, setSessions]         = useState<Session[]>([])
-  const [toReview, setToReview]         = useState<Session[]>([])
+  const { toast, showToast } = useToast()
+
+  const [sessions, setSessions]           = useState<Session[]>([])
+  const [toReview, setToReview]           = useState<Session[]>([])
   const [studentIdByEmail, setStudentIdByEmail] = useState<Record<string, string>>({})
-  const [students, setStudents]         = useState<Student[]>([])
-  const [selectedStudent, setSelectedStudent] = useState<string>('')
-  const [reviewFilter, setReviewFilter]   = useState<string>('all')
-  const [sessionFilter, setSessionFilter] = useState<string>('all')
-  const [sidebarStudent, setSidebarStudent] = useState<string | null>(null)
-  const [toast, setToast]               = useState('')
-  const [loading, setLoading]           = useState(true)
+  const [students, setStudents]           = useState<Student[]>([])
+  const [selectedStudent, setSelectedStudent]   = useState<string>('all')
+  const [chatMessages, setChatMessages]   = useState<{ senderId: string; text: string; createdAt: any }[]>([])
+  const [loading, setLoading]             = useState(true)
   const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
   const [calendlyToken, setCalendlyToken] = useState('')
   const [connectingCalendly, setConnectingCalendly] = useState(false)
@@ -113,11 +91,20 @@ export default function TutorDashboard() {
             summaryStatus: (s as any).summaryStatus ?? 'pending',
           }).catch(() => {}))
 
-        const upcoming = all
+        // Deduplicate by calendlyEventUri (webhook can fire twice)
+        const seen = new Set<string>()
+        const deduped = all.filter(s => {
+          const key = (s as any).calendlyEventUri || s.id
+          if (seen.has(key)) return false
+          seen.add(key)
+          return true
+        })
+
+        const upcoming = deduped
           .filter(s => s.status === 'scheduled' && (s.endAt ?? s.scheduledAt + 90 * 60 * 1000) > now)
           .sort((a, b) => a.scheduledAt - b.scheduledAt)
           .slice(0, 10)
-        const completed = all
+        const completed = deduped
           .filter(s => s.status === 'completed')
           .sort((a, b) => b.scheduledAt - a.scheduledAt)
           .slice(0, 20)
@@ -149,27 +136,49 @@ export default function TutorDashboard() {
     return () => unsub()
   }, [user])
 
+  // Derive students from sessions (unique emails) and look up their user docs
   useEffect(() => {
-    getDocs(query(collection(db, 'users'), where('tutorId', '==', user.uid)))
+    if (Object.keys(studentIdByEmail).length === 0 && sessions.length === 0 && toReview.length === 0) return
+    const allSessions = [...sessions, ...toReview]
+    const emails = [...new Set(allSessions.map(s => s.studentEmail).filter(Boolean))]
+    if (emails.length === 0) return
+    getDocs(query(collection(db, 'users'), where('email', 'in', emails.slice(0, 10))))
       .then(snap => {
-        const list = snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Student, 'id'>) }))
+        const list: Student[] = snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<Student, 'id'>) }))
+        // Fill in any students we have email for but no user doc (guest bookings)
+        emails.forEach(email => {
+          if (!list.find(s => s.email === email)) {
+            const sid = studentIdByEmail[email]
+            if (sid) list.push({ id: sid, displayName: email.split('@')[0], email })
+          }
+        })
         setStudents(list)
       })
       .catch(() => {})
-  }, [user])
+  }, [sessions, toReview, studentIdByEmail])
 
-  // Default Session Summary to whoever's coming up next
+  // Live chat messages for selected student
   useEffect(() => {
-    if (sessions.length === 0) return
+    if (!selectedStudent || selectedStudent === 'all') { setChatMessages([]); return }
+    const chatId = [user.uid, selectedStudent].sort().join('_')
+    const unsub = onSnapshot(
+      query(collection(db, 'chats', chatId, 'messages'), orderBy('createdAt', 'asc'), limit(20)),
+      snap => setChatMessages(snap.docs.map(d => d.data() as any)),
+      () => setChatMessages([])
+    )
+    return () => unsub()
+  }, [selectedStudent, user.uid])
+
+  // Default to next session's student on first load
+  useEffect(() => {
+    if (selectedStudent !== 'all') return
     const next = sessions[0]
+    if (!next) return
     const sid = next.studentId ?? studentIdByEmail[next.studentEmail] ?? null
     if (sid) setSelectedStudent(sid)
   }, [sessions, studentIdByEmail])
 
-  function showToast(msg: string) {
-    setToast(msg)
-    setTimeout(() => setToast(''), 3000)
-  }
+
 
   async function handleDeleteSession(id: string, e: React.MouseEvent) {
     e.preventDefault()
@@ -198,7 +207,7 @@ const nextSession = sessions[0] ?? null
   const canJoin = sessionLive && !!nextSession?.meetingUrl
 
   const selectedStudentData = students.find(st => st.id === selectedStudent)
-  const recentMessages = selectedStudentData?.messages?.slice(-2) ?? []
+
 
   return (
     <div className={s.shell}>
@@ -224,8 +233,8 @@ const nextSession = sessions[0] ?? null
             <div className={s.sideDivider} />
             <p className={s.sideLabel}>Students</p>
             <button
-              className={`${s.sideItem} ${sidebarStudent === null ? s.sideActive : ''}`}
-              onClick={() => { setSidebarStudent(null); setReviewFilter('all'); setSessionFilter('all') }}
+              className={`${s.sideItem} ${selectedStudent === 'all' ? s.sideActive : ''}`}
+              onClick={() => setSelectedStudent('all')}
             >
               <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
               All Students
@@ -233,8 +242,8 @@ const nextSession = sessions[0] ?? null
             {students.map(st => (
               <button
                 key={st.id}
-                className={`${s.sideItem} ${sidebarStudent === st.id ? s.sideActive : ''}`}
-                onClick={() => { setSidebarStudent(st.id); setReviewFilter(st.id); setSessionFilter(st.id) }}
+                className={`${s.sideItem} ${selectedStudent === st.id ? s.sideActive : ''}`}
+                onClick={() => setSelectedStudent(st.id)}
               >
                 <div className={s.sideAvatar}>{(st.displayName || st.email)?.[0]?.toUpperCase()}</div>
                 {st.displayName || st.email?.split('@')[0]}
@@ -290,20 +299,10 @@ const nextSession = sessions[0] ?? null
               <div className={s.card}>
                 <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Sessions to Review</span>
-                  <div className={s.cardHeaderRight}>
-                    {toReview.length > 0 && <span className={s.reviewBadge}>{toReview.length}</span>}
-                    {students.length > 0 && (
-                      <select className={s.studentPicker} value={reviewFilter} onChange={e => setReviewFilter(e.target.value)}>
-                        <option value="all">All students</option>
-                        {students.map(st => (
-                          <option key={st.id} value={st.id}>{st.displayName || st.email?.split('@')[0]}</option>
-                        ))}
-                      </select>
-                    )}
-                  </div>
+                  {toReview.length > 0 && <span className={s.reviewBadge}>{toReview.length}</span>}
                 </div>
                 {(() => {
-                  const filtered = reviewFilter === 'all' ? toReview : toReview.filter(s => s.studentId === reviewFilter || studentIdByEmail[s.studentEmail] === reviewFilter)
+                  const filtered = selectedStudent === 'all' ? toReview : toReview.filter(s => s.studentId === selectedStudent || studentIdByEmail[s.studentEmail] === selectedStudent)
                   return filtered.length === 0 ? (
                     <div className={s.emptyState}>
                       <span>All caught up</span>
@@ -316,7 +315,7 @@ const nextSession = sessions[0] ?? null
                           <div className={s.sessionLeft}>
                             <div className={s.sessionName}>{sess.studentName}</div>
                             <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
-                            <div className={s.sessionDate}>{fmt(sess.scheduledAt)}</div>
+                            <div className={s.sessionDate}>{fmtDateTime(sess.scheduledAt)}</div>
                           </div>
                           <div className={s.sessionRight}>
                             <span className={`${s.sessionBadge} ${
@@ -336,18 +335,14 @@ const nextSession = sessions[0] ?? null
                 })()}
               </div>
 
-              {/* Session Summary (existing) */}
+              {/* Session Summary */}
               <div className={s.card}>
                 <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Session Summary</span>
-                  {students.length > 0 && (
-                    <select className={s.studentPicker}
-                      value={selectedStudent}
-                      onChange={e => setSelectedStudent(e.target.value)}>
-                      {students.map(st => (
-                        <option key={st.id} value={st.id}>{st.displayName || st.email}</option>
-                      ))}
-                    </select>
+                  {selectedStudentData && (
+                    <span style={{ fontSize: 12, color: 'var(--mu)', fontWeight: 600 }}>
+                      {selectedStudentData.displayName || selectedStudentData.email?.split('@')[0]}
+                    </span>
                   )}
                 </div>
 
@@ -375,19 +370,27 @@ const nextSession = sessions[0] ?? null
 
                 <div className={s.divider} />
 
-                <div className={s.cardLabel} style={{ marginBottom: 10 }}>Recent Chat</div>
-                {recentMessages.length > 0 ? recentMessages.map((msg, i) => (
-                  <div key={i} className={s.msgRow}>
-                    <div className={`${s.msgAv} ${msg.isTutor ? s.msgAvTutor : ''}`}>{msg.initial}</div>
-                    <div className={s.msgBody}>
-                      <div className={s.msgMeta}>
-                        <span className={s.msgName}>{msg.name}</span>
-                        <span className={s.msgTime}>{msg.time}</span>
+                <div className={s.cardHeader} style={{ marginBottom: 10 }}>
+                  <span className={s.cardLabel}>Recent Chat</span>
+                  {selectedStudent && selectedStudent !== 'all' && (
+                    <Link to={`/chat/${selectedStudent}`} style={{ fontSize: 12, color: 'var(--gdd)', fontWeight: 600 }}>Open chat →</Link>
+                  )}
+                </div>
+                {chatMessages.length > 0 ? chatMessages.slice(-3).map((msg, i) => {
+                  const isMe = msg.senderId === user.uid
+                  const name = isMe ? 'You' : (selectedStudentData?.displayName || selectedStudentData?.email?.split('@')[0] || 'Student')
+                  return (
+                    <div key={i} className={s.msgRow}>
+                      <div className={`${s.msgAv} ${isMe ? s.msgAvTutor : ''}`}>{name[0]?.toUpperCase()}</div>
+                      <div className={s.msgBody}>
+                        <div className={s.msgMeta}>
+                          <span className={s.msgName}>{name}</span>
+                        </div>
+                        <div className={s.msgText}>{msg.text || '📎 File'}</div>
                       </div>
-                      <div className={s.msgText}>{msg.text}</div>
                     </div>
-                  </div>
-                )) : (
+                  )
+                }) : (
                   <div className={s.emptyState} style={{ padding: '12px 0 0' }}>
                     <span>No messages yet</span>
                   </div>
@@ -432,17 +435,9 @@ const nextSession = sessions[0] ?? null
               <div className={s.card}>
                 <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Upcoming Sessions</span>
-                  {students.length > 0 && (
-                    <select className={s.studentPicker} value={sessionFilter} onChange={e => setSessionFilter(e.target.value)}>
-                      <option value="all">All students</option>
-                      {students.map(st => (
-                        <option key={st.id} value={st.id}>{st.displayName || st.email?.split('@')[0]}</option>
-                      ))}
-                    </select>
-                  )}
                 </div>
                 {(() => {
-                  const filtered = sessionFilter === 'all' ? sessions : sessions.filter(s => s.studentId === sessionFilter || studentIdByEmail[s.studentEmail] === sessionFilter)
+                  const filtered = selectedStudent === 'all' ? sessions : sessions.filter(s => s.studentId === selectedStudent || studentIdByEmail[s.studentEmail] === selectedStudent)
                   return filtered.length === 0 ? (
                     <div className={s.emptyState}>
                       <span>No sessions scheduled</span>
@@ -457,7 +452,7 @@ const nextSession = sessions[0] ?? null
                           <div className={s.sessionLeft}>
                             <div className={s.sessionName}>{sess.studentName}</div>
                             <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
-                            <div className={s.sessionDate}>{fmt(sess.scheduledAt)}</div>
+                            <div className={s.sessionDate}>{fmtDateTime(sess.scheduledAt)}</div>
                           </div>
                           <div className={s.sessionRight}>
                             <div className={`${s.sessionBadge} ${live ? s.badgeLive : ''}`}>

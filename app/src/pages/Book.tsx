@@ -55,12 +55,16 @@ export default function Book() {
         if (snap.empty) return
         setTutors(snap.docs.map(d => {
           const data = d.data()
+          // Derive Calendly URL from stored calendlyUrl, or from email slug
+          const email: string = data.calendlyEmail ?? data.email ?? ''
+          const slug = email.split('@')[0].replace(/[^a-z0-9]/gi, '').toLowerCase()
+          const calendlyUrl = data.calendlyUrl || (slug ? `https://calendly.com/${slug}` : '')
           return {
             id: d.id,
             displayName: data.displayName ?? 'Tutor',
             bio: data.bio || LOREM,
             subjects: data.subjects ?? [],
-            calendlyUrl: data.calendlyUrl ?? '',
+            calendlyUrl,
             sessionsCompleted: data.sessionsCompleted ?? 0,
             avatarColor: data.avatarColor ?? 'linear-gradient(135deg, #2D5016, #58CC02)',
           }
