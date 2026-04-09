@@ -1,8 +1,15 @@
 {
   "functions": {
-    "api/calendly.ts": { "maxDuration": 10 },
-    "api/fireflies.ts": { "maxDuration": 30 },
-    "api/generate-summary.ts": { "maxDuration": 30 },
-    "api/register-calendly.ts": { "maxDuration": 15 }
-  }
+    "api/calendly.ts":        { "maxDuration": 10 },
+    "api/fireflies.ts":       { "maxDuration": 30 },
+    "api/generate-summary.ts":{ "maxDuration": 30 },
+    "api/register-calendly.ts":{ "maxDuration": 15 },
+    "api/cron-fireflies.ts":  { "maxDuration": 60 }
+  },
+  "crons": [
+    {
+      "path": "/api/cron-fireflies",
+      "schedule": "0 6 * * *"
+    }
+  ]
 }
