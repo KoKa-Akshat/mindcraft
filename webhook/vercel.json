@@ -4,7 +4,8 @@
     "api/fireflies.ts":       { "maxDuration": 30 },
     "api/generate-summary.ts":{ "maxDuration": 30 },
     "api/register-calendly.ts":{ "maxDuration": 15 },
-    "api/cron-fireflies.ts":  { "maxDuration": 60 }
+    "api/cron-fireflies.ts":   { "maxDuration": 60 },
+    "api/publish-summary.ts":  { "maxDuration": 10 }
   },
   "crons": [
     {

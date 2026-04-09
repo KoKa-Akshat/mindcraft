@@ -25,15 +25,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
 
   try {
-    const { sessionId, tutorNotes } = req.body
+    // fileText: optional plain-text content of an attached file, read client-side
+    // It is used here and then discarded — never stored in Firebase Storage
+    const { sessionId, tutorNotes, fileText } = req.body
     if (!sessionId) return res.status(400).json({ error: 'Missing sessionId' })
 
     const sessionSnap = await db.collection('sessions').doc(sessionId).get()
     if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
 
-    const session  = sessionSnap.data()!
+    const session    = sessionSnap.data()!
     const transcript = session.transcript?.fullText ?? ''
-    const notes      = tutorNotes || session.tutorNotes || ''
+    const notes      = [tutorNotes || session.tutorNotes || '', fileText || ''].filter(Boolean).join('\n\n')
 
     // Always generate — fall back to session metadata if transcript/notes aren't available yet
     const prompt = `You are a helpful tutor assistant for MindCraft, an online tutoring platform.
@@ -44,7 +46,7 @@ Student: ${session.studentName || 'Student'}
 Date: ${session.date || ''}
 Duration: ${session.duration || ''}
 ${transcript ? `\nSESSION TRANSCRIPT:\n${transcript.slice(0, 6000)}\n` : ''}
-${notes      ? `\nTUTOR NOTES:\n${notes}\n`                            : ''}
+${notes      ? `\nTUTOR NOTES & ATTACHMENTS:\n${notes.slice(0, 3000)}\n` : ''}
 ${!transcript && !notes ? '\n(No transcript or notes yet — write a warm placeholder based on session details above)\n' : ''}
 
 Return ONLY valid JSON (no markdown, no extra text) with this exact shape:

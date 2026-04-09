@@ -14,16 +14,16 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
-import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { db, storage } from '../firebase'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
 import s from './SessionDetail.module.css'
 
-const GENERATE_URL  = 'https://mindcraft-webhook.vercel.app/api/generate-summary'
-const DELETE_URL    = 'https://mindcraft-webhook.vercel.app/api/delete-session'
+const GENERATE_URL = 'https://mindcraft-webhook.vercel.app/api/generate-summary'
+const PUBLISH_URL  = 'https://mindcraft-webhook.vercel.app/api/publish-summary'
+const DELETE_URL   = 'https://mindcraft-webhook.vercel.app/api/delete-session'
 
 // Shape of the AI-generated summary card
 interface SummaryCard {
@@ -69,7 +69,7 @@ export default function SessionDetail() {
 
   const [tutorNotes, setTutorNotes] = useState('')
   const [notesFile, setNotesFile] = useState<File | null>(null)
-  const [uploadingFile, setUploadingFile] = useState(false)
+  const [fileReady, setFileReady] = useState(false)   // true once text has been extracted
 
   const { toast, showToast } = useToast()
   const [generating, setGenerating] = useState(false)
@@ -94,22 +94,21 @@ export default function SessionDetail() {
   }, [id, user, navigate])
 
 
-  async function handleFileUpload() {
-    if (!notesFile || !id) return
-    setUploadingFile(true)
-    try {
-      const path = storageRef(storage, `sessions/${id}/notes/${notesFile.name}`)
-      await uploadBytes(path, notesFile)
-      const url = await getDownloadURL(path)
-      await updateDoc(doc(db, 'sessions', id), { tutorNotesUrl: url })
-      setSession(prev => prev ? { ...prev, tutorNotesUrl: url } : prev)
-      showToast('File uploaded')
-    } catch (err) {
-      showToast('Upload failed')
-    } finally {
-      setUploadingFile(false)
-      setNotesFile(null)
+  // Read file as plain text client-side — no upload to Storage needed.
+  // The text goes straight into the AI prompt and is then discarded.
+  function handleFileSelect(file: File) {
+    setNotesFile(file)
+    setFileReady(false)
+    const reader = new FileReader()
+    reader.onload = e => {
+      const text = e.target?.result as string
+      // Append file content to tutor notes textarea
+      setTutorNotes(prev => prev ? `${prev}\n\n--- Attached: ${file.name} ---\n${text}` : `--- Attached: ${file.name} ---\n${text}`)
+      setFileReady(true)
+      showToast(`${file.name} ready — will be included in AI summary`)
     }
+    reader.onerror = () => showToast('Could not read file')
+    reader.readAsText(file)
   }
 
   async function handleGenerate() {
@@ -122,7 +121,14 @@ export default function SessionDetail() {
         body: JSON.stringify({ sessionId: id, tutorNotes }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
+      if (!res.ok) {
+        // Detect Anthropic auth error specifically
+        const msg = data.error ?? ''
+        if (msg.includes('authentication_error') || msg.includes('invalid x-api-key') || msg.includes('401')) {
+          throw new Error('Anthropic API key is invalid — update ANTHROPIC_API_KEY in Vercel env vars')
+        }
+        throw new Error(msg)
+      }
       setCard(data.summaryCard)
       setSession(prev => prev ? { ...prev, summaryStatus: 'draft', summaryCard: data.summaryCard } : prev)
       showToast('Summary generated — review and publish')
@@ -158,36 +164,19 @@ export default function SessionDetail() {
     if (!card.title) { showToast('Add a title before publishing'); return }
     setPublishing(true)
     try {
-      // Save tutorNotes if changed
-      const updates: Record<string, any> = {
-        summaryCard: card,
-        summaryStatus: 'published',
-        tutorNotes: tutorNotes || null,
-      }
-      await updateDoc(doc(db, 'sessions', id), updates)
-
-      // Push to student's lastSession
-      if (session.studentId) {
-        await updateDoc(doc(db, 'users', session.studentId), {
-          lastSession: {
-            id,
-            subject: session.subject,
-            date: session.date,
-            duration: session.duration,
-            title: card.title,
-            bullets: [...card.topics.slice(0, 2), ...card.homework.slice(0, 2)].filter(Boolean),
-            tutorName: session.tutorName,
-            scheduledAt: session.scheduledAt,
-            tutorNote: card.tutorNote,
-            progress: card.progress,
-          },
-        })
-      }
-
+      // Server-side publish: Admin SDK can write to student's user doc
+      // (Firestore client rules block tutor from writing to another user's doc)
+      const res = await fetch(PUBLISH_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: id, card, tutorNotes }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
       setSession(prev => prev ? { ...prev, summaryStatus: 'published' } : prev)
-      showToast('Published to student dashboard')
-    } catch {
-      showToast('Publish failed')
+      showToast('Published to student dashboard ✓')
+    } catch (err: any) {
+      showToast(err.message ?? 'Publish failed')
     } finally {
       setPublishing(false)
     }
@@ -286,22 +275,15 @@ export default function SessionDetail() {
                   ref={fileRef}
                   type="file"
                   style={{ display: 'none' }}
-                  accept=".pdf,.doc,.docx,.txt,.png,.jpg"
-                  onChange={e => setNotesFile(e.target.files?.[0] ?? null)}
+                  accept=".txt,.md,.csv,.doc,.docx,.pdf"
+                  onChange={e => { const f = e.target.files?.[0]; if (f) handleFileSelect(f) }}
                 />
                 <button className={s.btnOutline} onClick={() => fileRef.current?.click()}>
-                  {notesFile ? notesFile.name : '↑ Attach File'}
+                  {fileReady ? `✓ ${notesFile?.name}` : '↑ Attach File'}
                 </button>
-                {notesFile && (
-                  <button className={s.btnOutline} onClick={handleFileUpload} disabled={uploadingFile}>
-                    {uploadingFile ? 'Uploading…' : 'Upload'}
-                  </button>
-                )}
-                {session.tutorNotesUrl && !notesFile && (
-                  <a href={session.tutorNotesUrl} target="_blank" rel="noopener" className={s.fileLink}>
-                    View attached file →
-                  </a>
-                )}
+                <span style={{ fontSize: 11, color: 'var(--mu)', fontWeight: 600 }}>
+                  Text is read locally — nothing stored
+                </span>
               </div>
             </div>
 
