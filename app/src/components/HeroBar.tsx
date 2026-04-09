@@ -2,15 +2,16 @@ import { useNavigate } from 'react-router-dom'
 import s from './HeroBar.module.css'
 
 interface Props {
-  greeting: string
-  name: string
+  greeting:    string
+  name:        string
   nextSession: { subject: string; time: string; tutor: string; meetingUrl?: string | null; scheduledAt?: number } | null
-  tutorId?: string | null
+  tutorId?:    string | null
+  right?:      React.ReactNode   // class cards strip rendered in the empty hero space
 }
 
 const FIFTEEN_MIN = 15 * 60 * 1000
 
-export default function HeroBar({ greeting, name, nextSession, tutorId }: Props) {
+export default function HeroBar({ greeting, name, nextSession, tutorId, right }: Props) {
   const navigate = useNavigate()
   const now = Date.now()
   const sessionMs = nextSession?.scheduledAt ?? 0
@@ -56,6 +57,9 @@ export default function HeroBar({ greeting, name, nextSession, tutorId }: Props)
           )}
         </div>
       </div>
+
+      {/* Right slot — class cards horizontal strip fills the empty hero space */}
+      {right && <div className={s.right}>{right}</div>}
     </div>
   )
 }

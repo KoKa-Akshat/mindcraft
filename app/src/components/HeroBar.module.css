@@ -2,6 +2,17 @@
   padding: 28px 0 24px;
   border-bottom: 1px solid rgba(0,105,255,0.1);
   margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.left { flex-shrink: 0; }
+.right {
+  flex: 1;
+  min-width: 0;
+  /* vertically center the cards strip in the hero */
+  display: flex;
+  align-items: center;
 }
 .left h1 {
   font-size: clamp(24px, 3vw, 32px);

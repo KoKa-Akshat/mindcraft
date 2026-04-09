@@ -35,14 +35,14 @@ export default function Dashboard() {
           name={data.displayName}
           nextSession={data.nextSession}
           tutorId={data.tutorId}
+          right={<ExploreClasses />}
         />
         {data.loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <div className={s.grid}>
-            {/* LEFT: classes scroll strip + session summary */}
+            {/* LEFT: session summary */}
             <div className={s.col}>
-              <ExploreClasses />
               <LastSession session={data.lastSession} />
             </div>
             {/* RIGHT: practice card + messages, bottom-aligned with left */}
