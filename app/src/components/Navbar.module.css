@@ -1,32 +1,33 @@
-/* ── JARVIS FLOATING NAV ── */
+/* ── FLOATING NAVBAR (light glass + blue border glow) ── */
 .nav {
   position: fixed;
   top: 10px; left: 14px; right: 14px;
   z-index: 100;
   height: 54px;
-  background: rgba(10, 37, 64, 0.94);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-radius: 18px;
-  border: 1px solid rgba(0, 105, 255, 0.22);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: 16px;
+  border: 1.5px solid rgba(0, 105, 255, 0.22);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.22),
-    0 2px 8px rgba(0, 0, 0, 0.14),
-    0 0 0 0.5px rgba(0, 105, 255, 0.12) inset;
+    0 0 0 4px rgba(0, 105, 255, 0.05),
+    0 8px 32px rgba(10, 37, 64, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 22px;
 }
 
+/* Original logo: dark "Mind" + green "Craft" */
 .logo {
   font-size: 20px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
   text-decoration: none;
   letter-spacing: -.3px;
 }
-.logo span { color: var(--blue); }
+.logo span { color: var(--g); }
 
 .right { display: flex; align-items: center; gap: 10px; }
 
@@ -36,10 +37,10 @@
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   position: relative;
-  color: rgba(255,255,255,0.55);
+  color: var(--mu);
   transition: background .15s, color .15s;
 }
-.notif:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); }
+.notif:hover { background: var(--blue-bg); color: var(--blue); }
 .notif svg {
   width: 18px; height: 18px;
   stroke: currentColor; fill: none;
@@ -51,8 +52,8 @@
   width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--blue);
-  border: 2px solid rgba(10,37,64,0.9);
-  box-shadow: 0 0 6px rgba(0,105,255,0.6);
+  border: 2px solid #fff;
+  box-shadow: 0 0 5px rgba(0, 105, 255, 0.5);
 }
 
 .avatar {
@@ -63,8 +64,8 @@
   cursor: pointer;
   font-size: 14px; font-weight: 900; color: #fff;
   font-family: var(--f);
-  border: 1.5px solid rgba(0,105,255,0.4);
+  border: 1.5px solid rgba(0, 105, 255, 0.3);
   transition: opacity .15s, transform .15s;
-  box-shadow: 0 2px 8px rgba(0,105,255,0.35);
+  box-shadow: 0 2px 8px rgba(0, 105, 255, 0.25);
 }
 .avatar:hover { opacity: .9; transform: scale(1.06); }

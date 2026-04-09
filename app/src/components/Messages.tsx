@@ -48,11 +48,12 @@ export default function Messages({ messages, tutorId }: Props) {
       )}
       <div className={s.divider} />
       {tutorId ? (
-        <Link to={`/chat/${tutorId}`} className={s.btnOutline} style={{ fontSize: 12, textDecoration: 'none', display: 'inline-block' }}>
+        <Link to={`/chat/${tutorId}`} className={s.btnOutline} style={{ fontSize: 12, textDecoration: 'none', color: 'var(--tx)' }}>
+          <MailboxIcon />
           Message your tutor →
         </Link>
       ) : (
-        <span className={s.btnOutline} style={{ fontSize: 12, opacity: 0.5, cursor: 'default' }}>
+        <span className={s.btnOutline} style={{ fontSize: 12, opacity: 0.5, cursor: 'default', color: 'var(--tx)' }}>
           Book a session to message your tutor
         </span>
       )}

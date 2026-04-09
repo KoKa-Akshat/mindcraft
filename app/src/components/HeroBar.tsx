@@ -45,7 +45,13 @@ export default function HeroBar({ greeting, name, nextSession, tutorId }: Props)
           <button className={s.btnSecondary} onClick={() => navigate('/book')}>Book Session</button>
           {tutorId && (
             <button className={s.btnSecondary} onClick={() => navigate(`/chat/${tutorId}`)}>
-              💬 Message Tutor
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <rect x="2" y="7" width="20" height="14" rx="2"/>
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                <line x1="12" y1="12" x2="12" y2="17"/>
+                <line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/>
+              </svg>
+              Message Tutor
             </button>
           )}
         </div>
