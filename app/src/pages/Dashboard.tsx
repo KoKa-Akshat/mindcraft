@@ -52,7 +52,7 @@ export default function Dashboard() {
             </div>
             <div className={s.col}>
               <ExploreClasses />
-              <Messages messages={data.messages} />
+              <Messages messages={data.messages} tutorId={data.tutorId} />
             </div>
           </div>
         )}
