@@ -1,13 +1,22 @@
 :root {
+  /* Brand green — used by tutor dashboard */
   --g:      #58CC02;
   --gd:     #4CAD00;
   --gdd:    #3A8500;
   --forest: #1A3C2A;
+
+  /* Brand blue — used by student dashboard */
+  --blue:    #0069FF;
+  --blue-d:  #0052CC;
+  --blue-dd: #003D99;
+  --navy:    #0A2540;
+  --blue-bg: #EEF4FF;
+
   --tx:     #1A1A1A;
   --mu:     #8A8F98;
   --w:      #fff;
   --bd:     #E8EAED;
-  --bg:     #F5F6F8;
+  --bg:     #F5F7FB;
   --red:    #FF4B4B;
   --f:      'Nunito', sans-serif;
 }

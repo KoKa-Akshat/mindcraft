@@ -4,8 +4,8 @@
   color: var(--tx);
 }
 .page {
-  margin-left: 220px;
-  padding: 76px 28px 48px;
+  margin-left: 238px;
+  padding: 90px 28px 48px;
 }
 .grid {
   display: grid;
@@ -21,22 +21,22 @@
   justify-content: center;
   align-items: center;
   min-height: 140px;
-  border-radius: 18px;
-  border: 1.5px dashed var(--bd);
+  border-radius: 20px;
+  border: 1.5px dashed rgba(0,105,255,0.18);
   gap: 8px;
-  color: var(--bd);
+  color: rgba(0,105,255,0.3);
 }
 .placeholder span { font-size: 12px; font-weight: 700; }
 .loading { display: flex; align-items: center; justify-content: center; height: 300px; }
 .spinner {
   width: 32px; height: 32px;
-  border: 3px solid var(--bd);
-  border-top-color: var(--g);
+  border: 3px solid rgba(0,105,255,0.12);
+  border-top-color: var(--blue);
   border-radius: 50%;
   animation: spin .7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (max-width: 720px) {
-  .page { margin-left: 0; padding: 70px 16px 40px; }
+  .page { margin-left: 0; padding: 80px 16px 40px; }
   .grid { grid-template-columns: 1fr; }
 }
