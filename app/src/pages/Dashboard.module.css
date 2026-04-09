@@ -12,8 +12,16 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   align-items: stretch;
+  /* Let columns stretch to equal height so bottom-alignment works */
 }
 .col { display: flex; flex-direction: column; gap: 16px; }
+/* Right column aligns its content to the bottom so Messages lines up with LastSession */
+.colRight {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-end;
+}
 .placeholder {
   flex: 1;
   display: flex;
