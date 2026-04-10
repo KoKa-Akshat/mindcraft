@@ -15,19 +15,33 @@ interface ClassCard {
 }
 
 const SUGGESTIONS: ClassCard[] = [
-  { icon: '📐', bg: 'linear-gradient(135deg, #2D5016, #58CC02)', name: 'Mathematics',  sub: 'Algebra · Calculus · Stats', badge: 'Book',  badgeType: 'new'  },
-  { icon: '⚛️', bg: 'linear-gradient(135deg, #1A2A6C, #4A7BF7)', name: 'Sciences',     sub: 'Physics · Chemistry · Bio',  badge: 'Book',  badgeType: 'free' },
-  { icon: '📖', bg: 'linear-gradient(135deg, #7B4F00, #F59E0B)', name: 'English',      sub: 'Writing · Literature · SAT', badge: 'Book',  badgeType: 'soon' },
-  { icon: '🌍', bg: 'linear-gradient(135deg, #1A3C6A, #2980B9)', name: 'History',      sub: 'AP · World · US History',    badge: 'Book',  badgeType: 'soon' },
+  { icon: '📐', bg: 'linear-gradient(135deg, #2D5016, #58CC02)', name: 'Mathematics',       sub: 'Algebra · Calculus · Stats',   badge: 'Book', badgeType: 'new'  },
+  { icon: '⚛️', bg: 'linear-gradient(135deg, #1A2A6C, #4A7BF7)', name: 'Sciences',          sub: 'Physics · Chemistry · Bio',    badge: 'Book', badgeType: 'free' },
+  { icon: '💹', bg: 'linear-gradient(135deg, #1A3C2A, #00B09B)', name: 'Accounting',        sub: 'Finance · Tax · Bookkeeping',  badge: 'Book', badgeType: 'new'  },
+  { icon: '🎹', bg: 'linear-gradient(135deg, #2C1654, #8E44AD)', name: 'Piano',             sub: 'Beginner to Advanced',         badge: 'Book', badgeType: 'free' },
+  { icon: '🚀', bg: 'linear-gradient(135deg, #7B0000, #E74C3C)', name: 'Entrepreneurship',  sub: 'Startups · Strategy · Pitch',  badge: 'Book', badgeType: 'soon' },
+  { icon: '📊', bg: 'linear-gradient(135deg, #0D3349, #2471A3)', name: 'Data Science',      sub: 'Python · ML · Analytics',     badge: 'Book', badgeType: 'new'  },
+  { icon: '📖', bg: 'linear-gradient(135deg, #7B4F00, #F59E0B)', name: 'English',           sub: 'Writing · Literature · SAT',  badge: 'Book', badgeType: 'soon' },
+  { icon: '📜', bg: 'linear-gradient(135deg, #4A1A6C, #9B59B6)', name: 'History',           sub: 'AP · World · US History',     badge: 'Book', badgeType: 'soon' },
 ]
 
 const SUBJECT_META: Record<string, Pick<ClassCard, 'icon' | 'bg'>> = {
   'Math':              { icon: '📐', bg: 'linear-gradient(135deg, #2D5016, #58CC02)' },
+  'AP Calculus':       { icon: '📐', bg: 'linear-gradient(135deg, #2D5016, #58CC02)' },
+  'Pre-Calculus':      { icon: '📐', bg: 'linear-gradient(135deg, #2D5016, #58CC02)' },
+  'Algebra':           { icon: '📐', bg: 'linear-gradient(135deg, #2D5016, #58CC02)' },
+  'Statistics':        { icon: '📊', bg: 'linear-gradient(135deg, #0D3349, #2471A3)' },
   'Physics':           { icon: '⚛️', bg: 'linear-gradient(135deg, #1A2A6C, #4A7BF7)' },
+  'AP Physics':        { icon: '⚛️', bg: 'linear-gradient(135deg, #1A2A6C, #4A7BF7)' },
   'Chemistry':         { icon: '🧪', bg: 'linear-gradient(135deg, #7B1A1A, #E74C3C)' },
   'Biology':           { icon: '🧬', bg: 'linear-gradient(135deg, #1A5C2A, #27AE60)' },
   'English':           { icon: '📖', bg: 'linear-gradient(135deg, #7B4F00, #F59E0B)' },
   'History':           { icon: '📜', bg: 'linear-gradient(135deg, #4A1A6C, #9B59B6)' },
+  'Accounting':        { icon: '💹', bg: 'linear-gradient(135deg, #1A3C2A, #00B09B)' },
+  'Piano':             { icon: '🎹', bg: 'linear-gradient(135deg, #2C1654, #8E44AD)' },
+  'Entrepreneurship':  { icon: '🚀', bg: 'linear-gradient(135deg, #7B0000, #E74C3C)' },
+  'Data Science':      { icon: '📊', bg: 'linear-gradient(135deg, #0D3349, #2471A3)' },
+  'SAT Prep':          { icon: '✏️', bg: 'linear-gradient(135deg, #4A3000, #F39C12)' },
   'Tutoring Session':  { icon: '📚', bg: 'linear-gradient(135deg, #2D5016, #58CC02)' },
 }
 

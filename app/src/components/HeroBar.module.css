@@ -1,7 +1,7 @@
 .hero {
-  padding: 28px 0 24px;
+  padding: 16px 0 16px;
   border-bottom: 1px solid rgba(0,105,255,0.1);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 32px;
