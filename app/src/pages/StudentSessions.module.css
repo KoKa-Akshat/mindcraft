@@ -1,0 +1,286 @@
+/* StudentSessions.module.css */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--f);
+}
+
+.page {
+  margin-left: 200px;
+  flex: 1;
+  padding: 0 28px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 22px 0 18px;
+  border-bottom: 1px solid var(--bd);
+  margin-bottom: 20px;
+}
+
+.headerLeft { display: flex; flex-direction: column; gap: 3px; }
+
+.title {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--tx);
+  letter-spacing: -.4px;
+  margin: 0;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--mu);
+  font-weight: 600;
+  margin: 0;
+}
+
+.graphBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,105,255,0.07);
+  border: 1.5px solid rgba(0,105,255,0.2);
+  border-radius: 12px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--f);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.graphBtn svg { width: 16px; height: 16px; }
+.graphBtn:hover { background: rgba(0,105,255,0.13); border-color: rgba(0,105,255,0.4); }
+
+/* ── Filters ── */
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filterBtn {
+  background: var(--w);
+  border: 1.5px solid var(--bd);
+  border-radius: 20px;
+  color: var(--mu);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--f);
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.filterBtn:hover { border-color: #bbb; color: var(--tx); }
+.filterActive {
+  background: rgba(0,105,255,0.06) !important;
+  border-color: var(--blue) !important;
+  color: var(--blue) !important;
+}
+
+/* ── Loading ── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+.spinner {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--bd);
+  border-top-color: var(--blue);
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Empty state ── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 60px 20px;
+}
+.emptyIcon { font-size: 40px; }
+.emptyTitle { font-size: 18px; font-weight: 900; color: var(--tx); margin: 0; }
+.emptySub { font-size: 14px; color: var(--mu); margin: 0; text-align: center; max-width: 340px; }
+.bookBtn {
+  margin-top: 8px;
+  background: var(--g);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: var(--f);
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--gd);
+  transition: all .15s;
+}
+.bookBtn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+/* ── Session list ── */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Session card ── */
+.card {
+  background: var(--w);
+  border: 1.5px solid var(--bd);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s;
+  position: relative;
+}
+.card:hover { border-color: #ccc; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.cardOpen { border-color: var(--accent, var(--blue)) !important; }
+
+.cardAccent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--accent, var(--blue));
+  border-radius: 4px 0 0 4px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px 16px 24px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cardLeft { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+
+.subject {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--accent, var(--blue));
+  background: rgba(0,105,255,0.06);
+  padding: 2px 8px;
+  border-radius: 6px;
+  align-self: flex-start;
+}
+
+.sessionTitle {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--tx);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--mu);
+  font-weight: 600;
+}
+.dot { color: var(--bd); }
+
+.cardRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.bulletCount {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mu);
+  white-space: nowrap;
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--mu);
+  transition: transform .2s ease;
+  flex-shrink: 0;
+}
+.chevronOpen { transform: rotate(180deg); }
+
+/* ── Bullets (expanded) ── */
+.bullets {
+  padding: 0 24px 18px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--bd);
+  margin-top: 0;
+  padding-top: 16px;
+}
+
+.bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--tx);
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.bulletNum {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0,105,255,0.08);
+  border: 1px solid rgba(0,105,255,0.15);
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.cardActions {
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+}
+
+.graphLink {
+  background: none;
+  border: 1.5px solid var(--accent, var(--blue));
+  border-radius: 10px;
+  color: var(--accent, var(--blue));
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--f);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.graphLink:hover { background: rgba(0,105,255,0.06); }

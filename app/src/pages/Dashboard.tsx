@@ -10,6 +10,7 @@ import LastSession from '../components/LastSession'
 import PracticeReady from '../components/PracticeReady'
 import ExploreClasses from '../components/ExploreClasses'
 import Messages from '../components/Messages'
+import Jarvis from '../components/Jarvis'
 import s from './Dashboard.module.css'
 
 function greeting() {
@@ -35,20 +36,24 @@ export default function Dashboard() {
           name={data.displayName}
           nextSession={data.nextSession}
           tutorId={data.tutorId}
-          right={<ExploreClasses />}
+          right={
+            <Jarvis
+              heroMode
+              userName={data.displayName}
+              tutorId={data.tutorId}
+              context={`Last session: ${data.lastSession ? `${data.lastSession.subject} on ${data.lastSession.date}` : 'none'}. Practice problems ready: ${data.practiceCount}. Next session: ${data.nextSession ? `${data.nextSession.subject} at ${data.nextSession.time}` : 'none scheduled'}.`}
+            />
+          }
         />
         {data.loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <div className={s.grid}>
-            {/* LEFT: session summary */}
-            <div className={s.col}>
-              <LastSession session={data.lastSession} />
-            </div>
-            {/* RIGHT: practice card + messages, bottom-aligned with left */}
-            <div className={s.colRight}>
-              <PracticeReady count={data.practiceCount} session={data.lastSession} />
-              <Messages messages={data.messages} tutorId={data.tutorId} />
+            <LastSession session={data.lastSession} />
+            <Messages messages={data.messages} tutorId={data.tutorId} />
+            <PracticeReady count={data.practiceCount} session={data.lastSession} />
+            <div className={s.exploreWrap}>
+              <ExploreClasses />
             </div>
           </div>
         )}

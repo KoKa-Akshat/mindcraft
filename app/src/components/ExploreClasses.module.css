@@ -1,13 +1,14 @@
-/* ── EXPLORE CLASSES — horizontal scroll strip ── */
+/* ── EXPLORE CLASSES — clipped to 4 cards, arrow-scrolled ── */
 .wrap {
-  /* no card background — sits flush above the content below */
+  width: 100%;
+  min-width: 0;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .label {
@@ -18,32 +19,55 @@
   letter-spacing: 1.2px;
 }
 
-.seeAll {
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--blue);
-  background: none;
-  border: none;
+.arrows {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.arrow {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1.5px solid rgba(0,105,255,0.18);
+  background: rgba(255,255,255,0.9);
+  color: var(--blue-d);
+  font-size: 14px;
+  line-height: 1;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
   font-family: var(--f);
   padding: 0;
-  transition: opacity .15s;
 }
-.seeAll:hover { opacity: .7; }
+.arrow:hover:not(:disabled) {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+.arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
 
-/* Scrollable horizontal row */
+/* Viewport: clips to exactly 4 cards wide */
+/* 4 × 118px + 3 × 12px gaps = 508px */
+.viewport {
+  overflow: hidden;
+  width: 508px;
+}
+
+/* Inner strip: slides via transform */
 .scrollRow {
   display: flex;
   gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 6px;
-  scroll-snap-type: x mandatory;
-  /* hide scrollbar but keep scroll */
-  scrollbar-width: none;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
 }
-.scrollRow::-webkit-scrollbar { display: none; }
 
-/* Individual class card — curved rectangle, compact */
+/* Individual card */
 .card {
   flex-shrink: 0;
   width: 118px;
@@ -55,7 +79,6 @@
     0 3px 10px rgba(10, 37, 64, 0.06);
   padding: 12px 11px 11px;
   cursor: pointer;
-  scroll-snap-align: start;
   transition: transform .18s, box-shadow .18s;
   display: flex;
   flex-direction: column;
@@ -106,7 +129,7 @@
 .badge_free { background: rgba(88,204,2,.12);  color: #3A8500; }
 .badge_soon { background: rgba(160,160,160,.1); color: var(--mu); }
 
-/* Skeleton loading cards */
+/* Skeleton loading */
 .skeleton {
   background: linear-gradient(90deg, #f0f2f5 25%, #e8eaed 50%, #f0f2f5 75%);
   background-size: 200% 100%;

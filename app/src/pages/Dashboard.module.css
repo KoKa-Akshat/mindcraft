@@ -12,16 +12,32 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   align-items: stretch;
-  /* Let columns stretch to equal height so bottom-alignment works */
 }
-.col { display: flex; flex-direction: column; gap: 16px; }
-/* Right column aligns its content to the bottom so Messages lines up with LastSession */
-.colRight {
-  display: flex;
-  flex-direction: column;
+
+/* 4-cell grid: row 1 stretches (Last Session / Messages match), row 2 auto (Practice / Explore match) */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
   gap: 16px;
-  justify-content: flex-end;
 }
+
+/* unused flex cols kept for safety */
+.col { display: flex; flex-direction: column; gap: 16px; }
+.colRight { display: flex; flex-direction: column; gap: 16px; }
+
+/* Explore Classes wrapped in a card shell */
+.exploreWrap {
+  background: var(--w);
+  border-radius: 20px;
+  padding: 16px 20px;
+  border: 1.5px solid rgba(0, 105, 255, 0.13);
+  box-shadow:
+    0 0 0 4px rgba(0, 105, 255, 0.04),
+    0 4px 16px rgba(10, 37, 64, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
 .placeholder {
   flex: 1;
   display: flex;

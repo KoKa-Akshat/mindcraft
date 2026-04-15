@@ -8,6 +8,8 @@
     0 4px 16px rgba(10, 37, 64, 0.06),
     0 1px 3px rgba(0, 0, 0, 0.04);
   transition: box-shadow .2s, transform .2s;
+  display: flex;
+  flex-direction: column;
 }
 .card:hover {
   box-shadow:

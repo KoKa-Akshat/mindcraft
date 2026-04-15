@@ -24,6 +24,10 @@ import SessionDetail from './pages/SessionDetail'
 import Book          from './pages/Book'
 import Admin         from './pages/Admin'
 import Chat          from './pages/Chat'
+import StudyTimer        from './pages/StudyTimer'
+import StudentSessions   from './pages/StudentSessions'
+import KnowledgeGraph  from './pages/KnowledgeGraph'
+import GlobalJarvis    from './components/GlobalJarvis'
 
 export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
@@ -52,7 +56,12 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => onAuthStateChanged(auth, setUser), [])
   if (user === undefined) return null // still loading auth state
   if (!user) return <Navigate to="/login" replace />
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>
+  return (
+    <UserContext.Provider value={user}>
+      {children}
+      <GlobalJarvis />
+    </UserContext.Provider>
+  )
 }
 
 export default function App() {
@@ -69,6 +78,10 @@ export default function App() {
         <Route path="/tutor/session/:id"   element={<AuthGuard><SessionDetail /></AuthGuard>} />
         <Route path="/admin"               element={<AuthGuard><Admin /></AuthGuard>} />
         <Route path="/chat/:partnerId"     element={<AuthGuard><Chat /></AuthGuard>} />
+        <Route path="/study-timer"         element={<AuthGuard><StudyTimer /></AuthGuard>} />
+        <Route path="/sessions"            element={<AuthGuard><StudentSessions /></AuthGuard>} />
+        <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
+        <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
 
         {/* Root: redirect based on role */}
         <Route path="/" element={<AuthGuard><RoleRedirect /></AuthGuard>} />

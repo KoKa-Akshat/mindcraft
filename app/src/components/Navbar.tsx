@@ -11,7 +11,7 @@ export default function Navbar({ user, onSignOut }: Props) {
   const initial = (user.displayName?.[0] || user.email?.[0] || 'A').toUpperCase()
   return (
     <nav className={s.nav}>
-      <Link to="/login" className={s.logo}>Mind<span>Craft</span></Link>
+      <Link to="/dashboard" className={s.logo}>Mind<span>Craft</span></Link>
       <div className={s.right}>
         <div className={s.notif}>
           <svg viewBox="0 0 24 24">
