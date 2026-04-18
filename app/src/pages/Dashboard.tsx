@@ -39,8 +39,10 @@ export default function Dashboard() {
           right={
             <Jarvis
               heroMode
+              wakeWordEnabled={true}
               userName={data.displayName}
               tutorId={data.tutorId}
+              userId={user.uid}
               context={`Last session: ${data.lastSession ? `${data.lastSession.subject} on ${data.lastSession.date}` : 'none'}. Practice problems ready: ${data.practiceCount}. Next session: ${data.nextSession ? `${data.nextSession.subject} at ${data.nextSession.time}` : 'none scheduled'}.`}
             />
           }

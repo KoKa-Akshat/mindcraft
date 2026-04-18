@@ -1,9 +1,9 @@
 /**
  * GlobalJarvis.tsx
  *
- * Persistent bottom-right JARVIS rendered inside AuthGuard — survives navigation.
- * Fetches the student's displayName + tutorId from Firestore once on mount.
- * Enables wake word detection ("Jarvis" / "Hey Jarvis") globally.
+ * Persistent bottom-right JARVIS on all authenticated pages except /dashboard
+ * (dashboard has its own heroMode JARVIS in the HeroBar).
+ * Wake word ("Hey Jarvis") always active.
  */
 
 import { useEffect, useState } from 'react'
@@ -13,15 +13,14 @@ import { db } from '../firebase'
 import { useUser } from '../App'
 import Jarvis from './Jarvis'
 
-// Pages that have their own heroMode JARVIS — no global orb needed there
+// Pages that have their own heroMode JARVIS — skip the global orb there
 const HERO_PAGES = ['/dashboard']
 
 export default function GlobalJarvis() {
   const user     = useUser()
   const location = useLocation()
 
-  // Don't render on pages with their own heroMode JARVIS
-  if (HERO_PAGES.includes(location.pathname)) return null
+  // All hooks must run unconditionally before any early return
   const [displayName, setDisplayName] = useState<string | null>(null)
   const [tutorId,     setTutorId]     = useState<string | null>(null)
   const [subject,     setSubject]     = useState<string>('')
@@ -38,13 +37,16 @@ export default function GlobalJarvis() {
     }).catch(() => {})
   }, [user?.uid, user?.displayName])
 
+  // Don't render on dashboard — it has its own heroMode JARVIS
+  if (HERO_PAGES.includes(location.pathname)) return null
+
   return (
     <Jarvis
       userName={displayName}
       tutorId={tutorId}
       userId={user?.uid}
       wakeWordEnabled={true}
-      context={`${subject} Current page: ${window.location.pathname}.`}
+      context={`${subject} Current page: ${location.pathname}.`}
     />
   )
 }

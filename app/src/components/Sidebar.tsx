@@ -3,7 +3,8 @@ import s from './Sidebar.module.css'
 
 export default function Sidebar() {
   const loc = useLocation()
-  const active = (path: string) => loc.pathname === path ? s.active : ''
+  // Use startsWith so /knowledge-graph/Logarithms still highlights the Knowledge Graph link
+  const active = (path: string) => loc.pathname === path || (path !== '/' && path !== '#' && loc.pathname.startsWith(path + '/')) ? s.active : ''
 
   return (
     <aside className={s.sidebar}>
