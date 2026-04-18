@@ -404,109 +404,16 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
 
 <section class="sec flip">
   <div class="sec-in">
-    <!-- Left: transformation illustration -->
-    <div class="sa rv d2">
-      <svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" style="width:100%;max-width:520px;height:auto;display:block">
-        <defs>
-          <filter id="fsh2" x="-20%" y="-20%" width="140%" height="150%">
-            <feDropShadow dx="0" dy="3" stdDeviation="8" flood-color="#0D1A3A" flood-opacity="0.07"/>
-          </filter>
-          <filter id="fsh2s" x="-15%" y="-15%" width="130%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#0D1A3A" flood-opacity="0.05"/>
-          </filter>
-        </defs>
-
-        <!-- Ambient bg -->
-        <circle cx="100" cy="280" r="110" fill="rgba(255,152,0,0.04)"/>
-        <circle cx="360" cy="260" r="120" fill="rgba(88,204,2,0.04)"/>
-
-        <!-- ── LEFT SIDE: Chaos (scattered notes) ── -->
-        <!-- Tilted card 1 (warm orange tint) -->
-        <g filter="url(#fsh2s)" transform="rotate(-14 90 120)">
-          <rect x="18" y="80" width="110" height="76" rx="12" fill="white" stroke="#F0E8DC" stroke-width="1.5"/>
-        </g>
-        <rect x="30" y="94" width="55" height="4.5" rx="2.25" fill="#D4890A" opacity="0.5" transform="rotate(-14 57 96)"/>
-        <rect x="28" y="106" width="80" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.7" transform="rotate(-14 68 107)"/>
-        <rect x="30" y="116" width="65" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.7" transform="rotate(-14 62 117)"/>
-        <rect x="31" y="126" width="50" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.6" transform="rotate(-14 56 127)"/>
-        <!-- Question mark on chaos card 1 -->
-        <text x="105" y="148" font-size="22" font-family="sans-serif" fill="#D4890A" opacity="0.4" transform="rotate(-14 105 148)">?</text>
-
-        <!-- Tilted card 2 (purple tint) -->
-        <g filter="url(#fsh2s)" transform="rotate(9 100 220)">
-          <rect x="28" y="190" width="100" height="68" rx="12" fill="white" stroke="#EAE0F4" stroke-width="1.5"/>
-        </g>
-        <rect x="40" y="203" width="48" height="4.5" rx="2.25" fill="#9B59D0" opacity="0.45" transform="rotate(9 64 205)"/>
-        <rect x="38" y="215" width="72" height="3.5" rx="1.75" fill="#D8C8EC" opacity="0.7" transform="rotate(9 74 216)"/>
-        <rect x="40" y="225" width="56" height="3.5" rx="1.75" fill="#D8C8EC" opacity="0.6" transform="rotate(9 68 226)"/>
-        <text x="112" y="253" font-size="20" font-family="sans-serif" fill="#9B59D0" opacity="0.35" transform="rotate(9 112 253)">?</text>
-
-        <!-- Tilted card 3 (small, blue) -->
-        <g filter="url(#fsh2s)" transform="rotate(-7 80 300)">
-          <rect x="14" y="278" width="90" height="52" rx="10" fill="white" stroke="#DDE4F4" stroke-width="1.5"/>
-        </g>
-        <rect x="24" y="290" width="40" height="4" rx="2" fill="#4A7BF7" opacity="0.4" transform="rotate(-7 44 292)"/>
-        <rect x="24" y="301" width="64" height="3.5" rx="1.75" fill="#C8D4EE" opacity="0.6" transform="rotate(-7 56 302)"/>
-        <rect x="24" y="310" width="50" height="3.5" rx="1.75" fill="#C8D4EE" opacity="0.55" transform="rotate(-7 49 311)"/>
-
-        <!-- Chaos label -->
-        <text x="22" y="46" font-size="11" font-weight="700" font-family="sans-serif" fill="#B0937A" letter-spacing="1" opacity="0.7">BEFORE</text>
-        <rect x="22" y="50" width="100" height="2" rx="1" fill="#E8C99A" opacity="0.5"/>
-
-        <!-- ── CENTER: Transformation arrow ── -->
-        <ellipse cx="208" cy="170" rx="44" ry="24" fill="rgba(88,204,2,0.07)"/>
-        <line x1="148" y1="170" x2="264" y2="170" stroke="#58CC02" stroke-width="4" stroke-linecap="round"/>
-        <path d="M254 158 L270 170 L254 182" stroke="#58CC02" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <circle cx="172" cy="170" r="4.5" fill="#58CC02" opacity="0.35"/>
-        <circle cx="196" cy="170" r="4.5" fill="#58CC02" opacity="0.55"/>
-        <circle cx="220" cy="170" r="4.5" fill="#58CC02" opacity="0.75"/>
-        <circle cx="244" cy="170" r="4.5" fill="#58CC02" opacity="0.95"/>
-        <text x="152" y="194" font-size="10" font-weight="700" font-family="sans-serif" fill="#58CC02" letter-spacing="1" opacity="0.6">PROGRESS OVER TIME</text>
-
-        <!-- ── RIGHT SIDE: Clarity (+50 from original) ── -->
-        <!-- AFTER label -->
-        <text x="336" y="46" font-size="11" font-weight="700" font-family="sans-serif" fill="#3A8500" letter-spacing="1" opacity="0.7">AFTER</text>
-        <rect x="336" y="50" width="100" height="2" rx="1" fill="#58CC02" opacity="0.4"/>
-
-        <!-- Card 1 -->
-        <g filter="url(#fsh2)">
-          <rect x="328" y="72" width="158" height="82" rx="14" fill="white" stroke="#E8F5E0" stroke-width="1.5"/>
-        </g>
-        <rect x="328" y="72" width="5" height="82" rx="2.5" fill="#58CC02"/>
-        <rect x="344" y="86" width="52" height="5" rx="2.5" fill="#2E7200" opacity="0.6"/>
-        <rect x="344" y="97" width="128" height="3.5" rx="1.75" fill="#B8D4AA"/>
-        <rect x="344" y="107" width="110" height="3.5" rx="1.75" fill="#B8D4AA"/>
-        <rect x="344" y="117" width="94" height="3.5" rx="1.75" fill="#B8D4AA"/>
-        <circle cx="462" cy="89" r="10" fill="rgba(88,204,2,0.12)"/>
-        <path d="M457 89 L461 93 L468 85" stroke="#58CC02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-
-        <!-- Card 2 -->
-        <g filter="url(#fsh2s)">
-          <rect x="338" y="172" width="140" height="66" rx="12" fill="white" stroke="#E0E8FA" stroke-width="1.5"/>
-        </g>
-        <rect x="338" y="172" width="5" height="66" rx="2.5" fill="#4A7BF7"/>
-        <rect x="353" y="184" width="44" height="4.5" rx="2.25" fill="#2040A0" opacity="0.5"/>
-        <rect x="353" y="195" width="108" height="3.5" rx="1.75" fill="#C8D4EE"/>
-        <rect x="353" y="205" width="88" height="3.5" rx="1.75" fill="#C8D4EE"/>
-        <rect x="353" y="218" width="48" height="12" rx="5" fill="rgba(74,123,247,0.1)"/>
-        <rect x="407" y="218" width="38" height="12" rx="5" fill="rgba(88,204,2,0.1)"/>
-        <rect x="356" y="222" width="42" height="4" rx="2" fill="#6A9BE8" opacity="0.6"/>
-        <rect x="410" y="222" width="32" height="4" rx="2" fill="#4CAD00" opacity="0.55"/>
-
-        <!-- Card 3 -->
-        <g filter="url(#fsh2s)">
-          <rect x="332" y="258" width="152" height="62" rx="12" fill="white" stroke="#E0EED8" stroke-width="1.5"/>
-        </g>
-        <rect x="332" y="258" width="5" height="62" rx="2.5" fill="#58CC02"/>
-        <rect x="347" y="269" width="40" height="4" rx="2" fill="#2E7200" opacity="0.5"/>
-        <rect x="347" y="278" width="126" height="32" rx="6" fill="#F4FAF0"/>
-        <polyline points="355,302 366,296 377,299 388,292 399,287 410,282 421,277 432,273 460,267" stroke="#58CC02" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M355,302 L366,296 L377,299 L388,292 L399,287 L410,282 L421,277 L432,273 L460,267 L460,310 L355,310 Z" fill="rgba(88,204,2,0.07)"/>
-
-        <!-- Sparkles -->
-        <path d="M308 52 L310 46 L312 52 L318 54 L312 56 L310 62 L308 56 L302 54 Z" fill="#58CC02" opacity="0.3"/>
-        <path d="M496 200 L498 195 L500 200 L505 202 L500 204 L498 209 L496 204 L491 202 Z" fill="#4A7BF7" opacity="0.28"/>
-      </svg>
+    <!-- Left: product video -->
+    <div class="sa rv d2" style="display:flex;align-items:center;justify-content:center">
+      <video
+        src="img/VideoForThePanel.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        style="width:100%;max-width:520px;border-radius:16px;box-shadow:0 6px 32px rgba(0,0,0,0.18);display:block"
+      ></video>
     </div>
 
     <!-- Right: text -->
@@ -526,16 +433,106 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
       <p class="dk-sub">Students are often asked to carry the weight of a system not built around their pace, gaps, or confidence. MindCraft helps turn that complexity into a step-by-step path forward.</p>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">First Class, On Us &rarr;</a>
     </div>
-    <!-- Right: product video -->
-    <div class="hw-flow rv d1" style="display:flex;align-items:center;justify-content:center">
+    <!-- Right: before/after transformation illustration -->
+    <div class="hw-flow rv d1">
+      <svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" style="width:100%;max-width:520px;height:auto;display:block">
+        <defs>
+          <filter id="fsh2" x="-20%" y="-20%" width="140%" height="150%">
+            <feDropShadow dx="0" dy="3" stdDeviation="8" flood-color="#0D1A3A" flood-opacity="0.07"/>
+          </filter>
+          <filter id="fsh2s" x="-15%" y="-15%" width="130%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#0D1A3A" flood-opacity="0.05"/>
+          </filter>
+        </defs>
+        <circle cx="100" cy="280" r="110" fill="rgba(255,152,0,0.04)"/>
+        <circle cx="360" cy="260" r="120" fill="rgba(88,204,2,0.04)"/>
+        <g filter="url(#fsh2s)" transform="rotate(-14 90 120)">
+          <rect x="18" y="80" width="110" height="76" rx="12" fill="white" stroke="#F0E8DC" stroke-width="1.5"/>
+        </g>
+        <rect x="30" y="94" width="55" height="4.5" rx="2.25" fill="#D4890A" opacity="0.5" transform="rotate(-14 57 96)"/>
+        <rect x="28" y="106" width="80" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.7" transform="rotate(-14 68 107)"/>
+        <rect x="30" y="116" width="65" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.7" transform="rotate(-14 62 117)"/>
+        <rect x="31" y="126" width="50" height="3.5" rx="1.75" fill="#E8D5B0" opacity="0.6" transform="rotate(-14 56 127)"/>
+        <text x="105" y="148" font-size="22" font-family="sans-serif" fill="#D4890A" opacity="0.4" transform="rotate(-14 105 148)">?</text>
+        <g filter="url(#fsh2s)" transform="rotate(9 100 220)">
+          <rect x="28" y="190" width="100" height="68" rx="12" fill="white" stroke="#EAE0F4" stroke-width="1.5"/>
+        </g>
+        <rect x="40" y="203" width="48" height="4.5" rx="2.25" fill="#9B59D0" opacity="0.45" transform="rotate(9 64 205)"/>
+        <rect x="38" y="215" width="72" height="3.5" rx="1.75" fill="#D8C8EC" opacity="0.7" transform="rotate(9 74 216)"/>
+        <rect x="40" y="225" width="56" height="3.5" rx="1.75" fill="#D8C8EC" opacity="0.6" transform="rotate(9 68 226)"/>
+        <text x="112" y="253" font-size="20" font-family="sans-serif" fill="#9B59D0" opacity="0.35" transform="rotate(9 112 253)">?</text>
+        <g filter="url(#fsh2s)" transform="rotate(-7 80 300)">
+          <rect x="14" y="278" width="90" height="52" rx="10" fill="white" stroke="#DDE4F4" stroke-width="1.5"/>
+        </g>
+        <rect x="24" y="290" width="40" height="4" rx="2" fill="#4A7BF7" opacity="0.4" transform="rotate(-7 44 292)"/>
+        <rect x="24" y="301" width="64" height="3.5" rx="1.75" fill="#C8D4EE" opacity="0.6" transform="rotate(-7 56 302)"/>
+        <rect x="24" y="310" width="50" height="3.5" rx="1.75" fill="#C8D4EE" opacity="0.55" transform="rotate(-7 49 311)"/>
+        <text x="22" y="46" font-size="11" font-weight="700" font-family="sans-serif" fill="#B0937A" letter-spacing="1" opacity="0.7">BEFORE</text>
+        <rect x="22" y="50" width="100" height="2" rx="1" fill="#E8C99A" opacity="0.5"/>
+        <ellipse cx="208" cy="170" rx="44" ry="24" fill="rgba(88,204,2,0.07)"/>
+        <line x1="148" y1="170" x2="264" y2="170" stroke="#58CC02" stroke-width="4" stroke-linecap="round"/>
+        <path d="M254 158 L270 170 L254 182" stroke="#58CC02" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="172" cy="170" r="4.5" fill="#58CC02" opacity="0.35"/>
+        <circle cx="196" cy="170" r="4.5" fill="#58CC02" opacity="0.55"/>
+        <circle cx="220" cy="170" r="4.5" fill="#58CC02" opacity="0.75"/>
+        <circle cx="244" cy="170" r="4.5" fill="#58CC02" opacity="0.95"/>
+        <text x="152" y="194" font-size="10" font-weight="700" font-family="sans-serif" fill="#58CC02" letter-spacing="1" opacity="0.6">PROGRESS OVER TIME</text>
+        <text x="336" y="46" font-size="11" font-weight="700" font-family="sans-serif" fill="#3A8500" letter-spacing="1" opacity="0.7">AFTER</text>
+        <rect x="336" y="50" width="100" height="2" rx="1" fill="#58CC02" opacity="0.4"/>
+        <g filter="url(#fsh2)">
+          <rect x="328" y="72" width="158" height="82" rx="14" fill="white" stroke="#E8F5E0" stroke-width="1.5"/>
+        </g>
+        <rect x="328" y="72" width="5" height="82" rx="2.5" fill="#58CC02"/>
+        <rect x="344" y="86" width="52" height="5" rx="2.5" fill="#2E7200" opacity="0.6"/>
+        <rect x="344" y="97" width="128" height="3.5" rx="1.75" fill="#B8D4AA"/>
+        <rect x="344" y="107" width="110" height="3.5" rx="1.75" fill="#B8D4AA"/>
+        <rect x="344" y="117" width="94" height="3.5" rx="1.75" fill="#B8D4AA"/>
+        <circle cx="462" cy="89" r="10" fill="rgba(88,204,2,0.12)"/>
+        <path d="M457 89 L461 93 L468 85" stroke="#58CC02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <g filter="url(#fsh2s)">
+          <rect x="338" y="172" width="140" height="66" rx="12" fill="white" stroke="#E0E8FA" stroke-width="1.5"/>
+        </g>
+        <rect x="338" y="172" width="5" height="66" rx="2.5" fill="#4A7BF7"/>
+        <rect x="353" y="184" width="44" height="4.5" rx="2.25" fill="#2040A0" opacity="0.5"/>
+        <rect x="353" y="195" width="108" height="3.5" rx="1.75" fill="#C8D4EE"/>
+        <rect x="353" y="205" width="88" height="3.5" rx="1.75" fill="#C8D4EE"/>
+        <rect x="353" y="218" width="48" height="12" rx="5" fill="rgba(74,123,247,0.1)"/>
+        <rect x="407" y="218" width="38" height="12" rx="5" fill="rgba(88,204,2,0.1)"/>
+        <rect x="356" y="222" width="42" height="4" rx="2" fill="#6A9BE8" opacity="0.6"/>
+        <rect x="410" y="222" width="32" height="4" rx="2" fill="#4CAD00" opacity="0.55"/>
+        <g filter="url(#fsh2s)">
+          <rect x="332" y="258" width="152" height="62" rx="12" fill="white" stroke="#E0EED8" stroke-width="1.5"/>
+        </g>
+        <rect x="332" y="258" width="5" height="62" rx="2.5" fill="#58CC02"/>
+        <rect x="347" y="269" width="40" height="4" rx="2" fill="#2E7200" opacity="0.5"/>
+        <rect x="347" y="278" width="126" height="32" rx="6" fill="#F4FAF0"/>
+        <polyline points="355,302 366,296 377,299 388,292 399,287 410,282 421,277 432,273 460,267" stroke="#58CC02" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M355,302 L366,296 L377,299 L388,292 L399,287 L410,282 L421,277 L432,273 L460,267 L460,310 L355,310 Z" fill="rgba(88,204,2,0.07)"/>
+        <path d="M308 52 L310 46 L312 52 L318 54 L312 56 L310 62 L308 56 L302 54 Z" fill="#58CC02" opacity="0.3"/>
+        <path d="M496 200 L498 195 L500 200 L505 202 L500 204 L498 209 L496 204 L491 202 Z" fill="#4A7BF7" opacity="0.28"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="sec flip" id="learn">
+  <div class="sec-in">
+    <!-- Left: product video -->
+    <div class="sa rv d2" style="display:flex;align-items:center;justify-content:center">
       <video
         src="img/VideoForThePanel.mp4"
         autoplay
         muted
         loop
         playsinline
-        style="width:100%;max-width:520px;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.45);display:block"
+        style="width:100%;max-width:520px;border-radius:16px;box-shadow:0 6px 32px rgba(0,0,0,0.18);display:block"
       ></video>
+    </div>
+
+    <!-- Right: text -->
+    <div class="rv">
+      <h2 class="cg" style="font-size:clamp(30px,5vw,44px)">we help students learn how to learn</h2>
+      <p class="d" style="font-size:17px;line-height:1.75;max-width:460px">Each session builds habits around thinking, reviewing, and practicing in a way that continues outside the session. Over time, students rely less on help and more on their own understanding.</p>
     </div>
   </div>
 </section>
