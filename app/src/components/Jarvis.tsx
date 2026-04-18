@@ -55,16 +55,10 @@ const BUBBLES: [number, number, number, number, number][] = [
   [340,  85,  5, 1.3, 8  ],
 ]
 
-function speak(text: string, onEnd?: () => void) {
+// Speaking disabled — JARVIS acts silently
+function speak(_text: string, onEnd?: () => void) {
   window.speechSynthesis.cancel()
-  const u = new SpeechSynthesisUtterance(text)
-  u.rate = 0.92; u.pitch = 0.78; u.volume = 1
-  const voices = window.speechSynthesis.getVoices()
-  const preferred = voices.find(v => /daniel|alex|google uk english male|microsoft david/i.test(v.name))
-    || voices.find(v => v.lang.startsWith('en') && !v.name.toLowerCase().includes('female'))
-  if (preferred) u.voice = preferred
-  if (onEnd) u.onend = onEnd
-  window.speechSynthesis.speak(u)
+  if (onEnd) onEnd()
 }
 
 const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
@@ -107,29 +101,36 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
       if (!alive || openRef.current) return
       try {
         const r = new SR()
-        r.lang = 'en-US'; r.continuous = false; r.interimResults = false; r.maxAlternatives = 5
+        // continuous: true keeps mic open indefinitely — much more reliable for wake word
+        r.lang = 'en-US'; r.continuous = true; r.interimResults = true; r.maxAlternatives = 3
         r.onresult = (e: any) => {
-          const text = Array.from({ length: e.results.length }, (_: any, i: number) =>
-            Array.from({ length: e.results[i].length }, (_: any, j: number) =>
-              (e.results[i][j] as any).transcript as string
-            ).join(' ')
-          ).join(' ').toLowerCase()
-          if (/\bjarvis\b|hey\s+jarvis|hi\s+jarvis|okay\s+jarvis/.test(text)) {
-            setOpen(true)
-            shouldActivateRef.current = true
-            logEvent(userId, 'jarvis_wake', { trigger: 'voice', transcript: text.slice(0, 60) })
+          if (openRef.current) { r.stop(); return }
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            const text = (e.results[i][0] as any).transcript.toLowerCase()
+            if (/\bjarvis\b|hey\s+jarvis|hi\s+jarvis|okay\s+jarvis/.test(text)) {
+              r.stop()
+              setOpen(true)
+              shouldActivateRef.current = true
+              logEvent(userId, 'jarvis_wake', { trigger: 'voice', transcript: text.slice(0, 60) })
+              break
+            }
           }
         }
-        r.onend  = () => { if (alive) setTimeout(runWake, 400) }
-        r.onerror = () => { if (alive) setTimeout(runWake, 2500) }
+        // Restart on end (browser may stop continuous after ~60s of silence on some platforms)
+        r.onend  = () => { if (alive && !openRef.current) setTimeout(runWake, 300) }
+        r.onerror = (e: any) => {
+          // 'no-speech' is normal — just restart quickly; other errors wait longer
+          const delay = e.error === 'no-speech' ? 300 : 2000
+          if (alive && !openRef.current) setTimeout(runWake, delay)
+        }
         r.start()
         wakeRecogRef.current = r
         setWakeActive(true)
-      } catch { if (alive) setTimeout(runWake, 3000) }
+      } catch { if (alive) setTimeout(runWake, 2000) }
     }
 
     wakeLoopRef.current = runWake
-    const tid = setTimeout(runWake, 800)
+    const tid = setTimeout(runWake, 600)
     return () => { alive = false; clearTimeout(tid); wakeRecogRef.current?.stop(); setWakeActive(false) }
   }, [wakeWordEnabled, userId])
 
@@ -207,12 +208,17 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
     setState('listening')
     const r = new SR()
     recogRef.current = r
-    r.lang = 'en-US'; r.continuous = false; r.interimResults = false
+    // continuous: true keeps listening until the user actually speaks
+    r.lang = 'en-US'; r.continuous = true; r.interimResults = false; r.maxAlternatives = 1
     r.onresult = (e: any) => {
-      const t = e.results[0][0].transcript
-      setInput(t); setState('thinking'); handleMessage(t)
+      const lastResult = e.results[e.results.length - 1]
+      if (lastResult.isFinal) {
+        const t = lastResult[0].transcript
+        r.stop()
+        setInput(t); setState('thinking'); handleMessage(t)
+      }
     }
-    r.onerror = () => setState('idle')
+    r.onerror = (e: any) => { if (e.error !== 'no-speech') setState('idle') }
     r.onend   = () => setState(p => p === 'listening' ? 'idle' : p)
     r.start()
   }, [state, handleMessage])
@@ -306,33 +312,12 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
     </div>
   )
 
-  // ── Hero mode: inline orb with bubbles ─────────────────────────────────
+  // ── Hero mode: clean orb, no bubbles, no label ─────────────────────────
   if (heroMode) {
     return (
       <div className={s.heroWrap}>
         <button className={s.heroOrbBtn} onClick={toggleOpen} aria-label="Open JARVIS">
-          {/* Floating bubbles */}
-          {BUBBLES.map(([angle, radius, size, delay, dur], i) => {
-            const rad = (angle * Math.PI) / 180
-            const x   = Math.cos(rad) * radius
-            const y   = Math.sin(rad) * radius
-            return (
-              <span
-                key={i}
-                className={s.bubble}
-                style={{
-                  width:  size,
-                  height: size,
-                  left:   `calc(50% + ${x}px)`,
-                  top:    `calc(50% + ${y}px)`,
-                  animationDelay:    `${delay}s`,
-                  animationDuration: `${dur}s`,
-                }}
-              />
-            )
-          })}
-
-          {/* Main orb */}
+          {/* Main orb only */}
           <div className={`${s.heroOrb} ${s[`orb_${state}`]} ${open ? s.orbOpen : ''}`}>
             <div className={s.heroRing1} />
             <div className={s.heroRing2} />
@@ -342,17 +327,8 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
                 ? <div className={s.thinkDots}><span/><span/><span/></div>
                 : <span className={s.heroCoreJ}>J</span>}
             </div>
-            {state === 'speaking' && (
-              <div className={s.heroWave}>
-                {[1,2,3,4,5,6,7].map(i =>
-                  <div key={i} className={s.waveBar} style={{ animationDelay:`${i*.07}s` }} />
-                )}
-              </div>
-            )}
+            {wakeActive && !open && <span className={s.wakeDot} title="Listening for 'Jarvis'" />}
           </div>
-
-          {/* Label */}
-          <span className={s.heroLabel}>JARVIS</span>
         </button>
 
         {panel}

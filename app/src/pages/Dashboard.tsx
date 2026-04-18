@@ -9,7 +9,6 @@ import HeroBar from '../components/HeroBar'
 import LastSession from '../components/LastSession'
 import PracticeReady from '../components/PracticeReady'
 import ExploreClasses from '../components/ExploreClasses'
-import Messages from '../components/Messages'
 import Jarvis from '../components/Jarvis'
 import s from './Dashboard.module.css'
 
@@ -52,7 +51,7 @@ export default function Dashboard() {
         ) : (
           <div className={s.grid}>
             <LastSession session={data.lastSession} />
-            <Messages messages={data.messages} tutorId={data.tutorId} />
+            <div className={s.placeholder} />
             <PracticeReady count={data.practiceCount} session={data.lastSession} />
             <div className={s.exploreWrap}>
               <ExploreClasses />

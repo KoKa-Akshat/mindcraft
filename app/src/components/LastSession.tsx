@@ -1,8 +1,10 @@
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { SessionSummary } from '../hooks/useStudentData'
 import s from './Card.module.css'
 
 interface Props { session: SessionSummary | null }
+
+const PREVIEW_COUNT = 4
 
 function buildPrompt(session: SessionSummary): string {
   const focus = session.bullets.slice(0, 2).join('; ').toLowerCase()
@@ -10,7 +12,8 @@ function buildPrompt(session: SessionSummary): string {
 }
 
 export default function LastSession({ session }: Props) {
-  const navigate = useNavigate()
+  const [modalOpen, setModalOpen] = useState(false)
+
   if (!session) {
     return (
       <div className={s.card}>
@@ -23,30 +26,67 @@ export default function LastSession({ session }: Props) {
     )
   }
 
+  const previewBullets = session.bullets.slice(0, PREVIEW_COUNT)
+  const hasMore = session.bullets.length > PREVIEW_COUNT
+
   return (
-    <div className={s.card}>
-      <p className={s.label}>Last Session</p>
-      <div className={s.summaryHeader}>
-        <span className={s.tag}>{session.subject}</span>
-        <span className={s.date}>{session.date} · {session.duration}</span>
-      </div>
-      <div className={s.title}>{session.title}</div>
-      <ul className={s.list}>
-        {session.bullets.map((b, i) => <li key={i}>{b}</li>)}
-      </ul>
+    <>
+      <div className={s.card}>
+        <p className={s.label}>Last Session</p>
+        <div className={s.summaryHeader}>
+          <span className={s.tag}>{session.subject}</span>
+          <span className={s.date}>{session.date} · {session.duration}</span>
+        </div>
+        <div className={s.title}>{session.title}</div>
+        <ul className={s.list}>
+          {previewBullets.map((b, i) => <li key={i}>{b}</li>)}
+        </ul>
+        {hasMore && (
+          <button className={s.showMoreBtn} onClick={() => setModalOpen(true)}>
+            +{session.bullets.length - PREVIEW_COUNT} more topics · View Full Summary
+          </button>
+        )}
 
-      <div className={s.divider} />
+        <div className={s.divider} />
 
-      <div className={s.promptBox}>
-        <p className={s.promptLabel}>Practice Prompt</p>
-        <p className={s.promptText}>{buildPrompt(session)}</p>
-        <button className={s.btnGreen} style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
-          Start Practice Session →
+        <div className={s.promptBox}>
+          <p className={s.promptLabel}>Practice Prompt</p>
+          <p className={s.promptText}>{buildPrompt(session)}</p>
+          <button className={s.btnGreen} style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
+            Start Practice Session →
+          </button>
+        </div>
+
+        <div className={s.divider} />
+        <button className={s.btnOutline} onClick={() => setModalOpen(true)}>
+          View Full Summary
         </button>
       </div>
 
-      <div className={s.divider} />
-      <button className={s.btnOutline} onClick={() => session.id && !session.id.startsWith('seed') && navigate(`/tutor/session/${session.id}`)}>View Full Summary</button>
-    </div>
+      {/* Full summary modal */}
+      {modalOpen && (
+        <div className={s.modalOverlay} onClick={() => setModalOpen(false)}>
+          <div className={s.modalCard} onClick={e => e.stopPropagation()}>
+            <button className={s.modalClose} onClick={() => setModalOpen(false)}>✕</button>
+            <div className={s.summaryHeader}>
+              <span className={s.tag}>{session.subject}</span>
+              <span className={s.date}>{session.date} · {session.duration}</span>
+            </div>
+            <div className={s.title} style={{ fontSize: 18, marginBottom: 16 }}>{session.title}</div>
+            <ul className={s.list}>
+              {session.bullets.map((b, i) => <li key={i}>{b}</li>)}
+            </ul>
+            <div className={s.divider} />
+            <div className={s.promptBox}>
+              <p className={s.promptLabel}>Practice Prompt</p>
+              <p className={s.promptText}>{buildPrompt(session)}</p>
+              <button className={s.btnGreen} style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
+                Start Practice Session →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
