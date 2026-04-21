@@ -108,6 +108,8 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
           for (let i = e.resultIndex; i < e.results.length; i++) {
             const text = (e.results[i][0] as any).transcript.toLowerCase()
             if (/\bjarvis\b|hey\s+jarvis|hi\s+jarvis|okay\s+jarvis/.test(text)) {
+              // Set synchronously BEFORE r.stop() so onend/onerror see it immediately
+              openRef.current = true
               r.stop()
               setOpen(true)
               shouldActivateRef.current = true
@@ -116,10 +118,11 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
             }
           }
         }
-        // Restart on end (browser may stop continuous after ~60s of silence on some platforms)
-        r.onend  = () => { if (alive && !openRef.current) setTimeout(runWake, 300) }
+        // Restart on end — only if we didn't just open the panel
+        r.onend = () => { if (alive && !openRef.current) setTimeout(runWake, 300) }
         r.onerror = (e: any) => {
-          // 'no-speech' is normal — just restart quickly; other errors wait longer
+          // aborted = we called r.stop() ourselves; not-allowed = mic denied — don't retry either
+          if (e.error === 'aborted' || e.error === 'not-allowed' || e.error === 'service-not-allowed') return
           const delay = e.error === 'no-speech' ? 300 : 2000
           if (alive && !openRef.current) setTimeout(runWake, delay)
         }

@@ -1,7 +1,7 @@
 .hero {
-  padding: 10px 0 10px;
+  padding: 6px 0 8px;
   border-bottom: 1px solid rgba(0,105,255,0.1);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 0;
@@ -23,7 +23,7 @@
   color: var(--tx);
   letter-spacing: -.4px;
   line-height: 1.15;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .left h1 em { color: var(--g); font-style: normal; }
 
@@ -36,7 +36,7 @@
   border-radius: 40px;
   padding: 8px 16px 8px 12px;
   box-shadow: 0 1px 4px rgba(0,105,255,0.08);
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 .pillDot {
   width: 8px; height: 8px;

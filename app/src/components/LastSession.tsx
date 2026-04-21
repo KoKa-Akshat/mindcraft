@@ -43,7 +43,7 @@ export default function LastSession({ session }: Props) {
         </ul>
         {hasMore && (
           <button className={s.showMoreBtn} onClick={() => setModalOpen(true)}>
-            +{session.bullets.length - PREVIEW_COUNT} more topics · View Full Summary
+            +{session.bullets.length - PREVIEW_COUNT} more topics
           </button>
         )}
 
@@ -56,11 +56,6 @@ export default function LastSession({ session }: Props) {
             Start Practice Session →
           </button>
         </div>
-
-        <div className={s.divider} />
-        <button className={s.btnOutline} onClick={() => setModalOpen(true)}>
-          View Full Summary
-        </button>
       </div>
 
       {/* Full summary modal */}
