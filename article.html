@@ -10,6 +10,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <script>
   var fbApp = firebase.initializeApp({
     apiKey:            "AIzaSyBetzXAekac3zTdzgJ3vGxqKCQAXc3tcsU",
@@ -19,8 +20,9 @@
     messagingSenderId: "1024068467805",
     appId:             "1:1024068467805:web:1fed20442356c7b757e1b4",
   });
-  var fbAuth = firebase.auth();
-  var fbDb   = firebase.firestore();
+  var fbAuth    = firebase.auth();
+  var fbDb      = firebase.firestore();
+  var fbStorage = firebase.storage();
 </script>
 <style>
 :root{
@@ -248,6 +250,15 @@ function galleryBlock() {
   </div>`;
 }
 
+function uploadToStorage(file, onSuccess, onError) {
+  var articleId = new URLSearchParams(window.location.search).get('id') || '1';
+  var path = 'blog-images/' + articleId + '/' + Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  var ref = fbStorage.ref(path);
+  ref.put(file).then(function(snap) {
+    snap.ref.getDownloadURL().then(onSuccess).catch(onError);
+  }).catch(onError);
+}
+
 function uploadGalleryPhoto(cell) {
   if (cell.classList.contains('filled')) return;
   var input = document.createElement('input');
@@ -255,13 +266,16 @@ function uploadGalleryPhoto(cell) {
   input.accept = 'image/*';
   input.onchange = function() {
     if (!input.files[0]) return;
-    var reader = new FileReader();
-    reader.onload = function(e) {
+    // Show uploading state
+    cell.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:12px;font-weight:700"><div style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(88,204,2,.3);border-top-color:#58CC02;animation:spin .8s linear infinite"></div>Uploading…</div>';
+    uploadToStorage(input.files[0], function(url) {
       cell.classList.add('filled');
-      cell.innerHTML = '<img src="' + e.target.result + '" alt="Event photo">';
+      cell.innerHTML = '<img src="' + url + '" alt="Event photo">';
       cell.onclick = null;
-    };
-    reader.readAsDataURL(input.files[0]);
+    }, function(err) {
+      cell.innerHTML = '<span style="color:#FC8181;font-size:12px;font-weight:700;padding:8px">Upload failed</span>';
+      console.error('Upload error:', err);
+    });
   };
   input.click();
 }
@@ -525,11 +539,31 @@ render();
     input.accept = 'image/*';
     input.onchange = function() {
       if (!input.files[0]) return;
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        document.execCommand('insertImage', false, e.target.result);
-      };
-      reader.readAsDataURL(input.files[0]);
+      showToast('Uploading image…');
+      uploadToStorage(input.files[0], function(url) {
+        var img = document.createElement('img');
+        img.src = url;
+        img.style.cssText = 'max-width:100%;border-radius:12px;margin:20px 0;display:block';
+        img.alt = '';
+        // Insert at cursor position if possible, otherwise append to body
+        var sel = window.getSelection();
+        if (sel && sel.rangeCount) {
+          var range = sel.getRangeAt(0);
+          range.collapse(false);
+          range.insertNode(img);
+          // Move cursor after image
+          range.setStartAfter(img);
+          range.setEndAfter(img);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        } else {
+          document.getElementById('article-body').appendChild(img);
+        }
+        showToast('Image added');
+      }, function(err) {
+        showToast('Image upload failed');
+        console.error(err);
+      });
     };
     input.click();
   }
