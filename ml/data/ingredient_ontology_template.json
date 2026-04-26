@@ -1,0 +1,62 @@
+{
+  "version": "0.1",
+  "ingredients": [
+    {
+      "id": "angle_as_rotation",
+      "concept_id": "trigonometry_basics",
+      "name": "Angle as Rotation",
+      "description": "An angle represents the amount of rotation from a reference direction.",
+      "tags": ["angle", "rotation", "reference"],
+      "depends_on": []
+    },
+    {
+      "id": "unit_circle_point",
+      "concept_id": "trigonometry_basics",
+      "name": "Point on the Unit Circle",
+      "description": "Every angle corresponds to a unique point on the unit circle.",
+      "tags": ["circle", "coordinate", "angle"],
+      "depends_on": ["angle_as_rotation"]
+    },
+    {
+      "id": "sine_as_y_coordinate",
+      "concept_id": "trigonometry_basics",
+      "name": "Sine as Y-Coordinate",
+      "description": "Sine of an angle equals the y-coordinate of the corresponding unit circle point.",
+      "tags": ["sine", "vertical", "coordinate", "height"],
+      "depends_on": ["unit_circle_point"]
+    }
+  ],
+  "bridges": [
+    {
+      "id": "side_roles_to_sine_ratio",
+      "from_ingredient": "right_triangle_side_roles",
+      "to_ingredient": "sine_as_ratio",
+      "source_concept": "right_triangle_geometry",
+      "target_concept": "trigonometry_basics",
+      "relation": "enables",
+      "description": "Understanding opposite, adjacent, hypotenuse enables sine as a ratio.",
+      "confidence": 0.9
+    }
+  ],
+  "card_templates": [
+    {
+      "id": "radius_to_vertical_card",
+      "target_type": "bridge",
+      "target_id": "radius_as_rotating_segment->sine_as_vertical_component",
+      "representations": {
+        "geometric": {
+          "title": "Radius Creates Height",
+          "body": "A rotating radius can be split into horizontal and vertical parts. The vertical part changes with the angle.",
+          "visual_hint": "Draw a circle with a radius at angle theta, then drop a vertical line to the x-axis."
+        },
+        "algebraic": {
+          "title": "The y-Part of a Circle Point",
+          "body": "A point on a circle of radius r has vertical coordinate r sin(theta).",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "Which part of the radius controls height?",
+      "difficulty": 0.5
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# ── Core data modeling ──
+pydantic>=2.5.0
+
+# ── Graph operations ──
+networkx>=3.2
+
+# ── Numerical ──
+numpy>=1.26.0
+
+# ── Development / inspection ──
+jupyterlab>=4.0.0
+matplotlib>=3.8.0
+
+# ── Code quality ──
+black>=24.0.0
+ruff>=0.1.0
+pytest>=7.4.0
