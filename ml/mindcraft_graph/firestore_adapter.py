@@ -17,29 +17,33 @@ db = firestore.Client()
 
 def load_student_events(student_id: str, limit: int = 500) -> list[SessionEvent]:
     """Read events from Firestore interactions collection."""
-    docs = (
-        db.collection("interactions")
-        .where("studentId", "==", student_id)
-        .order_by("timestamp", direction=firestore.Query.DESCENDING)
-        .limit(limit)
-        .stream()
-    )
+    try:
+        docs = (
+            db.collection("interactions")
+            .where("studentId", "==", student_id)
+            .order_by("timestamp", direction=firestore.Query.DESCENDING)
+            .limit(limit)
+            .stream()
+        )
 
-    events = []
-    for doc in docs:
-        data = doc.to_dict()
-        events.append(SessionEvent(
-            student_id=student_id,
-            concept_id=data.get("conceptId", ""),
-            event_type=data.get("eventType", "session"),
-            outcome=float(data.get("outcome", 0)),
-            effort=float(data.get("effort", 0.5)),
-            duration_minutes=float(data.get("durationMinutes", 30)),
-            timestamp=data.get("timestamp", datetime.now()),
-            exposure_weight=float(data.get("exposureWeight", 1.0)),
-        ))
+        events = []
+        for doc in docs:
+            data = doc.to_dict()
+            events.append(SessionEvent(
+                student_id=student_id,
+                concept_id=data.get("conceptId", ""),
+                event_type=data.get("eventType", "session"),
+                outcome=float(data.get("outcome", 0)),
+                effort=float(data.get("effort", 0.5)),
+                duration_minutes=float(data.get("durationMinutes", 30)),
+                timestamp=data.get("timestamp", datetime.now()),
+                exposure_weight=float(data.get("exposureWeight", 1.0)),
+            ))
 
-    return events
+        return events
+    except Exception:
+        # Index may not exist yet or query failed — return empty for new students
+        return []
 
 
 def load_personal_graph(student_id: str) -> dict | None:

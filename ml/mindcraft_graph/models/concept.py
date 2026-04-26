@@ -6,9 +6,9 @@ class Concept(BaseModel):
     id: str
     name: str
     level: Literal["foundational", "core", "advanced"]
-    typical_order: int
-    description: str
-    tags: list[str]
+    typical_order: int = 0
+    description: str = ""
+    tags: list[str] = Field(default_factory=list)
 
 
 def estimate_difficulty(concept: Concept, max_order: int) -> float:

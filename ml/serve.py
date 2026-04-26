@@ -29,13 +29,20 @@ from mindcraft_graph.api.recommend import recommend
 
 # ── Startup: load once, reuse forever ──
 
+COMPLETE_ONTOLOGY_PATH = pathlib.Path(__file__).parent / "data" / "ontology_complete.json"
 ONTOLOGY_PATH = pathlib.Path(__file__).parent / "data" / "ontology.json"
 INGREDIENT_PATH = pathlib.Path(__file__).parent / "data" / "ingredient_ontology.json"
 EMBEDDINGS_PATH = pathlib.Path(__file__).parent / "data" / "concept_embeddings.npz"
 PCA_PATH = pathlib.Path(__file__).parent / "data" / "pca_axes.npz"
 
-ontology = Ontology.model_validate_json(ONTOLOGY_PATH.read_text())
-ingredient_ontology = IngredientOntology.model_validate_json(INGREDIENT_PATH.read_text())
+# Prefer the rich complete ontology; fall back to legacy files if missing
+if COMPLETE_ONTOLOGY_PATH.exists():
+    from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
+    ontology, ingredient_ontology = load_complete_ontology(COMPLETE_ONTOLOGY_PATH)
+else:
+    ontology = Ontology.model_validate_json(ONTOLOGY_PATH.read_text())
+    ingredient_ontology = IngredientOntology.model_validate_json(INGREDIENT_PATH.read_text())
+
 ingredient_graph = IngredientGraph(ingredient_ontology)
 
 if EMBEDDINGS_PATH.exists():
@@ -76,7 +83,22 @@ summary_model = embeddings.load_sentence_transformer()
 def embed_fn(text: str):
     return summary_model.encode([text], convert_to_numpy=True)[0]
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="MindCraft ML API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:4173",
+        "https://mindcraft-93858.web.app",
+        "https://mindcraft-93858.firebaseapp.com",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ── Request/Response schemas ──
 

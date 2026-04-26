@@ -1,6 +1,6 @@
 # ml/Dockerfile
 
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -18,17 +18,17 @@ COPY serve.py .
 RUN pip install --no-cache-dir ".[ml]" \
     uvicorn fastapi google-cloud-firestore
 
-# Pre-download the sentence transformer model so it's cached in the image
+# Pre-download the sentence transformer model so it's baked into the image
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
-# Pre-compute embeddings if not already cached
+# Pre-compute and cache embeddings from the complete ontology
 RUN python -c "\
-from mindcraft_graph.models.concept import Ontology; \
+from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology; \
 from mindcraft_graph.representation import embeddings; \
 import pathlib; \
-ont = Ontology.model_validate_json(pathlib.Path('data/ontology.json').read_text()); \
+ontology, _ = load_complete_ontology(pathlib.Path('data/ontology_complete.json')); \
 model = embeddings.load_sentence_transformer(); \
-embs = embeddings.compute_concept_embeddings(ont, model); \
+embs = embeddings.compute_concept_embeddings(ontology, model); \
 comps, mean, var = embeddings.compute_pca_axes(embs); \
 embeddings.save_concept_embeddings(embs, 'data/concept_embeddings.npz'); \
 embeddings.save_pca_axes(comps, mean, var, 'data/pca_axes.npz'); \
