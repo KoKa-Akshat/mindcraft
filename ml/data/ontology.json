@@ -1,0 +1,780 @@
+{
+"version": "0.1",
+"domain": "high_school_math",
+"concepts": [
+{
+"id": "fractions_decimals",
+"name": "Fractions and Decimals",
+"level": "foundational",
+"typical_order": 1,
+"description": "Understanding, converting, and performing arithmetic operations on fractional and decimal values.",
+"tags": ["arithmetic", "computation", "procedural", "numeric"]
+},
+{
+"id": "ratios_proportions",
+"name": "Ratios and Proportions",
+"level": "foundational",
+"typical_order": 2,
+"description": "Comparing quantities and solving for unknowns by setting equivalent ratios.",
+"tags": ["arithmetic", "applied", "procedural", "numeric"]
+},
+{
+"id": "order_of_operations",
+"name": "Order of Operations",
+"level": "foundational",
+"typical_order": 3,
+"description": "Evaluating mathematical expressions systematically using standard priority rules.",
+"tags": ["arithmetic", "computation", "procedural", "symbolic"]
+},
+{
+"id": "basic_equations",
+"name": "Basic One-Variable Equations",
+"level": "foundational",
+"typical_order": 4,
+"description": "Solving simple algebraic equations for a single unknown variable using inverse operations.",
+"tags": ["algebra", "symbolic", "procedural"]
+},
+{
+"id": "linear_equations",
+"name": "Linear Equations",
+"level": "core",
+"typical_order": 5,
+"description": "Graphing and solving equations of the first degree, understanding slope and y-intercept.",
+"tags": ["algebra", "symbolic", "visual", "procedural"]
+},
+{
+"id": "linear_inequalities",
+"name": "Linear Inequalities",
+"level": "core",
+"typical_order": 6,
+"description": "Solving and graphing inequalities to find ranges of valid solutions.",
+"tags": ["algebra", "symbolic", "visual", "procedural"]
+},
+{
+"id": "systems_of_linear_equations",
+"name": "Systems of Linear Equations",
+"level": "core",
+"typical_order": 7,
+"description": "Finding the common solution to two or more linear equations simultaneously.",
+"tags": ["algebra", "procedural", "visual", "computation"]
+},
+{
+"id": "functions_basics",
+"name": "Basics of Functions",
+"level": "core",
+"typical_order": 8,
+"description": "Understanding function notation, domain, range, and the concept of inputs mapping to unique outputs.",
+"tags": ["algebra", "conceptual", "symbolic"]
+},
+{
+"id": "exponent_rules",
+"name": "Exponent Rules",
+"level": "core",
+"typical_order": 9,
+"description": "Simplifying expressions using the properties of integer and rational exponents.",
+"tags": ["algebra", "symbolic", "computation", "procedural"]
+},
+{
+"id": "polynomials",
+"name": "Polynomial Operations",
+"level": "core",
+"typical_order": 10,
+"description": "Adding, subtracting, multiplying, and dividing algebraic expressions with multiple terms.",
+"tags": ["algebra", "symbolic", "procedural", "computation"]
+},
+{
+"id": "radical_expressions",
+"name": "Radical Expressions",
+"level": "core",
+"typical_order": 11,
+"description": "Simplifying and operating on expressions containing square roots and higher-order roots.",
+"tags": ["algebra", "symbolic", "computation"]
+},
+{
+"id": "factoring_polynomials",
+"name": "Factoring Polynomials",
+"level": "core",
+"typical_order": 12,
+"description": "Decomposing polynomials into products of simpler polynomials.",
+"tags": ["algebra", "symbolic", "procedural"]
+},
+{
+"id": "quadratic_equations",
+"name": "Quadratic Equations",
+"level": "core",
+"typical_order": 13,
+"description": "Solving second-degree polynomial equations using factoring, the quadratic formula, and completing the square.",
+"tags": ["algebra", "symbolic", "visual", "procedural"]
+},
+{
+"id": "descriptive_statistics",
+"name": "Descriptive Statistics",
+"level": "core",
+"typical_order": 14,
+"description": "Summarizing data using measures of center (mean, median, mode) and spread (variance, standard deviation).",
+"tags": ["statistics", "applied", "computation", "numeric"]
+},
+{
+"id": "basic_probability",
+"name": "Basic Probability",
+"level": "core",
+"typical_order": 15,
+"description": "Calculating the likelihood of simple and compound events using combinatorial logic.",
+"tags": ["statistics", "discrete", "applied", "procedural"]
+},
+{
+"id": "lines_angles",
+"name": "Lines and Angles",
+"level": "core",
+"typical_order": 16,
+"description": "Understanding geometric properties of intersecting lines, parallel lines, and angle relationships.",
+"tags": ["geometry", "visual", "conceptual"]
+},
+{
+"id": "triangles_congruence",
+"name": "Triangles and Congruence",
+"level": "core",
+"typical_order": 17,
+"description": "Proving triangles congruent or similar and applying properties of interior and exterior angles.",
+"tags": ["geometry", "visual", "proof", "logical"]
+},
+{
+"id": "right_triangle_geometry",
+"name": "Right Triangle Geometry",
+"level": "core",
+"typical_order": 18,
+"description": "Using the Pythagorean theorem and special right triangle rules to find missing side lengths.",
+"tags": ["geometry", "visual", "computation"]
+},
+{
+"id": "circles_geometry",
+"name": "Geometry of Circles",
+"level": "core",
+"typical_order": 19,
+"description": "Analyzing chords, secants, tangents, and calculating arc lengths and sector areas.",
+"tags": ["geometry", "visual", "computation"]
+},
+{
+"id": "area_volume",
+"name": "Area and Volume",
+"level": "core",
+"typical_order": 20,
+"description": "Calculating the two-dimensional area and three-dimensional volume of geometric figures.",
+"tags": ["geometry", "visual", "applied", "computation"]
+},
+{
+"id": "geometric_transformations",
+"name": "Geometric Transformations",
+"level": "core",
+"typical_order": 21,
+"description": "Translating, rotating, reflecting, and dilating figures on a coordinate plane.",
+"tags": ["geometry", "visual", "procedural"]
+},
+{
+"id": "rational_expressions",
+"name": "Rational Expressions",
+"level": "core",
+"typical_order": 22,
+"description": "Simplifying, adding, and solving equations involving algebraic fractions.",
+"tags": ["algebra", "symbolic", "procedural"]
+},
+{
+"id": "complex_numbers",
+"name": "Complex Numbers",
+"level": "advanced",
+"typical_order": 23,
+"description": "Understanding imaginary numbers and performing arithmetic operations on complex values.",
+"tags": ["algebra", "symbolic", "conceptual"]
+},
+{
+"id": "exponential_functions",
+"name": "Exponential Functions",
+"level": "core",
+"typical_order": 24,
+"description": "Modeling growth and decay mathematically using equations where variables appear in the exponent.",
+"tags": ["algebra", "conceptual", "applied", "continuous"]
+},
+{
+"id": "logarithmic_functions",
+"name": "Logarithmic Functions",
+"level": "core",
+"typical_order": 25,
+"description": "Evaluating logs, using log properties, and solving logarithmic equations as the inverse of exponentials.",
+"tags": ["algebra", "symbolic", "conceptual", "continuous"]
+},
+{
+"id": "sequences_series",
+"name": "Sequences and Series",
+"level": "core",
+"typical_order": 26,
+"description": "Identifying arithmetic and geometric patterns, finding nth terms, and summing finite and infinite series.",
+"tags": ["discrete", "symbolic", "conceptual", "algebra"]
+},
+{
+"id": "trigonometry_basics",
+"name": "Trigonometry Basics",
+"level": "core",
+"typical_order": 27,
+"description": "Using sine, cosine, and tangent functions on the unit circle and in right triangles.",
+"tags": ["trigonometry", "visual", "applied", "continuous"]
+},
+{
+"id": "trigonometric_identities",
+"name": "Trigonometric Identities",
+"level": "advanced",
+"typical_order": 28,
+"description": "Proving mathematical equivalence using fundamental trigonometric relationships like the Pythagorean identity.",
+"tags": ["trigonometry", "symbolic", "proof", "algebra"]
+},
+{
+"id": "probability_distributions",
+"name": "Probability Distributions",
+"level": "advanced",
+"typical_order": 29,
+"description": "Modeling random variables and using normal and binomial distributions to calculate probabilities.",
+"tags": ["statistics", "continuous", "conceptual", "applied"]
+},
+{
+"id": "vectors",
+"name": "Vectors",
+"level": "advanced",
+"typical_order": 30,
+"description": "Representing magnitude and direction mathematically, and computing dot products and vector addition.",
+"tags": ["geometry", "applied", "visual", "algebra"]
+},
+{
+"id": "matrices",
+"name": "Matrices",
+"level": "advanced",
+"typical_order": 31,
+"description": "Organizing data into rectangular arrays and performing matrix multiplication and inversion.",
+"tags": ["discrete", "symbolic", "procedural", "algebra"]
+},
+{
+"id": "conic_sections",
+"name": "Conic Sections",
+"level": "advanced",
+"typical_order": 32,
+"description": "Graphing and analyzing parabolas, ellipses, and hyperbolas derived from slicing a cone.",
+"tags": ["geometry", "algebra", "visual", "continuous"]
+},
+{
+"id": "limits_continuity",
+"name": "Limits and Continuity",
+"level": "advanced",
+"typical_order": 33,
+"description": "Evaluating the behavior of functions as inputs approach specific values or infinity.",
+"tags": ["calculus", "conceptual", "continuous", "symbolic"]
+},
+{
+"id": "derivatives",
+"name": "Derivatives",
+"level": "advanced",
+"typical_order": 34,
+"description": "Calculating instantaneous rates of change and the slope of the tangent line using formal rules.",
+"tags": ["calculus", "symbolic", "continuous", "procedural"]
+},
+{
+"id": "applications_of_derivatives",
+"name": "Applications of Derivatives",
+"level": "advanced",
+"typical_order": 35,
+"description": "Using derivatives to solve optimization and related rates problems, and to sketch curves.",
+"tags": ["calculus", "applied", "continuous", "visual"]
+},
+{
+"id": "integrals",
+"name": "Integrals",
+"level": "advanced",
+"typical_order": 36,
+"description": "Finding antiderivatives and computing definite integrals to determine accumulated quantities.",
+"tags": ["calculus", "symbolic", "continuous", "procedural"]
+},
+{
+"id": "applications_of_integrals",
+"name": "Applications of Integrals",
+"level": "advanced",
+"typical_order": 37,
+"description": "Applying integration to find areas between curves, volumes of solids of revolution, and net change.",
+"tags": ["calculus", "applied", "continuous", "visual"]
+},
+{
+"id": "inferential_statistics",
+"name": "Inferential Statistics",
+"level": "advanced",
+"typical_order": 38,
+"description": "Drawing conclusions about populations from sample data using confidence intervals and hypothesis testing.",
+"tags": ["statistics", "applied", "conceptual", "procedural"]
+}
+],
+"edges": [
+{
+"from": "fractions_decimals",
+"to": "ratios_proportions",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "fractions_decimals",
+"to": "basic_equations",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "order_of_operations",
+"to": "basic_equations",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "order_of_operations",
+"to": "exponent_rules",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "basic_equations",
+"to": "linear_equations",
+"relation": "prerequisite",
+"strength": 1.0
+},
+{
+"from": "basic_equations",
+"to": "lines_angles",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "linear_equations",
+"to": "linear_inequalities",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "linear_equations",
+"to": "systems_of_linear_equations",
+"relation": "prerequisite",
+"strength": 1.0
+},
+{
+"from": "linear_equations",
+"to": "functions_basics",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "linear_equations",
+"to": "lines_angles",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "exponent_rules",
+"to": "polynomials",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "exponent_rules",
+"to": "radical_expressions",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "exponent_rules",
+"to": "exponential_functions",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "polynomials",
+"to": "factoring_polynomials",
+"relation": "prerequisite",
+"strength": 1.0
+},
+{
+"from": "polynomials",
+"to": "rational_expressions",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "factoring_polynomials",
+"to": "quadratic_equations",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "factoring_polynomials",
+"to": "rational_expressions",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "radical_expressions",
+"to": "quadratic_equations",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "radical_expressions",
+"to": "complex_numbers",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "functions_basics",
+"to": "quadratic_equations",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "functions_basics",
+"to": "rational_expressions",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "functions_basics",
+"to": "exponential_functions",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "functions_basics",
+"to": "sequences_series",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "functions_basics",
+"to": "limits_continuity",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "quadratic_equations",
+"to": "complex_numbers",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "quadratic_equations",
+"to": "conic_sections",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "lines_angles",
+"to": "triangles_congruence",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "triangles_congruence",
+"to": "right_triangle_geometry",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "triangles_congruence",
+"to": "area_volume",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "circles_geometry",
+"to": "area_volume",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "right_triangle_geometry",
+"to": "trigonometry_basics",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "trigonometry_basics",
+"to": "trigonometric_identities",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "trigonometry_basics",
+"to": "vectors",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "trigonometry_basics",
+"to": "conic_sections",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "exponential_functions",
+"to": "logarithmic_functions",
+"relation": "prerequisite",
+"strength": 1.0
+},
+{
+"from": "exponential_functions",
+"to": "derivatives",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "logarithmic_functions",
+"to": "derivatives",
+"relation": "prerequisite",
+"strength": 0.7
+},
+{
+"from": "trigonometric_identities",
+"to": "derivatives",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "systems_of_linear_equations",
+"to": "matrices",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "limits_continuity",
+"to": "derivatives",
+"relation": "prerequisite",
+"strength": 1.0
+},
+{
+"from": "derivatives",
+"to": "applications_of_derivatives",
+"relation": "prerequisite",
+"strength": 1.0
+},
+{
+"from": "derivatives",
+"to": "integrals",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "integrals",
+"to": "applications_of_integrals",
+"relation": "prerequisite",
+"strength": 1.0
+},
+{
+"from": "fractions_decimals",
+"to": "basic_probability",
+"relation": "prerequisite",
+"strength": 0.8
+},
+{
+"from": "descriptive_statistics",
+"to": "inferential_statistics",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "basic_probability",
+"to": "probability_distributions",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "probability_distributions",
+"to": "inferential_statistics",
+"relation": "prerequisite",
+"strength": 0.9
+},
+{
+"from": "ratios_proportions",
+"to": "basic_probability",
+"relation": "related",
+"strength": 0.4
+},
+{
+"from": "fractions_decimals",
+"to": "descriptive_statistics",
+"relation": "related",
+"strength": 0.5
+},
+{
+"from": "factoring_polynomials",
+"to": "right_triangle_geometry",
+"relation": "related",
+"strength": 0.4
+},
+{
+"from": "quadratic_equations",
+"to": "conic_sections",
+"relation": "related",
+"strength": 0.6
+},
+{
+"from": "circles_geometry",
+"to": "conic_sections",
+"relation": "related",
+"strength": 0.6
+},
+{
+"from": "rational_expressions",
+"to": "basic_probability",
+"relation": "related",
+"strength": 0.3
+},
+{
+"from": "complex_numbers",
+"to": "vectors",
+"relation": "related",
+"strength": 0.4
+},
+{
+"from": "exponential_functions",
+"to": "probability_distributions",
+"relation": "related",
+"strength": 0.4
+},
+{
+"from": "sequences_series",
+"to": "integrals",
+"relation": "related",
+"strength": 0.3
+},
+{
+"from": "sequences_series",
+"to": "probability_distributions",
+"relation": "related",
+"strength": 0.4
+},
+{
+"from": "trigonometry_basics",
+"to": "circles_geometry",
+"relation": "related",
+"strength": 0.6
+},
+{
+"from": "matrices",
+"to": "vectors",
+"relation": "related",
+"strength": 0.5
+},
+{
+"from": "area_volume",
+"to": "applications_of_integrals",
+"relation": "related",
+"strength": 0.6
+},
+{
+"from": "ratios_proportions",
+"to": "right_triangle_geometry",
+"relation": "application",
+"strength": 0.5
+},
+{
+"from": "linear_equations",
+"to": "descriptive_statistics",
+"relation": "application",
+"strength": 0.4
+},
+{
+"from": "linear_inequalities",
+"to": "systems_of_linear_equations",
+"relation": "application",
+"strength": 0.6
+},
+{
+"from": "functions_basics",
+"to": "geometric_transformations",
+"relation": "application",
+"strength": 0.5
+},
+{
+"from": "quadratic_equations",
+"to": "applications_of_derivatives",
+"relation": "application",
+"strength": 0.5
+},
+{
+"from": "right_triangle_geometry",
+"to": "vectors",
+"relation": "application",
+"strength": 0.6
+},
+{
+"from": "geometric_transformations",
+"to": "matrices",
+"relation": "application",
+"strength": 0.6
+},
+{
+"from": "geometric_transformations",
+"to": "vectors",
+"relation": "application",
+"strength": 0.5
+},
+{
+"from": "complex_numbers",
+"to": "trigonometric_identities",
+"relation": "application",
+"strength": 0.5
+},
+{
+"from": "exponential_functions",
+"to": "applications_of_derivatives",
+"relation": "application",
+"strength": 0.6
+},
+{
+"from": "logarithmic_functions",
+"to": "inferential_statistics",
+"relation": "application",
+"strength": 0.4
+},
+{
+"from": "sequences_series",
+"to": "basic_probability",
+"relation": "application",
+"strength": 0.4
+},
+{
+"from": "trigonometry_basics",
+"to": "applications_of_integrals",
+"relation": "application",
+"strength": 0.5
+},
+{
+"from": "trigonometric_identities",
+"to": "integrals",
+"relation": "application",
+"strength": 0.6
+},
+{
+"from": "right_triangle_geometry",
+"to": "applications_of_derivatives",
+"relation": "application",
+"strength": 0.4
+},
+{
+"from": "integrals",
+"to": "area_volume",
+"relation": "application",
+"strength": 0.7
+},
+{
+"from": "descriptive_statistics",
+"to": "basic_probability",
+"relation": "application",
+"strength": 0.4
+},
+{
+"from": "basic_probability",
+"to": "inferential_statistics",
+"relation": "application",
+"strength": 0.6
+}
+]
+}
