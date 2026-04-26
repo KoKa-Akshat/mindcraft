@@ -28,6 +28,7 @@ import StudyTimer        from './pages/StudyTimer'
 import StudentSessions   from './pages/StudentSessions'
 import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
+import Practice        from './pages/Practice'
 import GlobalJarvis    from './components/GlobalJarvis'
 
 export const UserContext = createContext<User | null>(null)
@@ -84,6 +85,7 @@ export default function App() {
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
+        <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
 
         {/* Root: redirect based on role */}
         <Route path="/" element={<AuthGuard><RoleRedirect /></AuthGuard>} />

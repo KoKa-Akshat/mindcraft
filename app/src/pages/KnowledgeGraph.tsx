@@ -22,6 +22,7 @@ import { useUser }      from '../App'
 import { logEvent }     from '../lib/logEvent'
 import Navbar           from '../components/Navbar'
 import Sidebar          from '../components/Sidebar'
+import { getRecommendations, getStudentProfile, conceptLabel, type RecommendResult, type StudentProfileResult } from '../lib/mlApi'
 import s                from './KnowledgeGraph.module.css'
 
 const GRAPH_URL = 'https://mindcraft-webhook.vercel.app/api/concept-graph'
@@ -85,7 +86,9 @@ export default function KnowledgeGraph() {
   const [selected, setSelected] = useState<GraphNode | null>(null)
   const [hovered,  setHovered]  = useState<string | null>(null)
   const [listening, setListening] = useState(false)
-  const [error,    setError]    = useState('')
+  const [error,       setError]      = useState('')
+  const [mlResult,    setMlResult]   = useState<RecommendResult | null>(null)
+  const [mlProfile,   setMlProfile]  = useState<StudentProfileResult | null>(null)
   const recogRef = useRef<any>(null)
 
   // Node positions (computed once per graph)
@@ -106,28 +109,36 @@ export default function KnowledgeGraph() {
     setLoading(true)
     setError('')
     setSelected(null)
-    try {
-      const res = await fetch(GRAPH_URL, {
+    setMlResult(null)
+
+    // Derive a concept_id from the search term for the ML engine
+    const conceptId = conceptName.trim().toLowerCase().replace(/\s+/g, '_')
+
+    // Fire all three requests in parallel
+    const [graphRes, mlRes, profileRes] = await Promise.all([
+      fetch(GRAPH_URL, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ concept: conceptName.trim(), studentEmail: user.email }),
-      })
-      const data = await res.json()
-      if (data.nodes) {
-        computePositions(data.nodes)
-        setNodes(data.nodes)
-        setEdges(data.edges)
-        setConcept(data.concept)
-        navigate(`/knowledge-graph/${encodeURIComponent(data.concept)}`, { replace: true })
-        logEvent(user?.uid, 'graph_search', { concept: data.concept, nodeCount: data.nodes.length, edgeCount: data.edges.length })
-      } else {
-        setError('No graph found for that concept.')
-      }
-    } catch {
-      setError('Could not reach graph server.')
-    } finally {
-      setLoading(false)
+      }).then(r => r.json()).catch(() => null),
+      getRecommendations(user.uid, [conceptId], 'curriculum'),
+      getStudentProfile(user.uid),
+    ])
+
+    if (graphRes?.nodes) {
+      computePositions(graphRes.nodes)
+      setNodes(graphRes.nodes)
+      setEdges(graphRes.edges)
+      setConcept(graphRes.concept)
+      navigate(`/knowledge-graph/${encodeURIComponent(graphRes.concept)}`, { replace: true })
+      logEvent(user?.uid, 'graph_search', { concept: graphRes.concept, nodeCount: graphRes.nodes.length, edgeCount: graphRes.edges.length })
+    } else {
+      setError('No graph found for that concept.')
     }
+
+    if (mlRes) setMlResult(mlRes)
+    if (profileRes) setMlProfile(profileRes)
+    setLoading(false)
   }
 
   // Auto-fetch if URL has concept
@@ -172,6 +183,13 @@ export default function KnowledgeGraph() {
         setSelected({ ...node, sessionTitle: data.summary?.title, sessionBullets: data.summary?.bullets, sessionDate: data.summary?.date, sessionSubject: data.subject })
       }
     } catch { /* ignore */ }
+  }
+
+  // Merge ML mastery into node mastery when available
+  function mlMastery(node: GraphNode): number {
+    if (!mlProfile) return node.mastery
+    const cid = node.name.toLowerCase().replace(/\s+/g, '_')
+    return mlProfile.masteryByConcept[cid] ?? node.mastery
   }
 
   const masterySessions = nodes.filter(n => n.hasSession).length
@@ -346,13 +364,13 @@ export default function KnowledgeGraph() {
                         style={{ transition: 'r .15s' }}
                       />
 
-                      {/* Mastery arc for level 1 nodes with sessions */}
-                      {node.hasSession && node.level === 1 && node.mastery > 0 && (
+                      {/* Mastery arc for level 1 nodes — uses ML mastery if available */}
+                      {node.level === 1 && mlMastery(node) > 0 && (
                         <circle r={r - 6}
                           fill="none"
-                          stroke="#00f5e8"
+                          stroke={node.hasSession ? '#00f5e8' : 'rgba(0,245,232,0.45)'}
                           strokeWidth="3"
-                          strokeDasharray={`${node.mastery * 2 * Math.PI * (r - 6)} ${2 * Math.PI * (r - 6)}`}
+                          strokeDasharray={`${mlMastery(node) * 2 * Math.PI * (r - 6)} ${2 * Math.PI * (r - 6)}`}
                           strokeLinecap="round"
                           strokeOpacity="0.7"
                           transform={`rotate(-90)`}
@@ -433,19 +451,76 @@ export default function KnowledgeGraph() {
                 </>
               )}
 
-              {/* Mastery indicator */}
-              {selected.hasSession && (
+              {/* Mastery indicator — ML mastery takes priority */}
+              {(selected.hasSession || mlMastery(selected) > 0) && (
                 <div className={s.masteryRow}>
-                  <span className={s.masteryLabel}>Mastery</span>
+                  <span className={s.masteryLabel}>
+                    Mastery{mlProfile ? ' (ML)' : ''}
+                  </span>
                   <div className={s.masteryBar}>
-                    <div className={s.masteryFill} style={{ width: `${selected.mastery * 100}%` }} />
+                    <div className={s.masteryFill} style={{ width: `${mlMastery(selected) * 100}%` }} />
                   </div>
-                  <span className={s.masteryPct}>{Math.round(selected.mastery * 100)}%</span>
+                  <span className={s.masteryPct}>{Math.round(mlMastery(selected) * 100)}%</span>
                 </div>
               )}
             </div>
           )}
         </div>
+
+        {/* ── ML Learning Path Panel ── */}
+        {mlResult && mlResult.recommendations.length > 0 && (
+          <div className={s.mlPanel}>
+            <div className={s.mlHeader}>
+              <span className={s.mlTitle}>Your Learning Path</span>
+              <span className={s.mlSub}>{mlResult.recommendations.length} steps · {mlResult.mode} mode</span>
+            </div>
+            <div className={s.mlChain}>
+              {mlResult.recommendations.filter(r => !r.isSupplement).map((rec, i) => (
+                <div key={rec.conceptId} className={s.mlStep}>
+                  <div className={s.mlStepNum}>{i + 1}</div>
+                  <div className={s.mlStepContent}>
+                    <div className={s.mlConceptName}>{conceptLabel(rec.conceptId)}</div>
+                    <div className={s.mlReason}>{rec.reason}</div>
+                  </div>
+                  {rec.alignmentScore !== null && rec.alignmentScore > 0.2 && (
+                    <div className={s.mlAlignBadge} title="Aligns with your learning style">
+                      ✦ {Math.round(rec.alignmentScore * 100)}%
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button className={s.mlPracticeBtn} onClick={() => navigate('/practice')}>
+              Practice these concepts →
+            </button>
+          </div>
+        )}
+
+        {/* ── ML Strengths / Weaknesses ── */}
+        {mlProfile && (mlProfile.topStrengths.length > 0 || mlProfile.topWeaknesses.length > 0) && (
+          <div className={s.mlPanel}>
+            <div className={s.mlHeader}>
+              <span className={s.mlTitle}>Your Profile</span>
+              <span className={s.mlSub}>{mlProfile.eventCount} interactions tracked</span>
+            </div>
+            <div className={s.profileGrid}>
+              {mlProfile.topStrengths.slice(0, 3).map(sw => (
+                <div key={sw.conceptId} className={s.profileStrength}>
+                  <span className={s.profileDot}>▲</span>
+                  <span className={s.profileConcept}>{conceptLabel(sw.conceptId)}</span>
+                  <span className={s.profileScore}>{Math.round(sw.strength * 100)}%</span>
+                </div>
+              ))}
+              {mlProfile.topWeaknesses.slice(0, 3).map(sw => (
+                <div key={sw.conceptId} className={s.profileWeak}>
+                  <span className={s.profileDotWeak}>▼</span>
+                  <span className={s.profileConcept}>{conceptLabel(sw.conceptId)}</span>
+                  <span className={s.profileScore}>{Math.round(sw.strength * 100)}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ── Coverage bar ── */}
         {nodes.length > 0 && (

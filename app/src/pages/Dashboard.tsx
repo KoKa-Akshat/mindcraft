@@ -10,6 +10,7 @@ import LastSession from '../components/LastSession'
 import PracticeReady from '../components/PracticeReady'
 import ExploreClasses from '../components/ExploreClasses'
 import Jarvis from '../components/Jarvis'
+import MLInsightCard from '../components/MLInsightCard'
 import s from './Dashboard.module.css'
 
 function greeting() {
@@ -42,7 +43,7 @@ export default function Dashboard() {
               userName={data.displayName}
               tutorId={data.tutorId}
               userId={user.uid}
-              context={`Last session: ${data.lastSession ? `${data.lastSession.subject} on ${data.lastSession.date}` : 'none'}. Practice problems ready: ${data.practiceCount}. Next session: ${data.nextSession ? `${data.nextSession.subject} at ${data.nextSession.time}` : 'none scheduled'}.`}
+              context={`Last session: ${data.lastSession ? `${data.lastSession.subject} on ${data.lastSession.date}` : 'none'}. Practice problems ready: ${data.practiceCount}. Next session: ${data.nextSession ? `${data.nextSession.subject} at ${data.nextSession.time}` : 'none scheduled'}. learningStyle: intuitive.`}
             />
           }
         />
@@ -51,7 +52,7 @@ export default function Dashboard() {
         ) : (
           <div className={s.grid}>
             <LastSession session={data.lastSession} />
-            <div className={s.placeholder} />
+            <MLInsightCard userId={user.uid} />
             <PracticeReady count={data.practiceCount} session={data.lastSession} />
             <div className={s.exploreWrap}>
               <ExploreClasses />

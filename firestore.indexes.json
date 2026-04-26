@@ -33,6 +33,14 @@
         { "fieldPath": "studentEmail", "order": "ASCENDING" },
         { "fieldPath": "studentId",    "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "interactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "studentId",  "order": "ASCENDING" },
+        { "fieldPath": "timestamp",  "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

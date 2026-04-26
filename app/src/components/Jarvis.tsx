@@ -13,6 +13,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logEvent } from '../lib/logEvent'
+import HelpCards, { type HelpCard } from './HelpCards'
 import s from './Jarvis.module.css'
 
 const JARVIS_URL = 'https://mindcraft-webhook.vercel.app/api/jarvis'
@@ -70,8 +71,9 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
   const [messages, setMessages] = useState<Message[]>([
     { role: 'jarvis', text: `All systems online${userName ? `, ${userName.split(' ')[0]}` : ''}. How can I assist you today?` }
   ])
-  const [input, setInput]         = useState('')
-  const [wakeActive, setWakeActive] = useState(false)  // shows wake indicator
+  const [input, setInput]           = useState('')
+  const [wakeActive, setWakeActive] = useState(false)
+  const [helpCards, setHelpCards]   = useState<HelpCard[] | null>(null)
   const recogRef      = useRef<any>(null)
   const wakeRecogRef  = useRef<any>(null)
   const wakeLoopRef   = useRef<(() => void) | null>(null)
@@ -192,6 +194,17 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
         body: JSON.stringify({ message: text.trim(), context: `User: ${userName || 'unknown'}. ${context}` }),
       })
       const data = await res.json()
+
+      // Help cards mode — switch to card deck view
+      if (data.helpCards?.length) {
+        const intro: string = data.reply || 'Let me walk you through this.'
+        setMessages(m => [...m, { role: 'jarvis', text: intro }])
+        setHelpCards(data.helpCards)
+        setState('idle')
+        logEvent(userId, 'jarvis_help_cards', { cardCount: data.helpCards.length })
+        return
+      }
+
       const reply: string = data.reply || "I'm having trouble connecting. Please try again."
       setMessages(m => [...m, { role: 'jarvis', text: reply }])
       setState('speaking')
@@ -239,10 +252,10 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
   }
 
   const CHIPS = [
-    { label: 'Study Logs',       msg: 'study logarithms'            },
-    { label: 'Knowledge Graph',  msg: 'knowledge graph'             },
-    { label: 'Study Techniques', msg: 'take me to study techniques' },
-    { label: 'Book Session',     msg: 'navigate to book a session'  },
+    { label: '🧩 Help me',        msg: 'help me solve x² − 5x + 6 = 0' },
+    { label: 'Knowledge Graph',  msg: 'knowledge graph'                 },
+    { label: 'Study Techniques', msg: 'take me to study techniques'     },
+    { label: 'Book Session',     msg: 'navigate to book a session'      },
   ]
 
   // ── Chat panel (shared between both modes) ──────────────────────────────
@@ -289,6 +302,13 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
             <div className={s.msgBubble}>{m.text}</div>
           </div>
         ))}
+        {helpCards && (
+          <HelpCards
+            cards={helpCards}
+            onClose={() => setHelpCards(null)}
+            onPractice={() => { setHelpCards(null); navigate('/practice') }}
+          />
+        )}
       </div>
 
       <form className={s.inputRow} onSubmit={submit}>

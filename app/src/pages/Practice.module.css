@@ -1,0 +1,152 @@
+.shell { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg); }
+
+.page {
+  margin-left: 238px;
+  padding: 68px 40px 40px;
+  min-height: 100vh;
+  max-width: 800px;
+}
+
+/* ── Header ── */
+.back { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 0; margin-bottom: 18px; display: block; }
+.back:hover { color: var(--accent); }
+.title { font-size: 28px; font-weight: 800; color: var(--text); margin: 0 0 6px; }
+.sub   { font-size: 14px; color: var(--text-muted); margin: 0 0 32px; }
+
+/* ── Input ── */
+.inputSection { display: flex; flex-direction: column; gap: 16px; }
+.inputWrap    { display: flex; gap: 12px; align-items: flex-start; }
+
+.textarea {
+  flex: 1;
+  background: var(--card-bg);
+  border: 1.5px solid rgba(0,105,255,0.18);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: var(--f);
+  padding: 14px 16px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.textarea:focus { outline: none; border-color: rgba(0,105,255,0.45); }
+.textarea::placeholder { color: var(--text-muted); }
+
+.analyzeBtn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  align-self: stretch;
+}
+.analyzeBtn:hover:not(:disabled) { opacity: .88; }
+.analyzeBtn:disabled { opacity: .4; cursor: default; }
+
+.quickRow   { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.quickLabel { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+.quickChip  {
+  background: rgba(0,105,255,.08);
+  border: 1px solid rgba(0,105,255,.18);
+  border-radius: 20px;
+  color: var(--accent);
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.quickChip:hover { background: rgba(0,105,255,.16); }
+
+/* ── Loading ── */
+.loadingState { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 80px 0; color: var(--text-muted); }
+.spinner { width: 36px; height: 36px; border: 3px solid rgba(0,105,255,.18); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.errorMsg  { background: rgba(255,60,60,.08); border: 1px solid rgba(255,60,60,.2); border-radius: 12px; padding: 16px; color: #ff6060; display: flex; align-items: center; gap: 12px; }
+.retry     { background: none; border: 1px solid rgba(255,96,96,.4); border-radius: 8px; color: #ff6060; padding: 6px 14px; font-size: 13px; cursor: pointer; }
+
+/* ── Session ── */
+.session { display: flex; flex-direction: column; gap: 16px; }
+
+.sessionHeader { display: flex; justify-content: space-between; align-items: center; }
+.conceptBadge  { background: rgba(0,105,255,.1); border: 1px solid rgba(0,105,255,.2); border-radius: 20px; color: var(--accent); font-size: 13px; font-weight: 600; padding: 5px 14px; }
+.newProblem    { background: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; color: var(--text-muted); font-size: 12px; padding: 6px 12px; cursor: pointer; }
+.newProblem:hover { border-color: rgba(0,105,255,.3); color: var(--accent); }
+
+.progressBar  { height: 4px; background: rgba(255,255,255,.07); border-radius: 4px; overflow: hidden; }
+.progressFill { height: 100%; background: var(--accent); border-radius: 4px; transition: width .4s; }
+.progressLabel { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+/* ── Flip card ── */
+.cardWrap {
+  perspective: 1000px;
+  height: 320px;
+  cursor: pointer;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+
+.flipped .cardInner { transform: rotateY(180deg); }
+
+.cardFront,
+.cardBack {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid rgba(0,105,255,.18);
+}
+
+.cardFront { background: var(--card-bg); }
+.cardBack  { background: rgba(0,105,255,.06); border-color: rgba(0,105,255,.3); transform: rotateY(180deg); }
+
+.cardTag   { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+.cardTitle { font-size: 18px; font-weight: 800; color: var(--text); margin: 0 0 14px; line-height: 1.35; }
+.cardBody  { font-size: 14px; color: var(--text-muted); line-height: 1.7; flex: 1; }
+.tapHint   { font-size: 12px; color: rgba(255,255,255,.2); align-self: flex-end; margin-top: 12px; }
+
+.cardPrompt { font-size: 15px; color: var(--text); line-height: 1.7; flex: 1; font-weight: 500; }
+.cardHint   { font-size: 12px; color: var(--text-muted); font-style: italic; margin-top: 14px; }
+
+/* ── Answer buttons ── */
+.answerRow { display: flex; gap: 12px; }
+.btnNo  { flex: 1; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; background: rgba(255,80,80,.08); border: 1.5px solid rgba(255,80,80,.25); color: #ff8080; }
+.btnYes { flex: 1; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; background: rgba(88,204,2,.08); border: 1.5px solid rgba(88,204,2,.25); color: #58CC02; }
+.btnNo:hover  { background: rgba(255,80,80,.14); }
+.btnYes:hover { background: rgba(88,204,2,.14); }
+
+/* ── Done ── */
+.doneState { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; padding: 40px 0; }
+.doneIcon  { width: 64px; height: 64px; background: rgba(88,204,2,.12); border: 2px solid rgba(88,204,2,.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #58CC02; }
+.doneTitle { font-size: 24px; font-weight: 800; color: var(--text); margin: 0; }
+.doneLabel { font-size: 14px; color: var(--text-muted); margin: 0; }
+
+.compositionCard {
+  background: var(--card-bg);
+  border: 1.5px solid rgba(0,105,255,.18);
+  border-radius: 16px;
+  padding: 24px 28px;
+  max-width: 560px;
+  text-align: left;
+}
+.compositionPrompt { font-size: 14px; color: var(--text); line-height: 1.75; margin: 0; white-space: pre-line; }
+
+.doneActions { display: flex; gap: 12px; }
+.btnOutline  { padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; background: none; border: 1.5px solid rgba(255,255,255,.15); color: var(--text-muted); }
+.btnPrimary  { padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; background: var(--accent); border: none; color: #fff; }
+.btnOutline:hover { border-color: rgba(0,105,255,.35); color: var(--accent); }
+.btnPrimary:hover { opacity: .88; }
+
+.header { margin-bottom: 0; }

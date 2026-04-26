@@ -25,6 +25,7 @@ import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime, timeUntil } from '../utils/format'
 import type { Session, TutorStudent as Student } from '../types'
+import StudentIntelPanel from '../components/StudentIntelPanel'
 import s from './TutorDashboard.module.css'
 
 const FIFTEEN_MIN = 15 * 60 * 1000
@@ -366,6 +367,14 @@ const nextSession = sessions[0] ?? null
                     <span>No session summary yet</span>
                     <p>Summaries appear here after sessions are completed.</p>
                   </div>
+                )}
+
+                {/* Student ML intelligence — only when a specific student is selected */}
+                {selectedStudent !== 'all' && (
+                  <StudentIntelPanel
+                    studentId={selectedStudent}
+                    studentName={selectedStudentData?.displayName || selectedStudentData?.email?.split('@')[0] || 'Student'}
+                  />
                 )}
 
                 <div className={s.divider} />

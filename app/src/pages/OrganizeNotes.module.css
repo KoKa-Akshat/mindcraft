@@ -10,9 +10,9 @@
 }
 
 .page {
-  margin-left: 200px;
+  margin-left: 238px;
   flex: 1;
-  padding: 68px 28px 40px;
+  padding: 68px 36px 40px;
   display: flex;
   flex-direction: column;
   gap: 0;
