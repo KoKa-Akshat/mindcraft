@@ -96,7 +96,7 @@ def save_recommendation_result(student_id: str, result: dict):
         "updatedAt": datetime.now(),
         "mode": result.get("mode"),
         "recommendations": result.get("recommendations", []),
-        "studentProfile": result.get("student_profile", {}),
+        "studentProfile": result.get("studentProfile", {}),
     })
 
 
