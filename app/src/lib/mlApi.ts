@@ -7,7 +7,9 @@
  */
 
 export const ML_BASE =
-  import.meta.env.VITE_ML_URL ?? 'http://localhost:8000'
+  import.meta.env.VITE_ML_API_URL ??
+  import.meta.env.VITE_ML_URL ??
+  'http://localhost:8000'
 
 // ── Types ─────────────────────────────────────────────────────────────────
 

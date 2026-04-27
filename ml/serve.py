@@ -11,7 +11,7 @@ from mindcraft_graph.models.ingredient import IngredientOntology
 from mindcraft_graph.models.student_state import ConceptMastery
 from mindcraft_graph.representation import embeddings
 from mindcraft_graph.representation.student_embeddings import (
-    compute_student_embedding_from_profiles,
+    compute_student_embedding_from_profiles, compute_student_embedding_from_mastery
 )
 from mindcraft_graph.representation.summary_parser import process_session_summary
 from mindcraft_graph.engine.ingredient_graph import IngredientGraph
@@ -488,4 +488,120 @@ async def health():
         "ingredientCount": len(ingredient_graph.ingredients),
         "edgeCount": len(ontology.edges),
         "embeddingsLoaded": len(concept_embs) > 0,
+    }
+
+@app.get("/knowledge-graph/{student_id}")
+async def knowledge_graph_endpoint(student_id: str):
+    """
+    Returns all data needed to render the interactive knowledge graph.
+    
+    - Concept positions (PCA projected x,y coordinates)
+    - Ontology edges with weights
+    - Per-concept mastery and strength scores
+    - Student mastery and strength points
+    - Ingredient list per concept (for click-to-expand)
+    """
+    from mindcraft_graph.firestore_adapter import load_student_events
+    
+    events = load_student_events(student_id)
+    
+    graph = create_personal_graph(student_id, ontology)
+    if events:
+        graph = update_personal_graph(graph, events, ontology)
+    
+    profiles = compute_concept_profiles(events)
+    
+    mastery_vec = compute_student_embedding_from_mastery(
+        graph.state.mastery_by_concept, concept_embs,
+    )
+    strength_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
+    
+    # Project everything into 2D PCA space
+    projected_concepts = embeddings.project_concept_embeddings(
+        concept_embs, pca_components, pca_mean,
+    )
+    mastery_proj = embeddings.project_vectors_onto_axes(
+        mastery_vec, pca_components, pca_mean,
+    )
+    strength_proj = embeddings.project_vectors_onto_axes(
+        strength_vec, pca_components, pca_mean,
+    )
+    
+    # Build node data
+    nodes = []
+    for concept in ontology.concepts:
+        cid = concept.id
+        proj = projected_concepts[cid]
+        profile = profiles.get(cid)
+        mastery_state = graph.state.mastery_by_concept.get(cid)
+        
+        # Get ingredients for this concept
+        concept_ingredients = []
+        if hasattr(ingredient_graph, 'get_concept_ingredients'):
+            for ing in ingredient_graph.get_concept_ingredients(cid):
+                concept_ingredients.append({
+                    "id": ing.id,
+                    "name": ing.name,
+                    "description": ing.description,
+                })
+        
+        nodes.append({
+            "id": cid,
+            "name": concept.name,
+            "level": concept.level,
+            "x": float(proj[0]),
+            "y": float(proj[1]),
+            "mastery": mastery_state.mastery if mastery_state else 0.0,
+            "strengthScore": profile.strength_score if profile else 0.0,
+            "eventCount": profile.event_count if profile else 0,
+            "status": (
+                "mastered" if profile and profile.strength_score > 0.3
+                else "struggling" if profile and profile.strength_score < -0.1
+                else "untouched" if not profile or profile.event_count == 0
+                else "in_progress"
+            ),
+            "ingredients": concept_ingredients,
+            "tags": concept.tags,
+        })
+    
+    # Build edge data from personal graph
+    edge_list = []
+    for key, edge in graph.edges.items():
+        parts = key.split("::")
+        if len(parts) != 2:
+            continue
+        edge_list.append({
+            "from": parts[0],
+            "to": parts[1],
+            "weight": edge.weight,
+            "relation": edge.relation,
+        })
+    
+    # Student position
+    student_points = {
+        "mastery": {
+            "x": float(mastery_proj[0, 0]),
+            "y": float(mastery_proj[0, 1]),
+            "label": "Where you've been studying",
+        },
+        "strength": {
+            "x": float(strength_proj[0, 0]),
+            "y": float(strength_proj[0, 1]),
+            "label": "Where you perform best",
+        },
+    }
+    
+    # PCA axis labels for the frontend
+    axis_labels = {
+        "x": "applied/geometric ↔ algebraic/symbolic",
+        "y": "probabilistic/functional ↔ trigonometric/spatial",
+    }
+    
+    return {
+        "nodes": nodes,
+        "edges": edge_list,
+        "studentPoints": student_points,
+        "axisLabels": axis_labels,
+        "conceptCount": len(nodes),
+        "edgeCount": len(edge_list),
     }
