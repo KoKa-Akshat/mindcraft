@@ -18,16 +18,6 @@ import s from './Jarvis.module.css'
 
 const JARVIS_URL = 'https://mindcraft-webhook.vercel.app/api/jarvis'
 
-const GRAPH_CONCEPT_RE = /\b(?:study|graph|explore|show(?:\s+me)?|map|knowledge(?:\s+graph)?(?:\s+for)?|i\s+want\s+to\s+study|i\s+need\s+to\s+study)\s+([a-z0-9 ]+)/i
-
-const NAV_ROUTES: { patterns: RegExp; route: (tid?: string | null) => string; label: string }[] = [
-  { patterns: /\b(dashboard|home|main|overview)\b/i,                                              route: () => '/dashboard',           label: 'dashboard'        },
-  { patterns: /\b(book|schedule|booking|new session)\b/i,                                         route: () => '/book',                label: 'booking page'     },
-  { patterns: /\b(timer|pomodoro|technique|ultradian|flowtime|deep work|52|focus mode)\b/i,        route: () => '/study-timer',         label: 'Study Techniques' },
-  { patterns: /\b(knowledge\s+graph|my\s+graph)\b/i,                                              route: () => '/knowledge-graph',     label: 'Knowledge Graph'  },
-  { patterns: /\b(chat|message|inbox)\b/i,                                                        route: (tid) => tid ? `/chat/${tid}` : '/dashboard', label: 'messages' },
-]
-
 type JarvisState = 'idle' | 'listening' | 'thinking' | 'speaking'
 interface Message { role: 'user' | 'jarvis'; text: string }
 
@@ -156,52 +146,35 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
-  const detectNavigation = useCallback((msg: string): string | null => {
-    // Check for "study X" / "graph X" — navigate to knowledge graph for that concept
-    const graphMatch = msg.match(GRAPH_CONCEPT_RE)
-    if (graphMatch) {
-      const concept = graphMatch[1].trim()
-      navigate(`/knowledge-graph/${encodeURIComponent(concept)}`)
-      logEvent(userId, 'jarvis_navigate', { to: `/knowledge-graph/${concept}`, trigger: 'voice_command', msg: msg.slice(0, 80) })
-      return `Knowledge Graph for ${concept}`
-    }
-    for (const entry of NAV_ROUTES) {
-      if (entry.patterns.test(msg)) {
-        navigate(entry.route(tutorId))
-        logEvent(userId, 'jarvis_navigate', { to: entry.route(tutorId), label: entry.label, trigger: 'command', msg: msg.slice(0, 80) })
-        return entry.label
-      }
-    }
-    return null
-  }, [navigate, tutorId, userId])
-
   const handleMessage = useCallback(async (text: string) => {
     if (!text.trim()) return
     setMessages(m => [...m, { role: 'user', text: text.trim() }])
     setState('thinking')
-    const navLabel = detectNavigation(text)
-    if (navLabel) {
-      const reply = `Navigating to ${navLabel} now.`
-      setMessages(m => [...m, { role: 'jarvis', text: reply }])
-      setState('speaking')
-      speak(reply, () => setState('idle'))
-      return
-    }
     try {
-      const res  = await fetch(JARVIS_URL, {
+      const res = await fetch(JARVIS_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text.trim(), context: `User: ${userName || 'unknown'}. ${context}` }),
+        body: JSON.stringify({
+          message:   text.trim(),
+          context:   `User: ${userName || 'unknown'}. ${context}`,
+          studentId: userId ?? undefined,
+        }),
       })
       const data = await res.json()
 
-      // Help cards mode — switch to card deck view
+      // Agent routed to a page — navigate then show reply
+      if (data.navigationTarget) {
+        navigate(`/${data.navigationTarget}`)
+        logEvent(userId, 'jarvis_navigate', { to: data.navigationTarget, trigger: 'agent', msg: text.slice(0, 80) })
+      }
+
+      // Help cards — switch to card deck view
       if (data.helpCards?.length) {
         const intro: string = data.reply || 'Let me walk you through this.'
         setMessages(m => [...m, { role: 'jarvis', text: intro }])
         setHelpCards(data.helpCards)
         setState('idle')
-        logEvent(userId, 'jarvis_help_cards', { cardCount: data.helpCards.length })
+        logEvent(userId, 'jarvis_help_cards', { cardCount: data.helpCards.length, toolsUsed: data.toolsUsed })
         return
       }
 
@@ -215,7 +188,7 @@ export default function Jarvis({ userName, tutorId, userId, context = '', heroMo
       setState('speaking')
       speak(fb, () => setState('idle'))
     }
-  }, [detectNavigation, context, userName])
+  }, [context, navigate, userId, userName])
 
   const startListening = useCallback(() => {
     if (!SR) { handleMessage("Voice recognition isn't supported here. Please type."); return }
