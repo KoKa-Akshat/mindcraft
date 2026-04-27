@@ -1,199 +1,318 @@
 /**
  * KnowledgeGraph.tsx
  *
- * Interactive concept knowledge graph. Given a concept name (from URL param
- * or search), fetches the student's personalized subgraph and renders it as
- * an SVG force-like radial layout.
+ * Interactive concept knowledge graph using PCA-projected positions
+ * from the ML engine. Concepts are positioned in semantically meaningful
+ * space — algebraic concepts cluster together, geometric ones cluster
+ * separately — rather than arbitrary radial rings.
  *
- * - Center node = queried concept
- * - Ring 1 (radius 165px) = direct connections (session + ontology)
- * - Ring 2 (radius 310px) = second-degree connections
- * - Click a node → session detail panel slides in from right
- * - JARVIS mic button to speak a concept name
- * - Exam prep shortcut chips
+ * - Concept nodes colored by mastery status (mastered/struggling/in_progress/untouched)
+ * - Edges from ontology with weight-based thickness
+ * - Student mastery + strength points with displacement arrow
+ * - Click a concept → detail panel with ingredients, mastery, strength
+ * - ML learning path panel below the graph
+ * - Student profile panel with strengths/weaknesses
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { signOut }      from 'firebase/auth'
-import { auth, db }     from '../firebase'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { auth }         from '../firebase'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useUser }      from '../App'
 import { logEvent }     from '../lib/logEvent'
 import Navbar           from '../components/Navbar'
 import Sidebar          from '../components/Sidebar'
-import { getRecommendations, getStudentProfile, conceptLabel, type RecommendResult, type StudentProfileResult } from '../lib/mlApi'
+import { resolveConceptId, mlIdToLabel } from '../lib/conceptMap'
+import { getRecommendations, type RecommendResult } from '../lib/mlApi'
 import s                from './KnowledgeGraph.module.css'
 
-const GRAPH_URL = 'https://mindcraft-webhook.vercel.app/api/concept-graph'
+// ── ML API base URL ──
+const ML_API_URL =
+  import.meta.env.VITE_ML_API_URL ??
+  import.meta.env.VITE_ML_URL ??
+  ''
 
-const CX = 440
-const CY = 290
-const R1 = 165
-const R2 = 308
+// ── SVG viewport ──
+const SVG_W = 880
+const SVG_H = 580
+const PAD   = 60
+const ZOOM_MIN = 0.75
+const ZOOM_MAX = 1.8
+const ZOOM_STEP = 0.15
 
-interface GraphNode {
+// ── Types from ML API ──
+interface MLNode {
   id:             string
   name:           string
-  level:          0 | 1 | 2
-  hasSession:     boolean
-  sessionIds:     string[]
+  level:          string
+  x:              number
+  y:              number
   mastery:        number
-  sessionTitle?:  string
-  sessionBullets?: string[]
-  sessionDate?:   string
-  sessionSubject?: string
+  strengthScore:  number
+  eventCount:     number
+  status:         'mastered' | 'struggling' | 'in_progress' | 'untouched'
+  ingredients:    { id: string; name: string; description: string }[]
+  tags:           string[]
 }
 
-interface GraphEdge {
-  source: string
-  target: string
-  weight: number
-  type:   'session' | 'ontology' | 'both'
+interface MLEdge {
+  from:     string
+  to:       string
+  weight:   number
+  relation: string
 }
 
-function radialPos(i: number, total: number, radius: number, angleOffset = -Math.PI / 2) {
-  const angle = angleOffset + (2 * Math.PI * i) / total
-  return { x: CX + radius * Math.cos(angle), y: CY + radius * Math.sin(angle) }
+interface StudentPoint {
+  x:     number
+  y:     number
+  label: string
 }
 
-function nodeColor(node: GraphNode): string {
-  if (node.level === 0) return '#00d2c8'
-  if (node.hasSession) return `rgba(0,210,200,${0.9 - node.level * 0.2})`
-  return 'rgba(0,210,200,0.28)'
+interface MLGraphResponse {
+  nodes:          MLNode[]
+  edges:          MLEdge[]
+  studentPoints:  { mastery: StudentPoint; strength: StudentPoint }
+  axisLabels:     { x: string; y: string }
+  conceptCount:   number
+  edgeCount:      number
 }
 
-function edgeColor(edge: GraphEdge): string {
-  if (edge.type === 'both') return `rgba(0,210,200,${edge.weight * 0.7})`
-  if (edge.type === 'session') return `rgba(0,210,200,${edge.weight * 0.6})`
-  return `rgba(0,210,200,${edge.weight * 0.3})`
+interface IngredientPreview {
+  id: string
+  name: string
+  description: string
 }
 
-const EXAM_CONCEPTS = ['Logarithms', 'Derivatives', 'Calculus 1', 'Algebra', 'Exponents', 'Integrals']
+// ── Status → color mapping (MindCraft palette) ──
+function statusColor(status: string): string {
+  switch (status) {
+    case 'mastered':     return '#58CC02'
+    case 'struggling':   return '#FF4B4B'
+    case 'in_progress':  return '#4A7BF7'
+    case 'untouched':
+    default:             return '#3E4559'
+  }
+}
 
-const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+function statusGlow(status: string): string {
+  switch (status) {
+    case 'mastered':     return 'rgba(88, 204, 2, 0.4)'
+    case 'struggling':   return 'rgba(255, 75, 75, 0.3)'
+    case 'in_progress':  return 'rgba(74, 123, 247, 0.3)'
+    default:             return 'rgba(62, 69, 89, 0.15)'
+  }
+}
 
-export default function KnowledgeGraph() {
-  const user      = useUser()
-  const navigate  = useNavigate()
-  const { concept: urlConcept } = useParams<{ concept?: string }>()
+function edgeStyle(relation: string): { dash: string; opacity: number } {
+  switch (relation) {
+    case 'prerequisite': return { dash: '',        opacity: 0.25 }
+    case 'related':      return { dash: '6 4',     opacity: 0.12 }
+    case 'application':  return { dash: '3 3',     opacity: 0.18 }
+    case 'discovered':   return { dash: '2 4',     opacity: 0.15 }
+    default:             return { dash: '',        opacity: 0.15 }
+  }
+}
 
-  const [search,   setSearch]   = useState(urlConcept ? decodeURIComponent(urlConcept) : '')
-  const [nodes,    setNodes]    = useState<GraphNode[]>([])
-  const [edges,    setEdges]    = useState<GraphEdge[]>([])
-  const [loading,  setLoading]  = useState(false)
-  const [concept,  setConcept]  = useState(urlConcept ? decodeURIComponent(urlConcept) : '')
-  const [selected, setSelected] = useState<GraphNode | null>(null)
-  const [hovered,  setHovered]  = useState<string | null>(null)
-  const [listening, setListening] = useState(false)
-  const [error,       setError]      = useState('')
-  const [mlResult,    setMlResult]   = useState<RecommendResult | null>(null)
-  const [mlProfile,   setMlProfile]  = useState<StudentProfileResult | null>(null)
-  const recogRef = useRef<any>(null)
+// ── Scale PCA coordinates to SVG viewport ──
+function scaleNodes(nodes: MLNode[]): Map<string, { sx: number; sy: number }> {
+  if (nodes.length === 0) return new Map()
 
-  // Node positions (computed once per graph)
-  const posMap = useRef<Record<string, { x: number; y: number }>>({})
+  let minX = Infinity, maxX = -Infinity
+  let minY = Infinity, maxY = -Infinity
 
-  function computePositions(ns: GraphNode[]) {
-    const pm: Record<string, { x: number; y: number }> = {}
-    const l1 = ns.filter(n => n.level === 1)
-    const l2 = ns.filter(n => n.level === 2)
-    ns.filter(n => n.level === 0).forEach(n => { pm[n.name] = { x: CX, y: CY } })
-    l1.forEach((n, i) => { pm[n.name] = radialPos(i, l1.length, R1) })
-    l2.forEach((n, i) => { pm[n.name] = radialPos(i, l2.length, R2) })
-    posMap.current = pm
+  for (const n of nodes) {
+    if (n.x < minX) minX = n.x
+    if (n.x > maxX) maxX = n.x
+    if (n.y < minY) minY = n.y
+    if (n.y > maxY) maxY = n.y
   }
 
-  async function fetchGraph(conceptName: string) {
-    if (!conceptName.trim() || !user?.email) return
+  const rangeX = maxX - minX || 1
+  const rangeY = maxY - minY || 1
+  const plotW  = SVG_W - PAD * 2
+  const plotH  = SVG_H - PAD * 2
+
+  const positions = new Map<string, { sx: number; sy: number }>()
+  for (const n of nodes) {
+    positions.set(n.id, {
+      sx: PAD + ((n.x - minX) / rangeX) * plotW,
+      sy: PAD + ((n.y - minY) / rangeY) * plotH,
+    })
+  }
+
+  return positions
+}
+
+function scalePoint(
+  point: StudentPoint,
+  nodes: MLNode[],
+): { sx: number; sy: number } {
+  if (nodes.length === 0) return { sx: SVG_W / 2, sy: SVG_H / 2 }
+
+  let minX = Infinity, maxX = -Infinity
+  let minY = Infinity, maxY = -Infinity
+
+  for (const n of nodes) {
+    if (n.x < minX) minX = n.x
+    if (n.x > maxX) maxX = n.x
+    if (n.y < minY) minY = n.y
+    if (n.y > maxY) maxY = n.y
+  }
+
+  const rangeX = maxX - minX || 1
+  const rangeY = maxY - minY || 1
+  const plotW  = SVG_W - PAD * 2
+  const plotH  = SVG_H - PAD * 2
+
+  return {
+    sx: PAD + ((point.x - minX) / rangeX) * plotW,
+    sy: PAD + ((point.y - minY) / rangeY) * plotH,
+  }
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value))
+}
+
+// ── Exam prep concept chips ──
+const QUICK_CONCEPTS = [
+  'derivatives', 'integrals', 'quadratic_equations',
+  'trigonometry_basics', 'logarithmic_functions', 'linear_equations',
+]
+
+export default function KnowledgeGraph() {
+  const user     = useUser()
+  const navigate = useNavigate()
+  const { concept: urlConcept } = useParams<{ concept?: string }>()
+  const svgWrapRef = useRef<HTMLDivElement | null>(null)
+
+  const [search,    setSearch]    = useState(urlConcept ? decodeURIComponent(urlConcept) : '')
+  const [graphData, setGraphData] = useState<MLGraphResponse | null>(null)
+  const [loading,   setLoading]   = useState(false)
+  const [error,     setError]     = useState('')
+  const [selected,  setSelected]  = useState<MLNode | null>(null)
+  const [hovered,   setHovered]   = useState<string | null>(null)
+  const [mlResult,  setMlResult]  = useState<RecommendResult | null>(null)
+  const [zoom,      setZoom]      = useState(1)
+  const [pan,       setPan]       = useState({ x: 0, y: 0 })
+  const [dragging,  setDragging]  = useState(false)
+  const [dragOrigin, setDragOrigin] = useState<{ x: number; y: number } | null>(null)
+  const [activeIngredient, setActiveIngredient] = useState<IngredientPreview | null>(null)
+
+  // Scaled positions
+  const positions = graphData ? scaleNodes(graphData.nodes) : new Map()
+
+  // ── Fetch graph from ML API ──
+  async function fetchGraph(conceptInput?: string) {
+    if (!user?.uid) return
     setLoading(true)
     setError('')
     setSelected(null)
-    setMlResult(null)
+    setActiveIngredient(null)
+    if (!conceptInput) setMlResult(null)
 
-    // Derive a concept_id from the search term for the ML engine
-    const conceptId = conceptName.trim().toLowerCase().replace(/\s+/g, '_')
+    try {
+      // Fetch the full knowledge graph from ML API
+      const graphRes = await fetch(`${ML_API_URL}/knowledge-graph/${user.uid}`)
+      if (!graphRes.ok) throw new Error('Failed to fetch knowledge graph')
+      const data: MLGraphResponse = await graphRes.json()
 
-    // Fire all three requests in parallel
-    const [graphRes, mlRes, profileRes] = await Promise.all([
-      fetch(GRAPH_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ concept: conceptName.trim(), studentEmail: user.email }),
-      }).then(r => r.json()).catch(() => null),
-      getRecommendations(user.uid, [conceptId], 'curriculum'),
-      getStudentProfile(user.uid),
-    ])
+      if (data.nodes.length === 0) {
+        setError('No graph data yet. Complete a session to start building your knowledge graph.')
+        setGraphData(null)
+      } else {
+        setGraphData(data)
+      }
 
-    if (graphRes?.nodes) {
-      computePositions(graphRes.nodes)
-      setNodes(graphRes.nodes)
-      setEdges(graphRes.edges)
-      setConcept(graphRes.concept)
-      navigate(`/knowledge-graph/${encodeURIComponent(graphRes.concept)}`, { replace: true })
-      logEvent(user?.uid, 'graph_search', { concept: graphRes.concept, nodeCount: graphRes.nodes.length, edgeCount: graphRes.edges.length })
-    } else {
-      setError('No graph found for that concept.')
+      // If a concept was specified, also get recommendations for it
+      if (conceptInput) {
+        const conceptId = resolveConceptId(conceptInput)
+        const mlRes = await getRecommendations(user.uid, [conceptId], 'curriculum')
+        setMlResult(mlRes)
+        navigate(`/knowledge-graph/${encodeURIComponent(conceptInput)}`, { replace: true })
+        logEvent(user.uid, 'graph_search', {
+          concept: conceptId,
+          nodeCount: data.nodes.length,
+          edgeCount: data.edges.length,
+        })
+      } else {
+        setMlResult(null)
+      }
+    } catch (err) {
+      console.error('Knowledge graph fetch error:', err)
+      setError('Could not load knowledge graph. Is the ML server running?')
     }
 
-    if (mlRes) setMlResult(mlRes)
-    if (profileRes) setMlProfile(profileRes)
     setLoading(false)
   }
 
-  // Auto-fetch if URL has concept
+  // Auto-fetch on mount
   useEffect(() => {
-    if (urlConcept && user?.email) fetchGraph(decodeURIComponent(urlConcept))
-  }, [user?.email])
-
-  function startListening() {
-    if (!SR) return
-    if (listening) { recogRef.current?.stop(); setListening(false); return }
-    setListening(true)
-    const r = new SR()
-    recogRef.current = r
-    r.lang = 'en-US'; r.continuous = false; r.interimResults = false
-    r.onresult = (e: any) => {
-      const t = e.results[0][0].transcript
-      setSearch(t)
-      setListening(false)
-      fetchGraph(t)
+    if (user?.uid) {
+      fetchGraph(urlConcept ? decodeURIComponent(urlConcept) : undefined)
     }
-    r.onerror  = () => setListening(false)
-    r.onend    = () => setListening(false)
-    r.start()
+  }, [user?.uid, urlConcept])
+
+  function adjustZoom(delta: number) {
+    setZoom(current => clamp(Number((current + delta).toFixed(2)), ZOOM_MIN, ZOOM_MAX))
   }
 
-  // Find session detail for selected node (fetch from Firestore if needed)
-  async function openNode(node: GraphNode) {
+  function handleWheelZoom(e: React.WheelEvent<HTMLDivElement>) {
+    if (!graphData || loading) return
+    e.preventDefault()
+    adjustZoom(e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP)
+  }
+
+  function handlePointerDown(e: React.MouseEvent<HTMLDivElement>) {
+    if (!graphData || loading) return
+    if ((e.target as HTMLElement).closest('button')) return
+    setDragging(true)
+    setDragOrigin({ x: e.clientX, y: e.clientY })
+  }
+
+  function handlePointerMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (!dragging || !dragOrigin || !svgWrapRef.current) return
+
+    const rect = svgWrapRef.current.getBoundingClientRect()
+    const scaleX = SVG_W / Math.max(rect.width, 1)
+    const scaleY = SVG_H / Math.max(rect.height, 1)
+    const dx = (e.clientX - dragOrigin.x) * scaleX
+    const dy = (e.clientY - dragOrigin.y) * scaleY
+
+    setPan(current => ({ x: current.x + dx, y: current.y + dy }))
+    setDragOrigin({ x: e.clientX, y: e.clientY })
+  }
+
+  function stopDragging() {
+    setDragging(false)
+    setDragOrigin(null)
+  }
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault()
+    if (search.trim()) fetchGraph(search.trim())
+  }
+
+  function openNode(node: MLNode) {
     setSelected(node)
-    logEvent(user?.uid, 'graph_node_click', { node: node.name, level: node.level, hasSession: node.hasSession, mastery: node.mastery })
-    if (node.sessionTitle) return  // already have it
-
-    if (node.sessionIds.length === 0) return
-    // Fetch session from Firestore
-    try {
-      const snap = await getDocs(query(
-        collection(db, 'sessions'),
-        where('studentEmail', '==', user?.email ?? ''),
-      ))
-      const match = snap.docs.find(d => node.sessionIds.includes(d.id))
-      if (match) {
-        const data = match.data()
-        setSelected({ ...node, sessionTitle: data.summary?.title, sessionBullets: data.summary?.bullets, sessionDate: data.summary?.date, sessionSubject: data.subject })
-      }
-    } catch { /* ignore */ }
+    setActiveIngredient(null)
+    logEvent(user?.uid, 'graph_node_click', {
+      node: node.id,
+      status: node.status,
+      mastery: node.mastery,
+      strengthScore: node.strengthScore,
+    })
   }
 
-  // Merge ML mastery into node mastery when available
-  function mlMastery(node: GraphNode): number {
-    if (!mlProfile) return node.mastery
-    const cid = node.name.toLowerCase().replace(/\s+/g, '_')
-    return mlProfile.masteryByConcept[cid] ?? node.mastery
+  function openIngredientCard(ingredient: IngredientPreview) {
+    setActiveIngredient(ingredient)
   }
 
-  const masterySessions = nodes.filter(n => n.hasSession).length
-  const totalNodes = nodes.length
+  // ── Render ──
+  const masteredCount  = graphData?.nodes.filter(n => n.status === 'mastered').length ?? 0
+  const totalCount     = graphData?.nodes.length ?? 0
+  const hasStudentData = graphData?.studentPoints?.mastery && graphData?.studentPoints?.strength
+  const viewportTranslate = `${SVG_W / 2 * (1 - zoom) + pan.x} ${SVG_H / 2 * (1 - zoom) + pan.y}`
 
   return (
     <div className={s.shell}>
@@ -206,62 +325,97 @@ export default function KnowledgeGraph() {
           <button className={s.backBtn} onClick={() => navigate('/dashboard')}>← Dashboard</button>
           <div className={s.titleRow}>
             <span className={s.pageTitle}>Knowledge Graph</span>
-            {concept && <span className={s.conceptBadge}>{concept}</span>}
           </div>
         </div>
 
-        {/* ── Search / exam prep ── */}
+        {/* ── Search ── */}
         <div className={s.searchRow}>
-          <form className={s.searchForm} onSubmit={e => { e.preventDefault(); fetchGraph(search) }}>
+          <form className={s.searchForm} onSubmit={handleSearch}>
             <div className={s.searchWrap}>
-              <svg className={s.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <svg className={s.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
               <input
                 className={s.searchInput}
-                placeholder="Search a concept — e.g. Logarithms, Derivatives, Algebra…"
+                placeholder="Search a concept — e.g. Derivatives, Trigonometry, Algebra…"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
               />
-              <button
-                type="button"
-                className={`${s.micBtn} ${listening ? s.micActive : ''}`}
-                onClick={startListening}
-                title="Speak a concept"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-              </button>
             </div>
             <button type="submit" className={s.searchBtn} disabled={!search.trim() || loading}>
-              {loading ? 'Building…' : 'Explore →'}
+              {loading ? 'Loading…' : 'Explore →'}
             </button>
           </form>
 
-          {/* Exam-prep chips */}
           <div className={s.examChips}>
             <span className={s.examLabel}>Quick explore:</span>
-            {EXAM_CONCEPTS.map(c => (
-              <button key={c} className={s.examChip} onClick={() => { setSearch(c); fetchGraph(c) }}>{c}</button>
+            {QUICK_CONCEPTS.map(c => (
+              <button key={c} className={s.examChip} onClick={() => {
+                setSearch(mlIdToLabel(c))
+                fetchGraph(c)
+              }}>
+                {mlIdToLabel(c)}
+              </button>
             ))}
           </div>
         </div>
 
         {error && <div className={s.error}>{error}</div>}
 
-        {/* ── Main area ── */}
+        {/* ── Graph area ── */}
         <div className={s.graphArea}>
+          <div
+            ref={svgWrapRef}
+            className={`${s.svgWrap} ${dragging ? s.dragging : ''}`}
+            onWheel={handleWheelZoom}
+            onMouseDown={handlePointerDown}
+            onMouseMove={handlePointerMove}
+            onMouseUp={stopDragging}
+            onMouseLeave={stopDragging}
+          >
+            {graphData && !loading && (
+              <>
+                <div className={s.graphHud}>
+                  <div className={s.legend}>
+                    <span className={s.legendTitle}>Legend</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#58CC02' }} />Mastered</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#4A7BF7' }} />In progress</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#FF4B4B' }} />Needs work</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#748095' }} />Untouched</span>
+                  </div>
+                </div>
 
-          {/* SVG Canvas */}
-          <div className={s.svgWrap}>
-            {nodes.length === 0 && !loading && (
+                <div className={s.zoomControls}>
+                  <button type="button" className={s.zoomBtn} onClick={() => adjustZoom(-ZOOM_STEP)} disabled={zoom <= ZOOM_MIN}>
+                    −
+                  </button>
+                  <span className={s.zoomValue}>{Math.round(zoom * 100)}%</span>
+                  <button type="button" className={s.zoomBtn} onClick={() => adjustZoom(ZOOM_STEP)} disabled={zoom >= ZOOM_MAX}>
+                    +
+                  </button>
+                  <button type="button" className={s.zoomReset} onClick={() => setZoom(1)} disabled={zoom === 1}>
+                    Reset
+                  </button>
+                  <button type="button" className={s.zoomReset} onClick={() => setPan({ x: 0, y: 0 })} disabled={pan.x === 0 && pan.y === 0}>
+                    Center
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Empty state */}
+            {!graphData && !loading && (
               <div className={s.emptyState}>
                 <div className={s.emptyOrb}>
                   <div className={s.emptyRing} />
                   <span className={s.emptyJ}>J</span>
                 </div>
-                <p className={s.emptyText}>Search a concept above to explore your knowledge graph</p>
-                <p className={s.emptySub}>JARVIS will map how your sessions connect</p>
+                <p className={s.emptyText}>Your knowledge graph will appear here</p>
+                <p className={s.emptySub}>Complete sessions to see concepts connect</p>
               </div>
             )}
 
+            {/* Loading */}
             {loading && (
               <div className={s.emptyState}>
                 <div className={s.loadingOrb}>
@@ -273,195 +427,350 @@ export default function KnowledgeGraph() {
               </div>
             )}
 
-            {nodes.length > 0 && !loading && (
+            {/* SVG Graph */}
+            {graphData && !loading && (
               <svg
-                viewBox={`0 0 ${CX * 2} ${CY * 2}`}
+                viewBox={`0 0 ${SVG_W} ${SVG_H}`}
                 className={s.svg}
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <defs>
-                  {/* Glow filter for nodes */}
                   <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
                     <feGaussianBlur stdDeviation="4" result="blur"/>
                     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                   </filter>
                   <filter id="glowStrong" x="-80%" y="-80%" width="260%" height="260%">
-                    <feGaussianBlur stdDeviation="8" result="blur"/>
+                    <feGaussianBlur stdDeviation="6" result="blur"/>
                     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                   </filter>
-                  {/* Radial gradient for nodes */}
-                  <radialGradient id="nodeGrad0" cx="40%" cy="35%">
-                    <stop offset="0%" stopColor="#00f5e8"/>
-                    <stop offset="100%" stopColor="#008a83"/>
-                  </radialGradient>
-                  <radialGradient id="nodeGradHas" cx="40%" cy="35%">
-                    <stop offset="0%" stopColor="#00d2c8"/>
-                    <stop offset="100%" stopColor="#006b66"/>
-                  </radialGradient>
-                  <radialGradient id="nodeGradNo" cx="40%" cy="35%">
-                    <stop offset="0%" stopColor="rgba(0,210,200,0.5)"/>
-                    <stop offset="100%" stopColor="rgba(0,80,80,0.3)"/>
-                  </radialGradient>
+                  {/* Star marker for student points */}
+                  <marker id="arrowHead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L8,3 L0,6 Z" fill="mediumpurple" opacity="0.7" />
+                  </marker>
                 </defs>
 
-                {/* Edges — draw first (behind nodes) */}
-                {edges.map((edge, i) => {
-                  const sp = posMap.current[edge.source]
-                  const tp = posMap.current[edge.target]
-                  if (!sp || !tp) return null
-                  const isHighlighted = hovered === edge.source || hovered === edge.target
-                  const strokeWidth = edge.type === 'both' ? 2 : edge.type === 'session' ? 1.5 : 1
-                  const opacity = isHighlighted ? Math.max(edge.weight, 0.6) : edge.weight * 0.4 + 0.1
-                  // Curved path: pull midpoint slightly toward center
-                  const mx = (sp.x + tp.x) / 2 + (CX - (sp.x + tp.x) / 2) * 0.15
-                  const my = (sp.y + tp.y) / 2 + (CY - (sp.y + tp.y) / 2) * 0.15
-                  return (
-                    <path
-                      key={i}
-                      d={`M ${sp.x} ${sp.y} Q ${mx} ${my} ${tp.x} ${tp.y}`}
-                      stroke={edgeColor(edge)}
-                      strokeWidth={isHighlighted ? strokeWidth * 2 : strokeWidth}
-                      strokeOpacity={opacity}
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                  )
-                })}
-
-                {/* Nodes */}
-                {nodes.map(node => {
-                  const pos = posMap.current[node.name]
-                  if (!pos) return null
-                  const r = node.level === 0 ? 42 : node.level === 1 ? 32 : 24
-                  const isHovered  = hovered  === node.name
-                  const isSelected = selected?.name === node.name
-                  const fillId = node.level === 0 ? 'url(#nodeGrad0)' : node.hasSession ? 'url(#nodeGradHas)' : 'url(#nodeGradNo)'
-
-                  return (
-                    <g key={node.name}
-                      className={s.nodeG}
-                      transform={`translate(${pos.x},${pos.y})`}
-                      onClick={() => openNode(node)}
-                      onMouseEnter={() => setHovered(node.name)}
-                      onMouseLeave={() => setHovered(null)}
-                    >
-                      {/* Outer glow ring */}
-                      {(isHovered || isSelected || node.level === 0) && (
-                        <circle r={r + 8} fill="none"
-                          stroke={node.level === 0 ? '#00f5e8' : '#00d2c8'}
-                          strokeWidth="1"
-                          strokeOpacity={isSelected ? 0.8 : 0.4}
-                          filter="url(#glow)"
-                        />
-                      )}
-
-                      {/* Main circle */}
-                      <circle r={isHovered || isSelected ? r + 3 : r}
-                        fill={fillId}
-                        stroke={node.level === 0 ? '#00f5e8' : node.hasSession ? '#00d2c8' : 'rgba(0,210,200,0.35)'}
-                        strokeWidth={node.level === 0 ? 2 : isSelected ? 2 : 1}
-                        filter={node.level === 0 || isHovered ? 'url(#glowStrong)' : isSelected ? 'url(#glow)' : undefined}
-                        style={{ transition: 'r .15s' }}
-                      />
-
-                      {/* Mastery arc for level 1 nodes — uses ML mastery if available */}
-                      {node.level === 1 && mlMastery(node) > 0 && (
-                        <circle r={r - 6}
-                          fill="none"
-                          stroke={node.hasSession ? '#00f5e8' : 'rgba(0,245,232,0.45)'}
-                          strokeWidth="3"
-                          strokeDasharray={`${mlMastery(node) * 2 * Math.PI * (r - 6)} ${2 * Math.PI * (r - 6)}`}
-                          strokeLinecap="round"
-                          strokeOpacity="0.7"
-                          transform={`rotate(-90)`}
-                        />
-                      )}
-
-                      {/* Label */}
-                      <text
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        fontSize={node.level === 0 ? 11 : node.level === 1 ? 9 : 8}
-                        fontWeight={node.level === 0 ? '900' : '700'}
-                        fill={node.level === 0 ? '#00f5e8' : node.hasSession ? '#00d2c8' : 'rgba(0,210,200,0.55)'}
-                        style={{ fontFamily: 'var(--f)', userSelect: 'none' }}
-                      >
-                        {node.name.length > 12 ? node.name.slice(0, 11) + '…' : node.name}
+                <g transform={`translate(${viewportTranslate}) scale(${zoom})`}>
+                  {/* Axis labels */}
+                  {graphData.axisLabels && (
+                    <>
+                      <text x={SVG_W / 2} y={SVG_H - 8} textAnchor="middle"
+                        fontSize="10" fill="rgba(17,24,39,0.42)"
+                        fontFamily="var(--f)" fontWeight="700">
+                        {graphData.axisLabels.x}
                       </text>
+                      <text x={12} y={SVG_H / 2} textAnchor="middle"
+                        fontSize="10" fill="rgba(17,24,39,0.42)"
+                        fontFamily="var(--f)" fontWeight="700"
+                        transform={`rotate(-90, 12, ${SVG_H / 2})`}>
+                        {graphData.axisLabels.y}
+                      </text>
+                    </>
+                  )}
 
-                      {/* Session dot */}
-                      {node.hasSession && node.level > 0 && (
-                        <circle cx={r - 5} cy={-(r - 5)} r={4}
-                          fill="#58CC02"
-                          stroke="#fff"
-                          strokeWidth="1"
-                          filter="url(#glow)"
+                  {/* Edges */}
+                  {graphData.edges.filter(e => e.weight > 0.2).map((edge, i) => {
+                    const sp = positions.get(edge.from)
+                    const tp = positions.get(edge.to)
+                    if (!sp || !tp) return null
+
+                    const isHighlighted = hovered === edge.from || hovered === edge.to
+                    const style = edgeStyle(edge.relation)
+                    const strokeW = Math.max(0.75, edge.weight * 2.5)
+
+                    return (
+                      <line
+                        key={`e-${i}`}
+                        x1={sp.sx} y1={sp.sy}
+                        x2={tp.sx} y2={tp.sy}
+                        stroke="rgba(70, 85, 105, 0.65)"
+                        strokeWidth={isHighlighted ? strokeW * 1.8 : strokeW}
+                        strokeOpacity={isHighlighted ? Math.max(style.opacity * 2.6, 0.58) : style.opacity + 0.08}
+                        strokeDasharray={style.dash}
+                        strokeLinecap="round"
+                      />
+                    )
+                  })}
+
+                  {/* Displacement arrow (mastery → strength) */}
+                  {hasStudentData && (() => {
+                    const mp = scalePoint(graphData.studentPoints.mastery, graphData.nodes)
+                    const sp = scalePoint(graphData.studentPoints.strength, graphData.nodes)
+                    const dx = sp.sx - mp.sx
+                    const dy = sp.sy - mp.sy
+                    const len = Math.sqrt(dx * dx + dy * dy)
+                    if (len < 5) return null
+
+                    const mx = (mp.sx + sp.sx) / 2 + dy * 0.15
+                    const my = (mp.sy + sp.sy) / 2 - dx * 0.15
+
+                    return (
+                      <g key="displacement">
+                        <path
+                          d={`M ${mp.sx} ${mp.sy} Q ${mx} ${my} ${sp.sx} ${sp.sy}`}
+                          stroke="mediumpurple"
+                          strokeWidth="2.5"
+                          strokeOpacity="0.78"
+                          fill="none"
+                          markerEnd="url(#arrowHead)"
+                          strokeLinecap="round"
                         />
-                      )}
-                    </g>
-                  )
-                })}
+                        <text x={mx} y={my - 10} textAnchor="middle"
+                          fontSize="9" fill="rgba(109,40,217,0.92)"
+                          fontFamily="var(--f)" fontWeight="800">
+                          effort → strength
+                        </text>
+                      </g>
+                    )
+                  })()}
+
+                  {/* Student points */}
+                  {hasStudentData && (() => {
+                    const mp = scalePoint(graphData.studentPoints.mastery, graphData.nodes)
+                    const sp = scalePoint(graphData.studentPoints.strength, graphData.nodes)
+
+                    return (
+                      <g key="student-points">
+                        <polygon
+                          points={starPoints(mp.sx, mp.sy, 12, 6, 5)}
+                          fill="#ef4444" stroke="#ffffff" strokeWidth="1"
+                          filter="url(#glow)" opacity="0.96"
+                        />
+                        <text x={mp.sx} y={mp.sy + 22} textAnchor="middle"
+                          fontSize="9" fontWeight="800" fill="#b91c1c"
+                          fontFamily="var(--f)">
+                          mastery
+                        </text>
+
+                        <polygon
+                          points={starPoints(sp.sx, sp.sy, 12, 6, 5)}
+                          fill="#f59e0b" stroke="#ffffff" strokeWidth="1"
+                          filter="url(#glow)" opacity="0.96"
+                        />
+                        <text x={sp.sx} y={sp.sy + 22} textAnchor="middle"
+                          fontSize="9" fontWeight="800" fill="#b45309"
+                          fontFamily="var(--f)">
+                          strength
+                        </text>
+                      </g>
+                    )
+                  })()}
+
+                  {/* Concept nodes */}
+                  {graphData.nodes.map(node => {
+                    const pos = positions.get(node.id)
+                    if (!pos) return null
+
+                    const isHovered = hovered === node.id
+                    const isSelected = selected?.id === node.id
+                    const color = statusColor(node.status)
+                    const r = 6 + Math.min(node.eventCount * 1.5, 12)
+                    const label = mlIdToLabel(node.id)
+                    const showLabel = isHovered || isSelected || node.status === 'struggling' || node.eventCount > 0
+
+                    return (
+                      <g key={node.id}
+                        className={s.nodeG}
+                        transform={`translate(${pos.sx}, ${pos.sy})`}
+                        onClick={() => openNode(node)}
+                        onMouseEnter={() => setHovered(node.id)}
+                        onMouseLeave={() => setHovered(null)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {(isHovered || isSelected) && (
+                          <circle r={r + 9} fill="none"
+                            stroke={color} strokeWidth="1.75"
+                            strokeOpacity="0.62"
+                            filter="url(#glow)"
+                          />
+                        )}
+
+                        <circle
+                          r={isHovered || isSelected ? r + 2 : r}
+                          fill={color}
+                          fillOpacity={node.status === 'untouched' ? 0.58 : 0.92}
+                          stroke={isSelected ? '#ffffff' : color}
+                          strokeWidth={isSelected ? 2.4 : 1.4}
+                          strokeOpacity={node.status === 'untouched' ? 0.45 : 0.9}
+                          filter={isHovered ? 'url(#glowStrong)' : undefined}
+                          style={{ transition: 'r 0.15s, fill-opacity 0.15s' }}
+                        />
+
+                        {node.mastery > 0 && node.status !== 'untouched' && (
+                          <circle r={r - 3}
+                            fill="none"
+                            stroke="rgba(255,255,255,0.86)"
+                            strokeWidth="2"
+                            strokeDasharray={`${node.mastery * 2 * Math.PI * (r - 3)} ${2 * Math.PI * (r - 3)}`}
+                            strokeLinecap="round"
+                            strokeOpacity="0.8"
+                            transform="rotate(-90)"
+                          />
+                        )}
+
+                        {showLabel && (
+                          <g transform={`translate(0, ${r + 15})`}>
+                            <rect
+                              x={-(Math.min(label.length, 18) * 2.6) - 8}
+                              y={-9}
+                              rx="8"
+                              width={(Math.min(label.length, 18) * 5.2) + 16}
+                              height="18"
+                              fill={isSelected ? 'rgba(15,23,42,0.82)' : 'rgba(255,255,255,0.82)'}
+                              stroke={isSelected ? 'rgba(34,211,238,0.4)' : 'rgba(148,163,184,0.35)'}
+                            />
+                            <text
+                              y={4}
+                              textAnchor="middle"
+                              fontSize="8.5"
+                              fontWeight="800"
+                              fill={isSelected ? 'rgba(236,254,255,0.98)' : 'rgba(15,23,42,0.8)'}
+                              fontFamily="var(--f)"
+                              style={{ userSelect: 'none' }}
+                            >
+                              {label.length > 18 ? `${label.slice(0, 17)}…` : label}
+                            </text>
+                          </g>
+                        )}
+                      </g>
+                    )
+                  })}
+                </g>
               </svg>
             )}
           </div>
 
-          {/* ── Session Detail Panel ── */}
+          {/* ── Detail Panel ── */}
           {selected && (
             <div className={s.detailPanel}>
               <button className={s.closePanel} onClick={() => setSelected(null)}>✕</button>
 
-              <div className={s.detailBadge} style={{ opacity: selected.hasSession ? 1 : 0.5 }}>
-                {selected.hasSession
-                  ? <><span className={s.dotGreen} />Session covered</>
-                  : <><span className={s.dotDim} />Not yet studied</>
-                }
+              <div className={s.detailBadge} style={{ color: statusColor(selected.status) }}>
+                <span className={s.dotGreen} style={{ background: statusColor(selected.status) }} />
+                {selected.status === 'mastered' && 'Mastered'}
+                {selected.status === 'struggling' && 'Needs Work'}
+                {selected.status === 'in_progress' && 'In Progress'}
+                {selected.status === 'untouched' && 'Not Yet Studied'}
               </div>
 
-              <h2 className={s.detailTitle}>{selected.name}</h2>
+              <h2 className={s.detailTitle}>{mlIdToLabel(selected.id)}</h2>
 
-              {selected.hasSession && selected.sessionTitle ? (
+              {/* Mastery bar */}
+              <div className={s.masteryRow}>
+                <span className={s.masteryLabel}>Mastery</span>
+                <div className={s.masteryBar}>
+                  <div className={s.masteryFill} style={{
+                    width: `${selected.mastery * 100}%`,
+                    background: statusColor(selected.status),
+                  }} />
+                </div>
+                <span className={s.masteryPct}>{Math.round(selected.mastery * 100)}%</span>
+              </div>
+
+              {/* Strength score */}
+              <div className={s.masteryRow}>
+                <span className={s.masteryLabel}>Strength</span>
+                <div className={s.masteryBar}>
+                  <div className={s.masteryFill} style={{
+                    width: `${Math.min(Math.abs(selected.strengthScore) * 20, 100)}%`,
+                    background: selected.strengthScore > 0 ? '#58CC02' : '#FF4B4B',
+                  }} />
+                </div>
+                <span className={s.masteryPct} style={{
+                  color: selected.strengthScore > 0 ? '#58CC02' : selected.strengthScore < 0 ? '#FF4B4B' : 'var(--mu)',
+                }}>
+                  {selected.strengthScore > 0 ? '+' : ''}{selected.strengthScore.toFixed(2)}
+                </span>
+              </div>
+
+              {/* Event count */}
+              <div className={s.detailMeta}>
+                <span>{selected.eventCount} interaction{selected.eventCount !== 1 ? 's' : ''}</span>
+                <span>{selected.level}</span>
+              </div>
+
+              {/* Tags */}
+              {selected.tags.length > 0 && (
                 <>
-                  <div className={s.detailMeta}>
-                    <span>{selected.sessionSubject}</span>
-                    {selected.sessionDate && <span>{selected.sessionDate}</span>}
-                  </div>
-                  <p className={s.detailSessionTitle}>{selected.sessionTitle}</p>
-                  <ul className={s.detailBullets}>
-                    {(selected.sessionBullets ?? []).map((b, i) => (
-                      <li key={i}>{b}</li>
+                  <span className={s.ingredientHint}>Topic tags</span>
+                  <div className={s.tagRow}>
+                    {selected.tags.map(tag => (
+                      <span key={tag} className={s.tag}>{tag}</span>
                     ))}
-                  </ul>
-                  {selected.sessionIds[0] && (
-                    <button
-                      className={s.viewSessionBtn}
-                      onClick={() => navigate(`/tutor/session/${selected.sessionIds[0]}`)}
-                    >
-                      View Full Session →
-                    </button>
-                  )}
-                </>
-              ) : selected.hasSession ? (
-                <p className={s.detailLoading}>Loading session details…</p>
-              ) : (
-                <>
-                  <p className={s.notStudied}>You haven't covered this concept in a session yet.</p>
-                  <button className={s.bookBtn} onClick={() => navigate('/book')}>
-                    Book a Session on {selected.name} →
-                  </button>
+                  </div>
                 </>
               )}
 
-              {/* Mastery indicator — ML mastery takes priority */}
-              {(selected.hasSession || mlMastery(selected) > 0) && (
-                <div className={s.masteryRow}>
-                  <span className={s.masteryLabel}>
-                    Mastery{mlProfile ? ' (ML)' : ''}
+              {/* Ingredients (click to expand) */}
+              {selected.ingredients.length > 0 && (
+                <div className={s.ingredientSection}>
+                  <span className={s.ingredientLabel}>
+                    Building Blocks ({selected.ingredients.length})
                   </span>
-                  <div className={s.masteryBar}>
-                    <div className={s.masteryFill} style={{ width: `${mlMastery(selected) * 100}%` }} />
-                  </div>
-                  <span className={s.masteryPct}>{Math.round(mlMastery(selected) * 100)}%</span>
+                  <span className={s.ingredientHint}>Tap a building block to open its flash card</span>
+                  <ul className={s.ingredientList}>
+                    {selected.ingredients.map(ing => (
+                      <li
+                        key={ing.id}
+                        className={`${s.ingredientItem} ${activeIngredient?.id === ing.id ? s.ingredientItemActive : ''}`}
+                        onClick={() => openIngredientCard(ing)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            openIngredientCard(ing)
+                          }
+                        }}
+                      >
+                        <span className={s.ingredientName}>{ing.name}</span>
+                        <span className={s.ingredientDesc}>{ing.description}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
+              )}
+
+              {activeIngredient && (
+                <div className={s.flashcardPanel}>
+                  <div className={s.flashcardTop}>
+                    <span className={s.flashcardTag}>Flash Card</span>
+                    <button className={s.flashcardClose} onClick={() => setActiveIngredient(null)}>✕</button>
+                  </div>
+                  <div className={s.flashcardCard}>
+                    <div className={s.flashcardFace}>
+                      <div className={s.flashcardFaceLabel}>Building block</div>
+                      <h3 className={s.flashcardTitle}>{activeIngredient.name}</h3>
+                      <p className={s.flashcardBody}>{activeIngredient.description}</p>
+                    </div>
+                    <div className={s.flashcardDivider} />
+                    <div className={s.flashcardFace}>
+                      <div className={s.flashcardFaceLabel}>Prompt</div>
+                      <p className={s.flashcardPrompt}>
+                        In your own words, how would you explain <strong>{activeIngredient.name}</strong> and when would you use it inside {mlIdToLabel(selected.id)}?
+                      </p>
+                    </div>
+                  </div>
+                  <div className={s.flashcardActions}>
+                    <button className={s.flashcardAction} onClick={() => navigate('/practice')}>
+                      Practice this concept →
+                    </button>
+                    <button className={s.flashcardActionSecondary} onClick={() => navigate('/organize-notes')}>
+                      Add to notes
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Actions */}
+              {selected.status === 'untouched' && (
+                <button className={s.bookBtn} onClick={() => navigate('/book')}>
+                  Book a Session on {mlIdToLabel(selected.id)} →
+                </button>
+              )}
+              {selected.status === 'struggling' && (
+                <button className={s.bookBtn} onClick={() => navigate('/book')}>
+                  Get Help with {mlIdToLabel(selected.id)} →
+                </button>
               )}
             </div>
           )}
@@ -472,14 +781,16 @@ export default function KnowledgeGraph() {
           <div className={s.mlPanel}>
             <div className={s.mlHeader}>
               <span className={s.mlTitle}>Your Learning Path</span>
-              <span className={s.mlSub}>{mlResult.recommendations.length} steps · {mlResult.mode} mode</span>
+              <span className={s.mlSub}>
+                {mlResult.recommendations.length} steps · {mlResult.mode} mode
+              </span>
             </div>
             <div className={s.mlChain}>
               {mlResult.recommendations.filter(r => !r.isSupplement).map((rec, i) => (
                 <div key={rec.conceptId} className={s.mlStep}>
                   <div className={s.mlStepNum}>{i + 1}</div>
                   <div className={s.mlStepContent}>
-                    <div className={s.mlConceptName}>{conceptLabel(rec.conceptId)}</div>
+                    <div className={s.mlConceptName}>{mlIdToLabel(rec.conceptId)}</div>
                     <div className={s.mlReason}>{rec.reason}</div>
                   </div>
                   {rec.alignmentScore !== null && rec.alignmentScore > 0.2 && (
@@ -490,49 +801,35 @@ export default function KnowledgeGraph() {
                 </div>
               ))}
             </div>
-            <button className={s.mlPracticeBtn} onClick={() => navigate('/practice')}>
-              Practice these concepts →
-            </button>
-          </div>
-        )}
-
-        {/* ── ML Strengths / Weaknesses ── */}
-        {mlProfile && (mlProfile.topStrengths.length > 0 || mlProfile.topWeaknesses.length > 0) && (
-          <div className={s.mlPanel}>
-            <div className={s.mlHeader}>
-              <span className={s.mlTitle}>Your Profile</span>
-              <span className={s.mlSub}>{mlProfile.eventCount} interactions tracked</span>
-            </div>
-            <div className={s.profileGrid}>
-              {mlProfile.topStrengths.slice(0, 3).map(sw => (
-                <div key={sw.conceptId} className={s.profileStrength}>
-                  <span className={s.profileDot}>▲</span>
-                  <span className={s.profileConcept}>{conceptLabel(sw.conceptId)}</span>
-                  <span className={s.profileScore}>{Math.round(sw.strength * 100)}%</span>
-                </div>
-              ))}
-              {mlProfile.topWeaknesses.slice(0, 3).map(sw => (
-                <div key={sw.conceptId} className={s.profileWeak}>
-                  <span className={s.profileDotWeak}>▼</span>
-                  <span className={s.profileConcept}>{conceptLabel(sw.conceptId)}</span>
-                  <span className={s.profileScore}>{Math.round(sw.strength * 100)}%</span>
-                </div>
-              ))}
-            </div>
           </div>
         )}
 
         {/* ── Coverage bar ── */}
-        {nodes.length > 0 && (
+        {graphData && graphData.nodes.length > 0 && (
           <div className={s.coverage}>
             <span className={s.coverageLabel}>Coverage</span>
             <div className={s.coverageBar}>
-              <div className={s.coverageFill} style={{ width: `${(masterySessions / Math.max(totalNodes, 1)) * 100}%` }} />
+              <div className={s.coverageFill} style={{
+                width: `${(masteredCount / Math.max(totalCount, 1)) * 100}%`
+              }} />
             </div>
-            <span className={s.coverageTxt}>{masterySessions} of {totalNodes} concepts studied</span>
+            <span className={s.coverageTxt}>
+              {masteredCount} of {totalCount} concepts mastered
+            </span>
           </div>
         )}
       </main>
     </div>
   )
+}
+
+// ── SVG star path helper ──
+function starPoints(cx: number, cy: number, outerR: number, innerR: number, points: number): string {
+  const coords: string[] = []
+  for (let i = 0; i < points * 2; i++) {
+    const angle = (Math.PI * i) / points - Math.PI / 2
+    const r = i % 2 === 0 ? outerR : innerR
+    coords.push(`${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`)
+  }
+  return coords.join(' ')
 }

@@ -227,8 +227,10 @@
 /* ── SVG canvas wrapper ──────────────────────────────────────────────────── */
 .svgWrap {
   flex: 1;
-  background: rgba(0,210,200,0.02);
-  border: 1.5px solid rgba(0,210,200,0.1);
+  background:
+    radial-gradient(circle at 50% 48%, rgba(34,211,238,0.09), transparent 38%),
+    linear-gradient(180deg, rgba(248,252,255,0.96), rgba(236,245,252,0.98));
+  border: 1.5px solid rgba(34,211,238,0.16);
   border-radius: 20px;
   overflow: hidden;
   position: relative;
@@ -236,6 +238,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: grab;
+}
+
+.dragging {
+  cursor: grabbing;
 }
 
 /* Subtle radial background glow */
@@ -243,8 +250,115 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0,210,200,0.04) 0%, transparent 70%);
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(34,211,238,0.08) 0%, transparent 70%),
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.34) 52%, transparent 100%);
   pointer-events: none;
+}
+
+.graphHud {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 2;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 520px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.84);
+  border: 1px solid rgba(148,163,184,0.22);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+  backdrop-filter: blur(10px);
+}
+
+.legendTitle {
+  font-size: 11px;
+  font-weight: 900;
+  color: rgba(15,23,42,0.72);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(51,65,85,0.78);
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.65);
+}
+
+.zoomControls {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(148,163,184,0.22);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+  backdrop-filter: blur(10px);
+}
+
+.zoomBtn,
+.zoomReset {
+  background: rgba(241,245,249,0.95);
+  border: 1px solid rgba(148,163,184,0.3);
+  border-radius: 10px;
+  color: rgba(15,23,42,0.78);
+  font-size: 13px;
+  font-weight: 900;
+  font-family: var(--f);
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.zoomBtn {
+  width: 30px;
+  height: 30px;
+}
+
+.zoomReset {
+  padding: 7px 10px;
+  font-size: 11px;
+  letter-spacing: .2px;
+}
+
+.zoomBtn:hover:not(:disabled),
+.zoomReset:hover:not(:disabled) {
+  background: rgba(226,232,240,0.98);
+  border-color: rgba(34,211,238,0.35);
+}
+
+.zoomBtn:disabled,
+.zoomReset:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.zoomValue {
+  min-width: 42px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(15,23,42,0.66);
 }
 
 .svg {
@@ -355,10 +469,10 @@
 
 /* ── Detail panel ────────────────────────────────────────────────────────── */
 .detailPanel {
-  width: 280px;
+  width: 320px;
   flex-shrink: 0;
-  background: rgba(0,210,200,0.03);
-  border: 1.5px solid rgba(0,210,200,0.15);
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,251,255,0.94));
+  border: 1.5px solid rgba(34,211,238,0.16);
   border-radius: 20px;
   padding: 20px 20px 24px;
   position: relative;
@@ -368,6 +482,7 @@
   animation: panelSlide .2s ease-out;
   overflow-y: auto;
   max-height: 580px;
+  box-shadow: 0 16px 36px rgba(15,23,42,0.08);
 }
 @keyframes panelSlide {
   from { opacity: 0; transform: translateX(12px); }
@@ -417,7 +532,7 @@
 .detailTitle {
   font-size: 20px;
   font-weight: 900;
-  color: #00d2c8;
+  color: rgba(8,145,178,0.96);
   margin: 0;
   letter-spacing: -.3px;
   line-height: 1.2;
@@ -425,10 +540,11 @@
 
 .detailMeta {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   font-size: 11px;
   font-weight: 700;
-  color: rgba(0,210,200,0.5);
+  color: rgba(8,145,178,0.65);
   text-transform: uppercase;
   letter-spacing: .3px;
 }
@@ -536,7 +652,7 @@
 .masteryBar {
   flex: 1;
   height: 5px;
-  background: rgba(0,210,200,0.1);
+  background: rgba(148,163,184,0.22);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -551,7 +667,7 @@
 .masteryPct {
   font-size: 11px;
   font-weight: 800;
-  color: #00d2c8;
+  color: rgba(8,145,178,0.9);
   white-space: nowrap;
   min-width: 30px;
   text-align: right;
@@ -564,8 +680,8 @@
   gap: 12px;
   margin-top: 16px;
   padding: 12px 16px;
-  background: rgba(0,210,200,0.03);
-  border: 1px solid rgba(0,210,200,0.1);
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(148,163,184,0.16);
   border-radius: 12px;
 }
 
@@ -612,10 +728,11 @@
 /* ── ML Learning Path Panel ── */
 .mlPanel {
   margin-top: 20px;
-  background: rgba(0,105,255,.04);
-  border: 1.5px solid rgba(0,105,255,.18);
+  background: rgba(255,255,255,.8);
+  border: 1.5px solid rgba(59,130,246,.15);
   border-radius: 16px;
   padding: 20px 24px;
+  box-shadow: 0 12px 32px rgba(15,23,42,0.05);
 }
 
 .mlHeader {
@@ -624,8 +741,8 @@
   gap: 10px;
   margin-bottom: 16px;
 }
-.mlTitle { font-size: 14px; font-weight: 800; color: var(--tx); }
-.mlSub   { font-size: 12px; color: rgba(255,255,255,.35); }
+.mlTitle { font-size: 14px; font-weight: 800; color: rgba(15,23,42,.82); }
+.mlSub   { font-size: 12px; color: rgba(71,85,105,.58); }
 
 .mlChain { display: flex; flex-direction: column; gap: 10px; }
 
@@ -634,9 +751,9 @@
   align-items: flex-start;
   gap: 12px;
   padding: 12px 14px;
-  background: rgba(255,255,255,.03);
+  background: rgba(248,250,252,.95);
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.06);
+  border: 1px solid rgba(148,163,184,.18);
 }
 
 .mlStepNum {
@@ -657,7 +774,221 @@
 
 .mlStepContent { flex: 1; }
 .mlConceptName { font-size: 13px; font-weight: 700; color: rgba(0,210,200,.9); margin-bottom: 3px; }
-.mlReason      { font-size: 12px; color: rgba(255,255,255,.4); line-height: 1.5; }
+.mlReason      { font-size: 12px; color: rgba(51,65,85,.62); line-height: 1.5; }
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34,211,238,0.1);
+  border: 1px solid rgba(34,211,238,0.18);
+  color: rgba(8,145,178,0.82);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.ingredientSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.ingredientLabel {
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(15,23,42,0.75);
+  letter-spacing: .2px;
+}
+
+.ingredientHint {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(8,145,178,0.68);
+}
+
+.ingredientList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ingredientItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background: rgba(248,250,252,0.88);
+  border: 1px solid rgba(148,163,184,0.16);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+}
+
+.ingredientItem:hover {
+  transform: translateY(-1px);
+  border-color: rgba(34,211,238,0.28);
+  background: rgba(240,249,255,0.98);
+  box-shadow: 0 10px 24px rgba(15,23,42,0.06);
+}
+
+.ingredientItemActive {
+  border-color: rgba(34,211,238,0.35);
+  background: rgba(236,254,255,0.98);
+  box-shadow: 0 12px 28px rgba(8,145,178,0.09);
+}
+
+.ingredientName {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(15,23,42,0.82);
+  overflow-wrap: anywhere;
+}
+
+.ingredientDesc {
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(51,65,85,0.75);
+}
+
+.flashcardPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 14px;
+  background: linear-gradient(180deg, rgba(240,249,255,0.98), rgba(248,250,252,0.96));
+  border: 1px solid rgba(34,211,238,0.18);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+.flashcardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.flashcardTag {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: rgba(8,145,178,0.8);
+}
+
+.flashcardClose {
+  background: none;
+  border: none;
+  color: rgba(8,145,178,0.55);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.flashcardClose:hover {
+  color: rgba(8,145,178,0.88);
+}
+
+.flashcardCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(148,163,184,0.15);
+  border-radius: 16px;
+}
+
+.flashcardFace {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flashcardFaceLabel {
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .45px;
+  color: rgba(100,116,139,0.76);
+}
+
+.flashcardTitle {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 900;
+  color: rgba(15,23,42,0.84);
+}
+
+.flashcardBody,
+.flashcardPrompt {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(51,65,85,0.78);
+}
+
+.flashcardDivider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(148,163,184,0.38), transparent);
+}
+
+.flashcardActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.flashcardAction,
+.flashcardActionSecondary {
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--f);
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.flashcardAction {
+  background: rgba(8,145,178,0.12);
+  border: 1px solid rgba(8,145,178,0.22);
+  color: rgba(8,145,178,0.88);
+  padding: 10px 12px;
+}
+
+.flashcardActionSecondary {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(148,163,184,0.22);
+  color: rgba(51,65,85,0.76);
+  padding: 10px 12px;
+}
+
+.flashcardAction:hover {
+  background: rgba(8,145,178,0.18);
+}
+
+.flashcardActionSecondary:hover {
+  border-color: rgba(8,145,178,0.22);
+  color: rgba(8,145,178,0.82);
+}
 
 .mlAlignBadge {
   font-size: 11px;
