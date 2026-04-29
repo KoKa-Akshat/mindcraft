@@ -45,7 +45,7 @@ export default function GlobalJarvis() {
       userName={displayName}
       tutorId={tutorId}
       userId={user?.uid}
-      wakeWordEnabled={true}
+      wakeWordEnabled={false}
       context={`${subject} Current page: ${location.pathname}.`}
     />
   )

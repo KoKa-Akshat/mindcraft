@@ -189,6 +189,7 @@ export default function KnowledgeGraph() {
   const [search,    setSearch]    = useState(urlConcept ? decodeURIComponent(urlConcept) : '')
   const [graphData, setGraphData] = useState<MLGraphResponse | null>(null)
   const [loading,   setLoading]   = useState(false)
+  const [slowLoad,  setSlowLoad]  = useState(false)
   const [error,     setError]     = useState('')
   const [selected,  setSelected]  = useState<MLNode | null>(null)
   const [hovered,   setHovered]   = useState<string | null>(null)
@@ -206,10 +207,14 @@ export default function KnowledgeGraph() {
   async function fetchGraph(conceptInput?: string) {
     if (!user?.uid) return
     setLoading(true)
+    setSlowLoad(false)
     setError('')
     setSelected(null)
     setActiveIngredient(null)
     if (!conceptInput) setMlResult(null)
+
+    // After 6s with no response, show a warm-up message
+    const slowTimer = setTimeout(() => setSlowLoad(true), 6000)
 
     try {
       // Fetch the full knowledge graph from ML API
@@ -240,10 +245,12 @@ export default function KnowledgeGraph() {
       }
     } catch (err) {
       console.error('Knowledge graph fetch error:', err)
-      setError('Could not load knowledge graph. Is the ML server running?')
+      setError('Could not load knowledge graph. The ML server may still be warming up — try again in a moment.')
+    } finally {
+      clearTimeout(slowTimer)
+      setSlowLoad(false)
+      setLoading(false)
     }
-
-    setLoading(false)
   }
 
   // Auto-fetch on mount
@@ -424,6 +431,11 @@ export default function KnowledgeGraph() {
                   <span className={s.emptyJ}>J</span>
                 </div>
                 <p className={s.emptyText}>Building your knowledge graph…</p>
+                {slowLoad && (
+                  <p className={s.emptySub} style={{ maxWidth: 320, textAlign: 'center' }}>
+                    The ML engine is waking up — this first load takes ~30–60 seconds. Hang tight.
+                  </p>
+                )}
               </div>
             )}
 

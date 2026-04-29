@@ -39,7 +39,7 @@ export default function Dashboard() {
           right={
             <Jarvis
               heroMode
-              wakeWordEnabled={true}
+              wakeWordEnabled={false}
               userName={data.displayName}
               tutorId={data.tutorId}
               userId={user.uid}
