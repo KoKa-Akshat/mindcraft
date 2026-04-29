@@ -9,16 +9,16 @@ Temperature 0.2 — low variance for reliable concept extraction.
 """
 
 from __future__ import annotations
-import json, os, logging
+import json, logging
 from pathlib import Path
 from pydantic import BaseModel, field_validator
-import anthropic
+
+from utils.claude_client import call_claude
 
 logger = logging.getLogger(__name__)
 
-MODEL     = "claude-sonnet-4-5"
-TEMP      = 0.2
-MAX_TOKENS = 2048
+ORCHESTRATOR_TEMP      = 0.2   # low variance — concept extraction must be reliable
+ORCHESTRATOR_MAX_TOKENS = 2048
 
 _prompt_text: str | None = None
 
@@ -70,14 +70,28 @@ class OrchestratorOutput(BaseModel):
 # ── Main orchestrator call ─────────────────────────────────────────────────────
 
 async def orchestrate(
-    problem_text: str,
-    subject: str,
+    problem_text:      str,
+    subject:           str,
     student_strengths: list[str],
-    student_gaps: list[str],
+    student_gaps:      list[str],
 ) -> OrchestratorOutput:
-    client = anthropic.AsyncAnthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-    system_prompt = _load_prompt()
+    """
+    Decompose a homework problem into 2-4 distinct solution paths.
 
+    Args:
+        problem_text:      The raw problem the student submitted.
+        subject:           Subject area (e.g. "algebra").
+        student_strengths: Concept IDs the student is confident in.
+        student_gaps:      Concept IDs the student struggles with.
+
+    Returns:
+        OrchestratorOutput with a problem_summary, target_concept, and
+        a list of SolutionPath objects.
+
+    Raises:
+        json.JSONDecodeError: If Claude returns malformed JSON.
+        pydantic.ValidationError: If the JSON doesn't match the schema.
+    """
     user_message = (
         f"Subject: {subject}\n"
         f"Student strengths: {', '.join(student_strengths) or 'unknown'}\n"
@@ -87,15 +101,13 @@ async def orchestrate(
 
     logger.info("Orchestrator → Claude: %s", problem_text[:80])
 
-    message = await client.messages.create(
-        model=MODEL,
-        max_tokens=MAX_TOKENS,
-        temperature=TEMP,
-        system=system_prompt,
-        messages=[{"role": "user", "content": user_message}],
+    raw = await call_claude(
+        system_prompt = _load_prompt(),
+        user_message  = user_message,
+        temperature   = ORCHESTRATOR_TEMP,
+        max_tokens    = ORCHESTRATOR_MAX_TOKENS,
     )
 
-    raw = message.content[0].text.strip()
     logger.info("Orchestrator ← Claude: %d chars", len(raw))
 
     # Strip markdown fences if model wraps output
