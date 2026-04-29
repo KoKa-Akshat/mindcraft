@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
-import Jarvis from '../components/Jarvis'
+
 import s from './StudyTimer.module.css'
 
 // ── Technique definitions ─────────────────────────────────────────────────────
@@ -128,7 +128,6 @@ export default function StudyTimer() {
             />
         }
       </main>
-      <Jarvis userName={user?.displayName} context="User is on the Study Techniques page. Available techniques: Pomodoro, 52/17, Ultradian, Deep Work, Flowtime." />
     </div>
   )
 }

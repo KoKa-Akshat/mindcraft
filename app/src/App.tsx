@@ -29,7 +29,7 @@ import StudentSessions   from './pages/StudentSessions'
 import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
-import GlobalJarvis    from './components/GlobalJarvis'
+
 
 export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
@@ -61,7 +61,6 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   return (
     <UserContext.Provider value={user}>
       {children}
-      <GlobalJarvis />
     </UserContext.Provider>
   )
 }
