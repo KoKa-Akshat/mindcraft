@@ -1,14 +1,14 @@
 /**
  * api/jarvis.ts
  *
- * JARVIS AI assistant powered by a LangGraph ReAct agent.
+ * JARVIS AI assistant — Anthropic native tool-use agent loop.
  *
- * The agent orchestrates five tools:
- *   explain_concept      — cinematic 4-card math breakdown
- *   get_student_profile  — ML mastery / strength profile
- *   get_recommendations  — personalised next-concept suggestions
- *   get_session_history  — recent tutoring sessions from Firestore
- *   navigate             — client-side routing instruction
+ * The agent runs up to MAX_ITERATIONS turns of tool calling until Claude
+ * decides it has enough information to give a final answer. No LangGraph
+ * required — Anthropic's API handles the ReAct pattern natively.
+ *
+ * Tools: explain_concept, get_student_profile, get_recommendations,
+ *        get_session_history, navigate
  *
  * Conversation history is persisted per-student in Firestore so the agent
  * has memory across cold starts and browser refreshes.
@@ -18,16 +18,20 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { createReactAgent }       from '@langchain/langgraph/prebuilt'
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
-import { HumanMessage }           from '@langchain/core/messages'
-import { setCors }                from '../lib/cors'
+import Anthropic from '@anthropic-ai/sdk'
+import { setCors } from '../lib/cors'
 import { loadHistory, saveExchange } from '../lib/conversationStore'
-import { makeTools }              from '../lib/jarvisTools'
+import { TOOLS, makeExecutors } from '../lib/jarvisTools'
 
+const client  = new Anthropic()
+const MODEL   = 'claude-sonnet-4-20250514'
 const ML_BASE = process.env.ML_URL ?? 'http://localhost:8000'
 
-function parseStyle(context: string): 'geometric' | 'algebraic' | 'intuitive' {
+const MAX_ITERATIONS = 6
+
+// ── Helpers ────────────────────────────────────────────────────────────────────
+
+function parseStyle(context: string): string {
   if (/geometric/i.test(context)) return 'geometric'
   if (/algebraic/i.test(context)) return 'algebraic'
   return 'intuitive'
@@ -51,20 +55,107 @@ Rules:
 
 When to use each tool:
 - explain_concept: ANY math question, concept explanation, or homework help request.
-- get_student_profile: questions about progress, strengths, weaknesses, mastery, or "how am I doing".
+- get_student_profile: questions about progress, strengths, weaknesses, or "how am I doing".
 - get_recommendations: questions about what to study next, which topics to focus on, or study plans.
 - get_session_history: questions about past sessions, what was covered, or when the last class was.
 - navigate: any request to go somewhere — "take me to X", "open X", "show me X", or page names:
     practice → practice
-    knowledge graph / my graph / study [concept] → knowledge-graph
+    knowledge graph / my graph → knowledge-graph
     book / schedule / new session → book
-    study timer / pomodoro / focus mode / study techniques → study-timer
+    study timer / focus mode → study-timer
     dashboard / home → dashboard
 
-After calling explain_concept: write one calm sentence saying the cards are ready. Do not re-explain the math.
-After calling navigate: confirm the navigation in one short sentence.
+After explain_concept: write one calm sentence saying the cards are ready. Do not re-explain the math.
+After navigate: confirm the navigation in one short sentence.
 After get_student_profile or get_recommendations: synthesise a clear 2-3 sentence insight from the data.`
 }
+
+// ── Agent loop ─────────────────────────────────────────────────────────────────
+
+interface LoopResult {
+  reply:           string
+  toolsUsed:       string[]
+  helpCards?:      object[]
+  navigationTarget?: string
+}
+
+async function runAgentLoop(
+  messages:     { role: 'user' | 'assistant'; content: any }[],
+  systemPrompt: string,
+  executors:    Record<string, (input: any) => Promise<string>>,
+): Promise<LoopResult> {
+  let msgs    = [...messages]
+  const used: string[]            = []
+  let helpCards: object[] | undefined
+  let navigationTarget: string   | undefined
+
+  for (let i = 0; i < MAX_ITERATIONS; i++) {
+    const response = await client.messages.create({
+      model:      MODEL,
+      max_tokens: 1024,
+      system:     systemPrompt,
+      tools:      TOOLS,
+      messages:   msgs,
+    })
+
+    if (response.stop_reason === 'end_turn') {
+      const reply = response.content
+        .filter(b => b.type === 'text')
+        .map(b => (b as Anthropic.Messages.TextBlock).text)
+        .join('')
+      return { reply, toolsUsed: used, helpCards, navigationTarget }
+    }
+
+    if (response.stop_reason === 'tool_use') {
+      msgs.push({ role: 'assistant', content: response.content })
+
+      const toolResults: Anthropic.Messages.ToolResultBlockParam[] = []
+
+      for (const block of response.content) {
+        if (block.type !== 'tool_use') continue
+
+        used.push(block.name)
+        const executor = executors[block.name]
+        const result   = executor
+          ? await executor(block.input)
+          : `Tool "${block.name}" not available.`
+
+        // Extract structured outputs
+        if (block.name === 'explain_concept') {
+          try {
+            const parsed = JSON.parse(result)
+            if (Array.isArray(parsed.helpCards)) helpCards = parsed.helpCards
+          } catch { /* malformed — skip */ }
+        }
+        if (block.name === 'navigate') {
+          try {
+            const { page, concept } = JSON.parse(result)
+            navigationTarget = concept
+              ? `${page}/${encodeURIComponent(concept)}`
+              : page
+          } catch { /* skip */ }
+        }
+
+        toolResults.push({
+          type:        'tool_result',
+          tool_use_id: block.id,
+          content:     result,
+        })
+      }
+
+      msgs.push({ role: 'user', content: toolResults })
+      continue
+    }
+
+    // Unexpected stop reason — break out
+    break
+  }
+
+  // Max iterations reached
+  return { reply: 'I reached my reasoning limit. Please rephrase and try again.', toolsUsed: used, helpCards, navigationTarget }
+}
+
+// ── Handler ────────────────────────────────────────────────────────────────────
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
@@ -72,74 +163,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST')   return res.status(405).end()
 
   const { message, context = '', studentId } = req.body as {
-    message: string
-    context?: string
+    message:    string
+    context?:   string
     studentId?: string
   }
   if (!message?.trim()) return res.status(400).json({ error: 'No message' })
 
   const userName = parseUserName(context)
   const style    = parseStyle(context)
-
-  const llm = new ChatGoogleGenerativeAI({
-    model:       'gemini-1.5-flash',
-    apiKey:      process.env.GEMINI_API_KEY!,
-    temperature: 0.7,
-  })
-
-  const tools = makeTools({ studentId: studentId ?? '', mlBase: ML_BASE, style })
-
-  const agent = createReactAgent({
-    llm,
-    tools,
-    messageModifier: buildSystemPrompt(userName, style),
-  })
+  const executors = makeExecutors({ studentId: studentId ?? '', mlBase: ML_BASE, style })
 
   // Load persistent conversation history from Firestore
   const history = studentId ? await loadHistory(studentId) : []
 
+  const messages: { role: 'user' | 'assistant'; content: string }[] = [
+    ...history,
+    { role: 'user', content: message.trim() },
+  ]
+
   try {
-    const result = await agent.invoke({
-      messages: [...history, new HumanMessage(message.trim())],
-    })
+    const { reply, toolsUsed, helpCards, navigationTarget } = await runAgentLoop(
+      messages,
+      buildSystemPrompt(userName, style),
+      executors,
+    )
 
-    // ── Extract structured data from tool results ─────────────────────────
-    const toolsUsed: string[]      = []
-    let   helpCards: any[] | undefined
-    let   navigationTarget: string | undefined
-
-    for (const msg of result.messages) {
-      if (msg._getType() !== 'tool') continue
-      const tm = msg as any  // ToolMessage: { name, content }
-      if (tm.name) toolsUsed.push(tm.name)
-
-      if (tm.name === 'explain_concept') {
-        try {
-          const parsed = JSON.parse(tm.content as string)
-          if (Array.isArray(parsed.helpCards)) helpCards = parsed.helpCards
-        } catch { /* malformed card JSON — skip */ }
-      }
-
-      if (tm.name === 'navigate') {
-        try {
-          const { page, concept } = JSON.parse(tm.content as string)
-          navigationTarget = concept
-            ? `${page}/${encodeURIComponent(concept)}`
-            : page
-        } catch { /* skip */ }
-      }
-    }
-
-    // Final AIMessage content (string or content-block array)
-    const lastMsg = result.messages[result.messages.length - 1]
-    const reply =
-      typeof lastMsg.content === 'string'
-        ? lastMsg.content
-        : Array.isArray(lastMsg.content)
-          ? (lastMsg.content as any[]).map((c: any) => c.text ?? '').join('')
-          : 'I encountered an issue. Please try again.'
-
-    // Persist exchange in the background — don't block the response
     if (studentId) {
       saveExchange(studentId, message.trim(), reply).catch(() => {})
     }
@@ -149,7 +197,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (err) {
     console.error('[JARVIS] Agent error:', err)
     return res.json({
-      reply:    'My reasoning engine encountered an issue. Please try again in a moment.',
+      reply:     'My reasoning engine encountered an issue. Please try again in a moment.',
       toolsUsed: [],
       fallback:  true,
     })

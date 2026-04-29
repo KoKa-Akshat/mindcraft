@@ -1,25 +1,64 @@
-:root {
-  /* Brand green — used by tutor dashboard */
-  --g:      #58CC02;
-  --gd:     #4CAD00;
-  --gdd:    #3A8500;
-  --forest: #1A3C2A;
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
 
-  /* Brand blue — used by student dashboard */
+/* ── Design tokens ────────────────────────────────────────────────────────── */
+:root {
+  /* Subject accent colors */
+  --c-algebra:  #FF6B6B;
+  --c-geometry: #4ECDC4;
+  --c-trig:     #FFE66D;
+  --c-stats:    #A29BFE;
+
+  /* UI neutrals */
+  --bg:        #F7F6F2;
+  --surface:   #FFFFFF;
+  --surface-2: #F0EFE9;
+  --border:    #E5E4DD;
+  --text:      #1A1A2E;
+  --text-2:    #6B6B7B;
+
+  /* Primary action */
+  --accent:      #1A1A2E;
+  --accent-soft: #E8E8F0;
+
+  /* Legacy aliases — kept for components not yet migrated */
+  --bg-old:  var(--bg);
+  --tx:      var(--text);
+  --mu:      var(--text-2);
+  --w:       var(--surface);
+  --bd:      var(--border);
   --blue:    #0069FF;
   --blue-d:  #0052CC;
-  --blue-dd: #003D99;
-  --navy:    #0A2540;
-  --blue-bg: #EEF4FF;
+  --g:       #58CC02;
+  --gd:      #4CAD00;
+  --red:     #FF4B4B;
 
-  --tx:     #1A1A1A;
-  --mu:     #8A8F98;
-  --w:      #fff;
-  --bd:     #E8EAED;
-  --bg:     #F5F7FB;
-  --red:    #FF4B4B;
-  --f:      'Nunito', sans-serif;
+  /* Typography */
+  --f-display: 'Sora', sans-serif;
+  --f-body:    'DM Sans', sans-serif;
+  --f-mono:    'DM Mono', monospace;
+  --f:         var(--f-body);
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: var(--f); color: var(--tx); -webkit-font-smoothing: antialiased; }
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--f-body);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: var(--f-body);
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font-family: var(--f-body);
+}

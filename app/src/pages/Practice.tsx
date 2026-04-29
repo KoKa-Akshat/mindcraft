@@ -12,9 +12,9 @@
 
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useUser } from '../App'
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import HomeworkCards, { type HomeworkSession, type OutcomeRecord } from '../components/HomeworkCards'
@@ -36,16 +36,30 @@ type Phase = 'input' | 'loading' | 'cards' | 'done'
 export default function Practice() {
   const user     = useUser()
   const navigate = useNavigate()
+  const location = useLocation()
+  const fileRef  = useRef<HTMLInputElement>(null)
 
-  const [problem,  setProblem]  = useState('')
-  const [phase,    setPhase]    = useState<Phase>('input')
-  const [session,  setSession]  = useState<HomeworkSession | null>(null)
-  const [results,  setResults]  = useState<OutcomeRecord[]>([])
-  const [error,    setError]    = useState('')
-  const [slowLoad, setSlowLoad] = useState(false)
+  const [problem,      setProblem]      = useState('')
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null)
+  const [phase,        setPhase]        = useState<Phase>('input')
+  const [session,      setSession]      = useState<HomeworkSession | null>(null)
+  const [results,      setResults]      = useState<OutcomeRecord[]>([])
+  const [error,        setError]        = useState('')
+  const [slowLoad,     setSlowLoad]     = useState(false)
 
-  async function submitProblem(problemText: string) {
-    if (!problemText.trim()) return
+  // Pick up pre-filled problem text from dashboard navigation
+  useEffect(() => {
+    const state = location.state as { problemText?: string } | null
+    if (state?.problemText) {
+      setProblem(state.problemText)
+      submitProblem(state.problemText)
+      window.history.replaceState({}, '')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  async function submitProblem(problemText: string, file?: File | null) {
+    if (!problemText.trim() && !file) return
     setPhase('loading')
     setError('')
     setSession(null)
@@ -54,15 +68,21 @@ export default function Practice() {
     const slowTimer = setTimeout(() => setSlowLoad(true), 7000)
 
     try {
-      const res = await fetch(`${HOMEWORK_API}/submit`, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          student_id:   user.uid,
-          problem_text: problemText,
-          subject:      'algebra',
-        }),
-      })
+      let res: Response
+      if (file) {
+        const form = new FormData()
+        form.append('student_id',   user.uid)
+        form.append('problem_text', problemText)
+        form.append('subject',      'algebra')
+        form.append('file',         file)
+        res = await fetch(`${HOMEWORK_API}/submit-with-file`, { method: 'POST', body: form })
+      } else {
+        res = await fetch(`${HOMEWORK_API}/submit`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ student_id: user.uid, problem_text: problemText, subject: 'algebra' }),
+        })
+      }
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
@@ -110,6 +130,25 @@ export default function Practice() {
         {/* ── Input phase ── */}
         {phase === 'input' && (
           <div className={s.inputSection}>
+            {/* File upload strip */}
+            {uploadedFile ? (
+              <div className={s.fileStrip}>
+                <span>{uploadedFile.type === 'application/pdf' ? '📄' : '🖼️'} {uploadedFile.name}</span>
+                <button onClick={() => setUploadedFile(null)}>✕ Remove</button>
+              </div>
+            ) : (
+              <button className={s.uploadBtn} onClick={() => fileRef.current?.click()}>
+                ⬆ Upload image or PDF
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="image/*,.pdf"
+                  style={{ display: 'none' }}
+                  onChange={e => { const f = e.target.files?.[0]; if (f) setUploadedFile(f) }}
+                />
+              </button>
+            )}
+
             <div className={s.inputWrap}>
               <textarea
                 className={s.textarea}
@@ -118,13 +157,13 @@ export default function Practice() {
                 onChange={e => setProblem(e.target.value)}
                 rows={3}
                 onKeyDown={e => {
-                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submitProblem(problem)
+                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submitProblem(problem, uploadedFile)
                 }}
               />
               <button
                 className={s.analyzeBtn}
-                onClick={() => submitProblem(problem)}
-                disabled={!problem.trim()}
+                onClick={() => submitProblem(problem, uploadedFile)}
+                disabled={!problem.trim() && !uploadedFile}
               >
                 Break it down →
               </button>

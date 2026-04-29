@@ -1,7 +1,7 @@
 /**
  * api/generate-summary.ts
  *
- * Generates an AI session summary card using Gemini.
+ * Generates an AI session summary card using Claude.
  * Handles two flows:
  *
  *  1. TUTOR flow — POST { sessionId, tutorNotes?, fileText? }
@@ -9,16 +9,15 @@
  *
  *  2. STUDENT flow — POST { tutorNotes, subject, studentName }
  *     Generates summary card from raw notes, returns it without saving.
- *     (Student saves to Firestore client-side via OrganizeNotes page.)
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import Anthropic from '@anthropic-ai/sdk'
 import { db } from '../lib/firebase'
 import { setCors } from '../lib/cors'
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+const client = new Anthropic()
+const MODEL  = 'claude-sonnet-4-20250514'
 
 const JSON_SHAPE = `{
   "title":    "Brief session title (max 8 words)",
@@ -28,15 +27,31 @@ const JSON_SHAPE = `{
   "tutorNote":"Warm 2-3 sentence note to the student"
 }`
 
+async function callClaude(prompt: string): Promise<string> {
+  const message = await client.messages.create({
+    model:       MODEL,
+    max_tokens:  1024,
+    temperature: 0.3,
+    messages:    [{ role: 'user', content: prompt }],
+  })
+  return message.content[0].type === 'text' ? message.content[0].text.trim() : ''
+}
+
+function extractJson(raw: string): object {
+  const match = raw.match(/\{[\s\S]*\}/)
+  if (!match) throw new Error('No JSON in response')
+  return JSON.parse(match[0])
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
-  if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
+  if (req.method !== 'POST')   return res.status(405).send('Method Not Allowed')
 
   try {
     const { sessionId, tutorNotes, fileText, subject, studentName } = req.body
 
-    // ── STUDENT FLOW (no sessionId) ──────────────────────────────────────
+    // ── STUDENT FLOW (no sessionId) ──────────────────────────────────────────
     if (!sessionId) {
       if (!tutorNotes) return res.status(400).json({ error: 'Missing notes' })
 
@@ -52,15 +67,12 @@ ${tutorNotes.slice(0, 6000)}
 Return ONLY valid JSON (no markdown, no extra text) with this exact shape:
 ${JSON_SHAPE}`
 
-      const result = await model.generateContent(prompt)
-      const raw = result.response.text().trim()
-      const jsonMatch = raw.match(/\{[\s\S]*\}/)
-      if (!jsonMatch) return res.status(500).json({ error: 'AI did not return valid JSON', raw: raw.slice(0, 200) })
-      const summaryCard = JSON.parse(jsonMatch[0])
+      const raw = await callClaude(prompt)
+      const summaryCard = extractJson(raw)
       return res.status(200).json({ ok: true, summaryCard })
     }
 
-    // ── TUTOR FLOW (sessionId provided) ─────────────────────────────────
+    // ── TUTOR FLOW (sessionId provided) ──────────────────────────────────────
     const sessionSnap = await db.collection('sessions').doc(sessionId).get()
     if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
 
@@ -82,40 +94,35 @@ ${!transcript && !notes ? '\n(No transcript or notes yet — write a warm placeh
 Return ONLY valid JSON (no markdown, no extra text) with this exact shape:
 ${JSON_SHAPE}`
 
-    const result = await model.generateContent(prompt)
-    const raw = result.response.text().trim()
-    const jsonMatch = raw.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) return res.status(500).json({ error: 'AI did not return valid JSON', raw: raw.slice(0, 200) })
-    const summaryCard = JSON.parse(jsonMatch[0])
+    const raw         = await callClaude(prompt)
+    const summaryCard = extractJson(raw)
 
     await sessionSnap.ref.update({
       summaryCard,
       summaryStatus: 'draft',
-      tutorNotes: notes || null,
+      tutorNotes:    notes || null,
     })
 
     // Fire-and-forget: push session data to ML engine to update student mastery
-    const mlBase = process.env.ML_URL
+    const mlBase    = process.env.ML_URL
     const studentId = session.studentId
-    if (mlBase && studentId && summaryCard.topics?.length) {
-      const bullets = [
-        ...(summaryCard.homework ?? []),
-        summaryCard.progress,
-      ].filter(Boolean) as string[]
-      const durationMinutes = parseInt(session.duration) || 45
+    const { topics, homework, progress } = summaryCard as any
+    if (mlBase && studentId && topics?.length) {
+      const bullets = [...(homework ?? []), progress].filter(Boolean) as string[]
       fetch(`${mlBase}/process-summary`, {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          student_id: studentId,
+        body:    JSON.stringify({
+          student_id:       studentId,
           bullets,
-          topics: summaryCard.topics,
-          duration_minutes: durationMinutes,
+          topics,
+          duration_minutes: parseInt(session.duration) || 45,
         }),
-      }).catch(() => {}) // non-blocking; ML server down shouldn't break summary flow
+      }).catch(() => {})
     }
 
     return res.status(200).json({ ok: true, summaryCard })
+
   } catch (err: any) {
     console.error('generate-summary error:', err)
     return res.status(500).json({ error: err?.message ?? 'Internal server error' })

@@ -4,42 +4,50 @@
  * Persists JARVIS conversation history in Firestore so the agent has memory
  * across cold starts and sessions. Each student gets one document under
  * `conversations/{studentId}` with a capped array of message objects.
+ *
+ * Messages are stored and returned in Anthropic SDK format
+ * ({ role: 'user' | 'assistant', content: string }) so jarvis.ts can
+ * splice them directly into client.messages.create() calls.
  */
 
 import { db } from './firebase'
-import { HumanMessage, AIMessage } from '@langchain/core/messages'
-import type { BaseMessage } from '@langchain/core/messages'
 
 const MAX_IN_CONTEXT = 10  // messages passed to the agent per request
 const MAX_STORED     = 60  // messages kept in Firestore (30 exchanges)
 
 interface StoredMessage {
-  role: 'human' | 'ai'
+  role:    'user' | 'assistant'
   content: string
-  ts: number
+  ts:      number
 }
 
-export async function loadHistory(studentId: string): Promise<BaseMessage[]> {
+export type AnthropicMessage = Pick<StoredMessage, 'role' | 'content'>
+
+export async function loadHistory(studentId: string): Promise<AnthropicMessage[]> {
   try {
     const doc = await db.collection('conversations').doc(studentId).get()
     if (!doc.exists) return []
     const messages: StoredMessage[] = doc.data()?.messages ?? []
-    return messages.slice(-MAX_IN_CONTEXT).map(m =>
-      m.role === 'human' ? new HumanMessage(m.content) : new AIMessage(m.content)
-    )
+    return messages
+      .slice(-MAX_IN_CONTEXT)
+      .map(({ role, content }) => ({ role, content }))
   } catch {
     return []
   }
 }
 
-export async function saveExchange(studentId: string, human: string, ai: string): Promise<void> {
+export async function saveExchange(
+  studentId: string,
+  human: string,
+  ai: string,
+): Promise<void> {
   const ref = db.collection('conversations').doc(studentId)
-  const doc = await ref.get()
-  const existing: StoredMessage[] = doc.exists ? (doc.data()?.messages ?? []) : []
+  const snap = await ref.get()
+  const existing: StoredMessage[] = snap.exists ? (snap.data()?.messages ?? []) : []
   const updated = [
     ...existing,
-    { role: 'human' as const, content: human, ts: Date.now() },
-    { role: 'ai'    as const, content: ai,    ts: Date.now() },
+    { role: 'user'      as const, content: human, ts: Date.now() },
+    { role: 'assistant' as const, content: ai,    ts: Date.now() },
   ].slice(-MAX_STORED)
   await ref.set({ messages: updated }, { merge: true })
 }
