@@ -1,35 +1,26 @@
 /**
  * Practice.tsx
  *
- * Adaptive practice powered by the ML ingredient engine.
- * Student types or pastes a problem → ML breaks it into atomic
- * mental models → flip-card experience, one card at a time.
+ * MindCraft Homework Help — multi-agent tutoring experience.
  *
  * Flow:
- *   1. Enter problem text (or pick from "recent topics" chips)
- *   2. ML returns prerequisite ingredient cards ordered by need
- *   3. Each card: read the body, flip to see the prompt, mark ✓ or ✗
- *   4. Answer is submitted to ML, mastery updates in Firestore
- *   5. After all cards: composition prompt shown as a mini essay challenge
+ *   1. Student types / pastes a problem
+ *   2. POST /submit → orchestrator + 3 parallel agents → best path → Manim visual → cards
+ *   3. HomeworkCards renders the card sequence with "Need a clue?" and outcome buttons
+ *   4. Done screen shows per-concept breakdown and offers another problem
  */
 
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
-import { useStudentData } from '../hooks/useStudentData'
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
-import {
-  getIngredientCards,
-  submitAnswer,
-  conceptLabel,
-  type PracticeCard,
-  type IngredientRecommendResult,
-} from '../lib/mlApi'
-import { logEvent } from '../lib/logEvent'
+import HomeworkCards, { type HomeworkSession, type OutcomeRecord } from '../components/HomeworkCards'
 import s from './Practice.module.css'
+
+const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
 
 const QUICK_PROBLEMS = [
   'Solve x² − 5x + 6 = 0 by factoring',
@@ -37,72 +28,72 @@ const QUICK_PROBLEMS = [
   'Simplify √48',
   'Find sin(30°) using the unit circle',
   'Solve the system: 2x + y = 7 and x − y = 2',
+  'Expand (a + b)² and explain each term',
 ]
 
+type Phase = 'input' | 'loading' | 'cards' | 'done'
+
 export default function Practice() {
-  const user = useUser()
+  const user     = useUser()
   const navigate = useNavigate()
-  const data = useStudentData(user)
 
-  const [problem, setProblem]   = useState('')
-  const [loading, setLoading]   = useState(false)
-  const [result,  setResult]    = useState<IngredientRecommendResult | null>(null)
-  const [cardIdx, setCardIdx]   = useState(0)
-  const [flipped, setFlipped]   = useState(false)
-  const [done,    setDone]      = useState(false)
-  const [error,   setError]     = useState('')
+  const [problem,  setProblem]  = useState('')
+  const [phase,    setPhase]    = useState<Phase>('input')
+  const [session,  setSession]  = useState<HomeworkSession | null>(null)
+  const [results,  setResults]  = useState<OutcomeRecord[]>([])
+  const [error,    setError]    = useState('')
+  const [slowLoad, setSlowLoad] = useState(false)
 
-  async function loadCards(problemText: string) {
+  async function submitProblem(problemText: string) {
     if (!problemText.trim()) return
-    setLoading(true)
+    setPhase('loading')
     setError('')
-    setResult(null)
-    setDone(false)
-    setCardIdx(0)
-    setFlipped(false)
+    setSession(null)
+    setSlowLoad(false)
 
-    const res = await getIngredientCards(user.uid, problemText)
-    setLoading(false)
+    const slowTimer = setTimeout(() => setSlowLoad(true), 7000)
 
-    if (!res || res.cards.length === 0) {
-      setError('No practice cards found for that problem. Try rephrasing it.')
-      return
-    }
+    try {
+      const res = await fetch(`${HOMEWORK_API}/submit`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          student_id:   user.uid,
+          problem_text: problemText,
+          subject:      'algebra',
+        }),
+      })
 
-    setResult(res)
-    logEvent(user.uid, 'practice_started', {
-      problemText,
-      conceptId: res.problemFeatures.primary_concept,
-      cardCount: res.cards.length,
-    })
-  }
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.detail ?? `Server error ${res.status}`)
+      }
 
-  async function handleAnswer(card: PracticeCard, succeeded: boolean) {
-    await submitAnswer(
-      user.uid,
-      card.cardTemplateId,
-      card.targetType,
-      card.targetId,
-      card.representationKey,
-      succeeded,
-    )
-    logEvent(user.uid, 'practice_answer', {
-      cardId: card.cardTemplateId,
-      succeeded,
-      conceptId: result?.problemFeatures.primary_concept,
-    })
-
-    const next = cardIdx + 1
-    if (result && next >= result.cards.length) {
-      setDone(true)
-    } else {
-      setCardIdx(next)
-      setFlipped(false)
+      const data: HomeworkSession = await res.json()
+      clearTimeout(slowTimer)
+      setSlowLoad(false)
+      setSession(data)
+      setPhase('cards')
+    } catch (err: unknown) {
+      clearTimeout(slowTimer)
+      setSlowLoad(false)
+      setError(err instanceof Error ? err.message : 'Something went wrong. Try again.')
+      setPhase('input')
     }
   }
 
-  const card: PracticeCard | null = result?.cards[cardIdx] ?? null
-  const progress = result ? Math.round((cardIdx / result.cards.length) * 100) : 0
+  function handleComplete(outcomeRecords: OutcomeRecord[]) {
+    setResults(outcomeRecords)
+    setPhase('done')
+  }
+
+  function resetToInput() {
+    setProblem('')
+    setSession(null)
+    setResults([])
+    setError('')
+    setPhase('input')
+  }
 
   return (
     <div className={s.shell}>
@@ -112,119 +103,93 @@ export default function Practice() {
       <main className={s.page}>
         <div className={s.header}>
           <button className={s.back} onClick={() => navigate('/dashboard')}>← Dashboard</button>
-          <h1 className={s.title}>Practice</h1>
-          <p className={s.sub}>Enter a problem and JARVIS will break it into the building blocks you need.</p>
+          <h1 className={s.title}>Homework Help</h1>
+          <p className={s.sub}>Paste any problem — MindCraft breaks it down step by step, built around how you learn.</p>
         </div>
 
-        {/* ── Problem input ── */}
-        {!result && !loading && (
+        {/* ── Input phase ── */}
+        {phase === 'input' && (
           <div className={s.inputSection}>
             <div className={s.inputWrap}>
               <textarea
                 className={s.textarea}
-                placeholder="Paste a problem, e.g. — Solve x² − 5x + 6 = 0 by factoring"
+                placeholder="Paste your problem here, e.g. — Solve x² − 5x + 6 = 0 by factoring"
                 value={problem}
                 onChange={e => setProblem(e.target.value)}
                 rows={3}
-                onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) loadCards(problem) }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submitProblem(problem)
+                }}
               />
               <button
                 className={s.analyzeBtn}
-                onClick={() => loadCards(problem)}
+                onClick={() => submitProblem(problem)}
                 disabled={!problem.trim()}
               >
-                Analyse →
+                Break it down →
               </button>
             </div>
 
             <div className={s.quickRow}>
               <span className={s.quickLabel}>Try:</span>
               {QUICK_PROBLEMS.map(p => (
-                <button key={p} className={s.quickChip} onClick={() => { setProblem(p); loadCards(p) }}>
+                <button
+                  key={p}
+                  className={s.quickChip}
+                  onClick={() => { setProblem(p); submitProblem(p) }}
+                >
                   {p}
                 </button>
               ))}
             </div>
-          </div>
-        )}
 
-        {/* ── Loading ── */}
-        {loading && (
-          <div className={s.loadingState}>
-            <div className={s.spinner} />
-            <p>Breaking down the problem…</p>
-          </div>
-        )}
-
-        {error && (
-          <div className={s.errorMsg}>
-            {error}
-            <button className={s.retry} onClick={() => setError('')}>Try again</button>
-          </div>
-        )}
-
-        {/* ── Card session ── */}
-        {result && !done && card && (
-          <div className={s.session}>
-            {/* Header row */}
-            <div className={s.sessionHeader}>
-              <div className={s.conceptBadge}>
-                {conceptLabel(result.problemFeatures.primary_concept)}
-              </div>
-              <button className={s.newProblem} onClick={() => { setResult(null); setProblem('') }}>
-                New problem
-              </button>
-            </div>
-
-            {/* Progress bar */}
-            <div className={s.progressBar}>
-              <div className={s.progressFill} style={{ width: `${progress}%` }} />
-            </div>
-            <div className={s.progressLabel}>
-              Card {cardIdx + 1} of {result.cards.length}
-            </div>
-
-            {/* Flip card */}
-            <div className={`${s.cardWrap} ${flipped ? s.flipped : ''}`} onClick={() => setFlipped(f => !f)}>
-              <div className={s.cardInner}>
-                {/* Front */}
-                <div className={s.cardFront}>
-                  <div className={s.cardTag}>{card.representationKey} explanation</div>
-                  <h2 className={s.cardTitle}>{card.title}</h2>
-                  <p className={s.cardBody}>{card.body}</p>
-                  <span className={s.tapHint}>Tap to flip →</span>
-                </div>
-                {/* Back */}
-                <div className={s.cardBack}>
-                  <div className={s.cardTag}>Your turn</div>
-                  <p className={s.cardPrompt}>{card.prompt}</p>
-                  <p className={s.cardHint}>{card.reason}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Answer buttons — only show when flipped */}
-            {flipped && (
-              <div className={s.answerRow}>
-                <button className={s.btnNo}  onClick={() => handleAnswer(card, false)}>✗ Still learning</button>
-                <button className={s.btnYes} onClick={() => handleAnswer(card, true)}>✓ Got it</button>
+            {error && (
+              <div className={s.errorMsg}>
+                <span>{error}</span>
+                <button className={s.retry} onClick={() => setError('')}>Dismiss</button>
               </div>
             )}
           </div>
         )}
 
-        {/* ── Done state ── */}
-        {done && result && (
+        {/* ── Loading phase ── */}
+        {phase === 'loading' && (
+          <div className={s.loadingState}>
+            <div className={s.spinner} />
+            <p className={s.loadingMain}>Building your learning path…</p>
+            {slowLoad && (
+              <p className={s.loadingSlow}>
+                The AI tutor is spinning up — first load takes 30–60 s. Hang tight.
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* ── Cards phase ── */}
+        {phase === 'cards' && session && (
+          <HomeworkCards
+            session={session}
+            studentId={user.uid}
+            apiBase={HOMEWORK_API}
+            onComplete={handleComplete}
+            onNewProblem={resetToInput}
+          />
+        )}
+
+        {/* ── Done phase ── */}
+        {phase === 'done' && (
           <div className={s.doneState}>
-            <div className={s.doneIcon}>✓</div>
-            <h2 className={s.doneTitle}>Building blocks covered!</h2>
-            <p className={s.doneLabel}>Now put it together:</p>
-            <div className={s.compositionCard}>
-              <p className={s.compositionPrompt}>{result.compositionPrompt}</p>
-            </div>
+            <div className={s.doneIcon}>✦</div>
+            <h2 className={s.doneTitle}>Session complete.</h2>
+            <p className={s.doneLabel}>
+              {results.filter(r => r.outcome === 1).length} of {results.length} concepts solid
+              {results.filter(r => r.outcome === 0.5).length > 0
+                ? ` · ${results.filter(r => r.outcome === 0.5).length} partial`
+                : ''}
+            </p>
             <div className={s.doneActions}>
-              <button className={s.btnOutline} onClick={() => { setResult(null); setProblem(''); setDone(false) }}>
-                New problem
+              <button className={s.btnOutline} onClick={resetToInput}>
+                Try another problem
               </button>
               <button className={s.btnPrimary} onClick={() => navigate('/knowledge-graph')}>
                 View Knowledge Graph →

@@ -1,0 +1,571 @@
+/* HomeworkCards.module.css
+   Dark indigo aesthetic — #0A0A0F bg, #12121A card, #6366F1 accent
+   Font stack: DM Sans (body), DM Mono (math), Fraunces (display) */
+
+/* ── Layout shells ──────────────────────────────────────────────────────────── */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+/* ── Session header ─────────────────────────────────────────────────────────── */
+
+.sessionHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.problemSummary {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #F0F0F5;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.framingBadge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6366F1;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 20px;
+  padding: 2px 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pathsNote {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #6B6B80;
+}
+
+/* ── Card ───────────────────────────────────────────────────────────────────── */
+
+.card {
+  width: 100%;
+  background: #12121A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-left: 3px solid #6366F1;
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Card animations ────────────────────────────────────────────────────────── */
+
+.slideIn {
+  animation: slideIn 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.slideOut {
+  animation: slideOut 280ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-28px) scale(0.98);
+  }
+}
+
+/* ── Card top bar ───────────────────────────────────────────────────────────── */
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.conceptChip {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6366F1;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progressDots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  justify-content: center;
+}
+
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transition: background 250ms ease, transform 250ms ease;
+}
+
+.dot[style*="background: #6366F1"] {
+  transform: scale(1.2);
+}
+
+.stepCounter {
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 11px;
+  color: #6B6B80;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
+/* ── Visual box ─────────────────────────────────────────────────────────────── */
+
+.visualBox {
+  width: 100%;
+  background: #080810;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.visualGif {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.visualBox svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Type label ─────────────────────────────────────────────────────────────── */
+
+.typeLabel {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6366F1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.encouragementStar {
+  font-size: 14px;
+  animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.15); }
+}
+
+/* ── Content ────────────────────────────────────────────────────────────────── */
+
+.content {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #F0F0F5;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.encouragementContent {
+  font-size: 18px;
+  font-style: italic;
+  color: #F0C060;
+  text-align: center;
+  padding: 4px 0;
+}
+
+/* ── Clue section ───────────────────────────────────────────────────────────── */
+
+.clueSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.clue {
+  background: rgba(99, 102, 241, 0.07);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: clueReveal 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes clueReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.clueNum {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6366F1;
+  opacity: 0.8;
+}
+
+.clueText {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #C4C4D4;
+  margin: 0;
+}
+
+.clueMax {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #6B6B80;
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+}
+
+/* ── Action row ─────────────────────────────────────────────────────────────── */
+
+.actionRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.outcomeBtns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Got it — primary, full weight */
+.btnGotIt {
+  flex: 1;
+  background: #6366F1;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: background 150ms ease, transform 100ms ease, box-shadow 150ms ease;
+  box-shadow: 0 1px 12px rgba(99, 102, 241, 0.25);
+}
+
+.btnGotIt:hover {
+  background: #7577F3;
+  box-shadow: 0 2px 20px rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.btnGotIt:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Kind of — secondary ghost */
+.btnPartial {
+  background: rgba(240, 192, 96, 0.08);
+  color: #F0C060;
+  border: 1px solid rgba(240, 192, 96, 0.25);
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
+  white-space: nowrap;
+}
+
+.btnPartial:hover {
+  background: rgba(240, 192, 96, 0.14);
+  border-color: rgba(240, 192, 96, 0.4);
+  transform: translateY(-1px);
+}
+
+.btnPartial:active {
+  transform: translateY(0);
+}
+
+/* Not yet — tertiary muted */
+.btnStuck {
+  background: rgba(255, 107, 107, 0.07);
+  color: #FF8A8A;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
+  white-space: nowrap;
+}
+
+.btnStuck:hover {
+  background: rgba(255, 107, 107, 0.13);
+  border-color: rgba(255, 107, 107, 0.35);
+  transform: translateY(-1px);
+}
+
+.btnStuck:active {
+  transform: translateY(0);
+}
+
+/* Need a clue? */
+.clueBtn {
+  align-self: flex-start;
+  background: transparent;
+  color: #6B6B80;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+  letter-spacing: 0.01em;
+}
+
+.clueBtn:hover:not(:disabled) {
+  color: #A0A0B8;
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.clueBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── Done state ─────────────────────────────────────────────────────────────── */
+
+.doneWrap {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: fadeUp 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.doneOrb {
+  font-size: 36px;
+  color: #F0C060;
+  animation: orbFloat 3s ease-in-out infinite;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.08); }
+}
+
+.doneTitle {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #F0F0F5;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.doneSub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #6B6B80;
+  margin: 0;
+  text-align: center;
+}
+
+.doneStats {
+  width: 100%;
+  background: #12121A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.doneStat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 150ms ease;
+}
+
+.doneStat:last-child {
+  border-bottom: none;
+}
+
+.doneStat:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.doneStatLabel {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #C4C4D4;
+}
+
+.doneStatBadge {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.newProblemBtn {
+  background: #6366F1;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: background 150ms ease, transform 100ms ease, box-shadow 150ms ease;
+  box-shadow: 0 2px 16px rgba(99, 102, 241, 0.3);
+  margin-top: 8px;
+}
+
+.newProblemBtn:hover {
+  background: #7577F3;
+  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.45);
+  transform: translateY(-2px);
+}
+
+.newProblemBtn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 520px) {
+  .card {
+    padding: 20px 18px 18px;
+  }
+
+  .content {
+    font-size: 16px;
+  }
+
+  .outcomeBtns {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btnGotIt,
+  .btnPartial,
+  .btnStuck {
+    width: 100%;
+    text-align: center;
+  }
+
+  .doneTitle {
+    font-size: 24px;
+  }
+}
