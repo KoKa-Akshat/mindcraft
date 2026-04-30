@@ -8,10 +8,10 @@
   --c-trig:     #FFE66D;
   --c-stats:    #A29BFE;
 
-  /* MindCraft teal palette — base #1F6B72 */
-  --bg:          #1F6B72;   /* page background */
-  --surface:     #2A7D85;   /* card / panel surfaces */
-  --surface-2:   #236D78;   /* inputs, darker hover */
+  /* MindCraft palette — teal base + sky blue */
+  --bg:          #1A6070;   /* page background — slightly richer teal */
+  --surface:     #1E7080;   /* card / panel surfaces */
+  --surface-2:   #185565;   /* inputs, darker hover */
   --border:      rgba(255, 255, 255, 0.10);
   --text:        #FFFFFF;
   --text-2:      #B8D4D8;   /* secondary / muted */
@@ -21,6 +21,11 @@
   --accent:      #C4F547;
   --accent-dark: #164B52;   /* text on lime buttons */
   --accent-soft: rgba(196, 245, 71, 0.15);
+
+  /* Sky blue — for homework progress + highlights */
+  --sky:         #38BDF8;
+  --sky-dark:    #0C4A6E;
+  --sky-soft:    rgba(56, 189, 248, 0.15);
 
   /* Sidebar */
   --sidebar-bg:  #164B52;

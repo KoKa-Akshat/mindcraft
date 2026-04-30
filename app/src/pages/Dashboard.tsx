@@ -7,6 +7,7 @@ import HeroBar from '../components/HeroBar'
 import LastSession from '../components/LastSession'
 import ConstellationCard from '../components/ConstellationCard'
 import LearningGPS from '../components/LearningGPS'
+import HomeworkProgress from '../components/HomeworkProgress'
 import s from './Dashboard.module.css'
 
 function greeting() {
@@ -69,6 +70,9 @@ export default function Dashboard() {
                 <h2 className={s.sectionTitle}>Your Constellation</h2>
                 <ConstellationCard userId={user.uid} />
               </section>
+
+              {/* Homework progress — assigned by tutor */}
+              <HomeworkProgress homework={data.homework} />
 
               {/* Last session summary */}
               <LastSession session={data.lastSession} />

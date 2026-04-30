@@ -19,6 +19,21 @@ import {
 import { db } from '../firebase'
 import { User } from 'firebase/auth'
 
+export interface HomeworkProblem {
+  id: string
+  text: string
+  done: boolean
+  subject?: string
+}
+
+export interface HomeworkAssignment {
+  prompt?: string
+  subject?: string
+  problems: HomeworkProblem[]
+  assignedAt?: number
+  tutorName?: string
+}
+
 export interface SessionSummary {
   id: string
   subject: string
@@ -44,6 +59,7 @@ export interface StudentData {
   streak:       number
   nextSession:  { subject: string; time: string; tutor: string; meetingUrl?: string | null; scheduledAt?: number } | null
   lastSession:  SessionSummary | null
+  homework:     HomeworkAssignment | null
   practiceCount: number
   messages:     Message[]
   tutorId:      string | null
@@ -71,9 +87,10 @@ function fmtMessageTime(ts: any): string {
 
 export function useStudentData(user: User | null): StudentData {
   const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'tutorId' | 'loading' | 'messages'>>({
-    displayName:  firstName(user),
-    streak:       0,
-    lastSession:  null,
+    displayName:   firstName(user),
+    streak:        0,
+    lastSession:   null,
+    homework:      null,
     practiceCount: 0,
   })
   const [nextSession, setNextSession]           = useState<StudentData['nextSession']>(null)
@@ -125,6 +142,7 @@ export function useStudentData(user: User | null): StudentData {
         displayName:   d.displayName || firstName(user),
         streak:        d.streak ?? 0,
         lastSession:   d.lastSession ?? null,
+        homework:      d.homework   ?? null,
         practiceCount: d.practiceCount ?? 0,
       })
       setLoading(false)
@@ -220,5 +238,6 @@ export function useStudentData(user: User | null): StudentData {
     ...userData,
     lastSession: userData.lastSession ?? derivedLastSession,
     nextSession, tutorId, messages, loading,
+    homework: userData.homework,
   }
 }
