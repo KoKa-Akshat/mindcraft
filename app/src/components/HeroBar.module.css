@@ -1,7 +1,7 @@
 /* HeroBar — dark welcome strip, full width */
 
 .strip {
-  background: linear-gradient(135deg, #0C2E3A 0%, #154255 55%, #1A5262 100%);
+  background: linear-gradient(135deg, #134E54 0%, #196268 55%, #1F6B72 100%);
   border-radius: 16px;
   padding: 24px 28px;
   display: flex;

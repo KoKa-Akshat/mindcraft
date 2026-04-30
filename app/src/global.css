@@ -8,13 +8,13 @@
   --c-trig:     #FFE66D;
   --c-stats:    #A29BFE;
 
-  /* Oxford-inspired deep teal palette */
-  --bg:        #0F3D4C;   /* page background — deep teal */
-  --surface:   #1A5263;   /* card / panel surfaces */
-  --surface-2: #1F5E72;   /* hover states, secondary surfaces */
-  --border:    rgba(255, 255, 255, 0.10);
-  --text:      #E8F4F2;   /* near-white, slightly cool */
-  --text-2:    #78AAAA;   /* muted teal-white for secondary */
+  /* Teal palette — base #1F6B72 */
+  --bg:        #1F6B72;   /* page background */
+  --surface:   #256E76;   /* card / panel surfaces — slightly lighter */
+  --surface-2: #2C7980;   /* hover states, secondary surfaces */
+  --border:    rgba(255, 255, 255, 0.12);
+  --text:      #E8F6F4;   /* near-white, slightly cool */
+  --text-2:    #9ECECE;   /* muted teal-white for secondary */
 
   /* Primary action — MindCraft green pops beautifully on dark teal */
   --accent:      #58CC02;
