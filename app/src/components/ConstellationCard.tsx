@@ -4,9 +4,9 @@ import s from './ConstellationCard.module.css'
 
 const ML_API_URL = import.meta.env.VITE_ML_API_URL ?? ''
 
-const SVG_W = 400
-const SVG_H = 190
-const PAD   = 24
+const SVG_W = 700
+const SVG_H = 280
+const PAD   = 32
 
 interface MLNode {
   id: string

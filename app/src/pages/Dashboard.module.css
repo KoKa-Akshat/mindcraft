@@ -1,4 +1,4 @@
-/* Dashboard — 3-column layout: sidebar (200px) + main (flex) + panel (280px) */
+/* Dashboard layout: sidebar (200px) + main (flex) + panel (300px) */
 
 .shell {
   background: var(--bg);
@@ -8,7 +8,7 @@
 .page {
   margin-left: 200px;
   padding: 28px 28px 40px;
-  max-width: 1280px;
+  max-width: 1300px;
 }
 
 .loading {
@@ -29,7 +29,7 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Two-column content layout ──────────────────────────────────────────────── */
+/* ── Two-column content layout ────────────────────────────────────────────── */
 
 .layout {
   display: flex;
@@ -46,14 +46,14 @@
 }
 
 .panel {
-  width: 280px;
+  width: 300px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* ── Section chrome ─────────────────────────────────────────────────────────── */
+/* ── Section chrome ────────────────────────────────────────────────────────── */
 
 .section {
   display: flex;
@@ -70,145 +70,56 @@
   color: var(--text-2);
 }
 
-/* ── Subject tiles ──────────────────────────────────────────────────────────── */
+/* ── Homework Help card — vivid ───────────────────────────────────────────── */
 
-.tiles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.tile {
-  background: var(--tile-color);
+.homeworkCard {
   border-radius: 16px;
-  padding: 18px 18px 14px;
-  cursor: pointer;
-  position: relative;
   overflow: hidden;
-  animation: fadeUp 0.4s ease both;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.tile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* Geometric accent on each tile */
-.tile::after {
-  content: '';
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  pointer-events: none;
-}
-
-.tileIcon {
-  display: block;
-  font-size: 18px;
-  font-family: var(--f-mono);
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 10px;
-  line-height: 1;
-}
-
-.tileCount {
-  font-family: var(--f-display);
-  font-size: 36px;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.tileLabel {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
-  margin-top: 2px;
-  margin-bottom: 14px;
-}
-
-.tileBar {
-  height: 3px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-
-.tileBarFill {
-  height: 100%;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 2px;
-  transition: width 0.6s ease;
-}
-
-.tileGoal {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: var(--f-mono);
-}
-
-/* ── Today's card ───────────────────────────────────────────────────────────── */
-
-.todayCard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
+  border: 1.5px solid rgba(255, 107, 107, 0.25);
+  box-shadow: 0 4px 24px rgba(255, 107, 107, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  position: relative;
-  overflow: hidden;
+  gap: 0;
 }
 
-/* Subtle geometric accent in top-right */
-.todayCard::before {
-  content: '';
-  position: absolute;
-  top: -16px;
-  right: -16px;
-  width: 60px;
-  height: 60px;
-  background: var(--c-algebra);
-  opacity: 0.08;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.todayHeader {
+.homeworkHeader {
+  background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%);
+  padding: 14px 16px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.todayTitle {
+.homeworkTitle {
   font-family: var(--f-display);
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
 }
 
-.todayChip {
+.homeworkBadge {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--c-algebra);
-  background: rgba(255, 107, 107, 0.1);
-  border: 1px solid rgba(255, 107, 107, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
-  padding: 2px 8px;
+  padding: 2px 9px;
+}
+
+.homeworkBody {
+  background: var(--surface);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .dropZone {
-  border: 1.5px dashed var(--border);
+  border: 1.5px dashed rgba(255, 107, 107, 0.35);
   border-radius: 10px;
   padding: 14px;
   display: flex;
@@ -216,17 +127,20 @@
   align-items: center;
   gap: 4px;
   cursor: pointer;
+  background: var(--surface);
   transition: border-color 150ms ease, background 150ms ease;
+  margin: 14px 16px 0;
 }
 
 .dropZone:hover {
-  border-color: var(--accent);
+  border-color: #FF6B6B;
   background: var(--surface-2);
 }
 
 .dropIcon {
   font-size: 18px;
-  opacity: 0.3;
+  color: #FF6B6B;
+  opacity: 0.6;
 }
 
 .dropText {
@@ -234,9 +148,7 @@
   color: var(--text-2);
 }
 
-.fileInput {
-  display: none;
-}
+.fileInput { display: none; }
 
 .filePreview {
   display: flex;
@@ -245,6 +157,7 @@
   background: var(--surface-2);
   border-radius: 8px;
   padding: 10px 12px;
+  margin: 14px 16px 0;
 }
 
 .fileIcon {
@@ -272,12 +185,11 @@
   flex-shrink: 0;
 }
 
-.fileRemove:hover {
-  background: var(--border);
-}
+.fileRemove:hover { background: var(--border); }
 
 .problemInput {
-  width: 100%;
+  width: calc(100% - 32px);
+  margin: 10px 16px 0;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -288,11 +200,12 @@
   resize: none;
   line-height: 1.6;
   transition: border-color 150ms ease;
+  display: block;
 }
 
 .problemInput:focus {
   outline: none;
-  border-color: var(--accent);
+  border-color: #FF6B6B;
 }
 
 .problemInput::placeholder {
@@ -301,18 +214,20 @@
 }
 
 .hintBtn {
-  width: 100%;
-  background: var(--accent);
+  width: calc(100% - 32px);
+  margin: 10px 16px 16px;
+  background: linear-gradient(135deg, #FF6B6B 0%, #EE5A24 100%);
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  padding: 12px;
+  padding: 13px;
   font-family: var(--f-display);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: opacity 150ms ease, transform 100ms ease;
   letter-spacing: -0.01em;
+  box-shadow: 0 4px 14px rgba(255, 107, 107, 0.35);
 }
 
 .hintBtn:hover:not(:disabled) {
@@ -321,123 +236,29 @@
 }
 
 .hintBtn:disabled {
-  opacity: 0.35;
+  opacity: 0.4;
   cursor: default;
+  box-shadow: none;
 }
 
-/* ── Streak widget ──────────────────────────────────────────────────────────── */
-
-.streakCard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.streakRow {
-  display: flex;
-  justify-content: space-between;
-  gap: 4px;
-}
-
-.streakCol {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  flex: 1;
-}
-
-.streakDot {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  animation: fillCircle 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes fillCircle {
-  from { transform: scale(0.5); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
-}
-
-.streakDay {
-  font-family: var(--f-mono);
-  font-size: 10px;
-  color: var(--text-2);
-  letter-spacing: 0.04em;
-}
-
-.streakLabel {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  text-align: center;
-}
-
-/* ── Quick stats ────────────────────────────────────────────────────────────── */
-
-.statsCard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-.statItem {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.statNum {
-  font-family: var(--f-display);
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-
-.statLbl {
-  font-size: 11px;
-  color: var(--text-2);
-  text-align: center;
-}
-
-.statDivider {
-  width: 1px;
-  height: 36px;
-  background: var(--border);
-}
-
-/* ── Animations ─────────────────────────────────────────────────────────────── */
+/* ── Animations ─────────────────────────────────────────────────────────── */
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Responsive ─────────────────────────────────────────────────────────────── */
+/* ── Responsive ─────────────────────────────────────────────────────────── */
 
 @media (max-width: 1100px) {
-  .panel { width: 240px; }
+  .panel { width: 260px; }
 }
 
 @media (max-width: 900px) {
   .layout { flex-direction: column; }
   .panel { width: 100%; }
-  .tiles { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 768px) {
   .page { margin-left: 0; padding: 72px 16px 32px; }
-  .tiles { grid-template-columns: 1fr 1fr; }
 }

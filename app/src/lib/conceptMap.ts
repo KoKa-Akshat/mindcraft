@@ -119,6 +119,53 @@ export function mlIdToLabel(mlId: string): string {
 }
 
 /**
+ * Prerequisite graph — each concept maps to the ML IDs it directly requires.
+ * Used by the Learning GPS to build personalized mastery paths.
+ */
+export const PREREQUISITES: Record<string, string[]> = {
+  'arithmetic_operations':       [],
+  'fractions_decimals':          ['arithmetic_operations'],
+  'ratios_proportions':          ['fractions_decimals', 'arithmetic_operations'],
+  'order_of_operations':         ['arithmetic_operations'],
+  'basic_equations':             ['arithmetic_operations', 'order_of_operations'],
+  'linear_equations':            ['basic_equations'],
+  'linear_inequalities':         ['linear_equations'],
+  'exponent_rules':              ['basic_equations', 'arithmetic_operations'],
+  'radical_expressions':         ['exponent_rules'],
+  'polynomials':                 ['basic_equations', 'exponent_rules'],
+  'factoring_polynomials':       ['polynomials'],
+  'quadratic_equations':         ['factoring_polynomials', 'polynomials'],
+  'rational_expressions':        ['polynomials', 'factoring_polynomials'],
+  'systems_of_linear_equations': ['linear_equations'],
+  'functions_basics':            ['linear_equations', 'basic_equations'],
+  'exponential_functions':       ['functions_basics', 'exponent_rules'],
+  'logarithmic_functions':       ['exponential_functions', 'functions_basics'],
+  'sequences_series':            ['functions_basics', 'linear_equations', 'exponent_rules'],
+  'matrices':                    ['systems_of_linear_equations', 'linear_equations'],
+  'vectors':                     ['matrices', 'coordinate_geometry'],
+  'lines_angles':                ['arithmetic_operations'],
+  'triangles_congruence':        ['lines_angles'],
+  'circles_geometry':            ['lines_angles', 'arithmetic_operations'],
+  'area_volume':                 ['triangles_congruence', 'circles_geometry'],
+  'geometric_transformations':   ['coordinate_geometry'],
+  'coordinate_geometry':         ['linear_equations'],
+  'right_triangle_geometry':     ['triangles_congruence'],
+  'trigonometry_basics':         ['right_triangle_geometry', 'functions_basics'],
+  'trigonometric_identities':    ['trigonometry_basics'],
+  'conic_sections':              ['quadratic_equations', 'coordinate_geometry'],
+  'limits_continuity':           ['functions_basics', 'factoring_polynomials'],
+  'derivatives':                 ['limits_continuity', 'functions_basics'],
+  'applications_of_derivatives': ['derivatives'],
+  'integrals':                   ['derivatives'],
+  'applications_of_integrals':   ['integrals'],
+  'descriptive_statistics':      ['arithmetic_operations', 'fractions_decimals'],
+  'basic_probability':           ['fractions_decimals', 'arithmetic_operations'],
+  'probability_distributions':   ['basic_probability', 'descriptive_statistics'],
+  'inferential_statistics':      ['probability_distributions', 'descriptive_statistics'],
+  'circular_trigonometry':       ['trigonometry_basics'],
+}
+
+/**
  * Given any concept identifier (legacy name or ML ID), return the ML ID.
  */
 export function resolveConceptId(input: string): string {

@@ -1,41 +1,149 @@
 # MindCraft
 
-An AI-powered tutoring platform connecting students and tutors. Students get a personalized learning dashboard with session notes, a knowledge graph that maps how their concepts connect, an AI study assistant (JARVIS), and research-backed study timers. Tutors get a full workflow: Calendly booking → Fireflies transcripts → AI-generated session summaries → one-click publish to students.
+AI-powered math tutoring platform. Students get a living knowledge graph (their "constellation") that tracks mastery across every concept they've studied. Tutors get a full workflow from Calendly booking → Fireflies transcript → Claude-generated session summary → one-click publish.
 
 **Live app:** https://app-beta-one-59.vercel.app  
-**Webhook server:** https://mindcraft-webhook.vercel.app
+**Webhook server:** https://mindcraft-webhook.vercel.app  
+**ML API:** configured via `VITE_ML_API_URL` in `app/.env.local`
 
 ---
 
-## Screenshots
+## What's New (Apr 2026)
 
-| Student Dashboard | Knowledge Graph |
-|---|---|
-| ![Dashboard](img/sitting.png) | ![Graph](img/calculus.png) |
+### Dashboard redesign
+The student dashboard was restructured around what actually matters:
+
+- **Constellation at the top** — the knowledge graph is the hero. Students see their full concept map immediately, color-coded by mastery (green = mastered, blue = in progress, red = needs work, gray = untouched). Click it to open the full interactive graph.
+- **Last Session below** — quick recap of the most recent tutor session with bullets and a practice prompt.
+- **Homework Help panel (right)** — vivid red-orange gradient card; drag/drop image or PDF, or type a problem; launches the multi-agent hint flow.
+- **Learning GPS panel (right, below Homework Help)** — new feature, see below.
+- Removed: "This Week" subject tiles, streak widget, practice session counter. These had no real data backing them.
+- Removed: "Knowledge Graph" from sidebar nav — redundant since clicking the constellation opens it directly. Route still exists.
+
+### Learning GPS
+Students type any concept — "Logarithms", "Derivatives", "Conic Sections" — and the GPS maps every prerequisite they need to master it, ranked against their actual constellation mastery data.
+
+**How it works:**
+1. Fuzzy-resolves input against the 37-concept ML ontology (handles display names like "Log Properties", ML IDs like `logarithmic_functions`, partial matches)
+2. BFS walks the prerequisite graph backwards from the target concept
+3. Fetches the student's live constellation from the ML API
+4. Ranks prerequisites by urgency: Needs Work → Not Started → In Progress → Mastered
+5. Shows mastery bars and status labels per concept
+6. "Focus on [X] →" drops directly into a practice session on the most urgent gap
+
+Currently scoped to the 37 math concepts in the ML ontology. As the constellation grows, the GPS becomes more powerful automatically — just extend `PREREQUISITES` in `app/src/lib/conceptMap.ts`.
+
+### Codebase cleanup
+Deleted 9 dead component files that were never imported anywhere: `GlobalJarvis`, `Jarvis`, `HelpCards`, `ExploreClasses`, `MLInsightCard`, `Messages`, `Navbar`, `PracticeReady`, `Card.module.css`.
 
 ---
 
-## Features
+## Architecture
 
-### Student side
-- **Personalized dashboard** — next session pill with live Join button, last published summary card, explore classes carousel, practice queue
-- **Session Notes** (`/sessions`) — all published session summaries, accordion cards sorted by date, filter by subject, links to knowledge graph
-- **Knowledge Graph** (`/knowledge-graph/:concept`) — per-student SVG concept graph built from session keywords + math ontology; nodes show mastery level; click any node for session details
-- **JARVIS AI assistant** — animated teal orb; voice in (Web Speech API) + voice out (SpeechSynthesis); wake word activation ("Hey Jarvis"); navigates to any page on voice command; persists across all pages; "study logarithms" → opens knowledge graph for that concept
-- **Study Techniques** (`/study-timer`) — 5 research-backed timers: Pomodoro, 52/17, Ultradian, Deep Work, Flowtime; SVG hourglass animation; customizable intervals
+### Booking → Summary → Student
 
-### Tutor side
-- **Tutor dashboard** — sidebar student list, sessions-to-review queue, upcoming sessions, chat preview, Calendly connection
-- **Session detail** (`/tutor/session/:id`) — Fireflies transcript viewer, tutor notes + file upload, AI-generated summary card (Claude Haiku), inline editing, publish to student
-- **Real-time chat** — P2P messaging via Firestore with file attachments
+```
+Student visits /book → picks tutor → Calendly popup
 
-### Platform
-- **Firebase Auth** — Google OAuth + email/password, role-based routing (student → `/dashboard`, tutor → `/tutor`)
-- **Calendly integration** — per-tutor webhook subscription; auto-creates sessions, links students, invites Fireflies bot
-- **Fireflies integration** — bot auto-joins every session; transcript delivered via webhook after session ends
-- **Event logging** — every JARVIS action, graph search, node click logged to Firestore `events` collection for analytics
-- **Admin panel** (`/admin`) — live sessions table, manual booking form, status controls
-- **Public booking page** (`/book`) — tutor directory, Calendly popup
+Calendly webhook → POST /api/calendly
+  ├─ Creates sessions/{id} in Firestore
+  ├─ Links studentId if account exists
+  └─ Invites Fireflies bot to the meeting
+
+Session ends → Fireflies webhook → POST /api/fireflies
+  └─ Matches transcript to session, sets summaryStatus: 'pending'
+
+Tutor opens SessionDetail
+  ├─ Reviews transcript + adds notes
+  ├─ "Generate Summary" → POST /api/generate-summary (Claude Haiku)
+  └─ "Publish" → POST /api/publish-summary
+       └─ Writes users/{studentId}.lastSession in Firestore
+
+Student dashboard updates in real-time via Firestore onSnapshot
+```
+
+### ML Constellation pipeline
+
+```
+Student completes practice session
+  └─ Events logged: { conceptId, outcome, mastery }
+
+ML API (VITE_ML_API_URL)
+  └─ GET /knowledge-graph/{userId}
+       └─ Returns { nodes: [{ id, x, y, mastery, status }], edges: [{ from, to, weight }] }
+          Positions via PCA on concept embeddings (ml/data/)
+
+ConstellationCard   → mini SVG preview on dashboard
+KnowledgeGraph page → full interactive version
+LearningGPS         → cross-references live mastery → ranks prerequisite gaps
+```
+
+### Prerequisite graph (Learning GPS)
+
+Defined in `app/src/lib/conceptMap.ts` → `PREREQUISITES`. Each ML concept ID maps to its direct prerequisites. BFS from target surfaces everything a student needs, ranked by current mastery.
+
+To add new subjects: add IDs to `ML_TO_LABEL` and add prerequisite edges to `PREREQUISITES`. GPS picks them up automatically.
+
+---
+
+## Project Structure
+
+```
+mindcraft-site/
+├── app/                          # React 18 + TypeScript + Vite
+│   └── src/
+│       ├── App.tsx               # Router, AuthGuard, role-based redirect
+│       ├── firebase.ts
+│       ├── global.css            # CSS variables + reset
+│       ├── lib/
+│       │   ├── conceptMap.ts     # ML ontology ↔ display names + PREREQUISITES graph
+│       │   ├── mlApi.ts          # ML API client
+│       │   └── logEvent.ts       # Firestore analytics logger
+│       ├── hooks/
+│       │   ├── useStudentData.ts # Real-time Firestore: user doc, sessions, chat
+│       │   └── useToast.ts
+│       ├── pages/
+│       │   ├── Dashboard.tsx         # Constellation + LastSession + Homework Help + GPS
+│       │   ├── KnowledgeGraph.tsx    # Full interactive constellation
+│       │   ├── Practice.tsx          # Multi-agent homework hint flow
+│       │   ├── StudentSessions.tsx   # All session notes, filterable
+│       │   ├── StudyTimer.tsx        # Pomodoro, 52/17, Ultradian, Deep Work, Flowtime
+│       │   ├── OrganizeNotes.tsx
+│       │   ├── TutorDashboard.tsx    # Tutor: student list, sessions, chat
+│       │   ├── SessionDetail.tsx     # Transcript + AI summary + publish
+│       │   ├── Login.tsx
+│       │   ├── Book.tsx              # Public tutor directory + Calendly embed
+│       │   ├── Admin.tsx
+│       │   └── Chat.tsx              # Real-time P2P chat
+│       └── components/
+│           ├── ConstellationCard.tsx # Mini constellation SVG (dashboard preview → /knowledge-graph)
+│           ├── LearningGPS.tsx       # Concept input → prerequisite path ranked by mastery
+│           ├── LastSession.tsx       # Last session summary card
+│           ├── HeroBar.tsx           # Greeting + next session pill
+│           ├── HomeworkCards.tsx     # Hint card sequence (Practice page)
+│           ├── Sidebar.tsx           # Left nav
+│           └── StudentIntelPanel.tsx # Student intel (tutor view)
+├── webhook/                      # Vercel Serverless Functions (Node.js + TypeScript)
+│   └── api/
+│       ├── calendly.ts           # Booking → session creation + Fireflies invite
+│       ├── fireflies.ts          # Transcript delivery → session matching
+│       ├── generate-summary.ts   # Claude Haiku → structured summary
+│       ├── publish-summary.ts    # Publish to student user doc
+│       ├── register-calendly.ts  # Tutor Calendly PAT registration
+│       ├── delete-session.ts     # Admin delete via Firebase Admin SDK
+│       ├── deploy-rules.ts       # Programmatic Firestore/Storage rules deploy
+│       ├── cron-fireflies.ts     # Cron: poll pending transcripts
+│       ├── seed-sessions.ts      # Dev: seed dummy sessions
+│       └── admin-fix.ts          # Internal data repair
+├── ml/                           # Offline ML pipeline
+│   └── data/
+│       ├── concept_embeddings.npz  # Pre-computed concept vectors (37 concepts)
+│       └── pca_axes.npz            # PCA projection for 2D layout
+├── firestore.rules
+├── firestore.indexes.json
+├── storage.rules
+└── firebase.json
+```
 
 ---
 
@@ -44,190 +152,36 @@ An AI-powered tutoring platform connecting students and tutors. Students get a p
 | Layer | Technology |
 |---|---|
 | Frontend | React 18 + TypeScript + Vite |
-| Styling | CSS Modules (no UI library) |
+| Styling | CSS Modules (zero UI libraries) |
 | Routing | React Router v6 |
-| Backend (webhooks) | Vercel Serverless Functions (Node.js) |
-| Database | Firebase Firestore |
-| Auth | Firebase Authentication |
+| Webhooks | Vercel Serverless Functions (Node.js) |
+| Database | Firebase Firestore (real-time) |
+| Auth | Firebase Authentication (Google + email/password) |
 | File storage | Firebase Storage |
-| AI | Anthropic Claude (Haiku for summaries + JARVIS) |
+| AI | Anthropic Claude Haiku (summaries + homework hints) |
+| ML graph | Python + scikit-learn (offline); served via separate REST API |
 | Booking | Calendly API v2 |
 | Transcription | Fireflies.ai |
-| Voice | Web Speech API (SpeechRecognition + SpeechSynthesis) |
 
 ---
 
-## Project Structure
+## Getting Started
 
-```
-mindcraft-site/
-├── app/                              # React 18 + TypeScript + Vite frontend
-│   ├── src/
-│   │   ├── App.tsx                   # Router, AuthGuard, RoleRedirect, GlobalJarvis
-│   │   ├── firebase.ts               # Firebase SDK init (Auth, Firestore, Storage)
-│   │   ├── global.css                # CSS variables + base reset
-│   │   ├── lib/
-│   │   │   └── logEvent.ts           # Firestore event logger (analytics)
-│   │   ├── hooks/
-│   │   │   ├── useStudentData.ts     # Student doc sync, session linking
-│   │   │   └── useToast.ts           # Toast notifications
-│   │   ├── utils/
-│   │   │   └── format.ts             # Date/time helpers
-│   │   ├── pages/
-│   │   │   ├── Login.tsx             # Auth — email/password + Google
-│   │   │   ├── Dashboard.tsx         # Student dashboard (HeroBar + JARVIS orb + grid)
-│   │   │   ├── StudentSessions.tsx   # All session notes, accordion, subject filter
-│   │   │   ├── KnowledgeGraph.tsx    # SVG concept graph with JARVIS search
-│   │   │   ├── StudyTimer.tsx        # 5 study techniques + hourglass timer
-│   │   │   ├── TutorDashboard.tsx    # Tutor view — students, sessions, chat, Calendly
-│   │   │   ├── SessionDetail.tsx     # Per-session: transcript, AI summary, publish
-│   │   │   ├── Admin.tsx             # Admin panel
-│   │   │   ├── Book.tsx              # Public booking page
-│   │   │   └── Chat.tsx              # Real-time P2P chat
-│   │   └── components/
-│   │       ├── Jarvis.tsx            # AI assistant orb (heroMode + fixed mode + wake word)
-│   │       ├── GlobalJarvis.tsx      # Persistent bottom-right JARVIS (all non-dash pages)
-│   │       ├── Navbar.tsx            # Top nav — logo → /dashboard, sign-out avatar
-│   │       ├── Sidebar.tsx           # Left nav: Session Notes, Knowledge Graph, Study Timer
-│   │       ├── HeroBar.tsx           # Greeting, next session pill, JARVIS hero orb
-│   │       ├── LastSession.tsx       # Published summary card
-│   │       ├── PracticeReady.tsx     # Practice question count
-│   │       ├── ExploreClasses.tsx    # 4-card sliding carousel
-│   │       └── Messages.tsx          # Chat preview
-├── webhook/                          # Vercel Serverless Functions
-│   ├── lib/
-│   │   ├── firebase.ts               # Firebase Admin SDK init
-│   │   └── cors.ts                   # CORS helper
-│   └── api/
-│       ├── jarvis.ts                 # JARVIS AI — Claude Haiku, 180 token replies
-│       ├── concept-graph.ts          # Knowledge graph builder (ontology + session keywords)
-│       ├── seed-sessions.ts          # Dev-only: seed 10 dummy sessions for testing
-│       ├── calendly.ts               # invitee.created/canceled → session lifecycle
-│       ├── fireflies.ts              # Transcript delivery → session matching
-│       ├── generate-summary.ts       # Claude Haiku → structured summary card
-│       ├── register-calendly.ts      # Tutor connects Calendly PAT → registers webhook
-│       ├── publish-summary.ts        # Publish summary to student user doc
-│       ├── delete-session.ts         # Admin SDK delete (bypasses Firestore rules)
-│       ├── deploy-rules.ts           # Programmatic Firestore/Storage rules deploy
-│       ├── cron-fireflies.ts         # Cron: fetch pending transcripts
-│       └── admin-fix.ts              # Internal: data repair utilities
-├── img/                              # Image assets
-├── firestore.rules                   # Firestore security rules
-├── firestore.indexes.json            # Composite index definitions
-├── storage.rules                     # Firebase Storage security rules
-└── firebase.json                     # Firebase project config
-```
+### Prerequisites
+- Node.js 18+
+- Firebase project with Firestore, Auth, and Storage enabled
+- Ask Akshat for `.env` files (or create from the variables below)
 
----
-
-## Getting Started (for new contributors)
-
-### 1. Prerequisites
-
-- **Node.js 18+** — [nodejs.org](https://nodejs.org)
-- **Vercel CLI** — `npm install -g vercel`
-- A **Firebase project** with Firestore, Authentication, and Storage enabled (or ask Akshat for the `.env` files)
-
-### 2. Clone the repo
-
-```bash
-git clone https://github.com/KoKa-Akshat/mindcraft.git
-cd mindcraft
-```
-
-### 3. Set up the frontend (`app/`)
+### Frontend
 
 ```bash
 cd app
 npm install
+npm run dev        # http://localhost:5173
+npm run build      # production build
 ```
 
-Create `app/.env.local` with the Firebase config (get these from the Firebase console → Project Settings → Your apps):
-
-```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-```
-
-```bash
-npm run dev
-# App runs at http://localhost:5173
-```
-
-### 4. Set up the webhook server (`webhook/`)
-
-```bash
-cd webhook
-npm install
-```
-
-Deploy to Vercel and set environment variables:
-
-```bash
-vercel deploy --prod
-```
-
-In the [Vercel dashboard](https://vercel.com) → `mindcraft-webhook` project → Settings → Environment Variables, add:
-
-| Variable | Where to get it |
-|---|---|
-| `FIREBASE_SERVICE_ACCOUNT` | Firebase console → Project Settings → Service accounts → Generate new private key → paste entire JSON as one line |
-| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) → API Keys |
-| `FIREFLIES_API_KEY` | fireflies.ai → Settings → API → API Key |
-
-### 5. Set up Firestore indexes
-
-Run from the project root (requires Firebase CLI logged in):
-
-```bash
-firebase deploy --only firestore:indexes
-```
-
-Or create manually in Firebase console → Firestore → Indexes:
-- Collection: `sessions` | Fields: `studentEmail ASC`, `scheduledAt DESC` | Query scope: Collection
-
----
-
-## Common Commands
-
-```bash
-# Frontend dev server
-cd app && npm run dev
-
-# Frontend production build
-cd app && npm run build
-
-# Deploy frontend to Vercel
-cd app && vercel --prod
-
-# Deploy webhook to Vercel
-cd webhook && vercel --prod
-
-# Deploy Firestore rules
-firebase deploy --only firestore:rules
-
-# Type-check everything
-cd app && npx tsc --noEmit
-cd webhook && npx tsc --noEmit
-
-# Seed test sessions (dev only — run once per student account)
-curl -X POST https://mindcraft-webhook.vercel.app/api/seed-sessions \
-  -H "Content-Type: application/json" \
-  -d '{"email":"student@example.com","secret":"mindcraft-seed-2026"}'
-```
-
----
-
-## Environment Variables Reference
-
-### `app/.env.local`
-
-All prefixed with `VITE_` so Vite exposes them to the browser bundle.
-
+**`app/.env.local`**
 ```env
 VITE_FIREBASE_API_KEY=
 VITE_FIREBASE_AUTH_DOMAIN=
@@ -235,88 +189,31 @@ VITE_FIREBASE_PROJECT_ID=
 VITE_FIREBASE_STORAGE_BUCKET=
 VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
+VITE_ML_API_URL=   # ML knowledge-graph API base URL
 ```
 
-### `webhook/` (Vercel environment variables)
+### Webhook server
 
+```bash
+cd webhook
+npm install
+vercel deploy --prod
+```
+
+**Vercel env vars for `mindcraft-webhook`:**
 ```env
-FIREBASE_SERVICE_ACCOUNT={"type":"service_account","project_id":"..."}
+FIREBASE_SERVICE_ACCOUNT={"type":"service_account",...}  # full JSON, one line
 ANTHROPIC_API_KEY=sk-ant-...
 FIREFLIES_API_KEY=...
 ```
 
----
+### Firestore indexes
 
-## Architecture
-
-### Booking → Session → Summary flow
-
-```
-Student visits /book
-  └─ Tutor cards loaded from Firestore (role == 'tutor')
-  └─ Student clicks "Book" → Calendly popup
-
-Calendly fires webhook → POST /api/calendly
-  ├─ Creates sessions/{id} in Firestore
-  ├─ Links studentId if account exists
-  └─ Invites Fireflies bot to meeting
-
-Session ends → Fireflies webhook → POST /api/fireflies
-  ├─ Matches transcript to session by meetingUrl / time window
-  └─ Sets summaryStatus: 'pending'
-
-Tutor clicks session → SessionDetail page
-  ├─ Reads transcript, adds notes
-  ├─ "Generate Summary" → POST /api/generate-summary
-  │    └─ Claude Haiku → { title, topics, homework, progress, tutorNote }
-  └─ "Publish to Student" → POST /api/publish-summary
-       └─ Writes users/{studentId}.lastSession + sessions/{id}.summary.published = true
-
-Student dashboard shows published summary card
-Student /sessions page shows all published summaries
+```bash
+firebase deploy --only firestore:indexes
 ```
 
-### JARVIS Knowledge Graph flow
-
-```
-Student says "study logarithms" (or types it)
-  └─ JARVIS detects concept intent → navigates to /knowledge-graph/Logarithms
-
-KnowledgeGraph page → POST /api/concept-graph { concept, studentEmail }
-  ├─ Fetches all student sessions from Firestore
-  ├─ Runs keyword detection (17 regex patterns) against session titles + bullets
-  ├─ Builds adjacency from MATH_ONTOLOGY (20+ concept graph)
-  ├─ Computes edge weights: session co-occurrence(0.75) | ontology(0.35) | both(1.0)
-  ├─ Computes mastery: min(sessionCount / 3, 1.0) per concept
-  └─ Returns { nodes, edges } for SVG radial layout
-
-SVG graph renders:
-  ├─ Center node = searched concept (radius 0)
-  ├─ Ring 1 (165px) = direct connections (session + ontology neighbors)
-  ├─ Ring 2 (308px) = second-degree connections (ontology only)
-  └─ Click any node → session detail panel slides in from right
-```
-
-### JARVIS wake word flow
-
-```
-GlobalJarvis mounts on every authenticated page (except /dashboard)
-  └─ Starts SpeechRecognition loop (continuous: false, restarts on end)
-  └─ Listens for: "jarvis" | "hey jarvis" | "hi jarvis" | "okay jarvis"
-
-Wake word detected:
-  ├─ Opens JARVIS panel
-  ├─ Immediately starts command listening
-  └─ Logs jarvis_wake event to Firestore events collection
-
-Command heard:
-  ├─ "study [concept]" → navigates to /knowledge-graph/[concept]
-  ├─ "dashboard" / "home" → navigates to /dashboard
-  ├─ "book" / "schedule" → navigates to /book
-  ├─ "timer" / "pomodoro" → navigates to /study-timer
-  ├─ "knowledge graph" → navigates to /knowledge-graph
-  └─ anything else → POST /api/jarvis (Claude Haiku, 180 tokens max)
-```
+Required: `sessions` collection | `studentEmail ASC, scheduledAt DESC`.
 
 ---
 
@@ -324,22 +221,22 @@ Command heard:
 
 **`users/{uid}`**
 ```
-uid, email, displayName, role ('student'|'tutor'|'admin')
+uid, email, displayName, role ('student' | 'tutor' | 'admin')
 streak, practiceCount
-nextSession { subject, time, tutor, meetingUrl, scheduledAt }
-lastSession  { id, subject, date, title, bullets[], tutorName, duration }
-calendlyToken, calendlyEmail, calendlyUrl, calendlyWebhookUri  (tutor only)
+lastSession { id, subject, date, title, bullets[], tutorName, duration, scheduledAt }
+nextSession  { subject, time, tutor, meetingUrl, scheduledAt }
+calendlyToken, calendlyEmail, calendlyUrl, calendlyWebhookUri  ← tutor only
 ```
 
 **`sessions/{id}`**
 ```
-studentEmail, studentName, studentId, tutorId, tutorName
-subject, status ('scheduled'|'completed'|'cancelled')
-scheduledAt (ms), endAt (ms), duration, date, meetingUrl
+studentEmail, studentId, tutorId, tutorName, studentName
+subject, status ('scheduled' | 'completed' | 'cancelled')
+scheduledAt (ms), endAt (ms), meetingUrl
 summary { title, bullets[], date, duration, published: true }
-summaryCard { title, topics[], homework[], progress, tutorNote }  (tutor draft)
+summaryCard { title, topics[], homework[], progress, tutorNote }
 tutorNotes, tutorNotesUrl
-transcript { meetingId, fullText, sentences[], summary, processedAt }
+transcript { meetingId, fullText, sentences[], summary }
 ```
 
 **`chats/{chatId}/messages/{messageId}`**
@@ -348,42 +245,37 @@ chatId = [uid1, uid2].sort().join('_')
 senderId, text, fileUrl, fileName, fileType, createdAt
 ```
 
-**`events/{autoId}`** — analytics log
+**`events/{autoId}`** — analytics
 ```
 userId, type, data {}, page, ts
 ```
-Types: `jarvis_wake`, `jarvis_navigate`, `graph_search`, `graph_node_click`
-
-**`transcripts/{meetingId}`** — orphaned Fireflies recordings (no matching session)
 
 ---
 
-## Firestore Security Rules
+## Connecting Third-Party Services
 
-- `users/{uid}` — any authenticated user can read; only owner can write
-- `sessions/{id}` — read/write scoped to `studentId`, `studentEmail`, `tutorId`, or admin role
-- `chats/{chatId}` — read/write scoped to chat participants (UID in chatId)
-- `events/` — write-only from client (no read rule — analytics backend only)
+**Calendly (per tutor):**
+Tutor dashboard → Connect Calendly → paste Personal Access Token from calendly.com → Integrations → API & Webhooks.
 
-Full rules in [`firestore.rules`](./firestore.rules).
-
----
-
-## Connecting Calendly (per tutor)
-
-1. Tutor signs in → goes to `/tutor`
-2. Find the **Calendly** card → click **Connect Calendly**
-3. Generate a Personal Access Token at calendly.com → Integrations → API & Webhooks
-4. Paste the token and click **Connect**
-
-This registers a webhook so all future bookings auto-create sessions in Firestore.
+**Fireflies:**
+fireflies.ai → Settings → Integrations → Webhook:
+- URL: `https://mindcraft-webhook.vercel.app/api/fireflies`
+- Event: Transcription Completed
 
 ---
 
-## Connecting Fireflies
+## Dev Utilities
 
-In fireflies.ai → Settings → Integrations → Webhook:
-- **URL:** `https://mindcraft-webhook.vercel.app/api/fireflies`
-- **Event:** Transcription Completed
+```bash
+# Seed test sessions (dev only)
+curl -X POST https://mindcraft-webhook.vercel.app/api/seed-sessions \
+  -H "Content-Type: application/json" \
+  -d '{"email":"student@example.com","secret":"mindcraft-seed-2026"}'
 
-Fireflies will auto-join all sessions where the Calendly invite includes a Google Meet link.
+# Type-check everything
+cd app     && npx tsc --noEmit
+cd webhook && npx tsc --noEmit
+
+# Deploy Firestore rules
+firebase deploy --only firestore:rules
+```

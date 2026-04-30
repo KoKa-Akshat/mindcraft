@@ -1,0 +1,257 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+
+.header {
+  background: linear-gradient(135deg, #1A1A3E 0%, #2D1B69 100%);
+  padding: 14px 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.headerIcon {
+  font-size: 16px;
+  color: #A78BFA;
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.headerSub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: auto;
+}
+
+/* ── Search ── */
+
+.searchRow {
+  display: flex;
+  gap: 6px;
+  padding: 12px 12px 8px;
+}
+
+.input {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--f-body);
+  padding: 9px 12px;
+  transition: border-color 140ms ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #A78BFA;
+}
+
+.input::placeholder { color: var(--text-2); }
+
+.searchBtn {
+  width: 36px;
+  height: 36px;
+  background: #7C3AED;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 140ms ease;
+}
+
+.searchBtn:hover:not(:disabled) { opacity: 0.85; }
+.searchBtn:disabled { opacity: 0.35; cursor: default; }
+
+.spin {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Not found ── */
+
+.notFound {
+  font-size: 12px;
+  color: #FF4B4B;
+  padding: 0 12px 10px;
+  line-height: 1.5;
+}
+
+/* ── Hint ── */
+
+.hint {
+  font-size: 12px;
+  color: var(--text-2);
+  padding: 4px 12px 14px;
+  line-height: 1.6;
+}
+
+/* ── Results ── */
+
+.results {
+  padding: 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pathHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pathTitle {
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pathProgress {
+  font-size: 11px;
+  color: var(--text-2);
+  font-family: var(--f-mono);
+  white-space: nowrap;
+}
+
+/* ── Overall progress bar ── */
+
+.progressBar {
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #7C3AED;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.noPrereqs {
+  font-size: 12px;
+  color: #58CC02;
+  font-weight: 600;
+}
+
+/* ── Step list ── */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.list::-webkit-scrollbar { width: 3px; }
+.list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stepInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.stepLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.masteryBar {
+  height: 3px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.masteryFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+  opacity: 0.8;
+}
+
+.stepStatus {
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* ── Focus CTA ── */
+
+.focusBtn {
+  width: 100%;
+  background: linear-gradient(135deg, #7C3AED, #5B21B6);
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  padding: 11px;
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 140ms ease, transform 100ms ease;
+  letter-spacing: -0.01em;
+  margin-top: 2px;
+}
+
+.focusBtn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}

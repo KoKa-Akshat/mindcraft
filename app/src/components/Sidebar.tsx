@@ -12,16 +12,6 @@ const NAV_ITEMS = [
         to: '/sessions', label: 'Session Notes',
         icon: <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
       },
-      {
-        to: '/knowledge-graph', label: 'Knowledge Graph',
-        icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/>
-          <circle cx="12" cy="8" r="2"/><circle cx="12" cy="16" r="2"/>
-          <line x1="7" y1="12" x2="10" y2="9"/><line x1="7" y1="12" x2="10" y2="15"/>
-          <line x1="14" y1="8" x2="17" y2="6"/><line x1="14" y1="16" x2="17" y2="18"/>
-          <line x1="13" y1="10" x2="13" y2="14"/>
-        </svg>,
-      },
     ],
   },
   {
