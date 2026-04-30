@@ -30,26 +30,19 @@
 
 .logo:hover { opacity: 0.72; }
 
-.logoMind {
-  font-family: var(--f-display);
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -0.03em;
-}
-
-.logoCraft {
-  font-family: var(--f-display);
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--c-algebra);
-  letter-spacing: -0.03em;
+.logoImg {
+  height: 22px;
+  width: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .logoRaccoon {
-  font-size: 14px;
+  height: 22px;
+  width: auto;
+  display: block;
+  object-fit: contain;
   margin-left: 2px;
-  opacity: 0.8;
 }
 
 /* ── Nav ──────────────────────────────────────────────────────────────────── */

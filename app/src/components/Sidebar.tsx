@@ -2,6 +2,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useUser } from '../App'
+import logo from '../assets/logo.png'
+import raccoon from '../assets/raccoon.jpg'
 import s from './Sidebar.module.css'
 
 const NAV_ITEMS = [
@@ -46,8 +48,8 @@ export default function Sidebar() {
     <aside className={s.sidebar}>
       {/* Logo */}
       <Link to="/dashboard" className={s.logo}>
-        <span className={s.logoMind}>Mind</span><span className={s.logoCraft}>Craft</span>
-        <span className={s.logoRaccoon}>🦝</span>
+        <img src={logo} alt="MindCraft" className={s.logoImg} />
+        <img src={raccoon} alt="" className={s.logoRaccoon} />
       </Link>
 
       {/* Nav groups */}

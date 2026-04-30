@@ -5,7 +5,7 @@ import s from './LastSession.module.css'
 
 interface Props { session: SessionSummary | null }
 
-const PREVIEW_COUNT = 4
+const PREVIEW_COUNT = 3
 
 function buildPrompt(session: SessionSummary): string {
   const focus = session.bullets.slice(0, 2).join('; ').toLowerCase()
