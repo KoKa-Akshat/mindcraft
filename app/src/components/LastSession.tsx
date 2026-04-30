@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { SessionSummary } from '../hooks/useStudentData'
-import s from './Card.module.css'
+import s from './LastSession.module.css'
 
 interface Props { session: SessionSummary | null }
 
@@ -13,6 +14,7 @@ function buildPrompt(session: SessionSummary): string {
 
 export default function LastSession({ session }: Props) {
   const [modalOpen, setModalOpen] = useState(false)
+  const navigate = useNavigate()
 
   if (!session) {
     return (
@@ -52,7 +54,7 @@ export default function LastSession({ session }: Props) {
         <div className={s.promptBox}>
           <p className={s.promptLabel}>Practice Prompt</p>
           <p className={s.promptText}>{buildPrompt(session)}</p>
-          <button className={s.btnGreen} style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
+          <button className={s.practiceBtn} onClick={() => navigate('/practice')}>
             Start Practice Session →
           </button>
         </div>
@@ -67,7 +69,7 @@ export default function LastSession({ session }: Props) {
               <span className={s.tag}>{session.subject}</span>
               <span className={s.date}>{session.date} · {session.duration}</span>
             </div>
-            <div className={s.title} style={{ fontSize: 18, marginBottom: 16 }}>{session.title}</div>
+            <div className={s.title}>{session.title}</div>
             <ul className={s.list}>
               {session.bullets.map((b, i) => <li key={i}>{b}</li>)}
             </ul>
@@ -75,7 +77,7 @@ export default function LastSession({ session }: Props) {
             <div className={s.promptBox}>
               <p className={s.promptLabel}>Practice Prompt</p>
               <p className={s.promptText}>{buildPrompt(session)}</p>
-              <button className={s.btnGreen} style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
+              <button className={s.practiceBtn} onClick={() => { navigate('/practice'); setModalOpen(false) }}>
                 Start Practice Session →
               </button>
             </div>

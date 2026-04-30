@@ -1,0 +1,217 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+
+.label {
+  font-family: var(--f-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0 0 14px;
+}
+
+.summaryHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--c-algebra);
+  text-transform: capitalize;
+}
+
+.date {
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.title {
+  font-family: var(--f-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* ── Bullets ── */
+
+.list {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.list li {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 500;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--c-algebra);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.showMoreBtn {
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0 0;
+  text-align: left;
+}
+
+.showMoreBtn:hover { color: var(--text); }
+
+/* ── Divider ── */
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 0;
+}
+
+/* ── Practice prompt ── */
+
+.promptBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.promptLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.promptText {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.practiceBtn {
+  margin-top: 8px;
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 11px;
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 140ms ease;
+}
+
+.practiceBtn:hover { opacity: 0.85; }
+
+/* ── Empty state ── */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 0;
+  gap: 4px;
+}
+
+.empty span {
+  font-family: var(--f-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.empty p {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+/* ── Modal ── */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 20px;
+}
+
+.modalCard {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 28px 28px 24px;
+  max-width: 540px;
+  width: 100%;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modalClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--text-2);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalClose:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}

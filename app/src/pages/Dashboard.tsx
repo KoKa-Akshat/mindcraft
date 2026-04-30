@@ -121,10 +121,7 @@ export default function Dashboard() {
               </section>
 
               {/* Last session */}
-              <section className={s.section}>
-                <h2 className={s.sectionTitle}>Last Session</h2>
-                <LastSession session={data.lastSession} />
-              </section>
+              <LastSession session={data.lastSession} />
             </div>
 
             {/* ── Right panel ── */}
