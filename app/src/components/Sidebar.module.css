@@ -23,7 +23,12 @@
   padding: 20px 20px 16px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 120ms ease;
 }
+
+.logo:hover { opacity: 0.72; }
 
 .logoMind {
   font-family: var(--f-display);
@@ -167,6 +172,65 @@
   width: 16px;
   height: 16px;
   flex-shrink: 0;
+}
+
+/* ── User row ─────────────────────────────────────────────────────────────── */
+
+.userRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-top: 4px;
+  background: var(--surface-2);
+}
+
+.avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userName {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signOutBtn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.signOutBtn:hover {
+  color: var(--text);
+  background: var(--border);
+}
+
+.signOutBtn svg {
+  width: 14px;
+  height: 14px;
 }
 
 @media (max-width: 768px) {

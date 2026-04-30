@@ -10,12 +10,9 @@
  *   4. Done screen shows per-concept breakdown and offers another problem
  */
 
-import { signOut } from 'firebase/auth'
-import { auth } from '../firebase'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
-import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import HomeworkCards, { type HomeworkSession, type OutcomeRecord } from '../components/HomeworkCards'
 import s from './Practice.module.css'
@@ -117,7 +114,6 @@ export default function Practice() {
 
   return (
     <div className={s.shell}>
-      <Navbar user={user} onSignOut={() => signOut(auth).then(() => navigate('/login', { replace: true }))} />
       <Sidebar />
 
       <main className={s.page}>

@@ -1,13 +1,11 @@
-import { signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState } from 'react'
-import { auth } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
-import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import HeroBar from '../components/HeroBar'
-import MLInsightCard from '../components/MLInsightCard'
+import LastSession from '../components/LastSession'
+import ConstellationCard from '../components/ConstellationCard'
 import s from './Dashboard.module.css'
 
 // ── Subject tile config ────────────────────────────────────────────────────────
@@ -72,10 +70,6 @@ export default function Dashboard() {
 
   return (
     <div className={s.shell}>
-      <Navbar
-        user={user}
-        onSignOut={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
-      />
       <Sidebar />
 
       <main className={s.page}>
@@ -120,10 +114,16 @@ export default function Dashboard() {
                 </div>
               </section>
 
-              {/* ML insight */}
+              {/* Constellation */}
               <section className={s.section}>
-                <h2 className={s.sectionTitle}>Intelligence Profile</h2>
-                <MLInsightCard userId={user.uid} />
+                <h2 className={s.sectionTitle}>Constellation</h2>
+                <ConstellationCard userId={user.uid} />
+              </section>
+
+              {/* Last session */}
+              <section className={s.section}>
+                <h2 className={s.sectionTitle}>Last Session</h2>
+                <LastSession session={data.lastSession} />
               </section>
             </div>
 

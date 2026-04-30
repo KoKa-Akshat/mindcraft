@@ -15,12 +15,9 @@
  */
 
 import { useEffect, useRef, useState } from 'react'
-import { signOut }      from 'firebase/auth'
-import { auth }         from '../firebase'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useUser }      from '../App'
 import { logEvent }     from '../lib/logEvent'
-import Navbar           from '../components/Navbar'
 import Sidebar          from '../components/Sidebar'
 import { resolveConceptId, mlIdToLabel } from '../lib/conceptMap'
 import { getRecommendations, type RecommendResult } from '../lib/mlApi'
@@ -323,7 +320,6 @@ export default function KnowledgeGraph() {
 
   return (
     <div className={s.shell}>
-      <Navbar user={user} onSignOut={() => signOut(auth).then(() => navigate('/login', { replace: true }))} />
       <Sidebar />
 
       <main className={s.page}>

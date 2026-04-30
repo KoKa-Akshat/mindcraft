@@ -8,12 +8,10 @@
  */
 
 import { useEffect, useState } from 'react'
-import { signOut } from 'firebase/auth'
-import { auth, db } from '../firebase'
+import { db } from '../firebase'
 import { collection, query, where, onSnapshot } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
-import Navbar   from '../components/Navbar'
 import Sidebar  from '../components/Sidebar'
 import s        from './StudentSessions.module.css'
 
@@ -82,7 +80,6 @@ export default function StudentSessions() {
 
   return (
     <div className={s.shell}>
-      <Navbar user={user} onSignOut={() => signOut(auth).then(() => navigate('/login', { replace: true }))} />
       <Sidebar />
 
       <main className={s.page}>

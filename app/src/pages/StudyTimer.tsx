@@ -1,9 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { signOut } from 'firebase/auth'
-import { auth } from '../firebase'
-import { useNavigate } from 'react-router-dom'
-import { useUser } from '../App'
-import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 
 import s from './StudyTimer.module.css'
@@ -94,8 +89,6 @@ function pad(n: number) { return String(n).padStart(2, '0') }
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function StudyTimer() {
-  const user     = useUser()
-  const navigate = useNavigate()
 
   const [selected, setSelected] = useState<Technique | null>(null)
   const [customFocus, setCustomFocus] = useState(25)
@@ -104,7 +97,6 @@ export default function StudyTimer() {
 
   return (
     <div className={s.shell}>
-      <Navbar user={user} onSignOut={() => signOut(auth).then(() => navigate('/login', { replace: true }))} />
       <Sidebar />
       <main className={s.page}>
         {selected

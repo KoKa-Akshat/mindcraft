@@ -10,9 +10,6 @@ import { doc, addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
 import Sidebar from '../components/Sidebar'
-import Navbar from '../components/Navbar'
-import { signOut } from 'firebase/auth'
-import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import s from './OrganizeNotes.module.css'
 
@@ -113,7 +110,6 @@ export default function OrganizeNotes() {
 
   return (
     <div className={s.shell}>
-      <Navbar user={user} onSignOut={() => signOut(auth).then(() => navigate('/login', { replace: true }))} />
       <Sidebar />
       <main className={s.page}>
         <div className={s.header}>

@@ -1,4 +1,7 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebase'
+import { useUser } from '../App'
 import s from './Sidebar.module.css'
 
 const NAV_ITEMS = [
@@ -41,7 +44,10 @@ const NAV_ITEMS = [
 ]
 
 export default function Sidebar() {
-  const loc = useLocation()
+  const loc      = useLocation()
+  const navigate = useNavigate()
+  const user     = useUser()
+
   const active = (path: string) =>
     loc.pathname === path || (path !== '/' && loc.pathname.startsWith(path + '/'))
       ? s.active : ''
@@ -49,10 +55,10 @@ export default function Sidebar() {
   return (
     <aside className={s.sidebar}>
       {/* Logo */}
-      <div className={s.logo}>
+      <Link to="/dashboard" className={s.logo}>
         <span className={s.logoMind}>Mind</span><span className={s.logoCraft}>Craft</span>
         <span className={s.logoRaccoon}>🦝</span>
-      </div>
+      </Link>
 
       {/* Nav groups */}
       <nav className={s.nav}>
@@ -69,7 +75,7 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Community */}
+      {/* Bottom — community + user */}
       <div className={s.bottom}>
         <a
           href="https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg"
@@ -89,6 +95,28 @@ export default function Sidebar() {
           </svg>
           Community
         </a>
+
+        {user && (
+          <div className={s.userRow}>
+            <div className={s.avatar}>
+              {(user.displayName?.[0] ?? user.email?.[0] ?? '?').toUpperCase()}
+            </div>
+            <span className={s.userName}>
+              {user.displayName ? user.displayName.split(' ')[0] : user.email?.split('@')[0]}
+            </span>
+            <button
+              className={s.signOutBtn}
+              onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
+              title="Sign out"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
     </aside>
   )
