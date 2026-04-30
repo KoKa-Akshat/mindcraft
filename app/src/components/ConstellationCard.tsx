@@ -30,10 +30,19 @@ interface GraphResp {
 
 function statusColor(status: string): string {
   switch (status) {
-    case 'mastered':    return '#58CC02'
-    case 'in_progress': return '#4A7BF7'
-    case 'struggling':  return '#FF4B4B'
-    default:            return '#C4C4CE'
+    case 'mastered':    return '#A8E063'
+    case 'in_progress': return '#5B9BD5'
+    case 'struggling':  return '#FF6B6B'
+    default:            return '#FFFFFF'
+  }
+}
+
+function glowColor(status: string): string {
+  switch (status) {
+    case 'mastered':    return 'rgba(168,224,99,0.55)'
+    case 'in_progress': return 'rgba(91,155,213,0.50)'
+    case 'struggling':  return 'rgba(255,107,107,0.55)'
+    default:            return 'rgba(255,230,109,0.40)'  // golden for untouched
   }
 }
 
@@ -61,6 +70,15 @@ function scaleNodes(nodes: MLNode[]) {
   }
   return m
 }
+
+// Deterministic background star field — computed once
+const BG_STARS = Array.from({ length: 55 }, (_, i) => ({
+  x:       ((i * 157.3 + 17) % SVG_W),
+  y:       ((i * 89.7  + 43) % SVG_H),
+  r:       i % 4 === 0 ? 1.2 : 0.75,
+  opacity: 0.06 + (i % 4) * 0.04,
+  twinkle: i % 7 === 0,
+}))
 
 export default function ConstellationCard({ userId }: { userId: string }) {
   const navigate = useNavigate()
@@ -91,7 +109,7 @@ export default function ConstellationCard({ userId }: { userId: string }) {
     return (
       <div className={s.card}>
         <div className={s.empty}>
-          <div className={s.emptyOrb}>◎</div>
+          <div className={s.emptyOrb}>✦</div>
           <p className={s.emptyTitle}>Your constellation awaits</p>
           <p className={s.emptySub}>
             Complete a practice session to start mapping your knowledge
@@ -118,8 +136,8 @@ export default function ConstellationCard({ userId }: { userId: string }) {
       >
         <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} className={s.svg}>
           <defs>
-            <filter id="cGlow" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+            <filter id="cGlow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
               <feMerge>
                 <feMergeNode in="blur"/>
                 <feMergeNode in="SourceGraphic"/>
@@ -127,7 +145,18 @@ export default function ConstellationCard({ userId }: { userId: string }) {
             </filter>
           </defs>
 
-          {/* Edges (thin, low opacity) */}
+          {/* Background star field */}
+          {BG_STARS.map((star, i) => (
+            <circle
+              key={i}
+              cx={star.x} cy={star.y} r={star.r}
+              fill="#FFFFFF"
+              opacity={star.opacity}
+              className={star.twinkle ? s.twinkleStar : undefined}
+            />
+          ))}
+
+          {/* Constellation lines */}
           {data.edges
             .filter(e => e.weight > 0.3)
             .map((edge, i) => {
@@ -140,19 +169,22 @@ export default function ConstellationCard({ userId }: { userId: string }) {
                   key={i}
                   x1={sp.sx} y1={sp.sy}
                   x2={tp.sx} y2={tp.sy}
-                  stroke="rgba(255,255,255,0.18)"
-                  strokeWidth={isNearHovered ? 1.5 : 0.75}
-                  strokeOpacity={isNearHovered ? 0.7 : 1}
+                  stroke="#5AA5AF"
+                  strokeWidth={isNearHovered ? 1.5 : 1}
+                  strokeOpacity={isNearHovered ? 0.60 : 0.30}
+                  strokeDasharray="4 4"
+                  style={isNearHovered ? { filter: 'drop-shadow(0 0 3px rgba(90,165,175,0.5))' } : undefined}
                 />
               )
             })}
 
-          {/* Nodes */}
+          {/* Stars / nodes */}
           {data.nodes.map(node => {
-            const pos = positions.get(node.id)
+            const pos   = positions.get(node.id)
             if (!pos) return null
-            const r     = 3.5 + Math.min(node.eventCount * 0.9, 6)
+            const r     = 4 + Math.min(node.eventCount * 0.7, 5)
             const color = statusColor(node.status)
+            const glow  = glowColor(node.status)
             const isH   = hovered === node.id
 
             return (
@@ -163,29 +195,30 @@ export default function ConstellationCard({ userId }: { userId: string }) {
                 onMouseLeave={() => setHovered(null)}
                 style={{ cursor: 'pointer' }}
               >
-                {isH && (
-                  <circle
-                    r={r + 7}
-                    fill="none"
-                    stroke={color}
-                    strokeWidth="1.2"
-                    strokeOpacity="0.4"
-                  />
-                )}
+                {/* Glow layer (blurred copy behind) */}
+                <circle
+                  r={isH ? r + 8 : r + 4}
+                  fill={glow}
+                  style={{ filter: 'blur(5px)' }}
+                />
+
+                {/* Star core */}
                 <circle
                   r={isH ? r + 1.5 : r}
                   fill={color}
-                  fillOpacity={node.status === 'untouched' ? 0.22 : 0.85}
-                  filter={isH ? 'url(#cGlow)' : undefined}
+                  className={node.status === 'untouched' ? s.twinkleStar : undefined}
                   style={{ transition: 'r 0.12s ease' }}
                 />
+
+                {/* Mastery ring */}
                 {node.mastery > 0 && node.status !== 'untouched' && (
                   <circle
-                    r={r - 1.5}
+                    r={r + 3}
                     fill="none"
-                    stroke="rgba(255,255,255,0.7)"
-                    strokeWidth="1.5"
-                    strokeDasharray={`${node.mastery * 2 * Math.PI * (r - 1.5)} ${2 * Math.PI * (r - 1.5)}`}
+                    stroke={color}
+                    strokeWidth="1.2"
+                    strokeOpacity="0.5"
+                    strokeDasharray={`${node.mastery * 2 * Math.PI * (r + 3)} ${2 * Math.PI * (r + 3)}`}
                     strokeLinecap="round"
                     transform="rotate(-90)"
                   />
@@ -199,17 +232,17 @@ export default function ConstellationCard({ userId }: { userId: string }) {
       </div>
 
       <div className={s.stats}>
-        <span className={s.statItem} style={{ color: '#58CC02' }}>
-          <span className={s.dot} style={{ background: '#58CC02' }} />
+        <span className={s.statItem} style={{ color: '#A8E063' }}>
+          <span className={s.dot} style={{ background: '#A8E063' }} />
           {mastered} mastered
         </span>
-        <span className={s.statItem} style={{ color: '#4A7BF7' }}>
-          <span className={s.dot} style={{ background: '#4A7BF7' }} />
+        <span className={s.statItem} style={{ color: '#5B9BD5' }}>
+          <span className={s.dot} style={{ background: '#5B9BD5' }} />
           {inProgress} in progress
         </span>
         {struggling > 0 && (
-          <span className={s.statItem} style={{ color: '#FF4B4B' }}>
-            <span className={s.dot} style={{ background: '#FF4B4B' }} />
+          <span className={s.statItem} style={{ color: '#FF6B6B' }}>
+            <span className={s.dot} style={{ background: '#FF6B6B' }} />
             {struggling} needs work
           </span>
         )}

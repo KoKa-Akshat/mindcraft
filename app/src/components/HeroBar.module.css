@@ -144,13 +144,13 @@
 }
 
 .btnPrimary {
-  background: #ffffff;
-  color: #0F3D4C;
+  background: #C4F547;
+  color: #164B52;
 }
 
 .btnLive {
-  background: var(--c-geometry);
-  color: #0F3D4C;
+  background: #C4F547;
+  color: #164B52;
   animation: liveBlink 2s ease-in-out infinite;
 }
 

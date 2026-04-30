@@ -8,29 +8,40 @@
   --c-trig:     #FFE66D;
   --c-stats:    #A29BFE;
 
-  /* Teal palette — base #1F6B72 */
-  --bg:        #1F6B72;   /* page background */
-  --surface:   #256E76;   /* card / panel surfaces — slightly lighter */
-  --surface-2: #2C7980;   /* hover states, secondary surfaces */
-  --border:    rgba(255, 255, 255, 0.12);
-  --text:      #E8F6F4;   /* near-white, slightly cool */
-  --text-2:    #9ECECE;   /* muted teal-white for secondary */
+  /* MindCraft teal palette — base #1F6B72 */
+  --bg:          #1F6B72;   /* page background */
+  --surface:     #2A7D85;   /* card / panel surfaces */
+  --surface-2:   #236D78;   /* inputs, darker hover */
+  --border:      rgba(255, 255, 255, 0.10);
+  --text:        #FFFFFF;
+  --text-2:      #B8D4D8;   /* secondary / muted */
+  --text-muted:  #7A9FA5;   /* placeholders */
 
-  /* Primary action — MindCraft green pops beautifully on dark teal */
-  --accent:      #58CC02;
-  --accent-soft: rgba(88, 204, 2, 0.14);
+  /* Accent — lime green */
+  --accent:      #C4F547;
+  --accent-dark: #164B52;   /* text on lime buttons */
+  --accent-soft: rgba(196, 245, 71, 0.15);
 
-  /* Legacy aliases — kept for components not yet migrated */
+  /* Sidebar */
+  --sidebar-bg:  #164B52;
+
+  /* Status */
+  --c-mastered:    #A8E063;
+  --c-in-progress: #5B9BD5;
+  --c-struggling:  #FF6B6B;
+  --c-untouched:   #8B9BA8;
+
+  /* Legacy aliases */
   --bg-old:  var(--bg);
   --tx:      var(--text);
   --mu:      var(--text-2);
   --w:       var(--surface);
   --bd:      var(--border);
-  --blue:    #4A9EFF;
-  --blue-d:  #2E7FE8;
-  --g:       #58CC02;
-  --gd:      #4CAD00;
-  --red:     #FF4B4B;
+  --blue:    #5B9BD5;
+  --blue-d:  #4A8BC5;
+  --g:       #C4F547;
+  --gd:      #B4E540;
+  --red:     #FF6B6B;
 
   /* Typography */
   --f-display: 'Sora', sans-serif;

@@ -1,6 +1,7 @@
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: rgba(42, 125, 133, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
   overflow: hidden;
 }
@@ -41,8 +42,8 @@
 
 .emptyOrb {
   font-size: 32px;
-  color: var(--text-2);
-  opacity: 0.4;
+  color: #FFD93D;
+  opacity: 0.8;
   margin-bottom: 4px;
 }
 
@@ -65,36 +66,36 @@
 .ctaBtn {
   margin-top: 8px;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--accent-dark);
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   font-family: var(--f-display);
   transition: opacity 140ms ease;
 }
 
-.ctaBtn:hover { opacity: 0.84; }
+.ctaBtn:hover { opacity: 0.88; }
 
 /* ── SVG graph area ─────────────────────────────────────────────────────── */
 
 .svgWrap {
   position: relative;
   cursor: pointer;
-  background: var(--surface-2);
-  border-bottom: 1px solid var(--border);
+  background: #164B52;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
 .svgWrap:hover .svgHint { opacity: 1; }
-.svgWrap:hover .svg     { opacity: 0.85; }
+.svgWrap:hover .svg     { opacity: 0.88; }
 
 .svg {
   display: block;
   width: 100%;
-  height: 210px;
+  height: 220px;
   transition: opacity 180ms ease;
 }
 
@@ -103,15 +104,25 @@
   bottom: 10px;
   right: 14px;
   font-size: 11px;
-  font-weight: 600;
-  color: var(--accent);
-  background: rgba(255,255,255,0.88);
+  font-weight: 700;
+  color: #164B52;
+  background: #C4F547;
   border-radius: 6px;
-  padding: 3px 9px;
+  padding: 3px 10px;
   opacity: 0;
   transition: opacity 180ms ease;
   pointer-events: none;
-  border: 1px solid var(--border);
+}
+
+/* ── Twinkle animation for background stars ─────────────────────────────── */
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.14; }
+  50%       { opacity: 0.04; }
+}
+
+.twinkleStar {
+  animation: twinkle 3s ease-in-out infinite;
 }
 
 /* ── Stats row ──────────────────────────────────────────────────────────── */
@@ -122,6 +133,7 @@
   gap: 14px;
   padding: 12px 16px;
   flex-wrap: wrap;
+  background: rgba(22, 75, 82, 0.40);
 }
 
 .statItem {

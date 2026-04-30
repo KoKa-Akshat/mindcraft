@@ -76,11 +76,12 @@ export function useStudentData(user: User | null): StudentData {
     lastSession:  null,
     practiceCount: 0,
   })
-  const [nextSession, setNextSession]   = useState<StudentData['nextSession']>(null)
-  const [tutorId, setTutorId]           = useState<string | null>(null)
-  const [tutorName, setTutorName]       = useState<string>('Tutor')
-  const [messages, setMessages]         = useState<Message[]>([])
-  const [loading, setLoading]           = useState(true)
+  const [nextSession, setNextSession]           = useState<StudentData['nextSession']>(null)
+  const [derivedLastSession, setDerivedLast]    = useState<SessionSummary | null>(null)
+  const [tutorId, setTutorId]                   = useState<string | null>(null)
+  const [tutorName, setTutorName]               = useState<string>('Tutor')
+  const [messages, setMessages]                 = useState<Message[]>([])
+  const [loading, setLoading]                   = useState(true)
 
   // ── 1. User doc ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -139,10 +140,31 @@ export function useStudentData(user: User | null): StudentData {
       query(collection(db, 'sessions'), where('studentEmail', '==', user.email)),
       snap => {
         const now = Date.now()
-        const upcoming = snap.docs
-          .map(sd => ({ id: sd.id, ref: sd.ref, ...(sd.data() as any) }))
+        const allSessions = snap.docs.map(sd => ({ id: sd.id, ref: sd.ref, ...(sd.data() as any) }))
+
+        const upcoming = allSessions
           .filter(sd => sd.status === 'scheduled' && (sd.endAt ?? sd.scheduledAt + 90 * 60_000) > now)
           .sort((a, b) => a.scheduledAt - b.scheduledAt)[0]
+
+        // Derive last session from past sessions when user doc field is absent
+        const past = allSessions
+          .filter(sd => (sd.endAt ?? sd.scheduledAt + 90 * 60_000) < now)
+          .sort((a, b) => b.scheduledAt - a.scheduledAt)
+        if (past.length > 0) {
+          const ps = past[0]
+          const d  = new Date(ps.scheduledAt)
+          setDerivedLast({
+            id:        ps.id,
+            subject:   ps.subject   ?? 'Math',
+            date:      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            duration:  ps.duration  ?? '60 min',
+            title:     ps.summary?.title ?? ps.title ?? `${ps.subject ?? 'Math'} Session`,
+            bullets:   Array.isArray(ps.summary?.bullets) ? ps.summary.bullets
+                     : Array.isArray(ps.bullets)          ? ps.bullets : [],
+            tutorName: ps.tutorName ?? '',
+            scheduledAt: ps.scheduledAt,
+          })
+        }
 
         if (upcoming) {
           setNextSession({
@@ -194,5 +216,9 @@ export function useStudentData(user: User | null): StudentData {
     return () => unsub()
   }, [user, tutorId, tutorName])
 
-  return { ...userData, nextSession, tutorId, messages, loading }
+  return {
+    ...userData,
+    lastSession: userData.lastSession ?? derivedLastSession,
+    nextSession, tutorId, messages, loading,
+  }
 }

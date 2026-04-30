@@ -5,17 +5,26 @@ import s from './LearningGPS.module.css'
 
 const ML_API_URL = import.meta.env.VITE_ML_API_URL ?? ''
 
-// ── SVG canvas ───────────────────────────────────────────────────────────────
-const W = 268, H = 230
-const VPAD_T = 18, VPAD_B = 32  // bottom pad leaves room for bottom-row labels
+// Reverse graph: concept → concepts it directly unlocks
+const DEPENDENTS: Record<string, string[]> = {}
+for (const [id, prereqs] of Object.entries(PREREQUISITES)) {
+  for (const pre of prereqs) {
+    (DEPENDENTS[pre] ??= []).push(id)
+  }
+}
+
+// ── Canvas ───────────────────────────────────────────────────────────────────
+const W = 268, H = 330
+const VPAD_T = 24, VPAD_B = 42
 const TARGET_R = 10, NODE_R = 6
-const MAX_DEPTH = 5
+const MAX_PREREQ_DEPTH = 3
+const MAX_PER_LEVEL    = 5
 
 const STATUS_COLOR: Record<string, string> = {
-  mastered:    '#58CC02',
-  in_progress: '#4A7BF7',
-  struggling:  '#FF4B4B',
-  untouched:   '#B8B8C8',
+  mastered:    '#A8E063',
+  in_progress: '#5B9BD5',
+  struggling:  '#FF6B6B',
+  untouched:   '#8B9BA8',
 }
 const STATUS_LABEL: Record<string, string> = {
   mastered: 'Mastered', in_progress: 'In progress',
@@ -37,15 +46,17 @@ interface VNode {
   short: string
   mastery: number
   status: MLNode['status']
-  depth: number
+  depth: number   // 0 = target, positive = prerequisite, negative = unlock
   x: number
   y: number
   isTarget: boolean
+  isUnlock: boolean
 }
 
 interface VEdge {
   x1: number; y1: number; x2: number; y2: number
   needsWork: boolean
+  isUnlock: boolean
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -67,78 +78,113 @@ function trunc(str: string, n: number) {
   return str.length > n ? str.slice(0, n - 1) + '…' : str
 }
 
-// ── Graph builder ────────────────────────────────────────────────────────────
+// ── Graph builder ─────────────────────────────────────────────────────────────
+// depth 0  = target (center)
+// depth  1+ = prerequisites (drawn below target — "foundations")
+// depth -1  = direct unlocks (drawn above target — "where this leads")
 
 function buildGraph(targetId: string, nodeMap: Map<string, MLNode>) {
-  // BFS through prerequisite tree from target outward
   const depthMap = new Map<string, number>()
-  const queue: { id: string; d: number }[] = [{ id: targetId, d: 0 }]
+  const unlockSet = new Set<string>()
 
-  while (queue.length) {
-    const { id, d } = queue.shift()!
+  // BFS through prerequisites (positive depths, rendered below)
+  const q: { id: string; d: number }[] = [{ id: targetId, d: 0 }]
+  while (q.length) {
+    const { id, d } = q.shift()!
     if (depthMap.has(id)) continue
     depthMap.set(id, d)
-    if (d < MAX_DEPTH)
+    if (d < MAX_PREREQ_DEPTH)
       for (const pre of PREREQUISITES[id] ?? [])
-        if (!depthMap.has(pre)) queue.push({ id: pre, d: d + 1 })
+        if (!depthMap.has(pre)) q.push({ id: pre, d: d + 1 })
   }
 
-  // Group by depth level
-  const byDepth = new Map<number, string[]>()
-  for (const [id, d] of depthMap)
-    byDepth.set(d, [...(byDepth.get(d) ?? []), id])
+  // Add direct unlocks (depth -1, rendered above)
+  for (const dep of (DEPENDENTS[targetId] ?? []).slice(0, MAX_PER_LEVEL)) {
+    if (!depthMap.has(dep)) {
+      depthMap.set(dep, -1)
+      unlockSet.add(dep)
+    }
+  }
 
+  const minD = Math.min(...depthMap.values())          // -1 when unlocks exist
   const maxD = Math.max(...depthMap.values(), 0)
+  const range = maxD - minD || 1
 
-  // Assign 2-D positions: target top-center, prerequisites cascade downward
+  // Group by depth, cap crowded levels (keep most-urgent nodes first)
+  const byDepth = new Map<number, string[]>()
+  for (const [id, d] of depthMap) {
+    const arr = byDepth.get(d) ?? []
+    byDepth.set(d, arr)
+    if (id === targetId || arr.length < MAX_PER_LEVEL) arr.push(id)
+  }
+
+  // Assign 2-D positions
   const posMap = new Map<string, { x: number; y: number }>()
   for (const [d, ids] of byDepth) {
-    const y = VPAD_T + (maxD > 0 ? d / maxD : 0) * (H - VPAD_T - VPAD_B)
-    const step = (W - 32) / ids.length
-    ids.forEach((id, i) => posMap.set(id, { x: 16 + step * i + step / 2, y }))
+    // minD → VPAD_T (top), maxD → H-VPAD_B (bottom)
+    const baseY = VPAD_T + ((d - minD) / range) * (H - VPAD_T - VPAD_B)
+    const count = ids.length
+    const step  = (W - 32) / Math.max(count, 1)
+    ids.forEach((id, i) => {
+      // Stagger alternate nodes when ≥ 3 in a row to reduce label collisions
+      const stagger = count >= 3 && i % 2 === 1 ? 15 : 0
+      posMap.set(id, { x: 16 + step * i + step / 2, y: baseY + stagger })
+    })
   }
 
   // Build node list
-  const nodes: VNode[] = [...depthMap.keys()].map(id => {
-    const ml  = nodeMap.get(id)
-    const { x, y } = posMap.get(id)!
+  const nodes: VNode[] = []
+  for (const id of depthMap.keys()) {
+    const pos = posMap.get(id)
+    if (!pos) continue
+    const ml    = nodeMap.get(id)
     const label = ML_TO_LABEL[id] ?? id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-    return {
+    nodes.push({
       id, label, short: trunc(label, 11),
       mastery: ml?.mastery ?? 0,
       status:  ml?.status  ?? 'untouched',
       depth: depthMap.get(id)!,
-      x, y, isTarget: id === targetId,
-    }
-  })
+      x: pos.x, y: pos.y,
+      isTarget: id === targetId,
+      isUnlock: unlockSet.has(id),
+    })
+  }
 
-  // Build edge list (parent concept → its prerequisite)
+  // Build edge list
   const edges: VEdge[] = []
   for (const id of depthMap.keys()) {
     const from = posMap.get(id)!
+    // Prerequisite edges
     for (const pre of PREREQUISITES[id] ?? []) {
-      if (!depthMap.has(pre)) continue
+      if (!depthMap.has(pre) || unlockSet.has(pre)) continue
       const to = posMap.get(pre)!
       const needsWork =
         (nodeMap.get(id)?.status  ?? 'untouched') !== 'mastered' ||
         (nodeMap.get(pre)?.status ?? 'untouched') !== 'mastered'
-      edges.push({ x1: from.x, y1: from.y, x2: to.x, y2: to.y, needsWork })
+      edges.push({ x1: from.x, y1: from.y, x2: to.x, y2: to.y, needsWork, isUnlock: false })
+    }
+    // Unlock edges (target → its dependents)
+    if (id === targetId) {
+      for (const dep of unlockSet) {
+        const to = posMap.get(dep)
+        if (!to) continue
+        edges.push({ x1: from.x, y1: from.y, x2: to.x, y2: to.y, needsWork: false, isUnlock: true })
+      }
     }
   }
 
-  // Action list: non-target nodes sorted by urgency for the list below the graph
-  const actionList = nodes
-    .filter(n => !n.isTarget)
+  const prereqNodes = nodes.filter(n => !n.isTarget && !n.isUnlock)
+  const actionList  = prereqNodes
     .sort((a, b) => (URGENCY[a.status] - URGENCY[b.status]) || (a.depth - b.depth) || (a.mastery - b.mastery))
     .slice(0, 4)
 
-  const mastered = nodes.filter(n => !n.isTarget && n.status === 'mastered').length
-  const total    = nodes.length - 1
+  const mastered = prereqNodes.filter(n => n.status === 'mastered').length
+  const total    = prereqNodes.length
 
-  return { nodes, edges, actionList, mastered, total }
+  return { nodes, edges, actionList, mastered, total, unlockCount: unlockSet.size }
 }
 
-// ── Component ────────────────────────────────────────────────────────────────
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export default function LearningGPS({ userId }: { userId: string }) {
   const navigate = useNavigate()
@@ -165,7 +211,7 @@ export default function LearningGPS({ userId }: { userId: string }) {
           const { nodes }: { nodes: MLNode[] } = await res.json()
           nodes.forEach(n => nodeMap.set(n.id, n))
         }
-      } catch { /* constellation not yet available — all concepts show as untouched */ }
+      } catch { /* all concepts fall back to untouched */ }
     }
 
     setResult(buildGraph(id, nodeMap))
@@ -196,37 +242,42 @@ export default function LearningGPS({ userId }: { userId: string }) {
         </button>
       </div>
 
-      {notFound && <p className={s.notFound}>Not found — try "Logarithms", "Derivatives", "Probability"…</p>}
+      {notFound && <p className={s.notFound}>Not found — try "Probability", "Derivatives", "Logarithms"…</p>}
       {!result && !notFound && (
-        <p className={s.hint}>Type any concept to see your personal constellation path to mastery.</p>
+        <p className={s.hint}>Type any concept to map prerequisites and what it unlocks.</p>
       )}
 
-      {/* Results */}
       {result && (
         <>
           {/* ── Mini constellation graph ── */}
           <div className={s.graphWrap}>
             <p className={s.graphTitle}>
-              {result.total === 0
-                ? `${targetLabel} — no prerequisites`
-                : `Path to ${targetLabel}`}
+              {result.unlockCount > 0
+                ? `${targetLabel} · ${result.total} prereqs · ${result.unlockCount} unlock${result.unlockCount > 1 ? 's' : ''}`
+                : result.total === 0
+                  ? `${targetLabel} — no prerequisites`
+                  : `Path to ${targetLabel}`}
             </p>
 
             <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} className={s.svg}>
 
-              {/* Prerequisite edges */}
+              {/* Edges */}
               {result.edges.map((e, i) => (
                 <line key={i}
                   x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-                  stroke={e.needsWork ? 'rgba(124,58,237,0.22)' : 'rgba(88,204,2,0.18)'}
-                  strokeWidth={e.needsWork ? 1.3 : 0.9}
-                  strokeDasharray={e.needsWork ? undefined : '3 2'}
+                  stroke={
+                    e.isUnlock    ? 'rgba(74,158,255,0.40)' :
+                    e.needsWork   ? 'rgba(124,58,237,0.28)' :
+                                    'rgba(88,204,2,0.22)'
+                  }
+                  strokeWidth={e.isUnlock ? 1.4 : e.needsWork ? 1.3 : 0.9}
+                  strokeDasharray={e.isUnlock ? '4 3' : e.needsWork ? undefined : '3 2'}
                 />
               ))}
 
-              {/* Nodes — render deeper nodes first so target sits on top */}
-              {[...result.nodes].sort((a, b) => b.depth - a.depth).map(n => {
-                const color = n.isTarget ? '#7C3AED' : STATUS_COLOR[n.status]
+              {/* Nodes — deepest (furthest from target) rendered first */}
+              {[...result.nodes].sort((a, b) => Math.abs(b.depth) - Math.abs(a.depth)).map(n => {
+                const color = n.isTarget ? '#7C3AED' : n.isUnlock ? '#4A9EFF' : STATUS_COLOR[n.status]
                 const r     = n.isTarget ? TARGET_R : NODE_R
                 const isH   = hovered === n.id
                 const lY    = n.y + r + 9
@@ -246,13 +297,18 @@ export default function LearningGPS({ userId }: { userId: string }) {
 
                     {/* Node circle */}
                     <circle cx={n.x} cy={n.y} r={r}
-                      fill={n.isTarget ? 'rgba(124,58,237,0.25)' : 'var(--surface)'}
+                      fill={
+                        n.isTarget  ? 'rgba(124,58,237,0.25)' :
+                        n.isUnlock  ? 'rgba(74,158,255,0.14)' :
+                                      'var(--surface)'
+                      }
                       stroke={color}
                       strokeWidth={n.isTarget ? 2.5 : 1.8}
+                      strokeDasharray={n.isUnlock ? '3 2' : undefined}
                     />
 
-                    {/* Mastery fill (non-target only) */}
-                    {!n.isTarget && n.mastery > 0 && (
+                    {/* Mastery fill for prerequisite nodes */}
+                    {!n.isTarget && !n.isUnlock && n.mastery > 0 && (
                       <circle cx={n.x} cy={n.y} r={r - 2.5}
                         fill={color}
                         fillOpacity={0.2 + n.mastery * 0.65}
@@ -270,7 +326,11 @@ export default function LearningGPS({ userId }: { userId: string }) {
                       textAnchor="middle"
                       fontSize={n.isTarget ? 9 : 7.5}
                       fontWeight={n.isTarget ? 700 : 500}
-                      fill={n.isTarget ? '#D4AAFF' : 'rgba(255,255,255,0.55)'}
+                      fill={
+                        n.isTarget  ? '#D4AAFF' :
+                        n.isUnlock  ? 'rgba(74,158,255,0.9)' :
+                                      'rgba(255,255,255,0.58)'
+                      }
                       fontFamily="system-ui, -apple-system, sans-serif"
                     >
                       {n.isTarget ? trunc(n.label, 16) : n.short}
@@ -279,13 +339,13 @@ export default function LearningGPS({ userId }: { userId: string }) {
                     {/* Hover tooltip */}
                     {isH && !n.isTarget && (
                       <g>
-                        <rect x={n.x - 46} y={n.y - r - 23} width={92} height={18}
-                          rx={4} fill="rgba(26,26,46,0.9)" />
-                        <text x={n.x} y={n.y - r - 11}
+                        <rect x={n.x - 50} y={n.y - r - 24} width={100} height={18}
+                          rx={4} fill="rgba(10,35,45,0.96)" />
+                        <text x={n.x} y={n.y - r - 12}
                           textAnchor="middle" fontSize={8} fill="#fff"
                           fontFamily="system-ui, sans-serif"
                         >
-                          {trunc(n.label, 18)} · {Math.round(n.mastery * 100)}%
+                          {trunc(n.label, 20)} {n.isUnlock ? '(unlocks)' : `· ${Math.round(n.mastery * 100)}%`}
                         </text>
                       </g>
                     )}
@@ -294,7 +354,7 @@ export default function LearningGPS({ userId }: { userId: string }) {
               })}
             </svg>
 
-            {/* Color legend */}
+            {/* Legend */}
             <div className={s.legend}>
               {(['mastered','in_progress','struggling','untouched'] as const).map(st => (
                 <span key={st} className={s.legendItem}>
@@ -302,21 +362,27 @@ export default function LearningGPS({ userId }: { userId: string }) {
                   {STATUS_LABEL[st]}
                 </span>
               ))}
+              {result.unlockCount > 0 && (
+                <span className={s.legendItem}>
+                  <span className={s.legendDot} style={{ background: '#4A9EFF' }} />
+                  Unlocks
+                </span>
+              )}
             </div>
           </div>
 
-          {/* Overall progress */}
+          {/* Overall progress bar */}
           {result.total > 0 && (
             <div className={s.progressRow}>
               <div className={s.progressBar}>
                 <div className={s.progressFill}
                   style={{ width: `${Math.round((result.mastered / result.total) * 100)}%` }} />
               </div>
-              <span className={s.progressText}>{result.mastered}/{result.total} mastered</span>
+              <span className={s.progressText}>{result.mastered}/{result.total} prereqs mastered</span>
             </div>
           )}
 
-          {/* Action list — top concepts to focus on */}
+          {/* Action list */}
           {result.actionList.length > 0 && (
             <ul className={s.actionList}>
               {result.actionList.map(n => (
