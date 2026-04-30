@@ -8,17 +8,17 @@
   --c-trig:     #FFE66D;
   --c-stats:    #A29BFE;
 
-  /* UI neutrals */
-  --bg:        #F7F6F2;
-  --surface:   #FFFFFF;
-  --surface-2: #F0EFE9;
-  --border:    #E5E4DD;
-  --text:      #1A1A2E;
-  --text-2:    #6B6B7B;
+  /* Oxford-inspired deep teal palette */
+  --bg:        #0F3D4C;   /* page background — deep teal */
+  --surface:   #1A5263;   /* card / panel surfaces */
+  --surface-2: #1F5E72;   /* hover states, secondary surfaces */
+  --border:    rgba(255, 255, 255, 0.10);
+  --text:      #E8F4F2;   /* near-white, slightly cool */
+  --text-2:    #78AAAA;   /* muted teal-white for secondary */
 
-  /* Primary action */
-  --accent:      #1A1A2E;
-  --accent-soft: #E8E8F0;
+  /* Primary action — MindCraft green pops beautifully on dark teal */
+  --accent:      #58CC02;
+  --accent-soft: rgba(88, 204, 2, 0.14);
 
   /* Legacy aliases — kept for components not yet migrated */
   --bg-old:  var(--bg);
@@ -26,8 +26,8 @@
   --mu:      var(--text-2);
   --w:       var(--surface);
   --bd:      var(--border);
-  --blue:    #0069FF;
-  --blue-d:  #0052CC;
+  --blue:    #4A9EFF;
+  --blue-d:  #2E7FE8;
   --g:       #58CC02;
   --gd:      #4CAD00;
   --red:     #FF4B4B;

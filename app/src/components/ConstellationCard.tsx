@@ -140,9 +140,9 @@ export default function ConstellationCard({ userId }: { userId: string }) {
                   key={i}
                   x1={sp.sx} y1={sp.sy}
                   x2={tp.sx} y2={tp.sy}
-                  stroke="rgba(26,26,46,0.13)"
+                  stroke="rgba(255,255,255,0.18)"
                   strokeWidth={isNearHovered ? 1.5 : 0.75}
-                  strokeOpacity={isNearHovered ? 0.45 : 1}
+                  strokeOpacity={isNearHovered ? 0.7 : 1}
                 />
               )
             })}

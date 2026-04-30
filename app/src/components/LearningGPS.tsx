@@ -246,7 +246,7 @@ export default function LearningGPS({ userId }: { userId: string }) {
 
                     {/* Node circle */}
                     <circle cx={n.x} cy={n.y} r={r}
-                      fill={n.isTarget ? '#EDE9FE' : 'var(--surface)'}
+                      fill={n.isTarget ? 'rgba(124,58,237,0.25)' : 'var(--surface)'}
                       stroke={color}
                       strokeWidth={n.isTarget ? 2.5 : 1.8}
                     />
@@ -270,7 +270,7 @@ export default function LearningGPS({ userId }: { userId: string }) {
                       textAnchor="middle"
                       fontSize={n.isTarget ? 9 : 7.5}
                       fontWeight={n.isTarget ? 700 : 500}
-                      fill={n.isTarget ? '#4C1D95' : '#888898'}
+                      fill={n.isTarget ? '#D4AAFF' : 'rgba(255,255,255,0.55)'}
                       fontFamily="system-ui, -apple-system, sans-serif"
                     >
                       {n.isTarget ? trunc(n.label, 16) : n.short}

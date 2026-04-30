@@ -6,7 +6,7 @@
   left: 0;
   bottom: 0;
   width: 200px;
-  background: var(--surface);
+  background: #0A2D3A;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -30,19 +30,27 @@
 
 .logo:hover { opacity: 0.72; }
 
+.logoPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
 .logoImg {
-  height: 22px;
+  height: 20px;
   width: auto;
   display: block;
   object-fit: contain;
 }
 
 .logoRaccoon {
-  height: 22px;
+  height: 20px;
   width: auto;
   display: block;
   object-fit: contain;
-  margin-left: 2px;
 }
 
 /* ── Nav ──────────────────────────────────────────────────────────────────── */
@@ -151,14 +159,15 @@
   border-radius: 8px;
   font-size: 13px;
   font-weight: 500;
-  color: #4A154B;
+  color: var(--text-2);
   text-decoration: none;
-  background: rgba(74, 21, 75, 0.05);
-  transition: background 120ms ease;
+  background: rgba(255, 255, 255, 0.05);
+  transition: background 120ms ease, color 120ms ease;
 }
 
 .slack:hover {
-  background: rgba(74, 21, 75, 0.1);
+  background: rgba(255, 255, 255, 0.10);
+  color: var(--text);
 }
 
 .slackIcon {

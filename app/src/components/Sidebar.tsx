@@ -48,8 +48,10 @@ export default function Sidebar() {
     <aside className={s.sidebar}>
       {/* Logo */}
       <Link to="/dashboard" className={s.logo}>
-        <img src={logo} alt="MindCraft" className={s.logoImg} />
-        <img src={raccoon} alt="" className={s.logoRaccoon} />
+        <div className={s.logoPill}>
+          <img src={logo} alt="MindCraft" className={s.logoImg} />
+          <img src={raccoon} alt="" className={s.logoRaccoon} />
+        </div>
       </Link>
 
       {/* Nav groups */}
