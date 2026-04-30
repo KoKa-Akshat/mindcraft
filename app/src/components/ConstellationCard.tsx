@@ -80,19 +80,30 @@ const BG_STARS = Array.from({ length: 55 }, (_, i) => ({
   twinkle: i % 7 === 0,
 }))
 
+const FETCH_TIMEOUT_MS = 8_000
+
 export default function ConstellationCard({ userId }: { userId: string }) {
   const navigate = useNavigate()
   const [data,    setData]    = useState<GraphResp | null>(null)
   const [loading, setLoading] = useState(true)
+  const [timedOut, setTimedOut] = useState(false)
   const [hovered, setHovered] = useState<string | null>(null)
 
-  useEffect(() => {
+  function load() {
     if (!userId || !ML_API_URL) { setLoading(false); return }
-    fetch(`${ML_API_URL}/knowledge-graph/${userId}`)
+    setLoading(true)
+    setTimedOut(false)
+
+    const ctrl    = new AbortController()
+    const timer   = setTimeout(() => { ctrl.abort(); setTimedOut(true); setLoading(false) }, FETCH_TIMEOUT_MS)
+
+    fetch(`${ML_API_URL}/knowledge-graph/${userId}`, { signal: ctrl.signal })
       .then(r => r.ok ? r.json() : null)
-      .then(d  => { setData(d); setLoading(false) })
-      .catch(()  => setLoading(false))
-  }, [userId])
+      .then(d  => { clearTimeout(timer); setData(d); setLoading(false) })
+      .catch(err => { clearTimeout(timer); if (err.name !== 'AbortError') setLoading(false) })
+  }
+
+  useEffect(() => { load() }, [userId])
 
   if (loading) {
     return (
@@ -100,6 +111,21 @@ export default function ConstellationCard({ userId }: { userId: string }) {
         <div className={s.loadRow}>
           <div className={s.spinner} />
           <span>Loading constellation…</span>
+        </div>
+      </div>
+    )
+  }
+
+  if (timedOut) {
+    return (
+      <div className={s.card}>
+        <div className={s.empty}>
+          <div className={s.emptyOrb}>✦</div>
+          <p className={s.emptyTitle}>Constellation warming up…</p>
+          <p className={s.emptySub}>
+            The knowledge engine is starting up. Usually takes under 30 seconds on first load.
+          </p>
+          <button className={s.ctaBtn} onClick={load}>Retry →</button>
         </div>
       </div>
     )
