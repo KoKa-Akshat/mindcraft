@@ -1,44 +1,87 @@
 # MindCraft
 
-AI-powered math tutoring platform. Students get a living knowledge graph (their "constellation") that tracks mastery across every concept they've studied. Tutors get a full workflow from Calendly booking → Fireflies transcript → Claude-generated session summary → one-click publish.
+**Math exam coming up? No worries, we got you.**
 
-**Live app:** https://app-beta-one-59.vercel.app  
-**Webhook server:** https://mindcraft-webhook.vercel.app  
-**ML API:** configured via `VITE_ML_API_URL` in `app/.env.local`
+MindCraft finds what students actually don't understand, builds a clear personalized study path, and matches them with a tutor who helps fix gaps before the exam. Built for high-schoolers prepping for ACT, SAT, IB, and AP math.
+
+**Live app:** https://mindcraft-93858.web.app  
+**Marketing site:** https://mindcraft-marketing-site.web.app  
+**Webhook server:** https://mindcraft-webhook.vercel.app
 
 ---
 
-## What's New (Apr 2026)
+## Problem We Solve
 
-### Dashboard redesign
-The student dashboard was restructured around what actually matters:
+Students fail math exams not because they're lazy — but because they don't know what they don't know. They study randomly, miss the exact concepts that appear on test day, and walk in overwhelmed.
 
-- **Constellation at the top** — the knowledge graph is the hero. Students see their full concept map immediately, color-coded by mastery (green = mastered, blue = in progress, red = needs work, gray = untouched). Click it to open the full interactive graph.
-- **Last Session below** — quick recap of the most recent tutor session with bullets and a practice prompt.
-- **Homework Help panel (right)** — vivid red-orange gradient card; drag/drop image or PDF, or type a problem; launches the multi-agent hint flow.
-- **Learning GPS panel (right, below Homework Help)** — new feature, see below.
-- Removed: "This Week" subject tiles, streak widget, practice session counter. These had no real data backing them.
-- Removed: "Knowledge Graph" from sidebar nav — redundant since clicking the constellation opens it directly. Route still exists.
+MindCraft runs a four-step loop:
+1. **Diagnostic** — finds current level and hidden gaps
+2. **Learning Map** — connects gaps to the prerequisite concepts blocking progress
+3. **Tutor Session** — dedicated tutor rebuilds understanding (not just the answer)
+4. **Practice Loop** — personalized questions, flashcards, and next steps between sessions
 
-### Learning GPS
-Students type any concept — "Logarithms", "Derivatives", "Conic Sections" — and the GPS maps every prerequisite they need to master it, ranked against their actual constellation mastery data.
+---
 
-**How it works:**
-1. Fuzzy-resolves input against the 37-concept ML ontology (handles display names like "Log Properties", ML IDs like `logarithmic_functions`, partial matches)
-2. BFS walks the prerequisite graph backwards from the target concept
-3. Fetches the student's live constellation from the ML API
-4. Ranks prerequisites by urgency: Needs Work → Not Started → In Progress → Mastered
-5. Shows mastery bars and status labels per concept
-6. "Focus on [X] →" drops directly into a practice session on the most urgent gap
+## What's New (May 2026)
 
-Currently scoped to the 37 math concepts in the ML ontology. As the constellation grows, the GPS becomes more powerful automatically — just extend `PREREQUISITES` in `app/src/lib/conceptMap.ts`.
+### AI-Powered Exam Intake (Practice Page)
+- Students are now greeted with: *"Math exam coming up? No worries, we got you."*
+- Select exam type (ACT / SAT / IB / AP / General) + optional topic or problem description
+- Gemini 1.5 Flash analyzes input and returns 3–4 highest-yield concept recommendations with a personalized message
+- Falls back to exam-specific defaults if no API key is configured
 
-### Codebase cleanup
-Deleted 9 dead component files that were never imported anywhere: `GlobalJarvis`, `Jarvis`, `HelpCards`, `ExploreClasses`, `MLInsightCard`, `Messages`, `Navbar`, `PracticeReady`, `Card.module.css`.
+### Concept Explanation Cards (Explore Phase)
+Before every practice session, students see a rich ACT-prep-style concept card with:
+- Key rules, pro tips, watch-out mistakes, worked examples, exam weight
+- Covers 12 concepts: linear equations, inequalities, absolute value, quadratic equations, factoring, systems, functions, exponents, polynomials, rational expressions, probability, descriptive stats
+
+### Expanded Question Bank (102 questions)
+Duolingo-style leveled practice across **10 concepts**:
+
+| Concept | L1 | L2 | L3 |
+|---|---|---|---|
+| Linear Equations | 4 | 4 | 3 |
+| Linear Inequalities | 4 | 3 | 3 |
+| Absolute Value | 4 | 4 | 3 |
+| Quadratic Equations | 4 | 4 | 3 |
+| Functions | 4 | 4 | 3 |
+| Systems of Equations | 3 | 3 | 3 |
+| Exponent Rules | 4 | 4 | 3 |
+| Polynomials | 4 | 3 | 3 |
+| Rational Expressions | 3 | 3 | 3 |
+| Probability | 4 | 4 | 3 |
+
+Levels: **L1 Foundation** (+10 XP) · **L2 Applied** (+20 XP) · **L3 Exam Ready** (+35 XP)
+
+### Marketing Site Overhaul
+- Hero: *"Math exam coming up? No worries, we got you."*
+- Subjects reordered to lead with exam-critical areas (Math Exam Prep, ACT/SAT, Algebra, Calculus, Homework Rescue, Vibecoding)
+- How it works updated to 4-step loop: Diagnostic → Learning Map → Tutor Session → Practice Loop
+- Copy throughout sharpened to address exam panic directly
+
+### Homework Progress Card
+- Shows tutor-assigned problems from Firestore `users/{uid}.homework`
+- Progress bar + numbered checklist
+- Click any problem → auto-submits to Practice page solver
+
+### Dashboard Layout
+- Constellation card full-width at top
+- Below: Homework Help (60%) + HomeworkProgress + LearningGPS (40%) stacked
 
 ---
 
 ## Architecture
+
+### Practice Flow
+
+```
+intake (exam selector + Gemini AI) 
+  → mission (concept grid — AI picks highlighted at top)
+  → explore (concept explanation card: rules, tips, examples)
+  → level select (L1 / L2 / L3)
+  → session (5 questions, hint ladder, XP)
+  → complete (score, XP earned, next level CTA)
+```
 
 ### Booking → Summary → Student
 
@@ -55,14 +98,14 @@ Session ends → Fireflies webhook → POST /api/fireflies
 
 Tutor opens SessionDetail
   ├─ Reviews transcript + adds notes
-  ├─ "Generate Summary" → POST /api/generate-summary (Claude Haiku)
+  ├─ "Generate Summary" → POST /api/generate-summary (Claude)
   └─ "Publish" → POST /api/publish-summary
        └─ Writes users/{studentId}.lastSession in Firestore
 
 Student dashboard updates in real-time via Firestore onSnapshot
 ```
 
-### ML Constellation pipeline
+### ML Constellation Pipeline
 
 ```
 Student completes practice session
@@ -70,19 +113,16 @@ Student completes practice session
 
 ML API (VITE_ML_API_URL)
   └─ GET /knowledge-graph/{userId}
-       └─ Returns { nodes: [{ id, x, y, mastery, status }], edges: [{ from, to, weight }] }
-          Positions via PCA on concept embeddings (ml/data/)
+       └─ Returns { nodes: [{ id, x, y, mastery, status }], edges: [...] }
 
 ConstellationCard   → mini SVG preview on dashboard
 KnowledgeGraph page → full interactive version
 LearningGPS         → cross-references live mastery → ranks prerequisite gaps
 ```
 
-### Prerequisite graph (Learning GPS)
+### Concept Ontology (conceptMap.ts)
 
-Defined in `app/src/lib/conceptMap.ts` → `PREREQUISITES`. Each ML concept ID maps to its direct prerequisites. BFS from target surfaces everything a student needs, ranked by current mastery.
-
-To add new subjects: add IDs to `ML_TO_LABEL` and add prerequisite edges to `PREREQUISITES`. GPS picks them up automatically.
+40+ node prerequisite graph. Each concept maps to the ML IDs it directly requires. BFS from any target concept surfaces the full prerequisite chain, ranked by student mastery. Used by LearningGPS and the Gemini intake to generate personalized study paths.
 
 ---
 
@@ -90,59 +130,49 @@ To add new subjects: add IDs to `ML_TO_LABEL` and add prerequisite edges to `PRE
 
 ```
 mindcraft-site/
-├── app/                          # React 18 + TypeScript + Vite
+├── app/                              # React 18 + TypeScript + Vite
 │   └── src/
-│       ├── App.tsx               # Router, AuthGuard, role-based redirect
+│       ├── App.tsx                   # Router, AuthGuard, role-based redirect
 │       ├── firebase.ts
-│       ├── global.css            # CSS variables + reset
+│       ├── global.css                # CSS variables + reset (dark teal theme)
 │       ├── lib/
-│       │   ├── conceptMap.ts     # ML ontology ↔ display names + PREREQUISITES graph
-│       │   ├── mlApi.ts          # ML API client
-│       │   └── logEvent.ts       # Firestore analytics logger
+│       │   ├── conceptMap.ts         # 40+ node ontology + PREREQUISITES graph
+│       │   ├── conceptContent.ts     # Rich concept cards (rules, tips, examples)
+│       │   ├── questionBank.ts       # 102 curated MCQ questions × 10 concepts × 3 levels
+│       │   ├── geminiIntake.ts       # Gemini 1.5 Flash — personalized concept recommendations
+│       │   ├── mlApi.ts              # ML constellation API client
+│       │   └── logEvent.ts           # Firestore analytics logger
 │       ├── hooks/
-│       │   ├── useStudentData.ts # Real-time Firestore: user doc, sessions, chat
+│       │   ├── useStudentData.ts     # Real-time Firestore: user doc, sessions, homework
 │       │   └── useToast.ts
 │       ├── pages/
-│       │   ├── Dashboard.tsx         # Constellation + LastSession + Homework Help + GPS
+│       │   ├── Dashboard.tsx         # Constellation + Homework + GPS
+│       │   ├── Practice.tsx          # Intake → Explore → Level → Session → Complete
 │       │   ├── KnowledgeGraph.tsx    # Full interactive constellation
-│       │   ├── Practice.tsx          # Multi-agent homework hint flow
-│       │   ├── StudentSessions.tsx   # All session notes, filterable
-│       │   ├── StudyTimer.tsx        # Pomodoro, 52/17, Ultradian, Deep Work, Flowtime
-│       │   ├── OrganizeNotes.tsx
-│       │   ├── TutorDashboard.tsx    # Tutor: student list, sessions, chat
-│       │   ├── SessionDetail.tsx     # Transcript + AI summary + publish
-│       │   ├── Login.tsx
-│       │   ├── Book.tsx              # Public tutor directory + Calendly embed
-│       │   ├── Admin.tsx
-│       │   └── Chat.tsx              # Real-time P2P chat
+│       │   ├── StudentSessions.tsx   # All session notes
+│       │   ├── StudyTimer.tsx        # Pomodoro / deep work modes
+│       │   ├── TutorDashboard.tsx    # Tutor: students, sessions, publish
+│       │   ├── SessionDetail.tsx     # Transcript + AI summary
+│       │   ├── Login.tsx / Book.tsx / Admin.tsx / Chat.tsx
 │       └── components/
-│           ├── ConstellationCard.tsx # Mini constellation SVG (dashboard preview → /knowledge-graph)
-│           ├── LearningGPS.tsx       # Concept input → prerequisite path ranked by mastery
-│           ├── LastSession.tsx       # Last session summary card
-│           ├── HeroBar.tsx           # Greeting + next session pill
-│           ├── HomeworkCards.tsx     # Hint card sequence (Practice page)
+│           ├── ConstellationCard.tsx # Mini constellation SVG
+│           ├── LearningGPS.tsx       # Concept → prerequisite path ranked by mastery
+│           ├── HomeworkProgress.tsx  # Tutor-assigned homework tracker
+│           ├── HomeworkCards.tsx     # Hint card sequence (Problem Solver)
 │           ├── Sidebar.tsx           # Left nav
-│           └── StudentIntelPanel.tsx # Student intel (tutor view)
-├── webhook/                      # Vercel Serverless Functions (Node.js + TypeScript)
-│   └── api/
-│       ├── calendly.ts           # Booking → session creation + Fireflies invite
-│       ├── fireflies.ts          # Transcript delivery → session matching
-│       ├── generate-summary.ts   # Claude Haiku → structured summary
-│       ├── publish-summary.ts    # Publish to student user doc
-│       ├── register-calendly.ts  # Tutor Calendly PAT registration
-│       ├── delete-session.ts     # Admin delete via Firebase Admin SDK
-│       ├── deploy-rules.ts       # Programmatic Firestore/Storage rules deploy
-│       ├── cron-fireflies.ts     # Cron: poll pending transcripts
-│       ├── seed-sessions.ts      # Dev: seed dummy sessions
-│       └── admin-fix.ts          # Internal data repair
-├── ml/                           # Offline ML pipeline
+│           └── HeroBar.tsx / LastSession.tsx / StudentIntelPanel.tsx
+├── webhook/                          # Vercel Serverless Functions (Node + TypeScript)
+│   └── api/                          # calendly, fireflies, generate-summary, publish-summary, ...
+├── functions/                        # Firebase Cloud Functions
+├── ml/                               # Offline: concept embeddings + PCA projection
 │   └── data/
-│       ├── concept_embeddings.npz  # Pre-computed concept vectors (37 concepts)
-│       └── pca_axes.npz            # PCA projection for 2D layout
-├── firestore.rules
-├── firestore.indexes.json
-├── storage.rules
-└── firebase.json
+│       ├── concept_embeddings.npz
+│       └── pca_axes.npz
+├── index.html                        # Marketing site (Firebase Hosting target: marketing)
+├── article.html / blog.html
+├── firebase.json
+├── firestore.rules / firestore.indexes.json / storage.rules
+└── README.md
 ```
 
 ---
@@ -154,12 +184,13 @@ mindcraft-site/
 | Frontend | React 18 + TypeScript + Vite |
 | Styling | CSS Modules (zero UI libraries) |
 | Routing | React Router v6 |
-| Webhooks | Vercel Serverless Functions (Node.js) |
 | Database | Firebase Firestore (real-time) |
-| Auth | Firebase Authentication (Google + email/password) |
-| File storage | Firebase Storage |
-| AI | Anthropic Claude Haiku (summaries + homework hints) |
-| ML graph | Python + scikit-learn (offline); served via separate REST API |
+| Auth | Firebase Authentication |
+| Hosting | Firebase Hosting (multi-site) |
+| AI — Intake | Google Gemini 1.5 Flash |
+| AI — Summaries | Anthropic Claude (webhook server) |
+| Webhooks | Vercel Serverless Functions |
+| ML graph | Python + scikit-learn (offline) |
 | Booking | Calendly API v2 |
 | Transcription | Fireflies.ai |
 
@@ -167,18 +198,13 @@ mindcraft-site/
 
 ## Getting Started
 
-### Prerequisites
-- Node.js 18+
-- Firebase project with Firestore, Auth, and Storage enabled
-- Ask Akshat for `.env` files (or create from the variables below)
-
 ### Frontend
 
 ```bash
 cd app
 npm install
-npm run dev        # http://localhost:5173
-npm run build      # production build
+npm run dev       # http://localhost:5173
+npm run build     # production build → app/dist/
 ```
 
 **`app/.env.local`**
@@ -189,7 +215,19 @@ VITE_FIREBASE_PROJECT_ID=
 VITE_FIREBASE_STORAGE_BUCKET=
 VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
-VITE_ML_API_URL=   # ML knowledge-graph API base URL
+VITE_ML_API_URL=              # ML knowledge-graph API base URL
+VITE_HOMEWORK_API_URL=        # Homework hint API (Cloud Run)
+VITE_GEMINI_API_KEY=          # Gemini 1.5 Flash — powers the practice intake dialog
+```
+
+### Deploy
+
+```bash
+# Build the app first
+cd app && npm run build && cd ..
+
+# Deploy both hosting targets
+npx firebase-tools@13 deploy --only hosting
 ```
 
 ### Webhook server
@@ -200,20 +238,12 @@ npm install
 vercel deploy --prod
 ```
 
-**Vercel env vars for `mindcraft-webhook`:**
+**Vercel env vars:**
 ```env
-FIREBASE_SERVICE_ACCOUNT={"type":"service_account",...}  # full JSON, one line
+FIREBASE_SERVICE_ACCOUNT={"type":"service_account",...}
 ANTHROPIC_API_KEY=sk-ant-...
 FIREFLIES_API_KEY=...
 ```
-
-### Firestore indexes
-
-```bash
-firebase deploy --only firestore:indexes
-```
-
-Required: `sessions` collection | `studentEmail ASC, scheduledAt DESC`.
 
 ---
 
@@ -222,60 +252,42 @@ Required: `sessions` collection | `studentEmail ASC, scheduledAt DESC`.
 **`users/{uid}`**
 ```
 uid, email, displayName, role ('student' | 'tutor' | 'admin')
-streak, practiceCount
-lastSession { id, subject, date, title, bullets[], tutorName, duration, scheduledAt }
-nextSession  { subject, time, tutor, meetingUrl, scheduledAt }
-calendlyToken, calendlyEmail, calendlyUrl, calendlyWebhookUri  ← tutor only
+lastSession { id, subject, date, title, bullets[], tutorName, duration }
+nextSession  { subject, time, tutor, meetingUrl }
+homework     { assignments: [{ id, title, problems: [{ id, text, done }] }] }
+calendlyToken, calendlyEmail, calendlyUrl   ← tutor only
 ```
 
 **`sessions/{id}`**
 ```
-studentEmail, studentId, tutorId, tutorName, studentName
-subject, status ('scheduled' | 'completed' | 'cancelled')
-scheduledAt (ms), endAt (ms), meetingUrl
-summary { title, bullets[], date, duration, published: true }
-summaryCard { title, topics[], homework[], progress, tutorNote }
-tutorNotes, tutorNotesUrl
+studentEmail, studentId, tutorId, tutorName
+subject, status, scheduledAt, endAt, meetingUrl
+summary { title, bullets[], date, duration, published }
 transcript { meetingId, fullText, sentences[], summary }
-```
-
-**`chats/{chatId}/messages/{messageId}`**
-```
-chatId = [uid1, uid2].sort().join('_')
-senderId, text, fileUrl, fileName, fileType, createdAt
-```
-
-**`events/{autoId}`** — analytics
-```
-userId, type, data {}, page, ts
 ```
 
 ---
 
-## Connecting Third-Party Services
+## Background Agent Prompt (for Codex / offline generation)
 
-**Calendly (per tutor):**
-Tutor dashboard → Connect Calendly → paste Personal Access Token from calendly.com → Integrations → API & Webhooks.
+Paste this to any AI agent to keep expanding the system:
 
-**Fireflies:**
-fireflies.ai → Settings → Integrations → Webhook:
-- URL: `https://mindcraft-webhook.vercel.app/api/fireflies`
-- Event: Transcription Completed
+> You are working on MindCraft — an ACT/SAT/IB math exam prep platform. Stack: React 18 + TypeScript + Vite + Firebase + Gemini API. Mission: students panic before exams because they don't know what they're missing. MindCraft finds the gaps, builds a personalized learning path, and runs a practice loop. Current question bank: 102 questions across 10 concepts × 3 levels. Your job is to expand: (1) Add new concept nodes to conceptMap.ts with prerequisite edges. (2) Add 9–12 questions per new concept to questionBank.ts (4 L1, 4 L2, 3 L3) — real ACT/SAT/IB difficulty, original, with full explanation and 3-step hint ladder. (3) Add ConceptContent entries to conceptContent.ts (keyRules, tips, watchOut, examples). (4) Priority concepts to add: word_problems, percent_ratio, number_properties, function_transformations, statistics_graphs, data_interpretation, complex_numbers. Run `npm run build` from app/ to verify no TypeScript errors.
 
 ---
 
 ## Dev Utilities
 
 ```bash
-# Seed test sessions (dev only)
-curl -X POST https://mindcraft-webhook.vercel.app/api/seed-sessions \
-  -H "Content-Type: application/json" \
-  -d '{"email":"student@example.com","secret":"mindcraft-seed-2026"}'
+# Type-check frontend
+cd app && npx tsc --noEmit
 
-# Type-check everything
-cd app     && npx tsc --noEmit
+# Type-check webhooks
 cd webhook && npx tsc --noEmit
 
-# Deploy Firestore rules
-firebase deploy --only firestore:rules
+# Deploy Firestore rules only
+npx firebase-tools@13 deploy --only firestore:rules
+
+# Deploy everything
+npx firebase-tools@13 deploy --only hosting
 ```
