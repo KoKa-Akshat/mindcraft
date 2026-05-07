@@ -281,9 +281,124 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
     ],
   },
 
+  word_problems: {
+    id: 'word_problems', label: 'Word Problems', emoji: '🧩',
+    tagline: 'Translate the story into equations before touching the answer choices.',
+    keyRules: [
+      'Define the variable first: write exactly what x represents.',
+      'Turn totals into equations: part + part = total.',
+      'Use rate × time = distance and price × quantity = revenue.',
+      'For two unknowns, express one in terms of the other when a total is given.',
+      'Check units: dollars, hours, miles, and items should not get mixed.',
+    ],
+    tips: [
+      'Underline what the question actually asks for before solving.',
+      'If answer choices are numeric, back-solve only after you know the setup.',
+      'For mixture, ticket, and item-count problems, combine a count equation with a value equation.',
+      'When a problem says "more than" or "less than," place the comparison carefully.',
+    ],
+    watchOut: [
+      'ACT trap: solving for the smaller group when the question asks for the larger group.',
+      'ACT trap: charging every item/text/mile when only the extra amount is charged.',
+      'ACT trap: using perimeter when the final question asks for area.',
+    ],
+    formula: 'distance = rate × time; total value = unit value × quantity',
+    examples: [
+      { problem: '37 items cost $344. Mugs are $11, candles are $8. How many mugs?', solution: 'Let m = mugs. 11m + 8(37−m) = 344 → 3m = 48 → m = 16.' },
+      { problem: 'A ride costs $6 plus $2 per mile. Cost for 9 miles?', solution: '6 + 2(9) = 24.' },
+    ],
+    examWeight: '~5–7 ACT questions, often blended with algebra',
+  },
+
+  percent_ratio: {
+    id: 'percent_ratio', label: 'Percents & Ratios', emoji: '%',
+    tagline: 'Percents are multipliers; ratios are scaled parts of the same whole.',
+    keyRules: [
+      'p% means p/100, so 15% = 0.15.',
+      'Percent increase: new = original × (1 + rate).',
+      'Percent decrease: new = original × (1 − rate).',
+      'Ratios scale by multiplying every part by the same factor.',
+      'Part-to-part ratios must be converted to total parts when the total is given.',
+    ],
+    tips: [
+      'For successive discounts, multiply the remaining percents; do not add the discounts.',
+      'For "percent greater than," use 1 + percent as a decimal.',
+      'When two ratios share a variable, scale them until the shared part matches.',
+      'Write ratio labels over every part to avoid swapping numerator and denominator.',
+    ],
+    watchOut: [
+      'ACT trap: a 20% discount followed by 10% off is not a 30% discount.',
+      'ACT trap: "25% greater than x" means 1.25x, not 0.25x.',
+      'ACT trap: using one ratio part as the whole when total parts should be added first.',
+    ],
+    formula: 'new = original × (1 ± rate); part = total × part ratio / total ratio parts',
+    examples: [
+      { problem: 'A $120 item is 10% off, then 20% off.', solution: '120 × 0.90 × 0.80 = 86.40.' },
+      { problem: 'Juniors:seniors = 4:7 and total is 88.', solution: '11 parts = 88, so 1 part = 8. Seniors = 7×8 = 56.' },
+    ],
+    examWeight: '~4–6 ACT questions / common SAT calculator questions',
+  },
+
+  number_properties: {
+    id: 'number_properties', label: 'Number Properties', emoji: '#️⃣',
+    tagline: 'Odd/even, primes, factors, multiples, and divisibility patterns.',
+    keyRules: [
+      'Prime numbers have exactly two positive factors: 1 and themselves.',
+      'Even ± even = even; odd ± odd = even; odd ± even = odd.',
+      'Odd × odd = odd; any product with an even factor is even.',
+      'GCF uses shared prime factors; LCM uses the highest needed prime powers.',
+      'Among any n consecutive integers, one is divisible by n.',
+    ],
+    tips: [
+      'Test odd/even claims with small values like 1, 2, 3, and 4.',
+      'Use prime factorization for must-be-true divisibility questions.',
+      'For consecutive integer sums, the average is the middle value.',
+      'A counterexample is enough to eliminate an "always true" choice.',
+    ],
+    watchOut: [
+      'ACT trap: treating 1 as prime. It is neither prime nor composite.',
+      'ACT trap: assuming n² divisible by 12 means n divisible by 12; n = 6 disproves it.',
+      'ACT trap: forgetting that negative integers can be even, odd, prime-related, or factors in different ways.',
+    ],
+    examples: [
+      { problem: 'LCM of 12 and 18?', solution: '12 = 2²·3, 18 = 2·3², so LCM = 2²·3² = 36.' },
+      { problem: 'Product of 3 consecutive integers is always divisible by?', solution: 'One is even and one is divisible by 3, so the product is divisible by 6.' },
+    ],
+    examWeight: '~2–4 ACT questions / frequent SAT no-calculator logic',
+  },
+
+  function_transformations: {
+    id: 'function_transformations', label: 'Function Transformations', emoji: '🔁',
+    tagline: 'Inside changes move x; outside changes move or scale y.',
+    keyRules: [
+      'f(x) + k shifts up k; f(x) − k shifts down k.',
+      'f(x − h) shifts right h; f(x + h) shifts left h.',
+      '−f(x) reflects across the x-axis; f(−x) reflects across the y-axis.',
+      'a·f(x) vertically stretches by |a| when |a| > 1 and compresses when 0 < |a| < 1.',
+      'Transform points by matching the inside input, then applying the outside output change.',
+    ],
+    tips: [
+      'Separate transformations into inside-the-parentheses and outside-the-function.',
+      'Horizontal shifts look backwards because x must compensate inside the input.',
+      'For transformed points, solve the inside expression equal to the original x-value.',
+      'Apply vertical stretch/reflection before vertical shift when transforming y-values.',
+    ],
+    watchOut: [
+      'ACT trap: f(x−3) moves right 3, not left 3.',
+      'ACT trap: −f(x) and f(−x) are different reflections.',
+      'ACT trap: transforming only the graph shape but forgetting to transform the vertex or listed point.',
+    ],
+    formula: 'g(x) = a·f(x − h) + k moves points by x → x+h and y → ay+k',
+    examples: [
+      { problem: 'Point (−1,4) on f. Find point on −2f(x+3)+1.', solution: 'x+3 = −1 → x = −4; y = −2(4)+1 = −7. New point: (−4,−7).' },
+      { problem: 'Transform y = |x| to y = −|x−4|+6.', solution: 'Right 4, reflect over x-axis, up 6.' },
+    ],
+    examWeight: '~2–3 ACT questions / core SAT functions skill',
+  },
+
   descriptive_statistics: {
     id: 'descriptive_statistics', label: 'Descriptive Stats', emoji: '📊',
-    tagline: 'Mean, median, mode, range, standard deviation — know what each measures.',
+    tagline: 'Mean, median, range, and standard deviation tell different stories about the same data.',
     keyRules: [
       'Mean: sum of all values divided by the count.',
       'Median: middle value when sorted. For even count: average of two middle values.',
@@ -295,14 +410,18 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
       'Mean is affected by outliers; median is resistant to outliers.',
       'If all values increase by k: mean and median increase by k, SD stays the same.',
       'If all values multiply by k: mean, median, AND SD all multiply by k.',
+      'Work backward from mean by using total sum = mean × count.',
     ],
     watchOut: [
-      '⚠️ Median for even-numbered sets: average the TWO middle values.',
-      '⚠️ Adding a constant shifts center measures but does NOT change SD or range.',
+      'ACT trap: finding the median before sorting the data.',
+      'ACT trap: for even-numbered sets, forgetting to average the two middle values.',
+      'ACT trap: adding a constant shifts center measures but does not change SD or range.',
     ],
     examples: [
       { problem: 'Find mean and median of {2, 5, 5, 8, 10}', solution: 'Mean = 30/5 = 6. Median = 5 (middle value).' },
+      { problem: 'Mean of 6 numbers is 15 and five sum to 74. Missing value?', solution: 'Total must be 6×15 = 90. Missing value = 90−74 = 16.' },
     ],
+    examWeight: '~3–5 ACT questions / often appears in chart and table form',
   },
 }
 

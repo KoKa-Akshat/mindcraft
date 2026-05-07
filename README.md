@@ -33,10 +33,10 @@ MindCraft runs a four-step loop:
 ### Concept Explanation Cards (Explore Phase)
 Before every practice session, students see a rich ACT-prep-style concept card with:
 - Key rules, pro tips, watch-out mistakes, worked examples, exam weight
-- Covers 12 concepts: linear equations, inequalities, absolute value, quadratic equations, factoring, systems, functions, exponents, polynomials, rational expressions, probability, descriptive stats
+- Covers 16 concepts: linear equations, inequalities, absolute value, quadratic equations, factoring, systems, functions, function transformations, exponents, polynomials, rational expressions, word problems, percents/ratios, number properties, probability, descriptive stats
 
-### Expanded Question Bank (102 questions)
-Duolingo-style leveled practice across **10 concepts**:
+### Expanded Question Bank (155 questions)
+Duolingo-style leveled practice across **15 concepts**:
 
 | Concept | L1 | L2 | L3 |
 |---|---|---|---|
@@ -49,9 +49,20 @@ Duolingo-style leveled practice across **10 concepts**:
 | Exponent Rules | 4 | 4 | 3 |
 | Polynomials | 4 | 3 | 3 |
 | Rational Expressions | 3 | 3 | 3 |
+| Function Transformations | 3 | 3 | 3 |
+| Number Properties | 3 | 3 | 3 |
+| Word Problems | 4 | 4 | 4 |
+| Percents & Ratios | 4 | 4 | 4 |
+| Descriptive Statistics | 3 | 3 | 3 |
 | Probability | 4 | 4 | 3 |
 
 Levels: **L1 Foundation** (+10 XP) · **L2 Applied** (+20 XP) · **L3 Exam Ready** (+35 XP)
+
+### Question Generation Agent
+- `app/scripts/generateQuestions.mjs` uses Gemini 1.5 Flash to draft 5 original questions for a concept and level
+- Run from `app/`: `GEMINI_API_KEY=... npm run generate:questions -- linear_equations 2`
+- Prints validated JSON matching the `Question` interface, ready to review and paste into `questionBank.ts`
+- Prompt enforces original questions, exactly 4 choices, one correct answer, full explanations, and progressive 3-step hints
 
 ### Marketing Site Overhaul
 - Hero: *"Math exam coming up? No worries, we got you."*
@@ -122,7 +133,7 @@ LearningGPS         → cross-references live mastery → ranks prerequisite gap
 
 ### Concept Ontology (conceptMap.ts)
 
-40+ node prerequisite graph. Each concept maps to the ML IDs it directly requires. BFS from any target concept surfaces the full prerequisite chain, ranked by student mastery. Used by LearningGPS and the Gemini intake to generate personalized study paths.
+50+ node prerequisite graph. Each concept maps to the ML IDs it directly requires. BFS from any target concept surfaces the full prerequisite chain, ranked by student mastery. Used by LearningGPS and the Gemini intake to generate personalized study paths. New ACT-critical nodes include word problems, percents/ratios, number properties, inequalities on graphs, function transformations, complex numbers, statistics graphs, and data interpretation.
 
 ---
 
@@ -136,9 +147,9 @@ mindcraft-site/
 │       ├── firebase.ts
 │       ├── global.css                # CSS variables + reset (dark teal theme)
 │       ├── lib/
-│       │   ├── conceptMap.ts         # 40+ node ontology + PREREQUISITES graph
+│       │   ├── conceptMap.ts         # 50+ node ontology + PREREQUISITES graph
 │       │   ├── conceptContent.ts     # Rich concept cards (rules, tips, examples)
-│       │   ├── questionBank.ts       # 102 curated MCQ questions × 10 concepts × 3 levels
+│       │   ├── questionBank.ts       # 155 curated MCQ questions × 15 concepts × 3 levels
 │       │   ├── geminiIntake.ts       # Gemini 1.5 Flash — personalized concept recommendations
 │       │   ├── mlApi.ts              # ML constellation API client
 │       │   └── logEvent.ts           # Firestore analytics logger
@@ -205,6 +216,7 @@ cd app
 npm install
 npm run dev       # http://localhost:5173
 npm run build     # production build → app/dist/
+npm run generate:questions -- linear_equations 2
 ```
 
 **`app/.env.local`**
