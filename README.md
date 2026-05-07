@@ -64,6 +64,13 @@ Levels: **L1 Foundation** (+10 XP) · **L2 Applied** (+20 XP) · **L3 Exam Ready
 - Prints validated JSON matching the `Question` interface, ready to review and paste into `questionBank.ts`
 - Prompt enforces original questions, exactly 4 choices, one correct answer, full explanations, and progressive 3-step hints
 
+### Visual Explanation Agent
+- `app/scripts/generateManimScene.mjs` uses Gemini 1.5 Flash to draft Manim Community Edition scenes
+- Manim is the Python animation library created by 3Blue1Brown for math visuals
+- Run from `app/`: `GEMINI_API_KEY=... npm run generate:visual -- quadratic_equations "vertex form and axis of symmetry" > visual.py`
+- Render locally with Manim: `manim -pql visual.py MindCraftVisual`
+- The prompt blocks external files/network calls and asks for short, student-facing visual explanations
+
 ### Marketing Site Overhaul
 - Hero: *"Math exam coming up? No worries, we got you."*
 - Subjects reordered to lead with exam-critical areas (Math Exam Prep, ACT/SAT, Algebra, Calculus, Homework Rescue, Vibecoding)
@@ -217,6 +224,7 @@ npm install
 npm run dev       # http://localhost:5173
 npm run build     # production build → app/dist/
 npm run generate:questions -- linear_equations 2
+npm run generate:visual -- quadratic_equations "vertex form"
 ```
 
 **`app/.env.local`**
@@ -230,7 +238,10 @@ VITE_FIREBASE_APP_ID=
 VITE_ML_API_URL=              # ML knowledge-graph API base URL
 VITE_HOMEWORK_API_URL=        # Homework hint API (Cloud Run)
 VITE_GEMINI_API_KEY=          # Gemini 1.5 Flash — powers the practice intake dialog
+GEMINI_API_KEY=               # Local scripts only: question + Manim scene generation
 ```
+
+Do not commit `.env.local` or API keys. If a key appears in a screenshot, chat, commit, or issue, rotate it in Google AI Studio before using it again.
 
 ### Deploy
 
