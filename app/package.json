@@ -7,16 +7,23 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "audit:practice": "node scripts/auditPracticeSystem.mjs",
     "generate:questions": "node scripts/generateQuestions.mjs",
-    "generate:visual": "node scripts/generateManimScene.mjs"
+    "generate:visual": "node scripts/generateManimScene.mjs",
+    "agent:questions": "node scripts/questionAgent.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@types/three": "^0.184.1",
     "firebase": "^10.12.0",
     "firebase-tools": "^13.35.1",
+    "framer-motion": "^12.38.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.0"
+    "react-router-dom": "^6.24.0",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

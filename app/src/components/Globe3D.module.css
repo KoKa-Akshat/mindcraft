@@ -1,0 +1,117 @@
+.wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Main sphere ── */
+.sphere {
+  width: 182px;
+  height: 182px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 10deg,
+    #FF6B6B  0deg  85deg,
+    #C4F547  85deg 172deg,
+    #4A7BD9  172deg 258deg,
+    #9B45C8  258deg 360deg
+  );
+  position: relative;
+  box-shadow:
+    0 0 55px rgba(100, 195, 120, 0.22),
+    0 22px 52px rgba(0, 0, 0, 0.55),
+    inset 0 -18px 38px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+/* Glass sheen */
+.glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, rgba(255,255,255,0.30) 0%, transparent 52%);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+/* Bottom shadow */
+.shadowInner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 68% 74%, rgba(0,0,0,0.32) 0%, transparent 48%);
+}
+
+/* Grid lines (inside sphere, rotates with it) */
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Orbital rings ── */
+.orbit1 {
+  position: absolute;
+  width: 340px;
+  height: 110px;
+  transform: rotateX(70deg);
+  pointer-events: none;
+}
+
+.orbit2 {
+  position: absolute;
+  width: 300px;
+  height: 120px;
+  transform: rotateX(55deg) rotateZ(38deg);
+  pointer-events: none;
+}
+
+/* ── Labels ── */
+.labelClvr {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 8.5px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.36);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-align: right;
+  pointer-events: none;
+}
+
+/* ── API badge ── */
+.apiBadge {
+  position: absolute;
+  bottom: 10px;
+  right: 6px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #C4F547, #8dba16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.apiRing {
+  position: absolute;
+  inset: -6px;
+  border: 1.5px dashed rgba(10, 28, 35, 0.38);
+  border-radius: 50%;
+}
+
+.apiText {
+  font-size: 9.5px;
+  font-weight: 900;
+  color: #081a22;
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}

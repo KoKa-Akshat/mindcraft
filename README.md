@@ -1,4 +1,4 @@
-# MindCraft
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq# MindCraft
 
 **Math exam coming up? No worries, we got you.**
 
@@ -63,6 +63,8 @@ Levels: **L1 Foundation** (+10 XP) · **L2 Applied** (+20 XP) · **L3 Exam Ready
 - Run from `app/`: `GEMINI_API_KEY=... npm run generate:questions -- linear_equations 2`
 - Prints validated JSON matching the `Question` interface, ready to review and paste into `questionBank.ts`
 - Prompt enforces original questions, exactly 4 choices, one correct answer, full explanations, and progressive 3-step hints
+- `.github/workflows/question-agent.yml` runs every 30 minutes in GitHub Actions when `GEMINI_API_KEY` is saved as a repo secret
+- The scheduled agent stores review batches in `app/content/generatedQuestions.json` with `status: "needs_review"` so AI questions do not go live before a human checks the math
 
 ### Visual Explanation Agent
 - `app/scripts/generateManimScene.mjs` uses Gemini 1.5 Flash to draft Manim Community Edition scenes
@@ -70,6 +72,14 @@ Levels: **L1 Foundation** (+10 XP) · **L2 Applied** (+20 XP) · **L3 Exam Ready
 - Run from `app/`: `GEMINI_API_KEY=... npm run generate:visual -- quadratic_equations "vertex form and axis of symmetry" > visual.py`
 - Render locally with Manim: `manim -pql visual.py MindCraftVisual`
 - The prompt blocks external files/network calls and asks for short, student-facing visual explanations
+
+### Safe Research Agent
+- `webhook/api/research-agent.ts` runs server-side on Vercel every 30 minutes
+- Uses Google Programmable Search for public source discovery, including general web, Reddit, Quora, and forum-style queries
+- Uses Gemini server-side to summarize patterns into pain points, exam signals, concept signals, student language, product ideas, and safety notes
+- Stores structured summaries in Firestore `researchBatches`; raw forum pages, personal data, and long copied posts are not stored
+- Requires server env vars: `GOOGLE_SEARCH_API_KEY`, `GOOGLE_SEARCH_ENGINE_ID`, `GEMINI_API_KEY`, `FIREBASE_SERVICE_ACCOUNT`
+- Optional but recommended: set `CRON_SECRET` so scheduled/manual calls require bearer-token authorization
 
 ### Marketing Site Overhaul
 - Hero: *"Math exam coming up? No worries, we got you."*
@@ -266,6 +276,10 @@ vercel deploy --prod
 FIREBASE_SERVICE_ACCOUNT={"type":"service_account",...}
 ANTHROPIC_API_KEY=sk-ant-...
 FIREFLIES_API_KEY=...
+GEMINI_API_KEY=...
+GOOGLE_SEARCH_API_KEY=...
+GOOGLE_SEARCH_ENGINE_ID=...
+CRON_SECRET=...
 ```
 
 ---
@@ -279,6 +293,16 @@ lastSession { id, subject, date, title, bullets[], tutorName, duration }
 nextSession  { subject, time, tutor, meetingUrl }
 homework     { assignments: [{ id, title, problems: [{ id, text, done }] }] }
 calendlyToken, calendlyEmail, calendlyUrl   ← tutor only
+```
+
+**`researchBatches/{batchId}`**
+```
+id, createdAt, query, sourceKinds[], sourceCount
+sources[] { title, url, host, kind, snippetPreview }
+insights {
+  painPoints[], examSignals[], conceptSignals[],
+  studentLanguage[], productIdeas[], safetyNotes[]
+}
 ```
 
 **`sessions/{id}`**

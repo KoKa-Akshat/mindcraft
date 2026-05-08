@@ -1,13 +1,13 @@
 export interface Question {
-  id:           string
-  conceptId:    string
-  level:        1 | 2 | 3
-  question:     string
-  choices:      [string, string, string, string]
-  correctIndex: 0 | 1 | 2 | 3
-  explanation:  string
-  hints:        [string, string, string]
-  examTag?:     string
+  id: string
+  conceptId: string
+  level: 1 | 2 | 3
+  question: string
+  choices: string[]
+  correctIndex: number
+  explanation: string
+  hints: string[]
+  examTag?: 'ACT' | 'SAT' | 'IB' | 'AP'
 }
 
 const Q: Question[] = [
@@ -361,28 +361,28 @@ const Q: Question[] = [
   // ── BASIC PROBABILITY ────────────────────────────────────────────────────────
 
   // L1
-  { id:'pr-1-1', conceptId:'basic_probability', level:1,
+  { id:'bp-1-1', conceptId:'basic_probability', level:1,
     question:'A bag has 3 red and 7 blue marbles. What is the probability of drawing a red marble?',
     choices:['3/10','3/7','7/10','1/3'],
     correctIndex:0,
     explanation:'P = favorable / total = 3 / (3+7) = 3/10.',
     hints:['Count total marbles first','Total = red + blue = 10','P(red) = red count / total'] },
 
-  { id:'pr-1-2', conceptId:'basic_probability', level:1,
+  { id:'bp-1-2', conceptId:'basic_probability', level:1,
     question:'A fair die is rolled. What is the probability of rolling an even number?',
     choices:['1/6','1/3','1/2','2/3'],
     correctIndex:2,
     explanation:'Even numbers on a die: {2, 4, 6} — 3 out of 6. P = 3/6 = 1/2.',
     hints:['List all outcomes: {1, 2, 3, 4, 5, 6}','Which of those are even?','3 favorable out of 6 total'] },
 
-  { id:'pr-1-3', conceptId:'basic_probability', level:1,
+  { id:'bp-1-3', conceptId:'basic_probability', level:1,
     question:'P(rain) = 0.3. What is P(no rain)?',
     choices:['0.03','0.3','0.7','1.3'],
     correctIndex:2,
     explanation:'Complement rule: P(not A) = 1 − P(A). So P(no rain) = 1 − 0.3 = 0.7.',
     hints:['P(event) + P(not event) = 1','Use the complement rule','1 − 0.3 = ?'] },
 
-  { id:'pr-1-4', conceptId:'basic_probability', level:1,
+  { id:'bp-1-4', conceptId:'basic_probability', level:1,
     question:'A spinner has 8 equal sections numbered 1–8. What is the probability of landing on a number greater than 5?',
     choices:['3/8','4/8','5/8','3/5'],
     correctIndex:0,
@@ -390,7 +390,7 @@ const Q: Question[] = [
     hints:['List numbers greater than 5','Count them and divide by total sections','Favorable: {6, 7, 8}'] },
 
   // L2
-  { id:'pr-2-1', conceptId:'basic_probability', level:2,
+  { id:'bp-2-1', conceptId:'basic_probability', level:2,
     question:'A card is drawn from a 52-card deck. What is P(king OR heart)?',
     choices:['13/52','16/52','17/52','4/52'],
     correctIndex:1,
@@ -398,21 +398,21 @@ const Q: Question[] = [
     hints:['Use the addition rule: P(A or B) = P(A) + P(B) − P(A and B)','P(king) = 4/52 and P(heart) = 13/52','Subtract 1/52 for the king of hearts — it was counted twice'],
     examTag:'SAT' },
 
-  { id:'pr-2-2', conceptId:'basic_probability', level:2,
+  { id:'bp-2-2', conceptId:'basic_probability', level:2,
     question:'You flip a fair coin twice. What is the probability of exactly one head?',
     choices:['1/4','1/2','3/4','1'],
     correctIndex:1,
     explanation:'Sample space: {HH, HT, TH, TT}. Exactly one head: {HT, TH} = 2/4 = 1/2.',
     hints:['Write all possible outcomes for 2 flips','Sample space: {HH, HT, TH, TT}','Count outcomes with exactly one H'] },
 
-  { id:'pr-2-3', conceptId:'basic_probability', level:2,
+  { id:'bp-2-3', conceptId:'basic_probability', level:2,
     question:'Events A and B are independent. P(A) = 0.4 and P(B) = 0.5. What is P(A and B)?',
     choices:['0.1','0.2','0.45','0.9'],
     correctIndex:1,
     explanation:'For independent events: P(A and B) = P(A) × P(B) = 0.4 × 0.5 = 0.2.',
     hints:['Multiplication rule for independent events','P(A and B) = P(A) × P(B)','0.4 × 0.5 = ?'] },
 
-  { id:'pr-2-4', conceptId:'basic_probability', level:2,
+  { id:'bp-2-4', conceptId:'basic_probability', level:2,
     question:'In a class of 30, 18 play soccer and 12 play basketball. 6 play both. What is P(a student plays neither)?',
     choices:['1/5','1/6','1/3','2/5'],
     correctIndex:0,
@@ -421,7 +421,7 @@ const Q: Question[] = [
     examTag:'IB' },
 
   // L3
-  { id:'pr-3-1', conceptId:'basic_probability', level:3,
+  { id:'bp-3-1', conceptId:'basic_probability', level:3,
     question:'A box has 5 red and 3 blue balls. Two are drawn without replacement. What is P(both red)?',
     choices:['25/64','5/14','5/16','10/28'],
     correctIndex:1,
@@ -429,14 +429,14 @@ const Q: Question[] = [
     hints:['This is sampling without replacement — the second draw depends on the first','P(first red) = 5/8','After one red is removed: 4 red remain out of 7 total'],
     examTag:'IB' },
 
-  { id:'pr-3-2', conceptId:'basic_probability', level:3,
+  { id:'bp-3-2', conceptId:'basic_probability', level:3,
     question:'A shooter makes 60% of free throws (independently). What is the probability of making all 3 in a row?',
     choices:['0.06','0.216','0.36','0.6'],
     correctIndex:1,
     explanation:'P(all 3) = 0.6 × 0.6 × 0.6 = 0.6³ = 0.216.',
     hints:['Since each shot is independent, multiply','P(make) = 0.6 for each shot','0.6³ = ?'] },
 
-  { id:'pr-3-3', conceptId:'basic_probability', level:3,
+  { id:'bp-3-3', conceptId:'basic_probability', level:3,
     question:'A and B are mutually exclusive. P(A) = 0.3 and P(A or B) = 0.7. What is P(B)?',
     choices:['0.2','0.4','0.5','0.6'],
     correctIndex:1,
@@ -1272,6 +1272,561 @@ const Q: Question[] = [
     explanation:'The x − 5 inside shifts the graph right 5, so x-coordinate 3 becomes 8. The output y = −2 is multiplied by 2 and then increased by 7: 2(−2) + 7 = 3. Vertex is (8, 3).',
     hints:['Transform the x-coordinate from the inside shift','x − 5 moves right 5','Transform the y-coordinate with 2y + 7'],
     examTag:'IB' },
+
+  // ── LINEAR EQUATIONS – extra questions ──────────────────────────────────────
+
+  // L1 extras
+  { id:'le-1-5', conceptId:'linear_equations', level:1,
+    question:'Solve: 7x = 35',
+    choices:['x = 3','x = 4','x = 5','x = 7'],
+    correctIndex:2,
+    explanation:'Divide both sides by 7: x = 35 ÷ 7 = 5.',
+    hints:['Divide both sides by 7','35 ÷ 7 = ?','x = 5'] },
+
+  { id:'le-1-6', conceptId:'linear_equations', level:1,
+    question:'Solve: 2x + 5 = 13',
+    choices:['x = 3','x = 4','x = 8','x = 9'],
+    correctIndex:1,
+    explanation:'Subtract 5: 2x = 8. Divide by 2: x = 4.',
+    hints:['Subtract 5 from both sides','2x = 8','Divide both sides by 2'] },
+
+  { id:'le-1-7', conceptId:'linear_equations', level:1,
+    question:'If x − 8 = −3, what is x?',
+    choices:['x = −5','x = −11','x = 5','x = 11'],
+    correctIndex:2,
+    explanation:'Add 8 to both sides: x = −3 + 8 = 5.',
+    hints:['Add 8 to both sides','x = −3 + 8','x = 5'] },
+
+  { id:'le-1-8', conceptId:'linear_equations', level:1,
+    question:'What is x if 5x / 2 = 15?',
+    choices:['x = 3','x = 6','x = 10','x = 30'],
+    correctIndex:1,
+    explanation:'Multiply both sides by 2: 5x = 30. Divide by 5: x = 6.',
+    hints:['Multiply both sides by 2 to clear the fraction','5x = 30','Divide by 5'] },
+
+  { id:'le-1-9', conceptId:'linear_equations', level:1,
+    question:'Solve: 3(x + 4) = 18',
+    choices:['x = 2','x = 6','x = 10','x = 14'],
+    correctIndex:0,
+    explanation:'Divide both sides by 3: x + 4 = 6. Subtract 4: x = 2.',
+    hints:['Divide both sides by 3 first, or distribute','x + 4 = 6','Subtract 4'] },
+
+  { id:'le-1-10', conceptId:'linear_equations', level:1,
+    question:'Solve: 6 − x = 10',
+    choices:['x = −4','x = 4','x = 16','x = −16'],
+    correctIndex:0,
+    explanation:'Subtract 6: −x = 4. Multiply by −1: x = −4.',
+    hints:['Subtract 6 from both sides','−x = 4','Multiply both sides by −1'] },
+
+  // L2 extras
+  { id:'le-2-5', conceptId:'linear_equations', level:2,
+    question:'Solve: 4(x − 2) + 3x = 20',
+    choices:['x = 2','x = 4','x = 6','x = 8'],
+    correctIndex:1,
+    explanation:'Expand: 4x − 8 + 3x = 20 → 7x = 28 → x = 4.',
+    hints:['Distribute the 4 first','7x − 8 = 20 → 7x = 28','Divide by 7'] },
+
+  { id:'le-2-6', conceptId:'linear_equations', level:2,
+    question:'Solve: (x + 3) / 2 = (2x − 1) / 3',
+    choices:['x = 7','x = 9','x = 11','x = 13'],
+    correctIndex:2,
+    explanation:'Cross multiply: 3(x+3) = 2(2x−1) → 3x+9 = 4x−2 → x = 11.',
+    hints:['Multiply both sides by 6 (LCM of 2 and 3)','3(x+3) = 2(2x−1)','Expand and solve for x'] },
+
+  { id:'le-2-7', conceptId:'linear_equations', level:2,
+    question:'A student earns $8/hr tutoring plus a $12 registration bonus. If they earned $60 total, how many hours did they tutor?',
+    choices:['4','5','6','7'],
+    correctIndex:2,
+    explanation:'8h + 12 = 60 → 8h = 48 → h = 6.',
+    hints:['Write: 8h + 12 = 60','Subtract 12 from both sides','Divide by 8'],
+    examTag:'ACT' },
+
+  { id:'le-2-8', conceptId:'linear_equations', level:2,
+    question:'If 0.5x + 2.5 = 7, what is x?',
+    choices:['x = 4','x = 7','x = 9','x = 13'],
+    correctIndex:2,
+    explanation:'Subtract 2.5: 0.5x = 4.5. Divide by 0.5 (or multiply by 2): x = 9.',
+    hints:['Subtract 2.5 from both sides','0.5x = 4.5','Divide by 0.5'] },
+
+  { id:'le-2-9', conceptId:'linear_equations', level:2,
+    question:'Solve for y: 2x − 3y = 12, when x = 3',
+    choices:['y = −2','y = 2','y = 6','y = −6'],
+    correctIndex:0,
+    explanation:'Substitute x = 3: 6 − 3y = 12 → −3y = 6 → y = −2.',
+    hints:['Substitute x = 3','6 − 3y = 12','Subtract 6, then divide by −3'] },
+
+  { id:'le-2-10', conceptId:'linear_equations', level:2,
+    question:'The larger of two numbers is 7 more than 3 times the smaller. Their sum is 51. What is the larger number?',
+    choices:['33','40','44','47'],
+    correctIndex:1,
+    explanation:'Let smaller = x, larger = 3x+7. x + 3x+7 = 51 → 4x = 44 → x = 11. Larger = 3(11)+7 = 40.',
+    hints:['Let smaller = x and larger = 3x+7','x + (3x+7) = 51 → 4x = 44','x = 11, larger = 40'],
+    examTag:'SAT' },
+
+  // L3 extras
+  { id:'le-3-4', conceptId:'linear_equations', level:3,
+    question:'f(x) = 3x + b passes through (2, 11). What is f(5)?',
+    choices:['14','18','20','23'],
+    correctIndex:2,
+    explanation:'f(2) = 6 + b = 11 → b = 5. f(5) = 15 + 5 = 20.',
+    hints:['Use (2,11) to find b: 3(2)+b = 11','b = 5','f(5) = 3(5)+5 = 20'],
+    examTag:'SAT' },
+
+  { id:'le-3-5', conceptId:'linear_equations', level:3,
+    question:'Two cars start together and travel in opposite directions at 50 mph and 65 mph. How many hours until they are 230 miles apart?',
+    choices:['1.5','2','2.5','3'],
+    correctIndex:1,
+    explanation:'Combined rate = 115 mph. Time = 230 ÷ 115 = 2 hours.',
+    hints:['Opposite directions means speeds add','Total rate = 50+65 = 115 mph','115t = 230'],
+    examTag:'ACT' },
+
+  { id:'le-3-6', conceptId:'linear_equations', level:3,
+    question:'John is 5 years older than Mary. In 3 years John will be twice Mary\'s age. How old is Mary now?',
+    choices:['2','4','7','10'],
+    correctIndex:0,
+    explanation:'J = M+5; J+3 = 2(M+3) → M+8 = 2M+6 → M = 2.',
+    hints:['Write two equations: J = M+5 and J+3 = 2(M+3)','Substitute: M+8 = 2M+6','Solve for M'],
+    examTag:'ACT' },
+
+  { id:'le-3-7', conceptId:'linear_equations', level:3,
+    question:'Solve: (x + 1)/(x − 1) = 4/3  for x ≠ 1',
+    choices:['x = 5','x = 7','x = 9','x = 11'],
+    correctIndex:1,
+    explanation:'Cross multiply: 3(x+1) = 4(x−1) → 3x+3 = 4x−4 → x = 7.',
+    hints:['Cross multiply: 3(x+1) = 4(x−1)','Expand both sides','Collect x terms'],
+    examTag:'IB' },
+
+  { id:'le-3-8', conceptId:'linear_equations', level:3,
+    question:'A retailer marks up cost by 30%. If the selling price is $91, what is the cost?',
+    choices:['$60','$65','$70','$75'],
+    correctIndex:2,
+    explanation:'1.30 × cost = 91 → cost = 91 ÷ 1.30 = 70.',
+    hints:['Selling price = 1.30 × cost','1.30c = 91','Divide by 1.30'],
+    examTag:'SAT' },
+
+  { id:'le-3-9', conceptId:'linear_equations', level:3,
+    question:'If 2a − 3b = 5 and a + b = 10, what is 3a − 2b?',
+    choices:['13','15','17','20'],
+    correctIndex:1,
+    explanation:'From a+b=10: a=10−b. Substitute: 20−5b=5→b=3, a=7. 3(7)−2(3)=15.',
+    hints:['From a+b=10, express a in terms of b','Substitute into 2a−3b=5 to find b and a','Compute 3a−2b'],
+    examTag:'SAT' },
+
+  // ── QUADRATIC EQUATIONS – extra questions ────────────────────────────────────
+
+  // L1 extras
+  { id:'qe-1-5', conceptId:'quadratic_equations', level:1,
+    question:'What are the solutions of x² − 5x = 0?',
+    choices:['x = 0 only','x = 5 only','x = 0 or x = 5','x = ±5'],
+    correctIndex:2,
+    explanation:'Factor: x(x−5) = 0 → x = 0 or x = 5.',
+    hints:['Factor out x from every term','x(x − 5) = 0','Set each factor equal to zero'] },
+
+  { id:'qe-1-6', conceptId:'quadratic_equations', level:1,
+    question:'What is x if x² − 4 = 12?',
+    choices:['x = 2','x = ±4','x = ±8','x = 16'],
+    correctIndex:1,
+    explanation:'Add 4: x² = 16. Square roots: x = ±4.',
+    hints:['Add 4 to both sides','x² = 16','Take the square root — include ±'] },
+
+  { id:'qe-1-7', conceptId:'quadratic_equations', level:1,
+    question:'What are the roots of (x − 3)(x + 7) = 0?',
+    choices:['x = −3 and x = 7','x = 3 and x = −7','x = 3 and x = 7','x = −3 and x = −7'],
+    correctIndex:1,
+    explanation:'x − 3 = 0 → x = 3; x + 7 = 0 → x = −7.',
+    hints:['Set each factor equal to zero','x − 3 = 0 gives x = 3','x + 7 = 0 gives x = −7'] },
+
+  { id:'qe-1-8', conceptId:'quadratic_equations', level:1,
+    question:'Factor: x² − 7x + 12',
+    choices:['(x − 3)(x − 4)','(x − 2)(x − 6)','(x + 3)(x + 4)','(x − 1)(x − 12)'],
+    correctIndex:0,
+    explanation:'Find two numbers: product 12, sum −7 → −3 and −4. So (x−3)(x−4).',
+    hints:['Find two numbers with product 12 and sum −7','Try −3 and −4: (−3)×(−4)=12, (−3)+(−4)=−7','(x−3)(x−4)'] },
+
+  { id:'qe-1-9', conceptId:'quadratic_equations', level:1,
+    question:'What is the x-coordinate of the vertex of y = x² − 6x + 1?',
+    choices:['x = 1','x = 3','x = 6','x = −3'],
+    correctIndex:1,
+    explanation:'Vertex x = −b/(2a) = −(−6)/(2×1) = 3.',
+    hints:['Use vertex formula x = −b/(2a)','a = 1, b = −6','−(−6)/(2) = 3'],
+    examTag:'SAT' },
+
+  { id:'qe-1-10', conceptId:'quadratic_equations', level:1,
+    question:'Which of the following is a factor of x² + 5x + 6?',
+    choices:['(x − 2)','(x + 1)','(x + 2)','(x − 6)'],
+    correctIndex:2,
+    explanation:'x² + 5x + 6 = (x+2)(x+3), so (x+2) is a factor.',
+    hints:['Find two numbers with product 6 and sum 5','2 and 3 work: 2×3=6, 2+3=5','(x+2)(x+3)'] },
+
+  // L2 extras
+  { id:'qe-2-5', conceptId:'quadratic_equations', level:2,
+    question:'Use the quadratic formula to solve 2x² − 5x − 3 = 0.',
+    choices:['x = 3 or x = −1','x = 3 or x = −½','x = 1 or x = −3/2','x = −3 or x = ½'],
+    correctIndex:1,
+    explanation:'Discriminant = 25+24 = 49. x = (5±7)/4 → x = 3 or x = −½.',
+    hints:['a=2, b=−5, c=−3. Discriminant = b²−4ac = 49','√49 = 7','x = (5+7)/4 = 3 or x = (5−7)/4 = −½'],
+    examTag:'SAT' },
+
+  { id:'qe-2-6', conceptId:'quadratic_equations', level:2,
+    question:'What is the sum of the roots of x² + 8x + 15 = 0?',
+    choices:['−15','−8','8','15'],
+    correctIndex:1,
+    explanation:'Roots are −3 and −5 (from (x+3)(x+5)=0). Sum = −3+(−5) = −8. Or use −b/a = −8.',
+    hints:['Factor: (x+3)(x+5) = 0','Roots are −3 and −5','Sum = −3 + (−5) = −8'] },
+
+  { id:'qe-2-7', conceptId:'quadratic_equations', level:2,
+    question:'A ball follows h = −16t² + 80t + 6. At what time (seconds) does it reach maximum height?',
+    choices:['t = 2','t = 2.5','t = 3','t = 4'],
+    correctIndex:1,
+    explanation:'Max at vertex: t = −b/(2a) = −80/(−32) = 2.5 s.',
+    hints:['Maximum occurs at the vertex','t = −b/(2a) with a=−16, b=80','−80/(2×−16) = 2.5'],
+    examTag:'ACT' },
+
+  { id:'qe-2-8', conceptId:'quadratic_equations', level:2,
+    question:'What must be added to x² − 6x to make it a perfect square trinomial?',
+    choices:['3','9','−9','36'],
+    correctIndex:1,
+    explanation:'Take half of −6 and square: (−3)² = 9. Then x²−6x+9 = (x−3)².',
+    hints:['Take half the coefficient of x: −6/2 = −3','Square it: (−3)² = 9','x²−6x+9 = (x−3)²'] },
+
+  { id:'qe-2-9', conceptId:'quadratic_equations', level:2,
+    question:'One root of x² + bx + 15 = 0 is 3. What is the other root?',
+    choices:['3','5','−5','−3'],
+    correctIndex:1,
+    explanation:'Product of roots = c/a = 15. Other root = 15 ÷ 3 = 5.',
+    hints:['For a monic quadratic, product of roots = constant term','Product = 15','Other root = 15 ÷ 3 = 5'] },
+
+  { id:'qe-2-10', conceptId:'quadratic_equations', level:2,
+    question:'The discriminant of 3x² − 4x + 2 = 0 tells us there are:',
+    choices:['Two distinct real roots','One repeated real root','No real roots','Two irrational roots'],
+    correctIndex:2,
+    explanation:'b²−4ac = 16−24 = −8 < 0. Negative discriminant means no real roots.',
+    hints:['Discriminant = b²−4ac with a=3, b=−4, c=2','(−4)²−4(3)(2) = 16−24 = −8','Negative → no real roots'],
+    examTag:'IB' },
+
+  // L3 extras
+  { id:'qe-3-4', conceptId:'quadratic_equations', level:3,
+    question:'A rectangular garden has area 48 m² and length 2 m more than its width. What is the perimeter?',
+    choices:['22 m','26 m','28 m','32 m'],
+    correctIndex:2,
+    explanation:'w(w+2)=48 → w²+2w−48=0 → (w+8)(w−6)=0 → w=6, l=8. Perimeter=2(14)=28.',
+    hints:['w(w+2) = 48 → w²+2w−48 = 0','Factor: (w+8)(w−6) = 0 → w = 6','Perimeter = 2(l+w) = 2(14)'],
+    examTag:'ACT' },
+
+  { id:'qe-3-5', conceptId:'quadratic_equations', level:3,
+    question:'For x² + 4x − 21 = 0 with solutions p and q, find p² + q².',
+    choices:['37','46','58','74'],
+    correctIndex:2,
+    explanation:'p+q = −4, pq = −21 (Vieta\'s). p²+q² = (p+q)²−2pq = 16+42 = 58.',
+    hints:['By Vieta\'s: p+q = −4 and pq = −21','p²+q² = (p+q)²−2pq','(−4)²−2(−21) = 16+42 = 58'],
+    examTag:'SAT' },
+
+  { id:'qe-3-6', conceptId:'quadratic_equations', level:3,
+    question:'Profit P(x) = −2x² + 40x − 80. What price x maximises profit?',
+    choices:['$8','$10','$12','$20'],
+    correctIndex:1,
+    explanation:'Vertex: x = −b/(2a) = −40/(−4) = 10.',
+    hints:['Max profit occurs at vertex of parabola','x = −b/(2a)','−40/(2×−2) = 10'],
+    examTag:'AP' },
+
+  { id:'qe-3-7', conceptId:'quadratic_equations', level:3,
+    question:'For what values of k does x² − 2kx + (k+2) = 0 have equal roots?',
+    choices:['k = −1 only','k = 2 only','k = −1 or k = 2','k = 1 or k = −2'],
+    correctIndex:2,
+    explanation:'Discriminant = 0: 4k²−4(k+2)=0 → k²−k−2=0 → (k−2)(k+1)=0 → k=2 or k=−1.',
+    hints:['Equal roots ⟺ discriminant = 0','4k²−4(k+2)=0 → k²−k−2=0','Factor: (k−2)(k+1)=0'],
+    examTag:'IB' },
+
+  { id:'qe-3-8', conceptId:'quadratic_equations', level:3,
+    question:'For what values of x is f(x) = x² − 4x + 3 negative (< 0)?',
+    choices:['x < 1 or x > 3','1 < x < 3','x ≤ 1 or x ≥ 3','0 < x < 3'],
+    correctIndex:1,
+    explanation:'Roots: (x−1)(x−3)=0. Parabola opens up, so f < 0 between the roots: 1 < x < 3.',
+    hints:['Find the roots: (x−1)(x−3)=0 → x=1 or x=3','Parabola opens up (a>0)','f < 0 between the roots'],
+    examTag:'SAT' },
+
+  { id:'qe-3-9', conceptId:'quadratic_equations', level:3,
+    question:'A positive integer plus its square equals 56. What is the integer?',
+    choices:['6','7','8','9'],
+    correctIndex:1,
+    explanation:'n+n²=56 → n²+n−56=0 → (n+8)(n−7)=0 → n=7 (positive).',
+    hints:['Write n²+n = 56','n²+n−56 = 0','Factor and take the positive root'],
+    examTag:'ACT' },
+
+  // ── FUNCTIONS BASICS – extra questions ───────────────────────────────────────
+
+  // L1 extras
+  { id:'fn-1-5', conceptId:'functions_basics', level:1,
+    question:'If f(x) = 5x − 3, what is f(4)?',
+    choices:['12','17','22','23'],
+    correctIndex:1,
+    explanation:'f(4) = 5(4)−3 = 20−3 = 17.',
+    hints:['Substitute x = 4','5×4 = 20','20−3 = 17'] },
+
+  { id:'fn-1-6', conceptId:'functions_basics', level:1,
+    question:'If g(x) = x² + 2, what is g(−3)?',
+    choices:['−7','−11','7','11'],
+    correctIndex:3,
+    explanation:'g(−3) = (−3)²+2 = 9+2 = 11.',
+    hints:['Substitute x = −3','(−3)² = 9 (squaring a negative gives positive)','9+2 = 11'] },
+
+  { id:'fn-1-7', conceptId:'functions_basics', level:1,
+    question:'Which set of pairs represents y as a function of x?',
+    choices:['{(1,2),(1,3),(2,5)}','{(1,2),(2,4),(3,6)}','{(3,4),(3,5),(3,6)}','{(0,1),(0,2),(1,3)}'],
+    correctIndex:1,
+    explanation:'A function needs each x to have exactly one y. Only option B has all distinct x values.',
+    hints:['A function cannot assign two y-values to the same x','Look for repeated x values','Option B: x=1,2,3 each appear once'] },
+
+  { id:'fn-1-8', conceptId:'functions_basics', level:1,
+    question:'If h(x) = 2x + 1, what is h(a + 1)?',
+    choices:['2a + 2','2a + 3','2a + 1','2a + 4'],
+    correctIndex:1,
+    explanation:'h(a+1) = 2(a+1)+1 = 2a+2+1 = 2a+3.',
+    hints:['Replace x with (a+1)','Distribute: 2(a+1)+1','2a+2+1 = 2a+3'] },
+
+  { id:'fn-1-9', conceptId:'functions_basics', level:1,
+    question:'What is the domain of f(x) = √(x − 4)?',
+    choices:['x > 4','x ≥ 4','x ≤ 4','All reals'],
+    correctIndex:1,
+    explanation:'The radicand must be ≥ 0: x−4 ≥ 0 → x ≥ 4.',
+    hints:['The value under a square root must be ≥ 0','Set x−4 ≥ 0','Solve: x ≥ 4'],
+    examTag:'SAT' },
+
+  { id:'fn-1-10', conceptId:'functions_basics', level:1,
+    question:'f(x) = mx + b, m = 2, and f(3) = 7. What is b?',
+    choices:['−1','0','1','2'],
+    correctIndex:2,
+    explanation:'7 = 2(3)+b → 7 = 6+b → b = 1.',
+    hints:['Substitute x=3 and f(3)=7','7 = 2(3)+b','Solve for b'] },
+
+  // L2 extras
+  { id:'fn-2-5', conceptId:'functions_basics', level:2,
+    question:'f(x) = 3x − 2 and g(x) = x². Find f(g(2)).',
+    choices:['10','12','14','16'],
+    correctIndex:0,
+    explanation:'g(2) = 4. f(4) = 3(4)−2 = 10.',
+    hints:['Evaluate from inside out','g(2) = 2² = 4','f(4) = 3(4)−2 = 10'] },
+
+  { id:'fn-2-6', conceptId:'functions_basics', level:2,
+    question:'For what value of x is f(x) = (x + 1)/(x − 3) undefined?',
+    choices:['x = −1','x = 1','x = 3','x = −3'],
+    correctIndex:2,
+    explanation:'Undefined when denominator = 0: x−3 = 0 → x = 3.',
+    hints:['A fraction is undefined when the denominator equals zero','Set x−3 = 0','x = 3'] },
+
+  { id:'fn-2-7', conceptId:'functions_basics', level:2,
+    question:'f(x) = 2x + 5 and f(a) = 13. What is a?',
+    choices:['3','4','5','6'],
+    correctIndex:1,
+    explanation:'2a+5 = 13 → 2a = 8 → a = 4.',
+    hints:['Set 2a+5 = 13','Subtract 5','Divide by 2'] },
+
+  { id:'fn-2-8', conceptId:'functions_basics', level:2,
+    question:'For f(x) = x² with domain {−2, −1, 0, 1, 2}, what is the range?',
+    choices:['{−4,−1,0,1,4}','{0,1,4}','{0,1,2,4}','{−2,−1,0,1,2}'],
+    correctIndex:1,
+    explanation:'Outputs: 4,1,0,1,4. Unique values: {0, 1, 4}.',
+    hints:['Evaluate f for each domain value','f(−2)=4, f(−1)=1, f(0)=0, f(1)=1, f(2)=4','List only unique outputs'] },
+
+  { id:'fn-2-9', conceptId:'functions_basics', level:2,
+    question:'What are the zeros of f(x) = x² − 3x?',
+    choices:['x = 0 only','x = 3 only','x = 0 and x = 3','x = 0 and x = −3'],
+    correctIndex:2,
+    explanation:'x²−3x = 0 → x(x−3) = 0 → x = 0 or x = 3.',
+    hints:['Set f(x) = 0 and factor','x(x−3) = 0','Set each factor to zero'] },
+
+  { id:'fn-2-10', conceptId:'functions_basics', level:2,
+    question:'If f(x + 1) = 3x + 7, what is f(x)?',
+    choices:['3x + 4','3x + 7','3x + 10','3x + 1'],
+    correctIndex:0,
+    explanation:'Let u = x+1, so x = u−1. f(u) = 3(u−1)+7 = 3u+4. Replace u→x: f(x) = 3x+4.',
+    hints:['Let u = x+1, meaning x = u−1','f(u) = 3(u−1)+7','Simplify and replace u with x'],
+    examTag:'SAT' },
+
+  // L3 extras
+  { id:'fn-3-4', conceptId:'functions_basics', level:3,
+    question:'g(f(x)) = x for all x and f(x) = 2x − 5. What is g(x)?',
+    choices:['g(x) = (x+5)/2','g(x) = 2x+5','g(x) = (x−5)/2','g(x) = x/2−5'],
+    correctIndex:0,
+    explanation:'g is the inverse of f. From y = 2x−5, swap x/y: x = 2y−5 → y = (x+5)/2.',
+    hints:['g is the inverse function of f','To find inverse: swap x and y in y = 2x−5','Solve for y'],
+    examTag:'SAT' },
+
+  { id:'fn-3-5', conceptId:'functions_basics', level:3,
+    question:'f(x) = ax²+bx+c, f(0)=3, f(1)=6, f(−1)=2. Find a.',
+    choices:['a = 0','a = 1','a = 2','a = −1'],
+    correctIndex:1,
+    explanation:'f(0)=c=3. f(1)→a+b=3. f(−1)→a−b=−1. Adding: 2a=2 → a=1.',
+    hints:['f(0) = c = 3 immediately','f(1) gives a+b=3; f(−1) gives a−b=−1','Add the two equations: 2a=2'],
+    examTag:'IB' },
+
+  { id:'fn-3-6', conceptId:'functions_basics', level:3,
+    question:'f(x) = x/(x+2) for x ≠ −2. What is f(f(2))?',
+    choices:['1/4','1/5','1/2','2/5'],
+    correctIndex:1,
+    explanation:'f(2) = 2/4 = 1/2. f(1/2) = (1/2)/(5/2) = 1/5.',
+    hints:['Find f(2) first: 2/(2+2) = 1/2','Now find f(1/2) = (1/2)/((1/2)+2)','(1/2)/(5/2) = 1/5'],
+    examTag:'ACT' },
+
+  { id:'fn-3-7', conceptId:'functions_basics', level:3,
+    question:'f satisfies f(2x) = 2f(x) for all x. If f(3) = 9, what is f(6)?',
+    choices:['12','15','18','24'],
+    correctIndex:2,
+    explanation:'f(6) = f(2×3) = 2×f(3) = 18.',
+    hints:['f(6) = f(2×3)','Use the rule: f(2×3) = 2×f(3)','2×9 = 18'],
+    examTag:'SAT' },
+
+  { id:'fn-3-8', conceptId:'functions_basics', level:3,
+    question:'f is even: f(−x) = f(x). If f(3) = 7 and f(2) = 5, what is f(−3) + f(−2)?',
+    choices:['−12','2','12','−2'],
+    correctIndex:2,
+    explanation:'Even function: f(−3)=f(3)=7, f(−2)=f(2)=5. Sum = 12.',
+    hints:['Even function means f(−x) = f(x)','f(−3) = f(3) = 7','f(−2) = f(2) = 5; total = 12'],
+    examTag:'AP' },
+
+  { id:'fn-3-9', conceptId:'functions_basics', level:3,
+    question:'h(x) = f(g(x)), f(x) = x+3, g(x) = x². What is h(−2)?',
+    choices:['1','7','−1','5'],
+    correctIndex:1,
+    explanation:'g(−2) = 4. f(4) = 7.',
+    hints:['Evaluate inside out: g(−2) first','g(−2) = (−2)² = 4','f(4) = 4+3 = 7'] },
+
+  // ── EXPONENT RULES – extra questions ─────────────────────────────────────────
+
+  // L1 extras
+  { id:'ex-1-5', conceptId:'exponent_rules', level:1,
+    question:'Simplify: 2³ × 2⁴',
+    choices:['2⁷','2¹²','4⁷','8⁷'],
+    correctIndex:0,
+    explanation:'Same base, add exponents: 2^(3+4) = 2⁷.',
+    hints:['When multiplying same-base powers, add exponents','3+4 = 7','2⁷'] },
+
+  { id:'ex-1-6', conceptId:'exponent_rules', level:1,
+    question:'What is (3²)³?',
+    choices:['3⁵','3⁶','3⁸','6³'],
+    correctIndex:1,
+    explanation:'Power of a power: multiply exponents. 3^(2×3) = 3⁶.',
+    hints:['Raise a power to a power by multiplying exponents','2 × 3 = 6','3⁶'] },
+
+  { id:'ex-1-7', conceptId:'exponent_rules', level:1,
+    question:'Simplify: x⁵ ÷ x²',
+    choices:['x³','x⁷','x¹⁰','1/x³'],
+    correctIndex:0,
+    explanation:'Same base, subtract exponents: x^(5−2) = x³.',
+    hints:['When dividing same-base powers, subtract exponents','5−2 = 3','x³'] },
+
+  { id:'ex-1-8', conceptId:'exponent_rules', level:1,
+    question:'What is 5⁰?',
+    choices:['0','1','5','Undefined'],
+    correctIndex:1,
+    explanation:'Any non-zero number raised to the power 0 equals 1.',
+    hints:['This is a definition','Any non-zero base to the 0 power = 1','5⁰ = 1'] },
+
+  { id:'ex-1-9', conceptId:'exponent_rules', level:1,
+    question:'Simplify: (2x²)(3x³)',
+    choices:['5x⁵','5x⁶','6x⁵','6x⁶'],
+    correctIndex:2,
+    explanation:'Multiply coefficients: 2×3=6. Multiply variables: x²×x³=x⁵. Result: 6x⁵.',
+    hints:['Multiply coefficients separately: 2×3','Multiply variables: x² × x³ = x^(2+3)','6x⁵'] },
+
+  { id:'ex-1-10', conceptId:'exponent_rules', level:1,
+    question:'What is 2⁻³?',
+    choices:['−8','−6','1/6','1/8'],
+    correctIndex:3,
+    explanation:'Negative exponent = reciprocal: 2⁻³ = 1/2³ = 1/8.',
+    hints:['A negative exponent means take the reciprocal','2⁻³ = 1/2³','1/8'] },
+
+  // L2 extras
+  { id:'ex-2-5', conceptId:'exponent_rules', level:2,
+    question:'Simplify: (x³y²)²',
+    choices:['x⁵y⁴','x⁶y⁴','x⁶y⁸','x⁹y⁴'],
+    correctIndex:1,
+    explanation:'Apply outer exponent to each factor: x^(3×2) × y^(2×2) = x⁶y⁴.',
+    hints:['Raise each variable to the outside power','3×2=6 for x','2×2=4 for y'] },
+
+  { id:'ex-2-6', conceptId:'exponent_rules', level:2,
+    question:'Evaluate: 27^(1/3)',
+    choices:['3','9','27/3','√27'],
+    correctIndex:0,
+    explanation:'1/3 exponent means cube root: ∛27 = 3 since 3³ = 27.',
+    hints:['A fractional exponent 1/n means nth root','∛27 = ?','3³ = 27 so ∛27 = 3'] },
+
+  { id:'ex-2-7', conceptId:'exponent_rules', level:2,
+    question:'Simplify: (2x⁻²)(4x³)',
+    choices:['6x','8x','8/x','6/x'],
+    correctIndex:1,
+    explanation:'2×4=8; x⁻²×x³ = x^(−2+3) = x. Result: 8x.',
+    hints:['Multiply coefficients: 2×4','Add exponents of x: −2+3 = 1','8x'] },
+
+  { id:'ex-2-8', conceptId:'exponent_rules', level:2,
+    question:'Simplify: (x⁴)^(1/2)  (assume x ≥ 0)',
+    choices:['x²','x⁸','x^(1/2)','2x²'],
+    correctIndex:0,
+    explanation:'Multiply exponents: x^(4×1/2) = x².',
+    hints:['Multiply the exponents: 4 × (1/2)','4/2 = 2','x²'],
+    examTag:'SAT' },
+
+  { id:'ex-2-9', conceptId:'exponent_rules', level:2,
+    question:'Simplify: (a²b³) / (a⁵b)',
+    choices:['a³b²','b²/a³','a³/b²','1/(a³b²)'],
+    correctIndex:1,
+    explanation:'a²/a⁵ = a⁻³; b³/b = b². Result: b²/a³.',
+    hints:['Subtract exponents for each variable','a²/a⁵ = a^(2−5) = a⁻³','b³/b = b²'] },
+
+  { id:'ex-2-10', conceptId:'exponent_rules', level:2,
+    question:'Which expression equals √(x³)?',
+    choices:['x^(2/3)','x^(3/2)','x^(1/3)','3√x'],
+    correctIndex:1,
+    explanation:'√(x³) = (x³)^(1/2) = x^(3×1/2) = x^(3/2).',
+    hints:['√ is the same as raising to the 1/2 power','(x³)^(1/2)','Multiply exponents: 3×(1/2) = 3/2'],
+    examTag:'SAT' },
+
+  // L3 extras
+  { id:'ex-3-4', conceptId:'exponent_rules', level:3,
+    question:'If 4^x = 8, what is x?',
+    choices:['1','3/2','2','3'],
+    correctIndex:1,
+    explanation:'4^x = (2²)^x = 2^(2x) = 2³ → 2x = 3 → x = 3/2.',
+    hints:['Write both sides as powers of 2','4 = 2², so 4^x = 2^(2x)','2^(2x) = 2³ → 2x = 3'],
+    examTag:'SAT' },
+
+  { id:'ex-3-5', conceptId:'exponent_rules', level:3,
+    question:'Simplify: (x^(1/3))⁶',
+    choices:['x^(1/2)','x²','x^3','x^(1/18)'],
+    correctIndex:1,
+    explanation:'Multiply exponents: (1/3)×6 = 2. Result: x².',
+    hints:['Multiply the exponents','(1/3) × 6 = 2','x²'] },
+
+  { id:'ex-3-6', conceptId:'exponent_rules', level:3,
+    question:'If 2^n = 64, what is 2^(n − 2)?',
+    choices:['8','16','32','62'],
+    correctIndex:1,
+    explanation:'64 = 2⁶ so n = 6. 2^(6−2) = 2⁴ = 16.',
+    hints:['Find n: 2^n = 64 = 2⁶ so n = 6','Now compute 2^(n−2) = 2^4','2⁴ = 16'],
+    examTag:'ACT' },
+
+  { id:'ex-3-7', conceptId:'exponent_rules', level:3,
+    question:'Solve for x: 3^(x + 1) = 27^(x − 2)',
+    choices:['x = 2','x = 7/2','x = 4','x = 7'],
+    correctIndex:1,
+    explanation:'27 = 3³, so 3^(x+1) = 3^(3x−6) → x+1 = 3x−6 → 7 = 2x → x = 7/2.',
+    hints:['Write 27 as 3³','3^(x+1) = 3^(3(x−2))','Set exponents equal: x+1 = 3x−6'],
+    examTag:'IB' },
+
+  { id:'ex-3-8', conceptId:'exponent_rules', level:3,
+    question:'Simplify: 4^(3/2)',
+    choices:['4','6','8','16'],
+    correctIndex:2,
+    explanation:'4^(3/2) = (√4)³ = 2³ = 8.',
+    hints:['a^(m/n) = (nth root of a)^m','4^(3/2) = (√4)³ = 2³','2³ = 8'] },
+
+  { id:'ex-3-9', conceptId:'exponent_rules', level:3,
+    question:'Simplify: (8x⁶)^(2/3)',
+    choices:['2x²','4x³','4x⁴','8x⁴'],
+    correctIndex:2,
+    explanation:'8^(2/3) = (∛8)² = 4; (x⁶)^(2/3) = x⁴. Result: 4x⁴.',
+    hints:['Apply the exponent to each factor','8^(2/3) = (∛8)² = 2² = 4','x^(6×2/3) = x⁴'],
+    examTag:'AP' },
 ]
 
 // ── Concept metadata ──────────────────────────────────────────────────────────
@@ -1300,11 +1855,20 @@ export const LEVEL_META = {
   3: { label:'Exam Ready', sub:'ACT / IB difficulty',  xp:35, color:'#F4A261', colorSoft:'rgba(244,162,97,0.15)', stars:3 },
 }
 
-// Return questions for a concept + level, shuffled, up to `count`
-export function getQuestions(conceptId: string, level: 1|2|3, count = 5): Question[] {
-  const pool = Q.filter(q => q.conceptId === conceptId && q.level === level)
-  const shuffled = [...pool].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, count)
+// 80 % first-attempt accuracy = level mastered (Bloom's mastery learning threshold)
+export const MASTERY_THRESHOLD = 0.80
+
+// Return up to `count` questions shuffled, prioritising unseen IDs
+export function getQuestions(
+  conceptId: string,
+  level: 1|2|3,
+  count = 10,
+  seenIds: string[] = [],
+): Question[] {
+  const pool     = Q.filter(q => q.conceptId === conceptId && q.level === level)
+  const unseen   = pool.filter(q => !seenIds.includes(q.id)).sort(() => Math.random() - 0.5)
+  const seen     = pool.filter(q =>  seenIds.includes(q.id)).sort(() => Math.random() - 0.5)
+  return [...unseen, ...seen].slice(0, Math.min(count, pool.length))
 }
 
 // Total question count for a concept + level

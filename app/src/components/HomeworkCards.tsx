@@ -39,11 +39,12 @@ export interface HomeworkSession {
 }
 
 interface Props {
-  session:       HomeworkSession
-  studentId:     string
-  apiBase:       string
-  onComplete:    (results: OutcomeRecord[]) => void
-  onNewProblem:  () => void
+  session:        HomeworkSession
+  studentId:      string
+  apiBase:        string
+  onComplete:     (results: OutcomeRecord[]) => void
+  onNewProblem:   () => void
+  fetchClue?:     (content: string, concept: string, clueNum: number) => Promise<string>
 }
 
 export interface OutcomeRecord {
@@ -76,7 +77,7 @@ function dot(filled: boolean) {
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export default function HomeworkCards({ session, studentId, apiBase, onComplete, onNewProblem }: Props) {
+export default function HomeworkCards({ session, studentId, apiBase, onComplete, onNewProblem, fetchClue: fetchClueProp }: Props) {
   const [cardIdx,     setCardIdx]     = useState(0)
   const [animDir,     setAnimDir]     = useState<'enter' | 'exit-left' | 'exit-right' | null>(null)
   const [clues,       setClues]       = useState<string[]>([])
@@ -125,25 +126,31 @@ export default function HomeworkCards({ session, studentId, apiBase, onComplete,
     if (clues.length >= 2 || clueLoading) return
     setClueLoading(true)
     try {
-      const res = await fetch(`${apiBase}/clue`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          student_id:         studentId,
-          step_content:       card.content,
-          concept_addressed:  card.concept_chip,
-          preferred_style:    'algebraic',
-          clue_number:        clues.length + 1,
-        }),
-      })
-      const data = await res.json()
-      setClues(prev => [...prev, data.clue])
+      let clueText: string
+      if (fetchClueProp) {
+        clueText = await fetchClueProp(card.content, card.concept_chip, clues.length + 1)
+      } else {
+        const res = await fetch(`${apiBase}/clue`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_id:        studentId,
+            step_content:      card.content,
+            concept_addressed: card.concept_chip,
+            preferred_style:   'algebraic',
+            clue_number:       clues.length + 1,
+          }),
+        })
+        const data = await res.json()
+        clueText = data.clue
+      }
+      setClues(prev => [...prev, clueText])
     } catch {
       setClues(prev => [...prev, "Think about what you already know — what's one fact you're confident about here?"])
     } finally {
       setClueLoading(false)
     }
-  }, [clues.length, clueLoading, card, apiBase, studentId])
+  }, [clues.length, clueLoading, card, apiBase, studentId, fetchClueProp])
 
   // ── Outcome recording ──
   async function recordOutcome(outcome: number) {

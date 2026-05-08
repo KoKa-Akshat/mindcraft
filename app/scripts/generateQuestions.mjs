@@ -33,11 +33,11 @@ interface Question {
   conceptId: string
   level: 1 | 2 | 3
   question: string
-  choices: [string, string, string, string]
-  correctIndex: 0 | 1 | 2 | 3
+  choices: string[]
+  correctIndex: number
   explanation: string
-  hints: [string, string, string]
-  examTag: string
+  hints: string[]
+  examTag?: 'ACT' | 'SAT' | 'IB' | 'AP'
 }
 
 Quality rules:
@@ -52,7 +52,7 @@ Quality rules:
   1. Vague strategic nudge.
   2. More specific setup or rule.
   3. Almost gives away the solving step without stating the final choice.
-- examTag must be one of "ACT", "SAT", or "IB".
+- examTag must be one of "ACT", "SAT", "IB", or "AP".
 - Use concise student-facing wording and avoid trick ambiguity.
 - IDs must be unique and start with "${conceptId}-${level}-ai-".
 `
@@ -90,7 +90,7 @@ function assertQuestionShape(question, index) {
   if (!Array.isArray(question.hints) || question.hints.length !== 3 || !question.hints.every(hint => typeof hint === 'string')) {
     throw new Error(`${prefix} must have exactly 3 string hints.`)
   }
-  if (!['ACT', 'SAT', 'IB'].includes(question.examTag)) {
+  if (question.examTag !== undefined && !['ACT', 'SAT', 'IB', 'AP'].includes(question.examTag)) {
     throw new Error(`${prefix} has an invalid examTag.`)
   }
 }
