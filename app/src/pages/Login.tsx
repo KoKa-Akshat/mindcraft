@@ -116,7 +116,7 @@ export default function Login() {
 
       <div className={s.branding}>
         <a href="https://koka-akshat.github.io/mindcraft/" className={s.wordmark}>
-          Mind<span>C</span>raft
+          Mind<span>Craft</span>
         </a>
         <p className={s.examPrep}>Personal Exam Prep</p>
       </div>
