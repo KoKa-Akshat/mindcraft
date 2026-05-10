@@ -2,9 +2,9 @@
   position: relative;
   overflow: hidden;
   display: grid;
-  gap: 0;
+  gap: 14px;
   margin-bottom: 26px;
-  padding: 18px 18px 16px;
+  padding: 22px 24px 24px;
   border-radius: 22px;
   background:
     radial-gradient(circle at 12% 0%, rgba(196, 245, 71, 0.20), transparent 32%),
@@ -24,10 +24,9 @@
 
 .topRow {
   display: grid;
-  grid-template-columns: max-content 1fr max-content;
+  grid-template-columns: 1fr max-content;
   align-items: center;
   gap: 16px;
-  padding-bottom: 16px;
 }
 
 .brand {
@@ -39,29 +38,16 @@
   min-width: 0;
 }
 
-.logoPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-  padding: 5px 10px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.93);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
-}
-
-.logoImg,
-.logoRaccoon {
-  display: block;
-  width: auto;
-  height: 18px;
-}
-
 .brandText {
   font-family: var(--f-display);
-  font-size: 15px;
+  font-size: 21px;
   font-weight: 900;
   letter-spacing: 0;
+  line-height: 1;
+}
+
+.brandText span {
+  color: #C4F547;
 }
 
 .nav {
@@ -70,10 +56,10 @@
   justify-content: center;
   gap: 4px;
   min-width: 0;
-  padding: 4px;
+  padding: 3px;
   border-radius: 14px;
-  background: rgba(4, 18, 26, 0.24);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(4, 18, 26, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .navLink {
@@ -155,12 +141,11 @@
 
 .bottomRow {
   display: grid;
-  grid-template-columns: minmax(240px, 1fr) minmax(260px, max-content) max-content;
+  grid-template-columns: minmax(260px, 1fr) minmax(360px, max-content) minmax(230px, max-content) max-content;
   align-items: center;
-  gap: 20px;
-  min-height: 86px;
-  padding: 16px 18px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  gap: 18px;
+  min-height: 78px;
+  padding: 0;
 }
 
 .greetingBlock {
@@ -196,7 +181,6 @@
   gap: 7px;
   justify-items: start;
   min-width: 0;
-  padding-left: 10px;
 }
 
 .sessionLabel {
@@ -314,13 +298,8 @@
 }
 
 @media (max-width: 1120px) {
-  .topRow {
-    grid-template-columns: 1fr max-content;
-  }
-
   .nav {
     grid-column: 1 / -1;
-    grid-row: 2;
     justify-content: flex-start;
     overflow-x: auto;
     scrollbar-width: none;
@@ -351,7 +330,7 @@
   }
 
   .brandText {
-    display: none;
+    font-size: 18px;
   }
 
   .navLink {

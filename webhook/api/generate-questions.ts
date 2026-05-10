@@ -96,6 +96,12 @@ function normalizeExamType(value: unknown) {
   return typeof value === 'string' && ALLOWED_EXAMS.has(value) ? value : 'General'
 }
 
+function normalizeBridgeFrom(value: unknown) {
+  if (typeof value !== 'string') return undefined
+  const trimmed = value.trim()
+  return /^[a-z0-9_]{2,64}$/.test(trimmed) ? trimmed : undefined
+}
+
 function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examType: string): q is GeneratedQuestion {
   if (!q || typeof q !== 'object') return false
   const item = q as Partial<GeneratedQuestion>
@@ -193,8 +199,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const examType = normalizeExamType(rawExamType)
+  const normalizedBridgeFrom = normalizeBridgeFrom(bridgeFrom)
   const count = clampCount(rawCount)
-  const bridgeKey = bridgeFrom ? `_B${bridgeFrom}` : ''
+  const bridgeKey = normalizedBridgeFrom ? `_B${normalizedBridgeFrom}` : ''
   const cacheKey = `${conceptId}_L${level}_${examType}_N${count}${bridgeKey}`
 
   // ── 1. Check Firestore cache ───────────────────────────────────────────────
@@ -230,8 +237,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const conceptLabel = labelForConcept(conceptId)
   const conceptShort = conceptId.split('_').map((w: string) => w[0]).join('')
-  const bridgeContext = bridgeFrom
-    ? `Bridge from the student's strength in ${labelForConcept(bridgeFrom)} into their weaker target ${conceptLabel}. At least half the questions should require connecting both ideas, not drilling ${conceptLabel} in isolation.`
+  const bridgeContext = normalizedBridgeFrom
+    ? `Bridge from the student's strength in ${labelForConcept(normalizedBridgeFrom)} into their weaker target ${conceptLabel}. At least half the questions should require connecting both ideas, not drilling ${conceptLabel} in isolation.`
     : 'No bridge context. Focus on the target concept itself.'
 
   // ── 3. Generate ────────────────────────────────────────────────────────────

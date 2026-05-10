@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "audit:bridge": "node scripts/auditBridgePractice.mjs",
     "audit:practice": "node scripts/auditPracticeSystem.mjs",
     "generate:questions": "node scripts/generateQuestions.mjs",
     "generate:visual": "node scripts/generateManimScene.mjs",

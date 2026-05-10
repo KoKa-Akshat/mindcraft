@@ -12,7 +12,8 @@ import {
 } from '../lib/questionBank'
 import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
 import { getConceptContent } from '../lib/conceptContent'
-import { PREREQUISITES, mlIdToLabel } from '../lib/conceptMap'
+import { mlIdToLabel } from '../lib/conceptMap'
+import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
@@ -26,7 +27,6 @@ type PracticePhase =
 type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
 type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
-type BridgeRecommendation = { fromId: string; toId: string; viaIds: string[]; level: 1 | 2 | 3 }
 
 const EXAMS = ['ACT', 'SAT', 'IB', 'AP', 'General'] as const
 type ExamType = typeof EXAMS[number]
@@ -90,25 +90,6 @@ const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
   IB:      ['functions_basics', 'function_transformations', 'quadratic_equations', 'polynomials', 'rational_expressions', 'trigonometry_basics', 'exponent_rules', 'basic_probability', 'descriptive_statistics'],
   AP:      ['functions_basics', 'function_transformations', 'polynomials', 'rational_expressions', 'exponent_rules', 'quadratic_equations', 'trigonometry_basics', 'descriptive_statistics', 'linear_equations'],
   General: ['linear_equations', 'coordinate_geometry', 'quadratic_equations', 'functions_basics', 'linear_inequalities', 'exponent_rules', 'absolute_value'],
-}
-
-function getAtomicPrereqPath(targetId: string, sourceIds: Set<string>) {
-  const queue = [{ id: targetId, path: [] as string[] }]
-  const seen = new Set<string>()
-
-  while (queue.length > 0) {
-    const current = queue.shift()!
-    if (seen.has(current.id)) continue
-    seen.add(current.id)
-
-    for (const prereq of PREREQUISITES[current.id] ?? []) {
-      const nextPath = [...current.path, prereq]
-      if (sourceIds.has(prereq)) return { fromId: prereq, viaIds: nextPath }
-      queue.push({ id: prereq, path: nextPath })
-    }
-  }
-
-  return null
 }
 
 function bridgeLabel(id: string) {
@@ -241,27 +222,7 @@ export default function Practice() {
   const hardConcepts  = assessConcepts.filter(c => confidenceMap[c.id] === 'hard')
   const kindaConcepts = assessConcepts.filter(c => confidenceMap[c.id] === 'kinda')
   const easyConcepts  = assessConcepts.filter(c => confidenceMap[c.id] === 'easy')
-  const bridgeRecommendations: BridgeRecommendation[] = (() => {
-    const sourceIds = new Set(easyConcepts.map(c => c.id))
-    const targets = [...hardConcepts, ...kindaConcepts]
-    const seen = new Set<string>()
-
-    return targets.flatMap(target => {
-      const bridge = getAtomicPrereqPath(target.id, sourceIds)
-      if (!bridge) return []
-
-      const key = `${bridge.fromId}->${target.id}`
-      if (seen.has(key)) return []
-      seen.add(key)
-
-      return [{
-        fromId: bridge.fromId,
-        toId: target.id,
-        viaIds: bridge.viaIds,
-        level: getRecommendedLevel(target.id),
-      }]
-    }).slice(0, 2)
-  })()
+  const bridgeRecommendations = buildBridgeRecommendations(confidenceMap, 2)
 
   // The single best concept to start with (hardest first, then kinda)
   const topPriority = hardConcepts[0] ?? kindaConcepts[0] ?? easyConcepts[0] ?? assessConcepts[0]

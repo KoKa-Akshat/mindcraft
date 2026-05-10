@@ -79,7 +79,6 @@ export default function Dashboard() {
                   Let's Go
                 </motion.button>
 
-                <p className={s.heroMeta}>Adaptive AI · Personalised for your exam</p>
               </div>
 
               <Globe3D />
@@ -97,10 +96,7 @@ export default function Dashboard() {
                 >
                   <div className={s.floatDot} />
                   <h2 className={s.floatTitle}>Homework<br />Help.</h2>
-                  <p className={s.floatSub}>Math homework help</p>
-                  <div className={s.floatFooter}>
-                    <span className={s.aiTagSm}>Bring the messy one</span>
-                  </div>
+                  <p className={s.floatSub}>You can totally do it.</p>
                 </motion.div>
               </div>
 

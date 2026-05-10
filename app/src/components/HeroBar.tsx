@@ -2,8 +2,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useUser } from '../App'
-import logo from '../assets/logo.png'
-import raccoon from '../assets/raccoon.jpg'
 import s from './HeroBar.module.css'
 
 interface Props {
@@ -17,7 +15,6 @@ const NAV = [
   { to: '/dashboard',      label: 'Dashboard'     },
   { to: '/sessions',       label: 'Session Notes' },
   { to: '/practice',       label: 'Practice'      },
-  { to: '/organize-notes', label: 'Organize'      },
 ]
 
 const FIFTEEN_MIN = 15 * 60 * 1000
@@ -46,28 +43,8 @@ export default function HeroBar({ greeting, name, nextSession, tutorId }: Props)
     <div className={s.strip}>
       <div className={s.topRow}>
         <Link to="/dashboard" className={s.brand}>
-          <span className={s.logoPill}>
-            <img src={logo} alt="MindCraft" className={s.logoImg} />
-            <img src={raccoon} alt="" className={s.logoRaccoon} />
-          </span>
-          <span className={s.brandText}>MindCraft</span>
+          <span className={s.brandText}>Mind<span>Craft</span></span>
         </Link>
-
-        <nav className={s.nav} aria-label="Dashboard navigation">
-          {NAV.map(({ to, label }) => (
-            <Link key={to} to={to} className={`${s.navLink} ${active(to)}`}>
-              {label}
-            </Link>
-          ))}
-          <a
-            href="https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg"
-            target="_blank"
-            rel="noopener"
-            className={s.navLink}
-          >
-            Community
-          </a>
-        </nav>
 
         {user && (
           <div className={s.userRow}>
@@ -96,6 +73,22 @@ export default function HeroBar({ greeting, name, nextSession, tutorId }: Props)
             {greeting}, <em>{name}</em>
           </h1>
         </div>
+
+        <nav className={s.nav} aria-label="Dashboard navigation">
+          {NAV.map(({ to, label }) => (
+            <Link key={to} to={to} className={`${s.navLink} ${active(to)}`}>
+              {label}
+            </Link>
+          ))}
+          <a
+            href="https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg"
+            target="_blank"
+            rel="noopener"
+            className={s.navLink}
+          >
+            Community
+          </a>
+        </nav>
 
         <div className={s.sessionPanel}>
           <span className={s.sessionLabel}>{canJoin ? 'Session is live' : 'Next up'}</span>
