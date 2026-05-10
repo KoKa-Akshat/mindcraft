@@ -20,6 +20,7 @@ import s from './Practice.module.css'
 const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
 const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
+const PRACTICE_DRAFT_VERSION = 1
 
 type PracticePhase =
   | 'onboard' | 'exam-pick' | 'confidence' | 'building'
@@ -27,6 +28,26 @@ type PracticePhase =
 type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
 type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
+
+type PracticeDraft = {
+  version: number
+  name: string
+  savedAt: number
+  exam: string
+  assessConceptIds: string[]
+  confidenceStep: number
+  confidenceMap: Record<string, Confidence>
+  pPhase: PracticePhase
+  concept: string | null
+  level: 1 | 2 | 3
+  questions: Question[]
+  qIndex: number
+  results: boolean[]
+  xp: number
+  requeuedIds: string[]
+  initialQCount: number
+  sessionBridge: BridgeRecommendation | null
+}
 
 const EXAMS = ['ACT', 'SAT', 'IB', 'AP', 'General'] as const
 type ExamType = typeof EXAMS[number]
@@ -233,6 +254,17 @@ function safeQuestionSvg(question: Question) {
   return svg
 }
 
+function practiceDraftKey(uid: string) {
+  return `mindcraft:exam-help:${uid}:process-1`
+}
+
+function conceptsFromIds(ids: string[]) {
+  return ids.flatMap(id => {
+    const concept = PRACTICE_CONCEPTS.find(c => c.id === id)
+    return concept ? [concept] : []
+  })
+}
+
 // Map concept_chip string from homework cards → practice concept id
 function chipToConceptId(chip: string): string | null {
   const normalized = chip.toLowerCase().replace(/[\s-]+/g, '_')
@@ -308,6 +340,7 @@ export default function Practice() {
   const navigate = useNavigate()
   const location = useLocation()
   const fileRef  = useRef<HTMLInputElement>(null)
+  const draftHydratedRef = useRef(false)
 
   const [mode, setMode] = useState<Mode>('practice')
 
@@ -331,6 +364,7 @@ export default function Practice() {
   const [requeuedIds,  setRequeuedIds]  = useState<string[]>([])
   const [initialQCount,setInitialQCount]= useState(0)
   const [sessionBridge,setSessionBridge]= useState<BridgeRecommendation | null>(null)
+  const [draftRestored, setDraftRestored] = useState(false)
 
   // ── Solver state ──────────────────────────────────────────────────────────
   const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
@@ -340,6 +374,104 @@ export default function Practice() {
   const [sResults,   setSResults]   = useState<OutcomeRecord[]>([])
   const [error,      setError]      = useState('')
   const [slowLoad,   setSlowLoad]   = useState(false)
+
+  function clearPracticeDraft() {
+    localStorage.removeItem(practiceDraftKey(user.uid))
+  }
+
+  function restorePracticeDraft(draft: PracticeDraft) {
+    const restoredConcepts = conceptsFromIds(draft.assessConceptIds)
+    if (restoredConcepts.length === 0) return false
+
+    setMode('practice')
+    setExam(draft.exam)
+    setAssessConcepts(restoredConcepts)
+    setConfidenceStep(Math.min(draft.confidenceStep, Math.max(restoredConcepts.length - 1, 0)))
+    setConfidenceMap(draft.confidenceMap ?? {})
+    const restoredPhase = draft.pPhase === 'session' && !draft.questions?.length
+      ? 'path'
+      : draft.pPhase === 'building'
+      ? 'gap-analysis'
+      : draft.pPhase
+    setPPhase(restoredPhase)
+    setConcept(draft.concept)
+    setLevel(draft.level ?? 1)
+    setQuestions(Array.isArray(draft.questions) ? draft.questions : [])
+    setQIndex(draft.qIndex ?? 0)
+    setSelected(null)
+    setChecked(false)
+    setHintsShown(0)
+    setResults(Array.isArray(draft.results) ? draft.results : [])
+    setXp(draft.xp ?? 0)
+    setRequeuedIds(Array.isArray(draft.requeuedIds) ? draft.requeuedIds : [])
+    setInitialQCount(draft.initialQCount ?? 0)
+    setSessionBridge(draft.sessionBridge ?? null)
+    setDraftRestored(true)
+    return true
+  }
+
+  useEffect(() => {
+    if (draftHydratedRef.current) return
+    const raw = localStorage.getItem(practiceDraftKey(user.uid))
+    if (raw) {
+      try {
+        const draft = JSON.parse(raw) as PracticeDraft
+        if (draft.version === PRACTICE_DRAFT_VERSION && draft.assessConceptIds?.length) {
+          restorePracticeDraft(draft)
+        }
+      } catch {
+        localStorage.removeItem(practiceDraftKey(user.uid))
+      }
+    }
+    draftHydratedRef.current = true
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.uid])
+
+  useEffect(() => {
+    if (!draftHydratedRef.current) return
+    if (mode !== 'practice') return
+    if (!exam || assessConcepts.length === 0) return
+
+    const savedPhase: PracticePhase = pPhase === 'building' ? 'gap-analysis' : pPhase
+    const draft: PracticeDraft = {
+      version: PRACTICE_DRAFT_VERSION,
+      name: 'Process 1',
+      savedAt: Date.now(),
+      exam,
+      assessConceptIds: assessConcepts.map(c => c.id),
+      confidenceStep,
+      confidenceMap,
+      pPhase: savedPhase,
+      concept,
+      level,
+      questions,
+      qIndex,
+      results,
+      xp,
+      requeuedIds,
+      initialQCount,
+      sessionBridge,
+    }
+
+    localStorage.setItem(practiceDraftKey(user.uid), JSON.stringify(draft))
+  }, [
+    user.uid,
+    mode,
+    exam,
+    assessConcepts,
+    confidenceStep,
+    confidenceMap,
+    pPhase,
+    concept,
+    level,
+    questions,
+    qIndex,
+    results,
+    xp,
+    requeuedIds,
+    initialQCount,
+    sessionBridge,
+  ])
 
   // Auto-submit if navigated from dashboard with problemText; open the requested flow otherwise.
   useEffect(() => {
@@ -355,7 +487,7 @@ export default function Practice() {
       window.history.replaceState({}, '')
     } else if (state?.examHelp) {
       setMode('practice')
-      setPPhase('exam-pick')
+      if (!localStorage.getItem(practiceDraftKey(user.uid))) setPPhase('exam-pick')
       window.history.replaceState({}, '')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -505,6 +637,8 @@ export default function Practice() {
   }
 
   function resetPractice() {
+    clearPracticeDraft()
+    setDraftRestored(false)
     setPPhase('onboard')
     setConcept(null)
     setSelected(null)
@@ -693,7 +827,10 @@ export default function Practice() {
                       <div className={s.confMascotFloat}>
                         <PixelCraft size="sm" />
                       </div>
-                      <span className={s.confExamBadge}>{selectedExam} gap scan</span>
+                      <div className={s.processBadgeRow}>
+                        <span className={s.confExamBadge}>{selectedExam} gap scan</span>
+                        <span className={s.processBadge}>{draftRestored ? 'Process 1 resumed' : 'Process 1 saved'}</span>
+                      </div>
                       <h1 className={s.confTitle}>
                         How strong is <span>{current.label}</span>?
                       </h1>
@@ -764,7 +901,10 @@ export default function Practice() {
                         Your route is ready. Start at the first island.
                       </div>
                     </div>
-                    {exam && <span className={s.pathExamBadge}>{exam} Roadmap</span>}
+                    <div className={s.pathMeta}>
+                      {exam && <span className={s.pathExamBadge}>{exam} Roadmap</span>}
+                      <span className={s.processBadge}>{draftRestored ? 'Process 1 resumed' : 'Process 1 saved'}</span>
+                    </div>
                   </div>
 
                   <div className={s.roadmapIntro}>
@@ -868,6 +1008,7 @@ export default function Practice() {
                   </div>
                   <div className={s.pathMeta}>
                     {exam && <span className={s.pathExamBadge}>{exam} Path</span>}
+                    {assessConcepts.length > 0 && <span className={s.processBadge}>Process 1 saved</span>}
                     <button className={s.pathResetBtn} onClick={resetPractice}>← Change exam</button>
                   </div>
                 </div>
