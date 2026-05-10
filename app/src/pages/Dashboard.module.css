@@ -197,6 +197,10 @@
   transform: perspective(900px) rotateY(-13deg) rotateX(-5deg) rotateZ(-2deg);
 }
 
+.floatDisabled {
+  cursor: default;
+}
+
 .floatDot {
   width: 8px;
   height: 8px;

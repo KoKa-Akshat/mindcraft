@@ -96,7 +96,7 @@ export default function Dashboard() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 75, damping: 16, delay: 0.22 }}
                   whileHover={{ scale: 1.05 }}
-                  onClick={() => navigate('/practice', { state: { problemText: undefined } })}
+                  onClick={() => navigate('/practice', { state: { homeworkHelp: true } })}
                 >
                   <div className={s.floatDot} />
                   <h2 className={s.floatTitle}>Homework<br />Help.</h2>
@@ -109,12 +109,10 @@ export default function Dashboard() {
 
               <div className={s.floatBOuter}>
                 <motion.div
-                  className={s.floatB}
+                  className={`${s.floatB} ${s.floatDisabled}`}
                   initial={{ opacity: 0, y: 36 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 75, damping: 16, delay: 0.38 }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => navigate('/practice')}
                 >
                   <div className={s.floatDot} />
                   <h2 className={s.floatTitle}>This Week's<br />Problems</h2>

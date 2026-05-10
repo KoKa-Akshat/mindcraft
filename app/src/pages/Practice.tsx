@@ -127,13 +127,17 @@ export default function Practice() {
   const [error,      setError]      = useState('')
   const [slowLoad,   setSlowLoad]   = useState(false)
 
-  // Auto-submit if navigated from dashboard with problemText; skip to exam-pick if examHelp
+  // Auto-submit if navigated from dashboard with problemText; open the requested flow otherwise.
   useEffect(() => {
-    const state = location.state as { problemText?: string; examHelp?: boolean } | null
+    const state = location.state as { problemText?: string; examHelp?: boolean; homeworkHelp?: boolean } | null
     if (state?.problemText) {
       setMode('solver')
       setProblem(state.problemText)
       submitProblem(state.problemText)
+      window.history.replaceState({}, '')
+    } else if (state?.homeworkHelp) {
+      setMode('solver')
+      setSPhase('input')
       window.history.replaceState({}, '')
     } else if (state?.examHelp) {
       setMode('practice')
