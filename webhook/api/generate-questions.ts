@@ -53,7 +53,7 @@ const LEVEL_GUIDANCE: Record<number, string> = {
 const EXAM_STYLE: Record<string, string> = {
   ACT:     'ACT Math: phrasing like "which of the following", speed-focused, concrete numbers, word-problem contexts (plumber, car, store). 5 choices on real ACT but generate 4 here.',
   SAT:     'SAT Math: context-heavy with data tables or graphs described in text, real-world framing, "based on the equation above", units explicitly stated.',
-  IB:      'IB Mathematics SL/HL: exact values (leave in terms of π or √), "Hence find…", "Show that…", "Write down the value of…", multi-part questions welcome.',
+  IB:      'IB Mathematics AI SL: modelling-first, calculator-aware, context-rich. Emphasise interpreting graphs/tables, statistics/probability, functions, financial or real-world contexts, and short written conclusions.',
   AP:      'AP Calculus/Precalculus: "Let f be defined by…", interval notation, "on the open interval", domain/range conditions, correct function notation throughout.',
   General: 'Clear, friendly high school math. Straightforward wording. Emphasise understanding over speed.',
 }
@@ -61,7 +61,7 @@ const EXAM_STYLE: Record<string, string> = {
 const EXAM_BLUEPRINT: Record<string, string> = {
   ACT: 'Prioritise fast ACT multiple-choice math: concise wording, numeric answers, common traps, and realistic pacing. Good contexts: rates, percent change, systems, functions, probability, statistics, quadratics, and coordinate-style algebra. Avoid long proofs.',
   SAT: 'Prioritise Digital SAT math: context-heavy algebra, units, tables described in text, equivalent forms, function notation, and distractors based on misreading the setup. Make it feel like SAT math, not a generic worksheet.',
-  IB: 'Prioritise IB Mathematics style: exact values, symbolic reasoning, "hence" / "show that" flavor even though output is multiple-choice, and multi-step setup. Include distractors for manipulation errors, domain restrictions, surds, pi, and exact forms.',
+  IB: 'Prioritise IB Math Applications & Interpretation SL style: modelling, technology-friendly calculation, graph/table interpretation, statistics/probability, functions in context, and explaining what an answer means. Avoid AA-heavy proof style, advanced vectors, complex-number depth, and abstract exact-form manipulation unless the concept explicitly requires it.',
   AP: 'Prioritise AP Precalculus/Calculus readiness: function notation, intervals, transformations, rates of change, graphical/table descriptions in words, and notation discipline. Probe reasoning, not only computation.',
   General: 'Prioritise clear high-school skill-building questions that diagnose the core concept without unnecessary exam flavor.',
 }
@@ -69,7 +69,7 @@ const EXAM_BLUEPRINT: Record<string, string> = {
 const EXAM_FORMAT_RULES: Record<string, string> = {
   ACT: 'Use short, direct stems. Ask for the answer quickly. Distractors should reflect arithmetic slips, sign errors, and choosing the tempting shortcut too soon.',
   SAT: 'Use a wordier setup with explicit units, equation interpretation, table/graph descriptions, or equivalent-form reasoning. The hard part should often be translating the setup.',
-  IB: 'Use symbolic or exact-form reasoning. Even as multiple choice, make the question feel like a compressed multi-part prompt with method, notation, and exact values mattering.',
+  IB: 'Use realistic AI SL contexts, tables/graphs described in text, calculator-ready numbers, and answer choices that test interpretation. Include a brief conclusion in the explanation, not just computation.',
   AP: 'Use function notation, intervals, graphical or tabular descriptions, rate/change language, and notation discipline. The question should test reasoning about behavior, not only solving an equation.',
   General: 'Use clean skill-building prompts with varied formats and no heavy exam-specific style.',
 }
