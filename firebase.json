@@ -89,7 +89,25 @@
     {
       "target": "marketing",
       "public": ".",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "app/**", "functions/**"],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**",
+        "app/**",
+        "functions/**",
+        "webhook/**",
+        "ml/**",
+        "homework/**",
+        "package*.json",
+        "firestore*",
+        "storage.rules",
+        "*.pdf",
+        "*.xlsx",
+        "*.md",
+        "*.log",
+        "Logo.png",
+        "kite.jpg"
+      ],
       "rewrites": []
     }
   ]
