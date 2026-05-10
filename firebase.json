@@ -92,6 +92,10 @@
       "ignore": [
         "firebase.json",
         "**/.*",
+        ".git/**",
+        ".github/**",
+        ".firebase/**",
+        ".claude/**",
         "**/node_modules/**",
         "app/**",
         "functions/**",
