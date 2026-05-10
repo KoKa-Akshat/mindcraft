@@ -4,8 +4,7 @@
  * Root of the React app. Handles:
  *   - Auth state listening (Firebase onAuthStateChanged)
  *   - Route protection via AuthGuard
- *   - Public landing flow at "/" for signed-out visitors
- *   - Role-based redirect for signed-in visitors
+ *   - Public landing flow at "/" for all visitors
  *
  * Adding a new page:
  *   1. Create the component in pages/
@@ -53,24 +52,6 @@ function RoleRedirect() {
   return <Navigate to={dest} replace />
 }
 
-/** Sends signed-out visitors to the public landing page and signed-in users to their app home. */
-function PublicHomeRedirect() {
-  const [user, setUser] = useState<User | null | undefined>(undefined)
-
-  useEffect(() => onAuthStateChanged(auth, setUser), [])
-
-  useEffect(() => {
-    if (user === null) window.location.replace('/landing.html')
-  }, [user])
-
-  if (user === undefined || user === null) return null
-  return (
-    <UserContext.Provider value={user}>
-      <RoleRedirect />
-    </UserContext.Provider>
-  )
-}
-
 /** Blocks unauthenticated access. Redirects to /login if not signed in. */
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null | undefined>(undefined)
@@ -105,8 +86,8 @@ export default function App() {
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
 
-        {/* Root: public landing for visitors, dashboard redirect for signed-in users */}
-        <Route path="/" element={<PublicHomeRedirect />} />
+        {/* Root: public website. App entry stays on /dashboard, /tutor, etc. */}
+        <Route path="/" element={<Navigate to="/landing.html" replace />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />
