@@ -2318,7 +2318,7 @@
 .roadmapStage {
   position: relative;
   width: min(760px, 100%);
-  margin: 4px auto 0;
+  margin: 8px auto 0;
 }
 
 .roadmapSvg {
@@ -2331,24 +2331,21 @@
 
 .roadmapIsland {
   position: absolute;
-  width: min(310px, calc(50% - 26px));
-  min-height: 100px;
-  display: grid;
-  grid-template-columns: auto auto 1fr;
+  width: 210px;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 16px;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 26px 26px 30px 18px;
-  background:
-    radial-gradient(circle at 74% 12%, rgba(255,255,255,0.18), transparent 24%),
-    linear-gradient(145deg, rgba(91,139,132,0.72), rgba(12,54,66,0.94));
-  box-shadow:
-    0 20px 42px rgba(0,0,0,0.24),
-    inset 0 1px 0 rgba(255,255,255,0.10);
+  justify-content: flex-start;
+  gap: 3px;
+  padding: 0 12px 12px;
+  border: 0;
+  border-radius: 28px;
+  background: transparent;
+  box-shadow: none;
   color: var(--text);
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   font-family: var(--f-body);
   transform: translateY(0);
   animation: roadmapFloat 4.8s ease-in-out infinite;
@@ -2359,83 +2356,80 @@
 .roadmapIsland::after {
   content: "";
   position: absolute;
-  left: 14%;
-  right: 18%;
-  bottom: -10px;
-  height: 18px;
+  left: 26%;
+  right: 26%;
+  bottom: 34px;
+  height: 20px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.20);
-  filter: blur(8px);
+  background: rgba(0,0,0,0.22);
+  filter: blur(10px);
   z-index: -1;
 }
 
 .roadmapIsland:hover {
-  transform: translateY(-4px);
-  border-color: rgba(196,245,71,0.42);
-  box-shadow:
-    0 24px 48px rgba(0,0,0,0.28),
-    0 0 34px rgba(196,245,71,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.13);
+  transform: translateY(-5px);
 }
 
 .roadmapIslandStart {
-  background:
-    radial-gradient(circle at 76% 14%, rgba(196,245,71,0.24), transparent 25%),
-    linear-gradient(145deg, rgba(88,132,112,0.84), rgba(11,62,72,0.96));
-  border-color: rgba(196,245,71,0.35);
+  filter: drop-shadow(0 0 28px rgba(196,245,71,0.20));
 }
 
 .roadmapStep {
-  width: 30px;
-  height: 30px;
+  position: absolute;
+  top: 18px;
+  left: 36px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
   display: inline-grid;
   place-items: center;
-  border-radius: 12px;
-  background: rgba(196,245,71,0.18);
-  color: var(--accent);
+  border-radius: 50%;
+  background: #C4F547;
+  color: #0D3540;
   font-family: var(--f-display);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 900;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.22);
 }
 
-.roadmapCastle {
-  width: 44px;
-  height: 44px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.10);
-  font-size: 24px;
+.castleMark {
+  width: 150px;
+  height: 150px;
+  flex: 0 0 auto;
+  overflow: visible;
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,0.26));
 }
 
 .roadmapBody {
+  width: 100%;
   min-width: 0;
   display: grid;
-  gap: 4px;
+  gap: 3px;
+  margin-top: -12px;
 }
 
 .roadmapName {
   color: var(--text);
   font-family: var(--f-display);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.02;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.32);
 }
 
 .roadmapMeta {
-  color: rgba(255,255,255,0.60);
+  color: rgba(255,255,255,0.58);
   font-size: 12px;
   font-weight: 700;
   line-height: 1.25;
 }
 
 .roadmapStartBadge {
-  grid-column: 1 / -1;
-  justify-self: start;
   display: inline-flex;
   align-items: center;
   min-height: 28px;
-  padding: 0 12px;
+  margin-top: 8px;
+  padding: 0 14px;
   border-radius: 999px;
   background: var(--accent);
   color: #0D3540;
@@ -2706,11 +2700,16 @@
   }
 
   .roadmapIsland {
-    width: calc(100% - 24px);
+    width: 210px;
     left: 12px !important;
     right: auto !important;
-    min-height: 94px;
-    padding: 14px;
+    min-height: 170px;
+    padding: 0 12px 12px;
+  }
+
+  .roadmapIsland:nth-of-type(even) {
+    left: auto !important;
+    right: 12px !important;
   }
 
   .roadmapName {

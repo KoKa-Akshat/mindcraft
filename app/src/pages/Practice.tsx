@@ -85,7 +85,33 @@ const CONFIDENCE_OPTIONS: Record<ExamType, Record<Confidence, { label: string; d
 }
 
 const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
-  ACT:     ['linear_equations', 'coordinate_geometry', 'systems_of_linear_equations', 'quadratic_equations', 'functions_basics', 'word_problems', 'percent_ratio', 'basic_probability', 'descriptive_statistics'],
+  ACT: [
+    'number_properties',
+    'percent_ratio',
+    'linear_equations',
+    'linear_inequalities',
+    'absolute_value',
+    'systems_of_linear_equations',
+    'exponent_rules',
+    'polynomials',
+    'factoring_polynomials',
+    'quadratic_equations',
+    'rational_expressions',
+    'functions_basics',
+    'function_transformations',
+    'word_problems',
+    'lines_angles',
+    'triangles_congruence',
+    'right_triangle_geometry',
+    'coordinate_geometry',
+    'circles_geometry',
+    'area_volume',
+    'geometric_transformations',
+    'trigonometry_basics',
+    'descriptive_statistics',
+    'data_interpretation',
+    'basic_probability',
+  ],
   SAT:     ['linear_equations', 'coordinate_geometry', 'functions_basics', 'quadratic_equations', 'rational_expressions', 'percent_ratio', 'descriptive_statistics', 'exponent_rules', 'absolute_value'],
   IB:      ['functions_basics', 'function_transformations', 'quadratic_equations', 'polynomials', 'rational_expressions', 'trigonometry_basics', 'exponent_rules', 'basic_probability', 'descriptive_statistics'],
   AP:      ['functions_basics', 'function_transformations', 'polynomials', 'rational_expressions', 'exponent_rules', 'quadratic_equations', 'trigonometry_basics', 'descriptive_statistics', 'linear_equations'],
@@ -129,6 +155,48 @@ function PixelCraft({ size = 'sm', className = '' }: { size?: 'sm' | 'lg' | 'md'
       </span>
       <span className={s.pixelHeart} />
     </div>
+  )
+}
+
+function CastleMark({ index, active }: { index: number; active: boolean }) {
+  const hue = index % 3 === 0 ? '#C4F547' : index % 3 === 1 ? '#4ECDC4' : '#FF8A8A'
+  return (
+    <svg className={s.castleMark} viewBox="0 0 150 150" aria-hidden="true">
+      <defs>
+        <linearGradient id={`castleWall-${index}`} x1="28" y1="36" x2="128" y2="120" gradientUnits="userSpaceOnUse">
+          <stop stopColor={active ? '#F8FFDF' : '#F2F7F3'} />
+          <stop offset="1" stopColor={active ? '#96B29D' : '#7FA0A3'} />
+        </linearGradient>
+        <linearGradient id={`castleLand-${index}`} x1="14" y1="102" x2="134" y2="132" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#5D8B76" />
+          <stop offset="1" stopColor="#174C55" />
+        </linearGradient>
+        <filter id={`castleGlow-${index}`} x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="5" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+
+      <ellipse cx="76" cy="127" rx="54" ry="11" fill="rgba(0,0,0,.20)" />
+      <path
+        d="M20 103 C34 87 51 95 61 82 C72 68 89 70 99 84 C111 98 127 91 136 107 C123 125 42 130 20 103Z"
+        fill={`url(#castleLand-${index})`}
+        stroke="rgba(196,245,71,.28)"
+        strokeWidth="2"
+      />
+      <path d="M37 60 H113 V104 H37Z" fill={`url(#castleWall-${index})`} stroke="#153A42" strokeWidth="4" />
+      <path d="M49 40 H68 V104 H49Z" fill={`url(#castleWall-${index})`} stroke="#153A42" strokeWidth="4" />
+      <path d="M82 36 H104 V104 H82Z" fill={`url(#castleWall-${index})`} stroke="#153A42" strokeWidth="4" />
+      <path d="M48 39 L58 24 L69 39Z" fill={hue} stroke="#153A42" strokeWidth="4" />
+      <path d="M81 35 L93 17 L105 35Z" fill={hue} stroke="#153A42" strokeWidth="4" />
+      <path d="M36 60 L48 46 L60 60Z" fill={hue} stroke="#153A42" strokeWidth="4" />
+      <path d="M99 60 L112 46 L125 60Z" fill={hue} stroke="#153A42" strokeWidth="4" />
+      <path d="M102 60 H125 V104 H102Z" fill={`url(#castleWall-${index})`} stroke="#153A42" strokeWidth="4" />
+      <path d="M67 82 C67 72 83 72 83 82 V104 H67Z" fill="#12333B" />
+      <rect x="53" y="67" width="10" height="12" rx="3" fill="#12333B" />
+      <rect x="89" y="64" width="10" height="12" rx="3" fill="#12333B" />
+      <circle cx="122" cy="31" r="7" fill={hue} filter={`url(#castleGlow-${index})`} opacity={active ? 1 : .74} />
+    </svg>
   )
 }
 
@@ -580,9 +648,9 @@ export default function Practice() {
 
             {/* ── Gap analysis: student-facing roadmap ── */}
             {pPhase === 'gap-analysis' && assessConcepts.length > 0 && (() => {
-              const roadmap = pathConcepts.slice(0, 7)
+              const roadmap = pathConcepts
               const bridgeByTarget = new Map(bridgeRecommendations.map(bridge => [bridge.toId, bridge]))
-              const roadmapHeight = roadmap.length * 132 + 56
+              const roadmapHeight = roadmap.length * 190 + 80
 
               return (
                 <div className={s.gapAnalysisScreen}>
@@ -615,18 +683,17 @@ export default function Practice() {
                         </filter>
                       </defs>
                       {roadmap.slice(0, -1).map((c, i) => {
-                        const sx = i % 2 === 0 ? 188 : 572
-                        const sy = i * 132 + 96
-                        const ex = i % 2 === 0 ? 572 : 188
-                        const ey = (i + 1) * 132 + 58
+                        const sx = i % 2 === 0 ? 170 : 590
+                        const sy = i * 190 + 128
+                        const ex = i % 2 === 0 ? 590 : 170
+                        const ey = (i + 1) * 190 + 72
                         const cy = (sy + ey) / 2
                         return (
                           <path
                             key={c.id}
                             d={`M${sx},${sy} C${sx},${cy} ${ex},${cy} ${ex},${ey}`}
-                            stroke="rgba(196,245,71,0.28)"
-                            strokeWidth="3"
-                            strokeDasharray="8 8"
+                            stroke="rgba(196,245,71,0.24)"
+                            strokeWidth="5"
                             strokeLinecap="round"
                             fill="none"
                             filter="url(#roadmapGlow)"
@@ -644,19 +711,19 @@ export default function Practice() {
                           key={c.id}
                           className={`${s.roadmapIsland} ${isStart ? s.roadmapIslandStart : ''}`}
                           style={{
-                            top: `${i * 132 + 18}px`,
-                            ...(isLeft ? { left: '18px' } : { right: '18px' }),
+                            top: `${i * 190 + 16}px`,
+                            ...(isLeft ? { left: '48px' } : { right: '48px' }),
                             ['--float-delay' as string]: `${i * 0.24}s`,
                           }}
                           onClick={() => startSession(c.id, bridge?.level ?? getRecommendedLevel(c.id), bridge)}
                         >
                           <span className={s.roadmapStep}>{i + 1}</span>
-                          <span className={s.roadmapCastle}>{isStart ? '🏰' : bridge ? '🌉' : c.emoji}</span>
+                          <CastleMark index={i} active={isStart} />
                           <span className={s.roadmapBody}>
                             <span className={s.roadmapName}>{c.label}</span>
                             <span className={s.roadmapMeta}>
                               {bridge
-                                ? `Use ${bridgeLabel(bridge.fromId)} to unlock this`
+                                ? `Use ${bridgeLabel(bridge.fromId)} here`
                                 : `${getRoadmapTone(c.id)} practice`}
                             </span>
                           </span>
