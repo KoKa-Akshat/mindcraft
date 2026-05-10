@@ -235,14 +235,21 @@ export default function Practice() {
   // The single best concept to start with (hardest first, then kinda)
   const topPriority = hardConcepts[0] ?? kindaConcepts[0] ?? easyConcepts[0] ?? assessConcepts[0]
 
-  function getGapInsight(): string {
+  function getRoadmapSummary(): string {
     if (hardConcepts.length >= 3)
-      return `${hardConcepts.length} real gaps found. Focus hard on these — they're the quickest way to boost your ${exam} score.`
+      return `The first islands rebuild the rough spots. After that, the path moves into exam-speed practice.`
     if (hardConcepts.length > 0)
-      return `${hardConcepts.length} gap${hardConcepts.length > 1 ? 's' : ''} to close before exam day. ${kindaConcepts.length > 0 ? `${kindaConcepts.length} more to sharpen.` : "You're close!"}`
+      return `Start with the trickiest skill, then follow the path into the topics that are nearly there.`
     if (kindaConcepts.length > 0)
-      return `Solid foundation! ${kindaConcepts.length} concept${kindaConcepts.length > 1 ? 's' : ''} need a bit more practice before you're exam-ready.`
-    return `You're in great shape — a quick review and you're ready to ace it.`
+      return `You have a solid base. This path sharpens the few skills that still need polish.`
+    return `You're in great shape. This route keeps you warm and pushes into challenge practice.`
+  }
+
+  function getRoadmapTone(conceptId: string): string {
+    const conf = confidenceMap[conceptId]
+    if (conf === 'hard') return 'Foundation'
+    if (conf === 'kinda') return 'Sharpen'
+    return 'Stretch'
   }
 
   // ── Practice helpers ──────────────────────────────────────────────────────
@@ -571,139 +578,113 @@ export default function Practice() {
               </div>
             )}
 
-            {/* ── Gap analysis: dedicated breakdown screen ── */}
-            {pPhase === 'gap-analysis' && assessConcepts.length > 0 && (
-              <div className={s.gapAnalysisScreen}>
-                <div className={s.gapAnalysisHeader}>
-                  <div className={s.mascotRow}>
-                    <PixelCraft size="sm" />
-                    <div className={s.speechBubble}>
-                      Here's what I found. Let's fix these in the right order.
+            {/* ── Gap analysis: student-facing roadmap ── */}
+            {pPhase === 'gap-analysis' && assessConcepts.length > 0 && (() => {
+              const roadmap = pathConcepts.slice(0, 7)
+              const bridgeByTarget = new Map(bridgeRecommendations.map(bridge => [bridge.toId, bridge]))
+              const roadmapHeight = roadmap.length * 132 + 56
+
+              return (
+                <div className={s.gapAnalysisScreen}>
+                  <div className={s.roadmapHeader}>
+                    <div className={s.mascotRow}>
+                      <PixelCraft size="sm" />
+                      <div className={s.speechBubble}>
+                        Your route is ready. Start at the first island.
+                      </div>
                     </div>
+                    {exam && <span className={s.pathExamBadge}>{exam} Roadmap</span>}
                   </div>
-                  {exam && <span className={s.pathExamBadge}>{exam} Gap Analysis</span>}
-                </div>
 
-                <p className={s.gapInsight}>{getGapInsight()}</p>
-
-                {/* Visual gap breakdown */}
-                <div className={s.gapBuckets}>
-                  {hardConcepts.length > 0 && (
-                    <div className={`${s.gapBucket} ${s.gapBucketHard}`}>
-                      <div className={s.gapBucketHeader}>
-                        <span className={s.gapBucketIcon}>🔴</span>
-                        <span className={s.gapBucketTitle}>Needs work</span>
-                        <span className={s.gapBucketCount}>{hardConcepts.length}</span>
-                      </div>
-                      <div className={s.gapBucketConcepts}>
-                        {hardConcepts.map(c => (
-                          <span key={c.id} className={`${s.gapChip} ${s.gapChipHard}`}>
-                            {c.emoji} {c.label}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {kindaConcepts.length > 0 && (
-                    <div className={`${s.gapBucket} ${s.gapBucketKinda}`}>
-                      <div className={s.gapBucketHeader}>
-                        <span className={s.gapBucketIcon}>🟡</span>
-                        <span className={s.gapBucketTitle}>Almost there</span>
-                        <span className={s.gapBucketCount}>{kindaConcepts.length}</span>
-                      </div>
-                      <div className={s.gapBucketConcepts}>
-                        {kindaConcepts.map(c => (
-                          <span key={c.id} className={`${s.gapChip} ${s.gapChipKinda}`}>
-                            {c.emoji} {c.label}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {easyConcepts.length > 0 && (
-                    <div className={`${s.gapBucket} ${s.gapBucketEasy}`}>
-                      <div className={s.gapBucketHeader}>
-                        <span className={s.gapBucketIcon}>🟢</span>
-                        <span className={s.gapBucketTitle}>Confident</span>
-                        <span className={s.gapBucketCount}>{easyConcepts.length}</span>
-                      </div>
-                      <div className={s.gapBucketConcepts}>
-                        {easyConcepts.map(c => (
-                          <span key={c.id} className={`${s.gapChip} ${s.gapChipEasy}`}>
-                            {c.emoji} {c.label}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {bridgeRecommendations.length > 0 && (
-                  <div className={s.bridgePanel}>
-                    <div className={s.bridgeHeader}>
-                      <span className={s.bridgeEyebrow}>Atomic bridge practice</span>
-                      <span className={s.bridgeHint}>Use a strength to repair a weak link</span>
-                    </div>
-                    {bridgeRecommendations.map(bridge => (
-                      <div key={`${bridge.fromId}-${bridge.toId}`} className={s.bridgeCard}>
-                        <div className={s.bridgeText}>
-                          <div className={s.bridgePath}>
-                            <span>{bridgeLabel(bridge.fromId)}</span>
-                            <span className={s.bridgeArrow}>→</span>
-                            <span>{bridgeLabel(bridge.toId)}</span>
-                          </div>
-                          <p>
-                            You said {bridgeLabel(bridge.fromId)} feels strong. We'll use it to build {bridgeLabel(bridge.toId)} instead of drilling the weak topic alone.
-                          </p>
-                        </div>
-                        <button
-                          className={s.bridgeBtn}
-                          onClick={() => startSession(bridge.toId, bridge.level, bridge)}
-                        >
-                          Bridge it →
-                        </button>
-                      </div>
-                    ))}
+                  <div className={s.roadmapIntro}>
+                    <h2>Your study path</h2>
+                    <p>{getRoadmapSummary()} Follow the islands in order.</p>
                   </div>
-                )}
 
-                {/* Recommended first action */}
-                {topPriority && (
-                  <div className={s.gapRecommend}>
-                    <div className={s.gapRecommendLeft}>
-                      <span className={s.gapRecommendLabel}>Craft recommends — start here</span>
-                      <div className={s.gapRecommendConcept}>
-                        <span style={{ fontSize: 28 }}>{topPriority.emoji}</span>
-                        <div>
-                          <div className={s.gapRecommendName}>{topPriority.label}</div>
-                          <div className={s.gapRecommendLevel}>
-                            Level {getRecommendedLevel(topPriority.id)} — {
-                              getRecommendedLevel(topPriority.id) === 1
-                                ? 'Foundation questions, rebuild the core'
-                                : getRecommendedLevel(topPriority.id) === 2
-                                ? 'Applied questions, sharpen the edge'
-                                : 'Challenge questions, exam-ready depth'
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      className={s.gapStartBtn}
-                      onClick={() => startSession(topPriority.id, getRecommendedLevel(topPriority.id))}
+                  <div className={s.roadmapStage} style={{ height: `${roadmapHeight}px` }}>
+                    <svg
+                      className={s.roadmapSvg}
+                      viewBox={`0 0 760 ${roadmapHeight}`}
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
                     >
-                      Start now →
-                    </button>
-                  </div>
-                )}
+                      <defs>
+                        <filter id="roadmapGlow">
+                          <feGaussianBlur stdDeviation="3" result="blur" />
+                          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                        </filter>
+                      </defs>
+                      {roadmap.slice(0, -1).map((c, i) => {
+                        const sx = i % 2 === 0 ? 188 : 572
+                        const sy = i * 132 + 96
+                        const ex = i % 2 === 0 ? 572 : 188
+                        const ey = (i + 1) * 132 + 58
+                        const cy = (sy + ey) / 2
+                        return (
+                          <path
+                            key={c.id}
+                            d={`M${sx},${sy} C${sx},${cy} ${ex},${cy} ${ex},${ey}`}
+                            stroke="rgba(196,245,71,0.28)"
+                            strokeWidth="3"
+                            strokeDasharray="8 8"
+                            strokeLinecap="round"
+                            fill="none"
+                            filter="url(#roadmapGlow)"
+                          />
+                        )
+                      })}
+                    </svg>
 
-                <button className={s.gapViewAll} onClick={() => setPPhase('path')}>
-                  View full study path →
-                </button>
-              </div>
-            )}
+                    {roadmap.map((c, i) => {
+                      const bridge = bridgeByTarget.get(c.id)
+                      const isLeft = i % 2 === 0
+                      const isStart = c.id === topPriority?.id
+                      return (
+                        <button
+                          key={c.id}
+                          className={`${s.roadmapIsland} ${isStart ? s.roadmapIslandStart : ''}`}
+                          style={{
+                            top: `${i * 132 + 18}px`,
+                            ...(isLeft ? { left: '18px' } : { right: '18px' }),
+                            ['--float-delay' as string]: `${i * 0.24}s`,
+                          }}
+                          onClick={() => startSession(c.id, bridge?.level ?? getRecommendedLevel(c.id), bridge)}
+                        >
+                          <span className={s.roadmapStep}>{i + 1}</span>
+                          <span className={s.roadmapCastle}>{isStart ? '🏰' : bridge ? '🌉' : c.emoji}</span>
+                          <span className={s.roadmapBody}>
+                            <span className={s.roadmapName}>{c.label}</span>
+                            <span className={s.roadmapMeta}>
+                              {bridge
+                                ? `Use ${bridgeLabel(bridge.fromId)} to unlock this`
+                                : `${getRoadmapTone(c.id)} practice`}
+                            </span>
+                          </span>
+                          {isStart && <span className={s.roadmapStartBadge}>Start here</span>}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  {topPriority && (
+                    <div className={s.roadmapActions}>
+                      <button
+                        className={s.gapStartBtn}
+                        onClick={() => {
+                          const bridge = bridgeByTarget.get(topPriority.id)
+                          startSession(topPriority.id, bridge?.level ?? getRecommendedLevel(topPriority.id), bridge)
+                        }}
+                      >
+                        Start roadmap →
+                      </button>
+                      <button className={s.gapViewAll} onClick={() => setPPhase('path')}>
+                        See whole map →
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
 
             {/* ── Path: Duolingo-style concept map ── */}
             {pPhase === 'path' && (
@@ -712,7 +693,7 @@ export default function Practice() {
                   <div className={s.mascotRow}>
                     <PixelCraft size="sm" />
                     <div className={s.speechBubble}>
-                      {assessConcepts.length > 0 ? getGapInsight() : 'What do you want to practice today?'}
+                      {assessConcepts.length > 0 ? getRoadmapSummary() : 'What do you want to practice today?'}
                     </div>
                   </div>
                   <div className={s.pathMeta}>

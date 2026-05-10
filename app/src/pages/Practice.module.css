@@ -2267,10 +2267,10 @@
 ══════════════════════════════════════════════════════════════════════════════ */
 
 .gapAnalysisScreen {
-  max-width: 620px;
+  width: min(820px, 100%);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
   animation: fadeUp .3s ease both;
 }
 
@@ -2285,6 +2285,175 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.roadmapHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.roadmapIntro {
+  max-width: 620px;
+}
+
+.roadmapIntro h2 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-family: var(--f-display);
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: .98;
+  letter-spacing: 0;
+}
+
+.roadmapIntro p {
+  margin: 0;
+  color: rgba(255,255,255,0.66);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.roadmapStage {
+  position: relative;
+  width: min(760px, 100%);
+  margin: 4px auto 0;
+}
+
+.roadmapSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.roadmapIsland {
+  position: absolute;
+  width: min(310px, calc(50% - 26px));
+  min-height: 100px;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 26px 26px 30px 18px;
+  background:
+    radial-gradient(circle at 74% 12%, rgba(255,255,255,0.18), transparent 24%),
+    linear-gradient(145deg, rgba(91,139,132,0.72), rgba(12,54,66,0.94));
+  box-shadow:
+    0 20px 42px rgba(0,0,0,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--f-body);
+  transform: translateY(0);
+  animation: roadmapFloat 4.8s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.roadmapIsland::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 18%;
+  bottom: -10px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.20);
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.roadmapIsland:hover {
+  transform: translateY(-4px);
+  border-color: rgba(196,245,71,0.42);
+  box-shadow:
+    0 24px 48px rgba(0,0,0,0.28),
+    0 0 34px rgba(196,245,71,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.13);
+}
+
+.roadmapIslandStart {
+  background:
+    radial-gradient(circle at 76% 14%, rgba(196,245,71,0.24), transparent 25%),
+    linear-gradient(145deg, rgba(88,132,112,0.84), rgba(11,62,72,0.96));
+  border-color: rgba(196,245,71,0.35);
+}
+
+.roadmapStep {
+  width: 30px;
+  height: 30px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(196,245,71,0.18);
+  color: var(--accent);
+  font-family: var(--f-display);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.roadmapCastle {
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.10);
+  font-size: 24px;
+}
+
+.roadmapBody {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.roadmapName {
+  color: var(--text);
+  font-family: var(--f-display);
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.roadmapMeta {
+  color: rgba(255,255,255,0.60);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.roadmapStartBadge {
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0D3540;
+  font-family: var(--f-display);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.roadmapActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@keyframes roadmapFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
 }
 
 .gapInsight {
@@ -2522,6 +2691,43 @@
   align-self: flex-start;
 }
 .gapViewAll:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+
+@media (max-width: 640px) {
+  .roadmapIntro h2 {
+    font-size: 34px;
+  }
+
+  .roadmapStage {
+    width: 100%;
+  }
+
+  .roadmapSvg {
+    opacity: .45;
+  }
+
+  .roadmapIsland {
+    width: calc(100% - 24px);
+    left: 12px !important;
+    right: auto !important;
+    min-height: 94px;
+    padding: 14px;
+  }
+
+  .roadmapName {
+    font-size: 16px;
+  }
+
+  .roadmapActions {
+    align-items: stretch;
+  }
+
+  .roadmapActions .gapStartBtn,
+  .roadmapActions .gapViewAll {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
 
 /* ── Path screen additions ───────────────────────────────────────────────── */
 
