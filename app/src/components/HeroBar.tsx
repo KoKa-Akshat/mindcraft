@@ -41,33 +41,30 @@ export default function HeroBar({ greeting, name, nextSession, tutorId }: Props)
 
   return (
     <div className={s.strip}>
-      <div className={s.topRow}>
-        <Link to="/dashboard" className={s.brand}>
-          <span className={s.brandText}>Mind<span>Craft</span></span>
-        </Link>
-
-        {user && (
-          <div className={s.userRow}>
-            <div className={s.avatar}>
-              {(user.displayName?.[0] ?? user.email?.[0] ?? '?').toUpperCase()}
-            </div>
-            <button
-              className={s.signOutBtn}
-              onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
-              title="Sign out"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-                <polyline points="16 17 21 12 16 7"/>
-                <line x1="21" y1="12" x2="9" y2="12"/>
-              </svg>
-            </button>
+      {user && (
+        <div className={s.userRow}>
+          <div className={s.avatar}>
+            {(user.displayName?.[0] ?? user.email?.[0] ?? '?').toUpperCase()}
           </div>
-        )}
-      </div>
+          <button
+            className={s.signOutBtn}
+            onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
+            title="Sign out"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </button>
+        </div>
+      )}
 
       <div className={s.bottomRow}>
         <div className={s.greetingBlock}>
+          <Link to="/dashboard" className={s.brand}>
+            <span className={s.brandText}>Mind<span>Craft</span></span>
+          </Link>
           <p className={s.kicker}>{todayLabel()}</p>
           <h1 className={s.greeting}>
             {greeting}, <em>{name}</em>

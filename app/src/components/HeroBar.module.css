@@ -2,9 +2,8 @@
   position: relative;
   overflow: hidden;
   display: grid;
-  gap: 14px;
-  margin-bottom: 26px;
-  padding: 22px 24px 24px;
+  margin-bottom: 22px;
+  padding: 22px 24px;
   border-radius: 22px;
   background:
     radial-gradient(circle at 12% 0%, rgba(196, 245, 71, 0.20), transparent 32%),
@@ -16,31 +15,23 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.topRow,
 .bottomRow {
   position: relative;
   z-index: 1;
 }
 
-.topRow {
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  align-items: center;
-  gap: 16px;
-}
-
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   color: #ffffff;
   text-decoration: none;
-  min-width: 0;
+  width: fit-content;
+  margin-bottom: 22px;
 }
 
 .brandText {
   font-family: var(--f-display);
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 900;
   letter-spacing: 0;
   line-height: 1;
@@ -56,7 +47,7 @@
   justify-content: center;
   gap: 4px;
   min-width: 0;
-  padding: 3px;
+  padding: 4px;
   border-radius: 14px;
   background: rgba(4, 18, 26, 0.20);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -89,6 +80,10 @@
 }
 
 .userRow {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -141,10 +136,10 @@
 
 .bottomRow {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(360px, max-content) minmax(230px, max-content) max-content;
-  align-items: center;
+  grid-template-columns: minmax(360px, 1fr) minmax(390px, max-content) minmax(230px, max-content) max-content;
+  align-items: end;
   gap: 18px;
-  min-height: 78px;
+  min-height: 88px;
   padding: 0;
 }
 
@@ -153,7 +148,7 @@
 }
 
 .kicker {
-  margin: 0 0 5px;
+  margin: 0 0 4px;
   color: rgba(255, 255, 255, 0.48);
   font-family: var(--f-mono);
   font-size: 11px;
@@ -165,7 +160,7 @@
   margin: 0;
   color: #ffffff;
   font-family: var(--f-display);
-  font-size: 27px;
+  font-size: 25px;
   font-weight: 900;
   line-height: 1.08;
   letter-spacing: 0;
@@ -312,6 +307,7 @@
   .bottomRow {
     grid-template-columns: 1fr;
     align-items: start;
+    padding-top: 34px;
   }
 
   .btns {
@@ -321,7 +317,7 @@
 
 @media (max-width: 700px) {
   .strip {
-    padding: 14px;
+    padding: 16px;
     border-radius: 18px;
   }
 
@@ -330,7 +326,7 @@
   }
 
   .brandText {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .navLink {

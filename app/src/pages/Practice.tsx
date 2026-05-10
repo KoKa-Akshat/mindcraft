@@ -1177,54 +1177,70 @@ export default function Practice() {
         {/* ═══════ SOLVER MODE ═══════ */}
         {mode === 'solver' && (
           <div className={s.solverWrap}>
-            <div className={s.solverHeader}>
-              <h2 className={s.solverTitle}>Problem Solver</h2>
-              <p className={s.solverSub}>
-                Paste any problem — Craft breaks it down step by step with Socratic hints.
-                {exam && <> Tuned for <strong style={{ color: 'var(--accent)' }}>{exam}</strong>.</>}
-              </p>
-            </div>
-
             {sPhase === 'input' && (
-              <div className={s.solverInput}>
-                {solverFile ? (
-                  <div className={s.fileStrip}>
-                    <span>{solverFile.type === 'application/pdf' ? '📄' : '🖼️'} {solverFile.name}</span>
-                    <button onClick={() => setSolverFile(null)}>✕</button>
+              <div className={s.solverPanel}>
+                <div className={s.solverCopy}>
+                  <span className={s.solverEyebrow}>Homework Help</span>
+                  <h2 className={s.solverTitle}>Turn a stuck problem into visual intuition.</h2>
+                  <p className={s.solverSub}>
+                    Paste the problem or upload a photo. Craft builds Socratic hint cards, concept tags, and a visual step when the math needs a graph.
+                  </p>
+                  <div className={s.solverFeatureGrid}>
+                    <span>Step-by-step hints</span>
+                    <span>Concept map logging</span>
+                    <span>Manim or SVG visuals</span>
                   </div>
-                ) : (
-                  <button className={s.uploadBtn} onClick={() => fileRef.current?.click()}>
-                    ⬆ Upload image or PDF
-                    <input
-                      ref={fileRef}
-                      type="file"
-                      accept="image/*,.pdf"
-                      style={{ display: 'none' }}
-                      onChange={e => { const f = e.target.files?.[0]; if (f) setSolverFile(f) }}
-                    />
+                </div>
+
+                <div className={s.solverInputCard}>
+                  {solverFile ? (
+                    <div className={s.fileStrip}>
+                      <span>{solverFile.type === 'application/pdf' ? '📄' : '🖼️'} {solverFile.name}</span>
+                      <button onClick={() => setSolverFile(null)}>✕</button>
+                    </div>
+                  ) : (
+                    <button className={s.uploadBtn} onClick={() => fileRef.current?.click()}>
+                      ⬆ Upload image or PDF
+                      <input
+                        ref={fileRef}
+                        type="file"
+                        accept="image/*,.pdf"
+                        style={{ display: 'none' }}
+                        onChange={e => { const f = e.target.files?.[0]; if (f) setSolverFile(f) }}
+                      />
+                    </button>
+                  )}
+                  <textarea
+                    className={s.solverTextarea}
+                    placeholder="Paste your problem here... e.g. Solve x² - 5x + 6 = 0"
+                    value={problem}
+                    onChange={e => setProblem(e.target.value)}
+                    rows={5}
+                    onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submitProblem(problem, solverFile) }}
+                  />
+                  <button
+                    className={s.solverBtn}
+                    onClick={() => submitProblem(problem, solverFile)}
+                    disabled={!problem.trim() && !solverFile}
+                  >
+                    Build my hint path →
                   </button>
-                )}
-                <textarea
-                  className={s.solverTextarea}
-                  placeholder="Paste your problem here… e.g. Solve x² − 5x + 6 = 0"
-                  value={problem}
-                  onChange={e => setProblem(e.target.value)}
-                  rows={4}
-                  onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submitProblem(problem, solverFile) }}
-                />
-                <button
-                  className={s.solverBtn}
-                  onClick={() => submitProblem(problem, solverFile)}
-                  disabled={!problem.trim() && !solverFile}
-                >
-                  Break it down →
-                </button>
-                {error && (
-                  <div className={s.errorMsg}>
-                    {error}
-                    <button onClick={() => setError('')}>✕</button>
+                  {error && (
+                    <div className={s.errorMsg}>
+                      {error}
+                      <button onClick={() => setError('')}>✕</button>
+                    </div>
+                  )}
+                  <div className={s.solverMiniVisual} aria-hidden>
+                    <span />
+                    <svg viewBox="0 0 260 120" fill="none">
+                      <path d="M18 92 H242 M36 104 V18" stroke="rgba(255,255,255,.22)" strokeWidth="2" />
+                      <path d="M38 88 C82 74 95 28 130 34 C166 40 171 89 222 28" stroke="#C4F547" strokeWidth="4" strokeLinecap="round" />
+                      <circle cx="130" cy="34" r="5" fill="#4ECDC4" />
+                      <circle cx="222" cy="28" r="5" fill="#FF6B6B" />
+                    </svg>
                   </div>
-                )}
+                </div>
               </div>
             )}
 
