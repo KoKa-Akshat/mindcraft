@@ -60,6 +60,14 @@ const EXAM_BLUEPRINT: Record<string, string> = {
   General: 'Prioritise clear high-school skill-building questions that diagnose the core concept without unnecessary exam flavor.',
 }
 
+const EXAM_FORMAT_RULES: Record<string, string> = {
+  ACT: 'Use short, direct stems. Ask for the answer quickly. Distractors should reflect arithmetic slips, sign errors, and choosing the tempting shortcut too soon.',
+  SAT: 'Use a wordier setup with explicit units, equation interpretation, table/graph descriptions, or equivalent-form reasoning. The hard part should often be translating the setup.',
+  IB: 'Use symbolic or exact-form reasoning. Even as multiple choice, make the question feel like a compressed multi-part prompt with method, notation, and exact values mattering.',
+  AP: 'Use function notation, intervals, graphical or tabular descriptions, rate/change language, and notation discipline. The question should test reasoning about behavior, not only solving an equation.',
+  General: 'Use clean skill-building prompts with varied formats and no heavy exam-specific style.',
+}
+
 type GeneratedQuestion = {
   id: string
   conceptId: string
@@ -128,6 +136,7 @@ CONCEPT KNOWLEDGE: {concept_knowledge}
 DIFFICULTY: {level_guidance}
 EXAM STYLE: {exam_style}
 EXAM BLUEPRINT: {exam_blueprint}
+EXAM FORMAT RULES: {exam_format_rules}
 
 Generate exactly {count} UNIQUE multiple-choice questions. Each question must:
 • Be GENUINELY DIAGNOSTIC — reveal whether the student understands or is guessing
@@ -225,6 +234,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       level_guidance:    LEVEL_GUIDANCE[level]        ?? LEVEL_GUIDANCE[2],
       exam_style:        EXAM_STYLE[examType]          ?? EXAM_STYLE.General,
       exam_blueprint:    EXAM_BLUEPRINT[examType]      ?? EXAM_BLUEPRINT.General,
+      exam_format_rules: EXAM_FORMAT_RULES[examType]   ?? EXAM_FORMAT_RULES.General,
       exam_tag_instruction: examType === 'General'
         ? 'one of "ACT","SAT","IB","AP" or null — only tag when the question genuinely reflects that exam style'
         : `"${examType}" for every question`,

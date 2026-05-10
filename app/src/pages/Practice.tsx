@@ -54,6 +54,34 @@ const CONFIDENCE_COPY: Record<ExamType, string> = {
   General: 'Pick the level that matches how this skill feels today.',
 }
 
+const CONFIDENCE_OPTIONS: Record<ExamType, Record<Confidence, { label: string; desc: string }>> = {
+  ACT: {
+    easy:  { label: 'Fast and accurate', desc: 'Timed ACT-style questions, fewer warmups' },
+    kinda: { label: 'Speed is shaky',    desc: 'Practice with traps and pacing called out' },
+    hard:  { label: 'Rebuild it',        desc: 'Core skill first, then ACT shortcuts' },
+  },
+  SAT: {
+    easy:  { label: 'Context-ready',     desc: 'Wordy SAT setups with units and data' },
+    kinda: { label: 'Setup is shaky',    desc: 'Translate the wording before the math' },
+    hard:  { label: 'Rebuild it',        desc: 'Foundation first, then SAT framing' },
+  },
+  IB: {
+    easy:  { label: 'Method-ready',      desc: 'Exact, multi-step IB-style reasoning' },
+    kinda: { label: 'Steps are shaky',   desc: 'Practice the method and notation' },
+    hard:  { label: 'Rebuild it',        desc: 'Concept first, then exam-style proof' },
+  },
+  AP: {
+    easy:  { label: 'Notation-ready',    desc: 'Functions, intervals, and AP-style prompts' },
+    kinda: { label: 'Reasoning is shaky', desc: 'Work through graphs, rates, and wording' },
+    hard:  { label: 'Rebuild it',        desc: 'Core idea first, then AP setup' },
+  },
+  General: {
+    easy:  { label: 'Confident',         desc: 'Challenge questions, fewer warmups' },
+    kinda: { label: 'Shaky',             desc: 'Applied practice with traps called out' },
+    hard:  { label: 'Needs rebuild',     desc: 'Foundation first, then challenge style' },
+  },
+}
+
 const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
   ACT:     ['linear_equations', 'systems_of_linear_equations', 'quadratic_equations', 'functions_basics', 'word_problems', 'percent_ratio', 'basic_probability', 'descriptive_statistics'],
   SAT:     ['linear_equations', 'functions_basics', 'quadratic_equations', 'rational_expressions', 'percent_ratio', 'descriptive_statistics', 'exponent_rules', 'absolute_value'],
@@ -220,7 +248,7 @@ export default function Practice() {
     // because exam tracks should feel ACT/SAT/IB/AP-native whenever the agent is available.
     const [dynamic, staticQs] = await Promise.all([
       generateQuestions(conceptId, lv, examType, SESSION_LENGTH),
-      Promise.resolve(getQuestions(conceptId, lv, SESSION_LENGTH)),
+      Promise.resolve(getQuestions(conceptId, lv, SESSION_LENGTH, [], examType)),
     ])
 
     // Deduplicate by id. Dynamic takes priority; static only fills outages/shortfalls.
@@ -449,6 +477,7 @@ export default function Practice() {
               const current = assessConcepts[confidenceStep]
               const selectedExam = (EXAMS.includes(exam as ExamType) ? exam : FALLBACK_EXAM) as ExamType
               const examMeta = EXAM_CARD_META[selectedExam]
+              const confOptions = CONFIDENCE_OPTIONS[selectedExam]
               return (
                 <div
                   className={s.confidenceScreen}
@@ -488,22 +517,22 @@ export default function Practice() {
                       <button className={`${s.confBtn} ${s.confBtnEasy}`} onClick={() => pickConfidence('easy')}>
                         <span className={s.confBtnIcon}>3</span>
                         <div className={s.confBtnText}>
-                          <span className={s.confBtnLabel}>Confident</span>
-                          <span className={s.confBtnDesc}>Exam-ready questions, fewer warmups</span>
+                          <span className={s.confBtnLabel}>{confOptions.easy.label}</span>
+                          <span className={s.confBtnDesc}>{confOptions.easy.desc}</span>
                         </div>
                       </button>
                       <button className={`${s.confBtn} ${s.confBtnKinda}`} onClick={() => pickConfidence('kinda')}>
                         <span className={s.confBtnIcon}>2</span>
                         <div className={s.confBtnText}>
-                          <span className={s.confBtnLabel}>Shaky</span>
-                          <span className={s.confBtnDesc}>Applied practice with traps called out</span>
+                          <span className={s.confBtnLabel}>{confOptions.kinda.label}</span>
+                          <span className={s.confBtnDesc}>{confOptions.kinda.desc}</span>
                         </div>
                       </button>
                       <button className={`${s.confBtn} ${s.confBtnHard}`} onClick={() => pickConfidence('hard')}>
                         <span className={s.confBtnIcon}>1</span>
                         <div className={s.confBtnText}>
-                          <span className={s.confBtnLabel}>Needs rebuild</span>
-                          <span className={s.confBtnDesc}>Foundation first, then exam style</span>
+                          <span className={s.confBtnLabel}>{confOptions.hard.label}</span>
+                          <span className={s.confBtnDesc}>{confOptions.hard.desc}</span>
                         </div>
                       </button>
                     </div>

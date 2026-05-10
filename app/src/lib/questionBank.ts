@@ -1864,8 +1864,11 @@ export function getQuestions(
   level: 1|2|3,
   count = 10,
   seenIds: string[] = [],
+  examType: Question['examTag'] | 'General' = 'General',
 ): Question[] {
-  const pool     = Q.filter(q => q.conceptId === conceptId && q.level === level)
+  const basePool = Q.filter(q => q.conceptId === conceptId && q.level === level)
+  const examPool = examType === 'General' ? [] : basePool.filter(q => q.examTag === examType)
+  const pool     = examPool.length > 0 ? examPool : basePool
   const unseen   = pool.filter(q => !seenIds.includes(q.id)).sort(() => Math.random() - 0.5)
   const seen     = pool.filter(q =>  seenIds.includes(q.id)).sort(() => Math.random() - 0.5)
   return [...unseen, ...seen].slice(0, Math.min(count, pool.length))
