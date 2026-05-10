@@ -42,6 +42,9 @@ type PracticeDraft = {
   level: 1 | 2 | 3
   questions: Question[]
   qIndex: number
+  selected: number | null
+  checked: boolean
+  hintsShown: number
   results: boolean[]
   xp: number
   requeuedIds: string[]
@@ -365,6 +368,7 @@ export default function Practice() {
   const [initialQCount,setInitialQCount]= useState(0)
   const [sessionBridge,setSessionBridge]= useState<BridgeRecommendation | null>(null)
   const [draftRestored, setDraftRestored] = useState(false)
+  const [savedDraft, setSavedDraft] = useState<PracticeDraft | null>(null)
 
   // ── Solver state ──────────────────────────────────────────────────────────
   const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
@@ -377,6 +381,7 @@ export default function Practice() {
 
   function clearPracticeDraft() {
     localStorage.removeItem(practiceDraftKey(user.uid))
+    setSavedDraft(null)
   }
 
   function restorePracticeDraft(draft: PracticeDraft) {
@@ -397,32 +402,37 @@ export default function Practice() {
     setConcept(draft.concept)
     setLevel(draft.level ?? 1)
     setQuestions(Array.isArray(draft.questions) ? draft.questions : [])
-    setQIndex(draft.qIndex ?? 0)
-    setSelected(null)
-    setChecked(false)
-    setHintsShown(0)
+    const questionCount = Array.isArray(draft.questions) ? draft.questions.length : 0
+    setQIndex(Math.min(draft.qIndex ?? 0, Math.max(questionCount - 1, 0)))
+    setSelected(draft.selected ?? null)
+    setChecked(draft.checked ?? false)
+    setHintsShown(draft.hintsShown ?? 0)
     setResults(Array.isArray(draft.results) ? draft.results : [])
     setXp(draft.xp ?? 0)
     setRequeuedIds(Array.isArray(draft.requeuedIds) ? draft.requeuedIds : [])
     setInitialQCount(draft.initialQCount ?? 0)
     setSessionBridge(draft.sessionBridge ?? null)
     setDraftRestored(true)
+    setSavedDraft(draft)
     return true
+  }
+
+  function loadSavedPracticeDraft() {
+    const raw = localStorage.getItem(practiceDraftKey(user.uid))
+    if (!raw) return false
+    try {
+      const draft = JSON.parse(raw) as PracticeDraft
+      if (draft.version !== PRACTICE_DRAFT_VERSION || !draft.assessConceptIds?.length) return false
+      return restorePracticeDraft(draft)
+    } catch {
+      clearPracticeDraft()
+      return false
+    }
   }
 
   useEffect(() => {
     if (draftHydratedRef.current) return
-    const raw = localStorage.getItem(practiceDraftKey(user.uid))
-    if (raw) {
-      try {
-        const draft = JSON.parse(raw) as PracticeDraft
-        if (draft.version === PRACTICE_DRAFT_VERSION && draft.assessConceptIds?.length) {
-          restorePracticeDraft(draft)
-        }
-      } catch {
-        localStorage.removeItem(practiceDraftKey(user.uid))
-      }
-    }
+    loadSavedPracticeDraft()
     draftHydratedRef.current = true
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.uid])
@@ -446,6 +456,9 @@ export default function Practice() {
       level,
       questions,
       qIndex,
+      selected,
+      checked,
+      hintsShown,
       results,
       xp,
       requeuedIds,
@@ -454,6 +467,7 @@ export default function Practice() {
     }
 
     localStorage.setItem(practiceDraftKey(user.uid), JSON.stringify(draft))
+    setSavedDraft(draft)
   }, [
     user.uid,
     mode,
@@ -466,6 +480,9 @@ export default function Practice() {
     level,
     questions,
     qIndex,
+    selected,
+    checked,
+    hintsShown,
     results,
     xp,
     requeuedIds,
@@ -728,6 +745,21 @@ export default function Practice() {
       .filter(r => r.outcome === 0)
       .map(r => ({ label: r.concept_chip, conceptId: chipToConceptId(r.concept_chip) }))
 
+  const savedDraftConcept = savedDraft?.concept
+    ? PRACTICE_CONCEPTS.find(c => c.id === savedDraft.concept)
+    : null
+
+  function savedDraftStatus(draft: PracticeDraft) {
+    if (draft.pPhase === 'session' && draft.questions.length > 0) {
+      const label = savedDraftConcept?.label ?? bridgeLabel(draft.concept ?? '')
+      return `${draft.exam} • ${label} • Question ${Math.min(draft.qIndex + 1, draft.questions.length)} of ${draft.questions.length}`
+    }
+    if (draft.pPhase === 'confidence') {
+      return `${draft.exam} • Gap scan ${Math.min(draft.confidenceStep + 1, draft.assessConceptIds.length)} of ${draft.assessConceptIds.length}`
+    }
+    return `${draft.exam} • Roadmap ready`
+  }
+
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
@@ -760,8 +792,17 @@ export default function Practice() {
                 </div>
                 <h1 className={s.onboardTitle}>Exam coming up?</h1>
                 <p className={s.onboardSub}>Tell me what you're prepping for and I'll pinpoint exactly what to focus on.</p>
-                <button className={s.onboardBtn} onClick={() => setPPhase('exam-pick')}>
-                  Find my gaps →
+                {savedDraft && (
+                  <button className={s.resumeProcessBtn} onClick={loadSavedPracticeDraft}>
+                    <span className={s.resumeProcessTop}>
+                      <span>Resume Process 1</span>
+                      <span>→</span>
+                    </span>
+                    <span className={s.resumeProcessMeta}>{savedDraftStatus(savedDraft)}</span>
+                  </button>
+                )}
+                <button className={s.onboardBtn} onClick={() => { clearPracticeDraft(); setPPhase('exam-pick') }}>
+                  {savedDraft ? 'Start new process →' : 'Find my gaps →'}
                 </button>
                 <button className={s.skipBtn} onClick={() => { setAssessConcepts([]); setPPhase('path') }}>
                   Skip — just show me all topics
