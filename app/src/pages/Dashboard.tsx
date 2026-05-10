@@ -29,9 +29,6 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const data     = useStudentData(user)
 
-  const hwDone  = data.homework?.problems.filter(p => p.done).length ?? 0
-  const hwTotal = data.homework?.problems.length ?? 0
-
   return (
     <div className={s.shell}>
       <main className={s.page}>
@@ -109,23 +106,23 @@ export default function Dashboard() {
 
               <div className={s.floatBOuter}>
                 <motion.div
-                  className={`${s.floatB} ${s.floatDisabled}`}
+                  className={s.floatB}
                   initial={{ opacity: 0, y: 36 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 75, damping: 16, delay: 0.38 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => navigate('/knowledge-graph')}
                 >
                   <div className={s.floatDot} />
-                  <h2 className={s.floatTitle}>This Week's<br />Problems</h2>
-                  {hwTotal > 0 && (
-                    <p className={s.floatSub}>{hwDone}/{hwTotal} complete</p>
-                  )}
+                  <h2 className={s.floatTitle}>Learning<br />GPS</h2>
+                  <p className={s.floatSub}>Your concept map and next steps</p>
                   <div className={s.floatBottom}>
                     <motion.div
                       className={s.heartBtn}
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.88 }}
-                    >♡</motion.div>
-                    <span className={s.xpTag}>① {data.practiceCount ?? 0}</span>
+                    >⌖</motion.div>
+                    <span className={s.xpTag}>Open</span>
                   </div>
                 </motion.div>
               </div>
