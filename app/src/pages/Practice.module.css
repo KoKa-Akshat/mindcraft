@@ -227,6 +227,15 @@
 
 .stripConcept { font-size: 12px; font-weight: 600; color: var(--text); }
 .stripLevel   { font-size: 11px; font-weight: 700; }
+.stripBridge  {
+  max-width: 220px;
+  color: rgba(196,245,71,0.78);
+  font-size: 10px;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .progressBar  { height: 7px; background: rgba(255,255,255,0.10); border-radius: 4px; overflow: hidden; }
 .progressFill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
@@ -2249,6 +2258,93 @@
 .gapChipHard  { background: rgba(255,107,107,0.14); color: #FF8080; border-color: rgba(255,107,107,0.30); }
 .gapChipKinda { background: rgba(244,162,97,0.14);  color: #F4A261; border-color: rgba(244,162,97,0.30);  }
 .gapChipEasy  { background: rgba(168,224,99,0.12);  color: #A8E063; border-color: rgba(168,224,99,0.25);  }
+
+.bridgePanel {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(196,245,71,0.12), transparent 34%),
+    rgba(255,255,255,0.045);
+  border: 1px solid rgba(196,245,71,0.18);
+}
+
+.bridgeHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bridgeEyebrow {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+}
+
+.bridgeHint {
+  color: rgba(255,255,255,0.42);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.bridgeCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(4, 18, 26, 0.34);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.bridgeText {
+  min-width: 0;
+}
+
+.bridgePath {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-family: var(--f-display);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.bridgeArrow {
+  color: var(--accent);
+}
+
+.bridgeText p {
+  max-width: 430px;
+  margin: 5px 0 0;
+  color: rgba(255,255,255,0.56);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.bridgeBtn {
+  flex-shrink: 0;
+  border: 1px solid rgba(196,245,71,0.30);
+  border-radius: 12px;
+  padding: 11px 16px;
+  background: rgba(196,245,71,0.12);
+  color: var(--accent);
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.bridgeBtn:hover {
+  background: rgba(196,245,71,0.18);
+}
 
 /* Recommendation card */
 .gapRecommend {

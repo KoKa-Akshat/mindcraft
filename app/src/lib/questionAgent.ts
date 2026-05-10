@@ -16,8 +16,9 @@ import type { Question } from './questionBank'
 const ENDPOINT = 'https://mindcraft-webhook.vercel.app/api/generate-questions'
 const SESSION_PREFIX = 'qgen_'
 
-function sessionKey(conceptId: string, level: number, examType: string, count: number) {
-  return `${SESSION_PREFIX}${conceptId}_L${level}_${examType}_N${count}`
+function sessionKey(conceptId: string, level: number, examType: string, count: number, bridgeFrom?: string) {
+  const bridgePart = bridgeFrom ? `_B${bridgeFrom}` : ''
+  return `${SESSION_PREFIX}${conceptId}_L${level}_${examType}_N${count}${bridgePart}`
 }
 
 function readSession(key: string): Question[] | null {
@@ -47,8 +48,9 @@ export async function generateQuestions(
   level: 1 | 2 | 3,
   examType = 'General',
   count = 8,
+  bridgeFrom?: string,
 ): Promise<Question[]> {
-  const key = sessionKey(conceptId, level, examType, count)
+  const key = sessionKey(conceptId, level, examType, count, bridgeFrom)
 
   // 1. sessionStorage hit
   const cached = readSession(key)
@@ -59,7 +61,7 @@ export async function generateQuestions(
     const res = await fetch(ENDPOINT, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ conceptId, level, examType, count }),
+      body:    JSON.stringify({ conceptId, level, examType, count, bridgeFrom }),
     })
 
     if (!res.ok) return []

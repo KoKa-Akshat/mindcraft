@@ -5,7 +5,7 @@
  * Results are cached in Firestore for 24 hours to avoid regenerating identical
  * concept/level/exam combos across users.
  *
- * POST { conceptId, level, examType?, count? }
+ * POST { conceptId, level, examType?, count?, bridgeFrom? }
  * → { questions: Question[], cached: boolean }
  */
 
@@ -19,6 +19,10 @@ const ALLOWED_ORIGIN = 'https://mindcraft-93858.web.app'
 const CACHE_TTL_MS   = 24 * 60 * 60 * 1000   // 24 h
 const ALLOWED_EXAMS  = new Set(['ACT', 'SAT', 'IB', 'AP', 'General'])
 
+function labelForConcept(id: string) {
+  return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+}
+
 // ── Concept knowledge injected into the prompt ────────────────────────────────
 const CONCEPT_KNOWLEDGE: Record<string, string> = {
   linear_equations:            'Isolating x: adding/subtracting, multiply/divide, distributive property, variables on both sides. Traps: sign errors, "what is 3x" vs "what is x", forgetting to apply operation to both sides.',
@@ -31,6 +35,8 @@ const CONCEPT_KNOWLEDGE: Record<string, string> = {
   polynomials:                 'Adding, multiplying polynomials; FOIL; (a+b)²; (a+b)(a−b). Long/synthetic division. Remainder theorem. Factor theorem.',
   rational_expressions:        'Simplify by factoring numerator/denominator. Add/subtract with LCD. Domain restrictions (denominator ≠ 0). Complex fractions.',
   function_transformations:    'f(x−h)+k shifts right h, up k. −f(x) reflects over x-axis. f(−x) reflects over y-axis. af(x) stretches. Counter-intuitive horizontal direction.',
+  coordinate_geometry:         'Slope, distance, midpoint, equations of lines, intersections, graph interpretation, and geometry on the coordinate plane. Traps: slope sign, mixing x/y changes, treating a drawn shape as not algebraic.',
+  trigonometry_basics:         'Right-triangle trig, sine/cosine/tangent ratios, special right triangles, radians/degrees, and basic unit-circle connections. Traps: mixing opposite/adjacent, degree/radian confusion, calculator mode.',
   number_properties:           'Odd/even rules, prime factorisation, GCF, LCM, divisibility rules. Integer vs real distinctions on standardised tests.',
   word_problems:               'Rate × time = distance, work-rate problems, mixture problems, age problems. Translating English → algebra is the core skill.',
   percent_ratio:               'Percent change = (new−old)/old × 100. Proportional reasoning. Unit conversion. Scale/similar figures. Markup/discount.',
@@ -137,6 +143,7 @@ DIFFICULTY: {level_guidance}
 EXAM STYLE: {exam_style}
 EXAM BLUEPRINT: {exam_blueprint}
 EXAM FORMAT RULES: {exam_format_rules}
+BRIDGE CONTEXT: {bridge_context}
 
 Generate exactly {count} UNIQUE multiple-choice questions. Each question must:
 • Be GENUINELY DIAGNOSTIC — reveal whether the student understands or is guessing
@@ -173,11 +180,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST')   return res.status(405).json({ error: 'Method not allowed' })
 
-  const { conceptId, level, examType: rawExamType = 'General', count: rawCount = 8 } = (req.body ?? {}) as {
+  const { conceptId, level, examType: rawExamType = 'General', count: rawCount = 8, bridgeFrom } = (req.body ?? {}) as {
     conceptId?: string
     level?: number
     examType?: string
     count?: number
+    bridgeFrom?: string
   }
 
   if (!conceptId || !level) {
@@ -186,7 +194,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const examType = normalizeExamType(rawExamType)
   const count = clampCount(rawCount)
-  const cacheKey = `${conceptId}_L${level}_${examType}_N${count}`
+  const bridgeKey = bridgeFrom ? `_B${bridgeFrom}` : ''
+  const cacheKey = `${conceptId}_L${level}_${examType}_N${count}${bridgeKey}`
 
   // ── 1. Check Firestore cache ───────────────────────────────────────────────
   try {
@@ -219,8 +228,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const chain = prompt.pipe(model).pipe(new JsonOutputParser())
 
-  const conceptLabel = conceptId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+  const conceptLabel = labelForConcept(conceptId)
   const conceptShort = conceptId.split('_').map((w: string) => w[0]).join('')
+  const bridgeContext = bridgeFrom
+    ? `Bridge from the student's strength in ${labelForConcept(bridgeFrom)} into their weaker target ${conceptLabel}. At least half the questions should require connecting both ideas, not drilling ${conceptLabel} in isolation.`
+    : 'No bridge context. Focus on the target concept itself.'
 
   // ── 3. Generate ────────────────────────────────────────────────────────────
   let questions: unknown[]
@@ -235,6 +247,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       exam_style:        EXAM_STYLE[examType]          ?? EXAM_STYLE.General,
       exam_blueprint:    EXAM_BLUEPRINT[examType]      ?? EXAM_BLUEPRINT.General,
       exam_format_rules: EXAM_FORMAT_RULES[examType]   ?? EXAM_FORMAT_RULES.General,
+      bridge_context:    bridgeContext,
       exam_tag_instruction: examType === 'General'
         ? 'one of "ACT","SAT","IB","AP" or null — only tag when the question genuinely reflects that exam style'
         : `"${examType}" for every question`,

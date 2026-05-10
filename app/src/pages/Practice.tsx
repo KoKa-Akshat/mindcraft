@@ -12,6 +12,7 @@ import {
 } from '../lib/questionBank'
 import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
 import { getConceptContent } from '../lib/conceptContent'
+import { PREREQUISITES, mlIdToLabel } from '../lib/conceptMap'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
@@ -25,6 +26,7 @@ type PracticePhase =
 type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
 type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
+type BridgeRecommendation = { fromId: string; toId: string; viaIds: string[]; level: 1 | 2 | 3 }
 
 const EXAMS = ['ACT', 'SAT', 'IB', 'AP', 'General'] as const
 type ExamType = typeof EXAMS[number]
@@ -83,11 +85,34 @@ const CONFIDENCE_OPTIONS: Record<ExamType, Record<Confidence, { label: string; d
 }
 
 const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
-  ACT:     ['linear_equations', 'systems_of_linear_equations', 'quadratic_equations', 'functions_basics', 'word_problems', 'percent_ratio', 'basic_probability', 'descriptive_statistics'],
-  SAT:     ['linear_equations', 'functions_basics', 'quadratic_equations', 'rational_expressions', 'percent_ratio', 'descriptive_statistics', 'exponent_rules', 'absolute_value'],
-  IB:      ['functions_basics', 'function_transformations', 'quadratic_equations', 'polynomials', 'rational_expressions', 'exponent_rules', 'basic_probability', 'descriptive_statistics'],
-  AP:      ['functions_basics', 'function_transformations', 'polynomials', 'rational_expressions', 'exponent_rules', 'quadratic_equations', 'descriptive_statistics', 'linear_equations'],
-  General: ['linear_equations', 'quadratic_equations', 'functions_basics', 'linear_inequalities', 'exponent_rules', 'absolute_value'],
+  ACT:     ['linear_equations', 'coordinate_geometry', 'systems_of_linear_equations', 'quadratic_equations', 'functions_basics', 'word_problems', 'percent_ratio', 'basic_probability', 'descriptive_statistics'],
+  SAT:     ['linear_equations', 'coordinate_geometry', 'functions_basics', 'quadratic_equations', 'rational_expressions', 'percent_ratio', 'descriptive_statistics', 'exponent_rules', 'absolute_value'],
+  IB:      ['functions_basics', 'function_transformations', 'quadratic_equations', 'polynomials', 'rational_expressions', 'trigonometry_basics', 'exponent_rules', 'basic_probability', 'descriptive_statistics'],
+  AP:      ['functions_basics', 'function_transformations', 'polynomials', 'rational_expressions', 'exponent_rules', 'quadratic_equations', 'trigonometry_basics', 'descriptive_statistics', 'linear_equations'],
+  General: ['linear_equations', 'coordinate_geometry', 'quadratic_equations', 'functions_basics', 'linear_inequalities', 'exponent_rules', 'absolute_value'],
+}
+
+function getAtomicPrereqPath(targetId: string, sourceIds: Set<string>) {
+  const queue = [{ id: targetId, path: [] as string[] }]
+  const seen = new Set<string>()
+
+  while (queue.length > 0) {
+    const current = queue.shift()!
+    if (seen.has(current.id)) continue
+    seen.add(current.id)
+
+    for (const prereq of PREREQUISITES[current.id] ?? []) {
+      const nextPath = [...current.path, prereq]
+      if (sourceIds.has(prereq)) return { fromId: prereq, viaIds: nextPath }
+      queue.push({ id: prereq, path: nextPath })
+    }
+  }
+
+  return null
+}
+
+function bridgeLabel(id: string) {
+  return PRACTICE_CONCEPTS.find(c => c.id === id)?.label ?? mlIdToLabel(id)
 }
 
 // Map concept_chip string from homework cards → practice concept id
@@ -145,6 +170,7 @@ export default function Practice() {
   const [xp,           setXp]           = useState(0)
   const [requeuedIds,  setRequeuedIds]  = useState<string[]>([])
   const [initialQCount,setInitialQCount]= useState(0)
+  const [sessionBridge,setSessionBridge]= useState<BridgeRecommendation | null>(null)
 
   // ── Solver state ──────────────────────────────────────────────────────────
   const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
@@ -215,6 +241,27 @@ export default function Practice() {
   const hardConcepts  = assessConcepts.filter(c => confidenceMap[c.id] === 'hard')
   const kindaConcepts = assessConcepts.filter(c => confidenceMap[c.id] === 'kinda')
   const easyConcepts  = assessConcepts.filter(c => confidenceMap[c.id] === 'easy')
+  const bridgeRecommendations: BridgeRecommendation[] = (() => {
+    const sourceIds = new Set(easyConcepts.map(c => c.id))
+    const targets = [...hardConcepts, ...kindaConcepts]
+    const seen = new Set<string>()
+
+    return targets.flatMap(target => {
+      const bridge = getAtomicPrereqPath(target.id, sourceIds)
+      if (!bridge) return []
+
+      const key = `${bridge.fromId}->${target.id}`
+      if (seen.has(key)) return []
+      seen.add(key)
+
+      return [{
+        fromId: bridge.fromId,
+        toId: target.id,
+        viaIds: bridge.viaIds,
+        level: getRecommendedLevel(target.id),
+      }]
+    }).slice(0, 2)
+  })()
 
   // The single best concept to start with (hardest first, then kinda)
   const topPriority = hardConcepts[0] ?? kindaConcepts[0] ?? easyConcepts[0] ?? assessConcepts[0]
@@ -236,18 +283,19 @@ export default function Practice() {
     setPPhase('explore')
   }
 
-  async function startSession(conceptId: string, lv: 1|2|3) {
+  async function startSession(conceptId: string, lv: 1|2|3, bridge?: BridgeRecommendation) {
     // Show building screen while we fetch dynamic questions
     setPPhase('building')
     setConcept(conceptId)
     setLevel(lv)
+    setSessionBridge(bridge ?? null)
 
     const examType = (EXAMS.includes(exam as ExamType) ? exam : FALLBACK_EXAM) as ExamType
 
     // Fetch a full dynamic session first. Static questions remain backup only,
     // because exam tracks should feel ACT/SAT/IB/AP-native whenever the agent is available.
     const [dynamic, staticQs] = await Promise.all([
-      generateQuestions(conceptId, lv, examType, SESSION_LENGTH),
+      generateQuestions(conceptId, lv, examType, SESSION_LENGTH, bridge?.fromId),
       Promise.resolve(getQuestions(conceptId, lv, SESSION_LENGTH, [], examType)),
     ])
 
@@ -319,6 +367,7 @@ export default function Practice() {
     setXp(0)
     setRequeuedIds([])
     setInitialQCount(0)
+    setSessionBridge(null)
     setConfidenceMap({})
     setConfidenceStep(0)
     setAssessConcepts([])
@@ -622,6 +671,35 @@ export default function Practice() {
                   )}
                 </div>
 
+                {bridgeRecommendations.length > 0 && (
+                  <div className={s.bridgePanel}>
+                    <div className={s.bridgeHeader}>
+                      <span className={s.bridgeEyebrow}>Atomic bridge practice</span>
+                      <span className={s.bridgeHint}>Use a strength to repair a weak link</span>
+                    </div>
+                    {bridgeRecommendations.map(bridge => (
+                      <div key={`${bridge.fromId}-${bridge.toId}`} className={s.bridgeCard}>
+                        <div className={s.bridgeText}>
+                          <div className={s.bridgePath}>
+                            <span>{bridgeLabel(bridge.fromId)}</span>
+                            <span className={s.bridgeArrow}>→</span>
+                            <span>{bridgeLabel(bridge.toId)}</span>
+                          </div>
+                          <p>
+                            You said {bridgeLabel(bridge.fromId)} feels strong. We'll use it to build {bridgeLabel(bridge.toId)} instead of drilling the weak topic alone.
+                          </p>
+                        </div>
+                        <button
+                          className={s.bridgeBtn}
+                          onClick={() => startSession(bridge.toId, bridge.level, bridge)}
+                        >
+                          Bridge it →
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {/* Recommended first action */}
                 {topPriority && (
                   <div className={s.gapRecommend}>
@@ -907,7 +985,6 @@ export default function Practice() {
                         className={`${s.levelCard} ${recommended ? s.levelCardRec : ''}`}
                         style={{ '--lv-color': m.color, '--lv-soft': m.colorSoft } as React.CSSProperties}
                         onClick={() => startSession(conceptMeta.id, lv)}
-                        disabled={cnt === 0}
                       >
                         {recommended && (
                           <span className={s.levelRecBadge}>Recommended</span>
@@ -922,7 +999,7 @@ export default function Practice() {
                         <div className={s.levelName}>{m.label}</div>
                         <div className={s.levelDesc}>{m.sub}</div>
                         <div className={s.levelXp}>+{m.xp} XP / question</div>
-                        <div className={s.levelCount}>{cnt} questions</div>
+                        <div className={s.levelCount}>{cnt > 0 ? `${cnt} bank questions` : 'AI-generated'}</div>
                       </button>
                     )
                   })}
@@ -936,6 +1013,11 @@ export default function Practice() {
                 <div className={s.progressStrip}>
                   <div className={s.stripLeft}>
                     <span className={s.stripConcept}>{conceptMeta?.emoji} {conceptMeta?.label}</span>
+                    {sessionBridge && (
+                      <span className={s.stripBridge}>
+                        Bridge: {bridgeLabel(sessionBridge.fromId)} → {bridgeLabel(sessionBridge.toId)}
+                      </span>
+                    )}
                     <span className={s.stripLevel} style={{ color: lvMeta.color }}>
                       {'★'.repeat(level)}{'☆'.repeat(3 - level)} L{level}
                     </span>

@@ -1842,6 +1842,8 @@ export const PRACTICE_CONCEPTS: { id: string; label: string; category: string; e
   { id:'polynomials',                label:'Polynomials',          category:'Algebra',      emoji:'〽️' },
   { id:'rational_expressions',       label:'Rational Expressions', category:'Algebra',      emoji:'➗' },
   { id:'function_transformations',   label:'Function Transformations', category:'Algebra',   emoji:'🔁' },
+  { id:'coordinate_geometry',        label:'Coordinate Geometry', category:'Geometry',       emoji:'🗺️' },
+  { id:'trigonometry_basics',        label:'Trigonometry',        category:'Geometry',       emoji:'📐' },
   { id:'number_properties',          label:'Number Properties',    category:'Algebra',      emoji:'#️⃣' },
   { id:'word_problems',              label:'Word Problems',        category:'Word Problems', emoji:'🧩' },
   { id:'percent_ratio',              label:'Percents & Ratios',    category:'Word Problems', emoji:'%' },
