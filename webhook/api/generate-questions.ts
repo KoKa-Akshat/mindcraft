@@ -84,6 +84,8 @@ type GeneratedQuestion = {
   explanation: string
   hints: string[]
   examTag?: 'ACT' | 'SAT' | 'IB' | 'AP' | null
+  visual_type?: 'svg' | 'none'
+  visual_data?: string
 }
 
 function clampCount(value: unknown) {
@@ -107,6 +109,12 @@ function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examT
   const item = q as Partial<GeneratedQuestion>
   const examTagValid = item.examTag === undefined || item.examTag === null || ['ACT', 'SAT', 'IB', 'AP'].includes(item.examTag)
   const examTagMatches = examType === 'General' ? true : item.examTag === examType
+  const visualValid = item.visual_type === undefined
+    || item.visual_type === 'none'
+    || (item.visual_type === 'svg'
+      && typeof item.visual_data === 'string'
+      && item.visual_data.includes('<svg')
+      && item.visual_data.length <= 4500)
 
   return typeof item.id === 'string'
     && typeof item.question === 'string'
@@ -124,6 +132,7 @@ function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examT
     && item.level === level
     && examTagValid
     && examTagMatches
+    && visualValid
 }
 
 function normalizeQuestions(questions: unknown, conceptId: string, level: number, count: number, examType: string) {
@@ -159,6 +168,8 @@ Generate exactly {count} UNIQUE multiple-choice questions. Each question must:
 • Include EXACTLY 3 progressive hints: hint 1 = nudge toward the right approach, hint 2 = key algebraic/procedural step shown, hint 3 = one step away from the answer
 • Vary question structure — do NOT repeat the same template twice
 • Numbers and contexts must be different across all {count} questions
+• Include a compact visual for EVERY question when a diagram, graph, number line, table sketch, function shape, or geometry view helps. Use visual_type "svg" and visual_data as a self-contained inline SVG. Otherwise use visual_type "none" and visual_data "".
+• SVGs must be under 4500 characters, viewBox="0 0 320 180", transparent background, no scripts, no foreignObject, no external refs, no images. Use clean labels, axes/number lines/curves/points, stroke="#C4F547", secondary stroke="#4ECDC4", text fill="#0F343A".
 
 Return ONLY a JSON array — no markdown fences, no preamble, no commentary:
 [
@@ -169,11 +180,13 @@ Return ONLY a JSON array — no markdown fences, no preamble, no commentary:
     "question": "Full question text here",
     "choices": ["correct or wrong option", "wrong option", "wrong option", "wrong option"],
     "correctIndex": 0,
-    "explanation": "Step-by-step solution shown clearly",
-    "hints": ["Hint 1 text", "Hint 2 text", "Hint 3 text"],
-    "examTag": "ACT"
-  }}
-]
+	    "explanation": "Step-by-step solution shown clearly",
+	    "hints": ["Hint 1 text", "Hint 2 text", "Hint 3 text"],
+	    "examTag": "ACT",
+	    "visual_type": "svg",
+	    "visual_data": "<svg viewBox=\"0 0 320 180\" xmlns=\"http://www.w3.org/2000/svg\">...</svg>"
+	  }}
+	]
 
 Shuffle the correct answer position across questions (correctIndex should not always be 0).
 examTag must be {exam_tag_instruction}.`

@@ -8,6 +8,8 @@ export interface Question {
   explanation: string
   hints: string[]
   examTag?: 'ACT' | 'SAT' | 'IB' | 'AP'
+  visual_type?: 'svg' | 'none'
+  visual_data?: string
 }
 
 const Q: Question[] = [

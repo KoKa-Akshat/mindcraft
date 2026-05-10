@@ -96,6 +96,14 @@ function bridgeLabel(id: string) {
   return PRACTICE_CONCEPTS.find(c => c.id === id)?.label ?? mlIdToLabel(id)
 }
 
+function safeQuestionSvg(question: Question) {
+  if (question.visual_type !== 'svg' || !question.visual_data) return ''
+  const svg = question.visual_data.trim()
+  if (!svg.startsWith('<svg') || !svg.endsWith('</svg>') || svg.length > 4500) return ''
+  if (/(<script|<foreignObject|javascript:|data:|on\w+=)/i.test(svg)) return ''
+  return svg
+}
+
 // Map concept_chip string from homework cards → practice concept id
 function chipToConceptId(chip: string): string | null {
   const normalized = chip.toLowerCase().replace(/[\s-]+/g, '_')
@@ -1004,8 +1012,14 @@ export default function Practice() {
                         )}
                         <p className={s.questionText}>{currentQ.question}</p>
                       </div>
-                      <div className={s.questionBody}>
-                        <div className={s.choices}>
+	                      <div className={s.questionBody}>
+	                        {safeQuestionSvg(currentQ) && (
+	                          <div
+	                            className={s.questionVisual}
+	                            dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
+	                          />
+	                        )}
+	                        <div className={s.choices}>
                           {currentQ.choices.map((choice, i) => {
                             let cls = s.choice
                             if (checked) {

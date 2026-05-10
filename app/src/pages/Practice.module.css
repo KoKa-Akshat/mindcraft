@@ -300,6 +300,26 @@
   padding: 20px 24px 8px;
 }
 
+.questionVisual {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 16px;
+  padding: 14px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(196,245,71,0.18), transparent 34%),
+    linear-gradient(135deg, #F8FFF0 0%, #EEF9FF 100%);
+  border: 1px solid #DDEAD2;
+  overflow: hidden;
+}
+
+.questionVisual svg {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+  max-height: 210px;
+}
+
 /* Choices 2×2 grid */
 .choices {
   display: grid;
