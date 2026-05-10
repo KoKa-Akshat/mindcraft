@@ -430,9 +430,37 @@ export default function Practice() {
     }
   }
 
+  function showPracticeHome() {
+    setMode('practice')
+    setPPhase('onboard')
+    setSelected(null)
+    setChecked(false)
+    setHintsShown(0)
+  }
+
   useEffect(() => {
     if (draftHydratedRef.current) return
-    loadSavedPracticeDraft()
+    const state = location.state as { problemText?: string; examHelp?: boolean; homeworkHelp?: boolean } | null
+    if (state?.examHelp) {
+      const raw = localStorage.getItem(practiceDraftKey(user.uid))
+      if (raw) {
+        try {
+          const draft = JSON.parse(raw) as PracticeDraft
+          if (draft.version === PRACTICE_DRAFT_VERSION && draft.assessConceptIds?.length) {
+            setSavedDraft(draft)
+            setMode('practice')
+            setPPhase('onboard')
+          }
+        } catch {
+          localStorage.removeItem(practiceDraftKey(user.uid))
+        }
+      } else {
+        setMode('practice')
+        setPPhase('exam-pick')
+      }
+    } else {
+      loadSavedPracticeDraft()
+    }
     draftHydratedRef.current = true
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.uid])
@@ -503,8 +531,6 @@ export default function Practice() {
       setSPhase('input')
       window.history.replaceState({}, '')
     } else if (state?.examHelp) {
-      setMode('practice')
-      if (!localStorage.getItem(practiceDraftKey(user.uid))) setPPhase('exam-pick')
       window.history.replaceState({}, '')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -861,6 +887,13 @@ export default function Practice() {
                         className={`${s.confDot} ${i < confidenceStep ? s.confDotDone : i === confidenceStep ? s.confDotActive : ''}`}
                       />
                     ))}
+                  </div>
+                  <div className={s.processInlineBar}>
+                    <span>Process 1 is saved automatically</span>
+                    <div>
+                      <button onClick={showPracticeHome}>Back to processes</button>
+                      <button onClick={() => navigate('/dashboard')}>Dashboard</button>
+                    </div>
                   </div>
 
                   <div className={s.confLayout}>
