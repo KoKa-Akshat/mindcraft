@@ -2,12 +2,13 @@
   position: relative;
   overflow: hidden;
   display: grid;
-  gap: 18px;
-  margin-bottom: 24px;
-  padding: 18px;
+  gap: 0;
+  margin-bottom: 26px;
+  padding: 18px 18px 16px;
   border-radius: 22px;
   background:
-    radial-gradient(circle at 12% 0%, rgba(196, 245, 71, 0.18), transparent 30%),
+    radial-gradient(circle at 12% 0%, rgba(196, 245, 71, 0.20), transparent 32%),
+    radial-gradient(circle at 86% 74%, rgba(255, 255, 255, 0.08), transparent 30%),
     linear-gradient(135deg, #123F46 0%, #176169 58%, #14343D 100%);
   border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow:
@@ -26,6 +27,7 @@
   grid-template-columns: max-content 1fr max-content;
   align-items: center;
   gap: 16px;
+  padding-bottom: 16px;
 }
 
 .brand {
@@ -154,13 +156,11 @@
 .bottomRow {
   display: grid;
   grid-template-columns: minmax(240px, 1fr) minmax(260px, max-content) max-content;
-  align-items: end;
-  gap: 16px;
-  padding: 18px;
-  border-radius: 18px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.045));
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  align-items: center;
+  gap: 20px;
+  min-height: 86px;
+  padding: 16px 18px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
 .greetingBlock {
@@ -196,6 +196,7 @@
   gap: 7px;
   justify-items: start;
   min-width: 0;
+  padding-left: 10px;
 }
 
 .sessionLabel {

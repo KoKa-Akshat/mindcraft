@@ -49,10 +49,7 @@ export default function Globe3D() {
           stroke="rgba(255,255,255,0.14)" strokeWidth="0.9" strokeDasharray="4 5" />
       </motion.svg>
 
-      {/* Data labels */}
-      <div className={s.labelClvr}>CLVR<br />TIEX</div>
-
-      {/* API badge */}
+      {/* Math badge */}
       <motion.div
         className={s.apiBadge}
         animate={{ boxShadow: ['0 4px 16px rgba(196,245,71,0.35)', '0 6px 28px rgba(196,245,71,0.72)', '0 4px 16px rgba(196,245,71,0.35)'] }}
@@ -63,7 +60,7 @@ export default function Globe3D() {
           animate={{ rotate: 360 }}
           transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
         />
-        <span className={s.apiText}>API</span>
+        <span className={s.apiText}>Maths</span>
       </motion.div>
     </div>
   )

@@ -67,8 +67,8 @@ export default function Dashboard() {
                   <span className={s.brandLabel}>exam help</span>
                 </div>
 
-                <h1 className={s.heroTitle}>Tell us what<br />feels messy.</h1>
-                <p className={s.heroSub}>We turn it into one clear practice plan.</p>
+                <h1 className={s.heroTitle}>Let's ace<br />this exam.</h1>
+                <p className={s.heroSub}>Smart practice for the topics that matter next.</p>
 
                 <motion.button
                   className={s.heroBtn}
@@ -76,7 +76,7 @@ export default function Dashboard() {
                   whileHover={{ scale: 1.05, boxShadow: '0 12px 40px rgba(196,245,71,0.68)' }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  Exam Help
+                  Let's Go
                 </motion.button>
 
                 <p className={s.heroMeta}>Adaptive AI · Personalised for your exam</p>
@@ -97,9 +97,9 @@ export default function Dashboard() {
                 >
                   <div className={s.floatDot} />
                   <h2 className={s.floatTitle}>Homework<br />Help.</h2>
-                  <p className={s.floatSub}>Step-by-step problem support</p>
+                  <p className={s.floatSub}>Math homework help</p>
                   <div className={s.floatFooter}>
-                    <span className={s.aiTagSm}>Turn questions into clear next moves</span>
+                    <span className={s.aiTagSm}>Bring the messy one</span>
                   </div>
                 </motion.div>
               </div>
@@ -115,7 +115,7 @@ export default function Dashboard() {
                 >
                   <div className={s.floatDot} />
                   <h2 className={s.floatTitle}>Learning<br />GPS</h2>
-                  <p className={s.floatSub}>Your concept map and next steps</p>
+                  <p className={s.floatSub}>We navigate rough equations for you.</p>
                   <div className={s.floatBottom}>
                     <motion.div
                       className={s.heartBtn}
