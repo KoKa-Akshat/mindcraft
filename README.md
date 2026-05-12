@@ -1,243 +1,455 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq# MindCraft
+# MindCraft
 
-**Math exam coming up? No worries, we got you.**
+MindCraft is a math exam-prep web app for students preparing for ACT, SAT, IB Math, AP math, and general high-school math. The product goal is simple: find the exact gaps, show the student where to start, and guide them through practice, homework help, and tutoring without making them guess what to study.
 
-MindCraft finds what students actually don't understand, builds a clear personalized study path, and matches them with a tutor who helps fix gaps before the exam. Built for high-schoolers prepping for ACT, SAT, IB, and AP math.
+Live links:
 
-**Live app:** https://mindcraft-93858.web.app  
-**Marketing site:** https://mindcraft-marketing-site.web.app  
-**Webhook server:** https://mindcraft-webhook.vercel.app
+- App: https://mindcraft-93858.web.app
+- Marketing site: https://mindcraft-marketing-site.web.app
+- Vercel webhook API: https://mindcraft-webhook.vercel.app
 
----
+## Current Safety State
 
-## Problem We Solve
+Dynamic AI-generated practice questions are **disabled by default** in the frontend.
 
-Students fail math exams not because they're lazy — but because they don't know what they don't know. They study randomly, miss the exact concepts that appear on test day, and walk in overwhelmed.
+The app currently uses the reviewed static question bank for live practice. The Vercel question generator still exists, but the frontend only calls it when:
 
-MindCraft runs a four-step loop:
-1. **Diagnostic** — finds current level and hidden gaps
-2. **Learning Map** — connects gaps to the prerequisite concepts blocking progress
-3. **Tutor Session** — dedicated tutor rebuilds understanding (not just the answer)
-4. **Practice Loop** — personalized questions, flashcards, and next steps between sessions
-
----
-
-## What's New (May 2026)
-
-### AI-Powered Exam Intake (Practice Page)
-- Students are now greeted with: *"Math exam coming up? No worries, we got you."*
-- Select exam type (ACT / SAT / IB / AP / General) + optional topic or problem description
-- Gemini 1.5 Flash analyzes input and returns 3–4 highest-yield concept recommendations with a personalized message
-- Falls back to exam-specific defaults if no API key is configured
-
-### Concept Explanation Cards (Explore Phase)
-Before every practice session, students see a rich ACT-prep-style concept card with:
-- Key rules, pro tips, watch-out mistakes, worked examples, exam weight
-- Covers 16 concepts: linear equations, inequalities, absolute value, quadratic equations, factoring, systems, functions, function transformations, exponents, polynomials, rational expressions, word problems, percents/ratios, number properties, probability, descriptive stats
-
-### Expanded Question Bank (155 questions)
-Duolingo-style leveled practice across **15 concepts**:
-
-| Concept | L1 | L2 | L3 |
-|---|---|---|---|
-| Linear Equations | 4 | 4 | 3 |
-| Linear Inequalities | 4 | 3 | 3 |
-| Absolute Value | 4 | 4 | 3 |
-| Quadratic Equations | 4 | 4 | 3 |
-| Functions | 4 | 4 | 3 |
-| Systems of Equations | 3 | 3 | 3 |
-| Exponent Rules | 4 | 4 | 3 |
-| Polynomials | 4 | 3 | 3 |
-| Rational Expressions | 3 | 3 | 3 |
-| Function Transformations | 3 | 3 | 3 |
-| Number Properties | 3 | 3 | 3 |
-| Word Problems | 4 | 4 | 4 |
-| Percents & Ratios | 4 | 4 | 4 |
-| Descriptive Statistics | 3 | 3 | 3 |
-| Probability | 4 | 4 | 3 |
-
-Levels: **L1 Foundation** (+10 XP) · **L2 Applied** (+20 XP) · **L3 Exam Ready** (+35 XP)
-
-### Question Generation Agent
-- `app/scripts/generateQuestions.mjs` uses Gemini 1.5 Flash to draft 5 original questions for a concept and level
-- Run from `app/`: `GEMINI_API_KEY=... npm run generate:questions -- linear_equations 2`
-- Prints validated JSON matching the `Question` interface, ready to review and paste into `questionBank.ts`
-- Prompt enforces original questions, exactly 4 choices, one correct answer, full explanations, and progressive 3-step hints
-- `.github/workflows/question-agent.yml` runs every 30 minutes in GitHub Actions when `GEMINI_API_KEY` is saved as a repo secret
-- The scheduled agent stores review batches in `app/content/generatedQuestions.json` with `status: "needs_review"` so AI questions do not go live before a human checks the math
-
-### Visual Explanation Agent
-- `app/scripts/generateManimScene.mjs` uses Gemini 1.5 Flash to draft Manim Community Edition scenes
-- Manim is the Python animation library created by 3Blue1Brown for math visuals
-- Run from `app/`: `GEMINI_API_KEY=... npm run generate:visual -- quadratic_equations "vertex form and axis of symmetry" > visual.py`
-- Render locally with Manim: `manim -pql visual.py MindCraftVisual`
-- The prompt blocks external files/network calls and asks for short, student-facing visual explanations
-
-### Safe Research Agent
-- `webhook/api/research-agent.ts` runs server-side on Vercel every 30 minutes
-- Uses Google Programmable Search for public source discovery, including general web, Reddit, Quora, and forum-style queries
-- Uses Gemini server-side to summarize patterns into pain points, exam signals, concept signals, student language, product ideas, and safety notes
-- Stores structured summaries in Firestore `researchBatches`; raw forum pages, personal data, and long copied posts are not stored
-- Requires server env vars: `GOOGLE_SEARCH_API_KEY`, `GOOGLE_SEARCH_ENGINE_ID`, `GEMINI_API_KEY`, `FIREBASE_SERVICE_ACCOUNT`
-- Optional but recommended: set `CRON_SECRET` so scheduled/manual calls require bearer-token authorization
-
-### Marketing Site Overhaul
-- Hero: *"Math exam coming up? No worries, we got you."*
-- Subjects reordered to lead with exam-critical areas (Math Exam Prep, ACT/SAT, Algebra, Calculus, Homework Rescue, Vibecoding)
-- How it works updated to 4-step loop: Diagnostic → Learning Map → Tutor Session → Practice Loop
-- Copy throughout sharpened to address exam panic directly
-
-### Homework Progress Card
-- Shows tutor-assigned problems from Firestore `users/{uid}.homework`
-- Progress bar + numbered checklist
-- Click any problem → auto-submits to Practice page solver
-
-### Dashboard Layout
-- Constellation card full-width at top
-- Below: Homework Help (60%) + HomeworkProgress + LearningGPS (40%) stacked
-
----
-
-## Architecture
-
-### Practice Flow
-
-```
-intake (exam selector + Gemini AI) 
-  → mission (concept grid — AI picks highlighted at top)
-  → explore (concept explanation card: rules, tips, examples)
-  → level select (L1 / L2 / L3)
-  → session (5 questions, hint ladder, XP)
-  → complete (score, XP earned, next level CTA)
+```env
+VITE_ENABLE_DYNAMIC_QGEN=true
 ```
 
-### Booking → Summary → Student
+Keep that flag off in production until the past-paper pattern index and stronger answer validation are ready.
 
-```
-Student visits /book → picks tutor → Calendly popup
+## Product Flows
 
-Calendly webhook → POST /api/calendly
-  ├─ Creates sessions/{id} in Firestore
-  ├─ Links studentId if account exists
-  └─ Invites Fireflies bot to the meeting
+### Dashboard
 
-Session ends → Fireflies webhook → POST /api/fireflies
-  └─ Matches transcript to session, sets summaryStatus: 'pending'
+Student dashboard entry points:
 
-Tutor opens SessionDetail
-  ├─ Reviews transcript + adds notes
-  ├─ "Generate Summary" → POST /api/generate-summary (Claude)
-  └─ "Publish" → POST /api/publish-summary
-       └─ Writes users/{studentId}.lastSession in Firestore
+- Exam Help
+- Homework Help
+- Learning GPS
+- Session Notes
+- Practice
+- Community
 
-Student dashboard updates in real-time via Firestore onSnapshot
-```
+Exam Help and Homework Help both route through `app/src/pages/Practice.tsx`, but they use different modes.
 
-### ML Constellation Pipeline
+### Exam Help
 
-```
-Student completes practice session
-  └─ Events logged: { conceptId, outcome, mastery }
+Exam Help is the practice/gap-detection flow.
 
-ML API (VITE_ML_API_URL)
-  └─ GET /knowledge-graph/{userId}
-       └─ Returns { nodes: [{ id, x, y, mastery, status }], edges: [...] }
-
-ConstellationCard   → mini SVG preview on dashboard
-KnowledgeGraph page → full interactive version
-LearningGPS         → cross-references live mastery → ranks prerequisite gaps
+```text
+Dashboard
+-> Practice page
+-> choose exam
+-> confidence scan across exam concepts
+-> gap analysis
+-> recommended start point
+-> practice session
+-> saved process state
 ```
 
-### Concept Ontology (conceptMap.ts)
+Main files:
 
-50+ node prerequisite graph. Each concept maps to the ML IDs it directly requires. BFS from any target concept surfaces the full prerequisite chain, ranked by student mastery. Used by LearningGPS and the Gemini intake to generate personalized study paths. New ACT-critical nodes include word problems, percents/ratios, number properties, inequalities on graphs, function transformations, complex numbers, statistics graphs, and data interpretation.
+- `app/src/pages/Practice.tsx`
+- `app/src/lib/questionBank.ts`
+- `app/src/lib/examCurricula.ts`
+- `app/src/lib/bridgePractice.ts`
+- `app/src/lib/conceptMap.ts`
+- `app/src/lib/questionAgent.ts`
 
----
+What happens:
+
+1. Student picks an exam: `ACT`, `SAT`, `IB`, `AP`, or `General`.
+2. `examCurricula.ts` provides that exam's concept list and prerequisite map.
+3. The student marks each concept as confident, shaky, or hard.
+4. `bridgePractice.ts` looks for bridges from strong concepts into weak concepts.
+5. The app starts a practice session using `questionBank.ts`.
+6. The full process is saved locally as `Process 1` so the student can resume later.
+
+Saved process storage:
+
+```text
+localStorage key: mindcraft:exam-help:{uid}:process-1
+```
+
+Saved fields include exam, scanned concepts, confidence answers, current phase, current question list, question index, selected answer, hints, results, XP, and bridge metadata.
+
+### Homework Help
+
+Homework Help is the problem-solver/card flow.
+
+```text
+Dashboard
+-> Practice page Problem Solver mode
+-> type problem or upload image/PDF
+-> guided card session
+-> clues
+-> outcome logging
+```
+
+Main frontend files:
+
+- `app/src/pages/Practice.tsx`
+- `app/src/components/HomeworkCards.tsx`
+- `app/src/lib/geminiHomework.ts`
+- `app/src/lib/geminiProxy.ts`
+
+There are currently two homework paths:
+
+1. Typed problem:
+   - Uses `app/src/lib/geminiHomework.ts`.
+   - Calls the Vercel proxy at `webhook/api/gemini.ts`.
+   - Despite the file name, this proxy currently uses Groq/Llama by default.
+   - Produces a 6-card Socratic tutoring session.
+
+2. File upload:
+   - Calls the Cloud Run/FastAPI homework backend.
+   - Uses Claude for file extraction, orchestration, teaching agents, clues, and Manim/SVG visuals.
+
+## Backend Overview
+
+MindCraft has three backend layers:
+
+```text
+Firebase
+Vercel serverless webhook API
+Homework FastAPI service
+ML graph service
+```
+
+### Firebase
+
+Used for:
+
+- Auth
+- Firestore
+- Hosting
+- Storage rules
+
+Important files:
+
+- `firebase.json`
+- `firestore.rules`
+- `firestore.indexes.json`
+- `storage.rules`
+- `app/src/firebase.ts`
+
+Hosting targets:
+
+- `hosting:app` serves the React app from `app/dist`.
+- Marketing site is served separately from the root static files.
+
+Deploy app:
+
+```bash
+cd app
+npm run build
+cd ..
+npx firebase-tools@13 deploy --only hosting:app
+```
+
+### Vercel Webhook API
+
+Folder:
+
+```text
+webhook/
+```
+
+Important endpoints:
+
+- `api/gemini.ts`
+- `api/generate-questions.ts`
+- `api/calendly.ts`
+- `api/fireflies.ts`
+- `api/generate-summary.ts`
+- `api/publish-summary.ts`
+- `api/research-agent.ts`
+
+Deploy:
+
+```bash
+cd webhook
+npx vercel --prod --yes
+```
+
+Required Vercel env vars depend on which endpoints are used:
+
+```env
+FIREBASE_SERVICE_ACCOUNT=
+GROQ_API_KEY=
+ANTHROPIC_API_KEY=
+FIREFLIES_API_KEY=
+GOOGLE_SEARCH_API_KEY=
+GOOGLE_SEARCH_ENGINE_ID=
+CRON_SECRET=
+```
+
+### Practice Question Generator
+
+Endpoint:
+
+```text
+POST https://mindcraft-webhook.vercel.app/api/generate-questions
+```
+
+Source:
+
+```text
+webhook/api/generate-questions.ts
+```
+
+Input shape:
+
+```json
+{
+  "conceptId": "linear_equations",
+  "level": 2,
+  "examType": "IB",
+  "count": 10,
+  "bridgeFrom": "functions_basics"
+}
+```
+
+What it does:
+
+1. Validates exam type and count.
+2. Checks Firestore cache under `question_cache/{cacheKey}`.
+3. If cache misses, calls Groq/Llama through LangChain.
+4. Injects:
+   - concept knowledge
+   - level guidance
+   - exam style
+   - exam blueprint
+   - exam curriculum notes
+   - bridge context
+   - future past-paper pattern context
+5. Parses JSON output.
+6. Validates shape.
+7. Repairs simple numeric `correctIndex` mismatches when possible.
+8. Rejects obvious bad content, such as SVG in question text or explanations saying the answer is not listed.
+9. Writes successful generated questions to Firestore cache for 24 hours.
+
+Important: this endpoint is **not production-trusted yet**. The live frontend does not use it unless `VITE_ENABLE_DYNAMIC_QGEN=true`.
+
+### Homework FastAPI Backend
+
+Folder:
+
+```text
+homework/
+```
+
+Main API:
+
+```text
+homework/api/main.py
+```
+
+Endpoints:
+
+- `POST /submit`
+- `POST /submit-with-file`
+- `POST /clue`
+- `POST /outcome`
+- `GET /health`
+
+Full upload flow:
+
+```text
+image/PDF upload
+-> Claude extracts problem text
+-> orchestrator creates 2-4 solution paths
+-> Claude agents generate teaching narratives for each path
+-> path scorer selects the best student-aware path
+-> Manim visual generated if useful
+-> card sequence returned to frontend
+-> outcomes update student knowledge graph
+```
+
+Important files:
+
+- `homework/api/main.py`
+- `homework/orchestrator/orchestrator.py`
+- `homework/agents/agent_runner.py`
+- `homework/agents/knowledge_checker.py`
+- `homework/cards/card_builder.py`
+- `homework/students/student_loader.py`
+- `homework/visuals/manim_runner.py`
+- `homework/visuals/manim_generator.py`
+- `homework/utils/claude_client.py`
+
+Model:
+
+```text
+Claude Haiku 4.5 via ANTHROPIC_API_KEY
+```
+
+Student knowledge graph storage:
+
+```text
+Firestore collection: homework_profiles
+```
+
+The homework service also bootstraps from:
+
+```text
+Firestore collection: knowledge_graphs
+```
+
+### ML Knowledge Graph Service
+
+Folder:
+
+```text
+ml/
+```
+
+Main API:
+
+```text
+ml/serve.py
+```
+
+Used for:
+
+- concept ontology
+- ingredient ontology
+- per-student mastery graph
+- prerequisite paths
+- recommendations
+- concept embeddings/PCA
+
+Important files:
+
+- `ml/data/ontology_complete.json`
+- `ml/data/ontology.json`
+- `ml/data/ingredient_ontology.json`
+- `ml/mindcraft_graph/engine/student_graph.py`
+- `ml/mindcraft_graph/engine/edge_weights.py`
+- `ml/mindcraft_graph/planning/pathfinder.py`
+- `ml/mindcraft_graph/firestore_adapter.py`
+
+The richer atomic ontology lives in:
+
+```text
+ml/data/ontology_complete.json
+```
+
+The frontend currently uses the lighter browser-side map in:
+
+```text
+app/src/lib/conceptMap.ts
+```
+
+## Exam Curricula and Concept Maps
+
+Each exam now has its own frontend prerequisite map:
+
+```text
+app/src/lib/examCurricula.ts
+```
+
+This avoids treating ACT, SAT, IB AI SL, AP, and General math as the same concept graph.
+
+Current live maps are intentionally limited to concepts with reviewed static fallback questions. The broader future curriculum map lives in:
+
+```text
+ml/data/exam_curricula.json
+```
+
+For the current IB student, the frontend IB map is tuned toward IB Math AI SL and excludes calculus.
+
+## Past-Paper Intelligence Plan
+
+The long-term generation pipeline should be:
+
+```text
+approved exam PDFs
+-> parse questions
+-> tag every question by concept
+-> tag atomic skills
+-> extract recurring patterns
+-> store abstract pattern records
+-> generate original questions grounded in those patterns
+```
+
+Docs and schema:
+
+- `docs/past-paper-intelligence.md`
+- `ml/data/past_paper_schema.json`
+- `ml/data/exam_curricula.json`
+
+Starter ingestion script:
+
+```text
+ml/scripts/ingest_past_papers.py
+```
+
+Run:
+
+```bash
+python3 ml/scripts/ingest_past_papers.py --exam IB_AI_SL
+```
+
+Input folder:
+
+```text
+ml/data/past_papers/
+```
+
+Output folder:
+
+```text
+ml/data/past_paper_index/
+```
+
+Important legal/product note: do not commit copyrighted exam PDFs. The pipeline is designed for PDFs the team/student/school is allowed to process. Store derived metadata and abstract patterns, not copied papers.
 
 ## Project Structure
 
-```
+```text
 mindcraft-site/
-├── app/                              # React 18 + TypeScript + Vite
-│   └── src/
-│       ├── App.tsx                   # Router, AuthGuard, role-based redirect
-│       ├── firebase.ts
-│       ├── global.css                # CSS variables + reset (dark teal theme)
-│       ├── lib/
-│       │   ├── conceptMap.ts         # 50+ node ontology + PREREQUISITES graph
-│       │   ├── conceptContent.ts     # Rich concept cards (rules, tips, examples)
-│       │   ├── questionBank.ts       # 155 curated MCQ questions × 15 concepts × 3 levels
-│       │   ├── geminiIntake.ts       # Gemini 1.5 Flash — personalized concept recommendations
-│       │   ├── mlApi.ts              # ML constellation API client
-│       │   └── logEvent.ts           # Firestore analytics logger
-│       ├── hooks/
-│       │   ├── useStudentData.ts     # Real-time Firestore: user doc, sessions, homework
-│       │   └── useToast.ts
-│       ├── pages/
-│       │   ├── Dashboard.tsx         # Constellation + Homework + GPS
-│       │   ├── Practice.tsx          # Intake → Explore → Level → Session → Complete
-│       │   ├── KnowledgeGraph.tsx    # Full interactive constellation
-│       │   ├── StudentSessions.tsx   # All session notes
-│       │   ├── StudyTimer.tsx        # Pomodoro / deep work modes
-│       │   ├── TutorDashboard.tsx    # Tutor: students, sessions, publish
-│       │   ├── SessionDetail.tsx     # Transcript + AI summary
-│       │   ├── Login.tsx / Book.tsx / Admin.tsx / Chat.tsx
-│       └── components/
-│           ├── ConstellationCard.tsx # Mini constellation SVG
-│           ├── LearningGPS.tsx       # Concept → prerequisite path ranked by mastery
-│           ├── HomeworkProgress.tsx  # Tutor-assigned homework tracker
-│           ├── HomeworkCards.tsx     # Hint card sequence (Problem Solver)
-│           ├── Sidebar.tsx           # Left nav
-│           └── HeroBar.tsx / LastSession.tsx / StudentIntelPanel.tsx
-├── webhook/                          # Vercel Serverless Functions (Node + TypeScript)
-│   └── api/                          # calendly, fireflies, generate-summary, publish-summary, ...
-├── functions/                        # Firebase Cloud Functions
-├── ml/                               # Offline: concept embeddings + PCA projection
-│   └── data/
-│       ├── concept_embeddings.npz
-│       └── pca_axes.npz
-├── index.html                        # Marketing site (Firebase Hosting target: marketing)
-├── article.html / blog.html
+├── app/                         React + TypeScript + Vite app
+│   ├── src/
+│   │   ├── components/          reusable UI components
+│   │   ├── lib/                 question bank, maps, API clients
+│   │   └── pages/               Dashboard, Practice, Book, etc.
+│   ├── scripts/                 local generation/audit scripts
+│   └── dist/                    built app for Firebase Hosting
+├── webhook/                     Vercel serverless API
+│   └── api/
+├── homework/                    FastAPI homework-help backend
+│   ├── api/
+│   ├── agents/
+│   ├── cards/
+│   ├── orchestrator/
+│   ├── students/
+│   └── visuals/
+├── ml/                          ontology, graph engine, recommendations
+│   ├── data/
+│   ├── mindcraft_graph/
+│   └── scripts/
+├── docs/                        architecture docs
+├── functions/                   Firebase Functions
+├── index.html                   marketing/static page
 ├── firebase.json
-├── firestore.rules / firestore.indexes.json / storage.rules
 └── README.md
 ```
 
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | React 18 + TypeScript + Vite |
-| Styling | CSS Modules (zero UI libraries) |
-| Routing | React Router v6 |
-| Database | Firebase Firestore (real-time) |
-| Auth | Firebase Authentication |
-| Hosting | Firebase Hosting (multi-site) |
-| AI — Intake | Google Gemini 1.5 Flash |
-| AI — Summaries | Anthropic Claude (webhook server) |
-| Webhooks | Vercel Serverless Functions |
-| ML graph | Python + scikit-learn (offline) |
-| Booking | Calendly API v2 |
-| Transcription | Fireflies.ai |
-
----
-
-## Getting Started
-
-### Frontend
+## Frontend Setup
 
 ```bash
 cd app
 npm install
-npm run dev       # http://localhost:5173
-npm run build     # production build → app/dist/
-npm run generate:questions -- linear_equations 2
-npm run generate:visual -- quadratic_equations "vertex form"
+npm run dev
+npm run build
 ```
 
-**`app/.env.local`**
+Local env:
+
 ```env
 VITE_FIREBASE_API_KEY=
 VITE_FIREBASE_AUTH_DOMAIN=
@@ -245,96 +457,49 @@ VITE_FIREBASE_PROJECT_ID=
 VITE_FIREBASE_STORAGE_BUCKET=
 VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
-VITE_ML_API_URL=              # ML knowledge-graph API base URL
-VITE_HOMEWORK_API_URL=        # Homework hint API (Cloud Run)
-VITE_GEMINI_API_KEY=          # Gemini 1.5 Flash — powers the practice intake dialog
-GEMINI_API_KEY=               # Local scripts only: question + Manim scene generation
+VITE_ML_API_URL=
+VITE_HOMEWORK_API_URL=
+VITE_ENABLE_DYNAMIC_QGEN=false
 ```
 
-Do not commit `.env.local` or API keys. If a key appears in a screenshot, chat, commit, or issue, rotate it in Google AI Studio before using it again.
-
-### Deploy
+## Useful Commands
 
 ```bash
-# Build the app first
-cd app && npm run build && cd ..
+# Frontend build
+cd app && npm run build
 
-# Deploy both hosting targets
-npx firebase-tools@13 deploy --only hosting
+# Practice audit
+cd app && npm run audit:practice
+
+# Webhook type check
+cd webhook && npx tsc --noEmit --target ES2022 --lib ES2022 --skipLibCheck --moduleResolution node --module commonjs api/generate-questions.ts
+
+# Past-paper ingestion help
+python3 ml/scripts/ingest_past_papers.py --help
+
+# Deploy app
+npx firebase-tools@13 deploy --only hosting:app
+
+# Deploy webhook
+cd webhook && npx vercel --prod --yes
 ```
 
-### Webhook server
+## Known Gaps
 
-```bash
-cd webhook
-npm install
-vercel deploy --prod
-```
+- Dynamic generated questions are not production-safe yet.
+- The past-paper parser currently creates raw records only; concept tagging and pattern extraction are next.
+- The static bank covers the live maps, but many future `PRACTICE_CONCEPTS` still need reviewed questions.
+- Typed Homework Help currently uses the simpler Vercel/Groq card path, while file upload uses the richer FastAPI/Claude/Manim pipeline.
+- Exam process saving is browser-local, not Firestore-synced across devices.
 
-**Vercel env vars:**
-```env
-FIREBASE_SERVICE_ACCOUNT={"type":"service_account",...}
-ANTHROPIC_API_KEY=sk-ant-...
-FIREFLIES_API_KEY=...
-GEMINI_API_KEY=...
-GOOGLE_SEARCH_API_KEY=...
-GOOGLE_SEARCH_ENGINE_ID=...
-CRON_SECRET=...
-```
+## Contributor Notes
 
----
+Before turning generated questions back on:
 
-## Firestore Data Model
+1. Build the past-paper pattern index.
+2. Add concept/atomic tag validation.
+3. Add answer-key verification beyond numeric repair.
+4. Add a human review/promotion queue.
+5. Run remote smoke tests against `generate-questions`.
 
-**`users/{uid}`**
-```
-uid, email, displayName, role ('student' | 'tutor' | 'admin')
-lastSession { id, subject, date, title, bullets[], tutorName, duration }
-nextSession  { subject, time, tutor, meetingUrl }
-homework     { assignments: [{ id, title, problems: [{ id, text, done }] }] }
-calendlyToken, calendlyEmail, calendlyUrl   ← tutor only
-```
-
-**`researchBatches/{batchId}`**
-```
-id, createdAt, query, sourceKinds[], sourceCount
-sources[] { title, url, host, kind, snippetPreview }
-insights {
-  painPoints[], examSignals[], conceptSignals[],
-  studentLanguage[], productIdeas[], safetyNotes[]
-}
-```
-
-**`sessions/{id}`**
-```
-studentEmail, studentId, tutorId, tutorName
-subject, status, scheduledAt, endAt, meetingUrl
-summary { title, bullets[], date, duration, published }
-transcript { meetingId, fullText, sentences[], summary }
-```
-
----
-
-## Background Agent Prompt (for Codex / offline generation)
-
-Paste this to any AI agent to keep expanding the system:
-
-> You are working on MindCraft — an ACT/SAT/IB math exam prep platform. Stack: React 18 + TypeScript + Vite + Firebase + Gemini API. Mission: students panic before exams because they don't know what they're missing. MindCraft finds the gaps, builds a personalized learning path, and runs a practice loop. Current question bank: 102 questions across 10 concepts × 3 levels. Your job is to expand: (1) Add new concept nodes to conceptMap.ts with prerequisite edges. (2) Add 9–12 questions per new concept to questionBank.ts (4 L1, 4 L2, 3 L3) — real ACT/SAT/IB difficulty, original, with full explanation and 3-step hint ladder. (3) Add ConceptContent entries to conceptContent.ts (keyRules, tips, watchOut, examples). (4) Priority concepts to add: word_problems, percent_ratio, number_properties, function_transformations, statistics_graphs, data_interpretation, complex_numbers. Run `npm run build` from app/ to verify no TypeScript errors.
-
----
-
-## Dev Utilities
-
-```bash
-# Type-check frontend
-cd app && npx tsc --noEmit
-
-# Type-check webhooks
-cd webhook && npx tsc --noEmit
-
-# Deploy Firestore rules only
-npx firebase-tools@13 deploy --only firestore:rules
-
-# Deploy everything
-npx firebase-tools@13 deploy --only hosting
-```
+Keep production boring and correct. Students should never see unverified answer keys.
