@@ -1,0 +1,57 @@
+{
+  "version": "2026-05-10",
+  "collections": {
+    "paper_sources": {
+      "description": "One record per uploaded/approved exam paper PDF.",
+      "fields": {
+        "source_id": "stable hash of exam/year/session/paper/file",
+        "exam": "IB_AI_SL | ACT_MATH | SAT_MATH | AP_MATH",
+        "subject": "human readable subject name",
+        "year": "paper year if known",
+        "session": "exam session if known, for example May or November",
+        "paper": "paper label if known",
+        "timezone": "IB timezone if known",
+        "file_path": "local or storage path",
+        "license_note": "why MindCraft is allowed to process this file",
+        "ingested_at": "ISO timestamp"
+      }
+    },
+    "paper_questions": {
+      "description": "One record per parsed question/subquestion.",
+      "fields": {
+        "question_id": "source_id plus question number",
+        "source_id": "paper_sources.source_id",
+        "exam": "exam key",
+        "question_number": "printed question number",
+        "part": "subpart label if any",
+        "raw_text": "extracted question text",
+        "marks": "available marks if visible",
+        "figures": "paths or ids for extracted diagrams",
+        "answer_region": "optional markscheme snippet/reference, never used verbatim in student questions",
+        "concept_tags": "ranked concept ids",
+        "atomic_tags": "ingredient-level tags from ontology_complete.json",
+        "pattern_tags": "question pattern ids",
+        "difficulty_estimate": "0.0 to 1.0",
+        "calculator_expected": "true/false/unknown",
+        "modeling_context": "short context label",
+        "diagnostic_traps": "common mistakes this question exposes"
+      }
+    },
+    "question_patterns": {
+      "description": "Aggregated patterns extracted from many paper questions. These ground generation without copying paper wording.",
+      "fields": {
+        "pattern_id": "stable slug",
+        "exam": "exam key",
+        "concept_tags": "concept ids",
+        "atomic_tags": "ingredient ids",
+        "frequency": "relative frequency in ingested set",
+        "stem_shape": "abstract description of the question setup",
+        "data_shape": "table, graph, diagram, plain text, multi-part, etc.",
+        "skills_tested": "ordered list of operations the student must perform",
+        "common_traps": "distractor logic",
+        "generation_template": "safe abstract template, not copied wording",
+        "source_question_ids": "ids used to derive the pattern"
+      }
+    }
+  }
+}

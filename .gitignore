@@ -21,3 +21,5 @@ ml/google-cloud-sdk/
 ml/google-cloud-cli-linux-x86_64.tar.gz
 ml/mindcraft_remaining_modules.zip
 ml/scripts/*.png
+ml/data/past_papers/**/*.pdf
+ml/data/past_paper_index/*.jsonl

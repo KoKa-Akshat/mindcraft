@@ -14,7 +14,8 @@
 import type { Question } from './questionBank'
 
 const ENDPOINT = 'https://mindcraft-webhook.vercel.app/api/generate-questions'
-const SESSION_PREFIX = 'qgen_'
+const SESSION_PREFIX = 'qgen_v2_'
+const DYNAMIC_QGEN_ENABLED = import.meta.env.VITE_ENABLE_DYNAMIC_QGEN === 'true'
 
 function sessionKey(conceptId: string, level: number, examType: string, count: number, bridgeFrom?: string) {
   const bridgePart = bridgeFrom ? `_B${bridgeFrom}` : ''
@@ -50,6 +51,8 @@ export async function generateQuestions(
   count = 8,
   bridgeFrom?: string,
 ): Promise<Question[]> {
+  if (!DYNAMIC_QGEN_ENABLED) return []
+
   const key = sessionKey(conceptId, level, examType, count, bridgeFrom)
 
   // 1. sessionStorage hit

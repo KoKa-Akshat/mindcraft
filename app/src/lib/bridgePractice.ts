@@ -15,7 +15,11 @@ export function getRecommendedLevel(confidence: Confidence | undefined): 1 | 2 |
   return 3
 }
 
-export function getAtomicPrereqPath(targetId: string, sourceIds: Set<string>) {
+export function getAtomicPrereqPath(
+  targetId: string,
+  sourceIds: Set<string>,
+  prerequisites: Record<string, string[]> = PREREQUISITES,
+) {
   const queue = [{ id: targetId, path: [] as string[] }]
   const seen = new Set<string>()
 
@@ -24,7 +28,7 @@ export function getAtomicPrereqPath(targetId: string, sourceIds: Set<string>) {
     if (seen.has(current.id)) continue
     seen.add(current.id)
 
-    for (const prereq of PREREQUISITES[current.id] ?? []) {
+    for (const prereq of prerequisites[current.id] ?? []) {
       const nextPath = [...current.path, prereq]
       if (sourceIds.has(prereq)) return { fromId: prereq, viaIds: nextPath }
       queue.push({ id: prereq, path: nextPath })
@@ -37,6 +41,7 @@ export function getAtomicPrereqPath(targetId: string, sourceIds: Set<string>) {
 export function buildBridgeRecommendations(
   confidenceMap: Record<string, Confidence>,
   limit = 2,
+  prerequisites: Record<string, string[]> = PREREQUISITES,
 ): BridgeRecommendation[] {
   const sourceIds = new Set(
     Object.entries(confidenceMap)
@@ -50,7 +55,7 @@ export function buildBridgeRecommendations(
 
   const seen = new Set<string>()
   return targets.flatMap(target => {
-    const bridge = getAtomicPrereqPath(target.id, sourceIds)
+    const bridge = getAtomicPrereqPath(target.id, sourceIds, prerequisites)
     if (!bridge) return []
 
     const key = `${bridge.fromId}->${target.id}`

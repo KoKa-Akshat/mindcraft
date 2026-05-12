@@ -74,6 +74,14 @@ const EXAM_FORMAT_RULES: Record<string, string> = {
   General: 'Use clean skill-building prompts with varied formats and no heavy exam-specific style.',
 }
 
+const EXAM_CURRICULUM_NOTES: Record<string, string> = {
+  ACT: 'Use the ACT math prerequisite map: arithmetic/number properties and algebra speed feed word problems, coordinate geometry, right-triangle trig, statistics, and probability. Questions should reveal whether the student can move fast without falling for common traps.',
+  SAT: 'Use the Digital SAT math prerequisite map: linear equations and functions feed data interpretation, word problems, coordinate geometry, and equivalent-form reasoning. Questions should test translation from context into math.',
+  IB: 'Use the IB Math AI SL prerequisite map: number sense, percentages, functions, graph/table interpretation, statistics, probability, sequences, and growth models support modelling. Do not use calculus. Questions should feel calculator-friendly and ask what results mean in context.',
+  AP: 'Use the AP prerequisite map: functions and algebra feed limits, derivatives, applications, integrals, and graphical/interval reasoning. Questions should test notation discipline and function behavior.',
+  General: 'Use the general high-school prerequisite map and focus on core skill repair.',
+}
+
 type GeneratedQuestion = {
   id: string
   conceptId: string
@@ -109,6 +117,10 @@ function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examT
   const item = q as Partial<GeneratedQuestion>
   const examTagValid = item.examTag === undefined || item.examTag === null || ['ACT', 'SAT', 'IB', 'AP'].includes(item.examTag)
   const examTagMatches = examType === 'General' ? true : item.examTag === examType
+  const questionTextClean = typeof item.question === 'string'
+    && !/(<svg|<\/svg>|<script|<foreignObject|javascript:|data:|on\w+=)/i.test(item.question)
+  const explanationClean = typeof item.explanation === 'string'
+    && !/(not among the choices|closest to the actual answer|none of the choices|not one of the options|not listed)/i.test(item.explanation)
   const visualValid = item.visual_type === undefined
     || item.visual_type === 'none'
     || (item.visual_type === 'svg'
@@ -117,7 +129,7 @@ function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examT
       && item.visual_data.length <= 4500)
 
   return typeof item.id === 'string'
-    && typeof item.question === 'string'
+    && questionTextClean
     && Array.isArray(item.choices)
     && item.choices.length === 4
     && item.choices.every(choice => typeof choice === 'string' && choice.trim().length > 0)
@@ -135,12 +147,66 @@ function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examT
     && visualValid
 }
 
+function numericValueFromChoice(choice: string) {
+  const normalized = choice
+    .replace(/,/g, '')
+    .replace(/[−–—]/g, '-')
+    .replace(/^\s*[A-D][).:\s-]+/i, '')
+    .trim()
+
+  const equationMatch = normalized.match(/=\s*(-?\d+(?:\.\d+)?)(?!\s*[a-z])/i)
+  const plainMatch = normalized.match(/^([-+]?(?:\d+(?:\.\d+)?|\.\d+))\s*(?:%|[a-zA-Z/ ]+)?$/)
+  const fractionMatch = normalized.match(/^(-?\d+)\s*\/\s*(-?\d+)$/)
+
+  if (fractionMatch) {
+    const denominator = Number(fractionMatch[2])
+    if (denominator === 0) return null
+    return Number(fractionMatch[1]) / denominator
+  }
+
+  const raw = equationMatch?.[1] ?? plainMatch?.[1]
+  if (!raw) return null
+  const value = Number(raw)
+  return Number.isFinite(value) ? value : null
+}
+
+function numericValuesFromExplanation(explanation: string) {
+  const normalized = explanation.replace(/,/g, '').replace(/[−–—]/g, '-')
+  return [...normalized.matchAll(/-?\d+(?:\.\d+)?/g)]
+    .map(match => Number(match[0]))
+    .filter(Number.isFinite)
+}
+
+function nearlyEqual(a: number, b: number) {
+  return Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9)
+}
+
+function repairNumericCorrectIndex(question: GeneratedQuestion): GeneratedQuestion {
+  const choiceValues = question.choices.map(numericValueFromChoice)
+  if (choiceValues.some(value => value === null)) return question
+
+  const explanationValues = numericValuesFromExplanation(question.explanation)
+  if (explanationValues.length === 0) return question
+
+  const finalValue = explanationValues[explanationValues.length - 1]
+  const matchingChoiceIndexes = choiceValues
+    .map((value, index) => value !== null && nearlyEqual(value, finalValue) ? index : -1)
+    .filter(index => index >= 0)
+
+  if (matchingChoiceIndexes.length !== 1) return question
+  const repairedIndex = matchingChoiceIndexes[0]
+  return repairedIndex === question.correctIndex
+    ? question
+    : { ...question, correctIndex: repairedIndex }
+}
+
 function normalizeQuestions(questions: unknown, conceptId: string, level: number, count: number, examType: string) {
   if (!Array.isArray(questions)) return []
 
   const seen = new Set<string>()
   return questions
     .filter(q => isGeneratedQuestion(q, conceptId, level, examType))
+    .map(q => repairNumericCorrectIndex(q))
     .filter(q => {
       if (seen.has(q.id)) return false
       seen.add(q.id)
@@ -158,7 +224,9 @@ DIFFICULTY: {level_guidance}
 EXAM STYLE: {exam_style}
 EXAM BLUEPRINT: {exam_blueprint}
 EXAM FORMAT RULES: {exam_format_rules}
+EXAM CURRICULUM MAP: {exam_curriculum_notes}
 BRIDGE CONTEXT: {bridge_context}
+PAST-PAPER PATTERN CONTEXT: {paper_pattern_context}
 
 Generate exactly {count} UNIQUE multiple-choice questions. Each question must:
 • Be GENUINELY DIAGNOSTIC — reveal whether the student understands or is guessing
@@ -267,7 +335,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       exam_style:        EXAM_STYLE[examType]          ?? EXAM_STYLE.General,
       exam_blueprint:    EXAM_BLUEPRINT[examType]      ?? EXAM_BLUEPRINT.General,
       exam_format_rules: EXAM_FORMAT_RULES[examType]   ?? EXAM_FORMAT_RULES.General,
+      exam_curriculum_notes: EXAM_CURRICULUM_NOTES[examType] ?? EXAM_CURRICULUM_NOTES.General,
       bridge_context:    bridgeContext,
+      paper_pattern_context: 'No indexed past-paper patterns are attached yet. Generate original questions from the exam curriculum map and concept blueprint. When the past-paper index is online, this field will contain abstract pattern records, not copied paper text.',
       exam_tag_instruction: examType === 'General'
         ? 'one of "ACT","SAT","IB","AP" or null — only tag when the question genuinely reflects that exam style'
         : `"${examType}" for every question`,

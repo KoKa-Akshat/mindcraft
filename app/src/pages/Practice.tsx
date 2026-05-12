@@ -14,6 +14,7 @@ import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
 import { getConceptContent } from '../lib/conceptContent'
 import { mlIdToLabel } from '../lib/conceptMap'
 import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
+import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
@@ -118,22 +119,12 @@ const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
     'systems_of_linear_equations',
     'exponent_rules',
     'polynomials',
-    'factoring_polynomials',
     'quadratic_equations',
     'rational_expressions',
     'functions_basics',
     'function_transformations',
     'word_problems',
-    'lines_angles',
-    'triangles_congruence',
-    'right_triangle_geometry',
-    'coordinate_geometry',
-    'circles_geometry',
-    'area_volume',
-    'geometric_transformations',
-    'trigonometry_basics',
     'descriptive_statistics',
-    'data_interpretation',
     'basic_probability',
   ],
   SAT: [
@@ -143,26 +134,14 @@ const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
     'absolute_value',
     'quadratic_equations',
     'polynomials',
-    'factoring_polynomials',
     'rational_expressions',
-    'radical_expressions',
     'exponent_rules',
-    'exponential_functions',
     'functions_basics',
     'function_transformations',
     'word_problems',
     'percent_ratio',
     'descriptive_statistics',
-    'statistics_graphs',
-    'data_interpretation',
     'basic_probability',
-    'coordinate_geometry',
-    'lines_angles',
-    'triangles_congruence',
-    'right_triangle_geometry',
-    'circles_geometry',
-    'area_volume',
-    'trigonometry_basics',
   ],
   IB: [
     'number_properties',
@@ -171,50 +150,26 @@ const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
     'linear_inequalities',
     'systems_of_linear_equations',
     'exponent_rules',
+    'polynomials',
     'quadratic_equations',
-    'sequences_series',
+    'rational_expressions',
     'functions_basics',
     'function_transformations',
-    'exponential_functions',
-    'logarithmic_functions',
     'word_problems',
-    'lines_angles',
-    'triangles_congruence',
-    'coordinate_geometry',
-    'right_triangle_geometry',
-    'trigonometry_basics',
-    'circles_geometry',
-    'area_volume',
     'descriptive_statistics',
-    'statistics_graphs',
-    'data_interpretation',
     'basic_probability',
-    'integrals',
-    'applications_of_integrals',
-    'limits_continuity',
-    'derivatives',
-    'applications_of_derivatives',
   ],
   AP: [
     'functions_basics',
     'function_transformations',
-    'exponential_functions',
-    'logarithmic_functions',
-    'trigonometry_basics',
-    'trigonometric_identities',
+    'exponent_rules',
     'polynomials',
-    'factoring_polynomials',
     'rational_expressions',
-    'limits_continuity',
-    'derivatives',
-    'applications_of_derivatives',
-    'integrals',
-    'applications_of_integrals',
     'descriptive_statistics',
-    'statistics_graphs',
-    'data_interpretation',
     'basic_probability',
     'word_problems',
+    'linear_equations',
+    'quadratic_equations',
   ],
   General: [
     'number_properties',
@@ -224,22 +179,12 @@ const EXAM_CONCEPT_IDS: Record<ExamType, string[]> = {
     'absolute_value',
     'systems_of_linear_equations',
     'exponent_rules',
-    'radical_expressions',
     'polynomials',
-    'factoring_polynomials',
     'quadratic_equations',
     'rational_expressions',
     'functions_basics',
     'function_transformations',
-    'coordinate_geometry',
-    'lines_angles',
-    'triangles_congruence',
-    'right_triangle_geometry',
-    'circles_geometry',
-    'area_volume',
-    'trigonometry_basics',
     'descriptive_statistics',
-    'data_interpretation',
     'basic_probability',
     'word_problems',
   ],
@@ -540,7 +485,7 @@ export default function Practice() {
 
   function pickExam(e: string) {
     setExam(e)
-    const ids = EXAM_CONCEPT_IDS[e as ExamType] ?? EXAM_CONCEPT_IDS.General
+    const ids = getExamConceptIds(e)
     const filtered = ids.flatMap(id => {
       const c = PRACTICE_CONCEPTS.find(c => c.id === id)
       return c ? [c] : []
@@ -576,7 +521,7 @@ export default function Practice() {
   const hardConcepts  = assessConcepts.filter(c => confidenceMap[c.id] === 'hard')
   const kindaConcepts = assessConcepts.filter(c => confidenceMap[c.id] === 'kinda')
   const easyConcepts  = assessConcepts.filter(c => confidenceMap[c.id] === 'easy')
-  const bridgeRecommendations = buildBridgeRecommendations(confidenceMap, 2)
+  const bridgeRecommendations = buildBridgeRecommendations(confidenceMap, 2, getExamPrerequisites(exam || FALLBACK_EXAM))
 
   // The single best concept to start with (hardest first, then kinda)
   const topPriority = hardConcepts[0] ?? kindaConcepts[0] ?? easyConcepts[0] ?? assessConcepts[0]

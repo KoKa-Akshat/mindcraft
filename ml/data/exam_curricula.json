@@ -1,0 +1,106 @@
+{
+  "version": "2026-05-10",
+  "description": "Exam-specific curriculum maps. These are the exam-facing prerequisite maps used before question generation and past-paper pattern retrieval.",
+  "curricula": {
+    "IB_AI_SL": {
+      "label": "IB Mathematics Applications and Interpretation SL",
+      "generation_notes": "Model-first, calculator-friendly, context-rich. Prioritize functions, statistics, probability, financial/growth models, graph/table interpretation, and written conclusions. Exclude calculus.",
+      "concept_order": [
+        "number_properties",
+        "percent_ratio",
+        "linear_equations",
+        "linear_inequalities",
+        "systems_of_linear_equations",
+        "exponent_rules",
+        "radical_expressions",
+        "polynomials",
+        "factoring_polynomials",
+        "quadratic_equations",
+        "rational_expressions",
+        "sequences_series",
+        "functions_basics",
+        "function_transformations",
+        "exponential_functions",
+        "logarithmic_functions",
+        "word_problems",
+        "coordinate_geometry",
+        "right_triangle_geometry",
+        "trigonometry_basics",
+        "area_volume",
+        "descriptive_statistics",
+        "statistics_graphs",
+        "data_interpretation",
+        "basic_probability"
+      ],
+      "prerequisites": {
+        "percent_ratio": ["number_properties"],
+        "linear_equations": ["number_properties"],
+        "linear_inequalities": ["linear_equations"],
+        "systems_of_linear_equations": ["linear_equations"],
+        "exponent_rules": ["linear_equations", "number_properties"],
+        "radical_expressions": ["exponent_rules"],
+        "polynomials": ["linear_equations", "exponent_rules"],
+        "factoring_polynomials": ["polynomials"],
+        "quadratic_equations": ["factoring_polynomials", "polynomials", "functions_basics"],
+        "rational_expressions": ["polynomials", "factoring_polynomials"],
+        "sequences_series": ["linear_equations", "functions_basics", "percent_ratio"],
+        "functions_basics": ["linear_equations"],
+        "function_transformations": ["functions_basics", "coordinate_geometry"],
+        "exponential_functions": ["functions_basics", "exponent_rules", "percent_ratio"],
+        "logarithmic_functions": ["exponential_functions", "functions_basics"],
+        "word_problems": ["linear_equations", "percent_ratio", "functions_basics"],
+        "coordinate_geometry": ["linear_equations", "functions_basics"],
+        "right_triangle_geometry": ["coordinate_geometry"],
+        "trigonometry_basics": ["right_triangle_geometry", "functions_basics"],
+        "area_volume": ["number_properties", "right_triangle_geometry"],
+        "descriptive_statistics": ["percent_ratio", "number_properties"],
+        "statistics_graphs": ["descriptive_statistics", "data_interpretation"],
+        "data_interpretation": ["descriptive_statistics", "percent_ratio", "linear_equations"],
+        "basic_probability": ["percent_ratio", "descriptive_statistics"]
+      },
+      "paper_pattern_priorities": [
+        "real_context_model_setup",
+        "calculator_ready_computation",
+        "graph_table_interpretation",
+        "statistics_summary",
+        "probability_tree_or_table",
+        "financial_growth_or_decay",
+        "short_written_conclusion"
+      ]
+    },
+    "ACT_MATH": {
+      "label": "ACT Math",
+      "generation_notes": "Speed-first. Prioritize short stems, common traps, mixed algebra/geometry, and answer-choice diagnostics.",
+      "paper_pattern_priorities": [
+        "single_step_trap",
+        "timed_word_problem",
+        "coordinate_geometry",
+        "percent_ratio",
+        "right_triangle_trig",
+        "statistics_probability"
+      ]
+    },
+    "SAT_MATH": {
+      "label": "Digital SAT Math",
+      "generation_notes": "Context and interpretation first. Prioritize units, tables, graphs, equivalent forms, and algebra hidden inside wording.",
+      "paper_pattern_priorities": [
+        "context_to_equation",
+        "data_table_interpretation",
+        "function_notation",
+        "equivalent_expression",
+        "graph_claim_validation"
+      ]
+    },
+    "AP_MATH": {
+      "label": "AP Math",
+      "generation_notes": "Notation and reasoning first. Prioritize function behavior, rates, intervals, graphical reasoning, and written justification.",
+      "paper_pattern_priorities": [
+        "function_behavior",
+        "rate_of_change",
+        "interval_reasoning",
+        "graphical_derivative",
+        "accumulation"
+      ]
+    }
+  }
+}

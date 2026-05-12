@@ -80,6 +80,7 @@ const [questionBankSource, practiceSource] = await Promise.all([
 const practiceConcepts = extractPracticeConcepts(questionBankSource)
 const practiceConceptSet = new Set(practiceConcepts)
 const examMaps = extractExamMaps(practiceSource)
+const activeExamConceptSet = new Set(Object.values(examMaps).flat())
 const questions = extractQuestions(questionBankSource)
 
 console.log('\nMindCraft Practice System Audit\n')
@@ -108,7 +109,8 @@ if (invalidConceptQuestions.length > 0) {
 for (const conceptId of practiceConcepts) {
   for (const level of LEVELS) {
     const count = questions.filter(q => q.conceptId === conceptId && q.level === level).length
-    if (count === 0) fail(`${conceptId} L${level} has no static fallback questions`)
+    if (count === 0 && activeExamConceptSet.has(conceptId)) fail(`${conceptId} L${level} has no static fallback questions`)
+    else if (count === 0) warn(`${conceptId} L${level} has no static fallback questions yet (future concept, not in live exam maps)`)
     else if (count < 3) warn(`${conceptId} L${level} has only ${count} static fallback questions`)
   }
 }
