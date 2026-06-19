@@ -1,6 +1,6 @@
 # MindCraft
 
-MindCraft is a math exam-prep web app for students preparing for ACT, SAT, IB Math, AP math, and general high-school math. The product goal is simple: find the exact gaps, show the student where to start, and guide them through practice, homework help, and tutoring without making them guess what to study.
+MindCraft is a math exam-prep platform built around grit and growth mindset. The thesis: learning gaps are not a sign of low ability — they are a map. MindCraft shows students exactly where their understanding broke down, bridges them to what they already know, and guides deliberate practice without shame or arbitrary timers.
 
 Live links:
 
@@ -8,498 +8,192 @@ Live links:
 - Marketing site: https://mindcraft-marketing-site.web.app
 - Vercel webhook API: https://mindcraft-webhook.vercel.app
 
-## Current Safety State
+---
 
-Dynamic AI-generated practice questions are **disabled by default** in the frontend.
+## Architecture Overview
 
-The app currently uses the reviewed static question bank for live practice. The Vercel question generator still exists, but the frontend only calls it when:
+MindCraft is three services that talk through Firestore as the single source of truth.
 
-```env
-VITE_ENABLE_DYNAMIC_QGEN=true
+```
+Browser (React + Vite)
+    │
+    ├── Firebase Auth (Google + email)
+    ├── Firestore (reads/writes directly from client)
+    └── Vercel Webhook API (POST calls for AI work)
+            │
+            ├── Claude Haiku  — fast extraction, question gen
+            ├── Claude Sonnet — session summaries, JARVIS agent
+            ├── Groq Llama    — legacy typed-homework proxy (gemini.ts)
+            └── Gemini Flash  — research agent only (not student-facing)
+
+Python FastAPI (homework/)
+    │
+    ├── Claude Haiku — multimodal extraction, teaching cards, clues
+    └── ML layer (ml/) — embeddings, PCA, ontology graph, mastery decay
 ```
 
-Keep that flag off in production until the past-paper pattern index and stronger answer validation are ready.
+---
 
-## Product Flows
+## Backend: How Each Layer Works
 
-### Dashboard
+### 1. Vercel Webhook API (`webhook/api/`)
 
-Student dashboard entry points:
+Serverless TypeScript functions deployed on Vercel. Each file is one endpoint.
 
-- Exam Help
-- Homework Help
-- Learning GPS
-- Session Notes
-- Practice
-- Community
+| File | Endpoint | What it does |
+|------|----------|--------------|
+| `generate-questions.ts` | `POST /api/generate-questions` | Generates 1–10 exam-format MCQs for a concept/level/exam-type. Uses LangChain + Groq (Llama 3.3 70B). Caches results in Firestore `question_cache` for 24 h. Includes SVG diagrams, 3-tier hints, and numeric-correctness repair. |
+| `generate-summary.ts` | `POST /api/generate-summary` | Claude Sonnet 4 summarises a tutoring session from transcript or raw notes. Outputs title, topics covered, homework items, and a student progress note. |
+| `jarvis.ts` | `POST /api/jarvis` | Agentic loop (max 6 turns) using Claude Sonnet 4 tool-use. Tools: explain_concept, get_student_profile, get_recommendations, get_session_history, navigate. Reads/writes conversation history from `conversations/{studentId}` (capped at 60 messages). |
+| `gemini.ts` | `POST /api/gemini` | Proxy that forwards prompts to Groq (Llama 3.3 70B) — name is a legacy misnomer. CORS-locked to the Firebase app domain. |
+| `fireflies.ts` | `POST /api/fireflies` | Webhook from Fireflies.ai. Matches recording to a session by meeting URL or time window; stores transcript on the session doc. |
+| `cron-fireflies.ts` | `GET /api/cron-fireflies` | Fallback cron (every 15 min). Fetches the 10 most recent Fireflies transcripts and links any that weren't caught by the live webhook. |
+| `calendly.ts` | `POST /api/calendly` | Webhook from Calendly. Creates session docs on booking, auto-invites Fireflies bot, marks stale sessions complete. |
+| `concept-graph.ts` | `POST /api/concept-graph` | Builds a knowledge graph for a concept by analysing co-occurring topics across student sessions. Uses a math ontology as a domain prior. |
+| `publish-summary.ts` | `POST /api/publish-summary` | Atomically publishes a tutor-approved summary to the student dashboard; updates `sessions` and `users/{uid}/lastSession`. |
+| `research-agent.ts` | `GET /api/research-agent` | Runs a market research loop using Gemini 1.5 Flash + Google Custom Search. Not student-facing. Protected by `CRON_SECRET`. |
+| `delete-session.ts` | `DELETE /api/delete-session` | Server-side session delete using Admin SDK. Only the session's tutor can delete. |
+| `register-calendly.ts` | `POST /api/register-calendly` | OAuth flow for tutors to connect their Calendly account. Saves token + webhook subscription to Firestore. |
 
-Exam Help and Homework Help both route through `app/src/pages/Practice.tsx`, but they use different modes.
+### 2. Python FastAPI Service (`homework/`)
 
-### Exam Help
+Runs at a separate URL (typically `https://mindcraft-homework.fly.dev` or local). Handles the deep adaptive homework flow.
 
-Exam Help is the practice/gap-detection flow.
+**Endpoints:**
 
-```text
-Dashboard
--> Practice page
--> choose exam
--> confidence scan across exam concepts
--> gap analysis
--> recommended start point
--> practice session
--> saved process state
-```
+- `POST /submit` — Full pipeline: load student → generate parallel solution paths via the orchestrator → run agents on each path → select the most visual path → render Manim animation → build teaching cards. Returns a `HomeworkSession` with step-by-step cards.
+- `POST /submit-with-file` — Same as `/submit` but accepts an image or PDF first. Claude Haiku extracts the problem text via multimodal vision, then the pipeline runs.
+- `POST /clue` — Returns a single Socratic nudge for the current step (max 2 per card). Claude Haiku generates a hint that points toward the approach without giving the answer.
+- `POST /outcome` — Records `outcome` (0.0 / 0.5 / 1.0) and `clues_used` for a step, then updates the student's Bayesian mastery estimate in the knowledge graph.
+- `GET /health` — Liveness check.
 
-Main files:
+**How the orchestrator works:**
 
-- `app/src/pages/Practice.tsx`
-- `app/src/lib/questionBank.ts`
-- `app/src/lib/examCurricula.ts`
-- `app/src/lib/bridgePractice.ts`
-- `app/src/lib/conceptMap.ts`
-- `app/src/lib/questionAgent.ts`
+1. `orchestrate()` generates 3–5 parallel solution paths for the problem (e.g., algebraic, graphical, numeric).
+2. `run_agents()` runs each path through a teaching agent that writes Socratic step-by-step cards in Claude Haiku.
+3. `select_best_path()` picks the path with the clearest visual step.
+4. `render_visual()` calls Manim to render a GIF for that step.
+5. `build_cards()` assembles the final card sequence.
 
-What happens:
+### 3. ML Layer (`ml/`)
 
-1. Student picks an exam: `ACT`, `SAT`, `IB`, `AP`, or `General`.
-2. `examCurricula.ts` provides that exam's concept list and prerequisite map.
-3. The student marks each concept as confident, shaky, or hard.
-4. `bridgePractice.ts` looks for bridges from strong concepts into weak concepts.
-5. The app starts a practice session using `questionBank.ts`.
-6. The full process is saved locally as `Process 1` so the student can resume later.
+Runs as a separate Python service. Currently powers the Knowledge Graph page in the student app.
 
-Saved process storage:
+- **Embeddings** — sentence-transformers encodes concept descriptions into vectors.
+- **PCA projections** — reduces embedding dimensions for 2D graph layout.
+- **Ontology graph** — a hand-curated prerequisite map (e.g., `linear_equations → quadratic_equations → functions`). Mastery on one node influences confidence estimates on dependent nodes.
+- **Mastery decay** — time-weighted Bayesian update: mastery fades slowly if not reinforced; a correct answer raises it back.
 
-```text
-localStorage key: mindcraft:exam-help:{uid}:process-1
-```
+> The ML layer runs and stores data but is not yet surfaced in the student MVP UI beyond the Knowledge Graph page.
 
-Saved fields include exam, scanned concepts, confidence answers, current phase, current question list, question index, selected answer, hints, results, XP, and bridge metadata.
+---
 
-### Homework Help
+## Firestore Collections
 
-Homework Help is the problem-solver/card flow.
+| Collection | Purpose |
+|------------|---------|
+| `users/{uid}` | Auth profile, role (`student`/`tutor`/`admin`), Calendly token, next session |
+| `sessions/{sessionId}` | Tutoring session: transcript, summary card, status, tutor/student IDs |
+| `sessions/{sessionId}/messages` | In-session chat |
+| `chats/{uid1_uid2}/messages` | Persistent tutor–student chat |
+| `conversations/{studentId}` | JARVIS conversation history (capped at 60 messages) |
+| `question_cache/{key}` | Generated MCQ sets, 24 h TTL, keyed by `conceptId_level_examType_count` |
+| `transcripts/{id}` | Orphaned Fireflies transcripts awaiting session match |
+| `researchBatches/{id}` | Market research output from the research agent |
+| `agentState/researchAgent` | Cursor for cycling the research agent's query list |
 
-```text
-Dashboard
--> Practice page Problem Solver mode
--> type problem or upload image/PDF
--> guided card session
--> clues
--> outcome logging
-```
+---
 
-Main frontend files:
+## AI Providers
 
-- `app/src/pages/Practice.tsx`
-- `app/src/components/HomeworkCards.tsx`
-- `app/src/lib/geminiHomework.ts`
-- `app/src/lib/geminiProxy.ts`
+| Provider | Model | Where used |
+|----------|-------|-----------|
+| Anthropic | `claude-haiku-4-5-20251001` | Homework extraction, teaching agents, clues, question gen (MVP path) |
+| Anthropic | `claude-sonnet-4-20250514` | Session summaries, JARVIS agent |
+| Groq | `llama-3.3-70b-versatile` | Legacy typed-homework proxy, question gen (via LangChain) |
+| Google | `gemini-1.5-flash` | Research agent only — not student-facing |
 
-There are currently two homework paths:
+---
 
-1. Typed problem:
-   - Uses `app/src/lib/geminiHomework.ts`.
-   - Calls the Vercel proxy at `webhook/api/gemini.ts`.
-   - Despite the file name, this proxy currently uses Groq/Llama by default.
-   - Produces a 6-card Socratic tutoring session.
+## Frontend (`app/`)
 
-2. File upload:
-   - Calls the Cloud Run/FastAPI homework backend.
-   - Uses Claude for file extraction, orchestration, teaching agents, clues, and Manim/SVG visuals.
+React 18 + TypeScript + Vite + Tailwind. Firebase Auth (Google + email). Deployed to Firebase Hosting (`hosting:app`).
 
-## Backend Overview
+**Student routes:**
 
-MindCraft has three backend layers:
+| Route | What it is |
+|-------|-----------|
+| `/dashboard` | Hero page — links to Exam Help, Homework Help, Learning GPS |
+| `/practice` | Levelled MCQ practice with exam-type awareness (ACT/SAT/IB/AP) |
+| `/knowledge-graph` | Interactive prerequisite constellation — click a node to see mastery % and session snippets |
+| `/organize-notes` | File upload → Claude summary card |
+| `/sessions` | Student's tutoring session history |
+| `/study-timer` | Pomodoro focus timer |
+| `/chat/:partnerId` | Real-time tutor–student messaging |
 
-```text
-Firebase
-Vercel serverless webhook API
-Homework FastAPI service
-ML graph service
-```
+**Tutor routes:** `/tutor`, `/tutor/session/:id` — session list, transcript view, summary editing.
 
-### Firebase
+---
 
-Used for:
+## Landing Pages
 
-- Auth
-- Firestore
-- Hosting
-- Storage rules
+Two separate HTML pages (no React):
 
-Important files:
+- `index.html` → deployed to `hosting:marketing`
+- `app/public/landing.html` → deployed to `hosting:app` at `/landing.html`
 
-- `firebase.json`
-- `firestore.rules`
-- `firestore.indexes.json`
-- `storage.rules`
-- `app/src/firebase.ts`
+Both open with a full-screen cinematic intro deck (4 slides, black background) inspired by Angela Duckworth's research on grit — the philosophical foundation of MindCraft. The intro auto-advances every 5 s, supports keyboard navigation (←/→/Space/Esc), and fades out smoothly on "Enter MindCraft" or "Skip." The rest of the landing page (hero, how-it-works, pricing, FAQ) loads underneath.
 
-Hosting targets:
+---
 
-- `hosting:app` serves the React app from `app/dist`.
-- Marketing site is served separately from the root static files.
+## On Grit and Confidence
 
-Deploy app:
+MindCraft's thesis is not that students need more practice. It's that they need the *right* practice delivered in a way that doesn't reinforce the story "I'm just not a math person."
+
+The three design principles:
+
+1. **Specificity builds stamina.** Motivation increases when the next step is visible and achievable. Showing `"You got 2/7 right · concept: quadratic factoring · this is 15% of SAT Math · start here"` is more effective than a score.
+
+2. **Failure is information, not identity.** Every wrong answer maps to a broken prerequisite. The student sees the gap, not a red X. "Not yet" is a direction.
+
+3. **Progress is a constellation, not a line.** Understanding is non-linear. A student who knows derivatives but struggles with algebra underneath it doesn't need calculus practice — they need the algebra gap repaired first. The Knowledge Graph makes this visible.
+
+---
+
+## Dev Setup
 
 ```bash
-cd app
-npm run build
-cd ..
-npx firebase-tools@13 deploy --only hosting:app
+# Frontend
+cd app && npm install && npm run dev
+
+# Webhook (local Vercel dev)
+cd webhook && vercel dev
+
+# Python homework service
+cd homework && pip install -r requirements.txt && uvicorn api.main:app --reload
 ```
 
-### Vercel Webhook API
-
-Folder:
-
-```text
-webhook/
-```
-
-Important endpoints:
-
-- `api/gemini.ts`
-- `api/generate-questions.ts`
-- `api/calendly.ts`
-- `api/fireflies.ts`
-- `api/generate-summary.ts`
-- `api/publish-summary.ts`
-- `api/research-agent.ts`
-
-Deploy:
-
-```bash
-cd webhook
-npx vercel --prod --yes
-```
-
-Required Vercel env vars depend on which endpoints are used:
+Environment variables needed:
 
 ```env
-FIREBASE_SERVICE_ACCOUNT=
-GROQ_API_KEY=
+# webhook/.env
 ANTHROPIC_API_KEY=
-FIREFLIES_API_KEY=
-GOOGLE_SEARCH_API_KEY=
-GOOGLE_SEARCH_ENGINE_ID=
-CRON_SECRET=
-```
-
-### Practice Question Generator
-
-Endpoint:
-
-```text
-POST https://mindcraft-webhook.vercel.app/api/generate-questions
-```
-
-Source:
-
-```text
-webhook/api/generate-questions.ts
-```
-
-Input shape:
-
-```json
-{
-  "conceptId": "linear_equations",
-  "level": 2,
-  "examType": "IB",
-  "count": 10,
-  "bridgeFrom": "functions_basics"
-}
-```
-
-What it does:
-
-1. Validates exam type and count.
-2. Checks Firestore cache under `question_cache/{cacheKey}`.
-3. If cache misses, calls Groq/Llama through LangChain.
-4. Injects:
-   - concept knowledge
-   - level guidance
-   - exam style
-   - exam blueprint
-   - exam curriculum notes
-   - bridge context
-   - future past-paper pattern context
-5. Parses JSON output.
-6. Validates shape.
-7. Repairs simple numeric `correctIndex` mismatches when possible.
-8. Rejects obvious bad content, such as SVG in question text or explanations saying the answer is not listed.
-9. Writes successful generated questions to Firestore cache for 24 hours.
-
-Important: this endpoint is **not production-trusted yet**. The live frontend does not use it unless `VITE_ENABLE_DYNAMIC_QGEN=true`.
-
-### Homework FastAPI Backend
-
-Folder:
-
-```text
-homework/
-```
-
-Main API:
-
-```text
-homework/api/main.py
-```
-
-Endpoints:
-
-- `POST /submit`
-- `POST /submit-with-file`
-- `POST /clue`
-- `POST /outcome`
-- `GET /health`
-
-Full upload flow:
-
-```text
-image/PDF upload
--> Claude extracts problem text
--> orchestrator creates 2-4 solution paths
--> Claude agents generate teaching narratives for each path
--> path scorer selects the best student-aware path
--> Manim visual generated if useful
--> card sequence returned to frontend
--> outcomes update student knowledge graph
-```
-
-Important files:
-
-- `homework/api/main.py`
-- `homework/orchestrator/orchestrator.py`
-- `homework/agents/agent_runner.py`
-- `homework/agents/knowledge_checker.py`
-- `homework/cards/card_builder.py`
-- `homework/students/student_loader.py`
-- `homework/visuals/manim_runner.py`
-- `homework/visuals/manim_generator.py`
-- `homework/utils/claude_client.py`
-
-Model:
-
-```text
-Claude Haiku 4.5 via ANTHROPIC_API_KEY
-```
-
-Student knowledge graph storage:
-
-```text
-Firestore collection: homework_profiles
-```
-
-The homework service also bootstraps from:
-
-```text
-Firestore collection: knowledge_graphs
-```
-
-### ML Knowledge Graph Service
-
-Folder:
-
-```text
-ml/
-```
-
-Main API:
-
-```text
-ml/serve.py
-```
-
-Used for:
-
-- concept ontology
-- ingredient ontology
-- per-student mastery graph
-- prerequisite paths
-- recommendations
-- concept embeddings/PCA
-
-Important files:
-
-- `ml/data/ontology_complete.json`
-- `ml/data/ontology.json`
-- `ml/data/ingredient_ontology.json`
-- `ml/mindcraft_graph/engine/student_graph.py`
-- `ml/mindcraft_graph/engine/edge_weights.py`
-- `ml/mindcraft_graph/planning/pathfinder.py`
-- `ml/mindcraft_graph/firestore_adapter.py`
-
-The richer atomic ontology lives in:
-
-```text
-ml/data/ontology_complete.json
-```
-
-The frontend currently uses the lighter browser-side map in:
-
-```text
-app/src/lib/conceptMap.ts
-```
-
-## Exam Curricula and Concept Maps
-
-Each exam now has its own frontend prerequisite map:
-
-```text
-app/src/lib/examCurricula.ts
-```
-
-This avoids treating ACT, SAT, IB AI SL, AP, and General math as the same concept graph.
-
-Current live maps are intentionally limited to concepts with reviewed static fallback questions. The broader future curriculum map lives in:
-
-```text
-ml/data/exam_curricula.json
-```
-
-For the current IB student, the frontend IB map is tuned toward IB Math AI SL and excludes calculus.
-
-## Past-Paper Intelligence Plan
-
-The long-term generation pipeline should be:
-
-```text
-approved exam PDFs
--> parse questions
--> tag every question by concept
--> tag atomic skills
--> extract recurring patterns
--> store abstract pattern records
--> generate original questions grounded in those patterns
-```
-
-Docs and schema:
-
-- `docs/past-paper-intelligence.md`
-- `ml/data/past_paper_schema.json`
-- `ml/data/exam_curricula.json`
-
-Starter ingestion script:
-
-```text
-ml/scripts/ingest_past_papers.py
-```
-
-Run:
-
-```bash
-python3 ml/scripts/ingest_past_papers.py --exam IB_AI_SL
-```
-
-Input folder:
-
-```text
-ml/data/past_papers/
-```
-
-Output folder:
-
-```text
-ml/data/past_paper_index/
-```
-
-Important legal/product note: do not commit copyrighted exam PDFs. The pipeline is designed for PDFs the team/student/school is allowed to process. Store derived metadata and abstract patterns, not copied papers.
-
-## Project Structure
-
-```text
-mindcraft-site/
-├── app/                         React + TypeScript + Vite app
-│   ├── src/
-│   │   ├── components/          reusable UI components
-│   │   ├── lib/                 question bank, maps, API clients
-│   │   └── pages/               Dashboard, Practice, Book, etc.
-│   ├── scripts/                 local generation/audit scripts
-│   └── dist/                    built app for Firebase Hosting
-├── webhook/                     Vercel serverless API
-│   └── api/
-├── homework/                    FastAPI homework-help backend
-│   ├── api/
-│   ├── agents/
-│   ├── cards/
-│   ├── orchestrator/
-│   ├── students/
-│   └── visuals/
-├── ml/                          ontology, graph engine, recommendations
-│   ├── data/
-│   ├── mindcraft_graph/
-│   └── scripts/
-├── docs/                        architecture docs
-├── functions/                   Firebase Functions
-├── index.html                   marketing/static page
-├── firebase.json
-└── README.md
-```
-
-## Frontend Setup
-
-```bash
-cd app
-npm install
-npm run dev
-npm run build
-```
-
-Local env:
-
-```env
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
-VITE_FIREBASE_PROJECT_ID=
-VITE_FIREBASE_STORAGE_BUCKET=
-VITE_FIREBASE_MESSAGING_SENDER_ID=
-VITE_FIREBASE_APP_ID=
-VITE_ML_API_URL=
-VITE_HOMEWORK_API_URL=
+GROQ_API_KEY=
+FIREBASE_SERVICE_ACCOUNT=   # JSON stringified
+GOOGLE_API_KEY=              # research agent only
+GOOGLE_CSE_ID=               # research agent only
+STRIPE_SECRET_KEY=           # coming soon
+
+# app/.env
 VITE_ENABLE_DYNAMIC_QGEN=false
 ```
 
-## Useful Commands
+## Deploy
 
 ```bash
-# Frontend build
+# Build app first
 cd app && npm run build
 
-# Practice audit
-cd app && npm run audit:practice
-
-# Webhook type check
-cd webhook && npx tsc --noEmit --target ES2022 --lib ES2022 --skipLibCheck --moduleResolution node --module commonjs api/generate-questions.ts
-
-# Past-paper ingestion help
-python3 ml/scripts/ingest_past_papers.py --help
-
-# Deploy app
-npx firebase-tools@13 deploy --only hosting:app
-
-# Deploy webhook
-cd webhook && npx vercel --prod --yes
+# Deploy both hosting targets
+npx firebase-tools@13 deploy --only hosting:app,hosting:marketing
 ```
-
-## Known Gaps
-
-- Dynamic generated questions are not production-safe yet.
-- The past-paper parser currently creates raw records only; concept tagging and pattern extraction are next.
-- The static bank covers the live maps, but many future `PRACTICE_CONCEPTS` still need reviewed questions.
-- Typed Homework Help currently uses the simpler Vercel/Groq card path, while file upload uses the richer FastAPI/Claude/Manim pipeline.
-- Exam process saving is browser-local, not Firestore-synced across devices.
-
-## Contributor Notes
-
-Before turning generated questions back on:
-
-1. Build the past-paper pattern index.
-2. Add concept/atomic tag validation.
-3. Add answer-key verification beyond numeric repair.
-4. Add a human review/promotion queue.
-5. Run remote smoke tests against `generate-questions`.
-
-Keep production boring and correct. Students should never see unverified answer keys.

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx firebase-tools@13 --version)",
+      "Bash(git commit -m ' *)",
+      "Bash(npx firebase-tools@13 deploy --only hosting)"
+    ]
+  }
+}
