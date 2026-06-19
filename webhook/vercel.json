@@ -7,7 +7,8 @@
     "api/cron-fireflies.ts":   { "maxDuration": 60 },
     "api/publish-summary.ts":  { "maxDuration": 10 },
     "api/research-agent.ts":   { "maxDuration": 60 },
-    "api/generate-questions.ts": { "maxDuration": 30 }
+    "api/generate-questions.ts": { "maxDuration": 30 },
+    "api/gemini.ts":             { "maxDuration": 30 }
   },
   "crons": [
     {

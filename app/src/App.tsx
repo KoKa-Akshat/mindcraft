@@ -29,6 +29,7 @@ import StudentSessions   from './pages/StudentSessions'
 import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
+import Prep            from './pages/Prep'
 
 
 export const UserContext = createContext<User | null>(null)
@@ -85,6 +86,7 @@ export default function App() {
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
+        <Route path="/prep"                    element={<Prep />} />
 
         {/* Root: public website. App entry stays on /dashboard, /tutor, etc. */}
         <Route path="/" element={<Navigate to="/landing.html" replace />} />

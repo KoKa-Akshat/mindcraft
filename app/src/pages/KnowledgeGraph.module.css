@@ -63,15 +63,85 @@
 }
 
 .conceptBadge {
-  background: rgba(0,210,200,0.12);
-  border: 1px solid rgba(0,210,200,0.35);
+  background: rgba(20,184,166,0.12);
+  border: 1px solid rgba(20,184,166,0.35);
   border-radius: 20px;
-  color: #00d2c8;
+  color: #14b8a6;
   font-size: 12px;
   font-weight: 800;
   padding: 4px 14px;
   letter-spacing: .3px;
   text-transform: uppercase;
+}
+
+.worldHero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-end;
+  margin-bottom: 18px;
+  padding: 18px 0 20px;
+  border-bottom: 1px solid rgba(20,184,166,0.1);
+}
+
+.worldEyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(20,184,166,0.72);
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+
+.worldTitle {
+  margin: 0;
+  max-width: 760px;
+  color: var(--tx);
+  font-size: 52px;
+  line-height: .98;
+  font-family: var(--display, var(--f));
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.worldCopy {
+  max-width: 680px;
+  margin: 12px 0 0;
+  color: rgba(226,232,240,0.68);
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 650;
+}
+
+.worldStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(84px, 1fr));
+  gap: 10px;
+  min-width: 320px;
+}
+
+.worldStats div {
+  border: 1px solid rgba(20,184,166,0.18);
+  background: rgba(20,184,166,0.055);
+  border-radius: 12px;
+  padding: 12px 10px;
+}
+
+.worldStats strong {
+  display: block;
+  color: rgba(236,254,255,0.96);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.worldStats span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(20,184,166,0.62);
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .45px;
 }
 
 /* ── Search row ──────────────────────────────────────────────────────────── */
@@ -315,6 +385,36 @@
   border-radius: 14px;
   box-shadow: 0 10px 30px rgba(15,23,42,0.06);
   backdrop-filter: blur(10px);
+}
+
+.gritHud {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+  max-width: 340px;
+  padding: 12px 14px;
+  background: rgba(15,23,42,0.78);
+  border: 1px solid rgba(20,184,166,0.24);
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(15,23,42,0.12);
+  backdrop-filter: blur(10px);
+}
+
+.gritHud strong {
+  display: block;
+  color: rgba(240,253,250,0.98);
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.gritHud span {
+  display: block;
+  color: rgba(204,251,241,0.72);
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 650;
 }
 
 .zoomBtn,
@@ -1047,3 +1147,64 @@
 .profileDotWeak { color: rgba(255,120,120,.7); font-size: 10px; flex-shrink: 0; }
 .profileConcept { flex: 1; color: rgba(255,255,255,.7); }
 .profileScore   { font-weight: 700; color: rgba(255,255,255,.5); }
+
+@media (max-width: 980px) {
+  .worldHero {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .worldTitle {
+    font-size: 38px;
+  }
+
+  .worldStats {
+    min-width: 0;
+  }
+
+  .graphArea {
+    flex-direction: column;
+  }
+
+  .detailPanel {
+    width: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 0 16px 24px;
+  }
+
+  .worldTitle {
+    font-size: 31px;
+  }
+
+  .worldStats {
+    grid-template-columns: 1fr;
+  }
+
+  .searchForm {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .searchWrap {
+    max-width: none;
+  }
+
+  .graphHud,
+  .zoomControls,
+  .gritHud {
+    position: static;
+    margin: 10px;
+    align-self: stretch;
+  }
+
+  .svgWrap {
+    align-items: stretch;
+    flex-direction: column;
+    min-height: 620px;
+  }
+}

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MindCraft: Maths exam? We got you.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{--g:#58CC02;--gd:#4CAD00;--gdd:#3A8500;--forest:#1A3C2A;--tx:#3C3C3C;--mu:#777;--w:#FFF;--bd:#E5E5E5;--f:'Nunito',sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--f);color:var(--tx);background:var(--w);overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -22,7 +22,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .bl{padding:14px 32px;font-size:15px}
 
 /* ABOVE-FOLD: hero fills one full viewport */
-.above-fold{height:100vh;margin-top:56px;display:flex;flex-direction:column}
+.above-fold{height:100vh;margin-top:0;display:flex;flex-direction:column}
 
 /* HERO */
 .hero{flex:1;display:flex;justify-content:center;align-items:center;padding:0 24px;background:var(--w);overflow:hidden}
@@ -344,6 +344,29 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 .auto-stagger.show>*:nth-child(4){transition-delay:.31s}
 .auto-stagger.show>*:nth-child(5){transition-delay:.40s}
 .auto-stagger.show>*:nth-child(6){transition-delay:.49s}
+
+/* ── INTRO DECK — PPTX-faithful presentation ── */
+.mc-intro{position:fixed;inset:0;z-index:9000;background:#F5F1ED;overflow:hidden;transition:opacity .6s ease,visibility .6s}
+.mc-intro.mc-exit{opacity:0;visibility:hidden;pointer-events:none}
+.mc-intro.mc-gone{display:none!important}
+.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;transition:opacity .5s ease;pointer-events:none;background:#F5F1ED}
+.mc-slide.mc-active{opacity:1;pointer-events:auto}
+/* Large headline — matches PPTX 150pt Radley */
+.mc-big{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#60421C;margin:0}
+.mc-big .mc-invis{color:#F5F1ED}/* hidden — matches bg, like white on cream in PPTX */
+.mc-big .mc-gray{color:#817D7C}
+/* Quote text — matches PPTX ~40pt Radley */
+.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#60421C;margin:0;max-width:82vw}
+/* MINDCRAFT brand — gray per PPTX */
+.mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#817D7C;margin:0}
+/* Caption — bottom-right per PPTX */
+.mc-caption{position:absolute;bottom:clamp(20px,3vh,48px);right:clamp(32px,5vw,80px);font-family:'Radley',Georgia,serif;font-size:clamp(11px,1vw,16px);color:#0B0B0B;opacity:.55;letter-spacing:.02em}
+/* Enter/Skip */
+.mc-enter{margin-top:clamp(32px,5vh,56px);display:inline-block;font-family:'Radley',Georgia,serif;font-size:clamp(14px,1.4vw,18px);color:#60421C;background:none;border:1px solid #60421C;padding:12px 32px;cursor:pointer;letter-spacing:.08em;transition:background .2s,color .2s}
+.mc-enter:hover{background:#60421C;color:#F5F1ED}
+.mc-skip{position:absolute;top:20px;right:24px;z-index:10;font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(96,66,28,.35);background:none;border:1px solid rgba(96,66,28,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
+.mc-skip:hover{color:#60421C;border-color:#60421C}
+@media(max-width:600px){.mc-big,.mc-brand{font-size:clamp(36px,14vw,80px)}.mc-quote{font-size:clamp(16px,4.5vw,28px)}.mc-caption{display:none}}
 </style>
 </head>
 <body>
@@ -353,6 +376,43 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   <div class="nr"><a href="#proof" class="nl">Reviews</a><a href="#blog" class="nl">Blog</a><a href="#faq" class="nl">FAQ</a><a href="https://mindcraft-93858.web.app/login" class="nav-login">Log in</a></div>
 </nav>
 
+<div class="mc-intro" id="mc-intro" role="region" aria-label="MindCraft introduction">
+  <button class="mc-skip" id="mc-skip" type="button">Skip</button>
+
+  <div class="mc-slide mc-active">
+    <p class="mc-big">Learning is not<br><span class="mc-invis">FIXED</span></p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-big">Learning is not<br><span class="mc-gray">FIXED</span></p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-quote">&ldquo;Doing well in school depends on much more than your ability to learn quickly and easily. It depends on grit.&rdquo;</p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-quote">&ldquo;When students learn how the brain grows in response to challenge, they persevere through failure because they realize failure is not a permanent condition.&rdquo;</p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-brand">MINDCRAFT</p>
+    <p class="mc-big" style="color:#F5F1ED">A Growth Mindset</p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-brand">MINDCRAFT</p>
+    <p class="mc-big">A Growth Mindset</p>
+    <button class="mc-enter" id="mc-enter" type="button">Enter MindCraft</button>
+  </div>
+</div>
+
+<div id="start"></div>
 <div class="above-fold">
 <section class="hero">
   <div class="hero-in">
@@ -876,6 +936,46 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </footer>
 
 <script>
+// ── INTRO DECK ──
+(function(){
+  var intro=document.getElementById('mc-intro');
+  if(!intro)return;
+  document.body.style.overflow='hidden';
+  var slides=intro.querySelectorAll('.mc-slide');
+  var cur=0,timer=null,AUTO=3000;
+
+  function exit(){
+    clearTimeout(timer);
+    document.body.style.overflow='';
+    intro.classList.add('mc-exit');
+    setTimeout(function(){intro.classList.add('mc-gone');},700);
+  }
+
+  function go(n){
+    clearTimeout(timer);
+    slides[cur].classList.remove('mc-active');
+    cur=(n+slides.length)%slides.length;
+    slides[cur].classList.add('mc-active');
+    if(cur<slides.length-1)timer=setTimeout(function(){go(cur+1);},AUTO);
+  }
+
+  intro.addEventListener('click',function(e){
+    if(e.target.closest('#mc-skip,#mc-enter'))return;
+    if(cur<slides.length-1)go(cur+1); else exit();
+  });
+  document.addEventListener('keydown',function(e){
+    if(intro.classList.contains('mc-gone'))return;
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(cur<slides.length-1)go(cur+1);else exit();}
+    if(e.key==='ArrowLeft'){e.preventDefault();if(cur>0)go(cur-1);}
+    if(e.key==='Escape')exit();
+  });
+  var enterBtn=document.getElementById('mc-enter');
+  if(enterBtn)enterBtn.addEventListener('click',function(e){e.stopPropagation();exit();});
+  var skipBtn=document.getElementById('mc-skip');
+  if(skipBtn)skipBtn.addEventListener('click',function(e){e.stopPropagation();exit();});
+  go(0);
+})();
+
 // ── SCROLL PROGRESS BAR ──
 var prog=document.createElement('div');prog.id='mc-prog';document.body.prepend(prog);
 
