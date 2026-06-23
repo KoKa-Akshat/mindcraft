@@ -386,7 +386,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 @media(max-width:860px){.ptp-row{grid-template-columns:1fr;gap:clamp(24px,4vw,36px)}.ptp-flip{direction:ltr}.ptp-text p{max-width:100%}}
 
 /* ── 3D RACCOON VIEWER ── */
-.raccoon-canvas-wrap{width:clamp(260px,36vw,420px);height:clamp(260px,36vw,420px);border-radius:24px;background:#0d1117;border:1.5px solid rgba(88,204,2,.22);box-shadow:0 24px 64px rgba(0,0,0,.28),0 0 0 1px rgba(88,204,2,.07) inset;overflow:hidden;position:relative;z-index:2}
+.raccoon-canvas-wrap{width:clamp(220px,28vw,340px);height:clamp(320px,42vw,500px);border-radius:20px;background:transparent;border:none;box-shadow:0 24px 64px rgba(0,0,0,.07);overflow:hidden;position:relative;z-index:2}
 .raccoon-canvas-wrap canvas{display:block;width:100%!important;height:100%!important}
 @media(max-width:600px){.mc-big,.mc-brand{font-size:clamp(36px,14vw,80px)}.mc-quote{font-size:clamp(16px,4.5vw,28px)}.mc-caption{display:none}}
 </style>
@@ -1050,217 +1050,198 @@ import * as THREE from 'three';
   if (!wrap) return;
 
   // ── RENDERER ────────────────────────────────────────────────────────────────
-  const W = wrap.clientWidth  || 320;
-  const H = wrap.clientHeight || 320;
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(W, H);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
   wrap.appendChild(renderer.domElement);
 
-  const scene  = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 200);
-  camera.position.set(0, 3.5, 9);
-  camera.lookAt(0, 1.2, 0);
+  const scene = new THREE.Scene();
 
-  // ── LIGHTING ─────────────────────────────────────────────────────────────────
-  scene.add(new THREE.AmbientLight(0x9b8aff, 0.6));
-  const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
-  keyLight.position.set(4, 8, 5);
-  keyLight.castShadow = true;
-  keyLight.shadow.mapSize.set(512, 512);
-  scene.add(keyLight);
-  const rimLight = new THREE.DirectionalLight(0xa78bfa, 0.9);
-  rimLight.position.set(-5, 4, -3);
-  scene.add(rimLight);
-  const groundLight = new THREE.PointLight(0x38bdf8, 1.8, 18);
-  groundLight.position.set(0, -0.5, 0);
-  scene.add(groundLight);
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+  camera.position.set(0, 0.5, 5.0);
+  camera.lookAt(0, 1.5, 0);
 
-  // ── ROOT (rotates board + raccoon together) ───────────────────────────────
+  function resize() {
+    const W = wrap.clientWidth, H = wrap.clientHeight;
+    camera.aspect = W / H; camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  }
+  resize();
+  new ResizeObserver(resize).observe(wrap);
+
+  // ── STUDIO LIGHTING ────────────────────────────────────────────────────────
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const key = new THREE.DirectionalLight(0xfff8f2, 2.8);
+  key.position.set(-3, 7, 5); key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.camera.near = 0.5; key.shadow.camera.far = 22;
+  key.shadow.camera.left = -4; key.shadow.camera.right = 4;
+  key.shadow.camera.top = 6;  key.shadow.camera.bottom = -2;
+  key.shadow.bias = -0.001;
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.9); fill.position.set(5, 3, 3);   scene.add(fill);
+  const rim  = new THREE.DirectionalLight(0xe8f0ff, 0.7); rim.position.set(0, 5, -6);    scene.add(rim);
+  const bnce = new THREE.DirectionalLight(0xffffff, 0.25); bnce.position.set(0, -4, 2); scene.add(bnce);
+
+  // Soft drop-shadow catcher (appears on white CSS bg via alpha)
+  const shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(8,8), new THREE.ShadowMaterial({ opacity:0.08 }));
+  shadowMesh.rotation.x = -Math.PI/2; shadowMesh.position.y = -0.20; shadowMesh.receiveShadow = true;
+  scene.add(shadowMesh);
+
+  // ── ROOT GROUP ─────────────────────────────────────────────────────────────
   const root = new THREE.Group();
   scene.add(root);
 
-  // ── MATERIALS ────────────────────────────────────────────────────────────────
+  // ── PBR RACCOON PALETTE ───────────────────────────────────────────────────
   const M = {
-    gray:        new THREE.MeshStandardMaterial({ color: 0x8b8fa8, roughness: 0.8 }),
-    darkGray:    new THREE.MeshStandardMaterial({ color: 0x3a3a4a, roughness: 0.7 }),
-    cream:       new THREE.MeshStandardMaterial({ color: 0xd8cfc0, roughness: 0.9 }),
-    black:       new THREE.MeshStandardMaterial({ color: 0x111118, roughness: 0.6 }),
-    mask:        new THREE.MeshStandardMaterial({ color: 0x1a1a22, roughness: 0.7 }),
-    nose:        new THREE.MeshStandardMaterial({ color: 0x2a1a1a, roughness: 0.5, metalness: 0.1 }),
-    eyeWhite:    new THREE.MeshStandardMaterial({ color: 0xf0f0f8, roughness: 0.3 }),
-    eyePupil:    new THREE.MeshStandardMaterial({ color: 0x080810, roughness: 0.1, metalness: 0.3 }),
-    lensGlass:   new THREE.MeshStandardMaterial({ color: 0xffcc00, transparent: true, opacity: 0.55, roughness: 0.05, metalness: 0.7 }),
-    lensFrame:   new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.3, metalness: 0.8 }),
-    cupWhite:    new THREE.MeshStandardMaterial({ color: 0xf5f5f0, roughness: 0.7 }),
-    cupBrown:    new THREE.MeshStandardMaterial({ color: 0x6b3d1e, roughness: 0.8 }),
-    coffee:      new THREE.MeshStandardMaterial({ color: 0x2c1a0a, roughness: 0.2 }),
-    deckWood:    new THREE.MeshStandardMaterial({ color: 0xc8a86b, roughness: 0.8 }),
-    deckGraphic: new THREE.MeshStandardMaterial({ color: 0x7c3aed, roughness: 0.7, emissive: 0x4c1d95, emissiveIntensity: 0.3 }),
-    truck:       new THREE.MeshStandardMaterial({ color: 0x888899, roughness: 0.3, metalness: 0.9 }),
-    wheel:       new THREE.MeshStandardMaterial({ color: 0xe8e0ff, roughness: 0.9 }),
-    tail:        new THREE.MeshStandardMaterial({ color: 0x8b8fa8, roughness: 0.8 }),
-    tailBand:    new THREE.MeshStandardMaterial({ color: 0x1a1a22, roughness: 0.8 }),
+    fur:    new THREE.MeshStandardMaterial({ color:0x7d8590, roughness:0.93 }),
+    dark:   new THREE.MeshStandardMaterial({ color:0x1e232e, roughness:0.88 }),
+    belly:  new THREE.MeshStandardMaterial({ color:0xcec9c0, roughness:0.90 }),
+    nose:   new THREE.MeshStandardMaterial({ color:0x14141a, roughness:0.50, metalness:0.05 }),
+    eyeW:   new THREE.MeshStandardMaterial({ color:0xf2f0ee, roughness:0.40 }),
+    pupil:  new THREE.MeshStandardMaterial({ color:0x060810, roughness:0.10, metalness:0.30 }),
+    shine:  new THREE.MeshStandardMaterial({ color:0xffffff, emissive:new THREE.Color(1,1,1), emissiveIntensity:1.8, roughness:0 }),
+    glass:  new THREE.MeshStandardMaterial({ color:0xe63b2e, roughness:0.22, metalness:0.12 }),
+    lens:   new THREE.MeshStandardMaterial({ color:0x0c0f18, transparent:true, opacity:0.82, roughness:0.05, metalness:0.20 }),
+    wood:   new THREE.MeshStandardMaterial({ color:0xc8a870, roughness:0.82 }),
+    purple: new THREE.MeshStandardMaterial({ color:0x6d28d9, roughness:0.70, emissive:new THREE.Color(0x2e1065), emissiveIntensity:0.18 }),
+    metal:  new THREE.MeshStandardMaterial({ color:0x9ca3af, roughness:0.25, metalness:0.85 }),
+    wheel:  new THREE.MeshStandardMaterial({ color:0xece7ff, roughness:0.88 }),
+    cup:    new THREE.MeshStandardMaterial({ color:0xf5f5f0, roughness:0.72 }),
+    sleeve: new THREE.MeshStandardMaterial({ color:0x92400e, roughness:0.80 }),
+    coffee: new THREE.MeshStandardMaterial({ color:0x2c1a0a, roughness:0.20 }),
+    dgray:  new THREE.MeshStandardMaterial({ color:0x374151, roughness:0.82 }),
   };
 
-  // ── GEOMETRY HELPERS ─────────────────────────────────────────────────────────
-  function bx(w, h, d, mat, px=0, py=0, pz=0, rx=0, ry=0, rz=0) {
-    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-    m.position.set(px, py, pz); m.rotation.set(rx, ry, rz);
-    m.castShadow = true; m.receiveShadow = true; return m;
+  // ── GEOMETRY HELPERS ──────────────────────────────────────────────────────
+  function sp(r,mat,px=0,py=0,pz=0,sx=1,sy=1,sz=1){
+    const m=new THREE.Mesh(new THREE.SphereGeometry(r,32,22),mat);
+    m.position.set(px,py,pz); m.scale.set(sx,sy,sz); m.castShadow=true; return m;
   }
-  function sp(r, mat, px=0, py=0, pz=0) {
-    const m = new THREE.Mesh(new THREE.SphereGeometry(r, 20, 16), mat);
-    m.position.set(px, py, pz); m.castShadow = true; return m;
+  function bx(w,h,d,mat,px=0,py=0,pz=0,rx=0,ry=0,rz=0){
+    const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
+    m.position.set(px,py,pz); m.rotation.set(rx,ry,rz); m.castShadow=true; return m;
   }
-  function cy(rt, rb, h, seg, mat, px=0, py=0, pz=0, rx=0) {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat);
-    m.position.set(px, py, pz); m.rotation.x = rx; m.castShadow = true; return m;
+  function cy(rt,rb,h,seg,mat,px=0,py=0,pz=0,rx=0){
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);
+    m.position.set(px,py,pz); m.rotation.x=rx; m.castShadow=true; return m;
+  }
+  function cap(r,len,cs,rs,mat,px=0,py=0,pz=0,rx=0){
+    const m=new THREE.Mesh(new THREE.CapsuleGeometry(r,len,cs,rs),mat);
+    m.position.set(px,py,pz); m.rotation.x=rx; m.castShadow=true; return m;
   }
 
-  // ── SKATEBOARD ───────────────────────────────────────────────────────────────
+  // ── SKATEBOARD ───────────────────────────────────────────────────────────
   const board = new THREE.Group();
-  board.add(bx(1.8, 0.1, 0.6, M.deckWood));
-  board.add(bx(1.6, 0.11, 0.35, M.deckGraphic));
-  const kickF = bx(0.35, 0.1, 0.6, M.deckWood, 0.95, 0.08, 0);  kickF.rotation.z =  0.3; board.add(kickF);
-  const kickB = bx(0.35, 0.1, 0.6, M.deckWood, -0.95, 0.08, 0); kickB.rotation.z = -0.3; board.add(kickB);
-
-  const wheels = [];
-  [-0.6, 0.6].forEach(x => {
-    board.add(bx(0.18, 0.12, 0.72, M.truck, x, -0.11, 0));
-    board.add(cy(0.03, 0.03, 0.8, 8, M.truck, x, -0.22, 0, Math.PI / 2)); // one axle per truck
-    [-0.38, 0.38].forEach(z => {
-      const w = cy(0.14, 0.14, 0.1, 16, M.wheel, x, -0.22, z, Math.PI / 2);
+  board.add(bx(2.0,0.09,0.68,M.wood)); board.add(bx(1.75,0.10,0.44,M.purple));
+  const kf=bx(0.38,0.09,0.68,M.wood, 1.02,0.07,0); kf.rotation.z= 0.28; board.add(kf);
+  const kb=bx(0.38,0.09,0.68,M.wood,-1.02,0.07,0); kb.rotation.z=-0.28; board.add(kb);
+  const wheels=[];
+  [-0.65,0.65].forEach(x=>{
+    board.add(bx(0.16,0.13,0.76,M.metal,x,-0.12,0));
+    board.add(cy(0.025,0.025,0.84,8,M.metal,x,-0.22,0,Math.PI/2));
+    [-0.40,0.40].forEach(z=>{
+      const w=cy(0.155,0.155,0.10,20,M.wheel,x,-0.22,z,Math.PI/2);
       wheels.push(w); board.add(w);
     });
   });
-  board.position.set(0, 0.22, 0);
+  board.position.y=0.24;
   root.add(board);
 
-  // ── RACCOON ──────────────────────────────────────────────────────────────────
+  // ── RACCOON ───────────────────────────────────────────────────────────────
   const raccoon = new THREE.Group();
 
-  // Feet + legs
-  raccoon.add(bx(0.22, 0.1,  0.35, M.darkGray, -0.22, 0.05, 0));
-  raccoon.add(bx(0.22, 0.1,  0.35, M.darkGray,  0.22, 0.05, 0));
-  raccoon.add(bx(0.22, 0.48, 0.24, M.gray, -0.22, 0.34, 0));
-  raccoon.add(bx(0.22, 0.48, 0.24, M.gray,  0.22, 0.34, 0));
+  // Flat paws
+  raccoon.add(bx(0.26,0.09,0.38,M.dark,-0.24,0.05,0.05));
+  raccoon.add(bx(0.26,0.09,0.38,M.dark, 0.24,0.05,0.05));
+  // Short chubby legs
+  raccoon.add(cap(0.14,0.20,6,12,M.fur,-0.24,0.30,0));
+  raccoon.add(cap(0.14,0.20,6,12,M.fur, 0.24,0.30,0));
+  // Big round body
+  raccoon.add(sp(0.50,M.fur,  0,0.95,0,  1.0,1.10,0.88));
+  raccoon.add(sp(0.38,M.belly,0,0.88,0.30,1.0,0.85,0.58));
+  raccoon.add(sp(0.44,M.dark, 0,0.88,-0.10,0.9,1.02,0.62));
+  // Neck
+  raccoon.add(cy(0.17,0.21,0.18,14,M.fur,0,1.52,0));
 
-  // Torso — CapsuleGeometry available in three@0.160
-  const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.32, 0.5, 8, 16), M.cream);
-  torso.position.set(0, 0.9, 0); torso.scale.set(1, 1.1, 0.85); torso.castShadow = true;
-  raccoon.add(torso);
-  const back = new THREE.Mesh(new THREE.SphereGeometry(0.36, 16, 12), M.darkGray);
-  back.position.set(0, 0.9, 0.14); back.scale.set(1.05, 1, 0.6); raccoon.add(back);
-
-  raccoon.add(cy(0.14, 0.17, 0.2, 10, M.gray, 0, 1.3, 0));
-
+  // ── HEAD GROUP (glasses rotate with head) ────────────────────────────────
+  const headGroup = new THREE.Group();
+  headGroup.position.set(0,1.82,0);
   // Head
-  const head = new THREE.Mesh(new THREE.SphereGeometry(0.38, 20, 16), M.gray);
-  head.position.set(0, 1.65, 0); head.scale.set(1, 0.95, 0.92); head.castShadow = true;
-  raccoon.add(head);
-
-  // Snout + nose
-  const snout = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 12), M.cream);
-  snout.position.set(0, 1.58, 0.31); snout.scale.set(1, 0.7, 0.8); raccoon.add(snout);
-  raccoon.add(sp(0.055, M.nose, 0, 1.66, 0.46));
-
+  headGroup.add(sp(0.44,M.fur,  0,0,0, 1.0,0.96,0.93));
+  // Snout
+  headGroup.add(sp(0.21,M.belly,0,-0.09,0.33, 1.0,0.65,0.78));
+  headGroup.add(sp(0.065,M.nose,0,-0.02,0.50));
   // Eye masks
-  const maskL = new THREE.Mesh(new THREE.SphereGeometry(0.14, 12, 10), M.mask);
-  maskL.position.set(-0.16, 1.72, 0.3); maskL.scale.set(1.1, 0.7, 0.5); raccoon.add(maskL);
-  const maskR = maskL.clone(); maskR.position.x = 0.16; raccoon.add(maskR);
-
-  // Eyes + pupils + shine
-  raccoon.add(sp(0.075, M.eyeWhite, -0.16, 1.73, 0.33));
-  raccoon.add(sp(0.075, M.eyeWhite,  0.16, 1.73, 0.33));
-  raccoon.add(sp(0.04,  M.eyePupil, -0.16, 1.73, 0.365));
-  raccoon.add(sp(0.04,  M.eyePupil,  0.16, 1.73, 0.365));
-  const shineMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 2 });
-  raccoon.add(sp(0.015, shineMat, -0.145, 1.745, 0.375));
-  raccoon.add(sp(0.015, shineMat,  0.175, 1.745, 0.375));
-
+  headGroup.add(sp(0.165,M.dark,-0.18,0.06,0.30, 1.1,0.70,0.50));
+  headGroup.add(sp(0.165,M.dark, 0.18,0.06,0.30, 1.1,0.70,0.50));
+  // Eyes
+  headGroup.add(sp(0.090,M.eyeW, -0.18,0.07,0.34));
+  headGroup.add(sp(0.090,M.eyeW,  0.18,0.07,0.34));
+  headGroup.add(sp(0.052,M.pupil,-0.18,0.07,0.368));
+  headGroup.add(sp(0.052,M.pupil, 0.18,0.07,0.368));
+  headGroup.add(sp(0.020,M.shine,-0.162,0.086,0.378));
+  headGroup.add(sp(0.020,M.shine, 0.198,0.086,0.378));
   // Ears
-  const makeEar = (side) => {
-    const ear = new THREE.Group();
-    const outer = new THREE.Mesh(new THREE.SphereGeometry(0.13, 10, 8), M.gray);
-    outer.scale.set(1, 1.2, 0.5); ear.add(outer);
-    const inner = new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 8), M.cream);
-    inner.position.z = 0.06; inner.scale.set(0.9, 1.0, 0.5); ear.add(inner);
-    ear.position.set(side * 0.28, 1.98, -0.05);
-    ear.rotation.z = side * -0.2;
-    return ear;
+  const mkEar=s=>{
+    const g=new THREE.Group();
+    g.add(sp(0.155,M.fur,  0,0,0,    1.0,1.28,0.50));
+    g.add(sp(0.090,M.belly,0,0,0.065,0.85,1.12,0.42));
+    g.position.set(s*0.31,0.38,-0.04); g.rotation.z=s*-0.18; return g;
   };
-  raccoon.add(makeEar(-1), makeEar(1));
-
-  // Sunglasses — frame behind lens (z=0.375) to avoid z-fighting with lens (z=0.38)
-  const glasses = new THREE.Group();
-  glasses.add(bx(0.58, 0.04, 0.04, M.lensFrame, 0, 1.72, 0.38));
-  [-0.175, 0.175].forEach(x => {
-    glasses.add(bx(0.22, 0.13, 0.04, M.lensGlass, x, 1.72, 0.380));
-    glasses.add(bx(0.24, 0.15, 0.04, M.lensFrame, x, 1.72, 0.375));
+  headGroup.add(mkEar(-1),mkEar(1));
+  // Big red chunky sunglasses
+  [-0.205,0.205].forEach(x=>{
+    headGroup.add(bx(0.30,0.20,0.048,M.glass,x,0.04,0.41));   // red frame
+    headGroup.add(bx(0.23,0.13,0.052,M.lens, x,0.04,0.418));  // dark lens (in front)
   });
-  const tarmL = bx(0.28, 0.035, 0.035, M.lensFrame, -0.44, 1.72, 0.22); tarmL.rotation.y = -0.5; glasses.add(tarmL);
-  const tarmR = bx(0.28, 0.035, 0.035, M.lensFrame,  0.44, 1.72, 0.22); tarmR.rotation.y =  0.5; glasses.add(tarmR);
-  raccoon.add(glasses);
+  headGroup.add(bx(0.12,0.050,0.046,M.glass,0,0.04,0.41));    // bridge
+  const ta1=bx(0.30,0.040,0.040,M.glass,-0.50,0.04,0.25); ta1.rotation.y=-0.50; headGroup.add(ta1);
+  const ta2=bx(0.30,0.040,0.040,M.glass, 0.50,0.04,0.25); ta2.rotation.y= 0.50; headGroup.add(ta2);
+  raccoon.add(headGroup);
 
-  // Left arm (relaxed / balancing)
-  const armGroupL = new THREE.Group();
-  armGroupL.position.set(-0.42, 1.05, 0);
-  armGroupL.add(bx(0.18, 0.42, 0.18, M.gray, 0, -0.18, 0));
-  armGroupL.add(bx(0.16, 0.38, 0.16, M.gray, 0, -0.52, 0.04));
-  armGroupL.add(sp(0.1, M.darkGray, 0, -0.74, 0.06));
-  raccoon.add(armGroupL);
+  // ── ARMS ─────────────────────────────────────────────────────────────────
+  const armL=new THREE.Group(); armL.position.set(-0.50,1.16,0);
+  armL.add(cap(0.112,0.28,6,10,M.fur, 0,-0.12,0));
+  armL.add(cap(0.098,0.26,6,10,M.fur,-0.04,-0.50,0.05));
+  armL.add(sp(0.120,M.dark,0,-0.70,0.06));
+  raccoon.add(armL);
 
-  // Right arm (raised, holding cup)
-  const armGroupR = new THREE.Group();
-  armGroupR.position.set(0.42, 1.05, 0);
-  armGroupR.add(bx(0.18, 0.38, 0.18, M.gray, 0, 0.15, 0));
-  const foreR = bx(0.16, 0.36, 0.16, M.gray, 0.04, 0.45, -0.05); foreR.rotation.z = 0.4; armGroupR.add(foreR);
-  armGroupR.add(sp(0.1, M.darkGray, 0.14, 0.7, -0.07));
-
+  const armR=new THREE.Group(); armR.position.set(0.50,1.16,0);
+  armR.add(cap(0.112,0.26,6,10,M.fur,0,0.12,0));
+  const foreR=new THREE.Mesh(new THREE.CapsuleGeometry(0.098,0.24,6,10),M.fur);
+  foreR.position.set(0.04,0.42,-0.05); foreR.rotation.z=0.30; foreR.castShadow=true; armR.add(foreR);
+  armR.add(sp(0.120,M.dark,0.12,0.64,-0.07));
   // Coffee cup
-  const cup = new THREE.Group();
-  cup.add(cy(0.1, 0.085, 0.28, 16, M.cupWhite, 0, 0.14, 0));
-  cup.add(cy(0.105, 0.09, 0.15, 16, M.cupBrown, 0, 0.11, 0));
-  cup.add(cy(0.105, 0.1,  0.04, 16, M.darkGray, 0, 0.285, 0));
-  cup.add(cy(0.025, 0.025, 0.05, 8, M.black, 0.03, 0.315, 0));
-  const coffeeTop = new THREE.Mesh(new THREE.CircleGeometry(0.085, 16), M.coffee);
-  coffeeTop.rotation.x = -Math.PI / 2; coffeeTop.position.set(0, 0.278, 0); cup.add(coffeeTop);
-  cup.position.set(0.15, 0.72, -0.08); cup.rotation.z = -0.15;
-  armGroupR.add(cup);
-  raccoon.add(armGroupR);
+  const cupG=new THREE.Group();
+  cupG.add(cy(0.110,0.092,0.30,18,M.cup,   0,0.15,0));
+  cupG.add(cy(0.115,0.096,0.16,18,M.sleeve,0,0.12,0));
+  cupG.add(cy(0.117,0.110,0.044,18,M.dgray,0,0.30,0));
+  cupG.add(cy(0.030,0.030,0.055,10,M.dgray,0.036,0.33,0));
+  const lid=new THREE.Mesh(new THREE.CircleGeometry(0.092,18),M.coffee);
+  lid.rotation.x=-Math.PI/2; lid.position.set(0,0.294,0); cupG.add(lid);
+  cupG.position.set(0.14,0.70,-0.08); cupG.rotation.z=-0.20;
+  armR.add(cupG);
+  raccoon.add(armR);
 
-  // Tail — segmented, alternating bands
-  const tail = new THREE.Group();
-  let ty = 0;
-  for (let i = 0; i < 8; i++) {
-    const r = 0.13 - i * 0.01;
-    tail.add(cy(r, r + 0.01, 0.22, 12, i % 2 === 0 ? M.tail : M.tailBand, 0, ty, 0));
-    ty -= 0.22;
+  // ── TAIL (banded) ────────────────────────────────────────────────────────
+  const tail=new THREE.Group();
+  let ty=0;
+  for(let i=0;i<9;i++){
+    const r=0.148-i*0.010;
+    tail.add(cy(r+0.01,r,0.22,14,i%2===0?M.fur:M.dark,0,ty,0));
+    ty-=0.22;
   }
-  tail.position.set(0, 0.78, -0.37); tail.rotation.x = -1.1;
+  tail.position.set(0,0.86,-0.44); tail.rotation.x=-1.18;
   raccoon.add(tail);
 
-  raccoon.position.set(0, 0.42, 0);
-  raccoon.rotation.z = 0.07;
+  raccoon.position.y=0.28;
   root.add(raccoon);
 
-  // ── BACKGROUND PARTICLES ──────────────────────────────────────────────────
-  const pGeo = new THREE.BufferGeometry();
-  const pPos = new Float32Array(220 * 3);
-  for (let i = 0; i < 220; i++) {
-    pPos[i*3]   = (Math.random() - 0.5) * 14;
-    pPos[i*3+1] = Math.random() * 7;
-    pPos[i*3+2] = (Math.random() - 0.5) * 14;
-  }
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  const particles = new THREE.Points(pGeo,
-    new THREE.PointsMaterial({ color: 0xa78bfa, size: 0.06, transparent: true, opacity: 0.55 }));
-  scene.add(particles);
-
-  // ── ANIMATION ────────────────────────────────────────────────────────────────
+  // ── ANIMATION ────────────────────────────────────────────────────────────
   const clock = new THREE.Clock();
   let raf = null;
 
@@ -1268,63 +1249,35 @@ import * as THREE from 'three';
     raf = requestAnimationFrame(tick);
     const t = clock.getElapsedTime();
 
-    // Wheels spin
-    wheels.forEach(w => { w.rotation.z += 0.15; });
+    root.rotation.y += 0.003;
 
-    // Board bob
-    board.position.y  = 0.22 + Math.sin(t * 2.8) * 0.03;
-    board.rotation.z  = Math.sin(t * 1.4) * 0.02;
+    const bob = Math.sin(t*2.2)*0.018;
+    board.position.y   = 0.24 + bob;
+    raccoon.position.y = 0.28 + bob;
+    raccoon.rotation.z = Math.sin(t*1.1)*0.016;
 
-    // Raccoon sway
-    raccoon.position.y = 0.42 + Math.sin(t * 2.8) * 0.03;
-    raccoon.rotation.z = 0.07 + Math.sin(t * 1.4) * 0.025;
+    wheels.forEach(w=>{ w.rotation.z+=0.11; });
 
-    // Whole scene slow auto-rotate
-    root.rotation.y += 0.004;
+    armL.rotation.z = Math.sin(t*2.2)*0.20 - 0.08;
 
-    // Left arm balance swing
-    armGroupL.rotation.z = Math.sin(t * 2.8) * 0.22 - 0.1;
+    cupG.rotation.z = -0.20 + Math.sin(t*2.2+0.5)*0.06;
 
-    // Cup tilt
-    cup.rotation.z = -0.15 + Math.sin(t * 2.8 + 0.5) * 0.07;
+    tail.rotation.x = -1.18 + Math.sin(t*2.6)*0.15;
+    tail.rotation.z = Math.sin(t*1.8)*0.10;
 
-    // Tail wag
-    tail.rotation.x = -1.1 + Math.sin(t * 3.0) * 0.18;
-    tail.rotation.z = Math.sin(t * 2.0) * 0.12;
-
-    // Head subtle tilt
-    head.rotation.z = Math.sin(t * 1.2) * 0.05;
-
-    // Lens shimmer — reuse existing emissive Color, no allocation
-    M.lensGlass.emissive.setHSL((t * 0.2) % 1, 0.7, 0.15);
-    M.lensGlass.emissiveIntensity = 0.3 + Math.sin(t * 3) * 0.1;
-
-    // Ground light colour pulse
-    groundLight.intensity = 1.6 + Math.sin(t * 4) * 0.4;
-    groundLight.color.setHSL((0.55 + Math.sin(t * 0.3) * 0.1) % 1, 0.9, 0.5);
-
-    // Particle drift
-    particles.rotation.y = t * 0.05;
+    headGroup.rotation.y = Math.sin(t*0.7)*0.07;
+    headGroup.rotation.z = Math.sin(t*1.1)*0.035;
 
     renderer.render(scene, camera);
   }
 
   tick();
 
-  // Pause when off-screen
-  new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting && raf)  { cancelAnimationFrame(raf); raf = null; }
-      else if (e.isIntersecting && !raf) { tick(); }
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting&&raf){cancelAnimationFrame(raf);raf=null;}
+      else if(e.isIntersecting&&!raf){tick();}
     });
-  }).observe(wrap);
-
-  // Resize with the div
-  new ResizeObserver(() => {
-    const nW = wrap.clientWidth, nH = wrap.clientHeight;
-    camera.aspect = nW / nH;
-    camera.updateProjectionMatrix();
-    renderer.setSize(nW, nH);
   }).observe(wrap);
 
 })();
