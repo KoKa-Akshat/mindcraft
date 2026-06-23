@@ -367,8 +367,9 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 
 /* ── PANIC TO PLAN + GPS: two stacked rows ── */
 .ptp-section{background:var(--w);padding:clamp(48px,7vw,80px) clamp(24px,5vw,60px)}
-.ptp-row{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;padding:clamp(56px,7vw,80px) 0;border-bottom:1px solid rgba(0,0,0,.08)}
-.ptp-row:last-child{border-bottom:none;padding-bottom:0}
+.ptp-row{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;padding:clamp(40px,5vw,60px) 0}
+.ptp-row:first-child{padding-top:clamp(72px,10vw,120px)}
+.ptp-row:last-child{padding-bottom:clamp(90px,13vw,150px);max-width:1180px}
 .ptp-flip{direction:rtl}.ptp-flip>*{direction:ltr}
 .ptp-text h2{font-size:clamp(28px,3.2vw,44px);font-weight:900;line-height:1.1;letter-spacing:-.4px;margin:0 0 18px;color:var(--tx)}
 .ptp-text p{font-size:16px;line-height:1.8;color:var(--mu);max-width:400px;margin:0}
@@ -436,7 +437,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       <div id="raccoon-3d" class="raccoon-canvas-wrap"></div>
     </div>
     <div class="hero-text rv d1">
-      <h1><span style="display:block;font-size:clamp(28px,4vw,46px)">Maths exams can be stressful;</span><span style="display:block;color:var(--g)">We're here for you.</span></h1>
+      <h1><span style="display:block;font-size:clamp(28px,4vw,46px)">Maths exams can be stressful</span><span style="display:block;color:var(--g);font-size:clamp(20px,3vw,38px);white-space:nowrap">We're here for you.</span></h1>
       <div class="hb">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">Try It Free</a>
         <a href="#how" class="bw">See how it works</a>
@@ -683,18 +684,18 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       </div>
       <div class="dk-hstep rv" style="transition-delay:.12s">
         <div class="dk-hstep-num">02</div>
-        <h4>Learning Map</h4>
-        <p>MindCraft connects your gaps to the concepts behind them so you know exactly what to fix.</p>
+        <h4>Precision Learning</h4>
+        <p>Identifies and resolves student misconceptions in real time.</p>
       </div>
       <div class="dk-hstep rv" style="transition-delay:.20s">
         <div class="dk-hstep-num">03</div>
-        <h4>Tutor Session</h4>
-        <p>A dedicated tutor rebuilds your understanding. Not just the answer. The whole why.</p>
+        <h4>HiTL: Human in the Loop</h4>
+        <p>Technology with a tutor always by your child's side.</p>
       </div>
       <div class="dk-hstep rv" style="transition-delay:.28s">
         <div class="dk-hstep-num">04</div>
-        <h4>Practice Loop</h4>
-        <p>Personalized questions, flashcards, and next steps keep progress going between sessions.</p>
+        <h4>Review</h4>
+        <p>Parents get updates on their child's progress.</p>
       </div>
     </div>
     <!-- CTA centered below the cards -->
@@ -724,16 +725,18 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </section>
 
 <section class="pricing" id="pricing">
-  <h2 class="rv">Start free. Add a tutor when you're ready.</h2>
-  <p class="sub rv d1">The AI tools are always free. Human tutoring starts at $10/hr. First session on us.</p>
+  <h2 class="rv">Start Free.</h2>
 
-  <div class="pg auto-stagger">
+  <div class="pg auto-stagger" style="justify-content:center">
 
-    <!-- FREE -->
     <div class="pc">
       <h3>Practice</h3>
       <div class="pr free-pr">Free</div>
-      <p class="pd">AI-powered study tools. No card, no catch.</p>
+      <ul class="pd" style="list-style:none;padding:0">
+        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· Every Feature is Free</li>
+        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· We are Testing</li>
+        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· Please be patient with us</li>
+      </ul>
       <ul>
         <li>Personalized study path (GPS)</li>
         <li>AI Problem Solver</li>
@@ -748,44 +751,6 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       </div>
     </div>
 
-    <!-- TUTORED (recommended) -->
-    <div class="pc ft">
-      <h3>Tutored</h3>
-      <div class="pr">$10<span>/hr</span></div>
-      <p class="pd">AI platform + a real expert in your corner. First session free.</p>
-      <ul>
-        <li>Everything in Practice</li>
-        <li>Matched 1-on-1 expert tutor</li>
-        <li>Same tutor every session</li>
-        <li>AI-generated session notes</li>
-        <li>Tutor-assigned homework</li>
-        <li>Gap tracking after every session</li>
-        <li>Progress reports for parents</li>
-      </ul>
-      <div class="cta-wrap">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:14px;display:block;font-size:15px;text-align:center">Book First Session Free</a>
-      </div>
-    </div>
-
-    <!-- INTENSIVE -->
-    <div class="pc">
-      <h3>Intensive</h3>
-      <div class="pr">$35<span>/mo</span></div>
-      <p class="pd">4 sessions + the full platform. Best for exam countdowns.</p>
-      <ul>
-        <li>Everything in Tutored</li>
-        <li>4 sessions per month</li>
-        <li>Priority tutor matching</li>
-        <li>Exam countdown study plan</li>
-        <li>Weekly gap report</li>
-        <li>Direct tutor messaging</li>
-        <li>Parent dashboard access</li>
-      </ul>
-      <div class="cta-wrap">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center;background:#1A3C2A">Get Started</a>
-      </div>
-    </div>
-
   </div>
   <p class="pricing-note rv">All plans include access to the MindCraft app. Tutoring sessions are 1 hour. Cancel anytime.</p>
 </section>
@@ -797,6 +762,20 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
     <a href="blog.html" class="blog-see-all">See All &rarr;</a>
   </div>
   <div class="blog-scroll rv d1" id="blogScroll"></div>
+
+  <div class="blog-panel-head rv" style="margin-top:clamp(48px,7vw,72px)">
+    <h2>Our Podcasts</h2>
+  </div>
+  <div class="rv d1" style="padding:0 clamp(16px,3vw,32px)">
+    <div style="display:flex;align-items:center;gap:20px;background:#F8F9FA;border-radius:18px;padding:clamp(20px,3vw,32px) clamp(24px,4vw,40px);max-width:520px;border:1px solid rgba(0,0,0,.06)">
+      <svg viewBox="0 0 24 24" width="40" height="40" flex-shrink="0" style="flex-shrink:0"><path fill="#1DB954" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+      <div>
+        <p style="font-size:15px;font-weight:700;color:var(--tx);margin:0 0 4px">Playlist coming soon</p>
+        <p style="font-size:13px;color:var(--mu);margin:0 0 12px;line-height:1.5">We're building our podcast series.<br>Follow us on Spotify to be the first to know.</p>
+        <a href="#" class="bw" style="font-size:13px;padding:8px 18px;display:inline-block">Follow on Spotify</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <div class="blog-faq-divider"><hr></div>
@@ -808,76 +787,76 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       <div class="faq-col">
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How is MindCraft different from regular tutoring?</span>
+            <span class="faq-q-text">What does MindCraft actually do for my child?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Regular tutoring helps you in the moment, then disappears. MindCraft makes every session stick. Notes get organized automatically. Progress is tracked. And our AI assistant keeps you moving forward between sessions.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">MindCraft first diagnoses exactly what your child doesn't understand, then fixes it — with a real human tutor and AI tools that keep them moving forward between sessions. No guessing, no wasted time.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What subjects can I get help with?</span>
+            <span class="faq-q-text">Who teaches my child?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">We cover Intro to Algorithmic Trading, Accounting Basics, Networking, Style, and more. We are growing fast. If your subject is not listed, reach out and we will find the right tutor for you.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Our tutors are high-performing college students who recently mastered these exact subjects and exams. They know where students get stuck because they just went through it. We vet and train each one personally.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What actually happens during a session?</span>
+            <span class="faq-q-text">What exams and subjects do you cover?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">You meet your tutor live and work through exactly what you need. Afterwards, everything becomes a clear summary with key takeaways and next steps. It shows up right on your dashboard.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">We specialise in maths — ACT, SAT, IB, and high school exams. We are expanding to other subjects. If yours is not listed, reach out and we will find the right person for your child.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How are tutors chosen?</span>
+            <span class="faq-q-text">How will I know if it's working?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Every MindCraft tutor is a college student who recently mastered what they teach. They know exactly where students get stuck because they just went through it. We vet each one personally.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">After every session your child receives a breakdown of what was covered and what is next. You can see their knowledge map update in real time and watch gaps close over time. No more guessing.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Is there any commitment?</span>
+            <span class="faq-q-text">What happens during a session?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">None at all. Your first session is completely free. After that, book when it works for you. No contracts, no packages, no pressure.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Your child meets their tutor live, works through the exact concepts they are stuck on, and leaves with a clear plan. Notes and next steps are posted to their dashboard automatically after every session.</p></div>
         </div>
       </div>
 
       <div class="faq-col">
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What does my child get after each session?</span>
+            <span class="faq-q-text">Is it safe and monitored?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">A structured summary: what was covered, key takeaways, and next steps. It lives on the dashboard so nothing gets lost. Parents can see it too.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">All sessions take place on our secure platform. We personally vet every tutor and monitor all interactions. Your child's safety and privacy come first, always.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Can I track my child's progress?</span>
+            <span class="faq-q-text">How much does it cost?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Yes. The platform tracks what your student understands and where they need work. You can see exactly how they are growing. No more guessing.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Every feature on the app is free while we are in our testing phase. When you are ready for 1-on-1 tutoring, the first session is always on us. No credit card needed to start.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">I'm a student. Can I sign up without my parents?</span>
+            <span class="faq-q-text">Is there a contract or commitment?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Absolutely. MindCraft is built for students who want to take ownership of their learning. Book your own session, get your dashboard, and start building.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">None at all. No contracts, no packages, no monthly fees. Book sessions when they work for your family. Cancel anytime, no questions asked.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How do I become a MindCraft tutor?</span>
+            <span class="faq-q-text">My child is really behind. Will this work?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">We look for college students who are strong in their subject and genuinely enjoy teaching. If that sounds like you, reach out through the site. We will review your application and get back to you.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">That is exactly who we are built for. MindCraft finds the root gaps, not just the surface symptoms, and rebuilds from there. Most students feel a real difference within the first two sessions.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Where do sessions take place?</span>
+            <span class="faq-q-text">How do we get started?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Everything is online, through our platform. No commuting, no logistics. Join from anywhere on any device.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Create a free account, run the diagnostic, and see what MindCraft finds. If you want to book a tutor after, the first session is free. No commitment needed to try.</p></div>
         </div>
       </div>
 
@@ -965,14 +944,10 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   go(0);
 })();
 
-// ── DOM REORDER: subjects panel moves to after #steps (4th section) ──
+// ── SUBJECTS PANEL: reveal in place (already before #steps in HTML) ──
 (function(){
   var subj=document.getElementById('subj-orig');
-  var steps=document.getElementById('steps');
-  if(subj&&steps){
-    subj.style.cssText='';
-    steps.insertAdjacentElement('afterend',subj);
-  }
+  if(subj){ subj.style.cssText=''; }
 })();
 
 // ── SCROLL PROGRESS BAR ──
