@@ -368,16 +368,16 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 /* ── PANIC TO PLAN + GPS: two stacked rows ── */
 .ptp-section{background:var(--w);padding:clamp(48px,7vw,80px) clamp(24px,5vw,60px)}
 .ptp-row{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;padding:clamp(40px,5vw,60px) 0}
-.ptp-row:first-child{padding-top:clamp(72px,10vw,120px)}
-.ptp-row:last-child{padding-bottom:clamp(90px,13vw,150px);max-width:1180px}
+.ptp-row:first-child{padding-top:clamp(28px,3vw,44px);max-width:900px;margin-right:auto;margin-left:0}
+.ptp-row:last-child{padding-top:clamp(60px,8vw,100px);padding-bottom:clamp(90px,13vw,150px);max-width:1180px;margin-left:auto;margin-right:0}
 .ptp-flip{direction:rtl}.ptp-flip>*{direction:ltr}
 .ptp-text h2{font-size:clamp(28px,3.2vw,44px);font-weight:900;line-height:1.1;letter-spacing:-.4px;margin:0 0 18px;color:var(--tx)}
 .ptp-text p{font-size:16px;line-height:1.8;color:var(--mu);max-width:400px;margin:0}
 .ptp-media{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.11);background:#F0F4F8}
 .ptp-media video{width:100%;display:block;max-height:380px;object-fit:cover}
-.ptp-gps{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.09);border:1px solid rgba(0,0,0,.07);background:#fff}
-.ptp-gps .concept-map{width:100%;display:block}
-.ptp-gps .concept-map svg{width:100%;height:auto;display:block}
+.ptp-gps{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.09);border:1px solid rgba(0,0,0,.07);background:#fff;max-height:380px}
+.ptp-gps .concept-map{width:100%;height:100%;display:block}
+.ptp-gps .concept-map svg{width:100%;height:100%;display:block}
 @media(max-width:860px){.ptp-row{grid-template-columns:1fr;gap:clamp(24px,4vw,36px)}.ptp-flip{direction:ltr}.ptp-text p{max-width:100%}}
 
 /* ── 3D RACCOON VIEWER ── */
@@ -461,8 +461,8 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
     </div>
   </div>
 
-  <!-- Row 2: GPS visual left, text right -->
-  <div class="ptp-row ptp-flip">
+  <!-- Row 2: GPS left, text right (lower + right-biased) -->
+  <div class="ptp-row">
     <div class="ptp-gps rv">
       <div class="concept-map" aria-label="Animated concept map">
         <svg viewBox="0 0 620 400" role="img">
@@ -908,6 +908,8 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   document.body.style.overflow='hidden';
   var slides=intro.querySelectorAll('.mc-slide');
   var cur=0,timer=null,AUTO=3000;
+  // 0→1 ("FIXED" reveal) and 4→5 ("A Growth Mindset" reveal) fire after 0.5 s
+  var SLIDE_DELAYS=[500,AUTO,AUTO,AUTO,500];
 
   function exit(){
     clearTimeout(timer);
@@ -922,7 +924,8 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
     cur=(n+slides.length)%slides.length;
     slides[cur].classList.add('mc-active');
     if(cur<slides.length-1){
-      timer=setTimeout(function(){go(cur+1);},AUTO);
+      var delay=SLIDE_DELAYS[cur]!==undefined?SLIDE_DELAYS[cur]:AUTO;
+      timer=setTimeout(function(){go(cur+1);},delay);
     } else {
       // Last slide: auto-open site after 1 s
       timer=setTimeout(exit,1000);
