@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft: Maths exam? We got you.</title>
+<title>MindCraft: Maths exams can be stressful. We're here for you.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
 <style>
@@ -349,25 +349,42 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 .mc-intro{position:fixed;inset:0;z-index:9000;background:#F5F1ED;overflow:hidden;transition:opacity .6s ease,visibility .6s}
 .mc-intro.mc-exit{opacity:0;visibility:hidden;pointer-events:none}
 .mc-intro.mc-gone{display:none!important}
-.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;transition:opacity .5s ease;pointer-events:none;background:#F5F1ED}
+.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;transition:opacity .7s ease;pointer-events:none;background:#F5F1ED}
 .mc-slide.mc-active{opacity:1;pointer-events:auto}
-/* Large headline — matches PPTX 150pt Radley */
-.mc-big{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#60421C;margin:0}
-.mc-big .mc-invis{color:#F5F1ED}/* hidden — matches bg, like white on cream in PPTX */
-.mc-big .mc-gray{color:#817D7C}
-/* Quote text — matches PPTX ~40pt Radley */
-.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#60421C;margin:0;max-width:82vw}
-/* MINDCRAFT brand — gray per PPTX */
-.mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#817D7C;margin:0}
-/* Caption — bottom-right per PPTX */
+/* Large headline */
+.mc-big{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
+.mc-big .mc-invis{color:#F5F1ED}
+.mc-big .mc-gray{color:#58CC02}
+/* Quote text */
+.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#1A1A1A;margin:0;max-width:82vw}
+/* MINDCRAFT brand */
+.mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
+/* Caption */
 .mc-caption{position:absolute;bottom:clamp(20px,3vh,48px);right:clamp(32px,5vw,80px);font-family:'Radley',Georgia,serif;font-size:clamp(11px,1vw,16px);color:#0B0B0B;opacity:.55;letter-spacing:.02em}
-/* Enter/Skip */
-.mc-enter{margin-top:clamp(32px,5vh,56px);display:inline-block;font-family:'Radley',Georgia,serif;font-size:clamp(14px,1.4vw,18px);color:#60421C;background:none;border:1px solid #60421C;padding:12px 32px;cursor:pointer;letter-spacing:.08em;transition:background .2s,color .2s}
-.mc-enter:hover{background:#60421C;color:#F5F1ED}
-.mc-skip{position:absolute;top:20px;right:24px;z-index:10;font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(96,66,28,.35);background:none;border:1px solid rgba(96,66,28,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
-.mc-skip:hover{color:#60421C;border-color:#60421C}
+/* Skip only — Enter button removed */
+.mc-skip{position:absolute;top:20px;right:24px;z-index:10;font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(26,26,26,.35);background:none;border:1px solid rgba(26,26,26,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
+.mc-skip:hover{color:#1A1A1A;border-color:#1A1A1A}
+
+/* ── COMBINED PANIC + GPS SECTION ── */
+.panic-gps{padding:clamp(70px,10vw,110px) clamp(24px,5vw,60px);background:var(--w);display:flex;justify-content:center;align-items:center;min-height:100vh}
+.panic-gps-in{max-width:1140px;width:100%;display:grid;grid-template-columns:1fr 2fr;gap:clamp(48px,7vw,80px);align-items:center}
+.panic-texts{display:flex;flex-direction:column;gap:clamp(40px,6vw,60px)}
+.panic-text-block h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;line-height:1.15;margin-bottom:14px;letter-spacing:-.3px}
+.panic-text-block p{font-size:16px;color:var(--mu);line-height:1.75;margin:0;max-width:320px}
+.panic-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+.panic-card{background:#F4F6F8;border-radius:20px;overflow:hidden;border:1px solid rgba(25,45,64,.07);box-shadow:0 12px 40px rgba(0,0,0,.09);display:flex;flex-direction:column;min-height:300px}
+.panic-card video{width:100%;height:100%;display:block;object-fit:cover;flex:1}
+.panic-card-gps{padding:0}
+.panic-card-gps .concept-map{border-radius:0;max-width:100%;height:100%;aspect-ratio:auto;min-height:300px;flex:1}
+@media(max-width:960px){.panic-gps-in{grid-template-columns:1fr}.panic-cards{max-width:600px;margin:0 auto}.panic-text-block p{max-width:480px}}
+@media(max-width:560px){.panic-cards{grid-template-columns:1fr}.panic-card{min-height:220px}}
+
+/* ── 3D RACCOON CANVAS ── */
+.raccoon-canvas-wrap{width:clamp(180px,26vw,260px);height:clamp(180px,26vw,260px);position:relative;z-index:2}
+.raccoon-canvas-wrap canvas{display:block;width:100%!important;height:100%!important}
 @media(max-width:600px){.mc-big,.mc-brand{font-size:clamp(36px,14vw,80px)}.mc-quote{font-size:clamp(16px,4.5vw,28px)}.mc-caption{display:none}}
 </style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
 
@@ -408,7 +425,6 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   <div class="mc-slide">
     <p class="mc-brand">MINDCRAFT</p>
     <p class="mc-big">A Growth Mindset</p>
-    <button class="mc-enter" id="mc-enter" type="button">Enter MindCraft</button>
   </div>
 </div>
 
@@ -417,13 +433,13 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 <section class="hero">
   <div class="hero-in">
     <div class="ha rv">
-      <img src="img/reading.png" class="mr" alt="MindCraft">
+      <div id="raccoon-3d" class="raccoon-canvas-wrap" style="animation:bob 3s ease-in-out infinite"></div>
       <div class="fc" style="top:6%;right:14%;animation-delay:0s"><img src="img/algebra.png"></div>
       <div class="fc" style="top:32%;left:7%;animation-delay:.62s"><img src="img/geometry.png"></div>
       <div class="fc" style="bottom:18%;right:10%;animation-delay:1.24s"><img src="img/trig.png"></div>
     </div>
     <div class="hero-text rv d1">
-      <h1><span style="display:block">Maths exam?</span><span style="display:block;color:var(--g)">We got you.</span></h1>
+      <h1><span style="display:block;font-size:clamp(28px,4vw,46px)">Maths exams can be stressful;</span><span style="display:block;color:var(--g)">We're here for you.</span></h1>
       <div class="hb">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">Try It Free</a>
         <a href="#how" class="bw">See how it works</a>
@@ -433,21 +449,79 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </section>
 </div><!-- /above-fold -->
 
-<!-- ── FROM PANIC TO PLAN (Page 2) ── -->
-<section class="sec flip" id="pressure">
-  <div class="sec-in">
-    <div class="sa rv d2" style="display:flex;align-items:center;justify-content:center">
-      <video src="img/Video.mp4" autoplay muted loop playsinline style="width:100%;max-width:520px;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.13);display:block"></video>
+<!-- ── FROM PANIC TO PLAN + GPS (Combined, rule-of-thirds) ── -->
+<section class="panic-gps" id="pressure">
+  <div class="panic-gps-in">
+
+    <!-- LEFT 1/3: two stacked text blocks -->
+    <div class="panic-texts">
+      <div class="panic-text-block rv">
+        <h2 class="cg">From panic to plan.</h2>
+        <p>Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
+      </div>
+      <div class="panic-text-block rv d2">
+        <h2 class="cg">No more random practice.<br>We have a GPS.</h2>
+        <p>MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
+      </div>
     </div>
-    <div class="rv">
-      <h2 class="cg" style="font-size:clamp(30px,5vw,44px)">From panic to plan.</h2>
-      <p class="d" style="font-size:17px;line-height:1.75;max-width:460px">Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
+
+    <!-- RIGHT 2/3: two visual cards -->
+    <div class="panic-cards rv d1">
+
+      <!-- Card 1: Video -->
+      <div class="panic-card">
+        <video src="img/Video.mp4" autoplay muted loop playsinline></video>
+      </div>
+
+      <!-- Card 2: Concept GPS map -->
+      <div class="panic-card panic-card-gps">
+        <div class="concept-map" aria-label="Animated concept map">
+          <svg viewBox="0 0 620 400" role="img">
+            <defs>
+              <filter id="cmGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="8" result="blur"/>
+                <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.68 0 0 0 0 0.58 0 0 0 .5 0"/>
+                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path class="cm-grid" d="M80 40v320M180 40v320M280 40v320M380 40v320M480 40v320M40 100h540M40 200h540M40 300h540"/>
+            <line class="cm-link" x1="70" y1="200" x2="305" y2="200"/>
+            <line class="cm-link" x1="305" y1="200" x2="525" y2="200"/>
+            <line class="cm-link" x1="305" y1="200" x2="420" y2="90"/>
+            <line class="cm-link" x1="305" y1="200" x2="420" y2="310"/>
+            <line class="cm-link" x1="305" y1="200" x2="190" y2="90"/>
+            <line class="cm-link" x1="305" y1="200" x2="190" y2="310"/>
+            <line class="cm-link" x1="420" y1="90" x2="515" y2="80"/>
+            <line class="cm-link" x1="420" y1="310" x2="520" y2="320"/>
+            <line class="cm-link" x1="190" y1="90" x2="95" y2="80"/>
+            <line class="cm-link" x1="190" y1="310" x2="95" y2="320"/>
+            <line class="cm-link path" x1="190" y1="200" x2="305" y2="200"/>
+            <line class="cm-link path" x1="305" y1="200" x2="420" y2="90"/>
+            <line class="cm-link path" x1="305" y1="200" x2="420" y2="310"/>
+            <g class="cm-node soft" transform="translate(95 80)"><circle r="20"/><text>Rules</text></g>
+            <g class="cm-node" transform="translate(190 90)"><circle r="32"/><text>Linear</text></g>
+            <g class="cm-node next" transform="translate(190 200)"><circle r="38"/><text>Systems</text></g>
+            <g class="cm-node soft" transform="translate(95 320)"><circle r="20"/><text>Stats</text></g>
+            <g class="cm-node" transform="translate(190 310)"><circle r="31"/><text>Ratios</text></g>
+            <g class="cm-node focus" transform="translate(305 200)"><circle class="cm-pulse" r="26"/><circle r="54"/><text><tspan x="0" y="-7">Word</tspan><tspan x="0" y="10">Problems</tspan></text></g>
+            <g class="cm-node next" transform="translate(420 90)"><circle r="35"/><text>Percents</text></g>
+            <g class="cm-node next" transform="translate(420 310)"><circle r="35"/><text>Functions</text></g>
+            <g class="cm-node soft" transform="translate(515 80)"><circle r="20"/><text>ACT</text></g>
+            <g class="cm-node soft" transform="translate(525 200)"><circle r="25"/><text>SAT</text></g>
+            <g class="cm-node soft" transform="translate(520 320)"><circle r="20"/><text>Exam</text></g>
+            <circle class="cm-dot" cx="452" cy="68" r="4"/>
+            <circle class="cm-dot" cx="452" cy="286" r="4"/>
+            <circle class="cm-dot" cx="222" cy="176" r="4"/>
+          </svg>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ── SUBJECTS PANEL (Page 3) ── -->
-<section class="subj-panel">
+<!-- ── SUBJECTS PANEL (4th — inserted after #steps below) ── -->
+<section class="subj-panel" id="subj-orig" style="display:none;padding:0;margin:0;border:none">
   <div class="subj-in">
     <div class="rv">
       <span class="subj-eyebrow">subjects</span>
@@ -598,85 +672,6 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
         <div class="ss-dot active"></div>
         <div class="ss-dot"></div>
         <div class="ss-dot"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="sec" id="how">
-  <div class="sec-in">
-    <!-- Left: text only -->
-    <div class="rv">
-      <h2 class="cg" style="font-size:clamp(30px,5vw,44px)">No more random practice.<br>We have a GPS.</h2>
-      <p class="d" style="font-size:17px;line-height:1.75;max-width:460px">MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
-    </div>
-
-    <!-- Right: dynamic concept map -->
-    <div class="sa rv d2">
-      <div class="concept-map" aria-label="Animated concept map showing prerequisite links">
-        <svg viewBox="0 0 620 400" role="img">
-          <defs>
-            <filter id="cmGlow" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="8" result="blur"/>
-              <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.68 0 0 0 0 0.58 0 0 0 .5 0"/>
-              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-
-          <path class="cm-grid" d="M80 40v320M180 40v320M280 40v320M380 40v320M480 40v320M40 100h540M40 200h540M40 300h540"/>
-
-          <line class="cm-link" x1="70" y1="200" x2="305" y2="200"/>
-          <line class="cm-link" x1="305" y1="200" x2="525" y2="200"/>
-          <line class="cm-link" x1="305" y1="200" x2="420" y2="90"/>
-          <line class="cm-link" x1="305" y1="200" x2="420" y2="310"/>
-          <line class="cm-link" x1="305" y1="200" x2="190" y2="90"/>
-          <line class="cm-link" x1="305" y1="200" x2="190" y2="310"/>
-          <line class="cm-link" x1="420" y1="90" x2="515" y2="80"/>
-          <line class="cm-link" x1="420" y1="310" x2="520" y2="320"/>
-          <line class="cm-link" x1="190" y1="90" x2="95" y2="80"/>
-          <line class="cm-link" x1="190" y1="310" x2="95" y2="320"/>
-          <line class="cm-link path" x1="190" y1="200" x2="305" y2="200"/>
-          <line class="cm-link path" x1="305" y1="200" x2="420" y2="90"/>
-          <line class="cm-link path" x1="305" y1="200" x2="420" y2="310"/>
-
-          <g class="cm-node soft" transform="translate(95 80)">
-            <circle r="20"/><text>Rules</text>
-          </g>
-          <g class="cm-node" transform="translate(190 90)">
-            <circle r="32"/><text>Linear</text>
-          </g>
-          <g class="cm-node next" transform="translate(190 200)">
-            <circle r="38"/><text>Systems</text>
-          </g>
-          <g class="cm-node soft" transform="translate(95 320)">
-            <circle r="20"/><text>Stats</text>
-          </g>
-          <g class="cm-node" transform="translate(190 310)">
-            <circle r="31"/><text>Ratios</text>
-          </g>
-          <g class="cm-node focus" transform="translate(305 200)">
-            <circle class="cm-pulse" r="26"/><circle r="54"/><text><tspan x="0" y="-7">Word</tspan><tspan x="0" y="10">Problems</tspan></text>
-          </g>
-          <g class="cm-node next" transform="translate(420 90)">
-            <circle r="35"/><text>Percents</text>
-          </g>
-          <g class="cm-node next" transform="translate(420 310)">
-            <circle r="35"/><text>Functions</text>
-          </g>
-          <g class="cm-node soft" transform="translate(515 80)">
-            <circle r="20"/><text>ACT</text>
-          </g>
-          <g class="cm-node soft" transform="translate(525 200)">
-            <circle r="25"/><text>SAT</text>
-          </g>
-          <g class="cm-node soft" transform="translate(520 320)">
-            <circle r="20"/><text>Exam</text>
-          </g>
-          <circle class="cm-dot" cx="452" cy="68" r="4"/>
-          <circle class="cm-dot" cx="452" cy="286" r="4"/>
-          <circle class="cm-dot" cx="222" cy="176" r="4"/>
-        </svg>
       </div>
     </div>
   </div>
@@ -956,11 +951,16 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
     slides[cur].classList.remove('mc-active');
     cur=(n+slides.length)%slides.length;
     slides[cur].classList.add('mc-active');
-    if(cur<slides.length-1)timer=setTimeout(function(){go(cur+1);},AUTO);
+    if(cur<slides.length-1){
+      timer=setTimeout(function(){go(cur+1);},AUTO);
+    } else {
+      // Last slide: auto-open site after 1 s
+      timer=setTimeout(exit,1000);
+    }
   }
 
   intro.addEventListener('click',function(e){
-    if(e.target.closest('#mc-skip,#mc-enter'))return;
+    if(e.target.closest('#mc-skip'))return;
     if(cur<slides.length-1)go(cur+1); else exit();
   });
   document.addEventListener('keydown',function(e){
@@ -969,11 +969,19 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
     if(e.key==='ArrowLeft'){e.preventDefault();if(cur>0)go(cur-1);}
     if(e.key==='Escape')exit();
   });
-  var enterBtn=document.getElementById('mc-enter');
-  if(enterBtn)enterBtn.addEventListener('click',function(e){e.stopPropagation();exit();});
   var skipBtn=document.getElementById('mc-skip');
   if(skipBtn)skipBtn.addEventListener('click',function(e){e.stopPropagation();exit();});
   go(0);
+})();
+
+// ── DOM REORDER: subjects panel moves to after #steps (4th section) ──
+(function(){
+  var subj=document.getElementById('subj-orig');
+  var steps=document.getElementById('steps');
+  if(subj&&steps){
+    subj.style.cssText='';
+    steps.insertAdjacentElement('afterend',subj);
+  }
 })();
 
 // ── SCROLL PROGRESS BAR ──
@@ -1048,6 +1056,85 @@ if (scroll) {
     +'</a>';
   }).join('');
 }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { ThreeMFLoader } from 'three/addons/loaders/3MFLoader.js';
+
+var wrap = document.getElementById('raccoon-3d');
+if (!wrap) { throw new Error('no wrap'); }
+
+var W = wrap.clientWidth  || 240;
+var H = wrap.clientHeight || 240;
+
+var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(W, H);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+wrap.appendChild(renderer.domElement);
+
+var scene  = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(32, W / H, 0.1, 2000);
+camera.position.set(0, 40, 220);
+camera.lookAt(0, 10, 0);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+
+var keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+keyLight.position.set(2, 4, 5);
+scene.add(keyLight);
+
+var greenRim = new THREE.DirectionalLight(0x58CC02, 1.4);
+greenRim.position.set(-3, 0, -2);
+scene.add(greenRim);
+
+var fill = new THREE.DirectionalLight(0xffffff, 0.35);
+fill.position.set(3, -2, 3);
+scene.add(fill);
+
+var raf = null;
+var obj = null;
+
+new ThreeMFLoader().load('img/Cool_Racoon.3mf', function(loaded){
+  loaded.traverse(function(child){
+    if(child.isMesh){
+      child.material = new THREE.MeshPhongMaterial({
+        color: 0x1a1a1a,
+        specular: new THREE.Color(0x58CC02),
+        shininess: 55,
+      });
+    }
+  });
+
+  var box    = new THREE.Box3().setFromObject(loaded);
+  var center = box.getCenter(new THREE.Vector3());
+  var size   = box.getSize(new THREE.Vector3());
+  var scale  = 90 / Math.max(size.x, size.y, size.z);
+  loaded.scale.setScalar(scale);
+  loaded.position.copy(center.multiplyScalar(-scale));
+
+  scene.add(loaded);
+  obj = loaded;
+
+  (function animate(){
+    raf = requestAnimationFrame(animate);
+    obj.rotation.y += 0.009;
+    renderer.render(scene, camera);
+  })();
+}, undefined, function(){
+  // Fallback: show reading.png if 3MF fails
+  wrap.innerHTML = '<img src="img/reading.png" alt="MindCraft" style="width:100%;height:100%;object-fit:contain">';
+});
+
+// Pause when off-screen
+new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(!e.isIntersecting && raf){ cancelAnimationFrame(raf); raf=null; }
+    else if(e.isIntersecting && !raf && obj){
+      (function animate(){ raf=requestAnimationFrame(animate); obj.rotation.y+=0.009; renderer.render(scene,camera); })();
+    }
+  });
+}).observe(wrap);
 </script>
 
 </body></html>
