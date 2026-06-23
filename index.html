@@ -349,7 +349,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 .mc-intro{position:fixed;inset:0;z-index:9000;background:#F5F1ED;overflow:hidden;transition:opacity .6s ease,visibility .6s}
 .mc-intro.mc-exit{opacity:0;visibility:hidden;pointer-events:none}
 .mc-intro.mc-gone{display:none!important}
-.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;transition:opacity .7s ease;pointer-events:none;background:#F5F1ED}
+.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;transition:opacity .5s ease;pointer-events:none;background:#F5F1ED}
 .mc-slide.mc-active{opacity:1;pointer-events:auto}
 /* Large headline */
 .mc-big{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
@@ -365,22 +365,22 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 .mc-skip{position:absolute;top:20px;right:24px;z-index:10;font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(26,26,26,.35);background:none;border:1px solid rgba(26,26,26,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
 .mc-skip:hover{color:#1A1A1A;border-color:#1A1A1A}
 
-/* ── COMBINED PANIC + GPS SECTION ── */
-.panic-gps{padding:clamp(70px,10vw,110px) clamp(24px,5vw,60px);background:var(--w);display:flex;justify-content:center;align-items:center;min-height:100vh}
-.panic-gps-in{max-width:1140px;width:100%;display:grid;grid-template-columns:1fr 2fr;gap:clamp(48px,7vw,80px);align-items:center}
-.panic-texts{display:flex;flex-direction:column;gap:clamp(40px,6vw,60px)}
-.panic-text-block h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;line-height:1.15;margin-bottom:14px;letter-spacing:-.3px}
-.panic-text-block p{font-size:16px;color:var(--mu);line-height:1.75;margin:0;max-width:320px}
-.panic-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
-.panic-card{background:#F4F6F8;border-radius:20px;overflow:hidden;border:1px solid rgba(25,45,64,.07);box-shadow:0 12px 40px rgba(0,0,0,.09);display:flex;flex-direction:column;min-height:300px}
-.panic-card video{width:100%;height:100%;display:block;object-fit:cover;flex:1}
-.panic-card-gps{padding:0}
-.panic-card-gps .concept-map{border-radius:0;max-width:100%;height:100%;aspect-ratio:auto;min-height:300px;flex:1}
-@media(max-width:960px){.panic-gps-in{grid-template-columns:1fr}.panic-cards{max-width:600px;margin:0 auto}.panic-text-block p{max-width:480px}}
-@media(max-width:560px){.panic-cards{grid-template-columns:1fr}.panic-card{min-height:220px}}
+/* ── PANIC TO PLAN + GPS: two stacked rows ── */
+.ptp-section{background:var(--w);padding:clamp(48px,7vw,80px) clamp(24px,5vw,60px)}
+.ptp-row{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;padding:clamp(56px,7vw,80px) 0;border-bottom:1px solid rgba(0,0,0,.08)}
+.ptp-row:last-child{border-bottom:none;padding-bottom:0}
+.ptp-flip{direction:rtl}.ptp-flip>*{direction:ltr}
+.ptp-text h2{font-size:clamp(28px,3.2vw,44px);font-weight:900;line-height:1.1;letter-spacing:-.4px;margin:0 0 18px;color:var(--tx)}
+.ptp-text p{font-size:16px;line-height:1.8;color:var(--mu);max-width:400px;margin:0}
+.ptp-media{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.11);background:#F0F4F8}
+.ptp-media video{width:100%;display:block;max-height:380px;object-fit:cover}
+.ptp-gps{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.09);border:1px solid rgba(0,0,0,.07);background:#fff}
+.ptp-gps .concept-map{width:100%;display:block}
+.ptp-gps .concept-map svg{width:100%;height:auto;display:block}
+@media(max-width:860px){.ptp-row{grid-template-columns:1fr;gap:clamp(24px,4vw,36px)}.ptp-flip{direction:ltr}.ptp-text p{max-width:100%}}
 
-/* ── 3D RACCOON CANVAS ── */
-.raccoon-canvas-wrap{width:clamp(180px,26vw,260px);height:clamp(180px,26vw,260px);position:relative;z-index:2}
+/* ── 3D RACCOON VIEWER ── */
+.raccoon-canvas-wrap{width:clamp(260px,36vw,420px);height:clamp(260px,36vw,420px);border-radius:24px;background:#0d1117;border:1.5px solid rgba(88,204,2,.22);box-shadow:0 24px 64px rgba(0,0,0,.28),0 0 0 1px rgba(88,204,2,.07) inset;overflow:hidden;position:relative;z-index:2}
 .raccoon-canvas-wrap canvas{display:block;width:100%!important;height:100%!important}
 @media(max-width:600px){.mc-big,.mc-brand{font-size:clamp(36px,14vw,80px)}.mc-quote{font-size:clamp(16px,4.5vw,28px)}.mc-caption{display:none}}
 </style>
@@ -433,10 +433,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 <section class="hero">
   <div class="hero-in">
     <div class="ha rv">
-      <div id="raccoon-3d" class="raccoon-canvas-wrap" style="animation:bob 3s ease-in-out infinite"></div>
-      <div class="fc" style="top:6%;right:14%;animation-delay:0s"><img src="img/algebra.png"></div>
-      <div class="fc" style="top:32%;left:7%;animation-delay:.62s"><img src="img/geometry.png"></div>
-      <div class="fc" style="bottom:18%;right:10%;animation-delay:1.24s"><img src="img/trig.png"></div>
+      <div id="raccoon-3d" class="raccoon-canvas-wrap"></div>
     </div>
     <div class="hero-text rv d1">
       <h1><span style="display:block;font-size:clamp(28px,4vw,46px)">Maths exams can be stressful;</span><span style="display:block;color:var(--g)">We're here for you.</span></h1>
@@ -449,75 +446,69 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </section>
 </div><!-- /above-fold -->
 
-<!-- ── FROM PANIC TO PLAN + GPS (Combined, rule-of-thirds) ── -->
-<section class="panic-gps" id="pressure">
-  <div class="panic-gps-in">
+<!-- ── FROM PANIC TO PLAN + GPS ── -->
+<section class="ptp-section" id="pressure">
 
-    <!-- LEFT 1/3: two stacked text blocks -->
-    <div class="panic-texts">
-      <div class="panic-text-block rv">
-        <h2 class="cg">From panic to plan.</h2>
-        <p>Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
-      </div>
-      <div class="panic-text-block rv d2">
-        <h2 class="cg">No more random practice.<br>We have a GPS.</h2>
-        <p>MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
-      </div>
+  <!-- Row 1: text left, video right -->
+  <div class="ptp-row">
+    <div class="ptp-text rv">
+      <h2>From panic<br>to plan.</h2>
+      <p>Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
     </div>
-
-    <!-- RIGHT 2/3: two visual cards -->
-    <div class="panic-cards rv d1">
-
-      <!-- Card 1: Video -->
-      <div class="panic-card">
-        <video src="img/Video.mp4" autoplay muted loop playsinline></video>
-      </div>
-
-      <!-- Card 2: Concept GPS map -->
-      <div class="panic-card panic-card-gps">
-        <div class="concept-map" aria-label="Animated concept map">
-          <svg viewBox="0 0 620 400" role="img">
-            <defs>
-              <filter id="cmGlow" x="-80%" y="-80%" width="260%" height="260%">
-                <feGaussianBlur stdDeviation="8" result="blur"/>
-                <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.68 0 0 0 0 0.58 0 0 0 .5 0"/>
-                <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <path class="cm-grid" d="M80 40v320M180 40v320M280 40v320M380 40v320M480 40v320M40 100h540M40 200h540M40 300h540"/>
-            <line class="cm-link" x1="70" y1="200" x2="305" y2="200"/>
-            <line class="cm-link" x1="305" y1="200" x2="525" y2="200"/>
-            <line class="cm-link" x1="305" y1="200" x2="420" y2="90"/>
-            <line class="cm-link" x1="305" y1="200" x2="420" y2="310"/>
-            <line class="cm-link" x1="305" y1="200" x2="190" y2="90"/>
-            <line class="cm-link" x1="305" y1="200" x2="190" y2="310"/>
-            <line class="cm-link" x1="420" y1="90" x2="515" y2="80"/>
-            <line class="cm-link" x1="420" y1="310" x2="520" y2="320"/>
-            <line class="cm-link" x1="190" y1="90" x2="95" y2="80"/>
-            <line class="cm-link" x1="190" y1="310" x2="95" y2="320"/>
-            <line class="cm-link path" x1="190" y1="200" x2="305" y2="200"/>
-            <line class="cm-link path" x1="305" y1="200" x2="420" y2="90"/>
-            <line class="cm-link path" x1="305" y1="200" x2="420" y2="310"/>
-            <g class="cm-node soft" transform="translate(95 80)"><circle r="20"/><text>Rules</text></g>
-            <g class="cm-node" transform="translate(190 90)"><circle r="32"/><text>Linear</text></g>
-            <g class="cm-node next" transform="translate(190 200)"><circle r="38"/><text>Systems</text></g>
-            <g class="cm-node soft" transform="translate(95 320)"><circle r="20"/><text>Stats</text></g>
-            <g class="cm-node" transform="translate(190 310)"><circle r="31"/><text>Ratios</text></g>
-            <g class="cm-node focus" transform="translate(305 200)"><circle class="cm-pulse" r="26"/><circle r="54"/><text><tspan x="0" y="-7">Word</tspan><tspan x="0" y="10">Problems</tspan></text></g>
-            <g class="cm-node next" transform="translate(420 90)"><circle r="35"/><text>Percents</text></g>
-            <g class="cm-node next" transform="translate(420 310)"><circle r="35"/><text>Functions</text></g>
-            <g class="cm-node soft" transform="translate(515 80)"><circle r="20"/><text>ACT</text></g>
-            <g class="cm-node soft" transform="translate(525 200)"><circle r="25"/><text>SAT</text></g>
-            <g class="cm-node soft" transform="translate(520 320)"><circle r="20"/><text>Exam</text></g>
-            <circle class="cm-dot" cx="452" cy="68" r="4"/>
-            <circle class="cm-dot" cx="452" cy="286" r="4"/>
-            <circle class="cm-dot" cx="222" cy="176" r="4"/>
-          </svg>
-        </div>
-      </div>
-
+    <div class="ptp-media rv d1">
+      <video src="img/Video.mp4" autoplay muted loop playsinline></video>
     </div>
   </div>
+
+  <!-- Row 2: GPS visual left, text right -->
+  <div class="ptp-row ptp-flip">
+    <div class="ptp-gps rv">
+      <div class="concept-map" aria-label="Animated concept map">
+        <svg viewBox="0 0 620 400" role="img">
+          <defs>
+            <filter id="cmGlow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="8" result="blur"/>
+              <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.68 0 0 0 0 0.58 0 0 0 .5 0"/>
+              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path class="cm-grid" d="M80 40v320M180 40v320M280 40v320M380 40v320M480 40v320M40 100h540M40 200h540M40 300h540"/>
+          <line class="cm-link" x1="70" y1="200" x2="305" y2="200"/>
+          <line class="cm-link" x1="305" y1="200" x2="525" y2="200"/>
+          <line class="cm-link" x1="305" y1="200" x2="420" y2="90"/>
+          <line class="cm-link" x1="305" y1="200" x2="420" y2="310"/>
+          <line class="cm-link" x1="305" y1="200" x2="190" y2="90"/>
+          <line class="cm-link" x1="305" y1="200" x2="190" y2="310"/>
+          <line class="cm-link" x1="420" y1="90" x2="515" y2="80"/>
+          <line class="cm-link" x1="420" y1="310" x2="520" y2="320"/>
+          <line class="cm-link" x1="190" y1="90" x2="95" y2="80"/>
+          <line class="cm-link" x1="190" y1="310" x2="95" y2="320"/>
+          <line class="cm-link path" x1="190" y1="200" x2="305" y2="200"/>
+          <line class="cm-link path" x1="305" y1="200" x2="420" y2="90"/>
+          <line class="cm-link path" x1="305" y1="200" x2="420" y2="310"/>
+          <g class="cm-node soft" transform="translate(95 80)"><circle r="20"/><text>Rules</text></g>
+          <g class="cm-node" transform="translate(190 90)"><circle r="32"/><text>Linear</text></g>
+          <g class="cm-node next" transform="translate(190 200)"><circle r="38"/><text>Systems</text></g>
+          <g class="cm-node soft" transform="translate(95 320)"><circle r="20"/><text>Stats</text></g>
+          <g class="cm-node" transform="translate(190 310)"><circle r="31"/><text>Ratios</text></g>
+          <g class="cm-node focus" transform="translate(305 200)"><circle class="cm-pulse" r="26"/><circle r="54"/><text><tspan x="0" y="-7">Word</tspan><tspan x="0" y="10">Problems</tspan></text></g>
+          <g class="cm-node next" transform="translate(420 90)"><circle r="35"/><text>Percents</text></g>
+          <g class="cm-node next" transform="translate(420 310)"><circle r="35"/><text>Functions</text></g>
+          <g class="cm-node soft" transform="translate(515 80)"><circle r="20"/><text>ACT</text></g>
+          <g class="cm-node soft" transform="translate(525 200)"><circle r="25"/><text>SAT</text></g>
+          <g class="cm-node soft" transform="translate(520 320)"><circle r="20"/><text>Exam</text></g>
+          <circle class="cm-dot" cx="452" cy="68" r="4"/>
+          <circle class="cm-dot" cx="452" cy="286" r="4"/>
+          <circle class="cm-dot" cx="222" cy="176" r="4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ptp-text rv d1">
+      <h2>No more random practice.<br>We have a GPS.</h2>
+      <p>MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
+    </div>
+  </div>
+
 </section>
 
 <!-- ── SUBJECTS PANEL (4th — inserted after #steps below) ── -->
@@ -1080,29 +1071,27 @@ camera.lookAt(0, 10, 0);
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.85));
 
-var keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
-keyLight.position.set(2, 4, 5);
+var keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+keyLight.position.set(3, 5, 6);
 scene.add(keyLight);
 
-var greenRim = new THREE.DirectionalLight(0x58CC02, 1.4);
-greenRim.position.set(-3, 0, -2);
-scene.add(greenRim);
-
-var fill = new THREE.DirectionalLight(0xffffff, 0.35);
-fill.position.set(3, -2, 3);
+var fill = new THREE.DirectionalLight(0xffffff, 0.6);
+fill.position.set(-4, 2, 3);
 scene.add(fill);
+
+var rimLight = new THREE.DirectionalLight(0x58CC02, 0.5);
+rimLight.position.set(0, -3, -4);
+scene.add(rimLight);
 
 var raf = null;
 var obj = null;
 
 new ThreeMFLoader().load('img/Cool_Racoon.3mf', function(loaded){
+  // Preserve model's own colors — just boost shininess
   loaded.traverse(function(child){
-    if(child.isMesh){
-      child.material = new THREE.MeshPhongMaterial({
-        color: 0x1a1a1a,
-        specular: new THREE.Color(0x58CC02),
-        shininess: 55,
-      });
+    if(child.isMesh && child.material){
+      var mats = Array.isArray(child.material) ? child.material : [child.material];
+      mats.forEach(function(m){ if(m.shininess !== undefined) m.shininess = 60; });
     }
   });
 
@@ -1118,12 +1107,13 @@ new ThreeMFLoader().load('img/Cool_Racoon.3mf', function(loaded){
 
   (function animate(){
     raf = requestAnimationFrame(animate);
-    obj.rotation.y += 0.009;
+    obj.rotation.y += 0.008;
     renderer.render(scene, camera);
   })();
 }, undefined, function(){
-  // Fallback: show reading.png if 3MF fails
-  wrap.innerHTML = '<img src="img/reading.png" alt="MindCraft" style="width:100%;height:100%;object-fit:contain">';
+  wrap.style.background = 'transparent';
+  wrap.style.border = 'none';
+  wrap.style.boxShadow = 'none';
 });
 
 // Pause when off-screen
