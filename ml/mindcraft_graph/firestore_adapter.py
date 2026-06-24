@@ -13,6 +13,13 @@ from mindcraft_graph.models.ingredient import (
 from mindcraft_graph.models.student_state import StudentState, ConceptMastery
 from mindcraft_graph.engine.student_graph import PersonalGraph
 from mindcraft_graph.engine.edge_weights import EdgeState
+from mindcraft_graph.models.learning_world import (
+    AgentSkill,
+    ExecutionTrace,
+    LearningEvent,
+    MemoryRecord,
+    ReflexionRecord,
+)
 
 # The student data lives in the Firebase project mindcraft-93858 (the frontend +
 # webhook write there). On Cloud Run, a bare firestore.Client() would resolve to
@@ -249,4 +256,122 @@ def save_ingredient_recommendation_result(student_id: str, result: dict):
         "studentId": student_id,
         "updatedAt": datetime.now(),
         **result,
+    })
+
+
+def save_learning_event(event: LearningEvent):
+    """Persist a cross-subject learning-world event."""
+    db.collection("learning_events").add({
+        "studentId": event.student_id,
+        "subjectId": event.subject_id,
+        "conceptId": event.concept_id,
+        "ingredientId": event.ingredient_id,
+        "eventType": event.event_type,
+        "outcome": event.outcome,
+        "durationMs": event.duration_ms,
+        "clueUsed": event.clue_used,
+        "hintLevel": event.hint_level,
+        "source": event.source,
+        "metadata": event.metadata,
+        "timestamp": datetime.now(),
+    })
+
+
+def load_learning_events(student_id: str, subject_id: str, limit: int = 500) -> list[dict]:
+    """Read cross-subject learning events for a student and subject."""
+    try:
+        docs = (
+            db.collection("learning_events")
+            .where("studentId", "==", student_id)
+            .where("subjectId", "==", subject_id)
+            .order_by("timestamp", direction=firestore.Query.DESCENDING)
+            .limit(limit)
+            .stream()
+        )
+        return [doc.to_dict() for doc in docs]
+    except Exception:
+        return []
+
+
+def save_agent_skill(skill: AgentSkill):
+    """Persist a reusable code-as-policy teaching skill."""
+    db.collection("agent_skills").document(skill.id).set({
+        **skill.model_dump(),
+        "updatedAt": datetime.now(),
+    })
+
+
+def load_agent_skills(subject_id: str, concept_id: str | None = None, limit: int = 50) -> list[dict]:
+    """Load reusable teaching skills for a subject, optionally narrowed to a concept."""
+    try:
+        query = (
+            db.collection("agent_skills")
+            .where("subject_id", "==", subject_id)
+            .limit(limit)
+        )
+        docs = query.stream()
+        skills = [doc.to_dict() for doc in docs]
+        if concept_id:
+            skills = [
+                skill for skill in skills
+                if skill.get("concept_id") in {concept_id, None, ""}
+            ]
+        return skills
+    except Exception:
+        return []
+
+
+def save_memory_record(memory: MemoryRecord):
+    """Append a memory-stream record for a student or subject graph."""
+    db.collection("agent_memory").add({
+        **memory.model_dump(),
+        "timestamp": datetime.now(),
+    })
+
+
+def load_memory_records(
+    subject_id: str,
+    student_id: str | None = None,
+    concept_id: str | None = None,
+    limit: int = 100,
+) -> list[dict]:
+    """Read recent memory-stream records relevant to a planning context."""
+    try:
+        query = (
+            db.collection("agent_memory")
+            .where("subject_id", "==", subject_id)
+            .order_by("timestamp", direction=firestore.Query.DESCENDING)
+            .limit(limit)
+        )
+        records = [doc.to_dict() for doc in query.stream()]
+        if student_id:
+            records = [
+                record for record in records
+                if record.get("student_id") in {student_id, None, ""}
+            ]
+        if concept_id:
+            records = [
+                record for record in records
+                if record.get("concept_id") in {concept_id, None, ""}
+            ]
+        return records
+    except Exception:
+        return []
+
+
+def save_execution_trace(trace: ExecutionTrace) -> str:
+    """Persist one agent harness execution result."""
+    doc_ref = db.collection("agent_execution_traces").document()
+    doc_ref.set({
+        **trace.model_dump(),
+        "timestamp": datetime.now(),
+    })
+    return doc_ref.id
+
+
+def save_reflexion_record(reflexion: ReflexionRecord):
+    """Persist a verbal reinforcement constraint after a failure."""
+    db.collection("agent_reflexions").add({
+        **reflexion.model_dump(),
+        "timestamp": datetime.now(),
     })

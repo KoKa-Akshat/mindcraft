@@ -1,0 +1,403 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{verbatim}
+\usepackage{makecell}
+
+\title{Bayesian Hierarchical Nowcasting of Monthly U.S.\ GDP using a Gaussian Markov Random Field Latent Factor Model}
+\author{Akshat Koirala and Roger Carranza Aronne}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+U.S.\ GDP is released only at a quarterly frequency, creating a persistent gap between the timing of macroeconomic decisions and the availability of the headline measure of economic activity. This project develops a Bayesian hierarchical dynamic factor model that estimates an unobserved monthly GDP series from a set of higher-frequency macroeconomic indicators drawn from the Federal Reserve Bank of St.\ Louis (FRED). Following the framework of \citet{aruoba2009real}, we model observed monthly indicators (industrial production, unemployment, and additional labor, demand, and sentiment series) as noisy realizations of a common latent factor representing the state of the economy. The latent factor is modeled as an autoregressive Gaussian process, which admits a Gaussian Markov Random Field (GMRF) representation with a sparse tridiagonal precision matrix \citep{rue2005gaussian}. Indicator loadings are partially pooled by economic category, producing a three-level hierarchy that shares information across related series while respecting their group structure. We implement the model in Stan, conduct a prior sensitivity analysis across weakly and moderately informative specifications, and evaluate convergence and fit through $\hat{R}$, bulk and tail effective sample sizes, autocorrelation diagnostics, traceplots, and posterior predictive checks. Monthly posterior estimates are aggregated to the quarterly frequency and compared against realized GDP releases as an out-of-sample validation.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+\subsection{Motivation}
+
+Gross Domestic Product is the primary aggregate measure of economic activity in the United States, but it is released only quarterly and with a substantial publication lag. Monetary policy, fiscal planning, and private-sector decision making nonetheless operate on monthly or higher-frequency horizons. This mismatch between the frequency at which decisions are made and the frequency at which GDP is observed motivates a large literature on nowcasting, which seeks to construct timely estimates of current economic conditions from indicators that are released at higher frequency.
+
+\subsection{Research Question}
+
+This project addresses the following research question: \textbf{How accurately can monthly U.S.\ GDP be estimated as an unobserved latent factor using a Bayesian hierarchical dynamic factor model built from higher-frequency macroeconomic indicators?} A secondary question concerns the structure of the hierarchy: \textbf{does partial pooling of indicator loadings by economic category (labor, production, demand, sentiment) improve estimation and uncertainty quantification relative to complete pooling or no pooling?}
+
+\subsection{Why Bayesian and Why Hierarchical}
+
+A Bayesian approach is appropriate for three reasons. First, the object of inference is an unobserved latent series, and Bayesian methods provide a principled framework for quantifying uncertainty about latent quantities through the posterior distribution. Second, prior information from the macroeconomic literature (plausible persistence parameters, expected signs and magnitudes of indicator loadings, reasonable noise levels) can be incorporated in a coherent way. Third, aggregation of monthly posterior draws to the quarterly frequency and comparison to observed GDP provides a natural posterior predictive check.
+
+The hierarchy is motivated by the structure of the indicators themselves. Indicators within the same economic category share common drivers and should load on the latent factor in similar ways, but they are not identical. A complete pooling model that forces all loadings to be equal is too restrictive, while a no pooling model that estimates each loading independently ignores the group structure. Partial pooling draws loadings from category-specific distributions, which are themselves drawn from a global distribution, producing a three-level hierarchy.
+
+\section{Data}
+
+\subsection{Source}
+
+All data are obtained from the Federal Reserve Economic Data (FRED) system maintained by the Federal Reserve Bank of St.\ Louis. Quarterly real GDP is retrieved as \texttt{GDPC1}. Monthly indicators are grouped into four economic categories.
+
+\subsection{Variables}
+
+\begin{itemize}[nosep]
+  \item \textbf{Production}: Industrial Production Index (\texttt{INDPRO}), Capacity Utilization (\texttt{TCU}).
+  \item \textbf{Labor}: Unemployment Rate (\texttt{UNRATE}), Nonfarm Payrolls (\texttt{PAYEMS}).
+  \item \textbf{Demand}: Real Personal Consumption Expenditures (\texttt{PCEC96}), Real Retail Sales (\texttt{RRSFS}).
+  \item \textbf{Sentiment}: University of Michigan Consumer Sentiment (\texttt{UMCSENT}), Purchasing Managers' Index or equivalent.
+\end{itemize}
+
+The exact set of indicators may be refined during the analysis. What matters methodologically is that indicators fall into a small number of economic categories, permitting a meaningful partial pooling structure.
+
+\subsection{Preprocessing}
+
+Each indicator is transformed to stationarity (typically log-differencing or first differencing), standardized to unit variance, and aligned to a common monthly calendar. Missing values at the beginning or end of a series are handled through the model's state-space structure, which naturally accommodates ragged edges. The sample period begins at the earliest date for which all selected indicators are available and ends at the most recent observation.
+
+\section{Model}
+
+\subsection{Overview}
+
+We model observed monthly indicators as noisy, scaled realizations of a single latent factor $f_t$, interpreted as the unobserved monthly state of the economy. The latent factor follows a first-order autoregressive process, equivalent to a stationary Gaussian Markov Random Field on the temporal graph. Indicator loadings are partially pooled within economic category.
+
+\subsection{Notation}
+
+\begin{itemize}[nosep]
+  \item $t = 1, \dots, T$: month index.
+  \item $g = 1, \dots, G$: economic category (labor, production, demand, sentiment).
+  \item $j = 1, \dots, J_g$: indicator within category $g$.
+  \item $y_{gjt}$: observed value of indicator $j$ in category $g$ at month $t$, after preprocessing.
+  \item $f_t$: latent monthly factor at time $t$ (our nowcast of monthly GDP in standardized units).
+  \item $\lambda_{gj}$: loading of indicator $j$ in category $g$ on the latent factor.
+\end{itemize}
+
+\subsection{Likelihood: Measurement Equation}
+
+Each indicator is modeled as a scaled version of the latent factor plus Gaussian noise:
+\begin{equation}
+y_{gjt} = \lambda_{gj} \cdot f_t + \varepsilon_{gjt}, \qquad \varepsilon_{gjt} \sim \mathcal{N}(0, \sigma_{gj}^2).
+\end{equation}
+
+\subsection{State Equation: Latent Factor Dynamics}
+
+The latent factor follows a first-order autoregressive process:
+\begin{equation}
+f_t \mid f_{t-1}, \phi, \tau^2 \sim \mathcal{N}(\phi \cdot f_{t-1}, \tau^2), \qquad f_1 \sim \mathcal{N}\left(0, \frac{\tau^2}{1 - \phi^2}\right),
+\end{equation}
+with $|\phi| < 1$ for stationarity.
+
+\subsection{GMRF Representation of the Latent Factor}
+
+The AR(1) specification implies that the joint density of the latent factor vector $\mathbf{f} = (f_1, \dots, f_T)^\top$ is multivariate normal with precision matrix
+\begin{equation}
+\mathbf{Q}_\phi = \frac{1}{\tau^2}\begin{pmatrix}
+1 & -\phi & & & \\
+-\phi & 1+\phi^2 & -\phi & & \\
+& -\phi & 1+\phi^2 & \ddots & \\
+& & \ddots & \ddots & -\phi \\
+& & & -\phi & 1
+\end{pmatrix}.
+\end{equation}
+This is a tridiagonal precision matrix with at most $3T - 2$ nonzero entries, and it is the canonical example of a Gaussian Markov Random Field \citep{rue2005gaussian}. The sparsity of $\mathbf{Q}_\phi$ is what makes computation tractable even for large $T$. The derivation of the recursive AR(1) formulation, its joint density, and the corresponding tridiagonal precision matrix will be included in the methods section of the final report.
+
+\subsection{Hierarchical Prior on Loadings}
+
+Indicator loadings are partially pooled within category:
+\begin{align}
+\lambda_{gj} \mid \mu_g, \eta_g^2 &\sim \mathcal{N}(\mu_g, \eta_g^2), \\
+\mu_g \mid \mu_0, \omega_0^2 &\sim \mathcal{N}(\mu_0, \omega_0^2), \\
+\eta_g &\sim \text{Half-Normal}(0, s_\eta), \\
+\mu_0 &\sim \mathcal{N}(0, 1), \\
+\omega_0 &\sim \text{Half-Normal}(0, 1).
+\end{align}
+This three-level hierarchy allows loadings within a category to borrow strength from each other while allowing categories to differ.
+
+\subsection{Remaining Priors}
+
+\begin{align}
+\phi &\sim \text{Uniform}(-1, 1), \\
+\tau &\sim \text{Half-Normal}(0, 1), \\
+\sigma_{gj} &\sim \text{Half-Normal}(0, 1).
+\end{align}
+
+\subsection{Identification}
+
+Dynamic factor models are invariant under joint sign flips and scale changes of the factor and loadings. We fix the sign by constraining one specific loading to be positive (typically the loading on \texttt{INDPRO}), and we fix the scale by setting $\tau = 1$ during estimation of the measurement equation, letting the $\sigma_{gj}$ absorb noise variance.
+
+\section{Why a Standard Bayesian Regression Would Not Suffice}
+
+A defining feature of this project is that the outcome variable (monthly GDP) is \emph{not observed}. A standard Bayesian regression requires an observed response variable, and is therefore inapplicable here. The hierarchical dynamic factor formulation is necessary because (a) the quantity of interest is latent, (b) the latent quantity evolves over time with autoregressive structure, and (c) multiple noisy indicators load on this latent quantity with loadings that are themselves grouped. The Bayesian element is substantive: the posterior over the latent factor path is the object of inference, and it is only well defined through the full joint posterior. The GMRF structure of the AR(1) latent factor is what makes computation feasible at scale.
+
+\section{Prior Sensitivity Analysis}
+
+Following the project guidelines, we conduct a systematic prior sensitivity analysis. We consider three specifications:
+\begin{itemize}[nosep]
+  \item \textbf{Baseline (weakly informative)}: as specified above.
+  \item \textbf{Tighter}: halve the scale of all priors on loadings and hyperparameters.
+  \item \textbf{Looser}: double the scale of all priors on loadings and hyperparameters.
+\end{itemize}
+
+For each specification we refit the model and compare posterior means, credible intervals, and posterior predictive quarterly GDP estimates. If the primary posterior quantities are stable across specifications, we interpret this as evidence that the priors are genuinely weakly informative and the data are driving inference. If results change substantively, we document which parameters are most sensitive and discuss the implications for interpretation.
+
+\section{Computation}
+
+The model is implemented in Stan via \texttt{rstan}. We run four parallel chains with 2000 warmup iterations and 8000 total iterations per chain. We use non-centered parameterizations for the hierarchical loadings to improve geometry. We set \texttt{adapt\_delta = 0.99} and \texttt{max\_treedepth = 12} to reduce divergent transitions and treedepth warnings. We exploit the tridiagonal structure of the AR(1) prior by writing the latent factor prior directly in terms of the conditional form $f_t \mid f_{t-1}$, which Stan handles efficiently without forming the full precision matrix.
+
+\section{Convergence Diagnostics}
+
+For every reported parameter we report:
+\begin{itemize}[nosep]
+  \item \textbf{$\hat{R}$}: we require $\hat{R} < 1.01$ for all parameters.
+  \item \textbf{Bulk-ESS and Tail-ESS}: we require bulk and tail ESS above 400 for all parameters.
+  \item \textbf{Autocorrelation}: we examine autocorrelation plots for the latent factor at selected time points and for all hyperparameters.
+  \item \textbf{Traceplots}: visual inspection of all four chains for every top-level parameter.
+  \item \textbf{Divergent transitions and treedepth warnings}: flagged and addressed by reparameterization or tighter sampler controls.
+\end{itemize}
+
+If convergence problems arise, we will proceed through the hierarchy of fixes discussed in class: longer chains, more warmup, rescaling of inputs, non-centered parameterization, and simplification of the model (for example fewer indicators or collapsing the category level).
+
+\section{Model Evaluation}
+
+\subsection{Posterior Predictive Checks}
+
+We simulate predicted indicator values from the posterior and compare their empirical distributions to the observed indicators. Discrepancies at specific points in time (e.g., recessions) will be investigated.
+
+\subsection{Quarterly Aggregation and External Validation}
+
+Because GDP is observed quarterly, we aggregate posterior monthly factor draws to the quarterly frequency (taking within-quarter averages or appropriate transformations) and compare to realized quarterly GDP growth. This provides a direct, out-of-model validation that the latent factor is tracking the economy in a meaningful way. We report root mean squared error, directional accuracy (sign agreement with realized GDP), and calibration of credible intervals over held-out quarters.
+
+\subsection{Comparison Models}
+
+To contextualize the hierarchical model we fit two comparison specifications:
+\begin{itemize}[nosep]
+  \item \textbf{Complete pooling}: a single global loading distribution with no category level.
+  \item \textbf{No pooling}: category-specific loading distributions without a shared global prior.
+\end{itemize}
+We compare these using posterior predictive performance on held-out quarters.
+
+\section{Results}
+[To be completed after model fitting.]
+
+\subsection{Convergence and Diagnostics}
+
+\subsection{Posterior Estimates of the Latent Factor}
+
+\subsection{Posterior Estimates of Loadings and Hyperparameters}
+
+\subsection{Prior Sensitivity Analysis Results}
+
+\subsection{Quarterly Aggregation and Validation}
+
+\section{Discussion}
+[To be completed after results.]
+
+\subsection{Interpretation of the Latent Factor}
+
+\subsection{Role of the Hierarchy}
+
+\subsection{Limitations}
+
+\subsection{Directions for Extension}
+
+\section{Conclusion}
+[To be completed.]
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{9}
+
+\bibitem[Aruoba et al.(2009)]{aruoba2009real}
+Aruoba, S.~B., Diebold, F.~X., and Scotti, C. (2009).
+\newblock Real-time measurement of business conditions.
+\newblock \emph{Journal of Business \& Economic Statistics}, 27(4):417--427.
+
+\bibitem[Rue and Held(2005)]{rue2005gaussian}
+Rue, H.\ and Held, L. (2005).
+\newblock \emph{Gaussian Markov Random Fields: Theory and Applications}.
+\newblock Chapman \& Hall/CRC.
+
+\end{thebibliography}
+
+\appendix
+
+\section{Derivation of the AR(1) Precision Matrix}
+[To be filled in with the full derivation from the recursive AR(1) specification to the tridiagonal precision matrix form.]
+
+\section{Stan Code}
+[To be filled in once the model code is finalized.]
+
+\section{R Code for Data Preparation and Post-Processing}
+The data were pulled from FRED, harmonized to a monthly frequency, transformed into modeling-friendly forms, and then reduced into bucket-level principal components before being aligned with quarterly GDP observations.
+
+\begin{verbatim}
+library(fredr)
+library(dplyr)
+library(purrr)
+library(lubridate)
+
+fredr_set_key("YOUR_FRED_KEY")
+
+# Download the data
+pull_series <- function(id, name, start_date = as.Date("1992-01-01")) {
+  
+  if (id == "ICSA") {
+    fredr(
+      series_id = id,
+      observation_start = start_date,
+      frequency = "m",
+      aggregation_method = "avg"
+    ) %>%
+      select(date, value) %>%
+      rename(!!name := value)
+    
+  } else if (id == "NFCI") {
+    fredr(
+      series_id = id,
+      observation_start = start_date,
+      frequency = "m",
+      aggregation_method = "avg"
+    ) %>%
+      select(date, value) %>%
+      rename(!!name := value)
+    
+  } else {
+    fredr(
+      series_id = id,
+      observation_start = start_date
+    ) %>%
+      select(date, value) %>%
+      rename(!!name := value)
+  }
+}
+
+monthly_data <- list(
+  pull_series("PAYEMS", "payrolls"),
+  pull_series("UNRATE", "unemp"),
+  pull_series("ICSA", "claims"),
+  
+  pull_series("INDPRO", "indpro"),
+  pull_series("CMRMTSPL", "sales"),
+  pull_series("TCU", "cap_util"),
+  
+  pull_series("W875RX1", "income_ex_transfers"),
+  pull_series("DSPIC96", "disp_income"),
+  pull_series("RRSFS", "retail_sales"),
+  
+  pull_series("PERMIT", "permits"),
+  pull_series("UMCSENT", "sentiment"),
+  pull_series("NFCI", "nfci")
+) %>%
+  reduce(full_join, by = "date") %>%
+  arrange(date)
+
+gdp_data <- fredr(
+  series_id = "GDP",
+  observation_start = as.Date("1992-01-01")
+) %>%
+  select(date, value) %>%
+  rename(gdp = value)
+
+macro_data <- monthly_data %>%
+  left_join(gdp_data, by = "date") %>%
+  arrange(date)
+
+# Transform the macro-indicators into sensible observations to base our analysis on
+monthly_clean <- macro_data %>%
+  transmute(
+    date,
+    gdp,
+    
+    log_payrolls = log(payrolls),
+    unemp = unemp,
+    log_claims = log(claims),
+    
+    log_indpro = log(indpro),
+    log_sales = log(sales),
+    cap_util = cap_util,
+    
+    log_income_ex_transfers = log(income_ex_transfers),
+    log_disp_income = log(disp_income),
+    log_retail_sales = log(retail_sales),
+    
+    log_permits = log(permits),
+    sentiment = sentiment,
+    nfci = nfci
+  )
+
+# Clean the data for principal components
+pca_data <- monthly_clean %>%
+  select(
+    date,
+    log_payrolls, unemp, log_claims,
+    log_indpro, log_sales, cap_util,
+    log_income_ex_transfers, log_disp_income, log_retail_sales,
+    log_permits, sentiment, nfci
+  ) %>%
+  na.omit()
+
+labor <- pca_data %>%
+  select(log_payrolls, unemp, log_claims)
+
+production <- pca_data %>%
+  select(log_indpro, log_sales, cap_util)
+
+income_spending <- pca_data %>%
+  select(log_income_ex_transfers, log_disp_income, log_retail_sales)
+
+leading <- pca_data %>%
+  select(log_permits, sentiment, nfci)
+
+labor_pca <- prcomp(labor, center = TRUE, scale. = TRUE)
+production_pca <- prcomp(production, center = TRUE, scale. = TRUE)
+income_spending_pca <- prcomp(income_spending, center = TRUE, scale. = TRUE)
+leading_pca <- prcomp(leading, center = TRUE, scale. = TRUE)
+
+# Add PCs to the dataset
+pc_data <- pca_data %>%
+  mutate(
+    labor_pc1 = labor_pca$x[, 1],
+    production_pc1 = production_pca$x[, 1],
+    income_spending_pc1 = income_spending_pca$x[, 1],
+    leading_pc1 = leading_pca$x[, 1]
+  )
+
+pc_only <- pc_data %>%
+  select(date, labor_pc1, production_pc1, income_spending_pc1, leading_pc1)
+
+model_data <- pc_only %>%
+  left_join(
+    monthly_clean %>% select(date, gdp),
+    by = "date"
+  ) %>%
+  mutate(
+    gdp_obs = ifelse(is.na(gdp), 0, 1),
+    quarter_id = paste0(year(date), "_Q", quarter(date))
+  )
+
+final_data <- model_data %>%
+  mutate(
+    log_gdp = ifelse(is.na(gdp), NA, log(gdp))
+  ) %>%
+  select(
+    date,
+    quarter_id,
+    gdp,
+    log_gdp,
+    gdp_obs,
+    labor_pc1,
+    production_pc1,
+    income_spending_pc1,
+    leading_pc1
+  )
+
+write.csv(final_data, "final_data.csv", row.names = FALSE)
+\end{verbatim}
+
+\end{document}

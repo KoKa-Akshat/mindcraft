@@ -90,8 +90,13 @@ type GeneratedQuestion = {
   choices: string[]
   correctIndex: number
   explanation: string
-  hints: string[]
+  hints: [string, string]      // exactly 2: approach nudge, then key step
+  microLesson: string          // 2-sentence Socratic note shown only on wrong answer
+  trapChoiceIndex?: number     // index of the most deceptive distractor (0–3), or absent for grid-in
+  trapReasoning?: string       // 1 sentence: why this trap catches students
   examTag?: 'ACT' | 'SAT' | 'IB' | 'AP' | null
+  questionFormat?: 'multiple_choice' | 'grid_in'
+  methodMarks?: string         // IB mark scheme method notes
   visual_type?: 'svg' | 'none'
   visual_data?: string
 }
@@ -128,6 +133,9 @@ function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examT
       && item.visual_data.includes('<svg')
       && item.visual_data.length <= 4500)
 
+  const trapValid = item.trapChoiceIndex === undefined
+    || (Number.isInteger(item.trapChoiceIndex) && item.trapChoiceIndex! >= 0 && item.trapChoiceIndex! < 4)
+
   return typeof item.id === 'string'
     && questionTextClean
     && Array.isArray(item.choices)
@@ -138,8 +146,11 @@ function isGeneratedQuestion(q: unknown, conceptId: string, level: number, examT
     && item.correctIndex! < 4
     && typeof item.explanation === 'string'
     && Array.isArray(item.hints)
-    && item.hints.length === 3
+    && item.hints.length === 2
     && item.hints.every(hint => typeof hint === 'string' && hint.trim().length > 0)
+    && typeof item.microLesson === 'string'
+    && item.microLesson.trim().length > 0
+    && trapValid
     && item.conceptId === conceptId
     && item.level === level
     && examTagValid
@@ -228,16 +239,21 @@ EXAM CURRICULUM MAP: {exam_curriculum_notes}
 BRIDGE CONTEXT: {bridge_context}
 PAST-PAPER PATTERN CONTEXT: {paper_pattern_context}
 
-Generate exactly {count} UNIQUE multiple-choice questions. Each question must:
+Generate exactly {count} UNIQUE questions. Each question must:
 • Be GENUINELY DIAGNOSTIC — reveal whether the student understands or is guessing
 • Have EXACTLY 4 answer choices labelled as plain text (no A/B/C/D prefix)
 • Have ONE correct answer and THREE distractors that each represent a different realistic student mistake
 • Include a FULL worked solution in "explanation" (show every step)
-• Include EXACTLY 3 progressive hints: hint 1 = nudge toward the right approach, hint 2 = key algebraic/procedural step shown, hint 3 = one step away from the answer
+• Include EXACTLY 2 progressive hints: hint[0] = nudge toward the right approach (no steps shown), hint[1] = the key algebraic or procedural step shown
+• Include a "microLesson" field: EXACTLY 2 sentences. Shown ONLY when the student answers wrong. Must be Socratic — it leads them toward the answer without giving it. Start with "Good. We found the real gap." or similar recovery framing. Never say "wrong", "failed", "incorrect".
+• Include "trapChoiceIndex": the index (0–3) of the single most deceptive distractor — the one a student who almost-understands the concept would most likely pick. Set to null for grid-in questions.
+• Include "trapReasoning": ONE sentence explaining exactly why this choice traps students (what mistake it exploits). E.g. "This is the answer if you forget to distribute the negative sign before subtracting."
+• SAT questions: ~75% multiple choice (4 options), ~25% grid-in (no choices — set choices to [] and correctIndex to -1 for grid-in, and add "questionFormat": "grid_in")
+• IB questions: add a "methodMarks" field with 1–2 sentences describing what a mark scheme would credit (e.g. "M1 for setting up the equation, A1 for correct answer")
 • Vary question structure — do NOT repeat the same template twice
 • Numbers and contexts must be different across all {count} questions
-• Include a compact visual for EVERY question when a diagram, graph, number line, table sketch, function shape, or geometry view helps. Use visual_type "svg" and visual_data as a self-contained inline SVG. Otherwise use visual_type "none" and visual_data "".
-• SVGs must be under 4500 characters, viewBox="0 0 320 180", transparent background, no scripts, no foreignObject, no external refs, no images. Use clean labels, axes/number lines/curves/points, stroke="#C4F547", secondary stroke="#4ECDC4", text fill="#0F343A".
+• Include a compact visual when a diagram, graph, number line, table sketch, function shape, or geometry view helps. Use visual_type "svg" and visual_data as a self-contained inline SVG. Otherwise use visual_type "none" and visual_data "".
+• SVGs must be under 4500 characters, viewBox="0 0 320 180", transparent background, no scripts, no foreignObject, no external refs. Use stroke="#C4F547", secondary stroke="#4ECDC4", text fill="#0F343A".
 
 Return ONLY a JSON array — no markdown fences, no preamble, no commentary:
 [
@@ -248,13 +264,17 @@ Return ONLY a JSON array — no markdown fences, no preamble, no commentary:
     "question": "Full question text here",
     "choices": ["correct or wrong option", "wrong option", "wrong option", "wrong option"],
     "correctIndex": 0,
-	    "explanation": "Step-by-step solution shown clearly",
-	    "hints": ["Hint 1 text", "Hint 2 text", "Hint 3 text"],
-	    "examTag": "ACT",
-	    "visual_type": "svg",
-	    "visual_data": "<svg viewBox=\"0 0 320 180\" xmlns=\"http://www.w3.org/2000/svg\">...</svg>"
-	  }}
-	]
+    "explanation": "Step-by-step solution shown clearly",
+    "hints": ["Hint 1 — approach nudge only", "Hint 2 — key step shown"],
+    "microLesson": "Good. We found the real gap. [One Socratic sentence pointing toward what broke.]",
+    "trapChoiceIndex": 2,
+    "trapReasoning": "This traps students who forget to flip the inequality sign when dividing by a negative.",
+    "examTag": "ACT",
+    "questionFormat": "multiple_choice",
+    "visual_type": "svg",
+    "visual_data": "<svg viewBox=\"0 0 320 180\" xmlns=\"http://www.w3.org/2000/svg\">...</svg>"
+  }}
+]
 
 Shuffle the correct answer position across questions (correctIndex should not always be 0).
 examTag must be {exam_tag_instruction}.`

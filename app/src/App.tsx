@@ -31,6 +31,7 @@ import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
 import LearningGPS     from './components/LearningGPS'
 import ConstellationCard from './components/ConstellationCard'
+import Prep            from './pages/Prep'
 
 
 export const UserContext = createContext<User | null>(null)
@@ -101,6 +102,7 @@ export default function App() {
         <Route path="/constellation"       element={<AuthGuard><ConstellationPage /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
+        <Route path="/prep"                    element={<Prep />} />
 
         {/* Root: public website. App entry stays on /dashboard, /tutor, etc. */}
         <Route path="/" element={<Navigate to="/landing.html" replace />} />

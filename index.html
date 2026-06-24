@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft: Maths exam? We got you.</title>
+<title>MindCraft: Maths exams can be stressful. We're here for you.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{--g:#58CC02;--gd:#4CAD00;--gdd:#3A8500;--forest:#1A3C2A;--tx:#3C3C3C;--mu:#777;--w:#FFF;--bd:#E5E5E5;--f:'Nunito',sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--f);color:var(--tx);background:var(--w);overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -22,7 +22,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .bl{padding:14px 32px;font-size:15px}
 
 /* ABOVE-FOLD: hero fills one full viewport */
-.above-fold{height:100vh;margin-top:56px;display:flex;flex-direction:column}
+.above-fold{height:100vh;margin-top:0;display:flex;flex-direction:column}
 
 /* HERO */
 .hero{flex:1;display:flex;justify-content:center;align-items:center;padding:0 24px;background:var(--w);overflow:hidden}
@@ -205,6 +205,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .blog-see-all:hover{color:#fff;border-color:rgba(255,255,255,.35)}
 .blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:4px clamp(24px,5vw,64px) 16px;scrollbar-width:none;-ms-overflow-style:none}
 .blog-scroll::-webkit-scrollbar{display:none}
+.blog-duo{display:grid;grid-template-columns:1fr 1fr;align-items:start}
+.blog-duo-col{overflow:hidden;display:flex;flex-direction:column}
+.blog-duo-col+.blog-duo-col{border-left:1px solid rgba(255,255,255,.08)}
+.blog-duo-col .blog-panel-head{max-width:none;margin-left:0;margin-right:0}
+@media(max-width:700px){.blog-duo{grid-template-columns:1fr}.blog-duo-col+.blog-duo-col{border-left:none;border-top:1px solid rgba(255,255,255,.08);margin-top:48px}}
 .blog-card{flex-shrink:0;width:300px;background:#181B25;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.07);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;text-decoration:none}
 .blog-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.16)}
 .blog-card-img{height:170px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -291,7 +296,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
 
 /* ── SUBJECT SHOWCASE SLIDESHOW ── */
 .subj-showcase{position:relative;border-radius:20px;overflow:hidden;height:210px;margin:0 auto 30px;cursor:default;width:100%;max-width:820px;border:1px solid rgba(25,45,64,.08);box-shadow:0 10px 26px rgba(20,35,55,.07);background:#F7F8FA}
-.ss-slide{position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(22px,3.5vw,42px);gap:clamp(18px,2.5vw,36px);opacity:0;transition:opacity .8s cubic-bezier(.22,1,.36,1),filter .8s cubic-bezier(.22,1,.36,1);filter:saturate(.92);transform:none;pointer-events:none}
+.ss-slide{position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(22px,3.5vw,42px);gap:clamp(18px,2.5vw,36px);opacity:0;transition:opacity 1.5s cubic-bezier(.22,1,.36,1),filter 1.5s cubic-bezier(.22,1,.36,1);filter:saturate(.92);transform:none;pointer-events:none}
 .ss-slide.ss-active{opacity:1;filter:saturate(1);transform:none;pointer-events:auto}
 .ss-card{background:rgba(255,255,255,.88);border:1px solid rgba(25,45,64,.08);border-radius:16px;width:clamp(96px,10vw,126px);height:clamp(112px,13vw,142px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;flex-shrink:0;box-shadow:0 9px 20px rgba(20,35,55,.10)}
 .ss-icon{width:clamp(44px,5.5vw,58px);height:clamp(44px,5.5vw,58px);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:clamp(12px,1.5vw,15px);font-weight:900;letter-spacing:-.1px}
@@ -344,7 +349,48 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 .auto-stagger.show>*:nth-child(4){transition-delay:.31s}
 .auto-stagger.show>*:nth-child(5){transition-delay:.40s}
 .auto-stagger.show>*:nth-child(6){transition-delay:.49s}
+
+/* ── INTRO DECK — PPTX-faithful presentation ── */
+.mc-intro{position:fixed;inset:0;z-index:9000;background:#F5F1ED;overflow:hidden;transition:opacity .6s ease,visibility .6s}
+.mc-intro.mc-exit{opacity:0;visibility:hidden;pointer-events:none}
+.mc-intro.mc-gone{display:none!important}
+.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;transition:opacity .5s ease;pointer-events:none;background:#F5F1ED}
+.mc-slide.mc-active{opacity:1;pointer-events:auto}
+/* Large headline */
+.mc-big{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
+.mc-big .mc-invis{color:#F5F1ED}
+.mc-big .mc-gray{color:#58CC02}
+/* Quote text */
+.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#1A1A1A;margin:0;max-width:82vw}
+/* MINDCRAFT brand */
+.mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
+/* Caption */
+.mc-caption{position:absolute;bottom:clamp(20px,3vh,48px);right:clamp(32px,5vw,80px);font-family:'Radley',Georgia,serif;font-size:clamp(11px,1vw,16px);color:#0B0B0B;opacity:.55;letter-spacing:.02em}
+/* Skip only — Enter button removed */
+.mc-skip{position:absolute;top:20px;right:24px;z-index:10;font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(26,26,26,.35);background:none;border:1px solid rgba(26,26,26,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
+.mc-skip:hover{color:#1A1A1A;border-color:#1A1A1A}
+
+/* ── PANIC TO PLAN + GPS: two stacked rows ── */
+.ptp-section{background:var(--w);padding:clamp(48px,7vw,80px) clamp(24px,5vw,60px)}
+.ptp-row{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;padding:clamp(40px,5vw,60px) 0}
+.ptp-row:first-child{padding-top:clamp(28px,3vw,44px);max-width:900px;margin-right:auto;margin-left:0}
+.ptp-row:last-child{padding-top:clamp(60px,8vw,100px);padding-bottom:clamp(90px,13vw,150px);max-width:1180px;margin-left:auto;margin-right:0}
+.ptp-flip{direction:rtl}.ptp-flip>*{direction:ltr}
+.ptp-text h2{font-size:clamp(28px,3.2vw,44px);font-weight:900;line-height:1.1;letter-spacing:-.4px;margin:0 0 18px;color:var(--tx)}
+.ptp-text p{font-size:16px;line-height:1.8;color:var(--mu);max-width:400px;margin:0}
+.ptp-media{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.11);background:#F0F4F8}
+.ptp-media video{width:100%;display:block;max-height:380px;object-fit:cover}
+.ptp-gps{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.09);border:1px solid rgba(0,0,0,.07);background:#fff;max-height:380px}
+.ptp-gps .concept-map{width:100%;height:100%;display:block}
+.ptp-gps .concept-map svg{width:100%;height:100%;display:block}
+@media(max-width:860px){.ptp-row{grid-template-columns:1fr;gap:clamp(24px,4vw,36px)}.ptp-flip{direction:ltr}.ptp-text p{max-width:100%}}
+
+/* ── 3D RACCOON VIEWER ── */
+.raccoon-canvas-wrap{width:clamp(220px,28vw,340px);height:clamp(320px,42vw,500px);border-radius:20px;background:transparent;border:none;box-shadow:0 24px 64px rgba(0,0,0,.07);overflow:hidden;position:relative;z-index:2}
+.raccoon-canvas-wrap canvas{display:block;width:100%!important;height:100%!important}
+@media(max-width:600px){.mc-big,.mc-brand{font-size:clamp(36px,14vw,80px)}.mc-quote{font-size:clamp(16px,4.5vw,28px)}.mc-caption{display:none}}
 </style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
 
@@ -353,17 +399,50 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   <div class="nr"><a href="#proof" class="nl">Reviews</a><a href="#blog" class="nl">Blog</a><a href="#faq" class="nl">FAQ</a><a href="https://mindcraft-93858.web.app/login" class="nav-login">Log in</a></div>
 </nav>
 
+<div class="mc-intro" id="mc-intro" role="region" aria-label="MindCraft introduction">
+  <button class="mc-skip" id="mc-skip" type="button">Skip</button>
+
+  <div class="mc-slide mc-active">
+    <p class="mc-big">Learning is not<br><span class="mc-invis">FIXED</span></p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-big">Learning is not<br><span class="mc-gray">FIXED</span></p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-quote">&ldquo;Doing well in school depends on much more than your ability to learn quickly and easily. It depends on grit.&rdquo;</p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-quote">&ldquo;When students learn how the brain grows in response to challenge, they persevere through failure because they realize failure is not a permanent condition.&rdquo;</p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-brand">MINDCRAFT</p>
+    <p class="mc-big" style="color:#F5F1ED">A Growth Mindset</p>
+    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
+  </div>
+
+  <div class="mc-slide">
+    <p class="mc-brand">MINDCRAFT</p>
+    <p class="mc-big">A Growth Mindset</p>
+  </div>
+</div>
+
+<div id="start"></div>
 <div class="above-fold">
 <section class="hero">
   <div class="hero-in">
     <div class="ha rv">
-      <img src="img/reading.png" class="mr" alt="MindCraft">
-      <div class="fc" style="top:6%;right:14%;animation-delay:0s"><img src="img/algebra.png"></div>
-      <div class="fc" style="top:32%;left:7%;animation-delay:.62s"><img src="img/geometry.png"></div>
-      <div class="fc" style="bottom:18%;right:10%;animation-delay:1.24s"><img src="img/trig.png"></div>
+      <img src="img/racoon.jpg" alt="MindCraft raccoon" class="raccoon-canvas-wrap" style="object-fit:cover;display:block;">
     </div>
     <div class="hero-text rv d1">
-      <h1><span style="display:block">Maths exam?</span><span style="display:block;color:var(--g)">We got you.</span></h1>
+      <h1><span style="display:block;font-size:clamp(28px,4vw,46px)">Maths exams can be stressful</span><span style="display:block;color:var(--g);font-size:clamp(20px,3vw,38px);white-space:nowrap">We're here for you.</span></h1>
       <div class="hb">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">Try It Free</a>
         <a href="#how" class="bw">See how it works</a>
@@ -373,21 +452,73 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </section>
 </div><!-- /above-fold -->
 
-<!-- ── FROM PANIC TO PLAN (Page 2) ── -->
-<section class="sec flip" id="pressure">
-  <div class="sec-in">
-    <div class="sa rv d2" style="display:flex;align-items:center;justify-content:center">
-      <video src="img/Video.mp4" autoplay muted loop playsinline style="width:100%;max-width:520px;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.13);display:block"></video>
+<!-- ── FROM PANIC TO PLAN + GPS ── -->
+<section class="ptp-section" id="pressure">
+
+  <!-- Row 1: text left, video right -->
+  <div class="ptp-row">
+    <div class="ptp-text rv">
+      <h2>From panic<br>to plan.</h2>
+      <p>Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
     </div>
-    <div class="rv">
-      <h2 class="cg" style="font-size:clamp(30px,5vw,44px)">From panic to plan.</h2>
-      <p class="d" style="font-size:17px;line-height:1.75;max-width:460px">Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
+    <div class="ptp-media rv d1">
+      <video src="img/Video.mp4" autoplay muted loop playsinline></video>
     </div>
   </div>
+
+  <!-- Row 2: GPS left, text right (lower + right-biased) -->
+  <div class="ptp-row">
+    <div class="ptp-gps rv">
+      <div class="concept-map" aria-label="Animated concept map">
+        <svg viewBox="0 0 620 400" role="img">
+          <defs>
+            <filter id="cmGlow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="8" result="blur"/>
+              <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.68 0 0 0 0 0.58 0 0 0 .5 0"/>
+              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path class="cm-grid" d="M80 40v320M180 40v320M280 40v320M380 40v320M480 40v320M40 100h540M40 200h540M40 300h540"/>
+          <line class="cm-link" x1="70" y1="200" x2="305" y2="200"/>
+          <line class="cm-link" x1="305" y1="200" x2="525" y2="200"/>
+          <line class="cm-link" x1="305" y1="200" x2="420" y2="90"/>
+          <line class="cm-link" x1="305" y1="200" x2="420" y2="310"/>
+          <line class="cm-link" x1="305" y1="200" x2="190" y2="90"/>
+          <line class="cm-link" x1="305" y1="200" x2="190" y2="310"/>
+          <line class="cm-link" x1="420" y1="90" x2="515" y2="80"/>
+          <line class="cm-link" x1="420" y1="310" x2="520" y2="320"/>
+          <line class="cm-link" x1="190" y1="90" x2="95" y2="80"/>
+          <line class="cm-link" x1="190" y1="310" x2="95" y2="320"/>
+          <line class="cm-link path" x1="190" y1="200" x2="305" y2="200"/>
+          <line class="cm-link path" x1="305" y1="200" x2="420" y2="90"/>
+          <line class="cm-link path" x1="305" y1="200" x2="420" y2="310"/>
+          <g class="cm-node soft" transform="translate(95 80)"><circle r="20"/><text>Rules</text></g>
+          <g class="cm-node" transform="translate(190 90)"><circle r="32"/><text>Linear</text></g>
+          <g class="cm-node next" transform="translate(190 200)"><circle r="38"/><text>Systems</text></g>
+          <g class="cm-node soft" transform="translate(95 320)"><circle r="20"/><text>Stats</text></g>
+          <g class="cm-node" transform="translate(190 310)"><circle r="31"/><text>Ratios</text></g>
+          <g class="cm-node focus" transform="translate(305 200)"><circle class="cm-pulse" r="26"/><circle r="54"/><text><tspan x="0" y="-7">Word</tspan><tspan x="0" y="10">Problems</tspan></text></g>
+          <g class="cm-node next" transform="translate(420 90)"><circle r="35"/><text>Percents</text></g>
+          <g class="cm-node next" transform="translate(420 310)"><circle r="35"/><text>Functions</text></g>
+          <g class="cm-node soft" transform="translate(515 80)"><circle r="20"/><text>ACT</text></g>
+          <g class="cm-node soft" transform="translate(525 200)"><circle r="25"/><text>SAT</text></g>
+          <g class="cm-node soft" transform="translate(520 320)"><circle r="20"/><text>Exam</text></g>
+          <circle class="cm-dot" cx="452" cy="68" r="4"/>
+          <circle class="cm-dot" cx="452" cy="286" r="4"/>
+          <circle class="cm-dot" cx="222" cy="176" r="4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ptp-text rv d1">
+      <h2>No more random practice.<br>We have a GPS.</h2>
+      <p>MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
+    </div>
+  </div>
+
 </section>
 
-<!-- ── SUBJECTS PANEL (Page 3) ── -->
-<section class="subj-panel">
+<!-- ── SUBJECTS PANEL (4th — inserted after #steps below) ── -->
+<section class="subj-panel" id="subj-orig" style="display:none;padding:0;margin:0;border:none">
   <div class="subj-in">
     <div class="rv">
       <span class="subj-eyebrow">subjects</span>
@@ -544,85 +675,6 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </section>
 
 
-<section class="sec" id="how">
-  <div class="sec-in">
-    <!-- Left: text only -->
-    <div class="rv">
-      <h2 class="cg" style="font-size:clamp(30px,5vw,44px)">No more random practice.<br>We have a GPS.</h2>
-      <p class="d" style="font-size:17px;line-height:1.75;max-width:460px">MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
-    </div>
-
-    <!-- Right: dynamic concept map -->
-    <div class="sa rv d2">
-      <div class="concept-map" aria-label="Animated concept map showing prerequisite links">
-        <svg viewBox="0 0 620 400" role="img">
-          <defs>
-            <filter id="cmGlow" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="8" result="blur"/>
-              <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.68 0 0 0 0 0.58 0 0 0 .5 0"/>
-              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-
-          <path class="cm-grid" d="M80 40v320M180 40v320M280 40v320M380 40v320M480 40v320M40 100h540M40 200h540M40 300h540"/>
-
-          <line class="cm-link" x1="70" y1="200" x2="305" y2="200"/>
-          <line class="cm-link" x1="305" y1="200" x2="525" y2="200"/>
-          <line class="cm-link" x1="305" y1="200" x2="420" y2="90"/>
-          <line class="cm-link" x1="305" y1="200" x2="420" y2="310"/>
-          <line class="cm-link" x1="305" y1="200" x2="190" y2="90"/>
-          <line class="cm-link" x1="305" y1="200" x2="190" y2="310"/>
-          <line class="cm-link" x1="420" y1="90" x2="515" y2="80"/>
-          <line class="cm-link" x1="420" y1="310" x2="520" y2="320"/>
-          <line class="cm-link" x1="190" y1="90" x2="95" y2="80"/>
-          <line class="cm-link" x1="190" y1="310" x2="95" y2="320"/>
-          <line class="cm-link path" x1="190" y1="200" x2="305" y2="200"/>
-          <line class="cm-link path" x1="305" y1="200" x2="420" y2="90"/>
-          <line class="cm-link path" x1="305" y1="200" x2="420" y2="310"/>
-
-          <g class="cm-node soft" transform="translate(95 80)">
-            <circle r="20"/><text>Rules</text>
-          </g>
-          <g class="cm-node" transform="translate(190 90)">
-            <circle r="32"/><text>Linear</text>
-          </g>
-          <g class="cm-node next" transform="translate(190 200)">
-            <circle r="38"/><text>Systems</text>
-          </g>
-          <g class="cm-node soft" transform="translate(95 320)">
-            <circle r="20"/><text>Stats</text>
-          </g>
-          <g class="cm-node" transform="translate(190 310)">
-            <circle r="31"/><text>Ratios</text>
-          </g>
-          <g class="cm-node focus" transform="translate(305 200)">
-            <circle class="cm-pulse" r="26"/><circle r="54"/><text><tspan x="0" y="-7">Word</tspan><tspan x="0" y="10">Problems</tspan></text>
-          </g>
-          <g class="cm-node next" transform="translate(420 90)">
-            <circle r="35"/><text>Percents</text>
-          </g>
-          <g class="cm-node next" transform="translate(420 310)">
-            <circle r="35"/><text>Functions</text>
-          </g>
-          <g class="cm-node soft" transform="translate(515 80)">
-            <circle r="20"/><text>ACT</text>
-          </g>
-          <g class="cm-node soft" transform="translate(525 200)">
-            <circle r="25"/><text>SAT</text>
-          </g>
-          <g class="cm-node soft" transform="translate(520 320)">
-            <circle r="20"/><text>Exam</text>
-          </g>
-          <circle class="cm-dot" cx="452" cy="68" r="4"/>
-          <circle class="cm-dot" cx="452" cy="286" r="4"/>
-          <circle class="cm-dot" cx="222" cy="176" r="4"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 <section class="dk" id="steps">
   <div class="dk-steps-wrap">
     <div class="dk-steps-header rv">
@@ -637,18 +689,18 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       </div>
       <div class="dk-hstep rv" style="transition-delay:.12s">
         <div class="dk-hstep-num">02</div>
-        <h4>Learning Map</h4>
-        <p>MindCraft connects your gaps to the concepts behind them so you know exactly what to fix.</p>
+        <h4>Precision Learning</h4>
+        <p>Identifies and resolves student misconceptions in real time.</p>
       </div>
       <div class="dk-hstep rv" style="transition-delay:.20s">
         <div class="dk-hstep-num">03</div>
-        <h4>Tutor Session</h4>
-        <p>A dedicated tutor rebuilds your understanding. Not just the answer. The whole why.</p>
+        <h4>HiTL: Human in The Loop</h4>
+        <p>Technology with a tutor always by your child's side.</p>
       </div>
       <div class="dk-hstep rv" style="transition-delay:.28s">
         <div class="dk-hstep-num">04</div>
-        <h4>Practice Loop</h4>
-        <p>Personalized questions, flashcards, and next steps keep progress going between sessions.</p>
+        <h4>Review</h4>
+        <p>Parents get updates on their child's progress.</p>
       </div>
     </div>
     <!-- CTA centered below the cards -->
@@ -678,16 +730,18 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </section>
 
 <section class="pricing" id="pricing">
-  <h2 class="rv">Start free. Add a tutor when you're ready.</h2>
-  <p class="sub rv d1">The AI tools are always free. Human tutoring starts at $10/hr. First session on us.</p>
+  <h2 class="rv">Start Free.</h2>
 
-  <div class="pg auto-stagger">
+  <div class="pg auto-stagger" style="justify-content:center">
 
-    <!-- FREE -->
     <div class="pc">
       <h3>Practice</h3>
       <div class="pr free-pr">Free</div>
-      <p class="pd">AI-powered study tools. No card, no catch.</p>
+      <ul class="pd" style="list-style:none;padding:0">
+        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· Every Feature is Free</li>
+        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· We are Testing</li>
+        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· Please be patient with us</li>
+      </ul>
       <ul>
         <li>Personalized study path (GPS)</li>
         <li>AI Problem Solver</li>
@@ -702,55 +756,41 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       </div>
     </div>
 
-    <!-- TUTORED (recommended) -->
-    <div class="pc ft">
-      <h3>Tutored</h3>
-      <div class="pr">$10<span>/hr</span></div>
-      <p class="pd">AI platform + a real expert in your corner. First session free.</p>
-      <ul>
-        <li>Everything in Practice</li>
-        <li>Matched 1-on-1 expert tutor</li>
-        <li>Same tutor every session</li>
-        <li>AI-generated session notes</li>
-        <li>Tutor-assigned homework</li>
-        <li>Gap tracking after every session</li>
-        <li>Progress reports for parents</li>
-      </ul>
-      <div class="cta-wrap">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:14px;display:block;font-size:15px;text-align:center">Book First Session Free</a>
-      </div>
-    </div>
-
-    <!-- INTENSIVE -->
-    <div class="pc">
-      <h3>Intensive</h3>
-      <div class="pr">$35<span>/mo</span></div>
-      <p class="pd">4 sessions + the full platform. Best for exam countdowns.</p>
-      <ul>
-        <li>Everything in Tutored</li>
-        <li>4 sessions per month</li>
-        <li>Priority tutor matching</li>
-        <li>Exam countdown study plan</li>
-        <li>Weekly gap report</li>
-        <li>Direct tutor messaging</li>
-        <li>Parent dashboard access</li>
-      </ul>
-      <div class="cta-wrap">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center;background:#1A3C2A">Get Started</a>
-      </div>
-    </div>
-
   </div>
   <p class="pricing-note rv">All plans include access to the MindCraft app. Tutoring sessions are 1 hour. Cancel anytime.</p>
 </section>
 
 <div class="blog-top-fade" aria-hidden="true"></div>
 <section class="blog-panel" id="blog">
-  <div class="blog-panel-head rv">
-    <h2>Our Blog</h2>
-    <a href="blog.html" class="blog-see-all">See All &rarr;</a>
+  <div class="blog-duo">
+
+    <!-- Left: Blog -->
+    <div class="blog-duo-col">
+      <div class="blog-panel-head rv">
+        <h2>Our Blog</h2>
+        <a href="blog.html" class="blog-see-all">See All &rarr;</a>
+      </div>
+      <div class="blog-scroll rv d1" id="blogScroll"></div>
+    </div>
+
+    <!-- Right: Podcasts -->
+    <div class="blog-duo-col">
+      <div class="blog-panel-head rv">
+        <h2>Our Podcasts</h2>
+      </div>
+      <div class="rv d1" style="padding:0 clamp(24px,5vw,64px)">
+        <div style="display:flex;align-items:center;gap:20px;background:rgba(255,255,255,.05);border-radius:18px;padding:clamp(20px,3vw,32px) clamp(20px,3vw,32px);border:1px solid rgba(255,255,255,.10)">
+          <svg viewBox="0 0 24 24" width="44" height="44" style="flex-shrink:0"><path fill="#1DB954" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          <div>
+            <p style="font-size:15px;font-weight:700;color:#fff;margin:0 0 4px">Playlist coming soon</p>
+            <p style="font-size:13px;color:rgba(255,255,255,.55);margin:0 0 14px;line-height:1.6">We're building our podcast series.<br>Follow us on Spotify to be the first to know.</p>
+            <a href="#" class="bw" style="font-size:13px;padding:8px 18px;display:inline-block">Follow on Spotify</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="blog-scroll rv d1" id="blogScroll"></div>
 </section>
 
 <div class="blog-faq-divider"><hr></div>
@@ -762,76 +802,76 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       <div class="faq-col">
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How is MindCraft different from regular tutoring?</span>
+            <span class="faq-q-text">What does MindCraft actually do for my child?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Regular tutoring helps you in the moment, then disappears. MindCraft makes every session stick. Notes get organized automatically. Progress is tracked. And our AI assistant keeps you moving forward between sessions.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">MindCraft first diagnoses exactly what your child doesn't understand, then helps them fix it. With a real human tutor and mathematical tools we keep them moving forward. With confidence.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What subjects can I get help with?</span>
+            <span class="faq-q-text">Who teaches my child?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">We cover Intro to Algorithmic Trading, Accounting Basics, Networking, Style, and more. We are growing fast. If your subject is not listed, reach out and we will find the right tutor for you.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Our tutors are high-performing college students who recently mastered these exact subjects and exams. They know where students get stuck because they just went through it. We vet and train each one personally.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What actually happens during a session?</span>
+            <span class="faq-q-text">What exams and subjects do you cover?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">You meet your tutor live and work through exactly what you need. Afterwards, everything becomes a clear summary with key takeaways and next steps. It shows up right on your dashboard.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">We specialise in teaching maths including ACT, SAT, IB, and high school exams, as well as general school work help. If there is a new course or subject you want to study, we can create a custom plan for you.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How are tutors chosen?</span>
+            <span class="faq-q-text">How will I know if it's working?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Every MindCraft tutor is a college student who recently mastered what they teach. They know exactly where students get stuck because they just went through it. We vet each one personally.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">After every session your child receives a breakdown of what was covered and what is next. You can see their knowledge map update in real time and watch gaps close over time. No more guessing.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Is there any commitment?</span>
+            <span class="faq-q-text">What happens during a session?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">None at all. Your first session is completely free. After that, book when it works for you. No contracts, no packages, no pressure.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Your child meets their tutor live, works through the exact concepts they are stuck on, and leaves with a clear plan. Notes and next steps are posted to their dashboard automatically after every session.</p></div>
         </div>
       </div>
 
       <div class="faq-col">
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What does my child get after each session?</span>
+            <span class="faq-q-text">Is it safe and monitored?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">A structured summary: what was covered, key takeaways, and next steps. It lives on the dashboard so nothing gets lost. Parents can see it too.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">All sessions take place on our secure platform. We personally vet every tutor and monitor all interactions. Your child's safety and privacy come first, always.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Can I track my child's progress?</span>
+            <span class="faq-q-text">How much does it cost?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Yes. The platform tracks what your student understands and where they need work. You can see exactly how they are growing. No more guessing.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Every feature on the app is free while we are in our testing phase. When you are ready for 1-on-1 tutoring, the first session is always on us. No credit card needed to start.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">I'm a student. Can I sign up without my parents?</span>
+            <span class="faq-q-text">Is there a contract or commitment?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Absolutely. MindCraft is built for students who want to take ownership of their learning. Book your own session, get your dashboard, and start building.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">None at all. No contracts, no packages, no monthly fees. Book sessions when they work for your family. Cancel anytime, no questions asked.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How do I become a MindCraft tutor?</span>
+            <span class="faq-q-text">My child is really behind. Will this work?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">We look for college students who are strong in their subject and genuinely enjoy teaching. If that sounds like you, reach out through the site. We will review your application and get back to you.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">That is exactly who we are built for. MindCraft finds the root gaps, not just the surface symptoms, and rebuilds from there. Most students feel a real difference within the first two sessions.</p></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Where do sessions take place?</span>
+            <span class="faq-q-text">How do we get started?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
           </div>
-          <div class="faq-a"><p class="faq-a-inner">Everything is online, through our platform. No commuting, no logistics. Join from anywhere on any device.</p></div>
+          <div class="faq-a"><p class="faq-a-inner">Create a free account, run the diagnostic, and see what MindCraft finds. If you want to book a tutor after, the first session is free. No commitment needed to try.</p></div>
         </div>
       </div>
 
@@ -876,6 +916,58 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </footer>
 
 <script>
+// ── INTRO DECK ──
+(function(){
+  var intro=document.getElementById('mc-intro');
+  if(!intro)return;
+  document.body.style.overflow='hidden';
+  var slides=intro.querySelectorAll('.mc-slide');
+  var cur=0,timer=null,AUTO=3000;
+  // 0→1 and 4→5 (word reveals): 0.9 s. Slide 1 ("FIXED" shown) stays 1 s before next.
+  var SLIDE_DELAYS=[900,1000,AUTO,AUTO,900];
+
+  function exit(){
+    clearTimeout(timer);
+    document.body.style.overflow='';
+    intro.classList.add('mc-exit');
+    setTimeout(function(){intro.classList.add('mc-gone');},700);
+  }
+
+  function go(n){
+    clearTimeout(timer);
+    slides[cur].classList.remove('mc-active');
+    cur=(n+slides.length)%slides.length;
+    slides[cur].classList.add('mc-active');
+    if(cur<slides.length-1){
+      var delay=SLIDE_DELAYS[cur]!==undefined?SLIDE_DELAYS[cur]:AUTO;
+      timer=setTimeout(function(){go(cur+1);},delay);
+    } else {
+      // Last slide: auto-open site after 1 s
+      timer=setTimeout(exit,1000);
+    }
+  }
+
+  intro.addEventListener('click',function(e){
+    if(e.target.closest('#mc-skip'))return;
+    if(cur<slides.length-1)go(cur+1); else exit();
+  });
+  document.addEventListener('keydown',function(e){
+    if(intro.classList.contains('mc-gone'))return;
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(cur<slides.length-1)go(cur+1);else exit();}
+    if(e.key==='ArrowLeft'){e.preventDefault();if(cur>0)go(cur-1);}
+    if(e.key==='Escape')exit();
+  });
+  var skipBtn=document.getElementById('mc-skip');
+  if(skipBtn)skipBtn.addEventListener('click',function(e){e.stopPropagation();exit();});
+  go(0);
+})();
+
+// ── SUBJECTS PANEL: reveal in place (already before #steps in HTML) ──
+(function(){
+  var subj=document.getElementById('subj-orig');
+  if(subj){ subj.style.cssText=''; }
+})();
+
 // ── SCROLL PROGRESS BAR ──
 var prog=document.createElement('div');prog.id='mc-prog';document.body.prepend(prog);
 
@@ -948,6 +1040,247 @@ if (scroll) {
     +'</a>';
   }).join('');
 }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+(function () {
+  const wrap = document.getElementById('raccoon-3d');
+  if (!wrap) return;
+
+  // ── RENDERER ────────────────────────────────────────────────────────────────
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  wrap.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+  camera.position.set(0, 0.5, 5.0);
+  camera.lookAt(0, 1.5, 0);
+
+  function resize() {
+    const W = wrap.clientWidth, H = wrap.clientHeight;
+    camera.aspect = W / H; camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  }
+  resize();
+  new ResizeObserver(resize).observe(wrap);
+
+  // ── STUDIO LIGHTING ────────────────────────────────────────────────────────
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const key = new THREE.DirectionalLight(0xfff8f2, 2.8);
+  key.position.set(-3, 7, 5); key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.camera.near = 0.5; key.shadow.camera.far = 22;
+  key.shadow.camera.left = -4; key.shadow.camera.right = 4;
+  key.shadow.camera.top = 6;  key.shadow.camera.bottom = -2;
+  key.shadow.bias = -0.001;
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.9); fill.position.set(5, 3, 3);   scene.add(fill);
+  const rim  = new THREE.DirectionalLight(0xe8f0ff, 0.7); rim.position.set(0, 5, -6);    scene.add(rim);
+  const bnce = new THREE.DirectionalLight(0xffffff, 0.25); bnce.position.set(0, -4, 2); scene.add(bnce);
+
+  // Soft drop-shadow catcher (appears on white CSS bg via alpha)
+  const shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(8,8), new THREE.ShadowMaterial({ opacity:0.08 }));
+  shadowMesh.rotation.x = -Math.PI/2; shadowMesh.position.y = -0.20; shadowMesh.receiveShadow = true;
+  scene.add(shadowMesh);
+
+  // ── ROOT GROUP ─────────────────────────────────────────────────────────────
+  const root = new THREE.Group();
+  scene.add(root);
+
+  // ── PBR RACCOON PALETTE ───────────────────────────────────────────────────
+  const M = {
+    fur:    new THREE.MeshStandardMaterial({ color:0x7d8590, roughness:0.93 }),
+    dark:   new THREE.MeshStandardMaterial({ color:0x1e232e, roughness:0.88 }),
+    belly:  new THREE.MeshStandardMaterial({ color:0xcec9c0, roughness:0.90 }),
+    nose:   new THREE.MeshStandardMaterial({ color:0x14141a, roughness:0.50, metalness:0.05 }),
+    eyeW:   new THREE.MeshStandardMaterial({ color:0xf2f0ee, roughness:0.40 }),
+    pupil:  new THREE.MeshStandardMaterial({ color:0x060810, roughness:0.10, metalness:0.30 }),
+    shine:  new THREE.MeshStandardMaterial({ color:0xffffff, emissive:new THREE.Color(1,1,1), emissiveIntensity:1.8, roughness:0 }),
+    glass:  new THREE.MeshStandardMaterial({ color:0xe63b2e, roughness:0.22, metalness:0.12 }),
+    lens:   new THREE.MeshStandardMaterial({ color:0x0c0f18, transparent:true, opacity:0.82, roughness:0.05, metalness:0.20 }),
+    wood:   new THREE.MeshStandardMaterial({ color:0xc8a870, roughness:0.82 }),
+    purple: new THREE.MeshStandardMaterial({ color:0x6d28d9, roughness:0.70, emissive:new THREE.Color(0x2e1065), emissiveIntensity:0.18 }),
+    metal:  new THREE.MeshStandardMaterial({ color:0x9ca3af, roughness:0.25, metalness:0.85 }),
+    wheel:  new THREE.MeshStandardMaterial({ color:0xece7ff, roughness:0.88 }),
+    cup:    new THREE.MeshStandardMaterial({ color:0xf5f5f0, roughness:0.72 }),
+    sleeve: new THREE.MeshStandardMaterial({ color:0x92400e, roughness:0.80 }),
+    coffee: new THREE.MeshStandardMaterial({ color:0x2c1a0a, roughness:0.20 }),
+    dgray:  new THREE.MeshStandardMaterial({ color:0x374151, roughness:0.82 }),
+  };
+
+  // ── GEOMETRY HELPERS ──────────────────────────────────────────────────────
+  function sp(r,mat,px=0,py=0,pz=0,sx=1,sy=1,sz=1){
+    const m=new THREE.Mesh(new THREE.SphereGeometry(r,32,22),mat);
+    m.position.set(px,py,pz); m.scale.set(sx,sy,sz); m.castShadow=true; return m;
+  }
+  function bx(w,h,d,mat,px=0,py=0,pz=0,rx=0,ry=0,rz=0){
+    const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
+    m.position.set(px,py,pz); m.rotation.set(rx,ry,rz); m.castShadow=true; return m;
+  }
+  function cy(rt,rb,h,seg,mat,px=0,py=0,pz=0,rx=0){
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);
+    m.position.set(px,py,pz); m.rotation.x=rx; m.castShadow=true; return m;
+  }
+  function cap(r,len,cs,rs,mat,px=0,py=0,pz=0,rx=0){
+    const m=new THREE.Mesh(new THREE.CapsuleGeometry(r,len,cs,rs),mat);
+    m.position.set(px,py,pz); m.rotation.x=rx; m.castShadow=true; return m;
+  }
+
+  // ── SKATEBOARD ───────────────────────────────────────────────────────────
+  const board = new THREE.Group();
+  board.add(bx(2.0,0.09,0.68,M.wood)); board.add(bx(1.75,0.10,0.44,M.purple));
+  const kf=bx(0.38,0.09,0.68,M.wood, 1.02,0.07,0); kf.rotation.z= 0.28; board.add(kf);
+  const kb=bx(0.38,0.09,0.68,M.wood,-1.02,0.07,0); kb.rotation.z=-0.28; board.add(kb);
+  const wheels=[];
+  [-0.65,0.65].forEach(x=>{
+    board.add(bx(0.16,0.13,0.76,M.metal,x,-0.12,0));
+    board.add(cy(0.025,0.025,0.84,8,M.metal,x,-0.22,0,Math.PI/2));
+    [-0.40,0.40].forEach(z=>{
+      const w=cy(0.155,0.155,0.10,20,M.wheel,x,-0.22,z,Math.PI/2);
+      wheels.push(w); board.add(w);
+    });
+  });
+  board.position.y=0.24;
+  root.add(board);
+
+  // ── RACCOON ───────────────────────────────────────────────────────────────
+  const raccoon = new THREE.Group();
+
+  // Flat paws
+  raccoon.add(bx(0.26,0.09,0.38,M.dark,-0.24,0.05,0.05));
+  raccoon.add(bx(0.26,0.09,0.38,M.dark, 0.24,0.05,0.05));
+  // Short chubby legs
+  raccoon.add(cap(0.14,0.20,6,12,M.fur,-0.24,0.30,0));
+  raccoon.add(cap(0.14,0.20,6,12,M.fur, 0.24,0.30,0));
+  // Big round body
+  raccoon.add(sp(0.50,M.fur,  0,0.95,0,  1.0,1.10,0.88));
+  raccoon.add(sp(0.38,M.belly,0,0.88,0.30,1.0,0.85,0.58));
+  raccoon.add(sp(0.44,M.dark, 0,0.88,-0.10,0.9,1.02,0.62));
+  // Neck
+  raccoon.add(cy(0.17,0.21,0.18,14,M.fur,0,1.52,0));
+
+  // ── HEAD GROUP (glasses rotate with head) ────────────────────────────────
+  const headGroup = new THREE.Group();
+  headGroup.position.set(0,1.82,0);
+  // Head
+  headGroup.add(sp(0.44,M.fur,  0,0,0, 1.0,0.96,0.93));
+  // Snout
+  headGroup.add(sp(0.21,M.belly,0,-0.09,0.33, 1.0,0.65,0.78));
+  headGroup.add(sp(0.065,M.nose,0,-0.02,0.50));
+  // Eye masks
+  headGroup.add(sp(0.165,M.dark,-0.18,0.06,0.30, 1.1,0.70,0.50));
+  headGroup.add(sp(0.165,M.dark, 0.18,0.06,0.30, 1.1,0.70,0.50));
+  // Eyes
+  headGroup.add(sp(0.090,M.eyeW, -0.18,0.07,0.34));
+  headGroup.add(sp(0.090,M.eyeW,  0.18,0.07,0.34));
+  headGroup.add(sp(0.052,M.pupil,-0.18,0.07,0.368));
+  headGroup.add(sp(0.052,M.pupil, 0.18,0.07,0.368));
+  headGroup.add(sp(0.020,M.shine,-0.162,0.086,0.378));
+  headGroup.add(sp(0.020,M.shine, 0.198,0.086,0.378));
+  // Ears
+  const mkEar=s=>{
+    const g=new THREE.Group();
+    g.add(sp(0.155,M.fur,  0,0,0,    1.0,1.28,0.50));
+    g.add(sp(0.090,M.belly,0,0,0.065,0.85,1.12,0.42));
+    g.position.set(s*0.31,0.38,-0.04); g.rotation.z=s*-0.18; return g;
+  };
+  headGroup.add(mkEar(-1),mkEar(1));
+  // Big red chunky sunglasses
+  [-0.205,0.205].forEach(x=>{
+    headGroup.add(bx(0.30,0.20,0.048,M.glass,x,0.04,0.41));   // red frame
+    headGroup.add(bx(0.23,0.13,0.052,M.lens, x,0.04,0.418));  // dark lens (in front)
+  });
+  headGroup.add(bx(0.12,0.050,0.046,M.glass,0,0.04,0.41));    // bridge
+  const ta1=bx(0.30,0.040,0.040,M.glass,-0.50,0.04,0.25); ta1.rotation.y=-0.50; headGroup.add(ta1);
+  const ta2=bx(0.30,0.040,0.040,M.glass, 0.50,0.04,0.25); ta2.rotation.y= 0.50; headGroup.add(ta2);
+  raccoon.add(headGroup);
+
+  // ── ARMS ─────────────────────────────────────────────────────────────────
+  const armL=new THREE.Group(); armL.position.set(-0.50,1.16,0);
+  armL.add(cap(0.112,0.28,6,10,M.fur, 0,-0.12,0));
+  armL.add(cap(0.098,0.26,6,10,M.fur,-0.04,-0.50,0.05));
+  armL.add(sp(0.120,M.dark,0,-0.70,0.06));
+  raccoon.add(armL);
+
+  const armR=new THREE.Group(); armR.position.set(0.50,1.16,0);
+  armR.add(cap(0.112,0.26,6,10,M.fur,0,0.12,0));
+  const foreR=new THREE.Mesh(new THREE.CapsuleGeometry(0.098,0.24,6,10),M.fur);
+  foreR.position.set(0.04,0.42,-0.05); foreR.rotation.z=0.30; foreR.castShadow=true; armR.add(foreR);
+  armR.add(sp(0.120,M.dark,0.12,0.64,-0.07));
+  // Coffee cup
+  const cupG=new THREE.Group();
+  cupG.add(cy(0.110,0.092,0.30,18,M.cup,   0,0.15,0));
+  cupG.add(cy(0.115,0.096,0.16,18,M.sleeve,0,0.12,0));
+  cupG.add(cy(0.117,0.110,0.044,18,M.dgray,0,0.30,0));
+  cupG.add(cy(0.030,0.030,0.055,10,M.dgray,0.036,0.33,0));
+  const lid=new THREE.Mesh(new THREE.CircleGeometry(0.092,18),M.coffee);
+  lid.rotation.x=-Math.PI/2; lid.position.set(0,0.294,0); cupG.add(lid);
+  cupG.position.set(0.14,0.70,-0.08); cupG.rotation.z=-0.20;
+  armR.add(cupG);
+  raccoon.add(armR);
+
+  // ── TAIL (banded) ────────────────────────────────────────────────────────
+  const tail=new THREE.Group();
+  let ty=0;
+  for(let i=0;i<9;i++){
+    const r=0.148-i*0.010;
+    tail.add(cy(r+0.01,r,0.22,14,i%2===0?M.fur:M.dark,0,ty,0));
+    ty-=0.22;
+  }
+  tail.position.set(0,0.86,-0.44); tail.rotation.x=-1.18;
+  raccoon.add(tail);
+
+  raccoon.position.y=0.28;
+  root.add(raccoon);
+
+  // ── ANIMATION ────────────────────────────────────────────────────────────
+  const clock = new THREE.Clock();
+  let raf = null;
+
+  function tick() {
+    raf = requestAnimationFrame(tick);
+    const t = clock.getElapsedTime();
+
+    root.rotation.y += 0.003;
+
+    const bob = Math.sin(t*2.2)*0.018;
+    board.position.y   = 0.24 + bob;
+    raccoon.position.y = 0.28 + bob;
+    raccoon.rotation.z = Math.sin(t*1.1)*0.016;
+
+    wheels.forEach(w=>{ w.rotation.z+=0.11; });
+
+    armL.rotation.z = Math.sin(t*2.2)*0.20 - 0.08;
+
+    cupG.rotation.z = -0.20 + Math.sin(t*2.2+0.5)*0.06;
+
+    tail.rotation.x = -1.18 + Math.sin(t*2.6)*0.15;
+    tail.rotation.z = Math.sin(t*1.8)*0.10;
+
+    headGroup.rotation.y = Math.sin(t*0.7)*0.07;
+    headGroup.rotation.z = Math.sin(t*1.1)*0.035;
+
+    renderer.render(scene, camera);
+  }
+
+  tick();
+
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting&&raf){cancelAnimationFrame(raf);raf=null;}
+      else if(e.isIntersecting&&!raf){tick();}
+    });
+  }).observe(wrap);
+
+})();
 </script>
 
 </body></html>

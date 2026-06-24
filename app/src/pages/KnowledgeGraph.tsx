@@ -1,12 +1,12 @@
 /**
  * KnowledgeGraph.tsx
  *
- * Interactive concept knowledge graph using PCA-projected positions
+ * Interactive Learning World using PCA-projected concept positions
  * from the ML engine. Concepts are positioned in semantically meaningful
  * space — algebraic concepts cluster together, geometric ones cluster
  * separately — rather than arbitrary radial rings.
  *
- * - Concept nodes colored by mastery status (mastered/struggling/in_progress/untouched)
+ * - Concept nodes colored by learning status (stable/open gap/repairing/unexplored)
  * - Edges from ontology with weight-based thickness
  * - Student mastery + strength points with displacement arrow
  * - Click a concept → detail panel with ingredients, mastery, strength
@@ -47,7 +47,7 @@ interface MLNode {
   mastery:        number
   strengthScore:  number
   eventCount:     number
-  status:         'mastered' | 'struggling' | 'in_progress' | 'untouched'
+  status:         'mastered' | 'struggling' | 'in_progress' | 'untouched' | 'stable' | 'open_gap' | 'repairing' | 'unexplored' | 'comeback_built' | 'ready_for_challenge'
   ingredients:    { id: string; name: string; description: string }[]
   tags:           string[]
 }
@@ -83,21 +83,60 @@ interface IngredientPreview {
 // ── Status → color mapping (MindCraft palette) ──
 function statusColor(status: string): string {
   switch (status) {
-    case 'mastered':     return '#58CC02'
-    case 'struggling':   return '#FF4B4B'
-    case 'in_progress':  return '#4A7BF7'
+    case 'mastered':
+    case 'stable':       return '#19A974'
+    case 'comeback_built': return '#14B8A6'
+    case 'ready_for_challenge': return '#7C3AED'
+    case 'struggling':
+    case 'open_gap':     return '#FF6B5A'
+    case 'in_progress':
+    case 'repairing':    return '#4A7BF7'
     case 'untouched':
+    case 'unexplored':
     default:             return '#3E4559'
   }
 }
 
 function statusGlow(status: string): string {
   switch (status) {
-    case 'mastered':     return 'rgba(88, 204, 2, 0.4)'
-    case 'struggling':   return 'rgba(255, 75, 75, 0.3)'
-    case 'in_progress':  return 'rgba(74, 123, 247, 0.3)'
+    case 'mastered':
+    case 'stable':       return 'rgba(25, 169, 116, 0.34)'
+    case 'comeback_built': return 'rgba(20, 184, 166, 0.36)'
+    case 'ready_for_challenge': return 'rgba(124, 58, 237, 0.28)'
+    case 'struggling':
+    case 'open_gap':     return 'rgba(255, 107, 90, 0.28)'
+    case 'in_progress':
+    case 'repairing':    return 'rgba(74, 123, 247, 0.3)'
     default:             return 'rgba(62, 69, 89, 0.15)'
   }
+}
+
+function statusLabel(status: string): string {
+  switch (status) {
+    case 'mastered':
+    case 'stable': return 'Stable'
+    case 'struggling':
+    case 'open_gap': return 'Open Gap'
+    case 'in_progress':
+    case 'repairing': return 'Repairing'
+    case 'comeback_built': return 'Comeback Built'
+    case 'ready_for_challenge': return 'Ready for Challenge'
+    case 'untouched':
+    case 'unexplored':
+    default: return 'Unexplored'
+  }
+}
+
+function isOpenGap(status: string): boolean {
+  return status === 'struggling' || status === 'open_gap'
+}
+
+function isUnexplored(status: string): boolean {
+  return status === 'untouched' || status === 'unexplored'
+}
+
+function isStable(status: string): boolean {
+  return status === 'mastered' || status === 'stable' || status === 'comeback_built' || status === 'ready_for_challenge'
 }
 
 function edgeStyle(relation: string): { dash: string; opacity: number } {
@@ -221,7 +260,7 @@ export default function KnowledgeGraph() {
       const data: MLGraphResponse = await graphRes.json()
 
       if (data.nodes.length === 0) {
-        setError('No graph data yet. Complete a session to start building your knowledge graph.')
+        setError('No learning-world data yet. Complete a session to start turning mistakes into a map.')
         setGraphData(null)
       } else {
         setGraphData(data)
@@ -243,7 +282,7 @@ export default function KnowledgeGraph() {
       }
     } catch (err) {
       console.error('Knowledge graph fetch error:', err)
-      setError('Could not load knowledge graph. The ML server may still be warming up — try again in a moment.')
+      setError('Could not load your Learning World. The ML server may still be warming up — try again in a moment.')
     } finally {
       clearTimeout(slowTimer)
       setSlowLoad(false)
@@ -314,7 +353,9 @@ export default function KnowledgeGraph() {
   }
 
   // ── Render ──
-  const masteredCount  = graphData?.nodes.filter(n => n.status === 'mastered').length ?? 0
+  const masteredCount  = graphData?.nodes.filter(n => isStable(n.status)).length ?? 0
+  const openGapCount   = graphData?.nodes.filter(n => isOpenGap(n.status)).length ?? 0
+  const repairingCount = graphData?.nodes.filter(n => n.status === 'in_progress' || n.status === 'repairing').length ?? 0
   const totalCount     = graphData?.nodes.length ?? 0
   const hasStudentData = graphData?.studentPoints?.mastery && graphData?.studentPoints?.strength
   const viewportTranslate = `${SVG_W / 2 * (1 - zoom) + pan.x} ${SVG_H / 2 * (1 - zoom) + pan.y}`
@@ -328,9 +369,25 @@ export default function KnowledgeGraph() {
         <div className={s.topBar}>
           <button className={s.backBtn} onClick={() => navigate('/dashboard')}>← Dashboard</button>
           <div className={s.titleRow}>
-            <span className={s.pageTitle}>Knowledge Graph</span>
+            <span className={s.pageTitle}>Learning World</span>
+            <span className={s.conceptBadge}>Grit Map</span>
           </div>
         </div>
+
+        <section className={s.worldHero}>
+          <div>
+            <p className={s.worldEyebrow}>MindCraft adaptive graph</p>
+            <h1 className={s.worldTitle}>Mistakes become maps. Comebacks become progress.</h1>
+            <p className={s.worldCopy}>
+              Every click, clue, retry, and correct answer helps MindCraft learn which route this student needs next.
+            </p>
+          </div>
+          <div className={s.worldStats} aria-label="Learning world status">
+            <div><strong>{openGapCount}</strong><span>open gaps</span></div>
+            <div><strong>{repairingCount}</strong><span>repairing</span></div>
+            <div><strong>{masteredCount}</strong><span>stable</span></div>
+          </div>
+        </section>
 
         {/* ── Search ── */}
         <div className={s.searchRow}>
@@ -341,7 +398,7 @@ export default function KnowledgeGraph() {
               </svg>
               <input
                 className={s.searchInput}
-                placeholder="Search a concept — e.g. Derivatives, Trigonometry, Algebra…"
+                placeholder="Search a route — e.g. Derivatives, Trigonometry, Algebra..."
                 value={search}
                 onChange={e => { setSearch(e.target.value); setShowSuggest(true) }}
                 onFocus={() => setShowSuggest(true)}
@@ -377,7 +434,7 @@ export default function KnowledgeGraph() {
               })()}
             </div>
             <button type="submit" className={s.searchBtn} disabled={!search.trim() || loading}>
-              {loading ? 'Loading…' : 'Explore →'}
+              {loading ? 'Loading...' : 'Explore'}
             </button>
           </form>
 
@@ -421,11 +478,16 @@ export default function KnowledgeGraph() {
                 <div className={s.graphHud}>
                   <div className={s.legend}>
                     <span className={s.legendTitle}>Legend</span>
-                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#58CC02' }} />Mastered</span>
-                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#4A7BF7' }} />In progress</span>
-                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#FF4B4B' }} />Needs work</span>
-                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#748095' }} />Untouched</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#19A974' }} />Stable</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#4A7BF7' }} />Repairing</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#FF6B5A' }} />Open Gap</span>
+                    <span className={s.legendItem}><span className={s.legendDot} style={{ background: '#748095' }} />Unexplored</span>
                   </div>
+                </div>
+
+                <div className={s.gritHud}>
+                  <strong>Stay with the gap.</strong>
+                  <span>Retries and clue-to-correct moments build the graph, not just right answers.</span>
                 </div>
 
                 <div className={s.zoomControls}>
@@ -453,8 +515,8 @@ export default function KnowledgeGraph() {
                   <div className={s.emptyRing} />
                   <span className={s.emptyJ}>J</span>
                 </div>
-                <p className={s.emptyText}>Your knowledge graph will appear here</p>
-                <p className={s.emptySub}>Complete sessions to see concepts connect</p>
+                <p className={s.emptyText}>Your Learning World will appear here</p>
+                <p className={s.emptySub}>Complete questions to see concepts, gaps, and comebacks connect</p>
               </div>
             )}
 
@@ -466,7 +528,7 @@ export default function KnowledgeGraph() {
                   <div className={s.loadRing2} />
                   <span className={s.emptyJ}>J</span>
                 </div>
-                <p className={s.emptyText}>Building your knowledge graph…</p>
+                <p className={s.emptyText}>Building your Learning World...</p>
                 {slowLoad && (
                   <p className={s.emptySub} style={{ maxWidth: 320, textAlign: 'center' }}>
                     The ML engine is waking up — this first load takes ~30–60 seconds. Hang tight.
@@ -565,7 +627,7 @@ export default function KnowledgeGraph() {
                         <text x={mx} y={my - 10} textAnchor="middle"
                           fontSize="9" fill="rgba(109,40,217,0.92)"
                           fontFamily="var(--f)" fontWeight="800">
-                          effort → strength
+                          effort to strength
                         </text>
                       </g>
                     )
@@ -613,7 +675,7 @@ export default function KnowledgeGraph() {
                     const color = statusColor(node.status)
                     const r = 6 + Math.min(node.eventCount * 1.5, 12)
                     const label = mlIdToLabel(node.id)
-                    const showLabel = isHovered || isSelected || node.status === 'struggling' || node.eventCount > 0
+                    const showLabel = isHovered || isSelected || isOpenGap(node.status) || node.eventCount > 0
 
                     return (
                       <g key={node.id}
@@ -635,15 +697,15 @@ export default function KnowledgeGraph() {
                         <circle
                           r={isHovered || isSelected ? r + 2 : r}
                           fill={color}
-                          fillOpacity={node.status === 'untouched' ? 0.58 : 0.92}
+                          fillOpacity={isUnexplored(node.status) ? 0.58 : 0.92}
                           stroke={isSelected ? '#ffffff' : color}
                           strokeWidth={isSelected ? 2.4 : 1.4}
-                          strokeOpacity={node.status === 'untouched' ? 0.45 : 0.9}
+                          strokeOpacity={isUnexplored(node.status) ? 0.45 : 0.9}
                           filter={isHovered ? 'url(#glowStrong)' : undefined}
                           style={{ transition: 'r 0.15s, fill-opacity 0.15s' }}
                         />
 
-                        {node.mastery > 0 && node.status !== 'untouched' && (
+                        {node.mastery > 0 && !isUnexplored(node.status) && (
                           <circle r={r - 3}
                             fill="none"
                             stroke="rgba(255,255,255,0.86)"
@@ -694,17 +756,14 @@ export default function KnowledgeGraph() {
 
               <div className={s.detailBadge} style={{ color: statusColor(selected.status) }}>
                 <span className={s.dotGreen} style={{ background: statusColor(selected.status) }} />
-                {selected.status === 'mastered' && 'Mastered'}
-                {selected.status === 'struggling' && 'Needs Work'}
-                {selected.status === 'in_progress' && 'In Progress'}
-                {selected.status === 'untouched' && 'Not Yet Studied'}
+                {statusLabel(selected.status)}
               </div>
 
               <h2 className={s.detailTitle}>{mlIdToLabel(selected.id)}</h2>
 
               {/* Mastery bar */}
               <div className={s.masteryRow}>
-                <span className={s.masteryLabel}>Mastery</span>
+                <span className={s.masteryLabel}>Route strength</span>
                 <div className={s.masteryBar}>
                   <div className={s.masteryFill} style={{
                     width: `${selected.mastery * 100}%`,
@@ -716,15 +775,15 @@ export default function KnowledgeGraph() {
 
               {/* Strength score */}
               <div className={s.masteryRow}>
-                <span className={s.masteryLabel}>Strength</span>
+                <span className={s.masteryLabel}>Momentum</span>
                 <div className={s.masteryBar}>
                   <div className={s.masteryFill} style={{
                     width: `${Math.min(Math.abs(selected.strengthScore) * 20, 100)}%`,
-                    background: selected.strengthScore > 0 ? '#58CC02' : '#FF4B4B',
+                    background: selected.strengthScore > 0 ? '#19A974' : '#FF6B5A',
                   }} />
                 </div>
                 <span className={s.masteryPct} style={{
-                  color: selected.strengthScore > 0 ? '#58CC02' : selected.strengthScore < 0 ? '#FF4B4B' : 'var(--mu)',
+                  color: selected.strengthScore > 0 ? '#19A974' : selected.strengthScore < 0 ? '#FF6B5A' : 'var(--mu)',
                 }}>
                   {selected.strengthScore > 0 ? '+' : ''}{selected.strengthScore.toFixed(2)}
                 </span>
@@ -752,9 +811,9 @@ export default function KnowledgeGraph() {
               {selected.ingredients.length > 0 && (
                 <div className={s.ingredientSection}>
                   <span className={s.ingredientLabel}>
-                    Building Blocks ({selected.ingredients.length})
+                    Repair ingredients ({selected.ingredients.length})
                   </span>
-                  <span className={s.ingredientHint}>Tap a building block to open its flash card</span>
+                  <span className={s.ingredientHint}>Tap one ingredient to practice the smallest repairable piece</span>
                   <ul className={s.ingredientList}>
                     {selected.ingredients.map(ing => (
                       <li
@@ -800,7 +859,7 @@ export default function KnowledgeGraph() {
                   </div>
                   <div className={s.flashcardActions}>
                     <button className={s.flashcardAction} onClick={() => navigate('/practice')}>
-                      Practice this concept →
+                      Practice this concept
                     </button>
                     <button className={s.flashcardActionSecondary} onClick={() => navigate('/organize-notes')}>
                       Add to notes
@@ -810,14 +869,14 @@ export default function KnowledgeGraph() {
               )}
 
               {/* Actions */}
-              {selected.status === 'untouched' && (
+              {isUnexplored(selected.status) && (
                 <button className={s.bookBtn} onClick={() => navigate('/book')}>
-                  Book a Session on {mlIdToLabel(selected.id)} →
+                  Book a Session on {mlIdToLabel(selected.id)}
                 </button>
               )}
-              {selected.status === 'struggling' && (
+              {isOpenGap(selected.status) && (
                 <button className={s.bookBtn} onClick={() => navigate('/book')}>
-                  Get Help with {mlIdToLabel(selected.id)} →
+                  Repair {mlIdToLabel(selected.id)}
                 </button>
               )}
             </div>
@@ -828,7 +887,7 @@ export default function KnowledgeGraph() {
         {mlResult && mlResult.recommendations.length > 0 && (
           <div className={s.mlPanel}>
             <div className={s.mlHeader}>
-              <span className={s.mlTitle}>Your Learning Path</span>
+              <span className={s.mlTitle}>Your Next Route</span>
               <span className={s.mlSub}>
                 {mlResult.recommendations.length} steps · {mlResult.mode} mode
               </span>
@@ -862,7 +921,7 @@ export default function KnowledgeGraph() {
               }} />
             </div>
             <span className={s.coverageTxt}>
-              {masteredCount} of {totalCount} concepts mastered
+              {masteredCount} of {totalCount} concepts stable
             </span>
           </div>
         )}
