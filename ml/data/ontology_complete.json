@@ -2536,7 +2536,7 @@
         {
           "id": "triangles__congruence_criteria",
           "label": "Congruence is proven with minimal side and angle information",
-          "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
+          "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific of matching sides and angles.",
           "comes_from": "triangles__angle_sum",
           "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases",
           "failure_prior": 0.45,
