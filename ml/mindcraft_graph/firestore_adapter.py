@@ -1,5 +1,7 @@
 # ml/mindcraft_graph/firestore_adapter.py
 
+import os
+
 from google.cloud import firestore
 from datetime import datetime
 from mindcraft_graph.models.events import SessionEvent
@@ -19,7 +21,33 @@ from mindcraft_graph.models.learning_world import (
     ReflexionRecord,
 )
 
-db = firestore.Client()
+# The student data lives in the Firebase project mindcraft-93858 (the frontend +
+# webhook write there). On Cloud Run, a bare firestore.Client() would resolve to
+# the Cloud Run project instead — which has no database. Pin the project so the
+# ML service reads/writes the SAME store as the rest of the app, regardless of
+# where it runs. Overridable via FIRESTORE_PROJECT.
+FIRESTORE_PROJECT = os.getenv("FIRESTORE_PROJECT") or "mindcraft-93858"
+
+db = firestore.Client(project=FIRESTORE_PROJECT)
+
+
+def _to_naive(ts):
+    """Normalize a Firestore datetime to a plain, naive ``datetime``.
+
+    Firestore returns ``DatetimeWithNanoseconds`` (tz-aware). The engine works
+    entirely in naive datetimes (datetime.now(), make_event, decay), so mixing
+    them makes decay do ``naive - aware`` and raise TypeError. We rebuild a
+    vanilla ``datetime`` from the components rather than calling ``.replace()``:
+    ``replace()`` keeps the DatetimeWithNanoseconds subclass but drops its
+    ``_nanosecond`` slot, which then crashes when the value is written back to
+    Firestore (``timestamp_pb()`` reads ``_nanosecond``).
+    """
+    if isinstance(ts, datetime):
+        return datetime(
+            ts.year, ts.month, ts.day,
+            ts.hour, ts.minute, ts.second, ts.microsecond,
+        )
+    return ts
 
 
 def load_student_events(student_id: str, limit: int = 500) -> list[SessionEvent]:
@@ -43,7 +71,7 @@ def load_student_events(student_id: str, limit: int = 500) -> list[SessionEvent]
                 outcome=float(data.get("outcome", 0)),
                 effort=float(data.get("effort", 0.5)),
                 duration_minutes=float(data.get("durationMinutes", 30)),
-                timestamp=data.get("timestamp", datetime.now()),
+                timestamp=_to_naive(data.get("timestamp", datetime.now())),
                 exposure_weight=float(data.get("exposureWeight", 1.0)),
             ))
 
@@ -51,6 +79,40 @@ def load_student_events(student_id: str, limit: int = 500) -> list[SessionEvent]
     except Exception:
         # Index may not exist yet or query failed — return empty for new students
         return []
+
+
+def replace_interactions_by_source(student_id: str, events, source: str) -> int:
+    """Idempotently replace all interactions for a student that carry ``source``.
+
+    Used by the onboarding self-assessment seed: deletes any prior seed events
+    (so re-onboarding overwrites rather than stacking) and writes the new ones.
+    Queries by studentId only (single-field, auto-indexed) and filters source in
+    Python so this needs no composite index.
+    """
+    existing = db.collection("interactions").where("studentId", "==", student_id).stream()
+    for doc in existing:
+        if (doc.to_dict() or {}).get("source") == source:
+            doc.reference.delete()
+
+    return append_interactions(student_id, events, source)
+
+
+def append_interactions(student_id: str, events, source: str) -> int:
+    """Append interaction events (no delete). Used by practice/homework outcomes,
+    which accumulate over time — unlike the onboarding seed, which replaces."""
+    for event in events:
+        db.collection("interactions").add({
+            "studentId": event.student_id,
+            "conceptId": event.concept_id,
+            "eventType": event.event_type,
+            "outcome": event.outcome,
+            "effort": event.effort,
+            "durationMinutes": event.duration_minutes,
+            "timestamp": event.timestamp,
+            "exposureWeight": event.exposure_weight,
+            "source": source,
+        })
+    return len(events)
 
 
 def load_personal_graph(student_id: str) -> dict | None:
@@ -104,6 +166,27 @@ def save_recommendation_result(student_id: str, result: dict):
         "mode": result.get("mode"),
         "recommendations": result.get("recommendations", []),
         "studentProfile": result.get("studentProfile", {}),
+    })
+
+
+def append_displacement_snapshot(
+    student_id: str,
+    magnitude: float,
+    direction: dict[str, float],
+    now: datetime | None = None,
+):
+    """Append a displacement reading to a per-student time series.
+
+    Displacement (strength centroid - mastery centroid in PCA space) is the
+    learning-efficiency vector. save_recommendation_result OVERWRITES the latest
+    snapshot, so the KPI value — the trend over time — would be lost. This writes
+    an append-only point, mirroring the interactions log, so magnitude/direction
+    can be charted across sessions.
+    """
+    db.collection("students").document(student_id).collection("metrics").add({
+        "magnitude": float(magnitude),
+        "direction": {k: float(v) for k, v in direction.items()},
+        "timestamp": now or datetime.now(),
     })
 
 

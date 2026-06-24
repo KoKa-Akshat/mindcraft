@@ -1,0 +1,613 @@
+{
+  "meta": {
+    "version": "1.5",
+    "layer": "Layer 4 of 5: Student Learning State",
+    "created_at": "2026-06-21T17:02:08.871470+00:00",
+    "purpose": "Define how MindCraft stores evolving evidence about what a student knows, how they think, where they break, and how to route them next.",
+    "updated_at": "2026-06-21T17:11:01.696361+00:00",
+    "canonical_id_contract": {
+      "principle": "Every layer references the same canonical IDs; layers may add context but must not redefine core meanings.",
+      "id_formats": {
+        "concept_id": "snake_case stable ID, e.g. right_triangle_geometry",
+        "ingredient_id": "{concept_id}__{ingredient_slug}, e.g. right_triangle__pythagorean_theorem",
+        "archetype_id": "act_{family}_{distinguishing_bridge_or_representation}, e.g. act_square_area_to_diagonal",
+        "question_instance_id": "{exam}_{source_test}_{question_number}, e.g. act_test001_q010",
+        "misconception_id": "mis_{concept_or_archetype}_{short_error}, e.g. mis_square_diagonal_stop_at_side",
+        "solution_pathway_id": "sp_{archetype_id}_{method_slug}",
+        "student_event_id": "evt_{student_id}_{timestamp_or_uuid}",
+        "remediation_action_id": "actn_{student_id}_{timestamp_or_uuid}"
+      },
+      "immutability_rules": [
+        "Never change an ID once used in student-event data; deprecate and alias instead.",
+        "Raw source question text is immutable; intelligence annotations are versioned separately.",
+        "Concept definitions are canonical; question archetypes reference them and may not silently redefine them.",
+        "If an archetype bridges concepts, store that bridge explicitly rather than forcing one primary topic to contain the full meaning."
+      ],
+      "cross_layer_join_keys": [
+        "concept_id",
+        "ingredient_id",
+        "archetype_id",
+        "question_instance_id",
+        "misconception_id",
+        "representation_type",
+        "cognitive_action"
+      ],
+      "annotation_status_values": [
+        "raw_imported",
+        "human_explained",
+        "ai_enriched",
+        "needs_figure_verification",
+        "validated",
+        "deprecated"
+      ],
+      "confidence_scale": {
+        "0.0": "unknown",
+        "0.25": "weak guess",
+        "0.5": "reasonable but needs validation",
+        "0.75": "high confidence",
+        "1.0": "verified by human + data"
+      }
+    },
+    "canonical_taxonomies": {
+      "representation_types": [
+        "plain_numeric_expression",
+        "symbolic_expression",
+        "equation",
+        "literal_equation",
+        "word_problem",
+        "table",
+        "graph",
+        "coordinate_plane",
+        "number_line",
+        "geometry_diagram",
+        "implicit_diagram",
+        "answer_choice_structure",
+        "multi_representation"
+      ],
+      "cognitive_actions": [
+        "recognize_pattern",
+        "translate_representation",
+        "choose_unknown",
+        "set_up_equation",
+        "combine_like_terms",
+        "isolate_variable",
+        "substitute_input",
+        "compute_unit_rate",
+        "scale_proportion",
+        "infer_hidden_structure",
+        "apply_formula",
+        "check_units",
+        "test_answer_choices",
+        "estimate_eliminate",
+        "verify_solution"
+      ],
+      "difficulty_drivers": [
+        "hidden_bridge",
+        "wordiness",
+        "diagram_dependency",
+        "unit_conversion",
+        "symbolic_abstraction",
+        "answer_choice_trap",
+        "multi_step_chain",
+        "negative_or_fraction_coefficients",
+        "time_pressure",
+        "looks_like_wrong_topic",
+        "requires_noticing_exclusion_or_inclusion",
+        "requires_partial_result_then_continuation"
+      ],
+      "misconception_families": [
+        "notation_confusion",
+        "operation_confusion",
+        "representation_translation_error",
+        "formula_misuse",
+        "premature_stopping",
+        "wrong_unit_or_dimension",
+        "overgeneralized_pattern",
+        "diagram_reading_error",
+        "variable_role_confusion",
+        "procedure_without_meaning",
+        "arithmetic_slip_masking_concept"
+      ],
+      "evidence_signal_types": [
+        "correctness",
+        "selected_choice",
+        "free_response_work",
+        "intermediate_step",
+        "time_to_answer",
+        "hint_requested",
+        "confidence_rating",
+        "self_explanation",
+        "scratchpad_parse",
+        "tutor_observation",
+        "followup_transfer_success",
+        "retention_after_delay"
+      ],
+      "mastery_dimensions": [
+        "concept_mastery",
+        "ingredient_mastery",
+        "archetype_mastery",
+        "representation_fluency",
+        "bridge_fluency",
+        "strategy_fluency",
+        "misconception_risk",
+        "confidence_calibration",
+        "retention_strength",
+        "transfer_readiness"
+      ]
+    },
+    "last_updated": "2026-06-21T21:54:44.035935Z",
+    "update_note": "Added AI-batch provenance and new learning-event examples grounded in ACT Math Tests 21-30.",
+    "package_version": "v2.6_complete_act_tests_1_to_30_ai_generated"
+  },
+  "underlying_assumptions": [
+    "Mastery is not binary; evidence should accumulate with uncertainty and decay over time.",
+    "Wrong answers are not equal. The same wrong answer can indicate arithmetic, translation, representation, timing, or confidence failure.",
+    "A student can master a concept in one representation and fail it in another; state must track representation-specific weakness.",
+    "The tutor/AI should store partial success, not only correct/incorrect."
+  ],
+  "student_state_schema": {
+    "student_id": "string",
+    "curricula_targets": [
+      "ACT",
+      "SAT",
+      "IB",
+      "class_course"
+    ],
+    "created_at": "ISO datetime",
+    "updated_at": "ISO datetime",
+    "concept_mastery": {
+      "concept_id": {
+        "mastery_mean": "0-1",
+        "mastery_uncertainty": "0-1",
+        "evidence_count": "int",
+        "last_seen_at": "datetime",
+        "decay_half_life_days": "number",
+        "status": "unknown|introduced|improving|solid|revisit",
+        "evidence_refs": [
+          "student_event_id"
+        ]
+      }
+    },
+    "ingredient_mastery": {
+      "ingredient_id": {
+        "mastery_mean": "0-1",
+        "failure_prior": "0-1",
+        "evidence_count": "int",
+        "last_error_type": "string",
+        "recent_trend": "up|flat|down|unknown"
+      }
+    },
+    "archetype_performance": {
+      "question_archetype_id": {
+        "attempts": "int",
+        "accuracy": "0-1",
+        "avg_time_seconds": "number",
+        "latest_outcome": "correct|incorrect|partial|skipped",
+        "representation_confidence": "0-1",
+        "bridge_success_rate": "0-1"
+      }
+    },
+    "representation_profile": {
+      "word_problem": "strength_score",
+      "diagram": "strength_score",
+      "number_line": "strength_score",
+      "symbolic_expression": "strength_score",
+      "coordinate_graph": "strength_score",
+      "table": "strength_score"
+    },
+    "misconception_memory": {
+      "misconception_id": {
+        "count": "int",
+        "last_seen_at": "datetime",
+        "severity": "low|medium|high",
+        "linked_concepts": [
+          "concept_id"
+        ],
+        "linked_archetypes": [
+          "question_archetype_id"
+        ],
+        "remediation_history": [
+          "remediation_event_id"
+        ]
+      }
+    },
+    "solution_pathway_preferences": {
+      "visual": "0-1",
+      "algebraic": "0-1",
+      "procedural": "0-1",
+      "conceptual": "0-1",
+      "backsolve": "0-1",
+      "estimation": "0-1"
+    },
+    "confidence_calibration": {
+      "self_reported_confidence": "0-1",
+      "observed_accuracy": "0-1",
+      "calibration_gap": "number",
+      "pattern": "underconfident|calibrated|overconfident|unknown"
+    },
+    "goal_context": {
+      "exam_date": "date|null",
+      "target_score": "number|null",
+      "current_estimated_score": "number|null",
+      "time_to_exam_days": "int|null",
+      "mode": "foundation|mixed|triage"
+    },
+    "next_best_actions": [
+      {
+        "action_id": "string",
+        "remediation_policy_id": "string",
+        "target_concept_ids": [
+          "concept_id"
+        ],
+        "target_archetype_ids": [
+          "question_archetype_id"
+        ],
+        "reason": "string",
+        "priority": "low|medium|high|urgent"
+      }
+    ]
+  },
+  "student_event_schema": {
+    "event_id": "string",
+    "student_id": "string",
+    "timestamp": "datetime",
+    "event_type": "question_attempt|session_summary|diagnostic_scan|tutor_note|review_card|practice_set",
+    "question_instance_id": "string|null",
+    "question_archetype_id": "string|null",
+    "concept_ids": [
+      "concept_id"
+    ],
+    "ingredient_ids": [
+      "ingredient_id"
+    ],
+    "input_representation": "word_problem|diagram|number_line|graph|table|symbolic|mixed",
+    "student_answer": "string|null",
+    "correct_answer": "string|null",
+    "outcome": "correct|incorrect|partial|skipped|unknown",
+    "time_seconds": "number|null",
+    "confidence_before": "0-1|null",
+    "confidence_after": "0-1|null",
+    "work_trace": "string|null",
+    "observed_error_tags": [
+      "misconception_id"
+    ],
+    "partial_credit_signals": {
+      "setup_correct": "bool|null",
+      "concept_selected_correctly": "bool|null",
+      "bridge_detected": "bool|null",
+      "arithmetic_correct": "bool|null",
+      "final_format_correct": "bool|null"
+    },
+    "state_updates": {
+      "concept_delta": "map concept_id -> number",
+      "ingredient_delta": "map ingredient_id -> number",
+      "archetype_delta": "map question_archetype_id -> number",
+      "misconceptions_added": [
+        "misconception_id"
+      ]
+    }
+  },
+  "effects_on_student_learning": {
+    "primary": "Personalized diagnosis becomes precise enough to say which bridge or representation failed, not just which topic was missed.",
+    "secondary": "Students receive fewer generic review tasks and more targeted repair loops, improving motivation because practice feels relevant.",
+    "tertiary": "Aggregated state across students can reveal hidden prerequisite debt and support future simulated/visual learning worlds."
+  },
+  "counterintuitive_insights_and_blind_spots": [
+    "If the system over-prioritizes correctness, it may miss students who guessed right or used a brittle shortcut. Track pathway and confidence, not just answer.",
+    "A high-performing student may need representation switching more than harder content. Their growth path could be \u201csame math in new disguise,\u201d not \u201cnext topic.\u201d",
+    "Too much remediation can harm momentum. The state engine should sometimes triage toward exam payoff rather than perfectly repairing every foundation gap."
+  ],
+  "learning_event_graph_schema": {
+    "purpose": "Capture not just correctness, but which path the student took, where the path broke, and what evidence should update which node.",
+    "nodes": {
+      "student": "Person-specific state container.",
+      "question_instance": "Exact attempted question.",
+      "archetype": "Repeatable exam pattern tested.",
+      "concept": "Canonical math concept involved.",
+      "ingredient": "Atomic skill required.",
+      "bridge": "Transition between concepts/representations.",
+      "misconception": "Hypothesized recurring wrong mental model.",
+      "remediation_action": "Next-best lesson/practice/review action."
+    },
+    "edges": {
+      "attempted": "student -> question_instance",
+      "requires": "question_instance/archetype -> ingredient/concept",
+      "used_correctly": "event -> ingredient/concept with positive evidence",
+      "failed_at": "event -> ingredient/bridge/misconception with negative evidence",
+      "uncertain_about": "event -> target when evidence is insufficient",
+      "triggers": "diagnosis -> remediation_action",
+      "updates_state": "event -> student_state_feature"
+    },
+    "event_record_required_fields": [
+      "event_id",
+      "student_id",
+      "timestamp",
+      "question_instance_id",
+      "outcome",
+      "evidence_signals",
+      "partial_credit_updates",
+      "next_action_candidates"
+    ],
+    "partial_credit_policy": "Update only the nodes for which the student's work provides evidence. Correct answer without work is weak evidence; wrong answer with good intermediate work can still strengthen upstream ingredients."
+  },
+  "evidence_update_policy": {
+    "do_not_over_update_from_single_question": true,
+    "separate_can_do_from_can_recognize": true,
+    "separate_formula_knowledge_from_setup_bridge": true,
+    "update_dimensions": [
+      "concept_mastery",
+      "ingredient_mastery",
+      "archetype_mastery",
+      "representation_fluency",
+      "bridge_fluency",
+      "strategy_fluency",
+      "misconception_risk",
+      "confidence_calibration",
+      "retention_strength",
+      "transfer_readiness"
+    ],
+    "recommended_evidence_weights": {
+      "correct_with_work": 0.35,
+      "correct_no_work": 0.12,
+      "incorrect_but_correct_upstream_step": 0.15,
+      "same_misconception_repeated": -0.25,
+      "transfer_success_after_delay": 0.45,
+      "high_confidence_wrong": -0.35,
+      "low_confidence_correct": 0.1
+    }
+  },
+  "dynamic_schema_policy": {
+    "student_specific_extensions_allowed": true,
+    "examples": [
+      "student consistently fails visual-to-symbolic translation even when concept is known",
+      "student solves algebra symbolically but struggles with word problems",
+      "student has high speed but low confidence, indicating confidence calibration issue",
+      "student uses answer-choice backsolving effectively and should be given strategy-aware pathways"
+    ],
+    "guardrail": "Student-specific schema extensions must map back to at least one canonical taxonomy item so aggregate intelligence remains possible.",
+    "act_annotation_update_rule": "For every newly annotated ACT item, emit concept evidence, ingredient evidence, archetype evidence, representation evidence, misconception evidence, and a do-not-overinfer note. Do not collapse a bridge failure into broad concept weakness.",
+    "v2_3_addition": "As ACT annotations grow, new learning event templates should be added only when the wrong answer reveals a meaningfully different cognitive break, not for every surface-level wrong answer."
+  },
+  "example_learning_event_q10": {
+    "event_id": "evt_student123_2026-06-21T17:10:00Z",
+    "student_id": "student123",
+    "question_instance_id": "act_test001_q010",
+    "archetype_ids": [
+      "act_square_area_to_diagonal"
+    ],
+    "required_path": [
+      "area_geometry__square_area_formula",
+      "geometry_shapes__square_equal_sides",
+      "right_triangle__pythagorean_theorem"
+    ],
+    "student_observed_path": [
+      "area_geometry__square_area_formula",
+      "geometry_shapes__square_equal_sides"
+    ],
+    "outcome": "incorrect",
+    "partial_evidence_updates": [
+      {
+        "target_id": "area_geometry__square_area_formula",
+        "delta": 0.15,
+        "reason": "Student correctly extracted side length from area."
+      },
+      {
+        "target_id": "bridge_square_diagonal_to_right_triangle",
+        "delta": -0.35,
+        "reason": "Student did not form the diagonal right-triangle structure."
+      },
+      {
+        "target_id": "right_triangle__pythagorean_theorem",
+        "delta": 0.0,
+        "reason": "No evidence; student never reached Pythagorean step."
+      }
+    ],
+    "recommended_next": [
+      "micro_card_square_diagonal",
+      "visual_worked_example_square_diagonal",
+      "two_near_transfer_questions"
+    ]
+  },
+  "learning_event_examples_from_act_test2": [
+    {
+      "event_template_id": "event_template_act_t02_q04_rectangular_prism_stop_at_visible_face",
+      "question_instance_id": "act_math_t02_q04",
+      "archetype_id": "rectangular_prism_volume_to_largest_face_area",
+      "observed_student_work": "Student multiplies 3\u00d79 and answers 27 cm\u00b2 without using volume.",
+      "evidence_updates": [
+        {
+          "target_id": "area_volume__standard_formulas",
+          "delta": "small_positive",
+          "reason": "Student can compute a rectangle area."
+        },
+        {
+          "target_id": "area_volume__volume_as_base_times_height",
+          "delta": "negative",
+          "reason": "Student did not use volume to infer missing third dimension."
+        },
+        {
+          "target_id": "area_volume__rectangular_prism_face_areas",
+          "delta": "strong_negative",
+          "reason": "Student did not compare all prism faces."
+        },
+        {
+          "target_id": "representation_translation__implicit_structure_detection",
+          "delta": "negative",
+          "reason": "Student failed to detect hidden 3D structure."
+        }
+      ],
+      "recommended_next_actions": [
+        "Show micro-card on rectangular prism face areas",
+        "Use a rotatable/visual prism worked example",
+        "Give two near-transfer questions where the largest face is not the initially visible face"
+      ]
+    },
+    {
+      "event_template_id": "event_template_act_t02_q07_diameter_radius_confusion",
+      "question_instance_id": "act_math_t02_q07",
+      "archetype_id": "square_side_to_semicircle_shaded_area",
+      "observed_student_work": "Student finds square side 10 but uses r=10 in circle area.",
+      "evidence_updates": [
+        {
+          "target_id": "area_volume__square_side_from_area",
+          "delta": "positive",
+          "reason": "Student correctly converted area to side length."
+        },
+        {
+          "target_id": "circles__semicircle_area_from_diameter",
+          "delta": "strong_negative",
+          "reason": "Student confused diameter and radius."
+        },
+        {
+          "target_id": "representation_translation__diagram_to_ratio",
+          "delta": "negative",
+          "reason": "Student did not correctly interpret the side as diameter and radius as half."
+        }
+      ],
+      "recommended_next_actions": [
+        "Show diameter-to-radius micro-card",
+        "Animate diameter splitting into two radii",
+        "Give two circle-area questions that require diameter-to-radius conversion"
+      ]
+    },
+    {
+      "event_template_id": "event_template_act_t02_q01_possible_vs_impossible_reading",
+      "question_instance_id": "act_math_t02_q01",
+      "archetype_id": "integer_product_then_impossible_sum",
+      "observed_student_work": "Student lists a possible factor-pair sum but selects it as the answer to a could-NOT question.",
+      "evidence_updates": [
+        {
+          "target_id": "number_properties__factor_pair_sum_search",
+          "delta": "positive",
+          "reason": "Student can enumerate factor-pair sums."
+        },
+        {
+          "target_id": "act_strategy__strategy_selection",
+          "delta": "negative",
+          "reason": "Student did not align answer with the NOT/could-not wording."
+        },
+        {
+          "target_id": "representation_translation__words_to_equation",
+          "delta": "neutral",
+          "reason": "Setup may be correct; failure is likely prompt polarity."
+        }
+      ],
+      "recommended_next_actions": [
+        "Add a NOT/could-not prompt highlight card",
+        "Give a near-transfer item requiring impossible-choice elimination",
+        "Ask student to verbalize what the answer choice represents before solving"
+      ]
+    },
+    {
+      "event_template_id": "act_t02_q08_threshold_plan_wrong_0_25m",
+      "question_instance_id": "act_math_t02_q08",
+      "archetype_id": "threshold_linear_function_from_word_plan",
+      "observed_student_work": "Student writes f(m)=0.25m or f(m)=0.25m+50.",
+      "evidence_updates": {
+        "positive": [
+          "recognizes variable rate"
+        ],
+        "negative": [
+          "does not subtract included threshold before applying rate"
+        ],
+        "unknown": [
+          "may still understand linear functions in non-threshold contexts"
+        ]
+      },
+      "recommended_next_actions": [
+        "Boundary-check micro-card: plug m=1000 and see whether plan returns $50.",
+        "Near-transfer pricing plan with a different included amount."
+      ]
+    },
+    {
+      "event_template_id": "act_t02_q13_absolute_value_middle_interval",
+      "question_instance_id": "act_math_t02_q13",
+      "archetype_id": "absolute_value_greater_than_linear_inequality",
+      "observed_student_work": "Student chooses a middle interval such as -9<x<2.",
+      "evidence_updates": {
+        "positive": [
+          "can solve linear boundary equations"
+        ],
+        "negative": [
+          "thinks absolute greater-than means between boundaries rather than outside"
+        ],
+        "unknown": [
+          "not enough evidence about ordinary linear inequalities"
+        ]
+      },
+      "recommended_next_actions": [
+        "Distance-from-zero visual number line.",
+        "Contrast |A|>k versus |A|<k with two examples."
+      ]
+    },
+    {
+      "event_template_id": "act_t02_q15_log_base_confusion",
+      "question_instance_id": "act_math_t02_q15",
+      "archetype_id": "basic_log_equation_to_exponential_form",
+      "observed_student_work": "Student treats log_5 x=2 as 5x=2 or divides by 5.",
+      "evidence_updates": {
+        "positive": [
+          "recognizes equation has x"
+        ],
+        "negative": [
+          "does not understand log as inverse exponent"
+        ],
+        "unknown": [
+          "not enough evidence about broader exponent rules"
+        ]
+      },
+      "recommended_next_actions": [
+        "Micro-card: log_b(x)=y means b^y=x.",
+        "Three quick conversion drills before any log laws."
+      ]
+    }
+  ],
+  "effects_on_student_learning_extensions": [
+    {
+      "layer": "learning_event_graph",
+      "primary_effect": "Improves diagnosis precision by separating what the student reached, what they skipped, and where the bridge failed.",
+      "secondary_effect": "Supports tutor briefs that explain not only the wrong answer but the exact cognitive move to repair.",
+      "tertiary_effect": "Creates training data for future simulation/visual-learning worlds where the system can render the missed bridge as an interactive scene."
+    }
+  ],
+  "learning_event_examples_from_act_tests_3_to_20": [
+    {
+      "question_instance_id": "act_math_t03_q08",
+      "diagnosis_focus": "Geometry of Circles \u2192 sector fraction to arc length",
+      "likely_failure_signal": "Student uses the sector-area fraction on the wrong whole-circle quantity.",
+      "recommended_update": "Increase misconception risk for circle-fraction translation; assign a sector-vs-arc contrast card."
+    },
+    {
+      "question_instance_id": "act_math_t10_q12",
+      "diagnosis_focus": "Descriptive Statistics \u2192 pie chart ownership redistribution",
+      "likely_failure_signal": "Student redistributes the sold share incorrectly among recipients.",
+      "recommended_update": "Update representation_fluency for pie-chart transfer and assign a weighted-share worked example."
+    },
+    {
+      "question_instance_id": "act_math_t17_q15",
+      "diagnosis_focus": "Number Properties / modular cycle reasoning for calendar patterns",
+      "likely_failure_signal": "Student counts 260 days directly without using a 7-day cycle.",
+      "recommended_update": "Raise need for modular-arithmetic bridge lesson and cyclical-pattern practice."
+    }
+  ],
+  "learning_event_examples_from_act_tests_21_to_30": [
+    {
+      "question_instance_id": "act_math_t21_q12",
+      "diagnosis_focus": "Units and proportional reasoning \u2192 ramp rise per run",
+      "likely_failure_signal": "Student multiplies or divides without tracking inches of rise per inches of run.",
+      "recommended_update": "Increase unit-rate bridge practice and assign a ratio-with-units micro-card."
+    },
+    {
+      "question_instance_id": "act_math_t23_q05",
+      "diagnosis_focus": "Logarithmic Functions \u2192 log as exponent translation",
+      "likely_failure_signal": "Student treats log notation as multiplication instead of base raised to a power.",
+      "recommended_update": "Assign log-to-exponent translation card before introducing log properties."
+    },
+    {
+      "question_instance_id": "act_math_t30_q03",
+      "diagnosis_focus": "Sequences and Series \u2192 geometric sequence ratio",
+      "likely_failure_signal": "Student looks for an additive difference instead of a constant ratio.",
+      "recommended_update": "Contrast arithmetic vs geometric sequence recognition."
+    }
+  ]
+}

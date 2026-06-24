@@ -23,3 +23,11 @@ ml/mindcraft_remaining_modules.zip
 ml/scripts/*.png
 ml/data/past_papers/**/*.pdf
 ml/data/past_paper_index/*.jsonl
+
+# Firebase deploy cache
+.firebase/
+# Large/generated ML artifacts (not source)
+ml/img/
+ml/data/*.zip
+ml/scripts/output/
+ml/data/test.py

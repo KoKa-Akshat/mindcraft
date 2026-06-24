@@ -61,6 +61,19 @@ class CardTemplate(BaseModel):
     difficulty: float = Field(default=0.5, ge=0.0, le=1.0)
 
 
+class Combination(BaseModel):
+    """A hyperedge of ingredients that fire together to solve a class of problems."""
+
+    id: str
+    ingredients: list[str] = Field(default_factory=list)
+    apply_order: list[str] = Field(default_factory=list)
+    spans_concepts: list[str] = Field(default_factory=list)
+    example_problem: str = ""
+    captured_by_dependency_or_bridge: bool = False
+    note: str = ""
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
 class ProblemFeatures(BaseModel):
     """Structured tags extracted from a problem statement."""
 
@@ -116,3 +129,4 @@ class IngredientOntology(BaseModel):
     ingredients: list[Ingredient] = Field(default_factory=list)
     bridges: list[Bridge] = Field(default_factory=list)
     card_templates: list[CardTemplate] = Field(default_factory=list)
+    combinations: list[Combination] = Field(default_factory=list)

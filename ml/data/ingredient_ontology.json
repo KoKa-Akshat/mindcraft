@@ -1,80 +1,1927 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "ingredients": [
-    {"id": "variable_as_unknown", "concept_id": "basic_equations", "name": "Variable as Unknown Quantity", "description": "A variable stands for a value that must be determined from the information given.", "tags": ["variable", "unknown", "equation"], "depends_on": []},
-    {"id": "equation_as_balance", "concept_id": "basic_equations", "name": "Equation as Balance", "description": "An equation states that two expressions have equal value and must stay balanced.", "tags": ["balance", "equal", "equation"], "depends_on": ["variable_as_unknown"]},
-    {"id": "expression_as_composed_operations", "concept_id": "basic_equations", "name": "Expression as Composed Operations", "description": "An expression can be unpacked into operations applied in sequence to the unknown.", "tags": ["operations", "expression", "sequence"], "depends_on": ["variable_as_unknown"]},
-    {"id": "inverse_operations_undo", "concept_id": "basic_equations", "name": "Inverse Operations Undo Steps", "description": "Addition, subtraction, multiplication, and division can be reversed to isolate the unknown.", "tags": ["inverse", "undo", "isolate"], "depends_on": ["equation_as_balance", "expression_as_composed_operations"]},
-    {"id": "substitution_checks_solution", "concept_id": "basic_equations", "name": "Substitution Checks a Solution", "description": "A proposed solution is valid only if replacing the variable makes the equation true.", "tags": ["substitution", "check", "true_false"], "depends_on": ["inverse_operations_undo"]},
-
-    {"id": "like_terms_share_structure", "concept_id": "linear_equations", "name": "Like Terms Share Structure", "description": "Terms with the same variable part can be combined because they represent the same kind of quantity.", "tags": ["like_terms", "combine", "structure"], "depends_on": []},
-    {"id": "distributive_rewrite_preserves_value", "concept_id": "linear_equations", "name": "Distribution Preserves Value", "description": "Multiplying across parentheses rewrites an expression without changing its value.", "tags": ["distribution", "rewrite", "equivalence"], "depends_on": ["like_terms_share_structure"]},
-    {"id": "solve_multistep_in_sequence", "concept_id": "linear_equations", "name": "Solve Multi-Step Equations in Sequence", "description": "Multi-step equations are solved by simplifying first and then undoing operations in a controlled order.", "tags": ["multi_step", "simplify", "sequence"], "depends_on": ["like_terms_share_structure", "distributive_rewrite_preserves_value"]},
-    {"id": "variable_on_both_sides_balance", "concept_id": "linear_equations", "name": "Move Variable Terms While Preserving Balance", "description": "When variables appear on both sides, matching changes must preserve equality while gathering terms together.", "tags": ["both_sides", "balance", "collect_terms"], "depends_on": ["solve_multistep_in_sequence"]},
-    {"id": "graph_as_all_points_that_fit", "concept_id": "linear_equations", "name": "Graph as All Points That Fit the Rule", "description": "The graph of a linear equation is the set of points whose coordinates satisfy the relationship.", "tags": ["graph", "points", "coordinates"], "depends_on": ["variable_on_both_sides_balance"]},
-
-    {"id": "right_angle_structure", "concept_id": "right_triangle_geometry", "name": "Right Angle Fixes the Triangle Structure", "description": "A right angle creates a special triangle with one side opposite the 90-degree angle.", "tags": ["right_triangle", "right_angle", "structure"], "depends_on": []},
-    {"id": "legs_and_hypotenuse_roles", "concept_id": "right_triangle_geometry", "name": "Legs and Hypotenuse Have Different Roles", "description": "The hypotenuse is always opposite the right angle, while the legs form the right angle.", "tags": ["legs", "hypotenuse", "side_roles"], "depends_on": ["right_angle_structure"]},
-    {"id": "chosen_angle_sets_opposite_adjacent", "concept_id": "right_triangle_geometry", "name": "Chosen Angle Determines Opposite and Adjacent", "description": "Relative to a chosen acute angle, one leg is opposite and the other is adjacent.", "tags": ["angle", "opposite", "adjacent"], "depends_on": ["legs_and_hypotenuse_roles"]},
-    {"id": "pythagorean_relationship", "concept_id": "right_triangle_geometry", "name": "Pythagorean Relationship Links the Sides", "description": "In a right triangle, the squared leg lengths add to the squared hypotenuse length.", "tags": ["pythagorean", "sides", "square"], "depends_on": ["legs_and_hypotenuse_roles"]},
-    {"id": "special_triangle_ratio_patterns", "concept_id": "right_triangle_geometry", "name": "Special Right Triangles Have Fixed Ratios", "description": "Certain right triangles have side lengths in predictable ratios determined by their angles.", "tags": ["special_triangles", "ratios", "angles"], "depends_on": ["chosen_angle_sets_opposite_adjacent", "pythagorean_relationship"]},
-
-    {"id": "angle_as_rotation", "concept_id": "trigonometry_basics", "name": "Angle as Rotation", "description": "An angle measures how far a ray has rotated from a reference direction.", "tags": ["angle", "rotation", "reference"], "depends_on": []},
-    {"id": "sine_as_opposite_over_hypotenuse", "concept_id": "trigonometry_basics", "name": "Sine as Opposite over Hypotenuse", "description": "Sine compares the opposite side length to the hypotenuse for a chosen angle in a right triangle.", "tags": ["sine", "opposite", "hypotenuse"], "depends_on": ["angle_as_rotation"]},
-    {"id": "cosine_as_adjacent_over_hypotenuse", "concept_id": "trigonometry_basics", "name": "Cosine as Adjacent over Hypotenuse", "description": "Cosine compares the adjacent side length to the hypotenuse for a chosen angle in a right triangle.", "tags": ["cosine", "adjacent", "hypotenuse"], "depends_on": ["angle_as_rotation"]},
-    {"id": "unit_circle_as_normalized_triangle", "concept_id": "trigonometry_basics", "name": "Unit Circle as a Normalized Triangle", "description": "A point on the unit circle creates a right triangle whose hypotenuse has length one.", "tags": ["unit_circle", "triangle", "normalization"], "depends_on": ["angle_as_rotation", "sine_as_opposite_over_hypotenuse", "cosine_as_adjacent_over_hypotenuse"]},
-    {"id": "sine_cosine_as_coordinates", "concept_id": "trigonometry_basics", "name": "Sine and Cosine as Coordinates", "description": "On the unit circle, cosine gives the horizontal coordinate and sine gives the vertical coordinate.", "tags": ["coordinates", "unit_circle", "height"], "depends_on": ["unit_circle_as_normalized_triangle"]},
-
-    {"id": "radius_as_rotating_segment", "concept_id": "circular_trigonometry", "name": "Radius as a Rotating Segment", "description": "A radius sweeping around a circle carries a point whose position changes with the angle.", "tags": ["radius", "rotation", "circle"], "depends_on": []},
-    {"id": "height_as_sine_projection", "concept_id": "circular_trigonometry", "name": "Height as Sine Projection", "description": "The vertical height of a rotating point is the sine-based projection of the radius.", "tags": ["height", "projection", "sine"], "depends_on": ["radius_as_rotating_segment"]},
-    {"id": "horizontal_position_as_cosine_projection", "concept_id": "circular_trigonometry", "name": "Horizontal Position as Cosine Projection", "description": "The horizontal position of a rotating point is the cosine-based projection of the radius.", "tags": ["horizontal", "projection", "cosine"], "depends_on": ["radius_as_rotating_segment"]},
-    {"id": "period_as_full_rotation", "concept_id": "circular_trigonometry", "name": "Period as One Full Rotation", "description": "One complete turn of the radius corresponds to one full cycle of the repeating motion.", "tags": ["period", "cycle", "rotation"], "depends_on": ["radius_as_rotating_segment"]},
-    {"id": "sinusoid_as_projection_trace", "concept_id": "circular_trigonometry", "name": "Sinusoid as the Trace of Circular Projection", "description": "Recording a projection value as the angle changes produces a sinusoidal graph over time or angle.", "tags": ["sinusoid", "graph", "projection"], "depends_on": ["height_as_sine_projection", "horizontal_position_as_cosine_projection", "period_as_full_rotation"]}
+    {
+      "id": "term_as_indexed_value",
+      "concept_id": "sequences_patterns",
+      "name": "Term as an Indexed Value",
+      "description": "Each entry in a sequence has a position (index) and a value tied to that position.",
+      "tags": [
+        "sequence",
+        "index",
+        "term"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "first_differences_reveal_change",
+      "concept_id": "sequences_patterns",
+      "name": "First Differences Reveal Change",
+      "description": "Subtracting consecutive terms exposes how the sequence grows from step to step.",
+      "tags": [
+        "differences",
+        "change",
+        "consecutive"
+      ],
+      "depends_on": [
+        "term_as_indexed_value"
+      ]
+    },
+    {
+      "id": "constant_vs_growing_difference",
+      "concept_id": "sequences_patterns",
+      "name": "Constant vs Growing Difference",
+      "description": "A constant first difference signals linear growth; a changing difference signals a higher-order pattern.",
+      "tags": [
+        "linear",
+        "nonlinear",
+        "pattern"
+      ],
+      "depends_on": [
+        "first_differences_reveal_change"
+      ]
+    },
+    {
+      "id": "next_term_from_rule",
+      "concept_id": "sequences_patterns",
+      "name": "Predict Next Term From the Rule",
+      "description": "Once the difference pattern is known, the next term is produced by extending that rule.",
+      "tags": [
+        "prediction",
+        "extension",
+        "rule"
+      ],
+      "depends_on": [
+        "constant_vs_growing_difference"
+      ]
+    },
+    {
+      "id": "ratio_as_comparison",
+      "concept_id": "rates_proportion",
+      "name": "Ratio as a Comparison of Quantities",
+      "description": "A ratio expresses how two quantities relate by division.",
+      "tags": [
+        "ratio",
+        "comparison",
+        "division"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "unit_rate_normalizes",
+      "concept_id": "rates_proportion",
+      "name": "Unit Rate Normalizes to One",
+      "description": "A unit rate re-expresses a ratio so one quantity equals a single unit (per hour, per item).",
+      "tags": [
+        "unit_rate",
+        "per",
+        "normalize"
+      ],
+      "depends_on": [
+        "ratio_as_comparison"
+      ]
+    },
+    {
+      "id": "rate_inversion",
+      "concept_id": "rates_proportion",
+      "name": "Rates Can Be Inverted",
+      "description": "Hours-per-room and rooms-per-hour are reciprocals describing the same work.",
+      "tags": [
+        "reciprocal",
+        "inversion",
+        "rate"
+      ],
+      "depends_on": [
+        "unit_rate_normalizes"
+      ]
+    },
+    {
+      "id": "unit_conversion_chains",
+      "concept_id": "rates_proportion",
+      "name": "Unit Conversion as a Chain of Ratios",
+      "description": "Converting units multiplies by ratios equal to one until the target unit remains.",
+      "tags": [
+        "conversion",
+        "units",
+        "chain"
+      ],
+      "depends_on": [
+        "unit_rate_normalizes"
+      ]
+    },
+    {
+      "id": "proportion_as_equal_ratios",
+      "concept_id": "rates_proportion",
+      "name": "Proportion as Two Equal Ratios",
+      "description": "A proportion sets two ratios equal and can be solved for an unknown quantity.",
+      "tags": [
+        "proportion",
+        "equal",
+        "solve"
+      ],
+      "depends_on": [
+        "ratio_as_comparison"
+      ]
+    },
+    {
+      "id": "integer_arithmetic_fluency",
+      "concept_id": "linear_equations",
+      "name": "Signed Integer Arithmetic",
+      "description": "Reliable addition, subtraction, multiplication and division with negative numbers underpins all equation work.",
+      "tags": [
+        "integers",
+        "signs",
+        "arithmetic"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "like_terms_share_structure",
+      "concept_id": "linear_equations",
+      "name": "Like Terms Share Structure",
+      "description": "Terms with the same variable part can be combined because they represent the same kind of quantity.",
+      "tags": [
+        "like_terms",
+        "combine",
+        "structure"
+      ],
+      "depends_on": [
+        "integer_arithmetic_fluency"
+      ]
+    },
+    {
+      "id": "inverse_operations_isolate",
+      "concept_id": "linear_equations",
+      "name": "Inverse Operations Isolate the Unknown",
+      "description": "Operations are reversed in the opposite order to isolate the variable.",
+      "tags": [
+        "inverse",
+        "isolate",
+        "undo"
+      ],
+      "depends_on": [
+        "integer_arithmetic_fluency"
+      ]
+    },
+    {
+      "id": "distributive_rewrite",
+      "concept_id": "linear_equations",
+      "name": "Distribution Preserves Value",
+      "description": "Multiplying across parentheses rewrites an expression without changing its value.",
+      "tags": [
+        "distribution",
+        "rewrite",
+        "equivalence"
+      ],
+      "depends_on": [
+        "integer_arithmetic_fluency"
+      ]
+    },
+    {
+      "id": "variables_both_sides",
+      "concept_id": "linear_equations",
+      "name": "Move Variable Terms Across the Equals Sign",
+      "description": "When variables sit on both sides, terms are gathered to one side while preserving equality.",
+      "tags": [
+        "both_sides",
+        "collect",
+        "balance"
+      ],
+      "depends_on": [
+        "like_terms_share_structure",
+        "inverse_operations_isolate"
+      ]
+    },
+    {
+      "id": "divisibility_as_exact_division",
+      "concept_id": "number_theory",
+      "name": "Divisibility as Exact Division",
+      "description": "One number divides another when the division leaves no remainder.",
+      "tags": [
+        "divisibility",
+        "remainder",
+        "factor"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "prime_as_indivisible",
+      "concept_id": "number_theory",
+      "name": "Prime as Indivisible Building Block",
+      "description": "A prime has exactly two factors: one and itself.",
+      "tags": [
+        "prime",
+        "indivisible",
+        "factor"
+      ],
+      "depends_on": [
+        "divisibility_as_exact_division"
+      ]
+    },
+    {
+      "id": "factor_pairs_structure",
+      "concept_id": "number_theory",
+      "name": "Factors Come in Pairs",
+      "description": "Factors pair around the square root, which is why search stops at sqrt(n).",
+      "tags": [
+        "factor_pairs",
+        "sqrt",
+        "search"
+      ],
+      "depends_on": [
+        "divisibility_as_exact_division"
+      ]
+    },
+    {
+      "id": "perfect_square_structure",
+      "concept_id": "number_theory",
+      "name": "Perfect Squares Have a Repeated Factor",
+      "description": "A perfect square has an integer square root, giving an odd factor count.",
+      "tags": [
+        "perfect_square",
+        "root",
+        "count"
+      ],
+      "depends_on": [
+        "factor_pairs_structure"
+      ]
+    },
+    {
+      "id": "factor_counting",
+      "concept_id": "number_theory",
+      "name": "Counting Factors",
+      "description": "The number of factors follows from the pairing structure and prime composition.",
+      "tags": [
+        "counting",
+        "factors",
+        "enumeration"
+      ],
+      "depends_on": [
+        "factor_pairs_structure",
+        "prime_as_indivisible"
+      ]
+    },
+    {
+      "id": "mean_as_total_over_count",
+      "concept_id": "statistics_averages",
+      "name": "Mean as Total Divided by Count",
+      "description": "The arithmetic mean is the sum of values divided by how many there are.",
+      "tags": [
+        "mean",
+        "sum",
+        "count"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "total_reconstructed_from_mean",
+      "concept_id": "statistics_averages",
+      "name": "Recover the Total From the Mean",
+      "description": "Multiplying mean by count reconstructs the total, enabling back-solving.",
+      "tags": [
+        "total",
+        "reconstruct",
+        "back_solve"
+      ],
+      "depends_on": [
+        "mean_as_total_over_count"
+      ]
+    },
+    {
+      "id": "weighted_average_structure",
+      "concept_id": "statistics_averages",
+      "name": "Weighted Average Weights by Frequency",
+      "description": "A weighted average multiplies each value by its weight before dividing by total weight.",
+      "tags": [
+        "weighted",
+        "frequency",
+        "weights"
+      ],
+      "depends_on": [
+        "mean_as_total_over_count"
+      ]
+    },
+    {
+      "id": "word_problem_to_average",
+      "concept_id": "statistics_averages",
+      "name": "Translate Word Problems Into Average Form",
+      "description": "Identifying which quantities are values, counts, and weights turns prose into an average computation.",
+      "tags": [
+        "translation",
+        "word_problem",
+        "setup"
+      ],
+      "depends_on": [
+        "mean_as_total_over_count"
+      ]
+    },
+    {
+      "id": "unknown_named_as_variable",
+      "concept_id": "words_to_equations",
+      "name": "Name the Unknown as a Variable",
+      "description": "The quantity to find is assigned a symbol so relationships can be written about it.",
+      "tags": [
+        "unknown",
+        "variable",
+        "naming"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "verbal_to_symbolic_phrases",
+      "concept_id": "words_to_equations",
+      "name": "Translate Verbal Phrases to Operations",
+      "description": "Words like 'more than', 'product of', 'twice' map to specific arithmetic operations.",
+      "tags": [
+        "translation",
+        "phrases",
+        "operations"
+      ],
+      "depends_on": [
+        "unknown_named_as_variable"
+      ]
+    },
+    {
+      "id": "relationship_to_equation",
+      "concept_id": "words_to_equations",
+      "name": "Assemble Phrases Into an Equation",
+      "description": "Linked phrases combine into a single equation expressing the problem's constraint.",
+      "tags": [
+        "equation",
+        "assembly",
+        "constraint"
+      ],
+      "depends_on": [
+        "verbal_to_symbolic_phrases"
+      ]
+    },
+    {
+      "id": "inequality_as_range",
+      "concept_id": "inequalities",
+      "name": "Inequality Describes a Range",
+      "description": "An inequality specifies a set of values rather than a single solution.",
+      "tags": [
+        "inequality",
+        "range",
+        "set"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "endpoint_open_closed",
+      "concept_id": "inequalities",
+      "name": "Open vs Closed Endpoints",
+      "description": "Strict inequalities exclude the endpoint (open); non-strict include it (closed).",
+      "tags": [
+        "endpoint",
+        "open",
+        "closed"
+      ],
+      "depends_on": [
+        "inequality_as_range"
+      ]
+    },
+    {
+      "id": "number_line_representation",
+      "concept_id": "inequalities",
+      "name": "Number Line Represents the Solution Set",
+      "description": "Shading a number line shows which values satisfy the inequality.",
+      "tags": [
+        "number_line",
+        "shading",
+        "visual"
+      ],
+      "depends_on": [
+        "endpoint_open_closed"
+      ]
+    },
+    {
+      "id": "compound_inequality_intersection",
+      "concept_id": "inequalities",
+      "name": "Compound Inequalities Combine Ranges",
+      "description": "Compound inequalities intersect or union ranges to describe bounded regions.",
+      "tags": [
+        "compound",
+        "intersection",
+        "union"
+      ],
+      "depends_on": [
+        "number_line_representation"
+      ]
+    },
+    {
+      "id": "interval_notation",
+      "concept_id": "inequalities",
+      "name": "Interval Notation Encodes the Range",
+      "description": "Brackets and parentheses encode endpoints and inclusion in compact form.",
+      "tags": [
+        "interval",
+        "notation",
+        "brackets"
+      ],
+      "depends_on": [
+        "endpoint_open_closed"
+      ]
+    },
+    {
+      "id": "similarity_preserves_shape",
+      "concept_id": "similar_triangles",
+      "name": "Similarity Preserves Shape Not Size",
+      "description": "Similar figures have equal angles and proportionally scaled sides.",
+      "tags": [
+        "similarity",
+        "shape",
+        "scale"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "corresponding_parts_match",
+      "concept_id": "similar_triangles",
+      "name": "Identify Corresponding Sides and Angles",
+      "description": "Corresponding parts must be matched correctly before any ratio is written.",
+      "tags": [
+        "corresponding",
+        "matching",
+        "parts"
+      ],
+      "depends_on": [
+        "similarity_preserves_shape"
+      ]
+    },
+    {
+      "id": "scale_factor_as_ratio",
+      "concept_id": "similar_triangles",
+      "name": "Scale Factor Is the Common Ratio",
+      "description": "The constant ratio between corresponding sides is the scale factor.",
+      "tags": [
+        "scale_factor",
+        "ratio",
+        "constant"
+      ],
+      "depends_on": [
+        "corresponding_parts_match"
+      ]
+    },
+    {
+      "id": "similarity_criteria",
+      "concept_id": "similar_triangles",
+      "name": "Similarity Criteria (AA, SSS, SAS)",
+      "description": "Specific angle/side conditions are sufficient to guarantee similarity.",
+      "tags": [
+        "AA",
+        "SSS",
+        "SAS"
+      ],
+      "depends_on": [
+        "corresponding_parts_match"
+      ]
+    },
+    {
+      "id": "proportion_solves_missing_side",
+      "concept_id": "similar_triangles",
+      "name": "Set a Proportion to Find a Missing Side",
+      "description": "Equating corresponding-side ratios produces a solvable proportion.",
+      "tags": [
+        "proportion",
+        "missing_side",
+        "solve"
+      ],
+      "depends_on": [
+        "scale_factor_as_ratio"
+      ]
+    },
+    {
+      "id": "substitution_evaluates",
+      "concept_id": "expression_forms",
+      "name": "Substitution Evaluates an Expression",
+      "description": "Replacing variables with values produces a numerical result.",
+      "tags": [
+        "substitution",
+        "evaluate",
+        "value"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "exponent_rules",
+      "concept_id": "expression_forms",
+      "name": "Exponent Rules Govern Powers",
+      "description": "Products, quotients, and powers of powers follow fixed exponent laws.",
+      "tags": [
+        "exponents",
+        "powers",
+        "rules"
+      ],
+      "depends_on": [
+        "substitution_evaluates"
+      ]
+    },
+    {
+      "id": "square_of_binomial",
+      "concept_id": "expression_forms",
+      "name": "Square of a Binomial Pattern",
+      "description": "(a+b)^2 expands to a^2+2ab+b^2, not a^2+b^2.",
+      "tags": [
+        "binomial",
+        "expansion",
+        "pattern"
+      ],
+      "depends_on": [
+        "exponent_rules"
+      ]
+    },
+    {
+      "id": "difference_of_squares",
+      "concept_id": "expression_forms",
+      "name": "Difference of Squares Pattern",
+      "description": "a^2-b^2 factors as (a+b)(a-b), a common answer-choice trap.",
+      "tags": [
+        "difference_squares",
+        "factoring",
+        "pattern"
+      ],
+      "depends_on": [
+        "exponent_rules"
+      ]
+    },
+    {
+      "id": "equivalent_forms_same_value",
+      "concept_id": "expression_forms",
+      "name": "Equivalent Forms Share a Value",
+      "description": "Two expressions are equivalent if they yield the same value for every input.",
+      "tags": [
+        "equivalence",
+        "forms",
+        "value"
+      ],
+      "depends_on": [
+        "substitution_evaluates"
+      ]
+    },
+    {
+      "id": "area_as_covering",
+      "concept_id": "squares_area_right_triangles",
+      "name": "Area Counts Unit Coverage",
+      "description": "Area measures how many unit squares cover a region.",
+      "tags": [
+        "area",
+        "unit_square",
+        "covering"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "square_area_formula",
+      "concept_id": "squares_area_right_triangles",
+      "name": "Square Area Is Side Squared",
+      "description": "A square's area is the side length multiplied by itself.",
+      "tags": [
+        "square",
+        "area",
+        "side"
+      ],
+      "depends_on": [
+        "area_as_covering"
+      ]
+    },
+    {
+      "id": "side_from_area",
+      "concept_id": "squares_area_right_triangles",
+      "name": "Recover Side Length From Area",
+      "description": "Taking the square root of the area returns the side length.",
+      "tags": [
+        "square_root",
+        "side",
+        "inverse"
+      ],
+      "depends_on": [
+        "square_area_formula"
+      ]
+    },
+    {
+      "id": "pythagorean_relationship",
+      "concept_id": "squares_area_right_triangles",
+      "name": "Pythagorean Relationship Links the Sides",
+      "description": "In a right triangle the squared legs sum to the squared hypotenuse.",
+      "tags": [
+        "pythagorean",
+        "sides",
+        "square"
+      ],
+      "depends_on": [
+        "area_as_covering"
+      ]
+    },
+    {
+      "id": "diagonal_as_hypotenuse",
+      "concept_id": "squares_area_right_triangles",
+      "name": "Diagonal Is the Hypotenuse",
+      "description": "A square's diagonal is the hypotenuse of the right triangle formed by two sides.",
+      "tags": [
+        "diagonal",
+        "hypotenuse",
+        "square"
+      ],
+      "depends_on": [
+        "square_area_formula",
+        "pythagorean_relationship"
+      ]
+    },
+    {
+      "id": "special_right_triangle",
+      "concept_id": "squares_area_right_triangles",
+      "name": "Special Right Triangle Ratios",
+      "description": "45-45-90 and 30-60-90 triangles have fixed side ratios.",
+      "tags": [
+        "special_triangle",
+        "ratio",
+        "angles"
+      ],
+      "depends_on": [
+        "pythagorean_relationship"
+      ]
+    },
+    {
+      "id": "coordinate_plane_locates_points",
+      "concept_id": "coordinate_slope",
+      "name": "Coordinate Plane Locates Points",
+      "description": "An ordered pair fixes a point by horizontal and vertical position.",
+      "tags": [
+        "coordinate",
+        "point",
+        "plane"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "rise_over_run",
+      "concept_id": "coordinate_slope",
+      "name": "Slope as Rise Over Run",
+      "description": "Slope measures vertical change divided by horizontal change between two points.",
+      "tags": [
+        "slope",
+        "rise",
+        "run"
+      ],
+      "depends_on": [
+        "coordinate_plane_locates_points"
+      ]
+    },
+    {
+      "id": "slope_formula_two_points",
+      "concept_id": "coordinate_slope",
+      "name": "Slope Formula From Two Points",
+      "description": "Slope equals the difference of y-values over the difference of x-values.",
+      "tags": [
+        "slope_formula",
+        "two_points",
+        "difference"
+      ],
+      "depends_on": [
+        "rise_over_run"
+      ]
+    },
+    {
+      "id": "slope_sign_meaning",
+      "concept_id": "coordinate_slope",
+      "name": "Sign of Slope Shows Direction",
+      "description": "Positive slope rises, negative slope falls, zero is flat.",
+      "tags": [
+        "sign",
+        "direction",
+        "negative"
+      ],
+      "depends_on": [
+        "rise_over_run"
+      ]
+    },
+    {
+      "id": "slope_as_rate_of_change",
+      "concept_id": "coordinate_slope",
+      "name": "Slope Is a Rate of Change",
+      "description": "Slope expresses how one quantity changes per unit of another.",
+      "tags": [
+        "rate_of_change",
+        "interpretation",
+        "rate"
+      ],
+      "depends_on": [
+        "slope_formula_two_points"
+      ]
+    },
+    {
+      "id": "rectangle_area_formula",
+      "concept_id": "area_tiling",
+      "name": "Rectangle Area Is Length Times Width",
+      "description": "A rectangle's area is the product of its two dimensions.",
+      "tags": [
+        "rectangle",
+        "area",
+        "product"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "composite_area_decomposition",
+      "concept_id": "area_tiling",
+      "name": "Composite Area by Decomposition",
+      "description": "Irregular regions are split into rectangles whose areas add.",
+      "tags": [
+        "composite",
+        "decomposition",
+        "sum"
+      ],
+      "depends_on": [
+        "rectangle_area_formula"
+      ]
+    },
+    {
+      "id": "coverage_by_division",
+      "concept_id": "area_tiling",
+      "name": "Coverage Count by Dividing Areas",
+      "description": "Dividing total area by tile area gives the number of tiles needed.",
+      "tags": [
+        "coverage",
+        "division",
+        "tiles"
+      ],
+      "depends_on": [
+        "rectangle_area_formula"
+      ]
+    },
+    {
+      "id": "area_unit_conversion",
+      "concept_id": "area_tiling",
+      "name": "Area Unit Conversion Squares the Factor",
+      "description": "Converting area units squares the linear conversion factor.",
+      "tags": [
+        "unit_conversion",
+        "area",
+        "square"
+      ],
+      "depends_on": [
+        "rectangle_area_formula"
+      ]
+    },
+    {
+      "id": "identify_sides_by_angle",
+      "concept_id": "right_triangle_trig",
+      "name": "Identify Opposite, Adjacent, Hypotenuse",
+      "description": "Relative to a chosen acute angle, each side takes a named role.",
+      "tags": [
+        "opposite",
+        "adjacent",
+        "hypotenuse"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "soh_cah_toa",
+      "concept_id": "right_triangle_trig",
+      "name": "SOH-CAH-TOA Ratios",
+      "description": "Sine, cosine, and tangent are fixed ratios of the named sides.",
+      "tags": [
+        "sine",
+        "cosine",
+        "tangent"
+      ],
+      "depends_on": [
+        "identify_sides_by_angle"
+      ]
+    },
+    {
+      "id": "cosine_adjacent_hypotenuse",
+      "concept_id": "right_triangle_trig",
+      "name": "Cosine as Adjacent Over Hypotenuse",
+      "description": "Cosine compares the adjacent side to the hypotenuse for the chosen angle.",
+      "tags": [
+        "cosine",
+        "adjacent",
+        "ratio"
+      ],
+      "depends_on": [
+        "soh_cah_toa"
+      ]
+    },
+    {
+      "id": "reciprocal_trig_functions",
+      "concept_id": "right_triangle_trig",
+      "name": "Reciprocal Trig Functions",
+      "description": "Secant, cosecant, and cotangent are reciprocals of cosine, sine, and tangent.",
+      "tags": [
+        "secant",
+        "reciprocal",
+        "cosecant"
+      ],
+      "depends_on": [
+        "soh_cah_toa"
+      ]
+    },
+    {
+      "id": "formula_as_relationship",
+      "concept_id": "literal_equations",
+      "name": "Formula Relates Multiple Variables",
+      "description": "A literal equation expresses a relationship among several symbols.",
+      "tags": [
+        "formula",
+        "relationship",
+        "variables"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "isolate_target_variable",
+      "concept_id": "literal_equations",
+      "name": "Isolate the Target Variable",
+      "description": "Inverse operations isolate one chosen variable while treating others as constants.",
+      "tags": [
+        "isolate",
+        "target",
+        "inverse"
+      ],
+      "depends_on": [
+        "formula_as_relationship"
+      ]
+    },
+    {
+      "id": "factor_common_to_isolate",
+      "concept_id": "literal_equations",
+      "name": "Factor to Isolate a Shared Variable",
+      "description": "When the target appears in multiple terms, factoring it out is required to isolate it.",
+      "tags": [
+        "factoring",
+        "common_factor",
+        "isolate"
+      ],
+      "depends_on": [
+        "isolate_target_variable"
+      ]
+    },
+    {
+      "id": "divide_by_expression",
+      "concept_id": "literal_equations",
+      "name": "Divide by a Coefficient or Expression",
+      "description": "Isolation often ends by dividing both sides by a coefficient or grouped expression.",
+      "tags": [
+        "division",
+        "coefficient",
+        "expression"
+      ],
+      "depends_on": [
+        "isolate_target_variable"
+      ]
+    },
+    {
+      "id": "function_as_input_output",
+      "concept_id": "functions_evaluation",
+      "name": "Function Maps Inputs to Outputs",
+      "description": "A function assigns exactly one output to each input.",
+      "tags": [
+        "function",
+        "input",
+        "output"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "function_notation",
+      "concept_id": "functions_evaluation",
+      "name": "Function Notation Names the Rule",
+      "description": "Notation like f(x) names the rule and the input being supplied.",
+      "tags": [
+        "notation",
+        "f_of_x",
+        "rule"
+      ],
+      "depends_on": [
+        "function_as_input_output"
+      ]
+    },
+    {
+      "id": "substitute_into_function",
+      "concept_id": "functions_evaluation",
+      "name": "Substitute a Value Into a Function",
+      "description": "Evaluating replaces the input symbol everywhere it appears.",
+      "tags": [
+        "substitution",
+        "evaluate",
+        "input"
+      ],
+      "depends_on": [
+        "function_notation"
+      ]
+    },
+    {
+      "id": "quotient_of_function_values",
+      "concept_id": "functions_evaluation",
+      "name": "Quotient of Function Values",
+      "description": "Some problems evaluate two functions and divide the results.",
+      "tags": [
+        "quotient",
+        "ratio",
+        "evaluate"
+      ],
+      "depends_on": [
+        "substitute_into_function"
+      ]
+    }
   ],
   "bridges": [
-    {"id": "basic_expression_to_like_terms", "from_ingredient": "expression_as_composed_operations", "to_ingredient": "like_terms_share_structure", "source_concept": "basic_equations", "target_concept": "linear_equations", "relation": "enables", "description": "Seeing expressions as built from parts prepares students to group terms with matching variable structure.", "confidence": 0.82},
-    {"id": "basic_inverse_to_multistep", "from_ingredient": "inverse_operations_undo", "to_ingredient": "solve_multistep_in_sequence", "source_concept": "basic_equations", "target_concept": "linear_equations", "relation": "enables", "description": "Undoing a single operation directly extends to undoing multiple operations in sequence after simplification.", "confidence": 0.93},
-    {"id": "basic_balance_to_both_sides", "from_ingredient": "equation_as_balance", "to_ingredient": "variable_on_both_sides_balance", "source_concept": "basic_equations", "target_concept": "linear_equations", "relation": "enables", "description": "Understanding equality as balance directly supports moving terms from one side of an equation to the other without breaking equivalence.", "confidence": 0.95},
-    {"id": "basic_substitution_to_graph_points", "from_ingredient": "substitution_checks_solution", "to_ingredient": "graph_as_all_points_that_fit", "source_concept": "basic_equations", "target_concept": "linear_equations", "relation": "enables", "description": "Checking whether a value makes an equation true generalizes to checking whether a coordinate pair belongs on a graph.", "confidence": 0.8},
-
-    {"id": "rt_side_roles_to_sine", "from_ingredient": "legs_and_hypotenuse_roles", "to_ingredient": "sine_as_opposite_over_hypotenuse", "source_concept": "right_triangle_geometry", "target_concept": "trigonometry_basics", "relation": "enables", "description": "Identifying the hypotenuse is necessary before forming the sine ratio in a right triangle.", "confidence": 0.96},
-    {"id": "rt_side_roles_to_cosine", "from_ingredient": "legs_and_hypotenuse_roles", "to_ingredient": "cosine_as_adjacent_over_hypotenuse", "source_concept": "right_triangle_geometry", "target_concept": "trigonometry_basics", "relation": "enables", "description": "Identifying the hypotenuse is necessary before forming the cosine ratio in a right triangle.", "confidence": 0.96},
-    {"id": "rt_angle_roles_to_sine", "from_ingredient": "chosen_angle_sets_opposite_adjacent", "to_ingredient": "sine_as_opposite_over_hypotenuse", "source_concept": "right_triangle_geometry", "target_concept": "trigonometry_basics", "relation": "enables", "description": "Knowing which side is opposite a chosen angle directly enables constructing the sine ratio.", "confidence": 0.97},
-    {"id": "rt_angle_roles_to_cosine", "from_ingredient": "chosen_angle_sets_opposite_adjacent", "to_ingredient": "cosine_as_adjacent_over_hypotenuse", "source_concept": "right_triangle_geometry", "target_concept": "trigonometry_basics", "relation": "enables", "description": "Knowing which side is adjacent to a chosen angle directly enables constructing the cosine ratio.", "confidence": 0.97},
-    {"id": "rt_pythagorean_to_unit_circle", "from_ingredient": "pythagorean_relationship", "to_ingredient": "unit_circle_as_normalized_triangle", "source_concept": "right_triangle_geometry", "target_concept": "trigonometry_basics", "relation": "enables", "description": "The unit circle triangle relies on the same side relationship as the Pythagorean theorem once the hypotenuse is fixed to one.", "confidence": 0.88},
-    {"id": "rt_special_ratios_to_coordinates", "from_ingredient": "special_triangle_ratio_patterns", "to_ingredient": "sine_cosine_as_coordinates", "source_concept": "right_triangle_geometry", "target_concept": "trigonometry_basics", "relation": "enables", "description": "Exact special-triangle ratios feed directly into common sine and cosine coordinate values on the unit circle.", "confidence": 0.83},
-
-    {"id": "trig_angle_to_rotating_radius", "from_ingredient": "angle_as_rotation", "to_ingredient": "radius_as_rotating_segment", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "Treating angle as rotation directly supports viewing a circle radius as a rotating segment.", "confidence": 0.95},
-    {"id": "trig_sine_to_height_projection", "from_ingredient": "sine_as_opposite_over_hypotenuse", "to_ingredient": "height_as_sine_projection", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "The sine ratio becomes a vertical projection once the rotating radius forms a triangle with the axes.", "confidence": 0.91},
-    {"id": "trig_cosine_to_horizontal_projection", "from_ingredient": "cosine_as_adjacent_over_hypotenuse", "to_ingredient": "horizontal_position_as_cosine_projection", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "The cosine ratio becomes a horizontal projection once the rotating radius forms a triangle with the axes.", "confidence": 0.91},
-    {"id": "trig_coordinates_to_height_projection", "from_ingredient": "sine_cosine_as_coordinates", "to_ingredient": "height_as_sine_projection", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "Reading sine as the y-coordinate directly enables treating vertical height as a projection from circular motion.", "confidence": 0.96},
-    {"id": "trig_coordinates_to_horizontal_projection", "from_ingredient": "sine_cosine_as_coordinates", "to_ingredient": "horizontal_position_as_cosine_projection", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "Reading cosine as the x-coordinate directly enables treating horizontal position as a projection from circular motion.", "confidence": 0.96},
-    {"id": "trig_angle_to_period", "from_ingredient": "angle_as_rotation", "to_ingredient": "period_as_full_rotation", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "If an angle tracks rotation, then one complete turn naturally defines one full period of the motion.", "confidence": 0.92},
-    {"id": "trig_unit_circle_to_sinusoid", "from_ingredient": "unit_circle_as_normalized_triangle", "to_ingredient": "sinusoid_as_projection_trace", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "The unit-circle triangle gives the geometric setup that turns changing angle into a changing projection over time.", "confidence": 0.87},
-    {"id": "trig_coordinates_to_sinusoid", "from_ingredient": "sine_cosine_as_coordinates", "to_ingredient": "sinusoid_as_projection_trace", "source_concept": "trigonometry_basics", "target_concept": "circular_trigonometry", "relation": "enables", "description": "Once sine and cosine are understood as coordinates, plotting one coordinate against changing angle directly yields a sinusoid.", "confidence": 0.94},
-    {"id": "linear_graph_to_sinusoid", "from_ingredient": "graph_as_all_points_that_fit", "to_ingredient": "sinusoid_as_projection_trace", "source_concept": "linear_equations", "target_concept": "circular_trigonometry", "relation": "extends", "description": "Understanding a graph as a set of valid coordinate pairs helps students reinterpret a sinusoid as the trace of projection values across inputs.", "confidence": 0.78}
+    {
+      "id": "le_inverse_to_words",
+      "from_ingredient": "inverse_operations_isolate",
+      "to_ingredient": "relationship_to_equation",
+      "source_concept": "linear_equations",
+      "target_concept": "words_to_equations",
+      "relation": "enables",
+      "description": "Knowing how to isolate an unknown lets a student trust that a translated equation is solvable.",
+      "confidence": 0.84
+    },
+    {
+      "id": "words_to_le_solve",
+      "from_ingredient": "relationship_to_equation",
+      "to_ingredient": "variables_both_sides",
+      "source_concept": "words_to_equations",
+      "target_concept": "linear_equations",
+      "relation": "enables",
+      "description": "A translated equation frequently lands with variables on both sides, requiring linear-solving machinery to finish.",
+      "confidence": 0.9
+    },
+    {
+      "id": "le_distribute_to_words",
+      "from_ingredient": "distributive_rewrite",
+      "to_ingredient": "verbal_to_symbolic_phrases",
+      "source_concept": "linear_equations",
+      "target_concept": "words_to_equations",
+      "relation": "enables",
+      "description": "Phrases like 'twice the sum of' produce parenthesised expressions that must be distributed.",
+      "confidence": 0.8
+    },
+    {
+      "id": "le_inverse_to_literal",
+      "from_ingredient": "inverse_operations_isolate",
+      "to_ingredient": "isolate_target_variable",
+      "source_concept": "linear_equations",
+      "target_concept": "literal_equations",
+      "relation": "enables",
+      "description": "Isolating a numeric unknown generalises to isolating a chosen symbol among other symbols.",
+      "confidence": 0.93
+    },
+    {
+      "id": "le_distribute_to_literal_factor",
+      "from_ingredient": "distributive_rewrite",
+      "to_ingredient": "factor_common_to_isolate",
+      "source_concept": "linear_equations",
+      "target_concept": "literal_equations",
+      "relation": "enables",
+      "description": "Comfort distributing in reverse is what makes factoring a shared variable out feel natural.",
+      "confidence": 0.82
+    },
+    {
+      "id": "ratio_to_similar_scale",
+      "from_ingredient": "unit_rate_normalizes",
+      "to_ingredient": "scale_factor_as_ratio",
+      "source_concept": "rates_proportion",
+      "target_concept": "similar_triangles",
+      "relation": "enables",
+      "description": "A scale factor is a unit-rate comparison between corresponding sides.",
+      "confidence": 0.86
+    },
+    {
+      "id": "proportion_to_missing_side",
+      "from_ingredient": "proportion_as_equal_ratios",
+      "to_ingredient": "proportion_solves_missing_side",
+      "source_concept": "rates_proportion",
+      "target_concept": "similar_triangles",
+      "relation": "enables",
+      "description": "Solving a generic proportion is the exact mechanic used to find a missing similar-triangle side.",
+      "confidence": 0.95
+    },
+    {
+      "id": "ratio_to_slope",
+      "from_ingredient": "ratio_as_comparison",
+      "to_ingredient": "rise_over_run",
+      "source_concept": "rates_proportion",
+      "target_concept": "coordinate_slope",
+      "relation": "enables",
+      "description": "Slope is a ratio of vertical to horizontal change; ratio reasoning underpins it.",
+      "confidence": 0.85
+    },
+    {
+      "id": "rate_to_slope_interpretation",
+      "from_ingredient": "unit_rate_normalizes",
+      "to_ingredient": "slope_as_rate_of_change",
+      "source_concept": "rates_proportion",
+      "target_concept": "coordinate_slope",
+      "relation": "enables",
+      "description": "Interpreting slope as a rate of change reuses unit-rate thinking.",
+      "confidence": 0.88
+    },
+    {
+      "id": "tiling_to_coverage_rates",
+      "from_ingredient": "coverage_by_division",
+      "to_ingredient": "unit_conversion_chains",
+      "source_concept": "area_tiling",
+      "target_concept": "rates_proportion",
+      "relation": "enables",
+      "description": "Dividing total area by tile area is a unit-rate / conversion computation in disguise.",
+      "confidence": 0.72
+    },
+    {
+      "id": "area_to_square_area",
+      "from_ingredient": "area_as_covering",
+      "to_ingredient": "rectangle_area_formula",
+      "source_concept": "squares_area_right_triangles",
+      "target_concept": "area_tiling",
+      "relation": "enables",
+      "description": "Unit-coverage intuition is the basis for the rectangle area formula.",
+      "confidence": 0.9
+    },
+    {
+      "id": "expo_to_square_area",
+      "from_ingredient": "exponent_rules",
+      "to_ingredient": "square_area_formula",
+      "source_concept": "expression_forms",
+      "target_concept": "squares_area_right_triangles",
+      "relation": "enables",
+      "description": "Squaring a side length is an application of exponent rules.",
+      "confidence": 0.7
+    },
+    {
+      "id": "square_binomial_to_diag",
+      "from_ingredient": "square_of_binomial",
+      "to_ingredient": "diagonal_as_hypotenuse",
+      "source_concept": "expression_forms",
+      "target_concept": "squares_area_right_triangles",
+      "relation": "enables",
+      "description": "Expanding squared sums supports algebraic work on diagonal lengths.",
+      "confidence": 0.6
+    },
+    {
+      "id": "pyth_to_trig_sides",
+      "from_ingredient": "pythagorean_relationship",
+      "to_ingredient": "identify_sides_by_angle",
+      "source_concept": "squares_area_right_triangles",
+      "target_concept": "right_triangle_trig",
+      "relation": "enables",
+      "description": "Knowing the side relationships of a right triangle is needed before naming opposite/adjacent/hypotenuse.",
+      "confidence": 0.9
+    },
+    {
+      "id": "special_tri_to_trig",
+      "from_ingredient": "special_right_triangle",
+      "to_ingredient": "cosine_adjacent_hypotenuse",
+      "source_concept": "squares_area_right_triangles",
+      "target_concept": "right_triangle_trig",
+      "relation": "enables",
+      "description": "Special-triangle ratios give exact cosine values for common angles.",
+      "confidence": 0.8
+    },
+    {
+      "id": "subst_to_function_eval",
+      "from_ingredient": "substitution_evaluates",
+      "to_ingredient": "substitute_into_function",
+      "source_concept": "expression_forms",
+      "target_concept": "functions_evaluation",
+      "relation": "enables",
+      "description": "Evaluating an expression by substitution is the same act as evaluating a function at an input.",
+      "confidence": 0.93
+    },
+    {
+      "id": "equiv_forms_to_function",
+      "from_ingredient": "equivalent_forms_same_value",
+      "to_ingredient": "quotient_of_function_values",
+      "source_concept": "expression_forms",
+      "target_concept": "functions_evaluation",
+      "relation": "enables",
+      "description": "Recognising equivalent forms helps simplify quotients of function values.",
+      "confidence": 0.66
+    },
+    {
+      "id": "seq_diff_to_slope",
+      "from_ingredient": "constant_vs_growing_difference",
+      "to_ingredient": "slope_as_rate_of_change",
+      "source_concept": "sequences_patterns",
+      "target_concept": "coordinate_slope",
+      "relation": "enables",
+      "description": "A constant first difference IS a constant rate of change, the conceptual seed of slope.",
+      "confidence": 0.79
+    },
+    {
+      "id": "seq_to_words",
+      "from_ingredient": "next_term_from_rule",
+      "to_ingredient": "relationship_to_equation",
+      "source_concept": "sequences_patterns",
+      "target_concept": "words_to_equations",
+      "relation": "enables",
+      "description": "Expressing a sequence rule symbolically is a gateway to writing equations from patterns.",
+      "confidence": 0.64
+    },
+    {
+      "id": "perfect_square_to_diff_squares",
+      "from_ingredient": "perfect_square_structure",
+      "to_ingredient": "difference_of_squares",
+      "source_concept": "number_theory",
+      "target_concept": "expression_forms",
+      "relation": "enables",
+      "description": "Recognising perfect squares is prerequisite to spotting a difference of two squares.",
+      "confidence": 0.78
+    },
+    {
+      "id": "factor_pairs_to_diff_squares",
+      "from_ingredient": "factor_pairs_structure",
+      "to_ingredient": "difference_of_squares",
+      "source_concept": "number_theory",
+      "target_concept": "expression_forms",
+      "relation": "enables",
+      "description": "Factor-pair thinking supports factoring a^2-b^2 into a product.",
+      "confidence": 0.6
+    },
+    {
+      "id": "le_inverse_to_ineq",
+      "from_ingredient": "inverse_operations_isolate",
+      "to_ingredient": "inequality_as_range",
+      "source_concept": "linear_equations",
+      "target_concept": "inequalities",
+      "relation": "enables",
+      "description": "Solving inequalities reuses inverse operations, with a sign-flip caveat on multiplication by negatives.",
+      "confidence": 0.83
+    }
+  ],
+  "combinations": [
+    {
+      "id": "cb_multistep_both_sides_distribute",
+      "ingredients": [
+        "distributive_rewrite",
+        "like_terms_share_structure",
+        "variables_both_sides",
+        "inverse_operations_isolate"
+      ],
+      "apply_order": [
+        "distributive_rewrite",
+        "like_terms_share_structure",
+        "variables_both_sides",
+        "inverse_operations_isolate"
+      ],
+      "spans_concepts": [
+        "linear_equations"
+      ],
+      "example_problem": "Solve 3(x+2) - 5 = 7 - 2(x-1).",
+      "captured_by_dependency_or_bridge": false,
+      "note": "distributive_rewrite and like_terms_share_structure are siblings (both children of integer_arithmetic_fluency) with no edge between them; the real solving order distributes BEFORE combining, the reverse of the dependency order. A dependency backtrack from variables_both_sides reaches the two simplification skills only partially.",
+      "confidence": 0.9
+    },
+    {
+      "id": "cb_words_to_full_solve",
+      "ingredients": [
+        "unknown_named_as_variable",
+        "verbal_to_symbolic_phrases",
+        "relationship_to_equation",
+        "variables_both_sides",
+        "inverse_operations_isolate"
+      ],
+      "apply_order": [
+        "unknown_named_as_variable",
+        "verbal_to_symbolic_phrases",
+        "relationship_to_equation",
+        "variables_both_sides",
+        "inverse_operations_isolate"
+      ],
+      "spans_concepts": [
+        "linear_equations",
+        "words_to_equations"
+      ],
+      "example_problem": "Twice a number increased by 4 equals three times the number decreased by 7. Find the number.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Translation ingredients live in words_to_equations; the actual solving ingredients live in linear_equations. Only one bridge connects the two concepts, so the full fire-set spanning both is invisible to a single backtrack.",
+      "confidence": 0.88
+    },
+    {
+      "id": "cb_similar_triangle_proportion",
+      "ingredients": [
+        "similarity_preserves_shape",
+        "corresponding_parts_match",
+        "scale_factor_as_ratio",
+        "proportion_solves_missing_side",
+        "inverse_operations_isolate"
+      ],
+      "apply_order": [
+        "similarity_preserves_shape",
+        "corresponding_parts_match",
+        "scale_factor_as_ratio",
+        "proportion_solves_missing_side",
+        "inverse_operations_isolate"
+      ],
+      "spans_concepts": [
+        "linear_equations",
+        "similar_triangles"
+      ],
+      "example_problem": "Two similar triangles have a 6 cm side corresponding to a 9 cm side. Find the side corresponding to the 8 cm side.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Finishing the proportion requires inverse_operations_isolate from linear_equations, which has no dependency or bridge into proportion_solves_missing_side. The geometry chain stops short of the algebra that closes the problem.",
+      "confidence": 0.85
+    },
+    {
+      "id": "cb_square_diagonal_special_triangle",
+      "ingredients": [
+        "square_area_formula",
+        "side_from_area",
+        "pythagorean_relationship",
+        "diagonal_as_hypotenuse",
+        "special_right_triangle"
+      ],
+      "apply_order": [
+        "square_area_formula",
+        "side_from_area",
+        "pythagorean_relationship",
+        "diagonal_as_hypotenuse",
+        "special_right_triangle"
+      ],
+      "spans_concepts": [
+        "squares_area_right_triangles"
+      ],
+      "example_problem": "A square has area 50. Find the length of its diagonal.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "side_from_area and pythagorean_relationship are siblings under different parents and never co-linked; a diagonal problem must combine recovering the side, then applying Pythagoras / the 45-45-90 ratio. No single edge ties area-inversion to the diagonal step.",
+      "confidence": 0.86
+    },
+    {
+      "id": "cb_trig_with_pythagoras",
+      "ingredients": [
+        "identify_sides_by_angle",
+        "cosine_adjacent_hypotenuse",
+        "pythagorean_relationship",
+        "soh_cah_toa"
+      ],
+      "apply_order": [
+        "identify_sides_by_angle",
+        "pythagorean_relationship",
+        "cosine_adjacent_hypotenuse",
+        "soh_cah_toa"
+      ],
+      "spans_concepts": [
+        "right_triangle_trig",
+        "squares_area_right_triangles"
+      ],
+      "example_problem": "A right triangle has hypotenuse 13 and one leg 5. Find the cosine of the angle adjacent to the known leg.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "pythagorean_relationship is in squares_area_right_triangles while the trig ratio is in right_triangle_trig; the bridge runs the other direction (geometry enables trig) but the problem fires them jointly to get the missing side first, then the ratio.",
+      "confidence": 0.84
+    },
+    {
+      "id": "cb_slope_as_rate_word_problem",
+      "ingredients": [
+        "coordinate_plane_locates_points",
+        "slope_formula_two_points",
+        "slope_as_rate_of_change",
+        "unit_rate_normalizes"
+      ],
+      "apply_order": [
+        "coordinate_plane_locates_points",
+        "slope_formula_two_points",
+        "slope_as_rate_of_change",
+        "unit_rate_normalizes"
+      ],
+      "spans_concepts": [
+        "coordinate_slope",
+        "rates_proportion"
+      ],
+      "example_problem": "A tank holds 12 L at minute 2 and 30 L at minute 8. At what rate is it filling, in litres per minute?",
+      "captured_by_dependency_or_bridge": false,
+      "note": "The problem fuses coordinate-slope computation with rates_proportion unit-rate interpretation. These live in separate concepts joined by a single weak bridge; the combination, not the bridge, is what the problem needs.",
+      "confidence": 0.8
+    },
+    {
+      "id": "cb_average_back_solve",
+      "ingredients": [
+        "mean_as_total_over_count",
+        "total_reconstructed_from_mean",
+        "word_problem_to_average",
+        "inverse_operations_isolate"
+      ],
+      "apply_order": [
+        "word_problem_to_average",
+        "mean_as_total_over_count",
+        "total_reconstructed_from_mean",
+        "inverse_operations_isolate"
+      ],
+      "spans_concepts": [
+        "linear_equations",
+        "statistics_averages"
+      ],
+      "example_problem": "A student's mean over 5 tests is 82. After a 6th test the mean is 84. What was the 6th score?",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Back-solving from the mean fires total reconstruction plus an inverse-operation isolation step from linear_equations, across a concept boundary with no bridge.",
+      "confidence": 0.83
+    },
+    {
+      "id": "cb_weighted_average",
+      "ingredients": [
+        "weighted_average_structure",
+        "mean_as_total_over_count",
+        "ratio_as_comparison",
+        "word_problem_to_average"
+      ],
+      "apply_order": [
+        "word_problem_to_average",
+        "weighted_average_structure",
+        "ratio_as_comparison",
+        "mean_as_total_over_count"
+      ],
+      "spans_concepts": [
+        "rates_proportion",
+        "statistics_averages"
+      ],
+      "example_problem": "A class of 20 averages 70 and a class of 30 averages 80. What is the combined average?",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Weighted averaging silently uses ratio_as_comparison from rates_proportion to weight by class size. That cross-concept reliance is never edged.",
+      "confidence": 0.78
+    },
+    {
+      "id": "cb_expression_trap_evaluation",
+      "ingredients": [
+        "substitution_evaluates",
+        "square_of_binomial",
+        "difference_of_squares",
+        "equivalent_forms_same_value"
+      ],
+      "apply_order": [
+        "substitution_evaluates",
+        "square_of_binomial",
+        "difference_of_squares",
+        "equivalent_forms_same_value"
+      ],
+      "spans_concepts": [
+        "expression_forms"
+      ],
+      "example_problem": "Evaluate which answer choice equals (x+3)^2 - (x^2+9) for all x.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "The distractor structure requires holding square_of_binomial and difference_of_squares simultaneously to reject traps. Both are siblings under exponent_rules with no co-edge; recognising the trap is a combination, not a prerequisite chain.",
+      "confidence": 0.82
+    },
+    {
+      "id": "cb_literal_factor_isolate",
+      "ingredients": [
+        "formula_as_relationship",
+        "isolate_target_variable",
+        "factor_common_to_isolate",
+        "divide_by_expression",
+        "distributive_rewrite"
+      ],
+      "apply_order": [
+        "formula_as_relationship",
+        "isolate_target_variable",
+        "factor_common_to_isolate",
+        "divide_by_expression"
+      ],
+      "spans_concepts": [
+        "linear_equations",
+        "literal_equations"
+      ],
+      "example_problem": "Solve for r:  A = P + Prt.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Isolating r requires factoring it out of two terms then dividing by the grouped expression \u2014 combining literal-equation ingredients with reverse-distribution from linear_equations. The factoring-to-isolate move is exactly where students stall and is only partially bridged.",
+      "confidence": 0.85
+    },
+    {
+      "id": "cb_tiling_with_conversion",
+      "ingredients": [
+        "rectangle_area_formula",
+        "coverage_by_division",
+        "area_unit_conversion",
+        "unit_conversion_chains"
+      ],
+      "apply_order": [
+        "rectangle_area_formula",
+        "area_unit_conversion",
+        "coverage_by_division",
+        "unit_conversion_chains"
+      ],
+      "spans_concepts": [
+        "area_tiling",
+        "rates_proportion"
+      ],
+      "example_problem": "A floor is 12 ft by 9 ft. Tiles are sold in square yards. How many square yards of tile are needed?",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Mixing area in feet with tiles in yards forces area_unit_conversion (square the factor) plus unit_conversion_chains from rates_proportion. The squared-factor pitfall lives at the junction of two concepts.",
+      "confidence": 0.8
+    },
+    {
+      "id": "cb_function_quotient_eval",
+      "ingredients": [
+        "function_notation",
+        "substitute_into_function",
+        "quotient_of_function_values",
+        "exponent_rules"
+      ],
+      "apply_order": [
+        "function_notation",
+        "substitute_into_function",
+        "exponent_rules",
+        "quotient_of_function_values"
+      ],
+      "spans_concepts": [
+        "expression_forms",
+        "functions_evaluation"
+      ],
+      "example_problem": "If f(x)=x^2+1 and g(x)=x+1, find f(3)/g(3).",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Evaluating polynomial function values pulls exponent_rules from expression_forms into functions_evaluation; the quotient step then combines two independent evaluations. Neither cross-use is a dependency.",
+      "confidence": 0.79
+    },
+    {
+      "id": "cb_sequence_to_linear_rule",
+      "ingredients": [
+        "first_differences_reveal_change",
+        "constant_vs_growing_difference",
+        "next_term_from_rule",
+        "slope_as_rate_of_change",
+        "relationship_to_equation"
+      ],
+      "apply_order": [
+        "first_differences_reveal_change",
+        "constant_vs_growing_difference",
+        "slope_as_rate_of_change",
+        "relationship_to_equation",
+        "next_term_from_rule"
+      ],
+      "spans_concepts": [
+        "coordinate_slope",
+        "sequences_patterns",
+        "words_to_equations"
+      ],
+      "example_problem": "A sequence is 4, 7, 10, 13, ... Write a rule for the nth term and find the 20th term.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Going from a constant difference to a closed-form linear rule fuses sequence reasoning, slope-as-rate, and equation writing across three concepts. The pattern-to-formula leap is a combination the DAG cannot sequence.",
+      "confidence": 0.81
+    },
+    {
+      "id": "cb_number_theory_perfect_square_count",
+      "ingredients": [
+        "divisibility_as_exact_division",
+        "factor_pairs_structure",
+        "perfect_square_structure",
+        "factor_counting"
+      ],
+      "apply_order": [
+        "divisibility_as_exact_division",
+        "factor_pairs_structure",
+        "perfect_square_structure",
+        "factor_counting"
+      ],
+      "spans_concepts": [
+        "number_theory"
+      ],
+      "example_problem": "How many positive integers less than 100 have an odd number of factors?",
+      "captured_by_dependency_or_bridge": false,
+      "note": "The insight (only perfect squares have an odd factor count) requires combining factor-pairing with perfect-square structure and counting. These are within one concept but the combination is the actual problem, not any single prerequisite.",
+      "confidence": 0.8
+    },
+    {
+      "id": "cb_inequality_solve_and_represent",
+      "ingredients": [
+        "inequality_as_range",
+        "inverse_operations_isolate",
+        "endpoint_open_closed",
+        "number_line_representation",
+        "interval_notation"
+      ],
+      "apply_order": [
+        "inverse_operations_isolate",
+        "inequality_as_range",
+        "endpoint_open_closed",
+        "number_line_representation",
+        "interval_notation"
+      ],
+      "spans_concepts": [
+        "inequalities",
+        "linear_equations"
+      ],
+      "example_problem": "Solve -3x + 5 < 14 and graph the solution, then write it in interval notation.",
+      "captured_by_dependency_or_bridge": false,
+      "note": "Solving reuses inverse_operations_isolate from linear_equations (with a sign-flip), then represents the range on a line and in interval notation. The algebra and the representation halves live in different concepts joined by one bridge; the problem needs the full fused set.",
+      "confidence": 0.82
+    }
   ],
   "card_templates": [
-    {"id": "card_basic_expression_to_like_terms", "target_type": "bridge", "target_id": "expression_as_composed_operations->like_terms_share_structure", "representations": {"geometric": {"title": "See expression as composed operations inside like terms share structure", "body": "Picture the idea of expression as composed operations as a diagram first. Then mark the exact part of that picture that becomes like terms share structure when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing expression as composed operations and highlight the feature that carries over to like terms share structure."}, "algebraic": {"title": "Translate expression as composed operations into like terms share structure", "body": "Write the relationship for expression as composed operations in symbols, then rewrite it in the new setting until the same structure appears as like terms share structure. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of expression as composed operations that turns into like terms share structure?", "difficulty": 0.53},
-    {"id": "card_basic_inverse_to_multistep", "target_type": "bridge", "target_id": "inverse_operations_undo->solve_multistep_in_sequence", "representations": {"geometric": {"title": "See inverse operations undo inside solve multistep in sequence", "body": "Picture the idea of inverse operations undo as a diagram first. Then mark the exact part of that picture that becomes solve multistep in sequence when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing inverse operations undo and highlight the feature that carries over to solve multistep in sequence."}, "algebraic": {"title": "Translate inverse operations undo into solve multistep in sequence", "body": "Write the relationship for inverse operations undo in symbols, then rewrite it in the new setting until the same structure appears as solve multistep in sequence. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of inverse operations undo that turns into solve multistep in sequence?", "difficulty": 0.42},
-    {"id": "card_basic_balance_to_both_sides", "target_type": "bridge", "target_id": "equation_as_balance->variable_on_both_sides_balance", "representations": {"geometric": {"title": "See equation as balance inside variable on both sides balance", "body": "Picture the idea of equation as balance as a diagram first. Then mark the exact part of that picture that becomes variable on both sides balance when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing equation as balance and highlight the feature that carries over to variable on both sides balance."}, "algebraic": {"title": "Translate equation as balance into variable on both sides balance", "body": "Write the relationship for equation as balance in symbols, then rewrite it in the new setting until the same structure appears as variable on both sides balance. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of equation as balance that turns into variable on both sides balance?", "difficulty": 0.4},
-    {"id": "card_basic_substitution_to_graph_points", "target_type": "bridge", "target_id": "substitution_checks_solution->graph_as_all_points_that_fit", "representations": {"geometric": {"title": "See substitution checks solution inside graph as all points that fit", "body": "Picture the idea of substitution checks solution as a diagram first. Then mark the exact part of that picture that becomes graph as all points that fit when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing substitution checks solution and highlight the feature that carries over to graph as all points that fit."}, "algebraic": {"title": "Translate substitution checks solution into graph as all points that fit", "body": "Write the relationship for substitution checks solution in symbols, then rewrite it in the new setting until the same structure appears as graph as all points that fit. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of substitution checks solution that turns into graph as all points that fit?", "difficulty": 0.55},
-
-    {"id": "card_rt_side_roles_to_sine", "target_type": "bridge", "target_id": "legs_and_hypotenuse_roles->sine_as_opposite_over_hypotenuse", "representations": {"geometric": {"title": "See legs and hypotenuse roles inside sine as opposite over hypotenuse", "body": "Picture the idea of legs and hypotenuse roles as a diagram first. Then mark the exact part of that picture that becomes sine as opposite over hypotenuse when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing legs and hypotenuse roles and highlight the feature that carries over to sine as opposite over hypotenuse."}, "algebraic": {"title": "Translate legs and hypotenuse roles into sine as opposite over hypotenuse", "body": "Write the relationship for legs and hypotenuse roles in symbols, then rewrite it in the new setting until the same structure appears as sine as opposite over hypotenuse. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of legs and hypotenuse roles that turns into sine as opposite over hypotenuse?", "difficulty": 0.39},
-    {"id": "card_rt_side_roles_to_cosine", "target_type": "bridge", "target_id": "legs_and_hypotenuse_roles->cosine_as_adjacent_over_hypotenuse", "representations": {"geometric": {"title": "See legs and hypotenuse roles inside cosine as adjacent over hypotenuse", "body": "Picture the idea of legs and hypotenuse roles as a diagram first. Then mark the exact part of that picture that becomes cosine as adjacent over hypotenuse when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing legs and hypotenuse roles and highlight the feature that carries over to cosine as adjacent over hypotenuse."}, "algebraic": {"title": "Translate legs and hypotenuse roles into cosine as adjacent over hypotenuse", "body": "Write the relationship for legs and hypotenuse roles in symbols, then rewrite it in the new setting until the same structure appears as cosine as adjacent over hypotenuse. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of legs and hypotenuse roles that turns into cosine as adjacent over hypotenuse?", "difficulty": 0.39},
-    {"id": "card_rt_angle_roles_to_sine", "target_type": "bridge", "target_id": "chosen_angle_sets_opposite_adjacent->sine_as_opposite_over_hypotenuse", "representations": {"geometric": {"title": "See chosen angle sets opposite adjacent inside sine as opposite over hypotenuse", "body": "Picture the idea of chosen angle sets opposite adjacent as a diagram first. Then mark the exact part of that picture that becomes sine as opposite over hypotenuse when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing chosen angle sets opposite adjacent and highlight the feature that carries over to sine as opposite over hypotenuse."}, "algebraic": {"title": "Translate chosen angle sets opposite adjacent into sine as opposite over hypotenuse", "body": "Write the relationship for chosen angle sets opposite adjacent in symbols, then rewrite it in the new setting until the same structure appears as sine as opposite over hypotenuse. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of chosen angle sets opposite adjacent that turns into sine as opposite over hypotenuse?", "difficulty": 0.38},
-    {"id": "card_rt_angle_roles_to_cosine", "target_type": "bridge", "target_id": "chosen_angle_sets_opposite_adjacent->cosine_as_adjacent_over_hypotenuse", "representations": {"geometric": {"title": "See chosen angle sets opposite adjacent inside cosine as adjacent over hypotenuse", "body": "Picture the idea of chosen angle sets opposite adjacent as a diagram first. Then mark the exact part of that picture that becomes cosine as adjacent over hypotenuse when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing chosen angle sets opposite adjacent and highlight the feature that carries over to cosine as adjacent over hypotenuse."}, "algebraic": {"title": "Translate chosen angle sets opposite adjacent into cosine as adjacent over hypotenuse", "body": "Write the relationship for chosen angle sets opposite adjacent in symbols, then rewrite it in the new setting until the same structure appears as cosine as adjacent over hypotenuse. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of chosen angle sets opposite adjacent that turns into cosine as adjacent over hypotenuse?", "difficulty": 0.38},
-    {"id": "card_rt_pythagorean_to_unit_circle", "target_type": "bridge", "target_id": "pythagorean_relationship->unit_circle_as_normalized_triangle", "representations": {"geometric": {"title": "See pythagorean relationship inside unit circle as normalized triangle", "body": "Picture the idea of pythagorean relationship as a diagram first. Then mark the exact part of that picture that becomes unit circle as normalized triangle when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing pythagorean relationship and highlight the feature that carries over to unit circle as normalized triangle."}, "algebraic": {"title": "Translate pythagorean relationship into unit circle as normalized triangle", "body": "Write the relationship for pythagorean relationship in symbols, then rewrite it in the new setting until the same structure appears as unit circle as normalized triangle. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of pythagorean relationship that turns into unit circle as normalized triangle?", "difficulty": 0.47},
-    {"id": "card_rt_special_ratios_to_coordinates", "target_type": "bridge", "target_id": "special_triangle_ratio_patterns->sine_cosine_as_coordinates", "representations": {"geometric": {"title": "See special triangle ratio patterns inside sine cosine as coordinates", "body": "Picture the idea of special triangle ratio patterns as a diagram first. Then mark the exact part of that picture that becomes sine cosine as coordinates when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing special triangle ratio patterns and highlight the feature that carries over to sine cosine as coordinates."}, "algebraic": {"title": "Translate special triangle ratio patterns into sine cosine as coordinates", "body": "Write the relationship for special triangle ratio patterns in symbols, then rewrite it in the new setting until the same structure appears as sine cosine as coordinates. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of special triangle ratio patterns that turns into sine cosine as coordinates?", "difficulty": 0.52},
-
-    {"id": "card_trig_angle_to_rotating_radius", "target_type": "bridge", "target_id": "angle_as_rotation->radius_as_rotating_segment", "representations": {"geometric": {"title": "See angle as rotation inside radius as rotating segment", "body": "Picture the idea of angle as rotation as a diagram first. Then mark the exact part of that picture that becomes radius as rotating segment when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing angle as rotation and highlight the feature that carries over to radius as rotating segment."}, "algebraic": {"title": "Translate angle as rotation into radius as rotating segment", "body": "Write the relationship for angle as rotation in symbols, then rewrite it in the new setting until the same structure appears as radius as rotating segment. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of angle as rotation that turns into radius as rotating segment?", "difficulty": 0.4},
-    {"id": "card_trig_sine_to_height_projection", "target_type": "bridge", "target_id": "sine_as_opposite_over_hypotenuse->height_as_sine_projection", "representations": {"geometric": {"title": "See sine as opposite over hypotenuse inside height as sine projection", "body": "Picture the idea of sine as opposite over hypotenuse as a diagram first. Then mark the exact part of that picture that becomes height as sine projection when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing sine as opposite over hypotenuse and highlight the feature that carries over to height as sine projection."}, "algebraic": {"title": "Translate sine as opposite over hypotenuse into height as sine projection", "body": "Write the relationship for sine as opposite over hypotenuse in symbols, then rewrite it in the new setting until the same structure appears as height as sine projection. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of sine as opposite over hypotenuse that turns into height as sine projection?", "difficulty": 0.44},
-    {"id": "card_trig_cosine_to_horizontal_projection", "target_type": "bridge", "target_id": "cosine_as_adjacent_over_hypotenuse->horizontal_position_as_cosine_projection", "representations": {"geometric": {"title": "See cosine as adjacent over hypotenuse inside horizontal position as cosine projection", "body": "Picture the idea of cosine as adjacent over hypotenuse as a diagram first. Then mark the exact part of that picture that becomes horizontal position as cosine projection when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing cosine as adjacent over hypotenuse and highlight the feature that carries over to horizontal position as cosine projection."}, "algebraic": {"title": "Translate cosine as adjacent over hypotenuse into horizontal position as cosine projection", "body": "Write the relationship for cosine as adjacent over hypotenuse in symbols, then rewrite it in the new setting until the same structure appears as horizontal position as cosine projection. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of cosine as adjacent over hypotenuse that turns into horizontal position as cosine projection?", "difficulty": 0.44},
-    {"id": "card_trig_coordinates_to_height_projection", "target_type": "bridge", "target_id": "sine_cosine_as_coordinates->height_as_sine_projection", "representations": {"geometric": {"title": "See sine cosine as coordinates inside height as sine projection", "body": "Picture the idea of sine cosine as coordinates as a diagram first. Then mark the exact part of that picture that becomes height as sine projection when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing sine cosine as coordinates and highlight the feature that carries over to height as sine projection."}, "algebraic": {"title": "Translate sine cosine as coordinates into height as sine projection", "body": "Write the relationship for sine cosine as coordinates in symbols, then rewrite it in the new setting until the same structure appears as height as sine projection. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of sine cosine as coordinates that turns into height as sine projection?", "difficulty": 0.39},
-    {"id": "card_trig_coordinates_to_horizontal_projection", "target_type": "bridge", "target_id": "sine_cosine_as_coordinates->horizontal_position_as_cosine_projection", "representations": {"geometric": {"title": "See sine cosine as coordinates inside horizontal position as cosine projection", "body": "Picture the idea of sine cosine as coordinates as a diagram first. Then mark the exact part of that picture that becomes horizontal position as cosine projection when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing sine cosine as coordinates and highlight the feature that carries over to horizontal position as cosine projection."}, "algebraic": {"title": "Translate sine cosine as coordinates into horizontal position as cosine projection", "body": "Write the relationship for sine cosine as coordinates in symbols, then rewrite it in the new setting until the same structure appears as horizontal position as cosine projection. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of sine cosine as coordinates that turns into horizontal position as cosine projection?", "difficulty": 0.39},
-    {"id": "card_trig_angle_to_period", "target_type": "bridge", "target_id": "angle_as_rotation->period_as_full_rotation", "representations": {"geometric": {"title": "See angle as rotation inside period as full rotation", "body": "Picture the idea of angle as rotation as a diagram first. Then mark the exact part of that picture that becomes period as full rotation when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing angle as rotation and highlight the feature that carries over to period as full rotation."}, "algebraic": {"title": "Translate angle as rotation into period as full rotation", "body": "Write the relationship for angle as rotation in symbols, then rewrite it in the new setting until the same structure appears as period as full rotation. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of angle as rotation that turns into period as full rotation?", "difficulty": 0.43},
-    {"id": "card_trig_unit_circle_to_sinusoid", "target_type": "bridge", "target_id": "unit_circle_as_normalized_triangle->sinusoid_as_projection_trace", "representations": {"geometric": {"title": "See unit circle as normalized triangle inside sinusoid as projection trace", "body": "Picture the idea of unit circle as normalized triangle as a diagram first. Then mark the exact part of that picture that becomes sinusoid as projection trace when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing unit circle as normalized triangle and highlight the feature that carries over to sinusoid as projection trace."}, "algebraic": {"title": "Translate unit circle as normalized triangle into sinusoid as projection trace", "body": "Write the relationship for unit circle as normalized triangle in symbols, then rewrite it in the new setting until the same structure appears as sinusoid as projection trace. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of unit circle as normalized triangle that turns into sinusoid as projection trace?", "difficulty": 0.48},
-    {"id": "card_trig_coordinates_to_sinusoid", "target_type": "bridge", "target_id": "sine_cosine_as_coordinates->sinusoid_as_projection_trace", "representations": {"geometric": {"title": "See sine cosine as coordinates inside sinusoid as projection trace", "body": "Picture the idea of sine cosine as coordinates as a diagram first. Then mark the exact part of that picture that becomes sinusoid as projection trace when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing sine cosine as coordinates and highlight the feature that carries over to sinusoid as projection trace."}, "algebraic": {"title": "Translate sine cosine as coordinates into sinusoid as projection trace", "body": "Write the relationship for sine cosine as coordinates in symbols, then rewrite it in the new setting until the same structure appears as sinusoid as projection trace. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of sine cosine as coordinates that turns into sinusoid as projection trace?", "difficulty": 0.41},
-    {"id": "card_linear_graph_to_sinusoid", "target_type": "bridge", "target_id": "graph_as_all_points_that_fit->sinusoid_as_projection_trace", "representations": {"geometric": {"title": "See graph as all points that fit inside sinusoid as projection trace", "body": "Picture the idea of graph as all points that fit as a diagram first. Then mark the exact part of that picture that becomes sinusoid as projection trace when the situation is reinterpreted in the new concept.", "visual_hint": "Draw a simple sketch showing graph as all points that fit and highlight the feature that carries over to sinusoid as projection trace."}, "algebraic": {"title": "Translate graph as all points that fit into sinusoid as projection trace", "body": "Write the relationship for graph as all points that fit in symbols, then rewrite it in the new setting until the same structure appears as sinusoid as projection trace. Focus on what stays invariant during the translation.", "visual_hint": ""}}, "prompt": "What is the exact piece of graph as all points that fit that turns into sinusoid as projection trace?", "difficulty": 0.57}
+    {
+      "id": "card_le_inverse_to_words",
+      "target_type": "bridge",
+      "target_id": "inverse_operations_isolate->relationship_to_equation",
+      "representations": {
+        "geometric": {
+          "title": "See inverse operations isolate the unknown inside assemble phrases into an equation",
+          "body": "Picture the idea of inverse operations isolate the unknown as a diagram first. Then mark the exact part of that picture that becomes assemble phrases into an equation when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing inverse operations isolate the unknown and highlight the feature that carries over to assemble phrases into an equation."
+        },
+        "algebraic": {
+          "title": "Translate inverse operations isolate the unknown into assemble phrases into an equation",
+          "body": "Write the relationship for inverse operations isolate the unknown in symbols, then rewrite it in the new setting until the same structure appears as assemble phrases into an equation. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of inverse operations isolate the unknown that turns into assemble phrases into an equation?",
+      "difficulty": 0.56
+    },
+    {
+      "id": "card_words_to_le_solve",
+      "target_type": "bridge",
+      "target_id": "relationship_to_equation->variables_both_sides",
+      "representations": {
+        "geometric": {
+          "title": "See assemble phrases into an equation inside move variable terms across the equals sign",
+          "body": "Picture the idea of assemble phrases into an equation as a diagram first. Then mark the exact part of that picture that becomes move variable terms across the equals sign when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing assemble phrases into an equation and highlight the feature that carries over to move variable terms across the equals sign."
+        },
+        "algebraic": {
+          "title": "Translate assemble phrases into an equation into move variable terms across the equals sign",
+          "body": "Write the relationship for assemble phrases into an equation in symbols, then rewrite it in the new setting until the same structure appears as move variable terms across the equals sign. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of assemble phrases into an equation that turns into move variable terms across the equals sign?",
+      "difficulty": 0.5
+    },
+    {
+      "id": "card_le_distribute_to_words",
+      "target_type": "bridge",
+      "target_id": "distributive_rewrite->verbal_to_symbolic_phrases",
+      "representations": {
+        "geometric": {
+          "title": "See distribution preserves value inside translate verbal phrases to operations",
+          "body": "Picture the idea of distribution preserves value as a diagram first. Then mark the exact part of that picture that becomes translate verbal phrases to operations when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing distribution preserves value and highlight the feature that carries over to translate verbal phrases to operations."
+        },
+        "algebraic": {
+          "title": "Translate distribution preserves value into translate verbal phrases to operations",
+          "body": "Write the relationship for distribution preserves value in symbols, then rewrite it in the new setting until the same structure appears as translate verbal phrases to operations. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of distribution preserves value that turns into translate verbal phrases to operations?",
+      "difficulty": 0.6
+    },
+    {
+      "id": "card_le_inverse_to_literal",
+      "target_type": "bridge",
+      "target_id": "inverse_operations_isolate->isolate_target_variable",
+      "representations": {
+        "geometric": {
+          "title": "See inverse operations isolate the unknown inside isolate the target variable",
+          "body": "Picture the idea of inverse operations isolate the unknown as a diagram first. Then mark the exact part of that picture that becomes isolate the target variable when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing inverse operations isolate the unknown and highlight the feature that carries over to isolate the target variable."
+        },
+        "algebraic": {
+          "title": "Translate inverse operations isolate the unknown into isolate the target variable",
+          "body": "Write the relationship for inverse operations isolate the unknown in symbols, then rewrite it in the new setting until the same structure appears as isolate the target variable. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of inverse operations isolate the unknown that turns into isolate the target variable?",
+      "difficulty": 0.47
+    },
+    {
+      "id": "card_le_distribute_to_literal_factor",
+      "target_type": "bridge",
+      "target_id": "distributive_rewrite->factor_common_to_isolate",
+      "representations": {
+        "geometric": {
+          "title": "See distribution preserves value inside factor to isolate a shared variable",
+          "body": "Picture the idea of distribution preserves value as a diagram first. Then mark the exact part of that picture that becomes factor to isolate a shared variable when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing distribution preserves value and highlight the feature that carries over to factor to isolate a shared variable."
+        },
+        "algebraic": {
+          "title": "Translate distribution preserves value into factor to isolate a shared variable",
+          "body": "Write the relationship for distribution preserves value in symbols, then rewrite it in the new setting until the same structure appears as factor to isolate a shared variable. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of distribution preserves value that turns into factor to isolate a shared variable?",
+      "difficulty": 0.58
+    },
+    {
+      "id": "card_ratio_to_similar_scale",
+      "target_type": "bridge",
+      "target_id": "unit_rate_normalizes->scale_factor_as_ratio",
+      "representations": {
+        "geometric": {
+          "title": "See unit rate normalizes to one inside scale factor is the common ratio",
+          "body": "Picture the idea of unit rate normalizes to one as a diagram first. Then mark the exact part of that picture that becomes scale factor is the common ratio when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing unit rate normalizes to one and highlight the feature that carries over to scale factor is the common ratio."
+        },
+        "algebraic": {
+          "title": "Translate unit rate normalizes to one into scale factor is the common ratio",
+          "body": "Write the relationship for unit rate normalizes to one in symbols, then rewrite it in the new setting until the same structure appears as scale factor is the common ratio. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of unit rate normalizes to one that turns into scale factor is the common ratio?",
+      "difficulty": 0.54
+    },
+    {
+      "id": "card_proportion_to_missing_side",
+      "target_type": "bridge",
+      "target_id": "proportion_as_equal_ratios->proportion_solves_missing_side",
+      "representations": {
+        "geometric": {
+          "title": "See proportion as two equal ratios inside set a proportion to find a missing side",
+          "body": "Picture the idea of proportion as two equal ratios as a diagram first. Then mark the exact part of that picture that becomes set a proportion to find a missing side when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing proportion as two equal ratios and highlight the feature that carries over to set a proportion to find a missing side."
+        },
+        "algebraic": {
+          "title": "Translate proportion as two equal ratios into set a proportion to find a missing side",
+          "body": "Write the relationship for proportion as two equal ratios in symbols, then rewrite it in the new setting until the same structure appears as set a proportion to find a missing side. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of proportion as two equal ratios that turns into set a proportion to find a missing side?",
+      "difficulty": 0.45
+    },
+    {
+      "id": "card_ratio_to_slope",
+      "target_type": "bridge",
+      "target_id": "ratio_as_comparison->rise_over_run",
+      "representations": {
+        "geometric": {
+          "title": "See ratio as a comparison of quantities inside slope as rise over run",
+          "body": "Picture the idea of ratio as a comparison of quantities as a diagram first. Then mark the exact part of that picture that becomes slope as rise over run when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing ratio as a comparison of quantities and highlight the feature that carries over to slope as rise over run."
+        },
+        "algebraic": {
+          "title": "Translate ratio as a comparison of quantities into slope as rise over run",
+          "body": "Write the relationship for ratio as a comparison of quantities in symbols, then rewrite it in the new setting until the same structure appears as slope as rise over run. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of ratio as a comparison of quantities that turns into slope as rise over run?",
+      "difficulty": 0.55
+    },
+    {
+      "id": "card_rate_to_slope_interpretation",
+      "target_type": "bridge",
+      "target_id": "unit_rate_normalizes->slope_as_rate_of_change",
+      "representations": {
+        "geometric": {
+          "title": "See unit rate normalizes to one inside slope is a rate of change",
+          "body": "Picture the idea of unit rate normalizes to one as a diagram first. Then mark the exact part of that picture that becomes slope is a rate of change when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing unit rate normalizes to one and highlight the feature that carries over to slope is a rate of change."
+        },
+        "algebraic": {
+          "title": "Translate unit rate normalizes to one into slope is a rate of change",
+          "body": "Write the relationship for unit rate normalizes to one in symbols, then rewrite it in the new setting until the same structure appears as slope is a rate of change. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of unit rate normalizes to one that turns into slope is a rate of change?",
+      "difficulty": 0.52
+    },
+    {
+      "id": "card_tiling_to_coverage_rates",
+      "target_type": "bridge",
+      "target_id": "coverage_by_division->unit_conversion_chains",
+      "representations": {
+        "geometric": {
+          "title": "See coverage count by dividing areas inside unit conversion as a chain of ratios",
+          "body": "Picture the idea of coverage count by dividing areas as a diagram first. Then mark the exact part of that picture that becomes unit conversion as a chain of ratios when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing coverage count by dividing areas and highlight the feature that carries over to unit conversion as a chain of ratios."
+        },
+        "algebraic": {
+          "title": "Translate coverage count by dividing areas into unit conversion as a chain of ratios",
+          "body": "Write the relationship for coverage count by dividing areas in symbols, then rewrite it in the new setting until the same structure appears as unit conversion as a chain of ratios. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of coverage count by dividing areas that turns into unit conversion as a chain of ratios?",
+      "difficulty": 0.68
+    },
+    {
+      "id": "card_area_to_square_area",
+      "target_type": "bridge",
+      "target_id": "area_as_covering->rectangle_area_formula",
+      "representations": {
+        "geometric": {
+          "title": "See area counts unit coverage inside rectangle area is length times width",
+          "body": "Picture the idea of area counts unit coverage as a diagram first. Then mark the exact part of that picture that becomes rectangle area is length times width when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing area counts unit coverage and highlight the feature that carries over to rectangle area is length times width."
+        },
+        "algebraic": {
+          "title": "Translate area counts unit coverage into rectangle area is length times width",
+          "body": "Write the relationship for area counts unit coverage in symbols, then rewrite it in the new setting until the same structure appears as rectangle area is length times width. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of area counts unit coverage that turns into rectangle area is length times width?",
+      "difficulty": 0.5
+    },
+    {
+      "id": "card_expo_to_square_area",
+      "target_type": "bridge",
+      "target_id": "exponent_rules->square_area_formula",
+      "representations": {
+        "geometric": {
+          "title": "See exponent rules govern powers inside square area is side squared",
+          "body": "Picture the idea of exponent rules govern powers as a diagram first. Then mark the exact part of that picture that becomes square area is side squared when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing exponent rules govern powers and highlight the feature that carries over to square area is side squared."
+        },
+        "algebraic": {
+          "title": "Translate exponent rules govern powers into square area is side squared",
+          "body": "Write the relationship for exponent rules govern powers in symbols, then rewrite it in the new setting until the same structure appears as square area is side squared. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of exponent rules govern powers that turns into square area is side squared?",
+      "difficulty": 0.7
+    },
+    {
+      "id": "card_square_binomial_to_diag",
+      "target_type": "bridge",
+      "target_id": "square_of_binomial->diagonal_as_hypotenuse",
+      "representations": {
+        "geometric": {
+          "title": "See square of a binomial pattern inside diagonal is the hypotenuse",
+          "body": "Picture the idea of square of a binomial pattern as a diagram first. Then mark the exact part of that picture that becomes diagonal is the hypotenuse when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing square of a binomial pattern and highlight the feature that carries over to diagonal is the hypotenuse."
+        },
+        "algebraic": {
+          "title": "Translate square of a binomial pattern into diagonal is the hypotenuse",
+          "body": "Write the relationship for square of a binomial pattern in symbols, then rewrite it in the new setting until the same structure appears as diagonal is the hypotenuse. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of square of a binomial pattern that turns into diagonal is the hypotenuse?",
+      "difficulty": 0.8
+    },
+    {
+      "id": "card_pyth_to_trig_sides",
+      "target_type": "bridge",
+      "target_id": "pythagorean_relationship->identify_sides_by_angle",
+      "representations": {
+        "geometric": {
+          "title": "See pythagorean relationship links the sides inside identify opposite, adjacent, hypotenuse",
+          "body": "Picture the idea of pythagorean relationship links the sides as a diagram first. Then mark the exact part of that picture that becomes identify opposite, adjacent, hypotenuse when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing pythagorean relationship links the sides and highlight the feature that carries over to identify opposite, adjacent, hypotenuse."
+        },
+        "algebraic": {
+          "title": "Translate pythagorean relationship links the sides into identify opposite, adjacent, hypotenuse",
+          "body": "Write the relationship for pythagorean relationship links the sides in symbols, then rewrite it in the new setting until the same structure appears as identify opposite, adjacent, hypotenuse. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of pythagorean relationship links the sides that turns into identify opposite, adjacent, hypotenuse?",
+      "difficulty": 0.5
+    },
+    {
+      "id": "card_special_tri_to_trig",
+      "target_type": "bridge",
+      "target_id": "special_right_triangle->cosine_adjacent_hypotenuse",
+      "representations": {
+        "geometric": {
+          "title": "See special right triangle ratios inside cosine as adjacent over hypotenuse",
+          "body": "Picture the idea of special right triangle ratios as a diagram first. Then mark the exact part of that picture that becomes cosine as adjacent over hypotenuse when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing special right triangle ratios and highlight the feature that carries over to cosine as adjacent over hypotenuse."
+        },
+        "algebraic": {
+          "title": "Translate special right triangle ratios into cosine as adjacent over hypotenuse",
+          "body": "Write the relationship for special right triangle ratios in symbols, then rewrite it in the new setting until the same structure appears as cosine as adjacent over hypotenuse. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of special right triangle ratios that turns into cosine as adjacent over hypotenuse?",
+      "difficulty": 0.6
+    },
+    {
+      "id": "card_subst_to_function_eval",
+      "target_type": "bridge",
+      "target_id": "substitution_evaluates->substitute_into_function",
+      "representations": {
+        "geometric": {
+          "title": "See substitution evaluates an expression inside substitute a value into a function",
+          "body": "Picture the idea of substitution evaluates an expression as a diagram first. Then mark the exact part of that picture that becomes substitute a value into a function when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing substitution evaluates an expression and highlight the feature that carries over to substitute a value into a function."
+        },
+        "algebraic": {
+          "title": "Translate substitution evaluates an expression into substitute a value into a function",
+          "body": "Write the relationship for substitution evaluates an expression in symbols, then rewrite it in the new setting until the same structure appears as substitute a value into a function. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of substitution evaluates an expression that turns into substitute a value into a function?",
+      "difficulty": 0.47
+    },
+    {
+      "id": "card_equiv_forms_to_function",
+      "target_type": "bridge",
+      "target_id": "equivalent_forms_same_value->quotient_of_function_values",
+      "representations": {
+        "geometric": {
+          "title": "See equivalent forms share a value inside quotient of function values",
+          "body": "Picture the idea of equivalent forms share a value as a diagram first. Then mark the exact part of that picture that becomes quotient of function values when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing equivalent forms share a value and highlight the feature that carries over to quotient of function values."
+        },
+        "algebraic": {
+          "title": "Translate equivalent forms share a value into quotient of function values",
+          "body": "Write the relationship for equivalent forms share a value in symbols, then rewrite it in the new setting until the same structure appears as quotient of function values. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of equivalent forms share a value that turns into quotient of function values?",
+      "difficulty": 0.74
+    },
+    {
+      "id": "card_seq_diff_to_slope",
+      "target_type": "bridge",
+      "target_id": "constant_vs_growing_difference->slope_as_rate_of_change",
+      "representations": {
+        "geometric": {
+          "title": "See constant vs growing difference inside slope is a rate of change",
+          "body": "Picture the idea of constant vs growing difference as a diagram first. Then mark the exact part of that picture that becomes slope is a rate of change when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing constant vs growing difference and highlight the feature that carries over to slope is a rate of change."
+        },
+        "algebraic": {
+          "title": "Translate constant vs growing difference into slope is a rate of change",
+          "body": "Write the relationship for constant vs growing difference in symbols, then rewrite it in the new setting until the same structure appears as slope is a rate of change. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of constant vs growing difference that turns into slope is a rate of change?",
+      "difficulty": 0.61
+    },
+    {
+      "id": "card_seq_to_words",
+      "target_type": "bridge",
+      "target_id": "next_term_from_rule->relationship_to_equation",
+      "representations": {
+        "geometric": {
+          "title": "See predict next term from the rule inside assemble phrases into an equation",
+          "body": "Picture the idea of predict next term from the rule as a diagram first. Then mark the exact part of that picture that becomes assemble phrases into an equation when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing predict next term from the rule and highlight the feature that carries over to assemble phrases into an equation."
+        },
+        "algebraic": {
+          "title": "Translate predict next term from the rule into assemble phrases into an equation",
+          "body": "Write the relationship for predict next term from the rule in symbols, then rewrite it in the new setting until the same structure appears as assemble phrases into an equation. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of predict next term from the rule that turns into assemble phrases into an equation?",
+      "difficulty": 0.76
+    },
+    {
+      "id": "card_perfect_square_to_diff_squares",
+      "target_type": "bridge",
+      "target_id": "perfect_square_structure->difference_of_squares",
+      "representations": {
+        "geometric": {
+          "title": "See perfect squares have a repeated factor inside difference of squares pattern",
+          "body": "Picture the idea of perfect squares have a repeated factor as a diagram first. Then mark the exact part of that picture that becomes difference of squares pattern when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing perfect squares have a repeated factor and highlight the feature that carries over to difference of squares pattern."
+        },
+        "algebraic": {
+          "title": "Translate perfect squares have a repeated factor into difference of squares pattern",
+          "body": "Write the relationship for perfect squares have a repeated factor in symbols, then rewrite it in the new setting until the same structure appears as difference of squares pattern. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of perfect squares have a repeated factor that turns into difference of squares pattern?",
+      "difficulty": 0.62
+    },
+    {
+      "id": "card_factor_pairs_to_diff_squares",
+      "target_type": "bridge",
+      "target_id": "factor_pairs_structure->difference_of_squares",
+      "representations": {
+        "geometric": {
+          "title": "See factors come in pairs inside difference of squares pattern",
+          "body": "Picture the idea of factors come in pairs as a diagram first. Then mark the exact part of that picture that becomes difference of squares pattern when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing factors come in pairs and highlight the feature that carries over to difference of squares pattern."
+        },
+        "algebraic": {
+          "title": "Translate factors come in pairs into difference of squares pattern",
+          "body": "Write the relationship for factors come in pairs in symbols, then rewrite it in the new setting until the same structure appears as difference of squares pattern. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of factors come in pairs that turns into difference of squares pattern?",
+      "difficulty": 0.8
+    },
+    {
+      "id": "card_le_inverse_to_ineq",
+      "target_type": "bridge",
+      "target_id": "inverse_operations_isolate->inequality_as_range",
+      "representations": {
+        "geometric": {
+          "title": "See inverse operations isolate the unknown inside inequality describes a range",
+          "body": "Picture the idea of inverse operations isolate the unknown as a diagram first. Then mark the exact part of that picture that becomes inequality describes a range when the situation is reinterpreted in the new concept.",
+          "visual_hint": "Draw a simple sketch showing inverse operations isolate the unknown and highlight the feature that carries over to inequality describes a range."
+        },
+        "algebraic": {
+          "title": "Translate inverse operations isolate the unknown into inequality describes a range",
+          "body": "Write the relationship for inverse operations isolate the unknown in symbols, then rewrite it in the new setting until the same structure appears as inequality describes a range. Focus on what stays invariant during the translation.",
+          "visual_hint": ""
+        }
+      },
+      "prompt": "What is the exact piece of inverse operations isolate the unknown that turns into inequality describes a range?",
+      "difficulty": 0.57
+    }
   ]
 }

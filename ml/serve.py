@@ -1,22 +1,13 @@
 # ml/serve.py
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from datetime import datetime
 import pathlib
 from typing import Literal
 
 from mindcraft_graph.models.concept import Ontology
 from mindcraft_graph.models.ingredient import IngredientOntology
-from mindcraft_graph.models.learning_world import (
-    AgentSkill,
-    ExecutionTrace,
-    LearningEvent,
-    MemoryRecord,
-    ReflexionRecord,
-    StudentConceptState,
-)
-from mindcraft_graph.loaders.subject_graph_loader import load_subject_graphs
 from mindcraft_graph.models.student_state import ConceptMastery
 from mindcraft_graph.representation import embeddings
 from mindcraft_graph.representation.student_embeddings import (
@@ -38,54 +29,90 @@ from mindcraft_graph.api.recommend import recommend
 
 # ── Startup: load once, reuse forever ──
 
-COMPLETE_ONTOLOGY_PATH = pathlib.Path(__file__).parent / "data" / "ontology_complete.json"
-ONTOLOGY_PATH = pathlib.Path(__file__).parent / "data" / "ontology.json"
-INGREDIENT_PATH = pathlib.Path(__file__).parent / "data" / "ingredient_ontology.json"
-EMBEDDINGS_PATH = pathlib.Path(__file__).parent / "data" / "concept_embeddings.npz"
-PCA_PATH = pathlib.Path(__file__).parent / "data" / "pca_axes.npz"
-SUBJECT_GRAPHS_PATH = pathlib.Path(__file__).parent / "data" / "subject_graphs"
+DATA_DIR = pathlib.Path(__file__).parent / "data"
 
-# Prefer the rich complete ontology; fall back to legacy files if missing
-if COMPLETE_ONTOLOGY_PATH.exists():
-    from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
-    ontology, ingredient_ontology = load_complete_ontology(COMPLETE_ONTOLOGY_PATH)
+# Standardized canonical-ID ontology (concepts + ingredients + bridges +
+# combinations in one file). This is the source of truth the harness validated
+# against; the live API must classify against the same vocabulary.
+STANDARDIZED_ONTOLOGY_PATH = (
+    DATA_DIR / "5_level_ontology" / "01_mindcraft_concept_ontology_v2_6_with_combinations.json"
+)
+# Legacy files — kept on disk for reference, no longer preferred.
+LEGACY_COMPLETE_ONTOLOGY_PATH = DATA_DIR / "ontology_complete.json"
+LEGACY_ONTOLOGY_PATH = DATA_DIR / "ontology.json"
+LEGACY_INGREDIENT_PATH = DATA_DIR / "ingredient_ontology.json"
+
+EMBEDDINGS_PATH = DATA_DIR / "concept_embeddings.npz"
+PCA_PATH = DATA_DIR / "pca_axes.npz"
+
+# Combination firing threshold for /recommend-ingredients. Pinned to the value
+# the harness (scripts/test_concept_paths.py) validated against so the live API
+# fires the same combinations the harness reports. The pipeline's own default
+# differs; passing this explicitly keeps production and harness in lockstep.
+COMBINATION_MIN_OVERLAP = 0.5
+
+from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
+
+if STANDARDIZED_ONTOLOGY_PATH.exists():
+    ontology, ingredient_ontology = load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
+    _ontology_source = STANDARDIZED_ONTOLOGY_PATH.name
+elif LEGACY_COMPLETE_ONTOLOGY_PATH.exists():
+    ontology, ingredient_ontology = load_complete_ontology(LEGACY_COMPLETE_ONTOLOGY_PATH)
+    _ontology_source = LEGACY_COMPLETE_ONTOLOGY_PATH.name
 else:
-    ontology = Ontology.model_validate_json(ONTOLOGY_PATH.read_text())
-    ingredient_ontology = IngredientOntology.model_validate_json(INGREDIENT_PATH.read_text())
+    ontology = Ontology.model_validate_json(LEGACY_ONTOLOGY_PATH.read_text())
+    ingredient_ontology = IngredientOntology.model_validate_json(LEGACY_INGREDIENT_PATH.read_text())
+    _ontology_source = LEGACY_ONTOLOGY_PATH.name
 
 ingredient_graph = IngredientGraph(ingredient_ontology)
-subject_graphs = load_subject_graphs(SUBJECT_GRAPHS_PATH)
 
+
+def _rebuild_concept_embeddings():
+    model = embeddings.load_sentence_transformer()
+    embs = embeddings.compute_concept_embeddings(ontology, model)
+    pca = embeddings.compute_pca_axes(embs)
+    embeddings.save_concept_embeddings(embs, EMBEDDINGS_PATH)
+    embeddings.save_pca_axes(*pca, PCA_PATH)
+    return embs, pca
+
+
+# The .npz cache may have been built from a *different* ontology (e.g. the legacy
+# 37/38-concept file). If its concept set no longer matches the loaded ontology,
+# invalidate it and rebuild from the standardized file — otherwise classification
+# would run against a stale vocabulary that diverges from the harness.
+_ontology_concept_ids = {c.id for c in ontology.concepts}
 if EMBEDDINGS_PATH.exists():
     concept_embs = embeddings.load_concept_embeddings(EMBEDDINGS_PATH)
-    pca_components, pca_mean, pca_variance = embeddings.load_pca_axes(PCA_PATH)
+    if set(concept_embs.keys()) == _ontology_concept_ids:
+        pca_components, pca_mean, pca_variance = embeddings.load_pca_axes(PCA_PATH)
+        _embedding_source = f"{EMBEDDINGS_PATH.name} (cache hit, matches ontology)"
+    else:
+        concept_embs, (pca_components, pca_mean, pca_variance) = _rebuild_concept_embeddings()
+        _embedding_source = f"rebuilt from {_ontology_source} (stale cache invalidated)"
 else:
-    model = embeddings.load_sentence_transformer()
-    concept_embs = embeddings.compute_concept_embeddings(ontology, model)
-    pca_components, pca_mean, pca_variance = embeddings.compute_pca_axes(concept_embs)
-    embeddings.save_concept_embeddings(concept_embs, EMBEDDINGS_PATH)
-    embeddings.save_pca_axes(pca_components, pca_mean, pca_variance, PCA_PATH)
+    concept_embs, (pca_components, pca_mean, pca_variance) = _rebuild_concept_embeddings()
+    _embedding_source = f"computed from {_ontology_source} (no cache)"
+
+print(
+    "[startup] ontology=%s | concepts=%d edges=%d | ingredients=%d bridges=%d combinations=%d | embeddings: %s"
+    % (
+        _ontology_source,
+        len(ontology.concepts),
+        len(ontology.edges),
+        len(ingredient_graph.ingredients),
+        len(ingredient_ontology.bridges),
+        len(ingredient_ontology.combinations),
+        _embedding_source,
+    )
+)
 
 
-def _build_ingredient_concept_embeddings():
-    augmented = dict(concept_embs)
-    if "circular_trigonometry" not in augmented:
-        seed_ids = [
-            "trigonometry_basics",
-            "circles_geometry",
-            "functions_basics",
-        ]
-        seed_vectors = [concept_embs[seed_id] for seed_id in seed_ids if seed_id in concept_embs]
-        if seed_vectors:
-            vec = sum(seed_vectors) / len(seed_vectors)
-            norm = float((vec @ vec) ** 0.5)
-            if norm > 1e-8:
-                vec = vec / norm
-            augmented["circular_trigonometry"] = vec
-    return augmented
-
-
-ingredient_concept_embs = _build_ingredient_concept_embeddings()
+# Classification embeddings for the ingredient runtime. With the standardized
+# ontology these are exactly the concept embeddings — no synthesized concepts.
+# (A legacy augmentation here injected a phantom "circular_trigonometry" vector
+# that has no ingredients in the standardized graph; it has been removed so the
+# live API classifies against the same 42-concept vocabulary the harness uses.)
+ingredient_concept_embs = dict(concept_embs)
 
 # Load the sentence transformer for summary parsing
 # This stays in memory for the life of the container
@@ -105,12 +132,12 @@ app.add_middleware(
         "http://localhost:4173",
         "https://mindcraft-93858.web.app",
         "https://mindcraft-93858.firebaseapp.com",
+        "https://app-beta-one-59.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # ── Request/Response schemas ──
 
 class RecommendRequest(BaseModel):
@@ -137,6 +164,22 @@ class IngredientRecommendRequest(BaseModel):
     max_cards: int = 4
 
 
+class SeedAssessmentRequest(BaseModel):
+    student_id: str
+    # concept_id -> self-reported confidence ("hard" | "kinda" | "easy")
+    assessment: dict[str, str]
+
+
+class OutcomeItem(BaseModel):
+    concept_id: str
+    succeeded: bool
+
+
+class RecordOutcomesRequest(BaseModel):
+    student_id: str
+    outcomes: list[OutcomeItem]
+
+
 class SubmitIngredientAnswerRequest(BaseModel):
     student_id: str
     card_template_id: str
@@ -144,92 +187,6 @@ class SubmitIngredientAnswerRequest(BaseModel):
     target_id: str
     representation_key: str
     student_succeeded: bool
-
-
-class LearningEventRequest(BaseModel):
-    student_id: str
-    subject_id: str
-    concept_id: str
-    event_type: str
-    ingredient_id: str | None = None
-    outcome: float | None = None
-    duration_ms: int | None = None
-    clue_used: bool = False
-    hint_level: int | None = None
-    source: str = "learning_world"
-    metadata: dict = Field(default_factory=dict)
-
-
-class NextLearningActionRequest(BaseModel):
-    student_id: str
-    subject_id: str
-    current_concept_id: str | None = None
-
-
-class AgentSkillRequest(BaseModel):
-    id: str
-    subject_id: str
-    concept_id: str | None = None
-    name: str
-    goal: str
-    policy_type: Literal[
-        "diagnosis",
-        "lesson_generation",
-        "practice_generation",
-        "hinting",
-        "reflection",
-        "visual_generation",
-    ]
-    inputs_schema: dict = Field(default_factory=dict)
-    code: str
-    language: Literal["python", "typescript", "prompt"] = "prompt"
-    success_criteria: list[str] = []
-    failure_modes: list[str] = []
-    tags: list[str] = []
-    version: int = 1
-
-
-class MemoryRecordRequest(BaseModel):
-    student_id: str | None = None
-    subject_id: str
-    concept_id: str | None = None
-    memory_type: Literal[
-        "observation",
-        "reflection",
-        "constraint",
-        "schema_update",
-        "teaching_preference",
-        "failure_pattern",
-    ]
-    text: str
-    importance: float = Field(default=0.5, ge=0, le=1)
-    source_event_ids: list[str] = []
-    metadata: dict = Field(default_factory=dict)
-
-
-class ExecutionTraceRequest(BaseModel):
-    student_id: str | None = None
-    subject_id: str
-    concept_id: str | None = None
-    skill_id: str | None = None
-    goal: str
-    plan: list[str] = []
-    input_snapshot: dict = Field(default_factory=dict)
-    output_snapshot: dict = Field(default_factory=dict)
-    success: bool
-    error: str | None = None
-    metrics: dict = Field(default_factory=dict)
-
-
-class ReflexionRequest(BaseModel):
-    trace_id: str | None = None
-    subject_id: str
-    concept_id: str | None = None
-    failure_summary: str
-    cause: str
-    next_constraint: str
-    suggested_skill_patch: str = ""
-    confidence: float = Field(default=0.5, ge=0, le=1)
 
 
 def _serialize_minimal_dag(dag):
@@ -280,239 +237,13 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
     return []
 
 
-def _clamp_01(value: float) -> float:
-    return max(0.0, min(1.0, value))
-
-
-def _serialize_timestamp(value) -> str | None:
-    if value is None:
-        return None
-    if hasattr(value, "isoformat"):
-        return value.isoformat()
-    return str(value)
-
-
-def _learning_status_from_numbers(
-    mastery: float,
-    recovery: float,
-    stability: float,
-    attempts: int,
-) -> str:
-    if attempts == 0:
-        return "unexplored"
-    if recovery >= 0.65 and mastery >= 0.55:
-        return "comeback_built"
-    if mastery >= 0.78 and stability >= 0.58:
-        return "stable"
-    if mastery < 0.35:
-        return "open_gap"
-    if mastery >= 0.86 and recovery >= 0.55:
-        return "ready_for_challenge"
-    return "repairing"
-
-
-def _status_from_legacy(status: str) -> str:
-    return {
-        "mastered": "stable",
-        "struggling": "open_gap",
-        "in_progress": "repairing",
-        "untouched": "unexplored",
-    }.get(status, "unexplored")
-
-
-def _state_from_learning_events(concept_id: str, events: list[dict]) -> StudentConceptState:
-    concept_events = [event for event in events if event.get("conceptId") == concept_id]
-    attempts = len([
-        event for event in concept_events
-        if event.get("eventType") in {
-            "answer_submitted",
-            "wrong_answer",
-            "correct_answer",
-            "question_retried",
-            "concept_repaired",
-        }
-    ])
-    outcomes = [
-        float(event["outcome"])
-        for event in concept_events
-        if event.get("outcome") is not None
-    ]
-    wrongs = [
-        event for event in concept_events
-        if event.get("eventType") == "wrong_answer"
-        or (event.get("outcome") is not None and float(event.get("outcome", 0)) <= 0.25)
-    ]
-    successful_retries = len([
-        event for event in concept_events
-        if event.get("eventType") in {"question_retried", "concept_repaired"}
-        and (event.get("outcome") is None or float(event.get("outcome", 1)) >= 0.7)
-    ])
-    clue_events = [event for event in concept_events if event.get("clueUsed")]
-
-    mastery = _clamp_01(sum(outcomes) / len(outcomes)) if outcomes else 0.0
-    retry_recovery = successful_retries / max(len(wrongs), 1)
-    clue_recovery = len([
-        event for event in clue_events
-        if event.get("outcome") is not None and float(event.get("outcome", 0)) >= 0.7
-    ]) / max(len(clue_events), 1)
-    recovery = _clamp_01((retry_recovery * 0.65) + (clue_recovery * 0.35))
-
-    recent_outcomes = outcomes[:6]
-    recent_success = (
-        len([outcome for outcome in recent_outcomes if outcome >= 0.7]) / len(recent_outcomes)
-        if recent_outcomes else 0.0
-    )
-    stability = _clamp_01((recent_success * 0.7) + (min(attempts, 8) / 8 * 0.3))
-    last_touched = _serialize_timestamp(concept_events[0].get("timestamp")) if concept_events else None
-
-    return StudentConceptState(
-        concept_id=concept_id,
-        status=_learning_status_from_numbers(mastery, recovery, stability, attempts),
-        mastery=mastery,
-        recovery=recovery,
-        stability=stability,
-        attempts=attempts,
-        successful_retries=successful_retries,
-        last_touched=last_touched,
-    )
-
-
-def _subject_graph_to_learning_world(subject_id: str, student_id: str, events: list[dict]) -> dict:
-    graph = subject_graphs.get(subject_id)
-    if graph is None:
-        raise HTTPException(status_code=404, detail=f"Unknown subject graph: {subject_id}")
-
-    states = {
-        concept.id: _state_from_learning_events(concept.id, events)
-        for concept in graph.concepts
-    }
-    concept_units = {unit.id: unit for unit in graph.units}
-
-    return {
-        "studentId": student_id,
-        "subject": {
-            "id": graph.id,
-            "name": graph.subject,
-            "course": graph.course,
-            "metaphor": graph.metaphor,
-            "audience": graph.audience,
-        },
-        "worldLanguage": {
-            "thesis": "Mistakes become maps. Comebacks become progress.",
-            "openGap": "Open Gap",
-            "repairing": "Repairing",
-            "stable": "Stable",
-            "comebackBuilt": "Comeback Built",
-            "readyForChallenge": "Ready for Challenge",
-        },
-        "units": [unit.model_dump() for unit in graph.units],
-        "nodes": [
-            {
-                "id": concept.id,
-                "name": concept.name,
-                "unitId": concept.unit_id,
-                "unitName": concept_units.get(concept.unit_id).name if concept.unit_id in concept_units else "",
-                "level": concept.level,
-                "description": concept.description,
-                "story": concept.story,
-                "gritPrompt": concept.grit_prompt,
-                "visualMetaphor": concept.visual_metaphor,
-                "ingredients": [ingredient.model_dump() for ingredient in concept.ingredients],
-                "tags": concept.tags,
-                "state": states[concept.id].model_dump(),
-            }
-            for concept in graph.concepts
-        ],
-        "edges": [
-            {
-                "from": edge.from_id,
-                "to": edge.to_id,
-                "relation": edge.relation,
-                "strength": edge.strength,
-            }
-            for edge in graph.edges
-        ],
-        "gritMetrics": _grit_metrics_from_events(events),
-    }
-
-
-def _grit_metrics_from_events(events: list[dict]) -> dict:
-    attempts = len([event for event in events if event.get("eventType") == "answer_submitted"])
-    wrongs = len([event for event in events if event.get("eventType") == "wrong_answer"])
-    retries = len([event for event in events if event.get("eventType") == "question_retried"])
-    returns = len([event for event in events if event.get("eventType") == "returned_after_break"])
-    clue_success = len([
-        event for event in events
-        if event.get("clueUsed") and event.get("outcome") is not None and float(event.get("outcome", 0)) >= 0.7
-    ])
-    clue_events = len([event for event in events if event.get("clueUsed")])
-    abandonments = len([event for event in events if event.get("eventType") == "concept_abandoned"])
-
-    return {
-        "retryRate": round(retries / max(wrongs, 1), 3),
-        "clueToCorrectRate": round(clue_success / max(clue_events, 1), 3),
-        "returnAfterWrong": returns,
-        "abandonmentRisk": round(_clamp_01(abandonments / max(attempts + retries, 1)), 3),
-        "gritMessage": "Every retry is evidence that the learner stayed in the problem long enough to change.",
-    }
-
-
-def _math_subject_summary() -> dict:
-    return {
-        "id": "math",
-        "subject": "Math",
-        "course": "MindCraft Math",
-        "metaphor": "Math World",
-        "audience": "Students repairing prerequisite gaps and building exam confidence",
-        "conceptCount": len(ontology.concepts),
-        "isPrimary": True,
-    }
-
-
-def _next_action_from_world(world: dict) -> dict:
-    nodes = world.get("nodes", [])
-    priority = {
-        "open_gap": 0,
-        "repairing": 1,
-        "unexplored": 2,
-        "comeback_built": 3,
-        "stable": 4,
-        "ready_for_challenge": 5,
-    }
-    ranked = sorted(
-        nodes,
-        key=lambda node: (
-            priority.get(node.get("state", {}).get("status"), 9),
-            node.get("state", {}).get("mastery", 0),
-            -node.get("state", {}).get("recovery", 0),
-        ),
-    )
-    target = ranked[0] if ranked else None
-    ingredient = (target.get("ingredients") or [{}])[0] if target else {}
-
-    return {
-        "subjectId": world.get("subject", {}).get("id"),
-        "conceptId": target.get("id") if target else None,
-        "conceptName": target.get("name") if target else None,
-        "ingredientId": ingredient.get("id"),
-        "ingredientName": ingredient.get("label"),
-        "teachingMode": "repair_then_challenge",
-        "activity": "Start with one low-stakes retry, reveal one clue only if stuck, then ask the student to explain the move in their own words.",
-        "gritMessage": target.get("gritPrompt") if target else "Start small. The graph grows from the next honest attempt.",
-    }
-
-
-def _validate_subject_id(subject_id: str):
-    if subject_id != "math" and subject_id not in subject_graphs:
-        raise HTTPException(status_code=404, detail=f"Unknown subject graph: {subject_id}")
-
-
 # ── Endpoints ──
 
 @app.post("/recommend")
 async def recommend_endpoint(req: RecommendRequest):
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph, save_recommendation_result,
+        append_displacement_snapshot, load_ingredient_state,
     )
 
     # Load student data
@@ -540,20 +271,48 @@ async def recommend_endpoint(req: RecommendRequest):
         exploration_temp=req.exploration_temp,
     )
 
+    # Per-student bridge confidence feeds bridge-gap detection: cross-concept
+    # transitions the student is stuck on that the concept-level trim can't see.
+    ingredient_state = load_ingredient_state(req.student_id)
+
     # Run recommendation
     result = recommend(
         graph, goal, events,
         concept_embs, pca_components, pca_mean, ontology,
+        bridges=ingredient_ontology.bridges,
+        bridge_confidence=ingredient_state.bridge_confidence,
     )
 
     # Save state
     save_personal_graph(req.student_id, graph)
+
+    # Append the displacement reading to the per-student time series. The KPI is
+    # the trend (is the strength↔mastery gap closing?), which the overwriting
+    # recommendation snapshot can't capture.
+    append_displacement_snapshot(
+        req.student_id,
+        result.student_profile.displacement_magnitude,
+        result.student_profile.displacement_direction,
+        now,
+    )
+
+    # Concepts the target(s) directly unlock (reverse prerequisite edges) — lets
+    # the client show "where this leads" without a duplicate frontend prereq map.
+    _targets = set(result.target_concepts) or (
+        {result.canonical_chain[-1]} if result.canonical_chain else set()
+    )
+    unlocks = sorted({
+        edge.to_concept
+        for edge in ontology.edges
+        if edge.relation == "prerequisite" and edge.from_concept in _targets
+    })
 
     # Convert to JSON-serializable dict
     response = {
         "mode": result.mode,
         "targetConcepts": result.target_concepts,
         "canonicalChain": result.canonical_chain,
+        "unlocks": unlocks,
         "recommendations": [
             {
                 "conceptId": r.concept_id,
@@ -563,6 +322,11 @@ async def recommend_endpoint(req: RecommendRequest):
                 "supplementFor": r.supplement_for,
                 "alignmentScore": r.alignment_score,
                 "pcaProfile": r.pca_profile,
+                "isBridgeGap": r.is_bridge_gap,
+                "bridgeId": r.bridge_id,
+                "bridgeFromConcept": r.bridge_from_concept,
+                "bridgeToConcept": r.bridge_to_concept,
+                "bridgeEvidence": r.bridge_evidence,
             }
             for r in result.recommendations
         ],
@@ -586,6 +350,126 @@ async def recommend_endpoint(req: RecommendRequest):
     return response
 
 
+# Onboarding self-assessment -> seed events. hard = struggling (negative outcome,
+# high effort = confirmed weakness); easy = some initial mastery; kinda = mild gap.
+ASSESSMENT_OUTCOME_MAP = {
+    "hard": (-0.4, 0.7),
+    "kinda": (-0.1, 0.5),
+    "easy": (0.5, 0.3),
+}
+
+
+@app.post("/seed-assessment")
+async def seed_assessment_endpoint(req: SeedAssessmentRequest):
+    """Seed the concept graph from the onboarding 'gap scan' so a brand-new
+    student gets personalized recommendations before their first session."""
+    from mindcraft_graph.firestore_adapter import (
+        load_student_events,
+        replace_interactions_by_source,
+        save_personal_graph,
+    )
+    from mindcraft_graph.models.events import SessionEvent
+
+    valid_concepts = {concept.id for concept in ontology.concepts}
+    now = datetime.now()
+    seeded: list[str] = []
+    skipped: list[str] = []
+    events: list[SessionEvent] = []
+    for concept_id, confidence in req.assessment.items():
+        conf = (confidence or "").lower()
+        if concept_id not in valid_concepts or conf not in ASSESSMENT_OUTCOME_MAP:
+            skipped.append(concept_id)
+            continue
+        outcome, effort = ASSESSMENT_OUTCOME_MAP[conf]
+        events.append(SessionEvent(
+            student_id=req.student_id,
+            concept_id=concept_id,
+            event_type="assessment",
+            outcome=outcome,
+            effort=effort,
+            duration_minutes=5.0,
+            timestamp=now,
+            exposure_weight=1.0,
+        ))
+        seeded.append(concept_id)
+
+    # Idempotent: replaces any prior onboarding seed so re-onboarding overwrites.
+    replace_interactions_by_source(req.student_id, events, source="onboarding_assessment")
+
+    # Rebuild + persist the personal graph from all events (seed + any real ones).
+    all_events = load_student_events(req.student_id)
+    graph = create_personal_graph(req.student_id, ontology)
+    if all_events:
+        graph = update_personal_graph(graph, all_events, ontology)
+    graph.state = decay_student_state(graph.state, now)
+    graph.edges = decay_all_edges(graph.edges, now)
+    save_personal_graph(req.student_id, graph)
+
+    return {
+        "studentId": req.student_id,
+        "seededConcepts": seeded,
+        "skippedConcepts": skipped,
+        "eventsCreated": len(events),
+    }
+
+
+# Practice/homework outcome -> graph signal. A solved problem rewards mastery;
+# a missed one is weak negative evidence (lower effort than a confirmed struggle).
+OUTCOME_MAP = {True: (0.6, 0.4), False: (-0.4, 0.6)}
+
+
+@app.post("/record-outcomes")
+async def record_outcomes_endpoint(req: RecordOutcomesRequest):
+    """Record practice/homework results into the concept graph so mastery moves
+    as the student actually answers problems. Events accumulate (not replaced)."""
+    from mindcraft_graph.firestore_adapter import (
+        append_interactions,
+        load_student_events,
+        save_personal_graph,
+    )
+    from mindcraft_graph.models.events import SessionEvent
+
+    valid_concepts = {concept.id for concept in ontology.concepts}
+    now = datetime.now()
+    recorded: list[str] = []
+    skipped: list[str] = []
+    events: list[SessionEvent] = []
+    for item in req.outcomes:
+        if item.concept_id not in valid_concepts:
+            skipped.append(item.concept_id)
+            continue
+        outcome, effort = OUTCOME_MAP[item.succeeded]
+        events.append(SessionEvent(
+            student_id=req.student_id,
+            concept_id=item.concept_id,
+            event_type="problem_set",
+            outcome=outcome,
+            effort=effort,
+            duration_minutes=3.0,
+            timestamp=now,
+            exposure_weight=1.0,
+        ))
+        recorded.append(item.concept_id)
+
+    if events:
+        append_interactions(req.student_id, events, source="practice")
+
+    all_events = load_student_events(req.student_id)
+    graph = create_personal_graph(req.student_id, ontology)
+    if all_events:
+        graph = update_personal_graph(graph, all_events, ontology)
+    graph.state = decay_student_state(graph.state, now)
+    graph.edges = decay_all_edges(graph.edges, now)
+    save_personal_graph(req.student_id, graph)
+
+    return {
+        "studentId": req.student_id,
+        "recordedConcepts": recorded,
+        "skippedConcepts": skipped,
+        "eventsCreated": len(events),
+    }
+
+
 @app.post("/recommend-ingredients")
 async def recommend_ingredients_endpoint(req: IngredientRecommendRequest):
     from mindcraft_graph.firestore_adapter import (
@@ -602,6 +486,7 @@ async def recommend_ingredients_endpoint(req: IngredientRecommendRequest):
         embed_fn=embed_fn,
         ontology=ontology,
         max_cards=req.max_cards,
+        combination_min_overlap=COMBINATION_MIN_OVERLAP,
     )
 
     response = {
@@ -742,9 +627,9 @@ async def process_summary_endpoint(req: SummaryRequest):
     # Save
     save_personal_graph(req.student_id, graph)
 
-    # Also write the new events to Firestore so they persist
-    from google.cloud import firestore
-    db = firestore.Client()
+    # Also write the new events to Firestore so they persist. Reuse the adapter's
+    # client so this targets the same project (mindcraft-93858) as everything else.
+    from mindcraft_graph.firestore_adapter import db
     for event in new_events:
         db.collection("interactions").add({
             "studentId": event.student_id,
@@ -777,7 +662,9 @@ async def student_profile_endpoint(student_id: str):
 
     profiles = compute_concept_profiles(events)
     strength_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
-    mastery_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
+    mastery_vec = compute_student_embedding_from_mastery(
+        graph.state.mastery_by_concept, concept_embs,
+    )
 
     from mindcraft_graph.api.recommend import _project_and_label, DEFAULT_AXIS_LABELS
 
@@ -811,269 +698,8 @@ async def health():
         "ingredientConceptCount": len(ingredient_graph.by_concept),
         "ingredientCount": len(ingredient_graph.ingredients),
         "edgeCount": len(ontology.edges),
-        "subjectGraphCount": len(subject_graphs),
         "embeddingsLoaded": len(concept_embs) > 0,
     }
-
-
-@app.get("/subjects")
-async def subjects_endpoint():
-    return {
-        "subjects": [
-            _math_subject_summary(),
-            *[
-                {
-                    "id": graph.id,
-                    "subject": graph.subject,
-                    "course": graph.course,
-                    "metaphor": graph.metaphor,
-                    "audience": graph.audience,
-                    "conceptCount": len(graph.concepts),
-                    "isPrimary": False,
-                }
-                for graph in subject_graphs.values()
-            ],
-        ]
-    }
-
-
-@app.post("/learning-event")
-async def learning_event_endpoint(req: LearningEventRequest):
-    from mindcraft_graph.firestore_adapter import save_learning_event
-
-    _validate_subject_id(req.subject_id)
-
-    event = LearningEvent(
-        student_id=req.student_id,
-        subject_id=req.subject_id,
-        concept_id=req.concept_id,
-        event_type=req.event_type,
-        ingredient_id=req.ingredient_id,
-        outcome=req.outcome,
-        duration_ms=req.duration_ms,
-        clue_used=req.clue_used,
-        hint_level=req.hint_level,
-        source=req.source,
-        metadata=req.metadata,
-    )
-    save_learning_event(event)
-
-    return {
-        "ok": True,
-        "message": "Learning event saved. The world graph can now adapt from this interaction.",
-    }
-
-
-@app.post("/agent-skills")
-async def save_agent_skill_endpoint(req: AgentSkillRequest):
-    from mindcraft_graph.firestore_adapter import save_agent_skill
-
-    _validate_subject_id(req.subject_id)
-    skill = AgentSkill(**req.model_dump())
-    save_agent_skill(skill)
-
-    return {
-        "ok": True,
-        "skillId": skill.id,
-        "message": "Skill saved. Future agents can retrieve this policy instead of rebuilding it from scratch.",
-    }
-
-
-@app.get("/agent-skills/{subject_id}")
-async def agent_skills_endpoint(subject_id: str, concept_id: str | None = None):
-    from mindcraft_graph.firestore_adapter import load_agent_skills
-
-    _validate_subject_id(subject_id)
-    return {
-        "subjectId": subject_id,
-        "conceptId": concept_id,
-        "skills": load_agent_skills(subject_id, concept_id=concept_id),
-    }
-
-
-@app.post("/agent-memory")
-async def save_agent_memory_endpoint(req: MemoryRecordRequest):
-    from mindcraft_graph.firestore_adapter import save_memory_record
-
-    _validate_subject_id(req.subject_id)
-    memory = MemoryRecord(**req.model_dump())
-    save_memory_record(memory)
-
-    return {
-        "ok": True,
-        "message": "Memory saved. This can condition future planning, hinting, and course generation.",
-    }
-
-
-@app.get("/agent-memory/{subject_id}")
-async def agent_memory_endpoint(
-    subject_id: str,
-    student_id: str | None = None,
-    concept_id: str | None = None,
-):
-    from mindcraft_graph.firestore_adapter import load_memory_records
-
-    _validate_subject_id(subject_id)
-    return {
-        "subjectId": subject_id,
-        "studentId": student_id,
-        "conceptId": concept_id,
-        "memories": load_memory_records(subject_id, student_id=student_id, concept_id=concept_id),
-    }
-
-
-@app.post("/agent-execution-traces")
-async def save_agent_execution_trace_endpoint(req: ExecutionTraceRequest):
-    from mindcraft_graph.firestore_adapter import save_execution_trace
-
-    _validate_subject_id(req.subject_id)
-    trace = ExecutionTrace(**req.model_dump())
-    trace_id = save_execution_trace(trace)
-
-    return {
-        "ok": True,
-        "traceId": trace_id,
-        "needsReflexion": not trace.success,
-        "message": "Execution trace saved. Failed traces should be converted into reflexion constraints.",
-    }
-
-
-@app.post("/agent-reflexions")
-async def save_agent_reflexion_endpoint(req: ReflexionRequest):
-    from mindcraft_graph.firestore_adapter import save_memory_record, save_reflexion_record
-
-    _validate_subject_id(req.subject_id)
-    reflexion = ReflexionRecord(**req.model_dump())
-    save_reflexion_record(reflexion)
-
-    save_memory_record(MemoryRecord(
-        student_id=None,
-        subject_id=req.subject_id,
-        concept_id=req.concept_id,
-        memory_type="constraint",
-        text=req.next_constraint,
-        importance=max(0.6, req.confidence),
-        source_event_ids=[req.trace_id] if req.trace_id else [],
-        metadata={
-            "failureSummary": req.failure_summary,
-            "cause": req.cause,
-            "suggestedSkillPatch": req.suggested_skill_patch,
-        },
-    ))
-
-    return {
-        "ok": True,
-        "message": "Reflexion saved as a reusable constraint for future planning.",
-    }
-
-
-@app.get("/learning-world/{subject_id}/{student_id}")
-async def learning_world_endpoint(subject_id: str, student_id: str):
-    from mindcraft_graph.firestore_adapter import load_learning_events, load_student_events
-
-    if subject_id == "math":
-        events = load_student_events(student_id)
-        learning_events = load_learning_events(student_id, subject_id)
-
-        graph = create_personal_graph(student_id, ontology)
-        if events:
-            graph = update_personal_graph(graph, events, ontology)
-        profiles = compute_concept_profiles(events)
-
-        nodes = []
-        for concept in ontology.concepts:
-            cid = concept.id
-            profile = profiles.get(cid)
-            mastery_state = graph.state.mastery_by_concept.get(cid)
-            legacy_status = (
-                "mastered" if profile and profile.strength_score > 0.3
-                else "struggling" if profile and profile.strength_score < -0.1
-                else "untouched" if not profile or profile.event_count == 0
-                else "in_progress"
-            )
-            event_state = _state_from_learning_events(cid, learning_events)
-            mastery = mastery_state.mastery if mastery_state else event_state.mastery
-
-            concept_ingredients = []
-            if hasattr(ingredient_graph, "get_concept_ingredients"):
-                for ing in ingredient_graph.get_concept_ingredients(cid):
-                    concept_ingredients.append({
-                        "id": ing.id,
-                        "label": ing.name,
-                        "description": ing.description,
-                        "failure_mode": getattr(ing, "failure_mode", ""),
-                        "practice_prompt": "",
-                        "visual_metaphor": "",
-                    })
-
-            nodes.append({
-                "id": cid,
-                "name": concept.name,
-                "unitId": (concept.tags[0] if concept.tags else "math_core"),
-                "unitName": (concept.tags[0].replace("_", " ").title() if concept.tags else "Math Core"),
-                "level": concept.level,
-                "description": getattr(concept, "description", ""),
-                "story": f"{concept.name} is one room in the math world. Repair the prerequisite, then the next room opens.",
-                "gritPrompt": "A mistake here is a map marker. Try again and the route gets clearer.",
-                "visualMetaphor": "Connected stepping stones across a problem landscape.",
-                "ingredients": concept_ingredients,
-                "tags": concept.tags,
-                "state": {
-                    **event_state.model_dump(),
-                    "status": _status_from_legacy(legacy_status),
-                    "mastery": mastery,
-                    "attempts": profile.event_count if profile else event_state.attempts,
-                },
-            })
-
-        return {
-            "studentId": student_id,
-            "subject": _math_subject_summary(),
-            "worldLanguage": {
-                "thesis": "Mistakes become maps. Comebacks become progress.",
-                "openGap": "Open Gap",
-                "repairing": "Repairing",
-                "stable": "Stable",
-                "comebackBuilt": "Comeback Built",
-                "readyForChallenge": "Ready for Challenge",
-            },
-            "units": [
-                {
-                    "id": "math_core",
-                    "name": "Math Core",
-                    "metaphor": "A connected landscape of prerequisite paths",
-                    "description": "The student's math concepts arranged as repairable routes.",
-                }
-            ],
-            "nodes": nodes,
-            "edges": [
-                {
-                    "from": key.split("::")[0],
-                    "to": key.split("::")[1],
-                    "relation": edge.relation,
-                    "strength": edge.weight,
-                }
-                for key, edge in graph.edges.items()
-                if len(key.split("::")) == 2
-            ],
-            "gritMetrics": _grit_metrics_from_events(learning_events),
-        }
-
-    learning_events = load_learning_events(student_id, subject_id)
-    return _subject_graph_to_learning_world(subject_id, student_id, learning_events)
-
-
-@app.post("/recommend-next-learning-action")
-async def recommend_next_learning_action_endpoint(req: NextLearningActionRequest):
-    from mindcraft_graph.firestore_adapter import load_learning_events
-
-    if req.subject_id == "math":
-        world = await learning_world_endpoint("math", req.student_id)
-    else:
-        events = load_learning_events(req.student_id, req.subject_id)
-        world = _subject_graph_to_learning_world(req.subject_id, req.student_id, events)
-
-    return _next_action_from_world(world)
 
 @app.get("/knowledge-graph/{student_id}")
 async def knowledge_graph_endpoint(student_id: str):

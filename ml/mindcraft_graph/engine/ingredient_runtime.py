@@ -231,6 +231,32 @@ def backtrack_prerequisites(
     return prerequisite_ids, used_bridges
 
 
+def apply_combinations(
+    active_ids: set[str],
+    graph: IngredientGraph,
+    min_overlap: float = 0.5,
+) -> tuple[set[str], list[str]]:
+    """Expand a partial ingredient set via matching combinations and build an override order."""
+    combinations = graph.get_combinations_for_ingredients(active_ids, min_overlap=min_overlap)
+    if not combinations:
+        return active_ids, []
+
+    combinations = sorted(combinations, key=lambda c: (-c.confidence, c.id))
+    expanded_ids = set(active_ids)
+    for combo in combinations:
+        expanded_ids.update(combo.ingredients)
+
+    ordering_override: list[str] = []
+    seen_ids: set[str] = set()
+    for combo in combinations:
+        for ingredient_id in combo.apply_order:
+            if ingredient_id not in seen_ids:
+                ordering_override.append(ingredient_id)
+                seen_ids.add(ingredient_id)
+
+    return expanded_ids, ordering_override
+
+
 def build_minimal_dag(
     target_ids: list[str],
     prereq_ids: set[str],
@@ -239,7 +265,10 @@ def build_minimal_dag(
     student_state: IngredientStudentState,
 ) -> MinimalDAG:
     """Construct the dependency subgraph for the current problem."""
-    all_ids = set(target_ids) | prereq_ids
+    # sorted() so node insertion order is stable across processes — iterating a
+    # raw set is subject to hash randomization and would make the whole pipeline
+    # nondeterministic when need_scores tie. (Keep the engine fully auditable.)
+    all_ids = sorted(set(target_ids) | prereq_ids)
     nodes: dict[str, DAGNode] = {}
     edges: list[DAGEdge] = []
 
@@ -326,9 +355,16 @@ def detect_weak_targets(
     dag: MinimalDAG,
     max_targets: int = 4,
 ) -> list[WeakTarget]:
-    """Score non-pruned nodes and bridges, preferring bridge failures."""
-    targets: list[WeakTarget] = []
+    """Score non-pruned nodes and bridges, preferring bridge failures.
 
+    Target ingredients (the ones the problem is actually about) are protected
+    from truncation: they are never evicted from the result by backtracked
+    prerequisites or by combination-expanded ingredients. Only after every
+    non-pruned target is kept are the remaining slots (up to ``max_targets``)
+    filled by the highest-need bridges and non-target ingredients, where bridges
+    retain their 1.5x priority.
+    """
+    bridge_targets: list[WeakTarget] = []
     for edge in dag.edges:
         if edge.edge_type != "bridge":
             continue
@@ -343,7 +379,7 @@ def detect_weak_targets(
         ):
             continue
 
-        targets.append(
+        bridge_targets.append(
             WeakTarget(
                 target_type="bridge",
                 target_id=f"{edge.from_id}->{edge.to_id}",
@@ -353,19 +389,36 @@ def detect_weak_targets(
             )
         )
 
+    protected_targets: list[WeakTarget] = []
+    other_ingredients: list[WeakTarget] = []
     for node_id, node in dag.nodes.items():
         if node.is_pruned:
             continue
-        targets.append(
-            WeakTarget(
-                target_type="ingredient",
-                target_id=node_id,
-                need_score=node.need_score,
-            )
+        weak = WeakTarget(
+            target_type="ingredient",
+            target_id=node_id,
+            need_score=node.need_score,
         )
+        if node.is_target:
+            protected_targets.append(weak)
+        else:
+            other_ingredients.append(weak)
 
-    targets.sort(key=lambda target: -target.need_score)
-    return targets[:max_targets]
+    # Targets first — these are never evicted by truncation. The target_id is a
+    # secondary key so ties (identical need_score, common in the cold-start case)
+    # resolve deterministically rather than by set/dict iteration order.
+    protected_targets.sort(key=lambda target: (-target.need_score, target.target_id))
+
+    # Remaining slots go to the highest-need bridges and non-target nodes.
+    # Bridges keep their 1.5x priority within this fill pool.
+    fill = bridge_targets + other_ingredients
+    fill.sort(key=lambda target: (-target.need_score, target.target_id))
+
+    if len(protected_targets) >= max_targets:
+        return protected_targets[:max_targets]
+
+    remaining = max_targets - len(protected_targets)
+    return protected_targets + fill[:remaining]
 
 
 def select_cards(
@@ -377,7 +430,10 @@ def select_cards(
     """Select styled cards for the highest-need ingredients and bridges."""
     _ = student_state
     if style_priority is None:
-        style_priority = ["geometric", "algebraic", "verbal"]
+        # Authored card templates expose geometric / algebraic / procedural
+        # representations. (The older "verbal" key no longer exists in the
+        # standardized ontology — using it left the third style unreachable.)
+        style_priority = ["geometric", "algebraic", "procedural"]
 
     cards: list[CardRecommendation] = []
     for target in weak_targets:
@@ -390,7 +446,7 @@ def select_cards(
             if ingredient is None:
                 continue
 
-            representation_key = style_priority[0] if style_priority else "verbal"
+            representation_key = style_priority[0] if style_priority else "procedural"
             cards.append(
                 CardRecommendation(
                     card_template_id=f"auto::{ingredient.id}",
@@ -414,7 +470,7 @@ def select_cards(
 
         template: CardTemplate = templates[0]
         representation = None
-        representation_key = "verbal"
+        representation_key = style_priority[0] if style_priority else "procedural"
         for style in style_priority:
             if style in template.representations:
                 representation = template.representations[style]
@@ -456,6 +512,7 @@ def select_cards(
 def order_cards_by_dag(
     cards: list[CardRecommendation],
     dag: MinimalDAG,
+    ordering_override: list[str] | None = None,
 ) -> list[CardRecommendation]:
     """Topologically order cards so prerequisites come first."""
     in_degree: dict[str, int] = {}
@@ -481,6 +538,12 @@ def order_cards_by_dag(
                 queue.append(neighbor)
 
     order_map = {node_id: index for index, node_id in enumerate(topo_order)}
+    override_positions: dict[str, int] = {}
+    if ordering_override:
+        override_positions = {
+            ingredient_id: index
+            for index, ingredient_id in enumerate(ordering_override)
+        }
 
     def card_sort_key(card: CardRecommendation) -> int:
         if card.target_type == "bridge":
@@ -488,7 +551,9 @@ def order_cards_by_dag(
             primary = parts[0] if parts else card.target_id
         else:
             primary = card.target_id
-        return order_map.get(primary, 999)
+        if primary in override_positions:
+            return override_positions[primary]
+        return len(override_positions) + order_map.get(primary, 999)
 
     return sorted(cards, key=card_sort_key)
 

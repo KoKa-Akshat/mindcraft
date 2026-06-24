@@ -1,0 +1,20 @@
+[
+  {
+    "exact_question_text": "A sequence starts at 3 and grows by 2 each term. Find the 10th term.",
+    "concept_path": "Sequences & Patterns -> finite sequence -> compare successive terms -> first differences -> constant difference -> next term prediction",
+    "primary_topic": "Sequences & Patterns",
+    "secondary_topics": "Number patterns"
+  },
+  {
+    "exact_question_text": "Solve 3(x + 2) - 5 = 7 - 2(x - 1) for x.",
+    "concept_path": "Algebra: Linear Equations -> distribute terms -> combine like terms -> variables on both sides -> inverse operations -> isolate variable",
+    "primary_topic": "Algebra: Linear Equations",
+    "secondary_topics": "Equation solving"
+  },
+  {
+    "exact_question_text": "Two similar triangles have sides 6, 8, 10 and 9, 12, ?. Find the missing side.",
+    "concept_path": "Geometry: Similar Triangles & Proportions -> identify corresponding sides -> scale factor -> ratio as comparison -> proportion solving -> multiply to find unknown",
+    "primary_topic": "Geometry: Similar Triangles & Proportions",
+    "secondary_topics": "Ratios; scale factors; triangle similarity criteria"
+  }
+]

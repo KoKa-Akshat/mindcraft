@@ -5,7 +5,7 @@ from typing import Literal
 class Concept(BaseModel):
     id: str
     name: str
-    level: Literal["foundational", "core", "advanced"]
+    level: Literal["foundational", "core", "advanced", "cross_cutting"]
     typical_order: int = 0
     description: str = ""
     tags: list[str] = Field(default_factory=list)

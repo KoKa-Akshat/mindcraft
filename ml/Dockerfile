@@ -21,18 +21,20 @@ RUN pip install --no-cache-dir ".[ml]" \
 # Pre-download the sentence transformer model so it's baked into the image
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
-# Pre-compute and cache embeddings from the complete ontology
+# Pre-compute and cache embeddings from the SAME standardized ontology serve.py
+# loads at runtime. Baking from the matching file means serve's startup staleness
+# check passes (cache hit) instead of rebuilding embeddings on every cold start.
 RUN python -c "\
 from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology; \
 from mindcraft_graph.representation import embeddings; \
 import pathlib; \
-ontology, _ = load_complete_ontology(pathlib.Path('data/ontology_complete.json')); \
+ontology, _ = load_complete_ontology(pathlib.Path('data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json')); \
 model = embeddings.load_sentence_transformer(); \
 embs = embeddings.compute_concept_embeddings(ontology, model); \
 comps, mean, var = embeddings.compute_pca_axes(embs); \
 embeddings.save_concept_embeddings(embs, 'data/concept_embeddings.npz'); \
 embeddings.save_pca_axes(comps, mean, var, 'data/pca_axes.npz'); \
-print('Embeddings cached')"
+print('Embeddings cached:', len(embs), 'concepts')"
 
 EXPOSE 8080
 

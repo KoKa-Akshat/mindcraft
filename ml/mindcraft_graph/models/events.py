@@ -6,7 +6,7 @@ from typing import Literal
 class SessionEvent(BaseModel):
     student_id: str
     concept_id: str
-    event_type: Literal["session", "flashcard", "worksheet", "problem_set"]
+    event_type: Literal["session", "flashcard", "worksheet", "problem_set", "assessment"]
     outcome: float = Field(ge=-1, le=1)  # performance valence
     effort: float = Field(ge=0, le=1)    # normalized effort/attempts
     duration_minutes: float
