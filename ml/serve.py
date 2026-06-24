@@ -712,9 +712,9 @@ async def knowledge_graph_endpoint(student_id: str):
     - Student mastery and strength points
     - Ingredient list per concept (for click-to-expand)
     """
-    from mindcraft_graph.firestore_adapter import load_student_events
+    from mindcraft_graph.firestore_adapter import load_student_events_with_learning
     
-    events = load_student_events(student_id)
+    events = load_student_events_with_learning(student_id)
     
     graph = create_personal_graph(student_id, ontology)
     if events:

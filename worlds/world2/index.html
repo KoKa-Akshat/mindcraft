@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MindCraft — Study World 2</title>
+    <meta name="description" content="MindCraft World 2 — An immersive 3D study environment" />
+    <meta itemprop="name" content="MindCraft — Study World 2" />
+    <meta itemprop="description" content="MindCraft World 2 — An immersive 3D study environment" />
+    <meta itemprop="image" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MindCraft — Study World 2" />
+    <meta name="twitter:description" content="MindCraft World 2 — An immersive 3D study environment" />
+    <meta name="twitter:image" />
+    <meta property="og:site_name" content="MindCraft" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mindcraft-marketing-site.web.app/" />
+    <meta property="og:title" content="MindCraft — Study World 2" />
+    <meta property="og:description" content="MindCraft World 2 — An immersive 3D study environment" />
+    <meta property="og:image" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/8f7cb9e7de037c07.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/0adf2932e78e7213.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/b1ba879833e94ae6.png" />
+    <link rel="manifest" href="83eb0899ca40f015.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="MindCraft" />
+    <meta name="application-name" content="MindCraft" />
+    <meta name="msapplication-TileColor" content="#58CC02" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <script defer="defer" src="bundle.3ea4b3f1364c1bb7.js"></script>
+    <link href="main.css" rel="stylesheet" />
+    <link href="mc-diagnostic.css" rel="stylesheet" />
+  </head>
+  <body>
+    <canvas class="webgl"></canvas>
+    <div class="overlay"></div>
+
+    <!-- MindCraft corner badge -->
+    <div id="mc-badge">
+      <span class="mc-logo">Mind<span class="mc-craft">Craft</span></span>
+    </div>
+
+    <!-- Loading screen -->
+    <div id="cooking">
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div id="area">
+        <div id="sides">
+          <div id="pan"></div>
+          <div id="handle"></div>
+        </div>
+        <div id="pancake">
+          <div id="pastry"></div>
+          <div id="pastry2"></div>
+          <div id="pastry3"></div>
+        </div>
+      </div>
+      <h1>Loading your study world... <span id="progressPercentage"></span>%</h1>
+    </div>
+
+    <button class="start" id="mc-start-btn">Enter World →</button>
+    <script>
+      document.getElementById('mc-start-btn').addEventListener('click', function() {
+        setTimeout(function() {
+          document.getElementById('mc-badge').classList.add('show');
+          document.getElementById('mc-hint').classList.add('show');
+        }, 1800);
+      });
+    </script>
+
+    <!-- MindCraft hint overlay (shown after entering) -->
+    <div id="mc-hint" onclick="window.MC_onProjectsOpen&&window.MC_onProjectsOpen()" style="cursor:pointer">
+      <p>🍳 Let Nox Cook — open diagnostics</p>
+    </div>
+
+    <!-- Diagnostic overlay (projects / diagnostics screen) -->
+    <div id="mc-diag" aria-hidden="true">
+      <div id="mc-diag-backdrop"></div>
+      <div id="mc-diag-panel"></div>
+    </div>
+    <script src="mc-diagnostic.js" defer></script>
+  </body>
+</html>

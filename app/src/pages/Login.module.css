@@ -3,33 +3,55 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(
-    135deg,
-    #0a0e14 0%,
-    #0d2b2e 48%,
-    #1a4d52 100%
-  );
+  background: #080c14;
   overflow: hidden;
 }
 
-.noise {
+.videoBg {
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.025;
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   z-index: 0;
+  pointer-events: none;
+}
+
+.videoOverlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.30) 0%,
+    rgba(0,0,0,0.20) 45%,
+    rgba(8,12,20,0.82) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.topLogo {
+  position: fixed;
+  top: 22px;
+  left: 28px;
+  z-index: 10;
+  font-family: -apple-system, BlinkMacSystemFont, 'Nunito', 'Segoe UI', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.topLogo span {
+  color: #58CC02;
 }
 
 .branding {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  min-height: 100vh;
 }
 
 .wordmark {
@@ -54,6 +76,18 @@
   color: rgba(255, 255, 255, 0.42);
 }
 
+.tagline {
+  margin: 28px 0 0;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.32);
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 240px;
+}
+
 .cardPane {
   flex-shrink: 0;
   width: clamp(340px, 36vw, 440px);
@@ -63,22 +97,22 @@
   padding: clamp(24px, 4vw, 64px);
   gap: 18px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .card {
-  background: #ffffff;
+  background: rgba(15, 20, 45, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-radius: 20px;
   padding: clamp(24px, 3.2vw, 36px);
+  border: 1px solid rgba(120, 150, 255, 0.18);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.13),
-    0 2px 8px rgba(0, 0, 0, 0.08);
+    0 8px 40px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
 }
 
 .cardHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   margin-bottom: 22px;
 }
 
@@ -122,7 +156,7 @@
   margin-bottom: 20px;
   padding: 4px;
   border-radius: 14px;
-  background: #f3f4f6;
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .roleOpt {
@@ -130,7 +164,7 @@
   border: 0;
   border-radius: 11px;
   background: transparent;
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.40);
   font-family: var(--f);
   font-size: 13px;
   font-weight: 700;
@@ -139,13 +173,13 @@
 }
 
 .roleOpt.active {
-  background: #ffffff;
-  color: #111827;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.10);
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 }
 
 .roleOpt:hover:not(.active) {
-  color: #374151;
+  color: rgba(255, 255, 255, 0.70);
 }
 
 .field {
@@ -155,7 +189,7 @@
 .field label {
   display: block;
   margin-bottom: 7px;
-  color: #374151;
+  color: rgba(255, 255, 255, 0.50);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -165,12 +199,12 @@
 .field input {
   width: 100%;
   min-height: 52px;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   padding: 14px 16px;
   outline: none;
-  background: #f9fafb;
-  color: #111827;
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
   font-family: var(--f);
   font-size: 14.5px;
   font-weight: 500;
@@ -179,13 +213,13 @@
 }
 
 .field input:focus {
-  border-color: #a4d65e;
-  box-shadow: 0 0 0 4px rgba(164, 214, 94, 0.16);
-  background: #ffffff;
+  border-color: #58CC02;
+  box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.15);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 .field input::placeholder {
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .forgot {
@@ -196,7 +230,7 @@
 .forgot button {
   border: 0;
   background: none;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.38);
   font-family: var(--f);
   font-size: 12.5px;
   font-weight: 600;
@@ -205,7 +239,7 @@
 }
 
 .forgot button:hover {
-  color: #374151;
+  color: rgba(255, 255, 255, 0.70);
 }
 
 .error {
@@ -275,9 +309,9 @@
   width: 100%;
   min-height: 52px;
   border-radius: 12px;
-  border: 1.5px solid #e5e7eb;
-  background: #ffffff;
-  color: #374151;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
   font-family: var(--f);
   font-size: 14px;
   font-weight: 600;
@@ -302,7 +336,7 @@
 .bottomLink {
   margin: 0;
   text-align: center;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.40);
   font-size: 13.5px;
   font-weight: 600;
 }
@@ -326,15 +360,26 @@
   .page {
     flex-direction: column;
     align-items: stretch;
-    padding-top: 60px;
   }
 
   .branding {
-    padding: 48px 32px 24px;
+    padding: 60px 32px 40px;
+    min-height: auto;
+    background-position: center 35%;
+  }
+
+  .branding::after {
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.20) 50%, rgba(10,14,20,0.96) 100%),
+      linear-gradient(to right, rgba(10,14,20,0) 0%, rgba(10,14,20,0) 100%);
   }
 
   .wordmark {
     font-size: 52px;
+  }
+
+  .tagline {
+    display: none;
   }
 
   .cardPane {
