@@ -162,6 +162,27 @@ def save_recommendation_result(student_id: str, result: dict):
     })
 
 
+def append_displacement_snapshot(
+    student_id: str,
+    magnitude: float,
+    direction: dict[str, float],
+    now: datetime | None = None,
+):
+    """Append a displacement reading to a per-student time series.
+
+    Displacement (strength centroid - mastery centroid in PCA space) is the
+    learning-efficiency vector. save_recommendation_result OVERWRITES the latest
+    snapshot, so the KPI value — the trend over time — would be lost. This writes
+    an append-only point, mirroring the interactions log, so magnitude/direction
+    can be charted across sessions.
+    """
+    db.collection("students").document(student_id).collection("metrics").add({
+        "magnitude": float(magnitude),
+        "direction": {k: float(v) for k, v in direction.items()},
+        "timestamp": now or datetime.now(),
+    })
+
+
 def load_ingredient_state(student_id: str) -> IngredientStudentState:
     """Load ingredient-level student state or return a fresh one."""
     doc = db.collection("ingredient_states").document(student_id).get()

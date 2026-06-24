@@ -243,6 +243,7 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
 async def recommend_endpoint(req: RecommendRequest):
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph, save_recommendation_result,
+        append_displacement_snapshot,
     )
 
     # Load student data
@@ -278,6 +279,16 @@ async def recommend_endpoint(req: RecommendRequest):
 
     # Save state
     save_personal_graph(req.student_id, graph)
+
+    # Append the displacement reading to the per-student time series. The KPI is
+    # the trend (is the strength↔mastery gap closing?), which the overwriting
+    # recommendation snapshot can't capture.
+    append_displacement_snapshot(
+        req.student_id,
+        result.student_profile.displacement_magnitude,
+        result.student_profile.displacement_direction,
+        now,
+    )
 
     # Concepts the target(s) directly unlock (reverse prerequisite edges) — lets
     # the client show "where this leads" without a duplicate frontend prereq map.
@@ -640,7 +651,9 @@ async def student_profile_endpoint(student_id: str):
 
     profiles = compute_concept_profiles(events)
     strength_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
-    mastery_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
+    mastery_vec = compute_student_embedding_from_mastery(
+        graph.state.mastery_by_concept, concept_embs,
+    )
 
     from mindcraft_graph.api.recommend import _project_and_label, DEFAULT_AXIS_LABELS
 
