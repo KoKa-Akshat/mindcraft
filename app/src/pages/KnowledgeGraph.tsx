@@ -21,6 +21,7 @@ import { logEvent }     from '../lib/logEvent'
 import Sidebar          from '../components/Sidebar'
 import { resolveConceptId, mlIdToLabel } from '../lib/conceptMap'
 import { getRecommendations, type RecommendResult } from '../lib/mlApi'
+import { fetchKnowledgeGraph } from '../lib/graphCache'
 import s                from './KnowledgeGraph.module.css'
 
 // ── ML API base URL ──
@@ -254,10 +255,10 @@ export default function KnowledgeGraph() {
     const slowTimer = setTimeout(() => setSlowLoad(true), 6000)
 
     try {
-      // Fetch the full knowledge graph from ML API
-      const graphRes = await fetch(`${ML_API_URL}/knowledge-graph/${user.uid}`)
-      if (!graphRes.ok) throw new Error('Failed to fetch knowledge graph')
-      const data: MLGraphResponse = await graphRes.json()
+      // Full knowledge graph, shared via graphCache (reuses the dashboard's
+      // LearningGPS fetch instead of hitting Cloud Run again).
+      const data = (await fetchKnowledgeGraph(user.uid)) as MLGraphResponse | null
+      if (!data) throw new Error('Failed to fetch knowledge graph')
 
       if (data.nodes.length === 0) {
         setError('No learning-world data yet. Complete a session to start turning mistakes into a map.')

@@ -16,6 +16,7 @@ import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
 import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, type IngredientRecommendResult } from '../lib/mlApi'
+import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftRemote } from '../lib/practiceState'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
@@ -556,6 +557,7 @@ export default function Practice() {
       // Seed the concept graph from the gap scan so recommendations personalize
       // from the start. Fire-and-forget — the UI proceeds regardless of result.
       void seedAssessment(user.uid, updated)
+      invalidateKnowledgeGraph(user.uid)
       // Persist the diagnostic-done flag so the entry gate stops forcing it.
       void markDiagnosticComplete(user.uid, { exam, confidenceMap: updated })
       setPPhase('building')
@@ -676,6 +678,7 @@ export default function Practice() {
       // Feed the session result into the student graph so mastery moves.
       if (concept) {
         void recordOutcomes(user.uid, [{ conceptId: toOntologyId(concept), succeeded: passRate >= 0.6 }])
+        invalidateKnowledgeGraph(user.uid)
       }
       setPPhase('complete')
     } else {
@@ -1656,6 +1659,7 @@ export default function Practice() {
                     succeeded: rec.outcome === 1,
                   }))
                   void recordOutcomes(user.uid, outs)
+                  invalidateKnowledgeGraph(user.uid)
                 }}
                 onNewProblem={() => { setProblem(''); setSession(null); setSPhase('input') }}
               />

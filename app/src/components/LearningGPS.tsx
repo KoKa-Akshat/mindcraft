@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ML_TO_LABEL, LEGACY_TO_ML, resolveConceptId } from '../lib/conceptMap'
+import { fetchKnowledgeGraph } from '../lib/graphCache'
 import s from './LearningGPS.module.css'
 
 const ML_API_URL = import.meta.env.VITE_ML_API_URL ?? ''
@@ -190,17 +191,11 @@ export default function LearningGPS({ userId }: { userId: string }) {
   const [notFound,    setNotFound]    = useState(false)
   const [loading,     setLoading]     = useState(false)
 
-  // Per-concept status (for node colors) from the knowledge graph.
+  // Per-concept status (for node colors) from the knowledge graph. Shared via
+  // graphCache so the dashboard and the Knowledge Graph page don't double-fetch.
   async function fetchNodes(): Promise<MLNode[]> {
-    if (!userId || !ML_API_URL) return []
-    try {
-      const res = await fetch(`${ML_API_URL}/knowledge-graph/${userId}`)
-      if (res.ok) {
-        const { nodes }: { nodes: MLNode[] } = await res.json()
-        return nodes
-      }
-    } catch { /* ignore */ }
-    return []
+    const data = await fetchKnowledgeGraph(userId)
+    return (data?.nodes as MLNode[] | undefined) ?? []
   }
 
   // Mastery-aware path + unlocks for a target, straight from the /recommend

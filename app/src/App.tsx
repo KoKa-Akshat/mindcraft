@@ -32,6 +32,7 @@ import Practice        from './pages/Practice'
 import LearningGPS     from './components/LearningGPS'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
+import { fetchKnowledgeGraph } from './lib/graphCache'
 
 
 export const UserContext = createContext<User | null>(null)
@@ -84,7 +85,11 @@ function RoleRedirect() {
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null | undefined>(undefined)
   useEffect(() => onAuthStateChanged(auth, setUser), [])
-  useEffect(() => { if (user) warmML() }, [user])
+  useEffect(() => {
+    if (!user) return
+    warmML()                          // fastest wake signal (cold-start)
+    void fetchKnowledgeGraph(user.uid) // prefetch graph into the shared cache
+  }, [user])
   if (user === undefined) return null // still loading auth state
   if (!user) return <Navigate to="/login" replace />
   return (
