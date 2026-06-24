@@ -243,7 +243,7 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
 async def recommend_endpoint(req: RecommendRequest):
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph, save_recommendation_result,
-        append_displacement_snapshot,
+        append_displacement_snapshot, load_ingredient_state,
     )
 
     # Load student data
@@ -271,10 +271,16 @@ async def recommend_endpoint(req: RecommendRequest):
         exploration_temp=req.exploration_temp,
     )
 
+    # Per-student bridge confidence feeds bridge-gap detection: cross-concept
+    # transitions the student is stuck on that the concept-level trim can't see.
+    ingredient_state = load_ingredient_state(req.student_id)
+
     # Run recommendation
     result = recommend(
         graph, goal, events,
         concept_embs, pca_components, pca_mean, ontology,
+        bridges=ingredient_ontology.bridges,
+        bridge_confidence=ingredient_state.bridge_confidence,
     )
 
     # Save state
@@ -316,6 +322,11 @@ async def recommend_endpoint(req: RecommendRequest):
                 "supplementFor": r.supplement_for,
                 "alignmentScore": r.alignment_score,
                 "pcaProfile": r.pca_profile,
+                "isBridgeGap": r.is_bridge_gap,
+                "bridgeId": r.bridge_id,
+                "bridgeFromConcept": r.bridge_from_concept,
+                "bridgeToConcept": r.bridge_to_concept,
+                "bridgeEvidence": r.bridge_evidence,
             }
             for r in result.recommendations
         ],

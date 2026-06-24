@@ -33,6 +33,17 @@ DEFAULT_AXIS_LABELS = [
 ]
 
 
+# A bridge whose per-student confidence sits below this is "weak" — same
+# threshold the ingredient runtime uses to prune transitions from its DAG.
+WEAK_BRIDGE_THRESHOLD = 0.7
+# Concept mastery gates for the structural (Tier 2) bridge-gap hypothesis.
+MASTERED_THRESHOLD = 0.6
+WEAK_CONCEPT_THRESHOLD = 0.6
+# A bridge whose ontology confidence (1 - difficulty) is below this is
+# considered structurally hard — only such bridges seed a Tier 2 hypothesis.
+HARD_BRIDGE_THRESHOLD = 0.6
+
+
 @dataclass
 class ConceptRecommendation:
     """One recommended concept with explanation."""
@@ -43,6 +54,12 @@ class ConceptRecommendation:
     supplement_for: str | None           # which chain concept this supplements
     alignment_score: float | None        # cosine sim with strength vector
     pca_profile: dict[str, float]        # projection onto named PCA axes
+    # ── bridge-gap fields (set only when is_bridge_gap) ──
+    is_bridge_gap: bool = False          # a cross-concept transition the student is stuck on
+    bridge_id: str | None = None         # "from_ing->to_ing" id
+    bridge_from_concept: str | None = None
+    bridge_to_concept: str | None = None
+    bridge_evidence: str | None = None   # "evidence" (Tier 1) or "hypothesis" (Tier 2)
 
 
 @dataclass
@@ -76,6 +93,8 @@ def recommend(
     pca_mean: np.ndarray,
     ontology: Ontology,
     axis_labels: list[str] | None = None,
+    bridges: list | None = None,
+    bridge_confidence: dict | None = None,
 ) -> RecommendationResult:
     """
     Main entry point for the recommendation system.
@@ -164,6 +183,15 @@ def recommend(
         trimmed = path_result.get("trimmed_chain", [])
         supplements = path_result.get("supplements", {})
 
+        # Bridge gaps: cross-concept transitions the student is stuck on. The
+        # concept-level trim can't see these — it removes mastered concepts even
+        # when the student fails exactly at the join between two of them. Keyed
+        # by the source concept so each gap is inserted right after its block.
+        bridge_gaps = _detect_bridge_gaps(
+            trimmed, bridges or [], bridge_confidence or {},
+            graph.state.mastery_by_concept,
+        )
+
         for i, concept_id in enumerate(trimmed):
             concept_proj = _project_concept(
                 concept_id, concept_embeddings, pca_components, pca_mean, axis_labels,
@@ -210,6 +238,15 @@ def recommend(
                         pca_profile=analog_proj,
                     ))
 
+            # Inject any bridge gap leaving this concept, between it and the next.
+            for gap in bridge_gaps.get(concept_id, []):
+                gap.position_in_chain = i
+                gap.pca_profile = _project_concept(
+                    gap.bridge_to_concept, concept_embeddings,
+                    pca_components, pca_mean, axis_labels,
+                )
+                recommendations.append(gap)
+
     return RecommendationResult(
         mode=goal.mode,
         target_concepts=goal.target_concepts,
@@ -220,6 +257,110 @@ def recommend(
             "trimmed_chain": path_result.get("trimmed_chain", []),
             "raw_path_result": path_result,
         },
+    )
+
+
+# ── Bridge-gap detection ──
+
+def _detect_bridge_gaps(
+    trimmed: list[str],
+    bridges: list,
+    bridge_confidence: dict,
+    mastery_by_concept: dict,
+) -> dict[str, list[ConceptRecommendation]]:
+    """Find cross-concept transitions the student is likely stuck on.
+
+    Walks adjacent concept pairs in the trimmed chain and, for each bridge
+    connecting them, emits at most one gap (the weakest bridge for the pair):
+
+    - Tier 1 (evidence): the student has attempted the bridge and its confidence
+      is below WEAK_BRIDGE_THRESHOLD. Direct signal, fires regardless of concept
+      mastery.
+    - Tier 2 (hypothesis): no bridge evidence, but the concept gradient points at
+      the bridge — source mastered, target weak, and the bridge is structurally
+      hard. A guess, surfaced as such, that works before any card data exists.
+
+    Returns gaps keyed by source concept id.
+    """
+    if not bridges or len(trimmed) < 2:
+        return {}
+
+    # Index bridges by the (source, target) concept pair they connect.
+    by_pair: dict[tuple[str, str], list] = {}
+    for b in bridges:
+        by_pair.setdefault((b.source_concept, b.target_concept), []).append(b)
+
+    chain_pairs = set(zip(trimmed, trimmed[1:]))
+    gaps: dict[str, list[ConceptRecommendation]] = {}
+
+    for (src, tgt) in chain_pairs:
+        candidates = by_pair.get((src, tgt))
+        if not candidates:
+            continue
+
+        best: ConceptRecommendation | None = None
+        best_conf = 2.0  # lower is weaker; pick the weakest qualifying bridge
+
+        for b in candidates:
+            bc = bridge_confidence.get(b.id)
+
+            # Tier 1: real attempt history below the weakness threshold.
+            if bc is not None and bc.attempts > 0:
+                if bc.confidence < WEAK_BRIDGE_THRESHOLD and bc.confidence < best_conf:
+                    best = _make_bridge_gap(b, src, tgt, "evidence", bc.confidence)
+                    best_conf = bc.confidence
+                continue
+
+            # Tier 2: no evidence — fall back to the concept-mastery gradient.
+            src_m = _mastery(mastery_by_concept, src)
+            tgt_m = _mastery(mastery_by_concept, tgt)
+            if (
+                src_m >= MASTERED_THRESHOLD
+                and tgt_m < WEAK_CONCEPT_THRESHOLD
+                and b.confidence < HARD_BRIDGE_THRESHOLD
+                and b.confidence < best_conf
+            ):
+                best = _make_bridge_gap(b, src, tgt, "hypothesis", b.confidence)
+                best_conf = b.confidence
+
+        if best is not None:
+            gaps.setdefault(src, []).append(best)
+
+    return gaps
+
+
+def _mastery(mastery_by_concept: dict, concept_id: str) -> float:
+    """Concept mastery in [0,1], 0.0 if the student has no record."""
+    cm = mastery_by_concept.get(concept_id)
+    return float(cm.mastery) if cm is not None else 0.0
+
+
+def _make_bridge_gap(
+    bridge, src: str, tgt: str, evidence: str, conf: float,
+) -> ConceptRecommendation:
+    """Build a bridge-gap recommendation. pca_profile/position set by caller."""
+    desc = bridge.description.strip() if bridge.description else ""
+    if evidence == "evidence":
+        lead = f"You've struggled connecting {src} to {tgt}"
+    else:
+        lead = f"You know {src} but not {tgt} — the link between them is likely the blocker"
+    reason = f"{lead}. {desc}".strip()
+    if not reason.endswith("."):
+        reason += "."
+
+    return ConceptRecommendation(
+        concept_id=tgt,                 # anchor on the concept to work toward
+        reason=reason,
+        position_in_chain=None,         # set by caller
+        is_supplement=False,
+        supplement_for=None,
+        alignment_score=None,
+        pca_profile={},                 # set by caller
+        is_bridge_gap=True,
+        bridge_id=bridge.id,
+        bridge_from_concept=src,
+        bridge_to_concept=tgt,
+        bridge_evidence=evidence,
     )
 
 
