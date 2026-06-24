@@ -37,6 +37,19 @@ import Prep            from './pages/Prep'
 export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
 
+// Wake the ML Cloud Run service the moment auth resolves, so the first graph
+// fetch (LearningGPS auto-load on the dashboard, or the Knowledge Graph page)
+// hits a warm instance instead of eating a 30–60s cold start (min-instances 0).
+// Fire-and-forget, once per page session.
+const ML_API_URL =
+  import.meta.env.VITE_ML_API_URL ?? import.meta.env.VITE_ML_URL ?? ''
+let mlWarmed = false
+function warmML() {
+  if (mlWarmed || !ML_API_URL) return
+  mlWarmed = true
+  fetch(`${ML_API_URL}/health`).catch(() => {})
+}
+
 /** Pathfinder/recommend view — feeds the current user's id to LearningGPS. */
 function LearningGPSPage() {
   const user = useUser()
@@ -71,6 +84,7 @@ function RoleRedirect() {
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null | undefined>(undefined)
   useEffect(() => onAuthStateChanged(auth, setUser), [])
+  useEffect(() => { if (user) warmML() }, [user])
   if (user === undefined) return null // still loading auth state
   if (!user) return <Navigate to="/login" replace />
   return (
