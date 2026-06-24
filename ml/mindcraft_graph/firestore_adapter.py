@@ -115,6 +115,38 @@ def append_interactions(student_id: str, events, source: str) -> int:
     return len(events)
 
 
+def learning_events_as_session_events(student_id: str, subject_id: str = "math") -> list[SessionEvent]:
+    """Convert diagnostic/practice learning_events into SessionEvents for the PCA graph."""
+    converted: list[SessionEvent] = []
+    for raw in load_learning_events(student_id, subject_id):
+        outcome = raw.get("outcome")
+        if outcome is None:
+            continue
+        concept_id = raw.get("conceptId") or ""
+        if not concept_id or concept_id == "diagnostic":
+            continue
+        valence = float(outcome) * 2.0 - 1.0  # map 0/1 → -1..1
+        duration_ms = raw.get("durationMs") or 0
+        converted.append(SessionEvent(
+            student_id=student_id,
+            concept_id=concept_id,
+            event_type="problem_set",
+            outcome=valence,
+            effort=0.6,
+            duration_minutes=max(duration_ms / 60000.0, 0.5),
+            timestamp=raw.get("timestamp", datetime.now()),
+            exposure_weight=1.0,
+        ))
+    return converted
+
+
+def load_student_events_with_learning(student_id: str, limit: int = 500) -> list[SessionEvent]:
+    """Interactions + diagnostic learning_events — feeds constellation / knowledge graph."""
+    events = load_student_events(student_id, limit=limit)
+    events.extend(learning_events_as_session_events(student_id))
+    return events
+
+
 def load_personal_graph(student_id: str) -> dict | None:
     """Load a saved personal graph from Firestore."""
     doc = db.collection("knowledge_graphs").document(student_id).get()

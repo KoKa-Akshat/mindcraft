@@ -361,7 +361,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 .mc-big .mc-invis{color:#F5F1ED}
 .mc-big .mc-gray{color:#58CC02}
 /* Quote text */
-.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#1A1A1A;margin:0;max-width:82vw}
+.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#1A1A1A;margin:0;max-width:82vw}.mc-hl{background:#C4F547;padding:2px 8px;border-radius:5px;color:#1A1A1A}.mc-craft{color:#58CC02}
 /* MINDCRAFT brand */
 .mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
 /* Caption */
@@ -413,23 +413,23 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   </div>
 
   <div class="mc-slide">
-    <p class="mc-quote">&ldquo;Doing well in school depends on much more than your ability to learn quickly and easily. It depends on grit.&rdquo;</p>
+    <p class="mc-quote">&ldquo;Doing well in school depends on much more than your ability to learn quickly and easily. <span class="mc-hl">It depends on grit.</span>&rdquo;</p>
     <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
   </div>
 
   <div class="mc-slide">
-    <p class="mc-quote">&ldquo;When students learn how the brain grows in response to challenge, they persevere through failure because they realize failure is not a permanent condition.&rdquo;</p>
+    <p class="mc-quote">&ldquo;When students learn how the brain grows in response to challenge, they <span class="mc-hl">persevere through failure</span> because they realize failure is not a permanent condition.&rdquo;</p>
     <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
   </div>
 
   <div class="mc-slide">
-    <p class="mc-brand">MINDCRAFT</p>
+    <p class="mc-brand">MIND<span class="mc-craft">CRAFT</span></p>
     <p class="mc-big" style="color:#F5F1ED">A Growth Mindset</p>
     <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
   </div>
 
   <div class="mc-slide">
-    <p class="mc-brand">MINDCRAFT</p>
+    <p class="mc-brand">MIND<span class="mc-craft">CRAFT</span></p>
     <p class="mc-big">A Growth Mindset</p>
   </div>
 </div>
@@ -752,7 +752,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
         <li class="muted">Session notes &amp; homework</li>
       </ul>
       <div class="cta-wrap">
-        <a href="https://mindcraft-93858.web.app" target="_blank" class="bw" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center">Open the App →</a>
+        <a href="https://mindcraft-93858.web.app/login" target="_blank" class="bw" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center">Open the App →</a>
       </div>
     </div>
 
@@ -942,8 +942,8 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       var delay=SLIDE_DELAYS[cur]!==undefined?SLIDE_DELAYS[cur]:AUTO;
       timer=setTimeout(function(){go(cur+1);},delay);
     } else {
-      // Last slide: auto-open site after 1 s
-      timer=setTimeout(exit,1000);
+      // Last slide: hold for 2 s buffer then open site
+      timer=setTimeout(exit,2000);
     }
   }
 
