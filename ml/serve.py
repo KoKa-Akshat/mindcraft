@@ -29,52 +29,90 @@ from mindcraft_graph.api.recommend import recommend
 
 # ── Startup: load once, reuse forever ──
 
-COMPLETE_ONTOLOGY_PATH = pathlib.Path(__file__).parent / "data" / "ontology_complete.json"
-ONTOLOGY_PATH = pathlib.Path(__file__).parent / "data" / "ontology.json"
-INGREDIENT_PATH = pathlib.Path(__file__).parent / "data" / "ingredient_ontology.json"
-EMBEDDINGS_PATH = pathlib.Path(__file__).parent / "data" / "concept_embeddings.npz"
-PCA_PATH = pathlib.Path(__file__).parent / "data" / "pca_axes.npz"
+DATA_DIR = pathlib.Path(__file__).parent / "data"
 
-# Prefer the rich complete ontology; fall back to legacy files if missing
-if COMPLETE_ONTOLOGY_PATH.exists():
-    from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
-    ontology, ingredient_ontology = load_complete_ontology(COMPLETE_ONTOLOGY_PATH)
+# Standardized canonical-ID ontology (concepts + ingredients + bridges +
+# combinations in one file). This is the source of truth the harness validated
+# against; the live API must classify against the same vocabulary.
+STANDARDIZED_ONTOLOGY_PATH = (
+    DATA_DIR / "5_level_ontology" / "01_mindcraft_concept_ontology_v2_6_with_combinations.json"
+)
+# Legacy files — kept on disk for reference, no longer preferred.
+LEGACY_COMPLETE_ONTOLOGY_PATH = DATA_DIR / "ontology_complete.json"
+LEGACY_ONTOLOGY_PATH = DATA_DIR / "ontology.json"
+LEGACY_INGREDIENT_PATH = DATA_DIR / "ingredient_ontology.json"
+
+EMBEDDINGS_PATH = DATA_DIR / "concept_embeddings.npz"
+PCA_PATH = DATA_DIR / "pca_axes.npz"
+
+# Combination firing threshold for /recommend-ingredients. Pinned to the value
+# the harness (scripts/test_concept_paths.py) validated against so the live API
+# fires the same combinations the harness reports. The pipeline's own default
+# differs; passing this explicitly keeps production and harness in lockstep.
+COMBINATION_MIN_OVERLAP = 0.5
+
+from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
+
+if STANDARDIZED_ONTOLOGY_PATH.exists():
+    ontology, ingredient_ontology = load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
+    _ontology_source = STANDARDIZED_ONTOLOGY_PATH.name
+elif LEGACY_COMPLETE_ONTOLOGY_PATH.exists():
+    ontology, ingredient_ontology = load_complete_ontology(LEGACY_COMPLETE_ONTOLOGY_PATH)
+    _ontology_source = LEGACY_COMPLETE_ONTOLOGY_PATH.name
 else:
-    ontology = Ontology.model_validate_json(ONTOLOGY_PATH.read_text())
-    ingredient_ontology = IngredientOntology.model_validate_json(INGREDIENT_PATH.read_text())
+    ontology = Ontology.model_validate_json(LEGACY_ONTOLOGY_PATH.read_text())
+    ingredient_ontology = IngredientOntology.model_validate_json(LEGACY_INGREDIENT_PATH.read_text())
+    _ontology_source = LEGACY_ONTOLOGY_PATH.name
 
 ingredient_graph = IngredientGraph(ingredient_ontology)
 
+
+def _rebuild_concept_embeddings():
+    model = embeddings.load_sentence_transformer()
+    embs = embeddings.compute_concept_embeddings(ontology, model)
+    pca = embeddings.compute_pca_axes(embs)
+    embeddings.save_concept_embeddings(embs, EMBEDDINGS_PATH)
+    embeddings.save_pca_axes(*pca, PCA_PATH)
+    return embs, pca
+
+
+# The .npz cache may have been built from a *different* ontology (e.g. the legacy
+# 37/38-concept file). If its concept set no longer matches the loaded ontology,
+# invalidate it and rebuild from the standardized file — otherwise classification
+# would run against a stale vocabulary that diverges from the harness.
+_ontology_concept_ids = {c.id for c in ontology.concepts}
 if EMBEDDINGS_PATH.exists():
     concept_embs = embeddings.load_concept_embeddings(EMBEDDINGS_PATH)
-    pca_components, pca_mean, pca_variance = embeddings.load_pca_axes(PCA_PATH)
+    if set(concept_embs.keys()) == _ontology_concept_ids:
+        pca_components, pca_mean, pca_variance = embeddings.load_pca_axes(PCA_PATH)
+        _embedding_source = f"{EMBEDDINGS_PATH.name} (cache hit, matches ontology)"
+    else:
+        concept_embs, (pca_components, pca_mean, pca_variance) = _rebuild_concept_embeddings()
+        _embedding_source = f"rebuilt from {_ontology_source} (stale cache invalidated)"
 else:
-    model = embeddings.load_sentence_transformer()
-    concept_embs = embeddings.compute_concept_embeddings(ontology, model)
-    pca_components, pca_mean, pca_variance = embeddings.compute_pca_axes(concept_embs)
-    embeddings.save_concept_embeddings(concept_embs, EMBEDDINGS_PATH)
-    embeddings.save_pca_axes(pca_components, pca_mean, pca_variance, PCA_PATH)
+    concept_embs, (pca_components, pca_mean, pca_variance) = _rebuild_concept_embeddings()
+    _embedding_source = f"computed from {_ontology_source} (no cache)"
+
+print(
+    "[startup] ontology=%s | concepts=%d edges=%d | ingredients=%d bridges=%d combinations=%d | embeddings: %s"
+    % (
+        _ontology_source,
+        len(ontology.concepts),
+        len(ontology.edges),
+        len(ingredient_graph.ingredients),
+        len(ingredient_ontology.bridges),
+        len(ingredient_ontology.combinations),
+        _embedding_source,
+    )
+)
 
 
-def _build_ingredient_concept_embeddings():
-    augmented = dict(concept_embs)
-    if "circular_trigonometry" not in augmented:
-        seed_ids = [
-            "trigonometry_basics",
-            "circles_geometry",
-            "functions_basics",
-        ]
-        seed_vectors = [concept_embs[seed_id] for seed_id in seed_ids if seed_id in concept_embs]
-        if seed_vectors:
-            vec = sum(seed_vectors) / len(seed_vectors)
-            norm = float((vec @ vec) ** 0.5)
-            if norm > 1e-8:
-                vec = vec / norm
-            augmented["circular_trigonometry"] = vec
-    return augmented
-
-
-ingredient_concept_embs = _build_ingredient_concept_embeddings()
+# Classification embeddings for the ingredient runtime. With the standardized
+# ontology these are exactly the concept embeddings — no synthesized concepts.
+# (A legacy augmentation here injected a phantom "circular_trigonometry" vector
+# that has no ingredients in the standardized graph; it has been removed so the
+# live API classifies against the same 42-concept vocabulary the harness uses.)
+ingredient_concept_embs = dict(concept_embs)
 
 # Load the sentence transformer for summary parsing
 # This stays in memory for the life of the container
@@ -94,12 +132,12 @@ app.add_middleware(
         "http://localhost:4173",
         "https://mindcraft-93858.web.app",
         "https://mindcraft-93858.firebaseapp.com",
+        "https://app-beta-one-59.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # ── Request/Response schemas ──
 
 class RecommendRequest(BaseModel):
@@ -124,6 +162,22 @@ class IngredientRecommendRequest(BaseModel):
     student_id: str
     problem_text: str
     max_cards: int = 4
+
+
+class SeedAssessmentRequest(BaseModel):
+    student_id: str
+    # concept_id -> self-reported confidence ("hard" | "kinda" | "easy")
+    assessment: dict[str, str]
+
+
+class OutcomeItem(BaseModel):
+    concept_id: str
+    succeeded: bool
+
+
+class RecordOutcomesRequest(BaseModel):
+    student_id: str
+    outcomes: list[OutcomeItem]
 
 
 class SubmitIngredientAnswerRequest(BaseModel):
@@ -225,11 +279,23 @@ async def recommend_endpoint(req: RecommendRequest):
     # Save state
     save_personal_graph(req.student_id, graph)
 
+    # Concepts the target(s) directly unlock (reverse prerequisite edges) — lets
+    # the client show "where this leads" without a duplicate frontend prereq map.
+    _targets = set(result.target_concepts) or (
+        {result.canonical_chain[-1]} if result.canonical_chain else set()
+    )
+    unlocks = sorted({
+        edge.to_concept
+        for edge in ontology.edges
+        if edge.relation == "prerequisite" and edge.from_concept in _targets
+    })
+
     # Convert to JSON-serializable dict
     response = {
         "mode": result.mode,
         "targetConcepts": result.target_concepts,
         "canonicalChain": result.canonical_chain,
+        "unlocks": unlocks,
         "recommendations": [
             {
                 "conceptId": r.concept_id,
@@ -262,6 +328,126 @@ async def recommend_endpoint(req: RecommendRequest):
     return response
 
 
+# Onboarding self-assessment -> seed events. hard = struggling (negative outcome,
+# high effort = confirmed weakness); easy = some initial mastery; kinda = mild gap.
+ASSESSMENT_OUTCOME_MAP = {
+    "hard": (-0.4, 0.7),
+    "kinda": (-0.1, 0.5),
+    "easy": (0.5, 0.3),
+}
+
+
+@app.post("/seed-assessment")
+async def seed_assessment_endpoint(req: SeedAssessmentRequest):
+    """Seed the concept graph from the onboarding 'gap scan' so a brand-new
+    student gets personalized recommendations before their first session."""
+    from mindcraft_graph.firestore_adapter import (
+        load_student_events,
+        replace_interactions_by_source,
+        save_personal_graph,
+    )
+    from mindcraft_graph.models.events import SessionEvent
+
+    valid_concepts = {concept.id for concept in ontology.concepts}
+    now = datetime.now()
+    seeded: list[str] = []
+    skipped: list[str] = []
+    events: list[SessionEvent] = []
+    for concept_id, confidence in req.assessment.items():
+        conf = (confidence or "").lower()
+        if concept_id not in valid_concepts or conf not in ASSESSMENT_OUTCOME_MAP:
+            skipped.append(concept_id)
+            continue
+        outcome, effort = ASSESSMENT_OUTCOME_MAP[conf]
+        events.append(SessionEvent(
+            student_id=req.student_id,
+            concept_id=concept_id,
+            event_type="assessment",
+            outcome=outcome,
+            effort=effort,
+            duration_minutes=5.0,
+            timestamp=now,
+            exposure_weight=1.0,
+        ))
+        seeded.append(concept_id)
+
+    # Idempotent: replaces any prior onboarding seed so re-onboarding overwrites.
+    replace_interactions_by_source(req.student_id, events, source="onboarding_assessment")
+
+    # Rebuild + persist the personal graph from all events (seed + any real ones).
+    all_events = load_student_events(req.student_id)
+    graph = create_personal_graph(req.student_id, ontology)
+    if all_events:
+        graph = update_personal_graph(graph, all_events, ontology)
+    graph.state = decay_student_state(graph.state, now)
+    graph.edges = decay_all_edges(graph.edges, now)
+    save_personal_graph(req.student_id, graph)
+
+    return {
+        "studentId": req.student_id,
+        "seededConcepts": seeded,
+        "skippedConcepts": skipped,
+        "eventsCreated": len(events),
+    }
+
+
+# Practice/homework outcome -> graph signal. A solved problem rewards mastery;
+# a missed one is weak negative evidence (lower effort than a confirmed struggle).
+OUTCOME_MAP = {True: (0.6, 0.4), False: (-0.4, 0.6)}
+
+
+@app.post("/record-outcomes")
+async def record_outcomes_endpoint(req: RecordOutcomesRequest):
+    """Record practice/homework results into the concept graph so mastery moves
+    as the student actually answers problems. Events accumulate (not replaced)."""
+    from mindcraft_graph.firestore_adapter import (
+        append_interactions,
+        load_student_events,
+        save_personal_graph,
+    )
+    from mindcraft_graph.models.events import SessionEvent
+
+    valid_concepts = {concept.id for concept in ontology.concepts}
+    now = datetime.now()
+    recorded: list[str] = []
+    skipped: list[str] = []
+    events: list[SessionEvent] = []
+    for item in req.outcomes:
+        if item.concept_id not in valid_concepts:
+            skipped.append(item.concept_id)
+            continue
+        outcome, effort = OUTCOME_MAP[item.succeeded]
+        events.append(SessionEvent(
+            student_id=req.student_id,
+            concept_id=item.concept_id,
+            event_type="problem_set",
+            outcome=outcome,
+            effort=effort,
+            duration_minutes=3.0,
+            timestamp=now,
+            exposure_weight=1.0,
+        ))
+        recorded.append(item.concept_id)
+
+    if events:
+        append_interactions(req.student_id, events, source="practice")
+
+    all_events = load_student_events(req.student_id)
+    graph = create_personal_graph(req.student_id, ontology)
+    if all_events:
+        graph = update_personal_graph(graph, all_events, ontology)
+    graph.state = decay_student_state(graph.state, now)
+    graph.edges = decay_all_edges(graph.edges, now)
+    save_personal_graph(req.student_id, graph)
+
+    return {
+        "studentId": req.student_id,
+        "recordedConcepts": recorded,
+        "skippedConcepts": skipped,
+        "eventsCreated": len(events),
+    }
+
+
 @app.post("/recommend-ingredients")
 async def recommend_ingredients_endpoint(req: IngredientRecommendRequest):
     from mindcraft_graph.firestore_adapter import (
@@ -278,6 +464,7 @@ async def recommend_ingredients_endpoint(req: IngredientRecommendRequest):
         embed_fn=embed_fn,
         ontology=ontology,
         max_cards=req.max_cards,
+        combination_min_overlap=COMBINATION_MIN_OVERLAP,
     )
 
     response = {
@@ -418,9 +605,9 @@ async def process_summary_endpoint(req: SummaryRequest):
     # Save
     save_personal_graph(req.student_id, graph)
 
-    # Also write the new events to Firestore so they persist
-    from google.cloud import firestore
-    db = firestore.Client()
+    # Also write the new events to Firestore so they persist. Reuse the adapter's
+    # client so this targets the same project (mindcraft-93858) as everything else.
+    from mindcraft_graph.firestore_adapter import db
     for event in new_events:
         db.collection("interactions").add({
             "studentId": event.student_id,

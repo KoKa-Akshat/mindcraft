@@ -29,10 +29,24 @@ import StudentSessions   from './pages/StudentSessions'
 import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
+import LearningGPS     from './components/LearningGPS'
+import ConstellationCard from './components/ConstellationCard'
 
 
 export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
+
+/** Pathfinder/recommend view — feeds the current user's id to LearningGPS. */
+function LearningGPSPage() {
+  const user = useUser()
+  return <LearningGPS userId={user.uid} />
+}
+
+/** Constellation-style knowledge graph for the current user. */
+function ConstellationPage() {
+  const user = useUser()
+  return <ConstellationCard userId={user.uid} />
+}
 
 /** Reads the user's Firestore role and redirects to the correct dashboard. */
 function RoleRedirect() {
@@ -83,6 +97,8 @@ export default function App() {
         <Route path="/sessions"            element={<AuthGuard><StudentSessions /></AuthGuard>} />
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
+        <Route path="/learning-gps"        element={<AuthGuard><LearningGPSPage /></AuthGuard>} />
+        <Route path="/constellation"       element={<AuthGuard><ConstellationPage /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
 

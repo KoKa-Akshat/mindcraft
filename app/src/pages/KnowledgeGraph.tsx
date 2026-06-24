@@ -189,6 +189,7 @@ export default function KnowledgeGraph() {
   const [slowLoad,  setSlowLoad]  = useState(false)
   const [error,     setError]     = useState('')
   const [selected,  setSelected]  = useState<MLNode | null>(null)
+  const [showSuggest, setShowSuggest] = useState(false)
   const [hovered,   setHovered]   = useState<string | null>(null)
   const [mlResult,  setMlResult]  = useState<RecommendResult | null>(null)
   const [zoom,      setZoom]      = useState(1)
@@ -334,7 +335,7 @@ export default function KnowledgeGraph() {
         {/* ── Search ── */}
         <div className={s.searchRow}>
           <form className={s.searchForm} onSubmit={handleSearch}>
-            <div className={s.searchWrap}>
+            <div className={s.searchWrap} style={{ position: 'relative' }}>
               <svg className={s.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
               </svg>
@@ -342,8 +343,38 @@ export default function KnowledgeGraph() {
                 className={s.searchInput}
                 placeholder="Search a concept — e.g. Derivatives, Trigonometry, Algebra…"
                 value={search}
-                onChange={e => setSearch(e.target.value)}
+                onChange={e => { setSearch(e.target.value); setShowSuggest(true) }}
+                onFocus={() => setShowSuggest(true)}
+                onBlur={() => setTimeout(() => setShowSuggest(false), 150)}
               />
+              {showSuggest && search.trim() && (() => {
+                const q = search.trim().toLowerCase()
+                const sugg = (graphData?.nodes ?? [])
+                  .filter(n => mlIdToLabel(n.id).toLowerCase().includes(q) || n.id.includes(q))
+                  .slice(0, 8)
+                if (!sugg.length) return null
+                return (
+                  <div style={{
+                    position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 30, marginTop: 6,
+                    background: '#15162b', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 10,
+                    overflow: 'hidden', maxHeight: 260, overflowY: 'auto', boxShadow: '0 12px 32px rgba(0,0,0,0.45)',
+                  }}>
+                    {sugg.map(n => (
+                      <button
+                        key={n.id}
+                        type="button"
+                        onMouseDown={() => { setSearch(mlIdToLabel(n.id)); setShowSuggest(false); fetchGraph(n.id) }}
+                        style={{
+                          display: 'block', width: '100%', textAlign: 'left', padding: '9px 14px',
+                          background: 'none', border: 'none', color: '#EDEBFF', cursor: 'pointer', fontSize: 13,
+                        }}
+                      >
+                        {mlIdToLabel(n.id)}
+                      </button>
+                    ))}
+                  </div>
+                )
+              })()}
             </div>
             <button type="submit" className={s.searchBtn} disabled={!search.trim() || loading}>
               {loading ? 'Loading…' : 'Explore →'}
@@ -361,6 +392,15 @@ export default function KnowledgeGraph() {
               </button>
             ))}
           </div>
+        </div>
+
+        <div style={{
+          display: 'flex', gap: 18, flexWrap: 'wrap', alignItems: 'center',
+          fontSize: 12, opacity: 0.82, margin: '6px 2px 0',
+        }}>
+          <span><b style={{ color: '#A8E063' }}>★ Mastery</b> — where you've been studying</span>
+          <span><b style={{ color: '#60C8FF' }}>☆ Strength</b> — where you actually perform best</span>
+          <span style={{ opacity: 0.6 }}>the gap between the two points to your next growth</span>
         </div>
 
         {error && <div className={s.error}>{error}</div>}

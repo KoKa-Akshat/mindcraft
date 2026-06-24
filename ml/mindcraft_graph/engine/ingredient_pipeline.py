@@ -10,6 +10,7 @@ from mindcraft_graph.engine.ingredient_graph import IngredientGraph
 from mindcraft_graph.engine.ingredient_runtime import (
     IngredientRecommendationResult,
     MinimalDAG,
+    apply_combinations,
     backtrack_prerequisites,
     build_minimal_dag,
     classify_problem,
@@ -35,6 +36,8 @@ def recommend_cards(
     mastery_threshold: float = 0.8,
     bridge_confidence_threshold: float = 0.7,
     style_priority: list[str] | None = None,
+    use_combinations: bool = True,
+    combination_min_overlap: float = 0.1,
 ) -> IngredientRecommendationResult:
     """
     Full runtime pipeline: problem -> ingredient-level card recommendations.
@@ -61,7 +64,18 @@ def recommend_cards(
         )
 
     prereq_ids, used_bridges = backtrack_prerequisites(target_ids, graph)
-    dag = build_minimal_dag(target_ids, prereq_ids, used_bridges, graph, student_state)
+    active_ids = set(target_ids) | prereq_ids
+    if use_combinations:
+        expanded_ids, ordering_override = apply_combinations(
+            active_ids,
+            graph,
+            min_overlap=combination_min_overlap,
+        )
+    else:
+        expanded_ids, ordering_override = active_ids, []
+
+    expanded_prereq_ids = expanded_ids - set(target_ids)
+    dag = build_minimal_dag(target_ids, expanded_prereq_ids, used_bridges, graph, student_state)
     dag = prune_mastered_nodes(dag, mastery_threshold, bridge_confidence_threshold)
     weak_targets = detect_weak_targets(dag, max_targets=max_cards)
 
@@ -72,10 +86,10 @@ def recommend_cards(
                 key=lambda style: -student_state.style_scores[style],
             )
         else:
-            style_priority = ["geometric", "algebraic", "verbal"]
+            style_priority = ["geometric", "algebraic", "procedural"]
 
     cards = select_cards(weak_targets, graph, student_state, style_priority)
-    cards = order_cards_by_dag(cards, dag)
+    cards = order_cards_by_dag(cards, dag, ordering_override=ordering_override)
     composition_prompt, hidden_answer = generate_composition_prompt(
         target_ids,
         graph,

@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
 import Sidebar from '../components/Sidebar'
-import HomeworkCards, { type HomeworkSession, type OutcomeRecord } from '../components/HomeworkCards'
+import HomeworkCards, { type HomeworkSession, type HomeworkCard, type OutcomeRecord } from '../components/HomeworkCards'
 import {
   type Question,
   PRACTICE_CONCEPTS,
@@ -12,9 +12,11 @@ import {
 } from '../lib/questionBank'
 import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
 import { getConceptContent } from '../lib/conceptContent'
-import { mlIdToLabel } from '../lib/conceptMap'
+import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
 import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
+import { seedAssessment, recordOutcomes, getIngredientCards, type IngredientRecommendResult } from '../lib/mlApi'
+import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftRemote } from '../lib/practiceState'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
@@ -224,6 +226,34 @@ function chipToConceptId(chip: string): string | null {
   return partial?.id ?? null
 }
 
+// Fallback: render the deterministic ingredient-pipeline cards in the homework UI
+// when the LLM solver is unavailable. concept_chip carries the ontology id so the
+// outcome buttons still feed the student graph.
+function ingredientResultToSession(
+  ing: IngredientRecommendResult,
+  problemText: string,
+): HomeworkSession {
+  const concept = ing.problemFeatures.primary_concept
+  const cards: HomeworkCard[] = ing.cards.map((c, i) => ({
+    step_number: i + 1,
+    total_steps: ing.cards.length,
+    type: 'reframe',
+    concept_chip: concept,
+    content: c.prompt ? `${c.body}\n\n${c.prompt}` : c.body,
+    visual_type: 'none',
+    visual_data: '',
+    is_visual_step: false,
+  }))
+  return {
+    session_id: `ingredient-${Date.now()}`,
+    problem_summary: problemText,
+    target_concept: mlIdToLabel(concept),
+    path_framing: ing.compositionPrompt || 'Work through these building blocks in order.',
+    cards,
+    paths_explored: 1,
+  }
+}
+
 function PixelCraft({ size = 'sm', className = '' }: { size?: 'sm' | 'lg' | 'md'; className?: string }) {
   return (
     <div className={`${s.pixelCraft} ${s[`pixelCraft${size.toUpperCase()}`]} ${className}`} aria-label="Craft mascot" role="img">
@@ -289,6 +319,7 @@ export default function Practice() {
   const location = useLocation()
   const fileRef  = useRef<HTMLInputElement>(null)
   const draftHydratedRef = useRef(false)
+  const remoteSaveTimer = useRef<number | null>(null)
 
   const [mode, setMode] = useState<Mode>('practice')
 
@@ -410,6 +441,22 @@ export default function Practice() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.uid])
 
+  // Cross-device restore: if there's no local draft, pull the last one saved to
+  // Firestore (e.g. the student switched devices) and restore it.
+  useEffect(() => {
+    if (localStorage.getItem(practiceDraftKey(user.uid))) return
+    let cancelled = false
+    loadPracticeDraftRemote(user.uid).then(d => {
+      if (cancelled || !d) return
+      const draft = d as PracticeDraft
+      if (draft.version === PRACTICE_DRAFT_VERSION && draft.assessConceptIds?.length) {
+        restorePracticeDraft(draft)
+      }
+    })
+    return () => { cancelled = true }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.uid])
+
   useEffect(() => {
     if (!draftHydratedRef.current) return
     if (mode !== 'practice') return
@@ -441,6 +488,11 @@ export default function Practice() {
 
     localStorage.setItem(practiceDraftKey(user.uid), JSON.stringify(draft))
     setSavedDraft(draft)
+    // Mirror to Firestore (debounced) so progress is durable + cross-device.
+    if (remoteSaveTimer.current) window.clearTimeout(remoteSaveTimer.current)
+    remoteSaveTimer.current = window.setTimeout(() => {
+      void savePracticeDraftRemote(user.uid, draft)
+    }, 2000)
   }, [
     user.uid,
     mode,
@@ -501,6 +553,11 @@ export default function Practice() {
     const updated = { ...confidenceMap, [current.id]: conf }
     setConfidenceMap(updated)
     if (confidenceStep + 1 >= assessConcepts.length) {
+      // Seed the concept graph from the gap scan so recommendations personalize
+      // from the start. Fire-and-forget — the UI proceeds regardless of result.
+      void seedAssessment(user.uid, updated)
+      // Persist the diagnostic-done flag so the entry gate stops forcing it.
+      void markDiagnosticComplete(user.uid, { exam, confidenceMap: updated })
       setPPhase('building')
       setTimeout(() => setPPhase('gap-analysis'), 2200)
     } else {
@@ -611,9 +668,14 @@ export default function Practice() {
     }
 
     if (isLast && !shouldRequeue) {
+      const passRate = results.filter(Boolean).length / results.length
       // If mastered, evict sessionStorage cache so next session gets fresh questions
-      if (concept && results.filter(Boolean).length / results.length >= 0.8) {
+      if (concept && passRate >= 0.8) {
         evictQuestionCache(concept, level, exam || 'General')
+      }
+      // Feed the session result into the student graph so mastery moves.
+      if (concept) {
+        void recordOutcomes(user.uid, [{ conceptId: toOntologyId(concept), succeeded: passRate >= 0.6 }])
       }
       setPPhase('complete')
     } else {
@@ -676,6 +738,17 @@ export default function Practice() {
       setSession(data)
       setSPhase('cards')
     } catch (err: unknown) {
+      // LLM solver failed (e.g. Anthropic credits exhausted) — fall back to the
+      // deterministic ingredient pipeline when we have problem text to classify.
+      if (problemText.trim()) {
+        const ing = await getIngredientCards(user.uid, problemText, 4)
+        if (ing && ing.cards.length > 0) {
+          setSession(ingredientResultToSession(ing, problemText))
+          setSlowLoad(false)
+          setSPhase('cards')
+          return
+        }
+      }
       setSlowLoad(false)
       setError(err instanceof Error ? err.message : 'Something went wrong.')
       setSPhase('input')
@@ -1572,7 +1645,18 @@ export default function Practice() {
                 studentId={user.uid}
                 apiBase={HOMEWORK_API}
                 fetchClue={(content, concept, num) => clueWithGemini(content, concept, num, exam || 'General')}
-                onComplete={r => { setSResults(r); setSPhase('done') }}
+                onComplete={r => {
+                  setSResults(r); setSPhase('done')
+                  // Feed homework outcomes into the student graph (concept_chip
+                  // -> concept id; outcome 1 = solved). Unknown ids skip server-side.
+                  const outs = r.map(rec => ({
+                    // chipToConceptId handles LLM label chips; the ?? passes through
+                    // ontology ids from the ingredient fallback. Backend skips invalid.
+                    conceptId: toOntologyId(chipToConceptId(rec.concept_chip) ?? rec.concept_chip),
+                    succeeded: rec.outcome === 1,
+                  }))
+                  void recordOutcomes(user.uid, outs)
+                }}
                 onNewProblem={() => { setProblem(''); setSession(null); setSPhase('input') }}
               />
             )}

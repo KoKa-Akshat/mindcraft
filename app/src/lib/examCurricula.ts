@@ -20,20 +20,23 @@ function pickPrerequisites(conceptIds: string[], overrides: Record<string, strin
   )
 }
 
+// All concept IDs below are canonical ontology IDs (data/5_level_ontology). Topics
+// without a distinct ontology concept fold into their closest one:
+//   percent_ratio -> ratios_proportions, word_problems -> representation_translation,
+//   data_interpretation -> descriptive_statistics, function_transformations ->
+//   functions_basics, absolute_value -> linear_inequalities.
 const ACT_CONCEPTS = [
   'number_properties',
-  'percent_ratio',
+  'ratios_proportions',
   'linear_equations',
   'linear_inequalities',
-  'absolute_value',
   'systems_of_linear_equations',
   'exponent_rules',
   'polynomials',
   'quadratic_equations',
   'rational_expressions',
   'functions_basics',
-  'function_transformations',
-  'word_problems',
+  'representation_translation',
   'descriptive_statistics',
   'basic_probability',
 ]
@@ -42,22 +45,20 @@ const SAT_CONCEPTS = [
   'linear_equations',
   'linear_inequalities',
   'systems_of_linear_equations',
-  'absolute_value',
   'quadratic_equations',
   'polynomials',
   'rational_expressions',
   'exponent_rules',
   'functions_basics',
-  'function_transformations',
-  'word_problems',
-  'percent_ratio',
+  'representation_translation',
+  'ratios_proportions',
   'descriptive_statistics',
   'basic_probability',
 ]
 
 const IB_AI_SL_CONCEPTS = [
   'number_properties',
-  'percent_ratio',
+  'ratios_proportions',
   'linear_equations',
   'linear_inequalities',
   'systems_of_linear_equations',
@@ -66,21 +67,19 @@ const IB_AI_SL_CONCEPTS = [
   'quadratic_equations',
   'rational_expressions',
   'functions_basics',
-  'function_transformations',
-  'word_problems',
+  'representation_translation',
   'descriptive_statistics',
   'basic_probability',
 ]
 
 const AP_CONCEPTS = [
   'functions_basics',
-  'function_transformations',
   'exponent_rules',
   'polynomials',
   'rational_expressions',
   'descriptive_statistics',
   'basic_probability',
-  'word_problems',
+  'representation_translation',
   'linear_equations',
   'quadratic_equations',
 ]
@@ -91,9 +90,7 @@ export const EXAM_CURRICULA: Record<ExamCurriculumKey, ExamCurriculum> = {
     label: 'ACT Math',
     conceptIds: ACT_CONCEPTS,
     prerequisites: pickPrerequisites(ACT_CONCEPTS, {
-      word_problems: ['linear_equations', 'systems_of_linear_equations', 'percent_ratio'],
-      coordinate_geometry: ['linear_equations', 'functions_basics'],
-      trigonometry_basics: ['right_triangle_geometry'],
+      representation_translation: ['linear_equations', 'systems_of_linear_equations', 'ratios_proportions'],
     }),
     generationNotes: 'Prioritize speed, short stems, common traps, and mixed algebra/geometry contexts.',
   },
@@ -102,9 +99,8 @@ export const EXAM_CURRICULA: Record<ExamCurriculumKey, ExamCurriculum> = {
     label: 'Digital SAT Math',
     conceptIds: SAT_CONCEPTS,
     prerequisites: pickPrerequisites(SAT_CONCEPTS, {
-      data_interpretation: ['descriptive_statistics', 'percent_ratio', 'linear_equations'],
       functions_basics: ['linear_equations'],
-      coordinate_geometry: ['linear_equations', 'functions_basics'],
+      representation_translation: ['linear_equations', 'ratios_proportions', 'descriptive_statistics'],
     }),
     generationNotes: 'Prioritize context translation, units, tables, graphs, and equivalent forms.',
   },
@@ -113,14 +109,9 @@ export const EXAM_CURRICULA: Record<ExamCurriculumKey, ExamCurriculum> = {
     label: 'IB Math AI SL',
     conceptIds: IB_AI_SL_CONCEPTS,
     prerequisites: pickPrerequisites(IB_AI_SL_CONCEPTS, {
-      descriptive_statistics: ['percent_ratio', 'number_properties'],
-      statistics_graphs: ['descriptive_statistics', 'data_interpretation'],
-      data_interpretation: ['descriptive_statistics', 'percent_ratio', 'linear_equations'],
-      basic_probability: ['percent_ratio', 'descriptive_statistics'],
-      exponential_functions: ['functions_basics', 'exponent_rules', 'percent_ratio'],
-      logarithmic_functions: ['exponential_functions', 'functions_basics'],
-      sequences_series: ['linear_equations', 'functions_basics', 'percent_ratio'],
-      word_problems: ['linear_equations', 'percent_ratio', 'functions_basics'],
+      descriptive_statistics: ['ratios_proportions', 'number_properties'],
+      basic_probability: ['ratios_proportions', 'descriptive_statistics'],
+      representation_translation: ['linear_equations', 'ratios_proportions', 'functions_basics'],
     }),
     generationNotes: 'Prioritize modelling, calculator fluency, graph/table interpretation, statistics, probability, financial growth, and written conclusions. Do not use calculus for AI SL.',
   },
@@ -129,11 +120,7 @@ export const EXAM_CURRICULA: Record<ExamCurriculumKey, ExamCurriculum> = {
     label: 'AP Math',
     conceptIds: AP_CONCEPTS,
     prerequisites: pickPrerequisites(AP_CONCEPTS, {
-      limits_continuity: ['functions_basics', 'factoring_polynomials'],
-      derivatives: ['limits_continuity', 'functions_basics'],
-      applications_of_derivatives: ['derivatives'],
-      integrals: ['derivatives'],
-      applications_of_integrals: ['integrals'],
+      representation_translation: ['linear_equations', 'functions_basics'],
     }),
     generationNotes: 'Prioritize notation, function behavior, rates of change, graphical reasoning, and interval language.',
   },

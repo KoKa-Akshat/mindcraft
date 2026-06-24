@@ -171,6 +171,54 @@ export async function processSummary(
   }
 }
 
+/**
+ * Seed the concept graph from the onboarding "gap scan" (per-concept confidence)
+ * so a brand-new student gets personalized recommendations before their first
+ * session. Idempotent server-side — re-onboarding overwrites the prior seed.
+ */
+export async function seedAssessment(
+  studentId: string,
+  assessment: Record<string, 'hard' | 'kinda' | 'easy'>,
+): Promise<{ seededConcepts: string[]; skippedConcepts: string[]; eventsCreated: number } | null> {
+  try {
+    const res = await fetch(`${ML_BASE}/seed-assessment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student_id: studentId, assessment }),
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Record practice/homework outcomes into the concept graph so mastery moves as
+ * the student answers problems. Events accumulate (this is the practice → graph
+ * feedback loop). Unknown concept IDs are skipped server-side.
+ */
+export async function recordOutcomes(
+  studentId: string,
+  outcomes: { conceptId: string; succeeded: boolean }[],
+): Promise<{ recordedConcepts: string[]; skippedConcepts: string[]; eventsCreated: number } | null> {
+  if (!outcomes.length) return null
+  try {
+    const res = await fetch(`${ML_BASE}/record-outcomes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: studentId,
+        outcomes: outcomes.map(o => ({ concept_id: o.conceptId, succeeded: o.succeeded })),
+      }),
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
 export async function getStudentProfile(
   studentId: string,
 ): Promise<StudentProfileResult | null> {

@@ -1,0 +1,568 @@
+{
+  "meta": {
+    "version": "1.5",
+    "layer": "Layer 5 of 5: Adaptive Remediation and Teaching Action Policy",
+    "created_at": "2026-06-21T17:02:08.873578+00:00",
+    "purpose": "Translate diagnosis into next best tutoring/practice actions.",
+    "updated_at": "2026-06-21T21:29:17.333532Z",
+    "canonical_id_contract": {
+      "principle": "Every layer references the same canonical IDs; layers may add context but must not redefine core meanings.",
+      "id_formats": {
+        "concept_id": "snake_case stable ID, e.g. right_triangle_geometry",
+        "ingredient_id": "{concept_id}__{ingredient_slug}, e.g. right_triangle__pythagorean_theorem",
+        "archetype_id": "act_{family}_{distinguishing_bridge_or_representation}, e.g. act_square_area_to_diagonal",
+        "question_instance_id": "{exam}_{source_test}_{question_number}, e.g. act_test001_q010",
+        "misconception_id": "mis_{concept_or_archetype}_{short_error}, e.g. mis_square_diagonal_stop_at_side",
+        "solution_pathway_id": "sp_{archetype_id}_{method_slug}",
+        "student_event_id": "evt_{student_id}_{timestamp_or_uuid}",
+        "remediation_action_id": "actn_{student_id}_{timestamp_or_uuid}"
+      },
+      "immutability_rules": [
+        "Never change an ID once used in student-event data; deprecate and alias instead.",
+        "Raw source question text is immutable; intelligence annotations are versioned separately.",
+        "Concept definitions are canonical; question archetypes reference them and may not silently redefine them.",
+        "If an archetype bridges concepts, store that bridge explicitly rather than forcing one primary topic to contain the full meaning."
+      ],
+      "cross_layer_join_keys": [
+        "concept_id",
+        "ingredient_id",
+        "archetype_id",
+        "question_instance_id",
+        "misconception_id",
+        "representation_type",
+        "cognitive_action"
+      ],
+      "annotation_status_values": [
+        "raw_imported",
+        "human_explained",
+        "ai_enriched",
+        "needs_figure_verification",
+        "validated",
+        "deprecated"
+      ],
+      "confidence_scale": {
+        "0.0": "unknown",
+        "0.25": "weak guess",
+        "0.5": "reasonable but needs validation",
+        "0.75": "high confidence",
+        "1.0": "verified by human + data"
+      }
+    },
+    "canonical_taxonomies": {
+      "representation_types": [
+        "plain_numeric_expression",
+        "symbolic_expression",
+        "equation",
+        "literal_equation",
+        "word_problem",
+        "table",
+        "graph",
+        "coordinate_plane",
+        "number_line",
+        "geometry_diagram",
+        "implicit_diagram",
+        "answer_choice_structure",
+        "multi_representation"
+      ],
+      "cognitive_actions": [
+        "recognize_pattern",
+        "translate_representation",
+        "choose_unknown",
+        "set_up_equation",
+        "combine_like_terms",
+        "isolate_variable",
+        "substitute_input",
+        "compute_unit_rate",
+        "scale_proportion",
+        "infer_hidden_structure",
+        "apply_formula",
+        "check_units",
+        "test_answer_choices",
+        "estimate_eliminate",
+        "verify_solution"
+      ],
+      "difficulty_drivers": [
+        "hidden_bridge",
+        "wordiness",
+        "diagram_dependency",
+        "unit_conversion",
+        "symbolic_abstraction",
+        "answer_choice_trap",
+        "multi_step_chain",
+        "negative_or_fraction_coefficients",
+        "time_pressure",
+        "looks_like_wrong_topic",
+        "requires_noticing_exclusion_or_inclusion",
+        "requires_partial_result_then_continuation"
+      ],
+      "misconception_families": [
+        "notation_confusion",
+        "operation_confusion",
+        "representation_translation_error",
+        "formula_misuse",
+        "premature_stopping",
+        "wrong_unit_or_dimension",
+        "overgeneralized_pattern",
+        "diagram_reading_error",
+        "variable_role_confusion",
+        "procedure_without_meaning",
+        "arithmetic_slip_masking_concept"
+      ],
+      "evidence_signal_types": [
+        "correctness",
+        "selected_choice",
+        "free_response_work",
+        "intermediate_step",
+        "time_to_answer",
+        "hint_requested",
+        "confidence_rating",
+        "self_explanation",
+        "scratchpad_parse",
+        "tutor_observation",
+        "followup_transfer_success",
+        "retention_after_delay"
+      ],
+      "mastery_dimensions": [
+        "concept_mastery",
+        "ingredient_mastery",
+        "archetype_mastery",
+        "representation_fluency",
+        "bridge_fluency",
+        "strategy_fluency",
+        "misconception_risk",
+        "confidence_calibration",
+        "retention_strength",
+        "transfer_readiness"
+      ]
+    },
+    "last_updated": "2026-06-21T21:54:44.035935Z",
+    "update_note": "Extended remediation governance to include AI-generated ACT Math Test 21-30 annotations and explicit human-review fallback.",
+    "package_version": "v2.6_complete_act_tests_1_to_30_ai_generated"
+  },
+  "policy_principles": [
+    {
+      "id": "repair_the_bottleneck_not_the_label",
+      "rule": "When a student misses a question, identify the earliest failed bridge/ingredient before reteaching the primary topic."
+    },
+    {
+      "id": "preserve_momentum",
+      "rule": "Prefer short targeted loops over long generic review, especially for exam prep."
+    },
+    {
+      "id": "representation_switching",
+      "rule": "If a student fails one representation but knows the concept, practice the same concept in a different representation."
+    },
+    {
+      "id": "explain_then_retest_nearby",
+      "rule": "After remediation, ask a near-transfer question with the same archetype but different surface story."
+    },
+    {
+      "id": "use_original_content_publicly",
+      "rule": "Source questions are internal references; generated practice should be original MindCraft-style content linked to archetypes."
+    }
+  ],
+  "diagnosis_to_action_rules": [
+    {
+      "policy_id": "P01_unit_rate_reversal",
+      "trigger": {
+        "misconception_ids": [
+          "rate_division_reversal"
+        ],
+        "archetype_ids": [
+          "unit_rate_time_per_one_item"
+        ]
+      },
+      "action_sequence": [
+        "micro_lesson_units_before_numbers",
+        "worked_example_unit_cancellation",
+        "one_near_transfer_problem",
+        "ask_student_to_verbalize_answer_unit"
+      ],
+      "success_metric": "Student sets up desired unit before calculating."
+    },
+    {
+      "policy_id": "P02_hidden_geometry_bridge",
+      "trigger": {
+        "misconception_ids": [
+          "side_length_answer_instead_of_diagonal",
+          "area_as_side_length"
+        ],
+        "archetype_ids": [
+          "square_area_to_diagonal"
+        ]
+      },
+      "action_sequence": [
+        "draw_auxiliary_diagram",
+        "name_hidden_right_triangle",
+        "solve_with_two_pathways",
+        "near_transfer_rectangle_or_square_diagonal"
+      ],
+      "success_metric": "Student explicitly states the hidden structure before using formula."
+    },
+    {
+      "policy_id": "P03_number_line_endpoint_confusion",
+      "trigger": {
+        "misconception_ids": [
+          "open_closed_circle_swap"
+        ],
+        "archetype_ids": [
+          "number_line_to_compound_inequality"
+        ]
+      },
+      "action_sequence": [
+        "endpoint_inclusion_drill",
+        "translate_visual_to_words",
+        "translate_words_to_symbol",
+        "test_inside_outside_points"
+      ],
+      "success_metric": "Student consistently maps open to strict and closed to inclusive."
+    },
+    {
+      "policy_id": "P04_literal_equation_symbol_fear",
+      "trigger": {
+        "misconception_ids": [
+          "in_terms_of_confusion",
+          "divide_only_one_term"
+        ],
+        "archetype_ids": [
+          "literal_equation_solve_for_variable"
+        ]
+      },
+      "action_sequence": [
+        "treat_non_target_letters_as_numbers",
+        "color_code_target_variable",
+        "isolate_step_by_step",
+        "verify_by_substitution"
+      ],
+      "success_metric": "Student can solve for different target variables in the same equation."
+    },
+    {
+      "policy_id": "P05_function_notation_as_input_output",
+      "trigger": {
+        "misconception_ids": [
+          "f_x_as_multiplication",
+          "wrong_input_substituted"
+        ],
+        "archetype_ids": [
+          "function_evaluation_ratio"
+        ]
+      },
+      "action_sequence": [
+        "function_machine_visual",
+        "substitution_boxing",
+        "evaluate_functions_separately",
+        "combine_outputs_last"
+      ],
+      "success_metric": "Student says input and output correctly before computation."
+    },
+    {
+      "policy_id": "P06_factor_count_structure",
+      "trigger": {
+        "misconception_ids": [
+          "brute_force_without_structure",
+          "prime_has_one_factor"
+        ],
+        "archetype_ids": [
+          "factor_count_exactly_three"
+        ]
+      },
+      "action_sequence": [
+        "factor_pair_visual",
+        "prime_vs_composite_check",
+        "perfect_square_odd_factor_demo",
+        "prime_square_shortcut_practice"
+      ],
+      "success_metric": "Student recognizes square of prime as exactly-three-factor number."
+    },
+    {
+      "policy_id": "prompt_polarity_and_answer_choice_filter_policy",
+      "trigger": "Student solves underlying math but answers the opposite of what NOT/could-not/except asks.",
+      "action_sequence": [
+        "Highlight prompt polarity words",
+        "Ask student to restate what the correct answer must represent",
+        "Give one immediate near-transfer item with NOT/could-not wording",
+        "Track as reading-strategy evidence rather than concept failure"
+      ],
+      "linked_archetype_ids": [
+        "integer_product_then_impossible_sum"
+      ]
+    },
+    {
+      "policy_id": "visual_3d_structure_policy",
+      "trigger": "Student stops at an initially visible 2D area in a 3D geometry problem.",
+      "action_sequence": [
+        "Show rotatable prism or annotated face comparison",
+        "Separate evidence for area formula vs 3D face comparison",
+        "Give near-transfer with dimensions reordered",
+        "Only then move back to full ACT-style item"
+      ],
+      "linked_archetype_ids": [
+        "rectangular_prism_volume_to_largest_face_area"
+      ]
+    },
+    {
+      "policy_id": "diagram_bridge_animation_policy",
+      "trigger": "Student knows a formula but misses a diagram bridge such as side-to-diameter or diagonal-to-triangle.",
+      "action_sequence": [
+        "Animate the geometric bridge",
+        "Label the hidden object created by the diagram",
+        "Ask student to name the bridge before calculating",
+        "Generate two near-transfer diagram items"
+      ],
+      "linked_archetype_ids": [
+        "square_side_to_semicircle_shaded_area",
+        "square_area_to_diagonal"
+      ]
+    },
+    {
+      "policy_id": "word_to_function_threshold_repair",
+      "trigger": "Student applies a marginal rate to total input instead of amount beyond the included threshold.",
+      "action_sequence": [
+        "Show boundary-check micro-card.",
+        "Ask student to compute cost at threshold exactly.",
+        "Generate near-transfer threshold plan with different numbers."
+      ],
+      "success_metric": "Student correctly writes base + rate(total-threshold) on next two problems."
+    },
+    {
+      "policy_id": "absolute_value_inequality_split_repair",
+      "trigger": "Student solves absolute value greater-than as a single middle interval.",
+      "action_sequence": [
+        "Show distance-from-zero visual.",
+        "Contrast |A|>k vs |A|<k.",
+        "Give one symbolic and one number-line practice item."
+      ],
+      "success_metric": "Student chooses OR/outside intervals for greater-than absolute value."
+    },
+    {
+      "policy_id": "data_display_reading_repair",
+      "trigger": "Student does arithmetic correctly but uses wrong chart/category value.",
+      "action_sequence": [
+        "Require label-first routine: point to category, copy value, then compute.",
+        "Give two chart extraction drills before multi-step percent calculation."
+      ],
+      "success_metric": "Student identifies correct category value before arithmetic."
+    },
+    {
+      "policy_id": "log_as_inverse_exponent_repair",
+      "trigger": "Student treats log as ordinary multiplication/division.",
+      "action_sequence": [
+        "Teach log as exponent question.",
+        "Run three conversion-only drills: log_b(x)=y \u2194 b^y=x.",
+        "Only then introduce log laws."
+      ],
+      "success_metric": "Student converts basic log equations without using irrelevant arithmetic operations."
+    },
+    {
+      "policy_id": "coordinate_distance_visual_repair",
+      "trigger": "Student adds coordinate differences or misuses signs in distance formula.",
+      "action_sequence": [
+        "Plot two points and draw \u0394x/\u0394y right triangle.",
+        "Compute distance with Pythagorean theorem visually.",
+        "Then connect to distance formula."
+      ],
+      "success_metric": "Student can explain distance formula as Pythagorean theorem on coordinate changes."
+    }
+  ],
+  "practice_generation_contract": {
+    "inputs": [
+      "student_state",
+      "target_archetype_id",
+      "target_concept_ids",
+      "time_to_exam_days",
+      "preferred_pathway",
+      "recent_misconceptions"
+    ],
+    "outputs": [
+      "micro_lesson",
+      "worked_example",
+      "practice_questions",
+      "review_cards",
+      "tutor_brief",
+      "parent_summary_optional"
+    ],
+    "difficulty_ladder": [
+      {
+        "level": "foundation",
+        "description": "One concept, explicit representation, minimal trap."
+      },
+      {
+        "level": "applied",
+        "description": "Same concept in a word/diagram context with one bridge."
+      },
+      {
+        "level": "exam_ready",
+        "description": "ACT-style compression with distractors and timing pressure."
+      }
+    ],
+    "question_generation_guardrails": [
+      "Do not copy source wording.",
+      "Keep numbers solvable by intended pathway.",
+      "Distractors should correspond to known misconceptions.",
+      "If diagram-dependent, include renderable SVG/TikZ/Manim instructions or image metadata.",
+      "Always store which archetype and misconceptions each generated question targets."
+    ],
+    "must_use_canonical_ids": "Every generated practice question must include concept_ids, ingredient_ids, archetype_id, representation_type, difficulty_driver, expected_solution_pathways, and misconception_targets before being shown to a student."
+  },
+  "visual_learning_and_simulation_hooks": {
+    "purpose": "Prepare for future AI world simulations / graphic learning by making every remediation action renderable as a scene.",
+    "scene_fields": [
+      "objects",
+      "spatial_relationships",
+      "state_transitions",
+      "student_interaction_points",
+      "misconception_visualization",
+      "success_animation"
+    ],
+    "examples": [
+      {
+        "archetype_id": "square_area_to_diagonal",
+        "scene": "A square field grows from area label to side length labels; a diagonal appears; two right triangles highlight; Pythagorean squares animate."
+      },
+      {
+        "archetype_id": "unit_rate_time_per_one_item",
+        "scene": "A 6-hour timeline splits into 5 equal room-painting chunks; one chunk is highlighted as time per room."
+      }
+    ]
+  },
+  "counterintuitive_insights_and_blind_spots": [
+    "A beautiful explanation may not update mastery unless followed by a near-transfer attempt. Always close the loop with action.",
+    "The system should sometimes generate an easier representation, not an easier concept. A student may need the same concept in a visual form before returning to ACT wording.",
+    "Tutor notes should not be treated as raw truth; they are high-value evidence that should be reconciled with student attempts."
+  ],
+  "next_best_action_contract": {
+    "input_required": [
+      "student_state",
+      "recent_learning_events",
+      "target_exam",
+      "time_to_exam",
+      "question_archetype_context"
+    ],
+    "output_required": [
+      "action_type",
+      "target_ids",
+      "rationale",
+      "expected_learning_gain",
+      "confidence",
+      "fallback_action"
+    ],
+    "action_types": [
+      "micro_lesson",
+      "worked_example",
+      "near_transfer_practice",
+      "far_transfer_practice",
+      "review_card",
+      "tutor_brief",
+      "strategy_prompt",
+      "confidence_calibration_prompt",
+      "visual_simulation",
+      "stop_and_rebuild_prerequisite"
+    ],
+    "selection_policy": "Prefer the smallest action that repairs the actual broken bridge; do not reteach an entire concept when the evidence points to a representation or archetype gap."
+  },
+  "diagnosis_precision_rules": [
+    {
+      "if": "student gets final answer wrong but shows correct upstream setup",
+      "then": "Preserve upstream mastery and target the first broken downstream ingredient.",
+      "why": "Avoid punishing concepts the student actually knows."
+    },
+    {
+      "if": "student gets answer right using answer-choice strategy but cannot explain concept",
+      "then": "Mark strategy_fluency positive but concept_mastery uncertain; give one concept explanation and one transfer item.",
+      "why": "ACT performance and durable learning are related but not identical."
+    },
+    {
+      "if": "student misses multiple questions with different concepts but same representation type",
+      "then": "Diagnose representation_translation weakness, not separate unrelated topic failures.",
+      "why": "The common bottleneck may be reading diagrams/words/number lines rather than math content."
+    },
+    {
+      "if": "student expresses high confidence on wrong answer",
+      "then": "Prioritize misconception confrontation and confidence calibration.",
+      "why": "High-confidence errors are sticky and need explicit contrastive examples."
+    },
+    {
+      "rule_id": "avoid_overdiagnosing_log_properties_for_basic_log_conversion",
+      "trigger": "student misses a basic log equation like log_b(x)=n",
+      "policy": "First check whether the student understands log as inverse exponent and whether they answered the requested expression. Do not infer weakness in log product, quotient, power, or change-of-base properties unless the problem actually required those rules.",
+      "recommended_action": "Show a micro-card: log_b(a)=c means b^c=a; then give one near-transfer problem and one prompt-target check problem such as solving for x then answering \u221ax."
+    },
+    {
+      "rule_id": "ai_skip_respect_uncertainty",
+      "trigger": "Question instance status == ai_enriched_needs_human_pass",
+      "action": "Keep diagnosis broad; recommend human review or a later figure/formula verification pass instead of high-confidence remediation branching.",
+      "rationale": "Prevent the system from over-committing to a concept diagnosis when OCR damage or missing figures made the source unreliable."
+    },
+    {
+      "rule_id": "ai_skip_respect_uncertainty",
+      "trigger": "Question instance status == ai_enriched_needs_human_pass",
+      "action": "Keep diagnosis broad; recommend human review or a later figure/formula verification pass instead of high-confidence remediation branching.",
+      "rationale": "Prevent the system from over-committing to a concept diagnosis when OCR damage or missing figures made the source unreliable."
+    }
+  ],
+  "visual_world_simulation_policy": {
+    "purpose": "Prepare the data layer for future AI world simulations and graphic learning.",
+    "simulation_candidates": [
+      {
+        "archetype_pattern": "geometry hidden bridge",
+        "scene": "manipulable shape that reveals diagonal/triangle/area relationships"
+      },
+      {
+        "archetype_pattern": "unit rate",
+        "scene": "dynamic rate machine showing quantities changing together"
+      },
+      {
+        "archetype_pattern": "number line inequality",
+        "scene": "interactive endpoint inclusion/exclusion and shaded interval"
+      },
+      {
+        "archetype_pattern": "function evaluation",
+        "scene": "input-output machine with substitution slots"
+      }
+    ],
+    "minimum_metadata_needed": [
+      "representation_type",
+      "concept_path",
+      "manipulable_objects",
+      "state_transitions_to_show",
+      "misconception_to_contrast"
+    ],
+    "act_test2_new_simulation_targets": [
+      {
+        "archetype_id": "rectangular_prism_volume_to_largest_face_area",
+        "simulation": "Rotatable rectangular prism with selectable faces and area overlays."
+      },
+      {
+        "archetype_id": "square_side_to_semicircle_shaded_area",
+        "simulation": "Square side morphs into circle diameter, then splits into radius; shaded semicircle fills dynamically."
+      },
+      {
+        "archetype_id": "parallel_lines_angle_chasing_not_180",
+        "simulation": "Angle labels move through parallel lines showing equal and supplementary relationships."
+      }
+    ]
+  },
+  "scaling_governance": {
+    "batch_review_after_n_annotations": 50,
+    "archetype_creation_review_after_occurrences": 3,
+    "misconception_promotion_after_occurrences": 5,
+    "concept_addition_requires": [
+      "stable across multiple archetypes",
+      "not adequately represented by existing concept + ingredient",
+      "has distinct remediation need"
+    ],
+    "quality_metrics": [
+      "inter_annotator_agreement",
+      "student_outcome_lift",
+      "transfer_success",
+      "retention_after_delay",
+      "diagnosis_action_match"
+    ],
+    "ai_generated_annotation_protocol": {
+      "tag": "AI-generated",
+      "batch_id": "v2.6_act_test21_to_test30_ai_generated",
+      "rule": "If confidence is Low or the question was skipped, do not generate downstream student-facing explanations automatically; route to human review or a later figure-verification pass.",
+      "reason": "The user explicitly requested that uncertain math annotations be left blank rather than guessed."
+    }
+  }
+}

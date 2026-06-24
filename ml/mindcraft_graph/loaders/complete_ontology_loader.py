@@ -17,6 +17,7 @@ from mindcraft_graph.models.ingredient import (
     Bridge,
     CardRepresentation,
     CardTemplate,
+    Combination,
     Ingredient,
     IngredientOntology,
 )
@@ -174,11 +175,36 @@ def _build_ingredient_ontology(data: dict[str, Any]) -> IngredientOntology:
                 confidence=1.0 - b.get("difficulty", 0.5),
             ))
 
+    combinations: list[Combination] = []
+    for raw_combo in data.get("combinations", []):
+        # The standardized ontology names the ingredient list "ingredient_ids";
+        # the older format used "ingredients". Accept either, falling back to
+        # apply_order so the combination is never indexed with an empty set.
+        combo_ingredients = (
+            raw_combo.get("ingredient_ids")
+            or raw_combo.get("ingredients")
+            or raw_combo.get("apply_order", [])
+        )
+        combinations.append(Combination(
+            id=raw_combo["id"],
+            ingredients=combo_ingredients,
+            apply_order=raw_combo.get("apply_order", []),
+            spans_concepts=raw_combo.get("spans_concepts", []),
+            example_problem=raw_combo.get("example_problem", ""),
+            captured_by_dependency_or_bridge=raw_combo.get(
+                "captured_by_dependency_or_bridge",
+                raw_combo.get("captured_by_comes_from_or_bridge", False),
+            ),
+            note=raw_combo.get("note", ""),
+            confidence=raw_combo.get("confidence", 0.0),
+        ))
+
     return IngredientOntology(
         version=data.get("meta", {}).get("version", "1.0-complete"),
         ingredients=ingredients,
         bridges=bridges,
         card_templates=card_templates,
+        combinations=combinations,
     )
 
 

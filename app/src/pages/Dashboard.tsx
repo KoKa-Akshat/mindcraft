@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
+import { isDiagnosticComplete } from '../lib/practiceState'
 import HeroBar from '../components/HeroBar'
 import Globe3D from '../components/Globe3D'
 import s from './Dashboard.module.css'
@@ -29,6 +31,20 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const data     = useStudentData(user)
 
+  // Diagnostic-first: a student who hasn't done the gap-scan is sent through it
+  // before the dashboard. `diagChecked` stays false (showing the loader) until
+  // we know, so the dashboard never flashes before a redirect.
+  const [diagChecked, setDiagChecked] = useState(false)
+  useEffect(() => {
+    let cancelled = false
+    isDiagnosticComplete(user.uid).then(done => {
+      if (cancelled) return
+      if (!done) navigate('/practice', { state: { examHelp: true } })
+      else setDiagChecked(true)
+    })
+    return () => { cancelled = true }
+  }, [user.uid, navigate])
+
   return (
     <div className={s.shell}>
       <main className={s.page}>
@@ -39,7 +55,7 @@ export default function Dashboard() {
           tutorId={data.tutorId}
         />
 
-        {data.loading ? (
+        {(!diagChecked || data.loading) ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <div className={s.scene}>
@@ -107,7 +123,7 @@ export default function Dashboard() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 75, damping: 16, delay: 0.38 }}
                   whileHover={{ scale: 1.05 }}
-                  onClick={() => navigate('/knowledge-graph')}
+                  onClick={() => navigate('/learning-gps')}
                 >
                   <div className={s.floatDot} />
                   <h2 className={s.floatTitle}>Learning<br />GPS</h2>
@@ -118,6 +134,44 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.88 }}
                     >⌖</motion.div>
+                    <span className={s.xpTag}>Open</span>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className={s.floatCOuter}>
+                <motion.div
+                  className={s.floatB}
+                  initial={{ opacity: 0, y: 36 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: 'spring', stiffness: 75, damping: 16, delay: 0.50 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => navigate('/knowledge-graph')}
+                >
+                  <div className={s.floatDot} />
+                  <h2 className={s.floatTitle}>Knowledge<br />Graph</h2>
+                  <p className={s.floatSub}>See how every concept connects.</p>
+                  <div className={s.floatBottom}>
+                    <motion.div className={s.heartBtn} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.88 }}>◈</motion.div>
+                    <span className={s.xpTag}>Open</span>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className={s.floatDOuter}>
+                <motion.div
+                  className={s.floatB}
+                  initial={{ opacity: 0, y: 36 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: 'spring', stiffness: 75, damping: 16, delay: 0.62 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => navigate('/constellation')}
+                >
+                  <div className={s.floatDot} />
+                  <h2 className={s.floatTitle}>Constellation</h2>
+                  <p className={s.floatSub}>Your mastery as a star map.</p>
+                  <div className={s.floatBottom}>
+                    <motion.div className={s.heartBtn} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.88 }}>✦</motion.div>
                     <span className={s.xpTag}>Open</span>
                   </div>
                 </motion.div>

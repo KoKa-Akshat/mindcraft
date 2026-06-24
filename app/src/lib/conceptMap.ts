@@ -202,3 +202,22 @@ export function resolveConceptId(input: string): string {
   // Fallback: snake_case it
   return input.trim().toLowerCase().replace(/[^a-z0-9]+/g, '_')
 }
+
+// Practice/UI concept ids the ontology has no distinct node for — they fold into
+// a canonical ontology concept. Used to normalize outcome/seed signals so they
+// land in the student graph instead of being skipped server-side.
+const PRACTICE_TO_ONTOLOGY: Record<string, string> = {
+  absolute_value:           'linear_inequalities',
+  coordinate_geometry:      'lines_angles',
+  trigonometric_identities: 'trigonometry_basics',
+  function_transformations: 'functions_basics',
+  word_problems:            'representation_translation',
+  percent_ratio:            'ratios_proportions',
+  statistics_graphs:        'descriptive_statistics',
+  data_interpretation:      'descriptive_statistics',
+}
+
+/** Map a UI/practice concept id to its canonical ontology id (or itself). */
+export function toOntologyId(id: string): string {
+  return PRACTICE_TO_ONTOLOGY[id] ?? id
+}

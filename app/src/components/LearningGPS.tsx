@@ -1,17 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ML_TO_LABEL, LEGACY_TO_ML, PREREQUISITES, resolveConceptId } from '../lib/conceptMap'
+import { ML_TO_LABEL, LEGACY_TO_ML, resolveConceptId } from '../lib/conceptMap'
 import s from './LearningGPS.module.css'
 
 const ML_API_URL = import.meta.env.VITE_ML_API_URL ?? ''
-
-// Reverse graph: concept → concepts it directly unlocks
-const DEPENDENTS: Record<string, string[]> = {}
-for (const [id, prereqs] of Object.entries(PREREQUISITES)) {
-  for (const pre of prereqs) {
-    (DEPENDENTS[pre] ??= []).push(id)
-  }
-}
 
 // ── Canvas ───────────────────────────────────────────────────────────────────
 const W = 268, H = 330
@@ -83,23 +75,29 @@ function trunc(str: string, n: number) {
 // depth  1+ = prerequisites (drawn below target — "foundations")
 // depth -1  = direct unlocks (drawn above target — "where this leads")
 
-function buildGraph(targetId: string, nodeMap: Map<string, MLNode>) {
+// chain = server canonicalChain [foundation … target]; unlocks = what target enables.
+// Both come from /recommend (the real ontology pathfinder), so there is no
+// duplicate prerequisite map in the frontend.
+function buildGraph(
+  targetId: string,
+  chain: string[],
+  unlocks: string[],
+  nodeMap: Map<string, MLNode>,
+) {
   const depthMap = new Map<string, number>()
   const unlockSet = new Set<string>()
 
-  // BFS through prerequisites (positive depths, rendered below)
-  const q: { id: string; d: number }[] = [{ id: targetId, d: 0 }]
-  while (q.length) {
-    const { id, d } = q.shift()!
-    if (depthMap.has(id)) continue
-    depthMap.set(id, d)
-    if (d < MAX_PREREQ_DEPTH)
-      for (const pre of PREREQUISITES[id] ?? [])
-        if (!depthMap.has(pre)) q.push({ id: pre, d: d + 1 })
-  }
+  // Position the chain: target at depth 0, each earlier foundation one level below.
+  const tIdx = chain.lastIndexOf(targetId)
+  const baseIdx = tIdx >= 0 ? tIdx : chain.length - 1
+  chain.forEach((id, i) => {
+    const d = Math.min(baseIdx - i, MAX_PREREQ_DEPTH)
+    if (!depthMap.has(id)) depthMap.set(id, d)
+  })
+  if (!depthMap.has(targetId)) depthMap.set(targetId, 0)
 
-  // Add direct unlocks (depth -1, rendered above)
-  for (const dep of (DEPENDENTS[targetId] ?? []).slice(0, MAX_PER_LEVEL)) {
+  // Direct unlocks (depth -1, rendered above)
+  for (const dep of unlocks.slice(0, MAX_PER_LEVEL)) {
     if (!depthMap.has(dep)) {
       depthMap.set(dep, -1)
       unlockSet.add(dep)
@@ -150,26 +148,23 @@ function buildGraph(targetId: string, nodeMap: Map<string, MLNode>) {
     })
   }
 
-  // Build edge list
+  // Build edge list: consecutive chain links (foundation → next), plus target → unlocks
   const edges: VEdge[] = []
-  for (const id of depthMap.keys()) {
-    const from = posMap.get(id)!
-    // Prerequisite edges
-    for (const pre of PREREQUISITES[id] ?? []) {
-      if (!depthMap.has(pre) || unlockSet.has(pre)) continue
-      const to = posMap.get(pre)!
-      const needsWork =
-        (nodeMap.get(id)?.status  ?? 'untouched') !== 'mastered' ||
-        (nodeMap.get(pre)?.status ?? 'untouched') !== 'mastered'
-      edges.push({ x1: from.x, y1: from.y, x2: to.x, y2: to.y, needsWork, isUnlock: false })
-    }
-    // Unlock edges (target → its dependents)
-    if (id === targetId) {
-      for (const dep of unlockSet) {
-        const to = posMap.get(dep)
-        if (!to) continue
-        edges.push({ x1: from.x, y1: from.y, x2: to.x, y2: to.y, needsWork: false, isUnlock: true })
-      }
+  for (let i = 0; i < chain.length - 1; i++) {
+    const lower = posMap.get(chain[i])      // earlier in chain = deeper foundation
+    const upper = posMap.get(chain[i + 1])
+    if (!lower || !upper) continue
+    const needsWork =
+      (nodeMap.get(chain[i])?.status     ?? 'untouched') !== 'mastered' ||
+      (nodeMap.get(chain[i + 1])?.status ?? 'untouched') !== 'mastered'
+    edges.push({ x1: upper.x, y1: upper.y, x2: lower.x, y2: lower.y, needsWork, isUnlock: false })
+  }
+  const tPos = posMap.get(targetId)
+  if (tPos) {
+    for (const dep of unlockSet) {
+      const to = posMap.get(dep)
+      if (!to) continue
+      edges.push({ x1: tPos.x, y1: tPos.y, x2: to.x, y2: to.y, needsWork: false, isUnlock: true })
     }
   }
 
@@ -195,26 +190,75 @@ export default function LearningGPS({ userId }: { userId: string }) {
   const [notFound,    setNotFound]    = useState(false)
   const [loading,     setLoading]     = useState(false)
 
+  // Per-concept status (for node colors) from the knowledge graph.
+  async function fetchNodes(): Promise<MLNode[]> {
+    if (!userId || !ML_API_URL) return []
+    try {
+      const res = await fetch(`${ML_API_URL}/knowledge-graph/${userId}`)
+      if (res.ok) {
+        const { nodes }: { nodes: MLNode[] } = await res.json()
+        return nodes
+      }
+    } catch { /* ignore */ }
+    return []
+  }
+
+  // Mastery-aware path + unlocks for a target, straight from the /recommend
+  // pathfinder (no duplicate prerequisite map in the frontend).
+  async function fetchPath(targetId: string): Promise<{ chain: string[]; unlocks: string[] }> {
+    if (!userId || !ML_API_URL) return { chain: [targetId], unlocks: [] }
+    try {
+      const res = await fetch(`${ML_API_URL}/recommend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ student_id: userId, target_concepts: [targetId], mode: 'curriculum' }),
+      })
+      if (res.ok) {
+        const j = await res.json()
+        return {
+          chain: Array.isArray(j.canonicalChain) && j.canonicalChain.length ? j.canonicalChain : [targetId],
+          unlocks: Array.isArray(j.unlocks) ? j.unlocks : [],
+        }
+      }
+    } catch { /* ignore */ }
+    return { chain: [targetId], unlocks: [] }
+  }
+
+  async function renderTarget(targetId: string, nodes: MLNode[]) {
+    const nodeMap = new Map<string, MLNode>(nodes.map(n => [n.id, n]))
+    const { chain, unlocks } = await fetchPath(targetId)
+    const label = ML_TO_LABEL[targetId] ?? targetId
+    setTargetLabel(label)
+    setQuery(label)
+    setResult(buildGraph(targetId, chain, unlocks, nodeMap))
+  }
+
+  // Auto-load on mount: path to the student's most-urgent concept (struggling
+  // first, then lowest mastery) instead of a blank search box.
+  useEffect(() => {
+    let cancelled = false
+    async function autoLoad() {
+      if (!userId || !ML_API_URL) return
+      setLoading(true)
+      const nodes = await fetchNodes()
+      const ranked = [...nodes].sort(
+        (a, b) => (URGENCY[a.status] - URGENCY[b.status]) || (a.mastery - b.mastery),
+      )
+      const target = ranked[0]?.id ?? null
+      if (!cancelled && target) await renderTarget(target, nodes)
+      if (!cancelled) setLoading(false)
+    }
+    autoLoad()
+    return () => { cancelled = true }
+  }, [userId])
+
   async function search() {
     const id = fuzzyResolve(query)
     if (!id) { setNotFound(true); setResult(null); return }
-
     setNotFound(false)
-    setTargetLabel(ML_TO_LABEL[id] ?? id)
     setLoading(true)
-
-    const nodeMap = new Map<string, MLNode>()
-    if (userId && ML_API_URL) {
-      try {
-        const res = await fetch(`${ML_API_URL}/knowledge-graph/${userId}`)
-        if (res.ok) {
-          const { nodes }: { nodes: MLNode[] } = await res.json()
-          nodes.forEach(n => nodeMap.set(n.id, n))
-        }
-      } catch { /* all concepts fall back to untouched */ }
-    }
-
-    setResult(buildGraph(id, nodeMap))
+    const nodes = await fetchNodes()
+    await renderTarget(id, nodes)
     setLoading(false)
   }
 
@@ -223,10 +267,28 @@ export default function LearningGPS({ userId }: { userId: string }) {
 
       {/* Header */}
       <div className={s.header}>
+        <button
+          type="button"
+          onClick={() => navigate('/dashboard')}
+          aria-label="Back to dashboard"
+          style={{
+            background: 'none', border: 'none', color: 'inherit', cursor: 'pointer',
+            fontSize: 20, lineHeight: 1, marginRight: 8, padding: 0, opacity: 0.8,
+          }}
+        >
+          ←
+        </button>
         <span className={s.headerIcon}>◈</span>
         <span className={s.headerTitle}>Learning GPS</span>
         <span className={s.headerSub}>Map your path to mastery</span>
       </div>
+
+      <p style={{ margin: '0 0 12px', fontSize: 12, lineHeight: 1.45, opacity: 0.72 }}>
+        Pick any concept and Learning GPS maps the route to mastering it: the
+        foundations to build first (below the target) and what it unlocks next
+        (above), color-coded by where you stand. It auto-loads your most urgent
+        concept — search to remap.
+      </p>
 
       {/* Search */}
       <div className={s.searchRow}>

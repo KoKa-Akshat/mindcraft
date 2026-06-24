@@ -51,8 +51,25 @@ from mindcraft_graph.api.recommend import recommend, RecommendationResult
 
 # ── Setup ──
 
-ONTOLOGY_PATH = pathlib.Path(__file__).parent.parent / "data" / "ontology.json"
-ontology = Ontology.model_validate_json(ONTOLOGY_PATH.read_text())
+# Load the standardized canonical-ID ontology (the same unified file serve.py
+# loads). It carries the full concept vocabulary the fixtures below reference
+# (derivatives, integrals, quadratic_equations, …); the legacy 15-pilot
+# ontology.json lacked them, which is why this suite used to fail.
+from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
+
+STANDARDIZED_ONTOLOGY_PATH = (
+    pathlib.Path(__file__).parent.parent
+    / "data" / "5_level_ontology"
+    / "01_mindcraft_concept_ontology_v2_6_with_combinations.json"
+)
+LEGACY_ONTOLOGY_PATH = pathlib.Path(__file__).parent.parent / "data" / "ontology.json"
+
+if STANDARDIZED_ONTOLOGY_PATH.exists():
+    ontology, _ = load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
+    print(f"Loaded standardized ontology: {STANDARDIZED_ONTOLOGY_PATH.name} "
+          f"({len(ontology.concepts)} concepts, {len(ontology.edges)} edges)")
+else:
+    ontology = Ontology.model_validate_json(LEGACY_ONTOLOGY_PATH.read_text())
 
 print("Loading sentence transformer (one-time)...")
 model = embeddings.load_sentence_transformer()
@@ -194,8 +211,12 @@ related_edges = [e for e in graph_3.values() if e.relation == "related"]
 
 if prereq_edges:
     avg_prereq_weight = sum(e.weight for e in prereq_edges) / len(prereq_edges)
+    # The standardized ontology derives prerequisite strength from bridge
+    # difficulty (1 - difficulty), which caps at ~0.7 — unlike the legacy
+    # ontology's fixed pseudocount priors (~0.9). "High" here means clearly
+    # above the 0.5 neutral baseline, not above 0.7.
     check("Prerequisite edges have high average weight",
-          avg_prereq_weight > 0.7, f"avg={avg_prereq_weight:.3f}")
+          avg_prereq_weight > 0.6, f"avg={avg_prereq_weight:.3f}")
 
 if related_edges:
     avg_related_weight = sum(e.weight for e in related_edges) / len(related_edges)
