@@ -1,3 +1,9 @@
+:root {
+  --g: #54B948;
+  --gd: #449A38;
+  --gdd: #003F2D;
+}
+
 .page {
   position: relative;
   min-height: 100vh;
@@ -44,7 +50,7 @@
 }
 
 .topLogo span {
-  color: #58CC02;
+  color: var(--g);
 }
 
 .branding {
@@ -52,6 +58,14 @@
   position: relative;
   z-index: 2;
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(24px, 5vw, 64px);
+}
+
+.brandingStack {
+  text-align: center;
 }
 
 .wordmark {
@@ -61,10 +75,7 @@
   letter-spacing: -0.045em;
   line-height: 1;
   text-decoration: none;
-}
-
-.wordmark span {
-  color: #C4F547;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
 }
 
 .examPrep {
@@ -110,43 +121,6 @@
   box-shadow:
     0 8px 40px rgba(0, 0, 0, 0.45),
     0 1px 0 rgba(255, 255, 255, 0.06) inset;
-}
-
-.cardHeader {
-  margin-bottom: 22px;
-}
-
-.welcome {
-  font-size: 22px;
-  font-weight: 800;
-  color: #111827;
-  margin: 0;
-  letter-spacing: -0.02em;
-}
-
-.cardSub {
-  margin: 5px 0 0;
-  font-size: 13px;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.settingsBtn {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: rgba(196, 245, 71, 0.12);
-  color: #5a9a20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.18s ease;
-}
-
-.settingsBtn:hover {
-  background: rgba(196, 245, 71, 0.22);
 }
 
 .roleSelector {
@@ -213,8 +187,8 @@
 }
 
 .field input:focus {
-  border-color: #58CC02;
-  box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.15);
+  border-color: var(--g);
+  box-shadow: 0 0 0 4px rgba(84, 185, 72, 0.15);
   background: rgba(255, 255, 255, 0.10);
 }
 
@@ -258,51 +232,33 @@
   min-height: 52px;
   border-radius: 12px;
   border: 0;
-  background: #a4d65e;
-  color: #1a2d10;
+  background: var(--g);
+  color: #fff;
   font-family: var(--f);
   font-size: 14px;
   font-weight: 800;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  box-shadow: 0 4px 16px rgba(164, 214, 94, 0.40);
+  box-shadow: 0 4px 16px rgba(84, 185, 72, 0.40);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  margin-bottom: 10px;
 }
 
 .submitBtn:hover:not(:disabled) {
   transform: translateY(-1px);
   filter: brightness(1.04);
-  box-shadow: 0 6px 22px rgba(164, 214, 94, 0.52);
+  box-shadow: 0 6px 22px rgba(84, 185, 72, 0.52);
 }
 
 .submitBtn:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: 0 2px 10px rgba(164, 214, 94, 0.35);
+  box-shadow: 0 2px 10px rgba(84, 185, 72, 0.35);
 }
 
 .submitBtn:disabled {
   opacity: 0.60;
   cursor: default;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 20px 0;
-  color: #9ca3af;
-  font-size: 12.5px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #e5e7eb;
 }
 
 .googleBtn {
@@ -311,21 +267,16 @@
   border-radius: 12px;
   border: 1.5px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.85);
-  font-family: var(--f);
-  font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 11px;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .googleBtn:hover:not(:disabled) {
-  border-color: #d1d5db;
-  background: #f9fafb;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .googleBtn:disabled {
@@ -344,12 +295,22 @@
 .bottomLink button {
   border: 0;
   background: none;
-  color: #C4F547;
+  color: var(--g);
   font-family: var(--f);
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
   transition: opacity 0.15s ease;
+}
+
+.brandInline {
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.brandCraft {
+  color: var(--g);
 }
 
 .bottomLink button:hover {
