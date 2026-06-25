@@ -38,3 +38,28 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: firebase deploy --only hosting:marketing --project mindcraft-93858 --non-interactive
+
+  # Firebase app host (mindcraft-93858.web.app — login, dashboard, etc.)
+  deploy-firebase-app:
+    runs-on: ubuntu-latest
+    needs: deploy-marketing
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install and build app
+        working-directory: app
+        run: |
+          npm install --legacy-peer-deps
+          npm run build
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting (app)
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting:app --project mindcraft-93858 --non-interactive
