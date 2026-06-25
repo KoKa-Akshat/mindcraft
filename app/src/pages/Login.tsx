@@ -123,10 +123,7 @@ export default function Login() {
 
   return (
     <div className={s.page}>
-      <video className={s.videoBg} autoPlay muted loop playsInline>
-        <source src="/login-bg.mp4" type="video/mp4" />
-      </video>
-      <div className={s.videoOverlay} aria-hidden />
+      <div className={s.noise} aria-hidden />
 
       <a href={MARKETING_BASE} className={s.topLogo}>
         Mind<span className={s.brandCraft}>Craft</span>
