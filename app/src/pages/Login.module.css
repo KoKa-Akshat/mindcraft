@@ -9,6 +9,9 @@
 }
 
 .page {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -17,6 +20,7 @@
   background: var(--page);
   font-family: 'DM Sans', 'Nunito', system-ui, sans-serif;
   color: var(--ink);
+  z-index: 1;
 }
 
 .shell {

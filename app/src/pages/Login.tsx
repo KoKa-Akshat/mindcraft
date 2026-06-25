@@ -19,10 +19,10 @@ type Mode = 'signin' | 'signup'
 type Film = { src: string; label?: string }
 
 const FILMS: Film[] = [
-  { src: '/login-videos/Video.mp4' },
   { src: '/login-videos/Iceland.mp4', label: 'Iceland' },
   { src: '/login-videos/Norway.mp4', label: 'Norway' },
   { src: '/login-videos/Yamaguchi.mp4', label: 'Yamaguchi' },
+  { src: '/login-videos/Video.mp4' },
 ]
 
 function friendlyError(code: string) {
@@ -204,7 +204,7 @@ export default function Login() {
               {error && <p className={s.error}>{error}</p>}
 
               <button className={s.submitBtn} onClick={handleSubmit} disabled={loading} type="button">
-                {loading ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'}
+                {loading ? 'Please wait…' : mode === 'signin' ? 'SIGN IN' : 'CREATE ACCOUNT'}
               </button>
 
               <button
