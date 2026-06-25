@@ -137,7 +137,7 @@ export default function Login() {
           <div className={s.wordmark}>
             Mind<span className={s.brandCraft}>Craft</span>
           </div>
-          <p className={s.examPrep}>Learners Almanac</p>
+          <p className={s.examPrep}>A Learners Almanac</p>
         </div>
       </div>
 
