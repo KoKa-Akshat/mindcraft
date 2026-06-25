@@ -27,7 +27,7 @@
 <style>
 :root{
   --bg:#0D0F15;--bg2:#13161F;--card:#181B25;
-  --g:#58CC02;--gd:#4CAD00;--gdd:#3A8500;
+  --g:#54B948;--gd:#449A38;--gdd:#003F2D;
   --tx:#F0F2F8;--mu:#8B93A8;--bd:rgba(255,255,255,.08);
   --f:'Nunito',sans-serif
 }
@@ -60,7 +60,7 @@ nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit
 .article-title{font-size:clamp(28px,4.5vw,46px);font-weight:900;color:var(--tx);line-height:1.12;letter-spacing:-.6px;margin-bottom:20px}
 .article-byline{display:flex;align-items:center;gap:12px;padding-bottom:28px;border-bottom:1px solid var(--bd);margin-bottom:36px}
 .av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;flex-shrink:0}
-.av-green{background:linear-gradient(135deg,#3A8500,#1A3C2A)}
+.av-green{background:linear-gradient(135deg,#003F2D,#1A3C2A)}
 .av-blue{background:linear-gradient(135deg,#1E3A6A,#2A5AAF)}
 .byline-name{font-size:15px;font-weight:800;color:var(--tx)}
 .byline-role{font-size:13px;color:var(--mu);font-weight:700;margin-top:1px}
@@ -69,7 +69,7 @@ nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit
 /* ── BODY BLOCKS ── */
 .body-p{font-size:17px;color:rgba(240,242,248,.82);line-height:1.82;font-weight:600;margin-bottom:26px}
 .body-h2{font-size:26px;font-weight:900;color:var(--tx);letter-spacing:-.3px;line-height:1.2;margin:40px 0 16px}
-.body-quote{border-left:4px solid var(--g);padding:18px 24px;margin:32px 0;background:rgba(88,204,2,.05);border-radius:0 12px 12px 0}
+.body-quote{border-left:4px solid var(--g);padding:18px 24px;margin:32px 0;background:rgba(84,185,72,.05);border-radius:0 12px 12px 0}
 .body-quote p{font-size:19px;font-weight:800;color:var(--tx);line-height:1.5;font-style:italic;letter-spacing:-.1px}
 
 /* ── GALLERY ── */
@@ -77,13 +77,13 @@ nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit
 .gallery-label{font-size:11px;font-weight:900;color:var(--mu);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
 .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .gallery-placeholder{aspect-ratio:4/3;border-radius:12px;background:var(--card);border:1.5px dashed rgba(255,255,255,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--mu);cursor:pointer;position:relative;overflow:hidden;transition:border-color .2s,background .2s}
-.gallery-placeholder:hover{border-color:rgba(88,204,2,.5);background:rgba(88,204,2,.04)}
+.gallery-placeholder:hover{border-color:rgba(84,185,72,.5);background:rgba(84,185,72,.04)}
 .gallery-placeholder:hover .gp-hint{opacity:1}
 .gallery-placeholder svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5;opacity:.5;transition:opacity .2s}
 .gallery-placeholder span{font-size:12px;font-weight:700;transition:opacity .2s}
 .gallery-placeholder:hover svg,.gallery-placeholder:hover span{opacity:.35}
 .gp-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
-.gp-hint-inner{background:rgba(88,204,2,.9);color:#fff;font-size:11px;font-weight:900;padding:6px 14px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+.gp-hint-inner{background:rgba(84,185,72,.9);color:#fff;font-size:11px;font-weight:900;padding:6px 14px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
 .gallery-placeholder.wide{grid-column:span 2;aspect-ratio:8/4}
 .gallery-placeholder.filled{border:none;padding:0;background:none;cursor:default}
 .gallery-placeholder.filled:hover{border:none;background:none}
@@ -124,7 +124,7 @@ nav{height:62px;background:rgba(13,15,21,.88);backdrop-filter:blur(16px);-webkit
 .eb-discard{color:rgba(255,255,255,.4)}
 .edit-mode [contenteditable]{outline:none;border-radius:6px;transition:background .15s}
 .edit-mode [contenteditable]:hover{background:rgba(255,255,255,.04)}
-.edit-mode [contenteditable]:focus{background:rgba(255,255,255,.06);box-shadow:0 0 0 2px rgba(88,204,2,.3)}
+.edit-mode [contenteditable]:focus{background:rgba(255,255,255,.06);box-shadow:0 0 0 2px rgba(84,185,72,.3)}
 .edit-toggle{position:fixed;top:74px;right:24px;background:#1C1F2A;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;font-family:var(--f);cursor:pointer;z-index:150;display:flex;align-items:center;gap:6px;transition:all .18s}
 .edit-toggle:hover{color:#fff;border-color:rgba(255,255,255,.25)}
 .edit-toggle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -166,7 +166,7 @@ const ARTICLES = [
     category: "Headquarters",
     date: "April 5, 2026",
     author: { name: "Akshat K.", role: "Co-Founder", initial: "A" },
-    bg1: "#0A1F10", bg2: "#1A3C2A", accent: "#58CC02",
+    bg1: "#0A1F10", bg2: "#1A3C2A", accent: "#54B948",
     heroImg: "img/mission-hero.jpg",
     avClass: "av-green",
     sources: [],
@@ -267,7 +267,7 @@ function uploadGalleryPhoto(cell) {
   input.onchange = function() {
     if (!input.files[0]) return;
     // Show uploading state
-    cell.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:12px;font-weight:700"><div style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(88,204,2,.3);border-top-color:#58CC02;animation:spin .8s linear infinite"></div>Uploading…</div>';
+    cell.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:12px;font-weight:700"><div style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(84,185,72,.3);border-top-color:#54B948;animation:spin .8s linear infinite"></div>Uploading…</div>';
     uploadToStorage(input.files[0], function(url) {
       cell.classList.add('filled');
       cell.innerHTML = '<img src="' + url + '" alt="Event photo">';
@@ -389,7 +389,7 @@ render();
       <input id="si-email" type="email" placeholder="Email" style="width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:15px;font-family:Nunito,sans-serif;font-weight:600;outline:none;margin-bottom:12px">
       <input id="si-pass" type="password" placeholder="Password" style="width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:15px;font-family:Nunito,sans-serif;font-weight:600;outline:none;margin-bottom:6px">
       <div id="si-err" style="font-size:13px;color:#FC8181;font-weight:700;min-height:20px;margin-bottom:10px"></div>
-      <button id="si-btn" style="width:100%;padding:14px;background:#58CC02;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:900;font-family:Nunito,sans-serif;cursor:pointer">Sign in</button>
+      <button id="si-btn" style="width:100%;padding:14px;background:#54B948;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:900;font-family:Nunito,sans-serif;cursor:pointer">Sign in</button>
       <button onclick="document.getElementById('signin-modal').style.display='none'" style="width:100%;padding:10px;background:none;border:none;color:#8B93A8;font-size:14px;font-weight:700;font-family:Nunito,sans-serif;cursor:pointer;margin-top:8px">Cancel</button>
     </div>`;
   document.body.appendChild(modal);
