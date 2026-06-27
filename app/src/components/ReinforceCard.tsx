@@ -73,10 +73,13 @@ export function ReinforceCard({ recommendations }: { recommendations: ConceptRec
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
                 <div style={{ fontWeight: 600, fontSize: 14 }}>
                   {from} <span style={{ color: '#9CA3AF' }}>→</span> {to}
-                  <span style={{
+                  <span title={g.gapType === 'format'
+                      ? 'Format gap — scoped to one concept you know, shown in a vessel you stumble on'
+                      : 'Connection gap — spans two mastered topics you struggle to link'}
+                    style={{
                     marginLeft: 8, fontSize: 11, fontWeight: 600, color: '#6B7280',
                     background: '#F3F4F6', borderRadius: 6, padding: '2px 6px',
-                  }}>{g.gapType === 'format' ? 'format' : 'connection'}</span>
+                  }}>{g.gapType === 'format' ? 'format · within a concept' : 'connection · across concepts'}</span>
                 </div>
                 <span style={{
                   fontSize: 11, fontWeight: 600, color: '#fff',
