@@ -732,7 +732,7 @@ print("=" * 60)
 # ════════════════════════════════════════════════════════════
 from mindcraft_graph.engine.update import fold_format_events
 from mindcraft_graph.api.recommend import _detect_format_gaps
-from mindcraft_graph.config import FORMAT_IDS, outcome_from, split_outcome
+from mindcraft_graph.config import FORMAT_IDS, outcome_from, format_exposure_weight
 
 fmt_now = datetime(2026, 6, 25)
 fmt_state = StudentState(student_id="fs", mastery_by_concept={}, created_at=fmt_now, updated_at=fmt_now)
@@ -766,13 +766,26 @@ m_no = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="
         timestamp=fmt_now, exposure_weight=1.0)]).mastery_by_concept["diagram"].mastery
 check("Effort does not affect format mastery", m_eff == m_no)
 
-# split_outcome: positive full to both, negative split, no-format all-to-concept.
-pos_c, pos_f = split_outcome(0.5, True)
-neg_c, neg_f = split_outcome(-0.5, True)
-none_c, none_f = split_outcome(-0.5, False)
-check("Positive evidence: full credit to both nodes", pos_c == 0.5 and pos_f == 0.5)
-check("Negative evidence split 0.4/0.6", abs(neg_c - -0.2) < 1e-9 and abs(neg_f - -0.3) < 1e-9)
-check("No format tag: all to concept, none to format", none_c == -0.5 and none_f is None)
+# Per-node aggregation: a continuous session score grades (no binary collapse),
+# and outcome_from's level gain only bites on fractional scores (not clamped 1.0).
+check("Continuous session score grades (0.7 != 0.9)",
+      outcome_from(0.7, 1) != outcome_from(0.9, 1))
+check("Level gain bites on fractional scores",
+      outcome_from(0.7, 3) > outcome_from(0.7, 1))
+# Format events are sample-weighted: a format seen once is thin evidence.
+check("Format sample-weight grows with count",
+      format_exposure_weight(1) < format_exposure_weight(5))
+check("Format sample-weight caps at full evidence",
+      format_exposure_weight(99) == 1.0 and format_exposure_weight(1) < 1.0)
+# Sample-weight actually shrinks a thin format's mastery move vs a full one.
+thin = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="table",
+        event_type="problem_set", outcome=0.6, effort=0.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=format_exposure_weight(1))]).mastery_by_concept["table"].mastery
+full = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="table",
+        event_type="problem_set", outcome=0.6, effort=0.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=format_exposure_weight(5))]).mastery_by_concept["table"].mastery
+check("Thin format evidence moves mastery less than full", thin < full,
+      f"thin={thin:.3f} full={full:.3f}")
 
 # Format-gap detection (inverted gradient: concept HIGH, format LOW).
 from types import SimpleNamespace as _NS

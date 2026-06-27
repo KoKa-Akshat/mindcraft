@@ -441,61 +441,88 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest):
     """Record practice/homework results into the concept graph so mastery moves
     as the student actually answers problems. Events accumulate (not replaced).
 
-    Per-question granularity is preserved: each OutcomeItem mints its own event
-    via config.outcome_from(score, level) (replacing the old binary OUTCOME_MAP).
-    Format-tagged items split their negative evidence to a format node (full
-    credit to both on a positive), persisted to a separate collection and folded
-    via fold_format_events so they never touch the concept edge/feature path."""
+    Structural split: the UPDATE is one continuous-score event PER NODE the
+    session touches — concept scored k/N over all questions (full weight), each
+    format scored k/n over its own questions (sample-weighted). The OBSERVATION
+    log keeps full per-question granularity for the predictive harness. Items
+    arrive per-question (score 1/0); they are aggregated here, not folded raw."""
+    from collections import defaultdict
+    from statistics import mean
     from mindcraft_graph.firestore_adapter import (
         append_interactions,
         append_format_interactions,
+        append_attempt_observations,
         load_format_events,
         load_student_events,
         save_personal_graph,
     )
     from mindcraft_graph.models.events import SessionEvent
     from mindcraft_graph.engine.update import fold_format_events
-    from mindcraft_graph.config import outcome_from, split_outcome, FORMAT_IDS
+    from mindcraft_graph.config import outcome_from, format_exposure_weight, FORMAT_IDS
 
     valid_concepts = {concept.id for concept in ontology.concepts}
     now = datetime.now()
     recorded: list[str] = []
     skipped: list[str] = []
-    events: list[SessionEvent] = []
-    format_records: list[dict] = []
+
+    # Bucket per-question scores by node; collect per-question observations.
+    by_concept: dict[str, list[float]] = defaultdict(list)
+    concept_level: dict[str, int] = {}
+    by_format: dict[str, list[float]] = defaultdict(list)
+    format_level: dict[str, int] = {}
+    observations: list[dict] = []
     for item in req.outcomes:
         score = item.resolved_score()
         if item.concept_id not in valid_concepts or score is None:
             skipped.append(item.concept_id)
             continue
-        base_outcome = outcome_from(score, item.level)
+        by_concept[item.concept_id].append(score)
+        concept_level[item.concept_id] = max(concept_level.get(item.concept_id, 1), item.level)
         has_format = item.format_id in FORMAT_IDS
-        concept_outcome, format_outcome = split_outcome(base_outcome, has_format)
-        # Effort is informational for strength/displacement only (never mastery);
-        # a miss reflects more struggle than a pass.
-        effort = 0.6 if base_outcome < 0 else 0.4
+        if has_format:
+            by_format[item.format_id].append(score)
+            format_level[item.format_id] = max(format_level.get(item.format_id, 1), item.level)
+        observations.append({
+            "concept_id": item.concept_id,
+            "format_id": item.format_id if has_format else None,
+            "level": item.level,
+            "correct": 1.0 if score >= 1.0 else (0.0 if score <= 0.0 else score),
+            "question_id": item.question_id,
+        })
+        recorded.append(item.concept_id)
+
+    # One aggregated CONCEPT event per concept (k/N, full weight).
+    events: list[SessionEvent] = []
+    for cid, scores in by_concept.items():
+        base = outcome_from(mean(scores), concept_level[cid])
         events.append(SessionEvent(
             student_id=req.student_id,
-            concept_id=item.concept_id,
+            concept_id=cid,
             event_type="problem_set",
-            outcome=concept_outcome,
-            effort=effort,
+            outcome=base,
+            effort=0.6 if base < 0 else 0.4,  # strength/displacement only, never mastery
             duration_minutes=3.0,
             timestamp=now,
             exposure_weight=1.0,
         ))
-        if format_outcome is not None:
-            format_records.append({
-                "format_id": item.format_id,
-                "outcome": format_outcome,
-                "level": item.level,
-            })
-        recorded.append(item.concept_id)
+
+    # One aggregated FORMAT event per format (k/n, sample-weighted).
+    format_records: list[dict] = []
+    for fid, scores in by_format.items():
+        base = outcome_from(mean(scores), format_level[fid])
+        format_records.append({
+            "format_id": fid,
+            "outcome": base,
+            "level": format_level[fid],
+            "exposure_weight": format_exposure_weight(len(scores)),
+        })
 
     if events:
         append_interactions(req.student_id, events, source="practice")
     if format_records:
         append_format_interactions(req.student_id, format_records, now)
+    if observations:
+        append_attempt_observations(req.student_id, observations, now)
 
     all_events = load_student_events(req.student_id)
     graph = create_personal_graph(req.student_id, ontology)

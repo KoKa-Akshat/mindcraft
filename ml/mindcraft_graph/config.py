@@ -47,25 +47,23 @@ def outcome_from(score: float, level: int = 1) -> float:
     return max(OUTCOME_CLAMP_MIN, min(OUTCOME_CLAMP_MAX, base))
 
 
-# ── Split of NEGATIVE evidence between concept and format nodes (Logic 1) ────
-# A miss is partly "don't know the concept" and partly "can't handle the vessel".
-# Positive evidence is NOT split — full credit lands on both nodes.
-CONCEPT_SPLIT = 0.4
-FORMAT_SPLIT = 0.6
+# ── Per-node session aggregation (replaces the old concept/format split) ─────
+# The update is one continuous-score event PER NODE the session touches: the
+# concept scored over all questions (k/N), and each format scored over its own
+# questions (correct_in_format / count_in_format). A question naturally counts
+# toward both its concept and its format denominators, so no artificial split.
+#
+# Format events are SAMPLE-WEIGHTED: a format seen once is thin evidence, not a
+# full session. exposure_weight = min(1, count / FORMAT_EXPOSURE_NORM) — the
+# small-denominator guard. Concept events always carry full weight (1.0).
+FORMAT_EXPOSURE_NORM = 5.0   # questions of a format for it to count as full evidence
 
 
-def split_outcome(base: float, has_format: bool) -> tuple[float, float | None]:
-    """Split a base outcome into (concept_outcome, format_outcome).
-
-    - No format tag: all to concept, nothing to format.
-    - Positive base: full credit to BOTH concept and format.
-    - Negative base: split — CONCEPT_SPLIT to concept, FORMAT_SPLIT to format.
-    """
-    if not has_format:
-        return base, None
-    if base >= 0:
-        return base, base
-    return CONCEPT_SPLIT * base, FORMAT_SPLIT * base
+def format_exposure_weight(count: int) -> float:
+    """Sample-weight for a format's session event (in (0, 1])."""
+    if count <= 0:
+        return 0.0
+    return min(1.0, count / FORMAT_EXPOSURE_NORM)
 
 
 # ── Format-gap detection thresholds (Logic 2) ───────────────────────────────

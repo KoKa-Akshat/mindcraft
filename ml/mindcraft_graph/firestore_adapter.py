@@ -129,9 +129,63 @@ def append_format_interactions(student_id: str, records: list[dict], now: dateti
             "formatId": r["format_id"],
             "outcome": float(r["outcome"]),
             "level": int(r.get("level", 1)),
+            "exposureWeight": float(r.get("exposure_weight", 1.0)),
             "timestamp": now,
         })
     return len(records)
+
+
+def append_attempt_observations(student_id: str, observations: list[dict], now: datetime) -> int:
+    """Append PER-QUESTION attempt records for the predictive harness.
+
+    Structurally separate from the update events (interactions/format_interactions
+    hold one aggregated event per node per session). Observations keep full
+    granularity — one row per question — and are NEVER folded into mastery; the
+    harness replays them to reconstruct state-before-attempt vs actual outcome.
+    Each obs: {concept_id, format_id|None, level, correct (0/1), question_id|None}.
+    """
+    for o in observations:
+        db.collection("attempt_observations").add({
+            "studentId": student_id,
+            "conceptId": o.get("concept_id"),
+            "formatId": o.get("format_id"),
+            "level": int(o.get("level", 1)),
+            "correct": float(o.get("correct", 0.0)),
+            "questionId": o.get("question_id"),
+            "timestamp": now,
+        })
+    return len(observations)
+
+
+def load_attempt_observations(student_id: str, limit: int = 2000) -> list[dict]:
+    """Read per-question attempt observations in ascending timestamp order.
+
+    Returns plain dicts (the harness's replay source) — not SessionEvents, since
+    these are never folded into mastery.
+    """
+    try:
+        docs = (
+            db.collection("attempt_observations")
+            .where("studentId", "==", student_id)
+            .order_by("timestamp", direction=firestore.Query.ASCENDING)
+            .limit(limit)
+            .stream()
+        )
+        out = []
+        for doc in docs:
+            d = doc.to_dict()
+            out.append({
+                "student_id": student_id,
+                "concept_id": d.get("conceptId"),
+                "format_id": d.get("formatId"),
+                "level": int(d.get("level", 1)),
+                "correct": float(d.get("correct", 0.0)),
+                "question_id": d.get("questionId"),
+                "timestamp": _to_naive(d.get("timestamp", datetime.now())),
+            })
+        return out
+    except Exception:
+        return []
 
 
 def load_format_events(student_id: str, limit: int = 500) -> list[SessionEvent]:
@@ -160,7 +214,7 @@ def load_format_events(student_id: str, limit: int = 500) -> list[SessionEvent]:
                 effort=0.0,
                 duration_minutes=0.0,
                 timestamp=_to_naive(data.get("timestamp", datetime.now())),
-                exposure_weight=1.0,
+                exposure_weight=float(data.get("exposureWeight", 1.0)),
             ))
         return events
     except Exception:
