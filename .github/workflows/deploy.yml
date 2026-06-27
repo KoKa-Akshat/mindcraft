@@ -36,8 +36,11 @@ jobs:
 
       - name: Deploy to Firebase Hosting (marketing)
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: firebase deploy --only hosting:marketing --project mindcraft-93858 --non-interactive
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
+        run: |
+          printf '%s' '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$GOOGLE_APPLICATION_CREDENTIALS"
+          firebase deploy --only hosting:marketing --project mindcraft-93858 --non-interactive
+          rm -f "$GOOGLE_APPLICATION_CREDENTIALS"
 
   # Firebase app host (mindcraft-93858.web.app — login, dashboard, etc.)
   deploy-firebase-app:
@@ -61,5 +64,8 @@ jobs:
 
       - name: Deploy to Firebase Hosting (app)
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: firebase deploy --only hosting:app --project mindcraft-93858 --non-interactive
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
+        run: |
+          printf '%s' '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$GOOGLE_APPLICATION_CREDENTIALS"
+          firebase deploy --only hosting:app --project mindcraft-93858 --non-interactive
+          rm -f "$GOOGLE_APPLICATION_CREDENTIALS"
