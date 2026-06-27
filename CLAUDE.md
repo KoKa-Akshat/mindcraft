@@ -107,12 +107,22 @@ ID formats (the join keys across layers):
 The layers:
 - **Layer 1 — Concept Ontology** (`01_…_v2_6_*.json`): 42 concepts (levels:
   7 foundational / 22 core / 11 advanced / 2 cross_cutting), 179 nested
-  ingredients (each with `learning_vector` + 3-style `card_templates` = 537
-  representations), 16 bridges (in 9 `from_concept`/`to_concept` groups), 15
-  combinations, plus `act_prep_overlay`, `population_priors` (cold-start failure
-  rates), and `canonical_registries`. **Two variants**: `…_standardized.json`
-  (no combinations) and `…_with_combinations.json` (adds the 15 co-occurrence
-  hyperedges) — serve.py loads the **with_combinations** one.
+  ingredients (= 537 representations), 16 bridges (in 9 `from_concept`/
+  `to_concept` groups), 15 combinations, plus `act_prep_overlay`,
+  `population_priors` (cold-start failure rates), and `canonical_registries`.
+  Per-**concept** record: `act_relevance`, `population_failure_prior`,
+  `learning_style_affinity`, `cross_layer_links` (the explicit join surface —
+  `common_question_archetype_ids`/`common_misconception_ids`/
+  `recommended_remediation_policy_ids` + `diagnostic_axes`; mostly empty,
+  populated as annotation grows), `node_type`/`status`/`aliases`. Per-**ingredient**
+  record: `comes_from`, `failure_mode`, `failure_prior`, `learning_vector`
+  (geometric/algebraic/procedural/conceptual), 3-style `card_templates`,
+  `diagnostic_tags`, `canonical_misconception_family`, `observable_evidence`,
+  `remediation_handles`. NOTE: `canonical_registries.ingredient_ids` lags at 167
+  vs the 179 nested — join on the **nested** ingredient ids, not the registry.
+  **Two variants**: `…_standardized.json` (no combinations) and
+  `…_with_combinations.json` (adds the 15 co-occurrence hyperedges) — serve.py
+  loads the **with_combinations** one.
 - **Layer 2 — Question Archetype Ontology** (`02_…_standardized.json`): 84
   archetypes — repeatable ACT/exam patterns that describe HOW exams hide/apply
   concepts. Each links `primary_concept_ids`, `required_ingredient_ids`,
@@ -127,7 +137,16 @@ The layers:
   (concept/ingredient/archetype mastery, representation profile, misconception
   memory, calibration), `student_event_schema`, the learning-event graph, and
   `evidence_update_policy` (e.g. separate can-do from can-recognize; don't
-  over-update from one question; recency weights).
+  over-update from one question; recency weights). This layer defines the
+  canonical **representation/format ("vessel") vocabulary** that the
+  format-node work builds on: `student_state_schema.representation_profile`
+  tracks per-format mastery over {`word_problem`, `diagram`, `number_line`,
+  `symbolic_expression`, `coordinate_graph`, `table`}, and
+  `student_event_schema.input_representation` ∈ {`word_problem`|`diagram`|
+  `number_line`|`graph`|`table`|`symbolic`|`mixed`}. (L1
+  `canonical_registries.representation_types` is the broader 13-type list.) The
+  live `OutcomeItem`/questionBank carry NO format tag yet — that substrate is
+  what the format-node feature has to add.
 - **Layer 5 — Adaptive Remediation Policy** (`05_…_v1_6.json`): diagnosis→action
   rules (14 `diagnosis_to_action_rules`), the `practice_generation_contract`
   (inputs/outputs/difficulty-ladder/guardrails), `next_best_action_contract`,
