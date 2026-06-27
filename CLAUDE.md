@@ -201,17 +201,34 @@ is all naive datetimes — mixing them raises).
 - Code in `homework/`. Secret `ANTHROPIC_API_KEY`. Stateless. Down on credits.
 
 ### Frontend — Firebase Hosting, project `mindcraft-93858`
-- Build: `cd app && npm install --legacy-peer-deps && npm run build`
-  (`--legacy-peer-deps` is REQUIRED — a `@react-three` peer conflict otherwise).
-- Deploy: `firebase deploy --only hosting:app --project mindcraft-93858`.
-  The firebase CLI must be logged in as an account with access to
-  `mindcraft-93858` (`blakeykell@gmail.com` was granted `roles/firebase.admin`).
-- Live `https://mindcraft-93858.web.app` (root redirects to /landing.html; the
-  app serves via SPA rewrites). `app-beta-one-59.vercel.app` also exists but
-  Firebase Hosting is the active host.
-- Vite env: `.env.production` → Cloud Run URL (baked at build), `.env.local` →
-  `localhost:8080` (so LearningGPS/graph need the local ML server for local dev).
-  Also `VITE_HOMEWORK_API_URL` → the `mindcraft-homework` URL.
+
+**Full deploy sequence (run from repo root):**
+```bash
+cd app && npm install --legacy-peer-deps && npm run build && cd ..
+firebase deploy --only hosting:app --project mindcraft-93858
+```
+
+Key notes:
+- `--legacy-peer-deps` is REQUIRED — a `@react-three` peer conflict breaks
+  install without it.
+- **Credential**: Firebase CLI must be logged in as `blakeykell@gmail.com`
+  (granted `roles/firebase.admin` on `mindcraft-93858`). Verify with
+  `firebase login:list`. If wrong account: `firebase login --reauth`.
+  CLI version in use: **15.13.0** (`firebase --version`).
+- The deploy target `app` maps to the `mindcraft-93858` hosting site via
+  `.firebaserc` → `targets.mindcraft-93858.hosting.app`. `firebase.json`
+  defines the `app` target: public dir = `app/dist`, SPA rewrites to
+  `/index.html`, root `/` redirects to the marketing site.
+- Live `https://mindcraft-93858.web.app`. Root redirects to
+  `mindcraft-marketing-site.web.app`; the React SPA is served on all other
+  paths. `app-beta-one-59.vercel.app` still exists but Firebase is the active
+  host.
+- Vite env: `.env.production` → Cloud Run URL (baked at build time),
+  `.env.local` → `localhost:8080` for local dev. Also `VITE_HOMEWORK_API_URL`
+  → the `mindcraft-homework` URL. **Do not commit `.env.local`.**
+- Other Firebase targets in the same project: `world1` (co-founder's 3-D world,
+  public dir `worlds/world2`) and `marketing` (static marketing site). Deploy
+  those with `--only hosting:world1` or `--only hosting:marketing` respectively.
 
 ### Firestore — project `mindcraft-93858`
 - The real DB (users, sessions, interactions, ingredient_states,
