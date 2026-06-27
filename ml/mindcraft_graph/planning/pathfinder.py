@@ -328,7 +328,11 @@ def find_path(
         )
 
     # ── Exam / Curriculum: prerequisite-chain approach ──
-    if not goal.target_concepts:
+    # Exam mode with no explicit targets defaults to the exam-priority concepts.
+    targets = list(goal.target_concepts)
+    if not targets and goal.mode == "exam":
+        targets = list(ontology.high_priority_concepts)
+    if not targets:
         return {
             "canonical_chain": [],
             "trimmed_chain": [],
@@ -340,18 +344,20 @@ def find_path(
         }
 
     # Step 1: Get the canonical prerequisite chain
-    if len(goal.target_concepts) == 1:
-        canonical = get_prerequisite_chain(
-            goal.target_concepts[0], ontology,
-        )
+    if len(targets) == 1:
+        canonical = get_prerequisite_chain(targets[0], ontology)
     else:
-        canonical = get_multi_target_chain(
-            goal.target_concepts, ontology,
-        )
+        canonical = get_multi_target_chain(targets, ontology)
 
-    # Step 2: Anchor the route on mastered concepts already in the ontology path
-# Step 2: Trim based on three-state classification
+    # Step 2: Trim based on three-state classification
     trimmed = trim_chain(canonical, profiles, graph)
+
+    # Exam mode: re-rank by exam priority and apply the deadline budget (cram the
+    # highest-frequency / most-struggling concepts first), then restore teaching
+    # order. Curriculum/explore are untouched.
+    if goal.mode == "exam":
+        trimmed = _apply_exam_priority(trimmed, canonical, goal, graph, ontology)
+
     start_concept = trimmed[0] if trimmed else None
 
     # Step 3: Find supplements for each remaining concept
@@ -373,9 +379,46 @@ def find_path(
         "supplements": supplements,
         "start_concept": start_concept,
         "mastered_anchors": [],  # or remove this key entirely
-        "target_concepts": goal.target_concepts,
+        "target_concepts": targets,
         "mode": goal.mode,
 }
+
+
+def _apply_exam_priority(
+    trimmed: list[str],
+    canonical: list[str],
+    goal: Goal,
+    graph: PersonalGraph,
+    ontology: Ontology,
+) -> list[str]:
+    """Exam-mode re-rank + deadline budget.
+
+    Keeps the top-`budget` concepts by priority (high exam frequency + still
+    struggling), then restores prerequisite/teaching order. Triage semantics: in
+    a deadline cram we may keep a high-frequency concept without an unknown
+    (presumed-ok) prereq — struggling prereqs score high and survive anyway;
+    mastered ones are already trimmed out.
+    """
+    from mindcraft_graph.config import (
+        exam_concept_budget, EXAM_W_FREQUENCY, EXAM_W_STRUGGLE,
+    )
+    if not trimmed:
+        return trimmed
+
+    freq = {c.id: c.exam_frequency for c in ontology.concepts}
+    mastery = graph.state.mastery_by_concept
+    order = {cid: i for i, cid in enumerate(canonical)}
+
+    def _mastery(cid: str) -> float:
+        cm = mastery.get(cid)
+        return cm.mastery if cm is not None else 0.0
+
+    def _priority(cid: str) -> float:
+        return EXAM_W_FREQUENCY * freq.get(cid, 0.0) + EXAM_W_STRUGGLE * (1.0 - _mastery(cid))
+
+    budget = exam_concept_budget(goal.deadline_days, len(trimmed))
+    kept = sorted(trimmed, key=_priority, reverse=True)[:budget]
+    return sorted(kept, key=lambda cid: order.get(cid, 0))
 
 
 def _explore_recommendations(

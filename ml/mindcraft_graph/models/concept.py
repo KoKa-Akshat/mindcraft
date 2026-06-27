@@ -9,6 +9,10 @@ class Concept(BaseModel):
     typical_order: int = 0
     description: str = ""
     tags: list[str] = Field(default_factory=list)
+    # Exam-prep signal from act_relevance (Layer 1). frequency in [0,1] = how
+    # often the concept shows up on the exam; drives exam-mode prioritization.
+    exam_frequency: float = 0.0
+    exam_tested: bool = False
 
 
 def estimate_difficulty(concept: Concept, max_order: int) -> float:
@@ -27,3 +31,6 @@ class Ontology(BaseModel):
     domain: str
     concepts: list[Concept]
     edges: list[OntologyEdge]
+    # Ordered exam-priority concepts from act_prep_overlay — the default targets
+    # for exam mode when none are explicitly requested.
+    high_priority_concepts: list[str] = Field(default_factory=list)

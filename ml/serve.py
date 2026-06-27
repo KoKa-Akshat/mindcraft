@@ -197,6 +197,14 @@ class RecordOutcomesRequest(BaseModel):
     outcomes: list[OutcomeItem]
 
 
+class PrepDiagnoseRequest(BaseModel):
+    student_id: str
+    exam_type: str = "ACT_MATH"
+    deadline_days: int | None = None
+    # Optional explicit targets; empty = the exam-priority concepts.
+    target_concepts: list[str] = []
+
+
 class SubmitIngredientAnswerRequest(BaseModel):
     student_id: str
     card_template_id: str
@@ -371,6 +379,83 @@ async def recommend_endpoint(req: RecommendRequest):
 
     save_recommendation_result(req.student_id, response)
     return response
+
+
+@app.post("/prep-diagnose")
+async def prep_diagnose_endpoint(req: PrepDiagnoseRequest):
+    """Deterministic exam-prep diagnosis — the always-on fallback for /prep.
+
+    Runs the exam-mode pathfinder (exam-frequency + deadline budget) and maps the
+    gap chain into the same DiagnoseResult/Gap shape the panic-loop UI consumes,
+    so it drops in when the LLM diagnose is unavailable (Anthropic credits) or the
+    input is purely structured (exam type + deadline)."""
+    from mindcraft_graph.firestore_adapter import load_student_events
+    from mindcraft_graph.planning.pathfinder import find_path
+
+    now = datetime.now()
+    events = load_student_events(req.student_id)
+    graph = create_personal_graph(req.student_id, ontology)
+    if events:
+        graph = update_personal_graph(graph, events, ontology)
+    graph.state = decay_student_state(graph.state, now)
+    graph.edges = decay_all_edges(graph.edges, now)
+
+    profiles = compute_concept_profiles(events)
+    strength_vec = compute_student_embedding_from_profiles(profiles, concept_embs)
+    goal = Goal(mode="exam", deadline_days=req.deadline_days, target_concepts=req.target_concepts)
+    path = find_path(graph, goal, concept_embs, strength_vec, profiles, ontology, events)
+
+    trimmed = path["trimmed_chain"]
+    canonical = path["canonical_chain"]
+    concept_by_id = {c.id: c for c in ontology.concepts}
+    mastery = graph.state.mastery_by_concept
+    # First unmastered prereq of each concept (the "broken prerequisite").
+    def _mastery(cid):
+        cm = mastery.get(cid)
+        return cm.mastery if cm is not None else 0.0
+    # Bridge feeding each target concept (source_concept -> target_concept).
+    bridge_into = {}
+    for b in ingredient_ontology.bridges:
+        bridge_into.setdefault(b.target_concept, b.source_concept)
+
+    gaps = []
+    for cid in trimmed:
+        c = concept_by_id.get(cid)
+        m = _mastery(cid)
+        prof = profiles.get(cid)
+        if prof is not None and prof.strength_score < -0.1:
+            urgency = "critical"
+        elif m >= 0.5:
+            urgency = "stable"
+        else:
+            urgency = "moderate"
+        broken = ""
+        if cid in canonical:
+            for pre in canonical[:canonical.index(cid)]:
+                if _mastery(pre) < 0.5:
+                    broken = pre
+                    break
+        gaps.append({
+            "conceptId": cid,
+            "conceptName": c.name if c else cid,
+            "urgency": urgency,
+            "studentScore": round(m, 3),
+            "examWeight": round(c.exam_frequency, 3) if c else 0.0,
+            "brokenPrerequisite": broken,
+            "bridgeConcept": bridge_into.get(cid, ""),
+            "practiceCount": 0,
+        })
+
+    triage = req.deadline_days is not None and req.deadline_days <= 7
+    confidence = "high" if len(events) >= 10 else ("medium" if events else "low")
+    return {
+        "gaps": gaps,
+        "sessionId": f"prep_{req.student_id}_{int(now.timestamp())}",
+        "examType": req.exam_type,
+        "diagnosisConfidence": confidence,
+        "mode": "triage" if triage else "foundation",
+        "source": "deterministic",
+    }
 
 
 # Onboarding self-assessment -> seed events. hard = struggling (negative outcome,

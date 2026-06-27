@@ -43,6 +43,7 @@ def _build_concept_ontology(data: dict[str, Any]) -> Ontology:
 
     concepts = []
     for idx, c in enumerate(raw_concepts):
+        act = c.get("act_relevance", {})
         concepts.append(Concept(
             id=c["id"],
             name=c["name"],
@@ -50,15 +51,19 @@ def _build_concept_ontology(data: dict[str, Any]) -> Ontology:
             typical_order=idx,
             description=c.get("population_failure_prior", {}).get("notes", c["name"]),
             tags=_extract_tags(c),
+            exam_frequency=float(act.get("frequency", 0.0)),
+            exam_tested=bool(act.get("tested", False)),
         ))
 
     edges = _derive_concept_edges(data)
+    high_priority = data.get("act_prep_overlay", {}).get("high_priority_concepts", [])
 
     return Ontology(
         version=meta.get("version", "1.0-complete"),
         domain=meta.get("domain", "math"),
         concepts=concepts,
         edges=edges,
+        high_priority_concepts=list(high_priority),
     )
 
 

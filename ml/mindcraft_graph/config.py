@@ -66,6 +66,30 @@ def format_exposure_weight(count: int) -> float:
     return min(1.0, count / FORMAT_EXPOSURE_NORM)
 
 
+# ── Exam mode: deadline budget + concept prioritization ─────────────────────
+# Deadline → how many concepts to keep (cram tighter as the exam nears). Tiers
+# are predictable for the "panic loop" UX. None deadline = full chain.
+def exam_concept_budget(deadline_days: int | None, chain_len: int) -> int:
+    """Number of chain concepts to keep given the days-to-exam (prereq-safe trim
+    happens in the caller; this is just the count)."""
+    if deadline_days is None:
+        return chain_len
+    if deadline_days <= 3:
+        budget = 3
+    elif deadline_days <= 7:
+        budget = 6
+    elif deadline_days <= 14:
+        budget = 10
+    else:
+        return chain_len
+    return max(1, min(budget, chain_len))
+
+
+# Priority score for exam-mode ordering: struggling + high exam-frequency first.
+EXAM_W_FREQUENCY = 1.0   # weight on act_relevance.frequency
+EXAM_W_STRUGGLE = 0.6    # weight on (1 - mastery)
+
+
 # ── Format-gap detection thresholds (Logic 2) ───────────────────────────────
 # NOTE: the gradient is INVERTED relative to concept bridges — here the CONCEPT
 # is mastered and the FORMAT is weak ("knows the idea, fails the vessel").

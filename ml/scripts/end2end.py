@@ -808,6 +808,48 @@ check("No format gap when no concept is mastered (no anchor)",
 
 # ════════════════════════════════════════════════════════════
 print("\n" + "=" * 60)
+print("  TEST SUITE 15: EXAM MODE (deadline budget + exam weighting)")
+print("=" * 60)
+# ════════════════════════════════════════════════════════════
+from mindcraft_graph.planning.goal import Goal as _Goal
+from mindcraft_graph.planning.pathfinder import find_path as _find_path
+
+_exam_emb = {c.id: __import__("numpy").zeros(4) for c in ontology.concepts}
+_exam_graph = create_personal_graph("exam_student", ontology)
+_exam_profiles = compute_concept_profiles([])
+_zero = __import__("numpy").zeros(4)
+
+check("Ontology carries exam-priority concepts", len(ontology.high_priority_concepts) > 0,
+      f"n={len(ontology.high_priority_concepts)}")
+check("Concepts carry exam_frequency", any(c.exam_frequency > 0 for c in ontology.concepts))
+
+# Exam mode with no explicit targets falls back to high-priority concepts.
+_r_none = _find_path(_exam_graph, _Goal(mode="exam"), _exam_emb, _zero, _exam_profiles, ontology)
+check("Exam mode defaults targets when none given", len(_r_none["trimmed_chain"]) > 0,
+      f"chain={len(_r_none['canonical_chain'])} trimmed={len(_r_none['trimmed_chain'])}")
+
+# Deadline budget tightens the path.
+_r_2  = _find_path(_exam_graph, _Goal(mode="exam", deadline_days=2),  _exam_emb, _zero, _exam_profiles, ontology)
+_r_7  = _find_path(_exam_graph, _Goal(mode="exam", deadline_days=7),  _exam_emb, _zero, _exam_profiles, ontology)
+check("Tighter deadline → fewer concepts",
+      len(_r_2["trimmed_chain"]) <= len(_r_7["trimmed_chain"]) <= len(_r_none["trimmed_chain"]),
+      f"2d={len(_r_2['trimmed_chain'])} 7d={len(_r_7['trimmed_chain'])} none={len(_r_none['trimmed_chain'])}")
+check("2-day cram caps at the tier budget (3)", len(_r_2["trimmed_chain"]) <= 3)
+
+# Prereq/teaching order preserved: kept concepts keep their canonical order.
+_canon_idx = {cid: i for i, cid in enumerate(_r_7["canonical_chain"])}
+_kept_idx = [_canon_idx[c] for c in _r_7["trimmed_chain"] if c in _canon_idx]
+check("Budgeted exam path preserves prerequisite order", _kept_idx == sorted(_kept_idx),
+      f"order={_kept_idx}")
+
+# Curriculum mode is untouched by the exam budget.
+_r_cur = _find_path(_exam_graph, _Goal(mode="curriculum", target_concepts=["derivatives"]),
+                    _exam_emb, _zero, _exam_profiles, ontology)
+check("Curriculum mode ignores deadline budget", len(_r_cur["trimmed_chain"]) > 0)
+
+
+# ════════════════════════════════════════════════════════════
+print("\n" + "=" * 60)
 print("  RESULTS")
 print("=" * 60)
 print(f"\n  Passed: {passed}/{total}")
