@@ -172,7 +172,24 @@ class SeedAssessmentRequest(BaseModel):
 
 class OutcomeItem(BaseModel):
     concept_id: str
-    succeeded: bool
+    # Per-question substrate (Step 1). `score` is the raw pass rate in [0,1]
+    # (a single question is 1.0/0.0; a session may send a fraction). `format_id`
+    # is a canonical representation/vessel id, validated against config.FORMAT_IDS.
+    format_id: str | None = None
+    score: float | None = None
+    level: int = 1
+    question_id: str | None = None
+    # Deprecated legacy session-boolean. Used only when `score` is None so current
+    # callers don't break (succeeded -> score 1.0/0.0).
+    succeeded: bool | None = None
+
+    def resolved_score(self) -> float | None:
+        """Raw pass rate, falling back to the deprecated boolean."""
+        if self.score is not None:
+            return self.score
+        if self.succeeded is not None:
+            return 1.0 if self.succeeded else 0.0
+        return None
 
 
 class RecordOutcomesRequest(BaseModel):
@@ -243,8 +260,9 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
 async def recommend_endpoint(req: RecommendRequest):
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph, save_recommendation_result,
-        append_displacement_snapshot, load_ingredient_state,
+        append_displacement_snapshot, load_ingredient_state, load_format_events,
     )
+    from mindcraft_graph.engine.update import fold_format_events
 
     # Load student data
     events = load_student_events(req.student_id)
@@ -256,6 +274,10 @@ async def recommend_endpoint(req: RecommendRequest):
     graph = create_personal_graph(req.student_id, ontology)
     if events:
         graph = update_personal_graph(graph, events, ontology)
+
+    # Fold format nodes into mastery_by_concept (separate from the concept path)
+    # so format-gap detection can see per-vessel mastery.
+    graph.state = fold_format_events(graph.state, load_format_events(req.student_id))
 
     # Apply decay
     now = datetime.now()
@@ -323,6 +345,7 @@ async def recommend_endpoint(req: RecommendRequest):
                 "alignmentScore": r.alignment_score,
                 "pcaProfile": r.pca_profile,
                 "isBridgeGap": r.is_bridge_gap,
+                "gapType": r.gap_type,
                 "bridgeId": r.bridge_id,
                 "bridgeFromConcept": r.bridge_from_concept,
                 "bridgeToConcept": r.bridge_to_concept,
@@ -413,51 +436,100 @@ async def seed_assessment_endpoint(req: SeedAssessmentRequest):
     }
 
 
-# Practice/homework outcome -> graph signal. A solved problem rewards mastery;
-# a missed one is weak negative evidence (lower effort than a confirmed struggle).
-OUTCOME_MAP = {True: (0.6, 0.4), False: (-0.4, 0.6)}
-
-
 @app.post("/record-outcomes")
 async def record_outcomes_endpoint(req: RecordOutcomesRequest):
     """Record practice/homework results into the concept graph so mastery moves
-    as the student actually answers problems. Events accumulate (not replaced)."""
+    as the student actually answers problems. Events accumulate (not replaced).
+
+    Structural split: the UPDATE is one continuous-score event PER NODE the
+    session touches — concept scored k/N over all questions (full weight), each
+    format scored k/n over its own questions (sample-weighted). The OBSERVATION
+    log keeps full per-question granularity for the predictive harness. Items
+    arrive per-question (score 1/0); they are aggregated here, not folded raw."""
+    from collections import defaultdict
+    from statistics import mean
     from mindcraft_graph.firestore_adapter import (
         append_interactions,
+        append_format_interactions,
+        append_attempt_observations,
+        load_format_events,
         load_student_events,
         save_personal_graph,
     )
     from mindcraft_graph.models.events import SessionEvent
+    from mindcraft_graph.engine.update import fold_format_events
+    from mindcraft_graph.config import outcome_from, format_exposure_weight, FORMAT_IDS
 
     valid_concepts = {concept.id for concept in ontology.concepts}
     now = datetime.now()
     recorded: list[str] = []
     skipped: list[str] = []
-    events: list[SessionEvent] = []
+
+    # Bucket per-question scores by node; collect per-question observations.
+    by_concept: dict[str, list[float]] = defaultdict(list)
+    concept_level: dict[str, int] = {}
+    by_format: dict[str, list[float]] = defaultdict(list)
+    format_level: dict[str, int] = {}
+    observations: list[dict] = []
     for item in req.outcomes:
-        if item.concept_id not in valid_concepts:
+        score = item.resolved_score()
+        if item.concept_id not in valid_concepts or score is None:
             skipped.append(item.concept_id)
             continue
-        outcome, effort = OUTCOME_MAP[item.succeeded]
+        by_concept[item.concept_id].append(score)
+        concept_level[item.concept_id] = max(concept_level.get(item.concept_id, 1), item.level)
+        has_format = item.format_id in FORMAT_IDS
+        if has_format:
+            by_format[item.format_id].append(score)
+            format_level[item.format_id] = max(format_level.get(item.format_id, 1), item.level)
+        observations.append({
+            "concept_id": item.concept_id,
+            "format_id": item.format_id if has_format else None,
+            "level": item.level,
+            "correct": 1.0 if score >= 1.0 else (0.0 if score <= 0.0 else score),
+            "question_id": item.question_id,
+        })
+        recorded.append(item.concept_id)
+
+    # One aggregated CONCEPT event per concept (k/N, full weight).
+    events: list[SessionEvent] = []
+    for cid, scores in by_concept.items():
+        base = outcome_from(mean(scores), concept_level[cid])
         events.append(SessionEvent(
             student_id=req.student_id,
-            concept_id=item.concept_id,
+            concept_id=cid,
             event_type="problem_set",
-            outcome=outcome,
-            effort=effort,
+            outcome=base,
+            effort=0.6 if base < 0 else 0.4,  # strength/displacement only, never mastery
             duration_minutes=3.0,
             timestamp=now,
             exposure_weight=1.0,
         ))
-        recorded.append(item.concept_id)
+
+    # One aggregated FORMAT event per format (k/n, sample-weighted).
+    format_records: list[dict] = []
+    for fid, scores in by_format.items():
+        base = outcome_from(mean(scores), format_level[fid])
+        format_records.append({
+            "format_id": fid,
+            "outcome": base,
+            "level": format_level[fid],
+            "exposure_weight": format_exposure_weight(len(scores)),
+        })
 
     if events:
         append_interactions(req.student_id, events, source="practice")
+    if format_records:
+        append_format_interactions(req.student_id, format_records, now)
+    if observations:
+        append_attempt_observations(req.student_id, observations, now)
 
     all_events = load_student_events(req.student_id)
     graph = create_personal_graph(req.student_id, ontology)
     if all_events:
         graph = update_personal_graph(graph, all_events, ontology)
+    # Fold format nodes into mastery_by_concept (separate from the concept path).
+    graph.state = fold_format_events(graph.state, load_format_events(req.student_id))
     graph.state = decay_student_state(graph.state, now)
     graph.edges = decay_all_edges(graph.edges, now)
     save_personal_graph(req.student_id, graph)

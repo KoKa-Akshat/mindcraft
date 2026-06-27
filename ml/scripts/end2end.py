@@ -341,24 +341,27 @@ print("=" * 60)
 
 from mindcraft_graph.models.student_state import ConceptMastery
 
-# Mastery should decay over time
+# Mastery score should fade toward the prior as a concept goes idle. Decay now
+# refreshes the mastery field (recency-weighted), it no longer mutates the
+# cumulative_outcome accumulator — so assert on the score itself.
 cm_fresh = ConceptMastery(
     concept_id="test", mastery=0.7, exposure_count=5,
     last_interaction=datetime(2026, 1, 1),
-    cumulative_outcome=3.0, attempts=5,
+    cumulative_outcome=3.0, weighted_count=5.0, attempts=5,
 )
+m_fresh = decay_concept_mastery(cm_fresh, datetime(2026, 1, 1)).mastery
 
 # 30 days later
 cm_30d = decay_concept_mastery(cm_fresh, datetime(2026, 1, 31))
-check("Mastery outcome decays after 30 days",
-      cm_30d.cumulative_outcome < cm_fresh.cumulative_outcome,
-      f"before={cm_fresh.cumulative_outcome:.3f}, after={cm_30d.cumulative_outcome:.3f}")
+check("Mastery decays after 30 days idle",
+      cm_30d.mastery < m_fresh,
+      f"fresh={m_fresh:.3f}, 30d={cm_30d.mastery:.3f}")
 
-# 180 days later — should decay significantly
+# 180 days later — should decay significantly more
 cm_180d = decay_concept_mastery(cm_fresh, datetime(2026, 7, 1))
-check("Mastery decays more after 180 days",
-      cm_180d.cumulative_outcome < cm_30d.cumulative_outcome,
-      f"30d={cm_30d.cumulative_outcome:.3f}, 180d={cm_180d.cumulative_outcome:.3f}")
+check("Mastery decays more after 180 days idle",
+      cm_180d.mastery < cm_30d.mastery,
+      f"30d={cm_30d.mastery:.3f}, 180d={cm_180d.mastery:.3f}")
 
 # Edge decay: evidence should decay toward prior
 from mindcraft_graph.engine.edge_weights import EdgeState
@@ -720,6 +723,87 @@ check("Chain shortens further: phase 2 → 3",
 check("Final trimmed chain is shorter than original",
       len_3 < len_0,
       f"original={len_0}, final={len_3}: {' → '.join(r3['trimmed_chain'])}")
+
+
+# ════════════════════════════════════════════════════════════
+print("\n" + "=" * 60)
+print("  TEST SUITE 14: FORMAT NODES (representation/vessel mastery)")
+print("=" * 60)
+# ════════════════════════════════════════════════════════════
+from mindcraft_graph.engine.update import fold_format_events
+from mindcraft_graph.api.recommend import _detect_format_gaps
+from mindcraft_graph.config import FORMAT_IDS, outcome_from, format_exposure_weight
+
+fmt_now = datetime(2026, 6, 25)
+fmt_state = StudentState(student_id="fs", mastery_by_concept={}, created_at=fmt_now, updated_at=fmt_now)
+
+def _fmt_ev(fmt, out, days):
+    return SessionEvent(student_id="fs", concept_id=fmt, event_type="problem_set",
+                        outcome=out, effort=0.0, duration_minutes=0.0,
+                        timestamp=fmt_now - timedelta(days=days), exposure_weight=1.0)
+
+# Folds via the IDENTICAL apply_event_to_mastery path; lazy-mint; validated.
+folded = fold_format_events(fmt_state, [
+    _fmt_ev("word_problem", -0.3, 3), _fmt_ev("word_problem", -0.4, 1),
+    _fmt_ev("NOT_A_FORMAT", 0.6, 1),  # invalid -> dropped
+])
+check("Format node minted as a mastery key",
+      "word_problem" in folded.mastery_by_concept)
+check("Invalid format_id rejected (validated vs FORMAT_IDS)",
+      "NOT_A_FORMAT" not in folded.mastery_by_concept)
+check("Format mastery moves on the apply_event_to_mastery path",
+      0.0 < folded.mastery_by_concept["word_problem"].mastery < 0.6,
+      f"m={folded.mastery_by_concept['word_problem'].mastery:.3f}")
+check("Format node carries NO difficulty (absent from ontology concepts)",
+      all(c.id != "word_problem" for c in ontology.concepts))
+
+# Effort must not touch format mastery (strength/displacement only).
+m_eff = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="diagram",
+        event_type="problem_set", outcome=-0.3, effort=1.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=1.0)]).mastery_by_concept["diagram"].mastery
+m_no = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="diagram",
+        event_type="problem_set", outcome=-0.3, effort=0.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=1.0)]).mastery_by_concept["diagram"].mastery
+check("Effort does not affect format mastery", m_eff == m_no)
+
+# Per-node aggregation: a continuous session score grades (no binary collapse),
+# and outcome_from's level gain only bites on fractional scores (not clamped 1.0).
+check("Continuous session score grades (0.7 != 0.9)",
+      outcome_from(0.7, 1) != outcome_from(0.9, 1))
+check("Level gain bites on fractional scores",
+      outcome_from(0.7, 3) > outcome_from(0.7, 1))
+# Format events are sample-weighted: a format seen once is thin evidence.
+check("Format sample-weight grows with count",
+      format_exposure_weight(1) < format_exposure_weight(5))
+check("Format sample-weight caps at full evidence",
+      format_exposure_weight(99) == 1.0 and format_exposure_weight(1) < 1.0)
+# Sample-weight actually shrinks a thin format's mastery move vs a full one.
+thin = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="table",
+        event_type="problem_set", outcome=0.6, effort=0.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=format_exposure_weight(1))]).mastery_by_concept["table"].mastery
+full = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="table",
+        event_type="problem_set", outcome=0.6, effort=0.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=format_exposure_weight(5))]).mastery_by_concept["table"].mastery
+check("Thin format evidence moves mastery less than full", thin < full,
+      f"thin={thin:.3f} full={full:.3f}")
+
+# Format-gap detection (inverted gradient: concept HIGH, format LOW).
+from types import SimpleNamespace as _NS
+def _cm(m, att=0): return _NS(mastery=m, attempts=att)
+_trim = ["derivatives", "functions_basics"]
+_cmast = {"derivatives": _cm(0.8), "functions_basics": _cm(0.7)}
+g_t2 = _detect_format_gaps(_trim, _cmast, {"word_problem": _cm(0.2, 1)})
+check("Tier-2 format gap fires (concept high, format low, few attempts)",
+      len(g_t2) == 1 and g_t2[0].gap_type == "format" and g_t2[0].bridge_evidence == "hypothesis")
+check("Format gap anchors to highest-mastery concept",
+      g_t2 and g_t2[0].bridge_to_concept == "derivatives")
+g_t1 = _detect_format_gaps(_trim, _cmast, {"word_problem": _cm(0.2, 5)})
+check("Tier-1 when format has real attempt history",
+      g_t1 and g_t1[0].bridge_evidence == "evidence")
+check("No format gap when the format is strong",
+      _detect_format_gaps(_trim, _cmast, {"word_problem": _cm(0.8, 5)}) == [])
+check("No format gap when no concept is mastered (no anchor)",
+      _detect_format_gaps(_trim, {"derivatives": _cm(0.3)}, {"word_problem": _cm(0.2, 5)}) == [])
 
 
 # ════════════════════════════════════════════════════════════

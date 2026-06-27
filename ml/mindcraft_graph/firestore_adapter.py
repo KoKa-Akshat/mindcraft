@@ -115,6 +115,112 @@ def append_interactions(student_id: str, events, source: str) -> int:
     return len(events)
 
 
+def append_format_interactions(student_id: str, records: list[dict], now: datetime) -> int:
+    """Append representation/format outcomes to a SEPARATE collection.
+
+    Kept out of `interactions` on purpose: format events must never reach the
+    concept edge/feature/difficulty path (a HARD invariant). They feed format
+    nodes only, via load_format_events + fold_format_events. Each record:
+    {format_id, outcome, level}.
+    """
+    for r in records:
+        db.collection("format_interactions").add({
+            "studentId": student_id,
+            "formatId": r["format_id"],
+            "outcome": float(r["outcome"]),
+            "level": int(r.get("level", 1)),
+            "exposureWeight": float(r.get("exposure_weight", 1.0)),
+            "timestamp": now,
+        })
+    return len(records)
+
+
+def append_attempt_observations(student_id: str, observations: list[dict], now: datetime) -> int:
+    """Append PER-QUESTION attempt records for the predictive harness.
+
+    Structurally separate from the update events (interactions/format_interactions
+    hold one aggregated event per node per session). Observations keep full
+    granularity — one row per question — and are NEVER folded into mastery; the
+    harness replays them to reconstruct state-before-attempt vs actual outcome.
+    Each obs: {concept_id, format_id|None, level, correct (0/1), question_id|None}.
+    """
+    for o in observations:
+        db.collection("attempt_observations").add({
+            "studentId": student_id,
+            "conceptId": o.get("concept_id"),
+            "formatId": o.get("format_id"),
+            "level": int(o.get("level", 1)),
+            "correct": float(o.get("correct", 0.0)),
+            "questionId": o.get("question_id"),
+            "timestamp": now,
+        })
+    return len(observations)
+
+
+def load_attempt_observations(student_id: str, limit: int = 2000) -> list[dict]:
+    """Read per-question attempt observations in ascending timestamp order.
+
+    Returns plain dicts (the harness's replay source) — not SessionEvents, since
+    these are never folded into mastery.
+    """
+    try:
+        docs = (
+            db.collection("attempt_observations")
+            .where("studentId", "==", student_id)
+            .order_by("timestamp", direction=firestore.Query.ASCENDING)
+            .limit(limit)
+            .stream()
+        )
+        out = []
+        for doc in docs:
+            d = doc.to_dict()
+            out.append({
+                "student_id": student_id,
+                "concept_id": d.get("conceptId"),
+                "format_id": d.get("formatId"),
+                "level": int(d.get("level", 1)),
+                "correct": float(d.get("correct", 0.0)),
+                "question_id": d.get("questionId"),
+                "timestamp": _to_naive(d.get("timestamp", datetime.now())),
+            })
+        return out
+    except Exception:
+        return []
+
+
+def load_format_events(student_id: str, limit: int = 500) -> list[SessionEvent]:
+    """Read format outcomes as SessionEvents keyed by format_id (in concept_id).
+
+    Returned events are meant ONLY for fold_format_events — never pass them to
+    update_personal_graph (that would feed edges/features). effort is irrelevant
+    to mastery and left at 0.
+    """
+    try:
+        docs = (
+            db.collection("format_interactions")
+            .where("studentId", "==", student_id)
+            .order_by("timestamp", direction=firestore.Query.DESCENDING)
+            .limit(limit)
+            .stream()
+        )
+        events = []
+        for doc in docs:
+            data = doc.to_dict()
+            events.append(SessionEvent(
+                student_id=student_id,
+                concept_id=data.get("formatId", ""),
+                event_type="problem_set",
+                outcome=float(data.get("outcome", 0)),
+                effort=0.0,
+                duration_minutes=0.0,
+                timestamp=_to_naive(data.get("timestamp", datetime.now())),
+                exposure_weight=float(data.get("exposureWeight", 1.0)),
+            ))
+        return events
+    except Exception:
+        return []
+
+
 def learning_events_as_session_events(student_id: str, subject_id: str = "math") -> list[SessionEvent]:
     """Convert diagnostic/practice learning_events into SessionEvents for the PCA graph."""
     converted: list[SessionEvent] = []
@@ -167,6 +273,7 @@ def save_personal_graph(student_id: str, graph: PersonalGraph):
                 "exposureCount": cm.exposure_count,
                 "lastInteraction": cm.last_interaction,
                 "cumulativeOutcome": cm.cumulative_outcome,
+                "weightedCount": cm.weighted_count,
                 "attempts": cm.attempts,
             }
             for cid, cm in graph.state.mastery_by_concept.items()
