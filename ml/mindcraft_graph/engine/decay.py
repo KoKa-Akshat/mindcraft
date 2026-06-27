@@ -18,10 +18,11 @@ from datetime import datetime
 
 from mindcraft_graph.models.student_state import ConceptMastery, StudentState
 from mindcraft_graph.engine.edge_weights import EdgeState
+from mindcraft_graph.engine.update import MASTERY_HALF_LIFE_DAYS, compute_mastery_score
 
 
-# Default decay rates
-MASTERY_HALF_LIFE_DAYS = 60.0    # mastery evidence halves every 60 days
+# Default decay rates (mastery half-life lives in update.py — the same constant
+# weights the recency-EMA there, so keep it as the single source of truth).
 EDGE_HALF_LIFE_DAYS = 90.0       # edge evidence halves every 90 days
 
 
@@ -38,23 +39,19 @@ def decay_concept_mastery(
     half_life_days: float = MASTERY_HALF_LIFE_DAYS,
 ) -> ConceptMastery:
     """
-    Decay a single concept's mastery evidence toward zero.
+    Recompute a concept's mastery score as of ``now``.
 
-    cumulative_outcome decays but exposure_count and attempts
-    remain as historical record. The mastery score gets recomputed
-    from the decayed outcome at query time.
+    The recency weighting now lives in compute_mastery_score: it ages the
+    stored accumulators (which are "as of last_interaction") to ``now`` and
+    fades the score toward the prior. So this just refreshes the mastery
+    field at query time — the raw accumulators are left intact (folding from
+    events is the single place evidence is built, avoiding double-decay).
     """
-    if cm.last_interaction is None or cm.attempts == 0:
+    if cm.last_interaction is None or cm.weighted_count <= 0:
         return cm
 
-    days_elapsed = (now - cm.last_interaction).total_seconds() / 86400.0
-    if days_elapsed < 1.0:
-        return cm  # less than a day — no meaningful decay
-
-    factor = _decay_factor(days_elapsed, half_life_days)
-
     return cm.model_copy(update={
-        "cumulative_outcome": cm.cumulative_outcome * factor,
+        "mastery": compute_mastery_score(cm, now),
     })
 
 

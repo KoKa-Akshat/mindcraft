@@ -341,24 +341,27 @@ print("=" * 60)
 
 from mindcraft_graph.models.student_state import ConceptMastery
 
-# Mastery should decay over time
+# Mastery score should fade toward the prior as a concept goes idle. Decay now
+# refreshes the mastery field (recency-weighted), it no longer mutates the
+# cumulative_outcome accumulator — so assert on the score itself.
 cm_fresh = ConceptMastery(
     concept_id="test", mastery=0.7, exposure_count=5,
     last_interaction=datetime(2026, 1, 1),
-    cumulative_outcome=3.0, attempts=5,
+    cumulative_outcome=3.0, weighted_count=5.0, attempts=5,
 )
+m_fresh = decay_concept_mastery(cm_fresh, datetime(2026, 1, 1)).mastery
 
 # 30 days later
 cm_30d = decay_concept_mastery(cm_fresh, datetime(2026, 1, 31))
-check("Mastery outcome decays after 30 days",
-      cm_30d.cumulative_outcome < cm_fresh.cumulative_outcome,
-      f"before={cm_fresh.cumulative_outcome:.3f}, after={cm_30d.cumulative_outcome:.3f}")
+check("Mastery decays after 30 days idle",
+      cm_30d.mastery < m_fresh,
+      f"fresh={m_fresh:.3f}, 30d={cm_30d.mastery:.3f}")
 
-# 180 days later — should decay significantly
+# 180 days later — should decay significantly more
 cm_180d = decay_concept_mastery(cm_fresh, datetime(2026, 7, 1))
-check("Mastery decays more after 180 days",
-      cm_180d.cumulative_outcome < cm_30d.cumulative_outcome,
-      f"30d={cm_30d.cumulative_outcome:.3f}, 180d={cm_180d.cumulative_outcome:.3f}")
+check("Mastery decays more after 180 days idle",
+      cm_180d.mastery < cm_30d.mastery,
+      f"30d={cm_30d.mastery:.3f}, 180d={cm_180d.mastery:.3f}")
 
 # Edge decay: evidence should decay toward prior
 from mindcraft_graph.engine.edge_weights import EdgeState

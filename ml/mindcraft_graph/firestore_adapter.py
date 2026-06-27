@@ -135,6 +135,7 @@ def save_personal_graph(student_id: str, graph: PersonalGraph):
                 "exposureCount": cm.exposure_count,
                 "lastInteraction": cm.last_interaction,
                 "cumulativeOutcome": cm.cumulative_outcome,
+                "weightedCount": cm.weighted_count,
                 "attempts": cm.attempts,
             }
             for cid, cm in graph.state.mastery_by_concept.items()
