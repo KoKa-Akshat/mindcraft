@@ -36,7 +36,11 @@ export async function isDiagnosticComplete(uid: string): Promise<boolean> {
     const data = snap.data()
     // Tutors/admins never take the diagnostic — never gate them into it.
     if (data?.role === 'tutor' || data?.role === 'admin') return true
-    return !!data?.diagnosticCompleted
+    // Two diagnostic flows write different fields: the practice gap-scan sets the
+    // boolean `diagnosticCompleted`, the newer ACT Diagnostic sets the timestamp
+    // `diagnosticCompletedAt`. Accept EITHER, or a user who finished the ACT
+    // diagnostic gets bounced /dashboard → /practice forever.
+    return !!(data?.diagnosticCompleted || data?.diagnosticCompletedAt)
   } catch {
     return false
   }
