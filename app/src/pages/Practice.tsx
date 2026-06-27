@@ -9,6 +9,7 @@ import {
   LEVEL_META,
   getQuestions,
   questionCount,
+  questionFormat,
 } from '../lib/questionBank'
 import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
 import { getConceptContent } from '../lib/conceptContent'
@@ -675,9 +676,19 @@ export default function Practice() {
       if (concept && passRate >= 0.8) {
         evictQuestionCache(concept, level, exam || 'General')
       }
-      // Feed the session result into the student graph so mastery moves.
+      // Feed the session into the student graph so mastery moves. Per-question
+      // granularity is preserved (each answered question is its own outcome with
+      // score 1/0, format, and level) — this also feeds format nodes.
       if (concept) {
-        void recordOutcomes(user.uid, [{ conceptId: toOntologyId(concept), succeeded: passRate >= 0.6 }])
+        const conceptId = toOntologyId(concept)
+        const perQuestion = results.map((correct, i) => ({
+          conceptId,
+          score: correct ? 1 : 0,
+          level,
+          questionId: questions[i]?.id,
+          formatId: questions[i] ? questionFormat(questions[i]) : undefined,
+        }))
+        void recordOutcomes(user.uid, perQuestion)
         invalidateKnowledgeGraph(user.uid)
       }
       setPPhase('complete')

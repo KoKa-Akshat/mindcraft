@@ -21,6 +21,15 @@ export interface ConceptRecommendation {
   supplementFor: string | null
   alignmentScore: number | null
   pcaProfile: Record<string, number>
+  // Gap fields (present only when isBridgeGap). gapType: "concept" (cross-concept
+  // bridge) | "format" (vessel). For format gaps, bridgeFromConcept is the
+  // format_id and bridgeToConcept is the anchor concept.
+  isBridgeGap?: boolean
+  gapType?: 'concept' | 'format' | null
+  bridgeId?: string | null
+  bridgeFromConcept?: string | null
+  bridgeToConcept?: string | null
+  bridgeEvidence?: 'evidence' | 'hypothesis' | null
 }
 
 export interface StudentProfile {
@@ -198,9 +207,21 @@ export async function seedAssessment(
  * the student answers problems. Events accumulate (this is the practice → graph
  * feedback loop). Unknown concept IDs are skipped server-side.
  */
+export interface OutcomeInput {
+  conceptId: string
+  // Per-question substrate. score = raw pass rate [0,1] (single question = 1/0).
+  // formatId = canonical representation/vessel id (omit if untagged). succeeded
+  // is the deprecated fallback kept for callers not yet sending score.
+  score?: number
+  formatId?: string
+  level?: 1 | 2 | 3
+  questionId?: string
+  succeeded?: boolean
+}
+
 export async function recordOutcomes(
   studentId: string,
-  outcomes: { conceptId: string; succeeded: boolean }[],
+  outcomes: OutcomeInput[],
 ): Promise<{ recordedConcepts: string[]; skippedConcepts: string[]; eventsCreated: number } | null> {
   if (!outcomes.length) return null
   try {
@@ -209,7 +230,14 @@ export async function recordOutcomes(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         student_id: studentId,
-        outcomes: outcomes.map(o => ({ concept_id: o.conceptId, succeeded: o.succeeded })),
+        outcomes: outcomes.map(o => ({
+          concept_id: o.conceptId,
+          score: o.score,
+          format_id: o.formatId,
+          level: o.level,
+          question_id: o.questionId,
+          succeeded: o.succeeded,
+        })),
       }),
     })
     if (!res.ok) return null

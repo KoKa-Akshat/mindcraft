@@ -9,6 +9,7 @@ import AgentBrief         from '../components/AgentBrief'
 import ConstellationCard  from '../components/ConstellationCard'
 import LastSession        from '../components/LastSession'
 import LearningGPS        from '../components/LearningGPS'
+import ReinforcePanel     from '../components/ReinforceCard'
 import s from './Dashboard.module.css'
 
 function greeting() {
@@ -125,6 +126,11 @@ export default function Dashboard() {
               {/* Learning GPS */}
               <motion.div {...FADE_UP(0.26)}>
                 <LearningGPS userId={uid} />
+              </motion.div>
+
+              {/* Recommended Reinforcement (bridge + format gaps) */}
+              <motion.div {...FADE_UP(0.30)}>
+                <ReinforcePanel userId={uid} />
               </motion.div>
 
               {/* Knowledge Graph */}

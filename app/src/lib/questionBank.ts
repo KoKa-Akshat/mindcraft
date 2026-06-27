@@ -1,3 +1,14 @@
+// Canonical representation/format ("vessel") ids — mirrors the ML config
+// FORMAT_IDS (Layer 4 representation_profile). The question-side of the same
+// representation axis the student-side mastery tracks.
+export type FormatId =
+  | 'word_problem'
+  | 'diagram'
+  | 'number_line'
+  | 'symbolic_expression'
+  | 'coordinate_graph'
+  | 'table'
+
 export interface Question {
   id: string
   conceptId: string
@@ -10,6 +21,19 @@ export interface Question {
   examTag?: 'ACT' | 'SAT' | 'IB' | 'AP'
   visual_type?: 'svg' | 'none'
   visual_data?: string
+  // Representation/vessel this question is presented in. Optional & forward-
+  // compatible: untagged questions send no format (no format-node event). Bulk
+  // tagging is upstream data work — NOT classification done here.
+  format?: FormatId
+}
+
+/** The format a question should report, or undefined if untagged.
+ *  Only the unambiguous structural signal (an SVG figure ⇒ a diagram vessel) is
+ *  inferred; everything else must be explicitly tagged. Not a classifier. */
+export function questionFormat(q: Question): FormatId | undefined {
+  if (q.format) return q.format
+  if (q.visual_type === 'svg') return 'diagram'
+  return undefined
 }
 
 const Q: Question[] = [
