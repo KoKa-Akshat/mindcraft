@@ -27,9 +27,10 @@ all of this — it lives in one workspace.
 Operates on the 42-concept standardized ontology.
 
 - **Ontology** (`ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json`):
-  42 concepts + nested ingredients + bridges + combinations in ONE file, loaded
-  via `loaders/complete_ontology_loader.py`. THIS is what serve.py loads — NOT
-  the legacy `ml/data/ontology.json` (a stale 15/37-concept file). Concept ids
+  42 concepts + nested ingredients + bridges + combinations, loaded via
+  `loaders/complete_ontology_loader.py`. This is **Layer 1** of a 5-layer modular
+  schema set (see "Data layers" below) and the ONLY layer the live engine loads —
+  NOT the legacy `ml/data/ontology.json` (a stale 15/37-concept file). Concept ids
   are canonical slugs (`linear_equations`, `derivatives`, `functions_basics`…).
 - **Mastery engine** (`ml/mindcraft_graph/engine/`): updates per-concept mastery
   from session events. Deterministic, not a learned NN.
@@ -89,6 +90,58 @@ pedagogy.
 
 ---
 
+## Data layers (the 5-layer modular ontology)
+`ml/data/5_level_ontology/` is the target schema: five independently-versioned
+JSON files, joined by a shared **canonical ID contract**, replacing the old
+single-blob ontology. Each layer references the same IDs and may add context but
+must NOT redefine core meanings (`meta.canonical_id_contract` in every file).
+
+ID formats (the join keys across layers):
+- `concept_id` — snake_case slug, e.g. `right_triangle_geometry`
+- `ingredient_id` — `{concept_id}__{slug}`, e.g. `right_triangle__pythagorean_theorem`
+- `archetype_id` — `act_{family}_{distinguishing_bridge_or_representation}`
+- `question_instance_id` — `{exam}_{source_test}_{question_number}`, e.g. `act_test001_q010`
+- `misconception_id` — `mis_{concept_or_archetype}_{short_error}`
+- `solution_pathway_id` — `sp_{archetype_id}_{method_slug}`
+
+The layers:
+- **Layer 1 — Concept Ontology** (`01_…_v2_6_*.json`): 42 concepts (levels:
+  7 foundational / 22 core / 11 advanced / 2 cross_cutting), 179 nested
+  ingredients (each with `learning_vector` + 3-style `card_templates` = 537
+  representations), 16 bridges (in 9 `from_concept`/`to_concept` groups), 15
+  combinations, plus `act_prep_overlay`, `population_priors` (cold-start failure
+  rates), and `canonical_registries`. **Two variants**: `…_standardized.json`
+  (no combinations) and `…_with_combinations.json` (adds the 15 co-occurrence
+  hyperedges) — serve.py loads the **with_combinations** one.
+- **Layer 2 — Question Archetype Ontology** (`02_…_standardized.json`): 84
+  archetypes — repeatable ACT/exam patterns that describe HOW exams hide/apply
+  concepts. Each links `primary_concept_ids`, `required_ingredient_ids`,
+  `bridge_concept_ids`, a `concept_path_template`, `difficulty_drivers`,
+  `common_misconception_ids`, and `solution_pathway_templates`.
+- **Layer 3 — Question Instance Bank** (`03_…_seed_v1_6.json`): 450 concrete
+  question records (342 with full `intelligence`), each with `raw_question`,
+  `source`, and `links` back to archetype/concept/ingredient/misconception IDs.
+  Sourced from `MindCraft_ACT_Question_Bank.xlsm`.
+- **Layer 4 — Student Learning State** (`04_…_schema_v1_6.json`): the *schema*
+  (not data) for evolving per-student evidence — `student_state_schema`
+  (concept/ingredient/archetype mastery, representation profile, misconception
+  memory, calibration), `student_event_schema`, the learning-event graph, and
+  `evidence_update_policy` (e.g. separate can-do from can-recognize; don't
+  over-update from one question; recency weights).
+- **Layer 5 — Adaptive Remediation Policy** (`05_…_v1_6.json`): diagnosis→action
+  rules (14 `diagnosis_to_action_rules`), the `practice_generation_contract`
+  (inputs/outputs/difficulty-ladder/guardrails), `next_best_action_contract`,
+  and simulation hooks.
+
+**Current reality**: only Layer 1 is wired into the live engine. Layers 2-5 are
+the schema/data target — the runtime mastery model (`models/student_state.py`,
+`engine/`) is its own thing and does NOT yet read Layer 4/5 schemas, and the
+archetype/instance layers (2/3) are not loaded by serve.py. They ground the
+past-paper → generated-questions workstream (see "Next big workstream") and a
+future migration of the engine onto the richer per-student state.
+
+---
+
 ## API (`ml/serve.py` — the `mindcraft-ml` service)
 - `POST /recommend` — concept recs + PCA + `canonicalChain` + `unlocks`
   (reverse-prereq concepts). Used by the KnowledgeGraph page + LearningGPS.
@@ -119,8 +172,11 @@ is all naive datetimes — mixing them raises).
   the wrong (empty) project's Firestore. The Cloud Run SA was granted
   `roles/datastore.user` on `mindcraft-93858`.
 - URL `https://mindcraft-ml-630302850770.us-central1.run.app` (stable lately).
-  Latest rev `00009`. The Dockerfile bakes embeddings from the standardized
-  ontology; the cache self-invalidates at startup if it doesn't match.
+  Latest **deployed** rev `00009`. Local commits beyond `00009` (displacement
+  persistence + bridge-gap detection) have NOT been built/deployed — run Cloud
+  Build + `gcloud run deploy` with `FIRESTORE_PROJECT=mindcraft-93858` to push
+  them live. The Dockerfile bakes embeddings from the standardized ontology; the
+  cache self-invalidates at startup if it doesn't match.
 
 ### `mindcraft-homework` (LLM solver) — Cloud Run, project `mindcraft-93858`
 - Code in `homework/`. Secret `ANTHROPIC_API_KEY`. Stateless. Down on credits.
@@ -175,8 +231,20 @@ is all naive datetimes — mixing them raises).
   `/constellation`; both have Dashboard cards.
 - **Homework help** falls back to `/recommend-ingredients` (deterministic
   ingredient cards) when the LLM solver fails — which it does now (no credits).
-- THIS WORK is on branch `feat/ontology-firestore-practice-loop` (commit
-  a300222c), NOT pushed, NOT merged to main.
+- **Warm-ping + shared graph cache**: `App.tsx` fires `GET /health` on auth to
+  wake Cloud Run before LearningGPS auto-loads (`mlWarmed` flag prevents
+  double-firing). `lib/graphCache.ts` caches the in-flight
+  `/knowledge-graph/{uid}` promise per user — LearningGPS and the Knowledge
+  Graph page share one fetch; failures not cached; `invalidateKnowledgeGraph`
+  called after any mastery-mutating operation (seed-assessment, record-outcomes).
+- **main** is fully reconciled and pushed (`b8a05e14`). `feat/ontology-firestore-practice-loop`
+  is identical to main and can be deleted.
+- **Co-founder's agentic layer** (`ml/mindcraft_graph/models/learning_world.py`,
+  `loaders/subject_graph_loader.py`, `ml/data/subject_graphs/*.json`,
+  `ml/serve.py` endpoints for `/agent/*`) exists in the repo but is NOT wired
+  into the live `serve.py` — all eight agentic endpoints were intentionally
+  excluded when resolving the merge conflict (we took our `serve.py` entirely).
+  Dead code only; safe to ignore or delete later.
 
 ## Known gotchas / open items
 - **Anthropic credits exhausted** → `mindcraft-homework` + dynamic question gen
@@ -188,6 +256,18 @@ is all naive datetimes — mixing them raises).
   `mindcraft-webhook.vercel.app/api/generate-questions` (gated by
   `VITE_ENABLE_DYNAMIC_QGEN`).
 - `HomeworkProgress.tsx` / `LastSession.tsx` are unused (possibly intended).
+- **mindcraft-ml undeployed changes**: displacement persistence
+  (`append_displacement_snapshot`) and bridge-gap detection (`isBridgeGap`,
+  `bridgeEvidence` fields on knowledge-graph nodes) are committed locally but
+  NOT yet live (still rev `00009`). Needs a Cloud Build + deploy.
+- **Bridge-gap API fields not consumed by UI**: `isBridgeGap` / `bridgeEvidence`
+  are in the `/knowledge-graph` response and persisted to Firestore, but no
+  frontend component renders them. Natural next pieces: tutor "blockers" view
+  (list weak bridges per student) and a displacement-over-time chart.
+- **Audit `/student-profile` consumers**: the endpoint was silently returning
+  `masteryProjection == strengthProjection` (bug — both returned the same
+  vector) before a recent fix. Grep the frontend for callers to check whether
+  any UI logic accidentally compensated for the identical values.
 - **Tutor view**: tutors have no student events, so the graph is empty for them.
   Needs a student-selector in the tutor view (still open).
 - **Concept-layer pathfinder** on the 42-concept ontology was spot-checked and is
