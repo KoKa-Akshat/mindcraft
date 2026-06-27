@@ -1,0 +1,536 @@
+{
+  "source": "ACT_Question_Bank Question Intelligence sheet",
+  "ontology": "data/ontology_complete.json (37 concepts)",
+  "annotated_questions": 327,
+  "crosswalk": [
+    {
+      "primary_topic": "Algebraic Structure and Symbolic Manipulation",
+      "concept_id": "polynomials",
+      "concept_name": "Polynomial Operations",
+      "match_quality": "broad",
+      "candidate_concept_ids": [
+        "polynomials",
+        "factoring_polynomials",
+        "rational_expressions",
+        "exponent_rules",
+        "radical_expressions",
+        "basic_equations"
+      ]
+    },
+    {
+      "primary_topic": "Area and Volume",
+      "concept_id": "area_volume",
+      "concept_name": "Area and Volume",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "area_volume"
+      ]
+    },
+    {
+      "primary_topic": "Ratios and Proportions",
+      "concept_id": "ratios_proportions",
+      "concept_name": "Ratios and Proportions",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "ratios_proportions"
+      ]
+    },
+    {
+      "primary_topic": "Linear Equations",
+      "concept_id": "linear_equations",
+      "concept_name": "Linear Equations",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "linear_equations"
+      ]
+    },
+    {
+      "primary_topic": "Geometry of Circles",
+      "concept_id": "circles_geometry",
+      "concept_name": "Geometry of Circles",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "circles_geometry"
+      ]
+    },
+    {
+      "primary_topic": "Quadratic Equations",
+      "concept_id": "quadratic_equations",
+      "concept_name": "Quadratic Equations",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "quadratic_equations"
+      ]
+    },
+    {
+      "primary_topic": "Units, Measurement, and Dimensional Reasoning",
+      "concept_id": "ratios_proportions",
+      "concept_name": "Ratios and Proportions",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "ratios_proportions",
+        "fractions_decimals"
+      ]
+    },
+    {
+      "primary_topic": "Descriptive Statistics",
+      "concept_id": "descriptive_statistics",
+      "concept_name": "Descriptive Statistics",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "descriptive_statistics"
+      ]
+    },
+    {
+      "primary_topic": "Number Properties, Factors, and Divisibility",
+      "concept_id": "__ontology_gap__",
+      "concept_name": "(no ontology concept)",
+      "match_quality": "gap",
+      "candidate_concept_ids": [
+        "factoring_polynomials",
+        "fractions_decimals"
+      ]
+    },
+    {
+      "primary_topic": "Basics of Functions",
+      "concept_id": "functions_basics",
+      "concept_name": "Basics of Functions",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "functions_basics"
+      ]
+    },
+    {
+      "primary_topic": "Basic Probability",
+      "concept_id": "basic_probability",
+      "concept_name": "Basic Probability",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "basic_probability"
+      ]
+    },
+    {
+      "primary_topic": "Trigonometry Basics",
+      "concept_id": "trigonometry_basics",
+      "concept_name": "Trigonometry Basics",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "trigonometry_basics"
+      ]
+    },
+    {
+      "primary_topic": "Complex Numbers",
+      "concept_id": "complex_numbers",
+      "concept_name": "Complex Numbers",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "complex_numbers"
+      ]
+    },
+    {
+      "primary_topic": "Logarithmic Functions",
+      "concept_id": "logarithmic_functions",
+      "concept_name": "Logarithmic Functions",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "logarithmic_functions"
+      ]
+    },
+    {
+      "primary_topic": "Sequences and Series",
+      "concept_id": "sequences_series",
+      "concept_name": "Sequences and Series",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "sequences_series"
+      ]
+    },
+    {
+      "primary_topic": "Linear Inequalities",
+      "concept_id": "linear_inequalities",
+      "concept_name": "Linear Inequalities",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "linear_inequalities"
+      ]
+    },
+    {
+      "primary_topic": "Lines and Angles",
+      "concept_id": "lines_angles",
+      "concept_name": "Lines and Angles",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "lines_angles"
+      ]
+    },
+    {
+      "primary_topic": "Conic Sections",
+      "concept_id": "conic_sections",
+      "concept_name": "Conic Sections",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "conic_sections"
+      ]
+    },
+    {
+      "primary_topic": "Matrices",
+      "concept_id": "matrices",
+      "concept_name": "Matrices",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "matrices"
+      ]
+    },
+    {
+      "primary_topic": "Basic One-Variable Equations",
+      "concept_id": "basic_equations",
+      "concept_name": "Basic One-Variable Equations",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "basic_equations"
+      ]
+    },
+    {
+      "primary_topic": "Sequences & Patterns",
+      "concept_id": "sequences_series",
+      "concept_name": "Sequences and Series",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "sequences_series"
+      ]
+    },
+    {
+      "primary_topic": "Rates, Units & Proportional Reasoning",
+      "concept_id": "ratios_proportions",
+      "concept_name": "Ratios and Proportions",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "ratios_proportions"
+      ]
+    },
+    {
+      "primary_topic": "Algebra: Linear Equations",
+      "concept_id": "linear_equations",
+      "concept_name": "Linear Equations",
+      "match_quality": "exact",
+      "candidate_concept_ids": [
+        "linear_equations"
+      ]
+    },
+    {
+      "primary_topic": "Number Theory",
+      "concept_id": "__ontology_gap__",
+      "concept_name": "(no ontology concept)",
+      "match_quality": "gap",
+      "candidate_concept_ids": [
+        "factoring_polynomials"
+      ]
+    },
+    {
+      "primary_topic": "Statistics & Averages",
+      "concept_id": "descriptive_statistics",
+      "concept_name": "Descriptive Statistics",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "descriptive_statistics"
+      ]
+    },
+    {
+      "primary_topic": "Algebra: Translating Words to Equations",
+      "concept_id": "linear_equations",
+      "concept_name": "Linear Equations",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "linear_equations",
+        "basic_equations"
+      ]
+    },
+    {
+      "primary_topic": "Inequalities & Number Lines",
+      "concept_id": "linear_inequalities",
+      "concept_name": "Linear Inequalities",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "linear_inequalities"
+      ]
+    },
+    {
+      "primary_topic": "Geometry: Similar Triangles & Proportions",
+      "concept_id": "triangles_congruence",
+      "concept_name": "Triangles and Congruence",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "triangles_congruence",
+        "ratios_proportions"
+      ]
+    },
+    {
+      "primary_topic": "Algebra: Expression Evaluation & Equivalent Forms",
+      "concept_id": "polynomials",
+      "concept_name": "Polynomial Operations",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "polynomials",
+        "basic_equations"
+      ]
+    },
+    {
+      "primary_topic": "Geometry: Squares, Area & Right Triangles",
+      "concept_id": "area_volume",
+      "concept_name": "Area and Volume",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "area_volume",
+        "right_triangle_geometry"
+      ]
+    },
+    {
+      "primary_topic": "Coordinate Geometry: Slope",
+      "concept_id": "linear_equations",
+      "concept_name": "Linear Equations",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "linear_equations"
+      ]
+    },
+    {
+      "primary_topic": "Geometry: Area & Unit Tiling",
+      "concept_id": "area_volume",
+      "concept_name": "Area and Volume",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "area_volume"
+      ]
+    },
+    {
+      "primary_topic": "Trigonometry: Right Triangle Ratios",
+      "concept_id": "right_triangle_geometry",
+      "concept_name": "Right Triangle Geometry",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "right_triangle_geometry",
+        "trigonometry_basics"
+      ]
+    },
+    {
+      "primary_topic": "Algebra: Literal Equations & Rearranging Formulas",
+      "concept_id": "basic_equations",
+      "concept_name": "Basic One-Variable Equations",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "basic_equations",
+        "linear_equations"
+      ]
+    },
+    {
+      "primary_topic": "Functions: Evaluation & Substitution",
+      "concept_id": "functions_basics",
+      "concept_name": "Basics of Functions",
+      "match_quality": "related",
+      "candidate_concept_ids": [
+        "functions_basics"
+      ]
+    }
+  ],
+  "main_concepts": [
+    {
+      "concept_id": "polynomials",
+      "concept_name": "Polynomial Operations",
+      "question_count": 60,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "ratios_proportions",
+      "concept_name": "Ratios and Proportions",
+      "question_count": 50,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "area_volume",
+      "concept_name": "Area and Volume",
+      "question_count": 42,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "linear_equations",
+      "concept_name": "Linear Equations",
+      "question_count": 30,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "circles_geometry",
+      "concept_name": "Geometry of Circles",
+      "question_count": 25,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "quadratic_equations",
+      "concept_name": "Quadratic Equations",
+      "question_count": 21,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "descriptive_statistics",
+      "concept_name": "Descriptive Statistics",
+      "question_count": 19,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "functions_basics",
+      "concept_name": "Basics of Functions",
+      "question_count": 10,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "basic_probability",
+      "concept_name": "Basic Probability",
+      "question_count": 9,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "trigonometry_basics",
+      "concept_name": "Trigonometry Basics",
+      "question_count": 8,
+      "act_high_priority": true
+    },
+    {
+      "concept_id": "sequences_series",
+      "concept_name": "Sequences and Series",
+      "question_count": 7,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "complex_numbers",
+      "concept_name": "Complex Numbers",
+      "question_count": 7,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "logarithmic_functions",
+      "concept_name": "Logarithmic Functions",
+      "question_count": 7,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "linear_inequalities",
+      "concept_name": "Linear Inequalities",
+      "question_count": 6,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "basic_equations",
+      "concept_name": "Basic One-Variable Equations",
+      "question_count": 4,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "lines_angles",
+      "concept_name": "Lines and Angles",
+      "question_count": 3,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "conic_sections",
+      "concept_name": "Conic Sections",
+      "question_count": 3,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "matrices",
+      "concept_name": "Matrices",
+      "question_count": 3,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "triangles_congruence",
+      "concept_name": "Triangles and Congruence",
+      "question_count": 1,
+      "act_high_priority": false
+    },
+    {
+      "concept_id": "right_triangle_geometry",
+      "concept_name": "Right Triangle Geometry",
+      "question_count": 1,
+      "act_high_priority": true
+    }
+  ],
+  "act_high_priority_concepts": [
+    "area_volume",
+    "basic_probability",
+    "descriptive_statistics",
+    "fractions_decimals",
+    "functions_basics",
+    "linear_equations",
+    "quadratic_equations",
+    "ratios_proportions",
+    "right_triangle_geometry",
+    "trigonometry_basics"
+  ],
+  "high_priority_without_questions": [
+    "fractions_decimals"
+  ],
+  "ontology_gaps": {
+    "note": "topics with no matching ontology concept; co-founder may add one",
+    "topics": {
+      "Number Theory": 1,
+      "Number Properties, Factors, and Divisibility": 10
+    }
+  },
+  "unmapped_topics": {},
+  "act_question_patterns": [
+    {
+      "pattern": "word_problem_to_equation",
+      "concepts": [
+        "linear_equations",
+        "basic_equations"
+      ],
+      "frequency": 0.15
+    },
+    {
+      "pattern": "function_notation_evaluation",
+      "concepts": [
+        "functions_basics"
+      ],
+      "frequency": 0.08
+    },
+    {
+      "pattern": "percent_and_ratio",
+      "concepts": [
+        "fractions_decimals",
+        "ratios_proportions"
+      ],
+      "frequency": 0.12
+    },
+    {
+      "pattern": "quadratic_roots",
+      "concepts": [
+        "quadratic_equations",
+        "factoring_polynomials"
+      ],
+      "frequency": 0.1
+    },
+    {
+      "pattern": "coordinate_geometry",
+      "concepts": [
+        "linear_equations",
+        "circles_geometry"
+      ],
+      "frequency": 0.09
+    },
+    {
+      "pattern": "special_right_triangles",
+      "concepts": [
+        "right_triangle_geometry"
+      ],
+      "frequency": 0.06
+    },
+    {
+      "pattern": "statistics_interpretation",
+      "concepts": [
+        "descriptive_statistics",
+        "basic_probability"
+      ],
+      "frequency": 0.07
+    }
+  ]
+}

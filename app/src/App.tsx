@@ -4,7 +4,7 @@
  * Root of the React app. Handles:
  *   - Auth state listening (Firebase onAuthStateChanged)
  *   - Route protection via AuthGuard
- *   - Public landing flow at "/" for all visitors
+ *   - Public routes; landing site is mindcraft-marketing-site.web.app
  *
  * Adding a new page:
  *   1. Create the component in pages/
@@ -32,6 +32,8 @@ import Practice        from './pages/Practice'
 import LearningGPS     from './components/LearningGPS'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
+import Diagnostic      from './pages/Diagnostic'
+import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
 
 
@@ -99,6 +101,14 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** App root sends visitors to the marketing landing site. */
+function MarketingRedirect() {
+  useEffect(() => {
+    window.location.replace(MARKETING_BASE)
+  }, [])
+  return null
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -115,6 +125,7 @@ export default function App() {
         <Route path="/chat/:partnerId"     element={<AuthGuard><Chat /></AuthGuard>} />
         <Route path="/study-timer"         element={<AuthGuard><StudyTimer /></AuthGuard>} />
         <Route path="/sessions"            element={<AuthGuard><StudentSessions /></AuthGuard>} />
+        <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/learning-gps"        element={<AuthGuard><LearningGPSPage /></AuthGuard>} />
@@ -123,8 +134,8 @@ export default function App() {
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
         <Route path="/prep"                    element={<Prep />} />
 
-        {/* Root: public website. App entry stays on /dashboard, /tutor, etc. */}
-        <Route path="/" element={<Navigate to="/landing.html" replace />} />
+        {/* Root of app host → marketing site (landing lives on mindcraft-marketing-site.web.app) */}
+        <Route path="/" element={<MarketingRedirect />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />

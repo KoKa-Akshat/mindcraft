@@ -27,6 +27,7 @@ import { fmtDateTime, timeUntil } from '../utils/format'
 import type { Session, TutorStudent as Student } from '../types'
 import StudentIntelPanel from '../components/StudentIntelPanel'
 import s from './TutorDashboard.module.css'
+import { MARKETING_BASE } from '../lib/siteUrls'
 
 const FIFTEEN_MIN = 15 * 60 * 1000
 
@@ -213,7 +214,7 @@ const nextSession = sessions[0] ?? null
   return (
     <div className={s.shell}>
       <nav className={s.nav}>
-        <a href="https://koka-akshat.github.io/mindcraft/" className={s.logo}>Mind<span>Craft</span></a>
+        <a href={MARKETING_BASE} className={s.logo}>Mind<span>Craft</span></a>
         <div className={s.navRight}>
           <span className={s.navRole}>Tutor</span>
           <div className={s.avatar} onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}

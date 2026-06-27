@@ -11,9 +11,19 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import s from './Login.module.css'
+import { worldUrl } from '../lib/siteUrls'
 
 type Role = 'student' | 'parent' | 'tutor'
 type Mode = 'signin' | 'signup'
+
+type Film = { src: string; label?: string }
+
+const FILMS: Film[] = [
+  { src: '/login-videos/Iceland.mp4', label: 'Iceland' },
+  { src: '/login-videos/Norway.mp4', label: 'Norway' },
+  { src: '/login-videos/Yamaguchi.mp4', label: 'Yamaguchi' },
+  { src: '/login-videos/Video.mp4' },
+]
 
 function friendlyError(code: string) {
   switch (code) {
@@ -54,7 +64,11 @@ export default function Login() {
         displayName: auth.currentUser?.displayName ?? '',
         createdAt: new Date().toISOString(),
       })
-      navigate(role === 'tutor' ? '/tutor' : '/dashboard', { replace: true })
+      if (role === 'tutor') {
+        navigate('/tutor', { replace: true })
+      } else {
+        window.location.href = worldUrl(uid)
+      }
       return
     }
 
@@ -65,7 +79,11 @@ export default function Login() {
       return
     }
 
-    navigate(firestoreRole === 'tutor' || firestoreRole === 'admin' ? '/tutor' : '/dashboard', { replace: true })
+    if (firestoreRole === 'tutor' || firestoreRole === 'admin') {
+      navigate('/tutor', { replace: true })
+    } else {
+      window.location.href = worldUrl(uid)
+    }
   }
 
   async function handleSubmit() {
@@ -112,110 +130,113 @@ export default function Login() {
 
   return (
     <div className={s.page}>
-      <div className={s.noise} aria-hidden />
+      <main className={s.shell}>
+        <div className={s.layout}>
+          <section>
+            <header className={s.brand}>
+              <h1 className={s.logo}>
+                <span className={s.mind}>Mind</span><span className={s.craft}>Craft</span>
+              </h1>
+              <p className={s.wonder}>Let the Mind <em>Wonder</em></p>
+            </header>
 
-      <div className={s.branding}>
-        <a href="https://koka-akshat.github.io/mindcraft/" className={s.wordmark}>
-          Mind<span>Craft</span>
-        </a>
-        <p className={s.examPrep}>Personal Exam Prep</p>
-      </div>
+            <div className={s.filmstrip} aria-label="Places to explore">
+              {FILMS.map(film => (
+                <figure key={film.src} className={s.tile}>
+                  <video src={film.src} autoPlay muted loop playsInline />
+                  {film.label && (
+                    <figcaption className={s.caption}>{film.label}</figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+          </section>
 
-      <div className={s.cardPane}>
-        <div className={s.card}>
-          <div className={s.cardHeader}>
-            <div>
-              <h2 className={s.welcome}>
-                {mode === 'signin' ? 'Welcome back' : 'Start your map.'}
-              </h2>
-              <p className={s.cardSub}>
-                {mode === 'signin' ? 'Sign in to continue your prep' : 'Create your MindCraft account'}
+          <aside className={s.loginWrap}>
+            <div className={s.card}>
+              <h2 className={s.cardTitle}>Sign in</h2>
+
+              <div className={s.roleSelector}>
+                {(['student', 'parent', 'tutor'] as Role[]).map(r => (
+                  <button
+                    key={r}
+                    className={`${s.roleOpt} ${role === r ? s.active : ''}`}
+                    onClick={() => setRole(r)}
+                    type="button"
+                  >
+                    {r.charAt(0).toUpperCase() + r.slice(1)}
+                  </button>
+                ))}
+              </div>
+
+              <div className={s.field}>
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@email.com"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                  autoComplete="email"
+                />
+              </div>
+
+              <div className={s.field}>
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                  autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+                />
+              </div>
+
+              {mode === 'signin' && (
+                <div className={s.forgot}>
+                  <button type="button" onClick={handleForgot}>Forgot password?</button>
+                </div>
+              )}
+
+              {error && <p className={s.error}>{error}</p>}
+
+              <button className={s.submitBtn} onClick={handleSubmit} disabled={loading} type="button">
+                {loading ? 'Please wait…' : mode === 'signin' ? 'SIGN IN' : 'CREATE ACCOUNT'}
+              </button>
+
+              <button
+                className={s.googleBtn}
+                onClick={handleGoogle}
+                disabled={loading}
+                type="button"
+                aria-label="Continue with Google"
+              >
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+              </button>
+
+              <p className={s.bottomLink}>
+                {mode === 'signin' ? (
+                  <>New to MindCraft?{' '}
+                    <button type="button" onClick={() => { setMode('signup'); setError('') }}>Create account</button>
+                  </>
+                ) : (
+                  <>Already have an account?{' '}
+                    <button type="button" onClick={() => { setMode('signin'); setError('') }}>Sign in</button>
+                  </>
+                )}
               </p>
             </div>
-            <div className={s.settingsBtn} aria-label="Settings">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M12 1v3m0 16v3M4.22 4.22l2.12 2.12m11.32 11.32 2.12 2.12M1 12h3m16 0h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
-              </svg>
-            </div>
-          </div>
-
-          <div className={s.roleSelector}>
-            {(['student', 'parent', 'tutor'] as Role[]).map(r => (
-              <button
-                key={r}
-                className={`${s.roleOpt} ${role === r ? s.active : ''}`}
-                onClick={() => setRole(r)}
-                type="button"
-              >
-                {r.charAt(0).toUpperCase() + r.slice(1)}
-              </button>
-            ))}
-          </div>
-
-          <div className={s.field}>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="you@email.com"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-              autoComplete="email"
-            />
-          </div>
-
-          <div className={s.field}>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-            />
-          </div>
-
-          {mode === 'signin' && (
-            <div className={s.forgot}>
-              <button type="button" onClick={handleForgot}>Forgot password?</button>
-            </div>
-          )}
-
-          {error && <p className={s.error}>{error}</p>}
-
-          <button className={s.submitBtn} onClick={handleSubmit} disabled={loading} type="button">
-            {loading ? 'Please wait…' : mode === 'signin' ? 'SIGN IN' : 'CREATE ACCOUNT'}
-          </button>
-
-          <div className={s.divider}>Continue with Google</div>
-
-          <button className={s.googleBtn} onClick={handleGoogle} disabled={loading} type="button">
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            Continue with Google
-          </button>
+          </aside>
         </div>
-
-        <p className={s.bottomLink}>
-          {mode === 'signin' ? (
-            <>New to MindCraft?{' '}
-              <button type="button" onClick={() => { setMode('signup'); setError('') }}>Create account</button>
-            </>
-          ) : (
-            <>Already have an account?{' '}
-              <button type="button" onClick={() => { setMode('signin'); setError('') }}>Sign in</button>
-            </>
-          )}
-        </p>
-      </div>
+      </main>
     </div>
   )
 }

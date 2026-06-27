@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft: Maths exams can be stressful. We're here for you.</title>
+<title>MindCraft: Maths can be stressful</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--g:#58CC02;--gd:#4CAD00;--gdd:#3A8500;--forest:#1A3C2A;--tx:#3C3C3C;--mu:#777;--w:#FFF;--bd:#E5E5E5;--f:'Nunito',sans-serif}
+:root{--g:#54B948;--gd:#449A38;--gdd:#003F2D;--forest:#003F2D;--tx:#3C3C3C;--mu:#777;--w:#FFF;--bd:#E5E5E5;--f:'Nunito',sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--f);color:var(--tx);background:var(--w);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .rv{opacity:0;transform:translateY(18px);transition:all .55s cubic-bezier(.22,1,.36,1)}.rv.show{opacity:1;transform:translateY(0)}.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
@@ -15,7 +15,7 @@
 nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:var(--w);border-bottom:2px solid var(--bd)}
 .logo{font-size:22px;font-weight:900;color:var(--forest);text-decoration:none}.logo span{color:var(--g)}
 .nr{display:flex;align-items:center;gap:6px}.nr a{text-decoration:none;font-size:14px;font-weight:700;padding:10px 16px;border-radius:16px;transition:all .15s}
-.nl{color:var(--g);text-transform:uppercase;letter-spacing:.5px}.nl:hover{background:rgba(88,204,2,.08)}
+.nl{color:var(--g);text-transform:uppercase;letter-spacing:.5px}.nl:hover{background:rgba(84,185,72,.08)}
 .nav-login{background:var(--g)!important;color:var(--w)!important;font-weight:800!important;border-radius:14px!important;padding:8px 18px!important;font-size:13px!important;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 3px 0 var(--gd);border:none!important}.nav-login:hover{filter:brightness(1.05)!important;transform:translateY(-1px);box-shadow:0 4px 0 var(--gd)!important}
 .bg{background:var(--g);color:var(--w)!important;font-weight:800!important;border:none;padding:10px 20px;border-radius:16px;font-size:13px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 4px 0 var(--gd);transition:all .15s;display:inline-block;text-decoration:none;text-align:center;font-family:var(--f)}.bg:hover{filter:brightness(1.05);transform:translateY(-1px);box-shadow:0 5px 0 var(--gd)}.bg:active{transform:translateY(2px);box-shadow:0 1px 0 var(--gd)}
 .bw{background:var(--w);color:var(--gdd)!important;font-weight:800!important;border:2px solid var(--bd);padding:14px 32px;border-radius:16px;font-size:15px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 4px 0 var(--bd);transition:all .15s;display:inline-block;text-decoration:none;text-align:center;font-family:var(--f)}.bw:hover{background:#F7F7F7;transform:translateY(-1px)}
@@ -72,11 +72,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .subj-panel{background:#F8F9FA;padding:clamp(60px,7vw,90px) 24px;display:flex;justify-content:center}
 .subj-in{max-width:1040px;width:100%;display:flex;flex-direction:column}
 .subj-eyebrow{font-size:11px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:12px;opacity:.85}
-.subj-in h2{font-size:clamp(26px,4vw,38px);font-weight:900;line-height:1.2;color:var(--tx);margin-bottom:36px}
+.subj-head{font-size:clamp(22px,3.2vw,30px);font-weight:900;line-height:1.2;color:var(--tx);margin:0 0 24px}
+.tutor-link{color:inherit;font-weight:900;text-decoration:underline;text-decoration-color:#2563EB;text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer;transition:opacity .15s}
+.tutor-link:hover{opacity:.72}
+.subj-section-head{margin-top:clamp(48px,6vw,72px)}
+.subj-section-head .subj-eyebrow{margin-bottom:8px}
 /* Core exam grid */
 .subj-core{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
 .subj-card{background:#fff;border:1.5px solid #E8ECF0;border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;transition:all .2s}
-.subj-card:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 4px 20px rgba(88,204,2,.10)}
+.subj-card:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 4px 20px rgba(84,185,72,.10)}
 .subj-card .si{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;margin-bottom:4px}
 .subj-card strong{font-size:14px;font-weight:800;color:var(--tx);line-height:1.2;display:block}
 .subj-card p{font-size:12px;color:var(--mu);font-weight:600;line-height:1.45;margin:0;flex:1}
@@ -103,10 +107,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .sec-bleed{padding-bottom:clamp(40px,6vw,64px)}
 
 /* HOW IT WORKS - left/right split */
-.dk{background:radial-gradient(circle at 18% 18%,rgba(88,204,2,.16),transparent 26%),radial-gradient(circle at 82% 28%,rgba(0,169,157,.14),transparent 30%),linear-gradient(145deg,#102A1E 0%,#173C2A 56%,#0F2D22 100%);min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
+.dk{background:radial-gradient(circle at 18% 18%,rgba(84,185,72,.16),transparent 26%),radial-gradient(circle at 82% 28%,rgba(0,169,157,.14),transparent 30%),linear-gradient(145deg,#102A1E 0%,#173C2A 56%,#0F2D22 100%);min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
 .dk:before{content:"";position:absolute;inset:34px;border:1px solid rgba(255,255,255,.07);border-radius:24px;pointer-events:none}
 .dk-in{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center}
-.dk-eyebrow{font-size:11px;font-weight:900;color:#7FD94A;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:block}
+.dk-eyebrow{font-size:11px;font-weight:900;color:#6BC85F;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:block}
 .dk-head{font-size:clamp(32px,5vw,48px);font-weight:900;color:#FFFFFF;line-height:1.1;margin-bottom:16px;letter-spacing:-.5px}
 .dk-sub{font-size:17px;color:#A8C9B4;line-height:1.7;max-width:400px;margin:0 0 40px}
 /* Horizontal step cards layout */
@@ -116,9 +120,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .dk-steps-header .dk-head{margin-bottom:0}
 .dk-hsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;position:relative}
 .dk-hstep{background:linear-gradient(180deg,rgba(255,255,255,.095),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:34px 30px 32px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:18px;position:relative;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.08);min-height:260px}
-.dk-hstep:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(196,245,71,.14),transparent 42%);opacity:0;transition:opacity .22s ease}
+.dk-hstep:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(84,185,72,.14),transparent 42%);opacity:0;transition:opacity .22s ease}
 .dk-hstep:hover:before{opacity:1}
-.dk-hstep-num{font-size:44px;font-weight:900;color:rgba(196,245,71,.42);line-height:1;letter-spacing:-2px;margin:0;position:relative;z-index:1}
+.dk-hstep-num{font-size:44px;font-weight:900;color:rgba(84,185,72,.42);line-height:1;letter-spacing:-2px;margin:0;position:relative;z-index:1}
 .dk-hstep h4{font-size:21px;font-weight:900;color:#FFFFFF;margin:0;line-height:1.2;position:relative;z-index:1}
 .dk-hstep p{font-size:14px;color:#B6D0BE;line-height:1.65;margin:0;max-width:230px;position:relative;z-index:1}
 .dk-harrow{display:flex;align-items:center;justify-content:center;padding:0 16px;flex-shrink:0;align-self:center}
@@ -153,7 +157,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .cm-node.soft text{fill:#F8FFFF;opacity:.55}
 .cm-node.focus text{fill:#FFFFFF;font-size:12px;opacity:.95}
 .cm-node.next text{fill:#FFFFFF;opacity:.88}
-.cm-dot{fill:#58CC02;stroke:#F4FAF9;stroke-width:2}
+.cm-dot{fill:#54B948;stroke:#F4FAF9;stroke-width:2}
 .cm-pulse{fill:none;stroke:#00A99D;stroke-width:2;opacity:.34;animation:cmPulse 3.6s ease-out infinite}
 @keyframes cmFlow{to{stroke-dashoffset:-64}}
 @keyframes cmPulse{0%{r:26;opacity:.34}100%{r:66;opacity:0}}
@@ -161,6 +165,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 
 /* TESTIMONIALS - partial bleed */
 .proof{padding:clamp(80px,10vw,120px) 24px clamp(40px,6vw,64px);display:flex;flex-direction:column;align-items:center;background:#FAFAFA}
+.proof-block{width:100%;max-width:820px;margin:0 auto 56px;text-align:center}
+.proof-block:last-child{margin-bottom:0}
 .proof h2{font-size:clamp(28px,4.5vw,42px);font-weight:900;margin-bottom:8px;color:var(--tx);letter-spacing:-.3px}
 .proof h2 span{color:var(--g)}
 .proof .sub{font-size:17px;color:var(--mu);margin-bottom:40px}
@@ -171,14 +177,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .tc .au{font-size:14px;color:var(--mu);font-weight:700}
 .tc .au strong{color:var(--tx);font-weight:800;display:block;margin-bottom:2px}
 .tc-tag{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:20px}
+.tutor-tc{padding:0;overflow:hidden}
+.tutor-tc .tutor-photo{width:100%;height:200px;object-fit:cover;object-position:center center;display:block;background:#E8ECF0}
+.tutor-tc .tutor-cap{padding:22px 26px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tutor-tc .tutor-cap strong{font-size:15px;font-weight:900;color:var(--tx)}
+.tutor-tc .tutor-cap p{font-size:13px;color:var(--mu);font-weight:600;line-height:1.55;margin:0}
 
 /* PRICING: full viewport */
 .pricing{padding:clamp(60px,9vw,100px) 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--w)}
 .pricing h2{font-size:clamp(26px,4vw,38px);font-weight:900;margin-bottom:6px;letter-spacing:-.3px}
 .pricing .sub{font-size:16px;color:var(--mu);margin-bottom:36px;max-width:500px}
-.pg{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:16px;max-width:920px;margin:0 auto;width:100%}
+.pg{display:grid;grid-template-columns:1fr 1.1fr;gap:16px;max-width:720px;margin:0 auto;width:100%}
 .pc{background:var(--w);border-radius:20px;padding:28px 24px;border:2px solid var(--bd);text-align:left;position:relative;display:flex;flex-direction:column}
-.pc.ft{border-color:var(--g);box-shadow:0 0 0 2px var(--g),0 16px 48px rgba(88,204,2,.12);transform:scale(1.025)}
+.pc.ft{border-color:var(--g);box-shadow:0 0 0 2px var(--g),0 16px 48px rgba(84,185,72,.12);transform:scale(1.025)}
 .pc.ft::before{content:'MOST POPULAR';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--g);color:var(--w);padding:4px 18px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:.6px;white-space:nowrap}
 .pc h3{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--mu);margin-bottom:10px}
 .pc .pr{font-size:38px;font-weight:900;color:var(--tx);margin-bottom:2px;line-height:1}.pc .pr span{font-size:14px;color:var(--mu);font-weight:600}
@@ -190,27 +201,59 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .pc ul li::before{content:'✓';color:var(--g);font-weight:900;font-size:14px;flex-shrink:0;margin-top:1px}
 .pc ul li.muted::before{content:'—';color:#C0C0C0}
 .pc ul li.muted{color:#ABABAB}
+.ka-feature{align-items:flex-start!important;flex-direction:row!important;gap:8px!important;padding-bottom:4px!important}
+.ka-feature::before{margin-top:8px}
+.ka-body{flex:1;min-width:0}
+.ka-label{display:block;color:#3C3C3C;font-weight:600;line-height:1.45}
+.ka-sub{list-style:none;margin:6px 0 0;padding:0 0 0 14px;width:100%}
+.pc ul .ka-sub li{display:block;padding:3px 0;border:none;font-size:13px;font-weight:600;color:#ABABAB;line-height:1.45}
+.pc ul .ka-sub li::before{content:'•';color:#C0C0C0;font-weight:900;font-size:13px;margin-right:6px}
+.ka-sub a{color:#ABABAB;text-decoration:none;font-weight:600}
+.ka-sub a:hover{color:#888}
+.feat-shine{background:linear-gradient(90deg,#449A38 0%,#54B948 50%,#449A38 100%);background-size:160% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;animation:featShine 5s ease-in-out infinite}
+@keyframes featShine{0%,100%{background-position:0% center}50%{background-position:100% center}}
+.pc .meta-list{list-style:none;padding:0;margin:0 0 18px;border-bottom:2px solid #F0F0F0;padding-bottom:16px}
+.pc .meta-list li{font-size:13px;color:var(--mu);font-weight:600;padding:5px 0;border:none;display:block}
+.pc .meta-list li::before{content:none}
 .pc .cta-wrap{margin-top:auto}
 .pricing-note{margin-top:16px;font-size:13px;color:var(--mu);font-weight:600}
 @media(max-width:760px){.pg{grid-template-columns:1fr}.pc.ft{transform:none}}
 
 
+/* WORLD PORTFOLIO SHOWCASE */
+.world-showcase{background:#fff;padding:clamp(40px,5vw,64px) clamp(12px,3vw,32px) clamp(48px,6vw,72px);border-top:1px solid rgba(0,0,0,.06)}
+.world-showcase-in{max-width:min(96vw,1480px);margin:0 auto;text-align:center}
+.world-showcase h2{font-size:clamp(26px,4vw,38px);font-weight:900;color:var(--tx);margin-bottom:10px;letter-spacing:-.3px}
+.world-showcase-caption{font-size:16px;color:var(--mu);font-weight:600;line-height:1.65;max-width:680px;margin:0 auto 24px;text-align:center}
+.world-frame-wrap{position:relative;width:100%;min-height:min(78vh,860px);height:min(78vh,860px);border-radius:18px;overflow:hidden;border:1px solid rgba(0,0,0,.08);box-shadow:0 24px 64px rgba(0,0,0,.1);background:#fff;margin:0 auto;isolation:isolate}
+.world-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;z-index:1;background:transparent}
+.world-showcase h2 .mc-mind{color:#1A1A1A}
+.world-showcase h2 .mc-craft{color:var(--g)}
+@media(max-width:768px){.world-frame-wrap{min-height:62vh;height:62vh}}
+
+
 /* BLOG PANEL */
-.blog-faq-divider{background:#0D0F15;padding:0 clamp(24px,5vw,64px)}
-.blog-faq-divider hr{border:none;border-top:1px solid rgba(255,255,255,.18);max-width:1200px;margin:0 auto}
 .blog-panel{background:#0D0F15;padding:clamp(64px,7vw,92px) 0 clamp(48px,6vw,72px);display:flex;flex-direction:column;justify-content:center;border-top:1px solid rgba(255,255,255,.08)}
-.blog-panel-head{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,5vw,64px);max-width:1200px;margin:0 auto 28px;width:100%}
-.blog-panel-head h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:#fff;letter-spacing:-.4px}
-.blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:7px 14px;border-radius:20px;transition:all .18s;white-space:nowrap}
+.blog-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;width:100%;padding-bottom:4px}
+.blog-panel-head h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:#fff;letter-spacing:-.4px;margin:0}
+.blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:7px 14px;border-radius:20px;transition:all .18s;white-space:nowrap;flex-shrink:0}
 .blog-see-all:hover{color:#fff;border-color:rgba(255,255,255,.35)}
-.blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:4px clamp(24px,5vw,64px) 16px;scrollbar-width:none;-ms-overflow-style:none}
+.blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:8px 0 24px;scrollbar-width:none;-ms-overflow-style:none}
 .blog-scroll::-webkit-scrollbar{display:none}
-.blog-duo{display:grid;grid-template-columns:1fr 1fr;align-items:start}
-.blog-duo-col{overflow:hidden;display:flex;flex-direction:column}
-.blog-duo-col+.blog-duo-col{border-left:1px solid rgba(255,255,255,.08)}
-.blog-duo-col .blog-panel-head{max-width:none;margin-left:0;margin-right:0}
-@media(max-width:700px){.blog-duo{grid-template-columns:1fr}.blog-duo-col+.blog-duo-col{border-left:none;border-top:1px solid rgba(255,255,255,.08);margin-top:48px}}
-.blog-card{flex-shrink:0;width:300px;background:#181B25;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.07);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;text-decoration:none}
+.blog-duo{display:grid;grid-template-columns:1fr 1fr;align-items:start;position:relative;width:100%;column-gap:clamp(48px,7vw,96px)}
+.blog-duo::after{content:'';position:absolute;left:50%;top:88px;bottom:32px;width:1px;background:rgba(255,255,255,.08);pointer-events:none;transform:translateX(-50%)}
+.blog-duo-col{overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.blog-duo-col:first-child{padding-left:clamp(24px,5vw,64px);padding-right:clamp(20px,3vw,36px)}
+.blog-duo-col:last-child{padding-left:clamp(20px,3vw,36px);padding-right:clamp(24px,5vw,64px)}
+@media(max-width:700px){.blog-duo{grid-template-columns:1fr;column-gap:0}.blog-duo::after{display:none}.blog-duo-col:first-child,.blog-duo-col:last-child{padding:0 clamp(24px,5vw,64px)}.blog-duo-col:last-child{margin-top:56px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08)}.blog-duo-col:last-child .podcast-scroll{margin-top:0;padding-top:8px}}
+.podcast-scroll{display:flex;padding:8px 0 24px}
+.podcast-card{width:300px;min-height:392px;background:#181B25;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;flex-shrink:0}
+.podcast-card-img{height:170px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#0A1F10,#1A3C2A);flex-shrink:0}
+.podcast-card-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
+.podcast-card-title{font-size:16px;font-weight:900;color:#fff;line-height:1.3;letter-spacing:-.2px;margin:0}
+.podcast-card-excerpt{font-size:12px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:600;margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.podcast-card .bw{font-size:12px;padding:9px 16px;display:inline-block;align-self:flex-start;margin-top:auto}
+.blog-card{flex-shrink:0;width:300px;min-height:392px;background:#181B25;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.07);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;text-decoration:none}
 .blog-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.16)}
 .blog-card-img{height:170px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .blog-card-body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
@@ -220,17 +263,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 .blog-card-title{font-size:16px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:10px;letter-spacing:-.2px}
 .blog-card-excerpt{font-size:12px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:600;margin-bottom:14px;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .blog-card-author{display:flex;align-items:center;gap:8px}
-.blog-card-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;background:linear-gradient(135deg,#3A8500,#1A3C2A);flex-shrink:0}
+.blog-card-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;background:linear-gradient(135deg,#003F2D,#1A3C2A);flex-shrink:0}
 .blog-card-author-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.45)}
 
 /* FAQ */
-.faq{background:#111;min-height:100vh;padding:clamp(36px,4vw,52px) clamp(24px,8vw,120px) clamp(36px,4vw,52px);display:flex;flex-direction:column;justify-content:center}
-.faq-in{max-width:1100px;width:100%;margin:0 auto}
-.faq-title{font-size:clamp(32px,4.5vw,52px);font-weight:900;color:#FFFFFF;margin-bottom:clamp(32px,4vw,48px);letter-spacing:-.5px}
+.faq{background:#111;padding:clamp(64px,7vw,92px) 0 clamp(48px,6vw,72px);display:flex;flex-direction:column;justify-content:center}
+.faq-in{width:100%;padding:0 clamp(24px,5vw,64px);box-sizing:border-box}
+.faq-title{font-size:clamp(32px,4.5vw,52px);font-weight:900;color:#FFFFFF;margin-bottom:clamp(32px,4vw,48px);letter-spacing:-.5px;text-align:left}
 .faq-list{display:flex;gap:64px;align-items:flex-start}
 .faq-col{flex:1;min-width:0}
-.faq-item{border-top:1px solid rgba(255,255,255,.08);cursor:pointer}
-.faq-item:last-child{border-bottom:1px solid rgba(255,255,255,.08)}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
+.faq-item:last-child{border-bottom:none}
+.faq-item#faq-tutors{scroll-margin-top:96px}
 .faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:24px;user-select:none}
 .faq-q-text{font-size:15px;font-weight:700;color:#FFFFFF;line-height:1.35;flex:1}
 .faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s}
@@ -270,8 +314,8 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
 .blog-top-fade{height:0;background:#0D0F15;margin:0;padding:0}
 
 /* ── PREMIUM NAV LOGIN BUTTON ── */
-.nav-login{background:linear-gradient(150deg,#5ED400,#3CAD00)!important;box-shadow:0 4px 16px rgba(88,204,2,.38),0 2px 0 #297800!important;border-radius:22px!important;padding:9px 22px!important;font-size:13px!important;letter-spacing:.3px!important;transition:all .2s cubic-bezier(.22,1,.36,1)!important}
-.nav-login:hover{background:linear-gradient(150deg,#6EE800,#4DC200)!important;box-shadow:0 6px 24px rgba(88,204,2,.52),0 2px 0 #297800!important;transform:translateY(-2px)!important}
+.nav-login{background:linear-gradient(150deg,#5FC454,#449A38)!important;box-shadow:0 4px 16px rgba(84,185,72,.38),0 2px 0 #2E6B26!important;border-radius:22px!important;padding:9px 22px!important;font-size:13px!important;letter-spacing:.3px!important;transition:all .2s cubic-bezier(.22,1,.36,1)!important}
+.nav-login:hover{background:linear-gradient(150deg,#6BC85F,#54B948)!important;box-shadow:0 6px 24px rgba(84,185,72,.52),0 2px 0 #2E6B26!important;transform:translateY(-2px)!important}
 
 /* ── SUBJECT CARDS ── */
 .subj-card{border:none;border-radius:24px;padding:30px 22px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;background:#fff;box-shadow:0 4px 6px rgba(0,0,0,.04),0 10px 32px rgba(0,0,0,.08)}
@@ -304,12 +348,12 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
 .ss-icon .fill{fill:currentColor;stroke:none}
 .ss-lbl{font-size:clamp(12px,1.4vw,16px);font-weight:800}
 .ss-body{flex:1;padding-right:12px}
-.ss-tag{font-size:10px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:rgba(46,59,78,.48);margin-bottom:9px}
-.ss-nm{font-size:clamp(21px,2.5vw,29px);font-weight:900;color:#2F3746;line-height:1.05;margin-bottom:10px}
-.ss-ds{font-size:clamp(12px,1.15vw,14px);font-weight:700;color:rgba(47,55,70,.74);line-height:1.5;max-width:390px}
+.ss-tag{font-size:11px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:rgba(46,59,78,.48);margin-bottom:9px}
+.ss-nm{font-size:clamp(22px,2.7vw,32px);font-weight:900;color:#2F3746;line-height:1.05;margin-bottom:10px}
+.ss-ds{font-size:clamp(13px,1.22vw,15px);font-weight:700;color:rgba(47,55,70,.74);line-height:1.5;max-width:390px}
 .ss-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
 .ss-dot{width:7px;height:7px;border-radius:50%;background:rgba(47,55,70,.22);transition:background .45s cubic-bezier(.22,1,.36,1),transform .45s cubic-bezier(.22,1,.36,1);cursor:pointer}
-.ss-dot.active{background:#4CAD00;transform:scale(1.2)}
+.ss-dot.active{background:#449A38;transform:scale(1.2)}
 .subj-showcase .ss-slide:nth-child(1){background:linear-gradient(135deg,#F4F1FF,#ECE9FF)!important}
 .subj-showcase .ss-slide:nth-child(2){background:linear-gradient(135deg,#EEF4FF,#E8F0FF)!important}
 .subj-showcase .ss-slide:nth-child(3){background:linear-gradient(135deg,#EAF7F4,#E4F1EE)!important}
@@ -328,7 +372,7 @@ footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px
 @media(max-width:760px){.subj-showcase{height:auto;min-height:290px}.ss-slide{flex-direction:column;justify-content:center;text-align:center;padding:28px 20px 42px}.ss-body{padding-right:0}.ss-ds{max-width:300px}.ss-card{width:112px;height:128px}}
 
 /* ── SCROLL PROGRESS BAR ── */
-#mc-prog{position:fixed;top:56px;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--g) 0%,#A8FF47 100%);z-index:1001;border-radius:0 2px 2px 0;pointer-events:none;will-change:width}
+#mc-prog{position:fixed;top:56px;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--g) 0%,#6BC85F 100%);z-index:1001;border-radius:0 2px 2px 0;pointer-events:none;will-change:width}
 
 /* ── NAV GLASS ON SCROLL ── */
 nav{transition:background .35s,box-shadow .35s,border-color .35s,backdrop-filter .35s}
@@ -351,24 +395,38 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 .auto-stagger.show>*:nth-child(6){transition-delay:.49s}
 
 /* ── INTRO DECK — PPTX-faithful presentation ── */
-.mc-intro{position:fixed;inset:0;z-index:9000;background:#F5F1ED;overflow:hidden;transition:opacity .6s ease,visibility .6s}
+.mc-intro{position:fixed;inset:0;z-index:9000;background:#F5F1ED;overflow:hidden;transition:opacity 1s cubic-bezier(.22,1,.36,1),visibility 1s cubic-bezier(.22,1,.36,1)}
 .mc-intro.mc-exit{opacity:0;visibility:hidden;pointer-events:none}
 .mc-intro.mc-gone{display:none!important}
-.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;transition:opacity .5s ease;pointer-events:none;background:#F5F1ED}
-.mc-slide.mc-active{opacity:1;pointer-events:auto}
+.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;visibility:hidden;pointer-events:none;background:#F5F1ED;transform:translateY(14px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1),visibility 1s;z-index:0}
+.mc-slide.mc-active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);z-index:2}
+.mc-slide.mc-leaving{opacity:0;transform:translateY(-10px);z-index:1}
+@keyframes mcWordIn{from{opacity:0;transform:translateY(.14em)}to{opacity:1;transform:translateY(0)}}
+@keyframes mcLineIn{from{opacity:0;transform:translateY(.10em)}to{opacity:1;transform:translateY(0)}}
 /* Large headline */
 .mc-big{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
-.mc-big .mc-invis{color:#F5F1ED}
-.mc-big .mc-gray{color:#58CC02}
+.mc-reveal-word{color:var(--g);opacity:0;display:inline-block;transform:translateY(.14em)}
+.mc-slide.mc-active .mc-reveal-word{animation:mcWordIn 1s cubic-bezier(.22,1,.36,1) .55s forwards}
 /* Quote text */
-.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#1A1A1A;margin:0;max-width:82vw}
+.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#1A1A1A;margin:0;max-width:82vw;opacity:0;transform:translateY(10px)}
+.mc-slide.mc-active .mc-quote{animation:mcLineIn .95s cubic-bezier(.22,1,.36,1) .12s forwards}
+.mc-hl{background:var(--g);padding:2px 8px;border-radius:5px;color:#fff}
+.mc-craft{color:var(--g)}
 /* MINDCRAFT brand */
-.mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
+.mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0;opacity:0;transform:translateY(10px)}
+.mc-slide.mc-active .mc-brand{animation:mcLineIn .95s cubic-bezier(.22,1,.36,1) .08s forwards}
+.mc-reveal-line{color:#1A1A1A;margin:0;opacity:0;transform:translateY(.10em)}
+.mc-slide.mc-active .mc-reveal-line{animation:mcLineIn 1s cubic-bezier(.22,1,.36,1) .65s forwards}
 /* Caption */
-.mc-caption{position:absolute;bottom:clamp(20px,3vh,48px);right:clamp(32px,5vw,80px);font-family:'Radley',Georgia,serif;font-size:clamp(11px,1vw,16px);color:#0B0B0B;opacity:.55;letter-spacing:.02em}
-/* Skip only — Enter button removed */
-.mc-skip{position:absolute;top:20px;right:24px;z-index:10;font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(26,26,26,.35);background:none;border:1px solid rgba(26,26,26,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
+.mc-caption{position:absolute;bottom:clamp(20px,3vh,48px);right:clamp(32px,5vw,80px);font-family:'Radley',Georgia,serif;font-size:clamp(11px,1vw,16px);color:#0B0B0B;opacity:0;letter-spacing:.02em;transition:opacity .8s cubic-bezier(.22,1,.36,1) .35s}
+.mc-slide.mc-active .mc-caption{opacity:.55}
+.mc-slide.mc-leaving .mc-caption{opacity:0;transition-delay:0s}
+/* Skip + Log in */
+.mc-intro-actions{position:absolute;top:20px;right:24px;z-index:10;display:flex;align-items:center;gap:10px}
+.mc-skip{font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(26,26,26,.35);background:none;border:1px solid rgba(26,26,26,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
 .mc-skip:hover{color:#1A1A1A;border-color:#1A1A1A}
+.mc-login{font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:#fff!important;background:var(--g);border:none;border-radius:14px;padding:8px 16px;text-decoration:none;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 3px 0 var(--gd);transition:filter .15s,transform .15s}
+.mc-login:hover{filter:brightness(1.06);transform:translateY(-1px)}
 
 /* ── PANIC TO PLAN + GPS: two stacked rows ── */
 .ptp-section{background:var(--w);padding:clamp(48px,7vw,80px) clamp(24px,5vw,60px)}
@@ -400,37 +458,29 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 </nav>
 
 <div class="mc-intro" id="mc-intro" role="region" aria-label="MindCraft introduction">
-  <button class="mc-skip" id="mc-skip" type="button">Skip</button>
+  <div class="mc-intro-actions">
+    <button class="mc-skip" id="mc-skip" type="button">Skip</button>
+    <a href="https://mindcraft-93858.web.app/login" class="mc-login">Log in</a>
+  </div>
 
   <div class="mc-slide mc-active">
-    <p class="mc-big">Learning is not<br><span class="mc-invis">FIXED</span></p>
+    <p class="mc-big">Learning is not<br><span class="mc-reveal-word">FIXED</span></p>
     <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
   </div>
 
   <div class="mc-slide">
-    <p class="mc-big">Learning is not<br><span class="mc-gray">FIXED</span></p>
+    <p class="mc-quote">&ldquo;Doing well in school depends on much more than your ability to learn quickly and easily. <span class="mc-hl">It depends on grit.</span>&rdquo;</p>
     <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
   </div>
 
   <div class="mc-slide">
-    <p class="mc-quote">&ldquo;Doing well in school depends on much more than your ability to learn quickly and easily. It depends on grit.&rdquo;</p>
+    <p class="mc-quote">&ldquo;When students learn how the brain grows in response to challenge, they <span class="mc-hl">persevere through failure</span> because they realize failure is not a permanent condition.&rdquo;</p>
     <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
   </div>
 
   <div class="mc-slide">
-    <p class="mc-quote">&ldquo;When students learn how the brain grows in response to challenge, they persevere through failure because they realize failure is not a permanent condition.&rdquo;</p>
-    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
-  </div>
-
-  <div class="mc-slide">
-    <p class="mc-brand">MINDCRAFT</p>
-    <p class="mc-big" style="color:#F5F1ED">A Growth Mindset</p>
-    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
-  </div>
-
-  <div class="mc-slide">
-    <p class="mc-brand">MINDCRAFT</p>
-    <p class="mc-big">A Growth Mindset</p>
+    <p class="mc-brand">MIND<span class="mc-craft">CRAFT</span></p>
+    <p class="mc-big mc-reveal-line">A Growth Mindset</p>
   </div>
 </div>
 
@@ -439,13 +489,13 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 <section class="hero">
   <div class="hero-in">
     <div class="ha rv">
-      <img src="img/racoon.jpg" alt="MindCraft raccoon" class="raccoon-canvas-wrap" style="object-fit:cover;display:block;">
+      <img src="img/Rac.jpg" alt="MindCraft raccoon" class="raccoon-canvas-wrap" style="object-fit:cover;display:block;">
     </div>
     <div class="hero-text rv d1">
-      <h1><span style="display:block;font-size:clamp(28px,4vw,46px)">Maths exams can be stressful</span><span style="display:block;color:var(--g);font-size:clamp(20px,3vw,38px);white-space:nowrap">We're here for you.</span></h1>
+      <h1><span style="display:block">Maths can be stressful</span><span style="display:block;color:var(--g);font-size:clamp(20px,3vw,38px);margin-top:6px">We're here for you</span></h1>
       <div class="hb">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">Try It Free</a>
-        <a href="#how" class="bw">See how it works</a>
+        <a href="#steps" class="bw">See how it works</a>
       </div>
     </div>
   </div>
@@ -458,11 +508,11 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   <!-- Row 1: text left, video right -->
   <div class="ptp-row">
     <div class="ptp-text rv">
-      <h2>From panic<br>to plan.</h2>
+      <h2>From panic<br>to plan</h2>
       <p>Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
     </div>
     <div class="ptp-media rv d1">
-      <video src="img/Video.mp4" autoplay muted loop playsinline></video>
+      <video src="img/Video.mp4" autoplay muted loop playsinline preload="metadata" poster="img/Rac.jpg"></video>
     </div>
   </div>
 
@@ -510,7 +560,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       </div>
     </div>
     <div class="ptp-text rv d1">
-      <h2>No more random practice.<br>We have a GPS.</h2>
+      <h2>No more random practice.<br>MindCraft has a GPS</h2>
       <p>MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
     </div>
   </div>
@@ -522,7 +572,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   <div class="subj-in">
     <div class="rv">
       <span class="subj-eyebrow">subjects</span>
-      <h2>Got a test coming up?<br>We got the right tutor.</h2>
+      <h3 class="subj-head">Find the right <a href="#faq-tutors" class="tutor-link">tutor</a></h3>
     </div>
 
     <!-- Auto-cycling subject showcase -->
@@ -605,9 +655,9 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
       </div>
     </div>
 
-    <!-- Signature Programs divider -->
-    <div class="sig-divider rv d2">
-      <span>✦ &nbsp;Signature Programs</span>
+    <div class="subj-section-head rv d2">
+      <span class="subj-eyebrow">Signature Programs</span>
+      <h3 class="subj-head">Beyond exam prep</h3>
     </div>
 
     <!-- Signature Programs slideshow -->
@@ -713,51 +763,109 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 
 
 <section class="proof" id="proof">
-  <h2 class="rv">students love mind<span>craft</span></h2>
-  <p class="sub rv d1">Real results from students and parents in St. Paul.</p>
-  <div class="tg auto-stagger">
-    <div class="tc">
-      <span class="tc-tag" style="background:rgba(88,204,2,0.1);color:var(--gdd)">Student</span>
-      <p class="qt">"My classes with MindCraft have made me much more confident in math, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far."</p>
-      <div class="au"><strong>Seb</strong> High school senior, St. Paul, MN</div>
+  <div class="proof-block">
+    <h2 class="rv">Students love Mind<span>Craft</span></h2>
+    <p class="sub rv d1">Real results from students and parents in St. Paul.</p>
+    <div class="tg auto-stagger">
+      <div class="tc">
+        <span class="tc-tag" style="background:rgba(84,185,72,0.1);color:var(--gdd)">Student</span>
+        <p class="qt">"My classes with MindCraft have made me much more confident in math, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far."</p>
+        <div class="au"><strong>Seb</strong> High school senior, St. Paul, MN</div>
+      </div>
+      <div class="tc">
+        <span class="tc-tag" style="background:rgba(74,123,247,0.1);color:#2A50B0">Parent</span>
+        <p class="qt">"We realized Seb did not just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Math had started to feel defeating for him, and with the ACT so close, he was overwhelmed and unsure of himself. MindCraft felt different because it focused on what he did not yet understand and helped him move forward with more clarity and confidence."</p>
+        <div class="au"><strong>Gill</strong> Parent, St. Paul, MN</div>
+      </div>
     </div>
-    <div class="tc">
-      <span class="tc-tag" style="background:rgba(74,123,247,0.1);color:#2A50B0">Parent</span>
-      <p class="qt">"We realized Seb did not just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Math had started to feel defeating for him, and with the ACT so close, he was overwhelmed and unsure of himself. MindCraft felt different because it focused on what he did not yet understand and helped him move forward with more clarity and confidence."</p>
-      <div class="au"><strong>Gill</strong> Parent, St. Paul, MN</div>
+  </div>
+  <div class="proof-block">
+    <h2 class="rv">Meet our passionate, driven tutors</h2>
+    <p class="sub rv d1">Real tutors. Real expertise. Ready to help your child succeed.</p>
+    <div class="tg auto-stagger">
+      <div class="tc tutor-tc">
+        <img src="img/Tutor1.jpg" alt="Tutor Ra" class="tutor-photo">
+        <div class="tutor-cap">
+          <span class="tc-tag" style="background:rgba(84,185,72,0.1);color:var(--gdd)">Tutor</span>
+          <strong>Tutor Ra</strong>
+          <p>Eight years of tutoring across Nepal, South Africa, and USA. Mathematics and Economics at Macalester College'26</p>
+        </div>
+      </div>
+      <div class="tc tutor-tc">
+        <img src="img/BGPhoenix.jpg" alt="Tutor Coon" class="tutor-photo">
+        <div class="tutor-cap">
+          <span class="tc-tag" style="background:rgba(84,185,72,0.1);color:var(--gdd)">Tutor</span>
+          <strong>Tutor Coon</strong>
+          <p>Excited to share the love for maths. Applied Maths PhD at UNC, Kenyon College'26</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="world-showcase" id="portfolio">
+  <div class="world-showcase-in">
+    <h2 class="rv">Step inside the <span class="mc-mind">Mind</span><span class="mc-craft">Craft</span> World</h2>
+    <p class="world-showcase-caption rv d1">Phoenix asset helps you start and organize personal projects. Students can earn coins through practice to purchase assets for different purpose.</p>
+    <div class="world-frame-wrap rv d1">
+      <iframe id="phoenixWorld" src="phoenix/index.html?embed=1" title="Phoenix — MindCraft portfolio world" loading="lazy" allow="autoplay; fullscreen"></iframe>
     </div>
   </div>
 </section>
 
 <section class="pricing" id="pricing">
-  <h2 class="rv">Start Free.</h2>
+  <h2 class="rv">Start Free</h2>
 
-  <div class="pg auto-stagger" style="justify-content:center">
+  <div class="pg auto-stagger">
 
     <div class="pc">
       <h3>Practice</h3>
       <div class="pr free-pr">Free</div>
-      <ul class="pd" style="list-style:none;padding:0">
-        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· Every Feature is Free</li>
-        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· We are Testing</li>
-        <li style="border:none;padding:4px 0;font-size:12px;color:var(--mu)">· Please be patient with us</li>
+      <ul class="meta-list">
+        <li>We are testing</li>
+        <li>Please be patient with us</li>
+        <li>Every feature is free</li>
       </ul>
       <ul>
-        <li>Personalized study path (GPS)</li>
-        <li>AI Problem Solver</li>
-        <li>15-concept practice library</li>
-        <li>Exam-specific question sets</li>
-        <li>Knowledge gap map</li>
+        <li>Reinforce Knowledge Gaps</li>
+        <li>Personalized Study Plan</li>
+        <li>Homework Help</li>
         <li class="muted">1-on-1 tutor sessions</li>
-        <li class="muted">Session notes &amp; homework</li>
+        <li class="muted">Documentation (Notes, MindMap)</li>
       </ul>
       <div class="cta-wrap">
-        <a href="https://mindcraft-93858.web.app" target="_blank" class="bw" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center">Open the App →</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform" target="_blank" rel="noopener" class="bw" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center">Sign up</a>
+      </div>
+    </div>
+
+    <div class="pc ft">
+      <h3>Platform</h3>
+      <div class="pr">$200<span>/mo</span></div>
+      <ul class="meta-list">
+        <li>Launching September</li>
+        <li>Introducing STEM courses</li>
+        <li>Knowledge assets</li>
+      </ul>
+      <ul>
+        <li>1-on-1 tutor sessions</li>
+        <li>Documentation (Notes, MindMap)</li>
+        <li class="ka-feature">
+          <div class="ka-body">
+            <span class="ka-label">Knowledge Assets</span>
+            <ul class="ka-sub">
+              <li><a href="#portfolio">Phoenix</a></li>
+              <li><a href="https://mindcraft-world1.web.app" target="_blank" rel="noopener">Chef Nox</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <div class="cta-wrap">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform" target="_blank" rel="noopener" class="bg" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center">Sign up</a>
       </div>
     </div>
 
   </div>
-  <p class="pricing-note rv">All plans include access to the MindCraft app. Tutoring sessions are 1 hour. Cancel anytime.</p>
+  <p class="pricing-note rv">All plans include access to the MindCraft app. Cancel anytime.</p>
 </section>
 
 <div class="blog-top-fade" aria-hidden="true"></div>
@@ -777,14 +885,17 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
     <div class="blog-duo-col">
       <div class="blog-panel-head rv">
         <h2>Our Podcasts</h2>
+        <a href="#" class="blog-see-all">See All &rarr;</a>
       </div>
-      <div class="rv d1" style="padding:0 clamp(24px,5vw,64px)">
-        <div style="display:flex;align-items:center;gap:20px;background:rgba(255,255,255,.05);border-radius:18px;padding:clamp(20px,3vw,32px) clamp(20px,3vw,32px);border:1px solid rgba(255,255,255,.10)">
-          <svg viewBox="0 0 24 24" width="44" height="44" style="flex-shrink:0"><path fill="#1DB954" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          <div>
-            <p style="font-size:15px;font-weight:700;color:#fff;margin:0 0 4px">Playlist coming soon</p>
-            <p style="font-size:13px;color:rgba(255,255,255,.55);margin:0 0 14px;line-height:1.6">We're building our podcast series.<br>Follow us on Spotify to be the first to know.</p>
-            <a href="#" class="bw" style="font-size:13px;padding:8px 18px;display:inline-block">Follow on Spotify</a>
+      <div class="podcast-scroll rv d1">
+        <div class="podcast-card">
+          <div class="podcast-card-img">
+            <svg viewBox="0 0 24 24" width="52" height="52"><path fill="#1DB954" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          </div>
+          <div class="podcast-card-body">
+            <p class="podcast-card-title">Playlist coming soon</p>
+            <p class="podcast-card-excerpt">We're building our podcast series. Follow us on Spotify to be the first to know.</p>
+            <a href="#" class="bw">Follow on Spotify</a>
           </div>
         </div>
       </div>
@@ -793,7 +904,6 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   </div>
 </section>
 
-<div class="blog-faq-divider"><hr></div>
 <section class="faq" id="faq">
   <div class="faq-in">
     <h2 class="faq-title rv">FAQs</h2>
@@ -807,7 +917,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
           </div>
           <div class="faq-a"><p class="faq-a-inner">MindCraft first diagnoses exactly what your child doesn't understand, then helps them fix it. With a real human tutor and mathematical tools we keep them moving forward. With confidence.</p></div>
         </div>
-        <div class="faq-item">
+        <div class="faq-item" id="faq-tutors">
           <div class="faq-q" onclick="toggleFaq(this)">
             <span class="faq-q-text">Who teaches my child?</span>
             <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
@@ -920,35 +1030,59 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
 (function(){
   var intro=document.getElementById('mc-intro');
   if(!intro)return;
+  document.body.classList.add('intro-active');
   document.body.style.overflow='hidden';
   var slides=intro.querySelectorAll('.mc-slide');
-  var cur=0,timer=null,AUTO=3000;
-  // 0→1 and 4→5 (word reveals): 0.9 s. Slide 1 ("FIXED" shown) stays 1 s before next.
-  var SLIDE_DELAYS=[900,1000,AUTO,AUTO,900];
+  var cur=0,timer=null,leaveTimer=null,AUTO=3400;
+  var SLIDE_DELAYS=[2800,AUTO,AUTO,3200];
+
+  function resetReveal(slide){
+    slide.querySelectorAll('.mc-reveal-word,.mc-reveal-line,.mc-quote,.mc-brand').forEach(function(el){
+      el.style.animation='none';
+      void el.offsetWidth;
+      el.style.animation='';
+    });
+  }
+
+  function revealHero(){
+    document.body.classList.remove('intro-active');
+    window.scrollTo(0, 0);
+    document.querySelectorAll('.above-fold .rv,.above-fold .rv-pop').forEach(function(el){
+      el.classList.add('show');
+    });
+  }
 
   function exit(){
     clearTimeout(timer);
+    clearTimeout(leaveTimer);
     document.body.style.overflow='';
     intro.classList.add('mc-exit');
-    setTimeout(function(){intro.classList.add('mc-gone');},700);
+    setTimeout(function(){
+      intro.classList.add('mc-gone');
+      revealHero();
+    },1000);
   }
 
   function go(n){
     clearTimeout(timer);
-    slides[cur].classList.remove('mc-active');
+    clearTimeout(leaveTimer);
+    var prev=cur;
+    slides[prev].classList.remove('mc-active');
+    slides[prev].classList.add('mc-leaving');
     cur=(n+slides.length)%slides.length;
+    resetReveal(slides[cur]);
     slides[cur].classList.add('mc-active');
+    leaveTimer=setTimeout(function(){slides[prev].classList.remove('mc-leaving');},1050);
     if(cur<slides.length-1){
       var delay=SLIDE_DELAYS[cur]!==undefined?SLIDE_DELAYS[cur]:AUTO;
       timer=setTimeout(function(){go(cur+1);},delay);
     } else {
-      // Last slide: auto-open site after 1 s
-      timer=setTimeout(exit,1000);
+      timer=setTimeout(exit,3200);
     }
   }
 
   intro.addEventListener('click',function(e){
-    if(e.target.closest('#mc-skip'))return;
+    if(e.target.closest('#mc-skip')||e.target.closest('.mc-login'))return;
     if(cur<slides.length-1)go(cur+1); else exit();
   });
   document.addEventListener('keydown',function(e){
@@ -959,7 +1093,8 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   });
   var skipBtn=document.getElementById('mc-skip');
   if(skipBtn)skipBtn.addEventListener('click',function(e){e.stopPropagation();exit();});
-  go(0);
+  slides[0].classList.add('mc-active');
+  timer=setTimeout(function(){go(1);},SLIDE_DELAYS[0]);
 })();
 
 // ── SUBJECTS PANEL: reveal in place (already before #steps in HTML) ──
@@ -981,7 +1116,12 @@ window.addEventListener('scroll',function(){
 },{passive:true});
 
 // ── REVEAL: standard .rv elements ──
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(el){if(el.isIntersecting){el.target.classList.add('show');obs.unobserve(el.target)}})},{threshold:0.1});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(entry){
+  if(!entry.isIntersecting)return;
+  if(document.body.classList.contains('intro-active')&&entry.target.closest('.above-fold'))return;
+  entry.target.classList.add('show');
+  obs.unobserve(entry.target);
+})},{threshold:0.1});
 document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
 
 // ── REVEAL: auto-stagger grids ──
@@ -991,6 +1131,34 @@ document.querySelectorAll('.auto-stagger,.card-drop-grid').forEach(function(el){
 // ── REVEAL: scale-pop headings ──
 var popObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');popObs.unobserve(e.target)}})},{threshold:0.15});
 document.querySelectorAll('.rv-pop').forEach(function(el){popObs.observe(el)});
+
+// ── PHOENIX: scroll-triggered music in embed ──
+(function(){
+  var frame=document.getElementById('phoenixWorld');
+  var section=document.getElementById('portfolio');
+  if(!frame||!section)return;
+  function sendMusic(play){
+    try{frame.contentWindow.postMessage({type:'phoenix-music',play:!!play},'*');}catch(e){}
+  }
+  var inView=false;
+  var musicObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var shouldPlay=entry.isIntersecting;
+      if(shouldPlay===inView)return;
+      inView=shouldPlay;
+      sendMusic(shouldPlay);
+    });
+  },{threshold:0.08});
+  musicObs.observe(section);
+  frame.addEventListener('load',function(){
+    if(inView)sendMusic(true);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='m'&&e.key!=='M')return;
+    if(!inView)return;
+    try{frame.contentWindow.postMessage({type:'phoenix-music-toggle'},'*');}catch(err){}
+  });
+})();
 
 // ── SLIDESHOW AUTO-ADVANCE (runs for every .subj-showcase) ──
 document.querySelectorAll('.subj-showcase').forEach(function(wrap){
@@ -1016,9 +1184,36 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
+function openFaqItem(id) {
+  var item = document.getElementById(id);
+  if (!item) return;
+  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  item.classList.add('open');
+  setTimeout(function() {
+    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 80);
+}
+
+document.querySelectorAll('a[href="#faq-tutors"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    openFaqItem('faq-tutors');
+    history.pushState(null, '', '#faq-tutors');
+  });
+});
+
+function handleFaqHash() {
+  if (location.hash === '#faq-tutors') openFaqItem('faq-tutors');
+}
+window.addEventListener('hashchange', handleFaqHash);
+if (location.hash === '#faq-tutors') {
+  window.addEventListener('load', function() { setTimeout(handleFaqHash, 350); });
+  setTimeout(handleFaqHash, 350);
+}
+
 // ── Blog panel cards ──
 var BLOG_ARTICLES = [
-  { id:1, title:'Our Mission & Vision', excerpt:'MindCraft was created by educators who truly care about teaching — people who live for the moment a student finally gets it.', category:'Headquarters', date:'Apr 5, 2026', author:'Akshat K.', bg1:'#0A1F10', bg2:'#1A3C2A', accent:'#58CC02' },
+  { id:1, title:'Our Mission & Vision', excerpt:'MindCraft was created by educators who truly care about teaching — people who live for the moment a student finally gets it.', category:'Headquarters', date:'Apr 5, 2026', author:'Akshat K.', bg1:'#0A1F10', bg2:'#1A3C2A', accent:'#54B948' },
   { id:2, title:'MindCraft was in Beta at Macalester last week', excerpt:'Last week we attended a Beta.mn event at Macalester. Here\'s what we heard, and what it reinforced about the way we\'re building.', category:'Community', date:'Mar 28, 2026', author:'Akshat K.', bg1:'#0A1428', bg2:'#1A2A50', accent:'#4A7BF7' }
 ];
 

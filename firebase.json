@@ -1,13 +1,9 @@
 {
   "firestore": {
-    "rules": "firestore.rules"
+    "rules": "firebase/firestore.rules"
   },
   "storage": {
-    "rules": "storage.rules"
-  },
-  "functions": {
-    "source": "functions",
-    "runtime": "nodejs20"
+    "rules": "firebase/storage.rules"
   },
   "hosting": [
     {
@@ -15,7 +11,10 @@
       "public": "app/dist",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "redirects": [
-        { "source": "/", "destination": "/landing.html", "type": 302 }
+        { "source": "/", "destination": "https://mindcraft-marketing-site.web.app/", "type": 302 },
+        { "source": "/landing.html", "destination": "https://mindcraft-marketing-site.web.app/", "type": 301 },
+        { "source": "/blog.html", "destination": "https://mindcraft-marketing-site.web.app/blog.html", "type": 301 },
+        { "source": "/article.html", "destination": "https://mindcraft-marketing-site.web.app/article.html", "type": 301 }
       ],
       "rewrites": [
         { "source": "**", "destination": "/index.html" }
@@ -87,6 +86,20 @@
       ]
     },
     {
+      "target": "world1",
+      "public": "worlds/world2",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        { "source": "**", "destination": "/index.html" }
+      ],
+      "headers": [
+        {
+          "source": "/assets/**",
+          "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+        }
+      ]
+    },
+    {
       "target": "marketing",
       "public": ".",
       "ignore": [
@@ -102,9 +115,18 @@
         "webhook/**",
         "ml/**",
         "homework/**",
+        "worlds/**",
+        "docs/**",
+        "img/*.3mf",
+        "img/*.tex",
+        "img/*.pptx",
+        "img/*.mp3",
+        "img/*.py",
         "package*.json",
         "firestore*",
         "storage.rules",
+        "serve-spa.mjs",
+        "make_deck.py",
         "*.pdf",
         "*.xlsx",
         "*.md",
