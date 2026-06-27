@@ -54,11 +54,12 @@ class ConceptRecommendation:
     supplement_for: str | None           # which chain concept this supplements
     alignment_score: float | None        # cosine sim with strength vector
     pca_profile: dict[str, float]        # projection onto named PCA axes
-    # ── bridge-gap fields (set only when is_bridge_gap) ──
-    is_bridge_gap: bool = False          # a cross-concept transition the student is stuck on
-    bridge_id: str | None = None         # "from_ing->to_ing" id
-    bridge_from_concept: str | None = None
-    bridge_to_concept: str | None = None
+    # ── gap fields (set only when is_bridge_gap) ──
+    is_bridge_gap: bool = False          # a gap the concept-trim can't surface
+    gap_type: str | None = None          # "concept" (cross-concept bridge) | "format" (vessel)
+    bridge_id: str | None = None         # "from_ing->to_ing" id (concept gaps only)
+    bridge_from_concept: str | None = None  # concept gap: source concept | format gap: format_id
+    bridge_to_concept: str | None = None    # concept gap: target concept | format gap: anchor concept
     bridge_evidence: str | None = None   # "evidence" (Tier 1) or "hypothesis" (Tier 2)
 
 
@@ -247,6 +248,17 @@ def recommend(
                 )
                 recommendations.append(gap)
 
+        # Format gaps ("knows the concept, fails the vessel") — a separate
+        # post-pass on the format-blind pathfinder output, appended after the
+        # chain. Format mastery lives in mastery_by_concept under FORMAT_IDS keys.
+        from mindcraft_graph.config import FORMAT_IDS
+        _mastery = graph.state.mastery_by_concept
+        _format_mastery = {k: v for k, v in _mastery.items() if k in FORMAT_IDS}
+        _concept_mastery = {k: v for k, v in _mastery.items() if k not in FORMAT_IDS}
+        recommendations.extend(
+            _detect_format_gaps(trimmed, _concept_mastery, _format_mastery)
+        )
+
     return RecommendationResult(
         mode=goal.mode,
         target_concepts=goal.target_concepts,
@@ -357,11 +369,77 @@ def _make_bridge_gap(
         alignment_score=None,
         pca_profile={},                 # set by caller
         is_bridge_gap=True,
+        gap_type="concept",
         bridge_id=bridge.id,
         bridge_from_concept=src,
         bridge_to_concept=tgt,
         bridge_evidence=evidence,
     )
+
+
+def _detect_format_gaps(
+    trimmed: list[str],
+    concept_mastery: dict,
+    format_mastery: dict,
+) -> list[ConceptRecommendation]:
+    """Find representation/format gaps: "knows the concept, fails the vessel".
+
+    Separate post-pass on the pathfinder output (it stays format-blind). The
+    gradient is INVERTED vs concept bridges: the CONCEPT is mastered and the
+    FORMAT is weak. Each weak format is surfaced once, anchored to the
+    highest-mastery chain concept as the exemplar to demonstrate it with.
+
+    - Tier 1 (evidence): the format node has real attempt history
+      (>= GAP_TIER1_MIN_ATTEMPTS).
+    - Tier 2 (hypothesis): the format is weak but barely practiced.
+    """
+    from mindcraft_graph.config import (
+        GAP_CONCEPT_MASTERED_THRESHOLD,
+        GAP_FORMAT_WEAK_THRESHOLD,
+        GAP_TIER1_MIN_ATTEMPTS,
+    )
+
+    strong = sorted(
+        ((cid, concept_mastery[cid].mastery) for cid in trimmed
+         if cid in concept_mastery
+         and concept_mastery[cid].mastery >= GAP_CONCEPT_MASTERED_THRESHOLD),
+        key=lambda x: -x[1],
+    )
+    if not strong:
+        return []
+    anchor = strong[0][0]
+
+    gaps: list[ConceptRecommendation] = []
+    for fmt_id, fm in format_mastery.items():
+        if fm.mastery >= GAP_FORMAT_WEAK_THRESHOLD:
+            continue
+        evidence = "evidence" if fm.attempts >= GAP_TIER1_MIN_ATTEMPTS else "hypothesis"
+        if evidence == "evidence":
+            reason = (
+                f"You know {anchor} but keep missing it as a {fmt_id} — "
+                f"the format is the blocker, not the concept."
+            )
+        else:
+            reason = (
+                f"You know {anchor}; you haven't shown you can handle it as a "
+                f"{fmt_id}. That vessel might trip you up."
+            )
+        gaps.append(ConceptRecommendation(
+            concept_id=anchor,
+            reason=reason,
+            position_in_chain=None,
+            is_supplement=False,
+            supplement_for=None,
+            alignment_score=None,
+            pca_profile={},
+            is_bridge_gap=True,
+            gap_type="format",
+            bridge_id=None,
+            bridge_from_concept=fmt_id,
+            bridge_to_concept=anchor,
+            bridge_evidence=evidence,
+        ))
+    return gaps
 
 
 # ── Explanation generators ──

@@ -172,7 +172,24 @@ class SeedAssessmentRequest(BaseModel):
 
 class OutcomeItem(BaseModel):
     concept_id: str
-    succeeded: bool
+    # Per-question substrate (Step 1). `score` is the raw pass rate in [0,1]
+    # (a single question is 1.0/0.0; a session may send a fraction). `format_id`
+    # is a canonical representation/vessel id, validated against config.FORMAT_IDS.
+    format_id: str | None = None
+    score: float | None = None
+    level: int = 1
+    question_id: str | None = None
+    # Deprecated legacy session-boolean. Used only when `score` is None so current
+    # callers don't break (succeeded -> score 1.0/0.0).
+    succeeded: bool | None = None
+
+    def resolved_score(self) -> float | None:
+        """Raw pass rate, falling back to the deprecated boolean."""
+        if self.score is not None:
+            return self.score
+        if self.succeeded is not None:
+            return 1.0 if self.succeeded else 0.0
+        return None
 
 
 class RecordOutcomesRequest(BaseModel):
@@ -243,8 +260,9 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
 async def recommend_endpoint(req: RecommendRequest):
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph, save_recommendation_result,
-        append_displacement_snapshot, load_ingredient_state,
+        append_displacement_snapshot, load_ingredient_state, load_format_events,
     )
+    from mindcraft_graph.engine.update import fold_format_events
 
     # Load student data
     events = load_student_events(req.student_id)
@@ -256,6 +274,10 @@ async def recommend_endpoint(req: RecommendRequest):
     graph = create_personal_graph(req.student_id, ontology)
     if events:
         graph = update_personal_graph(graph, events, ontology)
+
+    # Fold format nodes into mastery_by_concept (separate from the concept path)
+    # so format-gap detection can see per-vessel mastery.
+    graph.state = fold_format_events(graph.state, load_format_events(req.student_id))
 
     # Apply decay
     now = datetime.now()
@@ -323,6 +345,7 @@ async def recommend_endpoint(req: RecommendRequest):
                 "alignmentScore": r.alignment_score,
                 "pcaProfile": r.pca_profile,
                 "isBridgeGap": r.is_bridge_gap,
+                "gapType": r.gap_type,
                 "bridgeId": r.bridge_id,
                 "bridgeFromConcept": r.bridge_from_concept,
                 "bridgeToConcept": r.bridge_to_concept,
@@ -413,51 +436,73 @@ async def seed_assessment_endpoint(req: SeedAssessmentRequest):
     }
 
 
-# Practice/homework outcome -> graph signal. A solved problem rewards mastery;
-# a missed one is weak negative evidence (lower effort than a confirmed struggle).
-OUTCOME_MAP = {True: (0.6, 0.4), False: (-0.4, 0.6)}
-
-
 @app.post("/record-outcomes")
 async def record_outcomes_endpoint(req: RecordOutcomesRequest):
     """Record practice/homework results into the concept graph so mastery moves
-    as the student actually answers problems. Events accumulate (not replaced)."""
+    as the student actually answers problems. Events accumulate (not replaced).
+
+    Per-question granularity is preserved: each OutcomeItem mints its own event
+    via config.outcome_from(score, level) (replacing the old binary OUTCOME_MAP).
+    Format-tagged items split their negative evidence to a format node (full
+    credit to both on a positive), persisted to a separate collection and folded
+    via fold_format_events so they never touch the concept edge/feature path."""
     from mindcraft_graph.firestore_adapter import (
         append_interactions,
+        append_format_interactions,
+        load_format_events,
         load_student_events,
         save_personal_graph,
     )
     from mindcraft_graph.models.events import SessionEvent
+    from mindcraft_graph.engine.update import fold_format_events
+    from mindcraft_graph.config import outcome_from, split_outcome, FORMAT_IDS
 
     valid_concepts = {concept.id for concept in ontology.concepts}
     now = datetime.now()
     recorded: list[str] = []
     skipped: list[str] = []
     events: list[SessionEvent] = []
+    format_records: list[dict] = []
     for item in req.outcomes:
-        if item.concept_id not in valid_concepts:
+        score = item.resolved_score()
+        if item.concept_id not in valid_concepts or score is None:
             skipped.append(item.concept_id)
             continue
-        outcome, effort = OUTCOME_MAP[item.succeeded]
+        base_outcome = outcome_from(score, item.level)
+        has_format = item.format_id in FORMAT_IDS
+        concept_outcome, format_outcome = split_outcome(base_outcome, has_format)
+        # Effort is informational for strength/displacement only (never mastery);
+        # a miss reflects more struggle than a pass.
+        effort = 0.6 if base_outcome < 0 else 0.4
         events.append(SessionEvent(
             student_id=req.student_id,
             concept_id=item.concept_id,
             event_type="problem_set",
-            outcome=outcome,
+            outcome=concept_outcome,
             effort=effort,
             duration_minutes=3.0,
             timestamp=now,
             exposure_weight=1.0,
         ))
+        if format_outcome is not None:
+            format_records.append({
+                "format_id": item.format_id,
+                "outcome": format_outcome,
+                "level": item.level,
+            })
         recorded.append(item.concept_id)
 
     if events:
         append_interactions(req.student_id, events, source="practice")
+    if format_records:
+        append_format_interactions(req.student_id, format_records, now)
 
     all_events = load_student_events(req.student_id)
     graph = create_personal_graph(req.student_id, ontology)
     if all_events:
         graph = update_personal_graph(graph, all_events, ontology)
+    # Fold format nodes into mastery_by_concept (separate from the concept path).
+    graph.state = fold_format_events(graph.state, load_format_events(req.student_id))
     graph.state = decay_student_state(graph.state, now)
     graph.edges = decay_all_edges(graph.edges, now)
     save_personal_graph(req.student_id, graph)

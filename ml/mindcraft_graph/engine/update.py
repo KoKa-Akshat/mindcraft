@@ -140,3 +140,20 @@ def update_student_state(
         "mastery_by_concept": new_mastery,
         "updated_at": sorted_events[-1].timestamp if sorted_events else state.updated_at,
     })
+
+
+def fold_format_events(state: StudentState, format_events: list[SessionEvent]) -> StudentState:
+    """Fold representation/format events into format nodes in mastery_by_concept.
+
+    Format nodes are lazy-minted as mastery keys (the event's concept_id holds a
+    format_id) on first valid event, validated against config.FORMAT_IDS, and
+    never enter the concepts list. They run through the IDENTICAL
+    apply_event_to_mastery path as concepts (no new update math); keeping format
+    events out of the concept event list is what keeps them off the edge/feature/
+    difficulty paths.
+    """
+    from mindcraft_graph.config import FORMAT_IDS
+    valid = [e for e in format_events if e.concept_id in FORMAT_IDS]
+    if not valid:
+        return state
+    return update_student_state(state, valid)

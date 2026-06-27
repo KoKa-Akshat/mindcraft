@@ -727,6 +727,74 @@ check("Final trimmed chain is shorter than original",
 
 # ════════════════════════════════════════════════════════════
 print("\n" + "=" * 60)
+print("  TEST SUITE 14: FORMAT NODES (representation/vessel mastery)")
+print("=" * 60)
+# ════════════════════════════════════════════════════════════
+from mindcraft_graph.engine.update import fold_format_events
+from mindcraft_graph.api.recommend import _detect_format_gaps
+from mindcraft_graph.config import FORMAT_IDS, outcome_from, split_outcome
+
+fmt_now = datetime(2026, 6, 25)
+fmt_state = StudentState(student_id="fs", mastery_by_concept={}, created_at=fmt_now, updated_at=fmt_now)
+
+def _fmt_ev(fmt, out, days):
+    return SessionEvent(student_id="fs", concept_id=fmt, event_type="problem_set",
+                        outcome=out, effort=0.0, duration_minutes=0.0,
+                        timestamp=fmt_now - timedelta(days=days), exposure_weight=1.0)
+
+# Folds via the IDENTICAL apply_event_to_mastery path; lazy-mint; validated.
+folded = fold_format_events(fmt_state, [
+    _fmt_ev("word_problem", -0.3, 3), _fmt_ev("word_problem", -0.4, 1),
+    _fmt_ev("NOT_A_FORMAT", 0.6, 1),  # invalid -> dropped
+])
+check("Format node minted as a mastery key",
+      "word_problem" in folded.mastery_by_concept)
+check("Invalid format_id rejected (validated vs FORMAT_IDS)",
+      "NOT_A_FORMAT" not in folded.mastery_by_concept)
+check("Format mastery moves on the apply_event_to_mastery path",
+      0.0 < folded.mastery_by_concept["word_problem"].mastery < 0.6,
+      f"m={folded.mastery_by_concept['word_problem'].mastery:.3f}")
+check("Format node carries NO difficulty (absent from ontology concepts)",
+      all(c.id != "word_problem" for c in ontology.concepts))
+
+# Effort must not touch format mastery (strength/displacement only).
+m_eff = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="diagram",
+        event_type="problem_set", outcome=-0.3, effort=1.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=1.0)]).mastery_by_concept["diagram"].mastery
+m_no = fold_format_events(fmt_state, [SessionEvent(student_id="fs", concept_id="diagram",
+        event_type="problem_set", outcome=-0.3, effort=0.0, duration_minutes=0.0,
+        timestamp=fmt_now, exposure_weight=1.0)]).mastery_by_concept["diagram"].mastery
+check("Effort does not affect format mastery", m_eff == m_no)
+
+# split_outcome: positive full to both, negative split, no-format all-to-concept.
+pos_c, pos_f = split_outcome(0.5, True)
+neg_c, neg_f = split_outcome(-0.5, True)
+none_c, none_f = split_outcome(-0.5, False)
+check("Positive evidence: full credit to both nodes", pos_c == 0.5 and pos_f == 0.5)
+check("Negative evidence split 0.4/0.6", abs(neg_c - -0.2) < 1e-9 and abs(neg_f - -0.3) < 1e-9)
+check("No format tag: all to concept, none to format", none_c == -0.5 and none_f is None)
+
+# Format-gap detection (inverted gradient: concept HIGH, format LOW).
+from types import SimpleNamespace as _NS
+def _cm(m, att=0): return _NS(mastery=m, attempts=att)
+_trim = ["derivatives", "functions_basics"]
+_cmast = {"derivatives": _cm(0.8), "functions_basics": _cm(0.7)}
+g_t2 = _detect_format_gaps(_trim, _cmast, {"word_problem": _cm(0.2, 1)})
+check("Tier-2 format gap fires (concept high, format low, few attempts)",
+      len(g_t2) == 1 and g_t2[0].gap_type == "format" and g_t2[0].bridge_evidence == "hypothesis")
+check("Format gap anchors to highest-mastery concept",
+      g_t2 and g_t2[0].bridge_to_concept == "derivatives")
+g_t1 = _detect_format_gaps(_trim, _cmast, {"word_problem": _cm(0.2, 5)})
+check("Tier-1 when format has real attempt history",
+      g_t1 and g_t1[0].bridge_evidence == "evidence")
+check("No format gap when the format is strong",
+      _detect_format_gaps(_trim, _cmast, {"word_problem": _cm(0.8, 5)}) == [])
+check("No format gap when no concept is mastered (no anchor)",
+      _detect_format_gaps(_trim, {"derivatives": _cm(0.3)}, {"word_problem": _cm(0.2, 5)}) == [])
+
+
+# ════════════════════════════════════════════════════════════
+print("\n" + "=" * 60)
 print("  RESULTS")
 print("=" * 60)
 print(f"\n  Passed: {passed}/{total}")
