@@ -347,6 +347,7 @@ export default function KnowledgeGraph() {
       mastery: node.mastery,
       strengthScore: node.strengthScore,
     })
+    void getRecommendations(user.uid, [node.id], 'curriculum').then(setMlResult)
   }
 
   function openIngredientCard(ingredient: IngredientPreview) {
@@ -859,7 +860,7 @@ export default function KnowledgeGraph() {
                     </div>
                   </div>
                   <div className={s.flashcardActions}>
-                    <button className={s.flashcardAction} onClick={() => navigate('/practice')}>
+                    <button className={s.flashcardAction} onClick={() => navigate('/practice', { state: { conceptId: selected.id } })}>
                       Practice this concept
                     </button>
                     <button className={s.flashcardActionSecondary} onClick={() => navigate('/organize-notes')}>
@@ -870,6 +871,12 @@ export default function KnowledgeGraph() {
               )}
 
               {/* Actions */}
+              <button
+                className={s.bookBtn}
+                onClick={() => navigate('/practice', { state: { conceptId: selected.id } })}
+              >
+                Practice {mlIdToLabel(selected.id)}
+              </button>
               {isUnexplored(selected.status) && (
                 <button className={s.bookBtn} onClick={() => navigate('/book')}>
                   Book a Session on {mlIdToLabel(selected.id)}

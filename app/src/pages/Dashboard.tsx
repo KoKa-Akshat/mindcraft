@@ -7,7 +7,7 @@ import { isDiagnosticComplete } from '../lib/practiceState'
 import { worldUrl } from '../lib/siteUrls'
 import HeroBar            from '../components/HeroBar'
 import ConstellationCard  from '../components/ConstellationCard'
-import LearningGPS        from '../components/LearningGPS'
+import NextConceptCard    from '../components/NextConceptCard'
 import ReinforcePanel     from '../components/ReinforceCard'
 import s from './Dashboard.module.css'
 
@@ -102,24 +102,7 @@ export default function Dashboard() {
               {/* Right panel */}
               <div className={s.panel}>
                 <motion.div {...FADE_UP(0.10)}>
-                  <div
-                    className={s.examCard}
-                    onClick={() => navigate('/prep')}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={e => e.key === 'Enter' && navigate('/prep')}
-                  >
-                    <div className={s.examTop}>
-                      <span className={s.examBadge}>EXAM HELP</span>
-                    </div>
-                    <h3 className={s.examTitle}>
-                      Let's find your gaps<br />before the exam does.
-                    </h3>
-                    <p className={s.examSub}>
-                      Diagnosis → gap map → targeted practice → readiness score.
-                    </p>
-                    <button className={s.examBtn}>Start prep session →</button>
-                  </div>
+                  <NextConceptCard userId={uid} />
                 </motion.div>
 
                 <motion.div {...FADE_UP(0.18)}>
@@ -143,12 +126,8 @@ export default function Dashboard() {
                   </div>
                 </motion.div>
 
-                <motion.div {...FADE_UP(0.26)}>
-                  <LearningGPS userId={uid} />
-                </motion.div>
-
                 {/* Recommended Reinforcement (bridge + format gaps) */}
-                <motion.div {...FADE_UP(0.30)}>
+                <motion.div {...FADE_UP(0.26)}>
                   <ReinforcePanel userId={uid} />
                 </motion.div>
 

@@ -16,7 +16,8 @@ import { getConceptContent } from '../lib/conceptContent'
 import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
 import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
-import { seedAssessment, recordOutcomes, getIngredientCards, getRecommendations, type IngredientRecommendResult } from '../lib/mlApi'
+import { seedAssessment, recordOutcomes, getIngredientCards, type IngredientRecommendResult } from '../lib/mlApi'
+import { fetchNextConcept } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote } from '../lib/practiceState'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
@@ -365,7 +366,7 @@ export default function Practice() {
   // Which mission is currently active (drives which slot autosave writes to), and
   // which hub start-card is loading.
   const [missionType, setMissionType] = useState<MissionType | null>(null)
-  const [missionLoading, setMissionLoading] = useState<'weakness' | 'learn' | null>(null)
+  const [missionLoading, setMissionLoading] = useState(false)
 
   // ── Solver state ──────────────────────────────────────────────────────────
   const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
@@ -469,7 +470,13 @@ export default function Practice() {
 
   useEffect(() => {
     if (draftHydratedRef.current) return
-    const state = location.state as { problemText?: string; examHelp?: boolean; homeworkHelp?: boolean } | null
+    const state = location.state as {
+      problemText?: string
+      examHelp?: boolean
+      homeworkHelp?: boolean
+      conceptId?: string
+      showPath?: boolean
+    } | null
     const slots = loadAllDraftSlots()
     setSavedDrafts(slots)
     const hasAny = Object.keys(slots).length > 0
@@ -479,7 +486,10 @@ export default function Practice() {
     if (state?.examHelp && !hasAny) {
       setMissionType('gapscan')
       setPPhase('exam-pick')
-    } else {
+    } else if (state?.showPath) {
+      setAssessConcepts([])
+      setPPhase('path')
+    } else if (!state?.conceptId) {
       setPPhase('onboard')
     }
     draftHydratedRef.current = true
@@ -577,11 +587,29 @@ export default function Practice() {
 
   // Auto-submit if navigated from dashboard with problemText; open the requested flow otherwise.
   useEffect(() => {
-    const state = location.state as { problemText?: string; examHelp?: boolean; homeworkHelp?: boolean } | null
+    const state = location.state as {
+      problemText?: string
+      examHelp?: boolean
+      homeworkHelp?: boolean
+      conceptId?: string
+      showPath?: boolean
+    } | null
     if (state?.problemText) {
       setMode('solver')
       setProblem(state.problemText)
       submitProblem(state.problemText)
+      window.history.replaceState({}, '')
+    } else if (state?.conceptId) {
+      setMode('practice')
+      setMissionType('weakness')
+      setConcept(state.conceptId)
+      setLevel(2)
+      setPPhase('level')
+      window.history.replaceState({}, '')
+    } else if (state?.showPath) {
+      setMode('practice')
+      setAssessConcepts([])
+      setPPhase('path')
       window.history.replaceState({}, '')
     } else if (state?.homeworkHelp) {
       setMode('solver')
@@ -645,29 +673,14 @@ export default function Practice() {
     setPPhase('level')
   }
 
-  // Learn New (Learning GPS): the next not-yet-mastered concept on the path.
-  async function startLearnMission() {
-    setMissionLoading('learn')
+  // Recommended next concept (weakness-prioritized).
+  async function startRecommendedMission() {
+    setMissionLoading(true)
     try {
-      const rec = await getRecommendations(user.uid, [], 'curriculum')
-      const next = rec?.recommendations?.find(r => !r.isSupplement && !r.isBridgeGap)?.conceptId
-      if (next) enterMission('learn', next)
-      else { setAssessConcepts([]); setPPhase('path') }  // fallback: show all topics
-    } finally { setMissionLoading(null) }
-  }
-
-  // Weakness practice (Exam Help): top weak concept or a concept-bridge gap.
-  async function startWeaknessMission() {
-    setMissionLoading('weakness')
-    try {
-      const rec = await getRecommendations(user.uid, [], 'curriculum')
-      const bridgeTarget = rec?.recommendations
-        ?.find(r => r.isBridgeGap && r.gapType === 'concept')?.bridgeToConcept
-      const weakest = rec?.studentProfile?.topWeaknesses?.[0]?.conceptId
-      const target = bridgeTarget ?? weakest
-      if (target) enterMission('weakness', target)
-      else { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }  // fallback: gap-scan to find weaknesses
-    } finally { setMissionLoading(null) }
+      const next = await fetchNextConcept(user.uid)
+      if (next) enterMission('weakness', next.conceptId)
+      else { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }
+    } finally { setMissionLoading(false) }
   }
 
   // ── Gap analysis helpers ──────────────────────────────────────────────────
@@ -964,26 +977,14 @@ export default function Practice() {
                 {/* ── Start a mission ── */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 460, marginTop: 8 }}>
                   <button
-                    onClick={startWeaknessMission}
-                    disabled={missionLoading !== null}
+                    onClick={startRecommendedMission}
+                    disabled={missionLoading}
                     style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
                              background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 15 }}>🎯 Exam Help — Weakness Practice</div>
+                    <div style={{ fontWeight: 700, fontSize: 15 }}>🎯 Practice recommended concept</div>
                     <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
-                      {missionLoading === 'weakness' ? 'Finding your weak spots…'
-                        : 'Drill the concepts and connections tripping you up.'}
-                    </div>
-                  </button>
-
-                  <button
-                    onClick={startLearnMission}
-                    disabled={missionLoading !== null}
-                    style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
-                             background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 15 }}>🧭 Learning GPS — Learn New</div>
-                    <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
-                      {missionLoading === 'learn' ? 'Plotting your next topic…'
-                        : 'Move forward to the next concept on your path.'}
+                      {missionLoading ? 'Finding your next focus…'
+                        : 'Jump straight into your highest-priority weakness.'}
                     </div>
                   </button>
                 </div>
@@ -992,7 +993,7 @@ export default function Practice() {
                   Run a full gap scan →
                 </button>
                 <button className={s.skipBtn} onClick={() => { setAssessConcepts([]); setPPhase('path') }}>
-                  Skip — just show me all topics
+                  See all topics
                 </button>
               </div>
             )}

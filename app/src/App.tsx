@@ -29,7 +29,6 @@ import StudentSessions   from './pages/StudentSessions'
 import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
-import LearningGPS     from './components/LearningGPS'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
@@ -41,7 +40,7 @@ export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
 
 // Wake the ML Cloud Run service the moment auth resolves, so the first graph
-// fetch (LearningGPS auto-load on the dashboard, or the Knowledge Graph page)
+// fetch (NextConceptCard on the dashboard, or the Knowledge Graph page)
 // hits a warm instance instead of eating a 30–60s cold start (min-instances 0).
 // Fire-and-forget, once per page session.
 const ML_API_URL =
@@ -51,12 +50,6 @@ function warmML() {
   if (mlWarmed || !ML_API_URL) return
   mlWarmed = true
   fetch(`${ML_API_URL}/health`).catch(() => {})
-}
-
-/** Pathfinder/recommend view — feeds the current user's id to LearningGPS. */
-function LearningGPSPage() {
-  const user = useUser()
-  return <LearningGPS userId={user.uid} />
 }
 
 /** Constellation-style knowledge graph for the current user. */
@@ -128,7 +121,7 @@ export default function App() {
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
-        <Route path="/learning-gps"        element={<AuthGuard><LearningGPSPage /></AuthGuard>} />
+        <Route path="/learning-gps"        element={<Navigate to="/knowledge-graph" replace />} />
         <Route path="/constellation"       element={<AuthGuard><ConstellationPage /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
