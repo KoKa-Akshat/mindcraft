@@ -277,6 +277,11 @@
       .catch(function () { console.warn('MC: could not load diagnostic spec') })
 
     root.querySelector('#mc-diag-backdrop').onclick = hide
+
+    // Prevent clicks inside the overlay from reaching the THREE.js raycaster on the canvas
+    root.addEventListener('click', function (e) { e.stopPropagation() })
+    root.addEventListener('pointerdown', function (e) { e.stopPropagation() })
+    root.addEventListener('pointerup', function (e) { e.stopPropagation() })
   }
 
   window.MC_onProjectsOpen = function () { show() }
