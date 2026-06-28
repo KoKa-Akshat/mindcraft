@@ -85,14 +85,17 @@ def font(size, bold=False):
     return ImageFont.load_default()
 
 
-FONT_TITLE = font(40, True)
-FONT_LABEL = font(25, True)
-FONT_BODY = font(21)
-FONT_BODY_SMALL = font(20)
-FONT_TAG = font(20, True)
-FONT_BUTTON = font(30, True)
+FONT_TITLE = font(36, True)
+FONT_LABEL = font(22, True)
+FONT_BODY = font(19)
+FONT_BODY_SMALL = font(18)
+FONT_TAG = font(18, True)
+FONT_BUTTON = font(24, True)
 FONT_LOGO = font(86, True)
 FONT_LOGO_SMALL = font(36, True)
+
+MC_GREEN = "#54b948"
+MC_GREEN_DARK = "#449a38"
 
 
 def draw_wrapped(draw, text, xy, width, font_obj, fill, line_gap=8):
@@ -141,14 +144,24 @@ def logo_mark(draw, box, large=False):
     draw.text((cx - tw / 2, cy - text_font.size / 2 - 2), logo_text, font=text_font, fill="#ffffff")
 
 
-# Layout matched to the original vending detail screens (project*_orig.ktx2).
-LEFT_CARD = (100, 110, 280, 369)
-RIGHT_CARD = (472, 110, 817, 369)
+# Layout aligned to original ramen-shop screens + 3D raycaster hit boxes
+# (projectNavigateHitBoxGeometry 0.47×0.27 at x=0.86 and x=1.415, y=-1.66).
+LEFT_CARD = (61, 80, 299, 391)
+RIGHT_CARD = (450, 80, 817, 391)
 PREVIEW = (488, 118, 801, 302)
-BODY = (100, 446, 809, 739)
-BTN_BACK = (100, 740, 479, 929)
-BTN_LEARN = (490, 740, 799, 929)
-BTN_ICON = (429, 874, 479, 924)
+BODY = (80, 448, 808, 800)
+# Visual buttons sized to match raycaster planes (~297×170 px), not full card width.
+BTN_BACK = (94, 823, 334, 957)
+BTN_LEARN = (444, 823, 684, 957)
+
+
+def btn_icon_box(btn):
+    x1, y1, x2, y2 = btn
+    size = min(x2 - x1, y2 - y1) // 3
+    cx = x2 - size // 2 - 14
+    cy = (y1 + y2) // 2
+    half = size // 2
+    return (cx - half, cy - half, cx + half, cy + half)
 
 
 def make_card(project):
@@ -162,8 +175,8 @@ def make_card(project):
     card_outline = "#88ddbb"
 
     rounded(draw, LEFT_CARD, 14, card_fill, card_outline, 2)
-    logo_mark(draw, (118, 124, 262, 268), large=False)
-    draw_wrapped(draw, project["label"], (112, 278), 156, FONT_LABEL, "#293b48", 4)
+    logo_mark(draw, (LEFT_CARD[0] + 18, LEFT_CARD[1] + 14, LEFT_CARD[0] + 162, LEFT_CARD[1] + 158), large=False)
+    draw_wrapped(draw, project["label"], (LEFT_CARD[0] + 12, LEFT_CARD[1] + 168), LEFT_CARD[2] - LEFT_CARD[0] - 24, FONT_LABEL, "#293b48", 4)
 
     rounded(draw, RIGHT_CARD, 14, card_fill, card_outline, 2)
     rounded(draw, PREVIEW, 8, "#111111", None, 0)
@@ -189,26 +202,44 @@ def make_card(project):
     )
 
     rounded(draw, BODY, 14, card_fill, card_outline, 2)
-    draw.text((118, 468), project["title"], font=FONT_TITLE, fill="#283b48")
-    body_y = draw_wrapped(draw, project["body"], (118, 530), 674, FONT_BODY, "#293b48", 6)
-    tag_y = min(body_y + 8, 688)
-    rounded(draw, (118, tag_y, 184, tag_y + 34), 3, "#293b48")
-    draw.text((132, tag_y + 6), "Skills", font=FONT_TAG, fill="#ffffff")
-    draw.text((200, tag_y + 8), project["skills"], font=FONT_BODY_SMALL, fill="#52636e")
+    body_pad = 18
+    title_x = BODY[0] + body_pad
+    title_y = BODY[1] + body_pad
+    draw.text((title_x, title_y), project["title"], font=FONT_TITLE, fill="#283b48")
+    body_y = draw_wrapped(
+        draw,
+        project["body"],
+        (title_x, title_y + 48),
+        BODY[2] - BODY[0] - body_pad * 2,
+        FONT_BODY,
+        "#293b48",
+        5,
+    )
+    tag_y = min(body_y + 6, BODY[3] - 52)
+    rounded(draw, (title_x, tag_y, title_x + 66, tag_y + 30), 3, "#293b48")
+    draw.text((title_x + 14, tag_y + 5), "Skills", font=FONT_TAG, fill="#ffffff")
+    draw.text((title_x + 82, tag_y + 7), project["skills"], font=FONT_BODY_SMALL, fill="#52636e")
 
-    rounded(draw, BTN_BACK, 12, card_fill, card_outline, 2)
-    draw.text((118, 778), "Go Back", font=FONT_BUTTON, fill="#344654")
-    draw.ellipse(BTN_ICON, fill="#5577ff")
-    draw.line((444, 894, 454, 904), fill="#ffffff", width=7)
-    draw.line((454, 904, 468, 888), fill="#ffffff", width=7)
+    rounded(draw, BTN_BACK, 10, card_fill, card_outline, 2)
+    back_text_x = BTN_BACK[0] + 16
+    back_text_y = BTN_BACK[1] + (BTN_BACK[3] - BTN_BACK[1]) // 2 - FONT_BUTTON.size // 2
+    draw.text((back_text_x, back_text_y), "Go Back", font=FONT_BUTTON, fill="#344654")
+    back_icon = btn_icon_box(BTN_BACK)
+    draw.ellipse(back_icon, fill=MC_GREEN)
+    ix1, iy1, ix2, iy2 = back_icon
+    draw.line((ix1 + 8, (iy1 + iy2) // 2, (ix1 + ix2) // 2 - 2, iy1 + 10), fill="#ffffff", width=5)
+    draw.line(((ix1 + ix2) // 2 - 2, iy1 + 10, ix2 - 6, (iy1 + iy2) // 2 - 6), fill="#ffffff", width=5)
 
-    rounded(draw, BTN_LEARN, 12, "#5577ff", "#3348cc", 2)
-    learn_x = BTN_LEARN[0] + 28
-    draw.text((learn_x, 772), "Learn More", font=FONT_BUTTON, fill="#ffffff")
-    draw.text((learn_x, 818), "(Coming Soon)", font=FONT_LABEL, fill="#ffffff")
-    learn_icon = (744, 874, 794, 924)
+    rounded(draw, BTN_LEARN, 10, MC_GREEN, MC_GREEN_DARK, 2)
+    learn_x = BTN_LEARN[0] + 16
+    learn_mid_y = (BTN_LEARN[1] + BTN_LEARN[3]) // 2
+    draw.text((learn_x, learn_mid_y - 28), "Learn More", font=FONT_BUTTON, fill="#ffffff")
+    draw.text((learn_x, learn_mid_y + 2), "(Coming Soon)", font=FONT_LABEL, fill="#ffffff")
+    learn_icon = btn_icon_box(BTN_LEARN)
     draw.ellipse(learn_icon, fill="#ffffff")
-    draw.text((769, 888), "i", font=FONT_BUTTON, fill="#5577ff", anchor="mm")
+    lcx = (learn_icon[0] + learn_icon[2]) // 2
+    lcy = (learn_icon[1] + learn_icon[3]) // 2
+    draw.text((lcx, lcy), "i", font=FONT_BUTTON, fill=MC_GREEN, anchor="mm")
 
     return image
 
