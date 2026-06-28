@@ -16,7 +16,7 @@ import { getConceptContent } from '../lib/conceptContent'
 import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
 import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
-import { seedAssessment, recordOutcomes, getIngredientCards, type IngredientRecommendResult } from '../lib/mlApi'
+import { seedAssessment, recordOutcomes, getIngredientCards, getRecommendations, type IngredientRecommendResult } from '../lib/mlApi'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftRemote } from '../lib/practiceState'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
@@ -347,6 +347,10 @@ export default function Practice() {
   const [sessionBridge,setSessionBridge]= useState<BridgeRecommendation | null>(null)
   const [draftRestored, setDraftRestored] = useState(false)
   const [savedDraft, setSavedDraft] = useState<PracticeDraft | null>(null)
+  // Mission hub: which kind of mission is active, and which start card is loading.
+  const [missionType, setMissionType] = useState<'weakness' | 'learn' | null>(null)
+  const [missionLoading, setMissionLoading] = useState<'weakness' | 'learn' | null>(null)
+  void missionType
 
   // ── Solver state ──────────────────────────────────────────────────────────
   const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
@@ -574,6 +578,42 @@ export default function Practice() {
     if (conf === 'hard')  return 1
     if (conf === 'kinda') return 2
     return 3
+  }
+
+  // ── Mission hub launchers ─────────────────────────────────────────────────
+  // Both land on the LEVEL screen (pick difficulty), never straight into
+  // questions. Concept ids from /recommend are ontology slugs — the same ids
+  // PRACTICE_CONCEPTS / getQuestions use — so they drive a session directly.
+  function enterMission(type: 'weakness' | 'learn', conceptId: string) {
+    setMissionType(type)
+    setConcept(conceptId)
+    setLevel(getRecommendedLevel(conceptId))
+    setPPhase('level')
+  }
+
+  // Learn New (Learning GPS): the next not-yet-mastered concept on the path.
+  async function startLearnMission() {
+    setMissionLoading('learn')
+    try {
+      const rec = await getRecommendations(user.uid, [], 'curriculum')
+      const next = rec?.recommendations?.find(r => !r.isSupplement && !r.isBridgeGap)?.conceptId
+      if (next) enterMission('learn', next)
+      else { setAssessConcepts([]); setPPhase('path') }  // fallback: show all topics
+    } finally { setMissionLoading(null) }
+  }
+
+  // Weakness practice (Exam Help): top weak concept or a concept-bridge gap.
+  async function startWeaknessMission() {
+    setMissionLoading('weakness')
+    try {
+      const rec = await getRecommendations(user.uid, [], 'curriculum')
+      const bridgeTarget = rec?.recommendations
+        ?.find(r => r.isBridgeGap && r.gapType === 'concept')?.bridgeToConcept
+      const weakest = rec?.studentProfile?.topWeaknesses?.[0]?.conceptId
+      const target = bridgeTarget ?? weakest
+      if (target) enterMission('weakness', target)
+      else { clearPracticeDraft(); setPPhase('exam-pick') }  // fallback: gap-scan to find weaknesses
+    } finally { setMissionLoading(null) }
   }
 
   // ── Gap analysis helpers ──────────────────────────────────────────────────
@@ -845,22 +885,51 @@ export default function Practice() {
                   <PixelCraft size="lg" />
                   <div className={s.speechBubbleTop}>
                     Hi! I'm <strong>Craft</strong> 🦝<br />
-                    I'll scan your gaps and build a study path<br />in about 60 seconds.
+                    Pick up where you left off, or start a mission below.
                   </div>
                 </div>
-                <h1 className={s.onboardTitle}>Exam coming up?</h1>
-                <p className={s.onboardSub}>Tell me what you're prepping for and I'll pinpoint exactly what to focus on.</p>
+                <h1 className={s.onboardTitle}>Your practice missions</h1>
+
+                {/* ── Resume in-progress missions ── */}
                 {savedDraft && (
                   <button className={s.resumeProcessBtn} onClick={loadSavedPracticeDraft}>
                     <span className={s.resumeProcessTop}>
-                      <span>Resume Process 1</span>
+                      <span>Resume mission</span>
                       <span>→</span>
                     </span>
                     <span className={s.resumeProcessMeta}>{savedDraftStatus(savedDraft)}</span>
                   </button>
                 )}
+
+                {/* ── Start a mission ── */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 460, marginTop: 8 }}>
+                  <button
+                    onClick={startWeaknessMission}
+                    disabled={missionLoading !== null}
+                    style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
+                             background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 15 }}>🎯 Exam Help — Weakness Practice</div>
+                    <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
+                      {missionLoading === 'weakness' ? 'Finding your weak spots…'
+                        : 'Drill the concepts and connections tripping you up.'}
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={startLearnMission}
+                    disabled={missionLoading !== null}
+                    style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
+                             background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 15 }}>🧭 Learning GPS — Learn New</div>
+                    <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
+                      {missionLoading === 'learn' ? 'Plotting your next topic…'
+                        : 'Move forward to the next concept on your path.'}
+                    </div>
+                  </button>
+                </div>
+
                 <button className={s.onboardBtn} onClick={() => { clearPracticeDraft(); setPPhase('exam-pick') }}>
-                  {savedDraft ? 'Start new process →' : 'Find my gaps →'}
+                  Run a full gap scan →
                 </button>
                 <button className={s.skipBtn} onClick={() => { setAssessConcepts([]); setPPhase('path') }}>
                   Skip — just show me all topics
