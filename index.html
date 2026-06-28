@@ -220,18 +220,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;ali
 @media(max-width:760px){.pg{grid-template-columns:1fr}.pc.ft{transform:none}}
 
 
-/* WORLD PORTFOLIO SHOWCASE */
-.world-showcase{background:#fff;padding:clamp(40px,5vw,64px) clamp(12px,3vw,32px) clamp(48px,6vw,72px);border-top:1px solid rgba(0,0,0,.06)}
-.world-showcase-in{max-width:min(96vw,1480px);margin:0 auto;text-align:center}
-.world-showcase h2{font-size:clamp(26px,4vw,38px);font-weight:900;color:var(--tx);margin-bottom:10px;letter-spacing:-.3px}
-.world-showcase-caption{font-size:16px;color:var(--mu);font-weight:600;line-height:1.65;max-width:680px;margin:0 auto 24px;text-align:center}
-.world-frame-wrap{position:relative;width:100%;min-height:min(78vh,860px);height:min(78vh,860px);border-radius:18px;overflow:hidden;border:1px solid rgba(0,0,0,.08);box-shadow:0 24px 64px rgba(0,0,0,.1);background:#fff;margin:0 auto;isolation:isolate}
-.world-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;z-index:1;background:transparent}
-.world-showcase h2 .mc-mind{color:#1A1A1A}
-.world-showcase h2 .mc-craft{color:var(--g)}
-@media(max-width:768px){.world-frame-wrap{min-height:62vh;height:62vh}}
-
-
 /* BLOG PANEL */
 .blog-panel{background:#0D0F15;padding:clamp(64px,7vw,92px) 0 clamp(48px,6vw,72px);display:flex;flex-direction:column;justify-content:center;border-top:1px solid rgba(255,255,255,.08)}
 .blog-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;width:100%;padding-bottom:4px}
@@ -803,16 +791,6 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
   </div>
 </section>
 
-<section class="world-showcase" id="portfolio">
-  <div class="world-showcase-in">
-    <h2 class="rv">Step inside the <span class="mc-mind">Mind</span><span class="mc-craft">Craft</span> World</h2>
-    <p class="world-showcase-caption rv d1">Phoenix asset helps you start and organize personal projects. Students can earn coins through practice to purchase assets for different purpose.</p>
-    <div class="world-frame-wrap rv d1">
-      <iframe id="phoenixWorld" src="phoenix/index.html?embed=1" title="Phoenix — MindCraft portfolio world" loading="lazy" allow="autoplay; fullscreen"></iframe>
-    </div>
-  </div>
-</section>
-
 <section class="pricing" id="pricing">
   <h2 class="rv">Start Free</h2>
 
@@ -853,8 +831,7 @@ nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit
           <div class="ka-body">
             <span class="ka-label">Knowledge Assets</span>
             <ul class="ka-sub">
-              <li><a href="#portfolio">Phoenix</a></li>
-              <li><a href="https://mindcraft-world1.web.app" target="_blank" rel="noopener">Chef Nox</a></li>
+              <li><a href="https://mindcraft-world1.web.app" target="_blank" rel="noopener">Study World</a></li>
             </ul>
           </div>
         </li>
@@ -1131,34 +1108,6 @@ document.querySelectorAll('.auto-stagger,.card-drop-grid').forEach(function(el){
 // ── REVEAL: scale-pop headings ──
 var popObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');popObs.unobserve(e.target)}})},{threshold:0.15});
 document.querySelectorAll('.rv-pop').forEach(function(el){popObs.observe(el)});
-
-// ── PHOENIX: scroll-triggered music in embed ──
-(function(){
-  var frame=document.getElementById('phoenixWorld');
-  var section=document.getElementById('portfolio');
-  if(!frame||!section)return;
-  function sendMusic(play){
-    try{frame.contentWindow.postMessage({type:'phoenix-music',play:!!play},'*');}catch(e){}
-  }
-  var inView=false;
-  var musicObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      var shouldPlay=entry.isIntersecting;
-      if(shouldPlay===inView)return;
-      inView=shouldPlay;
-      sendMusic(shouldPlay);
-    });
-  },{threshold:0.08});
-  musicObs.observe(section);
-  frame.addEventListener('load',function(){
-    if(inView)sendMusic(true);
-  });
-  document.addEventListener('keydown',function(e){
-    if(e.key!=='m'&&e.key!=='M')return;
-    if(!inView)return;
-    try{frame.contentWindow.postMessage({type:'phoenix-music-toggle'},'*');}catch(err){}
-  });
-})();
 
 // ── SLIDESHOW AUTO-ADVANCE (runs for every .subj-showcase) ──
 document.querySelectorAll('.subj-showcase').forEach(function(wrap){
