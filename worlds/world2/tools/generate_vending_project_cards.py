@@ -141,52 +141,74 @@ def logo_mark(draw, box, large=False):
     draw.text((cx - tw / 2, cy - text_font.size / 2 - 2), logo_text, font=text_font, fill="#ffffff")
 
 
+# Layout matched to the original vending detail screens (project*_orig.ktx2).
+LEFT_CARD = (100, 110, 280, 369)
+RIGHT_CARD = (472, 110, 817, 369)
+PREVIEW = (488, 118, 801, 302)
+BODY = (100, 446, 809, 739)
+BTN_BACK = (100, 740, 479, 929)
+BTN_LEARN = (490, 740, 799, 929)
+BTN_ICON = (429, 874, 479, 924)
+
+
 def make_card(project):
-    image = Image.new("RGB", (W, H), "#05d28f")
+    image = Image.new("RGB", (W, H), "#00cc99")
     draw = ImageDraw.Draw(image)
 
-    for y in range(0, H, 4):
-        color = "#05d28f" if (y // 4) % 2 == 0 else "#08c98e"
-        draw.line((0, y, W, y), fill=color)
+    rounded(draw, (18, 18, 1006, 1006), 62, None, "#111111", 28)
+    rounded(draw, (58, 58, 966, 966), 40, "#00cc99", "#8ffff0", 4)
 
-    rounded(draw, (18, 18, 1006, 1006), 62, None, "#082f38", 28)
-    rounded(draw, (58, 58, 966, 966), 40, "#07d596", "#8ffff0", 4)
+    card_fill = "#99eecc"
+    card_outline = "#88ddbb"
 
-    small = (132, 138, 324, 388)
-    big = (356, 138, 892, 388)
-    body = (132, 438, 892, 742)
-    back = (132, 790, 462, 930)
-    learn = (530, 790, 860, 930)
+    rounded(draw, LEFT_CARD, 14, card_fill, card_outline, 2)
+    logo_mark(draw, (118, 124, 262, 268), large=False)
+    draw_wrapped(draw, project["label"], (112, 278), 156, FONT_LABEL, "#293b48", 4)
 
-    rounded(draw, small, 14, "#baffec", "#96fff0", 2)
-    logo_mark(draw, (174, 166, 282, 274), large=False)
-    draw_wrapped(draw, project["label"], (158, 292), 142, FONT_LABEL, "#293b48", 4)
+    rounded(draw, RIGHT_CARD, 14, card_fill, card_outline, 2)
+    rounded(draw, PREVIEW, 8, "#111111", None, 0)
+    preview_cx = (PREVIEW[0] + PREVIEW[2]) // 2
+    preview_cy = (PREVIEW[1] + PREVIEW[3]) // 2 - 12
+    logo_size = 118
+    logo_mark(
+        draw,
+        (
+            preview_cx - logo_size // 2,
+            preview_cy - logo_size // 2,
+            preview_cx + logo_size // 2,
+            preview_cy + logo_size // 2,
+        ),
+        large=True,
+    )
+    draw.text(
+        (preview_cx, PREVIEW[3] - 18),
+        "MindCraft project preview",
+        font=FONT_BODY_SMALL,
+        fill="#99eecc",
+        anchor="mm",
+    )
 
-    rounded(draw, big, 14, "#baffec", "#96fff0", 2)
-    rounded(draw, (380, 164, 868, 360), 8, "#102229", None, 0)
-    logo_mark(draw, (534, 188, 714, 332), large=True)
-    draw.text((618, 342), "MindCraft project preview", font=FONT_BODY_SMALL, fill="#baffec", anchor="mm")
+    rounded(draw, BODY, 14, card_fill, card_outline, 2)
+    draw.text((118, 468), project["title"], font=FONT_TITLE, fill="#283b48")
+    body_y = draw_wrapped(draw, project["body"], (118, 530), 674, FONT_BODY, "#293b48", 6)
+    tag_y = min(body_y + 8, 688)
+    rounded(draw, (118, tag_y, 184, tag_y + 34), 3, "#293b48")
+    draw.text((132, tag_y + 6), "Skills", font=FONT_TAG, fill="#ffffff")
+    draw.text((200, tag_y + 8), project["skills"], font=FONT_BODY_SMALL, fill="#52636e")
 
-    rounded(draw, body, 14, "#baffec", "#96fff0", 2)
-    draw.text((170, 486), project["title"], font=FONT_TITLE, fill="#283b48")
-    body_y = draw_wrapped(draw, project["body"], (170, 548), 674, FONT_BODY, "#293b48", 6)
-    tag_y = min(body_y + 8, 684)
-    rounded(draw, (170, tag_y, 236, tag_y + 34), 3, "#293b48")
-    draw.text((184, tag_y + 6), "Skills", font=FONT_TAG, fill="#ffffff")
-    draw.text((252, tag_y + 8), project["skills"], font=FONT_BODY_SMALL, fill="#52636e")
+    rounded(draw, BTN_BACK, 12, card_fill, card_outline, 2)
+    draw.text((118, 778), "Go Back", font=FONT_BUTTON, fill="#344654")
+    draw.ellipse(BTN_ICON, fill="#5577ff")
+    draw.line((444, 894, 454, 904), fill="#ffffff", width=7)
+    draw.line((454, 904, 468, 888), fill="#ffffff", width=7)
 
-    rounded(draw, back, 12, "#baffec", "#96fff0", 2)
-    draw.text((160, 812), "Go Back", font=FONT_BUTTON, fill="#344654")
-    draw.ellipse((382, 882, 432, 932), fill="#5166ff")
-    draw.line((397, 902, 407, 912), fill="#ffffff", width=7)
-    draw.line((407, 912, 421, 896), fill="#ffffff", width=7)
-
-    rounded(draw, learn, 12, "#4256ff", "#2838d7", 2)
-    draw.rectangle((530, 880, 860, 930), fill="#2f35d9")
-    draw.text((560, 812), "Learn More", font=FONT_BUTTON, fill="#ffffff")
-    draw.text((560, 858), "(Coming Soon)", font=FONT_LABEL, fill="#ffffff")
-    draw.ellipse((784, 884, 834, 934), fill="#ffffff")
-    draw.text((809, 898), "i", font=FONT_BUTTON, fill="#4256ff", anchor="mm")
+    rounded(draw, BTN_LEARN, 12, "#5577ff", "#3348cc", 2)
+    learn_x = BTN_LEARN[0] + 28
+    draw.text((learn_x, 772), "Learn More", font=FONT_BUTTON, fill="#ffffff")
+    draw.text((learn_x, 818), "(Coming Soon)", font=FONT_LABEL, fill="#ffffff")
+    learn_icon = (744, 874, 794, 924)
+    draw.ellipse(learn_icon, fill="#ffffff")
+    draw.text((769, 888), "i", font=FONT_BUTTON, fill="#5577ff", anchor="mm")
 
     return image
 

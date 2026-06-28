@@ -47,156 +47,70 @@
   align-items: center;
 }
 
+/* --- Wordmark hero --- */
 .heroPanel {
-  display: flex;
-  align-items: center;
-  min-height: 100%;
+  padding: clamp(16px, 3vw, 40px) clamp(8px, 2vw, 24px);
 }
 
-.filmstrip {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  width: 100%;
-  max-width: 520px;
-}
-
-.tile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  transform: translateZ(0);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.tile:nth-child(1) { transform: rotate(-1.2deg); }
-.tile:nth-child(2) { transform: rotate(1deg); }
-.tile:nth-child(3) { transform: rotate(0.8deg); }
-.tile:nth-child(4) { transform: rotate(-0.6deg); }
-
-.tile:hover {
-  transform: translateY(-4px) rotate(0deg) scale(1.02);
-}
-
-.tileText {
-  text-align: center;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  padding: 16px;
-}
-
-.tile_mind {
-  background: linear-gradient(155deg, #1a1a1a 0%, #2f2f2f 55%, #1f1f1f 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.12) inset,
-    0 14px 32px rgba(0, 0, 0, 0.22),
-    0 4px 10px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.tile_mind .tileText {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+.wordmark {
+  font-size: clamp(3.2rem, 7vw, 5.6rem);
   font-weight: 800;
-  color: #fff;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 18px;
 }
 
-.tile_craft {
-  background: linear-gradient(155deg, #6bc85f 0%, #54b948 45%, #449a38 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.35) inset,
-    0 14px 32px rgba(68, 154, 56, 0.35),
-    0 4px 10px rgba(46, 107, 38, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
+.wmMind { color: #1a1a1a; }
+.wmCraft { color: var(--g); }
 
-.tile_craft .tileText {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 800;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-}
-
-.tile_growth {
-  background: linear-gradient(155deg, #f8faf6 0%, #eef4ea 55%, #e4ece0 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 12px 28px rgba(84, 185, 72, 0.12),
-    0 4px 10px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(84, 185, 72, 0.14);
-}
-
-.tile_growth .tileText {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
-  font-weight: 500;
-  color: #2a2a2a;
-}
-
-.tile_mindset {
-  background: linear-gradient(155deg, #ffffff 0%, #f6faf4 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 1) inset,
-    0 12px 28px rgba(84, 185, 72, 0.1),
-    0 4px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(84, 185, 72, 0.22);
-}
-
-.tile_mindset .tileText {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: clamp(1.2rem, 2.3vw, 1.6rem);
-  font-weight: 500;
+.tagline {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
   font-style: italic;
-  color: var(--g-dark);
+  color: #666;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
 }
 
+/* --- Login card (flat, no 3D tilt) --- */
 .loginWrap {
   position: sticky;
   top: 24px;
-  perspective: 1200px;
 }
 
 .cardStack {
   position: relative;
-  transform-style: preserve-3d;
 }
 
 .cardShadow {
   position: absolute;
-  inset: 8px 6px -10px;
+  inset: 12px 8px -14px;
   border-radius: 22px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.14));
-  filter: blur(12px);
-  transform: translateZ(-24px) rotateX(4deg);
+  background: rgba(0, 0, 0, 0.09);
+  filter: blur(18px);
   pointer-events: none;
 }
 
 .card {
   position: relative;
-  background: linear-gradient(180deg, #ffffff 0%, #f4f4f2 100%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 22px;
   padding: 28px 24px 22px;
-  transform: rotateY(-3deg) rotateX(2deg) translateZ(12px);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.04) inset,
     0 2px 0 rgba(255, 255, 255, 0.5),
-    0 18px 40px rgba(0, 0, 0, 0.12),
-    0 6px 16px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(0, 0, 0, 0.04);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    0 12px 36px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .cardStack:hover .card {
-  transform: rotateY(-1deg) rotateX(1deg) translateZ(18px);
+  transform: translateY(-2px);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 22px 48px rgba(0, 0, 0, 0.14),
-    0 8px 20px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(0, 0, 0, 0.04);
+    0 6px 24px rgba(0, 0, 0, 0.09),
+    0 16px 44px rgba(0, 0, 0, 0.1);
 }
 
 .cardTitle {
@@ -265,24 +179,20 @@
   padding: 0 14px;
   font-family: inherit;
   font-size: 14px;
-  background: linear-gradient(180deg, #ffffff, #fafafa);
+  background: #ffffff;
   outline: none;
   box-sizing: border-box;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 2px 4px rgba(0, 0, 0, 0.04) inset;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) inset;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .field input:focus {
   border-color: var(--g);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 0 0 3px rgba(84, 185, 72, 0.18);
+  box-shadow: 0 0 0 3px rgba(84, 185, 72, 0.18);
 }
 
 .field input::placeholder {
-  color: #aaa;
+  color: #bbb;
 }
 
 .forgot {
@@ -296,7 +206,7 @@
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
-  color: #888;
+  color: #999;
   cursor: pointer;
 }
 
@@ -320,7 +230,7 @@
   min-height: 50px;
   border: 0;
   border-radius: 12px;
-  background: linear-gradient(180deg, #5fc454 0%, var(--g) 45%, var(--g-dark) 100%);
+  background: linear-gradient(180deg, #62cc56 0%, var(--g) 50%, var(--g-dark) 100%);
   color: #fff;
   font-family: inherit;
   font-size: 13px;
@@ -361,25 +271,21 @@
 .googleBtn {
   width: 100%;
   min-height: 50px;
-  border: 1px solid #d8d8d8;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
-  background: linear-gradient(180deg, #ffffff, #f5f5f5);
+  background: #ffffff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 
 .googleBtn:hover:not(:disabled) {
   border-color: #c8c8c8;
   transform: translateY(-1px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .googleBtn:disabled {
@@ -410,24 +316,14 @@
 
   .loginWrap {
     position: static;
-    perspective: none;
   }
 
-  .card {
-    transform: none;
+  .heroPanel {
+    padding: 0 0 8px;
   }
 
-  .cardStack:hover .card {
-    transform: none;
-  }
-
-  .cardShadow {
-    display: none;
-  }
-
-  .filmstrip {
-    max-width: 420px;
-    margin: 0 auto;
+  .wordmark {
+    font-size: clamp(2.6rem, 10vw, 4rem);
   }
 }
 
@@ -435,14 +331,5 @@
   .shell {
     border-radius: 22px;
     padding: 22px 18px;
-  }
-
-  .filmstrip {
-    gap: 10px;
-    max-width: none;
-  }
-
-  .tileText {
-    padding: 12px;
   }
 }

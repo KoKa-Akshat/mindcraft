@@ -16,13 +16,6 @@ import { worldUrl } from '../lib/siteUrls'
 type Role = 'student' | 'parent' | 'tutor'
 type Mode = 'signin' | 'signup'
 
-const TILES = [
-  { text: 'Mind', tone: 'mind' as const },
-  { text: 'Craft', tone: 'craft' as const },
-  { text: 'A Growth', tone: 'growth' as const },
-  { text: 'Mindset', tone: 'mindset' as const },
-]
-
 function friendlyError(code: string) {
   switch (code) {
     case 'auth/user-not-found':             return 'No account found with that email.'
@@ -131,16 +124,10 @@ export default function Login() {
       <main className={s.shell}>
         <div className={s.layout}>
           <section className={s.heroPanel} aria-label="MindCraft — A Growth Mindset">
-            <div className={s.filmstrip}>
-              {TILES.map(tile => (
-                <div
-                  key={tile.text}
-                  className={`${s.tile} ${s[`tile_${tile.tone}`]}`}
-                >
-                  <span className={s.tileText}>{tile.text}</span>
-                </div>
-              ))}
+            <div className={s.wordmark}>
+              <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
             </div>
+            <p className={s.tagline}>A Growth Mindset</p>
           </section>
 
           <aside className={s.loginWrap}>

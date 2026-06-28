@@ -88,7 +88,19 @@
     {
       "target": "world1",
       "public": "worlds/world2",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**",
+        "**/*_unpacked_*",
+        "**/*_transcoded_*",
+        "**/*_orig.ktx2",
+        "**/tools/**",
+        "**/*.astc",
+        "**/*.dds",
+        "**/*.ktx",
+        "**/*.map"
+      ],
       "rewrites": [
         { "source": "**", "destination": "/index.html" }
       ],
