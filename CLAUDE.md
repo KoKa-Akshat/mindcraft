@@ -200,35 +200,32 @@ is all naive datetimes — mixing them raises).
 ### `mindcraft-homework` (LLM solver) — Cloud Run, project `mindcraft-93858`
 - Code in `homework/`. Secret `ANTHROPIC_API_KEY`. Stateless. Down on credits.
 
-### Frontend — Firebase Hosting, project `mindcraft-93858`
+### Frontend + world + marketing — Firebase Hosting, project `mindcraft-93858`
 
-**Full deploy sequence (run from repo root):**
-```bash
-cd app && npm install --legacy-peer-deps && npm run build && cd ..
-firebase deploy --only hosting:app --project mindcraft-93858
-```
+**CI auto-deploys on every push to `main`.** Workflow: `.github/workflows/deploy.yml`.
+It builds `app/` (`npm install --legacy-peer-deps && npm run build`) and deploys
+Firebase Hosting targets `app`, `world1`, and `marketing` using the
+`FIREBASE_SERVICE_ACCOUNT` repo secret.
+
+**To ship frontend / world / marketing:** `git push origin main`. Live in ~2–3 min.
+Confirm the Actions run is green. **Do NOT run `firebase deploy` from a laptop** —
+manual deploys publish local disk and overwrite CI, clobbering other people's work.
+
+Before work: `git pull origin main`. If push is rejected, pull/merge first — never
+force-push `main`.
+
+| Target | Source | Live URL |
+|--------|--------|----------|
+| `app` | `app/dist` (built in CI) | https://mindcraft-93858.web.app |
+| `world1` | `worlds/world2/` (static) | https://mindcraft-world1.web.app |
+| `marketing` | repo root (curated static) | https://mindcraft-marketing-site.web.app |
 
 Key notes:
-- `--legacy-peer-deps` is REQUIRED — a `@react-three` peer conflict breaks
-  install without it.
-- **Credential**: Firebase CLI must be logged in as `blakeykell@gmail.com`
-  (granted `roles/firebase.admin` on `mindcraft-93858`). Verify with
-  `firebase login:list`. If wrong account: `firebase login --reauth`.
-  CLI version in use: **15.13.0** (`firebase --version`).
-- The deploy target `app` maps to the `mindcraft-93858` hosting site via
-  `.firebaserc` → `targets.mindcraft-93858.hosting.app`. `firebase.json`
-  defines the `app` target: public dir = `app/dist`, SPA rewrites to
-  `/index.html`, root `/` redirects to the marketing site.
-- Live `https://mindcraft-93858.web.app`. Root redirects to
-  `mindcraft-marketing-site.web.app`; the React SPA is served on all other
-  paths. `app-beta-one-59.vercel.app` still exists but Firebase is the active
-  host.
-- Vite env: `.env.production` → Cloud Run URL (baked at build time),
-  `.env.local` → `localhost:8080` for local dev. Also `VITE_HOMEWORK_API_URL`
-  → the `mindcraft-homework` URL. **Do not commit `.env.local`.**
-- Other Firebase targets in the same project: `world1` (co-founder's 3-D world,
-  public dir `worlds/world2`) and `marketing` (static marketing site). Deploy
-  those with `--only hosting:world1` or `--only hosting:marketing` respectively.
+- `--legacy-peer-deps` is REQUIRED for app install ( `@react-three` peer conflict).
+- Vite env: `.env.production` → Cloud Run URLs (baked at CI build). `.env.local`
+  for local dev only. **Do not commit `.env.local` or secrets.**
+- `firebase.json` `world1` ignores generated texture junk, `*_orig.ktx2`, `tools/`,
+  and source maps — see `REPO_CLEANUP_AUDIT.md`.
 
 ### Firestore — project `mindcraft-93858`
 - The real DB (users, sessions, interactions, ingredient_states,

@@ -163,9 +163,13 @@ Questions:
 
 ## Deployment Notes
 
+**CI auto-deploy (2026-06-28):** `.github/workflows/deploy.yml` deploys
+`hosting:app`, `hosting:world1`, and `hosting:marketing` on every push to `main`.
+Secret: `FIREBASE_SERVICE_ACCOUNT`. **Do not run `firebase deploy` locally.**
+
 Firebase hosting targets:
 
-- `app`: public `app/dist`
+- `app`: public `app/dist` (built in CI)
 - `world1`: public `worlds/world2`
 - `marketing`: public repo root with many excludes
 
@@ -173,11 +177,13 @@ Important:
 
 - `worlds/world2` is a built static bundle. Editing source-like behavior there often means editing bundled JS or replacing texture assets.
 - Cache headers exist for some diagnostic assets, but many world assets are long-lived. Cache-busting should be intentional.
-- Deploy the Jesse world with `firebase deploy --only hosting:world1` or `npx firebase-tools@13 deploy --only hosting:world1`, not a broad all-target deploy.
+- To ship frontend/world/marketing: commit and `git push origin main`. Confirm Actions green.
 - On 2026-06-28, `61` generated texture inspection files were found inside `worlds/world2`; they added about `32M` under the Firebase public folder. They were deleted.
-- The `world1` Firebase hosting ignore list now excludes generated Basis/KTX inspection outputs and source maps:
+- The `world1` Firebase hosting ignore list now excludes generated Basis/KTX inspection outputs, rollback textures, tools, and source maps:
   - `**/*_unpacked_*`
   - `**/*_transcoded_*`
+  - `**/*_orig.ktx2`
+  - `**/tools/**`
   - `**/*.astc`
   - `**/*.dds`
   - `**/*.ktx`

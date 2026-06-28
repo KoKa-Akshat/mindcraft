@@ -16,19 +16,25 @@ Companion to `REPO_CLEANUP_AUDIT.md`. Read both before deleting, deploying, or r
 
 ## Blessed Deploy Commands
 
+**CI is the only deployer for Firebase Hosting.** `.github/workflows/deploy.yml`
+runs on every push to `main`: builds `app/` and deploys `hosting:app`,
+`hosting:world1`, and `hosting:marketing` to project `mindcraft-93858`.
+
 ```bash
-# Always pull before world work
 git pull origin main
-
-cd app && npm install --legacy-peer-deps && npm run build
-firebase deploy --only hosting:app --project mindcraft-93858
-
-firebase deploy --only hosting:world1 --project mindcraft-93858
-
-firebase deploy --only hosting:marketing --project mindcraft-93858
+# ... make changes, commit ...
+git push origin main
+# Wait ~2–3 min; confirm green run in GitHub Actions tab.
 ```
 
-Never run a broad `firebase deploy` without `--only`. Only one agent should push `main` at a time.
+**Do NOT run `firebase deploy` locally.** Manual deploys overwrite live from your
+disk and have clobbered co-founder work. `main` is the single source of truth.
+
+**Not auto-deployed** (manual GCP / Vercel):
+- `ml/` → Cloud Run `mindcraft-ml` (`gcloud builds submit` + `gcloud run deploy`,
+  `--set-env-vars FIRESTORE_PROJECT=mindcraft-93858`)
+- `homework/` → Cloud Run in `mindcraft-93858`
+- `webhook/` → Vercel
 
 ## Answers to Audit Questions (Cursor, 2026-06-28)
 
@@ -117,8 +123,17 @@ Layout coordinates must match original `*_orig.ktx2` grid (see generator constan
 
 ## Open Items for Owner
 
-1. Delete local `worlds/_world-builder-training/`? (recommended yes)
-2. Remove `*_orig.ktx2` from git entirely?
-3. Remove tracked `.map` files from git?
-4. Is marketing `phoenix/` iframe still wanted on landing page?
-5. CSS token migration — which page first after Dashboard/Login?
+Resolved 2026-06-28 (Cursor):
+
+1. **`worlds/_world-builder-training/`** — **Keep ignored, delete locally when ready**
+   (`rm -rf worlds/_world-builder-training`). Not production; ~18M. Nested `.git` dirs
+   inside may require running delete outside sandbox / from Terminal.
+2. **`*_orig.ktx2`** — Keep in git as rollback reference; excluded from Firebase deploy.
+3. **`.map` files** — Keep in git for local debug; excluded from Firebase deploy.
+4. **`phoenix/`** — Keep while marketing embeds it in `index.html`.
+5. **CSS token migration** — Deferred; do Dashboard/Login first when ready.
+
+Still manual / separate:
+
+- `ml/` Cloud Run deploy when backend changes ship
+- Large asset archive (PDFs, duplicate videos) — separate pass when marketing trims
