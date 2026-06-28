@@ -26,6 +26,17 @@ ml/data/past_paper_index/*.jsonl
 
 # Firebase deploy cache
 .firebase/
+
+# Generated world/texture inspection artifacts
+worlds/_world-builder-training/
+*_unpacked_*
+*_transcoded_*
+*.astc
+
+# World source/debug (keep locally; runtime uses .ktx2 in bundle)
+worlds/world2/tools/
+worlds/world2/**/*.map
+
 # Large/generated ML artifacts (not source)
 ml/img/
 ml/data/*.zip
