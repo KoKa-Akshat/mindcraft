@@ -28,7 +28,7 @@
     <meta name="theme-color" content="#1a1a1a" />
     <script defer="defer" src="bundle.3ea4b3f1364c1bb7.js"></script>
     <link href="main.css" rel="stylesheet" />
-    <link href="mc-diagnostic.css" rel="stylesheet" />
+    <link href="mc-diagnostic.css?v=879bdfe9" rel="stylesheet" />
   </head>
   <body>
     <canvas class="webgl"></canvas>
@@ -38,16 +38,6 @@
     <div id="mc-badge">
       <span class="mc-logo">Mind<span class="mc-craft">Craft</span></span>
     </div>
-
-    <!-- View toggle: leave the 3D world for the plain web dashboard -->
-    <a id="mc-web-toggle" href="https://mindcraft-93858.web.app/dashboard"
-       style="position:fixed;top:16px;right:16px;z-index:9999;display:flex;gap:4px;
-              padding:4px;border-radius:10px;background:rgba(255,255,255,0.08);
-              border:1px solid rgba(255,255,255,0.12);font:700 12px system-ui,sans-serif;
-              text-decoration:none;backdrop-filter:blur(4px)">
-      <span style="padding:6px 12px;border-radius:8px;background:#C4F547;color:#10231a">3D</span>
-      <span style="padding:6px 12px;border-radius:8px;color:rgba(255,255,255,0.75)">Web</span>
-    </a>
 
     <!-- Loading screen -->
     <div id="cooking">
@@ -82,7 +72,7 @@
 
     <!-- MindCraft hint overlay (shown after entering) -->
     <div id="mc-hint" onclick="window.MC_onProjectsOpen&&window.MC_onProjectsOpen()" style="cursor:pointer">
-      <p>🍳 Let Nox Cook — open diagnostics</p>
+      <p>Click on Projects</p>
     </div>
 
     <!-- Diagnostic overlay (projects / diagnostics screen) -->
@@ -90,6 +80,6 @@
       <div id="mc-diag-backdrop"></div>
       <div id="mc-diag-panel"></div>
     </div>
-    <script src="mc-diagnostic.js" defer></script>
+    <script src="mc-diagnostic.js?v=879bdfe9" defer></script>
   </body>
 </html>

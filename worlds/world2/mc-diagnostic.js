@@ -17,7 +17,15 @@
   var confidence = {}
   var probeIdx = 0
   var picked = null
-  var probePhase = 'answer' // answer | feedback | reveal
+  var probePhase = 'answer' // answer | feedback
+
+  var ENCOURAGEMENT = [
+    'You\'re doing great — keep going!',
+    'Every answer helps Jesse cook up your path.',
+    'Nice work — one question at a time.',
+    'Love the effort — Jesse\'s taking notes.',
+    'Keep it up — you\'re building something good here.',
+  ]
   var lastCorrect = false
   var correctCount = 0
   var questionStart = 0
@@ -56,22 +64,20 @@
     var probes = spec.probe_step.questions || []
 
     if (step === 'intro') {
-      html += '<p class="mc-diag-kicker">Diagnostics screen</p>'
       html += '<h2 class="mc-diag-title">' + esc(spec.intro.title) + '</h2>'
       html += '<p class="mc-diag-body">' + esc(spec.intro.body) + '</p>'
       html += '<button class="mc-diag-primary" data-action="next">Start</button>'
     } else if (step === 'goals') {
-      html += '<p class="mc-diag-kicker">Step 1 · Goals</p>'
       html += '<h2 class="mc-diag-title">' + esc(spec.goals_step.prompt) + '</h2>'
+      var goalsPlaceholder = spec.goals_step.placeholder || 'Tell us what you are aiming for…'
       html += '<div class="mc-diag-tags">'
       presets.forEach(function (p) {
         html += '<button class="mc-diag-tag' + (goalTags.indexOf(p) >= 0 ? ' on' : '') + '" data-goal="' + escAttr(p) + '">' + esc(p) + '</button>'
       })
       html += '</div>'
-      html += '<textarea class="mc-diag-textarea" id="mc-diag-goals-text" placeholder="Anything specific? (optional)" rows="3">' + esc(goalText) + '</textarea>'
+      html += '<textarea class="mc-diag-textarea" id="mc-diag-goals-text" placeholder="' + escAttr(goalsPlaceholder) + '" rows="6">' + esc(goalText) + '</textarea>'
       html += '<button class="mc-diag-primary" data-action="next"' + (goalTags.length === 0 && !goalText.trim() ? ' disabled' : '') + '>Next</button>'
     } else if (step === 'confidence') {
-      html += '<p class="mc-diag-kicker">Step 2 · Confidence</p>'
       html += '<h2 class="mc-diag-title">' + esc(spec.confidence_step.prompt) + '</h2>'
       html += '<p class="mc-diag-note">' + esc(spec.confidence_step.note) + '</p>'
       html += '<div class="mc-diag-conf">'
@@ -87,40 +93,23 @@
       html += '<button class="mc-diag-primary" data-action="next"' + (done ? '' : ' disabled') + '>Next</button>'
     } else if (step === 'probes' && probes[probeIdx]) {
       var probe = probes[probeIdx]
-      html += '<p class="mc-diag-kicker">Step 3 · ' + esc(probe.concept_id.replace(/_/g, ' ')) + ' · ' + (probeIdx + 1) + '/' + probes.length + '</p>'
       html += '<h2 class="mc-diag-title">' + esc(probe.stem) + '</h2>'
 
-      if (probePhase === 'feedback' || probePhase === 'reveal') {
-        var msg = lastCorrect
-          ? 'Well done — you\'re building a clear picture. Keep going!'
-          : 'Not quite — that\'s okay. Every attempt maps something new for Nox.'
-        var hint = probe.encouragement_hint || probe.skill_gap_if_wrong || ''
-        html += '<div class="mc-diag-feedback ' + (lastCorrect ? 'good' : 'try') + '"><strong>' + msg + '</strong>'
-        if (!lastCorrect && hint && probePhase === 'feedback') {
-          html += '<br><br>' + esc(hint)
-        }
-        if (!lastCorrect && probePhase === 'reveal') {
-          html += '<br><br><strong>Answer:</strong> ' + esc(probe.correct_answer)
-        }
-        html += '</div>'
-        if (!lastCorrect && probePhase === 'feedback') {
-          html += '<button class="mc-diag-primary" data-action="retry">Try again</button>'
-          html += '<button class="mc-diag-ghost" data-action="reveal">See the answer</button>'
-        } else {
-          html += '<button class="mc-diag-primary" data-action="next-probe">Continue</button>'
-        }
+      if (probePhase === 'feedback') {
+        var msg = ENCOURAGEMENT[probeIdx % ENCOURAGEMENT.length]
+        html += '<div class="mc-diag-feedback good"><strong>' + msg + '</strong></div>'
+        html += '<button class="mc-diag-primary" data-action="next-probe">Continue</button>'
       } else {
         html += '<div class="mc-diag-choices">'
         Object.keys(probe.choices).forEach(function (key) {
           html += '<button class="mc-diag-choice" data-choice="' + escAttr(key) + '"><span class="key">' + esc(key) + '</span><span>' + esc(probe.choices[key]) + '</span></button>'
         })
         html += '</div>'
-        html += '<button class="mc-diag-ghost" data-action="skip">Skip — not sure yet</button>'
+        html += '<div class="mc-diag-skip-wrap"><button class="mc-diag-skip" type="button" data-action="skip">Skip</button></div>'
       }
     } else if (step === 'done') {
-      html += '<p class="mc-diag-kicker">Complete</p>'
-      html += '<h2 class="mc-diag-title">You\'re mapped.</h2>'
-      html += '<p class="mc-diag-body">Nox now has a starting picture of your strengths and gaps. Head to your dashboard to keep going.</p>'
+      html += '<h2 class="mc-diag-title">Complete</h2>'
+      html += '<p class="mc-diag-body">Lessons will dynamically accommodate you, Jesse really cooked.</p>'
       html += '<button class="mc-diag-primary" data-action="dashboard">Go to dashboard</button>'
     }
 
@@ -136,7 +125,13 @@
       }
     })
     var ta = $('#mc-diag-goals-text')
-    if (ta) ta.oninput = function () { goalText = ta.value; render() }
+    if (ta) {
+      ta.oninput = function () {
+        goalText = ta.value
+        var next = panel.querySelector('[data-action="next"]')
+        if (next) next.disabled = goalTags.length === 0 && !goalText.trim()
+      }
+    }
 
     panel.querySelectorAll('[data-conf]').forEach(function (btn) {
       btn.onclick = function () {
@@ -153,10 +148,6 @@
     if (nextBtn) nextBtn.onclick = onNext
     var skipBtn = panel.querySelector('[data-action="skip"]')
     if (skipBtn) skipBtn.onclick = skipProbe
-    var retryBtn = panel.querySelector('[data-action="retry"]')
-    if (retryBtn) retryBtn.onclick = function () { picked = null; probePhase = 'answer'; render() }
-    var revealBtn = panel.querySelector('[data-action="reveal"]')
-    if (revealBtn) revealBtn.onclick = function () { probePhase = 'reveal'; render() }
     var nextProbeBtn = panel.querySelector('[data-action="next-probe"]')
     if (nextProbeBtn) nextProbeBtn.onclick = advanceProbe
     var dashBtn = panel.querySelector('[data-action="dashboard"]')
@@ -269,12 +260,17 @@
     panel = document.getElementById('mc-diag-panel')
     if (!root || !panel) return
 
-    fetch('data/actDiagnostic.json')
+    fetch('data/actDiagnostic.json?v=879bdfe9')
       .then(function (r) { return r.json() })
       .then(function (d) { spec = d })
       .catch(function () { console.warn('MC: could not load diagnostic spec') })
 
     root.querySelector('#mc-diag-backdrop').onclick = hide
+
+    // Prevent clicks inside the overlay from reaching the THREE.js raycaster on the canvas
+    root.addEventListener('click', function (e) { e.stopPropagation() })
+    root.addEventListener('pointerdown', function (e) { e.stopPropagation() })
+    root.addEventListener('pointerup', function (e) { e.stopPropagation() })
   }
 
   window.MC_onProjectsOpen = function () { show() }

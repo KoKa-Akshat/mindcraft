@@ -3,23 +3,19 @@
   "subject_id": "math",
   "shown_on": "first_login",
   "intro": {
-    "title": "Let Nox cook",
-    "body": "A few quick questions so Nox can map what you already know and where to focus. This kicks off your learning world."
+    "title": "Jesse's Kitchen",
+    "body": "Jesse can cook, you just have to be honest with him."
   },
   "goals_step": {
     "prompt": "What are you aiming for?",
     "free_text": true,
-    "presets": [
-      "Hit a target ACT score",
-      "Get faster at the math section",
-      "Fix specific weak topics",
-      "Build confidence from the basics"
-    ],
+    "presets": [],
+    "placeholder": "ACT in two weeks, where do I start?",
     "stored_as": "users/{uid}.goals"
   },
   "confidence_step": {
     "prompt": "How confident are you with each of these?",
-    "note": "Self-report only \u2014 no wrong answers here. Tap and move on.",
+    "note": "No wrong answers here.",
     "scale": [
       {
         "value": 0.15,

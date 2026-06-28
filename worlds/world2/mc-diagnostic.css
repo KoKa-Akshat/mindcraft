@@ -166,14 +166,29 @@
   cursor: pointer;
 }
 .mc-diag-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-.mc-diag-ghost {
-  width: 100%;
-  margin-top: 8px;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.45);
+.mc-diag-skip-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+.mc-diag-skip {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(66, 242, 255, 0.35);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: inherit;
   font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #b8e8ee;
   cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.mc-diag-skip:hover {
+  border-color: #42f2ff;
+  color: #42f2ff;
+  background: rgba(66, 242, 255, 0.1);
 }
 .mc-diag-feedback {
   background: rgba(66, 242, 255, 0.1);
