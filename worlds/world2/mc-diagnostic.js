@@ -260,7 +260,7 @@
     panel = document.getElementById('mc-diag-panel')
     if (!root || !panel) return
 
-    fetch('data/actDiagnostic.json')
+    fetch('data/actDiagnostic.json?v=879bdfe9')
       .then(function (r) { return r.json() })
       .then(function (d) { spec = d })
       .catch(function () { console.warn('MC: could not load diagnostic spec') })
