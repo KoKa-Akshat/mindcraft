@@ -17,7 +17,15 @@
   var confidence = {}
   var probeIdx = 0
   var picked = null
-  var probePhase = 'answer' // answer | feedback | reveal
+  var probePhase = 'answer' // answer | feedback
+
+  var ENCOURAGEMENT = [
+    'You\'re doing great — keep going!',
+    'Every answer helps Jesse cook up your path.',
+    'Nice work — one question at a time.',
+    'Love the effort — Jesse\'s taking notes.',
+    'Keep it up — you\'re building something good here.',
+  ]
   var lastCorrect = false
   var correctCount = 0
   var questionStart = 0
@@ -87,36 +95,21 @@
       var probe = probes[probeIdx]
       html += '<h2 class="mc-diag-title">' + esc(probe.stem) + '</h2>'
 
-      if (probePhase === 'feedback' || probePhase === 'reveal') {
-        var msg = lastCorrect
-          ? 'Well done — you\'re building a clear picture. Keep going!'
-          : 'Not quite — that\'s okay. Every attempt maps something new.'
-        var hint = probe.encouragement_hint || probe.skill_gap_if_wrong || ''
-        html += '<div class="mc-diag-feedback ' + (lastCorrect ? 'good' : 'try') + '"><strong>' + msg + '</strong>'
-        if (!lastCorrect && hint && probePhase === 'feedback') {
-          html += '<br><br>' + esc(hint)
-        }
-        if (!lastCorrect && probePhase === 'reveal') {
-          html += '<br><br><strong>Answer:</strong> ' + esc(probe.correct_answer)
-        }
-        html += '</div>'
-        if (!lastCorrect && probePhase === 'feedback') {
-          html += '<button class="mc-diag-primary" data-action="retry">Try again</button>'
-          html += '<button class="mc-diag-ghost" data-action="reveal">See the answer</button>'
-        } else {
-          html += '<button class="mc-diag-primary" data-action="next-probe">Continue</button>'
-        }
+      if (probePhase === 'feedback') {
+        var msg = ENCOURAGEMENT[probeIdx % ENCOURAGEMENT.length]
+        html += '<div class="mc-diag-feedback good"><strong>' + msg + '</strong></div>'
+        html += '<button class="mc-diag-primary" data-action="next-probe">Continue</button>'
       } else {
         html += '<div class="mc-diag-choices">'
         Object.keys(probe.choices).forEach(function (key) {
           html += '<button class="mc-diag-choice" data-choice="' + escAttr(key) + '"><span class="key">' + esc(key) + '</span><span>' + esc(probe.choices[key]) + '</span></button>'
         })
         html += '</div>'
-        html += '<button class="mc-diag-ghost" data-action="skip">Skip — not sure yet</button>'
+        html += '<div class="mc-diag-skip-wrap"><button class="mc-diag-skip" type="button" data-action="skip">Skip</button></div>'
       }
     } else if (step === 'done') {
       html += '<h2 class="mc-diag-title">Complete</h2>'
-      html += '<p class="mc-diag-body">Your study path is ready. Head to your dashboard to keep going.</p>'
+      html += '<p class="mc-diag-body">Lessons will dynamically accommodate you, Jesse really cooked.</p>'
       html += '<button class="mc-diag-primary" data-action="dashboard">Go to dashboard</button>'
     }
 
@@ -155,10 +148,6 @@
     if (nextBtn) nextBtn.onclick = onNext
     var skipBtn = panel.querySelector('[data-action="skip"]')
     if (skipBtn) skipBtn.onclick = skipProbe
-    var retryBtn = panel.querySelector('[data-action="retry"]')
-    if (retryBtn) retryBtn.onclick = function () { picked = null; probePhase = 'answer'; render() }
-    var revealBtn = panel.querySelector('[data-action="reveal"]')
-    if (revealBtn) revealBtn.onclick = function () { probePhase = 'reveal'; render() }
     var nextProbeBtn = panel.querySelector('[data-action="next-probe"]')
     if (nextProbeBtn) nextProbeBtn.onclick = advanceProbe
     var dashBtn = panel.querySelector('[data-action="dashboard"]')

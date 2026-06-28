@@ -4,13 +4,13 @@
   "shown_on": "first_login",
   "intro": {
     "title": "Jesse's Kitchen",
-    "body": "Help us pick the ingredients to cook up your personalized study path by answering a few diagnostic questions."
+    "body": "Jesse can cook, you just have to be honest with him."
   },
   "goals_step": {
     "prompt": "What are you aiming for?",
     "free_text": true,
     "presets": [],
-    "placeholder": "I have my ACT in two weeks and I am still not confident in trigonometry and co-ordinate geometry, and there are things I don't even know that I don't know. I want to score really well in two weeks.",
+    "placeholder": "ACT in two weeks, where do I start?",
     "stored_as": "users/{uid}.goals"
   },
   "confidence_step": {
