@@ -18,7 +18,7 @@ import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/br
 import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, getRecommendations, type IngredientRecommendResult } from '../lib/mlApi'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
-import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftRemote } from '../lib/practiceState'
+import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote } from '../lib/practiceState'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
@@ -33,6 +33,14 @@ type PracticePhase =
 type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
 type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
+// A resumable mission is one of three kinds; each persists in its own slot so a
+// weakness AND a learn mission can be in-progress at once.
+type MissionType   = 'weakness' | 'learn' | 'gapscan'
+const MISSION_LABEL: Record<MissionType, string> = {
+  weakness: 'Weakness practice',
+  learn:    'New concept',
+  gapscan:  'Gap scan',
+}
 
 type PracticeDraft = {
   version: number
@@ -42,6 +50,7 @@ type PracticeDraft = {
   assessConceptIds: string[]
   confidenceStep: number
   confidenceMap: Record<string, Confidence>
+  missionType: MissionType
   pPhase: PracticePhase
   concept: string | null
   level: 1 | 2 | 3
@@ -206,9 +215,14 @@ function safeQuestionSvg(question: Question) {
   return svg
 }
 
-function practiceDraftKey(uid: string) {
+function practiceDraftKey(uid: string, type: MissionType) {
+  return `mindcraft:exam-help:${uid}:${type}`
+}
+// Pre-mission-type single-slot key — migrated into the gap-scan slot on load.
+function legacyPracticeDraftKey(uid: string) {
   return `mindcraft:exam-help:${uid}:process-1`
 }
+const MISSION_TYPES: MissionType[] = ['weakness', 'learn', 'gapscan']
 
 function conceptsFromIds(ids: string[]) {
   return ids.flatMap(id => {
@@ -346,11 +360,12 @@ export default function Practice() {
   const [initialQCount,setInitialQCount]= useState(0)
   const [sessionBridge,setSessionBridge]= useState<BridgeRecommendation | null>(null)
   const [draftRestored, setDraftRestored] = useState(false)
-  const [savedDraft, setSavedDraft] = useState<PracticeDraft | null>(null)
-  // Mission hub: which kind of mission is active, and which start card is loading.
-  const [missionType, setMissionType] = useState<'weakness' | 'learn' | null>(null)
+  // One resumable draft per mission type (weakness / learn / gapscan).
+  const [savedDrafts, setSavedDrafts] = useState<Partial<Record<MissionType, PracticeDraft>>>({})
+  // Which mission is currently active (drives which slot autosave writes to), and
+  // which hub start-card is loading.
+  const [missionType, setMissionType] = useState<MissionType | null>(null)
   const [missionLoading, setMissionLoading] = useState<'weakness' | 'learn' | null>(null)
-  void missionType
 
   // ── Solver state ──────────────────────────────────────────────────────────
   const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
@@ -361,22 +376,28 @@ export default function Practice() {
   const [error,      setError]      = useState('')
   const [slowLoad,   setSlowLoad]   = useState(false)
 
-  function clearPracticeDraft() {
-    localStorage.removeItem(practiceDraftKey(user.uid))
-    setSavedDraft(null)
+  function clearPracticeDraft(type: MissionType) {
+    localStorage.removeItem(practiceDraftKey(user.uid, type))
+    setSavedDrafts(prev => { const next = { ...prev }; delete next[type]; return next })
+    void savePracticeDraftRemote(user.uid, type, null)
   }
 
-  function restorePracticeDraft(draft: PracticeDraft) {
-    const restoredConcepts = conceptsFromIds(draft.assessConceptIds)
-    if (restoredConcepts.length === 0) return false
+  function restorePracticeDraft(draft: PracticeDraft): boolean {
+    const type: MissionType = draft.missionType ?? 'gapscan'
+    const restoredConcepts = conceptsFromIds(draft.assessConceptIds ?? [])
+    // Gap-scan missions need their assessment concepts; weakness/learn just need
+    // a target concept.
+    if (type === 'gapscan' && restoredConcepts.length === 0) return false
+    if (type !== 'gapscan' && !draft.concept) return false
 
     setMode('practice')
+    setMissionType(type)
     setExam(draft.exam)
     setAssessConcepts(restoredConcepts)
     setConfidenceStep(Math.min(draft.confidenceStep, Math.max(restoredConcepts.length - 1, 0)))
     setConfidenceMap(draft.confidenceMap ?? {})
     const restoredPhase = draft.pPhase === 'session' && !draft.questions?.length
-      ? 'path'
+      ? (type === 'gapscan' ? 'path' : 'level')
       : draft.pPhase === 'building'
       ? 'gap-analysis'
       : draft.pPhase
@@ -395,21 +416,47 @@ export default function Practice() {
     setInitialQCount(draft.initialQCount ?? 0)
     setSessionBridge(draft.sessionBridge ?? null)
     setDraftRestored(true)
-    setSavedDraft(draft)
+    setSavedDrafts(prev => ({ ...prev, [type]: draft }))
     return true
   }
 
-  function loadSavedPracticeDraft() {
-    const raw = localStorage.getItem(practiceDraftKey(user.uid))
+  function loadSavedPracticeDraft(type: MissionType) {
+    const raw = localStorage.getItem(practiceDraftKey(user.uid, type))
     if (!raw) return false
     try {
       const draft = JSON.parse(raw) as PracticeDraft
-      if (draft.version !== PRACTICE_DRAFT_VERSION || !draft.assessConceptIds?.length) return false
-      return restorePracticeDraft(draft)
+      if (draft.version !== PRACTICE_DRAFT_VERSION) return false
+      return restorePracticeDraft({ ...draft, missionType: draft.missionType ?? type })
     } catch {
-      clearPracticeDraft()
+      clearPracticeDraft(type)
       return false
     }
+  }
+
+  // Read every local draft slot (migrating the legacy single slot → gapscan) so
+  // the hub can show a resume card per in-progress mission.
+  function loadAllDraftSlots(): Partial<Record<MissionType, PracticeDraft>> {
+    const legacy = localStorage.getItem(legacyPracticeDraftKey(user.uid))
+    if (legacy) {
+      try {
+        const d = JSON.parse(legacy) as PracticeDraft
+        localStorage.setItem(
+          practiceDraftKey(user.uid, 'gapscan'),
+          JSON.stringify({ ...d, missionType: 'gapscan' }),
+        )
+      } catch { /* ignore */ }
+      localStorage.removeItem(legacyPracticeDraftKey(user.uid))
+    }
+    const found: Partial<Record<MissionType, PracticeDraft>> = {}
+    for (const t of MISSION_TYPES) {
+      const raw = localStorage.getItem(practiceDraftKey(user.uid, t))
+      if (!raw) continue
+      try {
+        const d = JSON.parse(raw) as PracticeDraft
+        if (d.version === PRACTICE_DRAFT_VERSION) found[t] = { ...d, missionType: t }
+      } catch { /* ignore */ }
+    }
+    return found
   }
 
   function showPracticeHome() {
@@ -423,41 +470,39 @@ export default function Practice() {
   useEffect(() => {
     if (draftHydratedRef.current) return
     const state = location.state as { problemText?: string; examHelp?: boolean; homeworkHelp?: boolean } | null
-    if (state?.examHelp) {
-      const raw = localStorage.getItem(practiceDraftKey(user.uid))
-      if (raw) {
-        try {
-          const draft = JSON.parse(raw) as PracticeDraft
-          if (draft.version === PRACTICE_DRAFT_VERSION && draft.assessConceptIds?.length) {
-            setSavedDraft(draft)
-            setMode('practice')
-            setPPhase('onboard')
-          }
-        } catch {
-          localStorage.removeItem(practiceDraftKey(user.uid))
-        }
-      } else {
-        setMode('practice')
-        setPPhase('exam-pick')
-      }
+    const slots = loadAllDraftSlots()
+    setSavedDrafts(slots)
+    const hasAny = Object.keys(slots).length > 0
+    setMode('practice')
+    // Hub-first: land on the mission hub. A brand-new student routed here for the
+    // gap scan (examHelp, nothing saved yet) goes straight into the scan.
+    if (state?.examHelp && !hasAny) {
+      setMissionType('gapscan')
+      setPPhase('exam-pick')
     } else {
-      loadSavedPracticeDraft()
+      setPPhase('onboard')
     }
     draftHydratedRef.current = true
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.uid])
 
-  // Cross-device restore: if there's no local draft, pull the last one saved to
-  // Firestore (e.g. the student switched devices) and restore it.
+  // Cross-device restore: if no local slots, pull the saved drafts from Firestore
+  // (e.g. the student switched devices) and surface them on the hub.
   useEffect(() => {
-    if (localStorage.getItem(practiceDraftKey(user.uid))) return
+    if (MISSION_TYPES.some(t => localStorage.getItem(practiceDraftKey(user.uid, t)))) return
     let cancelled = false
-    loadPracticeDraftRemote(user.uid).then(d => {
-      if (cancelled || !d) return
-      const draft = d as PracticeDraft
-      if (draft.version === PRACTICE_DRAFT_VERSION && draft.assessConceptIds?.length) {
-        restorePracticeDraft(draft)
+    loadPracticeDraftsRemote(user.uid).then(map => {
+      if (cancelled) return
+      const found: Partial<Record<MissionType, PracticeDraft>> = {}
+      for (const [t, d] of Object.entries(map)) {
+        if (!MISSION_TYPES.includes(t as MissionType)) continue
+        const draft = d as PracticeDraft
+        if (draft?.version !== PRACTICE_DRAFT_VERSION) continue
+        const typed = { ...draft, missionType: t as MissionType }
+        found[t as MissionType] = typed
+        localStorage.setItem(practiceDraftKey(user.uid, t as MissionType), JSON.stringify(typed))
       }
+      if (Object.keys(found).length) setSavedDrafts(prev => ({ ...found, ...prev }))
     })
     return () => { cancelled = true }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -466,13 +511,21 @@ export default function Practice() {
   useEffect(() => {
     if (!draftHydratedRef.current) return
     if (mode !== 'practice') return
-    if (!exam || assessConcepts.length === 0) return
+    if (!missionType) return            // no active mission → nothing to save
+    if (pPhase === 'onboard') return    // on the hub, not inside a mission
+    // Only persist once there's something resumable: gap-scan needs assessment
+    // concepts; weakness/learn need a target concept.
+    const resumable = missionType === 'gapscan'
+      ? (!!exam && assessConcepts.length > 0)
+      : !!concept
+    if (!resumable) return
 
     const savedPhase: PracticePhase = pPhase === 'building' ? 'gap-analysis' : pPhase
     const draft: PracticeDraft = {
       version: PRACTICE_DRAFT_VERSION,
-      name: 'Process 1',
+      name: MISSION_LABEL[missionType],
       savedAt: Date.now(),
+      missionType,
       exam,
       assessConceptIds: assessConcepts.map(c => c.id),
       confidenceStep,
@@ -492,16 +545,17 @@ export default function Practice() {
       sessionBridge,
     }
 
-    localStorage.setItem(practiceDraftKey(user.uid), JSON.stringify(draft))
-    setSavedDraft(draft)
+    localStorage.setItem(practiceDraftKey(user.uid, missionType), JSON.stringify(draft))
+    setSavedDrafts(prev => ({ ...prev, [missionType]: draft }))
     // Mirror to Firestore (debounced) so progress is durable + cross-device.
     if (remoteSaveTimer.current) window.clearTimeout(remoteSaveTimer.current)
     remoteSaveTimer.current = window.setTimeout(() => {
-      void savePracticeDraftRemote(user.uid, draft)
+      void savePracticeDraftRemote(user.uid, missionType, draft)
     }, 2000)
   }, [
     user.uid,
     mode,
+    missionType,
     exam,
     assessConcepts,
     confidenceStep,
@@ -612,7 +666,7 @@ export default function Practice() {
       const weakest = rec?.studentProfile?.topWeaknesses?.[0]?.conceptId
       const target = bridgeTarget ?? weakest
       if (target) enterMission('weakness', target)
-      else { clearPracticeDraft(); setPPhase('exam-pick') }  // fallback: gap-scan to find weaknesses
+      else { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }  // fallback: gap-scan to find weaknesses
     } finally { setMissionLoading(null) }
   }
 
@@ -741,7 +795,7 @@ export default function Practice() {
   }
 
   function resetPractice() {
-    clearPracticeDraft()
+    clearPracticeDraft(missionType ?? 'gapscan')
     setDraftRestored(false)
     setPPhase('onboard')
     setConcept(null)
@@ -843,19 +897,21 @@ export default function Practice() {
       .filter(r => r.outcome === 0)
       .map(r => ({ label: r.concept_chip, conceptId: chipToConceptId(r.concept_chip) }))
 
-  const savedDraftConcept = savedDraft?.concept
-    ? PRACTICE_CONCEPTS.find(c => c.id === savedDraft.concept)
-    : null
-
   function savedDraftStatus(draft: PracticeDraft) {
+    const conceptLabel = draft.concept
+      ? (PRACTICE_CONCEPTS.find(c => c.id === draft.concept)?.label ?? bridgeLabel(draft.concept))
+      : ''
+    const prefix = MISSION_LABEL[draft.missionType ?? 'gapscan']
     if (draft.pPhase === 'session' && draft.questions.length > 0) {
-      const label = savedDraftConcept?.label ?? bridgeLabel(draft.concept ?? '')
-      return `${draft.exam} • ${label} • Question ${Math.min(draft.qIndex + 1, draft.questions.length)} of ${draft.questions.length}`
+      return `${prefix} • ${conceptLabel} • Question ${Math.min(draft.qIndex + 1, draft.questions.length)} of ${draft.questions.length}`
+    }
+    if (draft.pPhase === 'level' && conceptLabel) {
+      return `${prefix} • ${conceptLabel} • Pick a level`
     }
     if (draft.pPhase === 'confidence') {
-      return `${draft.exam} • Gap scan ${Math.min(draft.confidenceStep + 1, draft.assessConceptIds.length)} of ${draft.assessConceptIds.length}`
+      return `${prefix} • Gap scan ${Math.min(draft.confidenceStep + 1, draft.assessConceptIds.length)} of ${draft.assessConceptIds.length}`
     }
-    return `${draft.exam} • Roadmap ready`
+    return `${prefix} • ${conceptLabel || 'Ready'}`
   }
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -890,16 +946,20 @@ export default function Practice() {
                 </div>
                 <h1 className={s.onboardTitle}>Your practice missions</h1>
 
-                {/* ── Resume in-progress missions ── */}
-                {savedDraft && (
-                  <button className={s.resumeProcessBtn} onClick={loadSavedPracticeDraft}>
-                    <span className={s.resumeProcessTop}>
-                      <span>Resume mission</span>
-                      <span>→</span>
-                    </span>
-                    <span className={s.resumeProcessMeta}>{savedDraftStatus(savedDraft)}</span>
-                  </button>
-                )}
+                {/* ── Resume in-progress missions (one per type) ── */}
+                {MISSION_TYPES.map(t => {
+                  const d = savedDrafts[t]
+                  if (!d) return null
+                  return (
+                    <button key={t} className={s.resumeProcessBtn} onClick={() => loadSavedPracticeDraft(t)}>
+                      <span className={s.resumeProcessTop}>
+                        <span>Resume {MISSION_LABEL[t]}</span>
+                        <span>→</span>
+                      </span>
+                      <span className={s.resumeProcessMeta}>{savedDraftStatus(d)}</span>
+                    </button>
+                  )
+                })}
 
                 {/* ── Start a mission ── */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 460, marginTop: 8 }}>
@@ -928,7 +988,7 @@ export default function Practice() {
                   </button>
                 </div>
 
-                <button className={s.onboardBtn} onClick={() => { clearPracticeDraft(); setPPhase('exam-pick') }}>
+                <button className={s.onboardBtn} onClick={() => { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }}>
                   Run a full gap scan →
                 </button>
                 <button className={s.skipBtn} onClick={() => { setAssessConcepts([]); setPPhase('path') }}>

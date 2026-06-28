@@ -46,25 +46,36 @@ export async function isDiagnosticComplete(uid: string): Promise<boolean> {
   }
 }
 
-// The draft lives on the user's own doc (already writable per security rules) to
-// avoid a separate collection that would need a new rule. JSON round-trip strips
-// any `undefined` values, which Firestore rejects.
-export async function savePracticeDraftRemote(uid: string, draft: unknown): Promise<void> {
+// Drafts live on the user's own doc (already writable per security rules), now
+// keyed by mission type so a weakness AND a learn mission can resume independently
+// — users/{uid}.practiceDrafts = { weakness?, learn?, gapscan? }. Firestore's
+// merge:true deep-merges the map, so writing one slot preserves the others. JSON
+// round-trip strips `undefined`, which Firestore rejects.
+export async function savePracticeDraftRemote(
+  uid: string, missionType: string, draft: unknown,
+): Promise<void> {
   try {
-    const clean = JSON.parse(JSON.stringify(draft))
+    const clean = draft === null ? null : JSON.parse(JSON.stringify(draft))
     await setDoc(
       doc(db, 'users', uid),
-      { practiceDraft: clean, practiceDraftAt: serverTimestamp() },
+      { practiceDrafts: { [missionType]: clean }, practiceDraftAt: serverTimestamp() },
       { merge: true },
     )
   } catch { /* fail soft */ }
 }
 
-export async function loadPracticeDraftRemote(uid: string): Promise<unknown | null> {
+export async function loadPracticeDraftsRemote(uid: string): Promise<Record<string, unknown>> {
   try {
     const snap = await getDoc(doc(db, 'users', uid))
-    return snap.data()?.practiceDraft ?? null
+    const data = snap.data()
+    const map = (data?.practiceDrafts as Record<string, unknown>) ?? {}
+    // Legacy single-draft migration → gap-scan slot.
+    if (Object.keys(map).length === 0 && data?.practiceDraft) {
+      return { gapscan: data.practiceDraft }
+    }
+    // Drop nulled (cleared) slots.
+    return Object.fromEntries(Object.entries(map).filter(([, v]) => v))
   } catch {
-    return null
+    return {}
   }
 }
