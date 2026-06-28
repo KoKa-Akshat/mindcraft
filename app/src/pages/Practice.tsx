@@ -17,7 +17,7 @@ import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
 import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, type IngredientRecommendResult } from '../lib/mlApi'
-import { fetchNextConcept } from '../lib/recommendNextConcept'
+import { fetchNextConcept, fetchNextNewConcept } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote } from '../lib/practiceState'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
@@ -366,7 +366,7 @@ export default function Practice() {
   // Which mission is currently active (drives which slot autosave writes to), and
   // which hub start-card is loading.
   const [missionType, setMissionType] = useState<MissionType | null>(null)
-  const [missionLoading, setMissionLoading] = useState(false)
+  const [missionLoading, setMissionLoading] = useState<'weakness' | 'learn' | null>(null)
 
   // ── Solver state ──────────────────────────────────────────────────────────
   const [sPhase,     setSPhase]     = useState<SolverPhase>('input')
@@ -475,6 +475,8 @@ export default function Practice() {
       examHelp?: boolean
       homeworkHelp?: boolean
       conceptId?: string
+      missionType?: 'weakness' | 'learn'
+      resumeMission?: 'weakness' | 'learn'
       showPath?: boolean
     } | null
     const slots = loadAllDraftSlots()
@@ -489,7 +491,7 @@ export default function Practice() {
     } else if (state?.showPath) {
       setAssessConcepts([])
       setPPhase('path')
-    } else if (!state?.conceptId) {
+    } else if (!state?.conceptId && !state?.resumeMission) {
       setPPhase('onboard')
     }
     draftHydratedRef.current = true
@@ -592,6 +594,8 @@ export default function Practice() {
       examHelp?: boolean
       homeworkHelp?: boolean
       conceptId?: string
+      missionType?: 'weakness' | 'learn'
+      resumeMission?: 'weakness' | 'learn'
       showPath?: boolean
     } | null
     if (state?.problemText) {
@@ -601,10 +605,13 @@ export default function Practice() {
       window.history.replaceState({}, '')
     } else if (state?.conceptId) {
       setMode('practice')
-      setMissionType('weakness')
+      setMissionType(state.missionType ?? 'weakness')
       setConcept(state.conceptId)
-      setLevel(2)
+      setLevel(getRecommendedLevel(state.conceptId))
       setPPhase('level')
+      window.history.replaceState({}, '')
+    } else if (state?.resumeMission) {
+      loadSavedPracticeDraft(state.resumeMission)
       window.history.replaceState({}, '')
     } else if (state?.showPath) {
       setMode('practice')
@@ -673,14 +680,22 @@ export default function Practice() {
     setPPhase('level')
   }
 
-  // Recommended next concept (weakness-prioritized).
-  async function startRecommendedMission() {
-    setMissionLoading(true)
+  async function startWeaknessMission() {
+    setMissionLoading('weakness')
     try {
       const next = await fetchNextConcept(user.uid)
       if (next) enterMission('weakness', next.conceptId)
       else { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }
-    } finally { setMissionLoading(false) }
+    } finally { setMissionLoading(null) }
+  }
+
+  async function startLearnMission() {
+    setMissionLoading('learn')
+    try {
+      const next = await fetchNextNewConcept(user.uid)
+      if (next) enterMission('learn', next.conceptId)
+      else { setAssessConcepts([]); setPPhase('path') }
+    } finally { setMissionLoading(null) }
   }
 
   // ── Gap analysis helpers ──────────────────────────────────────────────────
@@ -959,8 +974,8 @@ export default function Practice() {
                 </div>
                 <h1 className={s.onboardTitle}>Your practice missions</h1>
 
-                {/* ── Resume in-progress missions (one per type) ── */}
-                {MISSION_TYPES.map(t => {
+                {/* ── Resume in-progress missions (weakness + learn; gap scan on hub below) ── */}
+                {(['weakness', 'learn'] as const).map(t => {
                   const d = savedDrafts[t]
                   if (!d) return null
                   return (
@@ -973,18 +988,39 @@ export default function Practice() {
                     </button>
                   )
                 })}
+                {savedDrafts.gapscan && (
+                  <button className={s.resumeProcessBtn} onClick={() => loadSavedPracticeDraft('gapscan')}>
+                    <span className={s.resumeProcessTop}>
+                      <span>Resume {MISSION_LABEL.gapscan}</span>
+                      <span>→</span>
+                    </span>
+                    <span className={s.resumeProcessMeta}>{savedDraftStatus(savedDrafts.gapscan)}</span>
+                  </button>
+                )}
 
                 {/* ── Start a mission ── */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 460, marginTop: 8 }}>
                   <button
-                    onClick={startRecommendedMission}
-                    disabled={missionLoading}
+                    onClick={startWeaknessMission}
+                    disabled={missionLoading !== null}
                     style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
                              background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 15 }}>🎯 Practice recommended concept</div>
+                    <div style={{ fontWeight: 700, fontSize: 15 }}>🎯 Weak spot — practice now</div>
                     <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
-                      {missionLoading ? 'Finding your next focus…'
-                        : 'Jump straight into your highest-priority weakness.'}
+                      {missionLoading === 'weakness' ? 'Finding your weak spots…'
+                        : 'Drill the concept the engine flags as your highest-priority weakness.'}
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={startLearnMission}
+                    disabled={missionLoading !== null}
+                    style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
+                             background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 15 }}>🧭 Learn next — new concept</div>
+                    <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
+                      {missionLoading === 'learn' ? 'Plotting your next topic…'
+                        : 'Move forward to the next step on your Learning GPS path.'}
                     </div>
                   </button>
                 </div>

@@ -1,3 +1,42 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resumeBtn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.resumeBtn:hover {
+  border-color: rgba(196, 245, 71, 0.28);
+  background: rgba(196, 245, 71, 0.06);
+}
+
+.resumeTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.resumeMeta {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.45;
+}
+
 .card {
   background: linear-gradient(140deg, #0a2218 0%, #0c1f10 55%, #071408 100%);
   border: 1px solid rgba(196, 245, 71, 0.16);
@@ -10,13 +49,32 @@
     0 20px 48px rgba(0, 0, 0, 0.40);
 }
 
+.cardLearn {
+  background: linear-gradient(140deg, #0f1428 0%, #121a35 55%, #0a0e1c 100%);
+  border-color: rgba(124, 58, 237, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.08) inset,
+    0 20px 48px rgba(0, 0, 0, 0.40);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
 .card:hover {
   border-color: rgba(196, 245, 71, 0.30);
-  transform: translateY(-2px);
   box-shadow:
     0 0 0 1px rgba(196, 245, 71, 0.08) inset,
     0 28px 64px rgba(0, 0, 0, 0.50),
     0 0 40px rgba(196, 245, 71, 0.06);
+}
+
+.cardLearn:hover {
+  border-color: rgba(124, 58, 237, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.10) inset,
+    0 28px 64px rgba(0, 0, 0, 0.50),
+    0 0 40px rgba(124, 58, 237, 0.08);
 }
 
 .badge {
@@ -31,6 +89,12 @@
   padding: 4px 10px;
   border-radius: 50px;
   margin-bottom: 14px;
+}
+
+.badgeLearn {
+  color: #D4AAFF;
+  background: rgba(124, 58, 237, 0.16);
+  border-color: rgba(124, 58, 237, 0.28);
 }
 
 .title {
@@ -64,9 +128,14 @@
   box-shadow: 0 4px 18px rgba(196, 245, 71, 0.35);
 }
 
+.btnLearn {
+  background: #7C3AED;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.35);
+}
+
 .btn:hover {
   filter: brightness(1.06);
-  box-shadow: 0 6px 24px rgba(196, 245, 71, 0.48);
 }
 
 .loadRow {
@@ -75,7 +144,8 @@
   gap: 12px;
   color: rgba(255, 255, 255, 0.55);
   font-size: 13px;
-  min-height: 100px;
+  min-height: 80px;
+  padding: 0 4px;
 }
 
 .spinner {

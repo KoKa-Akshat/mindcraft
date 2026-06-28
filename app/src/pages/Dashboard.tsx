@@ -7,7 +7,7 @@ import { isDiagnosticComplete } from '../lib/practiceState'
 import { worldUrl } from '../lib/siteUrls'
 import HeroBar            from '../components/HeroBar'
 import ConstellationCard  from '../components/ConstellationCard'
-import NextConceptCard    from '../components/NextConceptCard'
+import PracticeHubPanel   from '../components/PracticeHubPanel'
 import ReinforcePanel     from '../components/ReinforceCard'
 import s from './Dashboard.module.css'
 
@@ -102,7 +102,7 @@ export default function Dashboard() {
               {/* Right panel */}
               <div className={s.panel}>
                 <motion.div {...FADE_UP(0.10)}>
-                  <NextConceptCard userId={uid} />
+                  <PracticeHubPanel userId={uid} />
                 </motion.div>
 
                 <motion.div {...FADE_UP(0.18)}>

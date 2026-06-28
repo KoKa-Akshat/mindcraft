@@ -1,6 +1,6 @@
 import { mlIdToLabel } from './conceptMap'
 import { fetchKnowledgeGraph } from './graphCache'
-import { getRecommendations } from './mlApi'
+import { getRecommendations, type RecommendResult } from './mlApi'
 
 const URGENCY: Record<string, number> = {
   struggling: 0,
@@ -16,35 +16,32 @@ export interface NextConcept {
   status: string
 }
 
-/** Weakness-prioritized next concept — same signal as the old Learning GPS auto-load. */
-export async function fetchNextConcept(userId: string): Promise<NextConcept | null> {
-  if (!userId) return null
+export interface PracticeHubRecommendations {
+  weakness: NextConcept | null
+  learn: NextConcept | null
+}
 
-  const [rec, kg] = await Promise.all([
-    getRecommendations(userId, [], 'curriculum'),
-    fetchKnowledgeGraph(userId),
-  ])
+type GraphNode = { id: string; mastery?: number; status?: string }
 
-  const nodes = (kg?.nodes ?? []) as Array<{ id: string; mastery?: number; status?: string }>
-  const nodeMap = new Map(nodes.map(n => [n.id, n]))
+function pickMostUrgent(nodes: GraphNode[]): string | null {
+  if (!nodes.length) return null
+  return [...nodes]
+    .sort(
+      (a, b) =>
+        (URGENCY[a.status ?? 'untouched'] - URGENCY[b.status ?? 'untouched'])
+        || ((a.mastery ?? 0) - (b.mastery ?? 0)),
+    )[0]?.id ?? null
+}
 
-  const bridgeTarget = rec?.recommendations
-    ?.find(r => r.isBridgeGap && r.gapType === 'concept')?.bridgeToConcept
-  const weakest = rec?.studentProfile?.topWeaknesses?.[0]?.conceptId
+function chainSteps(rec: RecommendResult | null) {
+  return rec?.recommendations?.filter(r => !r.isSupplement && !r.isBridgeGap) ?? []
+}
 
-  let conceptId = bridgeTarget ?? weakest ?? null
-
-  if (!conceptId && nodes.length) {
-    conceptId = [...nodes]
-      .sort(
-        (a, b) =>
-          (URGENCY[a.status ?? 'untouched'] - URGENCY[b.status ?? 'untouched'])
-          || ((a.mastery ?? 0) - (b.mastery ?? 0)),
-      )[0]?.id ?? null
-  }
-
+function toNextConcept(
+  conceptId: string | null | undefined,
+  nodeMap: Map<string, GraphNode>,
+): NextConcept | null {
   if (!conceptId) return null
-
   const node = nodeMap.get(conceptId)
   return {
     conceptId,
@@ -52,4 +49,73 @@ export async function fetchNextConcept(userId: string): Promise<NextConcept | nu
     mastery: node?.mastery ?? 0,
     status: node?.status ?? 'untouched',
   }
+}
+
+/**
+ * Dashboard + practice hub recommendations.
+ *
+ * Weak spot — `/recommend` studentProfile.topWeaknesses (seeded by gap scan +
+ * practice), with bridge-gap override when a path exists.
+ *
+ * Learn next — pathfinder trimmed chain via `/recommend` with a target concept
+ * (weakness anchor, or most-urgent graph node). Empty curriculum targets do
+ * NOT produce a chain; exam mode is the fallback ACT roadmap.
+ */
+export async function fetchPracticeHubRecommendations(
+  userId: string,
+): Promise<PracticeHubRecommendations> {
+  if (!userId) return { weakness: null, learn: null }
+
+  const kg = await fetchKnowledgeGraph(userId)
+  const nodes = (kg?.nodes ?? []) as GraphNode[]
+  const nodeMap = new Map(nodes.map(n => [n.id, n]))
+  const fallbackId = pickMostUrgent(nodes)
+
+  const profileRec = await getRecommendations(userId, [], 'curriculum')
+  const weaknessId =
+    profileRec?.studentProfile?.topWeaknesses?.[0]?.conceptId
+    ?? fallbackId
+
+  // Pathfinder needs a target — anchor on the weakness (or fallback node).
+  const pathTarget = weaknessId ?? fallbackId
+  let pathRec: RecommendResult | null = null
+  if (pathTarget) {
+    pathRec = await getRecommendations(userId, [pathTarget], 'curriculum')
+  }
+
+  // Bridge gaps only appear once the pathfinder built a chain.
+  const bridgeTarget = pathRec?.recommendations
+    ?.find(r => r.isBridgeGap && r.gapType === 'concept')?.bridgeToConcept
+  const resolvedWeaknessId = bridgeTarget ?? weaknessId
+
+  let learnId = chainSteps(pathRec)[0]?.conceptId ?? null
+  if (learnId && learnId === resolvedWeaknessId) {
+    learnId = chainSteps(pathRec)[1]?.conceptId ?? null
+  }
+
+  // ACT exam overlay when curriculum path is empty (cold start / no target).
+  if (!learnId) {
+    const examRec = await getRecommendations(userId, [], 'exam')
+    const examChain = chainSteps(examRec)
+    learnId = examChain.find(c => c.conceptId !== resolvedWeaknessId)?.conceptId
+      ?? examChain[0]?.conceptId
+      ?? null
+  }
+
+  return {
+    weakness: toNextConcept(resolvedWeaknessId, nodeMap),
+    learn: toNextConcept(learnId, nodeMap),
+  }
+}
+
+/** Weakness-prioritized drill target from `/recommend`. */
+export async function fetchNextConcept(userId: string): Promise<NextConcept | null> {
+  const { weakness } = await fetchPracticeHubRecommendations(userId)
+  return weakness
+}
+
+/** Next step on the pathfinder chain (Learning GPS "learn new"). */
+export async function fetchNextNewConcept(userId: string): Promise<NextConcept | null> {
+  const { learn } = await fetchPracticeHubRecommendations(userId)
+  return learn
 }

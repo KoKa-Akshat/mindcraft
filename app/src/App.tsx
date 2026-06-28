@@ -40,7 +40,7 @@ export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
 
 // Wake the ML Cloud Run service the moment auth resolves, so the first graph
-// fetch (NextConceptCard on the dashboard, or the Knowledge Graph page)
+// fetch (PracticeHubPanel on the dashboard, or the Knowledge Graph page)
 // hits a warm instance instead of eating a 30–60s cold start (min-instances 0).
 // Fire-and-forget, once per page session.
 const ML_API_URL =

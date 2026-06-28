@@ -1,7 +1,7 @@
 /**
  * graphCache.ts — one shared fetch of the student knowledge graph.
  *
- * Both NextConceptCard (dashboard) and the Knowledge Graph page need
+ * Both PracticeHubPanel (dashboard) and the Knowledge Graph page need
  * GET /knowledge-graph/{uid}. Without sharing, each one re-fetches — so opening
  * the dashboard then navigating to the graph page hits Cloud Run twice. This
  * caches the in-flight promise per user so concurrent callers dedupe to a
