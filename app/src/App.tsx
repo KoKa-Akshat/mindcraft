@@ -12,7 +12,7 @@
  *   3. Add a <Route> entry — wrap in <AuthGuard> if login is required
  */
 
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
@@ -80,6 +80,7 @@ function RoleRedirect() {
 
 /** Blocks unauthenticated access. Redirects to /login if not signed in. */
 function AuthGuard({ children }: { children: React.ReactNode }) {
+  const location = useLocation()
   const [user, setUser] = useState<User | null | undefined>(undefined)
   useEffect(() => onAuthStateChanged(auth, setUser), [])
   useEffect(() => {
@@ -88,7 +89,10 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
     void fetchKnowledgeGraph(user.uid) // prefetch graph into the shared cache
   }, [user])
   if (user === undefined) return null // still loading auth state
-  if (!user) return <Navigate to="/login" replace />
+  if (!user) {
+    const next = encodeURIComponent(location.pathname + location.search)
+    return <Navigate to={`/login?next=${next}`} replace />
+  }
   return (
     <UserContext.Provider value={user}>
       {children}

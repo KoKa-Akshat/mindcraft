@@ -9,12 +9,18 @@ import {
 import { auth, googleProvider } from '../firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import s from './Login.module.css'
 import { worldUrl } from '../lib/siteUrls'
 
 type Role = 'student' | 'parent' | 'tutor'
 type Mode = 'signin' | 'signup'
+
+function safeReturnPath(raw: string | null): string | null {
+  if (!raw || !raw.startsWith('/') || raw.startsWith('//')) return null
+  if (raw.startsWith('/login')) return null
+  return raw
+}
 
 function friendlyError(code: string) {
   switch (code) {
@@ -42,6 +48,8 @@ export default function Login() {
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const returnTo = safeReturnPath(searchParams.get('next'))
 
   async function routeAfterLogin(uid: string, isNewUser = false) {
     await auth.currentUser?.getIdToken(true)
@@ -72,6 +80,8 @@ export default function Login() {
 
     if (firestoreRole === 'tutor' || firestoreRole === 'admin') {
       navigate('/tutor', { replace: true })
+    } else if (returnTo) {
+      navigate(returnTo, { replace: true })
     } else {
       window.location.href = worldUrl(uid)
     }
