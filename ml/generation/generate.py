@@ -8,6 +8,8 @@ from __future__ import annotations
 import json
 import re
 
+from mindcraft_graph.config import FORMAT_IDS
+
 from .essence import ConceptEssence
 from .llm_client import complete
 
@@ -26,6 +28,11 @@ FORMAT_GUIDE = {
     "coordinate_graph": "Reference points/lines on the coordinate plane, described in text.",
     "table": "Include a small data table written inline in the prompt text.",
 }
+
+if set(FORMAT_GUIDE) != set(FORMAT_IDS):
+    raise RuntimeError(
+        "ml.generation FORMAT_GUIDE keys must exactly match mindcraft_graph.config.FORMAT_IDS"
+    )
 
 SYSTEM = (
     "You write ACT math multiple-choice questions. Output STRICT JSON only, no prose. "
@@ -46,7 +53,17 @@ def _essence_block(ess: ConceptEssence | None) -> str:
     return "\n".join(lines)
 
 
+def _validate_request(level: int, fmt: str, n: int) -> None:
+    if level not in (1, 2, 3):
+        raise ValueError(f"level must be 1, 2, or 3; got {level!r}")
+    if fmt not in FORMAT_IDS:
+        raise ValueError(f"unknown format {fmt!r}; expected one of {sorted(FORMAT_IDS)}")
+    if n < 1:
+        raise ValueError(f"n must be positive; got {n!r}")
+
+
 def build_prompt(concept_id: str, ess: ConceptEssence | None, level: int, fmt: str, n: int) -> str:
+    _validate_request(level, fmt, n)
     return (
         f"Concept: {concept_id}\n"
         f"Difficulty — {LEVEL_GUIDE.get(level, LEVEL_GUIDE[1])}\n"
@@ -96,6 +113,7 @@ def generate_for(
 ) -> list[dict]:
     """Return validated Question dicts (C5 shape) for one (concept, level, format).
     Retries a couple times — LLM JSON output is occasionally malformed."""
+    _validate_request(level, fmt, n)
     prompt = build_prompt(concept_id, ess, level, fmt, n)
     parsed: dict | list | None = None
     for _ in range(attempts):
