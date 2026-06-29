@@ -292,6 +292,18 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
+.bottomRowMinimal {
+  grid-template-columns: 1fr auto auto;
+  align-items: end;
+}
+
+@media (max-width: 1120px) {
+  .bottomRowMinimal {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
 @media (max-width: 1120px) {
   .nav {
     grid-column: 1 / -1;

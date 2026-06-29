@@ -1,12 +1,15 @@
 .shell {
-  background: #1f2a3a;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(196, 245, 71, 0.06), transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.04), transparent 40%),
+    linear-gradient(180deg, #0c1218 0%, #121820 45%, #0a0e14 100%);
   min-height: 100vh;
 }
 
 .page {
   margin: 0 auto;
   padding: 24px 32px 60px;
-  max-width: 1520px;
+  max-width: 980px;
 }
 
 .topActions {

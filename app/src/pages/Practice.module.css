@@ -499,27 +499,11 @@
 
 .answerRow {
   display: flex;
-  align-items: stretch;
-  gap: 10px;
+  flex-direction: column;
+  gap: 0;
   margin-top: 18px;
   padding-top: 18px;
   border-top: 1px solid #E2E8F0;
-}
-
-.calcBtn {
-  width: 48px;
-  min-width: 48px;
-  border-radius: 12px;
-  border: 1.5px solid #CBD5E1;
-  background: #F8FAFC;
-  font-size: 20px;
-  cursor: pointer;
-  transition: background 150ms, border-color 150ms;
-}
-.calcBtn:hover { background: #EFF6FF; border-color: #93C5FD; }
-.calcBtnActive {
-  background: #DBEAFE;
-  border-color: #3B82F6;
 }
 
 .answerInputWrap {
@@ -556,30 +540,6 @@
 }
 .answerSubmit:hover:not(:disabled) { opacity: 0.92; }
 .answerSubmit:disabled { opacity: 0.35; cursor: not-allowed; }
-
-.calcPanel {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 14px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-}
-
-.calcKey {
-  min-height: 40px;
-  border: 1px solid #CBD5E1;
-  border-radius: 10px;
-  background: #ffffff;
-  font-size: 14px;
-  font-weight: 700;
-  color: #334155;
-  cursor: pointer;
-  font-family: var(--f-body);
-}
-.calcKey:hover { background: #EFF6FF; border-color: #93C5FD; }
 
 .hintCardInline {
   margin-top: 18px;
@@ -3256,9 +3216,59 @@
   z-index: 1;
 }
 
-/* Kill the flat teal body bg on lesson + path screens */
+/* Kill the flat teal body bg on path screens */
 :global(body.mc-path-backdrop) {
   background: #060a08 url('../assets/background.webp') center top / cover no-repeat fixed !important;
+}
+
+:global(body.mc-matte-backdrop) {
+  background: #0a0a0a !important;
+}
+
+/* Matte black stage — lesson whitepaper, level pick, questions */
+.matteShell {
+  background: #0a0a0a;
+  position: relative;
+}
+
+.matteShell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 85% 55% at 50% 0%, rgba(255, 255, 255, 0.035), transparent 58%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(84, 185, 72, 0.04), transparent 55%);
+}
+
+.matteShell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.matteShell .exploreCard {
+  background: #f7f7f5;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.matteShell .backLink {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.matteShell .backLink:hover {
+  color: #c4f547;
+}
+
+.matteShell .levelScreen {
+  padding-top: 8px;
+}
+
+.matteShell .sessionWrap {
+  padding-top: 4px;
 }
 
 .lessonPage {

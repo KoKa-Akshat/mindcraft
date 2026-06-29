@@ -3,6 +3,7 @@ import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
 import Sidebar from '../components/Sidebar'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
+import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
 import HomeworkCards, { type HomeworkSession, type HomeworkCard, type OutcomeRecord } from '../components/HomeworkCards'
 import {
@@ -344,6 +345,7 @@ export default function Practice() {
   const location = useLocation()
   const { streak, practiceCount } = useStudentData(user)
   const fileRef  = useRef<HTMLInputElement>(null)
+  const answerInputRef = useRef<HTMLInputElement>(null)
   const draftHydratedRef = useRef(false)
   const remoteSaveTimer = useRef<number | null>(null)
 
@@ -552,9 +554,14 @@ export default function Practice() {
   }, [user.uid])
 
   useEffect(() => {
-    const on = mode === 'practice' && ['path', 'explore', 'level', 'session'].includes(pPhase)
-    document.body.classList.toggle('mc-path-backdrop', on)
-    return () => document.body.classList.remove('mc-path-backdrop')
+    const pathOn = mode === 'practice' && pPhase === 'path'
+    const matteOn = mode === 'practice' && ['explore', 'level', 'session', 'complete'].includes(pPhase)
+    document.body.classList.toggle('mc-path-backdrop', pathOn)
+    document.body.classList.toggle('mc-matte-backdrop', matteOn)
+    return () => {
+      document.body.classList.remove('mc-path-backdrop')
+      document.body.classList.remove('mc-matte-backdrop')
+    }
   }, [mode, pPhase])
 
   useEffect(() => {
@@ -1026,20 +1033,20 @@ export default function Practice() {
   // ── Render ────────────────────────────────────────────────────────────────
 
   const isPathView = pPhase === 'path' && mode === 'practice'
-  const isPathLikeShell = mode === 'practice' && ['path', 'explore', 'level', 'session'].includes(pPhase)
-  const isLessonPage = mode === 'practice' && ['explore', 'level', 'session'].includes(pPhase)
-  const showLessonNav = isLessonPage
+  const isMatteFlow = mode === 'practice' && ['explore', 'level', 'session', 'complete'].includes(pPhase)
+  const isLessonPage = isMatteFlow
+  const isSessionView = pPhase === 'session' && mode === 'practice'
+  const hideTopBar = isPathView || pPhase === 'explore' || pPhase === 'level' || pPhase === 'complete'
 
   return (
-    <div className={`${s.shell}${isPathLikeShell ? ` ${s.pathShell}` : ''}`}>
+    <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}`}>
       <Sidebar />
 
       <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}`}>
 
-        {/* Mode toggle — hidden on full-page path view */}
-        {!isPathView && (
+        {!hideTopBar && (
         <div className={s.topBar}>
-          {showLessonNav ? (
+          {isSessionView ? (
             <div className={s.topBarPills}>
               <button type="button" className={s.topBarPill} onClick={() => setMode('solver')}>Problem Solver</button>
               <a className={s.topBarPillChat} href={SLACK_INVITE} target="_blank" rel="noopener noreferrer">Tutor Chat</a>
@@ -1668,17 +1675,9 @@ export default function Practice() {
 
                       {!checked && (
                         <div className={s.answerRow}>
-                          <button
-                            type="button"
-                            className={`${s.calcBtn} ${showCalc ? s.calcBtnActive : ''}`}
-                            onClick={() => setShowCalc(v => !v)}
-                            aria-label="Calculator"
-                            title="Calculator"
-                          >
-                            🧮
-                          </button>
                           <div className={s.answerInputWrap}>
                             <input
+                              ref={answerInputRef}
                               className={s.answerInput}
                               type="text"
                               placeholder="Type your answer here"
@@ -1687,6 +1686,11 @@ export default function Practice() {
                               onKeyDown={e => {
                                 if (e.key === 'Enter' && !checked) checkAnswer()
                               }}
+                              disabled={checked}
+                            />
+                            <ScientificCalcToggle
+                              active={showCalc}
+                              onToggle={() => setShowCalc(v => !v)}
                               disabled={checked}
                             />
                             <button
@@ -1699,26 +1703,13 @@ export default function Practice() {
                               ↑
                             </button>
                           </div>
-                        </div>
-                      )}
-
-                      {showCalc && !checked && (
-                        <div className={s.calcPanel}>
-                          {['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+','C','⌫'].map(key => (
-                            <button
-                              key={key}
-                              type="button"
-                              className={s.calcKey}
-                              onClick={() => {
-                                if (key === 'C') setTypedAnswer('')
-                                else if (key === '⌫') setTypedAnswer(v => v.slice(0, -1))
-                                else if (key === '=') checkAnswer()
-                                else setTypedAnswer(v => v + key)
-                              }}
-                            >
-                              {key}
-                            </button>
-                          ))}
+                          <ScientificCalcPanel
+                            open={showCalc}
+                            value={typedAnswer}
+                            onChange={setTypedAnswer}
+                            onSubmit={checkAnswer}
+                            inputRef={answerInputRef}
+                          />
                         </div>
                       )}
                     </div>

@@ -10,6 +10,8 @@ interface Props {
   nextSession: { subject: string; time: string; tutor: string; meetingUrl?: string | null; scheduledAt?: number } | null
   tutorId?:    string | null
   showUserControls?: boolean
+  /** Hide nav links — greeting + session only */
+  minimal?: boolean
 }
 
 const NAV = [
@@ -24,7 +26,7 @@ function todayLabel(): string {
   return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
 }
 
-export default function HeroBar({ greeting, name, nextSession, tutorId, showUserControls = true }: Props) {
+export default function HeroBar({ greeting, name, nextSession, tutorId, showUserControls = true, minimal = false }: Props) {
   const loc      = useLocation()
   const navigate = useNavigate()
   const user     = useUser()
@@ -61,7 +63,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
         </div>
       )}
 
-      <div className={s.bottomRow}>
+      <div className={`${s.bottomRow} ${minimal ? s.bottomRowMinimal : ''}`}>
         <div className={s.greetingBlock}>
           <Link to="/dashboard" className={s.brand}>
             <span className={s.brandText}>Mind<span>Craft</span></span>
@@ -72,6 +74,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
           </h1>
         </div>
 
+        {!minimal && (
         <nav className={s.nav} aria-label="Dashboard navigation">
           {NAV.map(({ to, label }) => (
             <Link key={to} to={to} className={`${s.navLink} ${active(to)}`}>
@@ -87,6 +90,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
             Community
           </a>
         </nav>
+        )}
 
         <div className={s.sessionPanel}>
           <span className={s.sessionLabel}>{canJoin ? 'Session is live' : 'Next up'}</span>
