@@ -406,7 +406,8 @@ export default function Practice() {
     setAssessConcepts(restoredConcepts)
     setConfidenceStep(Math.min(draft.confidenceStep, Math.max(restoredConcepts.length - 1, 0)))
     setConfidenceMap(draft.confidenceMap ?? {})
-    const restoredPhase = draft.pPhase === 'session' && !draft.questions?.length
+    const restoredPhase = draft.pPhase === 'onboard' ? 'path'
+      : draft.pPhase === 'session' && !draft.questions?.length
       ? (type === 'gapscan' ? 'path' : 'level')
       : draft.pPhase === 'building'
       ? 'gap-analysis'
@@ -1000,78 +1001,6 @@ export default function Practice() {
         {/* ═══════ PRACTICE MODE ═══════ */}
         {mode === 'practice' && (
           <>
-
-            {/* ── Onboard: mascot greeting ── */}
-            {pPhase === 'onboard' && (
-              <div className={s.onboard}>
-                <div className={s.onboardMascot}>
-                  <PixelCraft size="lg" />
-                  <div className={s.speechBubbleTop}>
-                    Hi! I'm <strong>Craft</strong> 🦝<br />
-                    Pick up where you left off, or start a mission below.
-                  </div>
-                </div>
-                <h1 className={s.onboardTitle}>Your practice missions</h1>
-
-                {/* ── Resume in-progress missions (weakness + learn; gap scan on hub below) ── */}
-                {(['weakness', 'learn'] as const).map(t => {
-                  const d = savedDrafts[t]
-                  if (!d) return null
-                  return (
-                    <button key={t} className={s.resumeProcessBtn} onClick={() => loadSavedPracticeDraft(t)}>
-                      <span className={s.resumeProcessTop}>
-                        <span>Resume {MISSION_LABEL[t]}</span>
-                        <span>→</span>
-                      </span>
-                      <span className={s.resumeProcessMeta}>{savedDraftStatus(d)}</span>
-                    </button>
-                  )
-                })}
-                {savedDrafts.gapscan && (
-                  <button className={s.resumeProcessBtn} onClick={() => loadSavedPracticeDraft('gapscan')}>
-                    <span className={s.resumeProcessTop}>
-                      <span>Resume {MISSION_LABEL.gapscan}</span>
-                      <span>→</span>
-                    </span>
-                    <span className={s.resumeProcessMeta}>{savedDraftStatus(savedDrafts.gapscan)}</span>
-                  </button>
-                )}
-
-                {/* ── Start a mission ── */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 460, marginTop: 8 }}>
-                  <button
-                    onClick={startWeaknessMission}
-                    disabled={missionLoading !== null}
-                    style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
-                             background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 15 }}>🎯 Weak spot — practice now</div>
-                    <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
-                      {missionLoading === 'weakness' ? 'Finding your weak spots…'
-                        : 'Drill the concept the engine flags as your highest-priority weakness.'}
-                    </div>
-                  </button>
-
-                  <button
-                    onClick={startLearnMission}
-                    disabled={missionLoading !== null}
-                    style={{ textAlign: 'left', padding: '16px 18px', borderRadius: 14, border: '1px solid #EEF0F3',
-                             background: '#fff', cursor: 'pointer', opacity: missionLoading ? 0.6 : 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 15 }}>🧭 Learn next — new concept</div>
-                    <div style={{ fontSize: 13, color: '#6B7280', marginTop: 4 }}>
-                      {missionLoading === 'learn' ? 'Plotting your next topic…'
-                        : 'Move forward to the next step on your Learning GPS path.'}
-                    </div>
-                  </button>
-                </div>
-
-                <button className={s.onboardBtn} onClick={() => { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }}>
-                  Run a full gap scan →
-                </button>
-                <button className={s.skipBtn} onClick={() => { setAssessConcepts([]); setPPhase('path') }}>
-                  See all topics
-                </button>
-              </div>
-            )}
 
             {/* ── Exam pick ── */}
             {pPhase === 'exam-pick' && (

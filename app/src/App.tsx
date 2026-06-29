@@ -32,7 +32,6 @@ import Practice        from './pages/Practice'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
-import ConstellationGpsLab from './pages/ConstellationGpsLab'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
 
@@ -141,8 +140,6 @@ export default function App() {
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
-        <Route path="/constellation-gps-lab" element={<AuthGuard><ConstellationGpsLab /></AuthGuard>} />
-        <Route path="/practice-path-lab" element={<AuthGuard><Navigate to="/practice" replace /></AuthGuard>} />
         <Route path="/learning-gps"        element={<Navigate to="/knowledge-graph" replace />} />
         <Route path="/constellation"       element={<AuthGuard><ConstellationPage /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
