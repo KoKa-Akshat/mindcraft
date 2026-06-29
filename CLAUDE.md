@@ -162,17 +162,102 @@ future migration of the engine onto the richer per-student state.
 ---
 
 ## API (`ml/serve.py` — the `mindcraft-ml` service)
-- `POST /recommend` — concept recs + PCA + `canonicalChain` + `unlocks`
-  (reverse-prereq concepts). Used by the KnowledgeGraph page + LearningGPS.
+- `POST /recommend` — **one endpoint, two consumer extractions** (see below).
+  Returns `canonicalChain`, `unlocks`, `recommendations[]` (trimmed path +
+  supplements + bridge/format gaps), and `studentProfile` (PCA projections,
+  `topStrengths` / `topWeaknesses`). Used by PawHub, Knowledge Graph path panel,
+  and ReinforcePanel.
 - `POST /seed-assessment` — onboarding gap-scan (per-concept confidence) → seed
-  events. REPLACES the prior seed (source=`onboarding_assessment`).
+  events. REPLACES the prior seed (source=`onboarding_assessment`). Each rated
+  concept gets one synthetic `assessment` event (`hard`/`kinda`/`easy` → outcome
+  + effort map in `serve.py`). This is **not** the pathfinder — it seeds the
+  graph so `/recommend` can read weaknesses before real practice exists.
 - `POST /record-outcomes` — practice/homework results → graph events (APPENDS,
   source=`practice`). The practice→mastery feedback loop.
 - `POST /process-summary` — parse session summary → events, update graph.
 - `POST /recommend-ingredients` — ingredient-level styled cards for a problem.
 - `POST /submit-answer` — ingredient/bridge mastery → aggregate to concept.
-- `GET /student-profile/{id}`, `GET /knowledge-graph/{id}` (returns ALL nodes),
+- `GET /student-profile/{id}`, `GET /knowledge-graph/{id}` (returns ALL nodes;
+  `eventCount` + `status` per node — `untouched` ⇔ `event_count === 0`),
+  `GET /exam-concepts/{exam}` — concept ids for an exam track (ACT →
+  `act_relevance.tested` from Layer 1; ~29 concepts),
   `GET /health`.
+
+### `/recommend` modes (pathfinder)
+- **`curriculum`** — needs `target_concepts: [conceptId]` or returns an empty
+  chain. Walks ontology prereqs → `canonicalChain`, trims mastered/struggling/
+  unknown → `recommendations[]`. Bridge gaps injected mid-chain; format gaps
+  appended after. Optional `exam` field scopes weakness filtering to the exam
+  track (`act_relevance.tested` for ACT).
+- **`exam`** — empty `target_concepts` defaults to **`act_relevance.tested`**
+  concepts (not `high_priority_concepts`). Same trim, then exam-priority re-rank
+  via `high_priority_concepts` + optional deadline budget (`deadline_days`).
+  This is the **ACT prep roadmap**.
+- **`explore`** — novelty/alignment picks (no prerequisite chain).
+
+### Student app UX (`app/`)
+
+**Shared chrome**
+- **`AppTabBar`** (`components/AppTabBar.tsx`) — pill tabs on Dashboard,
+  Practice, and Knowledge Graph: Dashboard | Practice | Problem Solver |
+  Knowledge Map. Problem Solver navigates to `/practice` with `homeworkHelp` state.
+- **`Sidebar`** (`components/Sidebar.tsx`) — fixed top nav (logo, Session Notes,
+  Practice, Organize, Community, avatar/sign-out). Same on Dashboard, Practice,
+  Knowledge Graph.
+- **`HomeRedirect`** (`App.tsx`) — on localhost, `/` stays in the app; in
+  production, `/` redirects to the marketing site.
+
+**Dashboard — PawHub** (`components/PawHub.tsx` + `lib/recommendNextConcept.ts`)
+Replaced the old card-based hub. Paw-shaped launcher driven by `/recommend`:
+
+| Pad / toe | `/recommend` signal | Launch |
+|-----------|---------------------|--------|
+| **Practice** (main pad) | `studentProfile.topWeaknesses` (+ bridge-gap override) | `/practice` → **direct question session** |
+| **Learn** (violet toe) | `mode: "exam"` → first 0-exposure, playable concept on ACT path | topic label only → **direct session** (L1 if never rated) |
+| Homework Help | — | Problem Solver |
+| GPS | — | `/knowledge-graph` |
+| Notes | — | `/sessions` |
+
+- **Weak spot** = observed weakness (gap-scan seed + practice + sessions), scoped
+  to the student's diagnostic exam track via `GET /exam-concepts/{exam}`.
+- **Learn next** = first `eventCount === 0` node on the trimmed exam path with
+  static questions in `questionBank` (`hasPlayableQuestions`). Gap-scan ratings
+  count as exposure — rated concepts won't appear as learn next.
+- PawHub calls `launchMissionDirect()` in Practice — **skips the level picker**;
+  level comes from gap-scan confidence (`bridgePractice.getRecommendedLevel`), or
+  L1 for a fresh learn target.
+- **Full topic path** (island map) is **not** on the dashboard — Practice → path
+  view (“See all topics”) or Knowledge Graph → concept → “Your Next Route”.
+- `/learning-gps` redirects to `/knowledge-graph`. `LearningGPS.tsx` and
+  `/constellation` still exist but are not on the dashboard.
+
+**Gap scan** (first-time + retake)
+- Dashboard gates students without `diagnosticCompleted` (or legacy
+  `diagnosticCompletedAt`) into Practice `examHelp` flow. Tutors/admins exempt.
+- Flow: exam pick → per-concept confidence (concepts from
+  `GET /exam-concepts/{exam}`, ~29 for ACT) → `/seed-assessment` → brief
+  “Scanning your gaps…” → **`/dashboard`** (no castle / gap-analysis screen).
+- `resetDiagnostic()` (`lib/practiceState.ts`) clears diagnostic flags + gapscan
+  drafts; Admin **Testing** tab exposes “Retake gap scan”.
+- **Level gating after scan**: `easy` → L3 only, `kinda` → L2, `hard` → L1
+  (`lib/bridgePractice.ts`). Manual path explore still offers the level picker.
+
+**Practice sessions**
+- `evictQuestionCache()` + Fisher–Yates `shuffle()` in `questionBank.ts` so
+  each new session draws a fresh random set (not the same cached questions).
+- Per-mission drafts: `users/{uid}.practiceDrafts.{weakness|learn|gapscan}` +
+  local fallbacks (`lib/practiceDrafts.ts`, `lib/practiceState.ts`).
+- “New Mission” after a session returns to the **path view**, not gap scan
+  (`returnToPath()`).
+
+**ML client** (`lib/mlApi.ts`) — browser calls attach `Authorization: Bearer
+<Firebase ID token>` via `mlAuthHeaders()`. Required once `ML_AUTH_ENABLED` is
+on in Cloud Run.
+
+**Admin** (`pages/Admin.tsx`) — **Testing** tab: retake gap scan, ACT ontology
+vs question-bank coverage table (`lib/ontologyBankCoverage.ts` +
+`data/actOntologyCoverage.json`; regenerate via
+`ml/scripts/audit_act_ontology_question_bank.py`).
 
 CORS must include `mindcraft-93858.web.app` + the Vercel domain. Firestore: a
 bare `firestore.Client()` targets the (empty) Cloud Run project — the client is
@@ -199,11 +284,11 @@ is all naive datetimes — mixing them raises).
   default). Local dev: `ML_AUTH_ENABLED=false`. Roll out callers (frontend push +
   Vercel env) BEFORE enabling on Cloud Run, or in-flight calls 401.
 - URL `https://mindcraft-ml-630302850770.us-central1.run.app` (stable lately).
-  Latest **deployed** rev `00009`. Local commits beyond `00009` (displacement
-  persistence + bridge-gap detection) have NOT been built/deployed — run Cloud
-  Build + `gcloud run deploy` with `FIRESTORE_PROJECT=mindcraft-93858` to push
-  them live. The Dockerfile bakes embeddings from the standardized ontology; the
-  cache self-invalidates at startup if it doesn't match.
+  Latest **deployed** rev `00009`. Local commits beyond `00009` (auth, displacement,
+  bridge-gap detection, `exam-concepts`, `act_tested` exam-mode) have NOT been
+  built/deployed — run Cloud Build + `gcloud run deploy` with both env vars.
+  The Dockerfile bakes embeddings from the standardized ontology; the cache
+  self-invalidates at startup if it doesn't match.
 
 ### `mindcraft-homework` (LLM solver) — Cloud Run, project `mindcraft-93858`
 - Code in `homework/`. Secret `ANTHROPIC_API_KEY`. Stateless. Down on credits.
@@ -241,96 +326,98 @@ Key notes:
 - Indexes deployed: `interactions(studentId, timestamp)` + 4 on `sessions`. New
   query shapes may need new composite indexes.
 - Rules let a user write their own `users/{uid}` doc — used for the diagnostic
-  flag + practice draft (`lib/practiceState.ts`).
+  flag, per-mission practice drafts (`practiceDrafts.{weakness|learn|gapscan}`),
+  and gap-scan progress (`lib/practiceState.ts`, `lib/practiceDrafts.ts`).
 
 ---
 
 ## Local dev
 - ML venv is named `mindcraft/` (not `.venv`), inside `ml/`. Package installed
   via `pip install -e ".[dev]"`.
-- Run ML server: `cd ml && source mindcraft/bin/activate && uvicorn serve:app --host 0.0.0.0 --port 8080`
-- Run frontend: `cd app && npm run dev` (serves on 5173)
+- Run ML server: `cd ml && source mindcraft/bin/activate && ML_AUTH_ENABLED=false FIRESTORE_PROJECT=mindcraft-93858 uvicorn serve:app --host 0.0.0.0 --port 8080`
+- Run frontend: `cd app && npm run dev` → `http://localhost:5173` (`host: true`
+  in `vite.config.ts` — use a normal browser tab; IDE embedded browsers often
+  break Google OAuth).
+- Point frontend at local ML: `app/.env.local` →
+  `VITE_ML_API_URL=http://localhost:8080` (do not commit).
 - Tests: `cd ml && python scripts/end2end.py` (63/63 on the standardized
   ontology). Card-path harness: `python scripts/test_concept_paths.py
   --complete-ontology ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json
   --questions ml/data/sample_questions/first_15_questions.csv`.
+- ACT bank audit: `python3 ml/scripts/audit_act_ontology_question_bank.py` →
+  refreshes `app/src/data/actOntologyCoverage.json`.
+- Dashboard **3D** toggle opens `worldUrl()` (`mindcraft-world1.web.app` in prod;
+  `localhost:3001` in dev — needs the world static server running locally).
 
 ---
 
-## Current state (deployed & working)
-- Standardized 42-concept ontology live; `mindcraft-ml` rev `00009`.
+## Current state
+
+### Deployed (production `main` + Cloud Run rev `00009`)
+- Standardized 42-concept ontology live on `mindcraft-ml`.
 - Firestore connected (`mindcraft-93858`). Test student WITH data:
   `gBFn9vUGIIa7tAiTTQSl8CbPSao2` = `shreeyutk@gmail.com` (events backfilled).
-- **The learning loop is wired end-to-end**: onboarding gap-scan →
-  `/seed-assessment` → graph; practice/homework completion → `/record-outcomes`
-  → graph; LearningGPS + recommendations adapt.
-- **Diagnostic-first**: Dashboard routes a student without `diagnosticCompleted`
-  (on their `users` doc) into the gap-scan before the dashboard. Progress
-  persists to Firestore via `lib/practiceState.ts`. Tutors/admins exempt.
-- **LearningGPS** is fully `/recommend`-driven (path + unlocks from server; no
-  frontend prereq map). Mounted at `/learning-gps`; ConstellationCard at
-  `/constellation`; both have Dashboard cards.
-- **Homework help** falls back to `/recommend-ingredients` (deterministic
-  ingredient cards) when the LLM solver fails — which it does now (no credits).
-- **Warm-ping + shared graph cache**: `App.tsx` fires `GET /health` on auth to
-  wake Cloud Run before LearningGPS auto-loads (`mlWarmed` flag prevents
-  double-firing). `lib/graphCache.ts` caches the in-flight
-  `/knowledge-graph/{uid}` promise per user — LearningGPS and the Knowledge
-  Graph page share one fetch; failures not cached; `invalidateKnowledgeGraph`
-  called after any mastery-mutating operation (seed-assessment, record-outcomes).
-- **Security hardened** (session `ebffc59a` + `5fc0cc5d`): all 5 webhook
-  endpoints auth-gated with Firebase ID tokens; open LLM proxy + `/debug-net`
-  key-leak removed; CORS allows `Authorization` header; ownership checks
-  fail-closed. `ml/serve.py` auth code committed but NOT yet live — needs Cloud
-  Build + deploy with `ML_SERVICE_SECRET` (see Deployment). `delete-session`
-  also gated.
-- **Co-founder's agentic layer** (`ml/mindcraft_graph/models/learning_world.py`,
-  `loaders/subject_graph_loader.py`, `ml/data/subject_graphs/*.json`,
-  `ml/serve.py` endpoints for `/agent/*`) exists in the repo but is NOT wired
-  into the live `serve.py` — all eight agentic endpoints were intentionally
-  excluded when resolving the merge conflict (we took our `serve.py` entirely).
-  Dead code only; safe to ignore or delete later.
+- **Learning loop**: gap-scan → `/seed-assessment` → graph; practice →
+  `/record-outcomes` → graph; recommendations adapt.
+- **Security on `main`** (`ebffc59a`, `5fc0cc5d`): webhook endpoints auth-gated;
+  frontend sends Bearer tokens to ML; `ml/serve.py` auth code committed but
+  **NOT yet enabled on Cloud Run** (still rev `00009` without `ML_AUTH_ENABLED`).
+- **Homework help** falls back to `/recommend-ingredients` when the LLM solver
+  is down (Anthropic credits exhausted).
+- **Warm-ping + shared graph cache**: `App.tsx` prefetches `/health` +
+  `/knowledge-graph/{uid}` on auth (`lib/graphCache.ts`).
+
+### Local uncommitted (not on production yet)
+Large frontend + ML delta on disk — **push `main` + Cloud Build/deploy** to ship.
+
+**Frontend**
+- **PawHub dashboard** + unified **AppTabBar** / **Sidebar** across Dashboard,
+  Practice, Knowledge Graph.
+- **Direct-to-session** from PawHub (no level picker); learn toe shows topic only.
+- Gap-scan fixes: ACT concept list from `/exam-concepts`, post-scan → dashboard,
+  `resetDiagnostic`, path flicker gate (`diagnosticHydrated`), fresh question
+  shuffle per session.
+- Admin **Testing** tab + ontology/bank coverage tooling.
+- Login: admin role gate, OAuth redirect fallback, `HomeRedirect` for localhost.
+
+**ML** (`serve.py` + pathfinder, not deployed)
+- `GET /exam-concepts/{exam}`; exam mode targets `act_relevance.tested` (~29 ACT
+  concepts); `exam` param on `/recommend` scopes weaknesses.
+- Displacement persistence (`append_displacement_snapshot`) + bridge-gap fields
+  on `/knowledge-graph` (`isBridgeGap`, `bridgeEvidence`) — API present, UI not
+  consuming bridge gaps yet.
+
+**Dead code** (safe to ignore): co-founder's agentic layer (`learning_world.py`,
+`/agent/*` endpoints) — excluded from live `serve.py`.
 
 ## Known gotchas / open items
 - **Anthropic credits exhausted** → `mindcraft-homework` + dynamic question gen
   return 400. Homework uses the ingredient-pipeline fallback meanwhile.
-- Existing students lack the `diagnosticCompleted` flag → get sent through the
-  diagnostic once (by design; backfill the flag if undesired).
-- Practice questions come from `app/src/lib/questionBank.ts` (495 static) +
-  dynamic gen via the Vercel webhook
-  `mindcraft-webhook.vercel.app/api/generate-questions` (gated by
-  `VITE_ENABLE_DYNAMIC_QGEN`).
-- `HomeworkProgress.tsx` / `LastSession.tsx` are unused (possibly intended).
-- **mindcraft-ml undeployed changes**: displacement persistence
-  (`append_displacement_snapshot`), bridge-gap detection (`isBridgeGap`,
-  `bridgeEvidence`), and the full auth layer (`mindcraft_graph/auth.py`) are
-  committed but NOT yet live (still rev `00009`). Next deploy activates all three.
-  Requires `ML_SERVICE_SECRET` env var + `ML_SERVICE_SECRET` set in Vercel first
-  (see Deployment — roll out callers before enabling on Cloud Run).
-- **Role assignment is client-self-selected**: `role: tutor/student` is written
-  by the client at signup (`Login.tsx`) — any user can self-promote. Firestore
-  rules let users write their own `users/{uid}` doc. The auth.py role lookup
-  (`_role_for`) reads this value to grant tutors cross-student access — so until
-  server-authoritative roles are built, the tutor exemption is not fully trusted.
-  See "Designed, not built" for the planned classroom model.
-- **Bridge-gap API fields not consumed by UI**: `isBridgeGap` / `bridgeEvidence`
-  are in the `/knowledge-graph` response and persisted to Firestore, but no
-  frontend component renders them. Natural next pieces: tutor "blockers" view
-  (list weak bridges per student) and a displacement-over-time chart.
-- **Audit `/student-profile` consumers**: the endpoint was silently returning
-  `masteryProjection == strengthProjection` (bug — both returned the same
-  vector) before a recent fix. Grep the frontend for callers to check whether
-  any UI logic accidentally compensated for the identical values.
-- **Tutor view**: tutors have no student events, so the graph is empty for them.
-  Needs a student-selector in the tutor view (still open).
-- **Concept-layer pathfinder** on the 42-concept ontology was spot-checked and is
-  SOUND — prereq chains are semantic (derived from bridges + ingredient
-  `comes_from`), NOT array-position artifacts (the old worry). Minor: edge
-  `typical_order` = concept array index (affects only the difficulty estimate),
-  and a few concepts are prereq-roots (e.g. `right_triangle_geometry` has no
-  prereqs). A broader eyeball across all 42 is still worthwhile, not urgent.
-- **Recall headroom** (~0.19 on the 15-question harness) is ingredient-tag /
-  path-step alignment — data work, not a mechanism bug.
+- **Production UI lags local** — PawHub, AppTabBar, direct sessions, ACT gap
+  scan, and ML `exam-concepts` are local uncommitted until pushed + deployed.
+- Existing students lack `diagnosticCompleted` → one forced gap scan (by design;
+  backfill the flag or use Admin Testing → retake).
+- Practice questions: `app/src/lib/questionBank.ts` (static) + dynamic gen via
+  Vercel webhook (gated by `VITE_ENABLE_DYNAMIC_QGEN`). **19 of 29 ACT-tested
+  concepts** lack full static bank coverage — see Admin Testing tab /
+  `actOntologyCoverage.json`. `getQuestions`/`questionCount` resolve ontology→bank
+  via `BANK_ALIASES` (only `ratios_proportions → percent_ratio` today) so
+  legacy-id content is still playable; `hasPlayableQuestions` (recommendNextConcept)
+  rides this, so alias'd concepts surface in PawHub. `getQuestions` also takes an
+  optional `format` arg (format → concept edge) — prefers questions in that vessel,
+  falls back to the concept pool; **no-ops until questions carry a `format` tag**.
+- `HomeworkProgress.tsx` / `LastSession.tsx` are unused.
+- **mindcraft-ml undeployed** (still rev `00009`): auth layer, displacement
+  persistence, bridge-gap API fields, `exam-concepts`, `act_tested` exam-mode
+  defaults. Deploy with `FIRESTORE_PROJECT` + `ML_SERVICE_SECRET`; set matching
+  secret in Vercel **before** enabling auth on Cloud Run.
+- **Role assignment is client-self-selected** at signup (`Login.tsx`) — tutor
+  exemption in ML auth is not fully trusted until server-authoritative roles
+  (see Designed, not built).
+- **Bridge-gap fields not in UI** — in `/knowledge-graph` response only.
+- **Tutor view**: empty graph without a student selector (still open).
+- **Concept-layer pathfinder** spot-checked SOUND on 42-concept ontology.
+- **Recall headroom** (~0.19 on 15-question harness) — data/alignment work.
 
 ### ML-quality backlog (concept/ingredient engine, not blocking the product)
 - Scale the card-path harness from 15 → ~50 tagged questions (keep ≤50 so each

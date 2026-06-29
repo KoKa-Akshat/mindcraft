@@ -1907,6 +1907,29 @@ export const LEVEL_META = {
 // 80 % first-attempt accuracy = level mastered (Bloom's mastery learning threshold)
 export const MASTERY_THRESHOLD = 0.80
 
+// Fisher–Yates shuffle (unbiased; sort(() => Math.random()) is not).
+export function shuffle<T>(items: T[]): T[] {
+  const a = [...items]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+// Some Layer-1 ontology ids don't match the static bank's legacy question ids.
+// Resolve to the id that actually carries questions so /recommend targets are
+// playable. Per the coverage audit, ratios_proportions is the only true content
+// alias today (its 12 items live under percent_ratio). Add entries here as the
+// bank/ontology ids get reconciled.
+const BANK_ALIASES: Record<string, string> = {
+  ratios_proportions: 'percent_ratio',
+}
+function bankConceptId(conceptId: string): string {
+  if (Q.some(q => q.conceptId === conceptId)) return conceptId
+  return BANK_ALIASES[conceptId] ?? conceptId
+}
+
 // Return up to `count` questions shuffled, prioritising unseen IDs
 export function getQuestions(
   conceptId: string,
@@ -1914,16 +1937,25 @@ export function getQuestions(
   count = 10,
   seenIds: string[] = [],
   examType: Question['examTag'] | 'General' = 'General',
+  format?: FormatId,
 ): Question[] {
-  const basePool = Q.filter(q => q.conceptId === conceptId && q.level === level)
-  const examPool = examType === 'General' ? [] : basePool.filter(q => q.examTag === examType)
-  const pool     = examPool.length > 0 ? examPool : basePool
-  const unseen   = pool.filter(q => !seenIds.includes(q.id)).sort(() => Math.random() - 0.5)
-  const seen     = pool.filter(q =>  seenIds.includes(q.id)).sort(() => Math.random() - 0.5)
+  const id = bankConceptId(conceptId)
+  const basePool = Q.filter(q => q.conceptId === id && q.level === level)
+  // Format-targeted (the format → concept edge): prefer questions in the
+  // requested vessel, falling back to the concept pool when none are tagged.
+  // The bank has no format tags yet, so this no-ops until tagging lands.
+  const formatPool = format ? basePool.filter(q => q.format === format) : []
+  const afterFormat = formatPool.length > 0 ? formatPool : basePool
+  const examPool = examType === 'General' ? [] : afterFormat.filter(q => q.examTag === examType)
+  const pool     = examPool.length > 0 ? examPool : afterFormat
+  const unseen   = shuffle(pool.filter(q => !seenIds.includes(q.id)))
+  const seen     = shuffle(pool.filter(q =>  seenIds.includes(q.id)))
   return [...unseen, ...seen].slice(0, Math.min(count, pool.length))
 }
 
-// Total question count for a concept + level
+// Total question count for a concept + level (alias-resolved, so a concept whose
+// content lives under a legacy bank id still reports its real coverage).
 export function questionCount(conceptId: string, level: 1|2|3): number {
-  return Q.filter(q => q.conceptId === conceptId && q.level === level).length
+  const id = bankConceptId(conceptId)
+  return Q.filter(q => q.conceptId === id && q.level === level).length
 }
