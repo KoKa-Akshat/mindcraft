@@ -81,7 +81,7 @@ ${JSON_SHAPE}`
     if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
 
     const session = sessionSnap.data()!
-    if (session.tutorId && uid !== session.tutorId) {
+    if (uid !== session.tutorId) {
       return res.status(403).json({ error: 'Forbidden' })
     }
     const transcript = session.transcript?.fullText ?? ''

@@ -34,7 +34,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const session = sessionSnap.data()!
 
-    if (session.tutorId && uid !== session.tutorId) {
+    if (uid !== session.tutorId) {
       return res.status(403).json({ error: 'Forbidden' })
     }
 
