@@ -3,51 +3,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: min(72vh, 640px);
-  padding: 24px 12px 48px;
+  min-height: min(72vh, 650px);
+  padding: 10px 12px 48px;
 }
 
 .backdrop {
   position: absolute;
-  inset: 8% 10% 12%;
-  border-radius: 50%;
+  left: 50%;
+  top: 54%;
+  width: 560px;
+  height: 420px;
+  transform: translate(-50%, -50%);
+  border-radius: 48%;
   background:
-    radial-gradient(circle at 50% 42%, rgba(196, 245, 71, 0.07), transparent 52%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 45%);
+    radial-gradient(circle at 50% 52%, rgba(196, 245, 71, 0.12), transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(70, 180, 190, 0.07), transparent 62%);
+  filter: blur(4px);
   pointer-events: none;
 }
 
 .paw {
   position: relative;
-  width: min(100%, 520px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
+  width: min(100%, 560px);
+  height: 470px;
 }
 
 .toes {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  width: min(100%, 460px);
-  margin: 0 auto 6px;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .toe {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  max-width: 108px;
-  justify-self: center;
+  position: absolute;
+  width: 126px;
+  height: 126px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(196, 245, 71, 0.34);
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%);
-  backdrop-filter: blur(16px);
+    radial-gradient(circle at 38% 24%, rgba(255, 255, 255, 0.22), transparent 26%),
+    radial-gradient(circle at 50% 56%, rgba(196, 245, 71, 0.11), transparent 56%),
+    linear-gradient(145deg, rgba(31, 53, 55, 0.92) 0%, rgba(14, 24, 28, 0.84) 100%);
+  backdrop-filter: blur(18px);
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    0 18px 44px rgba(0, 0, 0, 0.48),
+    0 0 30px rgba(196, 245, 71, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -18px 35px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -59,7 +62,38 @@
   color: #ffffff;
   font-family: var(--f-body);
   transition: border-color 0.15s, box-shadow 0.15s;
+  pointer-events: auto;
 }
+
+.toe::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 245, 71, 0.16);
+  box-shadow: inset 0 0 18px rgba(196, 245, 71, 0.08);
+  pointer-events: none;
+}
+
+.toe::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 42px;
+  height: 66px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(196, 245, 71, 0.24), rgba(196, 245, 71, 0.02));
+  filter: blur(8px);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.toe_learn { left: 28px; top: 66px; }
+.toe_homework { left: 122px; top: 0; }
+.toe_gps { right: 122px; top: 0; }
+.toe_notes { right: 20px; top: 105px; width: 110px; height: 110px; }
 
 .toe:hover {
   border-color: rgba(196, 245, 71, 0.35);
@@ -75,9 +109,9 @@
 .toe_amber:hover { box-shadow: 0 22px 48px rgba(0,0,0,0.5), 0 0 28px rgba(251, 191, 36, 0.14), inset 0 1px 0 rgba(255,255,255,0.18); }
 
 .toeIcon {
-  width: 28px;
-  height: 28px;
-  color: rgba(255, 255, 255, 0.82);
+  width: 30px;
+  height: 30px;
+  color: rgba(196, 245, 71, 0.88);
 }
 
 .iconSvg {
@@ -87,7 +121,7 @@
 }
 
 .toeLabel {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -96,7 +130,7 @@
 .toeSub {
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.50);
   line-height: 1.25;
   max-width: 88px;
   overflow: hidden;
@@ -105,17 +139,21 @@
 }
 
 .mainPad {
-  position: relative;
-  width: min(100%, 280px);
-  height: 280px;
+  position: absolute;
+  left: calc(50% - 147px);
+  top: 156px;
+  width: 294px;
+  height: 294px;
   border-radius: 50%;
-  border: 1px solid rgba(196, 245, 71, 0.28);
+  border: 1px solid rgba(196, 245, 71, 0.36);
   background:
-    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.22) 0%, rgba(196, 245, 71, 0.92) 38%, rgba(168, 224, 99, 0.88) 100%);
+    radial-gradient(circle at 36% 18%, rgba(255, 255, 255, 0.36), transparent 22%),
+    radial-gradient(circle at 50% 54%, rgba(196, 245, 71, 0.92) 0%, rgba(183, 238, 72, 0.78) 35%, rgba(28, 58, 43, 0.84) 72%, rgba(14, 28, 32, 0.94) 100%);
   box-shadow:
-    0 28px 70px rgba(0, 0, 0, 0.55),
-    0 0 60px rgba(196, 245, 71, 0.18),
-    inset 0 2px 0 rgba(255, 255, 255, 0.35);
+    0 34px 88px rgba(0, 0, 0, 0.58),
+    0 0 82px rgba(196, 245, 71, 0.28),
+    inset 0 2px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -28px 48px rgba(0, 0, 0, 0.28);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -129,25 +167,31 @@
 
 .mainGlow {
   position: absolute;
-  inset: 12%;
+  inset: 15%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.35), transparent 70%);
+  background:
+    radial-gradient(circle at 50% 56%, rgba(196,245,71,0.95), transparent 45%),
+    radial-gradient(circle at 48% 18%, rgba(40,40,62,0.28), transparent 18%);
   pointer-events: none;
 }
 
 .mainIcon {
-  width: 44px;
-  height: 44px;
-  color: rgba(15, 35, 24, 0.75);
+  position: relative;
+  width: 42px;
+  height: 42px;
+  color: rgba(14, 38, 28, 0.72);
 }
 
 .mainLabel {
-  font-size: 28px;
+  position: relative;
+  font-size: 30px;
   font-weight: 900;
   letter-spacing: -0.03em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.20);
 }
 
 .mainSub {
+  position: relative;
   font-size: 12px;
   font-weight: 700;
   color: rgba(15, 35, 24, 0.55);
@@ -155,10 +199,16 @@
 }
 
 @media (max-width: 640px) {
-  .toes { gap: 8px; max-width: 340px; }
-  .toe { max-width: 78px; padding: 8px; }
+  .stage { min-height: 520px; padding-top: 0; }
+  .paw { width: 360px; height: 430px; }
+  .toe { width: 86px; height: 86px; padding: 8px; }
+  .toe_learn { left: 4px; top: 78px; }
+  .toe_homework { left: 72px; top: 18px; }
+  .toe_gps { right: 72px; top: 18px; }
+  .toe_notes { right: 2px; top: 92px; width: 80px; height: 80px; }
+  .toeIcon { width: 22px; height: 22px; }
   .toeLabel { font-size: 9px; }
   .toeSub { display: none; }
-  .mainPad { width: 220px; height: 220px; }
+  .mainPad { left: calc(50% - 110px); top: 150px; width: 220px; height: 220px; }
   .mainLabel { font-size: 24px; }
 }
