@@ -10,23 +10,28 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { db } from '../lib/firebase'
 import { setCors } from '../lib/cors'
+import { verifyToken } from '../lib/verifyToken'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
 
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Unauthorized' })
+
   try {
-    const { sessionId, tutorId } = req.body
-    if (!sessionId || !tutorId) {
-      return res.status(400).json({ error: 'Missing sessionId or tutorId' })
+    const { sessionId } = req.body
+    if (!sessionId) {
+      return res.status(400).json({ error: 'Missing sessionId' })
     }
 
     const snap = await db.collection('sessions').doc(sessionId).get()
     if (!snap.exists) return res.status(404).json({ error: 'Session not found' })
 
-    // Only the session's assigned tutor may delete it
-    if (snap.data()!.tutorId !== tutorId) {
+    // Only the session's assigned tutor may delete it (verified uid, not a
+    // client-supplied tutorId).
+    if (snap.data()!.tutorId !== uid) {
       return res.status(403).json({ error: 'Not authorized to delete this session' })
     }
 

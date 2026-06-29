@@ -1,6 +1,6 @@
 # ml/serve.py
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from datetime import datetime
 import pathlib
@@ -26,6 +26,7 @@ from mindcraft_graph.engine.features import compute_concept_profiles
 from mindcraft_graph.engine.decay import decay_student_state, decay_all_edges
 from mindcraft_graph.planning.goal import Goal
 from mindcraft_graph.api.recommend import recommend
+from mindcraft_graph.auth import require_auth, authorize_student, AuthContext
 
 # ── Startup: load once, reuse forever ──
 
@@ -265,7 +266,8 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
 # ── Endpoints ──
 
 @app.post("/recommend")
-async def recommend_endpoint(req: RecommendRequest):
+async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(require_auth)):
+    authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph, save_recommendation_result,
         append_displacement_snapshot, load_ingredient_state, load_format_events,
@@ -382,13 +384,14 @@ async def recommend_endpoint(req: RecommendRequest):
 
 
 @app.post("/prep-diagnose")
-async def prep_diagnose_endpoint(req: PrepDiagnoseRequest):
+async def prep_diagnose_endpoint(req: PrepDiagnoseRequest, auth: AuthContext = Depends(require_auth)):
     """Deterministic exam-prep diagnosis — the always-on fallback for /prep.
 
     Runs the exam-mode pathfinder (exam-frequency + deadline budget) and maps the
     gap chain into the same DiagnoseResult/Gap shape the panic-loop UI consumes,
     so it drops in when the LLM diagnose is unavailable (Anthropic credits) or the
     input is purely structured (exam type + deadline)."""
+    authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import load_student_events
     from mindcraft_graph.planning.pathfinder import find_path
 
@@ -468,9 +471,10 @@ ASSESSMENT_OUTCOME_MAP = {
 
 
 @app.post("/seed-assessment")
-async def seed_assessment_endpoint(req: SeedAssessmentRequest):
+async def seed_assessment_endpoint(req: SeedAssessmentRequest, auth: AuthContext = Depends(require_auth)):
     """Seed the concept graph from the onboarding 'gap scan' so a brand-new
     student gets personalized recommendations before their first session."""
+    authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
         load_student_events,
         replace_interactions_by_source,
@@ -522,7 +526,7 @@ async def seed_assessment_endpoint(req: SeedAssessmentRequest):
 
 
 @app.post("/record-outcomes")
-async def record_outcomes_endpoint(req: RecordOutcomesRequest):
+async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext = Depends(require_auth)):
     """Record practice/homework results into the concept graph so mastery moves
     as the student actually answers problems. Events accumulate (not replaced).
 
@@ -531,6 +535,7 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest):
     format scored k/n over its own questions (sample-weighted). The OBSERVATION
     log keeps full per-question granularity for the predictive harness. Items
     arrive per-question (score 1/0); they are aggregated here, not folded raw."""
+    authorize_student(auth, req.student_id)
     from collections import defaultdict
     from statistics import mean
     from mindcraft_graph.firestore_adapter import (
@@ -628,7 +633,8 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest):
 
 
 @app.post("/recommend-ingredients")
-async def recommend_ingredients_endpoint(req: IngredientRecommendRequest):
+async def recommend_ingredients_endpoint(req: IngredientRecommendRequest, auth: AuthContext = Depends(require_auth)):
+    authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
         load_ingredient_state,
         save_ingredient_recommendation_result,
@@ -673,7 +679,8 @@ async def recommend_ingredients_endpoint(req: IngredientRecommendRequest):
 
 
 @app.post("/submit-answer")
-async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest):
+async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthContext = Depends(require_auth)):
+    authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
         load_ingredient_state,
         load_student_events,
@@ -749,7 +756,8 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest):
 
 
 @app.post("/process-summary")
-async def process_summary_endpoint(req: SummaryRequest):
+async def process_summary_endpoint(req: SummaryRequest, auth: AuthContext = Depends(require_auth)):
+    authorize_student(auth, req.student_id)
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph,
     )
@@ -807,7 +815,8 @@ async def process_summary_endpoint(req: SummaryRequest):
 
 
 @app.get("/student-profile/{student_id}")
-async def student_profile_endpoint(student_id: str):
+async def student_profile_endpoint(student_id: str, auth: AuthContext = Depends(require_auth)):
+    authorize_student(auth, student_id)
     from mindcraft_graph.firestore_adapter import load_student_events
 
     events = load_student_events(student_id)
@@ -859,7 +868,7 @@ async def health():
     }
 
 @app.get("/knowledge-graph/{student_id}")
-async def knowledge_graph_endpoint(student_id: str):
+async def knowledge_graph_endpoint(student_id: str, auth: AuthContext = Depends(require_auth)):
     """
     Returns all data needed to render the interactive knowledge graph.
     
@@ -869,6 +878,7 @@ async def knowledge_graph_endpoint(student_id: str):
     - Student mastery and strength points
     - Ingredient list per concept (for click-to-expand)
     """
+    authorize_student(auth, student_id)
     from mindcraft_graph.firestore_adapter import load_student_events_with_learning
     
     events = load_student_events_with_learning(student_id)

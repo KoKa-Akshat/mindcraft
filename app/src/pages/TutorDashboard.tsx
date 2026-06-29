@@ -188,10 +188,11 @@ export default function TutorDashboard() {
     e.stopPropagation()
     if (!window.confirm('Delete this session?')) return
     try {
+      const token = await user.getIdToken()
       const res = await fetch('https://mindcraft-webhook.vercel.app/api/delete-session', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId: id, tutorId: user.uid }),
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ sessionId: id }),
       })
       if (!res.ok) {
         const d = await res.json()

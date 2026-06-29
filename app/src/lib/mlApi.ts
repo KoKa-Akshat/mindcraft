@@ -6,10 +6,25 @@
  * In production it will be the Cloud Run URL.
  */
 
+import { auth } from '../firebase'
+
 export const ML_BASE =
   import.meta.env.VITE_ML_API_URL ??
   import.meta.env.VITE_ML_URL ??
   'http://localhost:8000'
+
+/**
+ * Headers for an ML API call, carrying the signed-in user's Firebase ID token
+ * as `Authorization: Bearer <token>` so serve.py can verify the caller and
+ * enforce that they only touch their own student_id. Merge in any extras
+ * (e.g. Content-Type) via the argument.
+ */
+export async function mlAuthHeaders(
+  extra: Record<string, string> = {},
+): Promise<Record<string, string>> {
+  const token = await auth.currentUser?.getIdToken()
+  return token ? { ...extra, Authorization: `Bearer ${token}` } : { ...extra }
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -100,7 +115,7 @@ export async function getRecommendations(
   try {
     const res = await fetch(`${ML_BASE}/recommend`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ student_id: studentId, target_concepts: targetConcepts, mode }),
     })
     if (!res.ok) return null
@@ -118,7 +133,7 @@ export async function getIngredientCards(
   try {
     const res = await fetch(`${ML_BASE}/recommend-ingredients`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ student_id: studentId, problem_text: problemText, max_cards: maxCards }),
     })
     if (!res.ok) return null
@@ -139,7 +154,7 @@ export async function submitAnswer(
   try {
     const res = await fetch(`${ML_BASE}/submit-answer`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({
         student_id: studentId,
         card_template_id: cardTemplateId,
@@ -165,7 +180,7 @@ export async function processSummary(
   try {
     const res = await fetch(`${ML_BASE}/process-summary`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({
         student_id: studentId,
         bullets,
@@ -192,7 +207,7 @@ export async function seedAssessment(
   try {
     const res = await fetch(`${ML_BASE}/seed-assessment`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ student_id: studentId, assessment }),
     })
     if (!res.ok) return null
@@ -227,7 +242,7 @@ export async function recordOutcomes(
   try {
     const res = await fetch(`${ML_BASE}/record-outcomes`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({
         student_id: studentId,
         outcomes: outcomes.map(o => ({
@@ -251,7 +266,9 @@ export async function getStudentProfile(
   studentId: string,
 ): Promise<StudentProfileResult | null> {
   try {
-    const res = await fetch(`${ML_BASE}/student-profile/${studentId}`)
+    const res = await fetch(`${ML_BASE}/student-profile/${studentId}`, {
+      headers: await mlAuthHeaders(),
+    })
     if (!res.ok) return null
     return res.json()
   } catch {
@@ -286,7 +303,7 @@ export async function sendLearningEvent(ev: LearningEventInput): Promise<boolean
   try {
     const res = await fetch(`${ML_BASE}/learning-event`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({
         student_id: ev.studentId,
         subject_id: ev.subjectId,

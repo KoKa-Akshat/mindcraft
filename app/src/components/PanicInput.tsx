@@ -6,7 +6,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import type { DiagnoseResult } from '../pages/Prep'
-import { ML_BASE } from '../lib/mlApi'
+import { ML_BASE, mlAuthHeaders } from '../lib/mlApi'
 import s from './PanicInput.module.css'
 
 type ExamPill = 'SAT_MATH' | 'ACT_MATH' | 'IB_MATH_AA' | 'IB_MATH_AI' | 'AP_CALC_AB'
@@ -99,7 +99,7 @@ export default function PanicInput({ diagnosing, onDiagnosing, onDiagnosed, stud
       try {
         const r = await fetch(`${ML_BASE}/prep-diagnose`, {
           method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
           body:    JSON.stringify({
             student_id:    studentId,
             exam_type:     examType,

@@ -21,6 +21,13 @@ import { db }    from './firebase'
 const client = new Anthropic()
 const MODEL  = 'claude-sonnet-4-20250514'
 
+// JARVIS runs server-side with no end-user token, so it authenticates to the ML
+// service as a trusted backend via the shared secret (verified in serve.py).
+function mlServiceHeaders(extra: Record<string, string> = {}): Record<string, string> {
+  const key = process.env.ML_SERVICE_SECRET
+  return key ? { ...extra, 'X-Service-Key': key } : { ...extra }
+}
+
 // ── Constants ──────────────────────────────────────────────────────────────────
 
 const CARD_STYLES: Record<string, string> = {
@@ -194,7 +201,9 @@ export function makeExecutors(opts: ExecutorOptions): Record<string, (input: any
       try {
         const targetId = sid ?? studentId
         if (!targetId) return 'No student ID available.'
-        const res = await fetch(`${mlBase}/student-profile/${targetId}`)
+        const res = await fetch(`${mlBase}/student-profile/${targetId}`, {
+          headers: mlServiceHeaders(),
+        })
         if (!res.ok) return 'No profile data available yet — the student may not have completed any sessions.'
         return JSON.stringify(await res.json())
       } catch {
@@ -207,7 +216,7 @@ export function makeExecutors(opts: ExecutorOptions): Record<string, (input: any
         if (!studentId) return 'No student ID available.'
         const res = await fetch(`${mlBase}/recommend`, {
           method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: mlServiceHeaders({ 'Content-Type': 'application/json' }),
           body:    JSON.stringify({ student_id: studentId, target_concepts: [], mode }),
         })
         if (!res.ok) return 'No recommendations available yet.'

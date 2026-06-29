@@ -186,10 +186,18 @@ is all naive datetimes — mixing them raises).
 
 ### `mindcraft-ml` (engine) — Cloud Run, project `project-e4af30ac-bc17-4691-8b6`
 - Build: `gcloud builds submit --tag us-central1-docker.pkg.dev/project-e4af30ac-bc17-4691-8b6/mindcraft-ml/mindcraft-ml`
-- Deploy: `gcloud run deploy mindcraft-ml --image [same] --region us-central1 --memory 1Gi --cpu 1 --min-instances 0 --max-instances 3 --allow-unauthenticated --set-env-vars FIRESTORE_PROJECT=mindcraft-93858`
+- Deploy: `gcloud run deploy mindcraft-ml --image [same] --region us-central1 --memory 1Gi --cpu 1 --min-instances 0 --max-instances 3 --allow-unauthenticated --set-env-vars FIRESTORE_PROJECT=mindcraft-93858,ML_SERVICE_SECRET=<secret>`
 - **MUST pass `--set-env-vars FIRESTORE_PROJECT=mindcraft-93858`** or it talks to
   the wrong (empty) project's Firestore. The Cloud Run SA was granted
-  `roles/datastore.user` on `mindcraft-93858`.
+  `roles/datastore.user` on `mindcraft-93858`. `--set-env-vars` REPLACES the
+  whole set, so include BOTH vars every deploy.
+- **Auth** (`mindcraft_graph/auth.py`): every data endpoint requires either a
+  Firebase ID token (browser; enforced `uid == student_id`, tutors/admins
+  exempt) or `X-Service-Key == ML_SERVICE_SECRET` (the webhook, server-to-server).
+  `/health` is public. `ML_SERVICE_SECRET` MUST match the value set in Vercel.
+  Token verification is pinned to Firebase project `mindcraft-93858` (auth.py
+  default). Local dev: `ML_AUTH_ENABLED=false`. Roll out callers (frontend push +
+  Vercel env) BEFORE enabling on Cloud Run, or in-flight calls 401.
 - URL `https://mindcraft-ml-630302850770.us-central1.run.app` (stable lately).
   Latest **deployed** rev `00009`. Local commits beyond `00009` (displacement
   persistence + bridge-gap detection) have NOT been built/deployed — run Cloud

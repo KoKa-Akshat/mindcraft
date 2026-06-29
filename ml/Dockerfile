@@ -16,7 +16,7 @@ COPY data/ data/
 COPY serve.py .
 
 RUN pip install --no-cache-dir ".[ml]" \
-    uvicorn fastapi google-cloud-firestore
+    uvicorn fastapi google-cloud-firestore firebase-admin
 
 # Pre-download the sentence transformer model so it's baked into the image
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"

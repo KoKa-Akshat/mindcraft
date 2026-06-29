@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ML_TO_LABEL, LEGACY_TO_ML, resolveConceptId } from '../lib/conceptMap'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
+import { mlAuthHeaders } from '../lib/mlApi'
 import s from './LearningGPS.module.css'
 
 const ML_API_URL = import.meta.env.VITE_ML_API_URL ?? ''
@@ -205,7 +206,7 @@ export default function LearningGPS({ userId }: { userId: string }) {
     try {
       const res = await fetch(`${ML_API_URL}/recommend`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ student_id: userId, target_concepts: [targetId], mode: 'curriculum' }),
       })
       if (res.ok) {

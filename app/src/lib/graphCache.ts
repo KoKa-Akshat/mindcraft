@@ -12,6 +12,8 @@
  * so the next view reflects updated mastery.
  */
 
+import { mlAuthHeaders } from './mlApi'
+
 const ML_API_URL =
   import.meta.env.VITE_ML_API_URL ?? import.meta.env.VITE_ML_URL ?? ''
 
@@ -26,7 +28,8 @@ export function fetchKnowledgeGraph(userId: string, force = false): Promise<KGRe
   const existing = cache.get(userId)
   if (existing) return existing
 
-  const p = fetch(`${ML_API_URL}/knowledge-graph/${userId}`)
+  const p = mlAuthHeaders()
+    .then(headers => fetch(`${ML_API_URL}/knowledge-graph/${userId}`, { headers }))
     .then(res => (res.ok ? (res.json() as Promise<KGResponse>) : null))
     .catch(() => null)
 

@@ -118,7 +118,10 @@ ${JSON_SHAPE}`
       const bullets = [...(homework ?? []), progress].filter(Boolean) as string[]
       fetch(`${mlBase}/process-summary`, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(process.env.ML_SERVICE_SECRET ? { 'X-Service-Key': process.env.ML_SERVICE_SECRET } : {}),
+        },
         body:    JSON.stringify({
           student_id:       studentId,
           bullets,
