@@ -1,3 +1,5 @@
+import generatedQuestionsData from '../data/generatedQuestions.json'
+
 // Canonical representation/format ("vessel") ids — mirrors the ML config
 // FORMAT_IDS (Layer 4 representation_profile). The question-side of the same
 // representation axis the student-side mastery tracks.
@@ -1921,7 +1923,10 @@ const RAW_QUESTIONS: Question[] = [
     examTag:'AP' },
 ]
 
-const Q: Question[] = tagQuestionFormats(RAW_QUESTIONS)
+// B4 — merge Agent A's verified/generated batch (C5). Static bank wins on id collision.
+const STATIC_IDS = new Set(RAW_QUESTIONS.map(q => q.id))
+const GENERATED_QUESTIONS = (generatedQuestionsData as Question[]).filter(q => !STATIC_IDS.has(q.id))
+const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS])
 
 // ── Concept metadata ──────────────────────────────────────────────────────────
 

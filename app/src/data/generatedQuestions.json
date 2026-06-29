@@ -1,0 +1,44 @@
+[
+  {
+    "id": "gen-right_triangle_geometry-1-word-problem-1",
+    "conceptId": "right_triangle_geometry",
+    "level": 1,
+    "question": "Tom is building a treehouse and needs to place a ladder from the ground to the top of the treehouse, which is 12 feet off the ground. If the ladder is 15 feet long and forms a right angle with the ground, how far from the base of the tree is the ladder?",
+    "choices": [
+      "9 feet",
+      "12 feet",
+      "15 feet",
+      "20 feet"
+    ],
+    "correctIndex": 0,
+    "explanation": "Since the ladder forms a right angle with the ground, we can use the Pythagorean theorem: a^2 + b^2 = c^2, where c is the length of the ladder (15 feet) and a is the height of the treehouse (12 feet). We need to solve for b, which is the distance from the base of the tree. So, b^2 = c^2 - a^2 = 15^2 - 12^2 = 225 - 144 = 81. Then, b = sqrt(81) = 9 feet.",
+    "hints": [
+      "Use the Pythagorean theorem to solve the problem",
+      "Identify the lengths of the sides of the right triangle",
+      "Remember to take the square root to find the length of the side"
+    ],
+    "examTag": "ACT",
+    "format": "word_problem"
+  },
+  {
+    "id": "gen-right_triangle_geometry-1-word-problem-2",
+    "conceptId": "right_triangle_geometry",
+    "level": 1,
+    "question": "A rectangular picture frame has a length of 18 inches and a width of 12 inches. What is the length of the diagonal of the frame?",
+    "choices": [
+      "15 inches",
+      "18 inches",
+      "20.78 inches",
+      "25 inches"
+    ],
+    "correctIndex": 2,
+    "explanation": "To find the length of the diagonal, we can use the Pythagorean theorem: a^2 + b^2 = c^2, where a is the length of the frame (18 inches), b is the width of the frame (12 inches), and c is the length of the diagonal. So, c^2 = 18^2 + 12^2 = 324 + 144 = 468. Then, c = sqrt(468) = 21.63 inches, which rounds to 20.78 inches (rounded to two decimal places).",
+    "hints": [
+      "Use the Pythagorean theorem to find the length of the diagonal",
+      "Remember to take the square root to find the length of the diagonal",
+      "Round the answer to two decimal places"
+    ],
+    "examTag": "ACT",
+    "format": "word_problem"
+  }
+]

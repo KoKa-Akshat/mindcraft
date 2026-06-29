@@ -7,7 +7,7 @@ import { loadPracticeDraftsRemote } from './practiceState'
 export const PATH_SLOT_COUNT = 6
 export const PRACTICE_PATH_UPDATED_EVENT = 'mc-practice-path-updated'
 
-const PRACTICE_DRAFT_VERSION = 1
+const PRACTICE_DRAFT_VERSION = 2
 const MISSION_TYPES = ['weakness', 'learn', 'gapscan'] as const
 
 type Confidence = 'easy' | 'kinda' | 'hard'

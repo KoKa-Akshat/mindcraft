@@ -35,7 +35,7 @@ const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:
 const SLACK_INVITE = 'https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg'
 const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
-const PRACTICE_DRAFT_VERSION = 1
+const PRACTICE_DRAFT_VERSION = 2
 const PATH_SLOT_COUNT = 6
 
 type PracticePhase =
@@ -76,6 +76,10 @@ type PracticeDraft = {
   requeuedIds: string[]
   initialQCount: number
   sessionBridge: BridgeRecommendation | null
+  /** C4 — gap-scan question diagnostic hides right/wrong. */
+  hideCorrectness?: boolean
+  /** Concepts still needing self-rating after the question diagnostic. */
+  confidenceQueueIds?: string[]
 }
 
 const EXAMS = ['ACT', 'SAT', 'IB', 'AP', 'General'] as const
@@ -435,6 +439,12 @@ export default function Practice() {
     setRequeuedIds(Array.isArray(draft.requeuedIds) ? draft.requeuedIds : [])
     setInitialQCount(draft.initialQCount ?? 0)
     setSessionBridge(draft.sessionBridge ?? null)
+    setHideCorrectness(draft.hideCorrectness ?? false)
+    const queueIds = draft.confidenceQueueIds ?? []
+    setConfidenceQueue(queueIds.flatMap(id => {
+      const c = PRACTICE_CONCEPTS.find(x => x.id === id)
+      return c ? [c] : []
+    }))
     setDraftRestored(true)
     setSavedDrafts(prev => ({ ...prev, [type]: draft }))
     return true
@@ -628,6 +638,8 @@ export default function Practice() {
       requeuedIds,
       initialQCount,
       sessionBridge,
+      hideCorrectness,
+      confidenceQueueIds: confidenceQueue.map(c => c.id),
     }
 
     localStorage.setItem(practiceDraftKey(user.uid, missionType), JSON.stringify(draft))
@@ -658,6 +670,8 @@ export default function Practice() {
     requeuedIds,
     initialQCount,
     sessionBridge,
+    hideCorrectness,
+    confidenceQueue,
   ])
 
   // Auto-submit if navigated from dashboard with problemText; open the requested flow otherwise.

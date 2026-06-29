@@ -10,6 +10,8 @@
     "audit:bridge": "node scripts/auditBridgePractice.mjs",
     "audit:practice": "node scripts/auditPracticeSystem.mjs",
     "generate:questions": "node scripts/generateQuestions.mjs",
+    "sync:generated-questions": "node scripts/syncGeneratedQuestions.mjs",
+    "test": "vitest run",
     "generate:visual": "node scripts/generateManimScene.mjs"
   },
   "dependencies": {
@@ -29,6 +31,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "typescript": "^5.4.5",
-    "vite": "5.3.1"
+    "vite": "5.3.1",
+    "vitest": "^3.2.4"
   }
 }

@@ -3,7 +3,7 @@ import { loadPracticeDraftsRemote } from './practiceState'
 
 export type PracticeMissionType = 'weakness' | 'learn' | 'gapscan'
 
-export const PRACTICE_DRAFT_VERSION = 1
+export const PRACTICE_DRAFT_VERSION = 2
 
 export const MISSION_LABELS: Record<PracticeMissionType, string> = {
   weakness: 'Weakness practice',

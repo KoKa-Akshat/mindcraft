@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "contract": "C1",
+    "spec": "FORMAT_WEAKNESS_PLAN.md:26-31",
+    "hypothesis_scale": 0.5,
+    "concept_mastered_gate": 0.6,
+    "formulas": {
+      "profile_weakness": "1 - concept_mastery",
+      "concept_gap_tier1": "1 - bridge_confidence",
+      "concept_gap_tier2": "(1 - bridge_confidence) * hypothesis_scale",
+      "format_gap_tier1": "1 - format_mastery",
+      "format_gap_tier2": "(1 - format_mastery) * hypothesis_scale",
+      "format_gap_gate": "concept_mastery >= concept_mastered_gate"
+    },
+    "consumers": [
+      "app/src/lib/recommendNextConcept.test.ts (worstWeakness)",
+      "ml/ — A3 severity ordering (same fixture, lane A)"
+    ]
+  },
+  "cases": [
+    {
+      "id": "three_way_ordering",
+      "description": "Integration check: format gap beats concept-bridge gap beats plain profile weakness when all three are playable.",
+      "nodeMap": {
+        "linear_equations": {
+          "id": "linear_equations",
+          "mastery": 0.55,
+          "status": "in_progress",
+          "eventCount": 5
+        },
+        "quadratic_equations": {
+          "id": "quadratic_equations",
+          "mastery": 0.72,
+          "status": "in_progress",
+          "eventCount": 8
+        },
+        "functions_basics": {
+          "id": "functions_basics",
+          "mastery": 0.65,
+          "status": "in_progress",
+          "eventCount": 6
+        }
+      },
+      "profileRec": {
+        "mode": "curriculum",
+        "targetConcepts": [],
+        "canonicalChain": [],
+        "recommendations": [],
+        "studentProfile": {
+          "masteryProjection": {},
+          "strengthProjection": {},
+          "displacementMagnitude": 0,
+          "displacementDirection": {},
+          "topStrengths": [],
+          "topWeaknesses": [
+            { "conceptId": "linear_equations", "strength": -0.3 }
+          ]
+        }
+      },
+      "pathRec": {
+        "mode": "curriculum",
+        "targetConcepts": ["linear_equations"],
+        "canonicalChain": ["linear_equations", "quadratic_equations"],
+        "recommendations": [
+          {
+            "conceptId": "quadratic_equations",
+            "reason": "fixture concept-bridge gap",
+            "positionInChain": null,
+            "isSupplement": false,
+            "supplementFor": null,
+            "alignmentScore": null,
+            "pcaProfile": {},
+            "isBridgeGap": true,
+            "gapType": "concept",
+            "bridgeId": "fixture-linear-to-quadratic",
+            "bridgeFromConcept": "linear_equations",
+            "bridgeToConcept": "quadratic_equations",
+            "bridgeEvidence": "evidence",
+            "bridge_confidence": 0.3,
+            "severity": 0.7
+          },
+          {
+            "conceptId": "functions_basics",
+            "reason": "fixture format gap",
+            "positionInChain": null,
+            "isSupplement": false,
+            "supplementFor": null,
+            "alignmentScore": null,
+            "pcaProfile": {},
+            "isBridgeGap": true,
+            "gapType": "format",
+            "bridgeId": null,
+            "bridgeFromConcept": "word_problem",
+            "bridgeToConcept": "functions_basics",
+            "bridgeEvidence": "evidence",
+            "format_mastery": 0.15,
+            "severity": 0.85
+          }
+        ],
+        "studentProfile": {
+          "masteryProjection": {},
+          "strengthProjection": {},
+          "displacementMagnitude": 0,
+          "displacementDirection": {},
+          "topStrengths": [],
+          "topWeaknesses": []
+        }
+      },
+      "severity_derivations": {
+        "profile": {
+          "type": "profile_weakness",
+          "conceptId": "linear_equations",
+          "concept_mastery": 0.55,
+          "formula": "1 - concept_mastery",
+          "severity": 0.45
+        },
+        "concept_gap": {
+          "type": "concept_gap_tier1",
+          "bridge_confidence": 0.3,
+          "bridgeEvidence": "evidence",
+          "formula": "1 - bridge_confidence",
+          "severity": 0.7
+        },
+        "format_gap": {
+          "type": "format_gap_tier1",
+          "conceptId": "functions_basics",
+          "concept_mastery": 0.65,
+          "format_mastery": 0.15,
+          "bridgeEvidence": "evidence",
+          "formula": "1 - format_mastery",
+          "gate": "concept_mastery 0.65 >= 0.6",
+          "severity": 0.85
+        }
+      },
+      "expected": {
+        "winner": {
+          "source": "format_gap",
+          "conceptId": "functions_basics",
+          "formatId": "word_problem",
+          "severity": 0.85
+        },
+        "ranking": [
+          {
+            "source": "format_gap",
+            "conceptId": "functions_basics",
+            "formatId": "word_problem",
+            "severity": 0.85
+          },
+          {
+            "source": "concept_gap",
+            "conceptId": "quadratic_equations",
+            "severity": 0.7
+          },
+          {
+            "source": "profile",
+            "conceptId": "linear_equations",
+            "severity": 0.45
+          }
+        ]
+      }
+    }
+  ]
+}
