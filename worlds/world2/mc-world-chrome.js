@@ -8,6 +8,13 @@
 
   window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-29-world-chrome-v8'
 
+  // Read shared .web.app cookie set by the dashboard when diagnostic is confirmed done
+  function hasDiagCookie() {
+    return document.cookie.split(';').some(function (c) {
+      return c.trim() === 'mc_diag_done=1'
+    })
+  }
+
   // Check if student just completed diagnostic (URL param from the React app)
   var params = new URLSearchParams(window.location.search)
   var diagJustDone = params.get('diagDone') === '1'
@@ -18,7 +25,10 @@
     var cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '')
     history.replaceState(null, '', cleanUrl)
   }
-  var diagDone = !!localStorage.getItem('mc-diag-done')
+
+  // diagDone: localStorage flag (world-own), shared cookie (set by dashboard), or URL param
+  var diagDone = !!localStorage.getItem('mc-diag-done') || hasDiagCookie()
+  if (diagDone) localStorage.setItem('mc-diag-done', '1') // sync to localStorage for next visit
 
   function wireChrome() {
     var webToggle  = document.getElementById('mc-web-toggle')
