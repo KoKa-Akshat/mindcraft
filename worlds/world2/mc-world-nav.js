@@ -10,8 +10,8 @@
   var diagDone = !!localStorage.getItem('mc-diag-done')
 
   var ROUTES = {
-    articles: APP + '/practice?learnNext=1',
-    aboutMe: APP + '/knowledge-graph',
+    articles: APP + '/dashboard?view=gps&learnNext=1',
+    aboutMe: APP + '/dashboard?view=gps',
     credits: APP + '/practice?homeworkHelp=1',
     practice: APP + '/practice',
     book: APP + '/book',

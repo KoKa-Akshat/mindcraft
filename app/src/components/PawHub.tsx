@@ -75,10 +75,12 @@ export default function PawHub({
   userId,
   layout = 'default',
   compact = false,
+  onGpsClick,
 }: {
   userId: string
   layout?: 'default' | 'side'
   compact?: boolean
+  onGpsClick?: () => void
 }) {
   const navigate = useNavigate()
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
@@ -111,9 +113,9 @@ export default function PawHub({
 
   function goLearnNext() {
     if (learn) {
-      navigate('/practice', { state: { conceptId: learn.conceptId, missionType: 'learn' } })
+      navigate(`/dashboard?view=gps&concept=${encodeURIComponent(learn.conceptId)}`)
     } else {
-      navigate('/practice', { state: { showPath: true } })
+      navigate('/dashboard?view=gps&learnNext=1')
     }
   }
 
@@ -121,7 +123,7 @@ export default function PawHub({
     {
       id: 'learn',
       label: 'Learn Next',
-      sub: learn ? learn.label : 'New on your path',
+      sub: learn ? learn.label : 'Plot your route',
       accent: 'violet',
       onClick: goLearnNext,
       icon: <TargetIcon />,
@@ -139,7 +141,7 @@ export default function PawHub({
       label: 'GPS',
       sub: 'Knowledge map',
       accent: 'lime',
-      onClick: () => navigate('/knowledge-graph'),
+      onClick: onGpsClick ?? (() => navigate('/learning-gps')),
       icon: <GpsIcon />,
     },
     {
