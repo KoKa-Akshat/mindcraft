@@ -384,15 +384,11 @@ h1 {
     left: 20px;
     z-index: 10000;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
     pointer-events: auto;
     opacity: 1;
-}
-
-#mc-badge .mc-booking-btn {
-    margin-top: 10px;
 }
 
 .mc-logo {

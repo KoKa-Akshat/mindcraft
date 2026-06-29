@@ -17,7 +17,7 @@
   }
 
   var FRONT_VIEW = {
-    position: { x: -11.1, y: -1, z: -7.6 },
+    position: { x: -9, y: -0.7, z: -6.2 },
     target: { x: 0, y: 0, z: -1 },
   }
 
