@@ -9,6 +9,7 @@ interface Props {
   name:        string
   nextSession: { subject: string; time: string; tutor: string; meetingUrl?: string | null; scheduledAt?: number } | null
   tutorId?:    string | null
+  showUserControls?: boolean
 }
 
 const NAV = [
@@ -23,7 +24,7 @@ function todayLabel(): string {
   return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
 }
 
-export default function HeroBar({ greeting, name, nextSession, tutorId }: Props) {
+export default function HeroBar({ greeting, name, nextSession, tutorId, showUserControls = true }: Props) {
   const loc      = useLocation()
   const navigate = useNavigate()
   const user     = useUser()
@@ -41,7 +42,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId }: Props)
 
   return (
     <div className={s.strip}>
-      {user && (
+      {showUserControls && user && (
         <div className={s.userRow}>
           <div className={s.avatar}>
             {(user.displayName?.[0] ?? user.email?.[0] ?? '?').toUpperCase()}
