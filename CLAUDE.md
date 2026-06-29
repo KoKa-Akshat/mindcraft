@@ -446,7 +446,7 @@ format gaps). Generation fills the coverage the static bank lacks so the
 diagnostic isn't limited to the ~11 statically-covered concepts.
 
 **Process: Opus = head/architect (writes build files, no coding); Cursor /
-Copilot / Codex = implementation agents.** Lanes own **disjoint** trees to avoid
+Copilot / Codex / Cursor = implementation agents.** Lanes own **disjoint** trees to avoid
 collisions: `ml/**` (engine/generation) vs `app/**` (frontend/data). The plan +
 shared contracts live in **`FORMAT_WEAKNESS_PLAN.md`** (root).
 

@@ -1,6 +1,6 @@
 # Work plan — unified weakness selection + format axis + question diagnostic
 
-Two agents in parallel (**A = Claude Code / backend+ML**, **B = Cursor / frontend+data**).
+Two agents in parallel (**A = Codex / backend+ML**, **B = Cursor / frontend+data**).
 Lanes own **disjoint files** so pushes don't collide. Both build against the
 **shared contracts** below — those are the seams; agree them first, then go wide.
 
@@ -90,6 +90,31 @@ Parallel-now: **A1 ∥ B1 ∥ B2 ∥ B3**. Gated: B-format-surfacing needs B2; f
 - A tagged format question flows: gap → `worstWeakness` picks it → `getQuestions(…, format)`
   serves a format-matched item.
 - Diagnostic session records outcomes but the UI shows no correctness.
+
+## Diagnostic reconciliation — ONE diagnostic, ONE update mechanism (decided)
+Three diagnostic-shaped flows existed; they **converge on Blake's engine** (the
+working deterministic update path). Akshat's kitchen-world `/learning-event` flow
+shipped the **frontend + question data only** — no engine update, no Firestore
+writer was ever built. So **do NOT build `/learning-event`.** Instead retarget the
+kitchen-world UI onto the existing, proven sinks:
+
+| Kitchen-world step (`Diagnostic.tsx`) | Was (orphan) | Retarget to (canonical) |
+|---|---|---|
+| confidence ratings (`confidence_report`, outcome=null) | `/learning-event` ❌ | **`/seed-assessment`** (per-concept confidence seed — exactly its job) |
+| probe answers (`answer_submitted`, outcome 1/0) | `/learning-event` ❌ | **`/record-outcomes`** (real question outcomes APPEND to graph) |
+| completion (`diagnostic_complete`) | writes `diagnosticCompletedAt` only | write the **canonical `diagnosticCompleted: true`** (keep timestamp as metadata) so PawHub gating + any n8n trigger agree (fixes Shreeyut finding #2) |
+
+Rules:
+- **Retire `sendLearningEvent`** — replace its 3 call sites in `Diagnostic.tsx`
+  with the existing mlApi calls to `/seed-assessment` + `/record-outcomes`.
+- The probe step IS the B3/C4 question diagnostic — run it **hide-correctness**
+  (C4): record probe outcomes via `/record-outcomes`, never reveal right/wrong.
+- Probe questions must carry the **C5 `format` tag** and canonical Layer-1
+  `conceptId` so format outcomes feed `worstWeakness` like any other evidence.
+  Reuse Akshat's `act_questions.json` / `build_act_diagnostic.py` as substrate;
+  better-question generation (A2 `--verify`) backfills coverage.
+- This is **Lane-crossing** (touches `app/Diagnostic.tsx` + relies on `ml/` sinks
+  already shipped) — Lane B owns the frontend retarget; no new `ml/` endpoint needed.
 
 ## Coordination rules (avoid the collisions we've had)
 - Lanes are **disjoint** (`ml/**` vs `app/**`). If you must cross, ping first.
