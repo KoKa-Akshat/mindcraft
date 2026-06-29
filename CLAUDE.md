@@ -278,8 +278,12 @@ Key notes:
   `/knowledge-graph/{uid}` promise per user — LearningGPS and the Knowledge
   Graph page share one fetch; failures not cached; `invalidateKnowledgeGraph`
   called after any mastery-mutating operation (seed-assessment, record-outcomes).
-- **main** is fully reconciled and pushed (`b8a05e14`). `feat/ontology-firestore-practice-loop`
-  is identical to main and can be deleted.
+- **Security hardened** (session `ebffc59a` + `5fc0cc5d`): all 5 webhook
+  endpoints auth-gated with Firebase ID tokens; open LLM proxy + `/debug-net`
+  key-leak removed; CORS allows `Authorization` header; ownership checks
+  fail-closed. `ml/serve.py` auth code committed but NOT yet live — needs Cloud
+  Build + deploy with `ML_SERVICE_SECRET` (see Deployment). `delete-session`
+  also gated.
 - **Co-founder's agentic layer** (`ml/mindcraft_graph/models/learning_world.py`,
   `loaders/subject_graph_loader.py`, `ml/data/subject_graphs/*.json`,
   `ml/serve.py` endpoints for `/agent/*`) exists in the repo but is NOT wired
@@ -298,9 +302,17 @@ Key notes:
   `VITE_ENABLE_DYNAMIC_QGEN`).
 - `HomeworkProgress.tsx` / `LastSession.tsx` are unused (possibly intended).
 - **mindcraft-ml undeployed changes**: displacement persistence
-  (`append_displacement_snapshot`) and bridge-gap detection (`isBridgeGap`,
-  `bridgeEvidence` fields on knowledge-graph nodes) are committed locally but
-  NOT yet live (still rev `00009`). Needs a Cloud Build + deploy.
+  (`append_displacement_snapshot`), bridge-gap detection (`isBridgeGap`,
+  `bridgeEvidence`), and the full auth layer (`mindcraft_graph/auth.py`) are
+  committed but NOT yet live (still rev `00009`). Next deploy activates all three.
+  Requires `ML_SERVICE_SECRET` env var + `ML_SERVICE_SECRET` set in Vercel first
+  (see Deployment — roll out callers before enabling on Cloud Run).
+- **Role assignment is client-self-selected**: `role: tutor/student` is written
+  by the client at signup (`Login.tsx`) — any user can self-promote. Firestore
+  rules let users write their own `users/{uid}` doc. The auth.py role lookup
+  (`_role_for`) reads this value to grant tutors cross-student access — so until
+  server-authoritative roles are built, the tutor exemption is not fully trusted.
+  See "Designed, not built" for the planned classroom model.
 - **Bridge-gap API fields not consumed by UI**: `isBridgeGap` / `bridgeEvidence`
   are in the `/knowledge-graph` response and persisted to Firestore, but no
   frontend component renders them. Natural next pieces: tutor "blockers" view
@@ -343,6 +355,16 @@ replaces/grounds the `generate-questions` webhook. Data lives in
 - Problem decomposition (invariant skeletons) — feeds ingredient runtime.
 - Confidence-gated card routing (4 tiers).
 - Interactive cards (Desmos/GeoGebra) in the geometric card representation.
+- **Classroom/roster model** (server-authoritative roles): tutor creates a
+  classroom → gets a join code → students enter the code to enroll → system
+  writes `role: student` (server-side, not client-set) and links
+  `students[].tutorId`. Replaces the current email-matching approach in
+  TutorDashboard. Makes the tutor "my students" view reliable and closes the
+  self-promotion gap (today any user can select `role: tutor` at signup).
+  Firestore shape: `classrooms/{classroomId}` with `{tutorId, code, studentIds[]}`;
+  `users/{uid}` gets `role` and `classroomId` written by a server function, not
+  the client. The `auth.py` `_role_for()` lookup is already wired — once roles
+  are server-assigned, the tutor exemption in the ML auth layer becomes trusted.
 
 ---
 
