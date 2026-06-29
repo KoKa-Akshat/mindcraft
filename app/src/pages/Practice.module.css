@@ -3256,19 +3256,6 @@
   z-index: 1;
 }
 
-/* Lesson flow — explore + level share a richer teal backdrop */
-.lessonShell {
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56, 189, 248, 0.08), transparent 55%),
-    linear-gradient(165deg, #1e6d7d 0%, #1a6070 42%, #154852 100%);
-}
-
-.sessionShell {
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 10%, rgba(196, 245, 71, 0.06), transparent 50%),
-    linear-gradient(165deg, #22808f 0%, #1a6070 48%, #134550 100%);
-}
-
 .lessonPage {
   max-width: none;
   width: 100%;

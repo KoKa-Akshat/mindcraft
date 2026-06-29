@@ -1020,15 +1020,15 @@ export default function Practice() {
   // ── Render ────────────────────────────────────────────────────────────────
 
   const isPathView = pPhase === 'path' && mode === 'practice'
-  const isLessonFlow = mode === 'practice' && (pPhase === 'explore' || pPhase === 'level')
-  const isSessionView = mode === 'practice' && pPhase === 'session'
-  const showLessonNav = mode === 'practice' && ['explore', 'level', 'session'].includes(pPhase)
+  const isPathLikeShell = mode === 'practice' && ['path', 'explore', 'level', 'session'].includes(pPhase)
+  const isLessonPage = mode === 'practice' && ['explore', 'level', 'session'].includes(pPhase)
+  const showLessonNav = isLessonPage
 
   return (
-    <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isLessonFlow ? ` ${s.lessonShell}` : ''}${isSessionView ? ` ${s.sessionShell}` : ''}`}>
+    <div className={`${s.shell}${isPathLikeShell ? ` ${s.pathShell}` : ''}`}>
       <Sidebar />
 
-      <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonFlow || isSessionView ? ` ${s.lessonPage}` : ''}`}>
+      <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}`}>
 
         {/* Mode toggle — hidden on full-page path view */}
         {!isPathView && (
