@@ -676,6 +676,17 @@
   margin: 0;
 }
 
+/* Mini route map */
+.miniMapWrap {
+  background: #f7f9fb;
+  border: 1px solid #e8ecef;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.miniMapSvg {
+  display: block;
+}
+
 /* Route steps */
 .routeSteps { display: flex; flex-direction: column; }
 

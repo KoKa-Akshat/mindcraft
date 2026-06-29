@@ -15,6 +15,8 @@ import { mlIdToLabel } from '../lib/conceptMap'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { getRecommendations } from '../lib/mlApi'
 import type { ConceptRecommendation } from '../lib/mlApi'
+import { buildGraph, GPS_W, GPS_H, STATUS_COLOR } from '../lib/learningPathGraph'
+import type { GPSGraph, GPSMLNode } from '../lib/learningPathGraph'
 import s from './ConstellationGpsLab.module.css'
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -39,7 +41,7 @@ interface RouteStep {
 type PanelState =
   | { mode: 'none' }
   | { mode: 'detail'; node: MLNode }
-  | { mode: 'route'; steps: RouteStep[]; loading: boolean; targetId: string }
+  | { mode: 'route'; steps: RouteStep[]; gpsGraph: GPSGraph | null; loading: boolean; targetId: string }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -158,7 +160,7 @@ export default function ConstellationGpsLab() {
     const token = targetId + Date.now()
     routeToken.current = token
     setSelectedId(targetId)
-    setPanel({ mode: 'route', steps: [], loading: true, targetId })
+    setPanel({ mode: 'route', steps: [], gpsGraph: null, loading: true, targetId })
     try {
       const result = await getRecommendations(user.uid, [targetId], 'curriculum')
       if (routeToken.current !== token) return
@@ -185,9 +187,16 @@ export default function ConstellationGpsLab() {
           isTarget,
         }
       })
-      setPanel({ mode: 'route', steps, loading: false, targetId })
+      const gpsNodeMap = new Map<string, GPSMLNode>(
+        chain.map(id => {
+          const n = nodeMap.get(id)
+          return [id, { id, mastery: n?.mastery ?? 0, status: n?.status ?? 'untouched' }]
+        }),
+      )
+      const gpsGraph = buildGraph(targetId, chain, [], gpsNodeMap)
+      setPanel({ mode: 'route', steps, gpsGraph, loading: false, targetId })
     } catch {
-      if (routeToken.current === token) setPanel({ mode: 'route', steps: [], loading: false, targetId })
+      if (routeToken.current === token) setPanel({ mode: 'route', steps: [], gpsGraph: null, loading: false, targetId })
     }
   }
 
@@ -553,7 +562,7 @@ export default function ConstellationGpsLab() {
                         Plot route →
                       </button>
                       <button className={s.btnGhost}
-                        onClick={() => navigate('/practice', { state: { conceptId: node.id } })}
+                        onClick={() => navigate('/practice', { state: { concept: node.id } })}
                       >
                         Start practice
                       </button>
@@ -597,6 +606,50 @@ export default function ConstellationGpsLab() {
 
                   {!panel.loading && panel.steps.length > 0 && (
                     <>
+                      {/* Mini route map */}
+                      {panel.gpsGraph && (
+                        <div className={s.miniMapWrap}>
+                          <svg viewBox={`0 0 ${GPS_W} ${GPS_H}`} width="100%" height={170} className={s.miniMapSvg}>
+                            {panel.gpsGraph.edges.map((e, i) => (
+                              <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+                                stroke={e.needsWork ? 'rgba(124,58,237,0.28)' : 'rgba(0,135,90,0.2)'}
+                                strokeWidth={e.needsWork ? 1.4 : 1}
+                                strokeDasharray={e.needsWork ? undefined : '3 2'}
+                              />
+                            ))}
+                            {[...panel.gpsGraph.nodes]
+                              .sort((a, b) => Math.abs(b.depth) - Math.abs(a.depth))
+                              .map(n => {
+                                const color = n.isTarget ? '#7c3aed' : (STATUS_COLOR[n.status] ?? '#9aabb6')
+                                const r = n.isTarget ? 9 : 6
+                                return (
+                                  <g key={n.id}>
+                                    <circle cx={n.x} cy={n.y} r={r}
+                                      fill={n.isTarget ? 'rgba(124,58,237,0.12)' : 'rgba(20,30,40,0.05)'}
+                                      stroke={color} strokeWidth={n.isTarget ? 2.2 : 1.6}
+                                    />
+                                    {n.mastery > 0.05 && (
+                                      <circle cx={n.x} cy={n.y} r={r - 2}
+                                        fill={color} fillOpacity={0.18 + n.mastery * 0.6}
+                                      />
+                                    )}
+                                    <text x={n.x} y={n.y + r + 9}
+                                      textAnchor="middle"
+                                      fontSize={n.isTarget ? 8.5 : 7.5}
+                                      fontWeight={n.isTarget ? 700 : 500}
+                                      fill={n.isTarget ? '#5b21b6' : '#607d8b'}
+                                      fontFamily="system-ui, -apple-system, sans-serif"
+                                    >
+                                      {n.short}
+                                    </text>
+                                  </g>
+                                )
+                              })}
+                          </svg>
+                        </div>
+                      )}
+
+                      {/* Step list */}
                       <div className={s.routeSteps}>
                         {panel.steps.map((step, i) => (
                           <div key={step.id}
@@ -626,18 +679,8 @@ export default function ConstellationGpsLab() {
                         ))}
                       </div>
 
-                      <div className={s.routeCoverage}>
-                        <div className={s.routeCoverageRow}>
-                          <span className={s.routeCoverageLabel}>COVERAGE</span>
-                          <span className={s.routeCoverageCount}>{stats.stable} of {stats.total} concepts stable</span>
-                        </div>
-                        <div className={s.routeCoverageBar}>
-                          <div className={s.routeCoverageFill} style={{ width: `${coveragePct}%` }} />
-                        </div>
-                      </div>
-
                       <button className={s.btnPrimary}
-                        onClick={() => navigate('/practice', { state: { conceptId: panel.steps[0]?.id } })}
+                        onClick={() => navigate('/practice', { state: { concept: panel.steps[0]?.id } })}
                       >
                         Start with {panel.steps[0] ? mlIdToLabel(panel.steps[0].id) : 'step 1'} →
                       </button>
