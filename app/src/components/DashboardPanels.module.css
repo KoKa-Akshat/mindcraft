@@ -1,0 +1,121 @@
+.scrollBody {
+  max-height: min(72vh, 640px);
+  overflow-y: auto;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0 20px;
+}
+
+.notesList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.noteCard {
+  border: 1px solid #e4e8ef;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  border-left: 4px solid var(--accent, #00d2c8);
+}
+
+.noteCardOpen {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.noteHead {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.noteSubject {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent, #00d2c8);
+  margin-bottom: 4px;
+}
+
+.noteTitle {
+  display: block;
+  font-size: 14px;
+  color: #1a1f2e;
+  margin-bottom: 4px;
+}
+
+.noteMeta {
+  font-size: 11px;
+  color: #607d8b;
+}
+
+.noteBullets {
+  margin: 0;
+  padding: 0 14px 14px 28px;
+  color: #3d4f5c;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.noteBullets li + li {
+  margin-top: 6px;
+}
+
+.homeworkCopy {
+  margin-bottom: 16px;
+}
+
+.homeworkCopy p {
+  margin: 0;
+  font-size: 13px;
+  color: #607d8b;
+  line-height: 1.55;
+}
+
+.homeworkInput {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid #e4e8ef;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 120px;
+  margin-bottom: 12px;
+}
+
+.homeworkInput:focus {
+  outline: none;
+  border-color: #4361ee;
+}
+
+.homeworkTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.homeworkTag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef1ff;
+  color: #4361ee;
+}

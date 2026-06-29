@@ -76,10 +76,12 @@ export default function ConstellationGpsExplorer({
   embedded = false,
   onBack,
   autoPlotConceptId,
+  onStartRoute,
 }: {
   embedded?: boolean
   onBack?: () => void
   autoPlotConceptId?: string | null
+  onStartRoute?: (targetId: string) => void
 }) {
   const user = useUser()
   const navigate = useNavigate()
@@ -546,7 +548,7 @@ export default function ConstellationGpsExplorer({
                       Plot route →
                     </button>
                     <button className={s.btnGhost}
-                      onClick={() => navigate('/practice', { state: { concept: node.id } })}
+                      onClick={() => navigate('/practice', { state: { conceptId: node.id, missionType: 'learn' } })}
                     >
                       Start practice
                     </button>
@@ -661,7 +663,10 @@ export default function ConstellationGpsExplorer({
                     </div>
 
                     <button className={s.btnPrimary}
-                      onClick={() => navigate('/practice', { state: { concept: panel.steps[0]?.id } })}
+                      onClick={() => {
+                        if (onStartRoute) onStartRoute(panel.targetId)
+                        else navigate(`/dashboard?view=route&target=${encodeURIComponent(panel.targetId)}`)
+                      }}
                     >
                       Start with {panel.steps[0] ? mlIdToLabel(panel.steps[0].id) : 'step 1'} →
                     </button>

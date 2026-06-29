@@ -1772,6 +1772,13 @@ export default function Practice() {
               <div className={s.sessionWrap}>
                 <div className={s.sessionCenter}>
                   <div className={s.progressStrip}>
+                    <button
+                      type="button"
+                      className={s.backDashBtn}
+                      onClick={() => navigate('/dashboard')}
+                    >
+                      ← Dashboard
+                    </button>
                     <div className={s.stripLeft}>
                       <span className={s.stripConcept}>
                         <ConceptPathIcon conceptId={sessionConceptId} size={18} />
