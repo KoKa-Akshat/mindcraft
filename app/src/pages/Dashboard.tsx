@@ -1,14 +1,16 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
 import { isDiagnosticComplete } from '../lib/practiceState'
+import { fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
 import { worldUrl } from '../lib/siteUrls'
 import HeroBar from '../components/HeroBar'
 import PawHub from '../components/PawHub'
 import PracticeLearningPathMini from '../components/PracticeLearningPathMini'
+import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import s from './Dashboard.module.css'
 
 function greeting() {
@@ -30,11 +32,24 @@ function ViewToggle({ onPick3D }: { onPick3D: () => void }) {
 export default function Dashboard() {
   const user = useUser()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const data = useStudentData(user)
   const uid = user?.uid ?? ''
   const path = usePracticePathQueue(uid)
 
   const [diagChecked, setDiagChecked] = useState(false)
+  const [plotConceptId, setPlotConceptId] = useState<string | null>(null)
+  const gpsMode = searchParams.get('view') === 'gps'
+  const conceptParam = searchParams.get('concept')
+  const learnNextParam = searchParams.get('learnNext') === '1'
+
+  function openGps() {
+    navigate('/dashboard?view=gps', { replace: true })
+  }
+
+  function closeGps() {
+    navigate('/dashboard', { replace: true })
+  }
 
   function goTo3DWorld() {
     localStorage.setItem('dashboardView', '3d')
@@ -43,6 +58,25 @@ export default function Dashboard() {
   }
 
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
+
+  useEffect(() => {
+    if (!gpsMode) {
+      setPlotConceptId(null)
+      return
+    }
+    if (conceptParam) {
+      setPlotConceptId(conceptParam)
+      return
+    }
+    if (learnNextParam && uid) {
+      let cancelled = false
+      void fetchPracticeHubRecommendations(uid).then(rec => {
+        if (!cancelled) setPlotConceptId(rec.learn?.conceptId ?? null)
+      })
+      return () => { cancelled = true }
+    }
+    setPlotConceptId(null)
+  }, [gpsMode, conceptParam, learnNextParam, uid])
 
   useEffect(() => {
     let cancelled = false
@@ -79,7 +113,7 @@ export default function Dashboard() {
           <>
             <ViewToggle onPick3D={goTo3DWorld} />
 
-            <div className={s.stage}>
+            <div className={`${s.stage} ${gpsMode ? s.stageGps : ''}`}>
               <div className={s.pawCol}>
                 <motion.div
                   className={s.pawWrap}
@@ -87,20 +121,28 @@ export default function Dashboard() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ type: 'spring', stiffness: 70, damping: 16 }}
                 >
-                  <PawHub userId={uid} layout="side" compact />
+                  <PawHub userId={uid} layout="side" compact onGpsClick={openGps} />
                 </motion.div>
               </div>
 
-              <div className={s.pathCol}>
-                <PracticeLearningPathMini
-                  concepts={path.pathConcepts}
-                  activeConceptId={path.activeConceptId}
-                  progressPct={path.progressPct}
-                  completedCount={path.completedOnPath}
-                  totalCount={path.pathQueue.length}
-                  exam={path.exam}
-                  loading={path.loading}
-                />
+              <div className={gpsMode ? s.gpsCol : s.pathCol}>
+                {gpsMode ? (
+                  <ConstellationGpsExplorer
+                    embedded
+                    onBack={closeGps}
+                    autoPlotConceptId={plotConceptId}
+                  />
+                ) : (
+                  <PracticeLearningPathMini
+                    concepts={path.pathConcepts}
+                    activeConceptId={path.activeConceptId}
+                    progressPct={path.progressPct}
+                    completedCount={path.completedOnPath}
+                    totalCount={path.pathQueue.length}
+                    exam={path.exam}
+                    loading={path.loading}
+                  />
+                )}
               </div>
             </div>
           </>

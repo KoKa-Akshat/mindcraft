@@ -714,18 +714,16 @@ export default function Practice() {
       setSPhase('input')
       setSearchParams({}, { replace: true })
     } else if (searchParams.get('learnNext') === '1') {
-      void (async () => {
-        const rec = await fetchPracticeHubRecommendations(user.uid)
-        const target = rec.learn
-        if (target) {
-          await launchMissionDirect(target.conceptId, 'learn')
-        } else {
-          setMode('practice')
-          setAssessConcepts([])
-          setPPhase('path')
-        }
-      })()
       setSearchParams({}, { replace: true })
+      void fetchPracticeHubRecommendations(user.uid).then(rec => {
+        const target = rec.learn
+        navigate(
+          target
+            ? `/dashboard?view=gps&concept=${encodeURIComponent(target.conceptId)}`
+            : '/dashboard?view=gps&learnNext=1',
+          { replace: true },
+        )
+      })
     } else if (searchParams.get('mode') === 'practice') {
       setMode('practice')
       setAssessConcepts([])

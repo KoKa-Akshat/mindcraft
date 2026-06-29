@@ -17,6 +17,56 @@
   min-height: 0;
 }
 
+.explorerStandalone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ── Embedded (dashboard) ─────────────────────────────────────────────────── */
+
+.embeddedRoot {
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f0f4f8;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}
+
+.embeddedHeader {
+  background: linear-gradient(160deg, #0d2d1e 0%, #0a2218 60%, #0b1e2e 100%);
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.embeddedBack {
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  align-self: flex-start;
+  transition: color 0.12s;
+}
+
+.embeddedBack:hover {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.mapAreaEmbedded {
+  min-height: 400px;
+}
+
 /* ── Dark hero header ──────────────────────────────────────────────────────── */
 
 .hero {
