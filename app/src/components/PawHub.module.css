@@ -23,23 +23,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 4px;
 }
 
 .toes {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  width: min(100%, 460px);
-  margin: 0 auto 6px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 20px;
+  width: min(100%, 500px);
+  height: 140px;
+  margin: 0 auto -4px;
 }
 
 .toe {
   position: relative;
-  width: 100%;
+  width: 104px;
   aspect-ratio: 1;
   max-width: 108px;
-  justify-self: center;
+  flex: 0 0 auto;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background:
@@ -59,6 +61,16 @@
   color: #ffffff;
   font-family: var(--f-body);
   transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.toe_learn,
+.toe_notes {
+  margin-bottom: 0;
+}
+
+.toe_homework,
+.toe_gps {
+  margin-bottom: 28px;
 }
 
 .toe:hover {
@@ -155,8 +167,13 @@
 }
 
 @media (max-width: 640px) {
-  .toes { gap: 8px; max-width: 340px; }
-  .toe { max-width: 78px; padding: 8px; }
+  .paw { gap: 0; }
+  .toes { gap: 10px; max-width: 350px; height: 104px; margin-bottom: -2px; }
+  .toe { width: 78px; max-width: 78px; padding: 8px; }
+  .toe_learn,
+  .toe_notes { margin-bottom: 0; }
+  .toe_homework,
+  .toe_gps { margin-bottom: 17px; }
   .toeLabel { font-size: 9px; }
   .toeSub { display: none; }
   .mainPad { width: 220px; height: 220px; }

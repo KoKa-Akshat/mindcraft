@@ -135,7 +135,7 @@ export default function PawHub({ userId }: { userId: string }) {
             <motion.button
               key={toe.id}
               type="button"
-              className={`${s.toe} ${s[`toe_${toe.accent ?? 'lime'}`]}`}
+              className={`${s.toe} ${s[`toe_${toe.id}`]} ${s[`toe_${toe.accent ?? 'lime'}`]}`}
               onClick={toe.onClick}
               whileHover={{ y: -4, scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
