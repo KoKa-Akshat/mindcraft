@@ -3,1428 +3,370 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft: Maths can be stressful</title>
+<title>MindCraft | Math finally has a map</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--g:#54B948;--gd:#449A38;--gdd:#003F2D;--forest:#003F2D;--tx:#3C3C3C;--mu:#777;--w:#FFF;--bd:#E5E5E5;--f:'Nunito',sans-serif}
-*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--f);color:var(--tx);background:var(--w);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.rv{opacity:0;transform:translateY(18px);transition:all .55s cubic-bezier(.22,1,.36,1)}.rv.show{opacity:1;transform:translateY(0)}.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
-
-nav{position:fixed;top:0;left:0;right:0;z-index:999;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:var(--w);border-bottom:2px solid var(--bd)}
-.logo{font-size:22px;font-weight:900;color:var(--forest);text-decoration:none}.logo span{color:var(--g)}
-.nr{display:flex;align-items:center;gap:6px}.nr a{text-decoration:none;font-size:14px;font-weight:700;padding:10px 16px;border-radius:16px;transition:all .15s}
-.nl{color:var(--g);text-transform:uppercase;letter-spacing:.5px}.nl:hover{background:rgba(84,185,72,.08)}
-.nav-login{background:var(--g)!important;color:var(--w)!important;font-weight:800!important;border-radius:14px!important;padding:8px 18px!important;font-size:13px!important;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 3px 0 var(--gd);border:none!important}.nav-login:hover{filter:brightness(1.05)!important;transform:translateY(-1px);box-shadow:0 4px 0 var(--gd)!important}
-.bg{background:var(--g);color:var(--w)!important;font-weight:800!important;border:none;padding:10px 20px;border-radius:16px;font-size:13px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 4px 0 var(--gd);transition:all .15s;display:inline-block;text-decoration:none;text-align:center;font-family:var(--f)}.bg:hover{filter:brightness(1.05);transform:translateY(-1px);box-shadow:0 5px 0 var(--gd)}.bg:active{transform:translateY(2px);box-shadow:0 1px 0 var(--gd)}
-.bw{background:var(--w);color:var(--gdd)!important;font-weight:800!important;border:2px solid var(--bd);padding:14px 32px;border-radius:16px;font-size:15px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 4px 0 var(--bd);transition:all .15s;display:inline-block;text-decoration:none;text-align:center;font-family:var(--f)}.bw:hover{background:#F7F7F7;transform:translateY(-1px)}
-.bl{padding:14px 32px;font-size:15px}
-
-/* ABOVE-FOLD: hero fills one full viewport */
-.above-fold{height:100vh;margin-top:0;display:flex;flex-direction:column}
-
-/* HERO */
-.hero{flex:1;display:flex;justify-content:center;align-items:center;padding:0 24px;background:var(--w);overflow:hidden}
-.hero-in{max-width:1100px;width:100%;display:grid;grid-template-columns:1.25fr 1fr;gap:60px;align-items:center}
-.ha{display:flex;align-items:center;justify-content:center;position:relative;min-height:360px}
-.ha .mr{width:clamp(160px,26vw,220px);animation:bob 3s ease-in-out infinite;position:relative;z-index:2}
-.hero-text{text-align:center}
-.hero-text h1{font-size:clamp(34px,5vw,54px);font-weight:900;color:var(--tx);line-height:1.1;margin-bottom:18px;letter-spacing:-.5px}
-.hero-text p{font-size:17px;color:var(--mu);line-height:1.75;margin:0 auto 32px;max-width:380px}
-.hb{display:flex;flex-direction:column;gap:12px;max-width:300px;margin:0 auto}.hb a{text-align:center;width:100%}
-.fc{position:absolute;border-radius:16px;animation:bob 3s ease-in-out infinite;cursor:default;z-index:1;overflow:hidden}
-.fc img{width:clamp(55px,10vw,76px);display:block}
-
-/* LANDING ILLUSTRATION */
-.sec-illo{margin-top:24px;width:100%;max-width:420px}
-.sec-illo svg{width:100%;height:auto;display:block}
-
-/* LANDING SESSION SUMMARY CARD */
-.lp2{background:var(--w);border:1.5px solid #DDE2EF;border-radius:22px;padding:22px;box-shadow:0 16px 48px rgba(0,0,0,.09);width:100%;max-width:355px}
-.lp2-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.lp2-hd-logo{font-size:15px;font-weight:900;color:#1A3C2A}
-.lp2-hd-logo em{color:var(--g);font-style:normal}
-.lp2-hd-dots{font-size:20px;color:#BEC4D2;letter-spacing:3px;line-height:1}
-.lp2-done{display:flex;align-items:center;gap:9px;margin-bottom:13px}
-.lp2-done-ck{width:22px;height:22px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:12px;font-weight:900}
-.lp2-done-text{font-size:13px;font-weight:800;color:var(--tx)}
-.lp2-sumbox{background:#EFF3FF;border-radius:12px;padding:13px 36px 13px 14px;margin-bottom:11px;position:relative}
-.lp2-sumbox h4{font-size:13px;font-weight:900;color:#2A3A6E;margin-bottom:4px}
-.lp2-sumbox p{font-size:12px;color:#6475A0;line-height:1.5;margin:0;font-weight:600}
-.lp2-sumbox-ck{position:absolute;top:12px;right:12px;color:#4A7BF7;font-weight:900;font-size:15px}
-.lp2-row-title{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:900;color:var(--tx);margin-bottom:8px}
-.lp2-row-title .spark{color:#E8A000;font-size:14px}
-.lp2-list{list-style:none;margin-bottom:11px;display:flex;flex-direction:column;gap:5px}
-.lp2-list li{font-size:12px;color:var(--mu);font-weight:600;display:flex;align-items:flex-start;gap:7px;line-height:1.45}
-.lp2-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:#C0C5D8;flex-shrink:0;margin-top:5px}
-.lp2-list li strong{color:var(--tx);font-weight:800}
-.lp2-prac{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--bd)}
-.lp2-prac-ico{width:28px;height:28px;background:rgba(74,123,247,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.lp2-prac-info strong{font-size:12px;font-weight:900;color:var(--tx);display:block}
-.lp2-prac-info span{font-size:11px;color:var(--mu);font-weight:700}
-.lp2-chart{margin-left:auto;font-size:20px}
-.lp2-upcoming{display:flex;align-items:center;justify-content:space-between;padding:10px 0 0;border-top:1px solid var(--bd)}
-.lp2-upcoming strong{font-size:12px;font-weight:900;color:var(--tx)}
-.lp2-upcoming span{font-size:11px;color:var(--mu);font-weight:700}
-
-/* SUBJECTS / CLASSES PANEL */
-.subj-panel{background:#F8F9FA;padding:clamp(60px,7vw,90px) 24px;display:flex;justify-content:center}
-.subj-in{max-width:1040px;width:100%;display:flex;flex-direction:column}
-.subj-eyebrow{font-size:11px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:12px;opacity:.85}
-.subj-head{font-size:clamp(22px,3.2vw,30px);font-weight:900;line-height:1.2;color:var(--tx);margin:0 0 24px}
-.tutor-link{color:inherit;font-weight:900;text-decoration:underline;text-decoration-color:#2563EB;text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer;transition:opacity .15s}
-.tutor-link:hover{opacity:.72}
-.subj-section-head{margin-top:clamp(48px,6vw,72px)}
-.subj-section-head .subj-eyebrow{margin-bottom:8px}
-/* Core exam grid */
-.subj-core{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
-.subj-card{background:#fff;border:1.5px solid #E8ECF0;border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;transition:all .2s}
-.subj-card:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 4px 20px rgba(84,185,72,.10)}
-.subj-card .si{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;margin-bottom:4px}
-.subj-card strong{font-size:14px;font-weight:800;color:var(--tx);line-height:1.2;display:block}
-.subj-card p{font-size:12px;color:var(--mu);font-weight:600;line-height:1.45;margin:0;flex:1}
-.find-tutor-link{font-size:11.5px;color:var(--g);font-weight:800;text-decoration:none;display:inline-block;margin-top:10px;transition:opacity .15s}
-.find-tutor-link:hover{opacity:.7;text-decoration:underline}
-/* Signature divider */
-.sig-divider{display:flex;align-items:center;gap:16px;margin:0 0 24px}
-.sig-divider::before,.sig-divider::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.10)}
-.sig-divider span{font-size:10px;font-weight:900;letter-spacing:2.5px;color:var(--mu);text-transform:uppercase;white-space:nowrap}
-/* Signature cards — same white design as subject cards */
-.sig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.sig-card{border:none;border-radius:24px;padding:30px 22px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;background:#fff;box-shadow:0 4px 6px rgba(0,0,0,.04),0 10px 32px rgba(0,0,0,.08);transition:box-shadow .22s}
-.sig-card:hover{box-shadow:0 4px 6px rgba(0,0,0,.04),0 20px 48px rgba(0,0,0,.13)}
-.sig-card .si{width:68px;height:68px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;margin-bottom:10px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
-.sig-card strong{font-size:16px;font-weight:900;color:var(--tx);line-height:1.2;display:block}
-.sig-card p{font-size:12.5px;color:var(--mu);font-weight:600;line-height:1.5;margin:0 0 4px;flex:1}
-.sig-link{display:block;text-align:center;background:var(--g);color:#fff!important;font-weight:800;font-size:13px;padding:11px 16px;border-radius:50px;margin-top:14px;text-decoration:none;transition:filter .15s,transform .15s,box-shadow .15s;box-shadow:0 3px 0 var(--gd);letter-spacing:.2px;width:100%;box-sizing:border-box}
-.sig-link:hover{filter:brightness(1.07);transform:translateY(-1px);box-shadow:0 5px 0 var(--gd);opacity:1!important}
-@media(max-width:1100px){.subj-core{grid-template-columns:repeat(2,1fr)}.sig-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.subj-core{grid-template-columns:1fr}.sig-grid{grid-template-columns:1fr}}
-
-/* ALL CONTENT SECTIONS */
-.sec{min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center;background:var(--w)}
-.sec-bleed{padding-bottom:clamp(40px,6vw,64px)}
-
-/* HOW IT WORKS - left/right split */
-.dk{background:radial-gradient(circle at 18% 18%,rgba(84,185,72,.16),transparent 26%),radial-gradient(circle at 82% 28%,rgba(0,169,157,.14),transparent 30%),linear-gradient(145deg,#102A1E 0%,#173C2A 56%,#0F2D22 100%);min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
-.dk:before{content:"";position:absolute;inset:34px;border:1px solid rgba(255,255,255,.07);border-radius:24px;pointer-events:none}
-.dk-in{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center}
-.dk-eyebrow{font-size:11px;font-weight:900;color:#6BC85F;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:block}
-.dk-head{font-size:clamp(32px,5vw,48px);font-weight:900;color:#FFFFFF;line-height:1.1;margin-bottom:16px;letter-spacing:-.5px}
-.dk-sub{font-size:17px;color:#A8C9B4;line-height:1.7;max-width:400px;margin:0 0 40px}
-/* Horizontal step cards layout */
-.dk-steps-wrap{max-width:1140px;width:100%;display:flex;flex-direction:column;gap:clamp(36px,5vw,56px);align-items:center;position:relative;z-index:1}
-.dk-steps-header{text-align:center}
-.dk-steps-header .dk-eyebrow{display:inline-block}
-.dk-steps-header .dk-head{margin-bottom:0}
-.dk-hsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;position:relative}
-.dk-hstep{background:linear-gradient(180deg,rgba(255,255,255,.095),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:34px 30px 32px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:18px;position:relative;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.08);min-height:260px}
-.dk-hstep:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(84,185,72,.14),transparent 42%);opacity:0;transition:opacity .22s ease}
-.dk-hstep:hover:before{opacity:1}
-.dk-hstep-num{font-size:44px;font-weight:900;color:rgba(84,185,72,.42);line-height:1;letter-spacing:-2px;margin:0;position:relative;z-index:1}
-.dk-hstep h4{font-size:21px;font-weight:900;color:#FFFFFF;margin:0;line-height:1.2;position:relative;z-index:1}
-.dk-hstep p{font-size:14px;color:#B6D0BE;line-height:1.65;margin:0;max-width:230px;position:relative;z-index:1}
-.dk-harrow{display:flex;align-items:center;justify-content:center;padding:0 16px;flex-shrink:0;align-self:center}
-.dk-steps-cta{display:flex;justify-content:center}
-.dk-hstep.rv{opacity:0;transform:translateY(0)}
-.dk-hstep.rv.show{opacity:1;animation:bounceCard .7s cubic-bezier(.34,1.56,.64,1) both}
-@keyframes bounceCard{0%{opacity:0;transform:translateY(28px) scale(.95)}65%{transform:translateY(-5px) scale(1.015)}82%{transform:translateY(3px) scale(.998)}100%{opacity:1;transform:translateY(0) scale(1)}}
-@media(max-width:900px){.dk-hsteps{grid-template-columns:1fr 1fr}}
-@media(max-width:768px){.dk-hsteps{grid-template-columns:1fr}.dk-harrow{transform:rotate(90deg)}.dk-steps-wrap{padding:0 8px}.dk-hstep{min-height:auto}}
-
-/* CONTENT SECTIONS */
-.sec{min-height:100vh;padding:clamp(60px,9vw,100px) 24px;display:flex;justify-content:center;align-items:center;background:var(--w)}
-.sec-in{max-width:960px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,80px);align-items:center}
-.sec.flip .sec-in{direction:rtl}.sec.flip .sec-in>*{direction:ltr}
-.sec h2{font-size:clamp(28px,4.5vw,42px);font-weight:900;line-height:1.1;margin-bottom:18px;letter-spacing:-.3px}
-.sec p.d{font-size:18px;color:var(--mu);line-height:1.8;margin-bottom:16px}
-.sa{display:flex;align-items:center;justify-content:center}
-.sa svg{width:100%;max-width:520px;height:auto;display:block;overflow:visible}
-.cg{color:var(--g)}.cc{color:#FF4B4B}
-
-/* CONCEPT GPS VISUAL */
-.concept-map{width:100%;max-width:620px;aspect-ratio:1.55;border-radius:22px;background:#F4FAF9;box-shadow:0 20px 60px rgba(25,70,65,.1);border:1px solid rgba(110,170,165,.14);overflow:hidden;position:relative}
-.concept-map svg{width:100%;height:100%;display:block}
-.cm-grid{stroke:#DFEFEC;stroke-width:1;opacity:.52}
-.cm-link{stroke:#A9DCD6;stroke-width:1.45;opacity:.55}
-.cm-link.path{stroke:#00A99D;stroke-width:1.9;opacity:.65;stroke-dasharray:7 9;animation:cmFlow 7s linear infinite}
-.cm-node circle{fill:#9ACAC7;stroke:#FFFFFF;stroke-width:1.5;opacity:.82}
-.cm-node.soft circle{fill:#B6D9D6;opacity:.62}
-.cm-node.focus circle{fill:#00A99D;stroke:#008A82;stroke-width:3;opacity:1;filter:url(#cmGlow)}
-.cm-node.next circle{fill:#00A99D;stroke:#007E77;stroke-width:2.5;opacity:.94}
-.cm-node text{font-size:9px;font-weight:800;fill:#EAF7F5;text-anchor:middle;dominant-baseline:middle;opacity:.76}
-.cm-node.soft text{fill:#F8FFFF;opacity:.55}
-.cm-node.focus text{fill:#FFFFFF;font-size:12px;opacity:.95}
-.cm-node.next text{fill:#FFFFFF;opacity:.88}
-.cm-dot{fill:#54B948;stroke:#F4FAF9;stroke-width:2}
-.cm-pulse{fill:none;stroke:#00A99D;stroke-width:2;opacity:.34;animation:cmPulse 3.6s ease-out infinite}
-@keyframes cmFlow{to{stroke-dashoffset:-64}}
-@keyframes cmPulse{0%{r:26;opacity:.34}100%{r:66;opacity:0}}
-@media(max-width:768px){.concept-map{max-width:420px;margin:0 auto}.cm-node text{font-size:8px}.cm-node.focus text{font-size:10px}}
-
-/* TESTIMONIALS - partial bleed */
-.proof{padding:clamp(80px,10vw,120px) 24px clamp(40px,6vw,64px);display:flex;flex-direction:column;align-items:center;background:#FAFAFA}
-.proof-block{width:100%;max-width:820px;margin:0 auto 56px;text-align:center}
-.proof-block:last-child{margin-bottom:0}
-.proof h2{font-size:clamp(28px,4.5vw,42px);font-weight:900;margin-bottom:8px;color:var(--tx);letter-spacing:-.3px}
-.proof h2 span{color:var(--g)}
-.proof .sub{font-size:17px;color:var(--mu);margin-bottom:40px}
-.tg{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:820px;width:100%;margin:0 auto;text-align:left}
-.tc{background:var(--w);border-radius:20px;padding:28px 30px;border:2px solid var(--bd);display:flex;flex-direction:column;gap:14px;transition:transform .2s}
-.tc:hover{transform:translateY(-3px);border-color:#D0D0D0}
-.tc .qt{font-size:16px;line-height:1.75;font-weight:600;color:var(--tx);flex:1}
-.tc .au{font-size:14px;color:var(--mu);font-weight:700}
-.tc .au strong{color:var(--tx);font-weight:800;display:block;margin-bottom:2px}
-.tc-tag{display:inline-block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:20px}
-.tutor-tc{padding:0;overflow:hidden}
-.tutor-tc .tutor-photo{width:100%;height:200px;object-fit:cover;object-position:center center;display:block;background:#E8ECF0}
-.tutor-tc .tutor-cap{padding:22px 26px;display:flex;flex-direction:column;gap:8px;flex:1}
-.tutor-tc .tutor-cap strong{font-size:15px;font-weight:900;color:var(--tx)}
-.tutor-tc .tutor-cap p{font-size:13px;color:var(--mu);font-weight:600;line-height:1.55;margin:0}
-
-/* PRICING: full viewport */
-.pricing{padding:clamp(60px,9vw,100px) 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--w)}
-.pricing h2{font-size:clamp(26px,4vw,38px);font-weight:900;margin-bottom:6px;letter-spacing:-.3px}
-.pricing .sub{font-size:16px;color:var(--mu);margin-bottom:36px;max-width:500px}
-.pg{display:grid;grid-template-columns:1fr 1.1fr;gap:16px;max-width:720px;margin:0 auto;width:100%}
-.pc{background:var(--w);border-radius:20px;padding:28px 24px;border:2px solid var(--bd);text-align:left;position:relative;display:flex;flex-direction:column}
-.pc.ft{border-color:var(--g);box-shadow:0 0 0 2px var(--g),0 16px 48px rgba(84,185,72,.12);transform:scale(1.025)}
-.pc.ft::before{content:'MOST POPULAR';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--g);color:var(--w);padding:4px 18px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:.6px;white-space:nowrap}
-.pc h3{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--mu);margin-bottom:10px}
-.pc .pr{font-size:38px;font-weight:900;color:var(--tx);margin-bottom:2px;line-height:1}.pc .pr span{font-size:14px;color:var(--mu);font-weight:600}
-.pc .pr.free-pr{color:var(--g)}
-.pc .pd{font-size:13px;color:var(--mu);margin-bottom:20px;line-height:1.55;font-weight:600;padding-bottom:16px;border-bottom:2px solid #F0F0F0}
-.pc ul{list-style:none;text-align:left;margin-bottom:24px;flex:1}
-.pc ul li{font-size:13px;padding:7px 0;display:flex;align-items:flex-start;gap:8px;font-weight:600;border-bottom:1px solid #F5F5F5;color:#3C3C3C;line-height:1.45}
-.pc ul li:last-child{border-bottom:none}
-.pc ul li::before{content:'✓';color:var(--g);font-weight:900;font-size:14px;flex-shrink:0;margin-top:1px}
-.pc ul li.muted::before{content:'—';color:#C0C0C0}
-.pc ul li.muted{color:#ABABAB}
-.ka-feature{align-items:flex-start!important;flex-direction:row!important;gap:8px!important;padding-bottom:4px!important}
-.ka-feature::before{margin-top:8px}
-.ka-body{flex:1;min-width:0}
-.ka-label{display:block;color:#3C3C3C;font-weight:600;line-height:1.45}
-.ka-sub{list-style:none;margin:6px 0 0;padding:0 0 0 14px;width:100%}
-.pc ul .ka-sub li{display:block;padding:3px 0;border:none;font-size:13px;font-weight:600;color:#ABABAB;line-height:1.45}
-.pc ul .ka-sub li::before{content:'•';color:#C0C0C0;font-weight:900;font-size:13px;margin-right:6px}
-.ka-sub a{color:#ABABAB;text-decoration:none;font-weight:600}
-.ka-sub a:hover{color:#888}
-.feat-shine{background:linear-gradient(90deg,#449A38 0%,#54B948 50%,#449A38 100%);background-size:160% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;animation:featShine 5s ease-in-out infinite}
-@keyframes featShine{0%,100%{background-position:0% center}50%{background-position:100% center}}
-.pc .meta-list{list-style:none;padding:0;margin:0 0 18px;border-bottom:2px solid #F0F0F0;padding-bottom:16px}
-.pc .meta-list li{font-size:13px;color:var(--mu);font-weight:600;padding:5px 0;border:none;display:block}
-.pc .meta-list li::before{content:none}
-.pc .cta-wrap{margin-top:auto}
-.pricing-note{margin-top:16px;font-size:13px;color:var(--mu);font-weight:600}
-@media(max-width:760px){.pg{grid-template-columns:1fr}.pc.ft{transform:none}}
-
-
-/* BLOG PANEL */
-.blog-panel{background:#0D0F15;padding:clamp(64px,7vw,92px) 0 clamp(48px,6vw,72px);display:flex;flex-direction:column;justify-content:center;border-top:1px solid rgba(255,255,255,.08)}
-.blog-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;width:100%;padding-bottom:4px}
-.blog-panel-head h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;color:#fff;letter-spacing:-.4px;margin:0}
-.blog-see-all{font-size:13px;font-weight:800;color:rgba(255,255,255,.5);text-decoration:none;border:1.5px solid rgba(255,255,255,.15);padding:7px 14px;border-radius:20px;transition:all .18s;white-space:nowrap;flex-shrink:0}
-.blog-see-all:hover{color:#fff;border-color:rgba(255,255,255,.35)}
-.blog-scroll{display:flex;gap:18px;overflow-x:auto;padding:8px 0 24px;scrollbar-width:none;-ms-overflow-style:none}
-.blog-scroll::-webkit-scrollbar{display:none}
-.blog-duo{display:grid;grid-template-columns:1fr 1fr;align-items:start;position:relative;width:100%;column-gap:clamp(48px,7vw,96px)}
-.blog-duo::after{content:'';position:absolute;left:50%;top:88px;bottom:32px;width:1px;background:rgba(255,255,255,.08);pointer-events:none;transform:translateX(-50%)}
-.blog-duo-col{overflow:hidden;display:flex;flex-direction:column;min-width:0}
-.blog-duo-col:first-child{padding-left:clamp(24px,5vw,64px);padding-right:clamp(20px,3vw,36px)}
-.blog-duo-col:last-child{padding-left:clamp(20px,3vw,36px);padding-right:clamp(24px,5vw,64px)}
-@media(max-width:700px){.blog-duo{grid-template-columns:1fr;column-gap:0}.blog-duo::after{display:none}.blog-duo-col:first-child,.blog-duo-col:last-child{padding:0 clamp(24px,5vw,64px)}.blog-duo-col:last-child{margin-top:56px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08)}.blog-duo-col:last-child .podcast-scroll{margin-top:0;padding-top:8px}}
-.podcast-scroll{display:flex;padding:8px 0 24px}
-.podcast-card{width:300px;min-height:392px;background:#181B25;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;flex-shrink:0}
-.podcast-card-img{height:170px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#0A1F10,#1A3C2A);flex-shrink:0}
-.podcast-card-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
-.podcast-card-title{font-size:16px;font-weight:900;color:#fff;line-height:1.3;letter-spacing:-.2px;margin:0}
-.podcast-card-excerpt{font-size:12px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:600;margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.podcast-card .bw{font-size:12px;padding:9px 16px;display:inline-block;align-self:flex-start;margin-top:auto}
-.blog-card{flex-shrink:0;width:300px;min-height:392px;background:#181B25;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.07);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;text-decoration:none}
-.blog-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.16)}
-.blog-card-img{height:170px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.blog-card-body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
-.blog-card-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.blog-card-cat{font-size:10px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.2px}
-.blog-card-date{font-size:11px;color:rgba(255,255,255,.3);font-weight:700}
-.blog-card-title{font-size:16px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:10px;letter-spacing:-.2px}
-.blog-card-excerpt{font-size:12px;color:rgba(255,255,255,.4);line-height:1.65;font-weight:600;margin-bottom:14px;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.blog-card-author{display:flex;align-items:center;gap:8px}
-.blog-card-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;background:linear-gradient(135deg,#003F2D,#1A3C2A);flex-shrink:0}
-.blog-card-author-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.45)}
-
-/* FAQ */
-.faq{background:#111;padding:clamp(64px,7vw,92px) 0 clamp(48px,6vw,72px);display:flex;flex-direction:column;justify-content:center}
-.faq-in{width:100%;padding:0 clamp(24px,5vw,64px);box-sizing:border-box}
-.faq-title{font-size:clamp(32px,4.5vw,52px);font-weight:900;color:#FFFFFF;margin-bottom:clamp(32px,4vw,48px);letter-spacing:-.5px;text-align:left}
-.faq-list{display:flex;gap:64px;align-items:flex-start}
-.faq-col{flex:1;min-width:0}
-.faq-item{border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
-.faq-item:last-child{border-bottom:none}
-.faq-item#faq-tutors{scroll-margin-top:96px}
-.faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:24px;user-select:none}
-.faq-q-text{font-size:15px;font-weight:700;color:#FFFFFF;line-height:1.35;flex:1}
-.faq-icon{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s}
-.faq-icon svg{width:12px;height:12px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2.5;stroke-linecap:round;transition:stroke .2s}
-.faq-item.open .faq-icon{border-color:var(--g)}
-.faq-item.open .faq-icon svg{stroke:var(--g)}
-.faq-q:hover .faq-q-text{color:rgba(255,255,255,.75)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-.faq-a-inner{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;padding-bottom:16px;font-weight:600}
-.faq-item.open .faq-a{max-height:300px}
-@media(max-width:768px){.faq{padding:56px 24px}.faq-list{flex-direction:column;gap:0}}
-
-/* FOOTER */
-footer{background:var(--forest);padding:clamp(56px,8vw,88px) clamp(24px,6vw,80px) 40px}
-.ft-grid{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)}
-.ft-brand{display:flex;flex-direction:column;gap:12px}
-.ft-brand .fl{font-size:22px;font-weight:900;color:var(--w)}.ft-brand .fl span{color:var(--g)}
-.ft-brand p{font-size:14px;color:#7EA896;line-height:1.6;max-width:240px}
-.ft-social{display:flex;gap:12px;margin-top:4px}
-.ft-social a{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:background .15s;color:var(--w);text-decoration:none}
-.ft-social a:hover{background:rgba(255,255,255,.16)}
-.ft-social svg{width:18px;height:18px;fill:var(--w)}
-.ft-col h5{font-size:11px;font-weight:900;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
-.ft-col a{display:block;font-size:15px;font-weight:700;color:#9EC4AF;text-decoration:none;margin-bottom:10px;transition:color .15s}
-.ft-col a:hover{color:var(--w)}
-.ft-bottom{max-width:960px;margin:28px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.ft-bottom p{font-size:13px;color:rgba(255,255,255,.3);font-weight:600}
-@media(max-width:768px){.ft-grid{grid-template-columns:1fr 1fr}.ft-brand{grid-column:1/-1}}
-
-/* Accent line */
-.accent{max-width:120px;height:3px;background:var(--g);margin:0 auto;border-radius:2px;opacity:.3}
-
-@media(max-width:768px){.hero-in,.sec-in{grid-template-columns:1fr;gap:28px}.sec.flip .sec-in{direction:ltr}.hero-text{text-align:center}.hero-text p{margin:0 auto 28px}.hb{margin:0 auto}.ha{min-height:280px}.tg,.pg{grid-template-columns:1fr}.pg{max-width:340px;margin:0 auto}.nl{display:none}.fc{display:none}}
-
-/* ── SECTION TRANSITIONS ── */
-.subj-panel{background:#F8F9FA}
-.blog-top-fade{height:0;background:#0D0F15;margin:0;padding:0}
-
-/* ── PREMIUM NAV LOGIN BUTTON ── */
-.nav-login{background:linear-gradient(150deg,#5FC454,#449A38)!important;box-shadow:0 4px 16px rgba(84,185,72,.38),0 2px 0 #2E6B26!important;border-radius:22px!important;padding:9px 22px!important;font-size:13px!important;letter-spacing:.3px!important;transition:all .2s cubic-bezier(.22,1,.36,1)!important}
-.nav-login:hover{background:linear-gradient(150deg,#6BC85F,#54B948)!important;box-shadow:0 6px 24px rgba(84,185,72,.52),0 2px 0 #2E6B26!important;transform:translateY(-2px)!important}
-
-/* ── SUBJECT CARDS ── */
-.subj-card{border:none;border-radius:24px;padding:30px 22px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;background:#fff;box-shadow:0 4px 6px rgba(0,0,0,.04),0 10px 32px rgba(0,0,0,.08)}
-.subj-card:hover{box-shadow:0 4px 6px rgba(0,0,0,.04),0 20px 48px rgba(0,0,0,.13)}
-.subj-card .si{width:68px;height:68px;border-radius:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:10px;color:#fff;font-size:16px;font-weight:900;letter-spacing:-.3px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.20)}
-.subj-card strong{font-size:16px;font-weight:900;color:var(--tx);line-height:1.2;display:block}
-.subj-card p{font-size:12.5px;color:var(--mu);font-weight:600;line-height:1.5;margin:0 0 4px;flex:1}
-.find-tutor-link{display:block;text-align:center;background:var(--g);color:#fff!important;font-weight:800;font-size:13px;padding:11px 16px;border-radius:50px;margin-top:14px;text-decoration:none;transition:filter .15s,transform .15s,box-shadow .15s;box-shadow:0 3px 0 var(--gd);letter-spacing:.2px;width:100%;box-sizing:border-box}
-.find-tutor-link:hover{filter:brightness(1.07);transform:translateY(-1px);box-shadow:0 5px 0 var(--gd);opacity:1!important}
-
-/* ── CARD DROP + FLOAT ANIMATION ── */
-@keyframes cardDrop{0%{opacity:0;transform:translateY(-32px) scale(.88)}55%{opacity:1;transform:translateY(7px) scale(1.03)}78%{transform:translateY(-3px) scale(.99)}100%{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes cardFloat{0%,100%{transform:translateY(0);box-shadow:0 4px 6px rgba(0,0,0,.04),0 10px 32px rgba(0,0,0,.08)}50%{transform:translateY(-9px);box-shadow:0 12px 10px rgba(0,0,0,.03),0 22px 50px rgba(0,0,0,.11)}}
-.card-drop-grid>*{opacity:0}
-.card-drop-grid.show>*:nth-child(1){animation:cardDrop .60s cubic-bezier(.22,1,.36,1) .04s both,cardFloat 4.0s ease-in-out 0.70s infinite}
-.card-drop-grid.show>*:nth-child(2){animation:cardDrop .60s cubic-bezier(.22,1,.36,1) .16s both,cardFloat 4.0s ease-in-out 0.82s infinite}
-.card-drop-grid.show>*:nth-child(3){animation:cardDrop .60s cubic-bezier(.22,1,.36,1) .28s both,cardFloat 4.0s ease-in-out 0.94s infinite}
-.card-drop-grid.show>*:nth-child(4){animation:cardDrop .60s cubic-bezier(.22,1,.36,1) .40s both,cardFloat 4.2s ease-in-out 1.10s infinite}
-.card-drop-grid.show>*:nth-child(5){animation:cardDrop .60s cubic-bezier(.22,1,.36,1) .52s both,cardFloat 4.2s ease-in-out 1.22s infinite}
-.card-drop-grid.show>*:nth-child(6){animation:cardDrop .60s cubic-bezier(.22,1,.36,1) .64s both,cardFloat 4.2s ease-in-out 1.34s infinite}
-
-
-/* ── SUBJECT SHOWCASE SLIDESHOW ── */
-.subj-showcase{position:relative;border-radius:20px;overflow:hidden;height:210px;margin:0 auto 30px;cursor:default;width:100%;max-width:820px;border:1px solid rgba(25,45,64,.08);box-shadow:0 10px 26px rgba(20,35,55,.07);background:#F7F8FA}
-.ss-slide{position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(22px,3.5vw,42px);gap:clamp(18px,2.5vw,36px);opacity:0;transition:opacity 1.5s cubic-bezier(.22,1,.36,1),filter 1.5s cubic-bezier(.22,1,.36,1);filter:saturate(.92);transform:none;pointer-events:none}
-.ss-slide.ss-active{opacity:1;filter:saturate(1);transform:none;pointer-events:auto}
-.ss-card{background:rgba(255,255,255,.88);border:1px solid rgba(25,45,64,.08);border-radius:16px;width:clamp(96px,10vw,126px);height:clamp(112px,13vw,142px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;flex-shrink:0;box-shadow:0 9px 20px rgba(20,35,55,.10)}
-.ss-icon{width:clamp(44px,5.5vw,58px);height:clamp(44px,5.5vw,58px);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:clamp(12px,1.5vw,15px);font-weight:900;letter-spacing:-.1px}
-.ss-icon svg{width:58%;height:58%;display:block;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.ss-icon .fill{fill:currentColor;stroke:none}
-.ss-lbl{font-size:clamp(12px,1.4vw,16px);font-weight:800}
-.ss-body{flex:1;padding-right:12px}
-.ss-tag{font-size:11px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:rgba(46,59,78,.48);margin-bottom:9px}
-.ss-nm{font-size:clamp(22px,2.7vw,32px);font-weight:900;color:#2F3746;line-height:1.05;margin-bottom:10px}
-.ss-ds{font-size:clamp(13px,1.22vw,15px);font-weight:700;color:rgba(47,55,70,.74);line-height:1.5;max-width:390px}
-.ss-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-.ss-dot{width:7px;height:7px;border-radius:50%;background:rgba(47,55,70,.22);transition:background .45s cubic-bezier(.22,1,.36,1),transform .45s cubic-bezier(.22,1,.36,1);cursor:pointer}
-.ss-dot.active{background:#449A38;transform:scale(1.2)}
-.subj-showcase .ss-slide:nth-child(1){background:linear-gradient(135deg,#F4F1FF,#ECE9FF)!important}
-.subj-showcase .ss-slide:nth-child(2){background:linear-gradient(135deg,#EEF4FF,#E8F0FF)!important}
-.subj-showcase .ss-slide:nth-child(3){background:linear-gradient(135deg,#EAF7F4,#E4F1EE)!important}
-.subj-showcase .ss-slide:nth-child(4){background:linear-gradient(135deg,#FFF4E8,#F8ECE0)!important}
-#sigShowcase .ss-slide:nth-child(1){background:linear-gradient(135deg,#FFF2E3,#F8E8D6)!important}
-#sigShowcase .ss-slide:nth-child(2){background:linear-gradient(135deg,#F4ECFF,#EEE5FA)!important}
-#sigShowcase .ss-slide:nth-child(3){background:linear-gradient(135deg,#E9F7FA,#E2F1F5)!important}
-#subjShowcase .ss-icon{background:#C46A35!important}
-#subjShowcase .ss-slide:nth-child(2) .ss-icon{background:#4E6FA8!important}
-#subjShowcase .ss-slide:nth-child(3) .ss-icon{background:#3F8B7E!important}
-#subjShowcase .ss-slide:nth-child(4) .ss-icon{background:#C4874D!important}
-#sigShowcase .ss-slide:nth-child(1) .ss-icon{background:#C4874D!important}
-#sigShowcase .ss-slide:nth-child(2) .ss-icon{background:#8B63C7!important}
-#sigShowcase .ss-slide:nth-child(3) .ss-icon{background:#4E91A6!important}
-#subjShowcase .ss-lbl,#sigShowcase .ss-lbl{color:#526072!important}
-@media(max-width:760px){.subj-showcase{height:auto;min-height:290px}.ss-slide{flex-direction:column;justify-content:center;text-align:center;padding:28px 20px 42px}.ss-body{padding-right:0}.ss-ds{max-width:300px}.ss-card{width:112px;height:128px}}
-
-/* ── SCROLL PROGRESS BAR ── */
-#mc-prog{position:fixed;top:56px;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--g) 0%,#6BC85F 100%);z-index:1001;border-radius:0 2px 2px 0;pointer-events:none;will-change:width}
-
-/* ── NAV GLASS ON SCROLL ── */
-nav{transition:background .35s,box-shadow .35s,border-color .35s,backdrop-filter .35s}
-nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 28px rgba(0,0,0,.08);border-bottom-color:transparent}
-
-/* ── EXTENDED DELAYS ── */
-.rv.d4{transition-delay:.45s}.rv.d5{transition-delay:.55s}.rv.d6{transition-delay:.65s}
-
-/* ── SCALE-POP REVEAL FOR HEADINGS ── */
-.rv-pop{opacity:0;transform:scale(.93) translateY(14px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}.rv-pop.show{opacity:1;transform:scale(1) translateY(0)}
-
-/* ── AUTO-STAGGER GRIDS ── */
-.auto-stagger>*{opacity:0;transform:translateY(22px);transition:opacity .52s cubic-bezier(.22,1,.36,1),transform .52s cubic-bezier(.22,1,.36,1)}
-.auto-stagger.show>*{opacity:1;transform:translateY(0)}
-.auto-stagger.show>*:nth-child(1){transition-delay:.04s}
-.auto-stagger.show>*:nth-child(2){transition-delay:.13s}
-.auto-stagger.show>*:nth-child(3){transition-delay:.22s}
-.auto-stagger.show>*:nth-child(4){transition-delay:.31s}
-.auto-stagger.show>*:nth-child(5){transition-delay:.40s}
-.auto-stagger.show>*:nth-child(6){transition-delay:.49s}
-
-/* ── INTRO DECK — PPTX-faithful presentation ── */
-.mc-intro{position:fixed;inset:0;z-index:9000;background:#F5F1ED;overflow:hidden;transition:opacity 1s cubic-bezier(.22,1,.36,1),visibility 1s cubic-bezier(.22,1,.36,1)}
-.mc-intro.mc-exit{opacity:0;visibility:hidden;pointer-events:none}
-.mc-intro.mc-gone{display:none!important}
-.mc-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(48px,10vw,200px);opacity:0;visibility:hidden;pointer-events:none;background:#F5F1ED;transform:translateY(14px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1),visibility 1s;z-index:0}
-.mc-slide.mc-active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);z-index:2}
-.mc-slide.mc-leaving{opacity:0;transform:translateY(-10px);z-index:1}
-@keyframes mcWordIn{from{opacity:0;transform:translateY(.14em)}to{opacity:1;transform:translateY(0)}}
-@keyframes mcLineIn{from{opacity:0;transform:translateY(.10em)}to{opacity:1;transform:translateY(0)}}
-/* Large headline */
-.mc-big{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0}
-.mc-reveal-word{color:var(--g);opacity:0;display:inline-block;transform:translateY(.14em)}
-.mc-slide.mc-active .mc-reveal-word{animation:mcWordIn 1s cubic-bezier(.22,1,.36,1) .55s forwards}
-/* Quote text */
-.mc-quote{font-family:'Radley',Georgia,serif;font-size:clamp(20px,3.2vw,44px);line-height:1.45;font-weight:400;color:#1A1A1A;margin:0;max-width:82vw;opacity:0;transform:translateY(10px)}
-.mc-slide.mc-active .mc-quote{animation:mcLineIn .95s cubic-bezier(.22,1,.36,1) .12s forwards}
-.mc-hl{background:var(--g);padding:2px 8px;border-radius:5px;color:#fff}
-.mc-craft{color:var(--g)}
-/* MINDCRAFT brand */
-.mc-brand{font-family:'Radley',Georgia,serif;font-size:clamp(48px,10vw,150px);line-height:1.12;font-weight:400;color:#1A1A1A;margin:0;opacity:0;transform:translateY(10px)}
-.mc-slide.mc-active .mc-brand{animation:mcLineIn .95s cubic-bezier(.22,1,.36,1) .08s forwards}
-.mc-reveal-line{color:#1A1A1A;margin:0;opacity:0;transform:translateY(.10em)}
-.mc-slide.mc-active .mc-reveal-line{animation:mcLineIn 1s cubic-bezier(.22,1,.36,1) .65s forwards}
-/* Caption */
-.mc-caption{position:absolute;bottom:clamp(20px,3vh,48px);right:clamp(32px,5vw,80px);font-family:'Radley',Georgia,serif;font-size:clamp(11px,1vw,16px);color:#0B0B0B;opacity:0;letter-spacing:.02em;transition:opacity .8s cubic-bezier(.22,1,.36,1) .35s}
-.mc-slide.mc-active .mc-caption{opacity:.55}
-.mc-slide.mc-leaving .mc-caption{opacity:0;transition-delay:0s}
-/* Skip + Log in */
-.mc-intro-actions{position:absolute;top:20px;right:24px;z-index:10;display:flex;align-items:center;gap:10px}
-.mc-skip{font-family:'Radley',Georgia,serif;font-size:12px;color:rgba(26,26,26,.35);background:none;border:1px solid rgba(26,26,26,.2);padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;letter-spacing:.04em}
-.mc-skip:hover{color:#1A1A1A;border-color:#1A1A1A}
-.mc-login{font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:#fff!important;background:var(--g);border:none;border-radius:14px;padding:8px 16px;text-decoration:none;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 3px 0 var(--gd);transition:filter .15s,transform .15s}
-.mc-login:hover{filter:brightness(1.06);transform:translateY(-1px)}
-
-/* ── PANIC TO PLAN + GPS: two stacked rows ── */
-.ptp-section{background:var(--w);padding:clamp(48px,7vw,80px) clamp(24px,5vw,60px)}
-.ptp-row{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;padding:clamp(40px,5vw,60px) 0}
-.ptp-row:first-child{padding-top:clamp(28px,3vw,44px);max-width:900px;margin-right:auto;margin-left:0}
-.ptp-row:last-child{padding-top:clamp(60px,8vw,100px);padding-bottom:clamp(90px,13vw,150px);max-width:1180px;margin-left:auto;margin-right:0}
-.ptp-flip{direction:rtl}.ptp-flip>*{direction:ltr}
-.ptp-text h2{font-size:clamp(28px,3.2vw,44px);font-weight:900;line-height:1.1;letter-spacing:-.4px;margin:0 0 18px;color:var(--tx)}
-.ptp-text p{font-size:16px;line-height:1.8;color:var(--mu);max-width:400px;margin:0}
-.ptp-media{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.11);background:#F0F4F8}
-.ptp-media video{width:100%;display:block;max-height:380px;object-fit:cover}
-.ptp-gps{border-radius:22px;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,0,.09);border:1px solid rgba(0,0,0,.07);background:#fff;max-height:380px}
-.ptp-gps .concept-map{width:100%;height:100%;display:block}
-.ptp-gps .concept-map svg{width:100%;height:100%;display:block}
-@media(max-width:860px){.ptp-row{grid-template-columns:1fr;gap:clamp(24px,4vw,36px)}.ptp-flip{direction:ltr}.ptp-text p{max-width:100%}}
-
-/* ── 3D RACCOON VIEWER ── */
-.raccoon-canvas-wrap{width:clamp(220px,28vw,340px);height:clamp(320px,42vw,500px);border-radius:20px;background:transparent;border:none;box-shadow:0 24px 64px rgba(0,0,0,.07);overflow:hidden;position:relative;z-index:2}
-.raccoon-canvas-wrap canvas{display:block;width:100%!important;height:100%!important}
-@media(max-width:600px){.mc-big,.mc-brand{font-size:clamp(36px,14vw,80px)}.mc-quote{font-size:clamp(16px,4.5vw,28px)}.mc-caption{display:none}}
+:root{
+  --cream:#fbf4e7;
+  --paper:#fffaf0;
+  --ink:#210f17;
+  --wine:#4b001d;
+  --forest:#064d36;
+  --green:#54b948;
+  --gold:#e4bf6a;
+  --line:rgba(117,78,24,.22);
+  --muted:rgba(33,15,23,.64);
+  --shadow:0 26px 80px rgba(34,25,12,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,a{font:inherit}
+.page{min-height:100vh;border:3px solid #1d2525;border-radius:0 0 28px 28px;overflow:hidden;background:var(--cream)}
+.nav{height:116px;display:grid;grid-template-columns:1fr auto;align-items:center;border-bottom:1px solid var(--line);background:rgba(251,244,231,.92);position:sticky;top:0;z-index:20;backdrop-filter:blur(18px)}
+.brand{padding-left:clamp(24px,4vw,56px);font-size:clamp(24px,2.5vw,34px);font-weight:900;letter-spacing:-.04em;color:#003f2d}
+.brand span{color:var(--green)}
+.navlinks{height:100%;display:flex;align-items:center;border-left:1px solid var(--line)}
+.navlinks a{height:100%;display:flex;align-items:center;padding:0 clamp(18px,2.7vw,38px);font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--wine);border-right:1px solid var(--line)}
+.navlinks a:last-child{background:var(--forest);color:#fff;border-right:0}
+.menu-dot{width:10px;height:10px;border-radius:50%;background:#d99512;display:inline-block;margin-right:10px}
+.hero{min-height:calc(100vh - 116px);display:grid;grid-template-columns:1.1fr 1fr;border-bottom:1px solid var(--line);position:relative;isolation:isolate}
+.hero:before,.studio:before,.journey:before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(90deg,transparent calc(25% - .5px),var(--line) 25%,transparent calc(25% + .5px)),
+  linear-gradient(90deg,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px)),
+  linear-gradient(90deg,transparent calc(75% - .5px),var(--line) 75%,transparent calc(75% + .5px)),
+  linear-gradient(180deg,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px))}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(65% 60% at 8% 16%,rgba(84,185,72,.12),transparent 58%),
+  radial-gradient(50% 70% at 88% 74%,rgba(6,77,54,.08),transparent 64%)}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(42px,6vw,88px) clamp(28px,5vw,72px) clamp(92px,8vw,132px)}
+.eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 20px}
+h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;color:var(--wine);font-size:clamp(58px,9.7vw,142px);line-height:.86;letter-spacing:-.055em;margin:0;max-width:100%;overflow-wrap:normal}
+.hero-note{align-self:flex-end;max-width:360px;margin:44px 8% 0 0;font-size:clamp(18px,2vw,25px);font-weight:700;line-height:1.18;color:var(--wine)}
+.hero-actions{display:flex;gap:12px;margin-top:42px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;padding:0 24px;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--forest)}
+.btn.primary{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 8px 0 #37852f}
+.btn.secondary{background:rgba(255,250,240,.68);color:var(--forest)}
+.scroll{position:absolute;left:clamp(28px,5vw,72px);bottom:34px;font-size:13px;font-weight:900;text-transform:uppercase;color:var(--wine);letter-spacing:.06em}
+.scroll span{display:block;color:#d99512;font-size:38px;line-height:1;margin-top:8px}
+.mosaic{position:relative;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(6,1fr);min-height:540px;border-left:1px solid var(--line);overflow:hidden}
+.tile{border-left:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,250,240,.58)}
+.image-tile{background-image:linear-gradient(rgba(251,244,231,.18),rgba(251,244,231,.18)),url("img/background.jpg");background-size:cover;background-position:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.24)}
+.tile.a{grid-column:3/5;grid-row:1/4;background-position:68% 18%}
+.tile.b{grid-column:2/5;grid-row:4/7;background-position:55% 52%}
+.tile.c{grid-column:1/3;grid-row:3/5;background-position:28% 62%}
+.quiet-tile{grid-column:1/3;grid-row:5/7;background:linear-gradient(135deg,rgba(251,244,231,.92),rgba(84,185,72,.08));border-left:1px solid var(--line);border-bottom:1px solid var(--line);position:relative}
+.quiet-tile:after{content:"";position:absolute;right:28px;bottom:28px;width:82px;height:2px;background:linear-gradient(90deg,var(--green),transparent)}
+.studio,.journey,.proof,.pricing,.faq{position:relative;padding:clamp(72px,9vw,130px) clamp(22px,4vw,56px);border-bottom:1px solid var(--line)}
+.section-head{display:grid;grid-template-columns:minmax(260px,.9fr) 1fr;gap:clamp(24px,5vw,80px);align-items:end;margin:0 auto clamp(38px,6vw,72px);max-width:1180px}
+.kicker{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 14px}
+h2{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(42px,6vw,88px);line-height:.92;font-weight:400;letter-spacing:-.045em;color:var(--wine);margin:0}
+.lead{font-size:clamp(17px,1.5vw,22px);line-height:1.45;color:var(--muted);font-weight:700;max-width:520px;margin:0}
+.feature-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);position:relative}
+.feature-grid:before{content:"";position:absolute;inset:-52px -32px auto -32px;height:220px;pointer-events:none;opacity:.18;background:
+  radial-gradient(circle at 12% 46%,var(--green) 0 3px,transparent 4px),
+  radial-gradient(circle at 42% 22%,var(--forest) 0 2px,transparent 3px),
+  radial-gradient(circle at 72% 50%,var(--green) 0 3px,transparent 4px),
+  linear-gradient(18deg,transparent 0 24%,rgba(6,77,54,.34) 24.1% 24.25%,transparent 24.35%),
+  linear-gradient(158deg,transparent 0 58%,rgba(84,185,72,.28) 58.1% 58.25%,transparent 58.35%)}
+.feature{min-height:470px;padding:34px;display:flex;flex-direction:column;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,250,240,.74),rgba(255,250,240,.54));position:relative;overflow:hidden;transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease,background .24s ease}
+.feature:before{content:"";position:absolute;inset:auto -24% -28% -24%;height:56%;background:radial-gradient(ellipse at 50% 0,rgba(84,185,72,.20),transparent 66%);transition:opacity .24s ease,transform .24s ease}
+.feature:hover{transform:translateY(-6px);border-color:rgba(84,185,72,.52);box-shadow:0 24px 70px rgba(6,77,54,.10);background:linear-gradient(180deg,rgba(255,250,240,.88),rgba(239,249,235,.46))}
+.feature:hover:before{opacity:1;transform:translateY(-12px)}
+.artifact{position:relative;z-index:1;height:168px;margin-bottom:42px;color:var(--forest)}
+.artifact svg{width:100%;height:100%;display:block;overflow:visible}
+.artifact .paper{fill:rgba(255,255,255,.72);stroke:rgba(6,77,54,.24);stroke-width:1.4}
+.artifact .line{stroke:rgba(6,77,54,.58);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.artifact .soft{stroke:rgba(84,185,72,.58);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.artifact .fill-soft{fill:rgba(84,185,72,.14);stroke:rgba(84,185,72,.42);stroke-width:1.3}
+.artifact .burgundy{stroke:rgba(75,0,29,.35);stroke-width:1.8;fill:none;stroke-linecap:round}
+.artifact .glow{filter:drop-shadow(0 0 14px rgba(84,185,72,.38))}
+.micro{position:relative;z-index:1;width:max-content;margin-bottom:16px;padding:7px 10px;border-radius:999px;background:rgba(84,185,72,.10);color:var(--forest);font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+.feature h3{position:relative;z-index:1;font-size:clamp(24px,2.4vw,34px);line-height:1;font-weight:900;letter-spacing:-.04em;color:var(--forest);margin:0 0 14px}
+.feature p{position:relative;z-index:1;font-size:15px;line-height:1.62;color:var(--muted);font-weight:700;margin:0}
+.atlas{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 1.12fr;border:1px solid var(--line);background:rgba(255,250,240,.62)}
+.steps{display:grid;grid-template-columns:1fr 1fr}
+.step{min-height:250px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:30px}
+.step:nth-child(even){border-right:0}
+.num{font-family:"DM Serif Display",Georgia,serif;font-size:64px;color:rgba(75,0,29,.18);line-height:.8}
+.step h3{color:var(--wine);font-size:22px;margin:32px 0 10px}
+.step p{font-size:14px;line-height:1.5;color:var(--muted);font-weight:700;margin:0}
+.map-panel{min-height:500px;position:relative;overflow:hidden;background:
+  linear-gradient(90deg,rgba(251,244,231,.9),rgba(251,244,231,.28)),
+  url("img/background.jpg") center/cover}
+.path{position:absolute;inset:54px;border:1px solid rgba(255,250,240,.5)}
+.node{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--green);box-shadow:0 0 0 12px rgba(84,185,72,.14)}
+.node.n1{left:18%;top:64%}.node.n2{left:42%;top:44%}.node.n3{left:68%;top:28%}.node.n4{left:76%;top:68%}
+.path svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:#fff4d4;stroke-width:2;stroke-dasharray:10 12;opacity:.85}
+.proof{background:#fff8ea}
+.proof-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.quote-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:0;box-shadow:0 14px 40px rgba(34,25,12,.08);overflow:hidden}
+.quote-card summary{list-style:none;cursor:pointer;padding:30px;min-height:250px;display:flex;flex-direction:column;gap:18px}
+.quote-card summary::-webkit-details-marker{display:none}
+.quote-card p{font-size:19px;line-height:1.42;color:var(--wine);font-weight:800;margin:0}
+.quote-card span{font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:auto}
+.quote-card .full{border-top:1px solid var(--line);padding:26px 30px 30px;color:var(--muted);font-size:15px;line-height:1.7;font-weight:700;background:rgba(255,255,255,.32)}
+.quote-card .expand{display:inline-flex;align-items:center;gap:8px;color:var(--forest);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.quote-card .expand:after{content:"+";font-size:18px;color:var(--green)}
+.quote-card[open] .expand:after{content:"-"}
+.pricing{background:var(--forest);color:#fff}
+.pricing h2,.pricing .kicker{color:#fff}
+.pricing .lead{color:rgba(255,255,255,.72)}
+.price-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.price{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:24px;padding:34px}
+.price.featured{background:#fff;color:var(--ink)}
+.price h3{font-size:15px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 18px;color:inherit}
+.price strong{font-size:48px;line-height:1;color:var(--green)}
+.price strong span{font-size:18px;color:inherit;opacity:.68}
+.price p{color:inherit;opacity:.72;font-weight:700;line-height:1.55}
+.price ul{list-style:none;padding:0;margin:22px 0;display:grid;gap:10px}
+.price li{font-weight:800}
+.price li:before{content:"+";color:var(--green);margin-right:10px}
+.faq{background:var(--cream)}
+.faq-list{max-width:980px;margin:0 auto;display:grid;gap:1px;border:1px solid var(--line)}
+.faq-item{background:rgba(255,250,240,.55);padding:26px;display:grid;grid-template-columns:1fr 1.6fr;gap:24px}
+.faq-item strong{font-size:20px;color:var(--wine)}
+.faq-item p{margin:0;color:var(--muted);line-height:1.55;font-weight:700}
+footer{padding:46px clamp(22px,4vw,56px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--forest);color:#fff}
+.footer-left{display:grid;gap:10px}
+.footer-brand{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.04em}.footer-brand span{color:var(--green)}
+.footer-contact{display:grid;gap:4px;color:#9ec4af;font-size:14px;font-weight:700}
+.footer-contact a{color:#9ec4af;text-decoration:none}
+.footer-contact a:hover{color:#fff}
+.socials{display:flex;gap:12px;align-items:center}
+.socials a{width:42px;height:42px;border:1px solid rgba(255,255,255,.18);border-radius:14px;display:grid;place-items:center;color:#fff;opacity:.86;margin-left:0}
+.socials svg{width:20px;height:20px;fill:currentColor}
+.socials a:hover{opacity:1;background:rgba(255,255,255,.1)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.reveal.show{opacity:1;transform:none}
+@media(max-width:900px){
+  .nav{height:auto;grid-template-columns:1fr}.brand{padding:22px}.navlinks{border-left:0;border-top:1px solid var(--line);overflow:auto}.navlinks a{min-height:56px;white-space:nowrap}
+  h1{font-size:clamp(42px,8vw,46px);line-height:.98;letter-spacing:-.035em}
+  .hero,.section-head,.atlas,.price-grid{grid-template-columns:1fr}.hero-copy{min-height:620px}.hero-note{align-self:flex-start;margin-right:0}.mosaic{min-height:520px;border-left:0}.scroll{display:none}
+  .feature-grid,.proof-grid,.price-grid{grid-template-columns:1fr}.feature{min-height:300px}.steps{grid-template-columns:1fr}.step{border-right:0}.faq-item{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .page{border-width:0;border-radius:0}
+  .brand{font-size:24px}
+  .navlinks a{padding:0 18px;font-size:12px}
+  h1{font-size:clamp(40px,12vw,48px);line-height:1;letter-spacing:-.035em}
+  .hero-copy{padding:34px 22px;min-height:540px}
+  .hero-note{max-width:320px;font-size:18px;line-height:1.2}
+  .hero-actions{gap:10px}
+  .btn{min-height:46px;padding:0 20px;font-size:12px}
+  .quiet-tile{grid-column:1/5}.tile.c{grid-column:1/3}.tile.a{grid-column:3/5}
+}
 </style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
-
-<nav>
-  <a href="#" class="logo">Mind<span>Craft</span></a>
-  <div class="nr"><a href="#proof" class="nl">Reviews</a><a href="#blog" class="nl">Blog</a><a href="#faq" class="nl">FAQ</a><a href="https://mindcraft-93858.web.app/login" class="nav-login">Log in</a></div>
-</nav>
-
-<div class="mc-intro" id="mc-intro" role="region" aria-label="MindCraft introduction">
-  <div class="mc-intro-actions">
-    <button class="mc-skip" id="mc-skip" type="button">Skip</button>
-    <a href="https://mindcraft-93858.web.app/login" class="mc-login">Log in</a>
-  </div>
-
-  <div class="mc-slide mc-active">
-    <p class="mc-big">Learning is not<br><span class="mc-reveal-word">FIXED</span></p>
-    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
-  </div>
-
-  <div class="mc-slide">
-    <p class="mc-quote">&ldquo;Doing well in school depends on much more than your ability to learn quickly and easily. <span class="mc-hl">It depends on grit.</span>&rdquo;</p>
-    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
-  </div>
-
-  <div class="mc-slide">
-    <p class="mc-quote">&ldquo;When students learn how the brain grows in response to challenge, they <span class="mc-hl">persevere through failure</span> because they realize failure is not a permanent condition.&rdquo;</p>
-    <span class="mc-caption">On Grit &mdash; Angela Lee Duckworth TEDxTalks</span>
-  </div>
-
-  <div class="mc-slide">
-    <p class="mc-brand">MIND<span class="mc-craft">CRAFT</span></p>
-    <p class="mc-big mc-reveal-line">A Growth Mindset</p>
-  </div>
-</div>
-
-<div id="start"></div>
-<div class="above-fold">
-<section class="hero">
-  <div class="hero-in">
-    <div class="ha rv">
-      <img src="img/Rac.jpg" alt="MindCraft raccoon" class="raccoon-canvas-wrap" style="object-fit:cover;display:block;">
-    </div>
-    <div class="hero-text rv d1">
-      <h1><span style="display:block">Maths can be stressful</span><span style="display:block;color:var(--g);font-size:clamp(20px,3vw,38px);margin-top:6px">We're here for you</span></h1>
-      <div class="hb">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">Try It Free</a>
-        <a href="#steps" class="bw">See how it works</a>
-      </div>
-    </div>
-  </div>
-</section>
-</div><!-- /above-fold -->
-
-<!-- ── FROM PANIC TO PLAN + GPS ── -->
-<section class="ptp-section" id="pressure">
-
-  <!-- Row 1: text left, video right -->
-  <div class="ptp-row">
-    <div class="ptp-text rv">
-      <h2>From panic<br>to plan</h2>
-      <p>Before a test, most students just guess what to study. MindCraft shows exactly what to focus on. You walk in with a real plan. And real confidence.</p>
-    </div>
-    <div class="ptp-media rv d1">
-      <video src="img/Video.mp4" autoplay muted loop playsinline preload="metadata" poster="img/Rac.jpg"></video>
-    </div>
-  </div>
-
-  <!-- Row 2: GPS left, text right (lower + right-biased) -->
-  <div class="ptp-row">
-    <div class="ptp-gps rv">
-      <div class="concept-map" aria-label="Animated concept map">
-        <svg viewBox="0 0 620 400" role="img">
-          <defs>
-            <filter id="cmGlow" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="8" result="blur"/>
-              <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0 0 0 0 0 0.68 0 0 0 0 0.58 0 0 0 .5 0"/>
-              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <path class="cm-grid" d="M80 40v320M180 40v320M280 40v320M380 40v320M480 40v320M40 100h540M40 200h540M40 300h540"/>
-          <line class="cm-link" x1="70" y1="200" x2="305" y2="200"/>
-          <line class="cm-link" x1="305" y1="200" x2="525" y2="200"/>
-          <line class="cm-link" x1="305" y1="200" x2="420" y2="90"/>
-          <line class="cm-link" x1="305" y1="200" x2="420" y2="310"/>
-          <line class="cm-link" x1="305" y1="200" x2="190" y2="90"/>
-          <line class="cm-link" x1="305" y1="200" x2="190" y2="310"/>
-          <line class="cm-link" x1="420" y1="90" x2="515" y2="80"/>
-          <line class="cm-link" x1="420" y1="310" x2="520" y2="320"/>
-          <line class="cm-link" x1="190" y1="90" x2="95" y2="80"/>
-          <line class="cm-link" x1="190" y1="310" x2="95" y2="320"/>
-          <line class="cm-link path" x1="190" y1="200" x2="305" y2="200"/>
-          <line class="cm-link path" x1="305" y1="200" x2="420" y2="90"/>
-          <line class="cm-link path" x1="305" y1="200" x2="420" y2="310"/>
-          <g class="cm-node soft" transform="translate(95 80)"><circle r="20"/><text>Rules</text></g>
-          <g class="cm-node" transform="translate(190 90)"><circle r="32"/><text>Linear</text></g>
-          <g class="cm-node next" transform="translate(190 200)"><circle r="38"/><text>Systems</text></g>
-          <g class="cm-node soft" transform="translate(95 320)"><circle r="20"/><text>Stats</text></g>
-          <g class="cm-node" transform="translate(190 310)"><circle r="31"/><text>Ratios</text></g>
-          <g class="cm-node focus" transform="translate(305 200)"><circle class="cm-pulse" r="26"/><circle r="54"/><text><tspan x="0" y="-7">Word</tspan><tspan x="0" y="10">Problems</tspan></text></g>
-          <g class="cm-node next" transform="translate(420 90)"><circle r="35"/><text>Percents</text></g>
-          <g class="cm-node next" transform="translate(420 310)"><circle r="35"/><text>Functions</text></g>
-          <g class="cm-node soft" transform="translate(515 80)"><circle r="20"/><text>ACT</text></g>
-          <g class="cm-node soft" transform="translate(525 200)"><circle r="25"/><text>SAT</text></g>
-          <g class="cm-node soft" transform="translate(520 320)"><circle r="20"/><text>Exam</text></g>
-          <circle class="cm-dot" cx="452" cy="68" r="4"/>
-          <circle class="cm-dot" cx="452" cy="286" r="4"/>
-          <circle class="cm-dot" cx="222" cy="176" r="4"/>
-        </svg>
-      </div>
-    </div>
-    <div class="ptp-text rv d1">
-      <h2>No more random practice.<br>MindCraft has a GPS</h2>
-      <p>MindCraft maps your gaps. Ranks what matters most. Builds a path straight to your exam. Every minute you study actually counts.</p>
-    </div>
-  </div>
-
-</section>
-
-<!-- ── SUBJECTS PANEL (4th — inserted after #steps below) ── -->
-<section class="subj-panel" id="subj-orig" style="display:none;padding:0;margin:0;border:none">
-  <div class="subj-in">
-    <div class="rv">
-      <span class="subj-eyebrow">subjects</span>
-      <h3 class="subj-head">Find the right <a href="#faq-tutors" class="tutor-link">tutor</a></h3>
-    </div>
-
-    <!-- Auto-cycling subject showcase -->
-    <div class="subj-showcase" id="subjShowcase">
-      <div class="ss-slide ss-active" style="background:linear-gradient(135deg,#7C6FE0,#5B4CC0)">
-        <div class="ss-card">
-          <div class="ss-icon" style="background:#D4520A">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 17.5 9.5 6l4.5 11.5"/>
-              <path d="M7 13.5h5"/>
-              <path d="M16.5 7.5h3"/>
-              <path d="M18 7.5v10"/>
-            </svg>
-          </div>
-          <span class="ss-lbl" style="color:#D4520A">Math</span>
-        </div>
-        <div class="ss-body">
-          <p class="ss-tag">exam prep</p>
-          <div class="ss-nm">ACT Math</div>
-          <div class="ss-ds">Speed, patterns, and precision under pressure. Every point on the 36-point scale counts.</div>
-        </div>
-      </div>
-      <div class="ss-slide" style="background:linear-gradient(135deg,#2B52C8,#1A3890)">
-        <div class="ss-card">
-          <div class="ss-icon" style="background:#2B52C8">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4.5 16.5c1.3 1.2 3.8 1.4 5.1.3 1.2-1 .7-2.6-.9-3.2l-1.9-.7c-1.7-.6-2.1-2.4-.8-3.5 1.2-1 3.3-.9 4.6.1"/>
-              <path d="M13 17.5 16.5 7l3.5 10.5"/>
-              <path d="M14.4 13.8h4.2"/>
-            </svg>
-          </div>
-          <span class="ss-lbl" style="color:#2B52C8">Math</span>
-        </div>
-        <div class="ss-body">
-          <p class="ss-tag">exam prep</p>
-          <div class="ss-nm">SAT Math</div>
-          <div class="ss-ds">Context problems, data fluency, and algebra. We map your gaps and fill them fast.</div>
-        </div>
-      </div>
-      <div class="ss-slide" style="background:linear-gradient(135deg,#00897B,#005F56)">
-        <div class="ss-card">
-          <div class="ss-icon" style="background:#00897B">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6.5 6.5v11"/>
-              <path d="M11 6.5h4.2c2 0 3.3 1 3.3 2.7 0 1.2-.7 2.1-1.8 2.5 1.4.3 2.3 1.3 2.3 2.7 0 1.9-1.4 3.1-3.6 3.1H11z"/>
-              <path d="M11 11.6h4"/>
-            </svg>
-          </div>
-          <span class="ss-lbl" style="color:#00897B">Math</span>
-        </div>
-        <div class="ss-body">
-          <p class="ss-tag">exam prep</p>
-          <div class="ss-nm">IB Mathematics</div>
-          <div class="ss-ds">SL &amp; HL. Rigorous proofs, exact values, and multi-part problems. Taught right.</div>
-        </div>
-      </div>
-      <div class="ss-slide" style="background:linear-gradient(135deg,#E87320,#C05500)">
-        <div class="ss-card">
-          <div class="ss-icon" style="background:#E87320">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 5.5v13"/>
-              <path d="M5.5 12h13"/>
-              <path d="M17.5 6.5 19 5"/>
-              <path d="M5 19l1.5-1.5"/>
-            </svg>
-          </div>
-          <span class="ss-lbl" style="color:#E87320">Any Exam</span>
-        </div>
-        <div class="ss-body">
-          <p class="ss-tag">and more</p>
-          <div class="ss-nm">Any Other Exam</div>
-          <div class="ss-ds">GCSE, IGCSE, A-Level, or anything else. Tell us your exam and we find the right tutor.</div>
-        </div>
-      </div>
-      <div class="ss-dots">
-        <div class="ss-dot active"></div>
-        <div class="ss-dot"></div>
-        <div class="ss-dot"></div>
-        <div class="ss-dot"></div>
-      </div>
-    </div>
-
-    <div class="subj-section-head rv d2">
-      <span class="subj-eyebrow">Signature Programs</span>
-      <h3 class="subj-head">Beyond exam prep</h3>
-    </div>
-
-    <!-- Signature Programs slideshow -->
-    <div class="subj-showcase" id="sigShowcase">
-      <div class="ss-slide ss-active" style="background:linear-gradient(135deg,#FF8C00,#C05000)">
-        <div class="ss-card">
-          <div class="ss-icon" style="background:#FF8C00">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 18.5h16"/>
-              <path d="M5.5 16 10 11.5l3 3L19 7"/>
-              <path d="M15.5 7H19v3.5"/>
-            </svg>
-          </div>
-          <span class="ss-lbl" style="color:#FF8C00">Trading</span>
-        </div>
-        <div class="ss-body">
-          <p class="ss-tag">signature program</p>
-          <div class="ss-nm">Algorithmic Trading</div>
-          <div class="ss-ds">Build and backtest quantitative strategies. Python, market logic, and real data.</div>
-        </div>
-      </div>
-      <div class="ss-slide" style="background:linear-gradient(135deg,#9D4EDD,#5A189A)">
-        <div class="ss-card">
-          <div class="ss-icon" style="background:#9D4EDD">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="4" y="6" width="16" height="11" rx="2"/>
-              <path d="M9 20h6"/>
-              <path d="m10 10-2 2 2 2"/>
-              <path d="m14 10 2 2-2 2"/>
-            </svg>
-          </div>
-          <span class="ss-lbl" style="color:#9D4EDD">Coding</span>
-        </div>
-        <div class="ss-body">
-          <p class="ss-tag">signature program</p>
-          <div class="ss-nm">Vibecoding</div>
-          <div class="ss-ds">Ship real products with AI tools. From idea to deployed in a weekend.</div>
-        </div>
-      </div>
-      <div class="ss-slide" style="background:linear-gradient(135deg,#00B4D8,#006A8A)">
-        <div class="ss-card">
-          <div class="ss-icon" style="background:#00B4D8">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="7"/>
-              <path d="M5 12h14"/>
-              <path d="M12 5c2 2 3 4.3 3 7s-1 5-3 7"/>
-              <path d="M12 5c-2 2-3 4.3-3 7s1 5 3 7"/>
-            </svg>
-          </div>
-          <span class="ss-lbl" style="color:#00B4D8">Networks</span>
-        </div>
-        <div class="ss-body">
-          <p class="ss-tag">signature program</p>
-          <div class="ss-nm">Networking</div>
-          <div class="ss-ds">How the internet actually works. Protocols, architecture, and systems thinking.</div>
-        </div>
-      </div>
-      <div class="ss-dots">
-        <div class="ss-dot active"></div>
-        <div class="ss-dot"></div>
-        <div class="ss-dot"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="dk" id="steps">
-  <div class="dk-steps-wrap">
-    <div class="dk-steps-header rv">
-      <span class="dk-eyebrow">the system</span>
-      <h2 class="dk-head">how mindcraft works</h2>
-    </div>
-    <div class="dk-hsteps rv d1">
-      <div class="dk-hstep rv" style="transition-delay:.05s">
-        <div class="dk-hstep-num">01</div>
-        <h4>Diagnostic</h4>
-        <p>A quick assessment finds your current level and the hidden gaps holding you back.</p>
-      </div>
-      <div class="dk-hstep rv" style="transition-delay:.12s">
-        <div class="dk-hstep-num">02</div>
-        <h4>Precision Learning</h4>
-        <p>Identifies and resolves student misconceptions in real time.</p>
-      </div>
-      <div class="dk-hstep rv" style="transition-delay:.20s">
-        <div class="dk-hstep-num">03</div>
-        <h4>HiTL: Human in The Loop</h4>
-        <p>Technology with a tutor always by your child's side.</p>
-      </div>
-      <div class="dk-hstep rv" style="transition-delay:.28s">
-        <div class="dk-hstep-num">04</div>
-        <h4>Review</h4>
-        <p>Parents get updates on their child's progress.</p>
-      </div>
-    </div>
-    <!-- CTA centered below the cards -->
-    <div class="dk-steps-cta rv d1">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank" class="bg bl">Try It Free &rarr;</a>
-    </div>
-  </div>
-</section>
-
-
-
-<section class="proof" id="proof">
-  <div class="proof-block">
-    <h2 class="rv">Students love Mind<span>Craft</span></h2>
-    <p class="sub rv d1">Real results from students and parents in St. Paul.</p>
-    <div class="tg auto-stagger">
-      <div class="tc">
-        <span class="tc-tag" style="background:rgba(84,185,72,0.1);color:var(--gdd)">Student</span>
-        <p class="qt">"My classes with MindCraft have made me much more confident in math, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far."</p>
-        <div class="au"><strong>Seb</strong> High school senior, St. Paul, MN</div>
-      </div>
-      <div class="tc">
-        <span class="tc-tag" style="background:rgba(74,123,247,0.1);color:#2A50B0">Parent</span>
-        <p class="qt">"We realized Seb did not just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Math had started to feel defeating for him, and with the ACT so close, he was overwhelmed and unsure of himself. MindCraft felt different because it focused on what he did not yet understand and helped him move forward with more clarity and confidence."</p>
-        <div class="au"><strong>Gill</strong> Parent, St. Paul, MN</div>
-      </div>
-    </div>
-  </div>
-  <div class="proof-block">
-    <h2 class="rv">Meet our passionate, driven tutors</h2>
-    <p class="sub rv d1">Real tutors. Real expertise. Ready to help your child succeed.</p>
-    <div class="tg auto-stagger">
-      <div class="tc tutor-tc">
-        <img src="img/Tutor1.jpg" alt="Tutor Ra" class="tutor-photo">
-        <div class="tutor-cap">
-          <span class="tc-tag" style="background:rgba(84,185,72,0.1);color:var(--gdd)">Tutor</span>
-          <strong>Tutor Ra</strong>
-          <p>Eight years of tutoring across Nepal, South Africa, and USA. Mathematics and Economics at Macalester College'26</p>
-        </div>
-      </div>
-      <div class="tc tutor-tc">
-        <img src="img/BGPhoenix.jpg" alt="Tutor Coon" class="tutor-photo">
-        <div class="tutor-cap">
-          <span class="tc-tag" style="background:rgba(84,185,72,0.1);color:var(--gdd)">Tutor</span>
-          <strong>Tutor Coon</strong>
-          <p>Excited to share the love for maths. Applied Maths PhD at UNC, Kenyon College'26</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="pricing" id="pricing">
-  <h2 class="rv">Start Free</h2>
-
-  <div class="pg auto-stagger">
-
-    <div class="pc">
-      <h3>Practice</h3>
-      <div class="pr free-pr">Free</div>
-      <ul class="meta-list">
-        <li>We are testing</li>
-        <li>Please be patient with us</li>
-        <li>Every feature is free</li>
-      </ul>
-      <ul>
-        <li>Reinforce Knowledge Gaps</li>
-        <li>Personalized Study Plan</li>
-        <li>Homework Help</li>
-        <li class="muted">1-on-1 tutor sessions</li>
-        <li class="muted">Documentation (Notes, MindMap)</li>
-      </ul>
-      <div class="cta-wrap">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform" target="_blank" rel="noopener" class="bw" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center">Sign up</a>
-      </div>
-    </div>
-
-    <div class="pc ft">
-      <h3>Platform</h3>
-      <div class="pr">$200<span>/mo</span></div>
-      <ul class="meta-list">
-        <li>Launching September</li>
-        <li>Introducing STEM courses</li>
-        <li>Knowledge assets</li>
-      </ul>
-      <ul>
-        <li>1-on-1 tutor sessions</li>
-        <li>Documentation (Notes, MindMap)</li>
-        <li class="ka-feature">
-          <div class="ka-body">
-            <span class="ka-label">Knowledge Assets</span>
-            <ul class="ka-sub">
-              <li><a href="https://mindcraft-world1.web.app" target="_blank" rel="noopener">Study World</a></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-      <div class="cta-wrap">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform" target="_blank" rel="noopener" class="bg" style="width:100%;padding:13px;display:block;font-size:14px;text-align:center">Sign up</a>
-      </div>
-    </div>
-
-  </div>
-  <p class="pricing-note rv">All plans include access to the MindCraft app. Cancel anytime.</p>
-</section>
-
-<div class="blog-top-fade" aria-hidden="true"></div>
-<section class="blog-panel" id="blog">
-  <div class="blog-duo">
-
-    <!-- Left: Blog -->
-    <div class="blog-duo-col">
-      <div class="blog-panel-head rv">
-        <h2>Our Blog</h2>
-        <a href="blog.html" class="blog-see-all">See All &rarr;</a>
-      </div>
-      <div class="blog-scroll rv d1" id="blogScroll"></div>
-    </div>
-
-    <!-- Right: Podcasts -->
-    <div class="blog-duo-col">
-      <div class="blog-panel-head rv">
-        <h2>Our Podcasts</h2>
-        <a href="#" class="blog-see-all">See All &rarr;</a>
-      </div>
-      <div class="podcast-scroll rv d1">
-        <div class="podcast-card">
-          <div class="podcast-card-img">
-            <svg viewBox="0 0 24 24" width="52" height="52"><path fill="#1DB954" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          </div>
-          <div class="podcast-card-body">
-            <p class="podcast-card-title">Playlist coming soon</p>
-            <p class="podcast-card-excerpt">We're building our podcast series. Follow us on Spotify to be the first to know.</p>
-            <a href="#" class="bw">Follow on Spotify</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="faq" id="faq">
-  <div class="faq-in">
-    <h2 class="faq-title rv">FAQs</h2>
-    <div class="faq-list">
-
-      <div class="faq-col">
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What does MindCraft actually do for my child?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">MindCraft first diagnoses exactly what your child doesn't understand, then helps them fix it. With a real human tutor and mathematical tools we keep them moving forward. With confidence.</p></div>
-        </div>
-        <div class="faq-item" id="faq-tutors">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Who teaches my child?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">Our tutors are high-performing college students who recently mastered these exact subjects and exams. They know where students get stuck because they just went through it. We vet and train each one personally.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What exams and subjects do you cover?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">We specialise in teaching maths including ACT, SAT, IB, and high school exams, as well as general school work help. If there is a new course or subject you want to study, we can create a custom plan for you.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How will I know if it's working?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">After every session your child receives a breakdown of what was covered and what is next. You can see their knowledge map update in real time and watch gaps close over time. No more guessing.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">What happens during a session?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">Your child meets their tutor live, works through the exact concepts they are stuck on, and leaves with a clear plan. Notes and next steps are posted to their dashboard automatically after every session.</p></div>
-        </div>
-      </div>
-
-      <div class="faq-col">
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Is it safe and monitored?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">All sessions take place on our secure platform. We personally vet every tutor and monitor all interactions. Your child's safety and privacy come first, always.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How much does it cost?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">Every feature on the app is free while we are in our testing phase. When you are ready for 1-on-1 tutoring, the first session is always on us. No credit card needed to start.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Is there a contract or commitment?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">None at all. No contracts, no packages, no monthly fees. Book sessions when they work for your family. Cancel anytime, no questions asked.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">My child is really behind. Will this work?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">That is exactly who we are built for. MindCraft finds the root gaps, not just the surface symptoms, and rebuilds from there. Most students feel a real difference within the first two sessions.</p></div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">
-            <span class="faq-q-text">How do we get started?</span>
-            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
-          </div>
-          <div class="faq-a"><p class="faq-a-inner">Create a free account, run the diagnostic, and see what MindCraft finds. If you want to book a tutor after, the first session is free. No commitment needed to try.</p></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="ft-grid">
-    <div class="ft-brand">
-      <div class="fl">Mind<span>Craft</span></div>
-      <p>We build better learners.<br>St. Paul, MN</p>
-      <p style="font-size:13px;color:#7EA896;margin-top:6px"><a href="mailto:joinmindcraft@gmail.com" style="color:#7EA896;text-decoration:none">joinmindcraft@gmail.com</a><br><a href="tel:+17633405616" style="color:#7EA896;text-decoration:none">+1 (763) 340-5616</a></p>
-      <div class="ft-social">
-        <a href="https://x.com/joinmindcraft" target="_blank" rel="noopener" aria-label="Twitter">
-          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="ft-col">
-      <h5>About</h5>
-      <a href="#">About us</a>
-    </div>
-    <div class="ft-col">
-      <h5>Tutoring</h5>
-      <a href="#">Get certified</a>
-      <a href="#">Become a tutor</a>
-    </div>
-    <div class="ft-col">
-      <h5>Community</h5>
+<div class="page">
+  <nav class="nav">
+    <a class="brand" href="#">Mind<span>Craft</span></a>
+    <div class="navlinks">
+      <a href="#proof">Reviews</a>
       <a href="blog.html">Blog</a>
-      <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#faq">FAQ</a>
+      <a class="app-login-link" href="https://mindcraft-93858.web.app/login"><span class="menu-dot"></span>Log in</a>
     </div>
-  </div>
-  <div class="ft-bottom">
-    <p>MindCraft &copy; 2026 &middot; St. Paul, MN</p>
-    <p>We find the gaps. You build the confidence.</p>
-  </div>
-</footer>
+  </nav>
 
+  <section class="hero">
+    <div class="hero-copy reveal">
+      <p class="eyebrow">Private AI tutoring studio</p>
+      <h1>Math finally has a map.</h1>
+      <p class="hero-note">AI practice, human tutoring, and progress signals arranged into one calm plan.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Try it free</a>
+        <a class="btn secondary" href="#studio">See the studio</a>
+      </div>
+    </div>
+    <div class="mosaic" aria-label="Abstract learning map">
+      <div class="tile"></div><div class="tile"></div><div class="tile image-tile a"></div>
+      <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+      <div class="tile image-tile c"></div><div class="tile"></div>
+      <div class="quiet-tile" aria-hidden="true"></div>
+      <div class="tile image-tile b"></div>
+    </div>
+    <div class="scroll">Scroll<span>↓</span></div>
+  </section>
+
+  <section class="studio" id="studio">
+    <div class="section-head reveal">
+      <div><p class="kicker">Inside the learning studio</p><h2>Three tools. One calmer student.</h2></div>
+      <p class="lead">MindCraft replaces random studying with a guided environment where students know what to practice, where to ask for help, and how each concept connects.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature reveal">
+        <div class="artifact" aria-hidden="true">
+          <svg viewBox="0 0 280 168">
+            <rect class="paper" x="42" y="28" width="122" height="92" rx="14" transform="rotate(-7 103 74)"/>
+            <rect class="paper" x="96" y="42" width="132" height="96" rx="14" transform="rotate(5 162 90)"/>
+            <path class="line" d="M72 58h54M70 78h66M76 98h36"/>
+            <path class="soft glow" d="m190 78 11 11 23-29"/>
+            <path class="burgundy" d="M122 116h58"/>
+            <rect class="fill-soft" x="88" y="132" width="104" height="10" rx="5"/>
+            <rect fill="#54b948" x="88" y="132" width="68" height="10" rx="5"/>
+            <circle class="fill-soft glow" cx="218" cy="120" r="13"/>
+          </svg>
+        </div>
+        <span class="micro">Targeted reps</span>
+        <h3>Practice Sets</h3>
+        <p>Targeted reps from the concepts that matter most right now — no endless worksheets, no wasted effort.</p>
+      </article>
+      <article class="feature reveal">
+        <div class="artifact" aria-hidden="true">
+          <svg viewBox="0 0 280 168">
+            <path class="paper" d="M52 44h138c14 0 24 10 24 23v36c0 13-10 23-24 23h-64l-31 24v-24H52c-14 0-24-10-24-23V67c0-13 10-23 24-23Z"/>
+            <path class="line" d="M66 72h78M66 94h104"/>
+            <path class="soft" d="M67 122c26-24 58-24 84 0s58 24 86-2"/>
+            <circle class="fill-soft" cx="68" cy="122" r="12"/>
+            <circle class="fill-soft" cx="152" cy="122" r="12"/>
+            <circle class="fill-soft glow" cx="236" cy="120" r="14"/>
+            <path class="line" d="M205 34 232 61"/>
+            <path class="burgundy" d="m198 42 9-9 36 36-9 9z"/>
+            <text x="54" y="154" fill="rgba(6,77,54,.62)" font-size="10" font-family="DM Sans" font-weight="900">STEP 1</text>
+            <text x="132" y="154" fill="rgba(6,77,54,.62)" font-size="10" font-family="DM Sans" font-weight="900">STEP 2</text>
+            <text x="212" y="154" fill="rgba(6,77,54,.62)" font-size="10" font-family="DM Sans" font-weight="900">STEP 3</text>
+          </svg>
+        </div>
+        <span class="micro">Guided support</span>
+        <h3>Homework Help</h3>
+        <p>Step-by-step support that teaches the reasoning, keeps momentum, and turns panic into progress.</p>
+      </article>
+      <article class="feature reveal">
+        <div class="artifact" aria-hidden="true">
+          <svg viewBox="0 0 280 168">
+            <path class="soft" d="M54 116 C88 58 128 68 152 94 S204 124 230 58"/>
+            <path class="line" d="M75 86 118 58 158 96 202 82"/>
+            <circle class="fill-soft" cx="54" cy="116" r="13"/>
+            <circle class="fill-soft" cx="75" cy="86" r="10"/>
+            <circle class="fill-soft" cx="118" cy="58" r="14"/>
+            <circle class="fill-soft" cx="158" cy="96" r="12"/>
+            <circle class="fill-soft" cx="202" cy="82" r="11"/>
+            <circle class="fill-soft glow" cx="230" cy="58" r="18"/>
+            <path class="burgundy" d="M42 136h192"/>
+            <path class="soft" d="M64 136v-12M118 136v-26M158 136v-18M230 136V84"/>
+            <circle fill="#54b948" cx="230" cy="58" r="5"/>
+            <circle fill="rgba(75,0,29,.36)" cx="42" cy="136" r="3"/>
+          </svg>
+        </div>
+        <span class="micro">Study GPS</span>
+        <h3>Knowledge Maps</h3>
+        <p>A visual route through gaps, prerequisites, exam skills, and the next best step.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="journey" id="journey">
+    <div class="section-head reveal">
+      <div><p class="kicker">The MindCraft method</p><h2>From confusion to a clear next step.</h2></div>
+      <p class="lead">Every session and every question feeds the same student picture, so the plan gets sharper instead of noisier.</p>
+    </div>
+    <div class="atlas reveal">
+      <div class="steps">
+        <article class="step"><div class="num">01</div><h3>Diagnose</h3><p>Find the gaps behind the missed questions.</p></article>
+        <article class="step"><div class="num">02</div><h3>Map</h3><p>Connect skills into a route students can understand.</p></article>
+        <article class="step"><div class="num">03</div><h3>Practice</h3><p>Build fluency with focused, level-aware work.</p></article>
+        <article class="step"><div class="num">04</div><h3>Review</h3><p>Turn progress into confidence before the exam.</p></article>
+      </div>
+      <div class="map-panel">
+        <div class="path">
+          <svg viewBox="0 0 600 420"><path d="M70 270 C170 180 230 200 300 150 S450 80 520 112 M300 150 C350 250 430 270 482 318"/></svg>
+          <span class="node n1"></span><span class="node n2"></span><span class="node n3"></span><span class="node n4"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof" id="proof">
+    <div class="section-head reveal">
+      <div><p class="kicker">Trust signals</p><h2>Built for students and parents.</h2></div>
+      <p class="lead">Warm enough for students to use, structured enough for parents and tutors to trust.</p>
+    </div>
+    <div class="proof-grid">
+      <details class="quote-card reveal">
+        <summary><p>"My classes with MindCraft have made me much more confident in math."</p><span>Seb · High school senior, St. Paul, MN</span><b class="expand">Read full comment</b></summary>
+        <div class="full">My classes with MindCraft have made me much more confident in math, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far.</div>
+      </details>
+      <details class="quote-card reveal">
+        <summary><p>"MindCraft felt different because it helped him move forward with clarity."</p><span>Gill · Parent, St. Paul, MN</span><b class="expand">Read full comment</b></summary>
+        <div class="full">We realized Seb did not just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Math had started to feel defeating for him, and with the ACT so close, he was overwhelmed and unsure of himself. MindCraft felt different because it focused on what he did not yet understand and helped him move forward with more clarity and confidence.</div>
+      </details>
+      <details class="quote-card reveal">
+        <summary><p>"Real expertise across Nepal, South Africa, and the USA."</p><span>Tutor Ra · Mathematics and Economics, Macalester College '26</span><b class="expand">Read tutor note</b></summary>
+        <div class="full">Eight years of tutoring across Nepal, South Africa, and USA. Mathematics and Economics at Macalester College '26.</div>
+      </details>
+      <details class="quote-card reveal">
+        <summary><p>"Excited to share the love for maths."</p><span>Tutor Coon · Applied Maths PhD track</span><b class="expand">Read tutor note</b></summary>
+        <div class="full">Excited to share the love for maths. Applied Maths PhD at UNC, Kenyon College '26.</div>
+      </details>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="section-head reveal">
+      <div><p class="kicker">Start simple</p><h2>A premium plan without the chaos.</h2></div>
+      <p class="lead">Begin with practice and planning, then add tutoring when a human guide makes the difference.</p>
+    </div>
+    <div class="price-grid">
+      <article class="price reveal"><h3>Free</h3><strong>Free</strong><p>A starting point for students who need structure before they need a full program.</p><ul><li>Reinforce Knowledge Gaps</li><li>Personalized Study Plan</li><li>Homework Help</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price reveal"><h3>Basic</h3><strong>$160<span>/mo</span></strong><p>Live tutoring support with the core study workflow, without packaged knowledge assets.</p><ul><li>1-on-1 tutor sessions</li><li>Documentation (Notes, MindMap)</li><li>Reinforce Knowledge Gaps</li><li>Personalized Study Plan</li><li>Homework Help</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price featured reveal"><h3>Platform</h3><strong>$200<span>/mo</span></strong><p>The full MindCraft experience: tutor sessions plus durable learning assets students can revisit.</p><ul><li>1-on-1 tutor sessions</li><li>Documentation (Notes, MindMap)</li><li>Knowledge Assets</li><li>Reinforce Knowledge Gaps</li><li>Personalized Study Plan</li><li>Homework Help</li></ul><a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="section-head reveal">
+      <div><p class="kicker">FAQ</p><h2>What parents ask first.</h2></div>
+      <p class="lead">A calmer product should also be easy to understand.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><strong>Is this tutoring or software?</strong><p>Both. MindCraft gives students an AI-powered learning path and gives tutors the context to help faster.</p></div>
+      <div class="faq-item"><strong>What subjects does it support?</strong><p>The core experience is built around math, exam prep, homework support, and concept mapping.</p></div>
+      <div class="faq-item"><strong>Does it replace a tutor?</strong><p>No. It removes the guesswork so tutoring time is more focused, useful, and confidence-building.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">
+      <strong class="footer-brand">Mind<span>Craft</span></strong>
+      <div class="footer-contact">
+        <a href="mailto:joinmindcraft@gmail.com">joinmindcraft@gmail.com</a>
+        <a href="tel:+17633405616">+1 (763) 340-5616</a>
+      </div>
+    </div>
+    <div class="socials">
+      <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92C8.42 2.17 8.8 2.16 12 2.16ZM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 12 8a4 4 0 0 1 0 8Zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z"/></svg></a>
+      <a href="https://x.com/joinmindcraft" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25h6.83l4.25 5.62Zm-1.16 17.52h1.83L7.08 4.13H5.12Z"/></svg></a>
+      <a href="https://open.spotify.com/playlist/3P9VnnuuoRYLKQB3QYCSe2" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.31a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 0 1-.33-1.46c4.57-1.04 8.5-.58 11.66 1.35.36.22.47.68.25 1.02Zm1.46-3.25a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.96-1.4a.94.94 0 1 1-.54-1.8c4.36-1.32 9.78-.68 13.48 1.59.44.27.58.85.31 1.3Zm.13-3.39C15.22 8.37 8.83 8.16 5.15 9.28a1.12 1.12 0 1 1-.65-2.14c4.23-1.28 11.28-1.03 15.74 1.62a1.12 1.12 0 0 1-1.15 1.91Z"/></svg></a>
+      <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.53V9H7.1v11.45ZM22.23 0H1.76C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.76 24h20.47c.97 0 1.77-.77 1.77-1.73V1.73C24 .77 23.2 0 22.23 0Z"/></svg></a>
+    </div>
+  </footer>
+</div>
 <script>
-// ── INTRO DECK ──
-(function(){
-  var intro=document.getElementById('mc-intro');
-  if(!intro)return;
-  document.body.classList.add('intro-active');
-  document.body.style.overflow='hidden';
-  var slides=intro.querySelectorAll('.mc-slide');
-  var cur=0,timer=null,leaveTimer=null,AUTO=3400;
-  var SLIDE_DELAYS=[2800,AUTO,AUTO,3200];
-
-  function resetReveal(slide){
-    slide.querySelectorAll('.mc-reveal-word,.mc-reveal-line,.mc-quote,.mc-brand').forEach(function(el){
-      el.style.animation='none';
-      void el.offsetWidth;
-      el.style.animation='';
-    });
-  }
-
-  function revealHero(){
-    document.body.classList.remove('intro-active');
-    window.scrollTo(0, 0);
-    document.querySelectorAll('.above-fold .rv,.above-fold .rv-pop').forEach(function(el){
-      el.classList.add('show');
-    });
-  }
-
-  function exit(){
-    clearTimeout(timer);
-    clearTimeout(leaveTimer);
-    document.body.style.overflow='';
-    intro.classList.add('mc-exit');
-    setTimeout(function(){
-      intro.classList.add('mc-gone');
-      revealHero();
-    },1000);
-  }
-
-  function go(n){
-    clearTimeout(timer);
-    clearTimeout(leaveTimer);
-    var prev=cur;
-    slides[prev].classList.remove('mc-active');
-    slides[prev].classList.add('mc-leaving');
-    cur=(n+slides.length)%slides.length;
-    resetReveal(slides[cur]);
-    slides[cur].classList.add('mc-active');
-    leaveTimer=setTimeout(function(){slides[prev].classList.remove('mc-leaving');},1050);
-    if(cur<slides.length-1){
-      var delay=SLIDE_DELAYS[cur]!==undefined?SLIDE_DELAYS[cur]:AUTO;
-      timer=setTimeout(function(){go(cur+1);},delay);
-    } else {
-      timer=setTimeout(exit,3200);
-    }
-  }
-
-  intro.addEventListener('click',function(e){
-    if(e.target.closest('#mc-skip')||e.target.closest('.mc-login'))return;
-    if(cur<slides.length-1)go(cur+1); else exit();
-  });
-  document.addEventListener('keydown',function(e){
-    if(intro.classList.contains('mc-gone'))return;
-    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(cur<slides.length-1)go(cur+1);else exit();}
-    if(e.key==='ArrowLeft'){e.preventDefault();if(cur>0)go(cur-1);}
-    if(e.key==='Escape')exit();
-  });
-  var skipBtn=document.getElementById('mc-skip');
-  if(skipBtn)skipBtn.addEventListener('click',function(e){e.stopPropagation();exit();});
-  slides[0].classList.add('mc-active');
-  timer=setTimeout(function(){go(1);},SLIDE_DELAYS[0]);
-})();
-
-// ── SUBJECTS PANEL: reveal in place (already before #steps in HTML) ──
-(function(){
-  var subj=document.getElementById('subj-orig');
-  if(subj){ subj.style.cssText=''; }
-})();
-
-// ── SCROLL PROGRESS BAR ──
-var prog=document.createElement('div');prog.id='mc-prog';document.body.prepend(prog);
-
-// ── NAV GLASS + PROGRESS ON SCROLL ──
-var navEl=document.querySelector('nav');
-window.addEventListener('scroll',function(){
-  var s=window.scrollY;
-  var total=document.documentElement.scrollHeight-window.innerHeight;
-  prog.style.width=(total>0?s/total*100:0)+'%';
-  navEl.classList.toggle('scrolled',s>40);
-},{passive:true});
-
-// ── REVEAL: standard .rv elements ──
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(entry){
-  if(!entry.isIntersecting)return;
-  if(document.body.classList.contains('intro-active')&&entry.target.closest('.above-fold'))return;
-  entry.target.classList.add('show');
-  obs.unobserve(entry.target);
-})},{threshold:0.1});
-document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)});
-
-// ── REVEAL: auto-stagger grids ──
-var asObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');asObs.unobserve(e.target)}})},{threshold:0.08});
-document.querySelectorAll('.auto-stagger,.card-drop-grid').forEach(function(el){asObs.observe(el)});
-
-// ── REVEAL: scale-pop headings ──
-var popObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');popObs.unobserve(e.target)}})},{threshold:0.15});
-document.querySelectorAll('.rv-pop').forEach(function(el){popObs.observe(el)});
-
-// ── SLIDESHOW AUTO-ADVANCE (runs for every .subj-showcase) ──
-document.querySelectorAll('.subj-showcase').forEach(function(wrap){
-  var slides=wrap.querySelectorAll('.ss-slide');
-  var dots=wrap.querySelectorAll('.ss-dot');
-  var cur=0;
-  if(!slides.length)return;
-  function goTo(n){
-    slides[cur].classList.remove('ss-active');
-    if(dots[cur])dots[cur].classList.remove('active');
-    cur=n%slides.length;
-    slides[cur].classList.add('ss-active');
-    if(dots[cur])dots[cur].classList.add('active');
-  }
-  setInterval(function(){goTo(cur+1);},4200);
-  dots.forEach(function(d,i){d.addEventListener('click',function(){goTo(i);});});
-});
-
-function toggleFaq(el) {
-  var item = el.parentElement;
-  var wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
-  if (!wasOpen) item.classList.add('open');
-}
-
-function openFaqItem(id) {
-  var item = document.getElementById(id);
-  if (!item) return;
-  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
-  item.classList.add('open');
-  setTimeout(function() {
-    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 80);
-}
-
-document.querySelectorAll('a[href="#faq-tutors"]').forEach(function(a) {
-  a.addEventListener('click', function(e) {
-    e.preventDefault();
-    openFaqItem('faq-tutors');
-    history.pushState(null, '', '#faq-tutors');
-  });
-});
-
-function handleFaqHash() {
-  if (location.hash === '#faq-tutors') openFaqItem('faq-tutors');
-}
-window.addEventListener('hashchange', handleFaqHash);
-if (location.hash === '#faq-tutors') {
-  window.addEventListener('load', function() { setTimeout(handleFaqHash, 350); });
-  setTimeout(handleFaqHash, 350);
-}
-
-// ── Blog panel cards ──
-var BLOG_ARTICLES = [
-  { id:1, title:'Our Mission & Vision', excerpt:'MindCraft was created by educators who truly care about teaching — people who live for the moment a student finally gets it.', category:'Headquarters', date:'Apr 5, 2026', author:'Akshat K.', bg1:'#0A1F10', bg2:'#1A3C2A', accent:'#54B948' },
-  { id:2, title:'MindCraft was in Beta at Macalester last week', excerpt:'Last week we attended a Beta.mn event at Macalester. Here\'s what we heard, and what it reinforced about the way we\'re building.', category:'Community', date:'Mar 28, 2026', author:'Akshat K.', bg1:'#0A1428', bg2:'#1A2A50', accent:'#4A7BF7' }
-];
-
-function miniSVG(accent) {
-  return '<svg viewBox="0 0 200 110" width="130" fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".18"><rect x="10" y="10" width="56" height="80" rx="9" fill="white"/><rect x="20" y="22" width="36" height="6" rx="3" fill="white" opacity=".7"/><rect x="20" y="34" width="28" height="4.5" rx="2.25" fill="white" opacity=".45"/><rect x="20" y="44" width="32" height="4.5" rx="2.25" fill="white" opacity=".4"/><rect x="20" y="58" width="22" height="18" rx="5" fill="'+accent+'" opacity=".55"/><rect x="80" y="8" width="110" height="56" rx="9" fill="white"/><rect x="92" y="20" width="72" height="6" rx="3" fill="white" opacity=".7"/><rect x="92" y="32" width="56" height="4.5" rx="2.25" fill="white" opacity=".45"/><rect x="92" y="42" width="64" height="4.5" rx="2.25" fill="white" opacity=".4"/><rect x="80" y="76" width="110" height="28" rx="7" fill="'+accent+'" opacity=".15"/><rect x="92" y="84" width="50" height="5" rx="2.5" fill="'+accent+'" opacity=".5"/></svg>';
-}
-
-var scroll = document.getElementById('blogScroll');
-if (scroll) {
-  scroll.innerHTML = BLOG_ARTICLES.map(function(a) {
-    return '<a href="article.html?id='+a.id+'" class="blog-card">'
-      +'<div class="blog-card-img" style="background:linear-gradient(145deg,'+a.bg1+','+a.bg2+')">'+miniSVG(a.accent)+'</div>'
-      +'<div class="blog-card-body">'
-        +'<div class="blog-card-meta"><span class="blog-card-cat">'+a.category+'</span><span class="blog-card-date">'+a.date+'</span></div>'
-        +'<div class="blog-card-title">'+a.title+'</div>'
-        +'<div class="blog-card-excerpt">'+a.excerpt+'</div>'
-        +'<div class="blog-card-author"><div class="blog-card-av">'+a.author.charAt(0)+'</div><span class="blog-card-author-name">'+a.author+'</span></div>'
-      +'</div>'
-    +'</a>';
-  }).join('');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add('show')
+  })
+}, { threshold: 0.12 })
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+document.querySelectorAll('.quote-card').forEach((card) => {
+  card.addEventListener('toggle', () => {
+    if (!card.open) return
+    document.querySelectorAll('.quote-card[open]').forEach((other) => {
+      if (other !== card) other.open = false
+    })
+  })
+})
+const isLocalDemo = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+if (isLocalDemo) {
+  document.querySelectorAll('.app-login-link').forEach((link) => {
+    link.href = 'http://127.0.0.1:5173/login'
+  })
 }
 </script>
-
-<script type="module">
-import * as THREE from 'three';
-
-(function () {
-  const wrap = document.getElementById('raccoon-3d');
-  if (!wrap) return;
-
-  // ── RENDERER ────────────────────────────────────────────────────────────────
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
-  wrap.appendChild(renderer.domElement);
-
-  const scene = new THREE.Scene();
-
-  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
-  camera.position.set(0, 0.5, 5.0);
-  camera.lookAt(0, 1.5, 0);
-
-  function resize() {
-    const W = wrap.clientWidth, H = wrap.clientHeight;
-    camera.aspect = W / H; camera.updateProjectionMatrix();
-    renderer.setSize(W, H);
-  }
-  resize();
-  new ResizeObserver(resize).observe(wrap);
-
-  // ── STUDIO LIGHTING ────────────────────────────────────────────────────────
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const key = new THREE.DirectionalLight(0xfff8f2, 2.8);
-  key.position.set(-3, 7, 5); key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
-  key.shadow.camera.near = 0.5; key.shadow.camera.far = 22;
-  key.shadow.camera.left = -4; key.shadow.camera.right = 4;
-  key.shadow.camera.top = 6;  key.shadow.camera.bottom = -2;
-  key.shadow.bias = -0.001;
-  scene.add(key);
-  const fill = new THREE.DirectionalLight(0xffffff, 0.9); fill.position.set(5, 3, 3);   scene.add(fill);
-  const rim  = new THREE.DirectionalLight(0xe8f0ff, 0.7); rim.position.set(0, 5, -6);    scene.add(rim);
-  const bnce = new THREE.DirectionalLight(0xffffff, 0.25); bnce.position.set(0, -4, 2); scene.add(bnce);
-
-  // Soft drop-shadow catcher (appears on white CSS bg via alpha)
-  const shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(8,8), new THREE.ShadowMaterial({ opacity:0.08 }));
-  shadowMesh.rotation.x = -Math.PI/2; shadowMesh.position.y = -0.20; shadowMesh.receiveShadow = true;
-  scene.add(shadowMesh);
-
-  // ── ROOT GROUP ─────────────────────────────────────────────────────────────
-  const root = new THREE.Group();
-  scene.add(root);
-
-  // ── PBR RACCOON PALETTE ───────────────────────────────────────────────────
-  const M = {
-    fur:    new THREE.MeshStandardMaterial({ color:0x7d8590, roughness:0.93 }),
-    dark:   new THREE.MeshStandardMaterial({ color:0x1e232e, roughness:0.88 }),
-    belly:  new THREE.MeshStandardMaterial({ color:0xcec9c0, roughness:0.90 }),
-    nose:   new THREE.MeshStandardMaterial({ color:0x14141a, roughness:0.50, metalness:0.05 }),
-    eyeW:   new THREE.MeshStandardMaterial({ color:0xf2f0ee, roughness:0.40 }),
-    pupil:  new THREE.MeshStandardMaterial({ color:0x060810, roughness:0.10, metalness:0.30 }),
-    shine:  new THREE.MeshStandardMaterial({ color:0xffffff, emissive:new THREE.Color(1,1,1), emissiveIntensity:1.8, roughness:0 }),
-    glass:  new THREE.MeshStandardMaterial({ color:0xe63b2e, roughness:0.22, metalness:0.12 }),
-    lens:   new THREE.MeshStandardMaterial({ color:0x0c0f18, transparent:true, opacity:0.82, roughness:0.05, metalness:0.20 }),
-    wood:   new THREE.MeshStandardMaterial({ color:0xc8a870, roughness:0.82 }),
-    purple: new THREE.MeshStandardMaterial({ color:0x6d28d9, roughness:0.70, emissive:new THREE.Color(0x2e1065), emissiveIntensity:0.18 }),
-    metal:  new THREE.MeshStandardMaterial({ color:0x9ca3af, roughness:0.25, metalness:0.85 }),
-    wheel:  new THREE.MeshStandardMaterial({ color:0xece7ff, roughness:0.88 }),
-    cup:    new THREE.MeshStandardMaterial({ color:0xf5f5f0, roughness:0.72 }),
-    sleeve: new THREE.MeshStandardMaterial({ color:0x92400e, roughness:0.80 }),
-    coffee: new THREE.MeshStandardMaterial({ color:0x2c1a0a, roughness:0.20 }),
-    dgray:  new THREE.MeshStandardMaterial({ color:0x374151, roughness:0.82 }),
-  };
-
-  // ── GEOMETRY HELPERS ──────────────────────────────────────────────────────
-  function sp(r,mat,px=0,py=0,pz=0,sx=1,sy=1,sz=1){
-    const m=new THREE.Mesh(new THREE.SphereGeometry(r,32,22),mat);
-    m.position.set(px,py,pz); m.scale.set(sx,sy,sz); m.castShadow=true; return m;
-  }
-  function bx(w,h,d,mat,px=0,py=0,pz=0,rx=0,ry=0,rz=0){
-    const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
-    m.position.set(px,py,pz); m.rotation.set(rx,ry,rz); m.castShadow=true; return m;
-  }
-  function cy(rt,rb,h,seg,mat,px=0,py=0,pz=0,rx=0){
-    const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);
-    m.position.set(px,py,pz); m.rotation.x=rx; m.castShadow=true; return m;
-  }
-  function cap(r,len,cs,rs,mat,px=0,py=0,pz=0,rx=0){
-    const m=new THREE.Mesh(new THREE.CapsuleGeometry(r,len,cs,rs),mat);
-    m.position.set(px,py,pz); m.rotation.x=rx; m.castShadow=true; return m;
-  }
-
-  // ── SKATEBOARD ───────────────────────────────────────────────────────────
-  const board = new THREE.Group();
-  board.add(bx(2.0,0.09,0.68,M.wood)); board.add(bx(1.75,0.10,0.44,M.purple));
-  const kf=bx(0.38,0.09,0.68,M.wood, 1.02,0.07,0); kf.rotation.z= 0.28; board.add(kf);
-  const kb=bx(0.38,0.09,0.68,M.wood,-1.02,0.07,0); kb.rotation.z=-0.28; board.add(kb);
-  const wheels=[];
-  [-0.65,0.65].forEach(x=>{
-    board.add(bx(0.16,0.13,0.76,M.metal,x,-0.12,0));
-    board.add(cy(0.025,0.025,0.84,8,M.metal,x,-0.22,0,Math.PI/2));
-    [-0.40,0.40].forEach(z=>{
-      const w=cy(0.155,0.155,0.10,20,M.wheel,x,-0.22,z,Math.PI/2);
-      wheels.push(w); board.add(w);
-    });
-  });
-  board.position.y=0.24;
-  root.add(board);
-
-  // ── RACCOON ───────────────────────────────────────────────────────────────
-  const raccoon = new THREE.Group();
-
-  // Flat paws
-  raccoon.add(bx(0.26,0.09,0.38,M.dark,-0.24,0.05,0.05));
-  raccoon.add(bx(0.26,0.09,0.38,M.dark, 0.24,0.05,0.05));
-  // Short chubby legs
-  raccoon.add(cap(0.14,0.20,6,12,M.fur,-0.24,0.30,0));
-  raccoon.add(cap(0.14,0.20,6,12,M.fur, 0.24,0.30,0));
-  // Big round body
-  raccoon.add(sp(0.50,M.fur,  0,0.95,0,  1.0,1.10,0.88));
-  raccoon.add(sp(0.38,M.belly,0,0.88,0.30,1.0,0.85,0.58));
-  raccoon.add(sp(0.44,M.dark, 0,0.88,-0.10,0.9,1.02,0.62));
-  // Neck
-  raccoon.add(cy(0.17,0.21,0.18,14,M.fur,0,1.52,0));
-
-  // ── HEAD GROUP (glasses rotate with head) ────────────────────────────────
-  const headGroup = new THREE.Group();
-  headGroup.position.set(0,1.82,0);
-  // Head
-  headGroup.add(sp(0.44,M.fur,  0,0,0, 1.0,0.96,0.93));
-  // Snout
-  headGroup.add(sp(0.21,M.belly,0,-0.09,0.33, 1.0,0.65,0.78));
-  headGroup.add(sp(0.065,M.nose,0,-0.02,0.50));
-  // Eye masks
-  headGroup.add(sp(0.165,M.dark,-0.18,0.06,0.30, 1.1,0.70,0.50));
-  headGroup.add(sp(0.165,M.dark, 0.18,0.06,0.30, 1.1,0.70,0.50));
-  // Eyes
-  headGroup.add(sp(0.090,M.eyeW, -0.18,0.07,0.34));
-  headGroup.add(sp(0.090,M.eyeW,  0.18,0.07,0.34));
-  headGroup.add(sp(0.052,M.pupil,-0.18,0.07,0.368));
-  headGroup.add(sp(0.052,M.pupil, 0.18,0.07,0.368));
-  headGroup.add(sp(0.020,M.shine,-0.162,0.086,0.378));
-  headGroup.add(sp(0.020,M.shine, 0.198,0.086,0.378));
-  // Ears
-  const mkEar=s=>{
-    const g=new THREE.Group();
-    g.add(sp(0.155,M.fur,  0,0,0,    1.0,1.28,0.50));
-    g.add(sp(0.090,M.belly,0,0,0.065,0.85,1.12,0.42));
-    g.position.set(s*0.31,0.38,-0.04); g.rotation.z=s*-0.18; return g;
-  };
-  headGroup.add(mkEar(-1),mkEar(1));
-  // Big red chunky sunglasses
-  [-0.205,0.205].forEach(x=>{
-    headGroup.add(bx(0.30,0.20,0.048,M.glass,x,0.04,0.41));   // red frame
-    headGroup.add(bx(0.23,0.13,0.052,M.lens, x,0.04,0.418));  // dark lens (in front)
-  });
-  headGroup.add(bx(0.12,0.050,0.046,M.glass,0,0.04,0.41));    // bridge
-  const ta1=bx(0.30,0.040,0.040,M.glass,-0.50,0.04,0.25); ta1.rotation.y=-0.50; headGroup.add(ta1);
-  const ta2=bx(0.30,0.040,0.040,M.glass, 0.50,0.04,0.25); ta2.rotation.y= 0.50; headGroup.add(ta2);
-  raccoon.add(headGroup);
-
-  // ── ARMS ─────────────────────────────────────────────────────────────────
-  const armL=new THREE.Group(); armL.position.set(-0.50,1.16,0);
-  armL.add(cap(0.112,0.28,6,10,M.fur, 0,-0.12,0));
-  armL.add(cap(0.098,0.26,6,10,M.fur,-0.04,-0.50,0.05));
-  armL.add(sp(0.120,M.dark,0,-0.70,0.06));
-  raccoon.add(armL);
-
-  const armR=new THREE.Group(); armR.position.set(0.50,1.16,0);
-  armR.add(cap(0.112,0.26,6,10,M.fur,0,0.12,0));
-  const foreR=new THREE.Mesh(new THREE.CapsuleGeometry(0.098,0.24,6,10),M.fur);
-  foreR.position.set(0.04,0.42,-0.05); foreR.rotation.z=0.30; foreR.castShadow=true; armR.add(foreR);
-  armR.add(sp(0.120,M.dark,0.12,0.64,-0.07));
-  // Coffee cup
-  const cupG=new THREE.Group();
-  cupG.add(cy(0.110,0.092,0.30,18,M.cup,   0,0.15,0));
-  cupG.add(cy(0.115,0.096,0.16,18,M.sleeve,0,0.12,0));
-  cupG.add(cy(0.117,0.110,0.044,18,M.dgray,0,0.30,0));
-  cupG.add(cy(0.030,0.030,0.055,10,M.dgray,0.036,0.33,0));
-  const lid=new THREE.Mesh(new THREE.CircleGeometry(0.092,18),M.coffee);
-  lid.rotation.x=-Math.PI/2; lid.position.set(0,0.294,0); cupG.add(lid);
-  cupG.position.set(0.14,0.70,-0.08); cupG.rotation.z=-0.20;
-  armR.add(cupG);
-  raccoon.add(armR);
-
-  // ── TAIL (banded) ────────────────────────────────────────────────────────
-  const tail=new THREE.Group();
-  let ty=0;
-  for(let i=0;i<9;i++){
-    const r=0.148-i*0.010;
-    tail.add(cy(r+0.01,r,0.22,14,i%2===0?M.fur:M.dark,0,ty,0));
-    ty-=0.22;
-  }
-  tail.position.set(0,0.86,-0.44); tail.rotation.x=-1.18;
-  raccoon.add(tail);
-
-  raccoon.position.y=0.28;
-  root.add(raccoon);
-
-  // ── ANIMATION ────────────────────────────────────────────────────────────
-  const clock = new THREE.Clock();
-  let raf = null;
-
-  function tick() {
-    raf = requestAnimationFrame(tick);
-    const t = clock.getElapsedTime();
-
-    root.rotation.y += 0.003;
-
-    const bob = Math.sin(t*2.2)*0.018;
-    board.position.y   = 0.24 + bob;
-    raccoon.position.y = 0.28 + bob;
-    raccoon.rotation.z = Math.sin(t*1.1)*0.016;
-
-    wheels.forEach(w=>{ w.rotation.z+=0.11; });
-
-    armL.rotation.z = Math.sin(t*2.2)*0.20 - 0.08;
-
-    cupG.rotation.z = -0.20 + Math.sin(t*2.2+0.5)*0.06;
-
-    tail.rotation.x = -1.18 + Math.sin(t*2.6)*0.15;
-    tail.rotation.z = Math.sin(t*1.8)*0.10;
-
-    headGroup.rotation.y = Math.sin(t*0.7)*0.07;
-    headGroup.rotation.z = Math.sin(t*1.1)*0.035;
-
-    renderer.render(scene, camera);
-  }
-
-  tick();
-
-  new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting&&raf){cancelAnimationFrame(raf);raf=null;}
-      else if(e.isIntersecting&&!raf){tick();}
-    });
-  }).observe(wrap);
-
-})();
-</script>
-
-</body></html>
+</body>
+</html>
