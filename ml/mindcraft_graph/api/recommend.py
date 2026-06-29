@@ -14,8 +14,9 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from mindcraft_graph.models.concept import Ontology
+from mindcraft_graph.models.affective_state import AffectiveState
 from mindcraft_graph.engine.student_graph import PersonalGraph
-from mindcraft_graph.engine.features import ConceptProfile, compute_concept_profiles
+from mindcraft_graph.engine.features import ConceptProfile, compute_concept_profiles, apply_affective_modifier
 from mindcraft_graph.planning.goal import Goal
 from mindcraft_graph.planning.pathfinder import find_path
 from mindcraft_graph.representation.student_embeddings import (
@@ -61,6 +62,7 @@ class ConceptRecommendation:
     bridge_from_concept: str | None = None  # concept gap: source concept | format gap: format_id
     bridge_to_concept: str | None = None    # concept gap: target concept | format gap: anchor concept
     bridge_evidence: str | None = None   # "evidence" (Tier 1) or "hypothesis" (Tier 2)
+    severity: float = 0.0                # [0,1] worse = higher; comparable across gap types (C1)
 
 
 @dataclass
@@ -96,6 +98,9 @@ def recommend(
     axis_labels: list[str] | None = None,
     bridges: list | None = None,
     bridge_confidence: dict | None = None,
+    affective_state: AffectiveState | None = None,
+    explicit_struggles: set[str] | None = None,
+    curriculum_scope: set[str] | None = None,
 ) -> RecommendationResult:
     """
     Main entry point for the recommendation system.
@@ -108,6 +113,11 @@ def recommend(
 
     # ── Compute student representations ──
     profiles = compute_concept_profiles(events)
+
+    # Affective modifier: pull explicit-struggle concepts into STRUGGLING so
+    # trim_chain never drops them as mastered.
+    if affective_state:
+        profiles = apply_affective_modifier(profiles, affective_state)
 
     mastery_vec = compute_student_embedding_from_mastery(
         graph.state.mastery_by_concept, concept_embeddings,
@@ -137,6 +147,13 @@ def recommend(
         (cid, p.strength_score) for cid, p in reversed(sorted_profiles)
         if p.strength_score < 0 and p.event_count > 0
     ][:5]
+    if curriculum_scope:
+        top_weaknesses = [
+            (cid, score) for cid, score in top_weaknesses if cid in curriculum_scope
+        ]
+        top_strengths = [
+            (cid, score) for cid, score in top_strengths if cid in curriculum_scope
+        ]
 
     student_profile = StudentProfile(
         mastery_projection=mastery_proj,
@@ -151,6 +168,7 @@ def recommend(
     path_result = find_path(
         graph, goal, concept_embeddings, strength_vec,
         profiles, ontology, events,
+        explicit_struggles=explicit_struggles,
     )
 
     # ── Build recommendations with explanations ──
@@ -351,6 +369,9 @@ def _make_bridge_gap(
     bridge, src: str, tgt: str, evidence: str, conf: float,
 ) -> ConceptRecommendation:
     """Build a bridge-gap recommendation. pca_profile/position set by caller."""
+    from mindcraft_graph.config import GAP_HYPOTHESIS_SCALE
+    # C1 severity: weaker bridge (low confidence) = worse; hypotheses discounted.
+    severity = max(0.0, min(1.0, 1.0 - conf)) * (1.0 if evidence == "evidence" else GAP_HYPOTHESIS_SCALE)
     desc = bridge.description.strip() if bridge.description else ""
     if evidence == "evidence":
         lead = f"You've struggled connecting {src} to {tgt}"
@@ -374,6 +395,7 @@ def _make_bridge_gap(
         bridge_from_concept=src,
         bridge_to_concept=tgt,
         bridge_evidence=evidence,
+        severity=severity,
     )
 
 
@@ -397,6 +419,7 @@ def _detect_format_gaps(
         GAP_CONCEPT_MASTERED_THRESHOLD,
         GAP_FORMAT_WEAK_THRESHOLD,
         GAP_TIER1_MIN_ATTEMPTS,
+        GAP_HYPOTHESIS_SCALE,
     )
 
     strong = sorted(
@@ -414,6 +437,9 @@ def _detect_format_gaps(
         if fm.mastery >= GAP_FORMAT_WEAK_THRESHOLD:
             continue
         evidence = "evidence" if fm.attempts >= GAP_TIER1_MIN_ATTEMPTS else "hypothesis"
+        # C1 severity: weaker format = worse; hypotheses discounted. Comparable
+        # to concept-gap severity so worstWeakness() can rank across both types.
+        severity = max(0.0, min(1.0, 1.0 - fm.mastery)) * (1.0 if evidence == "evidence" else GAP_HYPOTHESIS_SCALE)
         if evidence == "evidence":
             reason = (
                 f"You know {anchor} but keep missing it as a {fmt_id} — "
@@ -438,6 +464,7 @@ def _detect_format_gaps(
             bridge_from_concept=fmt_id,
             bridge_to_concept=anchor,
             bridge_evidence=evidence,
+            severity=severity,
         ))
     return gaps
 

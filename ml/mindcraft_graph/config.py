@@ -98,3 +98,6 @@ GAP_FORMAT_WEAK_THRESHOLD = 0.6
 # A format node with at least this many raw attempts is earned evidence (Tier 1);
 # fewer is a hypothesis (Tier 2).
 GAP_TIER1_MIN_ATTEMPTS = 3
+# Tier-2 (hypothesis) gap severity is scaled down vs Tier-1 (earned evidence) so
+# the worst-weakness comparator trusts observed struggle over guesses.
+GAP_HYPOTHESIS_SCALE = 0.5

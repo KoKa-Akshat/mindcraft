@@ -148,6 +148,34 @@ class RecommendRequest(BaseModel):
     deadline_days: int | None = None
     mode: str = "curriculum"
     exploration_temp: float = 0.3
+    # Exam track from onboarding (e.g. "ACT"). When set, scopes weakness filtering
+    # and fills exam-mode targets from act_relevance.tested concepts.
+    exam: str | None = None
+
+
+def _act_tested_concept_ids() -> list[str]:
+    return ontology.act_tested_concept_ids()
+
+
+def _exam_curriculum_scope(exam: str | None) -> set[str] | None:
+    """Resolve the concept subset for an exam track (ACT → act_relevance.tested)."""
+    if not exam:
+        return None
+    key = exam.strip().upper()
+    if key in ("ACT", "ACT_MATH", "GENERAL"):
+        return set(_act_tested_concept_ids())
+    return None
+
+
+def _resolve_recommend_targets(req: RecommendRequest) -> list[str]:
+    if req.target_concepts:
+        return list(req.target_concepts)
+    if req.mode == "exam":
+        scope = _exam_curriculum_scope(req.exam)
+        if scope:
+            return sorted(scope)
+        return _act_tested_concept_ids()
+    return []
 
 class SummaryRequest(BaseModel):
     student_id: str
@@ -271,6 +299,7 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
     from mindcraft_graph.firestore_adapter import (
         load_student_events, save_personal_graph, save_recommendation_result,
         append_displacement_snapshot, load_ingredient_state, load_format_events,
+        load_affective_state,
     )
     from mindcraft_graph.engine.update import fold_format_events
 
@@ -294,9 +323,15 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
     graph.state = decay_student_state(graph.state, now)
     graph.edges = decay_all_edges(graph.edges, now)
 
-    # Build goal
+    # Build goal — exam mode defaults to act_relevance.tested when targets omitted.
+    resolved_targets = _resolve_recommend_targets(req)
+    curriculum_scope = (
+        set(resolved_targets)
+        if resolved_targets
+        else _exam_curriculum_scope(req.exam)
+    )
     goal = Goal(
-        target_concepts=req.target_concepts,
+        target_concepts=resolved_targets,
         target_mastery=req.target_mastery,
         deadline_days=req.deadline_days,
         mode=req.mode,
@@ -307,12 +342,26 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
     # transitions the student is stuck on that the concept-level trim can't see.
     ingredient_state = load_ingredient_state(req.student_id)
 
+    # Load affective state (written by Vercel /api/agent-check-in, stale > 4 h = None)
+    affective_state = load_affective_state(req.student_id)
+
+    # High stress → lower the mastery bar so the student gets easier wins
+    if affective_state and affective_state.stress > 0.7:
+        goal = goal.model_copy(update={"target_mastery": max(0.5, goal.target_mastery - 0.1)})
+
+    # Affective modifier: nudge explicit-struggle concepts into STRUGGLING state
+    # so the pathfinder keeps them in the trimmed chain (applied inside recommend).
+    explicit_struggles = set(affective_state.explicit_struggles) if affective_state else set()
+
     # Run recommendation
     result = recommend(
         graph, goal, events,
         concept_embs, pca_components, pca_mean, ontology,
         bridges=ingredient_ontology.bridges,
         bridge_confidence=ingredient_state.bridge_confidence,
+        affective_state=affective_state,
+        explicit_struggles=explicit_struggles,
+        curriculum_scope=curriculum_scope,
     )
 
     # Save state
@@ -360,6 +409,7 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
                 "bridgeFromConcept": r.bridge_from_concept,
                 "bridgeToConcept": r.bridge_to_concept,
                 "bridgeEvidence": r.bridge_evidence,
+                "severity": r.severity,
             }
             for r in result.recommendations
         ],
@@ -861,11 +911,25 @@ async def health():
     return {
         "status": "ok",
         "conceptCount": len(ontology.concepts),
+        "actTestedConceptCount": len(_act_tested_concept_ids()),
         "ingredientConceptCount": len(ingredient_graph.by_concept),
         "ingredientCount": len(ingredient_graph.ingredients),
         "edgeCount": len(ontology.edges),
         "embeddingsLoaded": len(concept_embs) > 0,
     }
+
+
+@app.get("/exam-concepts/{exam}")
+async def exam_concepts_endpoint(exam: str):
+    """Concept ids for an exam track. ACT uses act_relevance.tested from Layer 1."""
+    scope = _exam_curriculum_scope(exam)
+    if scope:
+        return {
+            "exam": exam,
+            "conceptIds": sorted(scope),
+            "source": "act_relevance.tested",
+        }
+    return {"exam": exam, "conceptIds": [], "source": "unsupported"}
 
 @app.get("/knowledge-graph/{student_id}")
 async def knowledge_graph_endpoint(student_id: str, auth: AuthContext = Depends(require_auth)):
