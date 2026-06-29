@@ -539,8 +539,8 @@ h1 {
 /* Cluster: arrow + booking stacked, anchored left of the Projects sign */
 #mc-projects-cluster {
     position: fixed;
-    left: calc(50% - 310px);
-    top: 40%;
+    left: calc(50% - 230px);
+    top: 38%;
     z-index: 10000;
     flex-direction: column;
     align-items: flex-start;

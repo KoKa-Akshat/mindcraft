@@ -17,7 +17,7 @@
   }
 
   var FRONT_VIEW = {
-    position: { x: -11.1, y: -1, z: -7.6 },
+    position: { x: -7.8, y: -0.6, z: -5.2 },
     target: { x: 0, y: 0, z: -1 },
   }
 
@@ -129,4 +129,17 @@
   }, 200)
 
   window.addEventListener('load', tryPatch)
+
+  // Re-apply camera after Enter World click — overrides the bundle's intro animation
+  var startBtn = document.getElementById('mc-start-btn')
+  if (startBtn) {
+    startBtn.addEventListener('click', function () {
+      [1200, 2400].forEach(function (delay) {
+        setTimeout(function () {
+          var exp = window.experience
+          if (exp) setFrontView(exp)
+        }, delay)
+      })
+    }, { once: true })
+  }
 })()
