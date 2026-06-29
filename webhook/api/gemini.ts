@@ -211,7 +211,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const body    = req.body as Record<string, unknown>
   const action  = body.action  as string | undefined
   const product = body.product as string | undefined
-  const prompt  = body.prompt  as string | undefined
 
   // ── Diagnose ──────────────────────────────────────────────────────────────────
   if (action === 'diagnose') {
@@ -352,22 +351,6 @@ Tone: direct, honest, respectful. No emojis. No "Great job!". Write ONLY the 2�
       return res.json({ url: session.url })
     } catch (err: unknown) {
       return res.status(500).json({ error: err instanceof Error ? err.message : 'Checkout failed' })
-    }
-  }
-
-  // ── Legacy Claude Haiku proxy ─────────────────────────────────────────────────
-  if (prompt?.trim()) {
-    try {
-      const msg = await anthropic.messages.create({
-        model:      'claude-haiku-4-5-20251001',
-        max_tokens: 2048,
-        messages:   [{ role: 'user', content: prompt }],
-      })
-      const text = msg.content[0]?.type === 'text' ? msg.content[0].text : ''
-      return res.json({ text })
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Unknown error'
-      return res.status(500).json({ error: msg })
     }
   }
 

@@ -60,9 +60,10 @@ export default function TutorDashboard() {
     if (!calendlyToken.trim()) return
     setConnectingCalendly(true)
     try {
+      const token = await user.getIdToken()
       const res = await fetch('https://mindcraft-webhook.vercel.app/api/register-calendly', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ tutorId: user.uid, calendlyToken: calendlyToken.trim() }),
       })
       const data = await res.json()

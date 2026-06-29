@@ -115,9 +115,10 @@ export default function SessionDetail() {
     if (!id) return
     setGenerating(true)
     try {
+      const token = await user.getIdToken()
       const res = await fetch(GENERATE_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ sessionId: id, tutorNotes }),
       })
       const data = await res.json()
@@ -166,9 +167,10 @@ export default function SessionDetail() {
     try {
       // Server-side publish: Admin SDK can write to student's user doc
       // (Firestore client rules block tutor from writing to another user's doc)
+      const token = await user.getIdToken()
       const res = await fetch(PUBLISH_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ sessionId: id, card, tutorNotes }),
       })
       const data = await res.json()

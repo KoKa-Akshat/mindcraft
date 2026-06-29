@@ -13,11 +13,15 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { db } from '../lib/firebase'
 import { setCors } from '../lib/cors'
+import { verifyToken } from '../lib/verifyToken'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
+
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Unauthorized' })
 
   try {
     const { sessionId, card, tutorNotes } = req.body
@@ -29,6 +33,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
 
     const session = sessionSnap.data()!
+
+    if (session.tutorId && uid !== session.tutorId) {
+      return res.status(403).json({ error: 'Forbidden' })
+    }
 
     // 1. Update the session doc
     await sessionSnap.ref.update({

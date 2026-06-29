@@ -11,6 +11,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { db } from '../lib/firebase'
 import { setCors } from '../lib/cors'
+import { verifyToken } from '../lib/verifyToken'
 
 const WEBHOOK_URL = 'https://mindcraft-webhook.vercel.app/api/calendly'
 
@@ -19,11 +20,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
 
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Unauthorized' })
+
   try {
     const { tutorId, calendlyToken } = req.body
     if (!tutorId || !calendlyToken) {
       return res.status(400).json({ error: 'Missing tutorId or calendlyToken' })
     }
+    if (uid !== tutorId) return res.status(403).json({ error: 'Forbidden' })
 
     // Verify the token is valid and get the user's Calendly identity
     const meRes = await fetch('https://api.calendly.com/users/me', {

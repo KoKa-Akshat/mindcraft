@@ -348,53 +348,6 @@ async def health():
     return {"status": "ok", "service": "mindcraft-homework"}
 
 
-# ── /debug-net ─────────────────────────────────────────────────────────────────
-
-@app.get("/debug-net")
-async def debug_net():
-    """Network diagnostic: tests TCP, HTTPS, and Anthropic API reachability."""
-    import socket, ssl, os, asyncio, httpx
-    results: dict = {}
-
-    # 1. DNS
-    try:
-        ip = socket.gethostbyname("api.anthropic.com")
-        results["dns"] = {"ok": True, "ip": ip}
-    except Exception as e:
-        results["dns"] = {"ok": False, "error": str(e)}
-
-    # 2. Raw TCP to port 443
-    try:
-        sock = socket.create_connection(("api.anthropic.com", 443), timeout=10)
-        sock.close()
-        results["tcp_443"] = {"ok": True}
-    except Exception as e:
-        results["tcp_443"] = {"ok": False, "error": str(e)}
-
-    # 3. HTTPS GET (no auth)
-    try:
-        async with httpx.AsyncClient(timeout=15) as c:
-            r = await c.get("https://api.anthropic.com")
-        results["https_get"] = {"ok": True, "status": r.status_code}
-    except Exception as e:
-        results["https_get"] = {"ok": False, "error": type(e).__name__ + ": " + str(e)}
-
-    # 4. Anthropic models list (needs valid key)
-    try:
-        key = os.environ.get("ANTHROPIC_API_KEY", "")
-        async with httpx.AsyncClient(timeout=15) as c:
-            r = await c.get(
-                "https://api.anthropic.com/v1/models",
-                headers={"x-api-key": key.strip(), "anthropic-version": "2023-06-01"},
-            )
-        results["anthropic_models"] = {"ok": True, "status": r.status_code, "body": r.text[:120]}
-    except Exception as e:
-        results["anthropic_models"] = {"ok": False, "error": type(e).__name__ + ": " + str(e)}
-
-    results["key_len"]    = len(os.environ.get("ANTHROPIC_API_KEY", ""))
-    results["key_prefix"] = os.environ.get("ANTHROPIC_API_KEY", "")[:12]
-    return results
-
 
 # ── Session logger ─────────────────────────────────────────────────────────────
 

@@ -22,6 +22,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../lib/cors'
 import { loadHistory, saveExchange } from '../lib/conversationStore'
 import { TOOLS, makeExecutors } from '../lib/jarvisTools'
+import { verifyToken } from '../lib/verifyToken'
 
 const client  = new Anthropic()
 const MODEL   = 'claude-sonnet-4-20250514'
@@ -162,12 +163,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST')   return res.status(405).end()
 
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Unauthorized' })
+
   const { message, context = '', studentId } = req.body as {
     message:    string
     context?:   string
     studentId?: string
   }
   if (!message?.trim()) return res.status(400).json({ error: 'No message' })
+  if (studentId && uid !== studentId) return res.status(403).json({ error: 'Forbidden' })
 
   const userName = parseUserName(context)
   const style    = parseStyle(context)

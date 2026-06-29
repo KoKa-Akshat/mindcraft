@@ -15,6 +15,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import Anthropic from '@anthropic-ai/sdk'
 import { db } from '../lib/firebase'
 import { setCors } from '../lib/cors'
+import { verifyToken } from '../lib/verifyToken'
 
 const client = new Anthropic()
 const MODEL  = 'claude-sonnet-4-20250514'
@@ -48,6 +49,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).send('')
   if (req.method !== 'POST')   return res.status(405).send('Method Not Allowed')
 
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Unauthorized' })
+
   try {
     const { sessionId, tutorNotes, fileText, subject, studentName } = req.body
 
@@ -76,7 +80,10 @@ ${JSON_SHAPE}`
     const sessionSnap = await db.collection('sessions').doc(sessionId).get()
     if (!sessionSnap.exists) return res.status(404).json({ error: 'Session not found' })
 
-    const session    = sessionSnap.data()!
+    const session = sessionSnap.data()!
+    if (session.tutorId && uid !== session.tutorId) {
+      return res.status(403).json({ error: 'Forbidden' })
+    }
     const transcript = session.transcript?.fullText ?? ''
     const notes      = [tutorNotes || session.tutorNotes || '', fileText || ''].filter(Boolean).join('\n\n')
 

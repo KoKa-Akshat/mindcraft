@@ -51,9 +51,10 @@ export default function OrganizeNotes() {
     if (!notes.trim()) { setError('Paste or upload your notes first.'); return }
     setError(''); setGenerating(true); setCardReady(false)
     try {
+      const token = await user.getIdToken()
       const res = await fetch(GENERATE_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({
           tutorNotes: notes,
           subject: subject || 'General',
