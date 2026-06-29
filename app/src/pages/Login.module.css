@@ -1,7 +1,8 @@
 :root {
-  --g: #54b948;
-  --g-dark: #449a38;
-  --g-deep: #2e6b26;
+  /* Landing-page logo tokens — do NOT use --g (global.css overrides it to lime) */
+  --login-forest: #003f2d;
+  --login-brand: #54b948;
+  --login-brand-dark: #449a38;
   --ink: #141414;
   --muted: #6b6b6b;
   --line: rgba(0, 0, 0, 0.08);
@@ -60,14 +61,14 @@
   margin-bottom: 18px;
 }
 
-.wmMind { color: #1a1a1a; }
-.wmCraft { color: var(--g); }
+.wmMind { color: #003f2d; }
+.wmCraft { color: #54b948; }
 
 .tagline {
-  font-family: 'DM Serif Display', Georgia, serif;
+  font-family: inherit;
   font-size: clamp(1.15rem, 2.4vw, 1.6rem);
-  font-style: italic;
-  color: #666;
+  font-weight: 600;
+  color: #003f2d;
   letter-spacing: 0.01em;
   line-height: 1.3;
 }
@@ -187,7 +188,7 @@
 }
 
 .field input:focus {
-  border-color: var(--g);
+  border-color: #54b948;
   box-shadow: 0 0 0 3px rgba(84, 185, 72, 0.18);
 }
 
@@ -230,7 +231,7 @@
   min-height: 50px;
   border: 0;
   border-radius: 12px;
-  background: linear-gradient(180deg, #62cc56 0%, var(--g) 50%, var(--g-dark) 100%);
+  background: #54b948;
   color: #fff;
   font-family: inherit;
   font-size: 13px;
@@ -239,28 +240,18 @@
   text-transform: uppercase;
   cursor: pointer;
   margin-bottom: 10px;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.25) inset,
-    0 3px 0 var(--g-deep),
-    0 8px 20px rgba(84, 185, 72, 0.35);
-  transition: filter 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(84, 185, 72, 0.28);
+  transition: background 0.15s, box-shadow 0.15s;
 }
 
 .submitBtn:hover:not(:disabled) {
-  filter: brightness(1.04);
-  transform: translateY(-1px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.25) inset,
-    0 4px 0 var(--g-deep),
-    0 10px 24px rgba(84, 185, 72, 0.4);
+  background: #449a38;
+  box-shadow: 0 4px 12px rgba(84, 185, 72, 0.32);
 }
 
 .submitBtn:active:not(:disabled) {
-  transform: translateY(2px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.2) inset,
-    0 1px 0 var(--g-deep),
-    0 4px 12px rgba(84, 185, 72, 0.25);
+  background: #003f2d;
+  box-shadow: 0 1px 4px rgba(84, 185, 72, 0.22);
 }
 
 .submitBtn:disabled {
@@ -305,7 +296,7 @@
   background: none;
   font-family: inherit;
   font-weight: 700;
-  color: var(--g-dark);
+  color: #54b948;
   cursor: pointer;
 }
 
