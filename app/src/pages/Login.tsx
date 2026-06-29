@@ -142,21 +142,24 @@ export default function Login() {
       <main className={s.shell}>
         <div className={s.layout}>
           <section className={s.heroPanel} aria-label="MindCraft private learning studio">
-            <div className={s.brushArt} aria-hidden="true">
-              <span className={s.brushWash} />
-              <span className={s.brushPeakOne} />
-              <span className={s.brushPeakTwo} />
-            </div>
             <div className={s.heroContent}>
-              <div className={s.wordmark}>
-                <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
+              <div className={s.heroIntro}>
+                <div className={s.wordmark}>
+                  <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
+                </div>
+                <h1 className={s.heroTitle}>Your private learning studio.</h1>
+                <p className={s.heroCopy}>
+                  A calmer way to master math, build confidence, and walk into every exam with a plan.
+                </p>
               </div>
-              <h1 className={s.heroTitle}>Your private learning studio.</h1>
-              <p className={s.heroCopy}>
-                A calmer way to master math, build confidence, and walk into every exam with a plan.
-              </p>
 
-              <div className={s.valueGrid} aria-label="MindCraft benefits">
+              <div className={s.valueSection}>
+                <div className={s.brushArt} aria-hidden="true">
+                  <span className={s.brushWash} />
+                  <span className={s.brushPeakOne} />
+                  <span className={s.brushPeakTwo} />
+                </div>
+                <div className={s.valueGrid} aria-label="MindCraft benefits">
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
                   <svg viewBox="0 0 24 24">
@@ -194,6 +197,7 @@ export default function Login() {
                 <strong>Knowledge Maps</strong>
                 <p>A visual route through concepts, gaps, and what to learn next.</p>
               </article>
+              </div>
               </div>
 
               <blockquote className={s.quote}>

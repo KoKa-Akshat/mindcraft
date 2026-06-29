@@ -49,7 +49,12 @@ export default function Dashboard() {
     isDiagnosticComplete(user.uid).then(done => {
       if (cancelled) return
       if (!done) navigate('/practice', { state: { examHelp: true } })
-      else setDiagChecked(true)
+      else {
+        setDiagChecked(true)
+        // Set a shared .web.app cookie so the world (mindcraft-world1.web.app)
+        // can detect diagnostic completion without a separate auth check
+        document.cookie = 'mc_diag_done=1; domain=.web.app; path=/; max-age=31536000; SameSite=Lax'
+      }
     })
     return () => { cancelled = true }
   }, [user.uid, navigate])
