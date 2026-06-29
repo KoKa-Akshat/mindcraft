@@ -34,3 +34,6 @@ class Ontology(BaseModel):
     # Ordered exam-priority concepts from act_prep_overlay — the default targets
     # for exam mode when none are explicitly requested.
     high_priority_concepts: list[str] = Field(default_factory=list)
+
+    def act_tested_concept_ids(self) -> list[str]:
+        return [c.id for c in self.concepts if c.exam_tested]
