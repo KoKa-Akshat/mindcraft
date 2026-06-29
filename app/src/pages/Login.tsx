@@ -142,39 +142,62 @@ export default function Login() {
       <main className={s.shell}>
         <div className={s.layout}>
           <section className={s.heroPanel} aria-label="MindCraft private learning studio">
-            <div className={s.orbitArt} aria-hidden="true">
-              <span className={s.orbitRing} />
-              <span className={s.orbitRingSmall} />
+            <div className={s.brushArt} aria-hidden="true">
+              <span className={s.brushWash} />
+              <span className={s.brushPeakOne} />
+              <span className={s.brushPeakTwo} />
             </div>
             <div className={s.wordmark}>
               <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
             </div>
-            <p className={s.eyebrow}>Private AI tutoring studio</p>
-            <h1 className={s.heroTitle}>Your calmer way into math mastery.</h1>
+            <h1 className={s.heroTitle}>Your private learning studio.</h1>
             <p className={s.heroCopy}>
-              MindCraft turns practice, tutoring, and progress into one clear learning plan, so students know what to work on next and parents can trust the path.
+              A calmer way to master math, build confidence, and walk into every exam with a plan.
             </p>
 
             <div className={s.valueGrid} aria-label="MindCraft benefits">
               <article className={s.valueCard}>
-                <span className={s.valueIcon}>01</span>
-                <strong>Learning GPS</strong>
-                <p>A focused route through weak spots, next concepts, and exam-ready practice.</p>
+                <span className={s.valueIcon} aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 19V5h10a4 4 0 0 1 4 4v10H9a4 4 0 0 0-4 0Z" />
+                    <path d="M9 7v9" />
+                    <path d="M13 7v9" />
+                  </svg>
+                </span>
+                <strong>Practice Sets</strong>
+                <p>Targeted reps that turn weak spots into confident routines.</p>
               </article>
               <article className={s.valueCard}>
-                <span className={s.valueIcon}>02</span>
-                <strong>Human guidance</strong>
-                <p>Tutors and AI tools work around the same student picture, not scattered notes.</p>
+                <span className={s.valueIcon} aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 3a4 4 0 0 1 4 4c0 2.2-1.8 4-4 4S8 9.2 8 7a4 4 0 0 1 4-4Z" />
+                    <path d="M5 21a7 7 0 0 1 14 0" />
+                    <path d="M18.5 9.5h2.5" />
+                    <path d="M19.75 8.25v2.5" />
+                  </svg>
+                </span>
+                <strong>Homework Help</strong>
+                <p>Step-by-step support that keeps students moving without panic.</p>
               </article>
               <article className={s.valueCard}>
-                <span className={s.valueIcon}>03</span>
-                <strong>Visible progress</strong>
-                <p>Students see momentum build through mastery, sessions, and better habits.</p>
+                <span className={s.valueIcon} aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="7" cy="7" r="2.5" />
+                    <circle cx="17" cy="7" r="2.5" />
+                    <circle cx="12" cy="17" r="2.5" />
+                    <path d="M9.2 8.5 10.8 15" />
+                    <path d="m14.8 8.5-1.6 6.5" />
+                    <path d="M9.5 7h5" />
+                  </svg>
+                </span>
+                <strong>Knowledge Maps</strong>
+                <p>A visual route through concepts, gaps, and what to learn next.</p>
               </article>
             </div>
 
             <blockquote className={s.quote}>
-              "A better plan makes a calmer learner."
+              <span aria-hidden="true">"</span>
+              A better plan makes a calmer learner.
             </blockquote>
           </section>
 
@@ -182,10 +205,17 @@ export default function Login() {
             <div className={s.cardStack}>
               <div className={s.cardShadow} aria-hidden="true" />
               <div className={s.card}>
-                <div className={s.formIntro}>
-                  <p className={s.formKicker}>{mode === 'signin' ? 'Welcome back' : 'Begin your plan'}</p>
-                  <h2>{mode === 'signin' ? 'Continue your learning plan.' : 'Create your MindCraft studio.'}</h2>
-                  <p>{mode === 'signin' ? 'Pick your role and step back into your roadmap.' : 'Choose your role and we will shape the first path around you.'}</p>
+                <div className={s.formHeader}>
+                  <div className={s.formIntro}>
+                    <p className={s.formKicker}>{mode === 'signin' ? 'Welcome back' : 'Begin your plan'}</p>
+                    <h2>{mode === 'signin' ? 'Continue your learning plan.' : 'Create your MindCraft studio.'}</h2>
+                  </div>
+                  <span className={s.secureBadge} aria-label="Secure sign in">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 3 19 6v5c0 4.5-2.9 8.4-7 10-4.1-1.6-7-5.5-7-10V6l7-3Z" />
+                      <path d="m9.5 12 1.7 1.7 3.6-4" />
+                    </svg>
+                  </span>
                 </div>
 
                 <div className={s.roleSelector} aria-label="Select your role">
@@ -214,7 +244,7 @@ export default function Login() {
                       <input
                         id="email"
                         type="email"
-                        placeholder="student@mindcraft.ai"
+                        placeholder="Enter your email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         autoComplete="email"
@@ -296,12 +326,20 @@ export default function Login() {
                   )}
                 </p>
 
-                <p className={s.trustLine}>Trusted by students, parents, and tutors building calmer math confidence.</p>
               </div>
             </div>
           </aside>
         </div>
       </main>
+      <p className={s.pageTrust}>
+        <span aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3 19 6v5c0 4.5-2.9 8.4-7 10-4.1-1.6-7-5.5-7-10V6l7-3Z" />
+            <path d="m9.5 12 1.7 1.7 3.6-4" />
+          </svg>
+        </span>
+        Trusted by students and parents building calmer math confidence.
+      </p>
     </div>
   )
 }
