@@ -1,9 +1,15 @@
 # mindcraft_graph/engine/features.py
 
+from __future__ import annotations
+
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from mindcraft_graph.models.concept import Ontology, estimate_difficulty
 from mindcraft_graph.models.events import SessionEvent
+
+if TYPE_CHECKING:
+    from mindcraft_graph.models.affective_state import AffectiveState
 
 
 @dataclass
@@ -55,6 +61,36 @@ class ConceptProfile:
     def adjusted_strength(self) -> float:
         """Strength normalized by concept difficulty."""
         return self.strength_score * self.difficulty
+
+def apply_affective_modifier(
+    profiles: dict[str, ConceptProfile],
+    affective_state: AffectiveState,
+) -> dict[str, ConceptProfile]:
+    """Force explicit-struggle concepts into a STRUGGLING profile.
+
+    trim_chain classifies a concept as STRUGGLING when its profile has
+    event_count >= min_events and strength_score < mastery_threshold (0.0).
+    This override ensures self-reported struggles are never silently trimmed
+    as mastered, even if stale mastery data or no practice events said otherwise.
+    """
+    if not affective_state.explicit_struggles:
+        return profiles
+
+    result = dict(profiles)
+    for concept_id in affective_state.explicit_struggles:
+        existing = result.get(concept_id)
+        n = existing.event_count if (existing and existing.event_count > 0) else 1
+        # avg_outcome=-1.0, investment=1.0 → strength_score=-1.0 < 0 → STRUGGLING
+        result[concept_id] = ConceptProfile(
+            concept_id=concept_id,
+            total_time=30.0 * n,
+            total_effort=1.0 * n,
+            total_outcome=-1.0 * n,
+            event_count=n,
+            difficulty=existing.difficulty if existing else 1.0,
+        )
+    return result
+
 
 def compute_learning_ability(profiles: dict[str, ConceptProfile]) -> float:
     """

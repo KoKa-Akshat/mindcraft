@@ -168,7 +168,6 @@ def recommend(
     path_result = find_path(
         graph, goal, concept_embeddings, strength_vec,
         profiles, ontology, events,
-        explicit_struggles=explicit_struggles,
     )
 
     # ── Build recommendations with explanations ──
