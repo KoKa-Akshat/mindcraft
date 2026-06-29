@@ -66,7 +66,19 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
 
   return (
     <div className={`${s.strip} ${minimal && showBooking ? s.stripMinimalBooking : ''}`}>
-      {showUserControls && user && (
+
+      {/* Minimal dashboard: Booking + session in top-right column, no avatar/signout */}
+      {minimal && showBooking && onBooking && (
+        <div className={s.userCol}>
+          <button type="button" className={s.bookingBtn} onClick={onBooking}>
+            Booking
+          </button>
+          {sessionBlock}
+        </div>
+      )}
+
+      {/* Full mode: avatar + signout + optional booking */}
+      {!minimal && showUserControls && user && (
         <div className={s.userCol}>
           <div className={s.userRow}>
             <div className={s.avatar}>
@@ -98,12 +110,9 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
             <span className={s.brandText}>Mind<span>Craft</span></span>
           </Link>
           <p className={s.kicker}>{todayLabel()}</p>
-          <div className={minimal ? s.greetingRow : undefined}>
-            <h1 className={s.greeting}>
-              {greeting}, <em>{name}</em>
-            </h1>
-            {minimal && sessionBlock}
-          </div>
+          <h1 className={s.greeting}>
+            {greeting}, <em>{name}</em>
+          </h1>
         </div>
 
         {!minimal && (

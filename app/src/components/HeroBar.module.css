@@ -87,7 +87,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 7px;
+  gap: 10px;
   min-width: 0;
 }
 
@@ -341,15 +341,11 @@
 }
 
 .stripMinimalBooking {
-  padding-right: 148px;
+  padding-right: 160px;
 }
 
-.stripMinimalBooking .greetingBlock .sessionPanel {
-  margin-top: 14px;
-}
-
-.stripMinimalBooking .sessionPanel {
-  justify-items: start;
+.stripMinimalBooking .userCol .sessionPanel {
+  align-items: flex-end;
 }
 
 @media (max-width: 1120px) {
