@@ -335,12 +335,13 @@ Key notes:
 - ML venv is named `mindcraft/` (not `.venv`), inside `ml/`. Package installed
   via `pip install -e ".[dev]"`.
 - Run ML server: `cd ml && source mindcraft/bin/activate && ML_AUTH_ENABLED=false FIRESTORE_PROJECT=mindcraft-93858 uvicorn serve:app --host 0.0.0.0 --port 8080`
+- `LLM_PROVIDER=groq` must be in `ml/.env.local` (alongside `GROQ_API_KEY`) — default is ollama which requires a local server on :11434.
 - Run frontend: `cd app && npm run dev` → `http://localhost:5173` (`host: true`
   in `vite.config.ts` — use a normal browser tab; IDE embedded browsers often
   break Google OAuth).
 - Point frontend at local ML: `app/.env.local` →
   `VITE_ML_API_URL=http://localhost:8080` (do not commit).
-- Tests: `cd ml && python scripts/end2end.py` (63/63 on the standardized
+- Tests: `cd ml && python scripts/end2end.py` (85/85 on the standardized
   ontology). Card-path harness: `python scripts/test_concept_paths.py
   --complete-ontology ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json
   --questions ml/data/sample_questions/first_15_questions.csv`.
@@ -353,46 +354,38 @@ Key notes:
 
 ## Current state
 
-### Deployed (production `main` + Cloud Run rev `00009`)
-- Standardized 42-concept ontology live on `mindcraft-ml`.
+### Deployed (production `main` + Cloud Run rev `00014-xcf`, 2026-06-29)
+- Standardized 42-concept ontology live. 85/85 end2end tests green.
 - Firestore connected (`mindcraft-93858`). Test student WITH data:
   `gBFn9vUGIIa7tAiTTQSl8CbPSao2` = `shreeyutk@gmail.com` (events backfilled).
 - **Learning loop**: gap-scan → `/seed-assessment` → graph; practice →
   `/record-outcomes` → graph; recommendations adapt.
-- **Security on `main`** (`ebffc59a`, `5fc0cc5d`): webhook endpoints auth-gated;
-  frontend sends Bearer tokens to ML; `ml/serve.py` auth code committed but
-  **NOT yet enabled on Cloud Run** (still rev `00009` without `ML_AUTH_ENABLED`).
-- **Homework help** falls back to `/recommend-ingredients` when the LLM solver
-  is down (Anthropic credits exhausted).
+- **Auth LIVE** (`ML_AUTH_ENABLED` defaults `true`; no override needed): every
+  data endpoint requires Firebase ID token (browser) or `X-Service-Key` (webhook).
+  `/health` public. Vercel webhook redeployed with `ML_SERVICE_SECRET`. Smoke
+  checks passed: `/health` 200, unauthenticated data endpoints 401, correct
+  service key passes auth.
+- **Frontend shipped**: PawHub dashboard, AppTabBar pill nav (Dashboard | Practice
+  | Problem Solver | Knowledge Map), direct-to-session from PawHub, worstWeakness
+  selection (C1), format-tagged bank, hide-correctness diagnostic (C4), Admin
+  Testing tab + ontology/bank coverage, ACT gap-scan fixes.
+- **Diagnostic reconciled** — one diagnostic, one update mechanism:
+  `Diagnostic.tsx` (kitchen-world onboarding, reached from "Click Me" in world)
+  now POSTs to `/seed-assessment` (confidence) + `/record-outcomes` (probes, C4
+  hide-correctness) + writes canonical `diagnosticCompleted: true`. `sendLearningEvent`
+  deprecated. `actDiagnostic.json` probes carry `format` + `level` (C5).
+- **Affective state check-in** (`webhook/api/agent-check-in.ts`): pre-session
+  2–3 sentence → Claude Haiku → `affective_state/{student_id}/latest`. `/recommend`
+  reads it: stress > 0.7 softens `target_mastery` by 0.1; `explicit_struggles`
+  inject STRUGGLING profiles via `apply_affective_modifier` so trim_chain never
+  silently removes self-reported weak concepts.
+- **ML additions in rev 00014**: `GET /exam-concepts/{exam}` (~29 ACT concepts),
+  exam mode targets `act_relevance.tested`, displacement persistence
+  (`append_displacement_snapshot`), bridge-gap fields on `/knowledge-graph`
+  (`isBridgeGap`, `bridgeEvidence`, `severity`), `Ontology.act_tested_concept_ids()`.
+- **Homework help** falls back to `/recommend-ingredients` (Anthropic credits exhausted).
 - **Warm-ping + shared graph cache**: `App.tsx` prefetches `/health` +
   `/knowledge-graph/{uid}` on auth (`lib/graphCache.ts`).
-
-### Local uncommitted (not on production yet)
-Large frontend + ML delta on disk — **push `main` + Cloud Build/deploy** to ship.
-
-**Local commits ahead of `origin/main` (NOT pushed)** — the weakness/format/
-generation workstream (see "Active workstream"): getQuestions alias, A1 severity
-+ `FORMAT_WEAKNESS_PLAN.md`, Lane B (worstWeakness/format bank/diagnostic) + its
-origin merge, and A2 `ml/generation/`. Origin also has co-founder commits to
-merge. Integration is pending — sequence `merge origin → push` (CI deploys
-frontend; ml/ deploy is still manual via gcloud).
-
-**Frontend**
-- **PawHub dashboard** + unified **AppTabBar** / **Sidebar** across Dashboard,
-  Practice, Knowledge Graph.
-- **Direct-to-session** from PawHub (no level picker); learn toe shows topic only.
-- Gap-scan fixes: ACT concept list from `/exam-concepts`, post-scan → dashboard,
-  `resetDiagnostic`, path flicker gate (`diagnosticHydrated`), fresh question
-  shuffle per session.
-- Admin **Testing** tab + ontology/bank coverage tooling.
-- Login: admin role gate, OAuth redirect fallback, `HomeRedirect` for localhost.
-
-**ML** (`serve.py` + pathfinder, not deployed)
-- `GET /exam-concepts/{exam}`; exam mode targets `act_relevance.tested` (~29 ACT
-  concepts); `exam` param on `/recommend` scopes weaknesses.
-- Displacement persistence (`append_displacement_snapshot`) + bridge-gap fields
-  on `/knowledge-graph` (`isBridgeGap`, `bridgeEvidence`) — API present, UI not
-  consuming bridge gaps yet.
 
 **Dead code** (safe to ignore): co-founder's agentic layer (`learning_world.py`,
 `/agent/*` endpoints) — excluded from live `serve.py`.
@@ -400,31 +393,40 @@ frontend; ml/ deploy is still manual via gcloud).
 ## Known gotchas / open items
 - **Anthropic credits exhausted** → `mindcraft-homework` + dynamic question gen
   return 400. Homework uses the ingredient-pipeline fallback meanwhile.
-- **Production UI lags local** — PawHub, AppTabBar, direct sessions, ACT gap
-  scan, and ML `exam-concepts` are local uncommitted until pushed + deployed.
-- Existing students lack `diagnosticCompleted` → one forced gap scan (by design;
+- **Existing students lack `diagnosticCompleted`** → one forced gap scan (by design;
   backfill the flag or use Admin Testing → retake).
-- Practice questions: `app/src/lib/questionBank.ts` (static) + dynamic gen via
+- **Practice questions**: `app/src/lib/questionBank.ts` (static) + dynamic gen via
   Vercel webhook (gated by `VITE_ENABLE_DYNAMIC_QGEN`). **19 of 29 ACT-tested
   concepts** lack full static bank coverage — see Admin Testing tab /
   `actOntologyCoverage.json`. `getQuestions`/`questionCount` resolve ontology→bank
-  via `BANK_ALIASES` (only `ratios_proportions → percent_ratio` today) so
-  legacy-id content is still playable; `hasPlayableQuestions` (recommendNextConcept)
-  rides this, so alias'd concepts surface in PawHub. `getQuestions` also takes an
-  optional `format` arg (format → concept edge) — prefers questions in that vessel,
-  falls back to the concept pool; **no-ops until questions carry a `format` tag**.
-- `HomeworkProgress.tsx` / `LastSession.tsx` are unused.
-- **mindcraft-ml undeployed** (still rev `00009`): auth layer, displacement
-  persistence, bridge-gap API fields, `exam-concepts`, `act_tested` exam-mode
-  defaults. Deploy with `FIRESTORE_PROJECT` + `ML_SERVICE_SECRET`; set matching
-  secret in Vercel **before** enabling auth on Cloud Run.
+  via `BANK_ALIASES` (only `ratios_proportions → percent_ratio` today).
+  `getQuestions` takes optional `format` arg — prefers format-matched questions,
+  falls back to concept pool; format-gap targeting works end-to-end once more
+  questions carry format tags.
+- **Generation paused** (`ml/generation/`): verify pass ran (104 kept / 45 dropped,
+  ~30% bad key rate). Too high to scale — generation prompt needs arithmetic
+  hardening before `--tested --formats all`. 104 verified items committed but NOT
+  yet synced into the live bank (`syncGeneratedQuestions.mjs` → B4 step; inert
+  until a cleaner batch exists). `ml/data/generated_questions.verify_report.json`
+  has the drop list for diagnosis.
+- **`mc-diagnostic.js` overlay** (in-world Projects sign → `MC_onProjectsOpen()`)
+  still POSTs to dead `/learning-event`. The main onboarding flow ("Click Me"
+  arrow → React `/diagnostic`) is fixed; this secondary overlay is a fast-follow.
+  Retarget its 3 `fetch` calls to `/seed-assessment` + `/record-outcomes` (same
+  mapping as Diagnostic.tsx).
+- **`HomeworkProgress.tsx` / `LastSession.tsx`** are unused.
 - **Role assignment is client-self-selected** at signup (`Login.tsx`) — tutor
   exemption in ML auth is not fully trusted until server-authoritative roles
   (see Designed, not built).
-- **Bridge-gap fields not in UI** — in `/knowledge-graph` response only.
+- **Bridge-gap fields not in UI** — in `/knowledge-graph` response only (`isBridgeGap`,
+  `bridgeEvidence`, `severity`). `worstWeakness()` consumes severity from
+  `/recommend` gaps; the knowledge-graph bridge visualisation is open.
 - **Tutor view**: empty graph without a student selector (still open).
 - **Concept-layer pathfinder** spot-checked SOUND on 42-concept ontology.
 - **Recall headroom** (~0.19 on 15-question harness) — data/alignment work.
+- **`--set-env-vars` on Cloud Run REPLACES the whole set** — always include BOTH
+  `FIRESTORE_PROJECT=mindcraft-93858` and `ML_SERVICE_SECRET=<secret>` on every
+  deploy or one will be dropped.
 
 ### ML-quality backlog (concept/ingredient engine, not blocking the product)
 - Scale the card-path harness from 15 → ~50 tagged questions (keep ≤50 so each
@@ -463,21 +465,24 @@ Shared contracts (the seams — don't diverge):
 
 Status:
 - ✅ **A1** `severity` on both gap detectors + `/recommend` JSON (`recommend.py`,
-  `config.GAP_HYPOTHESIS_SCALE`).
+  `config.GAP_HYPOTHESIS_SCALE`). Live on rev 00014.
 - ✅ **B1** `worstWeakness()` (`lib/recommendNextConcept.ts`); **B2** format-tagged
-  bank + format-aware CTA; **B3** hide-correctness gap scan; `getQuestions` alias
-  + `format` param.
+  bank + format-aware CTA; **B3** hide-correctness diagnostic (Diagnostic.tsx
+  retargeted); `getQuestions` alias + `format` param. C1 fixture test 3/3.
 - ✅ **A2 generation** (`ml/generation/`): essence → LLM → format-tagged items.
-  **Uses Layer-3 structured joins, NOT embeddings** (Layer 3 instance → Layer 2
-  archetype → concept, + per-Q misconceptions as few-shot grounding).
-  Provider-agnostic (`LLM_PROVIDER` ollama|groq|anthropic; key in gitignored
-  `ml/.env.local`). Verified via Groq llama-3.3-70b.
-- ❌ **`--verify` pass (NEXT / BLOCKER)** — generated answer keys are sometimes
-  wrong (LLM arithmetic). Since the diagnostic records answers as evidence, a bad
-  key corrupts the graph → wrong weakness. Must **blind re-solve + drop
-  mismatches** before any generated batch is used. Build before scaling/loading.
-- ❌ generate at scale (`--tested --formats all`) → after verify.
-- ❌ **B4** load `generated_questions.json` into the bank → after a verified batch.
+  Uses Layer-3 structured joins. Provider-agnostic (`LLM_PROVIDER=groq` in
+  `ml/.env.local`; default was ollama). Verified via Groq llama-3.3-70b.
+- ✅ **`--verify` pass DONE**: 104 kept / 45 dropped (~30% bad key rate). Keys
+  committed to `ml/data/generated_questions.json` +
+  `ml/data/generated_questions.verify_report.json`.
+- ✅ **B4 wiring DONE** (`questionBank.ts` imports `generatedQuestions.json`; stub
+  has 2 questions). Bank loads verified JSON automatically once synced.
+- ❌ **NEXT (BLOCKER): fix generation prompt** — 30% bad key rate is too high for
+  scale. Diagnose via `verify_report.json` drops list. Harden arithmetic in the
+  generation prompt, re-run `--verify`, confirm drop rate < ~10%, then scale.
+- ❌ **Scale generation** (`--tested --formats all` → ~342 Qs) → after prompt fix.
+- ❌ **B4 sync** (`node app/scripts/syncGeneratedQuestions.mjs`) → after clean batch.
+- ❌ **`mc-diagnostic.js` overlay retarget** — fast-follow; Lane B, see gotchas.
 - Embedding-based essence (embed un-annotated past papers via
   `representation/embeddings.py`) is the heavier ALT, unused while Layer 3 covers
   seeds. Original seed data: `ml/data/sample_questions/`, `ml/data/past_papers/`.
