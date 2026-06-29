@@ -196,7 +196,7 @@ export default function Login() {
             </div>
 
             <blockquote className={s.quote}>
-              <span aria-hidden="true">"</span>
+              <span aria-hidden="true" />
               A better plan makes a calmer learner.
             </blockquote>
           </section>

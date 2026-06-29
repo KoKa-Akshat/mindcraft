@@ -89,6 +89,7 @@
 
 .shell {
   position: relative;
+  overflow: hidden;
   z-index: 2;
   width: min(1120px, 100%);
   border: 1px solid rgba(255, 255, 255, 0.86);
@@ -104,7 +105,22 @@
   backdrop-filter: blur(22px);
 }
 
+.shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 254, 250, 0.96) 0%, rgba(255, 254, 250, 0.82) 44%, rgba(255, 254, 250, 0.62) 100%),
+    linear-gradient(180deg, rgba(255, 254, 250, 0.56), rgba(255, 254, 250, 0.9)),
+    url('../assets/login-background.jpg') right center / min(58%, 520px) auto no-repeat;
+  opacity: 0.26;
+  mix-blend-mode: multiply;
+}
+
 .layout {
+  position: relative;
+  z-index: 1;
   min-height: min(640px, calc(100vh - 150px));
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(350px, 430px);
@@ -114,6 +130,7 @@
 
 .heroPanel {
   position: relative;
+  --hero-offset: clamp(24px, 4.4vw, 72px);
   min-height: 560px;
   display: flex;
   flex-direction: column;
@@ -182,7 +199,7 @@
 }
 
 .wordmark {
-  margin-left: clamp(54px, 9vw, 142px);
+  margin-left: var(--hero-offset);
   width: fit-content;
   color: var(--login-forest);
   font-size: clamp(2.2rem, 4vw, 3.05rem);
@@ -195,7 +212,7 @@
 .wmCraft { color: var(--login-brand); }
 
 .heroTitle {
-  margin: 18px 0 0 clamp(54px, 9vw, 142px);
+  margin: 18px 0 0 var(--hero-offset);
   max-width: 480px;
   color: var(--login-forest);
   font-size: clamp(1.42rem, 2vw, 2rem);
@@ -205,7 +222,7 @@
 }
 
 .heroCopy {
-  margin: 14px 0 0 clamp(54px, 9vw, 142px);
+  margin: 14px 0 0 var(--hero-offset);
   max-width: 390px;
   color: rgba(52, 52, 52, 0.68);
   font-size: 0.98rem;
@@ -226,7 +243,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(14px, 2vw, 28px);
   max-width: 520px;
-  margin: 42px 0 38px clamp(38px, 6vw, 96px);
+  margin: 42px 0 38px var(--hero-offset);
 }
 
 .valueCard {
@@ -276,11 +293,11 @@
 
 .quote {
   max-width: 340px;
-  margin: 0 0 0 clamp(54px, 9vw, 142px);
+  margin: 0 0 0 var(--hero-offset);
   display: grid;
-  grid-template-columns: 28px 1fr;
-  gap: 12px;
-  align-items: start;
+  grid-template-columns: 16px 1fr;
+  gap: 14px;
+  align-items: center;
   color: rgba(6, 77, 54, 0.82);
   font-size: 0.84rem;
   font-weight: 800;
@@ -288,10 +305,29 @@
 }
 
 .quote span {
-  color: var(--login-brand);
-  font-size: 2.5rem;
-  line-height: 0.9;
-  font-weight: 950;
+  position: relative;
+  width: 15px;
+  height: 12px;
+  display: inline-block;
+}
+
+.quote span::before,
+.quote span::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  width: 5px;
+  height: 11px;
+  border-radius: 2px;
+  background: var(--login-brand);
+}
+
+.quote span::before {
+  left: 1px;
+}
+
+.quote span::after {
+  right: 1px;
 }
 
 .loginWrap {
@@ -693,7 +729,7 @@
   .heroTitle,
   .heroCopy,
   .quote {
-    margin-left: clamp(72px, 16vw, 130px);
+    margin-left: var(--hero-offset);
   }
 
   .valueGrid {
