@@ -1,6 +1,6 @@
 /**
- * PracticePathLab — experimental “luxury green” learning path layout.
- * Test at /practice-path-lab (does not replace production /practice path UI).
+ * PracticePathLab — green-themed learning path layout experiment.
+ * Same structure as Practice path screen; different colors + sidebar streak.
  */
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -28,7 +28,7 @@ export default function PracticePathLab() {
   const { streak } = useStudentData(user)
 
   const pathConcepts = useMemo(
-    () => PATH_IDS.map(id => PRACTICE_CONCEPTS.find(c => c.id === id)!).filter(Boolean),
+    () => PATH_IDS.map(id => PRACTICE_CONCEPTS.find(c => c.id === id)).filter(Boolean),
     [],
   )
 
@@ -39,13 +39,11 @@ export default function PracticePathLab() {
     [pathIdSet],
   )
 
-  const pathHeight = pathConcepts.length * 112 + 40
-
   return (
-    <div className={s.page}>
+    <div className={s.shell}>
       <Sidebar />
 
-      <main className={s.main}>
+      <main className={s.page}>
         <header className={s.header}>
           <button type="button" className={s.back} onClick={() => navigate('/practice')}>
             ← Practice
@@ -54,7 +52,7 @@ export default function PracticePathLab() {
             <div>
               <span className={s.labBadge}>Lab</span>
               <h1 className={s.title}>Your Learning Path</h1>
-              <p className={s.subtitle}>Master algebra step by step — MindCraft green layout experiment</p>
+              <p className={s.subtitle}>Master algebra step by step</p>
             </div>
             <button type="button" className={s.liveLink} onClick={() => navigate('/practice')}>
               Compare live path →
@@ -64,71 +62,40 @@ export default function PracticePathLab() {
 
         <div className={s.layout}>
           <section className={s.pathColumn}>
-            <div className={s.pathStage} style={{ minHeight: `${pathHeight}px` }}>
-              <svg
-                className={s.pathSvg}
-                viewBox={`0 0 520 ${pathHeight}`}
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                <defs>
-                  <linearGradient id="pathLineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#54b948" stopOpacity="0.9" />
-                    <stop offset="100%" stopColor="#c4f547" stopOpacity="0.5" />
-                  </linearGradient>
-                </defs>
-                {pathConcepts.slice(0, -1).map((_, i) => {
-                  const y1 = i * 112 + 56
-                  const y2 = (i + 1) * 112 + 56
-                  return (
-                    <line
-                      key={i}
-                      x1="36"
-                      y1={y1}
-                      x2="36"
-                      y2={y2}
-                      stroke="url(#pathLineGrad)"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  )
-                })}
-              </svg>
-
+            <ol className={s.pathList}>
               {pathConcepts.map((concept, i) => (
-                <article
-                  key={concept.id}
-                  className={`${s.chapterCard} ${i === 0 ? s.chapterCardActive : ''}`}
-                  style={{ top: `${i * 112}px` }}
-                >
-                  <div className={s.nodeNum} aria-hidden="true">{i + 1}</div>
-                  <div className={s.iconTile}>
-                    <ConceptPathIcon conceptId={concept.id} size={36} />
+                <li key={concept!.id} className={s.pathItem}>
+                  <div className={s.pathRail} aria-hidden="true">
+                    <span className={s.pathDot}>{i + 1}</span>
+                    {i < pathConcepts.length - 1 && <span className={s.pathLine} />}
                   </div>
-                  <div className={s.chapterBody}>
-                    <h2 className={s.chapterName}>{concept.label}</h2>
-                    <p className={s.chapterMeta}>Practice · ~{EST_MINUTES[i] ?? 12} min</p>
-                  </div>
-                  <button
-                    type="button"
-                    className={s.chapterGo}
-                    onClick={() => navigate('/practice', { state: { concept: concept.id } })}
-                  >
-                    →
-                  </button>
-                </article>
+                  <article className={`${s.chapterCard} ${i === 0 ? s.chapterCardActive : ''}`}>
+                    <div className={s.iconTile}>
+                      <ConceptPathIcon conceptId={concept!.id} size={36} />
+                    </div>
+                    <div className={s.chapterBody}>
+                      <h2 className={s.chapterName}>{concept!.label}</h2>
+                      <p className={s.chapterMeta}>Practice · ~{EST_MINUTES[i] ?? 12} min</p>
+                    </div>
+                    <button
+                      type="button"
+                      className={s.chapterGo}
+                      onClick={() => navigate('/practice', { state: { concept: concept!.id } })}
+                    >
+                      →
+                    </button>
+                  </article>
+                </li>
               ))}
-            </div>
+            </ol>
           </section>
 
           <aside className={s.sideColumn}>
             <div className={s.streakCard}>
-              <div className={s.streakTop}>
-                <span className={s.streakFire} aria-hidden="true">🔥</span>
-                <div>
-                  <p className={s.streakCount}>{streak || 0} day{streak === 1 ? '' : 's'}</p>
-                  <p className={s.streakLabel}>Keep it up!</p>
-                </div>
+              <span className={s.streakFire} aria-hidden="true">🔥</span>
+              <div>
+                <p className={s.streakCount}>{streak || 0} day{streak === 1 ? '' : 's'}</p>
+                <p className={s.streakLabel}>Keep it up!</p>
               </div>
             </div>
 

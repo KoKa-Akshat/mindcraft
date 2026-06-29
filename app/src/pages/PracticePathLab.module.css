@@ -1,12 +1,13 @@
-.page {
+/* Same shell pattern as Practice.tsx — block layout, no flex-row on wrapper */
+
+.shell {
   min-height: 100vh;
   background: linear-gradient(165deg, #071408 0%, #0a2218 42%, #0c1a12 100%);
   color: #f4faf5;
 }
 
-.main {
-  min-width: 0;
-  padding: 24px 28px 48px;
+.page {
+  padding: 24px 40px 60px;
   max-width: 1180px;
   margin: 0 auto;
 }
@@ -83,8 +84,8 @@
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr min(320px, 34%);
-  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) min(320px, 34%);
+  gap: 24px;
   align-items: start;
 }
 
@@ -92,55 +93,30 @@
   min-width: 0;
 }
 
-.pathStage {
-  position: relative;
-  padding-left: 8px;
-}
-
-.pathSvg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.chapterCard {
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: grid;
-  grid-template-columns: auto auto 1fr auto;
-  align-items: center;
+.pathList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(10, 34, 24, 0.72);
-  border: 1px solid rgba(84, 185, 72, 0.22);
-  box-shadow:
-    0 0 0 1px rgba(0, 63, 45, 0.4) inset,
-    0 12px 40px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(12px);
-  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 
-.chapterCard:hover {
-  border-color: rgba(196, 245, 71, 0.45);
-  transform: translateX(4px);
-  box-shadow:
-    0 0 0 1px rgba(84, 185, 72, 0.15) inset,
-    0 16px 48px rgba(0, 0, 0, 0.4),
-    0 0 24px rgba(84, 185, 72, 0.08);
+.pathItem {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
 }
 
-.chapterCardActive {
-  border-color: rgba(196, 245, 71, 0.55);
-  box-shadow:
-    0 0 0 1px rgba(196, 245, 71, 0.12) inset,
-    0 0 32px rgba(84, 185, 72, 0.12);
+.pathRail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.nodeNum {
+.pathDot {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -154,6 +130,41 @@
   box-shadow: 0 0 12px rgba(84, 185, 72, 0.45);
   flex-shrink: 0;
   z-index: 1;
+}
+
+.pathLine {
+  flex: 1;
+  width: 3px;
+  min-height: 24px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(84, 185, 72, 0.9), rgba(196, 245, 71, 0.35));
+}
+
+.chapterCard {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(10, 34, 24, 0.85);
+  border: 1px solid rgba(84, 185, 72, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(0, 63, 45, 0.4) inset,
+    0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.chapterCard:hover {
+  border-color: rgba(196, 245, 71, 0.45);
+  transform: translateX(2px);
+}
+
+.chapterCardActive {
+  border-color: rgba(196, 245, 71, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(196, 245, 71, 0.12) inset,
+    0 0 32px rgba(84, 185, 72, 0.12);
 }
 
 .iconTile {
@@ -208,21 +219,18 @@
   flex-direction: column;
   gap: 16px;
   position: sticky;
-  top: 24px;
+  top: 78px;
 }
 
 .streakCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   padding: 18px 20px;
   border-radius: 16px;
   background: rgba(10, 34, 24, 0.85);
   border: 1px solid rgba(84, 185, 72, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.streakTop {
-  display: flex;
-  align-items: center;
-  gap: 14px;
 }
 
 .streakFire {
@@ -281,7 +289,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 10px;
+  padding: 10px;
   border: none;
   border-radius: 10px;
   background: transparent;
@@ -316,6 +324,10 @@
 }
 
 @media (max-width: 900px) {
+  .page {
+    padding: 20px 20px 48px;
+  }
+
   .layout {
     grid-template-columns: 1fr;
   }
