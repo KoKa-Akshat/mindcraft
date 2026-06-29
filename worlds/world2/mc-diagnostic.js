@@ -113,9 +113,7 @@
       html += '<button class="mc-diag-primary" data-action="dashboard">Go to dashboard</button>'
     }
 
-    panel.innerHTML = '<button id="mc-diag-close" type="button" aria-label="Close">×</button>' + html
-
-    $('#mc-diag-close').onclick = hide
+    panel.innerHTML = html
     panel.querySelectorAll('[data-goal]').forEach(function (btn) {
       btn.onclick = function () {
         var g = btn.getAttribute('data-goal')

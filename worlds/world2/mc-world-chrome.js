@@ -17,42 +17,34 @@
   }
 
   function wireChrome() {
-    var webToggle = document.getElementById('mc-web-toggle')
+    var webToggle  = document.getElementById('mc-web-toggle')
     var bookingLink = document.getElementById('mc-booking-link')
-    var badge = document.getElementById('mc-badge')
-    var bar = document.getElementById('mc-bottom-bar')
-    var hint = document.getElementById('mc-hint')
-    var projectsCue = document.getElementById('mc-projects-cue')
+    var badge      = document.getElementById('mc-badge')
+    var clickMe    = document.getElementById('mc-click-me')
 
-    if (webToggle) webToggle.href = APP + '/dashboard'
+    if (webToggle)   webToggle.href   = APP + '/dashboard'
     if (bookingLink) bookingLink.href = APP + '/book'
-    if (badge) badge.classList.add('show')
+    if (badge)       badge.classList.add('show')
 
-    // Show cluster (arrow + booking) only after "Enter World" is clicked
-    const startBtn = document.getElementById('mc-start-btn')
-    const cluster = document.getElementById('mc-projects-cluster')
-    const revealChrome = () => { if (cluster) cluster.style.display = 'flex' }
+    // Reveal booking + "Click me" only after Enter World
+    var startBtn = document.getElementById('mc-start-btn')
+    function revealChrome() {
+      if (bookingLink) bookingLink.style.display = 'inline-flex'
+      if (clickMe && !sessionStorage.getItem('mc-clicked-me')) clickMe.style.display = 'flex'
+    }
     if (startBtn) {
-      startBtn.addEventListener('click', () => setTimeout(revealChrome, 900), { once: true })
+      startBtn.addEventListener('click', function () { setTimeout(revealChrome, 900) }, { once: true })
     } else {
       revealChrome()
     }
 
-    if (hint && !hint.__mcWired) {
-      hint.__mcWired = true
-      hint.addEventListener('click', function (e) {
-        e.preventDefault()
-        e.stopPropagation()
-        openProjects()
-      })
-    }
-
-    if (projectsCue && !projectsCue.__mcWired) {
-      projectsCue.__mcWired = true
-      projectsCue.addEventListener('click', function (e) {
-        e.preventDefault()
-        e.stopPropagation()
-        openProjects()
+    // "Click me" → diagnostic, one-time per session
+    if (clickMe && !clickMe.__mcWired) {
+      clickMe.__mcWired = true
+      clickMe.addEventListener('click', function () {
+        sessionStorage.setItem('mc-clicked-me', '1')
+        clickMe.style.display = 'none'
+        window.location.href = APP + '/diagnostic'
       })
     }
   }

@@ -26,11 +26,11 @@
     <meta name="application-name" content="MindCraft" />
     <meta name="msapplication-TileColor" content="#58CC02" />
     <meta name="theme-color" content="#1a1a1a" />
-    <link href="main.css?v=20260624-world-v5" rel="stylesheet" />
-    <link href="mc-diagnostic.css?v=879bdfe9" rel="stylesheet" />
-    <script src="mc-world-chrome.js?v=20260624-world-v5"></script>
+    <link href="main.css?v=20260629-world-v6" rel="stylesheet" />
+    <link href="mc-diagnostic.css?v=20260629-world-v6" rel="stylesheet" />
+    <script src="mc-world-chrome.js?v=20260629-world-v6"></script>
     <script defer src="bundle.mc-v4.js"></script>
-    <script defer src="mc-world-nav.js?v=20260624-world-v5"></script>
+    <script defer src="mc-world-nav.js?v=20260629-world-v6"></script>
   </head>
   <body>
     <canvas class="webgl"></canvas>
@@ -38,6 +38,7 @@
 
     <div id="mc-badge">
       <span class="mc-logo">Mind<span class="mc-craft">Craft</span></span>
+      <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book" style="display:none;margin-top:8px;">Booking</a>
     </div>
 
     <div id="mc-top-actions" class="mc-top-actions">
@@ -69,18 +70,15 @@
 
     <button class="start" id="mc-start-btn">Enter World →</button>
 
-    <!-- Arrow + Booking cluster — hidden until Enter World is clicked -->
-    <div id="mc-projects-cluster" style="display:none">
-      <button type="button" id="mc-projects-cue" class="mc-projects-cue" aria-label="Open Projects">
-        <span class="mc-projects-arrow">→</span>
-      </button>
-      <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book">Booking</a>
-    </div>
+    <!-- Click me cue — hidden until Enter World, disappears after one click -->
+    <button type="button" id="mc-click-me" style="display:none" aria-label="Get started">
+      Click me →
+    </button>
 
     <div id="mc-diag" aria-hidden="true">
       <div id="mc-diag-backdrop"></div>
       <div id="mc-diag-panel"></div>
     </div>
-    <script src="mc-diagnostic.js?v=879bdfe9" defer></script>
+    <script src="mc-diagnostic.js?v=20260629-world-v6" defer></script>
   </body>
 </html>
