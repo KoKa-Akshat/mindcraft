@@ -26,11 +26,12 @@
     <meta name="application-name" content="MindCraft" />
     <meta name="msapplication-TileColor" content="#58CC02" />
     <meta name="theme-color" content="#1a1a1a" />
-    <link href="main.css?v=20260629-world-v9" rel="stylesheet" />
-    <link href="mc-diagnostic.css?v=20260629-world-v9" rel="stylesheet" />
-    <script src="mc-world-chrome.js?v=20260629-world-v9"></script>
+    <script>if('serviceWorker'in navigator)navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(sw){sw.unregister()})})</script>
+    <link href="main.css?v=20260629-world-v10" rel="stylesheet" />
+    <link href="mc-diagnostic.css?v=20260629-world-v10" rel="stylesheet" />
+    <script src="mc-world-chrome.js?v=20260629-world-v10"></script>
     <script defer src="bundle.mc-v4.js"></script>
-    <script defer src="mc-world-nav.js?v=20260629-world-v9"></script>
+    <script defer src="mc-world-nav.js?v=20260629-world-v10"></script>
   </head>
   <body>
     <canvas class="webgl"></canvas>
@@ -38,7 +39,7 @@
 
     <div id="mc-badge">
       <span class="mc-logo">Mind<span class="mc-craft">Craft</span></span>
-      <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book" style="display:none;margin-top:8px;">Booking</a>
+      <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book" style="display:none">Booking</a>
     </div>
 
     <div id="mc-top-actions" class="mc-top-actions">
@@ -79,6 +80,6 @@
       <div id="mc-diag-backdrop"></div>
       <div id="mc-diag-panel"></div>
     </div>
-    <script src="mc-diagnostic.js?v=20260629-world-v9" defer></script>
+    <script src="mc-diagnostic.js?v=20260629-world-v10" defer></script>
   </body>
 </html>
