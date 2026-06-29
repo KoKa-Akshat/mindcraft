@@ -27,7 +27,16 @@
     if (webToggle) webToggle.href = APP + '/dashboard'
     if (bookingLink) bookingLink.href = APP + '/book'
     if (badge) badge.classList.add('show')
-    if (bar) bar.classList.add('show')
+
+    // Show cluster (arrow + booking) only after "Enter World" is clicked
+    const startBtn = document.getElementById('mc-start-btn')
+    const cluster = document.getElementById('mc-projects-cluster')
+    const revealChrome = () => { if (cluster) cluster.style.display = 'flex' }
+    if (startBtn) {
+      startBtn.addEventListener('click', () => setTimeout(revealChrome, 900), { once: true })
+    } else {
+      revealChrome()
+    }
 
     if (hint && !hint.__mcWired) {
       hint.__mcWired = true

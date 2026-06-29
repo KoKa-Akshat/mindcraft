@@ -536,11 +536,18 @@ h1 {
     filter: brightness(1.05);
 }
 
-.mc-projects-cue {
+/* Cluster: arrow + booking stacked, anchored left of the Projects sign */
+#mc-projects-cluster {
     position: fixed;
-    left: calc(50% - 360px);
-    top: 43%;
+    left: calc(50% - 310px);
+    top: 40%;
     z-index: 10000;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.mc-projects-cue {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -550,6 +557,7 @@ h1 {
     background: transparent;
     color: #ff4fd8;
     cursor: pointer;
+    padding: 0;
     animation: mc-projects-nudge 1.15s ease-in-out infinite;
     filter:
         drop-shadow(0 0 7px rgba(255, 79, 216, 0.9))
@@ -579,7 +587,7 @@ h1 {
     .mc-hint-btn,
     .mc-booking-btn { height: 32px; min-height: 32px; padding: 0 10px; font-size: 12px; }
     .mc-bottom-bar { flex-direction: row; gap: 6px; }
-    .mc-projects-cue { left: calc(50% - 172px); top: 39%; }
+    #mc-projects-cluster { left: calc(50% - 172px); top: 37%; }
     .mc-projects-arrow { font-size: 28px; }
 }
 
