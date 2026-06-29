@@ -163,3 +163,15 @@
 }
 .right { background: rgba(168, 224, 99, .18); border-color: var(--c-mastered); }
 .wrong { background: rgba(255, 107, 107, .18); border-color: var(--c-struggling); }
+.feedback {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(168, 224, 99, .14);
+  border: 1px solid rgba(168, 224, 99, .45);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}

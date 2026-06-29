@@ -12,7 +12,7 @@
  * ml/scripts/build_act_diagnostic.py off the annotated ACT bank.
  */
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { doc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -34,6 +34,14 @@ interface Probe {
 
 const SUBJECT = (spec as any).subject_id ?? 'math'
 
+const ENCOURAGEMENT = [
+  "You're doing great — keep going!",
+  'Every answer helps Jesse cook up your path.',
+  'Nice work — one question at a time.',
+  "Love the effort — Jesse's taking notes.",
+  "Keep it up — you're building something good here.",
+]
+
 type Step = 'intro' | 'goals' | 'confidence' | 'probes' | 'done'
 
 export default function Diagnostic() {
@@ -53,6 +61,7 @@ export default function Diagnostic() {
   const [correctCount, setCorrectCount] = useState(0)
   const [questionStart, setQuestionStart] = useState(Date.now())
   const [saving, setSaving] = useState(false)
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const progress = useMemo(() => {
     const order: Step[] = ['intro', 'goals', 'confidence', 'probes', 'done']
@@ -106,15 +115,17 @@ export default function Diagnostic() {
       metadata: { question_id: probe.question_id, selected: choiceKey, step: 'probe' },
     })
 
-    setTimeout(() => {
-      if (probeIdx + 1 < probes.length) {
-        setProbeIdx(probeIdx + 1)
+    if (advanceTimer.current) clearTimeout(advanceTimer.current)
+    const nextIdx = probeIdx + 1
+    advanceTimer.current = setTimeout(() => {
+      if (nextIdx < probes.length) {
+        setProbeIdx(nextIdx)
         setPicked(null)
         setQuestionStart(Date.now())
       } else {
         complete()
       }
-    }, 900)
+    }, 2000)
   }
 
   function skipProbe() {
@@ -255,6 +266,9 @@ export default function Diagnostic() {
               })}
             </div>
             <button className={s.ghost} onClick={skipProbe} disabled={!!picked}>Skip — not sure</button>
+            {picked && (
+              <p className={s.feedback}>{ENCOURAGEMENT[probeIdx % ENCOURAGEMENT.length]}</p>
+            )}
           </section>
         )}
 

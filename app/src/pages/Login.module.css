@@ -1,4 +1,5 @@
 :root {
+  --lime: #c4f547;
   --g: #54b948;
   --g-dark: #449a38;
   --g-deep: #2e6b26;
@@ -61,13 +62,13 @@
 }
 
 .wmMind { color: #1a1a1a; }
-.wmCraft { color: var(--g); }
+.wmCraft { color: var(--lime); }
 
 .tagline {
   font-family: inherit;
   font-size: clamp(1.15rem, 2.4vw, 1.6rem);
   font-weight: 600;
-  color: var(--g-dark);
+  color: var(--lime);
   letter-spacing: 0.01em;
   line-height: 1.3;
 }
@@ -295,7 +296,7 @@
   background: none;
   font-family: inherit;
   font-weight: 700;
-  color: var(--g-dark);
+  color: var(--lime);
   cursor: pointer;
 }
 

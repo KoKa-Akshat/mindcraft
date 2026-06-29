@@ -29,6 +29,7 @@
   var lastCorrect = false
   var correctCount = 0
   var questionStart = 0
+  var probeAdvanceTimer = null
   var root, panel
 
   function $(sel) { return root.querySelector(sel) }
@@ -98,7 +99,6 @@
       if (probePhase === 'feedback') {
         var msg = ENCOURAGEMENT[probeIdx % ENCOURAGEMENT.length]
         html += '<div class="mc-diag-feedback good"><strong>' + msg + '</strong></div>'
-        html += '<button class="mc-diag-primary" data-action="next-probe">Continue</button>'
       } else {
         html += '<div class="mc-diag-choices">'
         Object.keys(probe.choices).forEach(function (key) {
@@ -148,8 +148,6 @@
     if (nextBtn) nextBtn.onclick = onNext
     var skipBtn = panel.querySelector('[data-action="skip"]')
     if (skipBtn) skipBtn.onclick = skipProbe
-    var nextProbeBtn = panel.querySelector('[data-action="next-probe"]')
-    if (nextProbeBtn) nextProbeBtn.onclick = advanceProbe
     var dashBtn = panel.querySelector('[data-action="dashboard"]')
     if (dashBtn) dashBtn.onclick = function () { window.location.href = APP_BASE + '/dashboard' }
   }
@@ -179,7 +177,20 @@
     render()
   }
 
+  function clearProbeAdvanceTimer() {
+    if (probeAdvanceTimer) {
+      clearTimeout(probeAdvanceTimer)
+      probeAdvanceTimer = null
+    }
+  }
+
+  function scheduleProbeAdvance() {
+    clearProbeAdvanceTimer()
+    probeAdvanceTimer = setTimeout(advanceProbe, 2000)
+  }
+
   function advanceProbe() {
+    clearProbeAdvanceTimer()
     var probes = spec.probe_step.questions
     if (probeIdx + 1 < probes.length) {
       probeIdx++
@@ -208,11 +219,13 @@
       durationMs: Date.now() - questionStart,
       metadata: { question_id: probe.question_id, selected: key, step: 'probe' },
     })
-    probePhase = correct ? 'feedback' : 'feedback'
+    probePhase = 'feedback'
     render()
+    scheduleProbeAdvance()
   }
 
   function skipProbe() {
+    clearProbeAdvanceTimer()
     advanceProbe()
   }
 
@@ -252,6 +265,7 @@
   }
 
   function hide() {
+    clearProbeAdvanceTimer()
     root.classList.remove('show')
   }
 
