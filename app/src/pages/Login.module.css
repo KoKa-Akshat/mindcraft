@@ -133,29 +133,51 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   padding: 18px 0 16px;
 }
 
 .heroContent {
   position: relative;
   z-index: 1;
+  width: min(520px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.heroIntro,
+.valueSection,
+.quote {
   width: 100%;
-  max-width: 520px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.heroIntro {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
+.valueSection {
+  position: relative;
+  margin: 34px 0 30px;
+  overflow: hidden;
+}
+
 .brushArt {
   position: absolute;
-  left: clamp(-82px, -7vw, -36px);
+  left: 0;
   top: 50%;
-  width: min(43vw, 390px);
-  height: 420px;
+  width: 100%;
+  height: 260px;
   transform: translateY(-50%);
-  opacity: 0.44;
+  opacity: 0.28;
   pointer-events: none;
   filter: blur(0.1px);
+  z-index: 0;
 }
 
 .brushWash,
@@ -211,7 +233,8 @@
 
 .heroTitle {
   margin: 18px 0 0;
-  max-width: 480px;
+  width: 100%;
+  max-width: none;
   color: var(--login-forest);
   font-size: clamp(1.42rem, 2vw, 2rem);
   font-weight: 850;
@@ -221,7 +244,8 @@
 
 .heroCopy {
   margin: 14px 0 0;
-  max-width: 390px;
+  width: 100%;
+  max-width: none;
   color: rgba(52, 52, 52, 0.68);
   font-size: 0.98rem;
   line-height: 1.72;
@@ -237,12 +261,13 @@
 }
 
 .valueGrid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(14px, 2vw, 24px);
   width: 100%;
-  max-width: 520px;
-  margin: 36px 0 32px;
+  margin: 0;
 }
 
 .valueCard {
@@ -292,8 +317,9 @@
 
 .quote {
   margin: 0;
-  padding: 12px 0 12px 16px;
-  max-width: 320px;
+  padding: 10px 0 10px 14px;
+  width: 100%;
+  max-width: none;
   border-left: 3px solid var(--login-brand);
   color: rgba(6, 77, 54, 0.82);
   font-size: 0.86rem;
@@ -705,13 +731,17 @@
   }
 
   .heroContent {
-    max-width: none;
+    width: 100%;
+  }
+
+  .valueSection {
+    margin: 28px 0 24px;
   }
 
   .brushArt {
-    width: 300px;
-    height: 310px;
-    left: -62px;
+    width: 100%;
+    height: 220px;
+    left: 0;
   }
 
   .wordmark,
@@ -722,8 +752,7 @@
   }
 
   .valueGrid {
-    max-width: none;
-    margin: 34px 0 28px;
+    margin: 0;
   }
 
   .loginWrap {
@@ -746,11 +775,11 @@
   }
 
   .brushArt {
-    left: -90px;
+    left: 0;
     top: 118px;
-    width: 280px;
+    width: 100%;
     height: 290px;
-    opacity: 0.32;
+    opacity: 0.26;
   }
 
   .wordmark,
