@@ -350,7 +350,7 @@ export default function Practice() {
   const [confidenceMap,  setConfidenceMap]  = useState<Record<string, Confidence>>({})
 
   // ── Practice state ────────────────────────────────────────────────────────
-  const [pPhase,     setPPhase]     = useState<PracticePhase>('onboard')
+  const [pPhase,     setPPhase]     = useState<PracticePhase>('path')
   const [concept,    setConcept]    = useState<string | null>(null)
   const [level,      setLevel]      = useState<1|2|3>(1)
   const [questions,  setQuestions]  = useState<Question[]>([])
@@ -465,7 +465,7 @@ export default function Practice() {
 
   function showPracticeHome() {
     setMode('practice')
-    setPPhase('onboard')
+    setPPhase('path')
     setSelected(null)
     setChecked(false)
     setHintsShown(0)
@@ -491,11 +491,9 @@ export default function Practice() {
     if (state?.examHelp && !hasAny) {
       setMissionType('gapscan')
       setPPhase('exam-pick')
-    } else if (state?.showPath) {
+    } else if (!state?.conceptId && !state?.resumeMission) {
       setAssessConcepts([])
       setPPhase('path')
-    } else if (!state?.conceptId && !state?.resumeMission) {
-      setPPhase('onboard')
     }
     draftHydratedRef.current = true
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -527,7 +525,7 @@ export default function Practice() {
     if (!draftHydratedRef.current) return
     if (mode !== 'practice') return
     if (!missionType) return            // no active mission → nothing to save
-    if (pPhase === 'onboard') return    // on the hub, not inside a mission
+    if (pPhase === 'onboard' || pPhase === 'path') return
     // Only persist once there's something resumable: gap-scan needs assessment
     // concepts; weakness/learn need a target concept.
     const resumable = missionType === 'gapscan'
@@ -828,7 +826,8 @@ export default function Practice() {
   function resetPractice() {
     clearPracticeDraft(missionType ?? 'gapscan')
     setDraftRestored(false)
-    setPPhase('onboard')
+    setMissionType('gapscan')
+    setPPhase('exam-pick')
     setConcept(null)
     setSelected(null)
     setChecked(false)
@@ -1319,6 +1318,22 @@ export default function Practice() {
                       </div>
                     </div>
 
+                    {(['weakness', 'learn', 'gapscan'] as const).map(t => {
+                      const d = savedDrafts[t]
+                      if (!d) return null
+                      return (
+                        <button
+                          key={t}
+                          type="button"
+                          className={s.pathResumeBtn}
+                          onClick={() => loadSavedPracticeDraft(t)}
+                        >
+                          <span>Resume {MISSION_LABEL[t]}</span>
+                          <span className={s.pathResumeMeta}>{savedDraftStatus(d)}</span>
+                        </button>
+                      )
+                    })}
+
                     <div className={s.pathFlowMap} style={{ height: `${flowHeight}px` }}>
                       <svg
                         className={s.pathFlowSvg}
@@ -1450,9 +1465,9 @@ export default function Practice() {
                           </button>
                         </li>
                         <li>
-                          <button type="button" className={s.pathToolkitItem} onClick={() => setPPhase('onboard')}>
-                            <span className={s.pathToolkitIcon}>📊</span>
-                            <span>Practice History</span>
+                          <button type="button" className={s.pathToolkitItem} onClick={() => { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }}>
+                            <span className={s.pathToolkitIcon}>🎯</span>
+                            <span>Run gap scan</span>
                             <span className={s.pathToolkitChev}>›</span>
                           </button>
                         </li>

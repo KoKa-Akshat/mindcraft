@@ -3184,6 +3184,37 @@
   text-align: right;
 }
 
+.pathResumeBtn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(196, 245, 71, 0.25);
+  background: rgba(196, 245, 71, 0.06);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--f-body);
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.pathResumeBtn:hover {
+  background: rgba(196, 245, 71, 0.1);
+  border-color: rgba(196, 245, 71, 0.4);
+}
+
+.pathResumeMeta {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+}
+
 .pathFlowMap {
   position: relative;
   width: 100%;

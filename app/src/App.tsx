@@ -142,7 +142,7 @@ export default function App() {
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/constellation-gps-lab" element={<AuthGuard><ConstellationGpsLab /></AuthGuard>} />
-        <Route path="/practice-path-lab" element={<AuthGuard><Navigate to="/practice" state={{ showPath: true }} replace /></AuthGuard>} />
+        <Route path="/practice-path-lab" element={<AuthGuard><Navigate to="/practice" replace /></AuthGuard>} />
         <Route path="/learning-gps"        element={<Navigate to="/knowledge-graph" replace />} />
         <Route path="/constellation"       element={<AuthGuard><ConstellationPage /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
