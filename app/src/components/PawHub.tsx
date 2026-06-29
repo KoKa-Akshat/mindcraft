@@ -142,7 +142,6 @@ export default function PawHub({ userId }: { userId: string }) {
             >
               <span className={s.toeIcon}>{toe.icon}</span>
               <span className={s.toeLabel}>{toe.label}</span>
-              <span className={s.toeSub}>{toe.sub}</span>
             </motion.button>
           ))}
         </div>
