@@ -3055,7 +3055,7 @@
 
 /* Full-page charcoal shell when viewing the learning path */
 .pathShell {
-  background: #0a100e;
+  background: #060a08 url('../assets/background.webp') center top / cover no-repeat fixed;
   position: relative;
 }
 
@@ -3065,16 +3065,7 @@
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.45;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 47px,
-      rgba(84, 185, 72, 0.04) 47px,
-      rgba(84, 185, 72, 0.04) 48px
-    ),
-    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(84, 185, 72, 0.08), transparent 55%);
+  background: linear-gradient(180deg, rgba(6, 10, 8, 0.72) 0%, rgba(6, 10, 8, 0.88) 100%);
 }
 
 .pathShell > * {
@@ -3085,62 +3076,62 @@
 .pathPage {
   max-width: none;
   width: 100%;
-  padding: 20px 48px 72px;
+  padding: 16px 40px 72px;
   margin: 0;
 }
 
-.pathTopRow {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 28px;
+.pathLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) min(320px, 30%);
+  gap: 40px;
+  align-items: start;
+}
+
+.pathMainCol {
+  min-width: 0;
+  padding-right: 8px;
 }
 
 .pathHeroTitle {
-  margin: 0;
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin: 0 0 28px;
+  font-size: clamp(2rem, 3.5vw, 2.65rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   color: #ffffff;
   line-height: 1.1;
+  text-align: left;
 }
 
 .pathHeroAccent {
   color: #c4f547;
 }
 
-.pathTopBar .modeToggle {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(84, 185, 72, 0.15);
-}
-
-.pathLayout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) min(340px, 32%);
-  gap: 36px;
-  align-items: start;
-}
-
-.pathMainCol {
-  min-width: 0;
+.pathSideColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 72px;
+  padding-top: 4px;
 }
 
 .pathProgressCard {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
   align-items: center;
-  gap: 24px;
-  padding: 20px 24px;
-  margin-bottom: 32px;
-  border-radius: 18px;
-  background: rgba(12, 28, 22, 0.72);
-  border: 1px solid rgba(84, 185, 72, 0.18);
+  gap: 12px 16px;
+  padding: 18px 18px;
+  border-radius: 16px;
+  background: rgba(10, 24, 18, 0.78);
+  border: 1px solid rgba(84, 185, 72, 0.2);
+  backdrop-filter: blur(8px);
 }
 
 .pathProgressRing {
-  width: 64px;
-  height: 64px;
+  grid-row: 1 / 3;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -3149,14 +3140,14 @@
 }
 
 .pathProgressRingInner {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #0a100e;
+  background: rgba(6, 10, 8, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   color: #c4f547;
 }
@@ -3165,23 +3156,140 @@
 .pathProgressTime {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+}
+
+.pathProgressTime {
+  grid-column: 2;
 }
 
 .pathProgressBig {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.02em;
 }
 
 .pathProgressSub {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.38);
 }
 
-.pathProgressTime {
-  text-align: right;
+.pathEmpty {
+  margin: 48px 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.pathFlowMap {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin-bottom: 12px;
+}
+
+.pathFlowSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.pathFlowCard {
+  position: absolute;
+  width: 40%;
+  max-width: 280px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(10, 28, 20, 0.88);
+  border: 1px solid rgba(84, 185, 72, 0.28);
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: var(--f-body);
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  backdrop-filter: blur(6px);
+}
+
+.pathFlowCardLeft {
+  left: 0;
+  right: auto;
+}
+
+.pathFlowCardRight {
+  right: 0;
+  left: auto;
+}
+
+.pathFlowCard:hover {
+  border-color: rgba(196, 245, 71, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+.pathFlowCardActive {
+  border-color: rgba(196, 245, 71, 0.55);
+  box-shadow: 0 0 28px rgba(84, 185, 72, 0.14);
+}
+
+.pathExploreSection {
+  padding: 4px 0 0;
+}
+
+.pathExploreTitle {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pathExploreGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pathExploreBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 14px 12px;
+  min-height: 88px;
+  border-radius: 14px;
+  border: 1px solid rgba(84, 185, 72, 0.22);
+  background: rgba(10, 26, 18, 0.82);
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: var(--f-body);
+  transition: border-color 0.12s, transform 0.12s, background 0.12s;
+}
+
+.pathExploreBox:hover {
+  border-color: rgba(196, 245, 71, 0.4);
+  background: rgba(14, 34, 24, 0.9);
+  transform: translateY(-1px);
+}
+
+.pathExploreBoxEmoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.pathExploreBoxName {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.35;
 }
 
 .pathResumeBtn {
@@ -3218,7 +3326,8 @@
 .pathFlowMap {
   position: relative;
   width: 100%;
-  margin-bottom: 28px;
+  max-width: 620px;
+  margin-bottom: 12px;
 }
 
 .pathFlowSvg {
@@ -3232,7 +3341,8 @@
 
 .pathFlowCard {
   position: absolute;
-  width: min(52%, 360px);
+  width: 40%;
+  max-width: 280px;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;

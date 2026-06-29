@@ -29,6 +29,11 @@ const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:
 const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
 const PRACTICE_DRAFT_VERSION = 1
+const PATH_SLOT_COUNT = 6
+
+function pathMasteredStorageKey(uid: string) {
+  return `mc-path-mastered-${uid}`
+}
 
 type PracticePhase =
   | 'onboard' | 'exam-pick' | 'confidence' | 'building'
@@ -364,6 +369,7 @@ export default function Practice() {
   const [initialQCount,setInitialQCount]= useState(0)
   const [sessionBridge,setSessionBridge]= useState<BridgeRecommendation | null>(null)
   const [draftRestored, setDraftRestored] = useState(false)
+  const [masteredPathIds, setMasteredPathIds] = useState<Set<string>>(() => new Set())
   // One resumable draft per mission type (weakness / learn / gapscan).
   const [savedDrafts, setSavedDrafts] = useState<Partial<Record<MissionType, PracticeDraft>>>({})
   // Which mission is currently active (drives which slot autosave writes to), and
@@ -498,6 +504,26 @@ export default function Practice() {
     draftHydratedRef.current = true
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.uid])
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(pathMasteredStorageKey(user.uid))
+      if (raw) setMasteredPathIds(new Set(JSON.parse(raw) as string[]))
+    } catch { /* ignore corrupt storage */ }
+  }, [user.uid])
+
+  function markPathMastered(conceptId: string) {
+    setMasteredPathIds(prev => {
+      if (prev.has(conceptId)) return prev
+      const next = new Set(prev).add(conceptId)
+      localStorage.setItem(pathMasteredStorageKey(user.uid), JSON.stringify([...next]))
+      return next
+    })
+  }
+
+  function isPathMastered(conceptId: string) {
+    return masteredPathIds.has(conceptId) || confidenceMap[conceptId] === 'easy'
+  }
 
   // Cross-device restore: if no local slots, pull the saved drafts from Firestore
   // (e.g. the student switched devices) and surface them on the hub.
@@ -798,6 +824,7 @@ export default function Practice() {
       // If mastered, evict sessionStorage cache so next session gets fresh questions
       if (concept && passRate >= 0.8) {
         evictQuestionCache(concept, level, exam || 'General')
+        markPathMastered(concept)
       }
       // Feed the session into the student graph so mastery moves. Per-question
       // granularity is preserved (each answered question is its own outcome with
@@ -912,14 +939,22 @@ export default function Practice() {
   const firstAccuracy        = initialQCount > 0 ? firstCorrect / initialQCount : 0
   const mastered             = firstAccuracy >= 0.80
 
-  const pathConcepts = assessConcepts.length > 0
+  const pathQueue = assessConcepts.length > 0
     ? [...assessConcepts].sort((a, b) => {
         const order: Record<Confidence, number> = { hard: 0, kinda: 1, easy: 2 }
         return order[confidenceMap[a.id] ?? 'kinda'] - order[confidenceMap[b.id] ?? 'kinda']
       })
-    : PRACTICE_CONCEPTS.slice(0, 6)
+    : [...PRACTICE_CONCEPTS]
 
-  const remainingConcepts = PRACTICE_CONCEPTS.filter(c => !assessConcepts.find(a => a.id === c.id))
+  const activePathQueue = pathQueue.filter(c => !isPathMastered(c.id))
+  const pathConcepts = activePathQueue.slice(0, PATH_SLOT_COUNT)
+  const exploreConcepts = activePathQueue.slice(PATH_SLOT_COUNT, PATH_SLOT_COUNT + 8)
+  const completedOnPath = pathQueue.filter(c => isPathMastered(c.id)).length
+  const pathProgressPct = pathQueue.length
+    ? Math.round((completedOnPath / pathQueue.length) * 100)
+    : 0
+
+  const remainingConcepts = exploreConcepts
 
   // Concepts from homework that the student struggled with (outcome === 0)
   const weakHomeworkConcepts: Array<{ label: string; conceptId: string | null }> =
@@ -1274,49 +1309,26 @@ export default function Practice() {
 
             {/* ── Path: premium full-page learning path ── */}
             {pPhase === 'path' && (() => {
-              const PATH_MINUTES = [12, 10, 14, 16, 11, 13]
-              const flowHeight = pathConcepts.length * 118 + 72
-              const completedOnPath = pathConcepts.filter(c => confidenceMap[c.id] === 'easy').length
-              const pathProgressPct = pathConcepts.length
-                ? Math.round((completedOnPath / pathConcepts.length) * 100)
-                : 0
-              const estMinutes = pathConcepts.reduce((sum, c, i) => sum + (PATH_MINUTES[i] ?? 12), 0)
-              const accuracyPct = practiceCount > 0
-                ? Math.min(98, 72 + Math.round(practiceCount * 1.4))
-                : pathProgressPct
+              const estMinutesFor = (id: string, i: number) => {
+                const table: Record<string, number> = {
+                  linear_equations: 12, linear_inequalities: 10, absolute_value: 14,
+                  systems_of_linear_equations: 16, exponent_rules: 11, radical_expressions: 13,
+                }
+                return table[id] ?? [12, 10, 14, 16, 11, 13][i % 6]
+              }
+              const STEP = 138
+              const SPINE = 320
+              const flowHeight = Math.max(pathConcepts.length, 1) * STEP + 32
+              const estMinutes = pathConcepts.reduce((sum, c, i) => sum + estMinutesFor(c.id, i), 0)
+              const nodeY = (i: number) => i * STEP + STEP * 0.52
 
               return (
               <div className={s.pathScreen}>
-                <div className={s.pathTopRow}>
-                  <h1 className={s.pathHeroTitle}>
-                    Your <span className={s.pathHeroAccent}>Learning Path</span>
-                  </h1>
-                </div>
-
                 <div className={s.pathLayout}>
                   <section className={s.pathMainCol}>
-                    <div className={s.pathProgressCard}>
-                      <div
-                        className={s.pathProgressRing}
-                        style={{ background: `conic-gradient(#c4f547 ${pathProgressPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
-                      >
-                        <span className={s.pathProgressRingInner}>{pathProgressPct}%</span>
-                      </div>
-                      <div className={s.pathProgressStats}>
-                        <span className={s.pathProgressBig}>
-                          {completedOnPath} / {pathConcepts.length} Topics Completed
-                        </span>
-                        <span className={s.pathProgressSub}>Keep moving through your path</span>
-                      </div>
-                      <div className={s.pathProgressTime}>
-                        <span className={s.pathProgressBig}>
-                          {estMinutes >= 60
-                            ? `${Math.floor(estMinutes / 60)}h ${estMinutes % 60}m`
-                            : `${estMinutes}m`}
-                        </span>
-                        <span className={s.pathProgressSub}>Est. time on path</span>
-                      </div>
-                    </div>
+                    <h1 className={s.pathHeroTitle}>
+                      Your <span className={s.pathHeroAccent}>Learning Path</span>
+                    </h1>
 
                     {(['weakness', 'learn', 'gapscan'] as const).map(t => {
                       const d = savedDrafts[t]
@@ -1334,79 +1346,98 @@ export default function Practice() {
                       )
                     })}
 
-                    <div className={s.pathFlowMap} style={{ height: `${flowHeight}px` }}>
-                      <svg
-                        className={s.pathFlowSvg}
-                        viewBox={`0 0 640 ${flowHeight}`}
-                        preserveAspectRatio="none"
-                        aria-hidden="true"
-                      >
-                        {pathConcepts.slice(0, -1).map((_, i) => {
-                          const sx = i % 2 === 0 ? 118 : 522
-                          const sy = i * 118 + 72
-                          const ex = i % 2 === 0 ? 522 : 118
-                          const ey = (i + 1) * 118 + 72
-                          const my = (sy + ey) / 2
+                    {pathConcepts.length === 0 ? (
+                      <p className={s.pathEmpty}>You cleared this path — explore more topics on the right →</p>
+                    ) : (
+                      <div className={s.pathFlowMap} style={{ height: `${flowHeight}px` }}>
+                        <svg
+                          className={s.pathFlowSvg}
+                          viewBox={`0 0 640 ${flowHeight}`}
+                          preserveAspectRatio="xMidYMid meet"
+                          aria-hidden="true"
+                        >
+                          <defs>
+                            <linearGradient id="pathCurveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stopColor="rgba(196,245,71,0.55)" />
+                              <stop offset="100%" stopColor="rgba(84,185,72,0.25)" />
+                            </linearGradient>
+                          </defs>
+                          {pathConcepts.slice(0, -1).map((_, i) => {
+                            const y1 = nodeY(i)
+                            const y2 = nodeY(i + 1)
+                            const bulge = i % 2 === 0 ? 88 : -88
+                            return (
+                              <path
+                                key={i}
+                                d={`M ${SPINE} ${y1} C ${SPINE + bulge} ${y1 + STEP * 0.22}, ${SPINE - bulge} ${y2 - STEP * 0.22}, ${SPINE} ${y2}`}
+                                stroke="url(#pathCurveGrad)"
+                                strokeWidth="3"
+                                fill="none"
+                                strokeLinecap="round"
+                              />
+                            )
+                          })}
+                          {pathConcepts.map((_, i) => {
+                            const cy = nodeY(i)
+                            return (
+                              <g key={i}>
+                                <circle cx={SPINE} cy={cy} r="19" fill="rgba(8,18,14,0.96)" stroke="rgba(196,245,71,0.55)" strokeWidth="2" />
+                                <text x={SPINE} y={cy + 5} textAnchor="middle" fill="#c4f547" fontSize="12" fontWeight="800" fontFamily="system-ui,sans-serif">{i + 1}</text>
+                              </g>
+                            )
+                          })}
+                        </svg>
+
+                        {pathConcepts.map((c, i) => {
+                          const isLeft = i % 2 === 0
+                          const isTop = c.id === topPriority?.id && assessConcepts.length > 0
                           return (
-                            <path
-                              key={i}
-                              d={`M${sx},${sy} C${sx},${my} ${ex},${my} ${ex},${ey}`}
-                              stroke="rgba(196,245,71,0.35)"
-                              strokeWidth="2.5"
-                              fill="none"
-                              strokeLinecap="round"
-                            />
+                            <button
+                              key={c.id}
+                              type="button"
+                              className={`${s.pathFlowCard} ${isLeft ? s.pathFlowCardLeft : s.pathFlowCardRight} ${isTop ? s.pathFlowCardActive : ''}`}
+                              style={{ top: `${i * STEP + 10}px` }}
+                              onClick={() => pickConcept(c.id)}
+                            >
+                              <div className={s.pathFlowIcon}>
+                                <ConceptPathIcon conceptId={c.id} size={32} />
+                              </div>
+                              <div className={s.pathFlowBody}>
+                                <span className={s.pathFlowTitle}>{c.label}</span>
+                                <span className={s.pathFlowMeta}>Practice · {estMinutesFor(c.id, i)} min</span>
+                              </div>
+                              <span className={s.pathFlowStatus}>→</span>
+                            </button>
                           )
                         })}
-                        {pathConcepts.map((_, i) => {
-                          const cx = i % 2 === 0 ? 118 : 522
-                          const cy = i * 118 + 72
-                          return (
-                            <g key={i}>
-                              <circle cx={cx} cy={cy} r="16" fill="rgba(10,24,18,0.95)" stroke="rgba(196,245,71,0.5)" strokeWidth="1.5" />
-                              <text x={cx} y={cy + 5} textAnchor="middle" fill="#c4f547" fontSize="11" fontWeight="700" fontFamily="system-ui,sans-serif">{i + 1}</text>
-                            </g>
-                          )
-                        })}
-                      </svg>
-
-                      {pathConcepts.map((c, i) => {
-                        const conf = confidenceMap[c.id]
-                        const isLeft = i % 2 === 0
-                        const isDone = conf === 'easy'
-                        const isTop = c.id === topPriority?.id && assessConcepts.length > 0
-                        return (
-                          <button
-                            key={c.id}
-                            type="button"
-                            className={`${s.pathFlowCard} ${isTop ? s.pathFlowCardActive : ''}`}
-                            style={{
-                              top: `${i * 118 + 28}px`,
-                              ...(isLeft ? { left: '0' } : { right: '0' }),
-                            }}
-                            onClick={() => pickConcept(c.id)}
-                          >
-                            <div className={s.pathFlowIcon}>
-                              <ConceptPathIcon conceptId={c.id} size={34} />
-                            </div>
-                            <div className={s.pathFlowBody}>
-                              <span className={s.pathFlowTitle}>{c.label}</span>
-                              <span className={s.pathFlowMeta}>Practice · {PATH_MINUTES[i] ?? 12} min</span>
-                            </div>
-                            <span className={`${s.pathFlowStatus} ${isDone ? s.pathFlowStatusDone : ''}`}>
-                              {isDone ? '✓' : '→'}
-                            </span>
-                          </button>
-                        )
-                      })}
-                    </div>
-
-                    <button type="button" className={s.pathChangeExam} onClick={resetPractice}>
-                      ↻ Change exam
-                    </button>
+                      </div>
+                    )}
                   </section>
 
                   <aside className={s.pathSideColumn}>
+                    <div className={s.pathProgressCard}>
+                      <div
+                        className={s.pathProgressRing}
+                        style={{ background: `conic-gradient(#c4f547 ${pathProgressPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
+                      >
+                        <span className={s.pathProgressRingInner}>{pathProgressPct}%</span>
+                      </div>
+                      <div className={s.pathProgressStats}>
+                        <span className={s.pathProgressBig}>
+                          {completedOnPath} / {pathQueue.length} Topics Completed
+                        </span>
+                        <span className={s.pathProgressSub}>On your full path</span>
+                      </div>
+                      <div className={s.pathProgressTime}>
+                        <span className={s.pathProgressBig}>
+                          {estMinutes >= 60
+                            ? `${Math.floor(estMinutes / 60)}h ${estMinutes % 60}m`
+                            : `${estMinutes || 0}m`}
+                        </span>
+                        <span className={s.pathProgressSub}>Est. on screen</span>
+                      </div>
+                    </div>
+
                     <div className={s.pathStreakCard}>
                       <span className={s.pathStreakFire} aria-hidden="true">🔥</span>
                       <div>
@@ -1415,86 +1446,22 @@ export default function Practice() {
                       </div>
                     </div>
 
-                    <div className={s.pathPerfCard}>
-                      <div className={s.pathPerfHead}>
-                        <span className={s.pathPerfTitle}>Performance</span>
-                        {practiceCount > 0 && (
-                          <span className={s.pathPerfDelta}>+{Math.min(24, practiceCount + 6)}%</span>
-                        )}
-                      </div>
-                      <svg className={s.pathPerfChart} viewBox="0 0 280 80" preserveAspectRatio="none" aria-hidden="true">
-                        <defs>
-                          <linearGradient id="pathPerfFill" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="rgba(196,245,71,0.35)" />
-                            <stop offset="100%" stopColor="rgba(196,245,71,0)" />
-                          </linearGradient>
-                        </defs>
-                        <path
-                          d="M0,62 C40,58 70,48 110,44 C150,40 190,28 230,22 C250,18 270,14 280,10 L280,80 L0,80 Z"
-                          fill="url(#pathPerfFill)"
-                        />
-                        <path
-                          d="M0,62 C40,58 70,48 110,44 C150,40 190,28 230,22 C250,18 270,14 280,10"
-                          fill="none"
-                          stroke="#c4f547"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                      <p className={s.pathPerfFoot}>
-                        Accuracy <strong>{accuracyPct || pathProgressPct}%</strong>
-                        {accuracyPct >= 80 ? ' · Great job!' : ' · Keep practicing'}
-                      </p>
-                    </div>
-
-                    <div className={s.pathToolkit}>
-                      <h3 className={s.pathToolkitTitle}>Your Toolkit</h3>
-                      <ul className={s.pathToolkitList}>
-                        <li>
-                          <button type="button" className={s.pathToolkitItem} onClick={() => navigate('/organize-notes')}>
-                            <span className={s.pathToolkitIcon}>📄</span>
-                            <span>Formula Sheet</span>
-                            <span className={s.pathToolkitChev}>›</span>
-                          </button>
-                        </li>
-                        <li>
-                          <button type="button" className={s.pathToolkitItem} onClick={() => navigate('/organize-notes')}>
-                            <span className={s.pathToolkitIcon}>📝</span>
-                            <span>Quick Notes</span>
-                            <span className={s.pathToolkitChev}>›</span>
-                          </button>
-                        </li>
-                        <li>
-                          <button type="button" className={s.pathToolkitItem} onClick={() => { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }}>
-                            <span className={s.pathToolkitIcon}>🎯</span>
-                            <span>Run gap scan</span>
-                            <span className={s.pathToolkitChev}>›</span>
-                          </button>
-                        </li>
-                        <li>
-                          <button type="button" className={s.pathToolkitItem} onClick={() => navigate('/dashboard')}>
-                            <span className={s.pathToolkitIcon}>🏆</span>
-                            <span>Achievements</span>
-                            <span className={s.pathToolkitChev}>›</span>
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-
-                    {remainingConcepts.length > 0 && (
-                      <div className={s.pathExploreBlock}>
-                        <h3 className={s.pathExploreTitle}>More topics to explore</h3>
-                        <ul className={s.pathExploreList}>
-                          {remainingConcepts.slice(0, 5).map(c => (
-                            <li key={c.id}>
-                              <button type="button" className={s.pathExploreItem} onClick={() => pickConcept(c.id)}>
-                                <span className={s.pathExploreEmoji}>{c.emoji}</span>
-                                <span className={s.pathExploreName}>{c.label}</span>
-                                <span className={s.pathExploreChev}>›</span>
-                              </button>
-                            </li>
+                    {exploreConcepts.length > 0 && (
+                      <div className={s.pathExploreSection}>
+                        <h3 className={s.pathExploreTitle}>Topics to explore</h3>
+                        <div className={s.pathExploreGrid}>
+                          {exploreConcepts.map(c => (
+                            <button
+                              key={c.id}
+                              type="button"
+                              className={s.pathExploreBox}
+                              onClick={() => pickConcept(c.id)}
+                            >
+                              <span className={s.pathExploreBoxEmoji}>{c.emoji}</span>
+                              <span className={s.pathExploreBoxName}>{c.label}</span>
+                            </button>
                           ))}
-                        </ul>
+                        </div>
                       </div>
                     )}
                   </aside>
