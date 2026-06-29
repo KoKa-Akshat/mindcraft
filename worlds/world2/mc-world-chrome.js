@@ -6,7 +6,7 @@
     ? 'http://localhost:4321'
     : 'https://mindcraft-93858.web.app'
 
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-24-world-chrome-v4'
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-24-world-chrome-v5'
 
   function wireChrome() {
     var webToggle = document.getElementById('mc-web-toggle')

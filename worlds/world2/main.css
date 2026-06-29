@@ -402,24 +402,29 @@ h1 {
     color: #58CC02;
 }
 
-/* ── World chrome (matches web dashboard toggle) ── */
+/* ── World chrome (pixel-match web dashboard) ── */
 .mc-top-actions {
     position: fixed;
     top: 16px;
     right: 16px;
-    z-index: 9999;
+    z-index: 10001;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     width: 124px;
     box-sizing: border-box;
-    font: 700 13px/1 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    pointer-events: auto;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 .mc-view-toggle {
     display: flex;
     gap: 4px;
     width: 100%;
+    height: 42px;
     box-sizing: border-box;
     padding: 4px;
     border-radius: 10px;
@@ -435,7 +440,9 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 34px;
     min-height: 34px;
+    max-height: 34px;
     border-radius: 8px;
     box-sizing: border-box;
     padding: 0 10px;
@@ -445,15 +452,22 @@ h1 {
     border: none;
     background: transparent;
     cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .mc-toggle-active {
     background: #C4F547;
     color: #10231a;
+    cursor: default;
 }
 
 .mc-toggle-inactive {
     color: rgba(255, 255, 255, 0.75);
+}
+
+.mc-toggle-inactive:hover {
+    color: #ffffff;
 }
 
 .mc-bottom-bar {
@@ -461,76 +475,75 @@ h1 {
     bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10000;
+    z-index: 10001;
     display: flex;
-    align-items: stretch;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
     pointer-events: auto;
     opacity: 1;
     white-space: nowrap;
 }
 
-.mc-hint-btn {
-    display: flex;
+.mc-hint-btn,
+.mc-booking-btn {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 38px;
-    min-width: 168px;
+    height: 34px;
+    min-height: 34px;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0 12px;
     border-radius: 10px;
-    padding: 0 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.82);
-    font: 700 13px/1 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+    transition: filter 0.12s ease, transform 0.12s ease, border-color 0.12s ease;
+}
+
+.mc-hint-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
 }
 
 .mc-hint-btn:hover {
-    border-color: rgba(196, 245, 71, 0.35);
-    background: rgba(0, 0, 0, 0.68);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
 }
 
-.mc-hint-btn:active {
+.mc-hint-btn:active,
+.mc-booking-btn:active {
     transform: scale(0.98);
 }
 
 .mc-booking-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 38px;
-    min-width: 124px;
-    box-sizing: border-box;
-    padding: 0 16px;
-    border-radius: 10px;
     background: #C4F547;
     border: 1px solid rgba(196, 245, 71, 0.42);
     color: #10231a;
-    font: 900 13px/1 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    text-decoration: none;
-    text-align: center;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22), 0 0 22px rgba(196, 245, 71, 0.24);
-    transition: transform 0.12s ease, filter 0.12s ease;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.22),
+        0 0 22px rgba(196, 245, 71, 0.24);
 }
 
 .mc-booking-btn:hover {
     filter: brightness(1.05);
 }
 
-.mc-booking-btn:active {
-    transform: scale(0.98);
-}
-
 @media (max-width: 768px) {
     .mc-top-actions { top: 10px; right: 10px; width: 116px; }
+    .mc-view-toggle { height: 40px; }
     .mc-toggle-active,
-    .mc-toggle-inactive { min-height: 32px; }
-    .mc-bottom-bar { flex-direction: column; gap: 8px; }
+    .mc-toggle-inactive { height: 32px; min-height: 32px; max-height: 32px; padding: 0 8px; }
+    .mc-hint-btn,
+    .mc-booking-btn { height: 32px; min-height: 32px; padding: 0 10px; font-size: 12px; }
+    .mc-bottom-bar { flex-direction: row; gap: 6px; }
 }
 
 .start {

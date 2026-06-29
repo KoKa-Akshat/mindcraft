@@ -9,9 +9,9 @@
   --c-stats:    #A29BFE;
 
   /* MindCraft palette — teal base + sky blue */
-  --bg:          #1A6070;   /* page background — slightly richer teal */
-  --surface:     #1E7080;   /* card / panel surfaces */
-  --surface-2:   #185565;   /* inputs, darker hover */
+  --bg:          #21616E;
+  --surface:     #21616E;
+  --surface-2:   #1a545f;
   --border:      rgba(255, 255, 255, 0.10);
   --text:        #FFFFFF;
   --text-2:      #B8D4D8;   /* secondary / muted */
