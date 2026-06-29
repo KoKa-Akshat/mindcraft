@@ -24,24 +24,19 @@ const FADE_UP = (delay = 0) => ({
 
 /** "3D" leaves for the immersive world (Nox's Kitchen, mindcraft-world1.web.app);
  *  "Web" is this card dashboard. The world has the mirror toggle back here. */
-function ViewToggle({ onPick3D }: { onPick3D: () => void }) {
-  const base = {
-    fontSize: 12, fontWeight: 700, padding: '6px 12px', borderRadius: 8,
-    border: 'none',
-  } as const
+function ViewToggle({ onPick3D, onBooking }: { onPick3D: () => void; onBooking: () => void }) {
   return (
-    <div style={{
-      display: 'flex', gap: 4, alignSelf: 'flex-end', margin: '0 0 12px',
-      padding: 4, borderRadius: 10, background: 'rgba(255,255,255,0.06)',
-      border: '1px solid rgba(255,255,255,0.08)', width: 'fit-content',
-    }}>
-      <button onClick={onPick3D}
-        style={{ ...base, background: 'transparent', color: 'rgba(255,255,255,0.7)', cursor: 'pointer' }}>
-        3D
-      </button>
-      <button disabled
-        style={{ ...base, background: '#C4F547', color: '#10231a', cursor: 'default' }}>
-        Web
+    <div className={s.topActions}>
+      <div className={s.viewToggle} aria-label="Dashboard view switcher">
+        <button className={s.toggleBtn} onClick={onPick3D}>
+          3D
+        </button>
+        <button className={`${s.toggleBtn} ${s.toggleActive}`} disabled>
+          Web
+        </button>
+      </div>
+      <button className={s.bookingBtn} onClick={onBooking}>
+        Booking
       </button>
     </div>
   )
@@ -83,13 +78,14 @@ export default function Dashboard() {
           name={data.displayName}
           nextSession={data.nextSession}
           tutorId={data.tutorId}
+          showUserControls={false}
         />
 
         {(!diagChecked || data.loading) ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <>
-            <ViewToggle onPick3D={goTo3DWorld} />
+            <ViewToggle onPick3D={goTo3DWorld} onBooking={() => navigate('/book')} />
 
             <div className={s.world}>
               {/* Left column */}
@@ -134,20 +130,20 @@ export default function Dashboard() {
                 <motion.div {...FADE_UP(0.34)}>
                   <div
                     className={s.hwCard}
-                    onClick={() => navigate('/knowledge-graph')}
+                    onClick={() => navigate('/practice', { state: { examHelp: true } })}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={e => e.key === 'Enter' && navigate('/knowledge-graph')}
+                    onKeyDown={e => e.key === 'Enter' && navigate('/practice', { state: { examHelp: true } })}
                   >
                     <div className={s.hwTop}>
-                      <span className={s.hwIcon}>◈</span>
-                      <span className={s.hwLabel}>Knowledge Graph</span>
+                      <span className={s.hwIcon}>⌖</span>
+                      <span className={s.hwLabel}>Learning GPS</span>
                     </div>
                     <p className={s.hwSub}>
-                      See how every concept connects — mastery and strength across your whole map.
+                      A guided route for what to practice next, based on your current strengths and gaps.
                     </p>
                     <div className={s.hwRow}>
-                      <span className={s.hwCta}>Open graph →</span>
+                      <span className={s.hwCta}>Open GPS →</span>
                     </div>
                   </div>
                 </motion.div>
