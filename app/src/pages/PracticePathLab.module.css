@@ -1,15 +1,14 @@
 .page {
-  display: flex;
   min-height: 100vh;
   background: linear-gradient(165deg, #071408 0%, #0a2218 42%, #0c1a12 100%);
   color: #f4faf5;
 }
 
 .main {
-  flex: 1;
   min-width: 0;
   padding: 24px 28px 48px;
   max-width: 1180px;
+  margin: 0 auto;
 }
 
 .header {

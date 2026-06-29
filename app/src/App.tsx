@@ -88,7 +88,22 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
     warmML()                          // fastest wake signal (cold-start)
     void fetchKnowledgeGraph(user.uid) // prefetch graph into the shared cache
   }, [user])
-  if (user === undefined) return null // still loading auth state
+  if (user === undefined) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#0a2218',
+        color: 'rgba(255,255,255,0.6)',
+        fontFamily: 'system-ui, sans-serif',
+        fontSize: 14,
+      }}>
+        Loading…
+      </div>
+    )
+  }
   if (!user) {
     const next = encodeURIComponent(location.pathname + location.search)
     return <Navigate to={`/login?next=${next}`} replace />
