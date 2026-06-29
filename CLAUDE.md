@@ -370,6 +370,13 @@ Key notes:
 ### Local uncommitted (not on production yet)
 Large frontend + ML delta on disk — **push `main` + Cloud Build/deploy** to ship.
 
+**Local commits ahead of `origin/main` (NOT pushed)** — the weakness/format/
+generation workstream (see "Active workstream"): getQuestions alias, A1 severity
++ `FORMAT_WEAKNESS_PLAN.md`, Lane B (worstWeakness/format bank/diagnostic) + its
+origin merge, and A2 `ml/generation/`. Origin also has co-founder commits to
+merge. Integration is pending — sequence `merge origin → push` (CI deploys
+frontend; ml/ deploy is still manual via gcloud).
+
 **Frontend**
 - **PawHub dashboard** + unified **AppTabBar** / **Sidebar** across Dashboard,
   Practice, Knowledge Graph.
@@ -431,12 +438,53 @@ Large frontend + ML delta on disk — **push `main` + Cloud Build/deploy** to sh
 - Possible refactor: split the standardized file into `concepts.json` +
   `ingredients.json` sharing ONE canonical ID space (removes any alias-map need).
 
-## Next big workstream — past-paper → generated questions
-GOAL (Blake): embed past papers → extract the "essence" → generate questions
-from that + a template → condense a group of concepts into fewer questions. This
-replaces/grounds the `generate-questions` webhook. Data lives in
-`ml/data/sample_questions/` (ACT bank CSV, `TEMPLATE.json`) and
-`ml/data/past_papers/`. Needs Anthropic credits. **Start this in a NEW chat.**
+## Active workstream — unified weakness + format axis + generated diagnostic
+GOAL (Blake): a freer question-based **diagnostic** (serve real questions across
+ALL concepts/formats, **hide correctness**, record outcomes) → genuine evidence →
+**ultimate weakness selection** (the single worst gap across concept-bridge AND
+format gaps). Generation fills the coverage the static bank lacks so the
+diagnostic isn't limited to the ~11 statically-covered concepts.
+
+**Process: Opus = head/architect (writes build files, no coding); Cursor /
+Copilot / Codex = implementation agents.** Lanes own **disjoint** trees to avoid
+collisions: `ml/**` (engine/generation) vs `app/**` (frontend/data). The plan +
+shared contracts live in **`FORMAT_WEAKNESS_PLAN.md`** (root).
+
+Shared contracts (the seams — don't diverge):
+- **C1** `/recommend` gaps carry `severity ∈ [0,1]` (higher=worse), comparable
+  across concept-bridge + format gaps → frontend `worstWeakness()` ranks all
+  candidates (incl. plain `1−mastery`) and picks the max **playable** one.
+- **C2** `FormatId` vocab shared: ml `config.FORMAT_IDS` == `questionBank.FormatId`.
+- **C3** `getQuestions(conceptId, level, count, seen, examType, format?)`.
+- **C4** diagnostic hide-correctness mode: serve real Qs, record outcome, never
+  reveal right/wrong (a wrong key would corrupt the mastery graph).
+- **C5** generated `Question` schema == `questionBank.Question` exactly (canonical
+  ontology `conceptId`, `format`-tagged).
+
+Status:
+- ✅ **A1** `severity` on both gap detectors + `/recommend` JSON (`recommend.py`,
+  `config.GAP_HYPOTHESIS_SCALE`).
+- ✅ **B1** `worstWeakness()` (`lib/recommendNextConcept.ts`); **B2** format-tagged
+  bank + format-aware CTA; **B3** hide-correctness gap scan; `getQuestions` alias
+  + `format` param.
+- ✅ **A2 generation** (`ml/generation/`): essence → LLM → format-tagged items.
+  **Uses Layer-3 structured joins, NOT embeddings** (Layer 3 instance → Layer 2
+  archetype → concept, + per-Q misconceptions as few-shot grounding).
+  Provider-agnostic (`LLM_PROVIDER` ollama|groq|anthropic; key in gitignored
+  `ml/.env.local`). Verified via Groq llama-3.3-70b.
+- ❌ **`--verify` pass (NEXT / BLOCKER)** — generated answer keys are sometimes
+  wrong (LLM arithmetic). Since the diagnostic records answers as evidence, a bad
+  key corrupts the graph → wrong weakness. Must **blind re-solve + drop
+  mismatches** before any generated batch is used. Build before scaling/loading.
+- ❌ generate at scale (`--tested --formats all`) → after verify.
+- ❌ **B4** load `generated_questions.json` into the bank → after a verified batch.
+- Embedding-based essence (embed un-annotated past papers via
+  `representation/embeddings.py`) is the heavier ALT, unused while Layer 3 covers
+  seeds. Original seed data: `ml/data/sample_questions/`, `ml/data/past_papers/`.
+
+Deferred future build file: **GeoGebra/Desmos figure generation** for the
+`diagram`/`coordinate_graph` formats (renderable spec on `Question.figure`,
+client-side render + render-verify). Confer with Opus → build file → divvy.
 
 ## Designed, not built
 - Problem decomposition (invariant skeletons) — feeds ingredient runtime.
