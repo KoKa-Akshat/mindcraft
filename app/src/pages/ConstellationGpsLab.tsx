@@ -165,7 +165,7 @@ export default function ConstellationGpsLab() {
       const result = await getRecommendations(user.uid, [targetId], 'curriculum')
       if (routeToken.current !== token) return
       if (!result) {
-        setPanel({ mode: 'route', steps: [], loading: false, targetId })
+        setPanel({ mode: 'route', steps: [], gpsGraph: null, loading: false, targetId })
         return
       }
       const chain = result.canonicalChain?.length ? result.canonicalChain : [targetId]
