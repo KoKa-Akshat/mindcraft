@@ -107,7 +107,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
         </div>
 
         <div className={s.btns}>
-          {canJoin ? (
+          {canJoin && (
             <a
               href={nextSession!.meetingUrl!}
               target="_blank"
@@ -116,10 +116,6 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
             >
               Join Session
             </a>
-          ) : (
-            <button className={`${s.btn} ${s.btnPrimary}`} onClick={() => navigate('/book')}>
-              Book Session
-            </button>
           )}
           {tutorId && (
             <button className={`${s.btn} ${s.btnGhost}`} onClick={() => navigate(`/chat/${tutorId}`)}>

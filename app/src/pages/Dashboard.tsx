@@ -6,7 +6,6 @@ import { useStudentData } from '../hooks/useStudentData'
 import { isDiagnosticComplete } from '../lib/practiceState'
 import { worldUrl } from '../lib/siteUrls'
 import HeroBar            from '../components/HeroBar'
-import ConstellationCard  from '../components/ConstellationCard'
 import PracticeHubPanel   from '../components/PracticeHubPanel'
 import ReinforcePanel     from '../components/ReinforceCard'
 import s from './Dashboard.module.css'
@@ -90,11 +89,7 @@ export default function Dashboard() {
             <div className={s.world}>
               {/* Left column */}
               <div className={s.main}>
-                <motion.div {...FADE_UP(0.18)}>
-                  <ConstellationCard userId={uid} />
-                </motion.div>
-
-                <motion.div {...FADE_UP(0.22)} className={s.labRow}>
+                <motion.div {...FADE_UP(0.18)} className={s.labRow}>
                   <button
                     type="button"
                     className={s.labSquare}
@@ -150,27 +145,6 @@ export default function Dashboard() {
                 {/* Recommended Reinforcement (bridge + format gaps) */}
                 <motion.div {...FADE_UP(0.26)}>
                   <ReinforcePanel userId={uid} />
-                </motion.div>
-
-                <motion.div {...FADE_UP(0.34)}>
-                  <div
-                    className={s.hwCard}
-                    onClick={() => navigate('/practice', { state: { examHelp: true } })}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={e => e.key === 'Enter' && navigate('/practice', { state: { examHelp: true } })}
-                  >
-                    <div className={s.hwTop}>
-                      <span className={s.hwIcon}>⌖</span>
-                      <span className={s.hwLabel}>Learning GPS</span>
-                    </div>
-                    <p className={s.hwSub}>
-                      A guided route for what to practice next, based on your current strengths and gaps.
-                    </p>
-                    <div className={s.hwRow}>
-                      <span className={s.hwCta}>Open GPS →</span>
-                    </div>
-                  </div>
                 </motion.div>
               </div>
             </div>
