@@ -101,17 +101,6 @@ export default function Dashboard() {
                     <span className={s.labSquareTitle}>GPS × Map</span>
                     <span className={s.labSquareSub}>Tap to experiment</span>
                   </button>
-                  <button
-                    type="button"
-                    className={s.labSquare}
-                    onClick={() => navigate('/practice', { state: { showPath: true } })}
-                    aria-label="Open Practice path lab experiment"
-                  >
-                    <span className={s.labSquareBadge}>Lab</span>
-                    <span className={s.labSquareIcon}>◎</span>
-                    <span className={s.labSquareTitle}>Path UI</span>
-                    <span className={s.labSquareSub}>Green layout</span>
-                  </button>
                 </motion.div>
               </div>
 
