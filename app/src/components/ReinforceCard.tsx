@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getRecommendations, type ConceptRecommendation } from '../lib/mlApi'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { mlIdToLabel } from '../lib/conceptMap'
+import { hasFormatQuestions, questionCount, type FormatId } from '../lib/questionBank'
 
 /**
  * Recommended Reinforcement.
@@ -12,9 +14,8 @@ import { mlIdToLabel } from '../lib/conceptMap'
  *   - concept gap: "you know both X and Y but stumble connecting them"
  *   - format gap:  "you know the concept but fail it as a {vessel}"
  *
- * Display-only in v1: no gap type has a server-detector → practice path yet
- * (concept gaps included — bridgePractice.ts derives its own from the confidence
- * map), so the CTA is disabled and says so rather than dead-ending.
+ * Renders both gap types (identical object shape). Practice CTA launches
+ * `(concept, format?)` when the bank can serve the target (C3).
  */
 
 const MAX_ITEMS = 5
@@ -39,7 +40,18 @@ function badge(evidence: string | null | undefined): { label: string; bg: string
     : { label: 'This might trip you up', bg: '#F59E0B' }
 }
 
+function gapPlayable(g: ConceptRecommendation): boolean {
+  const conceptId = g.bridgeToConcept ?? g.conceptId
+  if (!conceptId) return false
+  if (g.gapType === 'format') {
+    const fmt = g.bridgeFromConcept as FormatId | undefined
+    return !!fmt && hasFormatQuestions(conceptId, fmt)
+  }
+  return ([1, 2, 3] as const).some(l => questionCount(conceptId, l) > 0)
+}
+
 export function ReinforceCard({ recommendations }: { recommendations: ConceptRecommendation[] }) {
+  const navigate = useNavigate()
   const gaps = useMemo(() => {
     return recommendations
       .filter(r => r.isBridgeGap)
@@ -88,14 +100,31 @@ export function ReinforceCard({ recommendations }: { recommendations: ConceptRec
               </div>
               <p style={{ margin: '8px 0 10px', fontSize: 13, color: '#4B5563' }}>{g.reason}</p>
               <button
-                disabled
-                title="Targeted practice for this gap isn't wired up yet"
+                type="button"
+                disabled={!gapPlayable(g)}
+                title={gapPlayable(g) ? 'Practice this gap' : 'No format-tagged questions in the bank yet'}
+                onClick={() => {
+                  const conceptId = g.bridgeToConcept ?? g.conceptId
+                  if (!conceptId) return
+                  navigate('/practice', {
+                    state: {
+                      conceptId,
+                      missionType: 'weakness',
+                      formatId: g.gapType === 'format'
+                        ? (g.bridgeFromConcept as FormatId)
+                        : undefined,
+                    },
+                  })
+                }}
                 style={{
-                  fontSize: 13, fontWeight: 600, color: '#9CA3AF',
-                  background: '#F3F4F6', border: 'none', borderRadius: 8,
-                  padding: '7px 12px', cursor: 'not-allowed',
+                  fontSize: 13, fontWeight: 600,
+                  color: gapPlayable(g) ? '#1D4ED8' : '#9CA3AF',
+                  background: gapPlayable(g) ? '#EFF6FF' : '#F3F4F6',
+                  border: 'none', borderRadius: 8,
+                  padding: '7px 12px',
+                  cursor: gapPlayable(g) ? 'pointer' : 'not-allowed',
                 }}>
-                Practice (coming soon)
+                Practice this gap
               </button>
             </div>
           )

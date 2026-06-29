@@ -45,6 +45,8 @@ export interface ConceptRecommendation {
   bridgeFromConcept?: string | null
   bridgeToConcept?: string | null
   bridgeEvidence?: 'evidence' | 'hypothesis' | null
+  /** C1 — gap severity in [0,1]; higher = worse. Agent A produces; B falls back to 1−mastery. */
+  severity?: number
 }
 
 export interface StudentProfile {
@@ -111,17 +113,35 @@ export async function getRecommendations(
   studentId: string,
   targetConcepts: string[],
   mode: 'curriculum' | 'exam' | 'explore' = 'curriculum',
+  exam?: string | null,
 ): Promise<RecommendResult | null> {
   try {
     const res = await fetch(`${ML_BASE}/recommend`, {
       method: 'POST',
       headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({ student_id: studentId, target_concepts: targetConcepts, mode }),
+      body: JSON.stringify({
+        student_id: studentId,
+        target_concepts: targetConcepts,
+        mode,
+        ...(exam ? { exam } : {}),
+      }),
     })
     if (!res.ok) return null
     return res.json()
   } catch {
     return null
+  }
+}
+
+/** Exam-track concept ids from Layer 1 act_relevance.tested (ACT). */
+export async function fetchExamConceptIds(exam: string): Promise<string[]> {
+  try {
+    const res = await fetch(`${ML_BASE}/exam-concepts/${encodeURIComponent(exam)}`)
+    if (!res.ok) return []
+    const data = await res.json() as { conceptIds?: string[] }
+    return data.conceptIds ?? []
+  } catch {
+    return []
   }
 }
 
@@ -324,4 +344,42 @@ export async function sendLearningEvent(ev: LearningEventInput): Promise<boolean
 /** Pretty-print a concept_id like "quadratic_equations" → "Quadratic Equations" */
 export function conceptLabel(id: string): string {
   return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+}
+
+// ── Agent check-in ─────────────────────────────────────────────────────────
+
+export const WEBHOOK_BASE =
+  import.meta.env.VITE_WEBHOOK_URL ?? 'https://mindcraft-webhook.vercel.app'
+
+export interface AffectiveState {
+  stress: number
+  motivation: number
+  confidence_by_concept: Record<string, number>
+  explicit_struggles: string[]
+  captured_at: number
+}
+
+/**
+ * Optional pre-session check-in. Student writes 2–3 sentences; Claude Haiku
+ * extracts stress/motivation/struggles and stores them in Firestore so the
+ * next /recommend call can adjust weights and difficulty automatically.
+ * Fire-and-forget — never throws, returns null on failure.
+ */
+export async function agentCheckIn(
+  studentId: string,
+  text: string,
+): Promise<AffectiveState | null> {
+  try {
+    const token = await auth.currentUser?.getIdToken()
+    if (!token) return null
+    const res = await fetch(`${WEBHOOK_BASE}/api/agent-check-in`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body:    JSON.stringify({ student_id: studentId, text }),
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
 }

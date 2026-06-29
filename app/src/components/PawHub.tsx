@@ -74,20 +74,38 @@ function NotesIcon() {
 export default function PawHub({ userId }: { userId: string }) {
   const navigate = useNavigate()
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
+  const [learn, setLearn] = useState<NextConcept | null>(null)
 
   useEffect(() => {
     let cancelled = false
     void fetchPracticeHubRecommendations(userId).then(rec => {
-      if (!cancelled) setWeakness(rec.weakness ?? rec.learn)
+      if (!cancelled) {
+        setWeakness(rec.weakness)
+        setLearn(rec.learn)
+      }
     })
     return () => { cancelled = true }
   }, [userId])
 
-  function goLearnNext() {
+  function goPracticeWeakness() {
     if (weakness) {
-      navigate('/practice', { state: { conceptId: weakness.conceptId, missionType: 'weakness' } })
+      navigate('/practice', {
+        state: {
+          conceptId: weakness.conceptId,
+          missionType: 'weakness',
+          formatId: weakness.formatId,
+        },
+      })
     } else {
-      navigate('/practice')
+      navigate('/practice', { state: { showPath: true } })
+    }
+  }
+
+  function goLearnNext() {
+    if (learn) {
+      navigate('/practice', { state: { conceptId: learn.conceptId, missionType: 'learn' } })
+    } else {
+      navigate('/practice', { state: { showPath: true } })
     }
   }
 
@@ -95,7 +113,7 @@ export default function PawHub({ userId }: { userId: string }) {
     {
       id: 'learn',
       label: 'Learn Next',
-      sub: weakness ? weakness.label : 'Your weak spot',
+      sub: learn ? learn.label : 'New on your path',
       accent: 'violet',
       onClick: goLearnNext,
       icon: <TargetIcon />,
@@ -141,7 +159,11 @@ export default function PawHub({ userId }: { userId: string }) {
               whileTap={{ scale: 0.98 }}
             >
               <span className={s.toeIcon}>{toe.icon}</span>
-              <span className={s.toeLabel}>{toe.label}</span>
+              {toe.id === 'learn' ? (
+                <span className={s.toeTopicOnly}>{learn?.label ?? '···'}</span>
+              ) : (
+                <span className={s.toeLabel}>{toe.label}</span>
+              )}
             </motion.button>
           ))}
         </div>
@@ -149,14 +171,14 @@ export default function PawHub({ userId }: { userId: string }) {
         <motion.button
           type="button"
           className={s.mainPad}
-          onClick={() => navigate('/practice')}
+          onClick={goPracticeWeakness}
           whileHover={{ y: -3, scale: 1.015 }}
           whileTap={{ scale: 0.985 }}
         >
           <span className={s.mainGlow} aria-hidden="true" />
           <span className={s.mainIcon}><WheelIcon /></span>
           <span className={s.mainLabel}>Practice</span>
-          <span className={s.mainSub}>Your learning path</span>
+          <span className={s.mainSub}>{weakness ? weakness.label : 'Your weak spot'}</span>
         </motion.button>
       </div>
     </div>

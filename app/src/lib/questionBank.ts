@@ -29,14 +29,80 @@ export interface Question {
 
 /** The format a question should report, or undefined if untagged.
  *  Only the unambiguous structural signal (an SVG figure ⇒ a diagram vessel) is
- *  inferred; everything else must be explicitly tagged. Not a classifier. */
+ *  inferred at read-time; bulk tagging happens in `tagQuestionFormats`. */
 export function questionFormat(q: Question): FormatId | undefined {
   if (q.format) return q.format
   if (q.visual_type === 'svg') return 'diagram'
   return undefined
 }
 
-const Q: Question[] = [
+const FORMAT_ROTATION: FormatId[] = [
+  'symbolic_expression',
+  'word_problem',
+  'diagram',
+  'table',
+  'coordinate_graph',
+  'number_line',
+]
+
+/** Heuristic vessel tag — explicit `format` on a question always wins. */
+export function inferQuestionFormat(q: Question): FormatId {
+  if (q.format) return q.format
+  if (q.visual_type === 'svg' || q.visual_data) return 'diagram'
+  const text = q.question.toLowerCase()
+  if (text.includes('number line')) return 'number_line'
+  if (
+    text.includes('table below')
+    || text.includes('frequency table')
+    || (text.includes('table') && text.includes('|'))
+  ) return 'table'
+  if (
+    text.includes('graph')
+    || text.includes('coordinate')
+    || text.includes('plotted')
+    || text.includes('parabola')
+    || (text.includes('slope') && text.includes('line'))
+  ) return 'coordinate_graph'
+  const words = text.split(/\s+/).length
+  if (
+    words > 18
+    || /\b(charges?|buys?|sells?|earns?|costs?|miles? per|hours? (worked|long)|percent of)\b/.test(text)
+    || (text.includes('?') && words > 12 && /\b(if|when|how many|how much)\b/.test(text))
+  ) return 'word_problem'
+  return 'symbolic_expression'
+}
+
+/** Tag every question; rotate formats within each (concept, level) for variety. */
+export function tagQuestionFormats(questions: Question[]): Question[] {
+  const tagged = questions.map(q => ({
+    ...q,
+    format: q.format ?? inferQuestionFormat(q),
+  }))
+  const byKey = new Map<string, Question[]>()
+  for (const q of tagged) {
+    const key = `${q.conceptId}:${q.level}`
+    if (!byKey.has(key)) byKey.set(key, [])
+    byKey.get(key)!.push(q)
+  }
+  for (const group of byKey.values()) {
+    if (group.length <= 1) continue
+    const used = new Map<FormatId, number>()
+    for (const q of group) {
+      let fmt = q.format as FormatId
+      const count = used.get(fmt) ?? 0
+      if (count > 0) {
+        const alt = FORMAT_ROTATION.find(f => !used.has(f))
+          ?? FORMAT_ROTATION[count % FORMAT_ROTATION.length]
+        fmt = alt
+        q.format = alt
+      }
+      used.set(fmt, (used.get(fmt) ?? 0) + 1)
+    }
+  }
+  return tagged
+}
+
+const RAW_QUESTIONS: Question[] = [
 
   // ── LINEAR EQUATIONS ────────────────────────────────────────────────────────
 
@@ -1855,6 +1921,8 @@ const Q: Question[] = [
     examTag:'AP' },
 ]
 
+const Q: Question[] = tagQuestionFormats(RAW_QUESTIONS)
+
 // ── Concept metadata ──────────────────────────────────────────────────────────
 
 export const PRACTICE_CONCEPTS: { id: string; label: string; category: string; emoji: string }[] = [
@@ -1943,8 +2011,7 @@ export function getQuestions(
   const basePool = Q.filter(q => q.conceptId === id && q.level === level)
   // Format-targeted (the format → concept edge): prefer questions in the
   // requested vessel, falling back to the concept pool when none are tagged.
-  // The bank has no format tags yet, so this no-ops until tagging lands.
-  const formatPool = format ? basePool.filter(q => q.format === format) : []
+  const formatPool = format ? basePool.filter(q => questionFormat(q) === format) : []
   const afterFormat = formatPool.length > 0 ? formatPool : basePool
   const examPool = examType === 'General' ? [] : afterFormat.filter(q => q.examTag === examType)
   const pool     = examPool.length > 0 ? examPool : afterFormat
@@ -1958,4 +2025,10 @@ export function getQuestions(
 export function questionCount(conceptId: string, level: 1|2|3): number {
   const id = bankConceptId(conceptId)
   return Q.filter(q => q.conceptId === id && q.level === level).length
+}
+
+/** True when the bank has at least one item tagged for this (concept, vessel). */
+export function hasFormatQuestions(conceptId: string, format: FormatId): boolean {
+  const id = bankConceptId(conceptId)
+  return Q.some(q => q.conceptId === id && questionFormat(q) === format)
 }
