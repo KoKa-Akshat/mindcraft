@@ -12,6 +12,8 @@ interface Props {
   showUserControls?: boolean
   /** Hide nav links — greeting + session only */
   minimal?: boolean
+  showBooking?: boolean
+  onBooking?: () => void
 }
 
 const NAV = [
@@ -26,7 +28,7 @@ function todayLabel(): string {
   return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
 }
 
-export default function HeroBar({ greeting, name, nextSession, tutorId, showUserControls = true, minimal = false }: Props) {
+export default function HeroBar({ greeting, name, nextSession, tutorId, showUserControls = true, minimal = false, showBooking = false, onBooking }: Props) {
   const loc      = useLocation()
   const navigate = useNavigate()
   const user     = useUser()
@@ -45,21 +47,28 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
   return (
     <div className={s.strip}>
       {showUserControls && user && (
-        <div className={s.userRow}>
-          <div className={s.avatar}>
-            {(user.displayName?.[0] ?? user.email?.[0] ?? '?').toUpperCase()}
+        <div className={s.userCol}>
+          <div className={s.userRow}>
+            <div className={s.avatar}>
+              {(user.displayName?.[0] ?? user.email?.[0] ?? '?').toUpperCase()}
+            </div>
+            <button
+              className={s.signOutBtn}
+              onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
+              title="Sign out"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </button>
           </div>
-          <button
-            className={s.signOutBtn}
-            onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
-            title="Sign out"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-          </button>
+          {showBooking && onBooking && (
+            <button type="button" className={s.bookingBtn} onClick={onBooking}>
+              Booking
+            </button>
+          )}
         </div>
       )}
 

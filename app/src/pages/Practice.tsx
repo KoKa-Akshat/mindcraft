@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
 import Sidebar from '../components/Sidebar'
@@ -20,7 +20,7 @@ import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, buildBridgeRecommendations } from '../lib/bridgePractice'
 import { getExamConceptIds, getExamPrerequisites } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, type IngredientRecommendResult } from '../lib/mlApi'
-import { fetchNextConcept, fetchNextNewConcept } from '../lib/recommendNextConcept'
+import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote } from '../lib/practiceState'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
@@ -343,6 +343,7 @@ export default function Practice() {
   const user     = useUser()
   const navigate = useNavigate()
   const location = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { streak, practiceCount } = useStudentData(user)
   const fileRef  = useRef<HTMLInputElement>(null)
   const answerInputRef = useRef<HTMLInputElement>(null)
@@ -668,6 +669,31 @@ export default function Practice() {
       window.history.replaceState({}, '')
     } else if (state?.examHelp) {
       window.history.replaceState({}, '')
+    } else if (searchParams.get('homeworkHelp') === '1') {
+      setMode('solver')
+      setSPhase('input')
+      setSearchParams({}, { replace: true })
+    } else if (searchParams.get('learnNext') === '1') {
+      void fetchPracticeHubRecommendations(user.uid).then(rec => {
+        const target = rec.weakness ?? rec.learn
+        if (target) {
+          setMode('practice')
+          setMissionType('weakness')
+          setConcept(target.conceptId)
+          setLevel(getRecommendedLevel(target.conceptId))
+          setPPhase('level')
+        } else {
+          setMode('practice')
+          setAssessConcepts([])
+          setPPhase('path')
+        }
+      })
+      setSearchParams({}, { replace: true })
+    } else if (searchParams.get('mode') === 'practice') {
+      setMode('practice')
+      setAssessConcepts([])
+      setPPhase('path')
+      setSearchParams({}, { replace: true })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -1732,21 +1758,13 @@ export default function Practice() {
                       </div>
                     )}
 
-                    <div className={s.actionRow}>
-                      {!checked ? (
-                        <button
-                          className={s.checkBtn}
-                          onClick={checkAnswer}
-                          disabled={selected === null && !typedAnswer.trim()}
-                        >
-                          Check Answer →
-                        </button>
-                      ) : (
+                    {checked && (
+                      <div className={s.actionRow}>
                         <button className={s.nextBtn} onClick={nextQuestion}>
                           {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
                         </button>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

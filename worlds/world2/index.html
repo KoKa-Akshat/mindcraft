@@ -40,23 +40,10 @@
     </div>
 
     <!-- View toggle: leave the 3D world for the plain web dashboard -->
-    <div id="mc-top-actions"
-         style="position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;
-                align-items:flex-end;gap:7px;width:124px;font:700 13px system-ui,sans-serif">
-      <a id="mc-web-toggle" href="https://mindcraft-93858.web.app/dashboard"
-         style="display:flex;gap:4px;width:100%;box-sizing:border-box;padding:4px;border-radius:10px;background:rgba(255,255,255,0.08);
-                border:1px solid rgba(255,255,255,0.12);text-decoration:none;backdrop-filter:blur(4px);
-                box-shadow:0 10px 30px rgba(0,0,0,0.22)">
-        <span style="flex:1;display:flex;align-items:center;justify-content:center;min-height:34px;border-radius:8px;background:#C4F547;color:#10231a">3D</span>
-        <span style="flex:1;display:flex;align-items:center;justify-content:center;min-height:34px;border-radius:8px;color:rgba(255,255,255,0.75)">Web</span>
-      </a>
-      <a id="mc-booking-link" href="https://mindcraft-93858.web.app/book"
-         style="display:flex;align-items:center;justify-content:center;width:100%;min-height:38px;
-                box-sizing:border-box;padding:0 14px;border-radius:10px;background:#C4F547;
-                border:1px solid rgba(196,245,71,0.42);color:#10231a;font-weight:900;
-                text-decoration:none;backdrop-filter:blur(4px);
-                box-shadow:0 10px 30px rgba(0,0,0,0.22),0 0 22px rgba(196,245,71,0.24)">
-        Booking
+    <div id="mc-top-actions" class="mc-top-actions">
+      <a id="mc-web-toggle" class="mc-view-toggle" href="https://mindcraft-93858.web.app/dashboard">
+        <span class="mc-toggle-active">3D</span>
+        <span class="mc-toggle-inactive">Web</span>
       </a>
     </div>
 
@@ -82,19 +69,32 @@
     </div>
 
     <button class="start" id="mc-start-btn">Enter World →</button>
+
+    <!-- Bottom bar: projects hint + booking -->
+    <div id="mc-bottom-bar" class="mc-bottom-bar">
+      <div id="mc-hint" class="mc-hint-btn" onclick="window.MC_onProjectsOpen&&window.MC_onProjectsOpen()">
+        <p>Click on Projects</p>
+      </div>
+      <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book">Booking</a>
+    </div>
+
     <script>
+      (function () {
+        var APP_BASE = window.location.hostname === 'localhost'
+          ? 'http://localhost:4321'
+          : 'https://mindcraft-93858.web.app';
+        var webToggle = document.getElementById('mc-web-toggle');
+        var bookingLink = document.getElementById('mc-booking-link');
+        if (webToggle) webToggle.href = APP_BASE + '/dashboard';
+        if (bookingLink) bookingLink.href = APP_BASE + '/book';
+      })();
       document.getElementById('mc-start-btn').addEventListener('click', function() {
         setTimeout(function() {
           document.getElementById('mc-badge').classList.add('show');
-          document.getElementById('mc-hint').classList.add('show');
+          document.getElementById('mc-bottom-bar').classList.add('show');
         }, 1800);
       });
     </script>
-
-    <!-- MindCraft hint overlay (shown after entering) -->
-    <div id="mc-hint" onclick="window.MC_onProjectsOpen&&window.MC_onProjectsOpen()" style="cursor:pointer">
-      <p>Click on Projects</p>
-    </div>
 
     <!-- Diagnostic overlay (projects / diagnostics screen) -->
     <div id="mc-diag" aria-hidden="true">

@@ -79,11 +79,19 @@
   box-shadow: 0 10px 24px rgba(196, 245, 71, 0.20);
 }
 
-.userRow {
+.userCol {
   position: absolute;
   top: 18px;
   right: 20px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+  min-width: 0;
+}
+
+.userRow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -132,6 +140,27 @@
 .signOutBtn svg {
   width: 15px;
   height: 15px;
+}
+
+.bookingBtn {
+  width: 124px;
+  min-height: 38px;
+  border: 1px solid rgba(196, 245, 71, 0.42);
+  border-radius: 10px;
+  padding: 0 14px;
+  background: #C4F547;
+  color: #10231a;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.22),
+    0 0 22px rgba(196, 245, 71, 0.24);
+  backdrop-filter: blur(4px);
+}
+
+.bookingBtn:hover {
+  filter: brightness(1.05);
 }
 
 .bottomRow {
@@ -293,8 +322,9 @@
 }
 
 .bottomRowMinimal {
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 240px) auto;
   align-items: end;
+  gap: 24px;
 }
 
 @media (max-width: 1120px) {

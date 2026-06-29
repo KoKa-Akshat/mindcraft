@@ -3222,12 +3222,16 @@
 }
 
 :global(body.mc-matte-backdrop) {
-  background: #0a0a0a !important;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(196, 245, 71, 0.05), transparent 55%),
+    linear-gradient(180deg, #0c1218 0%, #121820 45%, #0a0e14 100%) !important;
 }
 
-/* Matte black stage — lesson whitepaper, level pick, questions */
+/* Homework-help surface — lesson whitepaper, level pick, questions */
 .matteShell {
-  background: #0a0a0a;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(196, 245, 71, 0.05), transparent 55%),
+    linear-gradient(180deg, #0c1218 0%, #121820 45%, #0a0e14 100%);
   position: relative;
 }
 
@@ -3237,9 +3241,7 @@
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background:
-    radial-gradient(ellipse 85% 55% at 50% 0%, rgba(255, 255, 255, 0.035), transparent 58%),
-    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(84, 185, 72, 0.04), transparent 55%);
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.02), transparent 50%);
 }
 
 .matteShell > * {
@@ -3247,12 +3249,59 @@
   z-index: 1;
 }
 
-.matteShell .exploreCard {
-  background: #f7f7f5;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow:
-    0 40px 90px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+/* Shared hw-card surface (matches Dashboard .hwCard) */
+.matteShell .exploreCard,
+.matteShell .questionCard {
+  background: rgba(14, 14, 22, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.matteShell .exploreName {
+  color: #ffffff;
+}
+
+.matteShell .exploreTagline,
+.matteShell .exploreSectionTitle {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.matteShell .exploreList li {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.matteShell .exploreList li::before {
+  color: #c4f547;
+}
+
+.matteShell .watchOutList li {
+  color: #fdba74;
+}
+
+.matteShell .watchOutList li::before {
+  color: #fb923c;
+}
+
+.matteShell .exploreFormula {
+  background: rgba(196, 245, 71, 0.08);
+  border-color: rgba(196, 245, 71, 0.22);
+  color: #c4f547;
+}
+
+.matteShell .exploreExample {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.matteShell .exampleQ {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.matteShell .exampleA {
+  color: #a8e063;
+  border-top-color: rgba(255, 255, 255, 0.08);
 }
 
 .matteShell .backLink {
@@ -3269,6 +3318,47 @@
 
 .matteShell .sessionWrap {
   padding-top: 4px;
+}
+
+.matteShell .answerRow {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.matteShell .choice {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.matteShell .choice:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(196, 245, 71, 0.35);
+}
+
+.matteShell .choiceSelected {
+  background: rgba(59, 130, 246, 0.18);
+  border-color: rgba(96, 165, 250, 0.55);
+}
+
+.matteShell .choiceLetter {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.matteShell .choiceSelected .choiceLetter {
+  background: rgba(59, 130, 246, 0.35);
+  color: #ffffff;
+}
+
+.matteShell .hintCardInline {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+.matteShell .questionVisual {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .lessonPage {

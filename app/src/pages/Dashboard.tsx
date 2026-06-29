@@ -15,14 +15,13 @@ function greeting() {
 }
 
 /** "3D" leaves for the immersive world; "Web" is this paw dashboard. */
-function ViewToggle({ onPick3D, onBooking }: { onPick3D: () => void; onBooking: () => void }) {
+function ViewToggle({ onPick3D }: { onPick3D: () => void }) {
   return (
     <div className={s.topActions}>
       <div className={s.viewToggle} aria-label="Dashboard view switcher">
         <button className={s.toggleBtn} onClick={onPick3D}>3D</button>
         <button className={`${s.toggleBtn} ${s.toggleActive}`} disabled>Web</button>
       </div>
-      <button className={s.bookingBtn} onClick={onBooking}>Booking</button>
     </div>
   )
 }
@@ -60,13 +59,15 @@ export default function Dashboard() {
           tutorId={data.tutorId}
           showUserControls
           minimal
+          showBooking
+          onBooking={() => navigate('/book')}
         />
 
         {(!diagChecked || data.loading) ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <>
-            <ViewToggle onPick3D={goTo3DWorld} onBooking={() => navigate('/book')} />
+            <ViewToggle onPick3D={goTo3DWorld} />
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
