@@ -26,11 +26,11 @@
     <meta name="application-name" content="MindCraft" />
     <meta name="msapplication-TileColor" content="#58CC02" />
     <meta name="theme-color" content="#1a1a1a" />
-    <link href="main.css?v=20260629-world-v7" rel="stylesheet" />
-    <link href="mc-diagnostic.css?v=20260629-world-v7" rel="stylesheet" />
-    <script src="mc-world-chrome.js?v=20260629-world-v7"></script>
+    <link href="main.css?v=20260629-world-v8" rel="stylesheet" />
+    <link href="mc-diagnostic.css?v=20260629-world-v8" rel="stylesheet" />
+    <script src="mc-world-chrome.js?v=20260629-world-v8"></script>
     <script defer src="bundle.mc-v4.js"></script>
-    <script defer src="mc-world-nav.js?v=20260629-world-v7"></script>
+    <script defer src="mc-world-nav.js?v=20260629-world-v8"></script>
   </head>
   <body>
     <canvas class="webgl"></canvas>
@@ -70,15 +70,15 @@
 
     <button class="start" id="mc-start-btn">Enter World →</button>
 
-    <!-- Click me cue — hidden until Enter World, disappears after one click -->
-    <button type="button" id="mc-click-me" style="display:none" aria-label="Get started">
-      Click me
+    <!-- Arrow cue next to Projects sign — hidden until Enter World, disappears after click -->
+    <button type="button" id="mc-click-me" style="display:none" aria-label="Click to open Projects">
+      ←
     </button>
 
     <div id="mc-diag" aria-hidden="true">
       <div id="mc-diag-backdrop"></div>
       <div id="mc-diag-panel"></div>
     </div>
-    <script src="mc-diagnostic.js?v=20260629-world-v7" defer></script>
+    <script src="mc-diagnostic.js?v=20260629-world-v8" defer></script>
   </body>
 </html>

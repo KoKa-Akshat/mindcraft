@@ -38,14 +38,25 @@
       revealChrome()
     }
 
-    // "Click me" → diagnostic, one-time per session
+    // Arrow cue → open Projects (same as clicking the sign), one-time per session
+    function hideArrow() {
+      if (clickMe) clickMe.style.display = 'none'
+      sessionStorage.setItem('mc-clicked-me', '1')
+    }
+
     if (clickMe && !clickMe.__mcWired) {
       clickMe.__mcWired = true
       clickMe.addEventListener('click', function () {
-        sessionStorage.setItem('mc-clicked-me', '1')
-        clickMe.style.display = 'none'
-        window.location.href = APP + '/diagnostic'
+        hideArrow()
+        if (window.MC_openProjectsSign) window.MC_openProjectsSign()
       })
+    }
+
+    // Also hide the arrow when the user clicks Projects sign directly
+    var _prevOnProjectsOpen = window.MC_onProjectsOpen
+    window.MC_onProjectsOpen = function () {
+      hideArrow()
+      if (_prevOnProjectsOpen) _prevOnProjectsOpen()
     }
   }
 

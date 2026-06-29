@@ -537,44 +537,36 @@ h1 {
     filter: brightness(1.05);
 }
 
-/* "Click me" cue — one-time prompt anchored left of Projects sign */
+/* Arrow cue — positioned to the right of the Projects sign */
 #mc-click-me {
     position: fixed;
-    left: calc(50% - 230px);
-    top: 36%;
+    left: 47%;
+    top: 37%;
+    transform: translateY(-50%);
     z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 18px;
-    height: 38px;
-    border: 2px solid rgba(255, 79, 216, 0.7);
-    border-radius: 10px;
-    background: rgba(20, 6, 28, 0.72);
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
     color: #ff4fd8;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
+    font-size: 28px;
     font-weight: 900;
-    letter-spacing: 0.01em;
+    line-height: 1;
     cursor: pointer;
-    backdrop-filter: blur(6px);
-    box-shadow:
-        0 0 16px rgba(255, 79, 216, 0.45),
-        0 0 40px rgba(196, 245, 71, 0.12);
-    animation: mc-click-me-pulse 1.8s ease-in-out infinite;
     pointer-events: auto;
+    filter:
+        drop-shadow(0 0 8px rgba(255, 79, 216, 1))
+        drop-shadow(0 0 20px rgba(255, 79, 216, 0.5));
+    animation: mc-arrow-nudge 1s ease-in-out infinite;
 }
 
-#mc-click-me:hover {
-    background: rgba(255, 79, 216, 0.18);
-    box-shadow:
-        0 0 24px rgba(255, 79, 216, 0.7),
-        0 0 50px rgba(196, 245, 71, 0.18);
-}
-
-@keyframes mc-click-me-pulse {
-    0%, 100% { opacity: 0.9; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.025); }
+@keyframes mc-arrow-nudge {
+    0%, 100% { transform: translateY(-50%) translateX(0); opacity: 0.85; }
+    50% { transform: translateY(-50%) translateX(-6px); opacity: 1; }
 }
 
 @media (max-width: 768px) {
@@ -585,7 +577,7 @@ h1 {
     .mc-hint-btn,
     .mc-booking-btn { height: 32px; min-height: 32px; padding: 0 10px; font-size: 12px; }
     .mc-bottom-bar { flex-direction: row; gap: 6px; }
-    #mc-click-me { left: calc(50% - 172px); top: 35%; }
+    #mc-click-me { left: 44%; top: 36%; }
 }
 
 .start {
