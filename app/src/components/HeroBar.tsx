@@ -98,10 +98,12 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
             <span className={s.brandText}>Mind<span>Craft</span></span>
           </Link>
           <p className={s.kicker}>{todayLabel()}</p>
-          <h1 className={s.greeting}>
-            {greeting}, <em>{name}</em>
-          </h1>
-          {minimal && sessionBlock}
+          <div className={minimal ? s.greetingRow : undefined}>
+            <h1 className={s.greeting}>
+              {greeting}, <em>{name}</em>
+            </h1>
+            {minimal && sessionBlock}
+          </div>
         </div>
 
         {!minimal && (

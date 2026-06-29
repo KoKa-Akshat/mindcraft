@@ -143,11 +143,11 @@
 }
 
 .bookingBtn {
-  width: 124px;
-  min-height: 38px;
+  width: auto;
+  min-height: 34px;
   border: 1px solid rgba(196, 245, 71, 0.42);
   border-radius: 10px;
-  padding: 0 8px;
+  padding: 0 14px;
   background: #C4F547;
   color: #10231a;
   font-size: 13px;
@@ -203,6 +203,13 @@
 .greeting em {
   color: #C4F547;
   font-style: normal;
+}
+
+.greetingRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .sessionPanel {
