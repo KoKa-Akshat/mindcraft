@@ -1,15 +1,12 @@
 .shell {
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(196, 245, 71, 0.06), transparent 55%),
-    radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.04), transparent 40%),
-    linear-gradient(180deg, #0c1218 0%, #121820 45%, #0a0e14 100%);
   min-height: 100vh;
+  background: var(--path-page-bg);
 }
 
 .page {
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 24px 32px 60px;
-  max-width: 980px;
+  padding: 24px 32px 72px;
 }
 
 .topActions {
@@ -92,6 +89,92 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(340px, 42%) minmax(0, 1fr);
+  gap: 32px 48px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.pawCol {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 36px;
+}
+
+.pawWrap {
+  width: 100%;
+  max-width: 460px;
+}
+
+.pawWrap :global(.compact .toe) {
+  width: 96px;
+  max-width: 96px;
+  padding: 10px;
+}
+
+.pawWrap :global(.compact .toeIcon) {
+  width: 26px;
+  height: 26px;
+}
+
+.pawWrap :global(.compact .toeLabel) {
+  font-size: 11px;
+}
+
+.pawWrap :global(.compact .mainPad) {
+  width: 248px;
+  height: 248px;
+  padding: 20px;
+}
+
+.pawWrap :global(.compact .mainLabel) {
+  font-size: 26px;
+}
+
+.pawWrap :global(.compact .mainIcon) {
+  width: 42px;
+  height: 42px;
+}
+
+.pawWrap :global(.toesSide) {
+  width: 124px;
+  gap: 12px;
+}
+
+.pawWrap :global(.pawSide) {
+  gap: 22px;
+}
+
+.pathCol {
+  min-width: 0;
+  padding-left: 0;
+}
+
+@media (max-width: 960px) {
+  .stage {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .pawCol {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .pawWrap {
+    max-width: 360px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .page { padding: 18px 16px 48px; }
 }
 
 .scene {

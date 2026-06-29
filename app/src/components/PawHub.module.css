@@ -212,6 +212,75 @@
   font-family: var(--f-body);
 }
 
+/* Side layout — toes arc on the left, practice pad on the right */
+.stageSide {
+  min-height: 0;
+  padding: 0;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.pawSide {
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+  width: auto;
+}
+
+.toesSide {
+  flex-direction: column;
+  width: 112px;
+  height: auto;
+  gap: 10px;
+  margin: 0;
+  align-items: flex-end;
+}
+
+.pawSide .toe_learn,
+.pawSide .toe_notes {
+  margin-right: 4px;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+
+.pawSide .toe_homework,
+.pawSide .toe_gps {
+  margin-right: 34px;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+
+.compact .toe {
+  width: 86px;
+  max-width: 86px;
+  padding: 9px;
+  gap: 5px;
+}
+
+.compact .toeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.compact .toeLabel {
+  font-size: 10px;
+}
+
+.compact .mainPad {
+  width: 210px;
+  height: 210px;
+  padding: 18px;
+}
+
+.compact .mainLabel {
+  font-size: 24px;
+}
+
+.compact .mainIcon {
+  width: 38px;
+  height: 38px;
+}
+
 @media (max-width: 640px) {
   .paw { gap: 0; }
   .toes { gap: 10px; max-width: 350px; height: 104px; margin-bottom: -2px; }

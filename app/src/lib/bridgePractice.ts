@@ -15,6 +15,14 @@ export function getRecommendedLevel(confidence: Confidence | undefined): 1 | 2 |
   return 3
 }
 
+/** Levels offered after gap-scan self-assessment. */
+export function allowedLevels(confidence: Confidence | undefined): Array<1 | 2 | 3> {
+  if (confidence === 'hard') return [1]
+  if (confidence === 'kinda') return [2]
+  if (confidence === 'easy') return [3]
+  return [1, 2, 3]
+}
+
 export function getAtomicPrereqPath(
   targetId: string,
   sourceIds: Set<string>,

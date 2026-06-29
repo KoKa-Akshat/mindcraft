@@ -89,6 +89,7 @@
 
 .shell {
   position: relative;
+  overflow: hidden;
   z-index: 2;
   width: min(1120px, 100%);
   border: 1px solid rgba(255, 255, 255, 0.86);
@@ -104,7 +105,21 @@
   backdrop-filter: blur(22px);
 }
 
+.shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 254, 250, 0.97) 0%, rgba(255, 254, 250, 0.88) 42%, rgba(255, 254, 250, 0.72) 100%),
+    url('../assets/login-background.jpg') right 8% center / min(52%, 480px) auto no-repeat;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+}
+
 .layout {
+  position: relative;
+  z-index: 1;
   min-height: min(640px, calc(100vh - 150px));
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(350px, 430px);
@@ -118,7 +133,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 18px 0 16px clamp(12px, 1.6vw, 22px);
+  padding: 18px 0 16px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .brushArt {
@@ -172,17 +197,7 @@
   opacity: 0.36;
 }
 
-.wordmark,
-.heroTitle,
-.heroCopy,
-.valueGrid,
-.quote {
-  position: relative;
-  z-index: 1;
-}
-
 .wordmark {
-  margin-left: clamp(54px, 9vw, 142px);
   width: fit-content;
   color: var(--login-forest);
   font-size: clamp(2.2rem, 4vw, 3.05rem);
@@ -195,7 +210,7 @@
 .wmCraft { color: var(--login-brand); }
 
 .heroTitle {
-  margin: 18px 0 0 clamp(54px, 9vw, 142px);
+  margin: 18px 0 0;
   max-width: 480px;
   color: var(--login-forest);
   font-size: clamp(1.42rem, 2vw, 2rem);
@@ -205,7 +220,7 @@
 }
 
 .heroCopy {
-  margin: 14px 0 0 clamp(54px, 9vw, 142px);
+  margin: 14px 0 0;
   max-width: 390px;
   color: rgba(52, 52, 52, 0.68);
   font-size: 0.98rem;
@@ -224,14 +239,15 @@
 .valueGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 2vw, 28px);
+  gap: clamp(14px, 2vw, 24px);
+  width: 100%;
   max-width: 520px;
-  margin: 42px 0 38px clamp(38px, 6vw, 96px);
+  margin: 36px 0 32px;
 }
 
 .valueCard {
   min-width: 0;
-  text-align: center;
+  text-align: left;
 }
 
 .valueIcon {
@@ -267,40 +283,45 @@
 }
 
 .valueCard p {
-  margin: 7px auto 0;
-  max-width: 126px;
+  margin: 7px 0 0;
+  max-width: 140px;
   color: rgba(52, 52, 52, 0.58);
   font-size: 0.74rem;
   line-height: 1.45;
 }
 
 .quote {
-  max-width: 340px;
-  margin: 0 0 0 clamp(54px, 9vw, 142px);
-  display: grid;
-  grid-template-columns: 28px 1fr;
-  gap: 12px;
-  align-items: start;
+  margin: 0;
+  padding: 12px 0 12px 16px;
+  max-width: 320px;
+  border-left: 3px solid var(--login-brand);
   color: rgba(6, 77, 54, 0.82);
-  font-size: 0.84rem;
-  font-weight: 800;
-  line-height: 1.42;
-}
-
-.quote span {
-  color: var(--login-brand);
-  font-size: 2.5rem;
-  line-height: 0.9;
-  font-weight: 950;
+  font-size: 0.86rem;
+  font-style: normal;
+  font-weight: 750;
+  line-height: 1.5;
 }
 
 .loginWrap {
+  position: relative;
   display: flex;
   align-items: center;
 }
 
+.loginWrap::before {
+  content: "";
+  position: absolute;
+  inset: 8% -6% 8% 20%;
+  pointer-events: none;
+  border-radius: 28px;
+  background: url('../assets/login-background.jpg') center / cover no-repeat;
+  opacity: 0.06;
+  filter: saturate(0.85);
+}
+
 .cardStack {
   position: relative;
+  z-index: 1;
   width: 100%;
 }
 
@@ -683,6 +704,10 @@
     padding: 18px 0 8px;
   }
 
+  .heroContent {
+    max-width: none;
+  }
+
   .brushArt {
     width: 300px;
     height: 310px;
@@ -693,7 +718,7 @@
   .heroTitle,
   .heroCopy,
   .quote {
-    margin-left: clamp(72px, 16vw, 130px);
+    margin-left: 0;
   }
 
   .valueGrid {

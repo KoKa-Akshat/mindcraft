@@ -27,22 +27,26 @@
     <meta name="msapplication-TileColor" content="#58CC02" />
     <meta name="theme-color" content="#1a1a1a" />
     <script>if('serviceWorker'in navigator)navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(sw){sw.unregister()})})</script>
-    <link href="main.css?v=20260629-world-v10" rel="stylesheet" />
-    <link href="mc-diagnostic.css?v=20260629-world-v10" rel="stylesheet" />
-    <script src="mc-world-chrome.js?v=20260629-world-v10"></script>
+    <link href="main.css?v=20260629-world-v11" rel="stylesheet" />
+    <link href="mc-diagnostic.css?v=20260629-world-v11" rel="stylesheet" />
+    <script src="mc-world-chrome.js?v=20260629-world-v11"></script>
     <script defer src="bundle.mc-v4.js"></script>
-    <script defer src="mc-world-nav.js?v=20260629-world-v10"></script>
+    <script defer src="mc-world-nav.js?v=20260629-world-v11"></script>
   </head>
   <body>
     <canvas class="webgl"></canvas>
     <div class="overlay"></div>
 
+    <!-- Logo: always visible, never changes size -->
     <div id="mc-badge">
       <span class="mc-logo">Mind<span class="mc-craft">Craft</span></span>
-      <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book" style="display:none">Booking</a>
     </div>
 
-    <div id="mc-top-actions" class="mc-top-actions">
+    <!-- Booking: separate fixed element, shown only after diagnostic done -->
+    <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book" style="display:none">Booking</a>
+
+    <!-- 3D|Web toggle: hidden until diagnostic done -->
+    <div id="mc-top-actions" class="mc-top-actions" style="display:none">
       <div class="mc-view-toggle" aria-label="Dashboard view switcher">
         <button type="button" class="mc-toggle-active" disabled aria-current="page">3D</button>
         <a id="mc-web-toggle" class="mc-toggle-inactive" href="https://mindcraft-93858.web.app/dashboard">Web</a>
@@ -80,6 +84,6 @@
       <div id="mc-diag-backdrop"></div>
       <div id="mc-diag-panel"></div>
     </div>
-    <script src="mc-diagnostic.js?v=20260629-world-v10" defer></script>
+    <script src="mc-diagnostic.js?v=20260629-world-v11" defer></script>
   </body>
 </html>

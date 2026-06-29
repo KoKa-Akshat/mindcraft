@@ -30,6 +30,25 @@ export async function markDiagnosticComplete(
   } catch { /* fail soft */ }
 }
 
+export async function loadDiagnostic(
+  uid: string,
+): Promise<{ exam: string | null; confidenceMap: Record<string, string> } | null> {
+  try {
+    const snap = await getDoc(doc(db, 'users', uid))
+    const diagnostic = snap.data()?.diagnostic as {
+      exam?: string | null
+      confidenceMap?: Record<string, string>
+    } | undefined
+    if (!diagnostic) return null
+    return {
+      exam: diagnostic.exam ?? null,
+      confidenceMap: diagnostic.confidenceMap ?? {},
+    }
+  } catch {
+    return null
+  }
+}
+
 export async function isDiagnosticComplete(uid: string): Promise<boolean> {
   try {
     const snap = await getDoc(doc(db, 'users', uid))

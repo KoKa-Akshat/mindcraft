@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
+import { usePracticePathQueue } from '../lib/practicePathQueue'
 import { isDiagnosticComplete } from '../lib/practiceState'
 import { worldUrl } from '../lib/siteUrls'
 import HeroBar from '../components/HeroBar'
 import PawHub from '../components/PawHub'
+import PracticeLearningPathMini from '../components/PracticeLearningPathMini'
 import s from './Dashboard.module.css'
 
 function greeting() {
@@ -14,7 +16,6 @@ function greeting() {
   return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'
 }
 
-/** "3D" leaves for the immersive world; "Web" is this paw dashboard. */
 function ViewToggle({ onPick3D }: { onPick3D: () => void }) {
   return (
     <div className={s.topActions}>
@@ -27,19 +28,22 @@ function ViewToggle({ onPick3D }: { onPick3D: () => void }) {
 }
 
 export default function Dashboard() {
-  const user     = useUser()
+  const user = useUser()
   const navigate = useNavigate()
-  const data     = useStudentData(user)
-  const uid      = user?.uid ?? ''
+  const data = useStudentData(user)
+  const uid = user?.uid ?? ''
+  const path = usePracticePathQueue(uid)
+
+  const [diagChecked, setDiagChecked] = useState(false)
 
   function goTo3DWorld() {
     localStorage.setItem('dashboardView', '3d')
     const base = worldUrl(uid)
     window.location.href = diagChecked ? `${base}&diagDone=1` : base
   }
+
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
 
-  const [diagChecked, setDiagChecked] = useState(false)
   useEffect(() => {
     let cancelled = false
     isDiagnosticComplete(user.uid).then(done => {
@@ -69,13 +73,31 @@ export default function Dashboard() {
         ) : (
           <>
             <ViewToggle onPick3D={goTo3DWorld} />
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: 'spring', stiffness: 80, damping: 18, delay: 0.08 }}
-            >
-              <PawHub userId={uid} />
-            </motion.div>
+
+            <div className={s.stage}>
+              <div className={s.pawCol}>
+                <motion.div
+                  className={s.pawWrap}
+                  initial={{ opacity: 0, x: -32 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ type: 'spring', stiffness: 70, damping: 16 }}
+                >
+                  <PawHub userId={uid} layout="side" compact />
+                </motion.div>
+              </div>
+
+              <div className={s.pathCol}>
+                <PracticeLearningPathMini
+                  concepts={path.pathConcepts}
+                  activeConceptId={path.activeConceptId}
+                  progressPct={path.progressPct}
+                  completedCount={path.completedOnPath}
+                  totalCount={path.pathQueue.length}
+                  exam={path.exam}
+                  loading={path.loading}
+                />
+              </div>
+            </div>
           </>
         )}
       </main>

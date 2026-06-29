@@ -27,6 +27,7 @@ import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations 
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic } from '../lib/practiceState'
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
+import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
@@ -36,10 +37,6 @@ const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
 const PRACTICE_DRAFT_VERSION = 1
 const PATH_SLOT_COUNT = 6
-
-function pathMasteredStorageKey(uid: string) {
-  return `mc-path-mastered-${uid}`
-}
 
 type PracticePhase =
   | 'onboard' | 'exam-pick' | 'confidence' | 'building'
@@ -527,6 +524,7 @@ export default function Practice() {
       if (prev.has(conceptId)) return prev
       const next = new Set(prev).add(conceptId)
       localStorage.setItem(pathMasteredStorageKey(user.uid), JSON.stringify([...next]))
+      notifyPracticePathUpdated()
       return next
     })
   }
@@ -754,6 +752,7 @@ export default function Practice() {
     void seedAssessment(user.uid, updated)
     invalidateKnowledgeGraph(user.uid)
     void markDiagnosticComplete(user.uid, { exam, confidenceMap: updated })
+    notifyPracticePathUpdated()
     setHideCorrectness(false)
     setConfidenceQueue([])
     setPPhase('building')

@@ -23,6 +23,7 @@
   function wireChrome() {
     var webToggle  = document.getElementById('mc-web-toggle')
     var bookingLink = document.getElementById('mc-booking-link')
+    var topActions = document.getElementById('mc-top-actions')
     var badge      = document.getElementById('mc-badge')
     var clickMe    = document.getElementById('mc-click-me')
     var startBtn   = document.getElementById('mc-start-btn')
@@ -31,18 +32,24 @@
     if (bookingLink) bookingLink.href = APP + '/book'
     if (badge)       badge.classList.add('show')
 
-    // Reveal booking after Enter World; arrow only if diagnostic not yet done
+    // After Enter World:
+    //   - If diagnostic done: show Booking + 3D|Web, no arrow
+    //   - If not done: show arrow only
     function revealChrome() {
-      if (bookingLink) bookingLink.style.display = 'inline-flex'
-      if (clickMe && !diagDone && !sessionStorage.getItem('mc-clicked-me')) {
-        clickMe.style.display = 'flex'
+      if (diagDone) {
+        if (bookingLink) bookingLink.style.display = 'inline-flex'
+        if (topActions) topActions.style.display = 'flex'
+      } else {
+        if (clickMe && !sessionStorage.getItem('mc-clicked-me')) {
+          clickMe.style.display = 'flex'
+        }
       }
     }
 
     if (startBtn) {
       startBtn.addEventListener('click', function () {
         setTimeout(revealChrome, 900)
-        // Auto-play sound after Enter World (simulates pressing M)
+        // Auto-play sound (simulates pressing M)
         setTimeout(function () {
           ;[document, window].forEach(function (t) {
             t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
@@ -53,7 +60,7 @@
       revealChrome()
     }
 
-    // Arrow → go to diagnostic (pre-diagnostic only)
+    // Arrow → go to diagnostic (pre-diagnostic flow)
     if (clickMe && !clickMe.__mcWired) {
       clickMe.__mcWired = true
       clickMe.addEventListener('click', function () {
@@ -63,7 +70,7 @@
       })
     }
 
-    // If student just completed diagnostic, auto-enter the world
+    // If arriving from ?diagDone=1 (from web dashboard 3D button), auto-enter
     if (diagJustDone && startBtn) {
       var obs = new MutationObserver(function () {
         if (startBtn.classList.contains('fadeIn')) {
