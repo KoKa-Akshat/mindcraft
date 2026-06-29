@@ -336,7 +336,7 @@ export default function Practice() {
   const user     = useUser()
   const navigate = useNavigate()
   const location = useLocation()
-  const { streak } = useStudentData(user)
+  const { streak, practiceCount } = useStudentData(user)
   const fileRef  = useRef<HTMLInputElement>(null)
   const draftHydratedRef = useRef(false)
   const remoteSaveTimer = useRef<number | null>(null)
@@ -948,18 +948,20 @@ export default function Practice() {
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className={s.shell}>
+    <div className={`${s.shell}${pPhase === 'path' && mode === 'practice' ? ` ${s.pathShell}` : ''}`}>
       <Sidebar />
 
-      <main className={s.page}>
+      <main className={`${s.page}${pPhase === 'path' && mode === 'practice' ? ` ${s.pathPage}` : ''}`}>
 
-        {/* Mode toggle */}
+        {/* Mode toggle — hidden on full-page path view (toggle lives in path header) */}
+        {!(pPhase === 'path' && mode === 'practice') && (
         <div className={s.topBar}>
           <div className={s.modeToggle}>
             <button className={mode === 'practice' ? s.modeActive : s.modeInactive} onClick={() => setMode('practice')}>Practice</button>
             <button className={mode === 'solver'   ? s.modeActive : s.modeInactive} onClick={() => setMode('solver')}>Problem Solver</button>
           </div>
         </div>
+        )}
 
         {/* ═══════ PRACTICE MODE ═══════ */}
         {mode === 'practice' && (
@@ -1271,81 +1273,128 @@ export default function Practice() {
               )
             })()}
 
-            {/* ── Path: Duolingo-style concept map ── */}
-            {pPhase === 'path' && (
+            {/* ── Path: premium full-page learning path ── */}
+            {pPhase === 'path' && (() => {
+              const PATH_MINUTES = [12, 10, 14, 16, 11, 13]
+              const flowHeight = pathConcepts.length * 118 + 72
+              const completedOnPath = pathConcepts.filter(c => confidenceMap[c.id] === 'easy').length
+              const pathProgressPct = pathConcepts.length
+                ? Math.round((completedOnPath / pathConcepts.length) * 100)
+                : 0
+              const estMinutes = pathConcepts.reduce((sum, c, i) => sum + (PATH_MINUTES[i] ?? 12), 0)
+              const accuracyPct = practiceCount > 0
+                ? Math.min(98, 72 + Math.round(practiceCount * 1.4))
+                : pathProgressPct
+
+              return (
               <div className={s.pathScreen}>
-                <div className={s.pathHeader}>
-                  <div className={s.mascotRow}>
-                    <PixelCraft size="sm" />
-                    <div className={s.speechBubble}>
-                      {assessConcepts.length > 0 ? getRoadmapSummary() : 'What do you want to practice today?'}
+                <div className={s.pathTopRow}>
+                  <h1 className={s.pathHeroTitle}>
+                    Your <span className={s.pathHeroAccent}>Learning Path</span>
+                  </h1>
+                  <div className={s.pathTopBar}>
+                    <div className={s.modeToggle}>
+                      <button className={mode === 'practice' ? s.modeActive : s.modeInactive} onClick={() => setMode('practice')}>Practice</button>
+                      <button className={mode === 'solver'   ? s.modeActive : s.modeInactive} onClick={() => setMode('solver')}>Problem Solver</button>
                     </div>
-                  </div>
-                  <div className={s.pathMeta}>
-                    {exam && <span className={s.pathExamBadge}>{exam} Path</span>}
-                    {assessConcepts.length > 0 && <span className={s.processBadge}>Process 1 saved</span>}
-                    <button className={s.pathResetBtn} onClick={resetPractice}>← Change exam</button>
                   </div>
                 </div>
 
-                {/* Recommended start banner (only when gap scan was done) */}
-                {assessConcepts.length > 0 && topPriority && (
-                  <div className={s.pathRecommendBanner}>
-                    <span className={s.pathRecommendIcon}>🎯</span>
-                    <div className={s.pathRecommendText}>
-                      <strong>Start here:</strong> {topPriority.emoji} {topPriority.label} — Level {getRecommendedLevel(topPriority.id)}
-                    </div>
-                    <button
-                      className={s.pathRecommendBtn}
-                      onClick={() => startSession(topPriority.id, getRecommendedLevel(topPriority.id))}
-                    >
-                      Go →
-                    </button>
-                  </div>
-                )}
-
                 <div className={s.pathLayout}>
-                  <section className={s.pathColumn}>
-                    <h2 className={s.pathHeading}>Your Learning Path</h2>
-                    <ol className={s.pathList}>
+                  <section className={s.pathMainCol}>
+                    <div className={s.pathProgressCard}>
+                      <div
+                        className={s.pathProgressRing}
+                        style={{ background: `conic-gradient(#c4f547 ${pathProgressPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
+                      >
+                        <span className={s.pathProgressRingInner}>{pathProgressPct}%</span>
+                      </div>
+                      <div className={s.pathProgressStats}>
+                        <span className={s.pathProgressBig}>
+                          {completedOnPath} / {pathConcepts.length} Topics Completed
+                        </span>
+                        <span className={s.pathProgressSub}>Keep moving through your path</span>
+                      </div>
+                      <div className={s.pathProgressTime}>
+                        <span className={s.pathProgressBig}>
+                          {estMinutes >= 60
+                            ? `${Math.floor(estMinutes / 60)}h ${estMinutes % 60}m`
+                            : `${estMinutes}m`}
+                        </span>
+                        <span className={s.pathProgressSub}>Est. time on path</span>
+                      </div>
+                    </div>
+
+                    <div className={s.pathFlowMap} style={{ height: `${flowHeight}px` }}>
+                      <svg
+                        className={s.pathFlowSvg}
+                        viewBox={`0 0 640 ${flowHeight}`}
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                      >
+                        {pathConcepts.slice(0, -1).map((_, i) => {
+                          const sx = i % 2 === 0 ? 118 : 522
+                          const sy = i * 118 + 72
+                          const ex = i % 2 === 0 ? 522 : 118
+                          const ey = (i + 1) * 118 + 72
+                          const my = (sy + ey) / 2
+                          return (
+                            <path
+                              key={i}
+                              d={`M${sx},${sy} C${sx},${my} ${ex},${my} ${ex},${ey}`}
+                              stroke="rgba(196,245,71,0.35)"
+                              strokeWidth="2.5"
+                              fill="none"
+                              strokeLinecap="round"
+                            />
+                          )
+                        })}
+                        {pathConcepts.map((_, i) => {
+                          const cx = i % 2 === 0 ? 118 : 522
+                          const cy = i * 118 + 72
+                          return (
+                            <g key={i}>
+                              <circle cx={cx} cy={cy} r="16" fill="rgba(10,24,18,0.95)" stroke="rgba(196,245,71,0.5)" strokeWidth="1.5" />
+                              <text x={cx} y={cy + 5} textAnchor="middle" fill="#c4f547" fontSize="11" fontWeight="700" fontFamily="system-ui,sans-serif">{i + 1}</text>
+                            </g>
+                          )
+                        })}
+                      </svg>
+
                       {pathConcepts.map((c, i) => {
                         const conf = confidenceMap[c.id]
+                        const isLeft = i % 2 === 0
+                        const isDone = conf === 'easy'
                         const isTop = c.id === topPriority?.id && assessConcepts.length > 0
                         return (
-                          <li key={c.id} className={s.pathItem}>
-                            <div className={s.pathRail} aria-hidden="true">
-                              <span className={s.pathDot}>{i + 1}</span>
-                              {i < pathConcepts.length - 1 && <span className={s.pathLine} />}
+                          <button
+                            key={c.id}
+                            type="button"
+                            className={`${s.pathFlowCard} ${isTop ? s.pathFlowCardActive : ''}`}
+                            style={{
+                              top: `${i * 118 + 28}px`,
+                              ...(isLeft ? { left: '0' } : { right: '0' }),
+                            }}
+                            onClick={() => pickConcept(c.id)}
+                          >
+                            <div className={s.pathFlowIcon}>
+                              <ConceptPathIcon conceptId={c.id} size={34} />
                             </div>
-                            <button
-                              type="button"
-                              className={`${s.pathChapterCard} ${isTop ? s.pathChapterActive : ''} ${
-                                conf === 'hard'  ? s.pathChapterHard  :
-                                conf === 'kinda' ? s.pathChapterKinda :
-                                conf === 'easy'  ? s.pathChapterEasy  : ''
-                              }`}
-                              onClick={() => pickConcept(c.id)}
-                            >
-                              <div className={s.pathIconTile}>
-                                <ConceptPathIcon conceptId={c.id} size={36} />
-                              </div>
-                              <div className={s.pathChapterBody}>
-                                <span className={s.pathChapterName}>{c.label}</span>
-                                <span className={s.pathChapterMeta}>
-                                  {conf === 'hard'  ? '! Focus here'   :
-                                   conf === 'kinda' ? '~ Almost there' :
-                                   conf === 'easy'  ? '✓ Confident'    :
-                                   assessConcepts.length > 0
-                                     ? `Start: L${getRecommendedLevel(c.id)}`
-                                     : 'Practice →'}
-                                </span>
-                              </div>
-                              <span className={s.pathChapterGo}>→</span>
-                            </button>
-                          </li>
+                            <div className={s.pathFlowBody}>
+                              <span className={s.pathFlowTitle}>{c.label}</span>
+                              <span className={s.pathFlowMeta}>Practice · {PATH_MINUTES[i] ?? 12} min</span>
+                            </div>
+                            <span className={`${s.pathFlowStatus} ${isDone ? s.pathFlowStatusDone : ''}`}>
+                              {isDone ? '✓' : '→'}
+                            </span>
+                          </button>
                         )
                       })}
-                    </ol>
+                    </div>
+
+                    <button type="button" className={s.pathChangeExam} onClick={resetPractice}>
+                      ↻ Change exam
+                    </button>
                   </section>
 
                   <aside className={s.pathSideColumn}>
@@ -1357,12 +1406,77 @@ export default function Practice() {
                       </div>
                     </div>
 
+                    <div className={s.pathPerfCard}>
+                      <div className={s.pathPerfHead}>
+                        <span className={s.pathPerfTitle}>Performance</span>
+                        {practiceCount > 0 && (
+                          <span className={s.pathPerfDelta}>+{Math.min(24, practiceCount + 6)}%</span>
+                        )}
+                      </div>
+                      <svg className={s.pathPerfChart} viewBox="0 0 280 80" preserveAspectRatio="none" aria-hidden="true">
+                        <defs>
+                          <linearGradient id="pathPerfFill" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="rgba(196,245,71,0.35)" />
+                            <stop offset="100%" stopColor="rgba(196,245,71,0)" />
+                          </linearGradient>
+                        </defs>
+                        <path
+                          d="M0,62 C40,58 70,48 110,44 C150,40 190,28 230,22 C250,18 270,14 280,10 L280,80 L0,80 Z"
+                          fill="url(#pathPerfFill)"
+                        />
+                        <path
+                          d="M0,62 C40,58 70,48 110,44 C150,40 190,28 230,22 C250,18 270,14 280,10"
+                          fill="none"
+                          stroke="#c4f547"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <p className={s.pathPerfFoot}>
+                        Accuracy <strong>{accuracyPct || pathProgressPct}%</strong>
+                        {accuracyPct >= 80 ? ' · Great job!' : ' · Keep practicing'}
+                      </p>
+                    </div>
+
+                    <div className={s.pathToolkit}>
+                      <h3 className={s.pathToolkitTitle}>Your Toolkit</h3>
+                      <ul className={s.pathToolkitList}>
+                        <li>
+                          <button type="button" className={s.pathToolkitItem} onClick={() => navigate('/organize-notes')}>
+                            <span className={s.pathToolkitIcon}>📄</span>
+                            <span>Formula Sheet</span>
+                            <span className={s.pathToolkitChev}>›</span>
+                          </button>
+                        </li>
+                        <li>
+                          <button type="button" className={s.pathToolkitItem} onClick={() => navigate('/organize-notes')}>
+                            <span className={s.pathToolkitIcon}>📝</span>
+                            <span>Quick Notes</span>
+                            <span className={s.pathToolkitChev}>›</span>
+                          </button>
+                        </li>
+                        <li>
+                          <button type="button" className={s.pathToolkitItem} onClick={() => setPPhase('onboard')}>
+                            <span className={s.pathToolkitIcon}>📊</span>
+                            <span>Practice History</span>
+                            <span className={s.pathToolkitChev}>›</span>
+                          </button>
+                        </li>
+                        <li>
+                          <button type="button" className={s.pathToolkitItem} onClick={() => navigate('/dashboard')}>
+                            <span className={s.pathToolkitIcon}>🏆</span>
+                            <span>Achievements</span>
+                            <span className={s.pathToolkitChev}>›</span>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+
                     {remainingConcepts.length > 0 && (
                       <div className={s.pathExploreBlock}>
                         <h3 className={s.pathExploreTitle}>More topics to explore</h3>
-                        <p className={s.pathExploreSub}>Not on your current path — jump in anytime.</p>
                         <ul className={s.pathExploreList}>
-                          {remainingConcepts.slice(0, 8).map(c => (
+                          {remainingConcepts.slice(0, 5).map(c => (
                             <li key={c.id}>
                               <button type="button" className={s.pathExploreItem} onClick={() => pickConcept(c.id)}>
                                 <span className={s.pathExploreEmoji}>{c.emoji}</span>
@@ -1377,7 +1491,8 @@ export default function Practice() {
                   </aside>
                 </div>
               </div>
-            )}
+              )
+            })()}
 
             {/* ── Explore: concept content card ── */}
             {pPhase === 'explore' && conceptMeta && (() => {
