@@ -414,7 +414,8 @@ h1 {
     flex-direction: column;
     align-items: flex-end;
     width: 124px;
-    font: 700 13px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    box-sizing: border-box;
+    font: 700 13px/1 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .mc-view-toggle {
@@ -439,6 +440,10 @@ h1 {
     justify-content: center;
     min-height: 34px;
     border-radius: 8px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    font: inherit;
+    line-height: 1;
 }
 
 .mc-toggle-active {
@@ -457,11 +462,11 @@ h1 {
     transform: translateX(-50%);
     z-index: 100;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 10px;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 0.6s ease;
     white-space: nowrap;
 }
 .mc-bottom-bar.show {
@@ -470,20 +475,36 @@ h1 {
 }
 
 .mc-hint-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    min-width: 168px;
+    box-sizing: border-box;
     background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 10px;
-    padding: 8px 20px;
+    padding: 0 16px;
     cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+.mc-hint-btn:hover {
+    border-color: rgba(196, 245, 71, 0.35);
+    background: rgba(0, 0, 0, 0.68);
+}
+
+.mc-hint-btn:active {
+    transform: scale(0.98);
 }
 
 .mc-hint-btn p {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: inherit;
     font-size: 13px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.70);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.82);
     position: static;
     bottom: auto;
     width: auto;
@@ -492,6 +513,7 @@ h1 {
     animation: none;
     opacity: 1;
     margin: 0;
+    line-height: 1;
 }
 
 .mc-booking-btn {
@@ -499,21 +521,27 @@ h1 {
     align-items: center;
     justify-content: center;
     min-height: 38px;
-    padding: 0 20px;
+    min-width: 124px;
+    box-sizing: border-box;
+    padding: 0 16px;
     border-radius: 10px;
     background: #C4F547;
     border: 1px solid rgba(196, 245, 71, 0.42);
     color: #10231a;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 13px;
-    font-weight: 900;
+    font: 900 13px/1 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     text-decoration: none;
+    text-align: center;
     backdrop-filter: blur(4px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22), 0 0 22px rgba(196, 245, 71, 0.24);
+    transition: transform 0.12s ease, filter 0.12s ease;
 }
 
 .mc-booking-btn:hover {
     filter: brightness(1.05);
+}
+
+.mc-booking-btn:active {
+    transform: scale(0.98);
 }
 
 @media (max-width: 768px) {

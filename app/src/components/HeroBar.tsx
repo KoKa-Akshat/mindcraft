@@ -44,8 +44,28 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
     loc.pathname === path || loc.pathname.startsWith(path + '/')
       ? s.navActive : ''
 
+  const sessionBlock = (
+    <div className={s.sessionPanel}>
+      <span className={s.sessionLabel}>{canJoin ? 'Session is live' : 'Next up'}</span>
+      {nextSession ? (
+        <div className={s.pill}>
+          <span className={s.pillDot} />
+          <span className={s.pillText}>
+            {nextSession.subject} · {nextSession.time}
+            <span className={s.pillSub}> with {nextSession.tutor}</span>
+          </span>
+        </div>
+      ) : (
+        <div className={s.pill}>
+          <span className={`${s.pillDot} ${s.pillDotIdle}`} />
+          <span className={s.pillText}>No session scheduled</span>
+        </div>
+      )}
+    </div>
+  )
+
   return (
-    <div className={s.strip}>
+    <div className={`${s.strip} ${minimal && showBooking ? s.stripMinimalBooking : ''}`}>
       {showUserControls && user && (
         <div className={s.userCol}>
           <div className={s.userRow}>
@@ -81,6 +101,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
           <h1 className={s.greeting}>
             {greeting}, <em>{name}</em>
           </h1>
+          {minimal && sessionBlock}
         </div>
 
         {!minimal && (
@@ -101,23 +122,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
         </nav>
         )}
 
-        <div className={s.sessionPanel}>
-          <span className={s.sessionLabel}>{canJoin ? 'Session is live' : 'Next up'}</span>
-          {nextSession ? (
-            <div className={s.pill}>
-              <span className={s.pillDot} />
-              <span className={s.pillText}>
-                {nextSession.subject} · {nextSession.time}
-                <span className={s.pillSub}> with {nextSession.tutor}</span>
-              </span>
-            </div>
-          ) : (
-            <div className={s.pill}>
-              <span className={`${s.pillDot} ${s.pillDotIdle}`} />
-              <span className={s.pillText}>No session scheduled</span>
-            </div>
-          )}
-        </div>
+        {!minimal && sessionBlock}
 
         <div className={s.btns}>
           {canJoin && (
