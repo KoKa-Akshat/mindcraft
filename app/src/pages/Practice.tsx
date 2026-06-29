@@ -26,6 +26,7 @@ import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
 const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
+const SLACK_INVITE = 'https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg'
 const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
 const PRACTICE_DRAFT_VERSION = 1
@@ -361,6 +362,8 @@ export default function Practice() {
   const [questions,  setQuestions]  = useState<Question[]>([])
   const [qIndex,     setQIndex]     = useState(0)
   const [selected,   setSelected]   = useState<number | null>(null)
+  const [typedAnswer, setTypedAnswer] = useState('')
+  const [showCalc,   setShowCalc]   = useState(false)
   const [checked,    setChecked]    = useState(false)
   const [hintsShown, setHintsShown] = useState(0)
   const [results,      setResults]      = useState<boolean[]>([])
@@ -798,10 +801,42 @@ export default function Practice() {
     setPPhase('session')
   }
 
+  function normalizeAnswerText(v: string) {
+    return v.trim().toLowerCase().replace(/\s+/g, ' ').replace(/,/g, '')
+  }
+
+  function matchTypedAnswer(q: Question, input: string): number | null {
+    const t = normalizeAnswerText(input)
+    if (!t) return null
+    if (/^[a-d]$/.test(t)) return t.charCodeAt(0) - 97
+    const exact = q.choices.findIndex(c => normalizeAnswerText(c) === t)
+    if (exact >= 0) return exact
+    const stripNum = (raw: string) => {
+      const n = parseFloat(raw.replace(/[^0-9.\-+]/g, ''))
+      return Number.isNaN(n) ? null : n
+    }
+    const typedNum = stripNum(t)
+    if (typedNum !== null) {
+      for (let i = 0; i < q.choices.length; i++) {
+        const cn = stripNum(q.choices[i])
+        if (cn !== null && Math.abs(cn - typedNum) < 0.001) return i
+      }
+    }
+    return null
+  }
+
   function checkAnswer() {
-    if (selected === null) return
+    let sel = selected
+    if (sel === null && typedAnswer.trim()) {
+      const matched = matchTypedAnswer(questions[qIndex], typedAnswer)
+      if (matched !== null) {
+        sel = matched
+        setSelected(matched)
+      }
+    }
+    if (sel === null) return
     setChecked(true)
-    const correct = selected === questions[qIndex].correctIndex
+    const correct = sel === questions[qIndex].correctIndex
     if (correct) setXp(x => x + LEVEL_META[level].xp)
     setResults(r => [...r, correct])
   }
@@ -846,6 +881,8 @@ export default function Practice() {
     } else {
       setQIndex(i => i + 1)
       setSelected(null)
+      setTypedAnswer('')
+      setShowCalc(false)
       setChecked(false)
       setHintsShown(0)
     }
@@ -982,19 +1019,31 @@ export default function Practice() {
 
   // ── Render ────────────────────────────────────────────────────────────────
 
+  const isPathView = pPhase === 'path' && mode === 'practice'
+  const isLessonFlow = mode === 'practice' && (pPhase === 'explore' || pPhase === 'level')
+  const isSessionView = mode === 'practice' && pPhase === 'session'
+  const showLessonNav = mode === 'practice' && ['explore', 'level', 'session'].includes(pPhase)
+
   return (
-    <div className={`${s.shell}${pPhase === 'path' && mode === 'practice' ? ` ${s.pathShell}` : ''}`}>
+    <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isLessonFlow ? ` ${s.lessonShell}` : ''}${isSessionView ? ` ${s.sessionShell}` : ''}`}>
       <Sidebar />
 
-      <main className={`${s.page}${pPhase === 'path' && mode === 'practice' ? ` ${s.pathPage}` : ''}`}>
+      <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonFlow || isSessionView ? ` ${s.lessonPage}` : ''}`}>
 
-        {/* Mode toggle — hidden on full-page path view (toggle lives in path header) */}
-        {!(pPhase === 'path' && mode === 'practice') && (
+        {/* Mode toggle — hidden on full-page path view */}
+        {!isPathView && (
         <div className={s.topBar}>
-          <div className={s.modeToggle}>
-            <button className={mode === 'practice' ? s.modeActive : s.modeInactive} onClick={() => setMode('practice')}>Practice</button>
-            <button className={mode === 'solver'   ? s.modeActive : s.modeInactive} onClick={() => setMode('solver')}>Problem Solver</button>
-          </div>
+          {showLessonNav ? (
+            <div className={s.topBarPills}>
+              <button type="button" className={s.topBarPill} onClick={() => setMode('solver')}>Problem Solver</button>
+              <a className={s.topBarPillChat} href={SLACK_INVITE} target="_blank" rel="noopener noreferrer">Tutor Chat</a>
+            </div>
+          ) : (
+            <div className={s.modeToggle}>
+              <button className={mode === 'practice' ? s.modeActive : s.modeInactive} onClick={() => setMode('practice')}>Practice</button>
+              <button className={mode === 'solver'   ? s.modeActive : s.modeInactive} onClick={() => setMode('solver')}>Problem Solver</button>
+            </div>
+          )}
         </div>
         )}
 
@@ -1259,22 +1308,6 @@ export default function Practice() {
                       Your <span className={s.pathHeroAccent}>Learning Path</span>
                     </h1>
 
-                    {(['weakness', 'learn', 'gapscan'] as const).map(t => {
-                      const d = savedDrafts[t]
-                      if (!d) return null
-                      return (
-                        <button
-                          key={t}
-                          type="button"
-                          className={s.pathResumeBtn}
-                          onClick={() => loadSavedPracticeDraft(t)}
-                        >
-                          <span>Resume {MISSION_LABEL[t]}</span>
-                          <span className={s.pathResumeMeta}>{savedDraftStatus(d)}</span>
-                        </button>
-                      )
-                    })}
-
                     {pathConcepts.length === 0 ? (
                       <p className={s.pathEmpty}>You cleared this path — explore more topics on the right →</p>
                     ) : (
@@ -1386,7 +1419,9 @@ export default function Practice() {
                               className={s.pathExploreBox}
                               onClick={() => pickConcept(c.id)}
                             >
-                              <span className={s.pathExploreBoxEmoji}>{c.emoji}</span>
+                              <span className={s.pathExploreBoxIcon}>
+                                <ConceptPathIcon conceptId={c.id} size={28} />
+                              </span>
                               <span className={s.pathExploreBoxName}>{c.label}</span>
                             </button>
                           ))}
@@ -1410,7 +1445,9 @@ export default function Practice() {
 
                   <div className={s.exploreCard}>
                     <div className={s.exploreHead}>
-                      <span className={s.exploreEmoji}>{conceptMeta.emoji}</span>
+                      <span className={s.exploreIconWrap}>
+                        <ConceptPathIcon conceptId={conceptMeta.id} size={44} />
+                      </span>
                       <div>
                         <h2 className={s.exploreName}>{conceptMeta.label}</h2>
                         {content && <p className={s.exploreTagline}>{content.tagline}</p>}
@@ -1483,7 +1520,9 @@ export default function Practice() {
                   ← {conceptMeta.label}
                 </button>
                 <div className={s.levelHeader}>
-                  <span className={s.levelConceptEmoji}>{conceptMeta.emoji}</span>
+                  <span className={s.levelConceptIcon}>
+                    <ConceptPathIcon conceptId={conceptMeta.id} size={40} />
+                  </span>
                   <div>
                     <h2 className={s.levelConceptName}>{conceptMeta.label}</h2>
                     <p className={s.levelConceptSub}>Choose your difficulty</p>
@@ -1528,112 +1567,155 @@ export default function Practice() {
             {/* ── Active session ── */}
             {pPhase === 'session' && currentQ && (
               <div className={s.sessionWrap}>
-                <div className={s.progressStrip}>
-                  <div className={s.stripLeft}>
-                    <span className={s.stripConcept}>{conceptMeta?.emoji} {conceptMeta?.label}</span>
-                    {sessionBridge && (
-                      <span className={s.stripBridge}>
-                        Bridge: {bridgeLabel(sessionBridge.fromId)} → {bridgeLabel(sessionBridge.toId)}
+                <div className={s.sessionCenter}>
+                  <div className={s.progressStrip}>
+                    <div className={s.stripLeft}>
+                      <span className={s.stripConcept}>
+                        <ConceptPathIcon conceptId={conceptMeta?.id ?? ''} size={18} />
+                        {conceptMeta?.label}
                       </span>
-                    )}
-                    <span className={s.stripLevel} style={{ color: lvMeta.color }}>
-                      {'★'.repeat(level)}{'☆'.repeat(3 - level)} L{level}
-                    </span>
-                  </div>
-                  <div className={s.stripCenter}>
-                    <div className={s.progressBar}>
-                      <div className={s.progressFill} style={{ width: `${pct}%`, background: lvMeta.color }} />
+                      {sessionBridge && (
+                        <span className={s.stripBridge}>
+                          Bridge: {bridgeLabel(sessionBridge.fromId)} → {bridgeLabel(sessionBridge.toId)}
+                        </span>
+                      )}
+                      <span className={s.stripLevel} style={{ color: lvMeta.color }}>
+                        {'★'.repeat(level)}{'☆'.repeat(3 - level)} L{level}
+                      </span>
                     </div>
-                    <span className={s.progressLabel}>{qIndex + 1} / {questions.length}</span>
-                  </div>
-                  <div className={s.stripRight}>
-                    <span className={s.xpBadge}>⚡ {xp} XP</span>
-                  </div>
-                </div>
-
-                <div className={s.sessionColumns}>
-                  {/* Main question card */}
-                  <div className={s.sessionMain}>
-                    <div className={s.questionCard}>
-                      <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
-                        {currentQ.examTag && (
-                          <span className={s.examTagLight}>{currentQ.examTag} Style</span>
-                        )}
-                        <p className={s.questionText}>{currentQ.question}</p>
+                    <div className={s.stripCenter}>
+                      <div className={s.progressBar}>
+                        <div className={s.progressFill} style={{ width: `${pct}%`, background: lvMeta.color }} />
                       </div>
-	                      <div className={s.questionBody}>
-	                        {safeQuestionSvg(currentQ) && (
-	                          <div
-	                            className={s.questionVisual}
-	                            dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
-	                          />
-	                        )}
-	                        <div className={s.choices}>
-                          {currentQ.choices.map((choice, i) => {
-                            let cls = s.choice
-                            if (checked) {
-                              if (i === currentQ.correctIndex) cls = s.choiceCorrect
-                              else if (i === selected)         cls = s.choiceWrong
-                            } else if (i === selected) {
-                              cls = s.choiceSelected
-                            }
-                            return (
-                              <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
-                                <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                                <span className={s.choiceText}>{choice}</span>
-                                {checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
-                                {checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>✗</span>}
-                              </button>
-                            )
-                          })}
-                        </div>
-                      </div>
-                      <div className={s.actionRow}>
-                        {!checked ? (
-                          <button className={s.checkBtn} onClick={checkAnswer} disabled={selected === null}>
-                            Check Answer →
-                          </button>
-                        ) : (
-                          <button className={s.nextBtn} onClick={nextQuestion}>
-                            {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
-                          </button>
-                        )}
-                      </div>
+                      <span className={s.progressLabel}>{qIndex + 1} / {questions.length}</span>
+                    </div>
+                    <div className={s.stripRight}>
+                      <span className={s.xpBadge}>⚡ {xp} XP</span>
                     </div>
                   </div>
 
-                  {/* Side panel — hints and feedback */}
-                  <div className={s.sidePanel}>
-                    {!checked && (
-                      <div className={s.hintCard}>
-                        <div className={s.hintCardHeader}>
-                          <span>💡</span>
-                          <span className={s.hintCardTitle}>Need a Hint?</span>
-                        </div>
-                        {hintsShown === 0 ? (
-                          <button className={s.hintTrigger} onClick={() => setHintsShown(1)}>
-                            Show hint 1 →
-                          </button>
-                        ) : (
-                          <div className={s.hintsBox}>
-                            {currentQ.hints.slice(0, hintsShown).map((h, i) => (
-                              <div key={i} className={s.hintLine}>
-                                <span className={s.hintNum}>{i + 1}</span> {h}
-                              </div>
-                            ))}
-                            {hintsShown < 3 && (
-                              <button
-                                className={s.hintTrigger}
-                                onClick={() => setHintsShown(h => Math.min(h + 1, 3))}
-                                style={{ borderTop: '1px solid #F1F5F9' }}
-                              >
-                                Hint {hintsShown + 1} →
-                              </button>
-                            )}
+                  <div className={s.questionCard}>
+                    <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
+                      {currentQ.examTag && (
+                        <span className={s.examTagLight}>{currentQ.examTag} Style</span>
+                      )}
+                      <p className={s.questionText}>{currentQ.question}</p>
+                    </div>
+                    <div className={s.questionBody}>
+                      {safeQuestionSvg(currentQ) && (
+                        <div
+                          className={s.questionVisual}
+                          dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
+                        />
+                      )}
+                      <div className={s.choices}>
+                        {currentQ.choices.map((choice, i) => {
+                          let cls = s.choice
+                          if (checked) {
+                            if (i === currentQ.correctIndex) cls = s.choiceCorrect
+                            else if (i === selected)         cls = s.choiceWrong
+                          } else if (i === selected) {
+                            cls = s.choiceSelected
+                          }
+                          return (
+                            <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
+                              <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
+                              <span className={s.choiceText}>{choice}</span>
+                              {checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
+                              {checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>✗</span>}
+                            </button>
+                          )
+                        })}
+                      </div>
+
+                      {!checked && (
+                        <div className={s.hintCardInline}>
+                          <div className={s.hintCardHeader}>
+                            <span>💡</span>
+                            <span className={s.hintCardTitle}>Need a hint?</span>
                           </div>
-                        )}
-                      </div>
-                    )}
+                          {hintsShown === 0 ? (
+                            <button type="button" className={s.hintTrigger} onClick={() => setHintsShown(1)}>
+                              Show hint 1 →
+                            </button>
+                          ) : (
+                            <div className={s.hintsBox}>
+                              {currentQ.hints.slice(0, hintsShown).map((h, i) => (
+                                <div key={i} className={s.hintLine}>
+                                  <span className={s.hintNum}>{i + 1}</span> {h}
+                                </div>
+                              ))}
+                              {hintsShown < 3 && (
+                                <button
+                                  type="button"
+                                  className={s.hintTrigger}
+                                  onClick={() => setHintsShown(h => Math.min(h + 1, 3))}
+                                  style={{ borderTop: '1px solid #F1F5F9' }}
+                                >
+                                  Hint {hintsShown + 1} →
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {!checked && (
+                        <div className={s.answerRow}>
+                          <button
+                            type="button"
+                            className={`${s.calcBtn} ${showCalc ? s.calcBtnActive : ''}`}
+                            onClick={() => setShowCalc(v => !v)}
+                            aria-label="Calculator"
+                            title="Calculator"
+                          >
+                            🧮
+                          </button>
+                          <div className={s.answerInputWrap}>
+                            <input
+                              className={s.answerInput}
+                              type="text"
+                              placeholder="Type your answer here"
+                              value={typedAnswer}
+                              onChange={e => setTypedAnswer(e.target.value)}
+                              onKeyDown={e => {
+                                if (e.key === 'Enter' && !checked) checkAnswer()
+                              }}
+                              disabled={checked}
+                            />
+                            <button
+                              type="button"
+                              className={s.answerSubmit}
+                              onClick={checkAnswer}
+                              disabled={checked || (selected === null && !typedAnswer.trim())}
+                              aria-label="Submit answer"
+                            >
+                              ↑
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {showCalc && !checked && (
+                        <div className={s.calcPanel}>
+                          {['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+','C','⌫'].map(key => (
+                            <button
+                              key={key}
+                              type="button"
+                              className={s.calcKey}
+                              onClick={() => {
+                                if (key === 'C') setTypedAnswer('')
+                                else if (key === '⌫') setTypedAnswer(v => v.slice(0, -1))
+                                else if (key === '=') checkAnswer()
+                                else setTypedAnswer(v => v + key)
+                              }}
+                            >
+                              {key}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
 
                     {checked && (
                       <div className={selected === currentQ.correctIndex ? s.feedbackCorrect : s.feedbackWrong}>
@@ -1652,6 +1734,22 @@ export default function Practice() {
                         </div>
                       </div>
                     )}
+
+                    <div className={s.actionRow}>
+                      {!checked ? (
+                        <button
+                          className={s.checkBtn}
+                          onClick={checkAnswer}
+                          disabled={selected === null && !typedAnswer.trim()}
+                        >
+                          Check Answer →
+                        </button>
+                      ) : (
+                        <button className={s.nextBtn} onClick={nextQuestion}>
+                          {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
