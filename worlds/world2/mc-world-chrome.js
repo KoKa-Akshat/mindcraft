@@ -6,57 +6,72 @@
     ? 'http://localhost:4321'
     : 'https://mindcraft-93858.web.app'
 
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-24-world-chrome-v5'
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-29-world-chrome-v8'
 
-  function openProjects() {
-    if (window.MC_openProjectsSign) {
-      window.MC_openProjectsSign()
-    } else if (window.MC_onProjectsOpen) {
-      window.MC_onProjectsOpen()
-    }
+  // Check if student just completed diagnostic (URL param from the React app)
+  var params = new URLSearchParams(window.location.search)
+  var diagJustDone = params.get('diagDone') === '1'
+  if (diagJustDone) {
+    localStorage.setItem('mc-diag-done', '1')
+    // Clean the URL param without reloading
+    params.delete('diagDone')
+    var cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '')
+    history.replaceState(null, '', cleanUrl)
   }
+  var diagDone = !!localStorage.getItem('mc-diag-done')
 
   function wireChrome() {
     var webToggle  = document.getElementById('mc-web-toggle')
     var bookingLink = document.getElementById('mc-booking-link')
     var badge      = document.getElementById('mc-badge')
     var clickMe    = document.getElementById('mc-click-me')
+    var startBtn   = document.getElementById('mc-start-btn')
 
     if (webToggle)   webToggle.href   = APP + '/dashboard'
     if (bookingLink) bookingLink.href = APP + '/book'
     if (badge)       badge.classList.add('show')
 
-    // Reveal booking + "Click me" only after Enter World
-    var startBtn = document.getElementById('mc-start-btn')
+    // Reveal booking after Enter World; arrow only if diagnostic not yet done
     function revealChrome() {
       if (bookingLink) bookingLink.style.display = 'inline-flex'
-      if (clickMe && !sessionStorage.getItem('mc-clicked-me')) clickMe.style.display = 'flex'
+      if (clickMe && !diagDone && !sessionStorage.getItem('mc-clicked-me')) {
+        clickMe.style.display = 'flex'
+      }
     }
+
     if (startBtn) {
-      startBtn.addEventListener('click', function () { setTimeout(revealChrome, 900) }, { once: true })
+      startBtn.addEventListener('click', function () {
+        setTimeout(revealChrome, 900)
+        // Auto-play sound after Enter World (simulates pressing M)
+        setTimeout(function () {
+          ;[document, window].forEach(function (t) {
+            t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
+          })
+        }, 1400)
+      }, { once: true })
     } else {
       revealChrome()
     }
 
-    // Arrow cue → open Projects (same as clicking the sign), one-time per session
-    function hideArrow() {
-      if (clickMe) clickMe.style.display = 'none'
-      sessionStorage.setItem('mc-clicked-me', '1')
-    }
-
+    // Arrow → go to diagnostic (pre-diagnostic only)
     if (clickMe && !clickMe.__mcWired) {
       clickMe.__mcWired = true
       clickMe.addEventListener('click', function () {
-        hideArrow()
-        if (window.MC_openProjectsSign) window.MC_openProjectsSign()
+        sessionStorage.setItem('mc-clicked-me', '1')
+        clickMe.style.display = 'none'
+        window.location.href = APP + '/diagnostic'
       })
     }
 
-    // Also hide the arrow when the user clicks Projects sign directly
-    var _prevOnProjectsOpen = window.MC_onProjectsOpen
-    window.MC_onProjectsOpen = function () {
-      hideArrow()
-      if (_prevOnProjectsOpen) _prevOnProjectsOpen()
+    // If student just completed diagnostic, auto-enter the world
+    if (diagJustDone && startBtn) {
+      var obs = new MutationObserver(function () {
+        if (startBtn.classList.contains('fadeIn')) {
+          obs.disconnect()
+          setTimeout(function () { startBtn.click() }, 700)
+        }
+      })
+      obs.observe(startBtn, { attributes: true, attributeFilter: ['class'] })
     }
   }
 

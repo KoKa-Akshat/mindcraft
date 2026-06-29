@@ -7,6 +7,8 @@
     ? 'http://localhost:4321'
     : 'https://mindcraft-93858.web.app'
 
+  var diagDone = !!localStorage.getItem('mc-diag-done')
+
   var ROUTES = {
     articles: APP + '/practice?learnNext=1',
     aboutMe: APP + '/knowledge-graph',
@@ -26,6 +28,32 @@
     vec.x = values.x
     vec.y = values.y
     vec.z = values.z
+  }
+
+  // Smooth eased camera animation — same "Projects zoom" style
+  function smoothToFrontView(exp, duration) {
+    var camera = exp && exp.camera
+    if (!camera || !camera.instance || !camera.controls) return
+    var p = camera.instance.position
+    var t = camera.controls.target
+    var start = { px: p.x, py: p.y, pz: p.z, tx: t.x, ty: t.y, tz: t.z }
+    var fp = FRONT_VIEW.position
+    var ft = FRONT_VIEW.target
+    var t0 = performance.now()
+    function tick() {
+      var prog = Math.min((performance.now() - t0) / duration, 1)
+      // ease-in-out quad
+      var e = prog < 0.5 ? 2 * prog * prog : -1 + (4 - 2 * prog) * prog
+      p.x = start.px + (fp.x - start.px) * e
+      p.y = start.py + (fp.y - start.py) * e
+      p.z = start.pz + (fp.z - start.pz) * e
+      t.x = start.tx + (ft.x - start.tx) * e
+      t.y = start.ty + (ft.y - start.ty) * e
+      t.z = start.tz + (ft.z - start.tz) * e
+      if (camera.controls.update) camera.controls.update()
+      if (prog < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
   }
 
   function setFrontView(exp) {
@@ -86,13 +114,13 @@
 
     ctrl.camControls.toDefault = async function () {
       if (ctrl.sounds && ctrl.sounds.playWhoosh) ctrl.sounds.playWhoosh()
-      if (ctrl.logic && ctrl.logic.lockButtons) ctrl.logic.lockButtons(900)
+      if (ctrl.logic && ctrl.logic.lockButtons) ctrl.logic.lockButtons(1400)
       if (camera.camAngle && camera.camAngle.unlocked) camera.camAngle.unlocked()
-      setFrontView(exp)
       if (camera.controls) {
         camera.controls.enableRotate = true
         camera.controls.enableZoom = true
       }
+      smoothToFrontView(exp, 1400)
     }
 
     ctrl.camControls.__mcCameraPatched = true
@@ -105,6 +133,11 @@
     if (!ctrl || !ctrl.menuControls || !ctrl.ramenShop || window.MC_openProjectsSign) return !!window.MC_openProjectsSign
 
     window.MC_openProjectsSign = function () {
+      // After diagnostic: Projects → Practice directly
+      if (localStorage.getItem('mc-diag-done')) {
+        window.location.href = ROUTES.practice
+        return
+      }
       if (ctrl.logic && ctrl.logic.mode !== 'menu') {
         if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
         return
@@ -130,16 +163,25 @@
 
   window.addEventListener('load', tryPatch)
 
-  // Re-apply camera after Enter World click — overrides the bundle's intro animation
+  // Re-apply camera after Enter World click
+  // Post-diagnostic: smooth zoom animation; otherwise instant snap
   var startBtn = document.getElementById('mc-start-btn')
   if (startBtn) {
     startBtn.addEventListener('click', function () {
-      [1200, 2400].forEach(function (delay) {
-        setTimeout(function () {
-          var exp = window.experience
-          if (exp) setFrontView(exp)
-        }, delay)
-      })
+      // Instant snap first (fast) then smooth zoom if post-diagnostic
+      setTimeout(function () {
+        var exp = window.experience
+        if (!exp) return
+        if (diagDone) {
+          smoothToFrontView(exp, 1600)
+        } else {
+          setFrontView(exp)
+        }
+      }, 1200)
+      setTimeout(function () {
+        var exp = window.experience
+        if (exp && !diagDone) setFrontView(exp)
+      }, 2400)
     }, { once: true })
   }
 })()

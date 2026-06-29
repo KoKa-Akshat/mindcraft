@@ -19,6 +19,7 @@ import { db } from '../firebase'
 import { useUser } from '../App'
 import { sendLearningEvent, conceptLabel } from '../lib/mlApi'
 import spec from '../data/actDiagnostic.json'
+import { WORLD_BASE } from '../lib/siteUrls'
 import s from './Diagnostic.module.css'
 
 interface ConfConcept { concept_id: string; name: string; act_high_priority: boolean }
@@ -173,7 +174,8 @@ export default function Diagnostic() {
   }
 
   function goToDashboard() {
-    navigate('/dashboard', { replace: true })
+    // Send student back to the world with diagDone flag so it auto-enters and plays zoom animation
+    window.location.replace(`${WORLD_BASE}?diagDone=1`)
   }
 
   return (

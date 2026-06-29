@@ -34,7 +34,8 @@ export default function Dashboard() {
 
   function goTo3DWorld() {
     localStorage.setItem('dashboardView', '3d')
-    window.location.href = worldUrl(uid)
+    const base = worldUrl(uid)
+    window.location.href = diagChecked ? `${base}&diagDone=1` : base
   }
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
 
@@ -59,7 +60,7 @@ export default function Dashboard() {
           tutorId={data.tutorId}
           showUserControls
           minimal
-          showBooking
+          showBooking={diagChecked}
           onBooking={() => navigate('/book')}
         />
 
