@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import sys
 
@@ -31,12 +32,27 @@ DEFAULT_OUT = ROOT / "data" / "generated_questions.json"
 DEFAULT_FORMATS = ["word_problem", "symbolic_expression"]
 
 
+def _load_env_local() -> None:
+    """Load ml/.env.local (KEY=VALUE, tolerant of spaces/quotes) into os.environ
+    so secrets like GROQ_API_KEY live only in that gitignored file."""
+    p = ROOT / ".env.local"
+    if not p.exists():
+        return
+    for line in p.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+
 def tested_concepts() -> list[str]:
     data = json.loads(L1.read_text())
     return [c["id"] for c in data["concepts"] if c.get("act_relevance", {}).get("tested")]
 
 
 def main(argv: list[str]) -> int:
+    _load_env_local()
     ap = argparse.ArgumentParser()
     ap.add_argument("--concepts", help="comma-separated concept ids")
     ap.add_argument("--tested", action="store_true", help="all act_relevance.tested concepts")

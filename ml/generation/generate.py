@@ -72,16 +72,39 @@ def _slug(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")[:24]
 
 
+def _extract_json(text: str) -> dict | list | None:
+    """Tolerant JSON parse: strip code fences, grab the outermost object/array.
+    Models occasionally wrap JSON in prose or fences, or emit a stray glitch."""
+    if not text:
+        return None
+    t = text.strip()
+    if t.startswith("```"):
+        t = re.sub(r"^```(?:json)?|```$", "", t, flags=re.MULTILINE).strip()
+    start = min((i for i in (t.find("{"), t.find("[")) if i != -1), default=-1)
+    end = max(t.rfind("}"), t.rfind("]"))
+    if start == -1 or end <= start:
+        return None
+    try:
+        return json.loads(t[start:end + 1])
+    except json.JSONDecodeError:
+        return None
+
+
 def generate_for(
     concept_id: str, ess: ConceptEssence | None, level: int, fmt: str, n: int = 4,
+    attempts: int = 2,
 ) -> list[dict]:
-    """Return validated Question dicts (C5 shape) for one (concept, level, format)."""
-    raw = complete(build_prompt(concept_id, ess, level, fmt, n), system=SYSTEM)
-    try:
-        parsed = json.loads(raw)
-    except json.JSONDecodeError:
+    """Return validated Question dicts (C5 shape) for one (concept, level, format).
+    Retries a couple times — LLM JSON output is occasionally malformed."""
+    prompt = build_prompt(concept_id, ess, level, fmt, n)
+    parsed: dict | list | None = None
+    for _ in range(attempts):
+        parsed = _extract_json(complete(prompt, system=SYSTEM))
+        if parsed:
+            break
+    if not parsed:
         return []
-    items = parsed.get("questions", parsed if isinstance(parsed, list) else [])
+    items = parsed.get("questions", []) if isinstance(parsed, dict) else parsed
     out: list[dict] = []
     for i, item in enumerate(items):
         if not _valid(item):

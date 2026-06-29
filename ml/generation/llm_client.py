@@ -22,8 +22,11 @@ DEFAULT_MODELS = {
 
 
 def _post(url: str, body: dict, headers: dict, timeout: int = 180) -> dict:
+    # A real User-Agent is required: Groq sits behind Cloudflare, which blocks
+    # the default Python-urllib UA with "error code: 1010".
     req = urllib.request.Request(
-        url, data=json.dumps(body).encode(), headers={"Content-Type": "application/json", **headers},
+        url, data=json.dumps(body).encode(),
+        headers={"Content-Type": "application/json", "User-Agent": "mindcraft-gen/1.0", **headers},
     )
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode())
@@ -44,12 +47,14 @@ def _ollama(prompt: str, system: str, model: str) -> str:
 
 def _groq(prompt: str, system: str, model: str) -> str:
     key = os.environ["GROQ_API_KEY"]
+    # NB: not using response_format=json_object — Groq hard-400s ("json_validate_
+    # failed") on any minor JSON glitch from the model. We parse tolerantly +
+    # retry in the generate layer instead, so one bad attempt doesn't kill a batch.
     body = {
         "model": model,
         "messages": [{"role": "system", "content": system or ""},
                      {"role": "user", "content": prompt}],
         "temperature": 0.4,
-        "response_format": {"type": "json_object"},
     }
     out = _post("https://api.groq.com/openai/v1/chat/completions", body,
                 {"Authorization": f"Bearer {key}"})
