@@ -26,28 +26,27 @@
     <meta name="application-name" content="MindCraft" />
     <meta name="msapplication-TileColor" content="#58CC02" />
     <meta name="theme-color" content="#1a1a1a" />
-    <script defer="defer" src="bundle.3ea4b3f1364c1bb7.js?v=20260624-chrome-v3"></script>
-    <link href="main.css?v=20260624-chrome-v3" rel="stylesheet" />
+    <link href="main.css?v=20260624-world-v4" rel="stylesheet" />
     <link href="mc-diagnostic.css?v=879bdfe9" rel="stylesheet" />
+    <script src="mc-world-chrome.js?v=20260624-world-v4"></script>
+    <script defer src="bundle.mc-v4.js"></script>
+    <script defer src="mc-world-nav.js?v=20260624-world-v4"></script>
   </head>
   <body>
     <canvas class="webgl"></canvas>
     <div class="overlay"></div>
 
-    <!-- MindCraft corner badge -->
     <div id="mc-badge">
       <span class="mc-logo">Mind<span class="mc-craft">Craft</span></span>
     </div>
 
-    <!-- View toggle: leave the 3D world for the plain web dashboard -->
     <div id="mc-top-actions" class="mc-top-actions">
-      <a id="mc-web-toggle" class="mc-view-toggle" href="https://mindcraft-93858.web.app/dashboard">
+      <div class="mc-view-toggle" aria-label="Dashboard view switcher">
         <span class="mc-toggle-active">3D</span>
-        <span class="mc-toggle-inactive">Web</span>
-      </a>
+        <a id="mc-web-toggle" class="mc-toggle-inactive" href="https://mindcraft-93858.web.app/dashboard">Web</a>
+      </div>
     </div>
 
-    <!-- Loading screen -->
     <div id="cooking">
       <div class="bubble"></div>
       <div class="bubble"></div>
@@ -70,65 +69,17 @@
 
     <button class="start" id="mc-start-btn">Enter World →</button>
 
-    <!-- Bottom bar: projects hint + booking -->
-    <div id="mc-bottom-bar" class="mc-bottom-bar">
-      <div id="mc-hint" class="mc-hint-btn" onclick="window.MC_onProjectsOpen&&window.MC_onProjectsOpen()">
-        <p>Click on Projects</p>
-      </div>
+    <div id="mc-bottom-bar" class="mc-bottom-bar show">
+      <button type="button" id="mc-hint" class="mc-hint-btn">
+        Click on Projects
+      </button>
       <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book">Booking</a>
     </div>
 
-    <script>
-      window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-24-dashboard-world-chrome-v3';
-      (function () {
-        var APP_BASE = window.location.hostname === 'localhost'
-          ? 'http://localhost:4321'
-          : 'https://mindcraft-93858.web.app';
-        var webToggle = document.getElementById('mc-web-toggle');
-        var bookingLink = document.getElementById('mc-booking-link');
-        if (webToggle) webToggle.href = APP_BASE + '/dashboard';
-        if (bookingLink) bookingLink.href = APP_BASE + '/book';
-
-        function showWorldChrome() {
-          var badge = document.getElementById('mc-badge');
-          var bar = document.getElementById('mc-bottom-bar');
-          if (badge) badge.classList.add('show');
-          if (bar) bar.classList.add('show');
-        }
-
-        function cookingDone() {
-          return cooking && (cooking.classList.contains('fade')
-            || cooking.style.display === 'none'
-            || cooking.style.opacity === '0');
-        }
-
-        // Show Projects + Booking when the loading screen fades out.
-        var cooking = document.getElementById('cooking');
-        if (cooking) {
-          var obs = new MutationObserver(function () {
-            if (cookingDone()) {
-              showWorldChrome();
-              obs.disconnect();
-            }
-          });
-          obs.observe(cooking, { attributes: true, attributeFilter: ['style', 'class'] });
-          setInterval(function () {
-            if (cookingDone()) {
-              showWorldChrome();
-              obs.disconnect();
-            }
-          }, 500);
-        }
-
-        document.getElementById('mc-start-btn').addEventListener('click', showWorldChrome);
-      })();
-    </script>
-
-    <!-- Diagnostic overlay (projects / diagnostics screen) -->
     <div id="mc-diag" aria-hidden="true">
       <div id="mc-diag-backdrop"></div>
       <div id="mc-diag-panel"></div>
     </div>
-    <script src="mc-diagnostic.js?v=local-preview-2" defer></script>
+    <script src="mc-diagnostic.js?v=879bdfe9" defer></script>
   </body>
 </html>

@@ -382,15 +382,13 @@ h1 {
     position: fixed;
     top: 18px;
     left: 20px;
-    z-index: 100;
+    z-index: 10000;
     display: flex;
     align-items: center;
     gap: 8px;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 1.2s ease 2s;
+    opacity: 1;
 }
-#mc-badge.show { opacity: 1; }
 
 .mc-logo {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -427,7 +425,6 @@ h1 {
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    text-decoration: none;
     backdrop-filter: blur(4px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
 }
@@ -444,6 +441,10 @@ h1 {
     padding: 0 10px;
     font: inherit;
     line-height: 1;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }
 
 .mc-toggle-active {
@@ -460,18 +461,13 @@ h1 {
     bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 100;
+    z-index: 10000;
     display: flex;
     align-items: stretch;
     gap: 10px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    white-space: nowrap;
-}
-.mc-bottom-bar.show {
-    opacity: 1;
     pointer-events: auto;
+    opacity: 1;
+    white-space: nowrap;
 }
 
 .mc-hint-btn {
@@ -488,6 +484,8 @@ h1 {
     border-radius: 10px;
     padding: 0 16px;
     cursor: pointer;
+    color: rgba(255, 255, 255, 0.82);
+    font: 700 13px/1 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
 }
 
@@ -498,22 +496,6 @@ h1 {
 
 .mc-hint-btn:active {
     transform: scale(0.98);
-}
-
-.mc-hint-btn p {
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.82);
-    position: static;
-    bottom: auto;
-    width: auto;
-    min-width: auto;
-    text-align: center;
-    animation: none;
-    opacity: 1;
-    margin: 0;
-    line-height: 1;
 }
 
 .mc-booking-btn {

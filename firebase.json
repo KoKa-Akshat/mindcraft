@@ -118,6 +118,14 @@
           "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
         },
         {
+          "source": "/mc-world-chrome.js",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+        },
+        {
+          "source": "/mc-world-nav.js",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+        },
+        {
           "source": "/mc-diagnostic.js",
           "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
         },
