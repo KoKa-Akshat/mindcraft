@@ -1,9 +1,8 @@
 :root {
-  /* Match marketing site (index.html) logo tokens */
-  --g: #54b948;
-  --g-dark: #449a38;
-  --g-deep: #003f2d;
-  --forest: #003f2d;
+  /* Landing-page logo tokens — do NOT use --g (global.css overrides it to lime) */
+  --login-forest: #003f2d;
+  --login-brand: #54b948;
+  --login-brand-dark: #449a38;
   --ink: #141414;
   --muted: #6b6b6b;
   --line: rgba(0, 0, 0, 0.08);
@@ -62,14 +61,14 @@
   margin-bottom: 18px;
 }
 
-.wmMind { color: var(--forest); }
-.wmCraft { color: var(--g); }
+.wmMind { color: #003f2d; }
+.wmCraft { color: #54b948; }
 
 .tagline {
   font-family: inherit;
   font-size: clamp(1.15rem, 2.4vw, 1.6rem);
   font-weight: 600;
-  color: var(--g);
+  color: #003f2d;
   letter-spacing: 0.01em;
   line-height: 1.3;
 }
@@ -189,7 +188,7 @@
 }
 
 .field input:focus {
-  border-color: var(--g);
+  border-color: #54b948;
   box-shadow: 0 0 0 3px rgba(84, 185, 72, 0.18);
 }
 
@@ -232,7 +231,7 @@
   min-height: 50px;
   border: 0;
   border-radius: 12px;
-  background: var(--g);
+  background: #54b948;
   color: #fff;
   font-family: inherit;
   font-size: 13px;
@@ -246,12 +245,12 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--g-dark);
+  background: #449a38;
   box-shadow: 0 4px 12px rgba(84, 185, 72, 0.32);
 }
 
 .submitBtn:active:not(:disabled) {
-  background: var(--g-deep);
+  background: #003f2d;
   box-shadow: 0 1px 4px rgba(84, 185, 72, 0.22);
 }
 
@@ -297,7 +296,7 @@
   background: none;
   font-family: inherit;
   font-weight: 700;
-  color: var(--g);
+  color: #54b948;
   cursor: pointer;
 }
 
