@@ -1,6 +1,15 @@
 import { mlIdToLabel } from './conceptMap'
 import { fetchKnowledgeGraph } from './graphCache'
 import { getRecommendations, type RecommendResult } from './mlApi'
+import { questionCount } from './questionBank'
+
+// A concept is a valid PRACTICE target only if the bank can serve it questions.
+// Cross-cutting meta-concepts (e.g. representation_translation) have none, so
+// they're never routed to as a drill — the path still treats them as prereqs.
+function hasPlayableQuestions(conceptId: string | null | undefined): boolean {
+  if (!conceptId) return false
+  return ([1, 2, 3] as const).some(l => questionCount(conceptId, l) > 0)
+}
 
 const URGENCY: Record<string, number> = {
   struggling: 0,
@@ -69,41 +78,52 @@ export async function fetchPracticeHubRecommendations(
   const kg = await fetchKnowledgeGraph(userId)
   const nodes = (kg?.nodes ?? []) as GraphNode[]
   const nodeMap = new Map(nodes.map(n => [n.id, n]))
-  const fallbackId = pickMostUrgent(nodes)
+  const isUntouched = (id: string) => (nodeMap.get(id)?.status ?? 'untouched') === 'untouched'
 
+  // ── Weak spot: observed weakness (must be playable), bridge-gap override, ──
+  // ── then most-urgent playable node as cold-start fallback. ──
   const profileRec = await getRecommendations(userId, [], 'curriculum')
-  const weaknessId =
-    profileRec?.studentProfile?.topWeaknesses?.[0]?.conceptId
-    ?? fallbackId
+  let weaknessId =
+    profileRec?.studentProfile?.topWeaknesses?.find(w => hasPlayableQuestions(w.conceptId))?.conceptId
+    ?? null
 
-  // Pathfinder needs a target — anchor on the weakness (or fallback node).
-  const pathTarget = weaknessId ?? fallbackId
+  const anchor = weaknessId ?? pickMostUrgent(nodes)
   let pathRec: RecommendResult | null = null
-  if (pathTarget) {
-    pathRec = await getRecommendations(userId, [pathTarget], 'curriculum')
-  }
+  if (anchor) pathRec = await getRecommendations(userId, [anchor], 'curriculum')
 
-  // Bridge gaps only appear once the pathfinder built a chain.
+  // Bridge-gap override only when its target is itself playable.
   const bridgeTarget = pathRec?.recommendations
-    ?.find(r => r.isBridgeGap && r.gapType === 'concept')?.bridgeToConcept
-  const resolvedWeaknessId = bridgeTarget ?? weaknessId
-
-  let learnId = chainSteps(pathRec)[0]?.conceptId ?? null
-  if (learnId && learnId === resolvedWeaknessId) {
-    learnId = chainSteps(pathRec)[1]?.conceptId ?? null
+    ?.find(r => r.isBridgeGap && r.gapType === 'concept' && hasPlayableQuestions(r.bridgeToConcept))
+    ?.bridgeToConcept
+  if (bridgeTarget) weaknessId = bridgeTarget
+  if (!weaknessId) {
+    weaknessId = [...nodes]
+      .filter(n => hasPlayableQuestions(n.id))
+      .sort((a, b) =>
+        (URGENCY[a.status ?? 'untouched'] - URGENCY[b.status ?? 'untouched'])
+        || ((a.mastery ?? 0) - (b.mastery ?? 0)))[0]?.id ?? null
   }
 
-  // ACT exam overlay when curriculum path is empty (cold start / no target).
-  if (!learnId) {
-    const examRec = await getRecommendations(userId, [], 'exam')
-    const examChain = chainSteps(examRec)
-    learnId = examChain.find(c => c.conceptId !== resolvedWeaknessId)?.conceptId
-      ?? examChain[0]?.conceptId
-      ?? null
-  }
+  // ── Learn next: the next 0-exposure (untouched), PLAYABLE concept on the ──
+  // ── ACT path. Concrete ACT concepts only — never a content-less meta node. ──
+  const examRec = await getRecommendations(userId, [], 'exam')
+  const actPath = chainSteps(examRec).map(s => s.conceptId)
+  let learnId =
+    // 1) next NEW ACT concept you can actually drill
+    actPath.find(id => id !== weaknessId && isUntouched(id) && hasPlayableQuestions(id))
+    // 2) any playable ACT concept on the path (already-seen but not mastered)
+    ?? actPath.find(id => id !== weaknessId && hasPlayableQuestions(id))
+    // 3) curriculum chain toward the weakness, first playable step
+    ?? chainSteps(pathRec).map(s => s.conceptId)
+        .find(id => id !== weaknessId && hasPlayableQuestions(id))
+    // 4) any untouched playable concept across the ontology
+    ?? [...nodes]
+        .filter(n => isUntouched(n.id) && hasPlayableQuestions(n.id) && n.id !== weaknessId)
+        .sort((a, b) => (a.mastery ?? 0) - (b.mastery ?? 0))[0]?.id
+    ?? null
 
   return {
-    weakness: toNextConcept(resolvedWeaknessId, nodeMap),
+    weakness: toNextConcept(weaknessId, nodeMap),
     learn: toNextConcept(learnId, nodeMap),
   }
 }
