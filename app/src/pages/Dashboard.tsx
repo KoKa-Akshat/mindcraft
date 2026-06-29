@@ -109,7 +109,7 @@ export default function Dashboard() {
                   <button
                     type="button"
                     className={s.labSquare}
-                    onClick={() => navigate('/practice-path-lab')}
+                    onClick={() => navigate('/practice', { state: { showPath: true } })}
                     aria-label="Open Practice path lab experiment"
                   >
                     <span className={s.labSquareBadge}>Lab</span>

@@ -2,6 +2,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
 import Sidebar from '../components/Sidebar'
+import { ConceptPathIcon } from '../components/ConceptPathIcon'
+import { useStudentData } from '../hooks/useStudentData'
 import HomeworkCards, { type HomeworkSession, type HomeworkCard, type OutcomeRecord } from '../components/HomeworkCards'
 import {
   type Question,
@@ -334,6 +336,7 @@ export default function Practice() {
   const user     = useUser()
   const navigate = useNavigate()
   const location = useLocation()
+  const { streak } = useStudentData(user)
   const fileRef  = useRef<HTMLInputElement>(null)
   const draftHydratedRef = useRef(false)
   const remoteSaveTimer = useRef<number | null>(null)
@@ -1282,7 +1285,6 @@ export default function Practice() {
                     {exam && <span className={s.pathExamBadge}>{exam} Path</span>}
                     {assessConcepts.length > 0 && <span className={s.processBadge}>Process 1 saved</span>}
                     <button className={s.pathResetBtn} onClick={resetPractice}>← Change exam</button>
-                    <button className={s.pathResetBtn} onClick={() => navigate('/practice-path-lab')}>Path lab →</button>
                   </div>
                 </div>
 
@@ -1302,116 +1304,78 @@ export default function Practice() {
                   </div>
                 )}
 
-                {/* Floating island map */}
-                <div
-                  className={s.islandMap}
-                  style={{ height: `${pathConcepts.length * 140 + 40}px` }}
-                >
-                  <svg
-                    className={s.islandSvg}
-                    viewBox={`0 0 560 ${pathConcepts.length * 140 + 40}`}
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                  >
-                    <defs>
-                      <filter id="glow">
-                        <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                      </filter>
-                    </defs>
-                    {pathConcepts.slice(0, -1).map((c, i) => {
-                      const sx = i % 2 === 0 ? 140 : 420
-                      const sy = i * 140 + 90
-                      const ex = i % 2 === 0 ? 420 : 140
-                      const ey = (i + 1) * 140 + 50
-                      const my = (sy + ey) / 2
-                      const conf = confidenceMap[c.id]
-                      const stroke = conf === 'hard'  ? 'rgba(255,107,107,0.40)'
-                        : conf === 'kinda' ? 'rgba(244,162,97,0.35)'
-                        : conf === 'easy'  ? 'rgba(168,224,99,0.28)'
-                        : 'rgba(196,245,71,0.20)'
-                      return (
-                        <path
-                          key={i}
-                          d={`M${sx},${sy} C${sx},${my} ${ex},${my} ${ex},${ey}`}
-                          stroke={stroke}
-                          strokeWidth="2.5"
-                          fill="none"
-                          strokeDasharray="6 4"
-                          strokeLinecap="round"
-                          filter="url(#glow)"
-                        />
-                      )
-                    })}
-                  </svg>
+                <div className={s.pathLayout}>
+                  <section className={s.pathColumn}>
+                    <h2 className={s.pathHeading}>Your Learning Path</h2>
+                    <ol className={s.pathList}>
+                      {pathConcepts.map((c, i) => {
+                        const conf = confidenceMap[c.id]
+                        const isTop = c.id === topPriority?.id && assessConcepts.length > 0
+                        return (
+                          <li key={c.id} className={s.pathItem}>
+                            <div className={s.pathRail} aria-hidden="true">
+                              <span className={s.pathDot}>{i + 1}</span>
+                              {i < pathConcepts.length - 1 && <span className={s.pathLine} />}
+                            </div>
+                            <button
+                              type="button"
+                              className={`${s.pathChapterCard} ${isTop ? s.pathChapterActive : ''} ${
+                                conf === 'hard'  ? s.pathChapterHard  :
+                                conf === 'kinda' ? s.pathChapterKinda :
+                                conf === 'easy'  ? s.pathChapterEasy  : ''
+                              }`}
+                              onClick={() => pickConcept(c.id)}
+                            >
+                              <div className={s.pathIconTile}>
+                                <ConceptPathIcon conceptId={c.id} size={36} />
+                              </div>
+                              <div className={s.pathChapterBody}>
+                                <span className={s.pathChapterName}>{c.label}</span>
+                                <span className={s.pathChapterMeta}>
+                                  {conf === 'hard'  ? '! Focus here'   :
+                                   conf === 'kinda' ? '~ Almost there' :
+                                   conf === 'easy'  ? '✓ Confident'    :
+                                   assessConcepts.length > 0
+                                     ? `Start: L${getRecommendedLevel(c.id)}`
+                                     : 'Practice →'}
+                                </span>
+                              </div>
+                              <span className={s.pathChapterGo}>→</span>
+                            </button>
+                          </li>
+                        )
+                      })}
+                    </ol>
+                  </section>
 
-                  {pathConcepts.map((c, i) => {
-                    const conf = confidenceMap[c.id]
-                    const isLeft = i % 2 === 0
-                    const isTop  = c.id === topPriority?.id && assessConcepts.length > 0
-                    return (
-                      <button
-                        key={c.id}
-                        className={`${s.island} ${
-                          conf === 'hard'  ? s.islandHard  :
-                          conf === 'kinda' ? s.islandKinda :
-                          conf === 'easy'  ? s.islandEasy  : s.islandNeutral
-                        } ${isTop ? s.islandTop : ''}`}
-                        style={{
-                          top: `${i * 140 + 20}px`,
-                          ...(isLeft ? { left: '2%' } : { right: '2%' }),
-                          ['--float-delay' as string]: `${i * 0.45}s`,
-                        }}
-                        onClick={() => pickConcept(c.id)}
-                      >
-                        {isTop && <span className={s.islandTopPin}>🎯</span>}
-                        <span className={s.islandStep}>{i + 1}</span>
-                        <span className={s.islandEmoji}>{c.emoji}</span>
-                        <div className={s.islandBody}>
-                          <span className={s.islandName}>{c.label}</span>
-                          <span className={`${s.islandBadge} ${
-                            conf === 'hard'  ? s.badgeHard  :
-                            conf === 'kinda' ? s.badgeKinda :
-                            conf === 'easy'  ? s.badgeEasy  : ''
-                          }`}>
-                            {conf === 'hard'  ? '! Focus here'   :
-                             conf === 'kinda' ? '~ Almost there' :
-                             conf === 'easy'  ? '✓ Confident'    : 'Practice →'}
-                          </span>
-                          {assessConcepts.length > 0 && (
-                            <span className={s.islandLevelHint}>
-                              Start: L{getRecommendedLevel(c.id)}
-                            </span>
-                          )}
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-
-                {remainingConcepts.length > 0 && (
-                  <>
-                    <div className={s.moreConceptsLabel}>More topics</div>
-                    <div className={s.conceptGrid}>
-                      {remainingConcepts.map(c => (
-                        <button key={c.id} className={s.conceptCard} onClick={() => pickConcept(c.id)}>
-                          <span className={s.conceptEmoji}>{c.emoji}</span>
-                          <span className={s.conceptLabel}>{c.label}</span>
-                          <span className={s.conceptCategory}>{c.category}</span>
-                          <div className={s.conceptLevels}>
-                            {([1, 2, 3] as const).map(lv => (
-                              <span
-                                key={lv}
-                                className={questionCount(c.id, lv) > 0 ? s.levelDot : s.levelDotEmpty}
-                                style={{ background: questionCount(c.id, lv) > 0 ? LEVEL_META[lv].color : undefined }}
-                              />
-                            ))}
-                          </div>
-                        </button>
-                      ))}
+                  <aside className={s.pathSideColumn}>
+                    <div className={s.pathStreakCard}>
+                      <span className={s.pathStreakFire} aria-hidden="true">🔥</span>
+                      <div>
+                        <p className={s.pathStreakCount}>{streak || 0} day{streak === 1 ? '' : 's'}</p>
+                        <p className={s.pathStreakLabel}>Keep it up!</p>
+                      </div>
                     </div>
-                  </>
-                )}
+
+                    {remainingConcepts.length > 0 && (
+                      <div className={s.pathExploreBlock}>
+                        <h3 className={s.pathExploreTitle}>More topics to explore</h3>
+                        <p className={s.pathExploreSub}>Not on your current path — jump in anytime.</p>
+                        <ul className={s.pathExploreList}>
+                          {remainingConcepts.slice(0, 8).map(c => (
+                            <li key={c.id}>
+                              <button type="button" className={s.pathExploreItem} onClick={() => pickConcept(c.id)}>
+                                <span className={s.pathExploreEmoji}>{c.emoji}</span>
+                                <span className={s.pathExploreName}>{c.label}</span>
+                                <span className={s.pathExploreChev}>›</span>
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </aside>
+                </div>
               </div>
             )}
 

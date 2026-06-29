@@ -2019,7 +2019,14 @@
    PATH SCREEN — floating island map
 ══════════════════════════════════════════════════════════════════════════════ */
 
-.pathScreen { max-width: 560px; }
+.pathScreen {
+  max-width: 1180px;
+  padding: 20px 22px 28px;
+  border-radius: 22px;
+  background: linear-gradient(165deg, #071408 0%, #0a2218 42%, #0c1a12 100%);
+  border: 1px solid rgba(84, 185, 72, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
 
 .pathHeader { margin-bottom: 4px; }
 
@@ -3040,4 +3047,256 @@
   color: var(--text-muted);
   margin: 0;
   line-height: 1.5;
+}
+
+/* ── Path screen — vertical chapter cards + sidebar ─────────────────────── */
+
+.pathHeading {
+  margin: 0 0 18px;
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.pathLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(320px, 34%);
+  gap: 24px;
+  align-items: start;
+}
+
+.pathColumn { min-width: 0; }
+
+.pathList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pathItem {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.pathRail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pathDot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #10231a;
+  background: linear-gradient(145deg, #c4f547, #54b948);
+  box-shadow: 0 0 12px rgba(84, 185, 72, 0.45);
+  flex-shrink: 0;
+}
+
+.pathLine {
+  flex: 1;
+  width: 3px;
+  min-height: 24px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(84, 185, 72, 0.9), rgba(196, 245, 71, 0.35));
+}
+
+.pathChapterCard {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(10, 34, 24, 0.85);
+  border: 1px solid rgba(84, 185, 72, 0.22);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: var(--f-body);
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.pathChapterCard:hover {
+  border-color: rgba(196, 245, 71, 0.45);
+  transform: translateX(2px);
+}
+
+.pathChapterActive {
+  border-color: rgba(196, 245, 71, 0.55);
+  box-shadow: 0 0 32px rgba(84, 185, 72, 0.12);
+}
+
+.pathChapterHard  { border-color: rgba(255, 107, 107, 0.45); }
+.pathChapterKinda { border-color: rgba(244, 162, 97, 0.4); }
+.pathChapterEasy  { border-color: rgba(168, 224, 99, 0.35); }
+
+.pathIconTile {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 63, 45, 0.55);
+  border: 1px solid rgba(84, 185, 72, 0.25);
+  flex-shrink: 0;
+}
+
+.pathChapterBody { min-width: 0; }
+
+.pathChapterName {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.pathChapterMeta {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.pathChapterGo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(84, 185, 72, 0.35);
+  background: rgba(84, 185, 72, 0.12);
+  color: #c4f547;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pathSideColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 78px;
+}
+
+.pathStreakCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: rgba(10, 34, 24, 0.85);
+  border: 1px solid rgba(84, 185, 72, 0.2);
+}
+
+.pathStreakFire {
+  font-size: 32px;
+  line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(196, 245, 71, 0.4));
+}
+
+.pathStreakCount {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.pathStreakLabel {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: rgba(196, 245, 71, 0.65);
+  font-weight: 600;
+}
+
+.pathExploreBlock {
+  padding: 18px 16px;
+  border-radius: 16px;
+  background: rgba(7, 20, 14, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pathExploreTitle {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.pathExploreSub {
+  margin: 0 0 14px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.45;
+}
+
+.pathExploreList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pathExploreItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--f-body);
+  transition: background 0.12s;
+}
+
+.pathExploreItem:hover { background: rgba(84, 185, 72, 0.1); }
+
+.pathExploreEmoji {
+  width: 28px;
+  text-align: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.pathExploreName {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.pathExploreChev {
+  color: rgba(84, 185, 72, 0.7);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .pathLayout { grid-template-columns: 1fr; }
+  .pathSideColumn { position: static; }
 }
