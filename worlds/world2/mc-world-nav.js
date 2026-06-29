@@ -12,7 +12,7 @@
   var ROUTES = {
     articles: APP + '/dashboard?view=gps&learnNext=1',
     aboutMe: APP + '/dashboard?view=gps',
-    credits: APP + '/practice?homeworkHelp=1',
+    credits: APP + '/dashboard?view=homework',
     practice: APP + '/practice',
     book: APP + '/book',
     dashboard: APP + '/dashboard',

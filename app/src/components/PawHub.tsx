@@ -75,12 +75,18 @@ export default function PawHub({
   userId,
   layout = 'default',
   compact = false,
+  onPracticeClick,
   onGpsClick,
+  onNotesClick,
+  onHomeworkClick,
 }: {
   userId: string
   layout?: 'default' | 'side'
   compact?: boolean
+  onPracticeClick?: () => void
   onGpsClick?: () => void
+  onNotesClick?: () => void
+  onHomeworkClick?: () => void
 }) {
   const navigate = useNavigate()
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
@@ -97,18 +103,12 @@ export default function PawHub({
     return () => { cancelled = true }
   }, [userId])
 
-  function goPracticeWeakness() {
-    if (weakness) {
-      navigate('/practice', {
-        state: {
-          conceptId: weakness.conceptId,
-          missionType: 'weakness',
-          formatId: weakness.formatId,
-        },
-      })
-    } else {
-      navigate('/practice', { state: { showPath: true } })
+  function goPractice() {
+    if (onPracticeClick) {
+      onPracticeClick()
+      return
     }
+    navigate('/dashboard')
   }
 
   function goLearnNext() {
@@ -133,7 +133,7 @@ export default function PawHub({
       label: 'Homework Help',
       sub: 'Socratic hints',
       accent: 'sky',
-      onClick: () => navigate('/practice', { state: { homeworkHelp: true } }),
+      onClick: onHomeworkClick ?? (() => navigate('/dashboard?view=homework')),
       icon: <PencilIcon />,
     },
     {
@@ -149,7 +149,7 @@ export default function PawHub({
       label: 'Notes',
       sub: 'Session summary',
       accent: 'amber',
-      onClick: () => navigate('/sessions'),
+      onClick: onNotesClick ?? (() => navigate('/dashboard?view=notes')),
       icon: <NotesIcon />,
     },
   ]
@@ -181,14 +181,14 @@ export default function PawHub({
         <motion.button
           type="button"
           className={s.mainPad}
-          onClick={goPracticeWeakness}
+          onClick={goPractice}
           whileHover={{ y: -3, scale: 1.015 }}
           whileTap={{ scale: 0.985 }}
         >
           <span className={s.mainGlow} aria-hidden="true" />
           <span className={s.mainIcon}><WheelIcon /></span>
           <span className={s.mainLabel}>Practice</span>
-          <span className={s.mainSub}>{weakness ? weakness.label : 'Your weak spot'}</span>
+          <span className={s.mainSub}>{weakness ? weakness.label : 'Your learning path'}</span>
         </motion.button>
       </div>
     </div>

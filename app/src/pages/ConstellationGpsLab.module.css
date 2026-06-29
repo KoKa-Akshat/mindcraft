@@ -63,6 +63,25 @@
   color: rgba(255, 255, 255, 0.78);
 }
 
+.embeddedTitleRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.embeddedTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.embeddedSub {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+}
+
 .mapAreaEmbedded {
   min-height: 400px;
 }
@@ -699,6 +718,13 @@
 .panelBack:hover { color: #4361ee; }
 
 .routeHeader { display: flex; flex-direction: column; gap: 3px; }
+.routeEyebrow {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9aabb6;
+}
 .routeTitle { font-size: 14px; font-weight: 800; color: #1a1f2e; }
 .routeMeta { font-size: 11px; color: #9aabb6; font-weight: 600; }
 
@@ -746,6 +772,11 @@
   gap: 11px;
   padding: 11px 8px;
   margin: 0 -8px;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  background: transparent;
   border-bottom: 1px solid #f0f2f5;
   cursor: pointer;
   border-radius: 10px;
