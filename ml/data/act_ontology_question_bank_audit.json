@@ -1,0 +1,552 @@
+{
+  "summary": {
+    "actTestedConcepts": 29,
+    "practiceConceptSlots": 38,
+    "staticQuestionsTotal": 227,
+    "fullCoverage": 10,
+    "partialCoverage": 0,
+    "listedNoQuestions": 11,
+    "ontologyOnly": 7,
+    "aliasOnly": 1,
+    "bankConceptsNotActTested": 17
+  },
+  "levelTiers": {
+    "foundational": {
+      "description": "Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills.",
+      "actTestedCount": 7,
+      "conceptIds": [
+        "fractions_decimals",
+        "ratios_proportions",
+        "order_of_operations",
+        "basic_equations",
+        "number_properties",
+        "measurement_units",
+        "algebraic_manipulation"
+      ]
+    },
+    "core": {
+      "description": "Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability).",
+      "actTestedCount": 20,
+      "conceptIds": [
+        "linear_equations",
+        "functions_basics",
+        "right_triangle_geometry",
+        "trigonometry_basics",
+        "linear_inequalities",
+        "systems_of_linear_equations",
+        "exponent_rules",
+        "polynomials",
+        "factoring_polynomials",
+        "radical_expressions",
+        "quadratic_equations",
+        "descriptive_statistics",
+        "basic_probability",
+        "exponential_functions",
+        "sequences_series",
+        "lines_angles",
+        "triangles_congruence",
+        "circles_geometry",
+        "area_volume",
+        "geometric_transformations"
+      ]
+    },
+    "advanced": {
+      "description": "Post-ACT / AP-level topics in the full 42-concept ontology. None are in the current ACT-tested set of 29.",
+      "actTestedCount": 0,
+      "conceptIds": []
+    },
+    "cross_cutting": {
+      "description": "Meta-skills that span topics (representation translation, test strategy). Often have no single drill topic in a static multiple-choice bank.",
+      "actTestedCount": 2,
+      "conceptIds": [
+        "representation_translation",
+        "act_strategy"
+      ]
+    }
+  },
+  "concepts": [
+    {
+      "conceptId": "area_volume",
+      "name": "Area and Volume",
+      "ontologyLevel": "core",
+      "actFrequency": 0.08,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] area_volume (Area and Volume). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "basic_probability",
+      "name": "Basic Probability",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 4,
+        "L2": 4,
+        "L3": 3,
+        "total": 11
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 basic_probability (Basic Probability) [core]: static bank has L1=4, L2=4, L3=3 questions."
+    },
+    {
+      "conceptId": "circles_geometry",
+      "name": "Geometry of Circles",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] circles_geometry (Geometry of Circles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "descriptive_statistics",
+      "name": "Descriptive Statistics",
+      "ontologyLevel": "core",
+      "actFrequency": 0.07,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 3,
+        "L2": 3,
+        "L3": 3,
+        "total": 9
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 descriptive_statistics (Descriptive Statistics) [core]: static bank has L1=3, L2=3, L3=3 questions."
+    },
+    {
+      "conceptId": "exponent_rules",
+      "name": "Exponent Rules",
+      "ontologyLevel": "core",
+      "actFrequency": 0.07,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 exponent_rules (Exponent Rules) [core]: static bank has L1=10, L2=10, L3=9 questions."
+    },
+    {
+      "conceptId": "exponential_functions",
+      "name": "Exponential Functions",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] exponential_functions (Exponential Functions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "factoring_polynomials",
+      "name": "Factoring Polynomials",
+      "ontologyLevel": "core",
+      "actFrequency": 0.08,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] factoring_polynomials (Factoring Polynomials). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "functions_basics",
+      "name": "Basics of Functions",
+      "ontologyLevel": "core",
+      "actFrequency": 0.13,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 functions_basics (Basics of Functions) [core]: static bank has L1=10, L2=10, L3=9 questions."
+    },
+    {
+      "conceptId": "geometric_transformations",
+      "name": "Geometric Transformations",
+      "ontologyLevel": "core",
+      "actFrequency": 0.05,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] geometric_transformations (Geometric Transformations). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "linear_equations",
+      "name": "Linear Equations",
+      "ontologyLevel": "core",
+      "actFrequency": 0.18,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 linear_equations (Linear Equations) [core]: static bank has L1=10, L2=10, L3=9 questions."
+    },
+    {
+      "conceptId": "linear_inequalities",
+      "name": "Linear Inequalities",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 4,
+        "L2": 3,
+        "L3": 3,
+        "total": 10
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 linear_inequalities (Linear Inequalities) [core]: static bank has L1=4, L2=3, L3=3 questions."
+    },
+    {
+      "conceptId": "lines_angles",
+      "name": "Lines and Angles",
+      "ontologyLevel": "core",
+      "actFrequency": 0.05,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] lines_angles (Lines and Angles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "polynomials",
+      "name": "Polynomial Operations",
+      "ontologyLevel": "core",
+      "actFrequency": 0.07,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 4,
+        "L2": 3,
+        "L3": 3,
+        "total": 10
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 polynomials (Polynomial Operations) [core]: static bank has L1=4, L2=3, L3=3 questions."
+    },
+    {
+      "conceptId": "quadratic_equations",
+      "name": "Quadratic Equations",
+      "ontologyLevel": "core",
+      "actFrequency": 0.12,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 quadratic_equations (Quadratic Equations) [core]: static bank has L1=10, L2=10, L3=9 questions."
+    },
+    {
+      "conceptId": "radical_expressions",
+      "name": "Radical Expressions",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] radical_expressions (Radical Expressions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "right_triangle_geometry",
+      "name": "Right Triangle Geometry",
+      "ontologyLevel": "core",
+      "actFrequency": 0.09,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] right_triangle_geometry (Right Triangle Geometry). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "sequences_series",
+      "name": "Sequences and Series",
+      "ontologyLevel": "core",
+      "actFrequency": 0.05,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] sequences_series (Sequences and Series). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "systems_of_linear_equations",
+      "name": "Systems of Linear Equations",
+      "ontologyLevel": "core",
+      "actFrequency": 0.08,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 3,
+        "L2": 3,
+        "L3": 3,
+        "total": 9
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 systems_of_linear_equations (Systems of Linear Equations) [core]: static bank has L1=3, L2=3, L3=3 questions."
+    },
+    {
+      "conceptId": "triangles_congruence",
+      "name": "Triangles and Congruence",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] triangles_congruence (Triangles and Congruence). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "trigonometry_basics",
+      "name": "Trigonometry Basics",
+      "ontologyLevel": "core",
+      "actFrequency": 0.07,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] trigonometry_basics (Trigonometry Basics). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "act_strategy",
+      "name": "ACT Mathematical Strategy and Test-Taking Heuristics",
+      "ontologyLevel": "cross_cutting",
+      "actFrequency": 0.0,
+      "status": "ontology_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [cross_cutting] act_strategy (ACT Mathematical Strategy and Test-Taking Heuristics). Tier: Meta-skills that span topics (representation translation, test strategy). Often have no single drill topic in a static multiple-choice bank."
+    },
+    {
+      "conceptId": "representation_translation",
+      "name": "Representation Translation and Mathematical Modeling",
+      "ontologyLevel": "cross_cutting",
+      "actFrequency": 0.2,
+      "status": "ontology_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [cross_cutting] representation_translation (Representation Translation and Mathematical Modeling). Tier: Meta-skills that span topics (representation translation, test strategy). Often have no single drill topic in a static multiple-choice bank."
+    },
+    {
+      "conceptId": "algebraic_manipulation",
+      "name": "Algebraic Structure and Symbolic Manipulation",
+      "ontologyLevel": "foundational",
+      "actFrequency": 0.16,
+      "status": "ontology_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] algebraic_manipulation (Algebraic Structure and Symbolic Manipulation). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
+    },
+    {
+      "conceptId": "basic_equations",
+      "name": "Basic One-Variable Equations",
+      "ontologyLevel": "foundational",
+      "actFrequency": 0.14,
+      "status": "ontology_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] basic_equations (Basic One-Variable Equations). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
+    },
+    {
+      "conceptId": "fractions_decimals",
+      "name": "Fractions and Decimals",
+      "ontologyLevel": "foundational",
+      "actFrequency": 0.12,
+      "status": "ontology_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] fractions_decimals (Fractions and Decimals). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
+    },
+    {
+      "conceptId": "measurement_units",
+      "name": "Units, Measurement, and Dimensional Reasoning",
+      "ontologyLevel": "foundational",
+      "actFrequency": 0.11,
+      "status": "ontology_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] measurement_units (Units, Measurement, and Dimensional Reasoning). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
+    },
+    {
+      "conceptId": "number_properties",
+      "name": "Number Properties, Factors, and Divisibility",
+      "ontologyLevel": "foundational",
+      "actFrequency": 0.09,
+      "status": "full",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 3,
+        "L2": 3,
+        "L3": 3,
+        "total": 9
+      },
+      "bankAlias": null,
+      "message": "OK \u2014 number_properties (Number Properties, Factors, and Divisibility) [foundational]: static bank has L1=3, L2=3, L3=3 questions."
+    },
+    {
+      "conceptId": "order_of_operations",
+      "name": "Order of Operations",
+      "ontologyLevel": "foundational",
+      "actFrequency": 0.08,
+      "status": "ontology_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] order_of_operations (Order of Operations). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
+    },
+    {
+      "conceptId": "ratios_proportions",
+      "name": "Ratios and Proportions",
+      "ontologyLevel": "foundational",
+      "actFrequency": 0.1,
+      "status": "alias_only",
+      "inPracticeConcepts": false,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": "percent_ratio",
+      "message": "Ontology concept_id does not match the question bank, but a legacy alias may have content: percent_ratio (Percents & Ratios). [foundational] ontology id=ratios_proportions (Ratios and Proportions). Bank has L1=4, L2=4, L3=4."
+    }
+  ],
+  "bankConceptsNotActTested": [
+    "absolute_value",
+    "applications_of_derivatives",
+    "applications_of_integrals",
+    "complex_numbers",
+    "coordinate_geometry",
+    "data_interpretation",
+    "derivatives",
+    "function_transformations",
+    "integrals",
+    "limits_continuity",
+    "logarithmic_functions",
+    "percent_ratio",
+    "rational_expressions",
+    "statistics_graphs",
+    "trigonometric_identities",
+    "vectors",
+    "word_problems"
+  ]
+}
