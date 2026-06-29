@@ -6,7 +6,6 @@ import { useStudentData } from '../hooks/useStudentData'
 import { isDiagnosticComplete } from '../lib/practiceState'
 import { worldUrl } from '../lib/siteUrls'
 import HeroBar            from '../components/HeroBar'
-import PracticeHubPanel   from '../components/PracticeHubPanel'
 import ReinforcePanel     from '../components/ReinforceCard'
 import s from './Dashboard.module.css'
 
@@ -106,10 +105,6 @@ export default function Dashboard() {
 
               {/* Right panel */}
               <div className={s.panel}>
-                <motion.div {...FADE_UP(0.10)}>
-                  <PracticeHubPanel userId={uid} />
-                </motion.div>
-
                 <motion.div {...FADE_UP(0.18)}>
                   <div
                     className={s.hwCard}
