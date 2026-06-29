@@ -319,6 +319,10 @@ export interface LearningEventInput {
  * starts building the student's knowledge graph from their first diagnostic.
  * Non-blocking: returns true/false, never throws.
  */
+/**
+ * @deprecated Orphan endpoint — no handler in serve.py. Diagnostic.tsx now uses
+ * /seed-assessment + /record-outcomes. Left for legacy world2 mc-diagnostic.js.
+ */
 export async function sendLearningEvent(ev: LearningEventInput): Promise<boolean> {
   try {
     const res = await fetch(`${ML_BASE}/learning-event`, {

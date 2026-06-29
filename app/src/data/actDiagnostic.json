@@ -87,6 +87,8 @@
       {
         "question_id": "act_t1_q9_40f35e",
         "concept_id": "polynomials",
+        "format": "symbolic_expression",
+        "level": 2,
         "stem": "Which of the following is equal to ( n \u2013 3) 2 if n = 11?",
         "choices": {
           "A": "( n + 6)( n \u2013 6)",
@@ -102,6 +104,8 @@
       {
         "question_id": "act_t1_q2_8b90a0",
         "concept_id": "ratios_proportions",
+        "format": "word_problem",
+        "level": 2,
         "stem": "Beth got a job painting dorm rooms at her college. At top speed, she could paint 5 identical rooms during one 6-hour shift. How long did she take to paint each room?",
         "choices": {
           "A": "50 minutes",
@@ -117,6 +121,8 @@
       {
         "question_id": "act_t1_q10_b1f9aa",
         "concept_id": "area_volume",
+        "format": "word_problem",
+        "level": 2,
         "stem": "A square field has an area of 22,500 square feet. To the nearest foot, what is the diagonal distance across the field?",
         "choices": {
           "A": "150 feet",
@@ -132,6 +138,8 @@
       {
         "question_id": "act_t1_q3_9594c8",
         "concept_id": "linear_equations",
+        "format": "symbolic_expression",
+        "level": 2,
         "stem": "If 5 x + 3 = 10 x \u2013 17, what is the value of x ?",
         "choices": {
           "A": "1",
@@ -147,6 +155,8 @@
       {
         "question_id": "act_t1_q5_361216",
         "concept_id": "descriptive_statistics",
+        "format": "word_problem",
+        "level": 2,
         "stem": "William earned $3,200 per month as a teacher for the ten months from September to June. Then he took a job as a barista at a local caf\u00e9, where he earned $2,000 per month during July and August. What was his average monthly pay for the 12 months?",
         "choices": {
           "A": "$2,400",
@@ -162,42 +172,9 @@
     ]
   },
   "event_emission": {
-    "endpoint": "POST {ML_BASE}/learning-event",
-    "confidence_report": {
-      "subject_id": "math",
-      "concept_id": "<concept_id>",
-      "event_type": "confidence_report",
-      "outcome": null,
-      "source": "diagnostic",
-      "metadata": {
-        "confidence": "<0..1 from scale>",
-        "step": "confidence"
-      },
-      "note": "outcome left null so self-report does not pollute mastery; confidence stored in metadata as a prior."
-    },
-    "probe_answer": {
-      "subject_id": "math",
-      "concept_id": "<concept_id>",
-      "event_type": "answer_submitted",
-      "outcome": "<1.0 if correct else 0.0>",
-      "duration_ms": "<time on question>",
-      "source": "diagnostic",
-      "metadata": {
-        "question_id": "<id>",
-        "selected": "<choice>",
-        "step": "probe"
-      }
-    },
-    "diagnostic_complete": {
-      "subject_id": "math",
-      "concept_id": "diagnostic",
-      "event_type": "diagnostic_complete",
-      "source": "diagnostic",
-      "metadata": {
-        "concepts_seen": "<int>",
-        "goals": "<text>"
-      },
-      "note": "marks first-login diagnostic done; engine can now serve /learning-world/math and /recommend."
-    }
+    "note": "Canonical sinks (FORMAT_WEAKNESS_PLAN.md diagnostic reconciliation). Do NOT use /learning-event.",
+    "confidence_step": "POST {ML_BASE}/seed-assessment — per-concept hard|kinda|easy from scale",
+    "probe_step": "POST {ML_BASE}/record-outcomes — score 1/0 per probe, hide correctness (C4), include format (C5)",
+    "completion": "users/{uid}.diagnosticCompleted via markDiagnosticComplete + goals on users/{uid}.goals"
   }
 }
