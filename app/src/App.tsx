@@ -129,6 +129,7 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/book"  element={<Book />} />
+        <Route path="/dashboard-projected" element={<Navigate to="/dashboard" replace />} />
 
         {/* Authenticated routes */}
         <Route path="/dashboard"           element={<AuthGuard><Dashboard /></AuthGuard>} />

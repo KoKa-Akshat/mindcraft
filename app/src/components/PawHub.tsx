@@ -71,7 +71,15 @@ function NotesIcon() {
   )
 }
 
-export default function PawHub({ userId }: { userId: string }) {
+export default function PawHub({
+  userId,
+  layout = 'default',
+  compact = false,
+}: {
+  userId: string
+  layout?: 'default' | 'side'
+  compact?: boolean
+}) {
   const navigate = useNavigate()
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
 
@@ -127,10 +135,10 @@ export default function PawHub({ userId }: { userId: string }) {
   ]
 
   return (
-    <div className={s.stage}>
+    <div className={`${s.stage} ${layout === 'side' ? s.stageSide : ''} ${compact ? s.compact : ''}`}>
       <div className={s.backdrop} aria-hidden="true" />
-      <div className={s.paw}>
-        <div className={s.toes}>
+      <div className={`${s.paw} ${layout === 'side' ? s.pawSide : ''}`}>
+        <div className={`${s.toes} ${layout === 'side' ? s.toesSide : ''}`}>
           {toes.map(toe => (
             <motion.button
               key={toe.id}

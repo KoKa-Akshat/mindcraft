@@ -1,0 +1,206 @@
+.wrap {
+  width: 100%;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.accent {
+  color: #c4f547;
+}
+
+.meta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(33, 97, 110, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ring {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ringInner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1a4a54;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #c4f547;
+}
+
+.progressCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.progressCopy strong {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13px;
+}
+
+.empty {
+  margin: 0;
+  padding: 20px 16px;
+  border-radius: 14px;
+  background: rgba(33, 97, 110, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+}
+
+.flowMap {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 4px;
+}
+
+.flowSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.flowCard {
+  position: absolute;
+  width: 42%;
+  max-width: 220px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #21616E;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: var(--f-body);
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.flowCardLeft {
+  left: 0;
+  right: auto;
+}
+
+.flowCardRight {
+  right: 0;
+  left: auto;
+}
+
+.flowCard:hover {
+  border-color: rgba(196, 245, 71, 0.45);
+  transform: translateY(-1px);
+}
+
+.flowCardActive {
+  border-color: rgba(196, 245, 71, 0.55);
+  box-shadow: 0 0 20px rgba(84, 185, 72, 0.12);
+}
+
+.flowIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.flowBody {
+  min-width: 0;
+}
+
+.flowTitle {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flowMeta {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.flowStatus {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.openFull {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #99f6e4;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.openFull:hover {
+  color: #c4f547;
+}
+
+.loading {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+}

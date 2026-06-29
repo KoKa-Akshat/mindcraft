@@ -38,6 +38,11 @@
 
   /* Legacy aliases */
   --bg-old:  var(--bg);
+
+  /* Learning path page — dark atmospheric backdrop */
+  --path-page-bg:
+    radial-gradient(ellipse 90% 60% at 18% 50%, rgba(33, 97, 110, 0.22), transparent 55%),
+    linear-gradient(180deg, #0a1018 0%, #0c1218 45%, #080c12 100%);
   --tx:      var(--text);
   --mu:      var(--text-2);
   --w:       var(--surface);

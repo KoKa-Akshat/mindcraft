@@ -23,6 +23,7 @@ import { seedAssessment, recordOutcomes, getIngredientCards, type IngredientReco
 import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote } from '../lib/practiceState'
+import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
 
@@ -32,10 +33,6 @@ const SESSION_LENGTH = 10   // Bloom's mastery: min 10 trials for 80% threshold
 const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
 const PRACTICE_DRAFT_VERSION = 1
 const PATH_SLOT_COUNT = 6
-
-function pathMasteredStorageKey(uid: string) {
-  return `mc-path-mastered-${uid}`
-}
 
 type PracticePhase =
   | 'onboard' | 'exam-pick' | 'confidence' | 'building'
@@ -524,6 +521,7 @@ export default function Practice() {
       if (prev.has(conceptId)) return prev
       const next = new Set(prev).add(conceptId)
       localStorage.setItem(pathMasteredStorageKey(user.uid), JSON.stringify([...next]))
+      notifyPracticePathUpdated()
       return next
     })
   }
@@ -725,7 +723,10 @@ export default function Practice() {
       // Persist the diagnostic-done flag so the entry gate stops forcing it.
       void markDiagnosticComplete(user.uid, { exam, confidenceMap: updated })
       setPPhase('building')
-      setTimeout(() => setPPhase('gap-analysis'), 2200)
+      setTimeout(() => {
+        setPPhase('gap-analysis')
+        notifyPracticePathUpdated()
+      }, 2200)
     } else {
       setConfidenceStep(i => i + 1)
     }

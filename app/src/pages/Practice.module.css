@@ -3201,7 +3201,7 @@
 
 /* Full-page practice shell — learning path */
 .pathShell {
-  background: var(--practice-bg, #21616E);
+  background: var(--path-page-bg);
   position: relative;
 }
 
@@ -3214,9 +3214,9 @@
   z-index: 1;
 }
 
-/* Kill the flat teal body bg on path screens */
+/* Dark atmospheric backdrop on path screens only */
 :global(body.mc-path-backdrop) {
-  background: #21616E !important;
+  background: var(--path-page-bg) !important;
 }
 
 :global(body.mc-matte-backdrop) {
