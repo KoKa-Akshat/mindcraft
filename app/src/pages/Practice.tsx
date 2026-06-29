@@ -1292,12 +1292,6 @@ export default function Practice() {
                   <h1 className={s.pathHeroTitle}>
                     Your <span className={s.pathHeroAccent}>Learning Path</span>
                   </h1>
-                  <div className={s.pathTopBar}>
-                    <div className={s.modeToggle}>
-                      <button className={mode === 'practice' ? s.modeActive : s.modeInactive} onClick={() => setMode('practice')}>Practice</button>
-                      <button className={mode === 'solver'   ? s.modeActive : s.modeInactive} onClick={() => setMode('solver')}>Problem Solver</button>
-                    </div>
-                  </div>
                 </div>
 
                 <div className={s.pathLayout}>
