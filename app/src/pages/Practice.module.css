@@ -3256,11 +3256,18 @@
   z-index: 1;
 }
 
+/* Kill the flat teal body bg on lesson + path screens */
+:global(body.mc-path-backdrop) {
+  background: #060a08 url('../assets/background.webp') center top / cover no-repeat fixed !important;
+}
+
 .lessonPage {
   max-width: none;
   width: 100%;
   margin: 0 auto;
   padding: 20px 24px 60px;
+  min-height: calc(100vh - 54px);
+  background: transparent;
 }
 
 .pathPage {

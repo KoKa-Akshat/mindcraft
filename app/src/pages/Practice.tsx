@@ -552,6 +552,12 @@ export default function Practice() {
   }, [user.uid])
 
   useEffect(() => {
+    const on = mode === 'practice' && ['path', 'explore', 'level', 'session'].includes(pPhase)
+    document.body.classList.toggle('mc-path-backdrop', on)
+    return () => document.body.classList.remove('mc-path-backdrop')
+  }, [mode, pPhase])
+
+  useEffect(() => {
     if (!draftHydratedRef.current) return
     if (mode !== 'practice') return
     if (!missionType) return            // no active mission → nothing to save
