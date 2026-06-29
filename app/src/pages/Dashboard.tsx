@@ -93,6 +93,31 @@ export default function Dashboard() {
                 <motion.div {...FADE_UP(0.18)}>
                   <ConstellationCard userId={uid} />
                 </motion.div>
+
+                <motion.div {...FADE_UP(0.22)} className={s.labRow}>
+                  <button
+                    type="button"
+                    className={s.labSquare}
+                    onClick={() => navigate('/constellation-gps-lab')}
+                    aria-label="Open Constellation GPS lab experiment"
+                  >
+                    <span className={s.labSquareBadge}>Lab</span>
+                    <span className={s.labSquareIcon}>⌖</span>
+                    <span className={s.labSquareTitle}>GPS × Map</span>
+                    <span className={s.labSquareSub}>Tap to experiment</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={s.labSquare}
+                    onClick={() => navigate('/practice-path-lab')}
+                    aria-label="Open Practice path lab experiment"
+                  >
+                    <span className={s.labSquareBadge}>Lab</span>
+                    <span className={s.labSquareIcon}>◎</span>
+                    <span className={s.labSquareTitle}>Path UI</span>
+                    <span className={s.labSquareSub}>Green layout</span>
+                  </button>
+                </motion.div>
               </div>
 
               {/* Right panel */}

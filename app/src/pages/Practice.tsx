@@ -1282,6 +1282,7 @@ export default function Practice() {
                     {exam && <span className={s.pathExamBadge}>{exam} Path</span>}
                     {assessConcepts.length > 0 && <span className={s.processBadge}>Process 1 saved</span>}
                     <button className={s.pathResetBtn} onClick={resetPractice}>← Change exam</button>
+                    <button className={s.pathResetBtn} onClick={() => navigate('/practice-path-lab')}>Path lab →</button>
                   </div>
                 </div>
 
