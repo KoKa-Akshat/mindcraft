@@ -16,8 +16,31 @@
     dashboard: APP + '/dashboard',
   }
 
+  var FRONT_VIEW = {
+    position: { x: -11.1, y: -1, z: -7.6 },
+    target: { x: 0, y: 0, z: -1 },
+  }
+
+  function setVector(vec, values) {
+    if (!vec || !values) return
+    vec.x = values.x
+    vec.y = values.y
+    vec.z = values.z
+  }
+
+  function setFrontView(exp) {
+    var camera = exp && exp.camera
+    if (!camera || !camera.instance || !camera.controls) return false
+    setVector(camera.instance.position, FRONT_VIEW.position)
+    setVector(camera.controls.target, FRONT_VIEW.target)
+    if (camera.camAngle && camera.camAngle.default) camera.camAngle.default()
+    if (camera.controls.update) camera.controls.update()
+    return true
+  }
+
   function patchMenuControls(mc) {
-    if (!mc || mc.__mcPatched) return false
+    if (!mc) return false
+    if (mc.__mcPatched) return true
 
     mc.articles = async function (t, e) {
       if (this.logic.buttonsLocked || this.logic.mode !== 'menu') return
@@ -55,10 +78,49 @@
     return true
   }
 
+  function patchCamera(exp) {
+    var ctrl = exp && exp.controller
+    var camera = exp && exp.camera
+    if (!ctrl || !ctrl.camControls || !camera) return false
+    if (ctrl.camControls.__mcCameraPatched) return true
+
+    ctrl.camControls.toDefault = async function () {
+      if (ctrl.sounds && ctrl.sounds.playWhoosh) ctrl.sounds.playWhoosh()
+      if (ctrl.logic && ctrl.logic.lockButtons) ctrl.logic.lockButtons(900)
+      if (camera.camAngle && camera.camAngle.unlocked) camera.camAngle.unlocked()
+      setFrontView(exp)
+      if (camera.controls) {
+        camera.controls.enableRotate = true
+        camera.controls.enableZoom = true
+      }
+    }
+
+    ctrl.camControls.__mcCameraPatched = true
+    setFrontView(exp)
+    return true
+  }
+
+  function patchProjectsCue(exp) {
+    var ctrl = exp && exp.controller
+    if (!ctrl || !ctrl.menuControls || !ctrl.ramenShop || window.MC_openProjectsSign) return !!window.MC_openProjectsSign
+
+    window.MC_openProjectsSign = function () {
+      if (ctrl.logic && ctrl.logic.mode !== 'menu') {
+        if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
+        return
+      }
+      ctrl.menuControls.projects(ctrl.ramenShop.projectsWhite, 'white')
+    }
+    return true
+  }
+
   function tryPatch() {
     var exp = window.experience
     var mc = exp && exp.controller && exp.controller.menuControls
-    return patchMenuControls(mc)
+    var menuDone = patchMenuControls(mc)
+    var cameraDone = patchCamera(exp)
+    var cueDone = patchProjectsCue(exp)
+    return menuDone && cameraDone && cueDone
   }
 
   var tries = 0

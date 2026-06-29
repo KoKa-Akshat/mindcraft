@@ -536,6 +536,41 @@ h1 {
     filter: brightness(1.05);
 }
 
+.mc-projects-cue {
+    position: fixed;
+    left: calc(50% - 360px);
+    top: 43%;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    color: #ff4fd8;
+    cursor: pointer;
+    animation: mc-projects-nudge 1.15s ease-in-out infinite;
+    filter:
+        drop-shadow(0 0 7px rgba(255, 79, 216, 0.9))
+        drop-shadow(0 0 18px rgba(196, 245, 71, 0.30));
+}
+
+.mc-projects-arrow {
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.mc-projects-cue:hover {
+    color: #C4F547;
+}
+
+@keyframes mc-projects-nudge {
+    0%, 100% { transform: translateX(0); opacity: 0.88; }
+    50% { transform: translateX(8px); opacity: 1; }
+}
+
 @media (max-width: 768px) {
     .mc-top-actions { top: 10px; right: 10px; width: 116px; }
     .mc-view-toggle { height: 40px; }
@@ -544,6 +579,8 @@ h1 {
     .mc-hint-btn,
     .mc-booking-btn { height: 32px; min-height: 32px; padding: 0 10px; font-size: 12px; }
     .mc-bottom-bar { flex-direction: row; gap: 6px; }
+    .mc-projects-cue { left: calc(50% - 172px); top: 39%; }
+    .mc-projects-arrow { font-size: 28px; }
 }
 
 .start {
