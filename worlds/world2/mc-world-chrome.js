@@ -5,8 +5,9 @@
   var APP = window.location.hostname === 'localhost'
     ? 'http://localhost:4321'
     : 'https://mindcraft-93858.web.app'
+  var AMBIENT_VOLUME = 0.28
 
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-30-world-chrome-v10'
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-30-world-chrome-v11'
 
   // Read shared .web.app cookie set by the dashboard when diagnostic is confirmed done
   function hasDiagCookie() {
@@ -46,7 +47,7 @@
       try {
         if (window.Howler) {
           window.Howler.mute(false)
-          window.Howler.volume(1)
+          window.Howler.volume(AMBIENT_VOLUME)
           if (window.Howler.ctx && window.Howler.ctx.resume) window.Howler.ctx.resume()
         }
       } catch (e) {}
@@ -55,7 +56,7 @@
       try {
         if (exp && exp.sounds) {
           if (exp.sounds.cooking && exp.sounds.cooking.mute) exp.sounds.cooking.mute(false)
-          if (exp.sounds.cooking && exp.sounds.cooking.volume) exp.sounds.cooking.volume(1)
+          if (exp.sounds.cooking && exp.sounds.cooking.volume) exp.sounds.cooking.volume(AMBIENT_VOLUME)
         }
       } catch (e) {}
 
@@ -70,8 +71,20 @@
       if (diagDone) return
       if (clickMe) clickMe.style.display = 'none'
       sessionStorage.setItem('mc-clicked-me', '1')
-      if (window.MC_openProjectsSign) window.MC_openProjectsSign()
-      else if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
+      if (window.MC_openProjectsSign) {
+        window.MC_openProjectsSign()
+        return
+      }
+      var tries = 0
+      var timer = setInterval(function () {
+        if (window.MC_openProjectsSign) {
+          clearInterval(timer)
+          window.MC_openProjectsSign()
+        } else if (++tries > 18) {
+          clearInterval(timer)
+          if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
+        }
+      }, 120)
     }
 
     // Jesse's Kitchen is now a pre-diagnostic experience only:
@@ -91,7 +104,7 @@
           try {
             if (window.Howler) {
               window.Howler.mute(false)
-              window.Howler.volume(1)
+              window.Howler.volume(AMBIENT_VOLUME)
               if (window.Howler.ctx && window.Howler.ctx.resume) window.Howler.ctx.resume()
             }
           } catch (e) {}
