@@ -1,7 +1,7 @@
 # MindCraft BETA Showcase Print Handoff
 
 Event: BETA Showcase, Wednesday July 1, 2026, 5:30-7:45 PM, The Luminare  
-QR target: https://mindcraft-93858.web.app/login
+QR target: https://mindcraft-marketing-site.web.app/
 
 ## Files To Use
 
@@ -19,7 +19,7 @@ Poster:
 - PNG backups are included with the same names.
 
 QR:
-- `mindcraft-login-qr.png`
+- `mindcraft-landing-qr.png`
 
 ## What To Order
 

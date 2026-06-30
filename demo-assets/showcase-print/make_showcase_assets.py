@@ -83,7 +83,7 @@ def draw_brand(draw, x, y, scale=1.0, light=False):
 
 
 def paste_qr(base, box, invert=False):
-    qr_path = OUT / "mindcraft-login-qr.png"
+    qr_path = OUT / "mindcraft-landing-qr.png"
     qr = Image.open(qr_path).convert("RGBA")
     if invert:
         rgb = qr.convert("RGB")
@@ -167,7 +167,7 @@ def make_card_back():
 
     d.line((74, 468, w - 74, 468), fill=(6, 77, 54, 70), width=2)
     d.text((74, 502), "joinmindcraft@gmail.com  •  +1 (763) 340-5616", font=font(SANS_BOLD, 20), fill=GREEN)
-    d.text((74, 540), "mindcraft-93858.web.app/login", font=font(SANS, 18), fill=MUTED)
+    d.text((74, 540), "mindcraft-marketing-site.web.app", font=font(SANS, 18), fill=MUTED)
     d.text((w - 74, 540), "BETA Showcase 2026", font=font(SANS_BOLD, 18), fill=BURGUNDY, anchor="ra")
     save_print(img, "mindcraft_showcase_card_back_3.75x2.25_bleed")
 
