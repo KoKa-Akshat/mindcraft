@@ -99,7 +99,7 @@ const EXAM_CARD_META: Record<ExamType, { icon: string; accent: string; micro: st
   SAT:     { icon: '800', accent: '#4ECDC4', micro: 'Data + functions' },
   IB:      { icon: 'AI', accent: '#A29BFE', micro: 'Modelling SL' },
   AP:      { icon: 'AP', accent: '#FFE66D', micro: 'Calc readiness' },
-  General: { icon: '+', accent: '#C4F547', micro: 'Custom path' },
+  General: { icon: '+', accent: '#54B948', micro: 'Custom path' },
 }
 
 const CONFIDENCE_COPY: Record<ExamType, string> = {
@@ -1181,10 +1181,11 @@ export default function Practice() {
   void correctCount
   const pct          = questions.length ? Math.round((qIndex / questions.length) * 100) : 0
   const lvBannerGradient = level === 1
-    ? 'linear-gradient(135deg,#58CC02,#3CAD00)'
+    ? 'linear-gradient(135deg,#4EB543,#247a46)'
     : level === 2
-    ? 'linear-gradient(135deg,#F97316,#EA580C)'
-    : 'linear-gradient(135deg,#7C3AED,#5B21B6)'
+    ? 'linear-gradient(135deg,#E4BF6A,#8C5A1E)'
+    : 'linear-gradient(135deg,#064D36,#09251D)'
+  const levelTierName = level === 1 ? 'Foundation' : level === 2 ? 'Fluency' : 'Mastery'
 
   const firstAttemptResults  = results.slice(0, initialQCount)
   const firstCorrect         = firstAttemptResults.filter(Boolean).length
@@ -1327,7 +1328,9 @@ export default function Practice() {
                       </h1>
                       <p className={s.confSub}>{CONFIDENCE_COPY[selectedExam]}</p>
                       <div className={s.conceptPreview}>
-                        <span className={s.conceptPreviewEmoji}>{current.emoji}</span>
+                        <span className={s.conceptPreviewIcon}>
+                          <ConceptPathIcon conceptId={current.id} size={38} />
+                        </span>
                         <div>
                           <span className={s.conceptPreviewName}>{current.label}</span>
                           <span className={s.conceptPreviewMeta}>
@@ -1446,8 +1449,8 @@ export default function Practice() {
                             const cy = nodeY(i)
                             return (
                               <g key={i}>
-                                <circle cx={SPINE} cy={cy} r="19" fill="rgba(8,18,14,0.96)" stroke="rgba(196,245,71,0.55)" strokeWidth="2" />
-                                <text x={SPINE} y={cy + 5} textAnchor="middle" fill="#c4f547" fontSize="12" fontWeight="800" fontFamily="system-ui,sans-serif">{i + 1}</text>
+                                <circle cx={SPINE} cy={cy} r="19" fill="rgba(8,18,14,0.96)" stroke="rgba(84,185,72,0.55)" strokeWidth="2" />
+                                <text x={SPINE} y={cy + 5} textAnchor="middle" fill="#54b948" fontSize="12" fontWeight="800" fontFamily="system-ui,sans-serif">{i + 1}</text>
                               </g>
                             )
                           })}
@@ -1483,7 +1486,7 @@ export default function Practice() {
                     <div className={s.pathProgressCard}>
                       <div
                         className={s.pathProgressRing}
-                        style={{ background: `conic-gradient(#c4f547 ${pathProgressPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
+                        style={{ background: `conic-gradient(#54b948 ${pathProgressPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
                       >
                         <span className={s.pathProgressRingInner}>{pathProgressPct}%</span>
                       </div>
@@ -1504,10 +1507,10 @@ export default function Practice() {
                     </div>
 
                     <div className={s.pathStreakCard}>
-                      <span className={s.pathStreakFire} aria-hidden="true">🔥</span>
+                      <span className={s.pathStreakMark} aria-hidden="true">M</span>
                       <div>
                         <p className={s.pathStreakCount}>{streak || 0} day{streak === 1 ? '' : 's'}</p>
-                        <p className={s.pathStreakLabel}>Keep it up!</p>
+                        <p className={s.pathStreakLabel}>Momentum streak</p>
                       </div>
                     </div>
 
@@ -1574,13 +1577,13 @@ export default function Practice() {
 
                         <div className={s.exploreGrid}>
                           <div className={s.exploreSection}>
-                            <div className={s.exploreSectionTitle}>📋 Key Rules</div>
+                            <div className={s.exploreSectionTitle}><span>Rules</span> Key moves</div>
                             <ul className={s.exploreList}>
                               {content.keyRules.map((r, i) => <li key={i}>{r}</li>)}
                             </ul>
                           </div>
                           <div className={s.exploreSection}>
-                            <div className={s.exploreSectionTitle}>💡 Pro Tips</div>
+                            <div className={s.exploreSectionTitle}><span>Coach</span> Field notes</div>
                             <ul className={s.exploreList}>
                               {content.tips.map((t, i) => <li key={i}>{t}</li>)}
                             </ul>
@@ -1588,14 +1591,14 @@ export default function Practice() {
                         </div>
 
                         <div className={s.exploreSection}>
-                          <div className={s.exploreSectionTitle}>⚠️ Watch Out</div>
+                          <div className={s.exploreSectionTitle}><span>Trap</span> Watch points</div>
                           <ul className={`${s.exploreList} ${s.watchOutList}`}>
                             {content.watchOut.map((w, i) => <li key={i}>{w}</li>)}
                           </ul>
                         </div>
 
                         <div className={s.exploreSection}>
-                          <div className={s.exploreSectionTitle}>🔍 Worked Examples</div>
+                          <div className={s.exploreSectionTitle}><span>Model</span> Worked examples</div>
                           <div className={s.exploreExamples}>
                             {content.examples.map((ex, i) => (
                               <div key={i} className={s.exploreExample}>
@@ -1694,15 +1697,15 @@ export default function Practice() {
                           <span className={s.levelRecBadge}>Recommended</span>
                         )}
                         <div className={s.levelColorStripe} style={{ background: m.color }} />
-                        <div className={s.levelStars}>
+                        <div className={s.levelTierMeter} aria-label={`${m.stars} of 3 tier intensity`}>
                           {Array.from({ length: 3 }).map((_, i) => (
-                            <span key={i} className={i < m.stars ? s.starOn : s.starOff}>★</span>
+                            <span key={i} className={i < m.stars ? s.tierOn : s.tierOff} />
                           ))}
                         </div>
                         <div className={s.levelNum}>Level {lv}</div>
                         <div className={s.levelName}>{m.label}</div>
                         <div className={s.levelDesc}>{m.sub}</div>
-                        <div className={s.levelXp}>+{m.xp} XP / question</div>
+                        <div className={s.levelXp}>+{m.xp} insight pts / question</div>
                         <div className={s.levelCount}>{cnt > 0 ? `${cnt} bank questions` : 'AI-generated'}</div>
                       </button>
                     )
@@ -1797,7 +1800,7 @@ export default function Practice() {
                       <span className={s.stripLevel} style={{ color: lvMeta.color }}>
                         {hideCorrectness
                           ? sessionLabel
-                          : `${'★'.repeat(level)}${'☆'.repeat(3 - level)} L${level}`}
+                          : `${levelTierName} · Level ${level}`}
                       </span>
                     </div>
                     <div className={s.stripCenter}>
@@ -1807,53 +1810,128 @@ export default function Practice() {
                       <span className={s.progressLabel}>{qIndex + 1} / {questions.length}</span>
                     </div>
                     <div className={s.stripRight}>
-                      {!hideCorrectness && <span className={s.xpBadge}>⚡ {xp} XP</span>}
+                      {!hideCorrectness && <span className={s.xpBadge}>{xp} Insight</span>}
                     </div>
                   </div>
 
-                  <div className={s.questionCard}>
-                    <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
-                      {currentQ.examTag && (
-                        <span className={s.examTagLight}>{currentQ.examTag} Style</span>
-                      )}
-                      <p className={s.questionText}>{currentQ.question}</p>
-                    </div>
-                    <div className={s.questionBody}>
-                      {safeQuestionSvg(currentQ) && (
-                        <div
-                          className={s.questionVisual}
-                          dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
-                        />
-                      )}
-                      <div className={s.choices}>
-                        {currentQ.choices.map((choice, i) => {
-                          let cls = s.choice
-                          if (checked && !hideCorrectness) {
-                            if (i === currentQ.correctIndex) cls = s.choiceCorrect
-                            else if (i === selected)         cls = s.choiceWrong
-                          } else if (i === selected) {
-                            cls = s.choiceSelected
-                          }
-                          return (
-                            <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
-                              <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                              <span className={s.choiceText}>{choice}</span>
-                              {!hideCorrectness && checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
-                              {!hideCorrectness && checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>✗</span>}
-                            </button>
-                          )
-                        })}
-                      </div>
+                  <div className={s.sessionColumns}>
+                    <div className={s.sessionMain}>
+                      <div className={s.questionCard}>
+                        <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
+                          <div className={s.questionMetaRow}>
+                            {currentQ.examTag && (
+                              <span className={s.examTagLight}>{currentQ.examTag} Style</span>
+                            )}
+                            <span className={s.questionModeTag}>{levelTierName}</span>
+                          </div>
+                          <p className={s.questionText}>{currentQ.question}</p>
+                        </div>
+                        <div className={s.questionBody}>
+                          {safeQuestionSvg(currentQ) && (
+                            <div
+                              className={s.questionVisual}
+                              dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
+                            />
+                          )}
+                          <div className={s.choices}>
+                            {currentQ.choices.map((choice, i) => {
+                              let cls = s.choice
+                              if (checked && !hideCorrectness) {
+                                if (i === currentQ.correctIndex) cls = s.choiceCorrect
+                                else if (i === selected)         cls = s.choiceWrong
+                              } else if (i === selected) {
+                                cls = s.choiceSelected
+                              }
+                              return (
+                                <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
+                                  <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
+                                  <span className={s.choiceText}>{choice}</span>
+                                  {!hideCorrectness && checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
+                                  {!hideCorrectness && checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>×</span>}
+                                </button>
+                              )
+                            })}
+                          </div>
 
+                          {!checked && (
+                            <div className={s.answerRow}>
+                              <div className={s.answerInputWrap}>
+                                <input
+                                  ref={answerInputRef}
+                                  className={s.answerInput}
+                                  type="text"
+                                  placeholder="Type answer or use the math keyboard"
+                                  value={typedAnswer}
+                                  onChange={e => setTypedAnswer(e.target.value)}
+                                  onKeyDown={e => {
+                                    if (e.key === 'Enter' && !checked) checkAnswer()
+                                  }}
+                                  disabled={checked}
+                                />
+                                <ScientificCalcToggle
+                                  active={showCalc}
+                                  onToggle={() => setShowCalc(v => !v)}
+                                  disabled={checked}
+                                />
+                                <button
+                                  type="button"
+                                  className={s.answerSubmit}
+                                  onClick={checkAnswer}
+                                  disabled={checked || (selected === null && !typedAnswer.trim())}
+                                  aria-label={hideCorrectness ? 'Continue' : 'Submit answer'}
+                                >
+                                  {hideCorrectness ? '→' : 'Submit'}
+                                </button>
+                              </div>
+                              <ScientificCalcPanel
+                                open={showCalc}
+                                value={typedAnswer}
+                                onChange={setTypedAnswer}
+                                onSubmit={checkAnswer}
+                                inputRef={answerInputRef}
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        {checked && !hideCorrectness && (
+                          <div className={selected === currentQ.correctIndex ? s.feedbackCorrect : s.feedbackWrong}>
+                            <div className={selected === currentQ.correctIndex ? s.feedbackBannerCorrect : s.feedbackBannerWrong}>
+                              <span className={s.feedbackIcon}>
+                                {selected === currentQ.correctIndex ? '✓' : 'i'}
+                              </span>
+                              <span className={s.feedbackTitle}>
+                                {selected === currentQ.correctIndex
+                                  ? `Correct · +${lvMeta.xp} Insight`
+                                  : 'Review the reasoning'}
+                              </span>
+                            </div>
+                            <div className={s.feedbackBody}>
+                              <div className={s.feedbackExplanation}>{currentQ.explanation}</div>
+                            </div>
+                          </div>
+                        )}
+
+                        {checked && !hideCorrectness && (
+                          <div className={s.actionRow}>
+                            <button className={s.nextBtn} onClick={nextQuestion}>
+                              {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <aside className={s.sidePanel} aria-label="Practice tools">
                       {!checked && !hideCorrectness && (
                         <div className={s.hintCardInline}>
                           <div className={s.hintCardHeader}>
-                            <span>💡</span>
-                            <span className={s.hintCardTitle}>Need a hint?</span>
+                            <span className={s.hintGlyph}>?</span>
+                            <span className={s.hintCardTitle}>Hint lane</span>
                           </div>
                           {hintsShown === 0 ? (
                             <button type="button" className={s.hintTrigger} onClick={() => setHintsShown(1)}>
-                              Show hint 1 →
+                              Reveal first hint
                             </button>
                           ) : (
                             <div className={s.hintsBox}>
@@ -1867,82 +1945,25 @@ export default function Practice() {
                                   type="button"
                                   className={s.hintTrigger}
                                   onClick={() => setHintsShown(h => Math.min(h + 1, 3))}
-                                  style={{ borderTop: '1px solid #F1F5F9' }}
                                 >
-                                  Hint {hintsShown + 1} →
+                                  Reveal hint {hintsShown + 1}
                                 </button>
                               )}
                             </div>
                           )}
                         </div>
                       )}
-
-                      {!checked && (
-                        <div className={s.answerRow}>
-                          <div className={s.answerInputWrap}>
-                            <input
-                              ref={answerInputRef}
-                              className={s.answerInput}
-                              type="text"
-                              placeholder="Type your answer here"
-                              value={typedAnswer}
-                              onChange={e => setTypedAnswer(e.target.value)}
-                              onKeyDown={e => {
-                                if (e.key === 'Enter' && !checked) checkAnswer()
-                              }}
-                              disabled={checked}
-                            />
-                            <ScientificCalcToggle
-                              active={showCalc}
-                              onToggle={() => setShowCalc(v => !v)}
-                              disabled={checked}
-                            />
-                            <button
-                              type="button"
-                              className={s.answerSubmit}
-                              onClick={checkAnswer}
-                              disabled={checked || (selected === null && !typedAnswer.trim())}
-                              aria-label={hideCorrectness ? 'Continue' : 'Submit answer'}
-                            >
-                              {hideCorrectness ? '→' : '↑'}
-                            </button>
-                          </div>
-                          <ScientificCalcPanel
-                            open={showCalc}
-                            value={typedAnswer}
-                            onChange={setTypedAnswer}
-                            onSubmit={checkAnswer}
-                            inputRef={answerInputRef}
-                          />
-                        </div>
-                      )}
-                    </div>
-
-                    {checked && !hideCorrectness && (
-                      <div className={selected === currentQ.correctIndex ? s.feedbackCorrect : s.feedbackWrong}>
-                        <div className={selected === currentQ.correctIndex ? s.feedbackBannerCorrect : s.feedbackBannerWrong}>
-                          <span className={s.feedbackIcon}>
-                            {selected === currentQ.correctIndex ? '✨' : '💡'}
-                          </span>
-                          <span className={s.feedbackTitle}>
-                            {selected === currentQ.correctIndex
-                              ? `Correct! +${lvMeta.xp} XP`
-                              : "Not quite — here's why:"}
-                          </span>
-                        </div>
-                        <div className={s.feedbackBody}>
-                          <div className={s.feedbackExplanation}>{currentQ.explanation}</div>
-                        </div>
+                      <div className={s.toolCard}>
+                        <span className={s.toolKicker}>Workspace</span>
+                        <strong>Question stays readable while tools stay close.</strong>
+                        <p>Use the math keyboard for symbols, keep hints open beside the problem, and leave space for iPad scratch work.</p>
                       </div>
-                    )}
-
-                    {checked && !hideCorrectness && (
-                      <div className={s.actionRow}>
-                        <button className={s.nextBtn} onClick={nextQuestion}>
-                          {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
-                        </button>
+                      <div className={s.toolCard}>
+                        <span className={s.toolKicker}>Backend signal</span>
+                        <strong>Every response sharpens the map.</strong>
+                        <p>Answers, hints, and retries become knowledge-gap evidence for the next route.</p>
                       </div>
-                    )}
+                    </aside>
                   </div>
                 </div>
               </div>
@@ -1952,15 +1973,15 @@ export default function Practice() {
             {pPhase === 'complete' && (
               <div className={s.completeWrap}>
                 <div className={s.completeStars}>
-                  {mastered ? '🌟🌟🌟' : firstAccuracy >= 0.60 ? '🌟🌟' : '🌟'}
+                  <span>{mastered ? 'Mastery' : firstAccuracy >= 0.60 ? 'Almost locked' : 'Needs reps'}</span>
                 </div>
                 <h2 className={s.completeTitle}>
-                  {mastered ? `Level ${level} Mastered!` : 'Session Complete!'}
+                  {mastered ? `Level ${level} mastered` : 'Session complete'}
                 </h2>
                 <div className={s.completeStats}>
                   <div className={s.completeStat}>
                     <span className={s.completeStatNum} style={{ color: lvMeta.color }}>{xp}</span>
-                    <span className={s.completeStatLabel}>XP Earned</span>
+                    <span className={s.completeStatLabel}>Insight points</span>
                   </div>
                   <div className={s.completeStat}>
                     <span className={s.completeStatNum}>{firstCorrect}/{initialQCount}</span>
@@ -2004,7 +2025,7 @@ export default function Practice() {
                         className={s.nextGapBtn}
                         onClick={() => startSession(nextGap.id, getRecommendedLevel(nextGap.id))}
                       >
-                        {nextGap.emoji} {nextGap.label} → Level {getRecommendedLevel(nextGap.id)}
+                        {nextGap.label} → Level {getRecommendedLevel(nextGap.id)}
                       </button>
                     </div>
                   )
@@ -2075,7 +2096,7 @@ export default function Practice() {
                     <span />
                     <svg viewBox="0 0 260 120" fill="none">
                       <path d="M18 92 H242 M36 104 V18" stroke="rgba(255,255,255,.22)" strokeWidth="2" />
-                      <path d="M38 88 C82 74 95 28 130 34 C166 40 171 89 222 28" stroke="#C4F547" strokeWidth="4" strokeLinecap="round" />
+                      <path d="M38 88 C82 74 95 28 130 34 C166 40 171 89 222 28" stroke="#54B948" strokeWidth="4" strokeLinecap="round" />
                       <circle cx="130" cy="34" r="5" fill="#4ECDC4" />
                       <circle cx="222" cy="28" r="5" fill="#FF6B6B" />
                     </svg>

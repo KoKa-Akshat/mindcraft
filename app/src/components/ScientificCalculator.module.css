@@ -2,9 +2,9 @@
   width: 46px;
   min-width: 46px;
   border: none;
-  border-left: 1px solid #CBD5E1;
-  background: #EFF6FF;
-  color: #2563EB;
+  border-left: 1px solid rgba(6, 77, 54, 0.16);
+  background: #f5fbf1;
+  color: #064d36;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -13,13 +13,13 @@
 }
 
 .toggle:hover:not(:disabled) {
-  background: #DBEAFE;
-  color: #1D4ED8;
+  background: #e8f7e4;
+  color: #0b6c44;
 }
 
 .toggleActive {
-  background: #2563EB;
-  color: #ffffff;
+  background: #064d36;
+  color: #fffaf0;
 }
 
 .toggle:disabled {
@@ -29,11 +29,11 @@
 
 .panel {
   margin-top: 12px;
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
-  border: 1px solid #CBD5E1;
-  background: #F8FAFC;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(6, 77, 54, 0.16);
+  background: #fffaf0;
+  box-shadow: 0 20px 54px rgba(6, 45, 34, 0.16);
 }
 
 .quickBar {
@@ -41,27 +41,27 @@
   flex-wrap: wrap;
   gap: 6px;
   padding: 10px 12px;
-  background: #ffffff;
-  border-bottom: 1px solid #E2E8F0;
+  background: rgba(255, 250, 240, 0.96);
+  border-bottom: 1px solid rgba(6, 77, 54, 0.12);
 }
 
 .quickKey {
   min-width: 34px;
   height: 34px;
   padding: 0 8px;
-  border: 1px solid #CBD5E1;
+  border: 1px solid rgba(6, 77, 54, 0.16);
   border-radius: 8px;
   background: #ffffff;
   font-size: 13px;
   font-weight: 700;
-  color: #334155;
+  color: #173f31;
   cursor: pointer;
   font-family: var(--f-body);
 }
 
 .quickKey:hover {
-  background: #EFF6FF;
-  border-color: #93C5FD;
+  background: #edf8e8;
+  border-color: rgba(84, 185, 72, 0.36);
 }
 
 .body {
@@ -76,28 +76,28 @@
   flex-direction: column;
   gap: 6px;
   padding: 10px 8px;
-  background: #ffffff;
-  border-right: 1px solid #E2E8F0;
+  background: rgba(255, 250, 240, 0.96);
+  border-right: 1px solid rgba(6, 77, 54, 0.12);
 }
 
 .sideKey {
   min-height: 34px;
-  border: 1px solid #CBD5E1;
+  border: 1px solid rgba(6, 77, 54, 0.16);
   border-radius: 8px;
   background: #ffffff;
   font-size: 12px;
   font-weight: 700;
-  color: #334155;
+  color: #173f31;
   cursor: pointer;
   font-family: var(--f-body);
 }
 
-.sideKey:hover { background: #F8FAFC; }
+.sideKey:hover { background: #edf8e8; }
 
 .sideKeyAccent {
-  background: #FFF7ED;
-  border-color: #FDBA74;
-  color: #C2410C;
+  background: rgba(228, 191, 106, 0.16);
+  border-color: rgba(228, 191, 106, 0.42);
+  color: #7a4f19;
 }
 
 .numpad {
@@ -110,22 +110,22 @@
 
 .numKey {
   min-height: 42px;
-  border: 1px solid #CBD5E1;
+  border: 1px solid rgba(6, 77, 54, 0.16);
   border-radius: 10px;
   background: #ffffff;
   font-size: 16px;
   font-weight: 700;
-  color: #1e293b;
+  color: #10231a;
   cursor: pointer;
   font-family: var(--f-display);
 }
 
-.numKey:hover { background: #F8FAFC; }
+.numKey:hover { background: #edf8e8; }
 
 .numKeyAccent {
-  background: #FFF7ED;
-  border-color: #FDBA74;
-  color: #C2410C;
+  background: rgba(228, 191, 106, 0.16);
+  border-color: rgba(228, 191, 106, 0.42);
+  color: #7a4f19;
 }
 
 .categoryCol {
@@ -133,7 +133,7 @@
   flex-direction: column;
   gap: 2px;
   padding: 8px;
-  background: #1e293b;
+  background: linear-gradient(180deg, #064d36, #09251d);
   overflow-y: auto;
   max-height: 220px;
 }
@@ -161,13 +161,13 @@
 }
 
 .categoryBtnActive {
-  background: rgba(59, 130, 246, 0.22);
-  color: #ffffff;
+  background: rgba(84, 185, 72, 0.24);
+  color: #fffaf0;
 }
 
 .check {
   font-size: 10px;
-  color: #93C5FD;
+  color: #e4bf6a;
 }
 
 .symbolGrid {
@@ -175,37 +175,50 @@
   flex-wrap: wrap;
   gap: 6px;
   padding: 10px 12px 12px;
-  background: #ffffff;
-  border-top: 1px solid #E2E8F0;
+  background: rgba(255, 250, 240, 0.96);
+  border-top: 1px solid rgba(6, 77, 54, 0.12);
 }
 
 .symbolKey {
   min-width: 42px;
   height: 36px;
   padding: 0 10px;
-  border: 1px solid #CBD5E1;
+  border: 1px solid rgba(6, 77, 54, 0.16);
   border-radius: 8px;
-  background: #F8FAFC;
+  background: #ffffff;
   font-size: 13px;
   font-weight: 700;
-  color: #334155;
+  color: #173f31;
   cursor: pointer;
   font-family: var(--f-body);
 }
 
 .symbolKey:hover {
-  background: #EFF6FF;
-  border-color: #93C5FD;
+  background: #edf8e8;
+  border-color: rgba(84, 185, 72, 0.36);
 }
 
 .symbolKeyMuted {
-  color: #64748b;
+  color: rgba(23, 63, 49, 0.66);
   background: #ffffff;
 }
 
 @media (max-width: 640px) {
   .body {
-    grid-template-columns: 64px 1fr 108px;
+    grid-template-columns: 58px 1fr;
+  }
+
+  .categoryCol {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    max-height: none;
+    overflow-x: auto;
+  }
+
+  .categoryBtn {
+    white-space: nowrap;
+    width: auto;
+    flex: 0 0 auto;
   }
 
   .categoryBtn {

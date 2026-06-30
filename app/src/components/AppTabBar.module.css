@@ -7,12 +7,13 @@
 
 .toggle {
   display: flex;
-  background: rgba(5, 24, 32, 0.34);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  background: rgba(255, 250, 240, 0.08);
+  border: 1px solid rgba(255, 250, 240, 0.12);
+  border-radius: 16px;
   padding: 4px;
   gap: 4px;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(16px);
 }
 
 .tab,
@@ -43,15 +44,24 @@
 }
 
 .tabActive {
-  background: var(--accent, #c4f547);
-  color: #164b52;
-  box-shadow: 0 10px 24px rgba(196, 245, 71, 0.2);
+  background: #54b948;
+  color: #fffaf0;
+  box-shadow: 0 10px 24px rgba(84, 185, 72, 0.24);
 }
 
 @media (max-width: 720px) {
-  .bar { justify-content: center; }
+  .bar {
+    justify-content: center;
+    position: sticky;
+    top: 8px;
+    z-index: 20;
+  }
+  .toggle {
+    width: min(100%, 360px);
+  }
   .tab,
   .tabActive {
+    flex: 1;
     padding: 0 12px;
     font-size: 11px;
   }
