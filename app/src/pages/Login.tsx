@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   sendPasswordResetEmail,
   signOut,
 } from 'firebase/auth'
@@ -17,10 +18,37 @@ type Role = 'student' | 'parent' | 'tutor'
 type SignupRole = Role | 'admin'
 type Mode = 'signin' | 'signup'
 
-function resolveSignupRole(selectedRole: Role, passcode: string): SignupRole {
+const ADMIN_PASSCODE_KEY = 'mc_admin_passcode'
+
+function isAdminPasscodeValid(passcode: string): boolean {
   const expected = import.meta.env.VITE_ADMIN_PASSCODE
-  if (expected && passcode.length > 0 && passcode === expected) return 'admin'
+  return !!(expected && passcode.length > 0 && passcode === expected)
+}
+
+function resolveSignupRole(selectedRole: Role, passcode: string): SignupRole {
+  if (isAdminPasscodeValid(passcode)) return 'admin'
   return selectedRole
+}
+
+function persistPasscodeForOAuth(passcode: string) {
+  if (passcode) sessionStorage.setItem(ADMIN_PASSCODE_KEY, passcode)
+  else sessionStorage.removeItem(ADMIN_PASSCODE_KEY)
+}
+
+/** Prefer in-memory state; fall back to sessionStorage (survives OAuth redirect). */
+function consumePendingPasscode(statePasscode: string): string {
+  const stored = sessionStorage.getItem(ADMIN_PASSCODE_KEY) ?? ''
+  sessionStorage.removeItem(ADMIN_PASSCODE_KEY)
+  return statePasscode || stored
+}
+
+function clearPasscodeState(
+  setShowAdminPasscode: (v: boolean) => void,
+  setAdminPasscode: (v: string) => void,
+) {
+  setShowAdminPasscode(false)
+  setAdminPasscode('')
+  sessionStorage.removeItem(ADMIN_PASSCODE_KEY)
 }
 
 function safeReturnPath(raw: string | null): string | null {
@@ -61,26 +89,68 @@ export default function Login() {
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
 
+  useEffect(() => {
+    const stored = sessionStorage.getItem(ADMIN_PASSCODE_KEY)
+    if (stored) {
+      setAdminPasscode(stored)
+      setShowAdminPasscode(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      try {
+        const cred = await getRedirectResult(auth)
+        if (cancelled || !cred?.user) return
+        setLoading(true)
+        const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
+        await routeAfterLogin(cred.user.uid, isNew)
+      } catch (e: unknown) {
+        if (cancelled) return
+        const code = (e as { code?: string })?.code ?? ''
+        const msg = friendlyError(code || 'unknown')
+        if (msg) setError(msg)
+        setLoading(false)
+      }
+    })()
+    return () => { cancelled = true }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  function navigateAfterRole(effectiveRole: string) {
+    if (effectiveRole === 'tutor' || effectiveRole === 'admin') {
+      navigate('/tutor', { replace: true })
+    } else if (returnTo) {
+      navigate(returnTo, { replace: true })
+    } else {
+      window.location.href = worldUrl(auth.currentUser!.uid)
+    }
+  }
+
   async function routeAfterLogin(uid: string, isNewUser = false) {
     await auth.currentUser?.getIdToken(true)
+    const passcode = consumePendingPasscode(adminPasscode)
+    const grantAdmin = isAdminPasscodeValid(passcode)
+
     const snap = await getDoc(doc(db, 'users', uid))
     const firestoreRole = snap.data()?.role
 
     if (isNewUser) {
-      const signupRole = resolveSignupRole(role, adminPasscode)
+      const signupRole = resolveSignupRole(role, passcode)
       await setDoc(doc(db, 'users', uid), {
         role: signupRole,
         email: auth.currentUser?.email ?? '',
         displayName: auth.currentUser?.displayName ?? '',
         createdAt: new Date().toISOString(),
       })
-      if (signupRole === 'tutor' || signupRole === 'admin') {
-        navigate('/tutor', { replace: true })
-      } else if (returnTo) {
-        navigate(returnTo, { replace: true })
-      } else {
-        window.location.href = worldUrl(uid)
-      }
+      navigateAfterRole(signupRole)
+      return
+    }
+
+    if (grantAdmin) {
+      await setDoc(doc(db, 'users', uid), { role: 'admin' }, { merge: true })
+      navigateAfterRole('admin')
       return
     }
 
@@ -103,6 +173,7 @@ export default function Login() {
   async function handleSubmit() {
     if (!email || !password) { setError('Please fill in all fields.'); return }
     setError('')
+    persistPasscodeForOAuth(adminPasscode)
     setLoading(true)
     try {
       if (mode === 'signin') {
@@ -120,11 +191,10 @@ export default function Login() {
 
   async function handleGoogle() {
     setError('')
+    persistPasscodeForOAuth(adminPasscode)
     setLoading(true)
     try {
-      const cred = await signInWithPopup(auth, googleProvider)
-      const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
-      await routeAfterLogin(cred.user.uid, isNew)
+      await signInWithRedirect(auth, googleProvider)
     } catch (e: any) {
       const msg = friendlyError(e.code ?? e.message ?? 'unknown')
       if (msg) setError(msg)
@@ -304,7 +374,7 @@ export default function Login() {
                     </div>
                   )}
 
-                  {mode === 'signup' && !showAdminPasscode && (
+                  {!showAdminPasscode && (
                     <div className={s.forgot}>
                       <button type="button" onClick={() => setShowAdminPasscode(true)}>
                         Have an admin code?
@@ -312,7 +382,7 @@ export default function Login() {
                     </div>
                   )}
 
-                  {mode === 'signup' && showAdminPasscode && (
+                  {showAdminPasscode && (
                     <div className={s.field}>
                       <label htmlFor="adminPasscode">Admin passcode</label>
                       <div className={s.inputShell}>
@@ -362,11 +432,11 @@ export default function Login() {
                 <p className={s.bottomLink}>
                   {mode === 'signin' ? (
                     <>New to MindCraft?{' '}
-                      <button type="button" onClick={() => { setMode('signup'); setError(''); setShowAdminPasscode(false); setAdminPasscode('') }}>Create account -&gt;</button>
+                      <button type="button" onClick={() => { setMode('signup'); setError(''); clearPasscodeState(setShowAdminPasscode, setAdminPasscode) }}>Create account -&gt;</button>
                     </>
                   ) : (
                     <>Already have an account?{' '}
-                      <button type="button" onClick={() => { setMode('signin'); setError(''); setShowAdminPasscode(false); setAdminPasscode('') }}>Sign in</button>
+                      <button type="button" onClick={() => { setMode('signin'); setError(''); clearPasscodeState(setShowAdminPasscode, setAdminPasscode) }}>Sign in</button>
                     </>
                   )}
                 </p>
