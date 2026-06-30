@@ -14,13 +14,13 @@ interface Tutor {
   avatarColor: string
 }
 
-const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+const DEFAULT_TUTOR_BIO = 'Calm, step-by-step math support for students who want a clearer plan, stronger habits, and less panic before exams.'
 
 const DEMO_TUTORS: Tutor[] = [
   {
     id: 'demo',
     displayName: 'Akshat K.',
-    bio: LOREM,
+    bio: DEFAULT_TUTOR_BIO,
     subjects: ['AP Calculus', 'Pre-Calc', 'Algebra', 'Statistics'],
     calendlyUrl: 'https://calendly.com/joinmindcraft/30min',
     sessionsCompleted: 40,
@@ -62,7 +62,7 @@ export default function Book() {
           return {
             id: d.id,
             displayName: data.displayName ?? 'Tutor',
-            bio: data.bio || LOREM,
+            bio: data.bio || DEFAULT_TUTOR_BIO,
             subjects: data.subjects ?? [],
             calendlyUrl,
             sessionsCompleted: data.sessionsCompleted ?? 0,
@@ -82,9 +82,10 @@ export default function Book() {
 
       <div className={s.hero}>
         <div className={s.heroInner}>
+            <div className={s.heroPill}>Private tutoring studio</div>
             <h1 className={s.heroH1}>Find your tutor.<br />Book in 60 seconds.</h1>
           <p className={s.heroSub}>
-            Every tutor here genuinely loves what they teach. Pick a time and get started.
+            Choose a calm expert, pick a time, and start building a better math plan.
           </p>
         </div>
       </div>
@@ -92,7 +93,7 @@ export default function Book() {
       <div className={s.taglineWrap}>
         <div className={s.taglineCard}>
           <div className={s.taglineTitle}>The right tutor changes everything.</div>
-          <div className={s.taglineSub}>Every tutor here genuinely loves what they teach.</div>
+          <div className={s.taglineSub}>Every session connects homework help, concept gaps, and what to practice next.</div>
         </div>
       </div>
 

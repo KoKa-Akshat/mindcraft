@@ -5,95 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MindCraft Blog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0D0F15;--card:#181B25;--g:#54B948;--tx:#F0F2F8;--mu:#8B93A8;--bd:rgba(255,255,255,.08);--f:'Nunito',sans-serif}
+:root{--cream:#fbf4e7;--paper:#fffdf7;--forest:#064d36;--green:#4eb543;--burgundy:#4b001d;--ink:#343434;--muted:#756a6a;--line:rgba(75,0,29,.16)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:var(--bg);color:var(--tx);font-family:var(--f);-webkit-font-smoothing:antialiased}
-nav{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,64px);border-bottom:1px solid var(--bd);background:rgba(13,15,21,.88);position:sticky;top:0;z-index:10}
-.logo{font-size:20px;font-weight:900;color:#fff;text-decoration:none}.logo span{color:var(--g)}
-.back{font-size:14px;font-weight:800;color:var(--mu);text-decoration:none}.back:hover{color:#fff}
-main{max-width:1120px;margin:0 auto;padding:clamp(48px,7vw,88px) 24px}
-.eyebrow{font-size:11px;font-weight:900;color:var(--g);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
-h1{font-size:clamp(34px,6vw,64px);line-height:1.02;font-weight:900;letter-spacing:-.5px;max-width:760px;margin-bottom:16px}
-.sub{font-size:18px;line-height:1.7;color:var(--mu);font-weight:700;max-width:620px;margin-bottom:42px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.card{display:flex;flex-direction:column;min-height:360px;background:var(--card);border:1px solid var(--bd);border-radius:18px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .18s,border-color .18s}
-.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.18)}
-.art{height:168px;display:flex;align-items:center;justify-content:center}
-.art svg{width:220px;max-width:70%;height:auto;opacity:.9}
-.body{padding:24px;display:flex;flex-direction:column;flex:1}
-.meta{display:flex;justify-content:space-between;gap:16px;margin-bottom:12px}
-.cat{font-size:10px;font-weight:900;color:var(--g);text-transform:uppercase;letter-spacing:1.2px}
-.date{font-size:12px;font-weight:800;color:rgba(255,255,255,.35)}
-h2{font-size:22px;font-weight:900;line-height:1.2;margin-bottom:12px}
-p{font-size:14px;line-height:1.7;color:rgba(255,255,255,.55);font-weight:700;flex:1}
-.author{margin-top:20px;font-size:13px;font-weight:800;color:rgba(255,255,255,.5)}
-@media(max-width:760px){.grid{grid-template-columns:1fr}.card{min-height:0}}
+body{min-height:100vh;color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:linear-gradient(rgba(251,244,231,.88),rgba(251,244,231,.94)),url("img/background.jpg") right top/720px auto no-repeat,var(--cream)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:320px 320px;opacity:.34}
+nav{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,70px);border-bottom:1px solid var(--line);background:rgba(251,244,231,.84);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}
+.logo{font-size:25px;font-weight:950;color:var(--forest);text-decoration:none;letter-spacing:-.05em}.logo span{color:var(--green)}
+.navLinks{display:flex;align-items:center;gap:clamp(18px,3vw,38px)}.navLinks a{color:var(--forest);font-size:13px;font-weight:900;letter-spacing:.1em;text-decoration:none;text-transform:uppercase}.loginPill{padding:12px 22px;border-radius:999px;color:#fff!important;background:var(--green);box-shadow:0 5px 0 #318a2c}
+main{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto;padding:clamp(54px,8vw,108px) 24px clamp(70px,8vw,110px)}
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:clamp(38px,7vw,100px);align-items:end;margin-bottom:clamp(40px,7vw,74px)}
+.eyebrow{margin-bottom:18px;color:var(--green);font-size:13px;font-weight:950;letter-spacing:.28em;text-transform:uppercase}
+h1{max-width:760px;color:var(--burgundy);font-family:"DM Serif Display",Georgia,serif;font-size:clamp(54px,9vw,124px);font-weight:400;line-height:.9;letter-spacing:-.035em}
+.sub{max-width:520px;color:rgba(75,0,29,.72);font-size:clamp(18px,2vw,25px);font-weight:850;line-height:1.35}.sub:before{content:"";display:block;width:84px;height:2px;margin:0 0 22px;background:linear-gradient(90deg,var(--green),transparent)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.card{position:relative;display:grid;grid-template-columns:minmax(170px,42%) 1fr;min-height:360px;overflow:hidden;border:1px solid var(--line);border-radius:26px;background:rgba(255,253,247,.68);color:inherit;text-decoration:none;box-shadow:0 24px 60px rgba(75,0,29,.06);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.card:hover{transform:translateY(-6px);border-color:rgba(78,181,67,.48);box-shadow:0 34px 80px rgba(6,77,54,.12)}
+.art{position:relative;min-height:100%;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);background:linear-gradient(rgba(6,77,54,.14),rgba(251,244,231,.18)),var(--art-image) center/cover no-repeat}
+.art:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 28% 24%,rgba(78,181,67,.3),transparent 24%),linear-gradient(180deg,rgba(75,0,29,.04),rgba(6,77,54,.18))}
+.artifact{position:relative;z-index:1;width:min(210px,74%);filter:drop-shadow(0 22px 34px rgba(6,45,34,.18))}
+.body{padding:clamp(26px,3.4vw,42px);display:flex;flex-direction:column;min-width:0}
+.meta{display:flex;justify-content:space-between;gap:16px;margin-bottom:18px}.cat{font-size:11px;font-weight:950;color:var(--green);text-transform:uppercase;letter-spacing:.18em}.date{font-size:12px;font-weight:850;color:rgba(52,52,52,.48)}
+h2{color:var(--forest);font-family:"Fraunces",Georgia,serif;font-size:clamp(25px,3vw,36px);font-weight:600;line-height:1.08;letter-spacing:-.03em;margin-bottom:16px}
+p{font-size:15px;line-height:1.72;color:rgba(52,52,52,.66);font-weight:650;flex:1}.author{margin-top:28px;color:var(--burgundy);font-size:13px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}.readMore{display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:var(--forest);font-size:13px;font-weight:950}.footerLink{margin-top:42px;text-align:center}.footerLink a{color:var(--forest);font-weight:900;text-decoration:none}
+@media(max-width:860px){nav{height:auto;gap:16px;flex-wrap:wrap;padding:18px 22px}.navLinks{gap:16px;flex-wrap:wrap}.hero{grid-template-columns:1fr;align-items:start}.grid{grid-template-columns:1fr}.card{grid-template-columns:1fr}.art{height:210px;border-right:0;border-bottom:1px solid var(--line)}}
+@media(max-width:520px){h1{font-size:58px}.navLinks a:not(.loginPill){display:none}}
 </style>
 </head>
 <body>
 <nav>
   <a href="index.html" class="logo">Mind<span>Craft</span></a>
-  <a href="index.html#blog" class="back">Back to landing</a>
+  <div class="navLinks">
+    <a href="index.html#proof">Reviews</a>
+    <a href="index.html#faq">FAQ</a>
+    <a class="loginPill" href="https://mindcraft-93858.web.app/login">Log in</a>
+  </div>
 </nav>
 <main>
-  <div class="eyebrow">MindCraft Notes</div>
-  <h1>Ideas from the team building better tutoring.</h1>
-  <p class="sub">Updates on teaching, product thinking, and the learning systems behind MindCraft.</p>
+  <section class="hero">
+    <div><div class="eyebrow">MindCraft Notes</div><h1>Notes from the studio.</h1></div>
+    <p class="sub">Teaching reflections, product updates, and the learning systems behind calmer math confidence.</p>
+  </section>
   <section class="grid" id="articles"></section>
+  <div class="footerLink"><a href="index.html">Back to MindCraft home →</a></div>
 </main>
 <script>
 const articles = [
-  {
-    id: 1,
-    title: 'Our Mission & Vision',
-    excerpt: 'MindCraft was created by educators who truly care about teaching, and who live for the moment a student finally gets it.',
-    category: 'Headquarters',
-    date: 'Apr 5, 2026',
-    author: 'Akshat K.',
-    bg1: '#0A1F10',
-    bg2: '#1A3C2A',
-    accent: '#54B948'
-  },
-  {
-    id: 2,
-    title: 'MindCraft was in Beta at Macalester last week',
-    excerpt: 'A quick reflection from a Beta.mn event at Macalester, and what it reinforced about building with technology.',
-    category: 'Community',
-    date: 'Mar 28, 2026',
-    author: 'Akshat K.',
-    bg1: '#0A1428',
-    bg2: '#1A2A50',
-    accent: '#4A7BF7'
-  }
+  {id:1,title:'Our Mission & Vision',excerpt:'MindCraft was created by educators who care about teaching, and who live for the moment a student finally gets it.',category:'Headquarters',date:'Apr 5, 2026',author:'Akshat K.',accent:'#4eb543',visual:'mission'},
+  {id:2,title:'MindCraft was in Beta at Macalester last week',excerpt:'A quick reflection from a Beta.mn event at Macalester, and what it reinforced about building with technology.',category:'Community',date:'Mar 28, 2026',author:'Akshat K.',accent:'#064d36',visual:'map'}
 ];
-
-function art(a) {
-  return `<div class="art" style="background:linear-gradient(135deg,${a.bg1},${a.bg2})">
-    <svg viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="38" y="28" width="78" height="94" rx="12" fill="white" opacity=".13"/>
-      <rect x="55" y="48" width="44" height="8" rx="4" fill="white" opacity=".55"/>
-      <rect x="55" y="66" width="38" height="6" rx="3" fill="white" opacity=".3"/>
-      <rect x="55" y="80" width="48" height="6" rx="3" fill="white" opacity=".24"/>
-      <rect x="132" y="42" width="70" height="56" rx="12" fill="white" opacity=".12"/>
-      <path d="M74 122C99 99 129 92 166 96" stroke="${a.accent}" stroke-width="7" stroke-linecap="round"/>
-      <circle cx="168" cy="96" r="9" fill="${a.accent}"/>
-    </svg>
-  </div>`;
-}
-
-document.getElementById('articles').innerHTML = articles.map(a => `
-  <a class="card" href="article.html?id=${a.id}">
-    ${art(a)}
-    <div class="body">
-      <div class="meta"><span class="cat">${a.category}</span><span class="date">${a.date}</span></div>
-      <h2>${a.title}</h2>
-      <p>${a.excerpt}</p>
-      <div class="author">${a.author}</div>
-    </div>
-  </a>
-`).join('');
+function artifact(a){if(a.visual==='mission'){return `<svg class="artifact" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="52" y="30" width="98" height="122" rx="18" fill="#fffdf7" opacity=".9"/><path d="M75 62h50M75 82h36M75 102h52" stroke="#064d36" stroke-width="5" stroke-linecap="round" opacity=".42"/><path d="M101 139c22-28 49-44 83-49" stroke="${a.accent}" stroke-width="8" stroke-linecap="round"/><circle cx="184" cy="90" r="12" fill="${a.accent}"/><path d="m178 90 4 4 8-10" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`}return `<svg class="artifact" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M42 128c28-38 58-56 92-54 28 2 45-11 63-38" stroke="#fffdf7" stroke-width="12" stroke-linecap="round" opacity=".72"/><path d="M42 128c28-38 58-56 92-54 28 2 45-11 63-38" stroke="${a.accent}" stroke-width="3" stroke-dasharray="8 12" stroke-linecap="round"/><circle cx="62" cy="112" r="10" fill="#fffdf7"/><circle cx="114" cy="78" r="10" fill="#fffdf7"/><circle cx="158" cy="72" r="10" fill="#fffdf7"/><circle cx="196" cy="38" r="12" fill="${a.accent}"/></svg>`}
+document.getElementById('articles').innerHTML=articles.map(a=>`<a class="card" href="article.html?id=${a.id}"><div class="art" style="--art-image:url('img/background.jpg')">${artifact(a)}</div><div class="body"><div class="meta"><span class="cat">${a.category}</span><span class="date">${a.date}</span></div><h2>${a.title}</h2><p>${a.excerpt}</p><span class="readMore">Read note →</span><div class="author">${a.author}</div></div></a>`).join('');
 </script>
 </body>
 </html>
