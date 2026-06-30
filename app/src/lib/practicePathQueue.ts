@@ -3,6 +3,8 @@ import { PRACTICE_CONCEPTS } from './questionBank'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { loadPracticeDraftsRemote } from './practiceState'
+import { getRecommendations } from './mlApi'
+import { chainSteps } from './recommendNextConcept'
 
 export const PATH_SLOT_COUNT = 6
 export const PRACTICE_PATH_UPDATED_EVENT = 'mc-practice-path-updated'
@@ -86,10 +88,7 @@ export function buildPracticePathQueue(
   masteredIds: Set<string>,
 ): Pick<PracticePathQueue, 'pathQueue' | 'pathConcepts' | 'activeConceptId' | 'progressPct' | 'completedOnPath'> {
   const pathQueue = assessConcepts.length > 0
-    ? [...assessConcepts].sort((a, b) => {
-        const order: Record<Confidence, number> = { hard: 0, kinda: 1, easy: 2 }
-        return order[confidenceMap[a.id] ?? 'kinda'] - order[confidenceMap[b.id] ?? 'kinda']
-      })
+    ? assessConcepts
     : PRACTICE_CONCEPTS.map(c => ({ id: c.id, label: c.label }))
 
   const activePathQueue = pathQueue.filter(c => !isPathMastered(c.id, masteredIds, confidenceMap))
@@ -139,11 +138,10 @@ async function loadPracticePathData(userId: string): Promise<PracticePathQueue> 
     }
   }
 
-  let assessConcepts = conceptsFromIds(draft?.assessConceptIds ?? [])
   let confidenceMap = draft?.confidenceMap ?? {}
-  let exam = draft?.exam ?? ''
+  let exam = draft?.exam ?? 'ACT'
 
-  if (assessConcepts.length === 0) {
+  if (Object.keys(confidenceMap).length === 0) {
     try {
       const snap = await getDoc(doc(db, 'users', userId))
       const diagnostic = snap.data()?.diagnostic as {
@@ -153,13 +151,18 @@ async function loadPracticePathData(userId: string): Promise<PracticePathQueue> 
       if (diagnostic?.confidenceMap) {
         confidenceMap = diagnostic.confidenceMap
         exam = diagnostic.exam ?? exam
-        assessConcepts = Object.keys(diagnostic.confidenceMap)
-          .flatMap(id => {
-            const concept = PRACTICE_CONCEPTS.find(c => c.id === id)
-            return concept ? [{ id: concept.id, label: concept.label }] : []
-          })
       }
     } catch { /* fail soft */ }
+  }
+
+  let assessConcepts: PathConcept[] = []
+  try {
+    const examRec = await getRecommendations(userId, [], 'exam', exam)
+    assessConcepts = conceptsFromIds(chainSteps(examRec).map(r => r.conceptId))
+  } catch { /* fail soft */ }
+
+  if (assessConcepts.length === 0) {
+    assessConcepts = conceptsFromIds(draft?.assessConceptIds ?? Object.keys(confidenceMap))
   }
 
   const masteredIds = loadMasteredIds(userId)

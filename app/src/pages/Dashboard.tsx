@@ -7,7 +7,6 @@ import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
 import { isDiagnosticComplete, markDiagnosticComplete } from '../lib/practiceState'
-import { fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import HeroBar from '../components/HeroBar'
 import PawHub from '../components/PawHub'
@@ -79,7 +78,6 @@ export default function Dashboard() {
 
   const conceptParam = searchParams.get('concept')
   const targetParam = searchParams.get('target')
-  const learnNextParam = searchParams.get('learnNext') === '1'
 
   function openPractice() {
     navigate('/dashboard', { replace: true })
@@ -116,15 +114,8 @@ export default function Dashboard() {
       setPlotConceptId(conceptParam)
       return
     }
-    if (learnNextParam && uid) {
-      let cancelled = false
-      void fetchPracticeHubRecommendations(uid).then(rec => {
-        if (!cancelled) setPlotConceptId(rec.learn?.conceptId ?? null)
-      })
-      return () => { cancelled = true }
-    }
     setPlotConceptId(null)
-  }, [gpsMode, conceptParam, learnNextParam, uid])
+  }, [gpsMode, conceptParam])
 
   useEffect(() => {
     let cancelled = false

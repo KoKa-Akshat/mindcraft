@@ -23,7 +23,7 @@ import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, allowedLevels, getRecommendedLevel as levelFromConfidence } from '../lib/bridgePractice'
 import { getExamConceptIds } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, agentCheckIn, fetchExamConceptIds, type IngredientRecommendResult } from '../lib/mlApi'
-import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
+import { fetchNextConcept } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic, getUserRole } from '../lib/practiceState'
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
@@ -728,17 +728,6 @@ export default function Practice() {
       setMode('solver')
       setSPhase('input')
       setSearchParams({}, { replace: true })
-    } else if (searchParams.get('learnNext') === '1') {
-      setSearchParams({}, { replace: true })
-      void fetchPracticeHubRecommendations(user.uid).then(rec => {
-        const target = rec.learn
-        navigate(
-          target
-            ? `/dashboard?view=gps&concept=${encodeURIComponent(target.conceptId)}`
-            : '/dashboard?view=gps&learnNext=1',
-          { replace: true },
-        )
-      })
     } else if (searchParams.get('mode') === 'practice') {
       setMode('practice')
       setAssessConcepts([])
@@ -885,8 +874,9 @@ export default function Practice() {
     setMode('practice')
     setMissionType(mission)
     setSessionFormat(formatId ?? null)
-    setConcept(conceptId)
-    setPPhase('explore')
+    const conf = confidenceMap[conceptId] as Confidence | undefined
+    const lv = missionLevel(mission, conf)
+    await startSession(conceptId, lv, undefined, formatId)
   }
 
   // ── Mission hub launchers ─────────────────────────────────────────────────
@@ -905,15 +895,6 @@ export default function Practice() {
       const next = await fetchNextConcept(user.uid)
       if (next) void launchMissionDirect(next.conceptId, 'weakness', next.formatId)
       else { setMissionType('gapscan'); clearPracticeDraft('gapscan'); setPPhase('exam-pick') }
-    } finally { setMissionLoading(null) }
-  }
-
-  async function startLearnMission() {
-    setMissionLoading('learn')
-    try {
-      const next = await fetchNextNewConcept(user.uid)
-      if (next) enterMission('learn', next.conceptId)
-      else { setAssessConcepts([]); setPPhase('path') }
     } finally { setMissionLoading(null) }
   }
 

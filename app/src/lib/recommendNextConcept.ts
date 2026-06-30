@@ -59,7 +59,7 @@ function pickMostUrgent(nodes: GraphNode[]): string | null {
     )[0]?.id ?? null
 }
 
-function chainSteps(rec: RecommendResult | null) {
+export function chainSteps(rec: RecommendResult | null) {
   return rec?.recommendations?.filter(r => !r.isSupplement && !r.isBridgeGap) ?? []
 }
 

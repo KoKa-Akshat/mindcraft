@@ -33,16 +33,6 @@ function WheelIcon() {
   )
 }
 
-function TargetIcon() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
-      <circle cx="16" cy="16" r="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="2" fill="currentColor" />
-    </svg>
-  )
-}
-
 function PencilIcon() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
@@ -90,44 +80,34 @@ export default function PawHub({
 }) {
   const navigate = useNavigate()
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
-  const [learn, setLearn] = useState<NextConcept | null>(null)
 
   useEffect(() => {
     let cancelled = false
     void fetchPracticeHubRecommendations(userId).then(rec => {
-      if (!cancelled) {
-        setWeakness(rec.weakness)
-        setLearn(rec.learn)
-      }
+      if (!cancelled) setWeakness(rec.weakness)
     })
     return () => { cancelled = true }
   }, [userId])
 
   function goPractice() {
+    if (weakness) {
+      navigate('/practice', {
+        state: {
+          conceptId: weakness.conceptId,
+          missionType: 'weakness' as const,
+          ...(weakness.formatId ? { formatId: weakness.formatId } : {}),
+        },
+      })
+      return
+    }
     if (onPracticeClick) {
       onPracticeClick()
       return
     }
-    navigate('/dashboard')
-  }
-
-  function goLearnNext() {
-    if (learn) {
-      navigate(`/dashboard?view=gps&concept=${encodeURIComponent(learn.conceptId)}`)
-    } else {
-      navigate('/dashboard?view=gps&learnNext=1')
-    }
+    navigate('/practice')
   }
 
   const toes: Toe[] = [
-    {
-      id: 'learn',
-      label: 'Learn Next',
-      sub: learn ? learn.label : 'Plot your route',
-      accent: 'violet',
-      onClick: goLearnNext,
-      icon: <TargetIcon />,
-    },
     {
       id: 'homework',
       label: 'Homework Help',
@@ -169,11 +149,7 @@ export default function PawHub({
               whileTap={{ scale: 0.98 }}
             >
               <span className={s.toeIcon}>{toe.icon}</span>
-              {toe.id === 'learn' ? (
-                <span className={s.toeTopicOnly}>{learn?.label ?? '···'}</span>
-              ) : (
-                <span className={s.toeLabel}>{toe.label}</span>
-              )}
+              <span className={s.toeLabel}>{toe.label}</span>
             </motion.button>
           ))}
         </div>
