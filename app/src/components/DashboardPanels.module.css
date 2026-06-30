@@ -1,5 +1,7 @@
 .scrollBody {
-  max-height: min(72vh, 640px);
+  flex: 1;
+  min-height: 0;
+  max-height: none;
   overflow-y: auto;
 }
 

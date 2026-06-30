@@ -162,7 +162,7 @@ export default function Dashboard() {
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <>
-            <div className={`${s.stage} ${panelMode ? s.stageGps : ''}`}>
+            <div className={s.stage}>
               <div className={s.pawCol}>
                 <motion.div
                   className={s.pawWrap}
@@ -182,36 +182,38 @@ export default function Dashboard() {
                 </motion.div>
               </div>
 
-              <div className={panelMode ? s.gpsCol : s.pathCol}>
-                {routeMode && targetParam ? (
-                  <DashboardRoutePanel
-                    targetId={targetParam}
-                    onBack={() => navigate(conceptParam
-                      ? `/dashboard?view=gps&concept=${encodeURIComponent(conceptParam)}`
-                      : '/dashboard?view=gps')}
-                  />
-                ) : notesMode ? (
-                  <DashboardNotesPanel onBack={closePanel} />
-                ) : homeworkMode ? (
-                  <DashboardHomeworkPanel onBack={closePanel} />
-                ) : gpsMode ? (
-                  <ConstellationGpsExplorer
-                    embedded
-                    onBack={closePanel}
-                    autoPlotConceptId={plotConceptId}
-                    onStartRoute={openRoute}
-                  />
-                ) : (
-                  <PracticeLearningPathMini
-                    concepts={path.pathConcepts}
-                    activeConceptId={path.activeConceptId}
-                    progressPct={path.progressPct}
-                    completedCount={path.completedOnPath}
-                    totalCount={path.pathQueue.length}
-                    exam={path.exam}
-                    loading={path.loading}
-                  />
-                )}
+              <div className={s.panelCol}>
+                <div className={s.panelSlot}>
+                  {routeMode && targetParam ? (
+                    <DashboardRoutePanel
+                      targetId={targetParam}
+                      onBack={() => navigate(conceptParam
+                        ? `/dashboard?view=gps&concept=${encodeURIComponent(conceptParam)}`
+                        : '/dashboard?view=gps')}
+                    />
+                  ) : notesMode ? (
+                    <DashboardNotesPanel onBack={closePanel} />
+                  ) : homeworkMode ? (
+                    <DashboardHomeworkPanel onBack={closePanel} />
+                  ) : gpsMode ? (
+                    <ConstellationGpsExplorer
+                      embedded
+                      onBack={closePanel}
+                      autoPlotConceptId={plotConceptId}
+                      onStartRoute={openRoute}
+                    />
+                  ) : (
+                    <PracticeLearningPathMini
+                      concepts={path.pathConcepts}
+                      activeConceptId={path.activeConceptId}
+                      progressPct={path.progressPct}
+                      completedCount={path.completedOnPath}
+                      totalCount={path.pathQueue.length}
+                      exam={path.exam}
+                      loading={path.loading}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </>
