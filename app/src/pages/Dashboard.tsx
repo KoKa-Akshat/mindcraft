@@ -1,13 +1,10 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { doc, updateDoc, deleteField, deleteDoc, collection, query, where, getDocs, writeBatch } from 'firebase/firestore'
-import { db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
 import { isDiagnosticComplete, markDiagnosticComplete } from '../lib/practiceState'
-import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import HeroBar from '../components/HeroBar'
 import PawHub from '../components/PawHub'
 import PracticeLearningPathMini from '../components/PracticeLearningPathMini'
@@ -32,42 +29,6 @@ export default function Dashboard() {
 
   const [diagChecked, setDiagChecked] = useState(false)
   const [plotConceptId, setPlotConceptId] = useState<string | null>(null)
-  const [restarting, setRestarting] = useState(false)
-
-  async function handleStartOver() {
-    if (!window.confirm('Wipe your diagnostic data and start fresh?')) return
-    setRestarting(true)
-    try {
-      await updateDoc(doc(db, 'users', uid), {
-        diagnosticCompleted:   deleteField(),
-        diagnosticCompletedAt: deleteField(),
-        diagnostic:            deleteField(),
-        goals:                 deleteField(),
-        practiceDrafts:        deleteField(),
-        practiceDraftAt:       deleteField(),
-      })
-      const [interSnap, learnSnap] = await Promise.all([
-        getDocs(query(collection(db, 'interactions'),    where('studentId', '==', uid))),
-        getDocs(query(collection(db, 'learning_events'), where('studentId', '==', uid))),
-      ])
-      const all = [...interSnap.docs, ...learnSnap.docs]
-      for (let i = 0; i < all.length; i += 499) {
-        const b = writeBatch(db)
-        all.slice(i, i + 499).forEach(d => b.delete(d.ref))
-        await b.commit()
-      }
-      await deleteDoc(doc(db, 'knowledge_graphs', uid))
-      invalidateKnowledgeGraph(uid)
-      localStorage.removeItem('mc-diag-done')
-      sessionStorage.removeItem('mc-clicked-me')
-      document.cookie = 'mc_diag_done=0; domain=.web.app; path=/; max-age=0; SameSite=Lax'
-      document.cookie = 'mc_diag_done=0; path=/; max-age=0'
-      window.location.href = '/practice'
-    } catch (e) {
-      console.error('[StartOver] failed', e)
-      setRestarting(false)
-    }
-  }
 
   const view = searchParams.get('view') ?? 'practice'
   const gpsMode = view === 'gps'
@@ -209,23 +170,6 @@ export default function Dashboard() {
             </div>
           </>
         )}
-        <div style={{ textAlign: 'center', padding: '24px 0 16px' }}>
-          <button
-            onClick={handleStartOver}
-            disabled={restarting}
-            style={{
-              background: 'transparent',
-              border: '1px solid rgba(255,255,255,0.15)',
-              borderRadius: 8,
-              color: 'rgba(255,255,255,0.35)',
-              fontSize: 12,
-              padding: '6px 16px',
-              cursor: restarting ? 'default' : 'pointer',
-            }}
-          >
-            {restarting ? 'Clearing…' : '↺ Start Over'}
-          </button>
-        </div>
       </main>
     </div>
   )
