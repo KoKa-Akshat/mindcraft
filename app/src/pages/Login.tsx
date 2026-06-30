@@ -188,7 +188,7 @@ export default function Login() {
                 </div>
                 <h1 className={s.heroTitle}>Stop guessing what math help should do next.</h1>
                 <p className={s.heroCopy}>
-                  MindCraft maps where your child stands, routes the next skill to fix, and connects tutoring to the plan so progress feels visible.
+                  MindCraft maps where your child stands, routes the next skill to practice, and connects tutoring to the plan so progress feels visible.
                 </p>
               </div>
 
@@ -220,7 +220,7 @@ export default function Login() {
                   </svg>
                 </span>
                 <strong>Next route</strong>
-                <p>Know what your child should fix next.</p>
+                <p>Know what your child should do next.</p>
               </article>
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
