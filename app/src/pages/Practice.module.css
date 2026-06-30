@@ -290,10 +290,10 @@
 }
 
 .sessionCenter {
-  width: min(100%, 1320px);
+  width: min(100%, 1420px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 }
 
 /* Progress strip */
@@ -388,15 +388,113 @@
     radial-gradient(circle at 18% 0%, rgba(228,191,106,0.10), transparent 42%),
     linear-gradient(180deg, rgba(255,250,240,0.98), rgba(247,251,245,0.96));
   border: 1px solid rgba(6, 77, 54, 0.18);
-  border-radius: 24px;
+  border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
   width: 100%;
+}
+
+.workbenchDock {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(200px, 0.7fr) minmax(360px, 1.25fr);
+  gap: 14px;
+  align-items: center;
+  padding: 14px clamp(16px, 2vw, 24px);
+  background:
+    linear-gradient(90deg, rgba(6, 77, 54, 0.96), rgba(3, 33, 27, 0.94)),
+    radial-gradient(circle at 82% 0%, rgba(228,191,106,0.16), transparent 44%);
+  border-bottom: 1px solid rgba(228,191,106,0.16);
+}
+
+.workbenchMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.workbenchConcept {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fffaf0;
+  font-size: 13px;
+  font-weight: 800;
+  min-width: 0;
+}
+
+.workbenchBridge {
+  max-width: 220px;
+  color: rgba(196,245,71,0.78);
+  font-size: 11px;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbenchLevel {
+  color: #c4f547;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.workbenchProgress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,250,240,0.76);
+  font-size: 12px;
+  font-weight: 800;
+  min-width: 0;
+}
+
+.miniProgress {
+  flex: 1;
+  min-width: 90px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  overflow: hidden;
+}
+
+.miniProgressFill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.4s ease;
+}
+
+.workbenchActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.workbenchBtn {
+  border: 1px solid rgba(255,250,240,0.16);
+  background: rgba(255,250,240,0.08);
+  color: rgba(255,250,240,0.88);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-family: var(--f-body);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.workbenchBtn:hover {
+  background: rgba(255,250,240,0.14);
+  border-color: rgba(196,245,71,0.42);
+  transform: translateY(-1px);
 }
 
 .questionBanner {
   padding: clamp(22px, 2.2vw, 34px);
-  min-height: 138px;
+  min-height: 126px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -449,7 +547,20 @@
 }
 
 .questionBody {
-  padding: clamp(16px, 2vw, 24px);
+  padding: clamp(16px, 1.8vw, 24px);
+}
+
+.workbenchGrid {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.86fr) minmax(460px, 1.14fr);
+  gap: clamp(16px, 1.8vw, 24px);
+  align-items: stretch;
+}
+
+.problemPane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .questionVisual {
@@ -472,30 +583,65 @@
   max-height: 210px;
 }
 
-/* Choices 2×2 grid */
 .choices {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 12px;
+}
+
+.scratchPane {
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(520px, 64vh, 760px);
+  background: #fffefa;
+  border: 1.5px solid rgba(6,77,54,0.16);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.92),
+    0 18px 44px rgba(6, 33, 27, 0.12);
+}
+
+.scratchHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  background:
+    linear-gradient(90deg, rgba(255,250,240,0.98), rgba(238,247,234,0.96));
+  border-bottom: 1px solid rgba(6,77,54,0.12);
+  color: #064D36;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.scratchHead span:last-child {
+  color: rgba(6,77,54,0.52);
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .scratchPad {
   width: 100%;
-  min-height: 112px;
-  margin-top: 16px;
-  resize: vertical;
-  border: 1.5px solid rgba(6,77,54,0.14);
-  border-radius: 16px;
+  flex: 1;
+  min-height: 0;
+  margin-top: 0;
+  resize: none;
+  border: 0;
+  border-radius: 0;
   background:
-    repeating-linear-gradient(180deg, #ffffff 0 31px, rgba(6,77,54,0.07) 32px),
+    linear-gradient(90deg, transparent 0 54px, rgba(228,191,106,0.22) 55px, transparent 56px),
+    repeating-linear-gradient(180deg, #ffffff 0 38px, rgba(6,77,54,0.075) 39px),
     #ffffff;
   color: #1e293b;
-  padding: 14px 16px;
+  padding: 22px 24px 22px 72px;
   font-family: var(--f-body);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 2.15;
   outline: none;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.86);
+  box-shadow: none;
+  touch-action: manipulation;
 }
 
 .scratchPad::placeholder {
@@ -503,10 +649,7 @@
 }
 
 .scratchPad:focus {
-  border-color: rgba(78,181,67,0.44);
-  box-shadow:
-    0 0 0 3px rgba(78,181,67,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.86);
+  box-shadow: inset 0 0 0 3px rgba(78,181,67,0.12);
 }
 
 .choice, .choiceSelected, .choiceCorrect, .choiceWrong {
@@ -582,7 +725,7 @@
 
 /* Action row — lives inside card below choices */
 .actionRow {
-  padding: 16px 24px 20px;
+  padding: 16px 0 0;
   display: flex;
   justify-content: flex-end;
 }
@@ -657,6 +800,16 @@
   overflow: hidden;
   border: 1px solid rgba(6,77,54,0.14);
   box-shadow: 0 18px 46px rgba(0, 0, 0, 0.18);
+}
+
+.inlineHints {
+  margin-top: 14px;
+  border: 1px solid rgba(6,77,54,0.13);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(196,245,71,0.10), transparent 38%),
+    rgba(255,250,240,0.86);
+  overflow: hidden;
 }
 
 .nextBtn {
@@ -760,7 +913,7 @@
 
 /* Feedback card — lives in side panel */
 .feedbackCorrect, .feedbackWrong {
-  margin: 0 clamp(16px, 2vw, 24px) clamp(16px, 2vw, 24px);
+  margin: 16px 0 0;
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
@@ -842,13 +995,17 @@
 }
 
 @media (max-width: 900px) {
-  .sessionColumns { grid-template-columns: 1fr; }
-  .sidePanel {
-    position: static;
-    display: block;
+  .workbenchDock {
+    grid-template-columns: 1fr;
   }
-  .hintCardInline {
-    width: 100%;
+  .workbenchActions {
+    justify-content: flex-start;
+  }
+  .workbenchGrid {
+    grid-template-columns: 1fr;
+  }
+  .scratchPane {
+    min-height: clamp(460px, 54vh, 640px);
   }
 }
 
@@ -857,11 +1014,14 @@
   .progressStrip { border-radius: 16px; }
   .stripCenter { order: 4; flex-basis: 100%; }
   .stripRight { margin-left: auto; }
-  .choices { grid-template-columns: 1fr; }
-  .sidePanel { grid-template-columns: 1fr; }
+  .workbenchDock { padding: 12px; }
+  .workbenchActions { gap: 6px; }
+  .workbenchBtn { padding: 7px 10px; font-size: 11px; }
   .questionBanner { min-height: 150px; }
   .questionText { font-size: 22px; line-height: 1.28; }
-  .scratchPad { min-height: 92px; }
+  .questionBody { padding: 12px; }
+  .scratchPane { min-height: 360px; border-radius: 18px; }
+  .scratchPad { padding: 18px 16px 18px 54px; font-size: 16px; line-height: 2.05; }
   .answerInputWrap { flex-wrap: wrap; }
   .answerInput { flex-basis: calc(100% - 46px); min-width: 0; }
   .answerSubmit { width: 100%; min-height: 44px; }
