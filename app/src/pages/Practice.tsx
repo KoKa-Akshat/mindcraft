@@ -1818,12 +1818,6 @@ export default function Practice() {
                     <div className={s.sessionMain}>
                       <div className={s.questionCard}>
                         <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
-                          <div className={s.questionMetaRow}>
-                            {currentQ.examTag && (
-                              <span className={s.examTagLight}>{currentQ.examTag} Style</span>
-                            )}
-                            <span className={s.questionModeTag}>{levelTierName}</span>
-                          </div>
                           <p className={s.questionText}>{currentQ.question}</p>
                         </div>
                         <div className={s.questionBody}>
@@ -1852,6 +1846,14 @@ export default function Practice() {
                               )
                             })}
                           </div>
+
+                          <textarea
+                            key={currentQ.id}
+                            className={s.scratchPad}
+                            aria-label="Scratch work"
+                            placeholder="Scratch work"
+                            spellCheck={false}
+                          />
 
                           {!checked && (
                             <div className={s.answerRow}>
@@ -1915,7 +1917,7 @@ export default function Practice() {
                         {checked && !hideCorrectness && (
                           <div className={s.actionRow}>
                             <button className={s.nextBtn} onClick={nextQuestion}>
-                              {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
+                              {qIndex + 1 < questions.length ? 'Next Question →' : 'Update Map →'}
                             </button>
                           </div>
                         )}
@@ -1953,16 +1955,6 @@ export default function Practice() {
                           )}
                         </div>
                       )}
-                      <div className={s.toolCard}>
-                        <span className={s.toolKicker}>Workspace</span>
-                        <strong>Question stays readable while tools stay close.</strong>
-                        <p>Use the math keyboard for symbols, keep hints open beside the problem, and leave space for iPad scratch work.</p>
-                      </div>
-                      <div className={s.toolCard}>
-                        <span className={s.toolKicker}>Backend signal</span>
-                        <strong>Every response sharpens the map.</strong>
-                        <p>Answers, hints, and retries become knowledge-gap evidence for the next route.</p>
-                      </div>
                     </aside>
                   </div>
                 </div>

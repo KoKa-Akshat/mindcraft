@@ -87,16 +87,7 @@
       })
     }
 
-    // Auto-enter Jesse's Kitchen so the diagnostic starts without extra clicks.
-    if (startBtn) {
-      var obs = new MutationObserver(function () {
-        if (startBtn.classList.contains('fadeIn')) {
-          obs.disconnect()
-          setTimeout(function () { startBtn.click() }, diagJustDone ? 700 : 350)
-        }
-      })
-      obs.observe(startBtn, { attributes: true, attributeFilter: ['class'] })
-    }
+    // Keep Enter World manual. Once pressed, sound starts and Projects opens the diagnostic.
   }
 
   if (document.readyState === 'loading') {

@@ -51,13 +51,13 @@
 
 .pawWrap {
   width: 100%;
-  max-width: 460px;
+  max-width: 380px;
   filter: drop-shadow(0 28px 58px rgba(0, 0, 0, 0.32));
 }
 
 .pawWrap :global(.compact .toe) {
-  width: 96px;
-  max-width: 96px;
+  width: 88px;
+  max-width: 88px;
   padding: 10px;
 }
 
@@ -71,8 +71,8 @@
 }
 
 .pawWrap :global(.compact .mainPad) {
-  width: 248px;
-  height: 248px;
+  width: 206px;
+  height: 206px;
   padding: 20px;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .pawWrap :global(.toesSide) {
-  width: 124px;
+  width: 98px;
   gap: 12px;
 }
 

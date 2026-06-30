@@ -22,7 +22,7 @@ export default function AppTabBar({ active, className, isAdmin }: Props) {
     if (tab === active) return
     switch (tab) {
       case 'dashboard': navigate('/dashboard'); break
-      case 'solver':    navigate('/practice', { state: { homeworkHelp: true } }); break
+      case 'solver':    navigate('/practice?homeworkHelp=1'); break
       case 'admin':     navigate('/admin'); break
     }
   }

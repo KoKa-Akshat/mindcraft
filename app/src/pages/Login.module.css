@@ -199,19 +199,40 @@
   margin: 30px 0 24px;
   width: 100%;
   max-width: 100%;
+  min-height: 286px;
+  padding: 72px 18px 18px;
   overflow: hidden;
+  border-radius: 30px;
+  border: 1px solid rgba(6, 77, 54, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255,253,247,0.14), rgba(255,253,247,0.34)),
+    url('../assets/login-background.jpg') center / cover no-repeat;
+  box-shadow:
+    0 24px 60px rgba(6, 45, 34, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54);
+}
+
+.valueSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,253,247,0.08) 0%, rgba(255,253,247,0.50) 100%),
+    radial-gradient(ellipse at 12% 24%, rgba(78, 181, 67, 0.18), transparent 48%),
+    radial-gradient(ellipse at 84% 78%, rgba(6, 77, 54, 0.12), transparent 52%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .brushArt {
   position: absolute;
-  left: -52px;
-  top: 50%;
+  inset: 0;
   width: 100%;
-  height: 320px;
-  transform: translateY(-48%);
-  opacity: 0.17;
+  height: 100%;
+  transform: none;
+  opacity: 0.24;
   pointer-events: none;
-  filter: blur(0.1px);
+  filter: blur(0.2px);
   z-index: 0;
 }
 
@@ -226,8 +247,8 @@
 }
 
 .brushWash {
-  width: 390px;
-  height: 360px;
+  width: 108%;
+  height: 100%;
   border-radius: 61% 39% 49% 51%;
   background:
     radial-gradient(ellipse at 38% 52%, rgba(6, 77, 54, 0.34), transparent 56%),
@@ -237,18 +258,18 @@
 }
 
 .brushPeakOne {
-  width: 320px;
-  height: 310px;
+  width: 86%;
+  height: 92%;
   background: linear-gradient(128deg, transparent 8%, rgba(6, 77, 54, 0.42), rgba(78, 181, 67, 0.07) 68%, transparent 91%);
   clip-path: polygon(0 96%, 24% 48%, 35% 62%, 52% 13%, 72% 70%, 88% 48%, 100% 96%);
   opacity: 0.56;
 }
 
 .brushPeakTwo {
-  width: 270px;
-  height: 260px;
-  left: 88px;
-  bottom: 88px;
+  width: 62%;
+  height: 74%;
+  left: 30%;
+  bottom: 52px;
   background: linear-gradient(110deg, transparent 6%, rgba(78, 181, 67, 0.22), rgba(6, 77, 54, 0.28), transparent 84%);
   clip-path: polygon(0 100%, 32% 42%, 44% 57%, 62% 16%, 100% 100%);
   opacity: 0.42;
@@ -258,7 +279,7 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(132px, 1fr));
   gap: 14px;
   width: 100%;
   max-width: 100%;
@@ -271,7 +292,8 @@
   padding: 18px 12px;
   border: 1px solid rgba(6, 77, 54, 0.12);
   border-radius: 22px;
-  background: rgba(255, 253, 247, 0.62);
+  background: rgba(255, 253, 247, 0.76);
+  backdrop-filter: blur(14px);
   box-shadow:
     0 20px 45px rgba(6, 45, 34, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.82) inset;
@@ -1042,11 +1064,10 @@
   }
 
   .brushArt {
-    left: -40px;
-    top: 118px;
-    width: 115%;
-    height: 290px;
-    opacity: 0.16;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.22;
   }
 
   .valueGrid {
