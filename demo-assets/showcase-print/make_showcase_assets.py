@@ -132,7 +132,7 @@ def make_card_front():
     d.text((88, 176), "FOR PARENTS TIRED OF GUESSING", font=font(SANS_BOLD, 20), fill=GOLD, spacing=6)
     headline = "Know what to do next."
     d.multiline_text((88, 224), headline, font=font(SERIF_BOLD, 68), fill=BURGUNDY, spacing=4)
-    d.text((88, 334), "Making math fun again.", font=font(SERIF_BOLD, 34), fill=GREEN)
+    d.text((88, 334), "Making maths fun again.", font=font(SERIF_BOLD, 34), fill=GREEN)
     body = "We find the gaps, build the route, and make practice feel like progress."
     d.multiline_text((88, 430), fit_lines(d, body, font(SANS_BOLD, 24), 590), font=font(SANS_BOLD, 24), fill=GREEN, spacing=8)
 
@@ -150,7 +150,7 @@ def make_card_back():
     img.alpha_composite(draw_arcs(d, w, h, GOLD, 38, offset=40))
     rounded_rect(d, (46, 44, w - 46, h - 44), 36, None, (6, 77, 54, 70), 2)
     draw_brand(d, 74, 70, 0.58, light=False)
-    d.text((74, 150), "Private study studio for math + ACT", font=font(SANS_BOLD, 22), fill=BURGUNDY)
+    d.text((74, 150), "Private study studio for maths + ACT", font=font(SANS_BOLD, 22), fill=BURGUNDY)
 
     items = [
         ("1", "See what is actually missing"),
@@ -194,8 +194,8 @@ def make_poster(name, inches):
     headline_font = font(SERIF_BOLD, int(w * 0.074))
     headline = "Know what to\ndo next."
     d.multiline_text((margin, int(h * 0.215)), headline, font=headline_font, fill=BURGUNDY, spacing=int(w * 0.012))
-    d.text((margin, int(h * 0.455)), "Making math fun again.", font=font(SERIF_BOLD, int(w * 0.036)), fill=GREEN)
-    sub = "MindCraft turns math stress into a clear plan: find the gaps, practice the next move, and make every tutor session count."
+    d.text((margin, int(h * 0.455)), "Making maths fun again.", font=font(SERIF_BOLD, int(w * 0.036)), fill=GREEN)
+    sub = "MindCraft turns maths stress into a clear plan: find the gaps, practice the next move, and make every tutor session count."
     d.multiline_text((margin, int(h * 0.535)), fit_lines(d, sub, font(SANS_BOLD, int(w * 0.019)), int(w * 0.47)), font=font(SANS_BOLD, int(w * 0.019)), fill=GREEN, spacing=int(w * 0.01))
 
     qr_size = int(w * 0.165)
@@ -211,7 +211,7 @@ def make_poster(name, inches):
     right_big = font(SERIF_BOLD, int(w * 0.030))
     d.multiline_text(
         (right_x, int(h * 0.085)),
-        fit_lines(d, "Private study studio for math + ACT.", right_small, right_width),
+        fit_lines(d, "Private study studio for maths + ACT.", right_small, right_width),
         font=right_small,
         fill=GOLD_SOFT,
         spacing=int(w * 0.008),
