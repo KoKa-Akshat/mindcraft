@@ -13,12 +13,13 @@ import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import {
   collection, query, orderBy, onSnapshot,
-  doc, getDoc, setDoc, updateDoc, serverTimestamp, getDocs, where,
+  doc, getDoc, setDoc, updateDoc, serverTimestamp, getDocs, where, deleteField,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
+import { listContentGaps, coverageSummaryLine, type ConceptCoverage } from '../lib/ontologyBankCoverage'
 import s from './Admin.module.css'
 
 // Admin sees a flattened view of sessions — simpler than tutor/student views
@@ -61,7 +62,9 @@ export default function Admin() {
   const { toast, showToast } = useToast()
   const [sessions, setSessions] = useState<AdminSession[]>([])
   const [students, setStudents] = useState<AdminStudent[]>([])
-  const [tab, setTab]           = useState<'sessions' | 'new'>('sessions')
+  const [tab, setTab]           = useState<'sessions' | 'new' | 'testing'>('sessions')
+  const [coverageRows]          = useState<ConceptCoverage[]>(() => listContentGaps())
+  const [coverageSummary]       = useState(() => coverageSummaryLine())
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
 
@@ -148,6 +151,14 @@ export default function Admin() {
     showToast(`Marked as ${status}`)
   }
 
+  async function retakeGapScan(uid: string) {
+    await updateDoc(doc(db, 'users', uid), {
+      diagnosticCompleted: deleteField(),
+      diagnosticCompletedAt: deleteField(),
+    })
+    showToast('Gap scan reset — user will be prompted on next login.')
+  }
+
   const counts = {
     scheduled: sessions.filter(s => s.status === 'scheduled').length,
     completed: sessions.filter(s => s.status === 'completed').length,
@@ -189,6 +200,9 @@ export default function Admin() {
           </button>
           <button className={`${s.tab} ${tab === 'new' ? s.tabActive : ''}`} onClick={() => setTab('new')}>
             + Book Session
+          </button>
+          <button className={`${s.tab} ${tab === 'testing' ? s.tabActive : ''}`} onClick={() => setTab('testing')}>
+            Testing
           </button>
         </div>
 
@@ -292,6 +306,58 @@ export default function Admin() {
           </div>
         )}
       </div>
+
+        {tab === 'testing' && (
+          <div className={s.formCard}>
+            <h2 className={s.formTitle}>Testing Tools</h2>
+
+            <div style={{ marginBottom: 32 }}>
+              <h3 style={{ marginBottom: 8, fontSize: 14, fontWeight: 600 }}>Gap Scan</h3>
+              <p style={{ marginBottom: 12, fontSize: 13, color: '#8A8F98' }}>
+                Reset the diagnostic flag for a student so they re-take the gap scan on next login.
+              </p>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                {students.map(st => (
+                  <button
+                    key={st.id}
+                    className={s.actionBtn}
+                    onClick={() => retakeGapScan(st.id)}
+                  >
+                    Retake: {st.displayName || st.email}
+                  </button>
+                ))}
+                <button className={s.actionBtn} onClick={() => retakeGapScan(user.uid)}>
+                  Retake: me
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h3 style={{ marginBottom: 4, fontSize: 14, fontWeight: 600 }}>ACT Ontology vs Question Bank</h3>
+              <p style={{ marginBottom: 12, fontSize: 13, color: '#8A8F98' }}>{coverageSummary}</p>
+              <table className={s.table}>
+                <thead>
+                  <tr>
+                    <th>Concept</th><th>Level</th><th>Status</th><th>L1</th><th>L2</th><th>L3</th><th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {coverageRows.map(row => (
+                    <tr key={row.conceptId}>
+                      <td><div className={s.studentName}>{row.name}</div><div className={s.studentEmail}>{row.conceptId}</div></td>
+                      <td>{row.ontologyLevel}</td>
+                      <td><span className={s.statusBadge} style={{ color: row.status === 'full' ? '#3A8500' : '#F59E0B', background: row.status === 'full' ? 'rgba(88,204,2,.08)' : 'rgba(245,158,11,.08)' }}>{row.status}</span></td>
+                      <td>{row.questionCounts.L1}</td>
+                      <td>{row.questionCounts.L2}</td>
+                      <td>{row.questionCounts.L3}</td>
+                      <td>{row.questionCounts.total}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
       {toast && <div className={s.toast}>{toast}</div>}
     </div>
