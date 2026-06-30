@@ -180,15 +180,15 @@ export default function Login() {
       </div>
       <main className={s.shell}>
         <div className={s.layout}>
-          <section className={s.heroPanel} aria-label="MindCraft private learning studio">
+          <section className={s.heroPanel} aria-label="MindCraft parent learning plan">
             <div className={s.heroContent}>
               <div className={s.heroIntro}>
                 <div className={s.wordmark}>
                   <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
                 </div>
-                <h1 className={s.heroTitle}>Your private learning studio.</h1>
+                <h1 className={s.heroTitle}>Stop guessing what math help should do next.</h1>
                 <p className={s.heroCopy}>
-                  A calmer way to master math, build confidence, and walk into every exam with a plan.
+                  MindCraft maps where your child stands, routes the next skill to fix, and connects tutoring to the plan so progress feels visible.
                 </p>
               </div>
 
@@ -207,8 +207,8 @@ export default function Login() {
                     <path d="M13 7v9" />
                   </svg>
                 </span>
-                <strong>Practice Sets</strong>
-                <p>Targeted reps that turn weak spots into confident routines.</p>
+                <strong>Gap map</strong>
+                <p>See the weak spots behind missed questions.</p>
               </article>
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
@@ -219,8 +219,8 @@ export default function Login() {
                     <path d="M19.75 8.25v2.5" />
                   </svg>
                 </span>
-                <strong>Homework Help</strong>
-                <p>Step-by-step support that keeps students moving without panic.</p>
+                <strong>Next route</strong>
+                <p>Know what your child should fix next.</p>
               </article>
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
@@ -233,14 +233,14 @@ export default function Login() {
                     <path d="M9.5 7h5" />
                   </svg>
                 </span>
-                <strong>Knowledge Maps</strong>
-                <p>A visual route through concepts, gaps, and what to learn next.</p>
+                <strong>Tutor context</strong>
+                <p>Make live help start from the real gap.</p>
               </article>
               </div>
               </div>
 
               <blockquote className={s.quote}>
-                A better plan makes a calmer learner.
+                Parents deserve more than hope and hourly tutoring bills.
               </blockquote>
             </div>
           </section>
@@ -252,12 +252,12 @@ export default function Login() {
                 <div className={s.formHeader}>
                   <div className={s.formIntro}>
                     <p className={s.formKicker}>
-                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Begin your plan'}
+                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Begin with clarity'}
                     </p>
                     <h2>
                       {adminFlow === 'passcode'
                         ? 'Enter your admin code.'
-                        : mode === 'signin' ? 'Continue your learning plan.' : 'Create your MindCraft studio.'}
+                        : mode === 'signin' ? 'Continue the learning plan.' : 'Create your MindCraft plan.'}
                     </h2>
                   </div>
                   <span className={s.secureBadge} aria-label="Secure sign in">
@@ -440,7 +440,7 @@ export default function Login() {
             <path d="m9.5 12 1.7 1.7 3.6-4" />
           </svg>
         </span>
-        Trusted by students and parents building calmer math confidence.
+        Built for parents who want clearer math progress, not more guessing.
       </p>
       <div className={s.socialLinks} aria-label="MindCraft social links">
         <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noreferrer" aria-label="Instagram">
