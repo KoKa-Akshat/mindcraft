@@ -1,15 +1,17 @@
 .toggle {
-  width: 46px;
-  min-width: 46px;
+  width: 60px;
+  min-width: 60px;
   border: none;
   border-left: 1px solid rgba(6, 77, 54, 0.16);
-  background: #f5fbf1;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(228,191,106,0.18), transparent 44%),
+    #f5fbf1;
   color: #064d36;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 150ms, color 150ms;
+  transition: background 150ms, color 150ms, box-shadow 150ms;
 }
 
 .toggle:hover:not(:disabled) {
@@ -18,8 +20,11 @@
 }
 
 .toggleActive {
-  background: #064d36;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(228,191,106,0.22), transparent 44%),
+    #064d36;
   color: #fffaf0;
+  box-shadow: inset 0 0 0 1px rgba(228,191,106,0.22);
 }
 
 .toggle:disabled {

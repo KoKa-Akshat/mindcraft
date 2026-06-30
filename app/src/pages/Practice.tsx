@@ -288,7 +288,7 @@ function ingredientResultToSession(
 
 function PixelCraft({ size = 'sm', className = '' }: { size?: 'sm' | 'lg' | 'md'; className?: string }) {
   return (
-    <div className={`${s.pixelCraft} ${s[`pixelCraft${size.toUpperCase()}`]} ${className}`} aria-label="Craft mascot" role="img">
+    <div className={`${s.pixelCraft} ${s[`pixelCraft${size.toUpperCase()}`]} ${className}`} aria-label="Craft bear mascot" role="img">
       <span className={s.pixelEarLeft} />
       <span className={s.pixelEarRight} />
       <span className={s.pixelHead}>
@@ -857,6 +857,10 @@ export default function Practice() {
     return levelFromConfidence(conf)
   }
 
+  function levelTierNameFor(lv: 1 | 2 | 3) {
+    return lv === 1 ? 'Warm-up' : lv === 2 ? 'Core' : 'Challenge'
+  }
+
   function missionLevel(mission: 'weakness' | 'learn', conf: Confidence | undefined): 1|2|3 {
     if (mission === 'learn' && !conf) return 1
     return levelFromConfidence(conf)
@@ -870,10 +874,8 @@ export default function Practice() {
     setMode('practice')
     setMissionType(mission)
     setSessionFormat(formatId ?? null)
-    const diagnostic = await loadDiagnostic(user.uid)
-    const conf = (diagnostic?.confidenceMap[conceptId] ?? confidenceMap[conceptId]) as Confidence | undefined
-    const lv = missionLevel(mission, conf)
-    await startSession(conceptId, lv, undefined, formatId)
+    setConcept(conceptId)
+    setPPhase('explore')
   }
 
   // ── Mission hub launchers ─────────────────────────────────────────────────
@@ -1181,11 +1183,11 @@ export default function Practice() {
   void correctCount
   const pct          = questions.length ? Math.round((qIndex / questions.length) * 100) : 0
   const lvBannerGradient = level === 1
-    ? 'linear-gradient(135deg,#4EB543,#247a46)'
+    ? 'radial-gradient(circle at 12% 10%, rgba(228,191,106,0.24), transparent 34%), linear-gradient(135deg,#064D36,#123A2A)'
     : level === 2
-    ? 'linear-gradient(135deg,#E4BF6A,#8C5A1E)'
-    : 'linear-gradient(135deg,#064D36,#09251D)'
-  const levelTierName = level === 1 ? 'Foundation' : level === 2 ? 'Fluency' : 'Mastery'
+    ? 'radial-gradient(circle at 12% 10%, rgba(228,191,106,0.28), transparent 34%), linear-gradient(135deg,#064D36,#4B001D)'
+    : 'radial-gradient(circle at 12% 10%, rgba(244,162,97,0.22), transparent 34%), linear-gradient(135deg,#09251D,#4B001D)'
+  const levelTierName = level === 1 ? 'Warm-up' : level === 2 ? 'Core' : 'Challenge'
 
   const firstAttemptResults  = results.slice(0, initialQCount)
   const firstCorrect         = firstAttemptResults.filter(Boolean).length
@@ -1237,7 +1239,7 @@ export default function Practice() {
   const isPathView = pPhase === 'path' && mode === 'practice'
   const isMatteFlow = mode === 'practice' && ['explore', 'level', 'checkin', 'session', 'complete', 'no-content'].includes(pPhase)
   const isLessonPage = isMatteFlow
-  const hideTopBar = mode === 'practice' && ['exam-pick', 'confidence', 'building'].includes(pPhase)
+  const hideTopBar = mode === 'practice' && ['exam-pick', 'confidence', 'building', 'session'].includes(pPhase)
 
   return (
     <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}`}>
@@ -1563,7 +1565,7 @@ export default function Practice() {
                         {/* Show recommended level if this concept was assessed */}
                         {confidenceMap[conceptMeta.id] && (
                           <span className={s.confLevelHint}>
-                            Craft recommends: Level {getRecommendedLevel(conceptMeta.id)} based on your self-assessment
+                            Craft recommends: {LEVEL_META[getRecommendedLevel(conceptMeta.id)].label} based on your self-assessment
                           </span>
                         )}
                       </div>
@@ -1702,7 +1704,7 @@ export default function Practice() {
                             <span key={i} className={i < m.stars ? s.tierOn : s.tierOff} />
                           ))}
                         </div>
-                        <div className={s.levelNum}>Level {lv}</div>
+                        <div className={s.levelNum}>{levelTierNameFor(lv)}</div>
                         <div className={s.levelName}>{m.label}</div>
                         <div className={s.levelDesc}>{m.sub}</div>
                         <div className={s.levelXp}>+{m.xp} insight pts / question</div>
@@ -1780,6 +1782,22 @@ export default function Practice() {
               <div className={s.sessionWrap}>
                 <div className={s.sessionCenter}>
                   <div className={s.progressStrip}>
+                    <div className={s.sessionNavGroup}>
+                      <button
+                        type="button"
+                        className={s.backDashBtn}
+                        onClick={() => setPPhase('explore')}
+                      >
+                        Lesson Notes
+                      </button>
+                      <button
+                        type="button"
+                        className={s.backDashBtn}
+                        onClick={() => setPPhase('path')}
+                      >
+                        Practice Path
+                      </button>
+                    </div>
                     <button
                       type="button"
                       className={s.backDashBtn}
@@ -1800,7 +1818,7 @@ export default function Practice() {
                       <span className={s.stripLevel} style={{ color: lvMeta.color }}>
                         {hideCorrectness
                           ? sessionLabel
-                          : `${levelTierName} · Level ${level}`}
+                          : levelTierName}
                       </span>
                     </div>
                     <div className={s.stripCenter}>
@@ -1882,7 +1900,7 @@ export default function Practice() {
                                   disabled={checked || (selected === null && !typedAnswer.trim())}
                                   aria-label={hideCorrectness ? 'Continue' : 'Submit answer'}
                                 >
-                                  {hideCorrectness ? '→' : 'Submit'}
+                                  ↑
                                 </button>
                               </div>
                               <ScientificCalcPanel
@@ -1968,7 +1986,7 @@ export default function Practice() {
                   <span>{mastered ? 'Mastery' : firstAccuracy >= 0.60 ? 'Almost locked' : 'Needs reps'}</span>
                 </div>
                 <h2 className={s.completeTitle}>
-                  {mastered ? `Level ${level} mastered` : 'Session complete'}
+                  {mastered ? `${levelTierName} mastered` : 'Session complete'}
                 </h2>
                 <div className={s.completeStats}>
                   <div className={s.completeStat}>
@@ -1986,7 +2004,7 @@ export default function Practice() {
                 </div>
                 <div className={s.completeInsight}>
                   {mastered
-                    ? `${firstCorrect}/${initialQCount} on first attempt — you've got ${conceptMeta?.label}. Ready for Level ${Math.min(level + 1, 3)}!`
+                    ? `${firstCorrect}/${initialQCount} on first attempt — you've got ${conceptMeta?.label}. Ready for ${levelTierNameFor(Math.min(level + 1, 3) as 1 | 2 | 3)}!`
                     : firstAccuracy >= 0.60
                     ? `${firstCorrect}/${initialQCount} first-try — nearly there. One more round and you'll lock it in.`
                     : `${firstCorrect}/${initialQCount} on first attempt. ${conceptMeta?.label} needs more practice — re-queued your misses for extra reps.`}
@@ -2000,8 +2018,8 @@ export default function Practice() {
                     onClick={() => startSession(concept!, mastered ? Math.min(level + 1, 3) as 1|2|3 : level)}
                   >
                     {mastered
-                      ? level < 3 ? `Level ${level + 1} →` : 'Practice Again →'
-                      : `Retry Level ${level} →`}
+                      ? level < 3 ? `${levelTierNameFor(Math.min(level + 1, 3) as 1 | 2 | 3)} →` : 'Practice Again →'
+                      : `Retry ${levelTierName} →`}
                   </button>
                 </div>
                 {/* Next gap concept suggestion */}
@@ -2017,7 +2035,7 @@ export default function Practice() {
                         className={s.nextGapBtn}
                         onClick={() => startSession(nextGap.id, getRecommendedLevel(nextGap.id))}
                       >
-                        {nextGap.label} → Level {getRecommendedLevel(nextGap.id)}
+                        {nextGap.label} → {LEVEL_META[getRecommendedLevel(nextGap.id)].label}
                       </button>
                     </div>
                   )
