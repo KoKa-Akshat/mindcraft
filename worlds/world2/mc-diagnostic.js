@@ -257,6 +257,8 @@
       return
     }
     pendingOpen = false
+    if (window.MC_hideProjectsCue) window.MC_hideProjectsCue()
+    try { sessionStorage.setItem('mc-clicked-me', '1') } catch (e) {}
     root.classList.add('show')
     step = 'intro'
     goalTags = []

@@ -7,7 +7,7 @@
     : 'https://mindcraft-93858.web.app'
   var AMBIENT_VOLUME = 0.28
 
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-30-world-chrome-v11'
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-30-world-chrome-v12'
 
   // Read shared .web.app cookie set by the dashboard when diagnostic is confirmed done
   function hasDiagCookie() {
@@ -67,24 +67,24 @@
       })
     }
 
+    function hideProjectsCue() {
+      if (clickMe) clickMe.style.display = 'none'
+    }
+
+    window.MC_hideProjectsCue = hideProjectsCue
+
+    function showProjectsCue() {
+      if (diagDone) return
+      if (clickMe) {
+        clickMe.style.display = 'flex'
+      }
+    }
+
     function openDiagnosticFlow() {
       if (diagDone) return
-      if (clickMe) clickMe.style.display = 'none'
+      hideProjectsCue()
       sessionStorage.setItem('mc-clicked-me', '1')
-      if (window.MC_openProjectsSign) {
-        window.MC_openProjectsSign()
-        return
-      }
-      var tries = 0
-      var timer = setInterval(function () {
-        if (window.MC_openProjectsSign) {
-          clearInterval(timer)
-          window.MC_openProjectsSign()
-        } else if (++tries > 18) {
-          clearInterval(timer)
-          if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
-        }
-      }, 120)
+      if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
     }
 
     // Jesse's Kitchen is now a pre-diagnostic experience only:
@@ -92,9 +92,6 @@
     function revealChrome() {
       if (bookingLink) bookingLink.style.display = 'none'
       if (topActions) topActions.style.display = 'none'
-      if (!diagDone && clickMe && !sessionStorage.getItem('mc-clicked-me')) {
-        clickMe.style.display = 'flex'
-      }
     }
 
     if (startBtn) {
@@ -110,12 +107,12 @@
           } catch (e) {}
         }, 250)
         setTimeout(revealChrome, 900)
-        setTimeout(openDiagnosticFlow, 1500)
+        setTimeout(showProjectsCue, 1200)
       }, { once: true })
     } else {
       turnSoundOn()
       revealChrome()
-      setTimeout(openDiagnosticFlow, 1500)
+      setTimeout(showProjectsCue, 1200)
     }
 
     // Projects cue → go to diagnostic (pre-diagnostic flow)
@@ -126,7 +123,7 @@
       })
     }
 
-    // Keep Enter World manual. Once pressed, sound starts and Projects opens the diagnostic.
+    // Keep Enter World and Projects manual. Once pressed, sound starts and a cue points to Projects.
   }
 
   if (document.readyState === 'loading') {

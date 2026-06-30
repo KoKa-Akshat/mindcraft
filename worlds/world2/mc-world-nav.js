@@ -132,33 +132,13 @@
     var ctrl = exp && exp.controller
     if (!ctrl || !ctrl.menuControls || !ctrl.ramenShop || window.MC_openProjectsSign) return !!window.MC_openProjectsSign
 
-    function pressProjectsSign() {
-      if (!ctrl || !ctrl.menuControls || !ctrl.ramenShop) return false
-      if (ctrl.logic && ctrl.logic.buttonsLocked) return false
-      if (ctrl.logic && ctrl.logic.mode !== 'menu') {
-        if (ctrl.logic.mode === 'projects0') return true
-        return false
-      }
-      var sign = ctrl.ramenShop.projectsWhite || ctrl.ramenShop.projectsGreen || ctrl.ramenShop.projectsBlack
-      if (!sign || !ctrl.menuControls.projects) return false
-      ctrl.menuControls.projects(sign, 'white')
-      return true
-    }
-
     window.MC_openProjectsSign = function () {
       // Jesse's Kitchen is pre-diagnostic only. After diagnostic, return to the web app.
       if (localStorage.getItem('mc-diag-done')) {
         window.location.href = ROUTES.dashboard
         return
       }
-      if (pressProjectsSign()) return
-      var tries = 0
-      var timer = setInterval(function () {
-        if (pressProjectsSign() || ++tries > 18) {
-          clearInterval(timer)
-          if (tries > 18 && window.MC_onProjectsOpen) window.MC_onProjectsOpen()
-        }
-      }, 120)
+      if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
     }
     return true
   }
