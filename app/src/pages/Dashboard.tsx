@@ -6,9 +6,8 @@ import { db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
-import { isDiagnosticComplete } from '../lib/practiceState'
+import { isDiagnosticComplete, markDiagnosticComplete } from '../lib/practiceState'
 import { fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
-import { worldUrl } from '../lib/siteUrls'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import HeroBar from '../components/HeroBar'
 import PawHub from '../components/PawHub'
@@ -22,17 +21,6 @@ import s from './Dashboard.module.css'
 function greeting() {
   const h = new Date().getHours()
   return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'
-}
-
-function ViewToggle({ onPick3D }: { onPick3D: () => void }) {
-  return (
-    <div className={s.topActions}>
-      <div className={s.viewToggle} aria-label="Dashboard view switcher">
-        <button className={s.toggleBtn} onClick={onPick3D}>3D</button>
-        <button className={`${s.toggleBtn} ${s.toggleActive}`} disabled>Web</button>
-      </div>
-    </div>
-  )
 }
 
 export default function Dashboard() {
@@ -117,12 +105,6 @@ export default function Dashboard() {
     navigate('/dashboard', { replace: true })
   }
 
-  function goTo3DWorld() {
-    localStorage.setItem('dashboardView', '3d')
-    const base = worldUrl(uid)
-    window.location.href = diagChecked ? `${base}&diagDone=1` : base
-  }
-
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
 
   useEffect(() => {
@@ -146,14 +128,19 @@ export default function Dashboard() {
 
   useEffect(() => {
     let cancelled = false
-    isDiagnosticComplete(user.uid).then(done => {
+    ;(async () => {
+      let done = await isDiagnosticComplete(user.uid)
+      if (!done && localStorage.getItem('mc-diag-done') === '1') {
+        await markDiagnosticComplete(user.uid, { exam: 'ACT', confidenceMap: {} })
+        done = true
+      }
       if (cancelled) return
       if (!done) navigate('/practice', { state: { examHelp: true } })
       else {
         setDiagChecked(true)
         document.cookie = 'mc_diag_done=1; domain=.web.app; path=/; max-age=31536000; SameSite=Lax'
       }
-    })
+    })()
     return () => { cancelled = true }
   }, [user.uid, navigate])
 
@@ -175,8 +162,6 @@ export default function Dashboard() {
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <>
-            <ViewToggle onPick3D={goTo3DWorld} />
-
             <div className={`${s.stage} ${panelMode ? s.stageGps : ''}`}>
               <div className={s.pawCol}>
                 <motion.div

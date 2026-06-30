@@ -6,10 +6,10 @@
   padding: 22px 24px;
   border-radius: 22px;
   background:
-    radial-gradient(circle at 12% 0%, rgba(196, 245, 71, 0.20), transparent 32%),
-    radial-gradient(circle at 86% 74%, rgba(255, 255, 255, 0.08), transparent 30%),
-    linear-gradient(135deg, #123F46 0%, #176169 58%, #14343D 100%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+    radial-gradient(circle at 12% 0%, rgba(84, 185, 72, 0.22), transparent 32%),
+    radial-gradient(circle at 86% 74%, rgba(228, 191, 106, 0.14), transparent 30%),
+    linear-gradient(135deg, #064d36 0%, #123a2a 58%, #09251d 100%);
+  border: 1px solid rgba(255, 250, 240, 0.12);
   box-shadow:
     0 24px 80px rgba(0, 0, 0, 0.34),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -38,7 +38,7 @@
 }
 
 .brandText span {
-  color: #C4F547;
+  color: #54b948;
 }
 
 .nav {
@@ -74,9 +74,9 @@
 }
 
 .navLink.navActive {
-  color: #0F343A;
-  background: #C4F547;
-  box-shadow: 0 10px 24px rgba(196, 245, 71, 0.20);
+  color: #fffaf0;
+  background: #54b948;
+  box-shadow: 0 10px 24px rgba(84, 185, 72, 0.24);
 }
 
 .userCol {
@@ -110,11 +110,11 @@
   height: 32px;
   flex-shrink: 0;
   border-radius: 50%;
-  color: #C4F547;
+  color: #fffaf0;
   font-size: 12px;
   font-weight: 900;
-  background: rgba(196, 245, 71, 0.16);
-  border: 1px solid rgba(196, 245, 71, 0.28);
+  background: rgba(84, 185, 72, 0.18);
+  border: 1px solid rgba(84, 185, 72, 0.34);
 }
 
 .signOutBtn {
@@ -145,11 +145,11 @@
 .bookingBtn {
   width: auto;
   min-height: 34px;
-  border: 1px solid rgba(196, 245, 71, 0.42);
+  border: 1px solid rgba(84, 185, 72, 0.48);
   border-radius: 10px;
   padding: 0 14px;
-  background: #C4F547;
-  color: #10231a;
+  background: #54b948;
+  color: #fffaf0;
   font-size: 13px;
   font-weight: 900;
   line-height: 1;
@@ -160,7 +160,7 @@
   text-align: center;
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.22),
-    0 0 22px rgba(196, 245, 71, 0.24);
+    0 0 22px rgba(84, 185, 72, 0.28);
   backdrop-filter: blur(4px);
 }
 
@@ -201,7 +201,7 @@
 }
 
 .greeting em {
-  color: #C4F547;
+  color: #e4bf6a;
   font-style: normal;
 }
 
@@ -243,8 +243,8 @@
   height: 7px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #C4F547;
-  box-shadow: 0 0 0 4px rgba(196, 245, 71, 0.13);
+  background: #54b948;
+  box-shadow: 0 0 0 4px rgba(84, 185, 72, 0.16);
   animation: pillPulse 2s ease-in-out infinite;
 }
 
@@ -309,9 +309,9 @@
 
 .btnPrimary,
 .btnLive {
-  color: #0F343A;
-  background: #C4F547;
-  box-shadow: 0 12px 28px rgba(196, 245, 71, 0.24);
+  color: #fffaf0;
+  background: #54b948;
+  box-shadow: 0 12px 28px rgba(84, 185, 72, 0.26);
 }
 
 .btnLive {
@@ -319,8 +319,8 @@
 }
 
 @keyframes liveBlink {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 245, 71, 0.36); }
-  50% { box-shadow: 0 0 0 7px rgba(196, 245, 71, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(84, 185, 72, 0.36); }
+  50% { box-shadow: 0 0 0 7px rgba(84, 185, 72, 0); }
 }
 
 .btnGhost {

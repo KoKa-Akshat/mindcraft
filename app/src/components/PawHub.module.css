@@ -12,8 +12,8 @@
   inset: 8% 10% 12%;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 42%, rgba(196, 245, 71, 0.11), transparent 52%),
-    radial-gradient(circle at 50% 50%, rgba(251, 250, 246, 0.04), transparent 45%);
+    radial-gradient(circle at 50% 42%, rgba(84, 185, 72, 0.13), transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(228, 191, 106, 0.08), transparent 45%);
   pointer-events: none;
 }
 
@@ -43,7 +43,7 @@
   max-width: 108px;
   flex: 0 0 auto;
   border-radius: 50%;
-  border: 1px solid rgba(251, 250, 246, 0.22);
+  border: 1px solid rgba(251, 250, 246, 0.20);
   background:
     radial-gradient(circle at 36% 24%, rgba(251, 250, 246, 0.24), transparent 28%),
     linear-gradient(145deg, rgba(251, 250, 246, 0.13) 0%, rgba(251, 250, 246, 0.05) 100%);
@@ -60,7 +60,7 @@
   gap: 7px;
   padding: 12px;
   text-align: center;
-  color: var(--mc-cream);
+  color: #fffaf0;
   font-family: var(--f-body);
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -76,10 +76,10 @@
 }
 
 .toe_violet {
-  border-color: rgba(228, 191, 106, 0.38);
+  border-color: rgba(228, 191, 106, 0.44);
   background:
     radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.30), transparent 28%),
-    linear-gradient(145deg, rgba(75, 0, 29, 0.92) 0%, rgba(94, 32, 53, 0.62) 55%, rgba(12, 18, 18, 0.90) 100%);
+    linear-gradient(145deg, rgba(75, 0, 29, 0.86) 0%, rgba(80, 43, 35, 0.68) 54%, rgba(9, 37, 29, 0.92) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
     0 0 34px rgba(228, 191, 106, 0.16),
@@ -88,10 +88,10 @@
 }
 
 .toe_sky {
-  border-color: rgba(84, 185, 72, 0.36);
+  border-color: rgba(84, 185, 72, 0.42);
   background:
     radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.30), transparent 28%),
-    linear-gradient(145deg, rgba(27, 111, 83, 0.92) 0%, rgba(12, 75, 62, 0.64) 58%, rgba(10, 24, 24, 0.90) 100%);
+    linear-gradient(145deg, rgba(6, 77, 54, 0.94) 0%, rgba(18, 82, 55, 0.72) 58%, rgba(9, 37, 29, 0.94) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
     0 0 34px rgba(84, 185, 72, 0.18),
@@ -100,13 +100,13 @@
 }
 
 .toe_lime {
-  border-color: rgba(196, 245, 71, 0.42);
+  border-color: rgba(84, 185, 72, 0.48);
   background:
     radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.32), transparent 28%),
-    linear-gradient(145deg, rgba(196, 245, 71, 0.94) 0%, rgba(55, 143, 66, 0.66) 56%, rgba(14, 28, 22, 0.90) 100%);
+    linear-gradient(145deg, rgba(78, 181, 67, 0.94) 0%, rgba(55, 143, 66, 0.72) 56%, rgba(14, 45, 28, 0.92) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
-    0 0 36px rgba(196, 245, 71, 0.22),
+    0 0 36px rgba(84, 185, 72, 0.22),
     inset 0 1px 0 rgba(255,255,255,0.24),
     inset 0 -16px 30px rgba(0,0,0,0.22);
 }
@@ -115,7 +115,7 @@
   border-color: rgba(228, 191, 106, 0.40);
   background:
     radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.30), transparent 28%),
-    linear-gradient(145deg, rgba(228, 191, 106, 0.92) 0%, rgba(126, 80, 28, 0.62) 58%, rgba(31, 23, 17, 0.90) 100%);
+    linear-gradient(145deg, rgba(228, 191, 106, 0.92) 0%, rgba(126, 80, 28, 0.62) 58%, rgba(34, 32, 20, 0.92) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
     0 0 34px rgba(228, 191, 106, 0.20),
@@ -127,7 +127,7 @@
   border-color: rgba(255, 255, 255, 0.42);
   box-shadow:
     0 24px 54px rgba(0, 0, 0, 0.52),
-    0 0 42px rgba(196, 245, 71, 0.14),
+    0 0 42px rgba(228, 191, 106, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
@@ -144,7 +144,7 @@
 }
 
 .toeLabel {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -181,12 +181,12 @@
   width: min(100%, 280px);
   height: 280px;
   border-radius: 50%;
-  border: 1px solid rgba(196, 245, 71, 0.34);
+  border: 1px solid rgba(84, 185, 72, 0.44);
   background:
-    radial-gradient(circle at 50% 28%, rgba(251, 250, 246, 0.26) 0%, rgba(196, 245, 71, 0.94) 38%, rgba(132, 206, 76, 0.90) 100%);
+    radial-gradient(circle at 50% 28%, rgba(255, 250, 240, 0.28) 0%, rgba(84, 185, 72, 0.96) 38%, rgba(6, 77, 54, 0.92) 100%);
   box-shadow:
     0 28px 70px rgba(0, 0, 0, 0.55),
-    0 0 60px rgba(196, 245, 71, 0.18),
+    0 0 60px rgba(84, 185, 72, 0.22),
     inset 0 2px 0 rgba(255, 255, 255, 0.35);
   cursor: pointer;
   display: flex;
@@ -195,7 +195,7 @@
   justify-content: center;
   gap: 8px;
   padding: 24px;
-  color: #10231a;
+  color: #fffaf0;
   font-family: var(--f-display);
 }
 
@@ -210,11 +210,11 @@
 .mainIcon {
   width: 44px;
   height: 44px;
-  color: rgba(15, 35, 24, 0.75);
+  color: rgba(255, 250, 240, 0.90);
 }
 
 .mainLabel {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 900;
   letter-spacing: -0.03em;
 }
@@ -222,7 +222,7 @@
 .mainSub {
   font-size: 12px;
   font-weight: 700;
-  color: rgba(15, 35, 24, 0.55);
+  color: rgba(255, 250, 240, 0.70);
   font-family: var(--f-body);
 }
 

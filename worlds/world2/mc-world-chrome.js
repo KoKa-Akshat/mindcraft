@@ -1,5 +1,5 @@
 /**
- * MindCraft world HTML chrome — toggle, Projects, Booking. Always visible.
+ * MindCraft world HTML chrome — pre-diagnostic entry flow.
  */
 (function () {
   var APP = window.location.hostname === 'localhost'
@@ -42,50 +42,57 @@
     if (bookingLink) bookingLink.href = APP + '/book'
     if (badge)       badge.classList.add('show')
 
-    // After Enter World:
-    //   - If diagnostic done: show Booking + 3D|Web, no Projects cue
-    //   - If not done: show Projects cue only
+    function turnSoundOn() {
+      ;[document, window].forEach(function (t) {
+        t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
+      })
+    }
+
+    function openDiagnosticFlow() {
+      if (diagDone) return
+      if (clickMe) clickMe.style.display = 'none'
+      sessionStorage.setItem('mc-clicked-me', '1')
+      if (window.MC_openProjectsSign) window.MC_openProjectsSign()
+      else if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
+    }
+
+    // Jesse's Kitchen is now a pre-diagnostic experience only:
+    // no Booking, no 3D|Web toggle, and no return path after diagnostic.
     function revealChrome() {
-      if (diagDone) {
-        if (bookingLink) bookingLink.style.display = 'inline-flex'
-        if (topActions) topActions.style.display = 'flex'
-      } else {
-        if (clickMe && !sessionStorage.getItem('mc-clicked-me')) {
-          clickMe.style.display = 'flex'
-        }
+      if (bookingLink) bookingLink.style.display = 'none'
+      if (topActions) topActions.style.display = 'none'
+      if (!diagDone && clickMe && !sessionStorage.getItem('mc-clicked-me')) {
+        clickMe.style.display = 'flex'
       }
     }
 
     if (startBtn) {
       startBtn.addEventListener('click', function () {
+        turnSoundOn()
+        setTimeout(turnSoundOn, 250)
         setTimeout(revealChrome, 900)
-        // Auto-play sound (simulates pressing M)
-        setTimeout(function () {
-          ;[document, window].forEach(function (t) {
-            t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
-          })
-        }, 1400)
+        setTimeout(openDiagnosticFlow, 2000)
       }, { once: true })
     } else {
+      turnSoundOn()
       revealChrome()
+      setTimeout(openDiagnosticFlow, 2000)
     }
 
     // Projects cue → go to diagnostic (pre-diagnostic flow)
     if (clickMe && !clickMe.__mcWired) {
       clickMe.__mcWired = true
       clickMe.addEventListener('click', function () {
-        sessionStorage.setItem('mc-clicked-me', '1')
-        clickMe.style.display = 'none'
-        window.location.href = APP + '/diagnostic'
+        openDiagnosticFlow()
       })
     }
 
-    // If arriving from ?diagDone=1 (from web dashboard 3D button), auto-enter
-    if (diagJustDone && startBtn) {
+    // Auto-enter Jesse's Kitchen so the diagnostic starts without extra clicks.
+    if (startBtn) {
       var obs = new MutationObserver(function () {
         if (startBtn.classList.contains('fadeIn')) {
           obs.disconnect()
-          setTimeout(function () { startBtn.click() }, 700)
+          setTimeout(function () { startBtn.click() }, diagJustDone ? 700 : 350)
         }
       })
       obs.observe(startBtn, { attributes: true, attributeFilter: ['class'] })
@@ -97,6 +104,12 @@
   } else {
     wireChrome()
   }
+
+  window.addEventListener('load', function () {
+    ;[document, window].forEach(function (t) {
+      t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
+    })
+  }, { once: true })
 
   // Unregister any stale service worker from Jesse's Ramen PWA manifest.
   if ('serviceWorker' in navigator) {

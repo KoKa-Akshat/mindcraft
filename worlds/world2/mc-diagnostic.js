@@ -1,6 +1,6 @@
 /**
  * In-world diagnostic overlay for Nox's kitchen (projects / diagnostics screen).
- * Opens when the player clicks the Diagnostics sign in the 3D world, or via "Let Nox Cook".
+ * Opens automatically in Jesse's Kitchen before the web dashboard.
  */
 (function () {
   var ML_BASE = 'https://mindcraft-ml-630302850770.us-central1.run.app'
@@ -18,6 +18,7 @@
   var probeIdx = 0
   var picked = null
   var probePhase = 'answer' // answer | feedback
+  var pendingOpen = false
 
   var ENCOURAGEMENT = [
     'You\'re doing great — keep going!',
@@ -229,6 +230,8 @@
 
   function complete() {
     step = 'done'
+    localStorage.setItem('mc-diag-done', '1')
+    document.cookie = 'mc_diag_done=1; path=/; max-age=31536000; SameSite=Lax'
     var goals = { tags: goalTags, text: goalText.trim() }
     sendLearningEvent({
       conceptId: 'diagnostic',
@@ -249,7 +252,11 @@
   function escAttr(s) { return esc(s).replace(/'/g, '&#39;') }
 
   function show() {
-    if (!spec) return
+    if (!spec) {
+      pendingOpen = true
+      return
+    }
+    pendingOpen = false
     root.classList.add('show')
     step = 'intro'
     goalTags = []
@@ -263,6 +270,7 @@
   }
 
   function hide() {
+    if (step !== 'done') return
     clearProbeAdvanceTimer()
     root.classList.remove('show')
   }
@@ -274,10 +282,17 @@
 
     fetch('data/actDiagnostic.json?v=879bdfe9')
       .then(function (r) { return r.json() })
-      .then(function (d) { spec = d })
+      .then(function (d) {
+        spec = d
+        if (pendingOpen) show()
+      })
       .catch(function () { console.warn('MC: could not load diagnostic spec') })
 
-    root.querySelector('#mc-diag-backdrop').onclick = hide
+    root.querySelector('#mc-diag-backdrop').onclick = function (e) {
+      e.preventDefault()
+      e.stopPropagation()
+      if (step === 'done') hide()
+    }
 
     // Prevent clicks inside the overlay from reaching the THREE.js raycaster on the canvas
     root.addEventListener('click', function (e) { e.stopPropagation() })
