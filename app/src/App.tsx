@@ -80,7 +80,7 @@ function RoleRedirect() {
 
 /** Sets QA mode and redirects to /dashboard — entry point for the test harness. */
 function QAEntry() {
-  useEffect(() => { sessionStorage.setItem('mc-qa-mode', '1') }, [])
+  sessionStorage.setItem('mc-qa-mode', '1') // must be sync — Navigate fires before any useEffect
   return <Navigate to="/dashboard" replace />
 }
 
