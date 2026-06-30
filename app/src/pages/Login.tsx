@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
+  browserPopupRedirectResolver,
   sendPasswordResetEmail,
   signOut,
 } from 'firebase/auth'
@@ -19,25 +19,9 @@ type Mode = 'signin' | 'signup'
 /** Separate admin flow: passcode step → sign in → grant admin once. */
 type AdminFlow = 'auth' | 'passcode' | 'armed'
 
-const ADMIN_GRANT_PENDING_KEY = 'mc_admin_grant_pending'
-
 function isAdminPasscodeValid(passcode: string): boolean {
   const expected = import.meta.env.VITE_ADMIN_PASSCODE
   return !!(expected && passcode.length > 0 && passcode === expected)
-}
-
-function armAdminGrant() {
-  sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, '1')
-}
-
-function consumeAdminGrant(): boolean {
-  const pending = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'
-  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
-  return pending
-}
-
-function clearAdminGrant() {
-  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
 }
 
 function safeReturnPath(raw: string | null): string | null {
@@ -59,6 +43,8 @@ function friendlyError(code: string) {
     case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
     case 'auth/popup-closed-by-user':       return ''
     case 'auth/popup-blocked':              return 'Pop-up was blocked. Allow pop-ups for this site.'
+    case 'auth/unauthorized-domain':        return 'This site isn’t authorized for sign-in. Use http://localhost:5173 locally, or add your domain in Firebase Console → Authentication → Settings → Authorized domains.'
+    case 'auth/operation-not-allowed':     return 'Google sign-in isn’t enabled for this project.'
     case 'auth/network-request-failed':     return 'Network error. Check your connection.'
     default:                                return `Login failed (${code}). Please try again.`
   }
@@ -78,33 +64,6 @@ export default function Login() {
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
 
-  useEffect(() => {
-    if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') {
-      setAdminFlow('armed')
-    }
-  }, [])
-
-  useEffect(() => {
-    let cancelled = false
-    void (async () => {
-      try {
-        const cred = await getRedirectResult(auth)
-        if (cancelled || !cred?.user) return
-        setLoading(true)
-        const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
-        await routeAfterLogin(cred.user.uid, isNew)
-      } catch (e: unknown) {
-        if (cancelled) return
-        const code = (e as { code?: string })?.code ?? ''
-        const msg = friendlyError(code || 'unknown')
-        if (msg) setError(msg)
-        setLoading(false)
-      }
-    })()
-    return () => { cancelled = true }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   function navigateAfterRole(effectiveRole: string) {
     if (effectiveRole === 'tutor' || effectiveRole === 'admin') {
       navigate('/tutor', { replace: true })
@@ -117,7 +76,7 @@ export default function Login() {
 
   async function routeAfterLogin(uid: string, isNewUser = false) {
     await auth.currentUser?.getIdToken(true)
-    const grantAdmin = consumeAdminGrant()
+    const grantAdmin = adminFlow === 'armed'
     if (grantAdmin) setAdminFlow('auth')
 
     const snap = await getDoc(doc(db, 'users', uid))
@@ -141,7 +100,7 @@ export default function Login() {
       return
     }
 
-    if (firestoreRole && firestoreRole !== role) {
+    if (firestoreRole && firestoreRole !== role && firestoreRole !== 'admin' && firestoreRole !== 'tutor') {
       await signOut(auth)
       setError(`This account is registered as a ${firestoreRole}. Please select the "${firestoreRole}" tab.`)
       setLoading(false)
@@ -179,7 +138,9 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      await signInWithRedirect(auth, googleProvider)
+      const cred = await signInWithPopup(auth, googleProvider, browserPopupRedirectResolver)
+      const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
+      await routeAfterLogin(cred.user.uid, isNew)
     } catch (e: any) {
       const msg = friendlyError(e.code ?? e.message ?? 'unknown')
       if (msg) setError(msg)
@@ -191,12 +152,10 @@ export default function Login() {
     setError('')
     if (!isAdminPasscodeValid(adminPasscode)) return
     setAdminPasscode('')
-    armAdminGrant()
     setAdminFlow('armed')
   }
 
   function cancelAdminFlow() {
-    clearAdminGrant()
     setAdminPasscode('')
     setAdminFlow('auth')
     setError('')
