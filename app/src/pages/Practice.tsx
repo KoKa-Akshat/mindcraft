@@ -27,6 +27,7 @@ import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations 
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic, getUserRole } from '../lib/practiceState'
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
+import actOntologyCoverage from '../data/actOntologyCoverage.json'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
@@ -45,6 +46,14 @@ type PracticePhase =
 type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
 type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
+
+const CORE_CONCEPT_IDS = new Set(
+  Object.entries(
+    (actOntologyCoverage as { byConceptId: Record<string, { ontologyLevel: string }> }).byConceptId,
+  )
+    .filter(([, v]) => v.ontologyLevel === 'core')
+    .map(([id]) => id),
+)
 // A resumable mission is one of three kinds; each persists in its own slot so a
 // weakness AND a learn mission can be in-progress at once.
 type MissionType   = 'weakness' | 'learn' | 'gapscan'
@@ -563,7 +572,8 @@ export default function Practice() {
         setConfidenceMap(diagnostic.confidenceMap as Record<string, Confidence>)
         if (!diagnostic.exam) return
         const ids = await fetchExamConceptIds(diagnostic.exam)
-        const source = ids.length > 0 ? ids : getExamConceptIds(diagnostic.exam)
+        const source = (ids.length > 0 ? ids : getExamConceptIds(diagnostic.exam))
+          .filter(id => CORE_CONCEPT_IDS.has(id))
         setAssessConcepts(source.flatMap(id => {
           const c = PRACTICE_CONCEPTS.find(c => c.id === id)
           return c ? [c] : []
@@ -744,7 +754,8 @@ export default function Practice() {
     setExam(e)
     void (async () => {
       const ids = await fetchExamConceptIds(e)
-      const source = ids.length > 0 ? ids : getExamConceptIds(e)
+      const source = (ids.length > 0 ? ids : getExamConceptIds(e))
+        .filter(id => CORE_CONCEPT_IDS.has(id))
       const filtered = source.flatMap(id => {
         const c = PRACTICE_CONCEPTS.find(c => c.id === id)
         return c ? [c] : []

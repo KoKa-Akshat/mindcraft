@@ -1,5 +1,5 @@
 {
-  "version": "2026-06-act-v1",
+  "version": "2026-06-act-v2",
   "subject_id": "math",
   "shown_on": "first_login",
   "intro": {
@@ -19,162 +19,44 @@
   },
   "confidence_step": {
     "prompt": "How confident are you with each of these?",
-    "note": "Self-report only \u2014 no wrong answers here. Tap and move on.",
+    "note": "Self-report only — no wrong answers here. Tap and move on.",
     "scale": [
-      {
-        "value": 0.15,
-        "label": "New to this"
-      },
-      {
-        "value": 0.45,
-        "label": "Shaky"
-      },
-      {
-        "value": 0.7,
-        "label": "Okay"
-      },
-      {
-        "value": 0.95,
-        "label": "Confident"
-      }
+      { "label": "Not there yet", "value": "hard" },
+      { "label": "Getting there", "value": "kinda" },
+      { "label": "Got it", "value": "easy" }
     ],
     "concepts": [
-      {
-        "concept_id": "polynomials",
-        "name": "Polynomial Operations",
-        "act_high_priority": false
-      },
-      {
-        "concept_id": "ratios_proportions",
-        "name": "Ratios and Proportions",
-        "act_high_priority": true
-      },
-      {
-        "concept_id": "area_volume",
-        "name": "Area and Volume",
-        "act_high_priority": true
-      },
-      {
-        "concept_id": "linear_equations",
-        "name": "Linear Equations",
-        "act_high_priority": true
-      },
-      {
-        "concept_id": "circles_geometry",
-        "name": "Geometry of Circles",
-        "act_high_priority": false
-      },
-      {
-        "concept_id": "quadratic_equations",
-        "name": "Quadratic Equations",
-        "act_high_priority": true
-      },
-      {
-        "concept_id": "descriptive_statistics",
-        "name": "Descriptive Statistics",
-        "act_high_priority": true
-      },
-      {
-        "concept_id": "functions_basics",
-        "name": "Basics of Functions",
-        "act_high_priority": true
-      }
+      { "concept_id": "linear_equations", "name": "Linear Equations", "act_high_priority": true },
+      { "concept_id": "linear_inequalities", "name": "Linear Inequalities", "act_high_priority": false },
+      { "concept_id": "systems_of_linear_equations", "name": "Systems of Linear Equations", "act_high_priority": true },
+      { "concept_id": "functions_basics", "name": "Basics of Functions", "act_high_priority": true },
+      { "concept_id": "exponent_rules", "name": "Exponent Rules", "act_high_priority": false },
+      { "concept_id": "polynomials", "name": "Polynomial Operations", "act_high_priority": false },
+      { "concept_id": "factoring_polynomials", "name": "Factoring Polynomials", "act_high_priority": true },
+      { "concept_id": "quadratic_equations", "name": "Quadratic Equations", "act_high_priority": true },
+      { "concept_id": "radical_expressions", "name": "Radical Expressions", "act_high_priority": false },
+      { "concept_id": "exponential_functions", "name": "Exponential Functions", "act_high_priority": false },
+      { "concept_id": "sequences_series", "name": "Sequences and Series", "act_high_priority": false },
+      { "concept_id": "descriptive_statistics", "name": "Descriptive Statistics", "act_high_priority": false },
+      { "concept_id": "basic_probability", "name": "Basic Probability", "act_high_priority": false },
+      { "concept_id": "right_triangle_geometry", "name": "Right Triangle Geometry", "act_high_priority": true },
+      { "concept_id": "trigonometry_basics", "name": "Trigonometry Basics", "act_high_priority": false },
+      { "concept_id": "lines_angles", "name": "Lines and Angles", "act_high_priority": false },
+      { "concept_id": "triangles_congruence", "name": "Triangles and Congruence", "act_high_priority": false },
+      { "concept_id": "circles_geometry", "name": "Geometry of Circles", "act_high_priority": false },
+      { "concept_id": "area_volume", "name": "Area and Volume", "act_high_priority": true },
+      { "concept_id": "geometric_transformations", "name": "Geometric Transformations", "act_high_priority": false }
     ]
   },
   "probe_step": {
-    "prompt": "Quick check \u2014 answer what you can, skip what you can't.",
-    "questions": [
-      {
-        "question_id": "act_t1_q9_40f35e",
-        "concept_id": "polynomials",
-        "format": "symbolic_expression",
-        "level": 2,
-        "stem": "Which of the following is equal to ( n \u2013 3) 2 if n = 11?",
-        "choices": {
-          "A": "( n + 6)( n \u2013 6)",
-          "B": "( n + 5)( n \u2013 7)",
-          "C": "( n + 4)( n \u2013 8)",
-          "D": "( n + 3)( n \u2013 9)",
-          "E": "( n + 2)( n \u2013 10)"
-        },
-        "correct_answer": "(n + 5)(n \u2212 7)",
-        "skill_gap_if_wrong": "Weakness in substitution; exponent meaning; evaluating expressions; recognizing equivalent value vs algebraic identity.",
-        "encouragement_hint": "Students may think they must expand every expression; may confuse (n\u22123)^2 with n^2\u22129; may not realize answer choices can be tested directly."
-      },
-      {
-        "question_id": "act_t1_q2_8b90a0",
-        "concept_id": "ratios_proportions",
-        "format": "word_problem",
-        "level": 2,
-        "stem": "Beth got a job painting dorm rooms at her college. At top speed, she could paint 5 identical rooms during one 6-hour shift. How long did she take to paint each room?",
-        "choices": {
-          "A": "50 minutes",
-          "B": "1 hour and 10 minutes",
-          "C": "1 hour and 12 minutes",
-          "D": "1 hour and 15 minutes",
-          "E": "1 hour and 20 minutes"
-        },
-        "correct_answer": "6/5 hours or 1.2 hours",
-        "skill_gap_if_wrong": "Weakness in unit rate direction; not tracking units; proportional reasoning with multiple quantities.",
-        "encouragement_hint": "Student may invert the ratio and compute 5/6 hour; may confuse rooms per hour with hours per room; may miss later unit conversion if answer choices use minutes/seconds."
-      },
-      {
-        "question_id": "act_t1_q10_b1f9aa",
-        "concept_id": "area_volume",
-        "format": "word_problem",
-        "level": 2,
-        "stem": "A square field has an area of 22,500 square feet. To the nearest foot, what is the diagonal distance across the field?",
-        "choices": {
-          "A": "150 feet",
-          "B": "178 feet",
-          "C": "191 feet",
-          "D": "212 feet",
-          "E": "260 feet"
-        },
-        "correct_answer": "212 feet",
-        "skill_gap_if_wrong": "Weakness in square properties; area-to-side inversion; Pythagorean theorem; concept mapping from quadrilaterals to triangles.",
-        "encouragement_hint": "Students may give the side length instead of the diagonal; may forget to take the square root of area; may not connect square diagonal to right-triangle hypotenuse."
-      },
-      {
-        "question_id": "act_t1_q3_9594c8",
-        "concept_id": "linear_equations",
-        "format": "symbolic_expression",
-        "level": 2,
-        "stem": "If 5 x + 3 = 10 x \u2013 17, what is the value of x ?",
-        "choices": {
-          "A": "1",
-          "B": "2",
-          "C": "3",
-          "D": "4",
-          "E": "5"
-        },
-        "correct_answer": "4",
-        "skill_gap_if_wrong": "Weakness in like terms; inverse operations; equation balance; fraction operations when coefficients are non-integers.",
-        "encouragement_hint": "Student may combine unlike terms incorrectly; may make sign mistakes moving terms; may panic if coefficients are fractions even though the process is identical."
-      },
-      {
-        "question_id": "act_t1_q5_361216",
-        "concept_id": "descriptive_statistics",
-        "format": "word_problem",
-        "level": 2,
-        "stem": "William earned $3,200 per month as a teacher for the ten months from September to June. Then he took a job as a barista at a local caf\u00e9, where he earned $2,000 per month during July and August. What was his average monthly pay for the 12 months?",
-        "choices": {
-          "A": "$2,400",
-          "B": "$2,500",
-          "C": "$2,600",
-          "D": "$2,800",
-          "E": "$3,000"
-        },
-        "correct_answer": "$3,000",
-        "skill_gap_if_wrong": "Weakness in recognizing mean from word problems; weighted average; unit consistency; translating text into math.",
-        "encouragement_hint": "Student may average the two monthly pay rates directly instead of weighting by number of months; may introduce unnecessary variables; may fail to see it is a mean problem because it is embedded in words."
-      }
-    ]
+    "prompt": "",
+    "questions": [],
+    "note": "Probes unwired — confidence-only diagnostic for now."
   },
   "event_emission": {
     "note": "Canonical sinks (FORMAT_WEAKNESS_PLAN.md diagnostic reconciliation). Do NOT use /learning-event.",
     "confidence_step": "POST {ML_BASE}/seed-assessment — per-concept hard|kinda|easy from scale",
-    "probe_step": "POST {ML_BASE}/record-outcomes — score 1/0 per probe, hide correctness (C4), include format (C5)",
+    "probe_step": "disabled — probes unwired",
     "completion": "users/{uid}.diagnosticCompleted via markDiagnosticComplete + goals on users/{uid}.goals"
   }
 }

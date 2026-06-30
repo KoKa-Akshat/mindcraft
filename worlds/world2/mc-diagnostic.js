@@ -134,7 +134,7 @@
 
     panel.querySelectorAll('[data-conf]').forEach(function (btn) {
       btn.onclick = function () {
-        confidence[btn.getAttribute('data-conf')] = parseFloat(btn.getAttribute('data-val'))
+        confidence[btn.getAttribute('data-conf')] = btn.getAttribute('data-val')
         render()
       }
     })
@@ -168,12 +168,7 @@
         metadata: { confidence: confidence[cid], step: 'confidence' },
       })
     })
-    step = 'probes'
-    probeIdx = 0
-    picked = null
-    probePhase = 'answer'
-    questionStart = Date.now()
-    render()
+    complete()
   }
 
   function clearProbeAdvanceTimer() {
@@ -282,7 +277,7 @@
     panel = document.getElementById('mc-diag-panel')
     if (!root || !panel) return
 
-    fetch('data/actDiagnostic.json?v=879bdfe9')
+    fetch('data/actDiagnostic.json?v=2026-act-v2')
       .then(function (r) { return r.json() })
       .then(function (d) {
         spec = d

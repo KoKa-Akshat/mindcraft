@@ -26,19 +26,26 @@ function pickPrerequisites(conceptIds: string[], overrides: Record<string, strin
 //   data_interpretation -> descriptive_statistics, function_transformations ->
 //   functions_basics, absolute_value -> linear_inequalities.
 const ACT_CONCEPTS = [
-  'number_properties',
-  'ratios_proportions',
   'linear_equations',
   'linear_inequalities',
   'systems_of_linear_equations',
+  'functions_basics',
   'exponent_rules',
   'polynomials',
+  'factoring_polynomials',
   'quadratic_equations',
-  'rational_expressions',
-  'functions_basics',
-  'representation_translation',
+  'radical_expressions',
+  'exponential_functions',
+  'sequences_series',
   'descriptive_statistics',
   'basic_probability',
+  'right_triangle_geometry',
+  'trigonometry_basics',
+  'lines_angles',
+  'triangles_congruence',
+  'circles_geometry',
+  'area_volume',
+  'geometric_transformations',
 ]
 
 const SAT_CONCEPTS = [

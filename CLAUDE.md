@@ -254,10 +254,25 @@ Replaced the old card-based hub. Paw-shaped launcher driven by `/recommend`:
 <Firebase ID token>` via `mlAuthHeaders()`. Required once `ML_AUTH_ENABLED` is
 on in Cloud Run.
 
-**Admin** (`pages/Admin.tsx`) — **Testing** tab: retake gap scan, ACT ontology
-vs question-bank coverage table (`lib/ontologyBankCoverage.ts` +
-`data/actOntologyCoverage.json`; regenerate via
-`ml/scripts/audit_act_ontology_question_bank.py`).
+**Admin** (`pages/Admin.tsx`) — `/admin`, `role: 'admin'` only. **AppTabBar**
+adds an Admin pill for admins. **Testing** tab:
+- **Gap scan retake** — clears `diagnosticCompleted` per student (or self).
+- **ACT question bank coverage** — all **29** `act_relevance.tested` concepts
+  (banked + gaps). Helpers: `listAllActConceptCoverage()`, `listContentGaps()`,
+  `formatQuestionSources()`, `buildNoContentMessage()` in
+  `lib/ontologyBankCoverage.ts`. Data: `data/actOntologyCoverage.json`
+  (`actConcepts[]`, `byConceptId`, `gapsNeedingContent`; each row has
+  `questionCounts` merged static+generated, `questionSources[]`).
+  Table columns: `concept_id`, name, ontology level, status (`full` / `partial` /
+  `listed_no_questions` / `ontology_only` / `alias_only`), L1–L3 totals,
+  **source file** (`app/src/lib/questionBank.ts` and/or
+  `app/src/data/generatedQuestions.json`; alias rows note bank id e.g.
+  `percent_ratio` for `ratios_proportions`). Actions: **Copy id**, **Copy file**,
+  **Copy details** (gap message). Regenerate after bank edits:
+  `python3 ml/scripts/audit_act_ontology_question_bank.py` (also writes
+  `ml/data/act_ontology_question_bank_audit.json`).
+- **Practice no-content screen** — when static + dynamic both empty, shows the
+  same audit message with **Copy message for co-founder**.
 
 CORS must include `mindcraft-93858.web.app` + the Vercel domain. Firestore: a
 bare `firestore.Client()` targets the (empty) Cloud Run project — the client is
@@ -336,9 +351,9 @@ Key notes:
   via `pip install -e ".[dev]"`.
 - Run ML server: `cd ml && source mindcraft/bin/activate && ML_AUTH_ENABLED=false FIRESTORE_PROJECT=mindcraft-93858 uvicorn serve:app --host 0.0.0.0 --port 8080`
 - `LLM_PROVIDER=groq` must be in `ml/.env.local` (alongside `GROQ_API_KEY`) — default is ollama which requires a local server on :11434.
-- Run frontend: `cd app && npm run dev` → `http://localhost:5173` (`host: true`
-  in `vite.config.ts` — use a normal browser tab; IDE embedded browsers often
-  break Google OAuth).
+- Run frontend: `cd app && npm run dev` → **`http://localhost:5173`** (`package.json`
+  binds `--host localhost` — use `localhost`, not `127.0.0.1`, or Google OAuth
+  fails; use a normal browser tab; IDE embedded browsers often break OAuth).
 - Point frontend at local ML: `app/.env.local` →
   `VITE_ML_API_URL=http://localhost:8080` (do not commit).
 - Tests: `cd ml && python scripts/end2end.py` (85/85 on the standardized
@@ -346,7 +361,9 @@ Key notes:
   --complete-ontology ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json
   --questions ml/data/sample_questions/first_15_questions.csv`.
 - ACT bank audit: `python3 ml/scripts/audit_act_ontology_question_bank.py` →
-  refreshes `app/src/data/actOntologyCoverage.json`.
+  refreshes `app/src/data/actOntologyCoverage.json` (app UI) and
+  `ml/data/act_ontology_question_bank_audit.json` (full report). Attributes
+  questions per concept to `questionBank.ts` vs `generatedQuestions.json`.
 - Dashboard **3D** toggle opens `worldUrl()` (`mindcraft-world1.web.app` in prod;
   `localhost:3001` in dev — needs the world static server running locally).
 
@@ -368,7 +385,8 @@ Key notes:
 - **Frontend shipped**: PawHub dashboard, AppTabBar pill nav (Dashboard | Practice
   | Problem Solver | Knowledge Map), direct-to-session from PawHub, worstWeakness
   selection (C1), format-tagged bank, hide-correctness diagnostic (C4), Admin
-  Testing tab + ontology/bank coverage, ACT gap-scan fixes.
+  Testing tab (full ACT coverage table, source files, copy id/file/details),
+  ACT gap-scan fixes.
 - **Diagnostic reconciled** — one diagnostic, one update mechanism:
   `Diagnostic.tsx` (kitchen-world onboarding, reached from "Click Me" in world)
   now POSTs to `/seed-assessment` (confidence) + `/record-outcomes` (probes, C4
@@ -395,11 +413,13 @@ Key notes:
   return 400. Homework uses the ingredient-pipeline fallback meanwhile.
 - **Existing students lack `diagnosticCompleted`** → one forced gap scan (by design;
   backfill the flag or use Admin Testing → retake).
-- **Practice questions**: `app/src/lib/questionBank.ts` (static) + dynamic gen via
-  Vercel webhook (gated by `VITE_ENABLE_DYNAMIC_QGEN`). **19 of 29 ACT-tested
-  concepts** lack full static bank coverage — see Admin Testing tab /
-  `actOntologyCoverage.json`. `getQuestions`/`questionCount` resolve ontology→bank
-  via `BANK_ALIASES` (only `ratios_proportions → percent_ratio` today).
+- **Practice questions**: `app/src/lib/questionBank.ts` (static) +
+  `app/src/data/generatedQuestions.json` (verified generated, merged at runtime)
+  + dynamic gen via Vercel webhook (gated by `VITE_ENABLE_DYNAMIC_QGEN`). As of
+  last audit: **10 of 29 ACT-tested concepts** fully banked L1–L3; the rest are
+  partial or missing — see Admin Testing tab / `actOntologyCoverage.json`.
+  `getQuestions`/`questionCount` resolve ontology→bank via `BANK_ALIASES`
+  (only `ratios_proportions → percent_ratio` today).
   `getQuestions` takes optional `format` arg — prefers format-matched questions,
   falls back to concept pool; format-gap targeting works end-to-end once more
   questions carry format tags.
