@@ -6,7 +6,7 @@
     ? 'http://localhost:4321'
     : 'https://mindcraft-93858.web.app'
 
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-29-world-chrome-v9'
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-30-world-chrome-v10'
 
   // Read shared .web.app cookie set by the dashboard when diagnostic is confirmed done
   function hasDiagCookie() {
@@ -43,6 +43,24 @@
     if (badge)       badge.classList.add('show')
 
     function turnSoundOn() {
+      try {
+        if (window.Howler) {
+          window.Howler.mute(false)
+          window.Howler.volume(1)
+          if (window.Howler.ctx && window.Howler.ctx.resume) window.Howler.ctx.resume()
+        }
+      } catch (e) {}
+
+      var exp = window.experience
+      try {
+        if (exp && exp.sounds) {
+          if (exp.sounds.cooking && exp.sounds.cooking.mute) exp.sounds.cooking.mute(false)
+          if (exp.sounds.cooking && exp.sounds.cooking.volume) exp.sounds.cooking.volume(1)
+        }
+      } catch (e) {}
+
+      // The original world uses M as the audio unlock/mute shortcut. Fire it once
+      // from the Enter World gesture, not on page load, so it doesn't double-toggle.
       ;[document, window].forEach(function (t) {
         t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
       })
@@ -69,14 +87,22 @@
     if (startBtn) {
       startBtn.addEventListener('click', function () {
         turnSoundOn()
-        setTimeout(turnSoundOn, 250)
+        setTimeout(function () {
+          try {
+            if (window.Howler) {
+              window.Howler.mute(false)
+              window.Howler.volume(1)
+              if (window.Howler.ctx && window.Howler.ctx.resume) window.Howler.ctx.resume()
+            }
+          } catch (e) {}
+        }, 250)
         setTimeout(revealChrome, 900)
-        setTimeout(openDiagnosticFlow, 2000)
+        setTimeout(openDiagnosticFlow, 1500)
       }, { once: true })
     } else {
       turnSoundOn()
       revealChrome()
-      setTimeout(openDiagnosticFlow, 2000)
+      setTimeout(openDiagnosticFlow, 1500)
     }
 
     // Projects cue → go to diagnostic (pre-diagnostic flow)
@@ -95,12 +121,6 @@
   } else {
     wireChrome()
   }
-
-  window.addEventListener('load', function () {
-    ;[document, window].forEach(function (t) {
-      t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
-    })
-  }, { once: true })
 
   // Unregister any stale service worker from Jesse's Ramen PWA manifest.
   if ('serviceWorker' in navigator) {
