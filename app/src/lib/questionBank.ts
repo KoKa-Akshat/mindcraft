@@ -1,4 +1,5 @@
 import generatedQuestionsData from '../data/generatedQuestions.json'
+import actMasterData from '../data/actMasterQuestionBank.generated.json'
 
 // Canonical representation/format ("vessel") ids — mirrors the ML config
 // FORMAT_IDS (Layer 4 representation_profile). The question-side of the same
@@ -1923,10 +1924,15 @@ const RAW_QUESTIONS: Question[] = [
     examTag:'AP' },
 ]
 
-// B4 — merge Agent A's verified/generated batch (C5). Static bank wins on id collision.
+// Merge order (later entries lose on id collision):
+//   1. RAW_QUESTIONS — hand-authored static bank (highest trust)
+//   2. generatedQuestions.json — verified AI-generated batch (C5, high confidence)
+//   3. actMasterQuestionBank.generated.json — ACT master backfill for gap concepts
 const STATIC_IDS = new Set(RAW_QUESTIONS.map(q => q.id))
 const GENERATED_QUESTIONS = (generatedQuestionsData as Question[]).filter(q => !STATIC_IDS.has(q.id))
-const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS])
+const ACT_MASTER_QUESTIONS: Question[] = ((actMasterData as { questions: Question[] }).questions ?? [])
+  .filter(q => !STATIC_IDS.has(q.id) && !GENERATED_QUESTIONS.some(g => g.id === q.id))
+const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER_QUESTIONS])
 
 // ── Concept metadata ──────────────────────────────────────────────────────────
 
@@ -1990,16 +1996,36 @@ export function shuffle<T>(items: T[]): T[] {
   return a
 }
 
-// Some Layer-1 ontology ids don't match the static bank's legacy question ids.
-// Resolve to the id that actually carries questions so /recommend targets are
-// playable. Per the coverage audit, ratios_proportions is the only true content
-// alias today (its 12 items live under percent_ratio). Add entries here as the
-// bank/ontology ids get reconciled.
+// Canonical alias resolution: maps old bank IDs and legacy annotation IDs to
+// the canonical ontology IDs used in the merged question bank.
+// The full alias table lives in lib/conceptAliases.ts; this is the bank-layer
+// subset that affects question lookup. Extend here only when a legacy ID has
+// questions under it that haven't been re-keyed yet.
 const BANK_ALIASES: Record<string, string> = {
-  ratios_proportions: 'percent_ratio',
+  // Legacy static bank IDs still used as conceptId on existing question objects
+  percent_ratio:             'ratios_proportions',
+  coordinate_geometry:       'linear_equations',
+  data_interpretation:       'descriptive_statistics',
+  statistics_graphs:         'descriptive_statistics',
+  word_problems:             'representation_translation',
+  absolute_value:            'linear_inequalities',
+  function_transformations:  'functions_basics',
+  trigonometric_identities:  'trigonometry_basics',
+  polynomials:               'polynomial_operations',
+  // v3.0 legacy IDs
+  systems_linear_equations:  'systems_of_linear_equations',
+  geometry_of_circles:       'circles_geometry',
+  lines_and_angles:          'lines_angles',
+  area_and_volume:           'area_volume',
+  sequences_and_series:      'sequences_series',
+  triangles_and_congruence:  'triangles_congruence',
 }
 function bankConceptId(conceptId: string): string {
+  // First try exact match (covers canonical IDs directly in bank)
   if (Q.some(q => q.conceptId === conceptId)) return conceptId
+  // Then fall back to alias
+  const aliased = BANK_ALIASES[conceptId]
+  if (aliased && Q.some(q => q.conceptId === aliased)) return aliased
   return BANK_ALIASES[conceptId] ?? conceptId
 }
 
