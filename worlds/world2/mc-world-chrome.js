@@ -6,7 +6,7 @@
     ? 'http://localhost:4321'
     : 'https://mindcraft-93858.web.app'
 
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-29-world-chrome-v8'
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-29-world-chrome-v9'
 
   // Read shared .web.app cookie set by the dashboard when diagnostic is confirmed done
   function hasDiagCookie() {
@@ -43,8 +43,8 @@
     if (badge)       badge.classList.add('show')
 
     // After Enter World:
-    //   - If diagnostic done: show Booking + 3D|Web, no arrow
-    //   - If not done: show arrow only
+    //   - If diagnostic done: show Booking + 3D|Web, no Projects cue
+    //   - If not done: show Projects cue only
     function revealChrome() {
       if (diagDone) {
         if (bookingLink) bookingLink.style.display = 'inline-flex'
@@ -70,7 +70,7 @@
       revealChrome()
     }
 
-    // Arrow → go to diagnostic (pre-diagnostic flow)
+    // Projects cue → go to diagnostic (pre-diagnostic flow)
     if (clickMe && !clickMe.__mcWired) {
       clickMe.__mcWired = true
       clickMe.addEventListener('click', function () {
