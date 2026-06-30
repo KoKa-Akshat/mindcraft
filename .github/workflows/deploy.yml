@@ -21,6 +21,8 @@ jobs:
       # Only the app needs a build; world (worlds/world2) and marketing are static.
       - name: Build app
         working-directory: app
+        env:
+          VITE_ADMIN_PASSCODE: ${{ secrets.VITE_ADMIN_PASSCODE }}
         run: |
           npm install --legacy-peer-deps
           npm run build

@@ -14,7 +14,14 @@ import s from './Login.module.css'
 import { worldUrl } from '../lib/siteUrls'
 
 type Role = 'student' | 'parent' | 'tutor'
+type SignupRole = Role | 'admin'
 type Mode = 'signin' | 'signup'
+
+function resolveSignupRole(selectedRole: Role, passcode: string): SignupRole {
+  const expected = import.meta.env.VITE_ADMIN_PASSCODE
+  if (expected && passcode.length > 0 && passcode === expected) return 'admin'
+  return selectedRole
+}
 
 function safeReturnPath(raw: string | null): string | null {
   if (!raw || !raw.startsWith('/') || raw.startsWith('//')) return null
@@ -48,6 +55,8 @@ export default function Login() {
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [showAdminPasscode, setShowAdminPasscode] = useState(false)
+  const [adminPasscode, setAdminPasscode] = useState('')
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
@@ -58,13 +67,14 @@ export default function Login() {
     const firestoreRole = snap.data()?.role
 
     if (isNewUser) {
+      const signupRole = resolveSignupRole(role, adminPasscode)
       await setDoc(doc(db, 'users', uid), {
-        role,
+        role: signupRole,
         email: auth.currentUser?.email ?? '',
         displayName: auth.currentUser?.displayName ?? '',
         createdAt: new Date().toISOString(),
       })
-      if (role === 'tutor') {
+      if (signupRole === 'tutor' || signupRole === 'admin') {
         navigate('/tutor', { replace: true })
       } else if (returnTo) {
         navigate(returnTo, { replace: true })
@@ -294,6 +304,36 @@ export default function Login() {
                     </div>
                   )}
 
+                  {mode === 'signup' && !showAdminPasscode && (
+                    <div className={s.forgot}>
+                      <button type="button" onClick={() => setShowAdminPasscode(true)}>
+                        Have an admin code?
+                      </button>
+                    </div>
+                  )}
+
+                  {mode === 'signup' && showAdminPasscode && (
+                    <div className={s.field}>
+                      <label htmlFor="adminPasscode">Admin passcode</label>
+                      <div className={s.inputShell}>
+                        <span className={s.inputIcon} aria-hidden="true">
+                          <svg viewBox="0 0 24 24">
+                            <rect x="5" y="10" width="14" height="10" rx="2" />
+                            <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                          </svg>
+                        </span>
+                        <input
+                          id="adminPasscode"
+                          type="password"
+                          placeholder="Optional"
+                          value={adminPasscode}
+                          onChange={e => setAdminPasscode(e.target.value)}
+                          autoComplete="off"
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   {error && <p className={s.error}>{error}</p>}
 
                   <button className={s.submitBtn} disabled={loading} type="submit">
@@ -322,11 +362,11 @@ export default function Login() {
                 <p className={s.bottomLink}>
                   {mode === 'signin' ? (
                     <>New to MindCraft?{' '}
-                      <button type="button" onClick={() => { setMode('signup'); setError('') }}>Create account -&gt;</button>
+                      <button type="button" onClick={() => { setMode('signup'); setError(''); setShowAdminPasscode(false); setAdminPasscode('') }}>Create account -&gt;</button>
                     </>
                   ) : (
                     <>Already have an account?{' '}
-                      <button type="button" onClick={() => { setMode('signin'); setError('') }}>Sign in</button>
+                      <button type="button" onClick={() => { setMode('signin'); setError(''); setShowAdminPasscode(false); setAdminPasscode('') }}>Sign in</button>
                     </>
                   )}
                 </p>
