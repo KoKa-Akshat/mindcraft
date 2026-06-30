@@ -1569,7 +1569,7 @@ export default function Practice() {
                       </div>
                       <div className={s.pathProgressStats}>
                         <span className={s.pathProgressBig}>
-                          {completedOnPath} / {pathQueue.length} Path Steps Complete
+                          {completedOnPath} / {pathQueue.length} Topics Completed
                         </span>
                         <span className={s.pathProgressSub}>On your full path</span>
                       </div>
@@ -1593,7 +1593,7 @@ export default function Practice() {
 
                     {exploreConcepts.length > 0 && (
                       <div className={s.pathExploreSection}>
-                        <h3 className={s.pathExploreTitle}>Learn Next</h3>
+                        <h3 className={s.pathExploreTitle}>Topics to explore</h3>
                         <div className={s.pathExploreGrid}>
                           {exploreConcepts.map(c => (
                             <button

@@ -188,9 +188,7 @@ export default function PawHub({
           <span className={s.mainGlow} aria-hidden="true" />
           <span className={s.mainIcon}><WheelIcon /></span>
           <span className={s.mainLabel}>Practice</span>
-          {layout !== 'side' && (
-            <span className={s.mainSub}>{weakness ? weakness.label : 'Your learning path'}</span>
-          )}
+          <span className={s.mainSub}>{weakness ? weakness.label : 'Your learning path'}</span>
         </motion.button>
       </div>
     </div>
