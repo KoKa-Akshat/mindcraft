@@ -62,8 +62,8 @@ export default function PracticeLearningPathMini({
           <span className={s.ringInner}>{progressPct}%</span>
         </div>
         <div className={s.progressCopy}>
-          <strong>{completedCount} / {totalCount || concepts.length} topics completed</strong>
-          <span>Same path as Practice</span>
+          <strong>{completedCount} / {totalCount || concepts.length} path steps complete</strong>
+          <span>Learn Next lives here</span>
         </div>
       </div>
 
@@ -127,7 +127,7 @@ export default function PracticeLearningPathMini({
                 </div>
                 <div className={s.flowBody}>
                   <span className={s.flowTitle}>{c.label}</span>
-                  <span className={s.flowMeta}>Practice · {estMinutesFor(c.id, i)} min</span>
+                  <span className={s.flowMeta}>{i === 0 ? 'Learn Next' : 'Practice'} · {estMinutesFor(c.id, i)} min</span>
                 </div>
                 <span className={s.flowStatus}>→</span>
               </button>

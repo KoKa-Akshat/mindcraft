@@ -1,6 +1,7 @@
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
+import type { PointerEvent } from 'react'
 import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
@@ -311,6 +312,8 @@ export default function Practice() {
   const { streak, practiceCount } = useStudentData(user)
   const fileRef  = useRef<HTMLInputElement>(null)
   const answerInputRef = useRef<HTMLInputElement>(null)
+  const scratchCanvasRef = useRef<HTMLCanvasElement>(null)
+  const scratchDrawingRef = useRef(false)
   const draftHydratedRef = useRef(false)
   const skipDiagnosticRestoreRef = useRef(
     !!(location.state as { examHelp?: boolean } | null)?.examHelp,
@@ -336,6 +339,7 @@ export default function Practice() {
   const [showCalc,   setShowCalc]   = useState(false)
   const [checked,    setChecked]    = useState(false)
   const [hintsShown, setHintsShown] = useState(0)
+  const [scratchMode, setScratchMode] = useState<'write' | 'erase'>('write')
   const [results,      setResults]      = useState<boolean[]>([])
   const [xp,           setXp]           = useState(0)
   const [requeuedIds,  setRequeuedIds]  = useState<string[]>([])
@@ -357,6 +361,62 @@ export default function Practice() {
   const [confidenceQueue, setConfidenceQueue] = useState<typeof PRACTICE_CONCEPTS>([])
   /** Format vessel for format-gap weakness missions (C3). */
   const [sessionFormat, setSessionFormat] = useState<FormatId | null>(null)
+
+  function prepareScratchCanvas() {
+    const canvas = scratchCanvasRef.current
+    if (!canvas) return null
+    const rect = canvas.getBoundingClientRect()
+    const dpr = window.devicePixelRatio || 1
+    const nextWidth = Math.max(1, Math.floor(rect.width * dpr))
+    const nextHeight = Math.max(1, Math.floor(rect.height * dpr))
+    if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+      canvas.width = nextWidth
+      canvas.height = nextHeight
+    }
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return null
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+    return ctx
+  }
+
+  function scratchPoint(e: PointerEvent<HTMLCanvasElement>) {
+    const rect = e.currentTarget.getBoundingClientRect()
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top }
+  }
+
+  function beginScratch(e: PointerEvent<HTMLCanvasElement>) {
+    e.preventDefault()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const ctx = prepareScratchCanvas()
+    if (!ctx) return
+    const p = scratchPoint(e)
+    scratchDrawingRef.current = true
+    ctx.beginPath()
+    ctx.moveTo(p.x, p.y)
+  }
+
+  function drawScratch(e: PointerEvent<HTMLCanvasElement>) {
+    if (!scratchDrawingRef.current) return
+    e.preventDefault()
+    const ctx = prepareScratchCanvas()
+    if (!ctx) return
+    const pressure = e.pressure && e.pressure > 0 ? e.pressure : 0.45
+    const p = scratchPoint(e)
+    ctx.globalCompositeOperation = scratchMode === 'erase' ? 'destination-out' : 'source-over'
+    ctx.strokeStyle = '#12382f'
+    ctx.lineWidth = scratchMode === 'erase' ? 28 : 2.2 + pressure * 3.4
+    ctx.lineTo(p.x, p.y)
+    ctx.stroke()
+  }
+
+  function endScratch(e: PointerEvent<HTMLCanvasElement>) {
+    scratchDrawingRef.current = false
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
+  }
 
   // ── Check-in state ────────────────────────────────────────────────────────
   const [checkinText,    setCheckinText]    = useState('')
@@ -1189,6 +1249,21 @@ export default function Practice() {
     : 'radial-gradient(circle at 12% 10%, rgba(244,162,97,0.22), transparent 34%), linear-gradient(135deg,#09251D,#4B001D)'
   const levelTierName = level === 1 ? 'Warm-up' : level === 2 ? 'Core' : 'Challenge'
 
+  useEffect(() => {
+    if (!currentQ) return
+    const reset = () => {
+      const ctx = prepareScratchCanvas()
+      const canvas = scratchCanvasRef.current
+      if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+    const frame = window.requestAnimationFrame(reset)
+    window.addEventListener('resize', reset)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('resize', reset)
+    }
+  }, [currentQ?.id])
+
   const firstAttemptResults  = results.slice(0, initialQCount)
   const firstCorrect         = firstAttemptResults.filter(Boolean).length
   const firstAccuracy        = initialQCount > 0 ? firstCorrect / initialQCount : 0
@@ -1239,7 +1314,7 @@ export default function Practice() {
   const isPathView = pPhase === 'path' && mode === 'practice'
   const isMatteFlow = mode === 'practice' && ['explore', 'level', 'checkin', 'session', 'complete', 'no-content'].includes(pPhase)
   const isLessonPage = isMatteFlow
-  const hideTopBar = mode === 'practice' && ['exam-pick', 'confidence', 'building', 'session'].includes(pPhase)
+  const hideTopBar = mode === 'practice' && pPhase !== 'path'
 
   return (
     <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}`}>
@@ -1494,7 +1569,7 @@ export default function Practice() {
                       </div>
                       <div className={s.pathProgressStats}>
                         <span className={s.pathProgressBig}>
-                          {completedOnPath} / {pathQueue.length} Topics Completed
+                          {completedOnPath} / {pathQueue.length} Path Steps Complete
                         </span>
                         <span className={s.pathProgressSub}>On your full path</span>
                       </div>
@@ -1518,7 +1593,7 @@ export default function Practice() {
 
                     {exploreConcepts.length > 0 && (
                       <div className={s.pathExploreSection}>
-                        <h3 className={s.pathExploreTitle}>Topics to explore</h3>
+                        <h3 className={s.pathExploreTitle}>Learn Next</h3>
                         <div className={s.pathExploreGrid}>
                           {exploreConcepts.map(c => (
                             <button
@@ -1950,14 +2025,33 @@ export default function Practice() {
                         <section className={s.scratchPane} aria-label="Scratch work">
                           <div className={s.scratchHead}>
                             <span>Scratch Work</span>
-                            <span>Pencil space</span>
+                            <div className={s.scratchTools} role="group" aria-label="Scratch tool">
+                              <button
+                                type="button"
+                                className={`${s.scratchTool} ${scratchMode === 'write' ? s.scratchToolActive : ''}`}
+                                onClick={() => setScratchMode('write')}
+                              >
+                                Write
+                              </button>
+                              <button
+                                type="button"
+                                className={`${s.scratchTool} ${scratchMode === 'erase' ? s.scratchToolActive : ''}`}
+                                onClick={() => setScratchMode('erase')}
+                              >
+                                Erase
+                              </button>
+                            </div>
                           </div>
-                          <textarea
+                          <canvas
                             key={currentQ.id}
-                            className={s.scratchPad}
-                            aria-label="Scratch work"
-                            placeholder=" "
-                            spellCheck={false}
+                            ref={scratchCanvasRef}
+                            className={s.scratchCanvas}
+                            aria-label="Scratch work canvas"
+                            onPointerDown={beginScratch}
+                            onPointerMove={drawScratch}
+                            onPointerUp={endScratch}
+                            onPointerCancel={endScratch}
+                            onPointerLeave={() => { scratchDrawingRef.current = false }}
                           />
                         </section>
                       </div>

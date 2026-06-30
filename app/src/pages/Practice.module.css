@@ -616,10 +616,45 @@
   font-weight: 900;
 }
 
-.scratchHead span:last-child {
-  color: rgba(6,77,54,0.52);
+.scratchTools {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid rgba(6,77,54,0.14);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+}
+
+.scratchTool {
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: transparent;
+  color: rgba(6,77,54,0.58);
+  font-family: var(--f-body);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.scratchToolActive {
+  background: linear-gradient(135deg, #064D36, #4EB543);
+  color: #fffaf0;
+  box-shadow: 0 6px 16px rgba(6,77,54,0.18);
+}
+
+.scratchCanvas {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: block;
+  cursor: crosshair;
+  background:
+    linear-gradient(90deg, transparent 0 54px, rgba(228,191,106,0.22) 55px, transparent 56px),
+    repeating-linear-gradient(180deg, #ffffff 0 38px, rgba(6,77,54,0.075) 39px),
+    #ffffff;
+  touch-action: none;
 }
 
 .scratchPad {
@@ -1021,6 +1056,10 @@
   .questionText { font-size: 22px; line-height: 1.28; }
   .questionBody { padding: 12px; }
   .scratchPane { min-height: 360px; border-radius: 18px; }
+  .scratchHead { align-items: flex-start; flex-direction: column; }
+  .scratchTools { width: 100%; justify-content: stretch; }
+  .scratchTool { flex: 1; }
+  .scratchCanvas { min-height: 310px; }
   .scratchPad { padding: 18px 16px 18px 54px; font-size: 16px; line-height: 2.05; }
   .answerInputWrap { flex-wrap: wrap; }
   .answerInput { flex-basis: calc(100% - 46px); min-width: 0; }
