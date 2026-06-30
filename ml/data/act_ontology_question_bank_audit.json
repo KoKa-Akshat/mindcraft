@@ -3,9 +3,11 @@
     "actTestedConcepts": 29,
     "practiceConceptSlots": 38,
     "staticQuestionsTotal": 227,
+    "generatedQuestionsTotal": 2,
+    "playableQuestionsTotal": 229,
     "fullCoverage": 10,
-    "partialCoverage": 0,
-    "listedNoQuestions": 11,
+    "partialCoverage": 1,
+    "listedNoQuestions": 10,
     "ontologyOnly": 7,
     "aliasOnly": 1,
     "bankConceptsNotActTested": 17
@@ -78,6 +80,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] area_volume (Area and Volume). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -94,8 +109,27 @@
         "L3": 3,
         "total": 11
       },
+      "staticQuestionCounts": {
+        "L1": 4,
+        "L2": 4,
+        "L3": 3,
+        "total": 11
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 11,
+          "bankConceptId": "basic_probability"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 basic_probability (Basic Probability) [core]: static bank has L1=4, L2=4, L3=3 questions."
+      "message": "OK \u2014 basic_probability (Basic Probability) [core]: bank has L1=4, L2=4, L3=3 questions. Sources: app/src/lib/questionBank.ts (11 as basic_probability)"
     },
     {
       "conceptId": "circles_geometry",
@@ -110,6 +144,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] circles_geometry (Geometry of Circles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -126,8 +173,27 @@
         "L3": 3,
         "total": 9
       },
+      "staticQuestionCounts": {
+        "L1": 3,
+        "L2": 3,
+        "L3": 3,
+        "total": 9
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 9,
+          "bankConceptId": "descriptive_statistics"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 descriptive_statistics (Descriptive Statistics) [core]: static bank has L1=3, L2=3, L3=3 questions."
+      "message": "OK \u2014 descriptive_statistics (Descriptive Statistics) [core]: bank has L1=3, L2=3, L3=3 questions. Sources: app/src/lib/questionBank.ts (9 as descriptive_statistics)"
     },
     {
       "conceptId": "exponent_rules",
@@ -142,8 +208,27 @@
         "L3": 9,
         "total": 29
       },
+      "staticQuestionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 29,
+          "bankConceptId": "exponent_rules"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 exponent_rules (Exponent Rules) [core]: static bank has L1=10, L2=10, L3=9 questions."
+      "message": "OK \u2014 exponent_rules (Exponent Rules) [core]: bank has L1=10, L2=10, L3=9 questions. Sources: app/src/lib/questionBank.ts (29 as exponent_rules)"
     },
     {
       "conceptId": "exponential_functions",
@@ -158,6 +243,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] exponential_functions (Exponential Functions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -174,6 +272,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] factoring_polynomials (Factoring Polynomials). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -190,8 +301,27 @@
         "L3": 9,
         "total": 29
       },
+      "staticQuestionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 29,
+          "bankConceptId": "functions_basics"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 functions_basics (Basics of Functions) [core]: static bank has L1=10, L2=10, L3=9 questions."
+      "message": "OK \u2014 functions_basics (Basics of Functions) [core]: bank has L1=10, L2=10, L3=9 questions. Sources: app/src/lib/questionBank.ts (29 as functions_basics)"
     },
     {
       "conceptId": "geometric_transformations",
@@ -206,6 +336,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] geometric_transformations (Geometric Transformations). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -222,8 +365,27 @@
         "L3": 9,
         "total": 29
       },
+      "staticQuestionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 29,
+          "bankConceptId": "linear_equations"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 linear_equations (Linear Equations) [core]: static bank has L1=10, L2=10, L3=9 questions."
+      "message": "OK \u2014 linear_equations (Linear Equations) [core]: bank has L1=10, L2=10, L3=9 questions. Sources: app/src/lib/questionBank.ts (29 as linear_equations)"
     },
     {
       "conceptId": "linear_inequalities",
@@ -238,8 +400,27 @@
         "L3": 3,
         "total": 10
       },
+      "staticQuestionCounts": {
+        "L1": 4,
+        "L2": 3,
+        "L3": 3,
+        "total": 10
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 10,
+          "bankConceptId": "linear_inequalities"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 linear_inequalities (Linear Inequalities) [core]: static bank has L1=4, L2=3, L3=3 questions."
+      "message": "OK \u2014 linear_inequalities (Linear Inequalities) [core]: bank has L1=4, L2=3, L3=3 questions. Sources: app/src/lib/questionBank.ts (10 as linear_inequalities)"
     },
     {
       "conceptId": "lines_angles",
@@ -254,6 +435,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] lines_angles (Lines and Angles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -270,8 +464,27 @@
         "L3": 3,
         "total": 10
       },
+      "staticQuestionCounts": {
+        "L1": 4,
+        "L2": 3,
+        "L3": 3,
+        "total": 10
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 10,
+          "bankConceptId": "polynomials"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 polynomials (Polynomial Operations) [core]: static bank has L1=4, L2=3, L3=3 questions."
+      "message": "OK \u2014 polynomials (Polynomial Operations) [core]: bank has L1=4, L2=3, L3=3 questions. Sources: app/src/lib/questionBank.ts (10 as polynomials)"
     },
     {
       "conceptId": "quadratic_equations",
@@ -286,8 +499,27 @@
         "L3": 9,
         "total": 29
       },
+      "staticQuestionCounts": {
+        "L1": 10,
+        "L2": 10,
+        "L3": 9,
+        "total": 29
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 29,
+          "bankConceptId": "quadratic_equations"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 quadratic_equations (Quadratic Equations) [core]: static bank has L1=10, L2=10, L3=9 questions."
+      "message": "OK \u2014 quadratic_equations (Quadratic Equations) [core]: bank has L1=10, L2=10, L3=9 questions. Sources: app/src/lib/questionBank.ts (29 as quadratic_equations)"
     },
     {
       "conceptId": "radical_expressions",
@@ -302,6 +534,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] radical_expressions (Radical Expressions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -310,16 +555,35 @@
       "name": "Right Triangle Geometry",
       "ontologyLevel": "core",
       "actFrequency": 0.09,
-      "status": "listed_no_questions",
+      "status": "partial",
       "inPracticeConcepts": true,
       "questionCounts": {
+        "L1": 2,
+        "L2": 0,
+        "L3": 0,
+        "total": 2
+      },
+      "staticQuestionCounts": {
         "L1": 0,
         "L2": 0,
         "L3": 0,
         "total": 0
       },
+      "generatedQuestionCounts": {
+        "L1": 2,
+        "L2": 0,
+        "L3": 0,
+        "total": 2
+      },
+      "questionSources": [
+        {
+          "file": "app/src/data/generatedQuestions.json",
+          "count": 2,
+          "bankConceptId": "right_triangle_geometry"
+        }
+      ],
       "bankAlias": null,
-      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] right_triangle_geometry (Right Triangle Geometry). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] right_triangle_geometry (Right Triangle Geometry). Have L1=2, L2=0, L3=0. Missing: L2, L3. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability).. Sources: app/src/data/generatedQuestions.json (2 as right_triangle_geometry)"
     },
     {
       "conceptId": "sequences_series",
@@ -334,6 +598,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] sequences_series (Sequences and Series). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -350,8 +627,27 @@
         "L3": 3,
         "total": 9
       },
+      "staticQuestionCounts": {
+        "L1": 3,
+        "L2": 3,
+        "L3": 3,
+        "total": 9
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 9,
+          "bankConceptId": "systems_of_linear_equations"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 systems_of_linear_equations (Systems of Linear Equations) [core]: static bank has L1=3, L2=3, L3=3 questions."
+      "message": "OK \u2014 systems_of_linear_equations (Systems of Linear Equations) [core]: bank has L1=3, L2=3, L3=3 questions. Sources: app/src/lib/questionBank.ts (9 as systems_of_linear_equations)"
     },
     {
       "conceptId": "triangles_congruence",
@@ -366,6 +662,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] triangles_congruence (Triangles and Congruence). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -382,6 +691,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] trigonometry_basics (Trigonometry Basics). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
@@ -398,6 +720,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [cross_cutting] act_strategy (ACT Mathematical Strategy and Test-Taking Heuristics). Tier: Meta-skills that span topics (representation translation, test strategy). Often have no single drill topic in a static multiple-choice bank."
     },
@@ -414,6 +749,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [cross_cutting] representation_translation (Representation Translation and Mathematical Modeling). Tier: Meta-skills that span topics (representation translation, test strategy). Often have no single drill topic in a static multiple-choice bank."
     },
@@ -430,6 +778,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] algebraic_manipulation (Algebraic Structure and Symbolic Manipulation). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
     },
@@ -446,6 +807,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] basic_equations (Basic One-Variable Equations). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
     },
@@ -462,6 +836,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] fractions_decimals (Fractions and Decimals). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
     },
@@ -478,6 +865,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] measurement_units (Units, Measurement, and Dimensional Reasoning). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
     },
@@ -494,8 +894,27 @@
         "L3": 3,
         "total": 9
       },
+      "staticQuestionCounts": {
+        "L1": 3,
+        "L2": 3,
+        "L3": 3,
+        "total": 9
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 9,
+          "bankConceptId": "number_properties"
+        }
+      ],
       "bankAlias": null,
-      "message": "OK \u2014 number_properties (Number Properties, Factors, and Divisibility) [foundational]: static bank has L1=3, L2=3, L3=3 questions."
+      "message": "OK \u2014 number_properties (Number Properties, Factors, and Divisibility) [foundational]: bank has L1=3, L2=3, L3=3 questions. Sources: app/src/lib/questionBank.ts (9 as number_properties)"
     },
     {
       "conceptId": "order_of_operations",
@@ -510,6 +929,19 @@
         "L3": 0,
         "total": 0
       },
+      "staticQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "generatedQuestionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "questionSources": [],
       "bankAlias": null,
       "message": "This concept is in the standardized Layer 1 ontology (act_relevance.tested) but has no matching concept_id in the static question bank. We do not have static practice questions for this topic yet. [foundational] order_of_operations (Order of Operations). Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
     },
@@ -521,13 +953,32 @@
       "status": "alias_only",
       "inPracticeConcepts": false,
       "questionCounts": {
+        "L1": 4,
+        "L2": 4,
+        "L3": 4,
+        "total": 12
+      },
+      "staticQuestionCounts": {
+        "L1": 4,
+        "L2": 4,
+        "L3": 4,
+        "total": 12
+      },
+      "generatedQuestionCounts": {
         "L1": 0,
         "L2": 0,
         "L3": 0,
         "total": 0
       },
+      "questionSources": [
+        {
+          "file": "app/src/lib/questionBank.ts",
+          "count": 12,
+          "bankConceptId": "percent_ratio"
+        }
+      ],
       "bankAlias": "percent_ratio",
-      "message": "Ontology concept_id does not match the question bank, but a legacy alias may have content: percent_ratio (Percents & Ratios). [foundational] ontology id=ratios_proportions (Ratios and Proportions). Bank has L1=4, L2=4, L3=4."
+      "message": "Ontology concept_id does not match the question bank, but a legacy alias may have content: percent_ratio (Percents & Ratios). [foundational] ontology id=ratios_proportions (Ratios and Proportions). Bank has L1=4, L2=4, L3=4. Sources: app/src/lib/questionBank.ts (12 as percent_ratio)"
     }
   ],
   "bankConceptsNotActTested": [

@@ -19,7 +19,7 @@ import { db } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
-import { listContentGaps, coverageSummaryLine, type ConceptCoverage } from '../lib/ontologyBankCoverage'
+import { listAllActConceptCoverage, coverageSummaryLine, formatQuestionSources, type ConceptCoverage } from '../lib/ontologyBankCoverage'
 import s from './Admin.module.css'
 
 // Admin sees a flattened view of sessions — simpler than tutor/student views
@@ -63,7 +63,7 @@ export default function Admin() {
   const [sessions, setSessions] = useState<AdminSession[]>([])
   const [students, setStudents] = useState<AdminStudent[]>([])
   const [tab, setTab]           = useState<'sessions' | 'new' | 'testing'>('sessions')
-  const [coverageRows]          = useState<ConceptCoverage[]>(() => listContentGaps())
+  const [coverageRows]          = useState<ConceptCoverage[]>(() => listAllActConceptCoverage())
   const [coverageSummary]       = useState(() => coverageSummaryLine())
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
@@ -305,59 +305,139 @@ export default function Admin() {
             </button>
           </div>
         )}
-      </div>
 
         {tab === 'testing' && (
-          <div className={s.formCard}>
-            <h2 className={s.formTitle}>Testing Tools</h2>
-
-            <div style={{ marginBottom: 32 }}>
-              <h3 style={{ marginBottom: 8, fontSize: 14, fontWeight: 600 }}>Gap Scan</h3>
-              <p style={{ marginBottom: 12, fontSize: 13, color: '#8A8F98' }}>
-                Reset the diagnostic flag for a student so they re-take the gap scan on next login.
+          <>
+            <div className={s.formCard}>
+              <h2 className={s.formTitle}>Gap scan testing</h2>
+              <p style={{ margin: '0 0 16px', fontSize: 14, color: 'var(--mu)', lineHeight: 1.5 }}>
+                Clears <code>diagnosticCompleted</code> so the student re-takes exam pick + confidence
+                ratings on next login.
               </p>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                 {students.map(st => (
                   <button
                     key={st.id}
+                    type="button"
                     className={s.actionBtn}
                     onClick={() => retakeGapScan(st.id)}
                   >
                     Retake: {st.displayName || st.email}
                   </button>
                 ))}
-                <button className={s.actionBtn} onClick={() => retakeGapScan(user.uid)}>
+                <button type="button" className={s.actionBtn} onClick={() => retakeGapScan(user.uid)}>
                   Retake: me
                 </button>
               </div>
             </div>
 
-            <div>
-              <h3 style={{ marginBottom: 4, fontSize: 14, fontWeight: 600 }}>ACT Ontology vs Question Bank</h3>
-              <p style={{ marginBottom: 12, fontSize: 13, color: '#8A8F98' }}>{coverageSummary}</p>
-              <table className={s.table}>
-                <thead>
-                  <tr>
-                    <th>Concept</th><th>Level</th><th>Status</th><th>L1</th><th>L2</th><th>L3</th><th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {coverageRows.map(row => (
-                    <tr key={row.conceptId}>
-                      <td><div className={s.studentName}>{row.name}</div><div className={s.studentEmail}>{row.conceptId}</div></td>
-                      <td>{row.ontologyLevel}</td>
-                      <td><span className={s.statusBadge} style={{ color: row.status === 'full' ? '#3A8500' : '#F59E0B', background: row.status === 'full' ? 'rgba(88,204,2,.08)' : 'rgba(245,158,11,.08)' }}>{row.status}</span></td>
-                      <td>{row.questionCounts.L1}</td>
-                      <td>{row.questionCounts.L2}</td>
-                      <td>{row.questionCounts.L3}</td>
-                      <td>{row.questionCounts.total}</td>
+            <div className={`${s.formCard} ${s.formCardWide}`} style={{ marginTop: 20 }}>
+              <h2 className={s.formTitle}>ACT question bank coverage</h2>
+              <p style={{ margin: '0 0 12px', fontSize: 14, color: 'var(--mu)', lineHeight: 1.5 }}>
+                {coverageSummary}. Static questions live in{' '}
+                <code>app/src/lib/questionBank.ts</code>; verified generated batches merge from{' '}
+                <code>app/src/data/generatedQuestions.json</code>. Re-run{' '}
+                <code>python3 ml/scripts/audit_act_ontology_question_bank.py</code> after edits.
+              </p>
+              <div className={s.tableWrap}>
+                <table className={s.table}>
+                  <thead>
+                    <tr>
+                      <th>concept_id</th>
+                      <th>Name</th>
+                      <th>Level</th>
+                      <th>Status</th>
+                      <th>L1</th>
+                      <th>L2</th>
+                      <th>L3</th>
+                      <th>Source file</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {coverageRows.map(row => (
+                      <tr key={row.conceptId}>
+                        <td><code>{row.conceptId}</code></td>
+                        <td>{row.name}</td>
+                        <td>{row.ontologyLevel}</td>
+                        <td>
+                          <span
+                            className={s.statusBadge}
+                            style={{
+                              color: row.status === 'full' ? '#3A8500' : '#F59E0B',
+                              background: row.status === 'full' ? 'rgba(88,204,2,.08)' : 'rgba(245,158,11,.08)',
+                            }}
+                          >
+                            {row.status.replace(/_/g, ' ')}
+                          </span>
+                        </td>
+                        <td>{row.questionCounts.L1}</td>
+                        <td>{row.questionCounts.L2}</td>
+                        <td>{row.questionCounts.L3}</td>
+                        <td>
+                          {row.questionSources?.length ? (
+                            <div className={s.sourceCell}>
+                              {row.questionSources.map(src => (
+                                <div key={`${src.file}-${src.bankConceptId}`} className={s.sourceLine}>
+                                  <code>{src.file}</code>
+                                  {src.bankConceptId !== row.conceptId && (
+                                    <span className={s.sourceAlias}> as {src.bankConceptId}</span>
+                                  )}
+                                  <span className={s.sourceCount}> ({src.count})</span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className={s.noZoom}>—</span>
+                          )}
+                        </td>
+                        <td>
+                          <div className={s.actions}>
+                            <button
+                              type="button"
+                              className={s.actionBtn}
+                              onClick={() => {
+                                void navigator.clipboard.writeText(row.conceptId)
+                                showToast(`Copied ${row.conceptId}`)
+                              }}
+                            >
+                              Copy id
+                            </button>
+                            {row.questionSources?.length ? (
+                              <button
+                                type="button"
+                                className={s.actionBtn}
+                                onClick={() => {
+                                  void navigator.clipboard.writeText(formatQuestionSources(row))
+                                  showToast('Copied source paths')
+                                }}
+                              >
+                                Copy file
+                              </button>
+                            ) : null}
+                            {row.status !== 'full' ? (
+                              <button
+                                type="button"
+                                className={s.actionBtn}
+                                onClick={() => {
+                                  void navigator.clipboard.writeText(row.message)
+                                  showToast('Copied gap details')
+                                }}
+                              >
+                                Copy details
+                              </button>
+                            ) : null}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          </>
         )}
+      </div>
 
       {toast && <div className={s.toast}>{toast}</div>}
     </div>

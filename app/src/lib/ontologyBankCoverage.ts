@@ -14,6 +14,12 @@ export type CoverageStatus =
   | 'ontology_only'
   | 'alias_only'
 
+export type QuestionSource = {
+  file: string
+  count: number
+  bankConceptId: string
+}
+
 export type ConceptCoverage = {
   conceptId: string
   name: string
@@ -22,12 +28,16 @@ export type ConceptCoverage = {
   status: CoverageStatus
   inPracticeConcepts: boolean
   questionCounts: { L1: number; L2: number; L3: number; total: number }
+  staticQuestionCounts?: { L1: number; L2: number; L3: number; total: number }
+  generatedQuestionCounts?: { L1: number; L2: number; L3: number; total: number }
+  questionSources?: QuestionSource[]
   bankAlias?: string | null
   message: string
 }
 
 const byId = coverageData.byConceptId as Record<string, ConceptCoverage>
 const gaps = coverageData.gapsNeedingContent as ConceptCoverage[]
+const allAct = (coverageData as { actConcepts?: ConceptCoverage[] }).actConcepts
 
 export function getConceptCoverage(conceptId: string): ConceptCoverage | null {
   return byId[conceptId] ?? null
@@ -35,6 +45,23 @@ export function getConceptCoverage(conceptId: string): ConceptCoverage | null {
 
 export function listContentGaps(): ConceptCoverage[] {
   return [...gaps]
+}
+
+/** All ACT-tested concepts — banked and gaps — sorted as in the audit. */
+export function listAllActConceptCoverage(): ConceptCoverage[] {
+  if (allAct?.length) return [...allAct]
+  return Object.values(byId).sort((a, b) => a.conceptId.localeCompare(b.conceptId))
+}
+
+export function formatQuestionSources(row: ConceptCoverage): string {
+  if (!row.questionSources?.length) return ''
+  return row.questionSources
+    .map(src =>
+      src.bankConceptId !== row.conceptId
+        ? `${src.file} (${src.count} questions as ${src.bankConceptId})`
+        : `${src.file} (${src.count} questions)`,
+    )
+    .join('\n')
 }
 
 /** Human-facing blocker when practice cannot load questions for a concept. */
@@ -98,9 +125,22 @@ export function buildNoContentMessage(
 }
 
 export function coverageSummaryLine(): string {
-  const s = coverageData.summary
+  const s = coverageData.summary as {
+    actTestedConcepts: number
+    fullCoverage: number
+    listedNoQuestions: number
+    ontologyOnly: number
+    aliasOnly: number
+    staticQuestionsTotal?: number
+    generatedQuestionsTotal?: number
+    playableQuestionsTotal?: number
+  }
+  const need = s.listedNoQuestions + s.ontologyOnly + s.aliasOnly
+  const playable = s.playableQuestionsTotal ?? s.staticQuestionsTotal ?? 0
+  const generated = s.generatedQuestionsTotal ?? 0
+  const genNote = generated > 0 ? ` · ${generated} generated` : ''
   return (
     `${s.actTestedConcepts} ACT concepts · ${s.fullCoverage} fully banked · ` +
-    `${s.listedNoQuestions + s.ontologyOnly + s.aliasOnly} need content`
+    `${need} need content · ${playable} playable static+generated${genNote}`
   )
 }

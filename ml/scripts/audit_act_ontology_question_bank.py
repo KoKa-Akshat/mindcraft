@@ -19,7 +19,11 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 ONTOLOGY_PATH = REPO / "ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json"
 QUESTION_BANK_PATH = REPO / "app/src/lib/questionBank.ts"
+GENERATED_QUESTIONS_PATH = REPO / "app/src/data/generatedQuestions.json"
 APP_COVERAGE_PATH = REPO / "app/src/data/actOntologyCoverage.json"
+
+STATIC_BANK_FILE = "app/src/lib/questionBank.ts"
+GENERATED_BANK_FILE = "app/src/data/generatedQuestions.json"
 
 # Known legacy id mismatches (ontology id → question bank id with content).
 KNOWN_BANK_ALIASES: dict[str, str] = {
@@ -73,45 +77,116 @@ def _parse_question_bank(source: str) -> tuple[set[str], dict[str, str], dict[st
     practice_ids = set(re.findall(r"\{\s*id:'([^']+)'", practice_block.group(0)))
     labels = dict(re.findall(r"\{ id:'([^']+)',\s*label:'([^']+)'", source))
 
-    questions: list[tuple[str, int]] = []
+    counts: dict[str, dict[int, int]] = {}
     for match in re.finditer(
         r"\{\s*id:'([^']+)',\s*conceptId:'([^']+)',\s*level:([123])",
         source,
     ):
-        questions.append((match.group(2), int(match.group(3))))
-
-    counts: dict[str, dict[int, int]] = {}
-    for concept_id, level in questions:
+        concept_id = match.group(2)
+        level = int(match.group(3))
         counts.setdefault(concept_id, {1: 0, 2: 0, 3: 0})
         counts[concept_id][level] += 1
 
     return practice_ids, labels, counts
 
 
+def _parse_generated_questions() -> dict[str, dict[int, int]]:
+    if not GENERATED_QUESTIONS_PATH.exists():
+        return {}
+    data = json.loads(GENERATED_QUESTIONS_PATH.read_text())
+    counts: dict[str, dict[int, int]] = {}
+    for row in data:
+        concept_id = row["conceptId"]
+        level = int(row["level"])
+        counts.setdefault(concept_id, {1: 0, 2: 0, 3: 0})
+        counts[concept_id][level] += 1
+    return counts
+
+
+def _level_row(counts: dict[str, dict[int, int]], concept_id: str) -> dict[int, int]:
+    return counts.get(concept_id, {1: 0, 2: 0, 3: 0})
+
+
 def _question_totals(counts: dict[str, dict[int, int]], concept_id: str) -> dict[str, int | int]:
-    row = counts.get(concept_id, {1: 0, 2: 0, 3: 0})
+    row = _level_row(counts, concept_id)
     return {"L1": row[1], "L2": row[2], "L3": row[3], "total": row[1] + row[2] + row[3]}
+
+
+def _merged_question_totals(
+    concept_id: str,
+    static_counts: dict[str, dict[int, int]],
+    generated_counts: dict[str, dict[int, int]],
+    alias: str | None = None,
+) -> dict[str, int]:
+    static_row = _level_row(static_counts, concept_id)
+    if sum(static_row.values()) == 0 and alias:
+        static_row = _level_row(static_counts, alias)
+    generated_row = _level_row(generated_counts, concept_id)
+    merged = {
+        1: static_row[1] + generated_row[1],
+        2: static_row[2] + generated_row[2],
+        3: static_row[3] + generated_row[3],
+    }
+    return {
+        "L1": merged[1],
+        "L2": merged[2],
+        "L3": merged[3],
+        "total": merged[1] + merged[2] + merged[3],
+    }
+
+
+def _question_sources(
+    concept_id: str,
+    static_counts: dict[str, dict[int, int]],
+    generated_counts: dict[str, dict[int, int]],
+    alias: str | None = None,
+) -> list[dict]:
+    sources: list[dict] = []
+    direct = _level_row(static_counts, concept_id)
+    if sum(direct.values()) > 0:
+        sources.append({
+            "file": STATIC_BANK_FILE,
+            "count": sum(direct.values()),
+            "bankConceptId": concept_id,
+        })
+    elif alias:
+        alias_row = _level_row(static_counts, alias)
+        if sum(alias_row.values()) > 0:
+            sources.append({
+                "file": STATIC_BANK_FILE,
+                "count": sum(alias_row.values()),
+                "bankConceptId": alias,
+            })
+    generated_row = _level_row(generated_counts, concept_id)
+    if sum(generated_row.values()) > 0:
+        sources.append({
+            "file": GENERATED_BANK_FILE,
+            "count": sum(generated_row.values()),
+            "bankConceptId": concept_id,
+        })
+    return sources
 
 
 def _classify_concept(
     concept_id: str,
     practice_ids: set[str],
-    counts: dict[str, dict[int, int]],
+    static_counts: dict[str, dict[int, int]],
+    generated_counts: dict[str, dict[int, int]],
 ) -> str:
     in_practice = concept_id in practice_ids
-    totals = _question_totals(counts, concept_id)
-    bank_id = concept_id
     alias = KNOWN_BANK_ALIASES.get(concept_id)
-    if totals["total"] == 0 and alias:
-        totals = _question_totals(counts, alias)
-        if totals["total"] > 0:
+    totals = _merged_question_totals(concept_id, static_counts, generated_counts, alias)
+    static_only = _question_totals(static_counts, concept_id)
+    if static_only["total"] == 0 and alias:
+        static_only = _question_totals(static_counts, alias)
+        if static_only["total"] > 0 and totals["total"] == static_only["total"]:
             return "alias_only"
 
     if not in_practice and totals["total"] == 0:
         return "ontology_only"
     if in_practice and totals["total"] == 0:
         return "listed_no_questions"
-    if totals["total"] > 0 and any(_question_totals(counts, concept_id)[f"L{l}"] == 0 for l in (1, 2, 3)):
+    if totals["total"] > 0 and any(totals[f"L{l}"] == 0 for l in (1, 2, 3)):
         return "partial"
     if totals["total"] > 0:
         return "full"
@@ -122,26 +197,35 @@ def _build_message(
     concept: dict,
     status: str,
     labels: dict[str, str],
-    counts: dict[str, dict[int, int]],
+    static_counts: dict[str, dict[int, int]],
+    generated_counts: dict[str, dict[int, int]],
 ) -> str:
     cid = concept["id"]
     name = concept.get("name", cid)
     level = concept.get("level", "?")
     tier = LEVEL_TIERS.get(level, "Ontology curriculum tier.")
+    alias = KNOWN_BANK_ALIASES.get(cid)
+    totals = _merged_question_totals(cid, static_counts, generated_counts, alias)
+    sources = _question_sources(cid, static_counts, generated_counts, alias)
+    source_line = (
+        " Sources: " + ", ".join(
+            f"{s['file']} ({s['count']} as {s['bankConceptId']})" for s in sources
+        )
+        if sources else " Sources: none."
+    )
 
     if status == "full":
-        t = _question_totals(counts, cid)
         return (
-            f"OK — {cid} ({name}) [{level}]: static bank has "
-            f"L1={t['L1']}, L2={t['L2']}, L3={t['L3']} questions."
+            f"OK — {cid} ({name}) [{level}]: bank has "
+            f"L1={totals['L1']}, L2={totals['L2']}, L3={totals['L3']} questions."
+            f"{source_line}"
         )
     if status == "partial":
-        t = _question_totals(counts, cid)
-        missing = [f"L{l}" for l in (1, 2, 3) if t[f"L{l}"] == 0]
+        missing = [f"L{l}" for l in (1, 2, 3) if totals[f"L{l}"] == 0]
         return (
             f"{PARTIAL_COVERAGE_MESSAGE} [{level}] {cid} ({name}). "
-            f"Have L1={t['L1']}, L2={t['L2']}, L3={t['L3']}. Missing: {', '.join(missing)}. "
-            f"Tier: {tier}"
+            f"Have L1={totals['L1']}, L2={totals['L2']}, L3={totals['L3']}. Missing: {', '.join(missing)}. "
+            f"Tier: {tier}.{source_line}"
         )
     if status == "listed_no_questions":
         return (
@@ -149,11 +233,12 @@ def _build_message(
             f"Tier: {tier}"
         )
     if status == "alias_only":
-        alias = KNOWN_BANK_ALIASES[cid]
-        t = _question_totals(counts, alias)
+        alias_id = KNOWN_BANK_ALIASES[cid]
+        t = _question_totals(static_counts, alias_id)
         return (
-            ALIAS_MESSAGE.format(alias=alias, alias_label=labels.get(alias, alias))
+            ALIAS_MESSAGE.format(alias=alias_id, alias_label=labels.get(alias_id, alias_id))
             + f" [{level}] ontology id={cid} ({name}). Bank has L1={t['L1']}, L2={t['L2']}, L3={t['L3']}."
+            f"{source_line}"
         )
     # ontology_only
     return (
@@ -165,7 +250,8 @@ def _build_message(
 def run_audit() -> dict:
     ontology = json.loads(ONTOLOGY_PATH.read_text())
     qb_source = QUESTION_BANK_PATH.read_text()
-    practice_ids, labels, counts = _parse_question_bank(qb_source)
+    practice_ids, labels, static_counts = _parse_question_bank(qb_source)
+    generated_counts = _parse_generated_questions()
 
     act_tested = [c for c in ontology["concepts"] if c.get("act_relevance", {}).get("tested")]
     act_ids = {c["id"] for c in act_tested}
@@ -180,21 +266,22 @@ def run_audit() -> dict:
 
     entries = []
     for concept in sorted(act_tested, key=lambda c: (c.get("level", ""), c["id"])):
-        status = _classify_concept(concept["id"], practice_ids, counts)
-        if status == "ontology_only" and concept["id"] in KNOWN_BANK_ALIASES:
-            alias = KNOWN_BANK_ALIASES[concept["id"]]
-            if _question_totals(counts, alias)["total"] > 0:
-                status = "alias_only"
-        message = _build_message(concept, status, labels, counts)
+        cid = concept["id"]
+        alias = KNOWN_BANK_ALIASES.get(cid)
+        status = _classify_concept(cid, practice_ids, static_counts, generated_counts)
+        message = _build_message(concept, status, labels, static_counts, generated_counts)
         entry = {
-            "conceptId": concept["id"],
-            "name": concept.get("name", concept["id"]),
+            "conceptId": cid,
+            "name": concept.get("name", cid),
             "ontologyLevel": concept.get("level"),
             "actFrequency": concept.get("act_relevance", {}).get("frequency"),
             "status": status,
-            "inPracticeConcepts": concept["id"] in practice_ids,
-            "questionCounts": _question_totals(counts, concept["id"]),
-            "bankAlias": KNOWN_BANK_ALIASES.get(concept["id"]),
+            "inPracticeConcepts": cid in practice_ids,
+            "questionCounts": _merged_question_totals(cid, static_counts, generated_counts, alias),
+            "staticQuestionCounts": _merged_question_totals(cid, static_counts, {}, alias),
+            "generatedQuestionCounts": _question_totals(generated_counts, cid),
+            "questionSources": _question_sources(cid, static_counts, generated_counts, alias),
+            "bankAlias": alias,
             "message": message,
         }
         entries.append(entry)
@@ -211,13 +298,16 @@ def run_audit() -> dict:
             "conceptIds": ids,
         }
 
+    static_total = sum(sum(row.values()) for row in static_counts.values())
+    generated_total = sum(sum(row.values()) for row in generated_counts.values())
+
     return {
         "summary": {
             "actTestedConcepts": len(act_tested),
             "practiceConceptSlots": len(practice_ids),
-            "staticQuestionsTotal": sum(
-                sum(row.values()) for row in counts.values()
-            ),
+            "staticQuestionsTotal": static_total,
+            "generatedQuestionsTotal": generated_total,
+            "playableQuestionsTotal": static_total + generated_total,
             "fullCoverage": len(by_status.get("full", [])),
             "partialCoverage": len(by_status.get("partial", [])),
             "listedNoQuestions": len(by_status.get("listed_no_questions", [])),
@@ -243,6 +333,7 @@ def _app_coverage_payload(report: dict) -> dict:
         "summary": report["summary"],
         "levelTiers": report["levelTiers"],
         "byConceptId": by_id,
+        "actConcepts": report["concepts"],
         "gapsNeedingContent": gaps,
     }
 

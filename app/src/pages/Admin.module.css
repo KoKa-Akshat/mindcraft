@@ -49,8 +49,8 @@
 .tabActive { background: var(--w); color: var(--tx); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 
 /* ── TABLE ── */
-.tableWrap { background: var(--w); border-radius: 18px; border: 1px solid var(--bd); overflow: hidden; }
-.table { width: 100%; border-collapse: collapse; }
+.tableWrap { background: var(--w); border-radius: 18px; border: 1px solid var(--bd); overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; min-width: 900px; }
 .table thead tr { border-bottom: 1px solid var(--bd); }
 .table th {
   text-align: left; padding: 14px 16px;
@@ -69,7 +69,13 @@
 .zoomLink { font-size: 12px; font-weight: 800; color: #4A7BF7; text-decoration: none; }
 .zoomLink:hover { text-decoration: underline; }
 .noZoom { color: var(--bd); }
-.actions { display: flex; gap: 6px; }
+
+.sourceCell { display: flex; flex-direction: column; gap: 6px; min-width: 220px; }
+.sourceLine { font-size: 11px; line-height: 1.45; }
+.sourceLine code { font-size: 10px; word-break: break-all; }
+.sourceAlias { color: var(--mu); font-size: 10px; font-weight: 700; }
+.sourceCount { color: var(--mu); font-size: 10px; font-weight: 700; }
+.actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
 .actionBtn {
   font-size: 11px; font-weight: 800; padding: 5px 12px;
   border-radius: 8px; border: none; cursor: pointer;
@@ -86,6 +92,7 @@
   border: 1px solid var(--bd); padding: 32px;
   max-width: 680px;
 }
+.formCardWide { max-width: none; }
 .formTitle { font-size: 20px; font-weight: 900; margin-bottom: 24px; letter-spacing: -.2px; }
 .formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
 .fullWidth { grid-column: 1 / -1; }
