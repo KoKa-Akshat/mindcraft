@@ -1,4 +1,33 @@
 import { PREREQUISITES } from './conceptMap'
+import type { Confidence } from './bridgePractice'
+
+/** Foundational ACT concepts — not shown in gap scan; seeded from core ratings. */
+export const FOUNDATIONAL_ACT_IDS = [
+  'algebraic_manipulation',
+  'basic_equations',
+  'fractions_decimals',
+  'measurement_units',
+  'number_properties',
+  'order_of_operations',
+  'ratios_proportions',
+] as const
+
+export function derivedFoundationalConfidence(map: Record<string, Confidence>): Confidence {
+  const score = { hard: 1, kinda: 2, easy: 3 } as const
+  const vals = Object.values(map).map(c => score[c as Confidence] ?? 2)
+  if (!vals.length) return 'kinda'
+  const avg = vals.reduce((a, b) => a + b, 0) / vals.length
+  return avg >= 2.5 ? 'easy' : avg >= 1.5 ? 'kinda' : 'hard'
+}
+
+export function seedFoundationalConfidence(map: Record<string, Confidence>): Record<string, Confidence> {
+  const derived = derivedFoundationalConfidence(map)
+  const seeded = { ...map }
+  for (const id of FOUNDATIONAL_ACT_IDS) {
+    if (!seeded[id]) seeded[id] = derived
+  }
+  return seeded
+}
 
 export type ExamCurriculumKey = 'ACT' | 'SAT' | 'IB' | 'AP' | 'General'
 

@@ -19,6 +19,7 @@ import { seedAssessment } from '../lib/mlApi'
 import { markDiagnosticComplete } from '../lib/practiceState'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { toOntologyId } from '../lib/conceptMap'
+import { seedFoundationalConfidence } from '../lib/examCurricula'
 import type { Confidence } from '../lib/bridgePractice'
 import spec from '../data/actDiagnostic.json'
 import s from './Diagnostic.module.css'
@@ -66,16 +67,17 @@ export default function Diagnostic() {
 
   async function finishConfidence() {
     const assessment = buildConfidenceMap(confidence)
-    await seedAssessment(user.uid, assessment)
+    const seeded = seedFoundationalConfidence(assessment)
+    await seedAssessment(user.uid, seeded)
     invalidateKnowledgeGraph(user.uid)
-    await complete()
+    await complete(seeded)
   }
 
-  async function complete() {
+  async function complete(confidenceMapOverride?: Record<string, Confidence>) {
     setSaving(true)
     setStep('done')
     const goals = { tags: goalTags, text: goalText.trim() }
-    const confidenceMap = buildConfidenceMap(confidence)
+    const confidenceMap = confidenceMapOverride ?? buildConfidenceMap(confidence)
     try {
       await setDoc(
         doc(db, 'users', user.uid),

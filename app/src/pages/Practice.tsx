@@ -22,7 +22,7 @@ import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
 import { getConceptContent } from '../lib/conceptContent'
 import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, allowedLevels, getRecommendedLevel as levelFromConfidence } from '../lib/bridgePractice'
-import { getExamConceptIds } from '../lib/examCurricula'
+import { getExamConceptIds, seedFoundationalConfidence } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, agentCheckIn, fetchExamConceptIds, type IngredientRecommendResult } from '../lib/mlApi'
 import { fetchNextConcept } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
@@ -826,9 +826,10 @@ export default function Practice() {
   }
 
   function finishGapScan(updated: Record<string, Confidence>) {
-    void seedAssessment(user.uid, updated)
+    const seeded = seedFoundationalConfidence(updated)
+    void seedAssessment(user.uid, seeded)
     invalidateKnowledgeGraph(user.uid)
-    void markDiagnosticComplete(user.uid, { exam, confidenceMap: updated })
+    void markDiagnosticComplete(user.uid, { exam, confidenceMap: seeded })
     notifyPracticePathUpdated()
     setHideCorrectness(false)
     setConfidenceQueue([])
