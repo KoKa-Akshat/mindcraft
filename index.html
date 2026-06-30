@@ -28,10 +28,9 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--obsidian);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button,a{font:inherit}
-.page{min-height:100vh;border:3px solid #172020;border-radius:0 0 28px 28px;overflow:hidden;background:var(--cream)}
+.page{min-height:100vh;border:3px solid #172020;border-radius:0 0 28px 28px;overflow:hidden;background:var(--cream);padding-top:104px}
 	.nav{height:104px;display:grid;grid-template-columns:1fr auto;align-items:center;border-bottom:1px solid var(--line);background:rgba(248,237,220,.9);position:fixed;top:0;left:50%;width:min(100%,calc(100% - 6px));max-width:none;transform:translateX(-50%) translateY(-116%);z-index:50;backdrop-filter:blur(18px);transition:transform .42s ease,background .28s ease,border-color .28s ease,color .28s ease}
 	body.nav-visible .nav{transform:translateX(-50%) translateY(0)}
-	body.nav-at-top .nav{position:sticky;left:auto;width:auto;transform:none}
 	body.nav-dark .nav{background:#4b001d;border-color:rgba(251,244,231,.26)}
 	body.nav-dark .brand{color:#fff4d4}
 	body.nav-dark .navlinks{border-left-color:rgba(251,244,231,.26)}
@@ -58,9 +57,7 @@ button,a{font:inherit}
   radial-gradient(56% 58% at 8% 14%,rgba(75,0,29,.10),transparent 58%),
   radial-gradient(52% 66% at 88% 80%,rgba(216,154,22,.13),transparent 64%)}
 .hero-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(46px,6vw,90px) clamp(28px,5vw,72px) clamp(86px,7vw,118px);position:relative;min-width:0;overflow:hidden}
-.hero-copy:before{content:"";position:absolute;left:0;right:10%;top:104px;height:min(48vw,620px);pointer-events:none;background:
-  radial-gradient(ellipse at 50% 100%,transparent 0 61%,rgba(216,154,22,.34) 61.12% 61.38%,transparent 61.5%),
-  radial-gradient(ellipse at 50% 100%,transparent 0 79%,rgba(75,0,29,.28) 79.1% 79.28%,transparent 79.4%);opacity:.62}
+.hero-copy:before{content:"";position:absolute;left:clamp(28px,5vw,72px);top:clamp(46px,6vw,90px);width:88px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);opacity:.8;pointer-events:none}
 .eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin:0 0 22px}
 h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;color:var(--wine);font-size:clamp(58px,8.4vw,118px);line-height:.91;letter-spacing:-.045em;margin:0;max-width:900px;overflow-wrap:normal;min-width:0}
 .hero-note{align-self:flex-end;max-width:390px;margin:34px 4% 0 0;font-size:clamp(18px,1.62vw,23px);font-weight:800;line-height:1.22;color:rgba(75,0,29,.82)}
@@ -86,9 +83,7 @@ h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;color:var(--wine
 .quiet-tile{grid-column:1/3;grid-row:5/8;background:linear-gradient(145deg,rgba(53,0,19,.96),rgba(0,25,26,.92));border-left:1px solid rgba(248,237,220,.16);border-bottom:1px solid rgba(248,237,220,.16);position:relative}
 .quiet-tile:after{content:"";position:absolute;right:28px;bottom:28px;width:82px;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
 .studio,.journey,.proof,.pricing,.faq{position:relative;padding:clamp(72px,9vw,130px) clamp(22px,4vw,56px);border-bottom:1px solid var(--line);overflow:hidden}
-.studio:after,.journey:after,.proof:after,.pricing:after{content:"";position:absolute;inset:auto -8% -28% -8%;height:360px;pointer-events:none;background:
-  radial-gradient(ellipse at 50% 100%,transparent 0 52%,rgba(216,154,22,.18) 52.1% 52.3%,transparent 52.45%),
-  radial-gradient(ellipse at 50% 100%,transparent 0 74%,rgba(75,0,29,.12) 74.1% 74.28%,transparent 74.45%);opacity:.7}
+.studio:after,.journey:after,.proof:after,.pricing:after{content:"";position:absolute;inset:auto 0 0 0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(228,191,106,.36),transparent);opacity:.8}
 .section-head{display:grid;grid-template-columns:minmax(260px,.9fr) 1fr;gap:clamp(24px,5vw,80px);align-items:end;margin:0 auto clamp(38px,6vw,72px);max-width:1180px}
 .kicker{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 14px}
 h2{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(42px,6vw,88px);line-height:.92;font-weight:400;letter-spacing:-.045em;color:var(--wine);margin:0}
@@ -162,7 +157,7 @@ h2{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(42px,6vw,88px);l
 .faq-item strong{font-size:20px;color:var(--wine)}
 .faq-item p{margin:0;color:var(--muted);line-height:1.55;font-weight:700}
 footer{padding:56px clamp(22px,4vw,56px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--obsidian);color:#fff;border-top:1px solid rgba(228,191,106,.24);position:relative;overflow:hidden}
-footer:before{content:"";position:absolute;left:-12%;bottom:-60%;width:52vw;aspect-ratio:1;border-radius:50%;border:1px solid rgba(228,191,106,.18);pointer-events:none}
+footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(228,191,106,.34),transparent);pointer-events:none}
 .footer-left{display:grid;gap:10px}
 .footer-brand{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.04em}.footer-brand span{color:var(--green)}
 .footer-contact{display:grid;gap:4px;color:#9ec4af;font-size:14px;font-weight:700}
@@ -176,12 +171,13 @@ footer:before{content:"";position:absolute;left:-12%;bottom:-60%;width:52vw;aspe
 .reveal.show{opacity:1;transform:none}
 @media(max-width:900px){
   .nav{height:auto;grid-template-columns:1fr}.brand{padding:22px}.navlinks{border-left:0;border-top:1px solid var(--line);overflow:auto}.navlinks a{min-height:56px;white-space:nowrap}
+  .page{padding-top:133px}
   h1{font-size:clamp(44px,11vw,62px);line-height:.95;letter-spacing:-.035em;max-width:100%;overflow-wrap:normal}
   .hero,.section-head,.atlas,.price-grid{grid-template-columns:1fr}.hero-copy{min-height:560px}.hero-note{align-self:flex-start;margin-right:0}.mosaic{min-height:520px;border-left:0}.scroll{display:none}
   .feature-grid,.proof-grid,.price-grid{grid-template-columns:1fr}.feature{min-height:300px}.steps{grid-template-columns:1fr}.step{border-right:0}.faq-item{grid-template-columns:1fr}
 }
 @media(max-width:560px){
-  .page{border-width:0;border-radius:0}
+  .page{border-width:0;border-radius:0;padding-top:133px}
   .brand{font-size:24px}
   .navlinks a{padding:0 18px;font-size:12px}
   h1{font-size:clamp(42px,13vw,54px);line-height:.98;letter-spacing:-.035em;max-width:340px}
@@ -341,13 +337,13 @@ footer:before{content:"";position:absolute;left:-12%;bottom:-60%;width:52vw;aspe
 
   <section class="pricing" id="pricing" data-nav-theme="forest">
     <div class="section-head reveal">
-      <div><p class="kicker">Start simple</p><h2>Spend on the plan, not the guessing.</h2></div>
-      <p class="lead">Begin with practice and planning, then add tutoring when a human guide makes the difference.</p>
+      <div><p class="kicker">Start with clarity</p><h2>A calmer way to support math at home.</h2></div>
+      <p class="lead">Choose the level of guidance your family needs now. Every plan is built to make the next step visible before stress turns into avoidance.</p>
     </div>
     <div class="price-grid">
-      <article class="price reveal"><h3>Free</h3><strong>Free</strong><p>A starting point for parents who want to see the gaps before committing to a full program.</p><ul><li>Reinforce Knowledge Gaps</li><li>Personalized Study Plan</li><li>Homework Help</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
-      <article class="price reveal"><h3>Basic</h3><strong>$160<span>/mo</span></strong><p>Live tutoring support connected to the core study workflow, so sessions start with context.</p><ul><li>1-on-1 tutor sessions</li><li>Documentation (Notes, MindMap)</li><li>Reinforce Knowledge Gaps</li><li>Personalized Study Plan</li><li>Homework Help</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
-      <article class="price featured reveal"><h3>Platform</h3><strong>$200<span>/mo</span></strong><p>The full MindCraft experience: tutor sessions plus durable learning assets students can revisit between sessions.</p><ul><li>1-on-1 tutor sessions</li><li>Documentation (Notes, MindMap)</li><li>Knowledge Assets</li><li>Reinforce Knowledge Gaps</li><li>Personalized Study Plan</li><li>Homework Help</li></ul><a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price reveal"><h3>First Look</h3><strong>Free</strong><p>For parents who want a clear read before choosing tutoring or another study plan.</p><ul><li>Initial math snapshot</li><li>Personalized next-step plan</li><li>Homework support trial</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price reveal"><h3>Guided</h3><strong>$160<span>/mo</span></strong><p>For families who want a human tutor connected to the student’s actual practice history.</p><ul><li>1-on-1 tutor sessions</li><li>Session notes and mind map</li><li>Targeted practice path</li><li>Parent-visible progress signals</li><li>Homework help workflow</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price featured reveal"><h3>Studio</h3><strong>$200<span>/mo</span></strong><p>The full MindCraft experience for students who need continuity between practice, homework, notes, and tutoring.</p><ul><li>1-on-1 tutor sessions</li><li>Session notes and mind map</li><li>Knowledge assets to revisit</li><li>Targeted practice path</li><li>Personalized study plan</li><li>Homework help workflow</li></ul><a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
     </div>
   </section>
 

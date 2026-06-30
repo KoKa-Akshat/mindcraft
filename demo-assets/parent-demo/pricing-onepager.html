@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MindCraft Parent Demo Pricing Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@600;700;800;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f8eddc;--paper:#fff7e8;--wine:#4b001d;--deep:#350013;--obsidian:#00191a;--forest:#064d36;--green:#54b948;--gold:#e4bf6a;--line:rgba(228,191,106,.28)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--obsidian);font-family:"DM Sans",system-ui,sans-serif;color:var(--paper);display:grid;place-items:center;padding:36px}
+.sheet{width:min(1180px,100%);min-height:660px;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:
+  radial-gradient(ellipse at 12% 18%,rgba(84,185,72,.14),transparent 42%),
+  linear-gradient(135deg,var(--obsidian),#07120f 48%,var(--deep));position:relative;box-shadow:0 38px 110px rgba(0,0,0,.34)}
+.sheet:before{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,transparent calc(25% - .5px),rgba(248,237,220,.14) 25%,transparent calc(25% + .5px)),
+  linear-gradient(90deg,transparent calc(50% - .5px),rgba(248,237,220,.14) 50%,transparent calc(50% + .5px)),
+  linear-gradient(90deg,transparent calc(75% - .5px),rgba(248,237,220,.14) 75%,transparent calc(75% + .5px)),
+  linear-gradient(180deg,transparent calc(52% - .5px),rgba(248,237,220,.14) 52%,transparent calc(52% + .5px));pointer-events:none}
+.head{position:relative;z-index:1;padding:54px 58px 28px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:end}
+.brand{font-size:30px;font-weight:900;letter-spacing:-.04em}.brand span{color:var(--green)}
+.kicker{margin:0 0 16px;color:var(--gold);font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:72px;line-height:.9;letter-spacing:-.045em;margin:26px 0 0;color:#fff7d8}
+.lead{margin:0;color:rgba(255,247,232,.72);font-size:20px;line-height:1.42;font-weight:800}
+.cards{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:22px 58px 58px}
+.card{min-height:300px;border:1px solid rgba(255,247,232,.16);border-radius:22px;padding:28px;background:rgba(255,247,232,.08)}
+.card.featured{background:var(--paper);color:#210f17;box-shadow:0 28px 70px rgba(0,0,0,.28)}
+.card h2{margin:0 0 20px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:inherit}
+.price{display:block;font-size:48px;font-weight:900;letter-spacing:-.04em;color:var(--green);margin-bottom:16px}.price small{font-size:17px;color:inherit;opacity:.7}
+.card p{margin:0 0 20px;font-size:15px;line-height:1.5;color:inherit;opacity:.76;font-weight:800}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+li{font-size:14px;font-weight:900;color:inherit}li:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:10px;vertical-align:1px}
+.note{position:absolute;left:58px;bottom:26px;color:rgba(255,247,232,.42);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <section class="head">
+    <div>
+      <div class="brand">Mind<span>Craft</span></div>
+      <p class="kicker">Pricing for clarity</p>
+      <h1>Choose the support your family needs now.</h1>
+    </div>
+    <p class="lead">Every plan is designed to make the next step visible before stress turns into avoidance. Start with a snapshot, then add guidance when a student needs continuity.</p>
+  </section>
+  <section class="cards">
+    <article class="card">
+      <h2>First Look</h2>
+      <span class="price">Free</span>
+      <p>A starting point for parents who want a clear read before choosing tutoring.</p>
+      <ul><li>Initial math snapshot</li><li>Personalized next-step plan</li><li>Homework support trial</li></ul>
+    </article>
+    <article class="card">
+      <h2>Guided</h2>
+      <span class="price">$160<small>/mo</small></span>
+      <p>Human tutoring connected to the student's actual practice history.</p>
+      <ul><li>1-on-1 tutor sessions</li><li>Session notes and mind map</li><li>Parent-visible progress signals</li><li>Homework help workflow</li></ul>
+    </article>
+    <article class="card featured">
+      <h2>Studio</h2>
+      <span class="price">$200<small>/mo</small></span>
+      <p>The full MindCraft experience across practice, homework, notes, and tutoring.</p>
+      <ul><li>1-on-1 tutor sessions</li><li>Knowledge assets to revisit</li><li>Targeted practice path</li><li>Personalized study plan</li></ul>
+    </article>
+  </section>
+  <div class="note">Parent demo asset - not a checkout screen</div>
+</main>
+</body>
+</html>
