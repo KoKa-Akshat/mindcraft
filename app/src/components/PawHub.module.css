@@ -12,8 +12,8 @@
   inset: 8% 10% 12%;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 42%, rgba(196, 245, 71, 0.07), transparent 52%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 45%);
+    radial-gradient(circle at 50% 42%, rgba(196, 245, 71, 0.11), transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(251, 250, 246, 0.04), transparent 45%);
   pointer-events: none;
 }
 
@@ -43,10 +43,10 @@
   max-width: 108px;
   flex: 0 0 auto;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(251, 250, 246, 0.22);
   background:
-    radial-gradient(circle at 36% 24%, rgba(255, 255, 255, 0.24), transparent 28%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+    radial-gradient(circle at 36% 24%, rgba(251, 250, 246, 0.24), transparent 28%),
+    linear-gradient(145deg, rgba(251, 250, 246, 0.13) 0%, rgba(251, 250, 246, 0.05) 100%);
   backdrop-filter: blur(16px);
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.45),
@@ -60,7 +60,7 @@
   gap: 7px;
   padding: 12px;
   text-align: center;
-  color: #ffffff;
+  color: var(--mc-cream);
   font-family: var(--f-body);
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -76,25 +76,25 @@
 }
 
 .toe_violet {
-  border-color: rgba(167, 139, 250, 0.34);
+  border-color: rgba(228, 191, 106, 0.38);
   background:
-    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.30), transparent 28%),
-    linear-gradient(145deg, rgba(124, 58, 237, 0.90) 0%, rgba(72, 42, 160, 0.55) 58%, rgba(22, 24, 38, 0.86) 100%);
+    radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.30), transparent 28%),
+    linear-gradient(145deg, rgba(75, 0, 29, 0.92) 0%, rgba(94, 32, 53, 0.62) 55%, rgba(12, 18, 18, 0.90) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
-    0 0 34px rgba(124, 58, 237, 0.20),
+    0 0 34px rgba(228, 191, 106, 0.16),
     inset 0 1px 0 rgba(255,255,255,0.24),
     inset 0 -16px 30px rgba(0,0,0,0.22);
 }
 
 .toe_sky {
-  border-color: rgba(56, 189, 248, 0.36);
+  border-color: rgba(84, 185, 72, 0.36);
   background:
-    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.30), transparent 28%),
-    linear-gradient(145deg, rgba(14, 165, 233, 0.88) 0%, rgba(8, 104, 136, 0.58) 58%, rgba(14, 25, 34, 0.88) 100%);
+    radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.30), transparent 28%),
+    linear-gradient(145deg, rgba(27, 111, 83, 0.92) 0%, rgba(12, 75, 62, 0.64) 58%, rgba(10, 24, 24, 0.90) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
-    0 0 34px rgba(56, 189, 248, 0.20),
+    0 0 34px rgba(84, 185, 72, 0.18),
     inset 0 1px 0 rgba(255,255,255,0.24),
     inset 0 -16px 30px rgba(0,0,0,0.22);
 }
@@ -102,8 +102,8 @@
 .toe_lime {
   border-color: rgba(196, 245, 71, 0.42);
   background:
-    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.30), transparent 28%),
-    linear-gradient(145deg, rgba(196, 245, 71, 0.92) 0%, rgba(55, 143, 66, 0.62) 56%, rgba(14, 28, 22, 0.88) 100%);
+    radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.32), transparent 28%),
+    linear-gradient(145deg, rgba(196, 245, 71, 0.94) 0%, rgba(55, 143, 66, 0.66) 56%, rgba(14, 28, 22, 0.90) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
     0 0 36px rgba(196, 245, 71, 0.22),
@@ -112,13 +112,13 @@
 }
 
 .toe_amber {
-  border-color: rgba(251, 191, 36, 0.38);
+  border-color: rgba(228, 191, 106, 0.40);
   background:
-    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.30), transparent 28%),
-    linear-gradient(145deg, rgba(245, 158, 11, 0.88) 0%, rgba(166, 86, 22, 0.58) 58%, rgba(31, 23, 17, 0.88) 100%);
+    radial-gradient(circle at 34% 22%, rgba(251, 250, 246, 0.30), transparent 28%),
+    linear-gradient(145deg, rgba(228, 191, 106, 0.92) 0%, rgba(126, 80, 28, 0.62) 58%, rgba(31, 23, 17, 0.90) 100%);
   box-shadow:
     0 18px 42px rgba(0, 0, 0, 0.46),
-    0 0 34px rgba(251, 191, 36, 0.20),
+    0 0 34px rgba(228, 191, 106, 0.20),
     inset 0 1px 0 rgba(255,255,255,0.24),
     inset 0 -16px 30px rgba(0,0,0,0.22);
 }
@@ -151,10 +151,24 @@
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.38);
 }
 
+.toeTopicOnly {
+  max-width: 78px;
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  color: #ffffff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.46);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .toeSub {
   font-size: 9px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(251, 250, 246, 0.58);
   line-height: 1.25;
   max-width: 88px;
   overflow: hidden;
@@ -167,9 +181,9 @@
   width: min(100%, 280px);
   height: 280px;
   border-radius: 50%;
-  border: 1px solid rgba(196, 245, 71, 0.28);
+  border: 1px solid rgba(196, 245, 71, 0.34);
   background:
-    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.22) 0%, rgba(196, 245, 71, 0.92) 38%, rgba(168, 224, 99, 0.88) 100%);
+    radial-gradient(circle at 50% 28%, rgba(251, 250, 246, 0.26) 0%, rgba(196, 245, 71, 0.94) 38%, rgba(132, 206, 76, 0.90) 100%);
   box-shadow:
     0 28px 70px rgba(0, 0, 0, 0.55),
     0 0 60px rgba(196, 245, 71, 0.18),
@@ -181,7 +195,7 @@
   justify-content: center;
   gap: 8px;
   padding: 24px;
-  color: #0f2318;
+  color: #10231a;
   font-family: var(--f-display);
 }
 
@@ -291,6 +305,7 @@
   .toe_gps { margin-bottom: 17px; }
   .toeIcon { width: 23px; height: 23px; }
   .toeLabel { font-size: 9px; }
+  .toeTopicOnly { max-width: 60px; font-size: 8.5px; }
   .toeSub { display: none; }
   .mainPad { width: 220px; height: 220px; }
   .mainLabel { font-size: 24px; }

@@ -19,11 +19,11 @@
 }
 
 .noteCard {
-  border: 1px solid #e4e8ef;
+  border: 1px solid rgba(6, 77, 54, 0.14);
   border-radius: 12px;
-  background: #fff;
+  background: var(--mc-cream);
   overflow: hidden;
-  border-left: 4px solid var(--accent, #00d2c8);
+  border-left: 4px solid var(--accent);
 }
 
 .noteCardOpen {
@@ -46,26 +46,26 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent, #00d2c8);
+  color: var(--mc-forest);
   margin-bottom: 4px;
 }
 
 .noteTitle {
   display: block;
   font-size: 14px;
-  color: #1a1f2e;
+  color: var(--mc-ink);
   margin-bottom: 4px;
 }
 
 .noteMeta {
   font-size: 11px;
-  color: #607d8b;
+  color: #60756c;
 }
 
 .noteBullets {
   margin: 0;
   padding: 0 14px 14px 28px;
-  color: #3d4f5c;
+  color: #334d3e;
   font-size: 13px;
   line-height: 1.55;
 }
@@ -81,14 +81,14 @@
 .homeworkCopy p {
   margin: 0;
   font-size: 13px;
-  color: #607d8b;
+  color: #60756c;
   line-height: 1.55;
 }
 
 .homeworkInput {
   width: 100%;
   box-sizing: border-box;
-  border: 1.5px solid #e4e8ef;
+  border: 1.5px solid rgba(6, 77, 54, 0.16);
   border-radius: 12px;
   padding: 12px 14px;
   font-family: inherit;
@@ -101,7 +101,7 @@
 
 .homeworkInput:focus {
   outline: none;
-  border-color: #4361ee;
+  border-color: var(--mc-forest);
 }
 
 .homeworkTags {
@@ -116,6 +116,6 @@
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 999px;
-  background: #eef1ff;
-  color: #4361ee;
+  background: rgba(78, 181, 67, 0.12);
+  color: var(--mc-forest);
 }

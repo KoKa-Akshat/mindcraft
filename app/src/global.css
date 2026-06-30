@@ -8,27 +8,40 @@
   --c-trig:     #FFE66D;
   --c-stats:    #A29BFE;
 
-  /* MindCraft palette — teal base + sky blue */
-  --bg:          #21616E;
-  --surface:     #21616E;
-  --surface-2:   #1a545f;
-  --border:      rgba(255, 255, 255, 0.10);
-  --text:        #FFFFFF;
-  --text-2:      #B8D4D8;   /* secondary / muted */
-  --text-muted:  #7A9FA5;   /* placeholders */
+  /* MindCraft premium studio palette */
+  --mc-cream:    #FBFAF6;
+  --mc-paper:    #FFF8EA;
+  --mc-mint:     #DDEBDD;
+  --mc-forest:   #064D36;
+  --mc-forest-2: #09251D;
+  --mc-deep:     #07120F;
+  --mc-ink:      #123A2A;
+  --mc-muted:    #8DA59A;
+  --mc-wine:     #4B001D;
+  --mc-gold:     #E4BF6A;
+
+  --bg:          #102F35;
+  --surface:     rgba(18, 64, 70, 0.92);
+  --surface-2:   rgba(8, 30, 35, 0.92);
+  --surface-soft:rgba(251, 250, 246, 0.08);
+  --border:      rgba(251, 250, 246, 0.12);
+  --border-strong: rgba(196, 245, 71, 0.30);
+  --text:        #FBFAF6;
+  --text-2:      #C7D9D3;   /* secondary / muted */
+  --text-muted:  #8DA59A;   /* placeholders */
 
   /* Accent — lime green */
   --accent:      #C4F547;
-  --accent-dark: #164B52;   /* text on lime buttons */
+  --accent-dark: #10231a;   /* text on lime buttons */
   --accent-soft: rgba(196, 245, 71, 0.15);
 
-  /* Sky blue — for homework progress + highlights */
-  --sky:         #38BDF8;
-  --sky-dark:    #0C4A6E;
-  --sky-soft:    rgba(56, 189, 248, 0.15);
+  /* Cool support accent — used sparingly for secondary data highlights */
+  --sky:         #4ECDC4;
+  --sky-dark:    #0E4F4B;
+  --sky-soft:    rgba(78, 205, 196, 0.15);
 
   /* Sidebar */
-  --sidebar-bg:  #164B52;
+  --sidebar-bg:  #09251D;
 
   /* Status */
   --c-mastered:    #A8E063;
@@ -41,14 +54,15 @@
 
   /* Learning path page — dark atmospheric backdrop */
   --path-page-bg:
-    radial-gradient(ellipse 90% 60% at 18% 50%, rgba(33, 97, 110, 0.22), transparent 55%),
-    linear-gradient(180deg, #0a1018 0%, #0c1218 45%, #080c12 100%);
+    radial-gradient(ellipse 80% 58% at 18% 28%, rgba(196, 245, 71, 0.10), transparent 56%),
+    radial-gradient(ellipse 70% 52% at 88% 18%, rgba(84, 185, 72, 0.09), transparent 58%),
+    linear-gradient(180deg, #102F35 0%, #0b1d20 42%, #07120f 100%);
   --tx:      var(--text);
   --mu:      var(--text-2);
   --w:       var(--surface);
   --bd:      var(--border);
-  --blue:    #5B9BD5;
-  --blue-d:  #4A8BC5;
+  --blue:    #4ECDC4;
+  --blue-d:  #2D8F89;
   --g:       #C4F547;
   --gd:      #B4E540;
   --red:     #FF6B6B;

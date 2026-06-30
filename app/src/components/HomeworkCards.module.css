@@ -1,6 +1,5 @@
 /* HomeworkCards.module.css
-   Dark indigo aesthetic — #0A0A0F bg, #12121A card, #6366F1 accent
-   Font stack: DM Sans (body), DM Mono (math), Fraunces (display) */
+   MindCraft studio palette: deep green, cream, gold, and calm status colors. */
 
 /* ── Layout shells ──────────────────────────────────────────────────────────── */
 
@@ -23,14 +22,14 @@
   flex-direction: column;
   gap: 8px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(251, 250, 246, 0.10);
 }
 
 .problemSummary {
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 500;
-  color: #F0F0F5;
+  color: var(--mc-cream);
   line-height: 1.4;
   letter-spacing: -0.01em;
 }
@@ -45,9 +44,9 @@
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
   font-weight: 600;
-  color: #6366F1;
-  background: rgba(99, 102, 241, 0.12);
-  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: var(--accent);
+  background: rgba(196, 245, 71, 0.12);
+  border: 1px solid rgba(196, 245, 71, 0.25);
   border-radius: 20px;
   padding: 2px 10px;
   letter-spacing: 0.04em;
@@ -57,16 +56,18 @@
 .pathsNote {
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
-  color: #6B6B80;
+  color: var(--text-muted);
 }
 
 /* ── Card ───────────────────────────────────────────────────────────────────── */
 
 .card {
   width: 100%;
-  background: #12121A;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-left: 3px solid #6366F1;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(196, 245, 71, 0.08), transparent 48%),
+    rgba(9, 28, 24, 0.94);
+  border: 1px solid rgba(251, 250, 246, 0.10);
+  border-left: 3px solid var(--accent);
   border-radius: 16px;
   padding: 28px 28px 24px;
   display: flex;
@@ -81,7 +82,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 20% 0%, rgba(196, 245, 71, 0.06) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -132,9 +133,9 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #6366F1;
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: var(--accent);
+  background: rgba(196, 245, 71, 0.10);
+  border: 1px solid rgba(196, 245, 71, 0.22);
   border-radius: 20px;
   padding: 3px 10px;
   white-space: nowrap;
@@ -159,14 +160,15 @@
   transition: background 250ms ease, transform 250ms ease;
 }
 
-.dot[style*="background: #6366F1"] {
+.dot[style*="background: #6366F1"],
+.dot[style*="background: rgb(99, 102, 241)"] {
   transform: scale(1.2);
 }
 
 .stepCounter {
   font-family: 'DM Mono', 'Courier New', monospace;
   font-size: 11px;
-  color: #6B6B80;
+  color: var(--text-muted);
   white-space: nowrap;
   letter-spacing: 0.04em;
 }
@@ -175,8 +177,8 @@
 
 .visualBox {
   width: 100%;
-  background: #080810;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(251, 250, 246, 0.06);
+  border: 1px solid rgba(251, 250, 246, 0.10);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -207,7 +209,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #6366F1;
+  color: var(--accent);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -230,7 +232,7 @@
   font-size: 17px;
   font-weight: 400;
   line-height: 1.65;
-  color: #F0F0F5;
+  color: var(--mc-cream);
   letter-spacing: -0.01em;
   margin: 0;
 }
@@ -238,7 +240,7 @@
 .encouragementContent {
   font-size: 18px;
   font-style: italic;
-  color: #F0C060;
+  color: var(--mc-gold);
   text-align: center;
   padding: 4px 0;
 }
@@ -253,8 +255,8 @@
 }
 
 .clue {
-  background: rgba(99, 102, 241, 0.07);
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  background: rgba(196, 245, 71, 0.07);
+  border: 1px solid rgba(196, 245, 71, 0.15);
   border-radius: 10px;
   padding: 12px 14px;
   display: flex;
@@ -280,7 +282,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #6366F1;
+  color: var(--accent);
   opacity: 0.8;
 }
 
@@ -288,14 +290,14 @@
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   line-height: 1.6;
-  color: #C4C4D4;
+  color: rgba(251, 250, 246, 0.78);
   margin: 0;
 }
 
 .clueMax {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
-  color: #6B6B80;
+  color: var(--text-muted);
   font-style: italic;
   margin: 0;
   text-align: center;
@@ -319,7 +321,7 @@
 /* Got it — primary, full weight */
 .btnGotIt {
   flex: 1;
-  background: #6366F1;
+  background: linear-gradient(135deg, #4EB543, #0f7a4e);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -330,12 +332,12 @@
   cursor: pointer;
   letter-spacing: -0.01em;
   transition: background 150ms ease, transform 100ms ease, box-shadow 150ms ease;
-  box-shadow: 0 1px 12px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 1px 12px rgba(78, 181, 67, 0.25);
 }
 
 .btnGotIt:hover {
-  background: #7577F3;
-  box-shadow: 0 2px 20px rgba(99, 102, 241, 0.4);
+  background: linear-gradient(135deg, #5bc951, #148a59);
+  box-shadow: 0 2px 20px rgba(78, 181, 67, 0.4);
   transform: translateY(-1px);
 }
 
@@ -346,9 +348,9 @@
 
 /* Kind of — secondary ghost */
 .btnPartial {
-  background: rgba(240, 192, 96, 0.08);
-  color: #F0C060;
-  border: 1px solid rgba(240, 192, 96, 0.25);
+  background: rgba(228, 191, 106, 0.08);
+  color: var(--mc-gold);
+  border: 1px solid rgba(228, 191, 106, 0.25);
   border-radius: 10px;
   padding: 12px 18px;
   font-family: 'DM Sans', sans-serif;
@@ -360,8 +362,8 @@
 }
 
 .btnPartial:hover {
-  background: rgba(240, 192, 96, 0.14);
-  border-color: rgba(240, 192, 96, 0.4);
+  background: rgba(228, 191, 106, 0.14);
+  border-color: rgba(228, 191, 106, 0.4);
   transform: translateY(-1px);
 }
 
@@ -398,8 +400,8 @@
 .clueBtn {
   align-self: flex-start;
   background: transparent;
-  color: #6B6B80;
-  border: 1px dashed rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+  border: 1px dashed rgba(251, 250, 246, 0.14);
   border-radius: 8px;
   padding: 7px 14px;
   font-family: 'DM Sans', sans-serif;
@@ -411,9 +413,9 @@
 }
 
 .clueBtn:hover:not(:disabled) {
-  color: #A0A0B8;
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.03);
+  color: var(--mc-cream);
+  border-color: rgba(196, 245, 71, 0.28);
+  background: rgba(251, 250, 246, 0.04);
 }
 
 .clueBtn:disabled {
@@ -448,7 +450,7 @@
 
 .doneOrb {
   font-size: 36px;
-  color: #F0C060;
+  color: var(--mc-gold);
   animation: orbFloat 3s ease-in-out infinite;
 }
 
@@ -458,10 +460,10 @@
 }
 
 .doneTitle {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--f-display), Georgia, serif;
   font-size: 28px;
   font-weight: 700;
-  color: #F0F0F5;
+  color: var(--mc-cream);
   margin: 0;
   text-align: center;
   letter-spacing: -0.02em;
@@ -470,15 +472,15 @@
 .doneSub {
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
-  color: #6B6B80;
+  color: var(--text-muted);
   margin: 0;
   text-align: center;
 }
 
 .doneStats {
   width: 100%;
-  background: #12121A;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(9, 28, 24, 0.94);
+  border: 1px solid rgba(251, 250, 246, 0.10);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
@@ -490,7 +492,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 13px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(251, 250, 246, 0.08);
   transition: background 150ms ease;
 }
 
@@ -499,13 +501,13 @@
 }
 
 .doneStat:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(251, 250, 246, 0.04);
 }
 
 .doneStatLabel {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #C4C4D4;
+  color: rgba(251, 250, 246, 0.78);
 }
 
 .doneStatBadge {
@@ -516,7 +518,7 @@
 }
 
 .newProblemBtn {
-  background: #6366F1;
+  background: linear-gradient(135deg, #064D36, #4EB543);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -527,13 +529,13 @@
   cursor: pointer;
   letter-spacing: -0.01em;
   transition: background 150ms ease, transform 100ms ease, box-shadow 150ms ease;
-  box-shadow: 0 2px 16px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 2px 16px rgba(78, 181, 67, 0.30);
   margin-top: 8px;
 }
 
 .newProblemBtn:hover {
-  background: #7577F3;
-  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.45);
+  background: linear-gradient(135deg, #075c40, #5bc951);
+  box-shadow: 0 4px 24px rgba(78, 181, 67, 0.45);
   transform: translateY(-2px);
 }
 
