@@ -33,6 +33,7 @@ import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
 import ConstellationGpsLab from './pages/ConstellationGpsLab'
+import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
 
@@ -77,10 +78,24 @@ function RoleRedirect() {
   return <Navigate to={dest} replace />
 }
 
+/** Sets QA mode and redirects to /dashboard — entry point for the test harness. */
+function QAEntry() {
+  useEffect(() => { sessionStorage.setItem('mc-qa-mode', '1') }, [])
+  return <Navigate to="/dashboard" replace />
+}
+
 /** Blocks unauthenticated access. Redirects to /login if not signed in. */
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const [user, setUser] = useState<User | null | undefined>(undefined)
+  const isQA = sessionStorage.getItem('mc-qa-mode') === '1'
+
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get('qa') === '1') {
+      sessionStorage.setItem('mc-qa-mode', '1')
+    }
+  }, [location.search])
+
   useEffect(() => onAuthStateChanged(auth, setUser), [])
   useEffect(() => {
     if (!user) return
@@ -110,6 +125,7 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   return (
     <UserContext.Provider value={user}>
       {children}
+      {isQA && <QAToolbar />}
     </UserContext.Provider>
   )
 }
@@ -129,6 +145,7 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/book"  element={<Book />} />
+        <Route path="/qa"    element={<AuthGuard><QAEntry /></AuthGuard>} />
         <Route path="/dashboard-projected" element={<Navigate to="/dashboard" replace />} />
 
         {/* Authenticated routes */}
