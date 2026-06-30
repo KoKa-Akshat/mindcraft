@@ -25,7 +25,7 @@ import { getExamConceptIds } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, agentCheckIn, fetchExamConceptIds, type IngredientRecommendResult } from '../lib/mlApi'
 import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
-import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic } from '../lib/practiceState'
+import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic, getUserRole } from '../lib/practiceState'
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
@@ -350,6 +350,7 @@ export default function Practice() {
   const [missionType, setMissionType] = useState<MissionType | null>(null)
   const [missionLoading, setMissionLoading] = useState<'weakness' | 'learn' | null>(null)
   const [diagnosticHydrated, setDiagnosticHydrated] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   /** C4 — gap-scan question diagnostic: record outcomes, never show right/wrong. */
   const [hideCorrectness, setHideCorrectness] = useState(false)
   /** Concepts still needing self-rating after the question diagnostic. */
@@ -496,6 +497,10 @@ export default function Practice() {
     setChecked(false)
     setHintsShown(0)
   }
+
+  useEffect(() => {
+    getUserRole(user.uid).then(role => setIsAdmin(role === 'admin'))
+  }, [user.uid])
 
   useEffect(() => {
     if (draftHydratedRef.current) return
@@ -1240,7 +1245,7 @@ export default function Practice() {
       <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}`}>
 
         {!hideTopBar && (
-          <AppTabBar active={mode === 'solver' ? 'solver' : 'practice'} />
+          <AppTabBar active={mode === 'solver' ? 'solver' : 'practice'} isAdmin={isAdmin} />
         )}
 
         {/* ═══════ PRACTICE MODE ═══════ */}

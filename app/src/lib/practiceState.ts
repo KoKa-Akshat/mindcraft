@@ -49,6 +49,15 @@ export async function loadDiagnostic(
   }
 }
 
+export async function getUserRole(uid: string): Promise<string | null> {
+  try {
+    const snap = await getDoc(doc(db, 'users', uid))
+    return snap.data()?.role ?? null
+  } catch {
+    return null
+  }
+}
+
 export async function isDiagnosticComplete(uid: string): Promise<boolean> {
   try {
     const snap = await getDoc(doc(db, 'users', uid))
