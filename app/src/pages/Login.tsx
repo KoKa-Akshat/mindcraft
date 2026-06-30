@@ -15,40 +15,29 @@ import s from './Login.module.css'
 import { worldUrl } from '../lib/siteUrls'
 
 type Role = 'student' | 'parent' | 'tutor'
-type SignupRole = Role | 'admin'
 type Mode = 'signin' | 'signup'
+/** Separate admin flow: passcode step → sign in → grant admin once. */
+type AdminFlow = 'auth' | 'passcode' | 'armed'
 
-const ADMIN_PASSCODE_KEY = 'mc_admin_passcode'
+const ADMIN_GRANT_PENDING_KEY = 'mc_admin_grant_pending'
 
 function isAdminPasscodeValid(passcode: string): boolean {
   const expected = import.meta.env.VITE_ADMIN_PASSCODE
   return !!(expected && passcode.length > 0 && passcode === expected)
 }
 
-function resolveSignupRole(selectedRole: Role, passcode: string): SignupRole {
-  if (isAdminPasscodeValid(passcode)) return 'admin'
-  return selectedRole
+function armAdminGrant() {
+  sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, '1')
 }
 
-function persistPasscodeForOAuth(passcode: string) {
-  if (passcode) sessionStorage.setItem(ADMIN_PASSCODE_KEY, passcode)
-  else sessionStorage.removeItem(ADMIN_PASSCODE_KEY)
+function consumeAdminGrant(): boolean {
+  const pending = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'
+  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
+  return pending
 }
 
-/** Prefer in-memory state; fall back to sessionStorage (survives OAuth redirect). */
-function consumePendingPasscode(statePasscode: string): string {
-  const stored = sessionStorage.getItem(ADMIN_PASSCODE_KEY) ?? ''
-  sessionStorage.removeItem(ADMIN_PASSCODE_KEY)
-  return statePasscode || stored
-}
-
-function clearPasscodeState(
-  setShowAdminPasscode: (v: boolean) => void,
-  setAdminPasscode: (v: string) => void,
-) {
-  setShowAdminPasscode(false)
-  setAdminPasscode('')
-  sessionStorage.removeItem(ADMIN_PASSCODE_KEY)
+function clearAdminGrant() {
+  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
 }
 
 function safeReturnPath(raw: string | null): string | null {
@@ -83,17 +72,15 @@ export default function Login() {
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [showAdminPasscode, setShowAdminPasscode] = useState(false)
+  const [adminFlow, setAdminFlow] = useState<AdminFlow>('auth')
   const [adminPasscode, setAdminPasscode] = useState('')
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
 
   useEffect(() => {
-    const stored = sessionStorage.getItem(ADMIN_PASSCODE_KEY)
-    if (stored) {
-      setAdminPasscode(stored)
-      setShowAdminPasscode(true)
+    if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') {
+      setAdminFlow('armed')
     }
   }, [])
 
@@ -130,14 +117,14 @@ export default function Login() {
 
   async function routeAfterLogin(uid: string, isNewUser = false) {
     await auth.currentUser?.getIdToken(true)
-    const passcode = consumePendingPasscode(adminPasscode)
-    const grantAdmin = isAdminPasscodeValid(passcode)
+    const grantAdmin = consumeAdminGrant()
+    if (grantAdmin) setAdminFlow('auth')
 
     const snap = await getDoc(doc(db, 'users', uid))
     const firestoreRole = snap.data()?.role
 
     if (isNewUser) {
-      const signupRole = resolveSignupRole(role, passcode)
+      const signupRole = grantAdmin ? 'admin' : role
       await setDoc(doc(db, 'users', uid), {
         role: signupRole,
         email: auth.currentUser?.email ?? '',
@@ -173,7 +160,6 @@ export default function Login() {
   async function handleSubmit() {
     if (!email || !password) { setError('Please fill in all fields.'); return }
     setError('')
-    persistPasscodeForOAuth(adminPasscode)
     setLoading(true)
     try {
       if (mode === 'signin') {
@@ -191,7 +177,6 @@ export default function Login() {
 
   async function handleGoogle() {
     setError('')
-    persistPasscodeForOAuth(adminPasscode)
     setLoading(true)
     try {
       await signInWithRedirect(auth, googleProvider)
@@ -200,6 +185,21 @@ export default function Login() {
       if (msg) setError(msg)
       setLoading(false)
     }
+  }
+
+  function verifyAdminPasscode() {
+    setError('')
+    if (!isAdminPasscodeValid(adminPasscode)) return
+    setAdminPasscode('')
+    armAdminGrant()
+    setAdminFlow('armed')
+  }
+
+  function cancelAdminFlow() {
+    clearAdminGrant()
+    setAdminPasscode('')
+    setAdminFlow('auth')
+    setError('')
   }
 
   async function handleForgot() {
@@ -292,8 +292,14 @@ export default function Login() {
               <div className={s.card}>
                 <div className={s.formHeader}>
                   <div className={s.formIntro}>
-                    <p className={s.formKicker}>{mode === 'signin' ? 'Welcome back' : 'Begin your plan'}</p>
-                    <h2>{mode === 'signin' ? 'Continue your learning plan.' : 'Create your MindCraft studio.'}</h2>
+                    <p className={s.formKicker}>
+                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Begin your plan'}
+                    </p>
+                    <h2>
+                      {adminFlow === 'passcode'
+                        ? 'Enter your admin code.'
+                        : mode === 'signin' ? 'Continue your learning plan.' : 'Create your MindCraft studio.'}
+                    </h2>
                   </div>
                   <span className={s.secureBadge} aria-label="Secure sign in">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -302,6 +308,48 @@ export default function Login() {
                     </svg>
                   </span>
                 </div>
+
+                {adminFlow === 'passcode' ? (
+                  <form
+                    className={s.form}
+                    onSubmit={(e) => { e.preventDefault(); verifyAdminPasscode() }}
+                  >
+                    <div className={s.field}>
+                      <label htmlFor="adminPasscode">Admin passcode</label>
+                      <div className={s.inputShell}>
+                        <span className={s.inputIcon} aria-hidden="true">
+                          <svg viewBox="0 0 24 24">
+                            <rect x="5" y="10" width="14" height="10" rx="2" />
+                            <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                          </svg>
+                        </span>
+                        <input
+                          id="adminPasscode"
+                          type="password"
+                          placeholder="Enter code"
+                          value={adminPasscode}
+                          onChange={e => setAdminPasscode(e.target.value)}
+                          autoComplete="off"
+                          autoFocus
+                        />
+                      </div>
+                    </div>
+                    <button className={s.submitBtn} type="submit" disabled={!adminPasscode.trim()}>
+                      <span>Continue</span>
+                      <span aria-hidden="true">-&gt;</span>
+                    </button>
+                    <p className={s.bottomLink}>
+                      <button type="button" onClick={cancelAdminFlow}>Back to sign in</button>
+                    </p>
+                  </form>
+                ) : (
+                  <>
+                {adminFlow === 'armed' && (
+                  <p className={s.formKicker} style={{ marginBottom: 16, textAlign: 'center' }}>
+                    Code accepted — sign in below to activate admin access.{' '}
+                    <button type="button" onClick={cancelAdminFlow}>Cancel</button>
+                  </p>
+                )}
 
                 <div className={s.roleSelector} aria-label="Select your role">
                   {(['student', 'parent', 'tutor'] as Role[]).map(r => (
@@ -374,36 +422,6 @@ export default function Login() {
                     </div>
                   )}
 
-                  {!showAdminPasscode && (
-                    <div className={s.forgot}>
-                      <button type="button" onClick={() => setShowAdminPasscode(true)}>
-                        Have an admin code?
-                      </button>
-                    </div>
-                  )}
-
-                  {showAdminPasscode && (
-                    <div className={s.field}>
-                      <label htmlFor="adminPasscode">Admin passcode</label>
-                      <div className={s.inputShell}>
-                        <span className={s.inputIcon} aria-hidden="true">
-                          <svg viewBox="0 0 24 24">
-                            <rect x="5" y="10" width="14" height="10" rx="2" />
-                            <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                          </svg>
-                        </span>
-                        <input
-                          id="adminPasscode"
-                          type="password"
-                          placeholder="Optional"
-                          value={adminPasscode}
-                          onChange={e => setAdminPasscode(e.target.value)}
-                          autoComplete="off"
-                        />
-                      </div>
-                    </div>
-                  )}
-
                   {error && <p className={s.error}>{error}</p>}
 
                   <button className={s.submitBtn} disabled={loading} type="submit">
@@ -432,14 +450,24 @@ export default function Login() {
                 <p className={s.bottomLink}>
                   {mode === 'signin' ? (
                     <>New to MindCraft?{' '}
-                      <button type="button" onClick={() => { setMode('signup'); setError(''); clearPasscodeState(setShowAdminPasscode, setAdminPasscode) }}>Create account -&gt;</button>
+                      <button type="button" onClick={() => { setMode('signup'); setError('') }}>Create account -&gt;</button>
                     </>
                   ) : (
                     <>Already have an account?{' '}
-                      <button type="button" onClick={() => { setMode('signin'); setError(''); clearPasscodeState(setShowAdminPasscode, setAdminPasscode) }}>Sign in</button>
+                      <button type="button" onClick={() => { setMode('signin'); setError('') }}>Sign in</button>
                     </>
                   )}
                 </p>
+
+                {adminFlow === 'auth' && (
+                  <p className={s.bottomLink}>
+                    <button type="button" onClick={() => { setAdminFlow('passcode'); setAdminPasscode(''); setError('') }}>
+                      Have an admin code?
+                    </button>
+                  </p>
+                )}
+                  </>
+                )}
 
               </div>
             </div>
