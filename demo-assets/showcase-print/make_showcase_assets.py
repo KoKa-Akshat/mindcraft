@@ -1,7 +1,5 @@
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
-import math
-import textwrap
+from PIL import Image, ImageDraw, ImageFont
 
 OUT = Path(__file__).resolve().parent
 DPI = 300
@@ -18,6 +16,7 @@ GOLD_SOFT = (232, 192, 102)
 INK = (16, 35, 31)
 MUTED = (109, 116, 105)
 WHITE = (255, 255, 255)
+BLACK = (7, 10, 9)
 
 FONT_DIR = Path("/System/Library/Fonts/Supplemental")
 SANS = str(FONT_DIR / "Arial.ttf")
@@ -75,7 +74,7 @@ def fit_lines(draw, value, fnt, max_width):
 def draw_brand(draw, x, y, scale=1.0, light=False):
     f1 = font(SANS_BLACK, int(38 * scale))
     f2 = font(SANS_BLACK, int(38 * scale))
-    c1 = WHITE if light else GREEN
+    c1 = WHITE if light else BLACK
     c2 = LIME
     draw.text((x, y), "Mind", font=f1, fill=c1)
     w = draw.textbbox((x, y), "Mind", font=f1)[2] - x - int(2 * scale)
@@ -83,7 +82,7 @@ def draw_brand(draw, x, y, scale=1.0, light=False):
 
 
 def paste_qr(base, box, invert=False):
-    qr_path = OUT / "mindcraft-login-qr.png"
+    qr_path = OUT / "mindcraft-landing-qr.png"
     qr = Image.open(qr_path).convert("RGBA")
     if invert:
         rgb = qr.convert("RGB")
@@ -130,11 +129,12 @@ def make_card_front():
 
     rounded_rect(d, (54, 46, w - 54, h - 46), 42, PAPER, (255, 250, 240, 90), 2)
     draw_brand(d, 88, 76, 0.82, light=False)
-    d.text((88, 190), "FOR PARENTS TIRED OF GUESSING", font=font(SANS_BOLD, 20), fill=GOLD, spacing=6)
+    d.text((88, 176), "FOR PARENTS TIRED OF GUESSING", font=font(SANS_BOLD, 20), fill=GOLD, spacing=6)
     headline = "Know what to do next."
-    d.multiline_text((88, 240), headline, font=font(SERIF_BOLD, 72), fill=BURGUNDY, spacing=4)
-    body = "MindCraft maps where your child stands in math, routes what to practice, and connects tutoring to the plan."
-    d.multiline_text((88, 428), fit_lines(d, body, font(SANS_BOLD, 25), 610), font=font(SANS_BOLD, 25), fill=GREEN, spacing=8)
+    d.multiline_text((88, 224), headline, font=font(SERIF_BOLD, 68), fill=BURGUNDY, spacing=4)
+    d.text((88, 334), "Making maths fun again.", font=font(SERIF_BOLD, 34), fill=GREEN)
+    body = "We find the gaps, build the route, and make practice feel like progress."
+    d.multiline_text((88, 430), fit_lines(d, body, font(SANS_BOLD, 24), 590), font=font(SANS_BOLD, 24), fill=GREEN, spacing=8)
 
     qr_box = (w - 296, h - 338, 222)
     rounded_rect(d, (qr_box[0] - 16, qr_box[1] - 16, qr_box[0] + qr_box[2] + 16, qr_box[1] + qr_box[2] + 58), 28, PAPER, None)
@@ -150,13 +150,13 @@ def make_card_back():
     img.alpha_composite(draw_arcs(d, w, h, GOLD, 38, offset=40))
     rounded_rect(d, (46, 44, w - 46, h - 44), 36, None, (6, 77, 54, 70), 2)
     draw_brand(d, 74, 70, 0.58, light=False)
-    d.text((74, 150), "Private learning support for ACT + school math", font=font(SANS_BOLD, 21), fill=BURGUNDY)
+    d.text((74, 150), "Private study studio for maths + ACT", font=font(SANS_BOLD, 22), fill=BURGUNDY)
 
     items = [
-        ("1", "Find the gaps behind missed questions"),
-        ("2", "Build a practice route students can follow"),
-        ("3", "Turn homework stress into guided help"),
-        ("4", "Give tutors context before every session"),
+        ("1", "See what is actually missing"),
+        ("2", "Know the next right skill"),
+        ("3", "Practice without the panic"),
+        ("4", "Bring tutoring a real plan"),
     ]
     y = 210
     for n, line in items:
@@ -166,9 +166,9 @@ def make_card_back():
         y += 58
 
     d.line((74, 468, w - 74, 468), fill=(6, 77, 54, 70), width=2)
-    d.text((74, 502), "joinmindcraft@gmail.com  •  +1 (763) 340-5616", font=font(SANS_BOLD, 20), fill=GREEN)
-    d.text((74, 540), "mindcraft-93858.web.app/login", font=font(SANS, 18), fill=MUTED)
-    d.text((w - 74, 540), "BETA Showcase 2026", font=font(SANS_BOLD, 18), fill=BURGUNDY, anchor="ra")
+    d.text((74, 494), "Talk with us", font=font(SERIF_BOLD, 25), fill=BURGUNDY)
+    d.text((74, 532), "joinmindcraft@gmail.com  •  +1 (763) 340-5616", font=font(SANS_BOLD, 20), fill=GREEN)
+    d.text((w - 74, 532), "BETA Showcase 2026", font=font(SANS_BOLD, 18), fill=BURGUNDY, anchor="ra")
     save_print(img, "mindcraft_showcase_card_back_3.75x2.25_bleed")
 
 
@@ -190,43 +190,44 @@ def make_poster(name, inches):
 
     margin = int(w * 0.055)
     draw_brand(d, margin, int(h * 0.055), 1.75 if inches[0] > 12 else 1.05, light=False)
-    d.text((margin, int(h * 0.17)), "FOR PARENTS TIRED OF GUESSING", font=font(SANS_BOLD, int(w * 0.018)), fill=GOLD)
+    d.text((margin, int(h * 0.155)), "FOR PARENTS TIRED OF GUESSING", font=font(SANS_BOLD, int(w * 0.018)), fill=GOLD)
     headline_font = font(SERIF_BOLD, int(w * 0.074))
     headline = "Know what to\ndo next."
-    d.multiline_text((margin, int(h * 0.225)), headline, font=headline_font, fill=BURGUNDY, spacing=int(w * 0.012))
-    sub = "MindCraft turns missed math questions into a clear learning route, so families know where a student stands, what to practice, and when tutoring is actually helping."
-    d.multiline_text((margin, int(h * 0.50)), fit_lines(d, sub, font(SANS_BOLD, int(w * 0.021)), int(w * 0.49)), font=font(SANS_BOLD, int(w * 0.021)), fill=GREEN, spacing=int(w * 0.01))
+    d.multiline_text((margin, int(h * 0.215)), headline, font=headline_font, fill=BURGUNDY, spacing=int(w * 0.012))
+    d.text((margin, int(h * 0.455)), "Making maths fun again.", font=font(SERIF_BOLD, int(w * 0.036)), fill=GREEN)
+    sub = "MindCraft turns maths stress into a clear plan: find the gaps, practice the next move, and make every tutor session count."
+    d.multiline_text((margin, int(h * 0.535)), fit_lines(d, sub, font(SANS_BOLD, int(w * 0.019)), int(w * 0.47)), font=font(SANS_BOLD, int(w * 0.019)), fill=GREEN, spacing=int(w * 0.01))
 
-    qr_size = int(w * 0.18)
+    qr_size = int(w * 0.165)
     qr_x = panel_x + int((w - panel_x - qr_size) / 2)
-    qr_y = int(h * 0.56)
+    qr_y = int(h * 0.665)
     rounded_rect(d, (qr_x - int(w * 0.018), qr_y - int(w * 0.018), qr_x + qr_size + int(w * 0.018), qr_y + qr_size + int(w * 0.07)), int(w * 0.02), PAPER)
     paste_qr(img, (qr_x, qr_y, qr_size), invert=True)
-    d.text((qr_x + qr_size // 2, qr_y + qr_size + int(w * 0.032)), "Scan for the demo", font=font(SANS_BOLD, int(w * 0.017)), fill=GREEN, anchor="ma")
+    d.text((qr_x + qr_size // 2, qr_y + qr_size + int(w * 0.032)), "Scan to see MindCraft", font=font(SANS_BOLD, int(w * 0.016)), fill=GREEN, anchor="ma")
 
     right_x = panel_x + int(w * 0.05)
     right_width = w - right_x - int(w * 0.045)
     right_small = font(SERIF_BOLD, int(w * 0.022))
     right_big = font(SERIF_BOLD, int(w * 0.030))
     d.multiline_text(
-        (right_x, int(h * 0.09)),
-        fit_lines(d, "Your child does not need more random reps.", right_small, right_width),
+        (right_x, int(h * 0.085)),
+        fit_lines(d, "Private study studio for maths + ACT.", right_small, right_width),
         font=right_small,
         fill=GOLD_SOFT,
         spacing=int(w * 0.008),
     )
     d.multiline_text(
-        (right_x, int(h * 0.18)),
-        fit_lines(d, "They need the next right move.", right_big, right_width),
+        (right_x, int(h * 0.175)),
+        fit_lines(d, "Clarity before the next test.", right_big, right_width),
         font=right_big,
         fill=PAPER,
         spacing=int(w * 0.01),
     )
     bullets = [
-        "Gap map from diagnostic + practice",
-        "Personal route for what to fix next",
-        "Homework help that preserves thinking",
-        "Tutor sessions connected to evidence",
+        "See where the struggle starts",
+        "Know the next right skill",
+        "Practice without the panic",
+        "Bring tutoring a real plan",
     ]
     y = int(h * 0.34)
     for b in bullets:
@@ -239,9 +240,9 @@ def make_poster(name, inches):
             fill=(230, 240, 226),
             spacing=int(w * 0.006),
         )
-        y += int(h * 0.062)
+        y += int(h * 0.055)
 
-    d.text((margin, h - int(h * 0.075)), "joinmindcraft@gmail.com  •  +1 (763) 340-5616", font=font(SANS_BOLD, int(w * 0.017)), fill=GREEN)
+    d.text((margin, h - int(h * 0.075)), "Talk with us  •  joinmindcraft@gmail.com  •  +1 (763) 340-5616", font=font(SANS_BOLD, int(w * 0.016)), fill=GREEN)
     d.text((right_x, h - int(h * 0.075)), "BETA Showcase • The Luminare", font=font(SANS_BOLD, int(w * 0.015)), fill=(220, 225, 214))
     save_print(img, name)
 
