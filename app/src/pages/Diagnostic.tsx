@@ -12,14 +12,8 @@
 
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { doc, setDoc } from 'firebase/firestore'
-import { db } from '../firebase'
 import { useUser } from '../App'
-import { seedAssessment } from '../lib/mlApi'
-import { markDiagnosticComplete } from '../lib/practiceState'
-import { invalidateKnowledgeGraph } from '../lib/graphCache'
-import { toOntologyId } from '../lib/conceptMap'
-import { seedFoundationalConfidence } from '../lib/examCurricula'
+import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import type { Confidence } from '../lib/bridgePractice'
 import spec from '../data/actDiagnostic.json'
 import s from './Diagnostic.module.css'
@@ -28,14 +22,6 @@ interface ConfConcept { concept_id: string; name: string; act_high_priority: boo
 interface ScalePoint { value: Confidence; label: string }
 
 const EXAM = 'ACT'
-
-function buildConfidenceMap(raw: Record<string, Confidence>): Record<string, Confidence> {
-  const out: Record<string, Confidence> = {}
-  for (const [conceptId, value] of Object.entries(raw)) {
-    out[toOntologyId(conceptId)] = value
-  }
-  return out
-}
 
 type Step = 'intro' | 'goals' | 'confidence' | 'done'
 
@@ -66,34 +52,19 @@ export default function Diagnostic() {
   }
 
   async function finishConfidence() {
-    const assessment = buildConfidenceMap(confidence)
-    const seeded = seedFoundationalConfidence(assessment)
-    await seedAssessment(user.uid, seeded)
-    invalidateKnowledgeGraph(user.uid)
-    await complete(seeded)
-  }
-
-  async function complete(confidenceMapOverride?: Record<string, Confidence>) {
     setSaving(true)
-    setStep('done')
-    const goals = { tags: goalTags, text: goalText.trim() }
-    const confidenceMap = confidenceMapOverride ?? buildConfidenceMap(confidence)
     try {
-      await setDoc(
-        doc(db, 'users', user.uid),
-        {
-          goals,
-          diagnosticCompletedAt: new Date().toISOString(),
-          diagnosticVersion: (spec as { version?: string }).version,
-        },
-        { merge: true },
+      await applyDiagnosticConfidence(
+        user.uid,
+        EXAM,
+        confidence,
+        { tags: goalTags, text: goalText.trim() },
+        { diagnosticVersion: (spec as { version?: string }).version },
       )
-    } catch {
-      /* non-blocking */
+      setStep('done')
+    } finally {
+      setSaving(false)
     }
-    await markDiagnosticComplete(user.uid, { exam: EXAM, confidenceMap })
-    invalidateKnowledgeGraph(user.uid)
-    setSaving(false)
   }
 
   function goToDashboard() {

@@ -50,32 +50,9 @@
     "note": "Probes unwired — confidence-only diagnostic for now."
   },
   "event_emission": {
-    "endpoint": "POST {ML_BASE}/learning-event",
-    "confidence_report": {
-      "subject_id": "math",
-      "concept_id": "<concept_id>",
-      "event_type": "confidence_report",
-      "outcome": null,
-      "source": "diagnostic",
-      "metadata": {
-        "confidence": "<hard|kinda|easy from scale>",
-        "step": "confidence"
-      },
-      "note": "outcome left null so self-report does not pollute mastery; confidence stored in metadata as a prior."
-    },
-    "probe_answer": {
-      "note": "disabled — probes unwired"
-    },
-    "diagnostic_complete": {
-      "subject_id": "math",
-      "concept_id": "diagnostic",
-      "event_type": "diagnostic_complete",
-      "source": "diagnostic",
-      "metadata": {
-        "concepts_seen": "<int>",
-        "goals": "<text>"
-      },
-      "note": "marks first-login diagnostic done; engine can now serve /learning-world/math and /recommend."
-    }
+    "note": "Canonical sinks — world hands off via /dashboard?diag=; app calls /seed-assessment.",
+    "confidence_step": "POST {APP_BASE}/dashboard?diag= — app seeds via applyDiagnosticConfidence",
+    "probe_step": "disabled — probes unwired",
+    "completion": "users/{uid}.diagnosticCompleted via app markDiagnosticComplete"
   }
 }

@@ -5,6 +5,8 @@ import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
 import { isDiagnosticComplete, markDiagnosticComplete } from '../lib/practiceState'
+import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
+import type { Confidence } from '../lib/bridgePractice'
 import HeroBar from '../components/HeroBar'
 import PawHub from '../components/PawHub'
 import PracticeLearningPathMini from '../components/PracticeLearningPathMini'
@@ -81,6 +83,23 @@ export default function Dashboard() {
   useEffect(() => {
     let cancelled = false
     ;(async () => {
+      const diag = searchParams.get('diag')
+      if (diag) {
+        try {
+          const { exam, confidence, goals } = JSON.parse(diag) as {
+            exam?: string
+            confidence: Record<string, Confidence>
+            goals?: { tags: string[]; text: string }
+          }
+          await applyDiagnosticConfidence(user.uid, exam ?? 'ACT', confidence, goals)
+        } catch { /* fall through — worst case they get the gap-scan */ }
+        if (cancelled) return
+        navigate('/dashboard', { replace: true })
+        setDiagChecked(true)
+        document.cookie = 'mc_diag_done=1; domain=.web.app; path=/; max-age=31536000; SameSite=Lax'
+        return
+      }
+
       let done = await isDiagnosticComplete(user.uid)
       if (!done && localStorage.getItem('mc-diag-done') === '1') {
         await markDiagnosticComplete(user.uid, { exam: 'ACT', confidenceMap: {} })
@@ -94,7 +113,7 @@ export default function Dashboard() {
       }
     })()
     return () => { cancelled = true }
-  }, [user.uid, navigate])
+  }, [user.uid, navigate, searchParams])
 
   return (
     <div className={s.shell}>

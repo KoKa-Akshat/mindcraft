@@ -105,9 +105,10 @@
 }
 
 .mc-diag-conf { display: flex; flex-direction: column; gap: 14px; margin-bottom: 16px; }
+.mc-diag-nav { display: flex; gap: 10px; align-items: center; justify-content: flex-end; }
 .mc-diag-conf-row { display: flex; flex-direction: column; gap: 6px; }
 .mc-diag-conf-name { font-size: 13px; font-weight: 700; }
-.mc-diag-scale { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+.mc-diag-scale { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
 .mc-diag-scale button {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.12);
