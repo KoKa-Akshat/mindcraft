@@ -1,129 +1,41 @@
 /**
- * MindCraft world HTML chrome — pre-diagnostic entry flow.
+ * MindCraft world HTML chrome — Open Projects button, always visible after world loads.
  */
 (function () {
-  var APP = window.location.hostname === 'localhost'
-    ? 'http://localhost:4321'
-    : 'https://mindcraft-93858.web.app'
-  var AMBIENT_VOLUME = 0.28
-
-  window.__MINDCRAFT_WORLD_BUILD__ = '2026-06-30-world-chrome-v12'
-
-  // Read shared .web.app cookie set by the dashboard when diagnostic is confirmed done
-  function hasDiagCookie() {
-    return document.cookie.split(';').some(function (c) {
-      return c.trim() === 'mc_diag_done=1'
-    })
-  }
-
-  // Check if student just completed diagnostic (URL param from the React app)
-  var params = new URLSearchParams(window.location.search)
-  var diagJustDone = params.get('diagDone') === '1'
-  if (diagJustDone) {
-    localStorage.setItem('mc-diag-done', '1')
-    // Clean the URL param without reloading
-    params.delete('diagDone')
-    var cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '')
-    history.replaceState(null, '', cleanUrl)
-  }
-
-  // diagDone: localStorage flag (world-own), shared cookie (set by dashboard), or URL param
-  var diagDone = !!localStorage.getItem('mc-diag-done') || hasDiagCookie()
-  if (diagDone) localStorage.setItem('mc-diag-done', '1') // sync to localStorage for next visit
+  window.__MINDCRAFT_WORLD_BUILD__ = '2026-07-01-world-chrome-v9'
 
   function wireChrome() {
-    var webToggle  = document.getElementById('mc-web-toggle')
-    var bookingLink = document.getElementById('mc-booking-link')
-    var topActions = document.getElementById('mc-top-actions')
-    var badge      = document.getElementById('mc-badge')
-    var clickMe    = document.getElementById('mc-click-me')
-    var startBtn   = document.getElementById('mc-start-btn')
+    var badge       = document.getElementById('mc-badge')
+    var startBtn    = document.getElementById('mc-start-btn')
+    var projectsBtn = document.getElementById('mc-open-projects')
 
-    if (webToggle)   webToggle.href   = APP + '/dashboard'
-    if (bookingLink) bookingLink.href = APP + '/book'
-    if (badge)       badge.classList.add('show')
+    if (badge) badge.classList.add('show')
 
-    function turnSoundOn() {
-      try {
-        if (window.Howler) {
-          window.Howler.mute(false)
-          window.Howler.volume(AMBIENT_VOLUME)
-          if (window.Howler.ctx && window.Howler.ctx.resume) window.Howler.ctx.resume()
-        }
-      } catch (e) {}
-
-      var exp = window.experience
-      try {
-        if (exp && exp.sounds) {
-          if (exp.sounds.cooking && exp.sounds.cooking.mute) exp.sounds.cooking.mute(false)
-          if (exp.sounds.cooking && exp.sounds.cooking.volume) exp.sounds.cooking.volume(AMBIENT_VOLUME)
-        }
-      } catch (e) {}
-
-      // The original world uses M as the audio unlock/mute shortcut. Fire it once
-      // from the Enter World gesture, not on page load, so it doesn't double-toggle.
-      ;[document, window].forEach(function (t) {
-        t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
+    // Wire the Open Projects button → overlay (always, every visit)
+    if (projectsBtn && !projectsBtn.__mcWired) {
+      projectsBtn.__mcWired = true
+      projectsBtn.addEventListener('click', function () {
+        if (typeof window.MC_onProjectsOpen === 'function') window.MC_onProjectsOpen()
       })
     }
 
-    function hideProjectsCue() {
-      if (clickMe) clickMe.style.display = 'none'
-    }
-
-    window.MC_hideProjectsCue = hideProjectsCue
-
-    function showProjectsCue() {
-      if (diagDone) return
-      if (clickMe) {
-        clickMe.style.display = 'flex'
-      }
-    }
-
-    function openDiagnosticFlow() {
-      if (diagDone) return
-      hideProjectsCue()
-      sessionStorage.setItem('mc-clicked-me', '1')
-      if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
-    }
-
-    // Jesse's Kitchen is now a pre-diagnostic experience only:
-    // no Booking, no 3D|Web toggle, and no return path after diagnostic.
     function revealChrome() {
-      if (bookingLink) bookingLink.style.display = 'none'
-      if (topActions) topActions.style.display = 'none'
+      if (projectsBtn) projectsBtn.style.display = 'flex'
     }
 
     if (startBtn) {
       startBtn.addEventListener('click', function () {
-        turnSoundOn()
-        setTimeout(function () {
-          try {
-            if (window.Howler) {
-              window.Howler.mute(false)
-              window.Howler.volume(AMBIENT_VOLUME)
-              if (window.Howler.ctx && window.Howler.ctx.resume) window.Howler.ctx.resume()
-            }
-          } catch (e) {}
-        }, 250)
         setTimeout(revealChrome, 900)
-        setTimeout(showProjectsCue, 1200)
+        // Auto-play sound
+        setTimeout(function () {
+          ;[document, window].forEach(function (t) {
+            t.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', code: 'KeyM', bubbles: true }))
+          })
+        }, 1400)
       }, { once: true })
     } else {
-      turnSoundOn()
       revealChrome()
-      setTimeout(showProjectsCue, 1200)
     }
-
-    // Projects cue → go to diagnostic (pre-diagnostic flow)
-    if (clickMe && !clickMe.__mcWired) {
-      clickMe.__mcWired = true
-      clickMe.addEventListener('click', function () {
-        openDiagnosticFlow()
-      })
-    }
-
-    // Keep Enter World and Projects manual. Once pressed, sound starts and a cue points to Projects.
   }
 
   if (document.readyState === 'loading') {

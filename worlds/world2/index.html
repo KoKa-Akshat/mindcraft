@@ -27,11 +27,11 @@
     <meta name="msapplication-TileColor" content="#58CC02" />
     <meta name="theme-color" content="#1a1a1a" />
     <script>if('serviceWorker'in navigator)navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(sw){sw.unregister()})})</script>
-    <link href="main.css?v=20260630-world-v15" rel="stylesheet" />
-    <link href="mc-diagnostic.css?v=20260630-diag-handoff" rel="stylesheet" />
-    <script src="mc-world-chrome.js?v=20260630-world-v15"></script>
+    <link href="main.css?v=20260701-world-v13" rel="stylesheet" />
+    <link href="mc-diagnostic.css?v=20260701-world-v13" rel="stylesheet" />
+    <script src="mc-world-chrome.js?v=20260701-world-v13"></script>
     <script defer src="bundle.mc-v4.js"></script>
-    <script defer src="mc-world-nav.js?v=20260630-world-v15"></script>
+    <script defer src="mc-world-nav.js?v=20260701-world-v13"></script>
   </head>
   <body>
     <canvas class="webgl"></canvas>
@@ -40,6 +40,17 @@
     <!-- Logo: always visible, never changes size -->
     <div id="mc-badge">
       <span class="mc-logo">Mind<span class="mc-craft">Craft</span></span>
+    </div>
+
+    <!-- Booking: separate fixed element, shown only after diagnostic done -->
+    <a id="mc-booking-link" class="mc-booking-btn" href="https://mindcraft-93858.web.app/book" style="display:none">Booking</a>
+
+    <!-- 3D|Web toggle: hidden until diagnostic done -->
+    <div id="mc-top-actions" class="mc-top-actions" style="display:none">
+      <div class="mc-view-toggle" aria-label="Dashboard view switcher">
+        <button type="button" class="mc-toggle-active" disabled aria-current="page">3D</button>
+        <a id="mc-web-toggle" class="mc-toggle-inactive" href="https://mindcraft-93858.web.app/dashboard">Web</a>
+      </div>
     </div>
 
     <div id="cooking">
@@ -64,17 +75,15 @@
 
     <button class="start" id="mc-start-btn">Enter World →</button>
 
-    <!-- Projects cue — hidden until Enter World, disappears when Projects opens -->
-    <div id="mc-click-me" style="display:none" aria-live="polite">
-      <span class="mc-cue-kicker">Start diagnostic</span>
-      <span class="mc-cue-title">Click Projects</span>
-      <span class="mc-cue-subtitle">Use the pink Projects sign on the left to open your first questions.</span>
-    </div>
+    <!-- Instruction callout — always visible after Enter World, opens Projects overlay -->
+    <button type="button" id="mc-open-projects" style="display:none" aria-label="Click Projects">
+      Click Projects
+    </button>
 
     <div id="mc-diag" aria-hidden="true">
       <div id="mc-diag-backdrop"></div>
       <div id="mc-diag-panel"></div>
     </div>
-    <script src="mc-diagnostic.js?v=20260630-diag-handoff" defer></script>
+    <script src="mc-diagnostic.js?v=20260701-world-v13" defer></script>
   </body>
 </html>
