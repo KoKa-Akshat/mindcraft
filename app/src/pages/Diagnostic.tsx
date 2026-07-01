@@ -36,6 +36,7 @@ export default function Diagnostic() {
   const [goalTags, setGoalTags] = useState<string[]>([])
   const [goalText, setGoalText] = useState('')
   const [confidence, setConfidence] = useState<Record<string, Confidence>>({})
+  const [excludedIds, setExcludedIds] = useState<Set<string>>(() => new Set())
   const [saving, setSaving] = useState(false)
 
   const progress = useMemo(() => {
@@ -43,12 +44,36 @@ export default function Diagnostic() {
     return (order.indexOf(step) / (order.length - 1)) * 100
   }, [step])
 
+  const allRated = useMemo(
+    () => concepts.every(c => confidence[c.concept_id] || excludedIds.has(c.concept_id)),
+    [concepts, confidence, excludedIds],
+  )
+
   function toggleGoal(tag: string) {
     setGoalTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]))
   }
 
   function setConf(conceptId: string, value: Confidence) {
+    setExcludedIds(prev => {
+      const next = new Set(prev)
+      next.delete(conceptId)
+      return next
+    })
     setConfidence(prev => ({ ...prev, [conceptId]: value }))
+  }
+
+  function toggleSkip(conceptId: string) {
+    setExcludedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(conceptId)) next.delete(conceptId)
+      else next.add(conceptId)
+      return next
+    })
+    setConfidence(prev => {
+      const next = { ...prev }
+      delete next[conceptId]
+      return next
+    })
   }
 
   async function finishConfidence() {
@@ -59,7 +84,10 @@ export default function Diagnostic() {
         EXAM,
         confidence,
         { tags: goalTags, text: goalText.trim() },
-        { diagnosticVersion: (spec as { version?: string }).version },
+        {
+          diagnosticVersion: (spec as { version?: string }).version,
+          excludedConcepts: [...excludedIds],
+        },
       )
       setStep('done')
     } finally {
@@ -131,13 +159,18 @@ export default function Diagnostic() {
                         onClick={() => setConf(c.concept_id, sp.value)}
                       >{sp.label}</button>
                     ))}
+                    <button
+                      type="button"
+                      className={`${s.skipBtn} ${excludedIds.has(c.concept_id) ? s.skipOn : ''}`}
+                      onClick={() => toggleSkip(c.concept_id)}
+                    >Skip</button>
                   </div>
                 </div>
               ))}
             </div>
             <button
               className={s.primary}
-              disabled={Object.keys(confidence).length < concepts.length}
+              disabled={!allRated}
               onClick={() => void finishConfidence()}
             >Finish</button>
           </section>

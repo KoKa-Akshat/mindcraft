@@ -87,12 +87,15 @@ export default function Dashboard() {
       const diag = searchParams.get('diag')
       if (diag) {
         try {
-          const { exam, confidence, goals } = JSON.parse(diag) as {
+          const { exam, confidence, goals, excluded } = JSON.parse(diag) as {
             exam?: string
             confidence: Record<string, Confidence>
             goals?: { tags: string[]; text: string }
+            excluded?: string[]
           }
-          await applyDiagnosticConfidence(user.uid, exam ?? 'ACT', confidence, goals)
+          await applyDiagnosticConfidence(user.uid, exam ?? 'ACT', confidence, goals, {
+            excludedConcepts: excluded ?? [],
+          })
         } catch { /* fall through — worst case they get the gap-scan */ }
         if (cancelled) return
         navigate('/dashboard', { replace: true })

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import { PRACTICE_CONCEPTS } from './questionBank'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../firebase'
 import { mlIdToLabel } from './conceptMap'
-import { loadPracticeDraftsRemote } from './practiceState'
+import { loadPracticeDraftsRemote, loadDiagnostic } from './practiceState'
 import { getRecommendations } from './mlApi'
 import { chainSteps } from './recommendNextConcept'
 
@@ -138,24 +136,18 @@ async function loadPracticePathData(userId: string): Promise<PracticePathQueue> 
 
   let confidenceMap = draft?.confidenceMap ?? {}
   let exam = draft?.exam ?? 'ACT'
+  let excludedConcepts: string[] = []
 
-  if (Object.keys(confidenceMap).length === 0) {
-    try {
-      const snap = await getDoc(doc(db, 'users', userId))
-      const diagnostic = snap.data()?.diagnostic as {
-        exam?: string
-        confidenceMap?: Record<string, Confidence>
-      } | undefined
-      if (diagnostic?.confidenceMap) {
-        confidenceMap = diagnostic.confidenceMap
-        exam = diagnostic.exam ?? exam
-      }
-    } catch { /* fail soft */ }
+  const diagnostic = await loadDiagnostic(userId).catch(() => null)
+  if (Object.keys(confidenceMap).length === 0 && diagnostic?.confidenceMap) {
+    confidenceMap = diagnostic.confidenceMap as Record<string, Confidence>
+    exam = diagnostic.exam ?? exam
   }
+  excludedConcepts = diagnostic?.excludedConcepts ?? []
 
   let assessConcepts: PathConcept[] = []
   try {
-    const examRec = await getRecommendations(userId, [], 'exam', exam)
+    const examRec = await getRecommendations(userId, [], 'exam', exam, excludedConcepts)
     assessConcepts = conceptsFromIds(chainSteps(examRec).map(r => r.conceptId))
   } catch { /* fail soft */ }
 

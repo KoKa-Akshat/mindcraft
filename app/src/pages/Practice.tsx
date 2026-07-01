@@ -90,6 +90,7 @@ type PracticeDraft = {
   hideCorrectness?: boolean
   /** Concepts still needing self-rating after the question diagnostic. */
   confidenceQueueIds?: string[]
+  excludedConceptIds?: string[]
 }
 
 const EXAMS = ['ACT', 'SAT', 'IB', 'AP', 'General'] as const
@@ -336,6 +337,7 @@ export default function Practice() {
   const [assessConcepts, setAssessConcepts] = useState<typeof PRACTICE_CONCEPTS>([])
   const [confidenceStep, setConfidenceStep] = useState(0)
   const [confidenceMap,  setConfidenceMap]  = useState<Record<string, Confidence>>({})
+  const [excludedConceptIds, setExcludedConceptIds] = useState<string[]>([])
 
   // ── Practice state ────────────────────────────────────────────────────────
   const [pPhase,     setPPhase]     = useState<PracticePhase>('path')
@@ -490,6 +492,7 @@ export default function Practice() {
     setAssessConcepts(restoredConcepts)
     setConfidenceStep(Math.min(draft.confidenceStep, Math.max(restoredConcepts.length - 1, 0)))
     setConfidenceMap(draft.confidenceMap ?? {})
+    setExcludedConceptIds(draft.excludedConceptIds ?? [])
     const restoredPhase = draft.pPhase === 'onboard' ? 'path'
       : draft.pPhase === 'session' && !draft.questions?.length
       ? (type === 'gapscan' ? 'path' : 'level')
@@ -716,6 +719,7 @@ export default function Practice() {
       sessionBridge,
       hideCorrectness,
       confidenceQueueIds: confidenceQueue.map(c => c.id),
+      excludedConceptIds,
     }
 
     localStorage.setItem(practiceDraftKey(user.uid, missionType), JSON.stringify(draft))
@@ -748,6 +752,7 @@ export default function Practice() {
     sessionBridge,
     hideCorrectness,
     confidenceQueue,
+    excludedConceptIds,
   ])
 
   // Auto-submit if navigated from dashboard with problemText; open the requested flow otherwise.
@@ -826,11 +831,11 @@ export default function Practice() {
     })()
   }
 
-  function finishGapScan(updated: Record<string, Confidence>) {
+  function finishGapScan(updated: Record<string, Confidence>, excluded = excludedConceptIds) {
     const seeded = seedFoundationalConfidence(updated)
     void seedAssessment(user.uid, seeded)
     invalidateKnowledgeGraph(user.uid)
-    void markDiagnosticComplete(user.uid, { exam, confidenceMap: seeded })
+    void markDiagnosticComplete(user.uid, { exam, confidenceMap: seeded, excludedConcepts: excluded })
     notifyPracticePathUpdated()
     setHideCorrectness(false)
     setConfidenceQueue([])
@@ -904,10 +909,27 @@ export default function Practice() {
   function pickConfidence(conf: Confidence) {
     const ratingList = confidenceQueue.length > 0 ? confidenceQueue : assessConcepts
     const current = ratingList[confidenceStep]
+    const updatedExcluded = excludedConceptIds.filter(id => id !== current.id)
     const updated = { ...confidenceMap, [current.id]: conf }
+    setExcludedConceptIds(updatedExcluded)
     setConfidenceMap(updated)
     if (confidenceStep + 1 >= ratingList.length) {
-      finishGapScan(updated)
+      finishGapScan(updated, updatedExcluded)
+    } else {
+      setConfidenceStep(i => i + 1)
+    }
+  }
+
+  function pickSkipTopic() {
+    const ratingList = confidenceQueue.length > 0 ? confidenceQueue : assessConcepts
+    const current = ratingList[confidenceStep]
+    const updatedExcluded = [...new Set([...excludedConceptIds, current.id])]
+    const updated = { ...confidenceMap }
+    delete updated[current.id]
+    setExcludedConceptIds(updatedExcluded)
+    setConfidenceMap(updated)
+    if (confidenceStep + 1 >= ratingList.length) {
+      finishGapScan(updated, updatedExcluded)
     } else {
       setConfidenceStep(i => i + 1)
     }
@@ -1436,6 +1458,17 @@ export default function Practice() {
                         <div className={s.confBtnText}>
                           <span className={s.confBtnLabel}>{confOptions.hard.label}</span>
                           <span className={s.confBtnDesc}>{confOptions.hard.desc}</span>
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        className={`${s.confBtn} ${s.confBtnSkip} ${excludedConceptIds.includes(current.id) ? s.confBtnSkipOn : ''}`}
+                        onClick={() => pickSkipTopic()}
+                      >
+                        <span className={s.confBtnIcon}>—</span>
+                        <div className={s.confBtnText}>
+                          <span className={s.confBtnLabel}>Not on my path</span>
+                          <span className={s.confBtnDesc}>Skip this topic for now</span>
                         </div>
                       </button>
                     </div>

@@ -7,6 +7,7 @@ import { useUser } from '../App'
 import { mlIdToLabel } from '../lib/conceptMap'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { getRecommendations } from '../lib/mlApi'
+import { loadDiagnostic } from '../lib/practiceState'
 import type { ConceptRecommendation } from '../lib/mlApi'
 import { buildGraph, GPS_W, GPS_H, STATUS_COLOR } from '../lib/learningPathGraph'
 import type { GPSGraph, GPSMLNode } from '../lib/learningPathGraph'
@@ -249,7 +250,9 @@ export default function ConstellationGpsExplorer({
     setSelectedId(targetId)
     setPanel({ mode: 'route', steps: [], gpsGraph: null, loading: true, targetId })
     try {
-      const result = await getRecommendations(user.uid, [targetId], 'curriculum')
+      const diagnostic = await loadDiagnostic(user.uid)
+      const excluded = diagnostic?.excludedConcepts ?? []
+      const result = await getRecommendations(user.uid, [targetId], 'curriculum', diagnostic?.exam ?? 'ACT', excluded)
       if (routeToken.current !== token) return
       if (!result) {
         setPanel({ mode: 'route', steps: [], gpsGraph: null, loading: false, targetId })

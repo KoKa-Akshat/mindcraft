@@ -118,7 +118,7 @@
   padding: 2px 7px;
   border-radius: 6px;
 }
-.scale { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.scale { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 6px; }
 .scaleBtn {
   background: var(--surface-2);
   color: var(--text-2);
@@ -130,6 +130,28 @@
   transition: all .12s ease;
 }
 .scaleOn { background: var(--accent); color: var(--accent-dark); border-color: var(--accent); font-weight: 700; }
+
+.skipBtn {
+  grid-column: 1 / -1;
+  justify-self: start;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .12s ease;
+}
+
+.skipBtn:hover { border-color: var(--text-muted); color: var(--text-2); }
+.skipOn {
+  background: rgba(148, 163, 184, 0.12);
+  border-color: #94a3b8;
+  border-style: solid;
+  color: #cbd5e1;
+}
 
 /* probes */
 .stem { font-size: 20px; font-weight: 600; line-height: 1.4; margin: 0 0 22px; }

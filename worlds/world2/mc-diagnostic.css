@@ -156,6 +156,27 @@
   font-weight: 800;
 }
 
+.mc-diag-topic-skip {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: 2px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255,255,255,0.22);
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mc-diag-topic-skip.on {
+  border-style: solid;
+  border-color: rgba(148,163,184,0.65);
+  color: #cbd5e1;
+  background: rgba(148,163,184,0.12);
+}
+
 .mc-diag-choices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 .mc-diag-choice {
   display: flex;

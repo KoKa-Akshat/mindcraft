@@ -14,15 +14,20 @@ export async function applyDiagnosticConfidence(
   exam: string,
   rawConfidence: Record<string, Confidence>,
   goals?: { tags: string[]; text: string },
-  options?: { diagnosticVersion?: string },
+  options?: { diagnosticVersion?: string; excludedConcepts?: string[] },
 ): Promise<void> {
   const canonical: Record<string, Confidence> = {}
   for (const [id, v] of Object.entries(rawConfidence)) {
     canonical[toOntologyId(id)] = v
   }
+  const excluded = (options?.excludedConcepts ?? []).map(toOntologyId)
   const seeded = seedFoundationalConfidence(canonical)
   await seedAssessment(uid, seeded)
-  await markDiagnosticComplete(uid, { exam, confidenceMap: seeded })
+  await markDiagnosticComplete(uid, {
+    exam,
+    confidenceMap: seeded,
+    excludedConcepts: excluded,
+  })
   invalidateKnowledgeGraph(uid)
   notifyPracticePathUpdated()
 

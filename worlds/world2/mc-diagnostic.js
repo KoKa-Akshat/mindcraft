@@ -13,6 +13,7 @@
   var goalTags = []
   var goalText = ''
   var confidence = {}
+  var excluded = {}
   var confPage = 0
   var pendingOpen = false
   var root, panel
@@ -20,12 +21,18 @@
   function $(sel) { return root.querySelector(sel) }
 
   function dashboardUrl() {
+    var excludedList = Object.keys(excluded)
     var payload = {
       exam: 'ACT',
       confidence: confidence,
       goals: { tags: goalTags, text: goalText.trim() },
+      excluded: excludedList,
     }
     return APP_BASE + '/dashboard?diag=' + encodeURIComponent(JSON.stringify(payload))
+  }
+
+  function isConceptDone(conceptId) {
+    return confidence[conceptId] || excluded[conceptId]
   }
 
   function render() {
@@ -52,8 +59,8 @@
     } else if (step === 'confidence') {
       var pageCount = Math.ceil(concepts.length / PER_PAGE)
       var pageConcepts = concepts.slice(confPage * PER_PAGE, confPage * PER_PAGE + PER_PAGE)
-      var pageRated = pageConcepts.every(function (c) { return confidence[c.concept_id] })
-      var allRated = Object.keys(confidence).length >= concepts.length
+      var pageRated = pageConcepts.every(function (c) { return isConceptDone(c.concept_id) })
+      var allRated = concepts.every(function (c) { return isConceptDone(c.concept_id) })
 
       html += '<h2 class="mc-diag-title">' + esc(spec.confidence_step.prompt) + '</h2>'
       html += '<p class="mc-diag-note">' + esc(spec.confidence_step.note) + '</p>'
@@ -66,6 +73,7 @@
         scale.forEach(function (s) {
           html += '<button class="' + (confidence[c.concept_id] === s.value ? 'on' : '') + '" data-conf="' + escAttr(c.concept_id) + '" data-val="' + s.value + '">' + esc(s.label) + '</button>'
         })
+        html += '<button class="mc-diag-topic-skip' + (excluded[c.concept_id] ? ' on' : '') + '" type="button" data-skip="' + escAttr(c.concept_id) + '">Skip</button>'
         html += '</div></div>'
       })
       html += '</div>'
@@ -105,7 +113,22 @@
 
     panel.querySelectorAll('[data-conf]').forEach(function (btn) {
       btn.onclick = function () {
-        confidence[btn.getAttribute('data-conf')] = btn.getAttribute('data-val')
+        var id = btn.getAttribute('data-conf')
+        delete excluded[id]
+        confidence[id] = btn.getAttribute('data-val')
+        render()
+      }
+    })
+
+    panel.querySelectorAll('[data-skip]').forEach(function (btn) {
+      btn.onclick = function () {
+        var id = btn.getAttribute('data-skip')
+        if (excluded[id]) {
+          delete excluded[id]
+        } else {
+          excluded[id] = true
+          delete confidence[id]
+        }
         render()
       }
     })
@@ -158,6 +181,7 @@
     goalTags = []
     goalText = ''
     confidence = {}
+    excluded = {}
     confPage = 0
     render()
   }

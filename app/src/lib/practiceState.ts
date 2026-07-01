@@ -12,7 +12,11 @@ import { db } from '../firebase'
 
 export async function markDiagnosticComplete(
   uid: string,
-  data: { exam: string | null; confidenceMap: Record<string, string> },
+  data: {
+    exam: string | null
+    confidenceMap: Record<string, string>
+    excludedConcepts?: string[]
+  },
 ): Promise<void> {
   try {
     await setDoc(
@@ -22,6 +26,7 @@ export async function markDiagnosticComplete(
         diagnostic: {
           exam: data.exam ?? null,
           confidenceMap: data.confidenceMap,
+          excludedConcepts: data.excludedConcepts ?? [],
           completedAt: serverTimestamp(),
         },
       },
@@ -32,17 +37,23 @@ export async function markDiagnosticComplete(
 
 export async function loadDiagnostic(
   uid: string,
-): Promise<{ exam: string | null; confidenceMap: Record<string, string> } | null> {
+): Promise<{
+  exam: string | null
+  confidenceMap: Record<string, string>
+  excludedConcepts: string[]
+} | null> {
   try {
     const snap = await getDoc(doc(db, 'users', uid))
     const diagnostic = snap.data()?.diagnostic as {
       exam?: string | null
       confidenceMap?: Record<string, string>
+      excludedConcepts?: string[]
     } | undefined
     if (!diagnostic) return null
     return {
       exam: diagnostic.exam ?? null,
       confidenceMap: diagnostic.confidenceMap ?? {},
+      excludedConcepts: diagnostic.excludedConcepts ?? [],
     }
   } catch {
     return null

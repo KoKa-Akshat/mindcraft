@@ -84,10 +84,12 @@ export function worstWeakness(
   profileRec: RecommendResult | null,
   pathRec: RecommendResult | null,
   nodeMap: Map<string, GraphNode>,
+  excluded?: Set<string>,
 ): WeaknessCandidate | null {
   const candidates: WeaknessCandidate[] = []
 
   for (const w of profileRec?.studentProfile?.topWeaknesses ?? []) {
+    if (excluded?.has(w.conceptId)) continue
     if (!hasPlayableQuestions(w.conceptId)) continue
     candidates.push({
       conceptId: w.conceptId,
@@ -101,6 +103,7 @@ export function worstWeakness(
     if (gap.gapType === 'format') {
       const conceptId = gap.bridgeToConcept
       const formatId = gap.bridgeFromConcept as FormatId | undefined
+      if (!conceptId || excluded?.has(conceptId)) continue
       if (!conceptId || !formatId || !hasFormatQuestions(conceptId, formatId)) continue
       candidates.push({
         conceptId,
@@ -110,7 +113,8 @@ export function worstWeakness(
       })
     } else {
       const conceptId = gap.bridgeToConcept ?? gap.conceptId
-      if (!conceptId || !hasPlayableQuestions(conceptId)) continue
+      if (!conceptId || excluded?.has(conceptId)) continue
+      if (!hasPlayableQuestions(conceptId)) continue
       candidates.push({
         conceptId,
         severity: gapSeverity(gap, nodeMap),
@@ -152,6 +156,8 @@ export async function fetchPracticeHubRecommendations(
 
   const diagnostic = await loadDiagnostic(userId)
   const exam = diagnostic?.exam ?? 'ACT'
+  const excludedList = diagnostic?.excludedConcepts ?? []
+  const excluded = new Set(excludedList)
   const examConceptIds = await fetchExamConceptIds(exam)
   const scope = examConceptIds.length > 0 ? examConceptIds : undefined
 
@@ -159,33 +165,33 @@ export async function fetchPracticeHubRecommendations(
   const nodes = (kg?.nodes ?? []) as GraphNode[]
   const nodeMap = new Map(nodes.map(n => [n.id, n]))
 
-  const profileRec = await getRecommendations(userId, [], 'curriculum', exam)
+  const profileRec = await getRecommendations(userId, [], 'curriculum', exam, excludedList)
   const anchorWeakness = profileRec?.studentProfile?.topWeaknesses
-    ?.find(w => hasPlayableQuestions(w.conceptId))?.conceptId ?? null
+    ?.find(w => !excluded.has(w.conceptId) && hasPlayableQuestions(w.conceptId))?.conceptId ?? null
   const anchor = anchorWeakness ?? pickMostUrgent(
-    scope ? nodes.filter(n => scope.includes(n.id)) : nodes,
+    scope ? nodes.filter(n => scope.includes(n.id) && !excluded.has(n.id)) : nodes.filter(n => !excluded.has(n.id)),
   )
   const pathRec = anchor
-    ? await getRecommendations(userId, [anchor], 'curriculum', exam)
+    ? await getRecommendations(userId, [anchor], 'curriculum', exam, excludedList)
     : null
 
-  const worst = worstWeakness(profileRec, pathRec, nodeMap)
+  const worst = worstWeakness(profileRec, pathRec, nodeMap, excluded)
   let weaknessId = worst?.conceptId ?? null
   const weaknessFormat = worst?.formatId
 
   if (!weaknessId) {
-    weaknessId = [...(scope ? nodes.filter(n => scope.includes(n.id)) : nodes)]
+    weaknessId = [...(scope ? nodes.filter(n => scope.includes(n.id) && !excluded.has(n.id)) : nodes.filter(n => !excluded.has(n.id)))]
       .filter(n => hasPlayableQuestions(n.id))
       .sort((a, b) =>
         (URGENCY[a.status ?? 'untouched'] - URGENCY[b.status ?? 'untouched'])
         || ((a.mastery ?? 0) - (b.mastery ?? 0)))[0]?.id ?? null
   }
 
-  const examRec = await getRecommendations(userId, [], 'exam', exam)
+  const examRec = await getRecommendations(userId, [], 'exam', exam, excludedList)
   const actPath = chainSteps(examRec).map(s => s.conceptId)
   const learnId =
-    actPath.find(id => id !== weaknessId && isZeroExposure(id, nodeMap) && hasPlayableQuestions(id))
-    ?? [...(scope ? nodes.filter(n => scope.includes(n.id)) : nodes)]
+    actPath.find(id => id !== weaknessId && !excluded.has(id) && isZeroExposure(id, nodeMap) && hasPlayableQuestions(id))
+    ?? [...(scope ? nodes.filter(n => scope.includes(n.id) && !excluded.has(n.id)) : nodes.filter(n => !excluded.has(n.id)))]
         .filter(n => n.id !== weaknessId && isZeroExposure(n.id, nodeMap) && hasPlayableQuestions(n.id))
         .sort((a, b) => (a.mastery ?? 0) - (b.mastery ?? 0))[0]?.id
     ?? null

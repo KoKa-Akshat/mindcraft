@@ -114,6 +114,7 @@ export async function getRecommendations(
   targetConcepts: string[],
   mode: 'curriculum' | 'exam' | 'explore' = 'curriculum',
   exam?: string | null,
+  excludedConcepts?: string[],
 ): Promise<RecommendResult | null> {
   try {
     const res = await fetch(`${ML_BASE}/recommend`, {
@@ -124,6 +125,7 @@ export async function getRecommendations(
         target_concepts: targetConcepts,
         mode,
         ...(exam ? { exam } : {}),
+        ...(excludedConcepts?.length ? { excluded_concepts: excludedConcepts } : {}),
       }),
     })
     if (!res.ok) return null
