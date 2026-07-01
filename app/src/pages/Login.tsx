@@ -186,7 +186,7 @@ export default function Login() {
                 <div className={s.wordmark}>
                   <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
                 </div>
-                <h1 className={s.heroTitle}>Stop guessing what math help should do next.</h1>
+                <h1 className={s.heroTitle}>Stop guessing what maths help should do next.</h1>
                 <p className={s.heroCopy}>
                   MindCraft maps where your child stands, routes the next skill to practice, and connects tutoring to the plan so progress feels visible.
                 </p>
@@ -440,7 +440,7 @@ export default function Login() {
             <path d="m9.5 12 1.7 1.7 3.6-4" />
           </svg>
         </span>
-        Built for parents who want clearer math progress, not more guessing.
+        Built for parents who want clearer maths progress, not more guessing.
       </p>
       <div className={s.socialLinks} aria-label="MindCraft social links">
         <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noreferrer" aria-label="Instagram">

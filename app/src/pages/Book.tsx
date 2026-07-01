@@ -14,7 +14,7 @@ interface Tutor {
   avatarColor: string
 }
 
-const DEFAULT_TUTOR_BIO = 'Calm, step-by-step math support for students who want a clearer plan, stronger habits, and less panic before exams.'
+const DEFAULT_TUTOR_BIO = 'Calm, step-by-step maths support for students who want a clearer plan, stronger habits, and less panic before exams.'
 
 const DEMO_TUTORS: Tutor[] = [
   {
@@ -85,7 +85,7 @@ export default function Book() {
             <div className={s.heroPill}>Private tutoring studio</div>
             <h1 className={s.heroH1}>Find your tutor.<br />Book in 60 seconds.</h1>
           <p className={s.heroSub}>
-            Choose a calm expert, pick a time, and start building a better math plan.
+            Choose a calm expert, pick a time, and start building a better maths plan.
           </p>
         </div>
       </div>

@@ -96,8 +96,10 @@ h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;color:var(--wine
 .demo-copy h2{color:#fff7d8;max-width:500px}
 .demo-copy .lead{color:rgba(255,247,232,.74);margin-top:24px}
 .demo-caption{margin-top:26px;color:rgba(255,247,232,.58);font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-.film-shell{position:relative;border:1px solid rgba(255,247,232,.22);background:rgba(255,247,232,.06);box-shadow:0 34px 90px rgba(0,0,0,.32),0 0 0 1px rgba(228,191,106,.10);overflow:hidden}
-.film-shell:before{content:"";position:absolute;inset:14px;z-index:2;pointer-events:none;border:1px solid rgba(228,191,106,.28)}
+.demo-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.demo-actions .btn.secondary{background:rgba(255,247,232,.08);border-color:rgba(255,247,232,.22);color:#fff7d8}
+.film-shell{position:relative;border:1px solid rgba(255,247,232,.22);border-radius:30px;background:rgba(255,247,232,.06);box-shadow:0 34px 90px rgba(0,0,0,.32),0 0 0 1px rgba(228,191,106,.10);overflow:hidden}
+.film-shell:before{content:"";position:absolute;inset:14px;z-index:2;pointer-events:none;border:1px solid rgba(228,191,106,.28);border-radius:20px}
 .film-shell video{display:block;width:100%;aspect-ratio:16/9;height:auto;background:#00191a;object-fit:cover}
 .studio,.journey,.proof,.pricing,.faq{position:relative;padding:clamp(72px,9vw,130px) clamp(22px,4vw,56px);border-bottom:1px solid var(--line);overflow:hidden}
 .studio:after,.journey:after,.proof:after,.pricing:after{content:"";position:absolute;inset:auto 0 0 0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(228,191,106,.36),transparent);opacity:.8}
@@ -223,7 +225,7 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
     <div class="hero-copy reveal">
       <p class="eyebrow">For parents tired of guessing</p>
       <h1>Know what to do next.</h1>
-      <p class="hero-note">Parents deserve more than hope and hourly tutoring bills. MindCraft shows where your child stands in math, turns uncertainty into a clear next step, and connects a tutor to the plan.</p>
+      <p class="hero-note">Parents deserve more than hope and hourly tutoring bills. MindCraft shows where your child stands in maths, turns uncertainty into a clear next step, and makes tutor booking quick when human help is the right move.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#studio">See how it works</a>
         <a class="btn secondary" href="#pricing">Try it free</a>
@@ -243,20 +245,24 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
     <div class="demo-grid">
       <div class="demo-copy">
         <p class="kicker">See how it works</p>
-        <h2>Watch uncertainty become a plan.</h2>
-        <p class="lead">A short parent demo of MindCraft: the diagnostic map, student practice, homework support, and the tutoring context that makes every next step easier to trust.</p>
+        <h2>From stuck to a next step.</h2>
+        <p class="lead">A quick look at the MindCraft loop: diagnose the gap, guide practice, support homework, and book a tutor in seconds when the student needs a calm human beside the plan.</p>
         <p class="demo-caption">A quick parent walkthrough</p>
+        <div class="demo-actions">
+          <a class="btn primary" href="https://mindcraft-93858.web.app/book">Book a tutor</a>
+          <a class="btn secondary" href="#pricing">See plans</a>
+        </div>
       </div>
       <div class="film-shell">
-        <video src="img/Vid.mp4" controls autoplay muted loop playsinline preload="metadata" aria-label="MindCraft parent demo video"></video>
+        <video src="img/Vid.mp4" controls autoplay muted playsinline preload="metadata" data-stop-at="9.8" aria-label="MindCraft parent demo video"></video>
       </div>
     </div>
   </section>
 
   <section class="studio" id="method" data-nav-theme="light">
     <div class="section-head reveal">
-      <div><p class="kicker">What parents get</p><h2>A clear plan instead of scattered help.</h2></div>
-      <p class="lead">MindCraft turns math support into a visible system: targeted practice for the student, progress signals for the parent, and tutoring that starts from the actual gap.</p>
+      <div><p class="kicker">What parents get</p><h2>One platform for the messy middle.</h2></div>
+      <p class="lead">MindCraft connects the pieces families usually manage alone: targeted practice for the student, homework support that leaves evidence, parent-visible progress, and tutor sessions that start from the actual gap.</p>
     </div>
     <div class="feature-grid">
       <article class="feature reveal">
@@ -272,9 +278,9 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
             <circle class="fill-soft glow" cx="218" cy="120" r="13"/>
           </svg>
         </div>
-        <span class="micro">Find the gap</span>
-        <h3>Practice Sets</h3>
-        <p>Targeted reps from the concepts that matter most right now, so practice time does not disappear into random worksheets.</p>
+        <span class="micro">Know the next move</span>
+        <h3>Practice Path</h3>
+        <p>Targeted reps from the concepts that matter most right now, so practice time becomes a route instead of another stack of random worksheets.</p>
       </article>
       <article class="feature reveal">
         <div class="artifact" aria-hidden="true">
@@ -294,7 +300,7 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
         </div>
         <span class="micro">Use homework wisely</span>
         <h3>Homework Help</h3>
-        <p>Step-by-step support that teaches the reasoning, keeps momentum, and shows where a tutor should step in.</p>
+        <p>Step-by-step support that teaches the reasoning, keeps momentum, and shows where the student is ready or where a tutor should step in.</p>
       </article>
       <article class="feature reveal">
         <div class="artifact" aria-hidden="true">
@@ -313,9 +319,9 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
             <circle fill="rgba(75,0,29,.36)" cx="42" cy="136" r="3"/>
           </svg>
         </div>
-        <span class="micro">See the route</span>
-        <h3>Knowledge Maps</h3>
-        <p>A visual route through gaps, prerequisites, exam skills, and the next best step, so progress is easier to trust.</p>
+        <span class="micro">Book with context</span>
+        <h3>Tutor Booking</h3>
+        <p>Families can move from “we need help” to a booked session quickly, with the tutor walking in already connected to the student’s work.</p>
       </article>
     </div>
   </section>
@@ -323,14 +329,14 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
   <section class="journey" id="journey" data-nav-theme="light">
     <div class="section-head reveal">
       <div><p class="kicker">The MindCraft method</p><h2>From “more tutoring” to the right work.</h2></div>
-      <p class="lead">Every session and every question feeds the same student picture, so the plan gets sharper instead of turning into more tabs, more notes, and more uncertainty.</p>
+      <p class="lead">Every question, hint, note, and tutor session feeds the same student picture, so the plan gets sharper instead of turning into more tabs, more notes, and more uncertainty.</p>
     </div>
     <div class="atlas reveal">
       <div class="steps">
         <article class="step"><div class="num">01</div><h3>Diagnose</h3><p>Find the gaps behind the missed questions.</p></article>
         <article class="step"><div class="num">02</div><h3>Route</h3><p>Decide what to do next, not just what to review again.</p></article>
         <article class="step"><div class="num">03</div><h3>Practice</h3><p>Build fluency with focused, level-aware work.</p></article>
-        <article class="step"><div class="num">04</div><h3>Tutor</h3><p>Connect a human tutor to the plan when the student needs guided support.</p></article>
+        <article class="step"><div class="num">04</div><h3>Book</h3><p>Bring in a tutor quickly, with context already attached to the session.</p></article>
       </div>
       <div class="map-panel">
         <div class="path">
@@ -348,16 +354,16 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
     </div>
     <div class="proof-grid">
       <details class="quote-card reveal">
-        <summary><p>"My classes with MindCraft have made me much more confident in math."</p><span>Seb · High school senior, St. Paul, MN</span><b class="expand">Read full comment</b></summary>
-        <div class="full">My classes with MindCraft have made me much more confident in math, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far.</div>
+        <summary><p>"My classes with MindCraft have made me much more confident in maths."</p><span>Seb · High school senior, St. Paul, MN</span><b class="expand">Read full comment</b></summary>
+        <div class="full">My classes with MindCraft have made me much more confident in maths, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far.</div>
       </details>
       <details class="quote-card reveal">
         <summary><p>"MindCraft felt different because it helped him move forward with clarity."</p><span>Gill · Parent, St. Paul, MN</span><b class="expand">Read full comment</b></summary>
-        <div class="full">We realized Seb did not just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Math had started to feel defeating for him, and with the ACT so close, he was overwhelmed and unsure of himself. MindCraft felt different because it focused on what he did not yet understand and helped him move forward with more clarity and confidence.</div>
+        <div class="full">We realized Seb did not just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Maths had started to feel defeating for him, and with the ACT so close, he was overwhelmed and unsure of himself. MindCraft felt different because it focused on what he did not yet understand and helped him move forward with more clarity and confidence.</div>
       </details>
       <details class="quote-card reveal">
-        <summary><p>"Real expertise across Nepal, South Africa, and the USA."</p><span>Tutor Ra · Mathematics and Economics, Macalester College '26</span><b class="expand">Read tutor note</b></summary>
-        <div class="full">Eight years of tutoring across Nepal, South Africa, and USA. Mathematics and Economics at Macalester College '26.</div>
+        <summary><p>"Real expertise across Nepal, South Africa, and the USA."</p><span>Tutor Ra · Maths and Economics, Macalester College '26</span><b class="expand">Read tutor note</b></summary>
+        <div class="full">Eight years of tutoring across Nepal, South Africa, and USA. Maths and Economics at Macalester College '26.</div>
       </details>
       <details class="quote-card reveal">
         <summary><p>"Excited to share the love for maths."</p><span>Tutor Coon · Applied Maths PhD track</span><b class="expand">Read tutor note</b></summary>
@@ -368,13 +374,13 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
 
   <section class="pricing" id="pricing" data-nav-theme="forest">
     <div class="section-head reveal">
-      <div><p class="kicker">Start with clarity</p><h2>A calmer way to support math at home.</h2></div>
+      <div><p class="kicker">Start with clarity</p><h2>A calmer way to support maths at home.</h2></div>
       <p class="lead">Choose the level of guidance your family needs now. Every plan is built to make the next step visible before stress turns into avoidance.</p>
     </div>
     <div class="price-grid">
-      <article class="price reveal"><h3>First Look</h3><strong>Free</strong><p>For parents who want a clear read before choosing tutoring or another study plan.</p><ul><li>Initial math snapshot</li><li>Personalized next-step plan</li><li>Homework support trial</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
-      <article class="price reveal"><h3>Guided</h3><strong>$160<span>/mo</span></strong><p>For families who want a human tutor connected to the student’s actual practice history.</p><ul><li>1-on-1 tutor sessions</li><li>Session notes and mind map</li><li>Targeted practice path</li><li>Parent-visible progress signals</li><li>Homework help workflow</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
-      <article class="price featured reveal"><h3>Studio</h3><strong>$200<span>/mo</span></strong><p>The full MindCraft experience for students who need continuity between practice, homework, notes, and tutoring.</p><ul><li>1-on-1 tutor sessions</li><li>Session notes and mind map</li><li>Knowledge assets to revisit</li><li>Targeted practice path</li><li>Personalized study plan</li><li>Homework help workflow</li></ul><a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price reveal"><h3>First Look</h3><strong>Free</strong><p>For parents who want a clear read before choosing tutoring or another study plan.</p><ul><li>Initial maths snapshot</li><li>Personalized next-step plan</li><li>Homework support trial</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price reveal"><h3>Guided</h3><strong>$160<span>/mo</span></strong><p>For families who want a human tutor connected to the student’s actual practice history.</p><ul><li>Fast tutor booking</li><li>Session notes and mind map</li><li>Targeted practice path</li><li>Parent-visible progress signals</li><li>Homework help workflow</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+      <article class="price featured reveal"><h3>Studio</h3><strong>$200<span>/mo</span></strong><p>The full MindCraft experience for students who need continuity between practice, homework, notes, and tutoring.</p><ul><li>Fast tutor booking</li><li>Session notes and mind map</li><li>Knowledge assets to revisit</li><li>Targeted practice path</li><li>Personalized study plan</li><li>Homework help workflow</li></ul><a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
     </div>
   </section>
 
@@ -385,7 +391,7 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
     </div>
     <div class="faq-list">
       <div class="faq-item"><strong>Is this tutoring or software?</strong><p>Both. MindCraft gives students an AI-powered learning path and gives tutors the context to help faster.</p></div>
-      <div class="faq-item"><strong>What subjects does it support?</strong><p>The core experience is built around math, exam prep, homework support, and concept mapping.</p></div>
+      <div class="faq-item"><strong>What subjects does it support?</strong><p>The core experience is built around maths, exam prep, homework support, and concept mapping.</p></div>
       <div class="faq-item"><strong>Does it replace a tutor?</strong><p>No. It removes the guesswork so tutoring time is more focused, useful, and confidence-building.</p></div>
     </div>
   </section>
@@ -450,6 +456,31 @@ const themeObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('[data-nav-theme]').forEach((el) => themeObserver.observe(el))
 window.addEventListener('scroll', updateNav, { passive: true })
 updateNav()
+const demoVideo = document.querySelector('.film-shell video')
+if (demoVideo) {
+  const stopAt = Number(demoVideo.dataset.stopAt || 9.8)
+  const clampDemoVideo = () => {
+    if (demoVideo.currentTime >= stopAt) {
+      demoVideo.pause()
+      demoVideo.currentTime = stopAt
+    }
+  }
+  demoVideo.addEventListener('timeupdate', clampDemoVideo)
+  demoVideo.addEventListener('seeking', () => {
+    if (demoVideo.currentTime > stopAt) demoVideo.currentTime = 0
+  })
+  const demoVideoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting || entry.intersectionRatio < 0.42) {
+        demoVideo.pause()
+        return
+      }
+      if (demoVideo.currentTime >= stopAt - 0.05) demoVideo.currentTime = 0
+      demoVideo.play().catch(() => {})
+    })
+  }, { threshold: [0, 0.42, 0.7] })
+  demoVideoObserver.observe(demoVideo)
+}
 const isLocalDemo = ['localhost', '127.0.0.1'].includes(window.location.hostname)
 if (isLocalDemo) {
   document.querySelectorAll('.app-login-link').forEach((link) => {
