@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
 import { mlIdToLabel } from '../lib/conceptMap'
+import { getConceptContent } from '../lib/conceptContent'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { getRecommendations } from '../lib/mlApi'
 import { loadDiagnostic } from '../lib/practiceState'
@@ -130,7 +131,9 @@ export default function ConstellationGpsExplorer({
   const [statusFilter, setStatusFilter] = useState<StatusKind | null>(null)
   const [view, setView] = useState({ scale: 1, tx: 0, ty: 0 })
   const [isDragging, setIsDragging] = useState(false)
-  const dragRef = useRef<{ x: number; y: number } | null>(null)
+  const dragRef = useRef<{
+    x: number; y: number; tx: number; ty: number; moved: boolean
+  } | null>(null)
   const routeToken = useRef<string | null>(null)
   const autoPlotted = useRef<string | null>(null)
 
@@ -217,24 +220,39 @@ export default function ConstellationGpsExplorer({
 
   function onPointerDown(e: React.PointerEvent<SVGSVGElement>) {
     if (e.button !== 0) return
-    dragRef.current = { x: e.clientX - view.tx, y: e.clientY - view.ty }
-    setIsDragging(true)
-    e.currentTarget.setPointerCapture(e.pointerId)
+    if ((e.target as Element).closest('[data-mc-node]')) return
+    dragRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      tx: view.tx,
+      ty: view.ty,
+      moved: false,
+    }
   }
 
   function onPointerMove(e: React.PointerEvent<SVGSVGElement>) {
     if (!dragRef.current) return
+    const dx = e.clientX - dragRef.current.x
+    const dy = e.clientY - dragRef.current.y
+    if (!dragRef.current.moved) {
+      if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return
+      dragRef.current.moved = true
+      setIsDragging(true)
+      e.currentTarget.setPointerCapture(e.pointerId)
+    }
     setView(v => ({
       ...v,
-      tx: e.clientX - dragRef.current!.x,
-      ty: e.clientY - dragRef.current!.y,
+      tx: dragRef.current!.tx + dx,
+      ty: dragRef.current!.ty + dy,
     }))
   }
 
   function onPointerUp(e: React.PointerEvent<SVGSVGElement>) {
+    if (dragRef.current?.moved) {
+      try { e.currentTarget.releasePointerCapture(e.pointerId) } catch { /* ignore */ }
+    }
     dragRef.current = null
     setIsDragging(false)
-    try { e.currentTarget.releasePointerCapture(e.pointerId) } catch { /* ignore */ }
   }
 
   function selectNode(node: MLNode) {
@@ -566,7 +584,9 @@ export default function ConstellationGpsExplorer({
 
                 return (
                   <g key={node.id}
+                    data-mc-node
                     transform={`translate(${pos.sx}, ${pos.sy})`}
+                    onPointerDown={e => e.stopPropagation()}
                     onClick={() => selectNode(node)}
                     onMouseEnter={() => setHovered(node.id)}
                     onMouseLeave={() => setHovered(null)}
@@ -651,6 +671,7 @@ export default function ConstellationGpsExplorer({
               const kind = statusKind(node.status)
               const masteryPct = Math.round(node.mastery * 100)
               const mom = node.strengthScore
+              const content = getConceptContent(node.id)
               return (
                 <div className={s.panelDetail}>
                   <button className={s.panelClose} onClick={closePanel} aria-label="Close panel">✕</button>
@@ -663,6 +684,9 @@ export default function ConstellationGpsExplorer({
                   </div>
 
                   <h2 className={s.detailName}>{mlIdToLabel(node.id)}</h2>
+                  {content?.tagline && (
+                    <p className={s.detailTagline}>{content.tagline}</p>
+                  )}
 
                   <div className={s.metric}>
                     <span className={s.metricLabel}>ROUTE STRENGTH</span>

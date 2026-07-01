@@ -20,6 +20,7 @@ import { useUser }      from '../App'
 import { logEvent }     from '../lib/logEvent'
 import Sidebar          from '../components/Sidebar'
 import { resolveConceptId, mlIdToLabel } from '../lib/conceptMap'
+import { getConceptContent } from '../lib/conceptContent'
 import { getRecommendations, type RecommendResult } from '../lib/mlApi'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import s                from './KnowledgeGraph.module.css'
@@ -235,7 +236,9 @@ export default function KnowledgeGraph() {
   const [zoom,      setZoom]      = useState(1)
   const [pan,       setPan]       = useState({ x: 0, y: 0 })
   const [dragging,  setDragging]  = useState(false)
-  const [dragOrigin, setDragOrigin] = useState<{ x: number; y: number } | null>(null)
+  const panDragRef = useRef<{
+    x: number; y: number; panX: number; panY: number; active: boolean
+  } | null>(null)
   const [activeIngredient, setActiveIngredient] = useState<IngredientPreview | null>(null)
 
   // Scaled positions
@@ -311,26 +314,37 @@ export default function KnowledgeGraph() {
   function handlePointerDown(e: React.MouseEvent<HTMLDivElement>) {
     if (!graphData || loading) return
     if ((e.target as HTMLElement).closest('button')) return
-    setDragging(true)
-    setDragOrigin({ x: e.clientX, y: e.clientY })
+    if ((e.target as HTMLElement).closest(`.${s.nodeG}`)) return
+    panDragRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      panX: pan.x,
+      panY: pan.y,
+      active: false,
+    }
   }
 
   function handlePointerMove(e: React.MouseEvent<HTMLDivElement>) {
-    if (!dragging || !dragOrigin || !svgWrapRef.current) return
-
+    if (!panDragRef.current || !svgWrapRef.current) return
+    const dx = e.clientX - panDragRef.current.x
+    const dy = e.clientY - panDragRef.current.y
+    if (!panDragRef.current.active) {
+      if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return
+      panDragRef.current.active = true
+      setDragging(true)
+    }
     const rect = svgWrapRef.current.getBoundingClientRect()
     const scaleX = SVG_W / Math.max(rect.width, 1)
     const scaleY = SVG_H / Math.max(rect.height, 1)
-    const dx = (e.clientX - dragOrigin.x) * scaleX
-    const dy = (e.clientY - dragOrigin.y) * scaleY
-
-    setPan(current => ({ x: current.x + dx, y: current.y + dy }))
-    setDragOrigin({ x: e.clientX, y: e.clientY })
+    setPan({
+      x: panDragRef.current.panX + dx * scaleX,
+      y: panDragRef.current.panY + dy * scaleY,
+    })
   }
 
   function stopDragging() {
+    panDragRef.current = null
     setDragging(false)
-    setDragOrigin(null)
   }
 
   function handleSearch(e: React.FormEvent) {
@@ -683,6 +697,7 @@ export default function KnowledgeGraph() {
                       <g key={node.id}
                         className={s.nodeG}
                         transform={`translate(${pos.sx}, ${pos.sy})`}
+                        onMouseDown={e => e.stopPropagation()}
                         onClick={() => openNode(node)}
                         onMouseEnter={() => setHovered(node.id)}
                         onMouseLeave={() => setHovered(null)}
@@ -762,6 +777,10 @@ export default function KnowledgeGraph() {
               </div>
 
               <h2 className={s.detailTitle}>{mlIdToLabel(selected.id)}</h2>
+              {(() => {
+                const tagline = getConceptContent(selected.id)?.tagline
+                return tagline ? <p className={s.detailTagline}>{tagline}</p> : null
+              })()}
 
               {/* Mastery bar */}
               <div className={s.masteryRow}>
