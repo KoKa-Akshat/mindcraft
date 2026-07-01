@@ -449,7 +449,7 @@ export default function Login() {
         <a href="https://x.com/joinmindcraft" target="_blank" rel="noreferrer" aria-label="X">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25h6.83l4.25 5.62Zm-1.16 17.52h1.83L7.08 4.13H5.12Z" /></svg>
         </a>
-        <a href="https://open.spotify.com/playlist/3P9VnnuuoRYLKQB3QYCSe2" target="_blank" rel="noreferrer" aria-label="Spotify">
+        <a href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noreferrer" aria-label="Spotify">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.31a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 0 1-.33-1.46c4.57-1.04 8.5-.58 11.66 1.35.36.22.47.68.25 1.02Zm1.46-3.25a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.96-1.4a.94.94 0 1 1-.54-1.8c4.36-1.32 9.78-.68 13.48 1.59.44.27.58.85.31 1.3Zm.13-3.39C15.22 8.37 8.83 8.16 5.15 9.28a1.12 1.12 0 1 1-.65-2.14c4.23-1.28 11.28-1.03 15.74 1.62a1.12 1.12 0 0 1-1.15 1.91Z" /></svg>
         </a>
         <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
