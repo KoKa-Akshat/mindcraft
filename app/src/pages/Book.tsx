@@ -12,19 +12,31 @@ interface Tutor {
   calendlyUrl: string
   sessionsCompleted: number
   avatarColor: string
+  available: boolean
 }
 
-const DEFAULT_TUTOR_BIO = 'Calm, step-by-step maths support for students who want a clearer plan, stronger habits, and less panic before exams.'
+const DEFAULT_TUTOR_BIO = 'Calm, step-by-step math support for students who want a clearer plan, stronger habits, and less panic before exams.'
 
 const DEMO_TUTORS: Tutor[] = [
   {
-    id: 'demo',
-    displayName: 'Akshat K.',
+    id: 'akshat-koirala',
+    displayName: 'Akshat Koirala',
     bio: DEFAULT_TUTOR_BIO,
-    subjects: ['AP Calculus', 'Pre-Calc', 'Algebra', 'Statistics'],
+    subjects: ['ACT Math', 'AP Calculus', 'Pre-Calc', 'Statistics'],
     calendlyUrl: 'https://calendly.com/joinmindcraft/30min',
     sessionsCompleted: 40,
     avatarColor: 'linear-gradient(135deg, #2D5016, #58CC02)',
+    available: true,
+  },
+  {
+    id: 'abhigya-koirala',
+    displayName: 'Abhigya Koirala',
+    bio: 'Applied math depth for students who want rigorous, calm support. Booking opens soon.',
+    subjects: ['Applied Math', 'Calculus', 'Proofs', 'Advanced Problem Solving'],
+    calendlyUrl: '',
+    sessionsCompleted: 0,
+    avatarColor: 'linear-gradient(135deg, #4b001d, #e4bf6a)',
+    available: false,
   },
 ]
 
@@ -53,7 +65,7 @@ export default function Book() {
     getDocs(query(collection(db, 'users'), where('role', '==', 'tutor')))
       .then(snap => {
         if (snap.empty) return
-        setTutors(snap.docs.map(d => {
+        const remoteTutors = snap.docs.map(d => {
           const data = d.data()
           // Derive Calendly URL from stored calendlyUrl, or from email slug
           const email: string = data.calendlyEmail ?? data.email ?? ''
@@ -67,8 +79,11 @@ export default function Book() {
             calendlyUrl,
             sessionsCompleted: data.sessionsCompleted ?? 0,
             avatarColor: data.avatarColor ?? 'linear-gradient(135deg, #2D5016, #58CC02)',
+            available: data.available ?? true,
           }
-        }))
+        })
+        const demoIds = new Set(DEMO_TUTORS.map(t => t.id))
+        setTutors([...DEMO_TUTORS, ...remoteTutors.filter(t => !demoIds.has(t.id))])
       })
       .catch(() => {})
   }, [])
@@ -85,7 +100,7 @@ export default function Book() {
             <div className={s.heroPill}>Private tutoring studio</div>
             <h1 className={s.heroH1}>Find your tutor.<br />Book in 60 seconds.</h1>
           <p className={s.heroSub}>
-            Choose a calm expert, pick a time, and start building a better maths plan.
+            Choose a calm expert, pick a time, and start building a better math plan.
           </p>
         </div>
       </div>
@@ -108,7 +123,7 @@ export default function Book() {
                 </div>
                 <div>
                   <div className={s.tutorName}>{tutor.displayName}</div>
-                  <div className={s.tutorStat}>{tutor.sessionsCompleted}+ sessions</div>
+                  <div className={s.tutorStat}>{tutor.available ? `${tutor.sessionsCompleted}+ sessions` : 'Unavailable right now'}</div>
                 </div>
               </div>
               <p className={s.tutorBio}>{tutor.bio}</p>
@@ -118,10 +133,11 @@ export default function Book() {
                 ))}
               </div>
               <button
-                className={s.bookBtn}
-                onClick={() => loadCalendly(tutor.calendlyUrl)}
+                className={`${s.bookBtn} ${!tutor.available ? s.bookBtnDisabled : ''}`}
+                disabled={!tutor.available}
+                onClick={() => tutor.available && loadCalendly(tutor.calendlyUrl)}
               >
-                Book Free Session →
+                {tutor.available ? 'Book Free Session →' : 'Booking Opens Soon'}
               </button>
             </div>
           ))}
