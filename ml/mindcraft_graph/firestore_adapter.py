@@ -10,6 +10,7 @@ from mindcraft_graph.models.ingredient import (
     IngredientMastery,
     IngredientStudentState,
 )
+from mindcraft_graph.models.affective_state import AffectiveState
 from mindcraft_graph.models.student_state import StudentState, ConceptMastery
 from mindcraft_graph.engine.student_graph import PersonalGraph
 from mindcraft_graph.engine.edge_weights import EdgeState
@@ -369,6 +370,26 @@ def load_ingredient_state(student_id: str) -> IngredientStudentState:
             for key, value in data.get("style_scores", {}).items()
         },
     )
+
+
+def load_affective_state(student_id: str) -> AffectiveState | None:
+    """Load a recent pre-session check-in, or None when absent/stale/invalid."""
+    try:
+        doc = db.collection("affective_state").document(student_id).get()
+        if not doc.exists:
+            return None
+
+        data = (doc.to_dict() or {}).get("latest")
+        if not data:
+            return None
+
+        state = AffectiveState(**data)
+        now_ms = int(datetime.now().timestamp() * 1000)
+        if now_ms - state.captured_at > 4 * 60 * 60 * 1000:
+            return None
+        return state
+    except Exception:
+        return None
 
 
 def save_ingredient_state(student_id: str, state: IngredientStudentState):
