@@ -26,12 +26,6 @@
     } catch (e) {}
   }
 
-  function appDashboardUrl() {
-    return location.hostname === 'localhost'
-      ? 'http://localhost:5173/dashboard'
-      : 'https://mindcraft-93858.web.app/dashboard'
-  }
-
   function resolveDiagDone() {
     try {
       var params = new URLSearchParams(location.search)
@@ -52,8 +46,5 @@
 
   window.MC_persistDiagDone = persistDiagDone
   window.MC_isDiagDone = resolveDiagDone
-
-  if (resolveDiagDone()) {
-    location.replace(appDashboardUrl())
-  }
+  resolveDiagDone()
 })()

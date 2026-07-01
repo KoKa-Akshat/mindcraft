@@ -135,11 +135,6 @@
     if (!ctrl || !ctrl.menuControls || !ctrl.ramenShop || window.MC_openProjectsSign) return !!window.MC_openProjectsSign
 
     window.MC_openProjectsSign = function () {
-      // Jesse's Kitchen is pre-diagnostic only. After diagnostic, return to the web app.
-      if (isDiagDone()) {
-        window.location.href = ROUTES.dashboard
-        return
-      }
       if (window.MC_onProjectsOpen) window.MC_onProjectsOpen()
     }
     return true

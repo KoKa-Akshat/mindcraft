@@ -218,13 +218,6 @@
   }
 
   window.MC_onProjectsOpen = function () {
-    if (window.MC_isDiagDone && window.MC_isDiagDone()) {
-      var app = window.location.hostname === 'localhost'
-        ? 'http://localhost:5173'
-        : 'https://mindcraft-93858.web.app'
-      window.location.href = app + '/dashboard'
-      return
-    }
     show()
   }
   window.MC_onProjectsClose = function () { hide() }
