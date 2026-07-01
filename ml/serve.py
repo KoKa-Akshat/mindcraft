@@ -144,6 +144,7 @@ app.add_middleware(
 class RecommendRequest(BaseModel):
     student_id: str
     target_concepts: list[str] = []
+    excluded_concepts: list[str] = []
     target_mastery: float = 0.8
     deadline_days: int | None = None
     mode: str = "curriculum"
@@ -157,24 +158,28 @@ def _act_tested_concept_ids() -> list[str]:
     return ontology.act_tested_concept_ids()
 
 
-def _exam_curriculum_scope(exam: str | None) -> set[str] | None:
+def _exam_curriculum_scope(exam: str | None, excluded: set[str] | None = None) -> set[str] | None:
     """Resolve the concept subset for an exam track (ACT → act_relevance.tested)."""
     if not exam:
         return None
     key = exam.strip().upper()
     if key in ("ACT", "ACT_MATH", "GENERAL"):
-        return set(_act_tested_concept_ids())
+        scope = set(_act_tested_concept_ids())
+        if excluded:
+            scope -= excluded
+        return scope or None
     return None
 
 
 def _resolve_recommend_targets(req: RecommendRequest) -> list[str]:
+    excluded = set(req.excluded_concepts)
     if req.target_concepts:
-        return list(req.target_concepts)
+        return [concept_id for concept_id in req.target_concepts if concept_id not in excluded]
     if req.mode == "exam":
-        scope = _exam_curriculum_scope(req.exam)
+        scope = _exam_curriculum_scope(req.exam, excluded)
         if scope:
             return sorted(scope)
-        return _act_tested_concept_ids()
+        return [concept_id for concept_id in _act_tested_concept_ids() if concept_id not in excluded]
     return []
 
 class SummaryRequest(BaseModel):
@@ -328,7 +333,7 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
     curriculum_scope = (
         set(resolved_targets)
         if resolved_targets
-        else _exam_curriculum_scope(req.exam)
+        else _exam_curriculum_scope(req.exam, set(req.excluded_concepts))
     )
     goal = Goal(
         target_concepts=resolved_targets,
