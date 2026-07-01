@@ -10,6 +10,14 @@
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 
+/** Browser signals the 3D world reads to skip the intro diagnostic. */
+export function persistDiagnosticDoneLocal(): void {
+  if (typeof window === 'undefined') return
+  try { localStorage.setItem('mc-diag-done', '1') } catch { /* ignore */ }
+  const domain = window.location.hostname.endsWith('.web.app') ? '; domain=.web.app' : ''
+  document.cookie = `mc_diag_done=1${domain}; path=/; max-age=31536000; SameSite=Lax`
+}
+
 export async function markDiagnosticComplete(
   uid: string,
   data: {
@@ -32,6 +40,7 @@ export async function markDiagnosticComplete(
       },
       { merge: true },
     )
+    persistDiagnosticDoneLocal()
   } catch { /* fail soft */ }
 }
 

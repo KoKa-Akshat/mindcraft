@@ -4,7 +4,7 @@
  */
 (function () {
   var APP_BASE = window.location.hostname === 'localhost'
-    ? 'http://localhost:4321'
+    ? 'http://localhost:5173'
     : 'https://mindcraft-93858.web.app'
 
   var PER_PAGE = 10
@@ -157,10 +157,12 @@
   }
 
   function complete() {
-    step = 'done'
-    localStorage.setItem('mc-diag-done', '1')
-    document.cookie = 'mc_diag_done=1; path=/; max-age=31536000; SameSite=Lax'
-    render()
+    if (window.MC_persistDiagDone) window.MC_persistDiagDone()
+    else {
+      localStorage.setItem('mc-diag-done', '1')
+      document.cookie = 'mc_diag_done=1; path=/; max-age=31536000; SameSite=Lax'
+    }
+    window.location.href = dashboardUrl()
   }
 
   function esc(s) {
@@ -215,7 +217,16 @@
     root.addEventListener('pointerup', function (e) { e.stopPropagation() })
   }
 
-  window.MC_onProjectsOpen = function () { show() }
+  window.MC_onProjectsOpen = function () {
+    if (window.MC_isDiagDone && window.MC_isDiagDone()) {
+      var app = window.location.hostname === 'localhost'
+        ? 'http://localhost:5173'
+        : 'https://mindcraft-93858.web.app'
+      window.location.href = app + '/dashboard'
+      return
+    }
+    show()
+  }
   window.MC_onProjectsClose = function () { hide() }
 
   if (document.readyState === 'loading') {

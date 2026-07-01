@@ -7,7 +7,9 @@
     ? 'http://localhost:4321'
     : 'https://mindcraft-93858.web.app'
 
-  var diagDone = !!localStorage.getItem('mc-diag-done')
+  function isDiagDone() {
+    return window.MC_isDiagDone ? window.MC_isDiagDone() : !!localStorage.getItem('mc-diag-done')
+  }
 
   var ROUTES = {
     articles: APP + '/dashboard?view=gps&learnNext=1',
@@ -134,7 +136,7 @@
 
     window.MC_openProjectsSign = function () {
       // Jesse's Kitchen is pre-diagnostic only. After diagnostic, return to the web app.
-      if (localStorage.getItem('mc-diag-done')) {
+      if (isDiagDone()) {
         window.location.href = ROUTES.dashboard
         return
       }
@@ -168,7 +170,7 @@
       setTimeout(function () {
         var exp = window.experience
         if (!exp) return
-        if (diagDone) {
+        if (isDiagDone()) {
           smoothToFrontView(exp, 1600)
         } else {
           setFrontView(exp)
@@ -176,7 +178,7 @@
       }, 1200)
       setTimeout(function () {
         var exp = window.experience
-        if (exp && !diagDone) setFrontView(exp)
+        if (exp && !isDiagDone()) setFrontView(exp)
       }, 2400)
     }, { once: true })
   }

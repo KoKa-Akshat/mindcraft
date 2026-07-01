@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
-import { isDiagnosticComplete, markDiagnosticComplete } from '../lib/practiceState'
+import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal } from '../lib/practiceState'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import type { Confidence } from '../lib/bridgePractice'
 import HeroBar from '../components/HeroBar'
@@ -100,7 +100,7 @@ export default function Dashboard() {
         if (cancelled) return
         navigate('/dashboard', { replace: true })
         setDiagChecked(true)
-        document.cookie = 'mc_diag_done=1; domain=.web.app; path=/; max-age=31536000; SameSite=Lax'
+        persistDiagnosticDoneLocal()
         return
       }
 
@@ -113,7 +113,7 @@ export default function Dashboard() {
       if (!done) navigate('/practice', { state: { examHelp: true } })
       else {
         setDiagChecked(true)
-        document.cookie = 'mc_diag_done=1; domain=.web.app; path=/; max-age=31536000; SameSite=Lax'
+        persistDiagnosticDoneLocal()
       }
     })()
     return () => { cancelled = true }

@@ -13,6 +13,7 @@ import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import s from './Login.module.css'
 import { worldUrl } from '../lib/siteUrls'
+import { isDiagnosticComplete } from '../lib/practiceState'
 
 type Role = 'student' | 'parent' | 'tutor'
 type Mode = 'signin' | 'signup'
@@ -64,13 +65,21 @@ export default function Login() {
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
 
+  async function redirectStudentAfterLogin(uid: string) {
+    if (await isDiagnosticComplete(uid)) {
+      navigate('/dashboard', { replace: true })
+      return
+    }
+    window.location.href = worldUrl(uid)
+  }
+
   function navigateAfterRole(effectiveRole: string) {
     if (effectiveRole === 'tutor' || effectiveRole === 'admin') {
       navigate('/tutor', { replace: true })
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {
-      window.location.href = worldUrl(auth.currentUser!.uid)
+      void redirectStudentAfterLogin(auth.currentUser!.uid)
     }
   }
 
@@ -112,7 +121,7 @@ export default function Login() {
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {
-      window.location.href = worldUrl(uid)
+      await redirectStudentAfterLogin(uid)
     }
   }
 
