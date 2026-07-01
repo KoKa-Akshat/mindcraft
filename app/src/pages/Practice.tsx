@@ -3,7 +3,6 @@ import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
 import type { PointerEvent } from 'react'
 import Sidebar from '../components/Sidebar'
-import AppTabBar from '../components/AppTabBar'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
 import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
@@ -999,7 +998,8 @@ export default function Practice() {
 
   function pickConcept(conceptId: string) {
     setConcept(conceptId)
-    openExplore('path')
+    setCheckinText('')
+    setPPhase('level')
   }
 
   function showCheckin(conceptId: string, lv: 1|2|3, bridge?: BridgeRecommendation) {
@@ -1018,6 +1018,20 @@ export default function Practice() {
       setCheckinLoading(false)
     }
     await startSession(pending.conceptId, pending.lv, pending.bridge)
+  }
+
+  async function startLevelWithCheckin(conceptId: string, lv: 1|2|3, bridge?: BridgeRecommendation) {
+    checkinPendingRef.current = { conceptId, lv, bridge }
+    setLevel(lv)
+    if (checkinText.trim()) {
+      setCheckinLoading(true)
+      try {
+        await agentCheckIn(user.uid, checkinText.trim())
+      } finally {
+        setCheckinLoading(false)
+      }
+    }
+    await startSession(conceptId, lv, bridge)
   }
 
   async function startSession(
@@ -1335,16 +1349,23 @@ export default function Practice() {
   const isPathView = pPhase === 'path' && mode === 'practice'
   const isMatteFlow = mode === 'practice' && ['explore', 'level', 'checkin', 'session', 'complete', 'no-content'].includes(pPhase)
   const isLessonPage = isMatteFlow
-  const hideTopBar = mode === 'practice' && pPhase !== 'path'
 
   return (
     <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}`}>
-      <Sidebar />
+      {!isMatteFlow && <Sidebar />}
 
       <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}`}>
 
-        {!hideTopBar && (
-          <AppTabBar active={mode === 'solver' ? 'solver' : 'practice'} isAdmin={isAdmin} />
+        {mode === 'practice' && isMatteFlow && (
+          <a
+            className={s.tutorPing}
+            href={SLACK_INVITE}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span aria-hidden="true">?</span>
+            Ping tutor
+          </a>
         )}
 
         {/* ═══════ PRACTICE MODE ═══════ */}
@@ -1724,9 +1745,6 @@ export default function Practice() {
                       </>
                     )}
 
-                    <button className={s.startPracticeBtn} onClick={() => setPPhase('level')}>
-                      Start Practice →
-                    </button>
                   </div>
                 </div>
               )
@@ -1777,52 +1795,76 @@ export default function Practice() {
             {/* ── Level selector ── */}
             {pPhase === 'level' && conceptMeta && (
               <div className={s.levelScreen}>
-                <button className={s.backLink} onClick={() => setPPhase('explore')}>
-                  ← {conceptMeta.label}
+                <button className={s.backLink} onClick={() => setPPhase('path')}>
+                  ← Back to path
                 </button>
-                <div className={s.levelHeader}>
-                  <span className={s.levelConceptIcon}>
-                    <ConceptPathIcon conceptId={conceptMeta.id} size={40} />
-                  </span>
-                  <div>
-                    <h2 className={s.levelConceptName}>{conceptMeta.label}</h2>
-                    <p className={s.levelConceptSub}>Choose your difficulty</p>
-                  </div>
-                </div>
 
-                <div className={s.levelCards}>
-                  {([1, 2, 3] as const)
-                    .filter(lv => allowedLevels(confidenceMap[conceptMeta.id]).includes(lv))
-                    .map(lv => {
-                    const m   = LEVEL_META[lv]
-                    const cnt = questionCount(conceptMeta.id, lv)
-                    const recommended = confidenceMap[conceptMeta.id]
-                      ? getRecommendedLevel(conceptMeta.id) === lv
-                      : false
-                    return (
-                      <button
-                        key={lv}
-                        className={`${s.levelCard} ${recommended ? s.levelCardRec : ''}`}
-                        style={{ '--lv-color': m.color, '--lv-soft': m.colorSoft } as React.CSSProperties}
-                        onClick={() => showCheckin(conceptMeta.id, lv)}
-                      >
-                        {recommended && (
-                          <span className={s.levelRecBadge}>Recommended</span>
-                        )}
-                        <div className={s.levelColorStripe} style={{ background: m.color }} />
-                        <div className={s.levelTierMeter} aria-label={`${m.stars} of 3 tier intensity`}>
-                          {Array.from({ length: 3 }).map((_, i) => (
-                            <span key={i} className={i < m.stars ? s.tierOn : s.tierOff} />
-                          ))}
-                        </div>
-                        <div className={s.levelNum}>{levelTierNameFor(lv)}</div>
-                        <div className={s.levelName}>{m.label}</div>
-                        <div className={s.levelDesc}>{m.sub}</div>
-                        <div className={s.levelXp}>+{m.xp} insight pts / question</div>
-                        <div className={s.levelCount}>{cnt > 0 ? `${cnt} bank questions` : 'AI-generated'}</div>
-                      </button>
-                    )
-                  })}
+                <div className={s.levelStudioCard}>
+                  <div className={s.levelHeader}>
+                    <span className={s.levelConceptIcon}>
+                      <ConceptPathIcon conceptId={conceptMeta.id} size={40} />
+                    </span>
+                    <div>
+                      <h2 className={s.levelConceptName}>{conceptMeta.label}</h2>
+                      <p className={s.levelConceptSub}>Choose the version that feels right today.</p>
+                      {confidenceMap[conceptMeta.id] && (
+                        <span className={s.confLevelHint}>
+                          Craft recommends {LEVEL_META[getRecommendedLevel(conceptMeta.id)].label}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={s.levelCards}>
+                    {([1, 2, 3] as const)
+                      .filter(lv => allowedLevels(confidenceMap[conceptMeta.id]).includes(lv))
+                      .map(lv => {
+                      const m   = LEVEL_META[lv]
+                      const cnt = questionCount(conceptMeta.id, lv)
+                      const recommended = confidenceMap[conceptMeta.id]
+                        ? getRecommendedLevel(conceptMeta.id) === lv
+                        : false
+                      return (
+                        <button
+                          key={lv}
+                          className={`${s.levelCard} ${recommended ? s.levelCardRec : ''}`}
+                          style={{ '--lv-color': m.color, '--lv-soft': m.colorSoft } as React.CSSProperties}
+                          onClick={() => void startLevelWithCheckin(conceptMeta.id, lv)}
+                          disabled={checkinLoading}
+                        >
+                          {recommended && (
+                            <span className={s.levelRecBadge}>Recommended</span>
+                          )}
+                          <div className={s.levelColorStripe} style={{ background: m.color }} />
+                          <div className={s.levelTierMeter} aria-label={`${m.stars} of 3 tier intensity`}>
+                            {Array.from({ length: 3 }).map((_, i) => (
+                              <span key={i} className={i < m.stars ? s.tierOn : s.tierOff} />
+                            ))}
+                          </div>
+                          <div className={s.levelNum}>{levelTierNameFor(lv)}</div>
+                          <div className={s.levelName}>{m.label}</div>
+                          <div className={s.levelDesc}>{m.sub}</div>
+                          <div className={s.levelXp}>+{m.xp} insight pts / question</div>
+                          <div className={s.levelCount}>{cnt > 0 ? `${cnt} bank questions` : 'AI-generated'}</div>
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  <div className={s.checkinInline}>
+                    <div className={s.checkinCopy}>
+                      <h3>How are you feeling?</h3>
+                      <p>Optional. Tell Craft what feels tricky, then choose a difficulty above.</p>
+                    </div>
+                    <textarea
+                      rows={3}
+                      value={checkinText}
+                      onChange={e => setCheckinText(e.target.value)}
+                      placeholder="e.g. Circles are fine, but word problems with radius and diameter feel confusing."
+                      maxLength={1000}
+                    />
+                    {checkinLoading && <span className={s.checkinReading}>Reading your note…</span>}
+                  </div>
                 </div>
               </div>
             )}

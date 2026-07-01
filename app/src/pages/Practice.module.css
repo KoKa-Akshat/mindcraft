@@ -170,7 +170,7 @@
 ══════════════════════════════════════════════════════════════════════════════ */
 
 .levelScreen {
-  max-width: 760px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -218,6 +218,20 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+.levelStudioCard {
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 28px;
+  padding: 34px;
+  background:
+    radial-gradient(circle at 14% 10%, rgba(84,185,72,0.16), transparent 32%),
+    linear-gradient(135deg, rgba(18,72,72,0.94), rgba(6,48,41,0.96));
+  box-shadow: 0 30px 80px rgba(0,0,0,0.22);
+}
+
+.levelStudioCard .levelHeader {
+  margin-bottom: 28px;
 }
 
 .levelCard {
@@ -275,6 +289,96 @@
 .levelDesc { font-size: 13px; color: var(--text-2); }
 .levelXp   { font-size: 12px; font-weight: 700; color: var(--lv-color, #fff); background: var(--lv-soft, rgba(255,255,255,0.08)); border-radius: 20px; padding: 3px 12px; margin-top: 4px; text-transform: lowercase; }
 .levelCount{ font-size: 11px; color: var(--text-muted); }
+
+.checkinInline {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.45fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.checkinCopy h3 {
+  margin: 0 0 6px;
+  font-family: var(--f-display);
+  font-size: 20px;
+  color: #fff;
+}
+
+.checkinCopy p {
+  margin: 0;
+  color: rgba(255,255,255,0.58);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.checkinInline textarea {
+  width: 100%;
+  min-height: 96px;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 16px;
+  background: rgba(255,250,240,0.92);
+  color: #18342a;
+  padding: 14px 16px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+  outline: none;
+}
+
+.checkinInline textarea:focus {
+  border-color: rgba(196,245,71,0.62);
+  box-shadow: 0 0 0 3px rgba(196,245,71,0.16);
+}
+
+.checkinReading {
+  grid-column: 2;
+  color: rgba(196,245,71,0.82);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tutorPing {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(196,245,71,0.34);
+  background: linear-gradient(135deg, rgba(196,245,71,0.18), rgba(84,185,72,0.12));
+  color: #eaffb8;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.22);
+  backdrop-filter: blur(14px);
+}
+
+.tutorPing span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #c4f547;
+  color: #08231a;
+  font-weight: 950;
+}
+
+.tutorPing:hover {
+  border-color: rgba(196,245,71,0.68);
+  color: #fff;
+}
 
 /* ══════════════════════════════════════════════════════════════════════════════
    SESSION SCREEN
@@ -2935,9 +3039,12 @@
 @media (max-width: 860px) {
   .solverPanel { grid-template-columns: 1fr; }
   .solverTitle { font-size: 27px; }
+  .levelStudioCard { padding: 22px; border-radius: 22px; }
   .levelCards { grid-template-columns: 1fr; gap: 12px; }
   .levelCard  { flex-direction: row; text-align: left; padding: 20px; }
   .levelTierMeter { grid-template-columns: repeat(3, 24px); }
+  .checkinInline { grid-template-columns: 1fr; }
+  .checkinReading { grid-column: 1; }
   .examPickScreen { grid-template-columns: 1fr; max-width: 680px; gap: 24px; }
   .examPickTitle,
   .examPickSub { max-width: 520px; }
@@ -2948,9 +3055,16 @@
 
 @media (max-width: 768px) {
   .page { margin-left: 0; padding: 72px 16px 40px; }
+  .lessonPage { padding-top: 20px; }
   .conceptGrid { grid-template-columns: repeat(2, 1fr); }
   .completeStats { gap: 20px; }
   .topBar { justify-content: center; }
+  .tutorPing {
+    top: 12px;
+    right: 12px;
+    min-height: 38px;
+    padding-right: 12px;
+  }
 }
 
 @media (max-width: 560px) {
