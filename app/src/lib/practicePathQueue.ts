@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { PRACTICE_CONCEPTS } from './questionBank'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import { mlIdToLabel } from './conceptMap'
 import { loadPracticeDraftsRemote } from './practiceState'
 import { getRecommendations } from './mlApi'
 import { chainSteps } from './recommendNextConcept'
@@ -42,11 +43,8 @@ function practiceDraftKey(uid: string, type: MissionType) {
   return `mindcraft:exam-help:${uid}:${type}`
 }
 
-function conceptsFromIds(ids: string[]): PathConcept[] {
-  return ids.flatMap(id => {
-    const concept = PRACTICE_CONCEPTS.find(c => c.id === id)
-    return concept ? [{ id: concept.id, label: concept.label }] : []
-  })
+export function conceptsFromIds(ids: string[]): PathConcept[] {
+  return ids.map(id => ({ id, label: mlIdToLabel(id) }))
 }
 
 function loadLocalDraft(uid: string): PracticeDraft | null {
@@ -89,7 +87,7 @@ export function buildPracticePathQueue(
 ): Pick<PracticePathQueue, 'pathQueue' | 'pathConcepts' | 'activeConceptId' | 'progressPct' | 'completedOnPath'> {
   const pathQueue = assessConcepts.length > 0
     ? assessConcepts
-    : PRACTICE_CONCEPTS.map(c => ({ id: c.id, label: c.label }))
+    : conceptsFromIds([])
 
   const activePathQueue = pathQueue.filter(c => !isPathMastered(c.id, masteredIds, confidenceMap))
   const pathConcepts = activePathQueue.slice(0, PATH_SLOT_COUNT)

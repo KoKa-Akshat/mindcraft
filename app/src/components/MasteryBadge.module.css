@@ -1,0 +1,99 @@
+.wrap {
+  position: relative;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(196, 245, 71, 0.35);
+  background: rgba(196, 245, 71, 0.1);
+  color: #e8f5c8;
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.badge:hover {
+  background: rgba(196, 245, 71, 0.16);
+  border-color: rgba(196, 245, 71, 0.55);
+}
+
+.pct {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #c4f547;
+}
+
+.label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  width: min(320px, 92vw);
+  max-height: 360px;
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(7, 18, 15, 0.96);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.panelHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 4px 10px;
+  align-items: center;
+  font-size: 0.78rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.row:last-child { border-bottom: none; }
+
+.rowLabel {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.rowMeta {
+  font-size: 0.68rem;
+  text-transform: capitalize;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.rowPct {
+  font-weight: 700;
+  color: #c4f547;
+  min-width: 2.5rem;
+  text-align: right;
+}

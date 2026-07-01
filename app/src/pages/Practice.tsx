@@ -339,6 +339,7 @@ export default function Practice() {
 
   // ── Practice state ────────────────────────────────────────────────────────
   const [pPhase,     setPPhase]     = useState<PracticePhase>('path')
+  const [preExploreReturnPhase, setPreExploreReturnPhase] = useState<PracticePhase | null>(null)
   const [concept,    setConcept]    = useState<string | null>(null)
   const [level,      setLevel]      = useState<1|2|3>(1)
   const [questions,  setQuestions]  = useState<Question[]>([])
@@ -969,9 +970,14 @@ export default function Practice() {
 
   // ── Practice helpers ──────────────────────────────────────────────────────
 
+  function openExplore(returnPhase: PracticePhase) {
+    setPreExploreReturnPhase(returnPhase)
+    setPPhase('explore')
+  }
+
   function pickConcept(conceptId: string) {
     setConcept(conceptId)
-    setPPhase('explore')
+    openExplore('path')
   }
 
   function showCheckin(conceptId: string, lv: 1|2|3, bridge?: BridgeRecommendation) {
@@ -1615,8 +1621,12 @@ export default function Practice() {
               const content = getConceptContent(conceptMeta.id)
               return (
                 <div className={s.exploreScreen}>
-                  <button className={s.backLink} onClick={() => setPPhase('path')}>
-                    ← Back to path
+                  <button className={s.backLink} onClick={() => {
+                    const ret = preExploreReturnPhase ?? 'path'
+                    setPreExploreReturnPhase(null)
+                    setPPhase(ret)
+                  }}>
+                    ← {preExploreReturnPhase === 'session' ? 'Back to question' : 'Back to path'}
                   </button>
 
                   <div className={s.exploreCard}>
@@ -1879,7 +1889,7 @@ export default function Practice() {
                         <button type="button" className={s.workbenchBtn} onClick={() => setPPhase('path')}>
                           Practice Path
                         </button>
-                        <button type="button" className={s.workbenchBtn} onClick={() => setPPhase('explore')}>
+                        <button type="button" className={s.workbenchBtn} onClick={() => openExplore('session')}>
                           Lesson Notes
                         </button>
                         <button type="button" className={s.workbenchBtn} onClick={() => navigate('/practice?homeworkHelp=1')}>
@@ -2002,6 +2012,15 @@ export default function Practice() {
                               </div>
                               <div className={s.feedbackBody}>
                                 <div className={s.feedbackExplanation}>{currentQ.explanation}</div>
+                                {selected !== currentQ.correctIndex && concept && getConceptContent(concept) && (
+                                  <button
+                                    type="button"
+                                    className={s.reviewLink}
+                                    onClick={() => openExplore('session')}
+                                  >
+                                    Review {conceptMeta?.label ?? mlIdToLabel(concept)} →
+                                  </button>
+                                )}
                               </div>
                             </div>
                           )}

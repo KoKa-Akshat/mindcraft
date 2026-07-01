@@ -21,7 +21,13 @@ interface MLNode {
   tags: string[]
 }
 interface MLEdge { from: string; to: string; weight: number; relation: string }
-interface KGData { nodes: MLNode[]; edges: MLEdge[] }
+interface StudentPoint { x: number; y: number; label: string }
+interface KGData {
+  nodes: MLNode[]
+  edges: MLEdge[]
+  studentPoints?: { mastery: StudentPoint; strength: StudentPoint }
+  axisLabels?: { x: string; y: string }
+}
 
 interface RouteStep {
   id: string; name: string
@@ -54,12 +60,28 @@ const KIND_LABEL: Record<StatusKind, string> = {
 
 function nodeColor(status: string) { return KIND_COLOR[statusKind(status)] }
 
-function scalePositions(nodes: MLNode[]) {
-  if (!nodes.length) return new Map<string, { sx: number; sy: number }>()
+function diamondPoints(cx: number, cy: number, r: number) {
+  return `${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`
+}
+
+function scalePositions(nodes: MLNode[], extras: { x: number; y: number }[] = []) {
+  const pts = [
+    ...nodes.map(n => ({ x: n.x, y: n.y })),
+    ...extras,
+  ]
+  if (!pts.length) {
+    return {
+      positions: new Map<string, { sx: number; sy: number }>(),
+      minX: 0,
+      minY: 0,
+      rX: 1,
+      rY: 1,
+    }
+  }
   let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
-  for (const n of nodes) {
-    if (n.x < minX) minX = n.x; if (n.x > maxX) maxX = n.x
-    if (n.y < minY) minY = n.y; if (n.y > maxY) maxY = n.y
+  for (const p of pts) {
+    if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x
+    if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y
   }
   const rX = maxX - minX || 1, rY = maxY - minY || 1
   const out = new Map<string, { sx: number; sy: number }>()
@@ -69,7 +91,17 @@ function scalePositions(nodes: MLNode[]) {
       sy: PAD + ((n.y - minY) / rY) * (SVG_H - PAD * 2),
     })
   }
-  return out
+  return { positions: out, minX, minY, rX, rY }
+}
+
+function scaleRawPoint(
+  point: { x: number; y: number },
+  bounds: { minX: number; minY: number; rX: number; rY: number },
+) {
+  return {
+    sx: PAD + ((point.x - bounds.minX) / bounds.rX) * (SVG_W - PAD * 2),
+    sy: PAD + ((point.y - bounds.minY) / bounds.rY) * (SVG_H - PAD * 2),
+  }
 }
 
 export default function ConstellationGpsExplorer({
@@ -94,6 +126,10 @@ export default function ConstellationGpsExplorer({
   const [search,     setSearch]     = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
   const [levelFilter,setLevelFilter]= useState<string | null>(null)
+  const [statusFilter, setStatusFilter] = useState<StatusKind | null>(null)
+  const [view, setView] = useState({ scale: 1, tx: 0, ty: 0 })
+  const [isDragging, setIsDragging] = useState(false)
+  const dragRef = useRef<{ x: number; y: number } | null>(null)
   const routeToken = useRef<string | null>(null)
   const autoPlotted = useRef<string | null>(null)
 
@@ -119,10 +155,27 @@ export default function ConstellationGpsExplorer({
     return m
   }, [kgData])
 
-  const positions = useMemo(
-    () => kgData ? scalePositions(kgData.nodes) : new Map<string, { sx: number; sy: number }>(),
-    [kgData],
-  )
+  const positionsBundle = useMemo(() => {
+    if (!kgData) return null
+    const extras: { x: number; y: number }[] = []
+    const sp = kgData.studentPoints
+    if (sp?.mastery) extras.push(sp.mastery)
+    if (sp?.strength) extras.push(sp.strength)
+    return scalePositions(kgData.nodes, extras)
+  }, [kgData])
+
+  const positions = positionsBundle?.positions ?? new Map<string, { sx: number; sy: number }>()
+
+  const studentScreenPoints = useMemo(() => {
+    if (!kgData?.studentPoints || !positionsBundle) return null
+    const { mastery, strength } = kgData.studentPoints
+    return {
+      mastery: scaleRawPoint(mastery, positionsBundle),
+      strength: scaleRawPoint(strength, positionsBundle),
+      masteryLabel: mastery.label,
+      strengthLabel: strength.label,
+    }
+  }, [kgData, positionsBundle])
 
   const stats = useMemo(() => {
     if (!kgData) return { stable: 0, progress: 0, needs: 0, total: 0 }
@@ -152,6 +205,36 @@ export default function ConstellationGpsExplorer({
   }, [search, kgData])
 
   const coveragePct = stats.total ? Math.round((stats.stable / stats.total) * 100) : 0
+
+  function resetView() { setView({ scale: 1, tx: 0, ty: 0 }) }
+
+  function onWheel(e: React.WheelEvent<SVGSVGElement>) {
+    e.preventDefault()
+    const delta = e.deltaY > 0 ? 0.9 : 1.1
+    setView(v => ({ ...v, scale: Math.min(4, Math.max(0.5, v.scale * delta)) }))
+  }
+
+  function onPointerDown(e: React.PointerEvent<SVGSVGElement>) {
+    if (e.button !== 0) return
+    dragRef.current = { x: e.clientX - view.tx, y: e.clientY - view.ty }
+    setIsDragging(true)
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+
+  function onPointerMove(e: React.PointerEvent<SVGSVGElement>) {
+    if (!dragRef.current) return
+    setView(v => ({
+      ...v,
+      tx: e.clientX - dragRef.current!.x,
+      ty: e.clientY - dragRef.current!.y,
+    }))
+  }
+
+  function onPointerUp(e: React.PointerEvent<SVGSVGElement>) {
+    dragRef.current = null
+    setIsDragging(false)
+    try { e.currentTarget.releasePointerCapture(e.pointerId) } catch { /* ignore */ }
+  }
 
   function selectNode(node: MLNode) {
     setSelectedId(node.id)
@@ -217,9 +300,47 @@ export default function ConstellationGpsExplorer({
     setSelectedId(null)
   }
 
-  const visibleNodes = levelFilter
-    ? kgData?.nodes.filter(n => n.level === levelFilter) ?? []
-    : kgData?.nodes ?? []
+  const visibleNodes = useMemo(() => {
+    let nodes = kgData?.nodes ?? []
+    if (levelFilter) nodes = nodes.filter(n => n.level === levelFilter)
+    if (statusFilter) nodes = nodes.filter(n => statusKind(n.status) === statusFilter)
+    return nodes
+  }, [kgData, levelFilter, statusFilter])
+
+  const filterRow = (levels.length > 0 || kgData) && (
+    <div className={s.filters} role="group" aria-label="Map filters">
+      <button
+        className={`${s.chip} ${!statusFilter ? s.chipActive : ''}`}
+        onClick={() => setStatusFilter(null)}
+      >All status</button>
+      {(['stable', 'progress', 'needs', 'unknown'] as const).map(kind => (
+        <button
+          key={kind}
+          className={`${s.chip} ${statusFilter === kind ? s.chipActive : ''}`}
+          onClick={() => setStatusFilter(statusFilter === kind ? null : kind)}
+        >
+          {KIND_LABEL[kind]}
+        </button>
+      ))}
+      {levels.length > 0 && (
+        <>
+          <span className={s.filterSep} aria-hidden />
+          <button
+            className={`${s.chip} ${!levelFilter ? s.chipActive : ''}`}
+            onClick={() => setLevelFilter(null)}
+          >All levels</button>
+          {levels.map(lv => (
+            <button key={lv}
+              className={`${s.chip} ${levelFilter === lv ? s.chipActive : ''}`}
+              onClick={() => setLevelFilter(levelFilter === lv ? null : lv)}
+            >
+              {lv.replace(/_/g, ' ')}
+            </button>
+          ))}
+        </>
+      )}
+    </div>
+  )
 
   const searchForm = (
     <form className={s.searchRow} onSubmit={handleSearchSubmit}>
@@ -315,26 +436,11 @@ export default function ConstellationGpsExplorer({
             </div>
 
             {searchForm}
-
-            {levels.length > 0 && (
-              <div className={s.filters} role="group" aria-label="Filter by level">
-                <button
-                  className={`${s.chip} ${!levelFilter ? s.chipActive : ''}`}
-                  onClick={() => setLevelFilter(null)}
-                >All</button>
-                {levels.map(lv => (
-                  <button key={lv}
-                    className={`${s.chip} ${levelFilter === lv ? s.chipActive : ''}`}
-                    onClick={() => setLevelFilter(levelFilter === lv ? null : lv)}
-                  >
-                    {lv.replace(/_/g, ' ')}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         </header>
       )}
+
+      {filterRow}
 
       <div className={`${s.mapArea} ${embedded ? s.mapAreaEmbedded : ''}`}>
         <div className={s.mapWrap}>
@@ -352,8 +458,40 @@ export default function ConstellationGpsExplorer({
           )}
 
           {kgData && (
+            <>
+            <div className={s.zoomControls}>
+              <button type="button" className={s.zoomBtn} onClick={() => setView(v => ({ ...v, scale: Math.min(4, v.scale * 1.2) }))}>+</button>
+              <button type="button" className={s.zoomBtn} onClick={() => setView(v => ({ ...v, scale: Math.max(0.5, v.scale * 0.8) }))}>−</button>
+              <button type="button" className={s.zoomBtn} onClick={resetView}>Reset</button>
+            </div>
             <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} className={s.mapSvg}
-              xmlns="http://www.w3.org/2000/svg" aria-label="Knowledge constellation">
+              xmlns="http://www.w3.org/2000/svg" aria-label="Knowledge constellation"
+              onWheel={onWheel}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onPointerLeave={onPointerUp}
+              onDoubleClick={e => { if (e.target === e.currentTarget) resetView() }}
+              style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+            >
+              <g transform={`translate(${view.tx},${view.ty}) scale(${view.scale})`}>
+              {kgData.axisLabels && (
+                <>
+                  <text x={SVG_W / 2} y={SVG_H - 10} textAnchor="middle"
+                    fontSize="9" fill="rgba(50,60,80,0.55)"
+                    fontFamily="system-ui, sans-serif" fontWeight="600"
+                    pointerEvents="none">
+                    {kgData.axisLabels.x}
+                  </text>
+                  <text x={14} y={SVG_H / 2} textAnchor="middle"
+                    fontSize="9" fill="rgba(50,60,80,0.55)"
+                    fontFamily="system-ui, sans-serif" fontWeight="600"
+                    transform={`rotate(-90, 14, ${SVG_H / 2})`}
+                    pointerEvents="none">
+                    {kgData.axisLabels.y}
+                  </text>
+                </>
+              )}
               {kgData.edges.filter(e => e.weight > 0.1).map((edge, i) => {
                 const sp = positions.get(edge.from)
                 const tp = positions.get(edge.to)
@@ -369,6 +507,43 @@ export default function ConstellationGpsExplorer({
                   />
                 )
               })}
+
+              {studentScreenPoints && (
+                <g pointerEvents="none">
+                  <line
+                    x1={studentScreenPoints.mastery.sx}
+                    y1={studentScreenPoints.mastery.sy}
+                    x2={studentScreenPoints.strength.sx}
+                    y2={studentScreenPoints.strength.sy}
+                    stroke="#7c3aed"
+                    strokeWidth="1.5"
+                    strokeOpacity="0.65"
+                    strokeDasharray="4 3"
+                  />
+                  <polygon
+                    points={diamondPoints(studentScreenPoints.mastery.sx, studentScreenPoints.mastery.sy, 9)}
+                    fill="#4361ee"
+                    stroke="#fff"
+                    strokeWidth="1.2"
+                  />
+                  <text x={studentScreenPoints.mastery.sx} y={studentScreenPoints.mastery.sy - 14}
+                    textAnchor="middle" fontSize="8" fontWeight="700" fill="#4361ee"
+                    fontFamily="system-ui, sans-serif">
+                    {studentScreenPoints.masteryLabel}
+                  </text>
+                  <polygon
+                    points={diamondPoints(studentScreenPoints.strength.sx, studentScreenPoints.strength.sy, 9)}
+                    fill="none"
+                    stroke="#7c3aed"
+                    strokeWidth="2"
+                  />
+                  <text x={studentScreenPoints.strength.sx} y={studentScreenPoints.strength.sy - 14}
+                    textAnchor="middle" fontSize="8" fontWeight="700" fill="#7c3aed"
+                    fontFamily="system-ui, sans-serif">
+                    {studentScreenPoints.strengthLabel}
+                  </text>
+                </g>
+              )}
 
               {visibleNodes.map(node => {
                 const pos = positions.get(node.id)
@@ -436,7 +611,9 @@ export default function ConstellationGpsExplorer({
                   </g>
                 )
               })}
+              </g>
             </svg>
+            </>
           )}
 
           <div className={s.legend}>

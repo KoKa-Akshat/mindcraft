@@ -8,8 +8,9 @@ import { isDiagnosticComplete, markDiagnosticComplete } from '../lib/practiceSta
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import type { Confidence } from '../lib/bridgePractice'
 import HeroBar from '../components/HeroBar'
+import MasteryBadge from '../components/MasteryBadge'
 import PawHub from '../components/PawHub'
-import PracticeLearningPathMini from '../components/PracticeLearningPathMini'
+import NextConceptCard from '../components/NextConceptCard'
 import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
@@ -118,16 +119,19 @@ export default function Dashboard() {
   return (
     <div className={s.shell}>
       <main className={s.page}>
-        <HeroBar
-          greeting={greeting()}
-          name={data.displayName}
-          nextSession={data.nextSession}
-          tutorId={data.tutorId}
-          showUserControls
-          minimal
-          showBooking={diagChecked}
-          onBooking={() => navigate('/book')}
-        />
+        <div className={s.heroRow}>
+          <HeroBar
+            greeting={greeting()}
+            name={data.displayName}
+            nextSession={data.nextSession}
+            tutorId={data.tutorId}
+            showUserControls
+            minimal
+            showBooking={diagChecked}
+            onBooking={() => navigate('/book')}
+          />
+          {diagChecked && <MasteryBadge userId={uid} />}
+        </div>
 
         {(!diagChecked || data.loading) ? (
           <div className={s.loading}><div className={s.spinner} /></div>
@@ -174,14 +178,10 @@ export default function Dashboard() {
                       onStartRoute={openRoute}
                     />
                   ) : (
-                    <PracticeLearningPathMini
-                      concepts={path.pathConcepts}
-                      activeConceptId={path.activeConceptId}
-                      progressPct={path.progressPct}
-                      completedCount={path.completedOnPath}
-                      totalCount={path.pathQueue.length}
-                      exam={path.exam}
+                    <NextConceptCard
+                      concept={path.pathConcepts[0] ?? null}
                       loading={path.loading}
+                      exam={path.exam}
                     />
                   )}
                 </div>

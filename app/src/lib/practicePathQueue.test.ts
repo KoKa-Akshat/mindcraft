@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildPracticePathQueue } from './practicePathQueue'
+import { buildPracticePathQueue, conceptsFromIds } from './practicePathQueue'
 
 describe('buildPracticePathQueue', () => {
   it('preserves assessConcepts order (pathfinder chain, not confidence sort)', () => {
@@ -21,5 +21,11 @@ describe('buildPracticePathQueue', () => {
       'linear_equations',
       'functions_basics',
     ])
+  })
+
+  it('conceptsFromIds keeps foundational ids absent from PRACTICE_CONCEPTS', () => {
+    const out = conceptsFromIds(['basic_equations', 'linear_equations'])
+    expect(out.map(c => c.id)).toEqual(['basic_equations', 'linear_equations'])
+    expect(out[0].label).toBeTruthy()
   })
 })

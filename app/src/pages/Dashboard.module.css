@@ -42,6 +42,18 @@
   min-height: 640px;
 }
 
+.heroRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.heroRow > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
 .pawCol {
   display: flex;
   align-items: flex-start;
