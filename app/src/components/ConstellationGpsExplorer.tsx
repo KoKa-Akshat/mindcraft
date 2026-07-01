@@ -461,7 +461,7 @@ export default function ConstellationGpsExplorer({
         </header>
       )}
 
-      {filterRow}
+      {filterRow && <div className={s.filterBar}>{filterRow}</div>}
 
       <div className={`${s.mapArea} ${embedded ? s.mapAreaEmbedded : ''}`}>
         <div className={s.mapWrap}>
@@ -499,13 +499,13 @@ export default function ConstellationGpsExplorer({
               {kgData.axisLabels && (
                 <>
                   <text x={SVG_W / 2} y={SVG_H - 10} textAnchor="middle"
-                    fontSize="9" fill="rgba(50,60,80,0.55)"
+                    fontSize="9" fill="rgba(255,255,255,0.42)"
                     fontFamily="system-ui, sans-serif" fontWeight="600"
                     pointerEvents="none">
                     {kgData.axisLabels.x}
                   </text>
                   <text x={14} y={SVG_H / 2} textAnchor="middle"
-                    fontSize="9" fill="rgba(50,60,80,0.55)"
+                    fontSize="9" fill="rgba(255,255,255,0.42)"
                     fontFamily="system-ui, sans-serif" fontWeight="600"
                     transform={`rotate(-90, 14, ${SVG_H / 2})`}
                     pointerEvents="none">
@@ -522,8 +522,8 @@ export default function ConstellationGpsExplorer({
                 return (
                   <line key={i}
                     x1={sp.sx} y1={sp.sy} x2={tp.sx} y2={tp.sy}
-                    stroke={lit ? 'rgba(67,97,238,0.22)' : 'rgba(0,0,0,0.06)'}
-                    strokeWidth={lit ? 1.8 : 0.8}
+                    stroke={lit ? 'rgba(255,255,255,0.62)' : 'rgba(255,255,255,0.18)'}
+                    strokeWidth={lit ? 1.6 : 0.9}
                     strokeLinecap="round"
                   />
                 )
@@ -571,7 +571,7 @@ export default function ConstellationGpsExplorer({
                 if (!pos) return null
                 const isHov = hovered === node.id
                 const isSel = selectedId === node.id
-                const color = nodeColor(node.status)
+                const accent = nodeColor(node.status)
                 const dimmed = searchMatches.size > 0 && !searchMatches.has(node.id)
                 const hasData = node.eventCount > 0
                 const r = hasData
@@ -595,21 +595,21 @@ export default function ConstellationGpsExplorer({
                   >
                     {isSel && (
                       <circle r={r + 9}
-                        fill={color} fillOpacity="0.1"
-                        stroke={color} strokeWidth="1.5" strokeOpacity="0.3"
+                        fill={accent} fillOpacity="0.12"
+                        stroke={accent} strokeWidth="1.5" strokeOpacity="0.45"
                       />
                     )}
                     <circle r={r}
-                      fill={color}
-                      fillOpacity={dimmed ? 0.18 : isSel ? 1 : isHov ? 0.9 : hasData ? 0.78 : 0.45}
-                      stroke={isSel ? 'white' : color}
-                      strokeWidth={isSel ? 2 : 0.8}
-                      strokeOpacity={dimmed ? 0.25 : 0.9}
+                      fill={dimmed ? 'rgba(255,255,255,0.22)' : '#ffffff'}
+                      fillOpacity={dimmed ? 1 : (isSel ? 1 : isHov ? 0.96 : hasData ? 0.9 : 0.55)}
+                      stroke={isSel ? accent : 'rgba(255,255,255,0.85)'}
+                      strokeWidth={isSel ? 2.2 : 1}
+                      strokeOpacity={dimmed ? 0.3 : 1}
                     />
                     {node.mastery > 0.05 && !dimmed && (
                       <circle r={r - 2.5}
                         fill="none"
-                        stroke="rgba(255,255,255,0.75)" strokeWidth="1.8"
+                        stroke={accent} strokeWidth="1.8"
                         strokeDasharray={`${node.mastery * 2 * Math.PI * (r - 2.5)} ${2 * Math.PI * (r - 2.5)}`}
                         strokeLinecap="round"
                         transform="rotate(-90)"
@@ -621,7 +621,7 @@ export default function ConstellationGpsExplorer({
                         textAnchor="middle"
                         fontSize={isSel ? 9.5 : 8.5}
                         fontWeight={isSel ? 700 : 500}
-                        fill={isSel ? '#1a1f2e' : dimmed ? 'rgba(50,60,80,0.4)' : 'rgba(50,60,80,0.72)'}
+                        fill={isSel ? '#ffffff' : dimmed ? 'rgba(255,255,255,0.28)' : 'rgba(255,255,255,0.72)'}
                         fontFamily="system-ui, -apple-system, sans-serif"
                         style={{ userSelect: 'none', pointerEvents: 'none' }}
                       >

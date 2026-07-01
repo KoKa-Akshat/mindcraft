@@ -21,24 +21,8 @@
 }
 
 .brand {
-  display: inline-flex;
-  align-items: center;
-  color: #ffffff;
-  text-decoration: none;
   width: fit-content;
   margin-bottom: 22px;
-}
-
-.brandText {
-  font-family: var(--f-display);
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 1;
-}
-
-.brandText span {
-  color: #54b948;
 }
 
 .nav {
@@ -388,8 +372,8 @@
     display: none;
   }
 
-  .brandText {
-    font-size: 17px;
+  .brand {
+    margin-bottom: 18px;
   }
 
   .navLink {

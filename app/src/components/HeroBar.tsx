@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useUser } from '../App'
+import MindCraftLogo from './MindCraftLogo'
 import s from './HeroBar.module.css'
 
 interface Props {
@@ -106,9 +107,7 @@ export default function HeroBar({ greeting, name, nextSession, tutorId, showUser
 
       <div className={`${s.bottomRow} ${minimal ? s.bottomRowMinimal : ''}`}>
         <div className={s.greetingBlock}>
-          <Link to="/dashboard" className={s.brand}>
-            <span className={s.brandText}>Mind<span>Craft</span></span>
-          </Link>
+          <MindCraftLogo className={s.brand} size="md" />
           <p className={s.kicker}>{todayLabel()}</p>
           <h1 className={s.greeting}>
             {greeting}, <em>{name}</em>

@@ -2,8 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useUser } from '../App'
-import logo from '../assets/logo.png'
-import raccoon from '../assets/raccoon.jpg'
+import MindCraftLogo from './MindCraftLogo'
 import s from './Sidebar.module.css'
 
 const NAV = [
@@ -24,12 +23,7 @@ export default function Sidebar() {
   return (
     <>
       <nav className={s.topNav}>
-        <Link to="/dashboard" className={s.logo}>
-          <div className={s.logoPill}>
-            <img src={logo} alt="MindCraft" className={s.logoImg} />
-            <img src={raccoon} alt="" className={s.logoRaccoon} />
-          </div>
-        </Link>
+        <MindCraftLogo size="sm" />
 
         <div className={s.links}>
           {NAV.map(({ to, label }) => (
