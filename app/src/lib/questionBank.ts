@@ -1,5 +1,6 @@
 import generatedQuestionsData from '../data/generatedQuestions.json'
 import actMasterBankData from '../data/actMasterQuestionBank.generated.json'
+import eediQuestionsData from '../data/eediQuestions.json'
 
 // Canonical representation/format ("vessel") ids — mirrors the ML config
 // FORMAT_IDS (Layer 4 representation_profile). The question-side of the same
@@ -21,7 +22,7 @@ export interface Question {
   correctIndex: number
   explanation: string
   hints: string[]
-  examTag?: 'ACT' | 'SAT' | 'IB' | 'AP'
+  examTag?: 'ACT' | 'SAT' | 'IB' | 'AP' | 'GCSE'
   visual_type?: 'svg' | 'none'
   visual_data?: string
   // Representation/vessel this question is presented in. Optional & forward-
@@ -1928,7 +1929,8 @@ const RAW_QUESTIONS: Question[] = [
 const STATIC_IDS = new Set(RAW_QUESTIONS.map(q => q.id))
 const GENERATED_QUESTIONS = (generatedQuestionsData as Question[]).filter(q => !STATIC_IDS.has(q.id))
 const ACT_MASTER = (actMasterBankData as Question[]).filter(q => !STATIC_IDS.has(q.id))
-const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER])
+const EEDI_QUESTIONS = (eediQuestionsData as Question[]).filter(q => !STATIC_IDS.has(q.id))
+const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER, ...EEDI_QUESTIONS])
 
 // ── Concept metadata ──────────────────────────────────────────────────────────
 

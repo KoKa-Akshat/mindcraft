@@ -1,0 +1,352 @@
+{
+  "total_input": 1869,
+  "total_kept": 818,
+  "total_rejected": 1051,
+  "survival_rate": 0.438,
+  "reject_by_reason": {
+    "R4_latex_fail": 256,
+    "R2_diagram": 522,
+    "R1_excluded": 220,
+    "R4_answer_latex_fail": 38,
+    "R4_duplicate_correct": 3,
+    "R3_too_short": 12
+  },
+  "kept_by_concept": {
+    "order_of_operations": {
+      "total": 33,
+      "by_level": {
+        "1": 33,
+        "2": 0,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 28,
+        "word_problem": 5
+      }
+    },
+    "descriptive_statistics": {
+      "total": 29,
+      "by_level": {
+        "1": 27,
+        "2": 2,
+        "3": 0
+      },
+      "by_format": {
+        "word_problem": 3,
+        "symbolic_expression": 26
+      }
+    },
+    "fractions_decimals": {
+      "total": 145,
+      "by_level": {
+        "1": 118,
+        "2": 27,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 145
+      }
+    },
+    "measurement_units": {
+      "total": 49,
+      "by_level": {
+        "1": 49,
+        "2": 0,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 45,
+        "word_problem": 4
+      }
+    },
+    "algebraic_manipulation": {
+      "total": 103,
+      "by_level": {
+        "1": 65,
+        "2": 27,
+        "3": 11
+      },
+      "by_format": {
+        "symbolic_expression": 99,
+        "word_problem": 4
+      }
+    },
+    "factoring_polynomials": {
+      "total": 24,
+      "by_level": {
+        "1": 7,
+        "2": 15,
+        "3": 2
+      },
+      "by_format": {
+        "symbolic_expression": 23,
+        "word_problem": 1
+      }
+    },
+    "number_properties": {
+      "total": 181,
+      "by_level": {
+        "1": 146,
+        "2": 33,
+        "3": 2
+      },
+      "by_format": {
+        "symbolic_expression": 160,
+        "word_problem": 21
+      }
+    },
+    "linear_inequalities": {
+      "total": 13,
+      "by_level": {
+        "1": 0,
+        "2": 13,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 12,
+        "word_problem": 1
+      }
+    },
+    "linear_equations": {
+      "total": 56,
+      "by_level": {
+        "1": 5,
+        "2": 49,
+        "3": 2
+      },
+      "by_format": {
+        "symbolic_expression": 55,
+        "word_problem": 1
+      }
+    },
+    "ratios_proportions": {
+      "total": 44,
+      "by_level": {
+        "1": 40,
+        "2": 4,
+        "3": 0
+      },
+      "by_format": {
+        "word_problem": 8,
+        "symbolic_expression": 36
+      }
+    },
+    "exponent_rules": {
+      "total": 48,
+      "by_level": {
+        "1": 33,
+        "2": 15,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 48
+      }
+    },
+    "quadratic_equations": {
+      "total": 19,
+      "by_level": {
+        "1": 0,
+        "2": 19,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 18,
+        "word_problem": 1
+      }
+    },
+    "sequences_series": {
+      "total": 34,
+      "by_level": {
+        "1": 0,
+        "2": 29,
+        "3": 5
+      },
+      "by_format": {
+        "symbolic_expression": 34
+      }
+    },
+    "triangles_congruence": {
+      "total": 13,
+      "by_level": {
+        "1": 7,
+        "2": 6,
+        "3": 0
+      },
+      "by_format": {
+        "word_problem": 5,
+        "symbolic_expression": 8
+      }
+    },
+    "area_volume": {
+      "total": 3,
+      "by_level": {
+        "1": 2,
+        "2": 1,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 3
+      }
+    },
+    "basic_probability": {
+      "total": 7,
+      "by_level": {
+        "1": 6,
+        "2": 0,
+        "3": 1
+      },
+      "by_format": {
+        "symbolic_expression": 5,
+        "word_problem": 2
+      }
+    },
+    "lines_angles": {
+      "total": 3,
+      "by_level": {
+        "1": 2,
+        "2": 1,
+        "3": 0
+      },
+      "by_format": {
+        "symbolic_expression": 3
+      }
+    },
+    "systems_of_linear_equations": {
+      "total": 6,
+      "by_level": {
+        "1": 0,
+        "2": 5,
+        "3": 1
+      },
+      "by_format": {
+        "symbolic_expression": 2,
+        "word_problem": 4
+      }
+    },
+    "radical_expressions": {
+      "total": 6,
+      "by_level": {
+        "1": 0,
+        "2": 5,
+        "3": 1
+      },
+      "by_format": {
+        "symbolic_expression": 6
+      }
+    },
+    "circles_geometry": {
+      "total": 2,
+      "by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 1
+      },
+      "by_format": {
+        "symbolic_expression": 2
+      }
+    }
+  },
+  "misconceptions_minted": 1636,
+  "top_misconceptions": [
+    {
+      "id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+      "name": "Rounds to the wrong degree of accuracy (rounds too little)",
+      "count": 47
+    },
+    {
+      "id": "mis_number_properties__rounds_down_instead_up",
+      "name": "Rounds down instead of up",
+      "count": 42
+    },
+    {
+      "id": "mis_linear_equations__solving_equation_uses_same_operation",
+      "name": "When solving an equation, uses the same operation rather than the inverse.",
+      "count": 36
+    },
+    {
+      "id": "mis_order_of_operations__carries_out_operations_from_left",
+      "name": "Carries out operations from left to right regardless of priority order",
+      "count": 26
+    },
+    {
+      "id": "mis_measurement_units__answers_if_there_are_100",
+      "name": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
+      "count": 20
+    },
+    {
+      "id": "mis_sequences_series__asked_for_specific_term_sequence",
+      "name": "When asked for a specific term in a sequence gives the term before",
+      "count": 18
+    },
+    {
+      "id": "mis_factoring_polynomials__believes_factorising_quadratic_they_can",
+      "name": "Believes that when factorising a quadratic, they can choose any two numbers that multiply to give the constant",
+      "count": 18
+    },
+    {
+      "id": "mis_fractions_decimals__multiplying_decimals_divides_wrong_power",
+      "name": "When multiplying decimals, divides by the wrong power of 10 when reinserting the decimal",
+      "count": 18
+    },
+    {
+      "id": "mis_functions_basics__does_not_follow_arrows_through",
+      "name": "Does not follow the arrows through a function machine, changes the order of the operations asked.",
+      "count": 18
+    },
+    {
+      "id": "mis_number_properties__rounds_up_instead_down",
+      "name": "Rounds up instead of down",
+      "count": 17
+    },
+    {
+      "id": "mis_sequences_series__uses_only_first_two_terms",
+      "name": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+      "count": 16
+    },
+    {
+      "id": "mis_sequences_series__does_not_recognise_linear_sequence",
+      "name": "Does not recognise that a linear sequence must increase or decrease by same amount",
+      "count": 16
+    },
+    {
+      "id": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+      "name": "Does not recognise difference of two squares",
+      "count": 15
+    },
+    {
+      "id": "mis_algebraic_manipulation__does_not_understand_bar_modelling",
+      "name": "Does not understand bar modelling in algebra",
+      "count": 14
+    },
+    {
+      "id": "mis_lines_angles__reads_wrong_scale_on_protractor",
+      "name": "Reads the wrong scale on the protractor when measuring reflex angles",
+      "count": 14
+    },
+    {
+      "id": "mis_fractions_decimals__does_not_find_common_denominator",
+      "name": "Does not find a common denominator when adding/subtracting fractions",
+      "count": 13
+    },
+    {
+      "id": "mis_number_properties__solving_problem_requires_inverse_operation",
+      "name": "When solving a problem that requires an inverse operation (e.g. missing number problems), does the original operation",
+      "count": 13
+    },
+    {
+      "id": "mis_algebraic_manipulation__adds_instead_multiplying_expanding_bracket",
+      "name": "Adds instead of multiplying when expanding bracket",
+      "count": 13
+    },
+    {
+      "id": "mis_algebraic_manipulation__only_multiplies_first_term_expansion",
+      "name": "Only multiplies the first term in the expansion of a bracket",
+      "count": 13
+    },
+    {
+      "id": "mis_algebraic_manipulation__believes_multiplying_two_negatives_gives",
+      "name": "Believes multiplying two negatives gives a negative answer",
+      "count": 12
+    }
+  ]
+}
