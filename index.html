@@ -3,352 +3,604 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft | Stop guessing what your child needs next</title>
+<title>MindCraft | Math finally has a map</title>
+<meta name="description" content="MindCraft pairs your child with an expert tutor AND an AI knowledge graph that maps exactly what they know, don't know, and why. One plan. $100/month.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#f8eddc;
-  --paper:#fff7e8;
-  --ink:#210f17;
+  --cream:#fbf4e7;
+  --paper:#fffaf0;
+  --ink:#1c0f0a;
   --wine:#4b001d;
-  --wine-deep:#350013;
-  --obsidian:#00191a;
   --forest:#064d36;
   --green:#54b948;
   --gold:#e4bf6a;
-  --amber:#d89a16;
-  --line:rgba(117,78,24,.24);
-  --muted:rgba(33,15,23,.64);
-  --shadow:0 26px 80px rgba(34,25,12,.12);
+  --amber:#d99512;
+  --line:rgba(117,78,24,.18);
+  --muted:rgba(28,15,10,.56);
+  --shadow:0 28px 80px rgba(28,15,10,.11);
+  --radius:20px;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:auto}
-body{margin:0;background:var(--obsidian);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button,a{font:inherit}
-.page{min-height:100vh;border:3px solid #172020;border-radius:0 0 28px 28px;overflow:hidden;background:var(--cream);padding-top:104px}
-	.nav{height:104px;display:grid;grid-template-columns:1fr auto;align-items:center;border-bottom:1px solid var(--line);background:rgba(248,237,220,.9);position:fixed;top:0;left:50%;width:min(100%,calc(100% - 6px));max-width:none;transform:translateX(-50%) translateY(-116%);z-index:50;backdrop-filter:blur(18px);transition:transform .42s ease,background .28s ease,border-color .28s ease,color .28s ease}
-	body.nav-visible .nav{transform:translateX(-50%) translateY(0)}
-	body.nav-dark .nav{background:#4b001d;border-color:rgba(251,244,231,.26)}
-	body.nav-dark .brand{color:#fff4d4}
-	body.nav-dark .navlinks{border-left-color:rgba(251,244,231,.26)}
-	body.nav-dark .navlinks a{color:#fff4d4;border-right-color:rgba(251,244,231,.26)}
-	body.nav-dark .navlinks a:last-child{background:#fbf4e7;color:#4b001d}
-	body.nav-forest .nav{background:#00191a;border-color:rgba(251,244,231,.22)}
-	body.nav-forest .brand{color:#fbfaf6}
-	body.nav-forest .navlinks{border-left-color:rgba(251,244,231,.22)}
-	body.nav-forest .navlinks a{color:#fbfaf6;border-right-color:rgba(251,244,231,.22)}
-	body.nav-forest .navlinks a:last-child{background:var(--green);color:#082016}
-.brand{padding-left:clamp(24px,4vw,56px);font-size:clamp(24px,2.5vw,34px);font-weight:900;letter-spacing:-.04em;color:#003f2d}
+
+/* page frame */
+.page{min-height:100vh;border:2.5px solid #1a2222;border-radius:0 0 32px 32px;overflow:hidden;background:var(--cream)}
+
+/* announce bar */
+.announce{background:var(--forest);color:rgba(255,255,255,.85);text-align:center;padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.announce strong{color:#fff}
+
+/* nav */
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(251,244,231,.96);position:sticky;top:0;z-index:20;backdrop-filter:blur(20px);padding:0 clamp(22px,4vw,56px)}
+.brand{font-size:22px;font-weight:900;letter-spacing:-.04em;color:#003f2d}
 .brand span{color:var(--green)}
-.navlinks{height:100%;display:flex;align-items:center;border-left:1px solid var(--line)}
-.navlinks a{height:100%;display:flex;align-items:center;padding:0 clamp(18px,2.7vw,38px);font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--wine);border-right:1px solid var(--line)}
-.navlinks a:last-child{background:var(--forest);color:#fff;border-right:0}
-.menu-dot{width:10px;height:10px;border-radius:50%;background:#d99512;display:inline-block;margin-right:10px}
-.hero{min-height:calc(100vh - 104px);display:grid;grid-template-columns:minmax(0,1.04fr) minmax(360px,.96fr);border-bottom:1px solid rgba(228,191,106,.38);position:relative;isolation:isolate;background:var(--paper);overflow:hidden}
-.hero:before,.studio:before,.journey:before,.faq:before{content:"";position:absolute;inset:0;z-index:-1;background:
+.nav-right{display:flex;align-items:center}
+.nav-link{height:70px;display:flex;align-items:center;padding:0 clamp(14px,2vw,28px);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--wine);border-left:1px solid var(--line);transition:color .15s}
+.nav-link:hover{color:var(--forest)}
+.nav-link.cta{background:var(--forest);color:#fff;border-left:1px solid rgba(255,255,255,.1)}
+.nav-link.cta:hover{background:#053d28}
+
+/* hero */
+.hero{min-height:calc(100vh - 110px);display:grid;grid-template-columns:1.08fr 1fr;border-bottom:1px solid var(--line);position:relative;isolation:isolate}
+.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:
   linear-gradient(90deg,transparent calc(25% - .5px),var(--line) 25%,transparent calc(25% + .5px)),
   linear-gradient(90deg,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px)),
   linear-gradient(90deg,transparent calc(75% - .5px),var(--line) 75%,transparent calc(75% + .5px)),
   linear-gradient(180deg,transparent calc(50% - .5px),var(--line) 50%,transparent calc(50% + .5px))}
 .hero:after{content:"";position:absolute;inset:0;z-index:-1;background:
-  radial-gradient(56% 58% at 8% 14%,rgba(75,0,29,.10),transparent 58%),
-  radial-gradient(52% 66% at 88% 80%,rgba(216,154,22,.13),transparent 64%)}
-.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(46px,6vw,90px) clamp(28px,5vw,72px) clamp(86px,7vw,118px);position:relative;min-width:0;overflow:hidden}
-.hero-copy:before{content:"";position:absolute;left:clamp(28px,5vw,72px);top:clamp(46px,6vw,90px);width:88px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);opacity:.8;pointer-events:none}
-.eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin:0 0 22px}
-h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;color:var(--wine);font-size:clamp(58px,8.4vw,118px);line-height:.91;letter-spacing:-.045em;margin:0;max-width:900px;overflow-wrap:normal;min-width:0}
-.hero-note{align-self:flex-end;max-width:390px;margin:34px 4% 0 0;font-size:clamp(18px,1.62vw,23px);font-weight:800;line-height:1.22;color:rgba(75,0,29,.82)}
-.hero-actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;padding:0 25px;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--forest);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
-.btn:hover{transform:translateY(-2px)}
-.btn.primary{background:var(--wine);border-color:var(--wine);color:#fff7d8;box-shadow:0 8px 0 rgba(216,154,22,.72)}
-.btn.secondary{background:rgba(255,247,232,.72);color:var(--forest);border-color:rgba(6,77,54,.28)}
-.btn.tertiary{background:transparent;color:var(--wine);border-color:rgba(75,0,29,.22)}
-.scroll{position:absolute;left:clamp(28px,5vw,72px);bottom:34px;font-size:13px;font-weight:900;text-transform:uppercase;color:var(--wine);letter-spacing:.06em}
-.scroll span{display:block;color:#d99512;font-size:38px;line-height:1;margin-top:8px}
-.mosaic{position:relative;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(7,1fr);min-height:540px;border-left:1px solid rgba(228,191,106,.34);overflow:hidden;background:linear-gradient(180deg,var(--wine-deep) 0 36%,var(--obsidian) 36% 100%)}
-.mosaic:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:
-  linear-gradient(90deg,transparent calc(33.333% - .5px),rgba(248,237,220,.18) 33.333%,transparent calc(33.333% + .5px)),
-  linear-gradient(90deg,transparent calc(66.666% - .5px),rgba(248,237,220,.18) 66.666%,transparent calc(66.666% + .5px)),
-  linear-gradient(180deg,transparent calc(50% - .5px),rgba(248,237,220,.18) 50%,transparent calc(50% + .5px)),
-  radial-gradient(ellipse at 16% 22%,transparent 0 43%,rgba(228,191,106,.26) 43.1% 43.32%,transparent 43.45%)}
-.tile{border-left:1px solid rgba(248,237,220,.16);border-bottom:1px solid rgba(248,237,220,.16);background:rgba(255,247,232,.06)}
-.image-tile{background-image:linear-gradient(rgba(25,12,10,.04),rgba(25,12,10,.06)),url("img/background.jpg");background-size:cover;background-position:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
-.tile.a{grid-column:4/6;grid-row:1/4;background-position:68% 18%;filter:saturate(.86) contrast(1.08)}
-.tile.b{grid-column:2/6;grid-row:4/8;background-position:55% 52%;filter:saturate(.92) contrast(1.08)}
-.tile.c{grid-column:1/4;grid-row:3/5;background-position:28% 62%;filter:saturate(.82) contrast(1.06)}
-.quiet-tile{grid-column:1/3;grid-row:5/8;background:linear-gradient(145deg,rgba(53,0,19,.96),rgba(0,25,26,.92));border-left:1px solid rgba(248,237,220,.16);border-bottom:1px solid rgba(248,237,220,.16);position:relative}
-.quiet-tile:after{content:"";position:absolute;right:28px;bottom:28px;width:82px;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
-.studio,.journey,.proof,.pricing,.faq{position:relative;padding:clamp(72px,9vw,130px) clamp(22px,4vw,56px);border-bottom:1px solid var(--line);overflow:hidden}
-.studio:after,.journey:after,.proof:after,.pricing:after{content:"";position:absolute;inset:auto 0 0 0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(228,191,106,.36),transparent);opacity:.8}
-.section-head{display:grid;grid-template-columns:minmax(260px,.9fr) 1fr;gap:clamp(24px,5vw,80px);align-items:end;margin:0 auto clamp(38px,6vw,72px);max-width:1180px}
-.kicker{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 14px}
-h2{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(42px,6vw,88px);line-height:.92;font-weight:400;letter-spacing:-.045em;color:var(--wine);margin:0}
-.lead{font-size:clamp(17px,1.5vw,22px);line-height:1.45;color:var(--muted);font-weight:700;max-width:520px;margin:0}
-.feature-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);position:relative}
-.feature-grid:before{content:"";position:absolute;inset:-52px -32px auto -32px;height:220px;pointer-events:none;opacity:.18;background:
-  radial-gradient(circle at 12% 46%,var(--green) 0 3px,transparent 4px),
-  radial-gradient(circle at 42% 22%,var(--forest) 0 2px,transparent 3px),
-  radial-gradient(circle at 72% 50%,var(--green) 0 3px,transparent 4px),
-  linear-gradient(18deg,transparent 0 24%,rgba(6,77,54,.34) 24.1% 24.25%,transparent 24.35%),
-  linear-gradient(158deg,transparent 0 58%,rgba(84,185,72,.28) 58.1% 58.25%,transparent 58.35%)}
-.feature{min-height:470px;padding:34px;display:flex;flex-direction:column;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,247,232,.82),rgba(255,247,232,.52));position:relative;overflow:hidden;transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease,background .24s ease}
-.feature:before{content:"";position:absolute;inset:auto -24% -28% -24%;height:56%;background:radial-gradient(ellipse at 50% 0,rgba(84,185,72,.20),transparent 66%);transition:opacity .24s ease,transform .24s ease}
-.feature:hover{transform:translateY(-6px);border-color:rgba(84,185,72,.52);box-shadow:0 24px 70px rgba(6,77,54,.10);background:linear-gradient(180deg,rgba(255,250,240,.88),rgba(239,249,235,.46))}
-.feature:hover:before{opacity:1;transform:translateY(-12px)}
-.artifact{position:relative;z-index:1;height:168px;margin-bottom:42px;color:var(--forest)}
-.artifact svg{width:100%;height:100%;display:block;overflow:visible}
-.artifact .paper{fill:rgba(255,255,255,.72);stroke:rgba(6,77,54,.24);stroke-width:1.4}
-.artifact .line{stroke:rgba(6,77,54,.58);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.artifact .soft{stroke:rgba(84,185,72,.58);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.artifact .fill-soft{fill:rgba(84,185,72,.14);stroke:rgba(84,185,72,.42);stroke-width:1.3}
-.artifact .burgundy{stroke:rgba(75,0,29,.35);stroke-width:1.8;fill:none;stroke-linecap:round}
-.artifact .glow{filter:drop-shadow(0 0 14px rgba(84,185,72,.38))}
-.micro{position:relative;z-index:1;width:max-content;margin-bottom:16px;padding:7px 10px;border-radius:999px;background:rgba(84,185,72,.10);color:var(--forest);font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
-.feature h3{position:relative;z-index:1;font-size:clamp(24px,2.4vw,34px);line-height:1;font-weight:900;letter-spacing:-.04em;color:var(--forest);margin:0 0 14px}
-.feature p{position:relative;z-index:1;font-size:15px;line-height:1.62;color:var(--muted);font-weight:700;margin:0}
-.atlas{max-width:1180px;margin:0 auto;border:1px solid var(--line);background:rgba(255,250,240,.62)}
-.map-panel{min-height:560px;position:relative;overflow:hidden;background:
-  linear-gradient(90deg,rgba(251,244,231,.64),rgba(251,244,231,.06) 34%,rgba(0,25,26,.08)),
-  url("img/background.jpg") center/cover}
-.path{position:absolute;inset:58px;border:1px solid rgba(255,250,240,.5)}
-.node{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--green);box-shadow:0 0 0 18px rgba(84,185,72,.18);display:grid;place-items:center}
-.node b{position:absolute;left:50%;top:34px;transform:translateX(-50%);padding:8px 11px;border:1px solid rgba(255,250,240,.54);border-radius:999px;background:rgba(255,247,232,.76);color:var(--forest);font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 16px 36px rgba(6,45,34,.12);backdrop-filter:blur(10px)}
-.node.n1{left:18%;top:64%}.node.n2{left:42%;top:44%}.node.n3{left:68%;top:28%}.node.n4{left:76%;top:68%}
-.node.n4 b{background:rgba(75,0,29,.84);border-color:rgba(255,247,232,.28);color:#fff7d8}
-.path svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:#fff4d4;stroke-width:2;stroke-dasharray:10 12;opacity:.85}
-.proof{background:linear-gradient(180deg,#fff7e8,#f8eddc)}
-.proof-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.quote-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:0;box-shadow:0 14px 40px rgba(34,25,12,.08);overflow:hidden}
-.quote-card summary{list-style:none;cursor:pointer;padding:30px;min-height:250px;display:flex;flex-direction:column;gap:18px}
-.quote-card summary::-webkit-details-marker{display:none}
-.quote-card p{font-size:19px;line-height:1.42;color:var(--wine);font-weight:800;margin:0}
-.quote-card span{font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:auto}
-.quote-card .full{border-top:1px solid var(--line);padding:26px 30px 30px;color:var(--muted);font-size:15px;line-height:1.7;font-weight:700;background:rgba(255,255,255,.32)}
-.quote-card .expand{display:inline-flex;align-items:center;gap:8px;color:var(--forest);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-.quote-card .expand:after{content:"+";font-size:18px;color:var(--green)}
-.quote-card[open] .expand:after{content:"-"}
-.pricing{background:
-  radial-gradient(ellipse at 12% 18%,rgba(84,185,72,.14),transparent 42%),
-  linear-gradient(135deg,var(--obsidian) 0%,#07120f 48%,var(--wine-deep) 100%);color:#fff}
-.pricing h2{color:#fff7d8}
-.pricing .kicker{color:var(--gold)}
-.pricing .lead{color:rgba(255,247,232,.72)}
-.price-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.price{background:rgba(255,247,232,.08);border:1px solid rgba(255,247,232,.16);border-radius:24px;padding:34px}
-.price.featured{background:#fff7e8;color:var(--ink);box-shadow:0 24px 70px rgba(0,0,0,.22)}
-.price h3{font-size:15px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 18px;color:inherit}
-.price strong{font-size:48px;line-height:1;color:var(--green)}
-.price strong span{font-size:18px;color:inherit;opacity:.68}
-.price p{color:inherit;opacity:.72;font-weight:700;line-height:1.55}
-.price ul{list-style:none;padding:0;margin:22px 0;display:grid;gap:10px}
-.price li{font-weight:800}
-.price li:before{content:"+";color:var(--green);margin-right:10px}
-.faq{background:var(--cream)}
-.faq-list{max-width:980px;margin:0 auto;display:grid;gap:1px;border:1px solid var(--line)}
-.faq-item{background:rgba(255,250,240,.55);padding:26px;display:grid;grid-template-columns:1fr 1.6fr;gap:24px}
-.faq-item strong{font-size:20px;color:var(--wine)}
-.faq-item p{margin:0;color:var(--muted);line-height:1.55;font-weight:700}
-footer{padding:56px clamp(22px,4vw,56px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--obsidian);color:#fff;border-top:1px solid rgba(228,191,106,.24);position:relative;overflow:hidden}
-footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(228,191,106,.34),transparent);pointer-events:none}
-.footer-left{display:grid;gap:10px}
-.footer-brand{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.04em}.footer-brand span{color:var(--green)}
-.footer-contact{display:grid;gap:4px;color:#9ec4af;font-size:14px;font-weight:700}
-.footer-contact a{color:#9ec4af;text-decoration:none}
-.footer-contact a:hover{color:#fff}
-.socials{display:flex;gap:12px;align-items:center}
-.socials a{width:42px;height:42px;border:1px solid rgba(255,255,255,.18);border-radius:14px;display:grid;place-items:center;color:#fff;opacity:.86;margin-left:0}
-.socials svg{width:20px;height:20px;fill:currentColor}
-.socials a:hover{opacity:1;background:rgba(255,255,255,.1)}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+  radial-gradient(65% 60% at 6% 14%,rgba(84,185,72,.13),transparent 60%),
+  radial-gradient(50% 70% at 90% 76%,rgba(6,77,54,.09),transparent 66%)}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(48px,6vw,92px) clamp(28px,5vw,72px) clamp(56px,6vw,92px)}
+.eyebrow{font-size:11px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.eyebrow:before{content:"";width:26px;height:1.5px;background:var(--green);flex-shrink:0}
+h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;color:var(--wine);font-size:clamp(54px,9.2vw,134px);line-height:.87;letter-spacing:-.055em}
+.hero-sub{margin-top:30px;font-size:clamp(16px,1.55vw,20px);font-weight:600;line-height:1.58;color:var(--muted);max-width:430px}
+.hero-actions{display:flex;gap:12px;margin-top:42px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;padding:0 28px;font-size:13px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--forest);cursor:pointer;transition:all .18s ease;white-space:nowrap}
+.btn.primary{background:var(--forest);color:#fff;box-shadow:0 5px 0 #033d26}
+.btn.primary:hover{background:#053d28;transform:translateY(-2px);box-shadow:0 7px 0 #033d26}
+.btn.ghost{background:transparent;color:var(--forest)}
+.btn.ghost:hover{background:rgba(6,77,54,.07)}
+.hero-proof{margin-top:52px;padding-top:36px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.proof-stat{padding-right:28px;border-right:1px solid var(--line)}
+.proof-stat:last-child{padding-right:0;border-right:0;padding-left:28px}
+.proof-stat:nth-child(2){padding:0 28px}
+.proof-num{font-size:30px;font-weight:900;color:var(--wine);letter-spacing:-.04em;line-height:1}
+.proof-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-top:4px}
+
+/* mosaic */
+.mosaic{position:relative;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(6,1fr);min-height:560px;border-left:1px solid var(--line);overflow:hidden}
+.tile{border-left:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,250,240,.58)}
+.image-tile{background-image:linear-gradient(rgba(251,244,231,.15),rgba(251,244,231,.15)),url("img/background.jpg");background-size:cover;background-position:center}
+.tile.a{grid-column:3/5;grid-row:1/4;background-position:68% 18%}
+.tile.b{grid-column:2/5;grid-row:4/7;background-position:55% 52%}
+.tile.c{grid-column:1/3;grid-row:3/5;background-position:28% 62%}
+.quote-tile{grid-column:1/3;grid-row:5/7;background:linear-gradient(145deg,rgba(255,250,240,.96),rgba(84,185,72,.06));border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:32px 30px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
+.quote-tile blockquote{font-family:"DM Serif Display",Georgia,serif;font-size:16px;font-weight:400;font-style:italic;color:var(--wine);line-height:1.4}
+.quote-tile cite{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-style:normal}
+.quote-tile:after{content:"";display:block;width:40px;height:1.5px;background:linear-gradient(90deg,var(--green),transparent);margin-top:4px}
+
+/* shared section styles */
+section{position:relative;padding:clamp(80px,10vw,140px) clamp(22px,4vw,56px);border-bottom:1px solid var(--line)}
+.section-head{display:grid;grid-template-columns:minmax(260px,.88fr) 1fr;gap:clamp(24px,5vw,80px);align-items:end;margin:0 auto clamp(52px,7vw,92px);max-width:1200px}
+.kicker{font-size:11px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.kicker:before{content:"";width:18px;height:1.5px;background:var(--green);flex-shrink:0}
+h2{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(38px,5.2vw,80px);line-height:.92;font-weight:400;letter-spacing:-.045em;color:var(--wine)}
+.lead{font-size:clamp(16px,1.4vw,19px);line-height:1.6;color:var(--muted);font-weight:600;max-width:500px}
+
+/* grid lines on sections */
+.studio:before,.journey:before,.proof-section:before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(90deg,transparent calc(33.333% - .5px),var(--line) 33.333%,transparent calc(33.333% + .5px)),
+  linear-gradient(90deg,transparent calc(66.666% - .5px),var(--line) 66.666%,transparent calc(66.666% + .5px))}
+
+/* features */
+.feature-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.feature{min-height:500px;padding:42px 38px;display:flex;flex-direction:column;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,250,240,.78),rgba(255,250,240,.52));position:relative;overflow:hidden;transition:transform .24s ease,border-color .24s,box-shadow .24s}
+.feature:hover{transform:translateY(-8px);border-color:rgba(84,185,72,.48);box-shadow:0 28px 80px rgba(6,77,54,.09)}
+.artifact{height:172px;margin-bottom:46px;color:var(--forest)}
+.artifact svg{width:100%;height:100%;overflow:visible}
+.micro{font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+.feature h3{font-family:"DM Serif Display",Georgia,serif;font-size:27px;font-weight:400;color:var(--wine);margin-bottom:14px;line-height:1.08}
+.feature p{font-size:15px;line-height:1.65;color:var(--muted);font-weight:600}
+
+/* SVG helpers */
+.paper{fill:rgba(255,250,240,.92);stroke:rgba(6,77,54,.3);stroke-width:2}
+.line-s{fill:none;stroke:rgba(6,77,54,.42);stroke-width:1.8;stroke-linecap:round}
+.soft{fill:none;stroke:rgba(84,185,72,.52);stroke-width:2.5}
+.glow{filter:drop-shadow(0 0 6px rgba(84,185,72,.58))}
+.burg{fill:none;stroke:var(--wine);stroke-width:2;stroke-linecap:round}
+.fs{fill:rgba(6,77,54,.10)}
+
+/* journey */
+.atlas{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.step{padding:36px 30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper)}
+.step:nth-child(2n){border-right:0}
+.step:nth-child(n+3){border-bottom:0}
+.num{font-size:48px;font-weight:900;color:rgba(75,0,29,.10);letter-spacing:-.06em;line-height:1;margin-bottom:18px}
+.step h3{font-family:"DM Serif Display",Georgia,serif;font-size:22px;font-weight:400;color:var(--wine);margin-bottom:8px}
+.step p{font-size:14px;line-height:1.65;color:var(--muted);font-weight:600}
+.map-panel{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;min-height:360px;padding:44px 40px;background:linear-gradient(145deg,rgba(6,77,54,.03),rgba(84,185,72,.05));position:relative}
+.path{position:relative;width:100%;height:260px}
+.path svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45}
+.path svg path{fill:none;stroke:var(--forest);stroke-width:2;stroke-linecap:round;stroke-dasharray:5 4}
+.node{position:absolute;width:13px;height:13px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(84,185,72,.2)}
+.node.n1{top:58%;left:9%}
+.node.n2{top:38%;left:33%}
+.node.n3{top:27%;left:57%}
+.node.n4{top:22%;left:81%;background:var(--wine);box-shadow:0 0 0 6px rgba(75,0,29,.15),0 0 20px rgba(75,0,29,.32)}
+.map-label{position:absolute;bottom:24px;left:40px;font-size:11px;font-weight:800;color:var(--forest);letter-spacing:.08em;text-transform:uppercase}
+
+/* unique section */
+.unique{background:var(--ink);color:#fff;border-bottom:1px solid rgba(255,255,255,.06)}
+.unique .kicker{color:rgba(255,255,255,.4)}
+.unique .kicker:before{background:rgba(255,255,255,.3)}
+.unique h2{color:#fff}
+.unique .lead{color:rgba(255,255,255,.52)}
+.unique-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);overflow:hidden}
+.unique-item{background:var(--ink);padding:50px 44px;display:flex;flex-direction:column;gap:20px;transition:background .22s}
+.unique-item:hover{background:#221510}
+.u-num{font-size:11px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.22)}
+.unique-item h3{font-family:"DM Serif Display",Georgia,serif;font-size:26px;font-weight:400;color:#fff;line-height:1.08}
+.unique-item p{font-size:15px;font-weight:600;color:rgba(255,255,255,.52);line-height:1.68}
+.unique-item mark{background:rgba(84,185,72,.18);color:var(--green);padding:1px 6px;border-radius:4px;font-style:normal}
+
+/* testimonials */
+.proof-section{background:var(--paper)}
+.proof-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.qcard{border:1px solid var(--line);border-radius:var(--radius);background:#fff;overflow:hidden;cursor:pointer;transition:box-shadow .22s,transform .22s}
+.qcard:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.qcard summary{list-style:none;padding:38px 42px 34px;display:flex;flex-direction:column;gap:14px;user-select:none}
+.qcard summary::-webkit-details-marker{display:none}
+.qcard summary p{font-family:"DM Serif Display",Georgia,serif;font-size:21px;font-weight:400;color:var(--wine);line-height:1.32;font-style:italic}
+.qcard summary cite{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-style:normal}
+.qcard-expand{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--green)}
+.qcard .full{padding:0 42px 36px;font-size:15px;line-height:1.68;font-weight:600;color:var(--muted);border-top:1px solid var(--line);padding-top:22px}
+
+/* pricing */
+.pricing{background:var(--forest);color:#fff}
+.pricing .kicker{color:rgba(255,255,255,.5)}
+.pricing .kicker:before{background:rgba(255,255,255,.35)}
+.pricing h2{color:#fff}
+.pricing .lead{color:rgba(255,255,255,.6)}
+.price-layout{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
+.price-includes{display:grid;gap:22px}
+.pi-item{display:grid;grid-template-columns:40px 1fr;gap:18px;align-items:start}
+.pi-icon{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.pi-item h4{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;line-height:1.2}
+.pi-item p{font-size:13px;font-weight:600;color:rgba(255,255,255,.52);line-height:1.55}
+.price-card{background:#fff;border-radius:24px;padding:46px;color:var(--ink);position:relative;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.22)}
+.price-card-bar{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--forest))}
+.price-card h3{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:20px}
+.price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
+.price-amount strong{font-size:62px;font-weight:900;letter-spacing:-.05em;color:var(--wine);line-height:1}
+.price-amount span{font-size:18px;font-weight:700;color:var(--muted)}
+.price-tagline{font-size:14px;font-weight:600;color:var(--muted);line-height:1.5;margin-bottom:28px}
+.price-feats{list-style:none;display:grid;gap:11px;margin-bottom:32px}
+.price-feats li{font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.price-feats li:before{content:"✓";width:20px;height:20px;background:rgba(84,185,72,.13);color:var(--green);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;flex-shrink:0}
+.price-cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;border-radius:14px;font-size:14px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;background:var(--forest);color:#fff;border:2px solid var(--forest);cursor:pointer;transition:all .18s;box-shadow:0 4px 0 #033d26}
+.price-cta:hover{background:#053d28;transform:translateY(-2px);box-shadow:0 6px 0 #033d26}
+.price-note{font-size:12px;font-weight:700;color:var(--muted);text-align:center;margin-top:14px}
+
+/* faq */
+.faq-wrap{max-width:860px;margin:0 auto;display:grid;gap:3px}
+.faq-row{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:box-shadow .2s}
+.faq-row:hover{box-shadow:var(--shadow)}
+.faq-row details summary{list-style:none;padding:26px 34px;display:flex;justify-content:space-between;align-items:center;gap:18px;cursor:pointer;user-select:none}
+.faq-row details summary::-webkit-details-marker{display:none}
+.faq-row details summary strong{font-size:17px;font-weight:800;color:var(--ink);line-height:1.3}
+.faq-toggle{width:28px;height:28px;border-radius:50%;background:rgba(84,185,72,.12);display:flex;align-items:center;justify-content:center;color:var(--green);font-size:20px;font-weight:300;flex-shrink:0;transition:transform .22s}
+.faq-row details[open] .faq-toggle{transform:rotate(45deg)}
+.faq-row details p{padding:0 34px 26px;font-size:15px;font-weight:600;color:var(--muted);line-height:1.68}
+
+/* reveal animations */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .62s cubic-bezier(.22,.8,.3,1),transform .62s cubic-bezier(.22,.8,.3,1)}
 .reveal.show{opacity:1;transform:none}
-@media(max-width:900px){
-  .nav{height:auto;grid-template-columns:1fr}.brand{padding:22px}.navlinks{border-left:0;border-top:1px solid var(--line);overflow:auto}.navlinks a{min-height:56px;white-space:nowrap}
-  .page{padding-top:133px}
-  h1{font-size:clamp(44px,11vw,62px);line-height:.95;letter-spacing:-.035em;max-width:100%;overflow-wrap:normal}
-  .hero,.section-head,.price-grid{grid-template-columns:1fr}.hero-copy{min-height:560px}.hero-note{align-self:flex-start;margin-right:0}.mosaic{min-height:520px;border-left:0}.scroll{display:none}
-  .feature-grid,.proof-grid,.price-grid{grid-template-columns:1fr}.feature{min-height:300px}.steps{grid-template-columns:1fr}.step{border-right:0}.faq-item{grid-template-columns:1fr}
+
+/* footer */
+footer{display:flex;align-items:flex-start;justify-content:space-between;padding:44px clamp(22px,4vw,56px);flex-wrap:wrap;gap:28px;background:var(--cream)}
+.footer-brand{font-size:26px;font-weight:900;letter-spacing:-.04em;color:#003f2d;display:block;margin-bottom:12px}
+.footer-brand span{color:var(--green)}
+.footer-contact{display:flex;gap:18px;flex-wrap:wrap}
+.footer-contact a{font-size:13px;font-weight:700;color:var(--muted);transition:color .15s}
+.footer-contact a:hover{color:var(--ink)}
+.footer-right{text-align:right}
+.footer-legal{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:12px}
+.socials{display:flex;gap:12px;justify-content:flex-end}
+.socials a{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .18s}
+.socials a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.socials svg{width:15px;height:15px;fill:currentColor}
+
+/* responsive */
+@media(max-width:920px){
+  .hero{grid-template-columns:1fr}
+  .mosaic{display:none}
+  .hero-copy{min-height:auto;padding-bottom:clamp(52px,8vw,88px)}
+  .section-head{grid-template-columns:1fr}
+  .lead{max-width:100%}
+  .feature-grid{grid-template-columns:1fr}
+  .feature{min-height:auto}
+  .atlas{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:0}
+  .unique-grid{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr}
+  .price-layout{grid-template-columns:1fr}
+  .price-card{max-width:480px}
+  .nav-link:not(.cta){display:none}
+  .hero-proof{grid-template-columns:1fr 1fr;gap:18px}
+  .proof-stat:last-child{padding-left:0;grid-column:1/3;border-right:0}
 }
 @media(max-width:560px){
-  .page{border-width:0;border-radius:0;padding-top:133px}
-  .brand{font-size:24px}
-  .navlinks a{padding:0 18px;font-size:12px}
-  h1{font-size:clamp(42px,13vw,54px);line-height:.98;letter-spacing:-.035em;max-width:340px}
-  .hero-copy{padding:42px 22px 58px;min-height:560px}
-  .hero-note{max-width:320px;font-size:18px;line-height:1.2}
-  .hero-actions{gap:10px;max-width:344px;width:100%}
-  .btn{min-height:46px;padding:0 18px;font-size:11px}
-  .hero-actions .btn{flex:1 1 100%;width:100%;min-width:0}
-  .quiet-tile{grid-column:1/5}.tile.c{grid-column:1/3}.tile.a{grid-column:3/5}
+  .hero-proof{grid-template-columns:1fr}
+  .proof-stat{border-right:0;padding:0;border-bottom:1px solid var(--line);padding-bottom:16px}
+  .proof-stat:last-child{border-bottom:0;padding-bottom:0}
 }
 </style>
 </head>
 <body>
 <div class="page">
+
+  <div class="announce">
+    Now enrolling for Summer 2026 &nbsp;·&nbsp; <strong>Limited spots available</strong> &nbsp;·&nbsp; St. Paul, MN &amp; online
+  </div>
+
   <nav class="nav">
     <a class="brand" href="#">Mind<span>Craft</span></a>
-    <div class="navlinks">
-      <a href="#proof">Reviews</a>
-      <a href="blog.html">Blog</a>
-      <a href="#faq">FAQ</a>
-      <a class="app-login-link" href="https://mindcraft-93858.web.app/login"><span class="menu-dot"></span>Log in</a>
+    <div class="nav-right">
+      <a class="nav-link" href="#how">How it works</a>
+      <a class="nav-link" href="#pricing">Pricing</a>
+      <a class="nav-link" href="#faq">FAQ</a>
+      <a class="nav-link cta app-login-link" href="https://mindcraft-93858.web.app/login">Log in</a>
     </div>
   </nav>
 
-  <section class="hero" data-nav-theme="light">
+  <!-- ─── HERO ─── -->
+  <section class="hero">
     <div class="hero-copy reveal">
-      <p class="eyebrow">For parents tired of guessing</p>
-      <h1>Know what to do next.</h1>
-      <p class="hero-note">When math feels unclear, MindCraft shows the gaps, the route, and when a tutor should step in.</p>
+      <p class="eyebrow">AI-powered private tutoring</p>
+      <h1>Math<br><em style="font-style:italic">finally</em><br>has a map.</h1>
+      <p class="hero-sub">Most students practice hard and still fall behind. The problem is never effort — it's direction. MindCraft builds a precise map of exactly what your child knows, what they don't, and why. Every tutor session and every practice rep hits the real gap.</p>
       <div class="hero-actions">
-        <a class="btn primary" href="#method">See how it works</a>
-        <a class="btn secondary" href="#pricing">Try it free</a>
+        <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Start your child's plan →</a>
+        <a class="btn ghost" href="#how">See how it works</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-stat">
+          <div class="proof-num">42</div>
+          <div class="proof-label">Concepts mapped</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-num">1,500+</div>
+          <div class="proof-label">Practice questions</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-num">4</div>
+          <div class="proof-label">Expert tutors</div>
+        </div>
       </div>
     </div>
-    <div class="mosaic" aria-label="Abstract learning map">
-      <div class="tile"></div><div class="tile"></div><div class="tile image-tile a"></div>
-      <div class="tile"></div><div class="tile"></div><div class="tile"></div>
-      <div class="tile image-tile c"></div><div class="tile"></div>
-      <div class="quiet-tile" aria-hidden="true"></div>
+    <div class="mosaic" aria-hidden="true">
+      <div class="tile"></div>
+      <div class="tile"></div>
+      <div class="tile image-tile a"></div>
+      <div class="tile"></div>
+      <div class="tile image-tile c"></div>
       <div class="tile image-tile b"></div>
+      <div class="quote-tile">
+        <blockquote>"I actually look forward to exams now. I know exactly where I stand."</blockquote>
+        <cite>— Seb, High School Senior, St. Paul</cite>
+      </div>
     </div>
-    <div class="scroll">Scroll<span>↓</span></div>
   </section>
 
-  <section class="studio" id="method" data-nav-theme="light">
+  <!-- ─── FEATURES ─── -->
+  <section class="studio" id="how">
     <div class="section-head reveal">
-      <div><p class="kicker">See how it works</p><h2>Feeling stuck and need a plan?</h2></div>
-      <p class="lead">Practice, homework, progress, and tutoring finally point to the same student map.</p>
+      <div><p class="kicker">The MindCraft studio</p><h2>Three things we do that nobody else does.</h2></div>
+      <p class="lead">Traditional tutoring is a brilliant person doing their best with incomplete information. MindCraft gives them — and your child — the full picture.</p>
     </div>
     <div class="feature-grid">
       <article class="feature reveal">
-        <div class="artifact" aria-hidden="true">
+        <div class="artifact">
           <svg viewBox="0 0 280 168">
             <rect class="paper" x="42" y="28" width="122" height="92" rx="14" transform="rotate(-7 103 74)"/>
             <rect class="paper" x="96" y="42" width="132" height="96" rx="14" transform="rotate(5 162 90)"/>
-            <path class="line" d="M72 58h54M70 78h66M76 98h36"/>
+            <path class="line-s" d="M72 58h54M70 78h66M76 98h36"/>
             <path class="soft glow" d="m190 78 11 11 23-29"/>
-            <path class="burgundy" d="M122 116h58"/>
-            <rect class="fill-soft" x="88" y="132" width="104" height="10" rx="5"/>
+            <path class="burg" d="M122 116h58"/>
+            <rect class="fs" x="88" y="132" width="104" height="10" rx="5"/>
             <rect fill="#54b948" x="88" y="132" width="68" height="10" rx="5"/>
-            <circle class="fill-soft glow" cx="218" cy="120" r="13"/>
+            <circle class="fs glow" cx="218" cy="120" r="13"/>
           </svg>
         </div>
-        <span class="micro">Know the next move</span>
-        <h3>Practice Path</h3>
-        <p>Focused reps from the gaps that matter now.</p>
+        <span class="micro">Knowledge graph</span>
+        <h3>A map, not a worksheet.</h3>
+        <p>The AI builds a living knowledge graph of every concept your child has encountered — what's mastered, what's fragile, and the specific thinking error behind every wrong answer. No other platform tracks the <em>why</em>.</p>
       </article>
       <article class="feature reveal">
-        <div class="artifact" aria-hidden="true">
+        <div class="artifact">
           <svg viewBox="0 0 280 168">
             <path class="paper" d="M52 44h138c14 0 24 10 24 23v36c0 13-10 23-24 23h-64l-31 24v-24H52c-14 0-24-10-24-23V67c0-13 10-23 24-23Z"/>
-            <path class="line" d="M66 72h78M66 94h104"/>
+            <path class="line-s" d="M66 72h78M66 94h104"/>
             <path class="soft" d="M67 122c26-24 58-24 84 0s58 24 86-2"/>
-            <circle class="fill-soft" cx="68" cy="122" r="12"/>
-            <circle class="fill-soft" cx="152" cy="122" r="12"/>
-            <circle class="fill-soft glow" cx="236" cy="120" r="14"/>
-            <path class="line" d="M205 34 232 61"/>
-            <path class="burgundy" d="m198 42 9-9 36 36-9 9z"/>
-            <text x="54" y="154" fill="rgba(6,77,54,.62)" font-size="10" font-family="DM Sans" font-weight="900">STEP 1</text>
-            <text x="132" y="154" fill="rgba(6,77,54,.62)" font-size="10" font-family="DM Sans" font-weight="900">STEP 2</text>
-            <text x="212" y="154" fill="rgba(6,77,54,.62)" font-size="10" font-family="DM Sans" font-weight="900">STEP 3</text>
+            <circle class="fs" cx="68" cy="122" r="12"/>
+            <circle class="fs" cx="152" cy="122" r="12"/>
+            <circle class="fs glow" cx="236" cy="120" r="14"/>
+            <path class="line-s" d="M205 34 232 61"/>
+            <path class="burg" d="m198 42 9-9 36 36-9 9z"/>
           </svg>
         </div>
-        <span class="micro">Use homework wisely</span>
-        <h3>Homework Help</h3>
-        <p>Hints that preserve thinking and turn homework into evidence.</p>
+        <span class="micro">Tutor + AI in sync</span>
+        <h3>Tutors who already know where to go.</h3>
+        <p>Your tutor walks into every session with a briefing: what improved last week, what's still fragile, what the AI recommends targeting next. No cold starts. No wasted first 20 minutes. Every hour hits harder.</p>
       </article>
       <article class="feature reveal">
-        <div class="artifact" aria-hidden="true">
+        <div class="artifact">
           <svg viewBox="0 0 280 168">
             <path class="soft" d="M54 116 C88 58 128 68 152 94 S204 124 230 58"/>
-            <path class="line" d="M75 86 118 58 158 96 202 82"/>
-            <circle class="fill-soft" cx="54" cy="116" r="13"/>
-            <circle class="fill-soft" cx="75" cy="86" r="10"/>
-            <circle class="fill-soft" cx="118" cy="58" r="14"/>
-            <circle class="fill-soft" cx="158" cy="96" r="12"/>
-            <circle class="fill-soft" cx="202" cy="82" r="11"/>
-            <circle class="fill-soft glow" cx="230" cy="58" r="18"/>
-            <path class="burgundy" d="M42 136h192"/>
+            <path class="line-s" d="M75 86 118 58 158 96 202 82"/>
+            <circle class="fs" cx="54" cy="116" r="13"/>
+            <circle class="fs" cx="75" cy="86" r="10"/>
+            <circle class="fs" cx="118" cy="58" r="14"/>
+            <circle class="fs" cx="158" cy="96" r="12"/>
+            <circle class="fs" cx="202" cy="82" r="11"/>
+            <circle class="fs glow" cx="230" cy="58" r="18"/>
+            <path class="burg" d="M42 136h192"/>
             <path class="soft" d="M64 136v-12M118 136v-26M158 136v-18M230 136V84"/>
             <circle fill="#54b948" cx="230" cy="58" r="5"/>
-            <circle fill="rgba(75,0,29,.36)" cx="42" cy="136" r="3"/>
           </svg>
         </div>
-        <span class="micro">Book with context</span>
-        <h3>Tutor Booking</h3>
-        <p>Book quickly. Give the tutor context before the session starts.</p>
+        <span class="micro">Parent visibility</span>
+        <h3>Progress you can actually see.</h3>
+        <p>Parents get a live window into what clicked, what's still shaky, and what the tutor is targeting next. Not a report card delivered once a quarter. A real-time map that updates after every session and every practice rep.</p>
       </article>
     </div>
   </section>
 
-  <section class="journey" id="journey" data-nav-theme="light">
+  <!-- ─── HOW IT WORKS ─── -->
+  <section class="journey" id="journey">
     <div class="section-head reveal">
-      <div><p class="kicker">The MindCraft method</p><h2>A route, not more noise.</h2></div>
-      <p class="lead">Diagnose the gap. Route the work. Practice with purpose. Bring in a tutor when it counts.</p>
+      <div><p class="kicker">The method</p><h2>From confused to confident.</h2></div>
+      <p class="lead">Every session and every question feeds the same student picture — so the plan compounds instead of resetting.</p>
     </div>
     <div class="atlas reveal">
-      <div class="map-panel" aria-label="MindCraft route map">
+      <div class="steps">
+        <article class="step">
+          <div class="num">01</div>
+          <h3>Diagnose</h3>
+          <p>A 10-minute adaptive assessment finds the root gaps — not just the missed questions, but the reasoning gaps underneath them.</p>
+        </article>
+        <article class="step">
+          <div class="num">02</div>
+          <h3>Map</h3>
+          <p>Every concept is placed on a visual knowledge graph, with prerequisites, connections, and the specific skills tested on your child's exam.</p>
+        </article>
+        <article class="step">
+          <div class="num">03</div>
+          <h3>Practice</h3>
+          <p>Daily reps calibrated to today's exact gap — not a generic worksheet. The right concept, the right level, every time.</p>
+        </article>
+        <article class="step">
+          <div class="num">04</div>
+          <h3>Grow</h3>
+          <p>Each tutor session sharpens the map. Each practice rep updates the evidence. The plan compounds — and so does your child's confidence.</p>
+        </article>
+      </div>
+      <div class="map-panel">
         <div class="path">
           <svg viewBox="0 0 600 420"><path d="M70 270 C170 180 230 200 300 150 S450 80 520 112 M300 150 C350 250 430 270 482 318"/></svg>
-          <span class="node n1"><b>Diagnose</b></span>
-          <span class="node n2"><b>Route</b></span>
-          <span class="node n3"><b>Practice</b></span>
-          <span class="node n4"><b>Tutor</b></span>
+          <span class="node n1"></span>
+          <span class="node n2"></span>
+          <span class="node n3"></span>
+          <span class="node n4"></span>
         </div>
+        <p class="map-label">Your child's knowledge map</p>
       </div>
     </div>
   </section>
 
-  <section class="proof" id="proof" data-nav-theme="light">
+  <!-- ─── UNIQUE VALUE ─── -->
+  <section class="unique">
     <div class="section-head reveal">
-      <div><p class="kicker">Trust signals</p><h2>Proof parents can feel.</h2></div>
-      <p class="lead">Students get a calmer way to work. Parents get signals they can trust.</p>
+      <div><p class="kicker">What only we do</p><h2>No other platform does all three.</h2></div>
+      <p class="lead">Most tutoring tools give students more practice. MindCraft gives them the right practice, at the right level, targeting the right concept — informed by everything that came before.</p>
+    </div>
+    <div class="unique-grid reveal">
+      <div class="unique-item">
+        <span class="u-num">01</span>
+        <h3>We track the thinking error, not just the wrong answer.</h3>
+        <p>When your child gets a problem wrong, most platforms mark it red and move on. MindCraft diagnoses <mark>which specific misconception</mark> caused the error — and builds a targeted path to fix the root cause, not the symptom. Over 1,700 misconceptions catalogued.</p>
+      </div>
+      <div class="unique-item">
+        <span class="u-num">02</span>
+        <h3>Your tutor's first question is answered before they sit down.</h3>
+        <p>Every tutor session starts with the AI's briefing — what improved last week, what's still fragile, which concept has the highest leverage right now. <mark>Zero guesswork</mark>, maximum impact per hour. This is the part no other tutoring company can offer.</p>
+      </div>
+      <div class="unique-item">
+        <span class="u-num">03</span>
+        <h3>The knowledge map builds from every single touchpoint.</h3>
+        <p>Practice reps, tutor sessions, homework help — every interaction updates the same living map. It doesn't reset between sessions or forget what happened last month. <mark>It compounds</mark>, exactly like a student who keeps getting smarter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TESTIMONIALS ─── -->
+  <section class="proof-section" id="proof">
+    <div class="section-head reveal">
+      <div><p class="kicker">What families say</p><h2>Built for students and parents.</h2></div>
+      <p class="lead">Warm enough for a teenager to use. Structured enough for a parent to trust. Expert enough for a PhD tutor to rely on.</p>
     </div>
     <div class="proof-grid">
-      <details class="quote-card reveal">
-        <summary><p>"My classes with MindCraft have made me much more confident in math."</p><span>Seb · High school senior, St. Paul, MN</span><b class="expand">Read full comment</b></summary>
-        <div class="full">My classes with MindCraft have made me much more confident in math, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far.</div>
+      <details class="qcard reveal">
+        <summary>
+          <p>"I actually look forward to exams now. I know exactly where I stand."</p>
+          <cite>Seb · High school senior, St. Paul, MN</cite>
+          <span class="qcard-expand">Read more ↓</span>
+        </summary>
+        <p class="full">My classes with MindCraft have made me much more confident in math, to the point where I actually look forward to exams. I leave each session knowing what I understand well, where I am still struggling, and what I need to focus on next. I have tried other tutors before, but this has been the best learning experience by far.</p>
       </details>
-      <details class="quote-card reveal">
-        <summary><p>"MindCraft felt different because it helped him move forward with clarity."</p><span>Gill · Parent, St. Paul, MN</span><b class="expand">Read full comment</b></summary>
-        <div class="full">We realized Seb did not just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Math had started to feel defeating for him, and with the ACT so close, he was overwhelmed and unsure of himself. MindCraft felt different because it focused on what he did not yet understand and helped him move forward with more clarity and confidence.</div>
+      <details class="qcard reveal">
+        <summary>
+          <p>"It focused on what he didn't understand and helped him move forward with real clarity."</p>
+          <cite>Gill · Parent of a high school senior, St. Paul, MN</cite>
+          <span class="qcard-expand">Read more ↓</span>
+        </summary>
+        <p class="full">We realized Seb didn't just need homework help. He needed someone who could actually see where his understanding was breaking down and help him rebuild from there. Math had started to feel defeating, and with the ACT so close, he was overwhelmed. MindCraft felt different because it targeted what he didn't yet understand — and helped him move forward with more clarity and confidence than he'd had in years.</p>
       </details>
-      <details class="quote-card reveal">
-        <summary><p>"Real expertise across Nepal, South Africa, and the USA."</p><span>Akshat Koirala · Math and Economics, Macalester College '26</span><b class="expand">Read tutor note</b></summary>
-        <div class="full">Eight years of tutoring across Nepal, South Africa, and USA. Math and Economics at Macalester College '26.</div>
+      <details class="qcard reveal">
+        <summary>
+          <p>"Eight years tutoring across three countries — this is the most effective platform I've used."</p>
+          <cite>Tutor Ra · Mathematics &amp; Economics, Macalester College '26</cite>
+          <span class="qcard-expand">Read more ↓</span>
+        </summary>
+        <p class="full">Eight years of tutoring students across Nepal, South Africa, and the USA. MindCraft gives me a level of insight into each student that I've never had before — I walk into sessions knowing exactly what to focus on. It's completely changed how I approach the first 15 minutes of every session. That time used to be diagnostic. Now it's already solved.</p>
       </details>
-      <details class="quote-card reveal">
-        <summary><p>"Excited to share the love for math."</p><span>Abhigya Koirala · Applied Math PhD track</span><b class="expand">Read tutor note</b></summary>
-        <div class="full">Excited to share the love for math. Applied Math PhD at UNC, Kenyon College '26.</div>
+      <details class="qcard reveal">
+        <summary>
+          <p>"The platform reveals connections students miss — and when they see them, something clicks."</p>
+          <cite>Tutor Coon · Applied Mathematics PhD track, UNC / Kenyon '26</cite>
+          <span class="qcard-expand">Read more ↓</span>
+        </summary>
+        <p class="full">Applied Maths PhD at UNC, Kenyon College '26. What I love about MindCraft is that the knowledge graph reveals the connections between concepts that students usually miss. They think of math as isolated topics. The map shows them it's a network — and once they see that, the whole subject starts making sense in a way it never did before.</p>
       </details>
     </div>
   </section>
 
-  <section class="pricing" id="pricing" data-nav-theme="forest">
+  <!-- ─── PRICING ─── -->
+  <section class="pricing" id="pricing">
     <div class="section-head reveal">
-      <div><p class="kicker">Start with clarity</p><h2>A calmer way to support math.</h2></div>
-      <p class="lead">Start free. Add guidance when your child needs a stronger plan.</p>
+      <div><p class="kicker">One clear plan</p><h2>$100 per month.</h2></div>
+      <p class="lead">Less than one hour of traditional tutoring a week — but with AI that works on your child's actual gaps around the clock. Everything included. No hidden tiers.</p>
     </div>
-    <div class="price-grid">
-      <article class="price reveal"><h3>First Look</h3><strong>Free</strong><p>A clear read before you choose the next step.</p><ul><li>Initial math snapshot</li><li>Personalized route</li><li>Homework support trial</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
-      <article class="price reveal"><h3>Guided</h3><strong>$160<span>/mo</span></strong><p>For families who want tutoring tied to real student work.</p><ul><li>Fast tutor booking</li><li>Session notes and mind map</li><li>Targeted practice path</li><li>Parent-visible progress</li><li>Homework help workflow</li></ul><a class="btn secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
-      <article class="price featured reveal"><h3>Studio</h3><strong>$200<span>/mo</span></strong><p>The full loop: practice, homework, notes, and tutoring in one plan.</p><ul><li>Fast tutor booking</li><li>Session notes and mind map</li><li>Knowledge assets to revisit</li><li>Targeted practice path</li><li>Personalized study plan</li><li>Homework help workflow</li></ul><a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">Sign up</a></article>
+    <div class="price-layout reveal">
+      <div class="price-includes">
+        <div class="pi-item">
+          <div class="pi-icon">🎯</div>
+          <div>
+            <h4>Live 1-on-1 tutor sessions</h4>
+            <p>Expert tutors, scheduled around your family. Every session pre-briefed by the AI so the first minute counts as much as the last.</p>
+          </div>
+        </div>
+        <div class="pi-item">
+          <div class="pi-icon">🗺️</div>
+          <div>
+            <h4>Personalized knowledge map</h4>
+            <p>A visual chart of every concept — mastered, fragile, or untouched — updated live after every session and every practice rep.</p>
+          </div>
+        </div>
+        <div class="pi-item">
+          <div class="pi-icon">⚡</div>
+          <div>
+            <h4>Targeted daily practice</h4>
+            <p>Adaptive practice calibrated to today's exact gap. Over 1,500 questions across 42 concepts, leveled by difficulty.</p>
+          </div>
+        </div>
+        <div class="pi-item">
+          <div class="pi-icon">💡</div>
+          <div>
+            <h4>Homework help, 24/7</h4>
+            <p>Step-by-step breakdowns that teach the reasoning — available the moment your child gets stuck, at 11pm before a test.</p>
+          </div>
+        </div>
+        <div class="pi-item">
+          <div class="pi-icon">🔍</div>
+          <div>
+            <h4>Misconception tracking</h4>
+            <p>When they get something wrong, we show the exact thinking error — not just the right answer. Over 1,700 misconceptions catalogued.</p>
+          </div>
+        </div>
+        <div class="pi-item">
+          <div class="pi-icon">📊</div>
+          <div>
+            <h4>Parent progress dashboard</h4>
+            <p>See what clicked, what's still stuck, and what the tutor is targeting next — without having to ask your child to explain.</p>
+          </div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-bar"></div>
+        <h3>MindCraft Complete</h3>
+        <div class="price-amount">
+          <strong>$100</strong>
+          <span>/ month</span>
+        </div>
+        <p class="price-tagline">Everything your child needs to go from confused to confident, in one focused plan.</p>
+        <ul class="price-feats">
+          <li>Live tutor sessions</li>
+          <li>AI knowledge map</li>
+          <li>Targeted daily practice</li>
+          <li>Homework help, 24/7</li>
+          <li>Misconception tracking</li>
+          <li>Parent progress dashboard</li>
+        </ul>
+        <a class="price-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdMntl4dF6zUdjf7aWhETabMYvdsqpWXE5HdTpYAi1-RHrgAg/viewform?usp=publish-editor" target="_blank">
+          Start your child's plan →
+        </a>
+        <p class="price-note">No long contracts. Cancel anytime.</p>
+      </div>
     </div>
   </section>
 
-  <section class="faq" id="faq" data-nav-theme="light">
+  <!-- ─── FAQ ─── -->
+  <section class="faq" id="faq">
     <div class="section-head reveal">
-      <div><p class="kicker">FAQ</p><h2>What parents ask first.</h2></div>
-      <p class="lead">The practical questions, answered simply.</p>
+      <div><p class="kicker">Frequently asked</p><h2>What parents ask first.</h2></div>
+      <p class="lead">A calmer product should also be easy to understand.</p>
     </div>
-    <div class="faq-list">
-      <div class="faq-item"><strong>Is this tutoring or software?</strong><p>Both. Students get a learning path; tutors get the context to help faster.</p></div>
-      <div class="faq-item"><strong>What subjects does it support?</strong><p>Math, exam prep, homework support, and concept mapping.</p></div>
-      <div class="faq-item"><strong>Does it replace a tutor?</strong><p>No. It makes tutoring sharper, calmer, and easier to trust.</p></div>
+    <div class="faq-wrap reveal">
+      <div class="faq-row">
+        <details>
+          <summary>
+            <strong>Is this tutoring or software?</strong>
+            <span class="faq-toggle">+</span>
+          </summary>
+          <p>Both — and they work together. MindCraft gives students an AI-powered learning path and gives tutors the real-time data to help faster and more precisely. The AI handles the diagnosis and mapping; the tutor handles the human connection and explanation. Neither works as well without the other.</p>
+        </details>
+      </div>
+      <div class="faq-row">
+        <details>
+          <summary>
+            <strong>What grade levels and subjects does it support?</strong>
+            <span class="faq-toggle">+</span>
+          </summary>
+          <p>The core experience is built around math — grade 6 through 12 and ACT exam prep. The knowledge map covers 42 concepts from foundational arithmetic through precalculus, all linked to real exam patterns. Middle school students get the same personalized map, without any ACT pressure — just clear, grade-appropriate math skill building. Subject expansion is on the roadmap.</p>
+        </details>
+      </div>
+      <div class="faq-row">
+        <details>
+          <summary>
+            <strong>How long until my child sees results?</strong>
+            <span class="faq-toggle">+</span>
+          </summary>
+          <p>Most students notice a shift in confidence within 3–4 weeks. The knowledge map starts improving from the very first session — but the compound effect of practice data building on tutor sessions is what creates lasting change. Plan for a semester, celebrate the early wins.</p>
+        </details>
+      </div>
+      <div class="faq-row">
+        <details>
+          <summary>
+            <strong>Does my child need to be struggling?</strong>
+            <span class="faq-toggle">+</span>
+          </summary>
+          <p>No. High-performing students use MindCraft to find the blind spots that don't show up until test day. The diagnostic is accurate even when a student scores well on class tests — it reveals the gaps that haven't been tested yet, and the thinking patterns that are quietly fragile.</p>
+        </details>
+      </div>
+      <div class="faq-row">
+        <details>
+          <summary>
+            <strong>Does it replace a tutor?</strong>
+            <span class="faq-toggle">+</span>
+          </summary>
+          <p>No. It removes the guesswork so tutoring time is more focused, more efficient, and more confidence-building. The AI builds the map; the tutor navigates it with your child. The human relationship is irreplaceable — we just make sure every minute of it counts.</p>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -360,63 +612,36 @@ footer:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;backg
         <a href="tel:+17633405616">+1 (763) 340-5616</a>
       </div>
     </div>
-    <div class="socials">
-      <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92C8.42 2.17 8.8 2.16 12 2.16ZM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 12 8a4 4 0 0 1 0 8Zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z"/></svg></a>
-      <a href="https://x.com/joinmindcraft" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25h6.83l4.25 5.62Zm-1.16 17.52h1.83L7.08 4.13H5.12Z"/></svg></a>
-      <a href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.31a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 0 1-.33-1.46c4.57-1.04 8.5-.58 11.66 1.35.36.22.47.68.25 1.02Zm1.46-3.25a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.96-1.4a.94.94 0 1 1-.54-1.8c4.36-1.32 9.78-.68 13.48 1.59.44.27.58.85.31 1.3Zm.13-3.39C15.22 8.37 8.83 8.16 5.15 9.28a1.12 1.12 0 1 1-.65-2.14c4.23-1.28 11.28-1.03 15.74 1.62a1.12 1.12 0 0 1-1.15 1.91Z"/></svg></a>
-      <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.53V9H7.1v11.45ZM22.23 0H1.76C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.76 24h20.47c.97 0 1.77-.77 1.77-1.73V1.73C24 .77 23.2 0 22.23 0Z"/></svg></a>
+    <div class="footer-right">
+      <p class="footer-legal">© 2026 MindCraft. All rights reserved.</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92C8.42 2.17 8.8 2.16 12 2.16ZM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 12 8a4 4 0 0 1 0 8Zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z"/></svg></a>
+        <a href="https://x.com/joinmindcraft" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25h6.83l4.25 5.62Zm-1.16 17.52h1.83L7.08 4.13H5.12Z"/></svg></a>
+        <a href="https://open.spotify.com/playlist/3P9VnnuuoRYLKQB3QYCSe2" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.31a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 0 1-.33-1.46c4.57-1.04 8.5-.58 11.66 1.35.36.22.47.68.25 1.02Zm1.46-3.25a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.96-1.4a.94.94 0 1 1-.54-1.8c4.36-1.32 9.78-.68 13.48 1.59.44.27.58.85.31 1.3Zm.13-3.39C15.22 8.37 8.83 8.16 5.15 9.28a1.12 1.12 0 1 1-.65-2.14c4.23-1.28 11.28-1.03 15.74 1.62a1.12 1.12 0 0 1-1.15 1.91Z"/></svg></a>
+        <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.53V9H7.1v11.45ZM22.23 0H1.76C.79 0 .77 0 .77 1.73v20.54C0 23.23.79 24 1.76 24h20.47c.97 0 1.77-.77 1.77-1.73V1.73C24 .77 23.2 0 22.23 0Z"/></svg></a>
+      </div>
     </div>
   </footer>
+
 </div>
 <script>
 const io = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add('show')
-  })
-}, { threshold: 0.12 })
+  entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('show') })
+}, { threshold: 0.09 })
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
-document.querySelectorAll('.quote-card').forEach((card) => {
+
+document.querySelectorAll('.qcard').forEach((card) => {
   card.addEventListener('toggle', () => {
     if (!card.open) return
-    document.querySelectorAll('.quote-card[open]').forEach((other) => {
+    document.querySelectorAll('.qcard[open]').forEach((other) => {
       if (other !== card) other.open = false
     })
   })
 })
-let lastY = window.scrollY
-let navHeldVisible = window.scrollY < 80
-const root = document.body
-const navThemes = ['nav-dark', 'nav-forest']
-function setNavTheme(theme) {
-  root.classList.remove(...navThemes)
-  if (theme === 'dark') root.classList.add('nav-dark')
-  if (theme === 'forest') root.classList.add('nav-forest')
-}
-function updateNav() {
-  const y = window.scrollY
-  const goingUp = y < lastY - 6
-  const goingDown = y > lastY + 6
-  const nearTop = y < 80
-  if (nearTop || goingUp) navHeldVisible = true
-  if (!nearTop && goingDown) navHeldVisible = false
-  root.classList.toggle('nav-at-top', nearTop)
-  root.classList.toggle('nav-visible', navHeldVisible)
-  lastY = y
-}
-const themeObserver = new IntersectionObserver((entries) => {
-  const visible = entries
-    .filter((entry) => entry.isIntersecting)
-    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-  if (visible) setNavTheme(visible.target.dataset.navTheme || 'light')
-}, { threshold: [0.2, 0.45, 0.7] })
-document.querySelectorAll('[data-nav-theme]').forEach((el) => themeObserver.observe(el))
-window.addEventListener('scroll', updateNav, { passive: true })
-updateNav()
-const isLocalDemo = ['localhost', '127.0.0.1'].includes(window.location.hostname)
-if (isLocalDemo) {
-  document.querySelectorAll('.app-login-link').forEach((link) => {
-    link.href = 'http://127.0.0.1:5173/login'
-  })
+
+const isLocal = ['localhost','127.0.0.1'].includes(location.hostname)
+if (isLocal) {
+  document.querySelectorAll('.app-login-link').forEach((a) => a.href = 'http://127.0.0.1:5173/login')
 }
 </script>
 </body>
