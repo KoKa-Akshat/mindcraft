@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-30T06:20:31.367928Z",
+  "generatedAt": "2026-06-29T14:49:47.534332Z",
   "summary": {
     "actTestedConcepts": 29,
     "practiceConceptSlots": 38,
-    "staticQuestionsTotal": 259,
-    "fullCoverage": 20,
-    "partialCoverage": 1,
-    "listedNoQuestions": 0,
+    "staticQuestionsTotal": 227,
+    "fullCoverage": 10,
+    "partialCoverage": 0,
+    "listedNoQuestions": 11,
     "ontologyOnly": 7,
     "aliasOnly": 1,
     "bankConceptsNotActTested": 17
@@ -71,16 +71,16 @@
       "name": "Area and Volume",
       "ontologyLevel": "core",
       "actFrequency": 0.08,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 area_volume (Area and Volume) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] area_volume (Area and Volume). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "basic_probability": {
       "conceptId": "basic_probability",
@@ -103,16 +103,16 @@
       "name": "Geometry of Circles",
       "ontologyLevel": "core",
       "actFrequency": 0.06,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 circles_geometry (Geometry of Circles) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] circles_geometry (Geometry of Circles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "descriptive_statistics": {
       "conceptId": "descriptive_statistics",
@@ -151,32 +151,32 @@
       "name": "Exponential Functions",
       "ontologyLevel": "core",
       "actFrequency": 0.06,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 exponential_functions (Exponential Functions) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] exponential_functions (Exponential Functions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "factoring_polynomials": {
       "conceptId": "factoring_polynomials",
       "name": "Factoring Polynomials",
       "ontologyLevel": "core",
       "actFrequency": 0.08,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 factoring_polynomials (Factoring Polynomials) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] factoring_polynomials (Factoring Polynomials). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "functions_basics": {
       "conceptId": "functions_basics",
@@ -199,16 +199,16 @@
       "name": "Geometric Transformations",
       "ontologyLevel": "core",
       "actFrequency": 0.05,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 geometric_transformations (Geometric Transformations) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] geometric_transformations (Geometric Transformations). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "linear_equations": {
       "conceptId": "linear_equations",
@@ -247,16 +247,16 @@
       "name": "Lines and Angles",
       "ontologyLevel": "core",
       "actFrequency": 0.05,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 lines_angles (Lines and Angles) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] lines_angles (Lines and Angles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "polynomials": {
       "conceptId": "polynomials",
@@ -295,48 +295,48 @@
       "name": "Radical Expressions",
       "ontologyLevel": "core",
       "actFrequency": 0.06,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 radical_expressions (Radical Expressions) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] radical_expressions (Radical Expressions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "right_triangle_geometry": {
       "conceptId": "right_triangle_geometry",
       "name": "Right Triangle Geometry",
       "ontologyLevel": "core",
       "actFrequency": 0.09,
-      "status": "partial",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 2,
+        "L1": 0,
         "L2": 0,
         "L3": 0,
-        "total": 2
+        "total": 0
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] right_triangle_geometry (Right Triangle Geometry). Have L1=2, L2=0, L3=0. Missing: L2, L3. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] right_triangle_geometry (Right Triangle Geometry). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "sequences_series": {
       "conceptId": "sequences_series",
       "name": "Sequences and Series",
       "ontologyLevel": "core",
       "actFrequency": 0.05,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 sequences_series (Sequences and Series) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] sequences_series (Sequences and Series). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "systems_of_linear_equations": {
       "conceptId": "systems_of_linear_equations",
@@ -359,32 +359,32 @@
       "name": "Triangles and Congruence",
       "ontologyLevel": "core",
       "actFrequency": 0.06,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 triangles_congruence (Triangles and Congruence) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] triangles_congruence (Triangles and Congruence). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "trigonometry_basics": {
       "conceptId": "trigonometry_basics",
       "name": "Trigonometry Basics",
       "ontologyLevel": "core",
       "actFrequency": 0.07,
-      "status": "full",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 1,
-        "L2": 1,
-        "L3": 1,
-        "total": 3
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
       },
       "bankAlias": null,
-      "message": "OK \u2014 trigonometry_basics (Trigonometry Basics) [core]: static bank has L1=1, L2=1, L3=1 questions."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] trigonometry_basics (Trigonometry Basics). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     "act_strategy": {
       "conceptId": "act_strategy",
@@ -533,20 +533,180 @@
   },
   "gapsNeedingContent": [
     {
+      "conceptId": "area_volume",
+      "name": "Area and Volume",
+      "ontologyLevel": "core",
+      "actFrequency": 0.08,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] area_volume (Area and Volume). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "circles_geometry",
+      "name": "Geometry of Circles",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] circles_geometry (Geometry of Circles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "exponential_functions",
+      "name": "Exponential Functions",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] exponential_functions (Exponential Functions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "factoring_polynomials",
+      "name": "Factoring Polynomials",
+      "ontologyLevel": "core",
+      "actFrequency": 0.08,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] factoring_polynomials (Factoring Polynomials). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "geometric_transformations",
+      "name": "Geometric Transformations",
+      "ontologyLevel": "core",
+      "actFrequency": 0.05,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] geometric_transformations (Geometric Transformations). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "lines_angles",
+      "name": "Lines and Angles",
+      "ontologyLevel": "core",
+      "actFrequency": 0.05,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] lines_angles (Lines and Angles). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "radical_expressions",
+      "name": "Radical Expressions",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] radical_expressions (Radical Expressions). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
       "conceptId": "right_triangle_geometry",
       "name": "Right Triangle Geometry",
       "ontologyLevel": "core",
       "actFrequency": 0.09,
-      "status": "partial",
+      "status": "listed_no_questions",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 2,
+        "L1": 0,
         "L2": 0,
         "L3": 0,
-        "total": 2
+        "total": 0
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] right_triangle_geometry (Right Triangle Geometry). Have L1=2, L2=0, L3=0. Missing: L2, L3. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] right_triangle_geometry (Right Triangle Geometry). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "sequences_series",
+      "name": "Sequences and Series",
+      "ontologyLevel": "core",
+      "actFrequency": 0.05,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] sequences_series (Sequences and Series). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "triangles_congruence",
+      "name": "Triangles and Congruence",
+      "ontologyLevel": "core",
+      "actFrequency": 0.06,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] triangles_congruence (Triangles and Congruence). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+    },
+    {
+      "conceptId": "trigonometry_basics",
+      "name": "Trigonometry Basics",
+      "ontologyLevel": "core",
+      "actFrequency": 0.07,
+      "status": "listed_no_questions",
+      "inPracticeConcepts": true,
+      "questionCounts": {
+        "L1": 0,
+        "L2": 0,
+        "L3": 0,
+        "total": 0
+      },
+      "bankAlias": null,
+      "message": "This concept_id is listed in PRACTICE_CONCEPTS but has zero static questions at levels 1\u20133. Practice must rely on dynamic question generation or new bank content. [core] trigonometry_basics (Trigonometry Basics). Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     {
       "conceptId": "act_strategy",

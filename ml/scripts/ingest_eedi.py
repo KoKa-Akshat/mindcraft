@@ -642,6 +642,7 @@ def ingest(
         # Explanation + hints
         # Get the most common misconception for a wrong answer (not the correct one)
         misc_name = None
+        misc_id_minted = None
         for i, col in enumerate(['MisconceptionAId', 'MisconceptionBId',
                                   'MisconceptionCId', 'MisconceptionDId']):
             if i == correct_idx:
@@ -650,6 +651,7 @@ def ingest(
             if pd.notna(mid_val):
                 misc_name = misc_lookup.get(int(mid_val), None)
                 if misc_name:
+                    misc_id_minted = mint_misconception_id(concept_id, misc_name)
                     break
 
         cache_key = hashlib.sha256(f"{qid}:{q_plain}".encode()).hexdigest()[:16]
@@ -668,7 +670,7 @@ def ingest(
         if not hints:
             hints = build_hints(construct)
 
-        questions.append({
+        q_entry: dict = {
             'id': f'eedi_{qid}',
             'conceptId': concept_id,
             'level': level,
@@ -679,7 +681,15 @@ def ingest(
             'hints': hints,
             'examTag': 'GCSE',
             'format': fmt,
-        })
+        }
+        if misc_id_minted and misc_name:
+            q_entry['misconception_id'] = misc_id_minted
+            # Short human-readable label (≤90 chars, sentence-case, no trailing period)
+            label = misc_name.strip().rstrip('.')
+            if len(label) > 90:
+                label = label[:87].rstrip() + '...'
+            q_entry['misconception_label'] = label
+        questions.append(q_entry)
 
     # ── Write outputs ────────────────────────────────────────────────────────
     if not dry_run:

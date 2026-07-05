@@ -20,11 +20,6 @@ REPO = Path(__file__).resolve().parents[2]
 ONTOLOGY_PATH = REPO / "ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json"
 QUESTION_BANK_PATH = REPO / "app/src/lib/questionBank.ts"
 APP_COVERAGE_PATH = REPO / "app/src/data/actOntologyCoverage.json"
-# Generated question banks (merged at runtime by questionBank.ts; counted here for audit accuracy)
-GENERATED_BANK_PATHS = [
-    REPO / "app/src/data/generatedQuestions.json",
-    REPO / "app/src/data/actMasterQuestionBank.generated.json",
-]
 
 # Known legacy id mismatches (ontology id → question bank id with content).
 KNOWN_BANK_ALIASES: dict[str, str] = {
@@ -167,27 +162,10 @@ def _build_message(
     )
 
 
-def _load_generated_bank_counts(counts: dict[str, dict[int, int]]) -> None:
-    """Merge question counts from generated JSON banks into the existing counts dict."""
-    for path in GENERATED_BANK_PATHS:
-        if not path.exists():
-            continue
-        data = json.loads(path.read_text())
-        # Support both top-level list and {"questions": [...]} wrapper
-        questions = data if isinstance(data, list) else data.get("questions", [])
-        for q in questions:
-            cid = q.get("conceptId", "")
-            lvl = q.get("level")
-            if cid and lvl in (1, 2, 3):
-                counts.setdefault(cid, {1: 0, 2: 0, 3: 0})
-                counts[cid][lvl] += 1
-
-
 def run_audit() -> dict:
     ontology = json.loads(ONTOLOGY_PATH.read_text())
     qb_source = QUESTION_BANK_PATH.read_text()
     practice_ids, labels, counts = _parse_question_bank(qb_source)
-    _load_generated_bank_counts(counts)  # add generated + ACT master questions
 
     act_tested = [c for c in ontology["concepts"] if c.get("act_relevance", {}).get("tested")]
     act_ids = {c["id"] for c in act_tested}
