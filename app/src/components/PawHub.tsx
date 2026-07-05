@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { doc, getDoc } from 'firebase/firestore'
 import { motion } from 'framer-motion'
@@ -12,69 +12,64 @@ import {
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import s from './PawHub.module.css'
 
-type Toe = {
-  id: string
-  label: string
-  sub: string
-  onClick: () => void
-  accent?: 'lime' | 'violet' | 'sky' | 'amber'
-  icon: ReactNode
-}
-
-function WheelIcon() {
+function KathaFlame({ size = 18 }: { size?: number }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
-      <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" strokeWidth="1.6" />
-      <circle cx="16" cy="16" r="2.2" fill="currentColor" />
-      {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => (
-        <line
-          key={deg}
-          x1="16"
-          y1="16"
-          x2={16 + 11 * Math.cos((deg * Math.PI) / 180)}
-          y2={16 + 11 * Math.sin((deg * Math.PI) / 180)}
-          stroke="currentColor"
-          strokeWidth="1.2"
-        />
-      ))}
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 20 24"
+      fill="none"
+      aria-hidden="true"
+      className={s.kathaFlame}
+    >
+      <defs>
+        <linearGradient id="kf_outer" x1="0.3" y1="1" x2="0.5" y2="0">
+          <stop offset="0%" stopColor="#c1121f" />
+          <stop offset="55%" stopColor="#e85d04" />
+          <stop offset="100%" stopColor="#ffb703" />
+        </linearGradient>
+        <linearGradient id="kf_inner" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#1d3a8a" />
+          <stop offset="100%" stopColor="#4895ef" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M10 1C10 1 13.5 5.5 13 9C15 7 16 4.5 14.5 1.5C17 4 18.5 8.5 17 12.5C17.8 11 18.5 11 18 13C18 17.9 14.4 22 10 22C5.6 22 2 17.9 2 13C2 9 5.5 6 5.5 6C5.5 8.5 7 10.5 8.5 10.5C8.5 7 9 3.5 10 1Z"
+        fill="url(#kf_outer)"
+      />
+      <path
+        d="M10 11.5C10 11.5 11.5 13.5 10.5 16C9.5 14.5 8.5 13 9.5 11C8.5 12 7.5 14 8 16C8 18 8.9 19.5 10 19.5C11.1 19.5 12 18 12 16C12 13.5 10 11.5 10 11.5Z"
+        fill="url(#kf_inner)"
+        opacity="0.82"
+      />
     </svg>
   )
 }
 
-function TargetIcon() {
+function MapIcon() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
-      <circle cx="16" cy="16" r="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="16" r="2" fill="currentColor" />
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={s.qkIcon}>
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M10 2.5V5M10 15V17.5M2.5 10H5M15 10H17.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="10" cy="10" r="2" fill="currentColor" />
     </svg>
   )
 }
 
 function PencilIcon() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
-      <path d="M8 24 L22 10 L24 12 L10 26 Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="M20 8 L24 12" stroke="currentColor" strokeWidth="1.6" />
-    </svg>
-  )
-}
-
-function GpsIcon() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
-      <circle cx="16" cy="16" r="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M16 6 V10 M16 22 V26 M6 16 H10 M22 16 H26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="16" cy="16" r="2.5" fill="currentColor" />
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={s.qkIcon}>
+      <path d="M5 15L13.5 6.5L15 8L6.5 16.5L4 16L5 15Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+      <path d="M12.5 5L15.5 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   )
 }
 
 function NotesIcon() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
-      <rect x="9" y="7" width="14" height="18" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M12 13 H20 M12 17 H20 M12 21 H16" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={s.qkIcon}>
+      <rect x="5" y="4" width="10" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M7.5 8h5M7.5 11h5M7.5 14h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
   )
 }
@@ -118,10 +113,7 @@ export default function PawHub({
   }, [userId])
 
   function goPractice() {
-    if (onPracticeClick) {
-      onPracticeClick()
-      return
-    }
+    if (onPracticeClick) { onPracticeClick(); return }
     navigate('/dashboard')
   }
 
@@ -133,81 +125,82 @@ export default function PawHub({
     }
   }
 
-  const learnLabel = learn ? pawHubDisplayText(learn.label, curriculumTrack) : null
-  const practiceSub = pawHubPracticeSub(weakness?.label, curriculumTrack)
-
-  const toes: Toe[] = [
-    {
-      id: 'learn',
-      label: 'Learn Next',
-      sub: learnLabel ?? pawHubLearnSub(curriculumTrack),
-      accent: 'violet',
-      onClick: goLearnNext,
-      icon: <TargetIcon />,
-    },
-    {
-      id: 'homework',
-      label: 'Homework Help',
-      sub: 'Socratic hints',
-      accent: 'sky',
-      onClick: onHomeworkClick ?? (() => navigate('/dashboard?view=homework')),
-      icon: <PencilIcon />,
-    },
-    {
-      id: 'gps',
-      label: 'GPS',
-      sub: 'Knowledge map',
-      accent: 'lime',
-      onClick: onGpsClick ?? (() => navigate('/learning-gps')),
-      icon: <GpsIcon />,
-    },
-    {
-      id: 'notes',
-      label: 'Notes',
-      sub: 'Session summary',
-      accent: 'amber',
-      onClick: onNotesClick ?? (() => navigate('/dashboard?view=notes')),
-      icon: <NotesIcon />,
-    },
-  ]
+  const weaknessLabel = weakness ? pawHubDisplayText(weakness.label, curriculumTrack) : null
+  const learnLabel    = learn    ? pawHubDisplayText(learn.label, curriculumTrack)    : null
+  const practiceSub   = pawHubPracticeSub(weakness?.label, curriculumTrack)
+  const learnSub      = pawHubLearnSub(curriculumTrack)
 
   return (
-    <div className={`${s.stage} ${layout === 'side' ? s.stageSide : ''} ${compact ? s.compact : ''}`}>
-      <div className={s.backdrop} aria-hidden="true" />
-      <div className={`${s.paw} ${layout === 'side' ? s.pawSide : ''}`}>
-        <div className={`${s.toes} ${layout === 'side' ? s.toesSide : ''}`}>
-          {toes.map(toe => (
-            <motion.button
-              key={toe.id}
-              type="button"
-              className={`${s.toe} ${s[`toe_${toe.id}`]} ${s[`toe_${toe.accent ?? 'lime'}`]}`}
-              onClick={toe.onClick}
-              whileHover={{ y: -4, scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className={s.toeIcon}>{toe.icon}</span>
-              {toe.id === 'learn' ? (
-                <span className={s.toeTopicOnly}>{learnLabel ?? '···'}</span>
-              ) : (
-                <span className={s.toeLabel}>{toe.label}</span>
-              )}
-            </motion.button>
-          ))}
-        </div>
+    <div className={`${s.deck} ${layout === 'side' ? s.deckSide : ''} ${compact ? s.compact : ''}`}>
 
-        <motion.button
+      {/* Practice — main action, red */}
+      <motion.button
+        type="button"
+        className={s.practiceCard}
+        onClick={goPractice}
+        whileHover={{ scale: 1.018, y: -2 }}
+        whileTap={{ scale: 0.982 }}
+      >
+        <div className={s.cardGlow} aria-hidden="true" />
+        <div className={s.cardTop}>
+          <span className={s.practiceChip}>
+            <KathaFlame size={13} />
+            Practice
+          </span>
+          <span className={s.cardArrow} aria-hidden="true">→</span>
+        </div>
+        <div className={s.cardTopic}>
+          {weaknessLabel ?? 'Your next challenge'}
+        </div>
+        <div className={s.cardSub}>{practiceSub}</div>
+      </motion.button>
+
+      {/* Learn Next — blue */}
+      <motion.button
+        type="button"
+        className={s.learnCard}
+        onClick={goLearnNext}
+        whileHover={{ scale: 1.018, y: -2 }}
+        whileTap={{ scale: 0.982 }}
+      >
+        <div className={s.cardTop}>
+          <span className={s.learnChip}>Learn Next</span>
+          <span className={s.cardArrow} aria-hidden="true">→</span>
+        </div>
+        <div className={s.cardTopic}>
+          {learnLabel ?? learnSub}
+        </div>
+        <div className={s.cardSub}>First time through this concept</div>
+      </motion.button>
+
+      {/* Quick actions */}
+      <div className={s.quickRow}>
+        <button
           type="button"
-          className={s.mainPad}
-          onClick={goPractice}
-          whileHover={{ y: -3, scale: 1.015 }}
-          whileTap={{ scale: 0.985 }}
+          className={s.quickBtn}
+          onClick={onHomeworkClick ?? (() => navigate('/dashboard?view=homework'))}
         >
-          <span className={s.mainGlow} aria-hidden="true" />
-          <span className={s.mainIcon}><WheelIcon /></span>
-          <span className={s.mainLabel}>Practice</span>
-          <span className={s.mainSub}>{practiceSub}</span>
-        </motion.button>
+          <PencilIcon />
+          <span>Problem Solver</span>
+        </button>
+        <button
+          type="button"
+          className={s.quickBtn}
+          onClick={onGpsClick ?? (() => navigate('/learning-gps'))}
+        >
+          <MapIcon />
+          <span>Knowledge Map</span>
+        </button>
+        <button
+          type="button"
+          className={s.quickBtn}
+          onClick={onNotesClick ?? (() => navigate('/dashboard?view=notes'))}
+        >
+          <NotesIcon />
+          <span>Session Notes</span>
+        </button>
       </div>
+
     </div>
   )
 }

@@ -1,9 +1,9 @@
 .shell {
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 72% 52% at 18% 18%, rgba(84, 185, 72, 0.12), transparent 56%),
-    radial-gradient(ellipse 56% 48% at 88% 16%, rgba(228, 191, 106, 0.12), transparent 58%),
-    linear-gradient(180deg, #123a2a 0%, #09251d 48%, #07120f 100%);
+    radial-gradient(ellipse 65% 50% at 12% 15%, rgba(193, 18, 31, 0.11), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(29, 58, 138, 0.13), transparent 56%),
+    linear-gradient(180deg, #0e0810 0%, #080610 50%, #05050a 100%);
   color: var(--text);
 }
 
@@ -35,7 +35,7 @@
 
 .stage {
   display: grid;
-  grid-template-columns: 380px minmax(0, 1fr);
+  grid-template-columns: 340px minmax(0, 1fr);
   gap: 40px;
   align-items: start;
   margin-top: 18px;
@@ -59,53 +59,12 @@
   align-items: flex-start;
   justify-content: center;
   min-height: 640px;
-  padding: 118px 0 0;
+  padding: 0;
 }
 
 .pawWrap {
   width: 100%;
-  max-width: 380px;
-  filter: drop-shadow(0 28px 58px rgba(0, 0, 0, 0.32));
-  transform: translateZ(0);
-}
-
-.pawWrap :global(.compact .toe) {
-  width: 88px;
-  max-width: 88px;
-  padding: 10px;
-}
-
-.pawWrap :global(.compact .toeIcon) {
-  width: 26px;
-  height: 26px;
-}
-
-.pawWrap :global(.compact .toeLabel) {
-  font-size: 10.5px;
-}
-
-.pawWrap :global(.compact .mainPad) {
-  width: 206px;
-  height: 206px;
-  padding: 20px;
-}
-
-.pawWrap :global(.compact .mainLabel) {
-  font-size: 24px;
-}
-
-.pawWrap :global(.compact .mainIcon) {
-  width: 42px;
-  height: 42px;
-}
-
-.pawWrap :global(.toesSide) {
-  width: 98px;
-  gap: 12px;
-}
-
-.pawWrap :global(.pawSide) {
-  gap: 22px;
+  max-width: 340px;
 }
 
 .panelCol {
@@ -136,7 +95,7 @@
   }
 
   .pawWrap {
-    max-width: 360px;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -172,7 +131,7 @@
 .dot {
   position: absolute;
   border-radius: 50%;
-  background: rgba(84, 185, 72, 0.36);
+  background: rgba(193, 18, 31, 0.28);
 }
 
 .hero {
@@ -186,8 +145,8 @@
   align-items: center;
   gap: 16px;
   background:
-    radial-gradient(circle at 20% 18%, rgba(228, 191, 106, 0.13), transparent 36%),
-    linear-gradient(140deg, rgba(8, 31, 28, 0.97) 0%, rgba(12, 48, 53, 0.95) 55%, rgba(7, 18, 15, 0.98) 100%);
+    radial-gradient(circle at 20% 18%, rgba(193, 18, 31, 0.10), transparent 36%),
+    linear-gradient(140deg, rgba(12, 6, 14, 0.97) 0%, rgba(18, 8, 24, 0.95) 55%, rgba(8, 6, 14, 0.98) 100%);
   border: 1px solid rgba(251, 250, 246, 0.09);
   box-shadow:
     0 32px 90px rgba(0, 0, 0, 0.62),
@@ -244,8 +203,8 @@
 
 .heroBtn {
   align-self: flex-start;
-  background: #4eb543;
-  color: #fffaf0;
+  background: #c1121f;
+  color: #fff;
   border: none;
   border-radius: 50px;
   padding: 14px 34px;
@@ -254,7 +213,13 @@
   font-weight: 800;
   cursor: pointer;
   letter-spacing: -0.01em;
-  box-shadow: 0 6px 28px rgba(84, 185, 72, 0.32);
+  box-shadow: 0 6px 28px rgba(193, 18, 31, 0.38);
+  transition: filter 0.15s, box-shadow 0.15s;
+}
+
+.heroBtn:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 8px 36px rgba(193, 18, 31, 0.50);
 }
 
 .heroBtnSecondary {
@@ -320,12 +285,12 @@
 }
 
 .floatA {
-  background: linear-gradient(148deg, #FF6B6B 0%, #BF3030 100%);
+  background: linear-gradient(148deg, #c1121f 0%, #7d0a13 100%);
   transform: perspective(900px) rotateY(-16deg) rotateX(4deg) rotateZ(-2deg);
 }
 
 .floatB {
-  background: linear-gradient(148deg, #4A6FD9 0%, #7A2FBC 100%);
+  background: linear-gradient(148deg, #1d3a8a 0%, #4361ee 100%);
   transform: perspective(900px) rotateY(-13deg) rotateX(-5deg) rotateZ(-2deg);
 }
 
@@ -470,23 +435,23 @@
   justify-content: space-between;
   padding: 14px;
   border-radius: 16px;
-  border: 1px dashed rgba(84, 185, 72, 0.42);
+  border: 1px dashed rgba(193, 18, 31, 0.38);
   background:
-    radial-gradient(circle at 20% 0%, rgba(228, 191, 106, 0.10), transparent 52%),
-    rgba(9, 28, 24, 0.88);
+    radial-gradient(circle at 20% 0%, rgba(29, 58, 138, 0.10), transparent 52%),
+    rgba(10, 8, 18, 0.88);
   cursor: pointer;
   text-align: left;
   transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 0 0 1px rgba(84, 185, 72, 0.08) inset;
+  box-shadow: 0 0 0 1px rgba(193, 18, 31, 0.06) inset;
 }
 
 .labSquare:hover {
-  border-color: rgba(84, 185, 72, 0.72);
+  border-color: rgba(193, 18, 31, 0.65);
   transform: translateY(-2px);
   box-shadow:
-    0 0 0 1px rgba(84, 185, 72, 0.12) inset,
+    0 0 0 1px rgba(193, 18, 31, 0.10) inset,
     0 12px 32px rgba(0, 0, 0, 0.35),
-    0 0 24px rgba(228, 191, 106, 0.10);
+    0 0 24px rgba(29, 58, 138, 0.10);
 }
 
 .labSquareBadge {
@@ -494,15 +459,15 @@
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #10231a;
-  background: #e4bf6a;
+  color: #fff;
+  background: #c1121f;
   border-radius: 999px;
   padding: 3px 8px;
 }
 
 .labSquareIcon {
   font-size: 28px;
-  color: rgba(84, 185, 72, 0.92);
+  color: rgba(193, 18, 31, 0.88);
   line-height: 1;
 }
 
@@ -530,25 +495,25 @@
 /* ── Exam Help card ── */
 .examCard {
   background:
-    radial-gradient(circle at 20% 8%, rgba(228, 191, 106, 0.12), transparent 40%),
-    linear-gradient(140deg, #0a2218 0%, #0c1f10 55%, #071408 100%);
-  border: 1px solid rgba(84, 185, 72, 0.20);
+    radial-gradient(circle at 20% 8%, rgba(29, 58, 138, 0.14), transparent 40%),
+    linear-gradient(140deg, #0c0814 0%, #0a0820 55%, #070610 100%);
+  border: 1px solid rgba(29, 58, 138, 0.22);
   border-radius: 22px;
   padding: 24px 22px 20px;
   cursor: pointer;
   transition: all 0.18s;
   box-shadow:
-    0 0 0 1px rgba(84, 185, 72, 0.08) inset,
+    0 0 0 1px rgba(29, 58, 138, 0.08) inset,
     0 20px 48px rgba(0,0,0,0.40);
 }
 
 .examCard:hover {
-  border-color: rgba(84, 185, 72, 0.34);
+  border-color: rgba(29, 58, 138, 0.40);
   transform: translateY(-2px);
   box-shadow:
-    0 0 0 1px rgba(84, 185, 72, 0.10) inset,
+    0 0 0 1px rgba(29, 58, 138, 0.12) inset,
     0 28px 64px rgba(0,0,0,0.50),
-    0 0 40px rgba(228, 191, 106, 0.08);
+    0 0 40px rgba(29, 58, 138, 0.10);
 }
 
 .examTop {
@@ -560,9 +525,9 @@
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #e4bf6a;
-  background: rgba(228, 191, 106, 0.12);
-  border: 1px solid rgba(228, 191, 106, 0.24);
+  color: #7aadff;
+  background: rgba(29, 58, 138, 0.18);
+  border: 1px solid rgba(29, 58, 138, 0.30);
   padding: 4px 10px;
   border-radius: 50px;
 }
@@ -585,8 +550,8 @@
 
 .examBtn {
   width: 100%;
-  background: #4eb543;
-  color: #fffaf0;
+  background: #1d3a8a;
+  color: #fff;
   border: none;
   border-radius: 12px;
   padding: 13px 16px;
@@ -595,17 +560,17 @@
   cursor: pointer;
   transition: all 0.15s;
   letter-spacing: 0.01em;
-  box-shadow: 0 4px 18px rgba(196,245,71,0.35);
+  box-shadow: 0 4px 18px rgba(29, 58, 138, 0.40);
 }
 
 .examBtn:hover {
-  filter: brightness(1.06);
-  box-shadow: 0 6px 24px rgba(196,245,71,0.48);
+  filter: brightness(1.12);
+  box-shadow: 0 6px 24px rgba(29, 58, 138, 0.55);
 }
 
 /* ── Homework Help card ── */
 .hwCard {
-  background: rgba(14,14,22,0.90);
+  background: rgba(14,12,20,0.90);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 22px;
   padding: 20px 22px 16px;
@@ -616,7 +581,7 @@
 .hwCard:hover {
   border-color: rgba(255,255,255,0.14);
   transform: translateY(-2px);
-  background: rgba(18,18,28,0.95);
+  background: rgba(18,16,28,0.95);
 }
 
 .hwTop {
