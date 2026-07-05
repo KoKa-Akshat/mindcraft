@@ -78,7 +78,6 @@ export default function PawHub({
   userId,
   layout = 'default',
   compact = false,
-  onPracticeClick,
   onGpsClick,
   onNotesClick,
   onHomeworkClick,
@@ -86,7 +85,6 @@ export default function PawHub({
   userId: string
   layout?: 'default' | 'side'
   compact?: boolean
-  onPracticeClick?: () => void
   onGpsClick?: () => void
   onNotesClick?: () => void
   onHomeworkClick?: () => void
@@ -113,15 +111,18 @@ export default function PawHub({
   }, [userId])
 
   function goPractice() {
-    if (onPracticeClick) { onPracticeClick(); return }
-    navigate('/dashboard')
+    if (weakness) {
+      navigate('/practice', { state: { conceptId: weakness.conceptId, missionType: 'weakness' } })
+    } else {
+      navigate('/practice')
+    }
   }
 
   function goLearnNext() {
     if (learn) {
-      navigate(`/dashboard?view=gps&concept=${encodeURIComponent(learn.conceptId)}`)
+      navigate('/practice', { state: { conceptId: learn.conceptId, missionType: 'learn' } })
     } else {
-      navigate('/dashboard?view=gps&learnNext=1')
+      navigate('/practice')
     }
   }
 

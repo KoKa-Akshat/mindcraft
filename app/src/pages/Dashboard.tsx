@@ -43,10 +43,6 @@ export default function Dashboard() {
   const conceptParam = searchParams.get('concept')
   const targetParam = searchParams.get('target')
 
-  function openPractice() {
-    navigate('/dashboard', { replace: true })
-  }
-
   function openGps() {
     navigate('/dashboard?view=gps', { replace: true })
   }
@@ -152,7 +148,6 @@ export default function Dashboard() {
                     userId={uid}
                     layout="side"
                     compact
-                    onPracticeClick={openPractice}
                     onGpsClick={openGps}
                     onNotesClick={openNotes}
                     onHomeworkClick={openHomework}
