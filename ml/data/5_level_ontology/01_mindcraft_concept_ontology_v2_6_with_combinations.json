@@ -220,8 +220,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_fractions_decimals__mixes_up_numerator_and_denominator",
+            "mis_fractions_decimals__believes_fraction_means_dividing_denominator",
+            "mis_fractions_decimals__does_not_realise_you_can"
+          ],
+          "canonical_misconception_family": "mis_fractions_decimals__mixes_up_numerator_and_denominator",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -260,8 +264,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_fractions_decimals__does_not_realise_you_can",
+            "mis_fractions_decimals__ordered_fractions_comparing_denominators_rather",
+            "mis_fractions_decimals__simplifies_fraction_adding_or_subtracting"
+          ],
+          "canonical_misconception_family": "mis_fractions_decimals__does_not_realise_you_can",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -300,8 +308,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_fractions_decimals__does_not_find_common_denominator",
+            "mis_fractions_decimals__adding_fractions_adds_numerators_and",
+            "mis_fractions_decimals__does_not_consider_denominator_adding"
+          ],
+          "canonical_misconception_family": "mis_fractions_decimals__does_not_find_common_denominator",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -340,8 +352,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_fractions_decimals__does_not_know_how_compare",
+            "mis_fractions_decimals__dividing_decimal_multiple_10_just",
+            "mis_fractions_decimals__dividing_decimals_does_not_realize"
+          ],
+          "canonical_misconception_family": "mis_fractions_decimals__does_not_know_how_compare",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -380,8 +396,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_fractions_decimals__converts_fraction_decimal_using_denominator",
+            "mis_fractions_decimals__converts_fraction_decimal_placing_decimal",
+            "mis_fractions_decimals__converts_fraction_decimal_using_only"
+          ],
+          "canonical_misconception_family": "mis_fractions_decimals__converts_fraction_decimal_using_denominator",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -462,8 +482,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_ratios_proportions__thinks_ratios_are_written_1total",
+            "mis_ratios_proportions__thinks_difference_one_part_ratio",
+            "mis_ratios_proportions__ratio_where_total_given_treats"
+          ],
+          "canonical_misconception_family": "mis_ratios_proportions__thinks_ratios_are_written_1total",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -502,8 +526,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_ratios_proportions__does_not_realise_ratio_worded",
+            "mis_ratios_proportions__thinks_difference_one_part_ratio",
+            "mis_ratios_proportions__thinks_ratios_are_written_1total"
+          ],
+          "canonical_misconception_family": "mis_ratios_proportions__does_not_realise_ratio_worded",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -542,8 +570,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_ratios_proportions__does_not_realise_ratio_worded",
+            "mis_ratios_proportions__ratio_question_where_one_side",
+            "mis_ratios_proportions__ratio_where_total_given_treats"
+          ],
+          "canonical_misconception_family": "mis_ratios_proportions__does_not_realise_ratio_worded",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -582,8 +614,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_ratios_proportions__ratio_question_where_one_side",
+            "mis_ratios_proportions__converting_ratio_fractions_puts_other",
+            "mis_ratios_proportions__ratio_question_where_difference_between"
+          ],
+          "canonical_misconception_family": "mis_ratios_proportions__ratio_question_where_one_side",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -660,8 +696,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_order_of_operations__performs_subtraction_right_left_if",
+            "mis_order_of_operations__carries_out_operations_from_left",
+            "mis_order_of_operations__carries_out_operations_from_right"
+          ],
+          "canonical_misconception_family": "mis_order_of_operations__performs_subtraction_right_left_if",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -740,8 +780,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_order_of_operations__applies_bidmas_strict_order_does",
+            "mis_order_of_operations__performs_subtraction_right_left_if"
+          ],
+          "canonical_misconception_family": "mis_order_of_operations__applies_bidmas_strict_order_does",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -896,8 +939,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_equations__thinks_inverse_subtraction_multiplication",
+            "mis_functions_basics__thinks_inverse_subtraction_multiplication",
+            "mis_algebraic_manipulation__confuses_inverse_operations_addition_and"
+          ],
+          "canonical_misconception_family": "mis_linear_equations__thinks_inverse_subtraction_multiplication",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -936,8 +983,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_equations__does_not_realise_maintain_balance",
+            "mis_linear_equations__does_not_understand_multiplying_both",
+            "mis_algebraic_manipulation__does_not_understand_multiplying_both"
+          ],
+          "canonical_misconception_family": "mis_linear_equations__does_not_realise_maintain_balance",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1094,8 +1145,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_functions_basics__does_not_interpret_sloping_gradient"
+          ],
+          "canonical_misconception_family": "mis_functions_basics__does_not_interpret_sloping_gradient",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1134,8 +1187,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_equations__believes_y_intercept_given_difference",
+            "mis_linear_equations__believes_equation_horizontal_line_form",
+            "mis_linear_equations__believes_equation_for_horizontal_line"
+          ],
+          "canonical_misconception_family": "mis_linear_equations__believes_y_intercept_given_difference",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1174,8 +1231,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_equations__believes_ymxc_m_yintercept"
+          ],
+          "canonical_misconception_family": "mis_linear_equations__believes_ymxc_m_yintercept",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1214,8 +1273,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_equations__believes_one_point_enough_specify"
+          ],
+          "canonical_misconception_family": "mis_linear_equations__believes_one_point_enough_specify",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1254,8 +1315,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_equations__confuses_meaning_parallel_and_perpendicular",
+            "mis_linear_equations__confuses_meaning_perpendicular_and_vertical",
+            "mis_linear_equations__does_not_know_meaning_perpendicular"
+          ],
+          "canonical_misconception_family": "mis_linear_equations__confuses_meaning_parallel_and_perpendicular",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1330,8 +1395,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_functions_basics__using_function_machine_confuses_input",
+            "mis_functions_basics__function_machine_confuses_first_operation"
+          ],
+          "canonical_misconception_family": "mis_functions_basics__using_function_machine_confuses_input",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1370,8 +1438,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_functions_basics__function_machine_confuses_first_operation",
+            "mis_functions_basics__using_function_machine_confuses_input"
+          ],
+          "canonical_misconception_family": "mis_functions_basics__function_machine_confuses_first_operation",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1450,8 +1521,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_functions_basics__does_not_reverse_order_operations",
+            "mis_functions_basics__reverses_order_operations_but_does"
+          ],
+          "canonical_misconception_family": "mis_functions_basics__does_not_reverse_order_operations",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1667,8 +1741,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio",
+            "mis_ratios_proportions__uses_denominator_converting_from_fractions",
+            "mis_ratios_proportions__ratio_question_where_difference_between"
+          ],
+          "canonical_misconception_family": "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1805,8 +1883,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_triangles_congruence__uses_more_than_3_letters",
+            "mis_lines_angles__student_thinks_any_two_angles",
+            "mis_triangles_congruence__uses_2_letters_describe_angle"
+          ],
+          "canonical_misconception_family": "mis_triangles_congruence__uses_more_than_3_letters",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1885,8 +1967,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_trigonometry_basics__uses_sin_cos_required"
+          ],
+          "canonical_misconception_family": "mis_trigonometry_basics__uses_sin_cos_required",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -1925,8 +2009,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_trigonometry_basics__uses_cos_sin_required",
+            "mis_trigonometry_basics__uses_sin_cos_required"
+          ],
+          "canonical_misconception_family": "mis_trigonometry_basics__uses_cos_sin_required",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -2550,8 +2637,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_inequalities__believes_solving_inequality_gives_single",
+            "mis_linear_inequalities__does_not_understand_inequality_notation",
+            "mis_linear_inequalities__confuses_inequality_symbols_with_equality"
+          ],
+          "canonical_misconception_family": "mis_linear_inequalities__believes_solving_inequality_gives_single",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -2590,8 +2681,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_linear_inequalities__believes_they_can_multiplydivide_through",
+            "mis_linear_inequalities__thinks_subtracting_negative_makes_your",
+            "mis_linear_inequalities__believes_subtracting_positive_number_from"
+          ],
+          "canonical_misconception_family": "mis_linear_inequalities__believes_they_can_multiplydivide_through",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -2707,7 +2802,12 @@
             "geometric": "On a number line, |A| > 11 means A is more than 11 units away from zero, so it lives outside the interval from -11 to 11.",
             "algebraic": "|2x+7| > 11 becomes 2x+7 > 11 OR 2x+7 < -11.",
             "procedural": "For absolute value greater than: split into two inequalities, use OR, and flip to the negative boundary on the second branch."
-          }
+          },
+          "canonical_misconception_family": "mis_linear_inequalities__believes_negative_numbers_with_larger",
+          "diagnostic_tags": [
+            "mis_linear_inequalities__believes_negative_numbers_with_larger",
+            "mis_linear_inequalities__believes_they_can_multiplydivide_through"
+          ]
         }
       ],
       "cross_layer_links": {
@@ -2773,8 +2873,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they",
+            "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_they"
+          ],
+          "canonical_misconception_family": "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -2813,8 +2916,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_systems_of_linear_equations__mixes_up_value_two_terms"
+          ],
+          "canonical_misconception_family": "mis_systems_of_linear_equations__mixes_up_value_two_terms",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -2853,8 +2958,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical",
+            "mis_systems_of_linear_equations__subtracts_simultaneous_equations_addition_required",
+            "mis_systems_of_linear_equations__solving_equation_forgets_eliminate_coefficient"
+          ],
+          "canonical_misconception_family": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -2893,8 +3002,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical"
+          ],
+          "canonical_misconception_family": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -2975,8 +3086,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_exponent_rules__multiplying_numbers_with_different_bases",
+            "mis_exponent_rules__has_cubed_base_number_and",
+            "mis_exponent_rules__has_added_powers_rather_than"
+          ],
+          "canonical_misconception_family": "mis_exponent_rules__multiplying_numbers_with_different_bases",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3015,8 +3130,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_exponent_rules__believes_dividing_numbers_with_same",
+            "mis_exponent_rules__makes_number_negative_asked_find",
+            "mis_exponent_rules__correctly_finds_reciprocal_number_but"
+          ],
+          "canonical_misconception_family": "mis_exponent_rules__believes_dividing_numbers_with_same",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3055,8 +3174,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_exponent_rules__has_added_powers_rather_than",
+            "mis_exponent_rules__confuses_powers_and_multiples",
+            "mis_exponent_rules__has_cubed_base_number_and"
+          ],
+          "canonical_misconception_family": "mis_exponent_rules__has_added_powers_rather_than",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3095,8 +3218,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_exponent_rules__makes_number_negative_asked_find",
+            "mis_exponent_rules__can_not_square_root_negative"
+          ],
+          "canonical_misconception_family": "mis_exponent_rules__makes_number_negative_asked_find",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3135,8 +3261,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_exponent_rules__forgotten_anything_power_0_equals"
+          ],
+          "canonical_misconception_family": "mis_exponent_rules__forgotten_anything_power_0_equals",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3216,8 +3344,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__believes_you_add_terms_together",
+            "mis_algebraic_manipulation__collecting_like_terms_only_simplifies"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__believes_you_add_terms_together",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3256,8 +3387,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__does_not_know_factorise_quadratic",
+            "mis_factoring_polynomials__does_not_know_factorise_quadratic"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__does_not_know_factorise_quadratic",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3437,8 +3571,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_factoring_polynomials__believes_they_can_fully_factorise",
+            "mis_factoring_polynomials__factorising_finds_factor_goes_into",
+            "mis_factoring_polynomials__factorising_into_single_brackets_only"
+          ],
+          "canonical_misconception_family": "mis_factoring_polynomials__believes_they_can_fully_factorise",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3477,8 +3615,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+            "mis_factoring_polynomials__believes_factorising_quadratic_they_can",
+            "mis_factoring_polynomials__thinks_quadratic_without_non_variable"
+          ],
+          "canonical_misconception_family": "mis_factoring_polynomials__does_not_know_factorise_quadratic",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3517,8 +3659,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_factoring_polynomials__does_not_know_factorise_quadratic",
+            "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+            "mis_factoring_polynomials__factorising_quadratic_with_nonunit_coefficient"
+          ],
+          "canonical_misconception_family": "mis_factoring_polynomials__does_not_know_factorise_quadratic",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3557,8 +3703,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_factoring_polynomials__completing_square_form_x_a2",
+            "mis_factoring_polynomials__completing_square_believes_always_half"
+          ],
+          "canonical_misconception_family": "mis_factoring_polynomials__completing_square_form_x_a2",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3638,8 +3787,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_radical_expressions__simplifying_surds_leaves_square_root",
+            "mis_radical_expressions__simplifying_surds_does_not_multiply",
+            "mis_radical_expressions__simplifying_surds_does_not_square"
+          ],
+          "canonical_misconception_family": "mis_radical_expressions__simplifying_surds_leaves_square_root",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3718,8 +3871,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_functions_basics__mixes_up_squaring_and_addition",
+            "mis_exponent_rules__mixes_up_squaring_and_addition"
+          ],
+          "canonical_misconception_family": "mis_functions_basics__mixes_up_squaring_and_addition",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3758,8 +3914,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__does_not_know_how_simplify",
+            "mis_algebraic_manipulation__believes_they_should_multiply_each",
+            "mis_algebraic_manipulation__thinks_you_can_divide_terms"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__does_not_know_how_simplify",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3841,8 +4001,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_quadratic_equations__solving_simultaneous_equations_graphically_they",
+            "mis_quadratic_equations__finds_y_intercept_asked_read",
+            "mis_quadratic_equations__solves_for_y0_instead_given"
+          ],
+          "canonical_misconception_family": "mis_quadratic_equations__solving_simultaneous_equations_graphically_they",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3881,8 +4045,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_quadratic_equations__confuses_cubic_and_quadratic_graphs",
+            "mis_quadratic_equations__confuses_reciprocal_and_quadratic_graphs"
+          ],
+          "canonical_misconception_family": "mis_quadratic_equations__confuses_cubic_and_quadratic_graphs",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3921,8 +4088,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_number_properties__does_not_understand_term_factor",
+            "mis_algebraic_manipulation__incorrectly_factorises_quadratic",
+            "mis_algebraic_manipulation__does_not_know_factorise_quadratic"
+          ],
+          "canonical_misconception_family": "mis_number_properties__does_not_understand_term_factor",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -3961,8 +4132,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_quadratic_equations__misremembers_quadratic_formula"
+          ],
+          "canonical_misconception_family": "mis_quadratic_equations__misremembers_quadratic_formula",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -4001,8 +4174,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_quadratic_equations__believes_discriminant_must_be_perfect",
+            "mis_quadratic_equations__believes_discriminant_0_means_there"
+          ],
+          "canonical_misconception_family": "mis_quadratic_equations__believes_discriminant_must_be_perfect",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -4082,8 +4258,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_descriptive_statistics__believes_outlier_value_data_set",
+            "mis_descriptive_statistics__asked_for_mean_list_data"
+          ],
+          "canonical_misconception_family": "mis_descriptive_statistics__believes_outlier_value_data_set",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -4122,8 +4301,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_descriptive_statistics__finding_median_from_even_dataset",
+            "mis_descriptive_statistics__finding_median_for_odd_numbered",
+            "mis_descriptive_statistics__asked_for_mean_list_data"
+          ],
+          "canonical_misconception_family": "mis_descriptive_statistics__finding_median_from_even_dataset",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -4162,8 +4345,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_descriptive_statistics__asked_for_mean_list_data",
+            "mis_descriptive_statistics__finds_mean_instead_median",
+            "mis_descriptive_statistics__finds_median_instead_mean"
+          ],
+          "canonical_misconception_family": "mis_descriptive_statistics__asked_for_mean_list_data",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -4385,8 +4572,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__confuses_collecting_like_terms_with"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__confuses_collecting_like_terms_with",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -4927,8 +5116,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_sequences_series__believes_you_multiply_constant_difference",
+            "mis_sequences_series__finding_differences_between_terms_sequence"
+          ],
+          "canonical_misconception_family": "mis_sequences_series__believes_you_multiply_constant_difference",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5007,8 +5199,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_sequences_series__uses_first_term_numerical_part",
+            "mis_sequences_series__finding_nth_term_linear_sequence",
+            "mis_sequences_series__finding_nth_term_rule_for"
+          ],
+          "canonical_misconception_family": "mis_sequences_series__uses_first_term_numerical_part",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5129,8 +5325,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_lines_angles__thinks_corresponding_angles_sum_180",
+            "mis_lines_angles__using_180_degree_protractor_measure",
+            "mis_lines_angles__confuses_alternate_and_opposite_angles"
+          ],
+          "canonical_misconception_family": "mis_lines_angles__thinks_corresponding_angles_sum_180",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5169,8 +5369,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_lines_angles__student_thinks_any_two_angles",
+            "mis_lines_angles__does_not_know_vertically_opposite",
+            "mis_lines_angles__thinks_alternate_angles_are_always"
+          ],
+          "canonical_misconception_family": "mis_lines_angles__student_thinks_any_two_angles",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5209,8 +5413,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_lines_angles__confuses_cointerior_and_alternate_angles",
+            "mis_lines_angles__confuses_cointerior_and_corresponding_angles",
+            "mis_lines_angles__confuses_alternate_and_opposite_angles"
+          ],
+          "canonical_misconception_family": "mis_lines_angles__confuses_cointerior_and_alternate_angles",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5246,7 +5454,13 @@
             "geometric": "Trace one angle through the diagram: first use vertical angles, then move across parallel lines using corresponding or alternate interior angles, then check straight-line sums.",
             "algebraic": "If two angles form a straight line, their measures add to 180. If parallel lines create corresponding angles, substitute equal angle expressions into the 180 equation.",
             "procedural": "Mark all known equal angles with the same symbol; circle all straight-line pairs; then test each answer choice against equal-angle and supplementary relationships."
-          }
+          },
+          "canonical_misconception_family": "mis_lines_angles__student_thinks_any_two_angles",
+          "diagnostic_tags": [
+            "mis_lines_angles__student_thinks_any_two_angles",
+            "mis_lines_angles__thinks_only_angles_on_parallel",
+            "mis_lines_angles__thinks_alternate_angles_are_always"
+          ]
         }
       ],
       "cross_layer_links": {
@@ -5309,8 +5523,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_triangles_congruence__does_not_know_angles_triangle",
+            "mis_triangles_congruence__forgets_subtract_sum_angles_we",
+            "mis_triangles_congruence__does_not_consider_all_three"
+          ],
+          "canonical_misconception_family": "mis_triangles_congruence__does_not_know_angles_triangle",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5389,8 +5607,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_triangles_congruence__thinks_angles_which_look_same",
+            "mis_triangles_congruence__does_not_understand_all_angles",
+            "mis_triangles_congruence__confuses_scalene_and_right_angle"
+          ],
+          "canonical_misconception_family": "mis_triangles_congruence__thinks_angles_which_look_same",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5470,8 +5692,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_circles_geometry__confuses_arc_and_diameter",
+            "mis_circles_geometry__confuses_circumference_and_radius"
+          ],
+          "canonical_misconception_family": "mis_circles_geometry__confuses_arc_and_diameter",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5550,8 +5775,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_circles_geometry__confuses_tangent_and_radius",
+            "mis_circles_geometry__confuses_tangent_and_circumference",
+            "mis_circles_geometry__confuses_tangent_and_chord"
+          ],
+          "canonical_misconception_family": "mis_circles_geometry__confuses_tangent_and_radius",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5587,7 +5816,12 @@
             "geometric": "Draw the diameter across the circle and mark radius as half that length. Shade half the circle to show why the area is divided by two.",
             "algebraic": "Area of semicircle = (1/2)π(d/2)². Diameter must be halved before squaring.",
             "procedural": "Step 1: find diameter. Step 2: divide by 2 for radius. Step 3: compute πr². Step 4: divide by 2."
-          }
+          },
+          "canonical_misconception_family": "mis_circles_geometry__does_not_know_term_diameter",
+          "diagnostic_tags": [
+            "mis_circles_geometry__does_not_know_term_diameter",
+            "mis_circles_geometry__confuses_diameter_and_radius"
+          ]
         }
       ],
       "cross_layer_links": {
@@ -5651,8 +5885,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_area_volume__has_used_slant_height_and",
+            "mis_area_volume__has_multiplied_base_slant_height",
+            "mis_area_volume__doesnt_know_area_triangle_formula"
+          ],
+          "canonical_misconception_family": "mis_area_volume__has_used_slant_height_and",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5731,8 +5969,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_area_volume__does_not_know_units_volume",
+            "mis_area_volume__does_not_convert_measurements_have"
+          ],
+          "canonical_misconception_family": "mis_area_volume__does_not_know_units_volume",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5768,7 +6009,13 @@
             "geometric": "Draw the box and label all three dimensions, then shade each type of face: front/back, side/side, top/bottom. Compare all three areas.",
             "algebraic": "If dimensions are a,b,c, volume is abc and face areas are ab, ac, bc. Find the missing dimension first, then compare the products.",
             "procedural": "Step 1: use volume to find missing side. Step 2: compute all three pairwise products. Step 3: select the largest area."
-          }
+          },
+          "canonical_misconception_family": "mis_area_volume__think_cross_section_prism_biggest",
+          "diagnostic_tags": [
+            "mis_area_volume__think_cross_section_prism_biggest",
+            "mis_area_volume__thinks_cross_section_prism_can",
+            "mis_area_volume__confuses_triangular_prism_with_pyramid"
+          ]
         },
         {
           "id": "area_volume__square_side_from_area",
@@ -5787,7 +6034,13 @@
             "geometric": "A 100 square-unit square can be seen as a 10 by 10 grid, so each side is 10 units.",
             "algebraic": "A = s², so s = √A. If A = 100, then s = 10.",
             "procedural": "Take the square root of the area to get one side length; do not divide the area by four."
-          }
+          },
+          "canonical_misconception_family": "mis_area_volume__does_not_know_units_area",
+          "diagnostic_tags": [
+            "mis_area_volume__does_not_know_units_area",
+            "mis_area_volume__thinks_diagonal_square_same_length",
+            "mis_area_volume__cannot_identify_correct_side_lengths"
+          ]
         }
       ],
       "cross_layer_links": {
@@ -5850,8 +6103,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_geometric_transformations__describing_translation_miscounts_crossing_axis",
+            "mis_geometric_transformations__mistakes_rotations_for_translations",
+            "mis_geometric_transformations__describing_translation_counts_corners_squares"
+          ],
+          "canonical_misconception_family": "mis_geometric_transformations__describing_translation_miscounts_crossing_axis",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5890,8 +6147,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_geometric_transformations__believes_reflection_always_switches_x",
+            "mis_geometric_transformations__believes_reflection_y_x_switches",
+            "mis_geometric_transformations__believes_reflection_y_x_changes"
+          ],
+          "canonical_misconception_family": "mis_geometric_transformations__believes_reflection_always_switches_x",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -5930,8 +6191,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_geometric_transformations__believes_you_do_not_need",
+            "mis_geometric_transformations__asked_rotate_180_degrees_rotates",
+            "mis_geometric_transformations__mixes_up_clockwise_and_anticlockwise"
+          ],
+          "canonical_misconception_family": "mis_geometric_transformations__believes_you_do_not_need",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6011,8 +6276,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__thinks_you_cancel_identical_terms",
+            "mis_algebraic_manipulation__incorrectly_cancels_what_they_believe"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__thinks_you_cancel_identical_terms",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6051,8 +6319,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__addingsubtracting_fractions_addssubtracts_denominators_and",
+            "mis_fractions_decimals__does_not_find_common_denominator",
+            "mis_algebraic_manipulation__does_not_find_common_denominator"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__addingsubtracting_fractions_addssubtracts_denominators_and",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6091,8 +6363,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_fractions_decimals__does_not_recognise_fraction_can",
+            "mis_functions_basics__believes_fraction_with_equal_numerator",
+            "mis_algebraic_manipulation__simplifying_thinks_they_write_0"
+          ],
+          "canonical_misconception_family": "mis_fractions_decimals__does_not_recognise_fraction_can",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6172,8 +6448,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_exponent_rules__can_not_square_root_negative",
+            "mis_quadratic_equations__believes_you_can_square_root",
+            "mis_linear_inequalities__does_not_think_square_root"
+          ],
+          "canonical_misconception_family": "mis_exponent_rules__can_not_square_root_negative",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6373,8 +6653,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_geometric_transformations__adding_column_vectors_multiplies_rather"
+          ],
+          "canonical_misconception_family": "mis_geometric_transformations__adding_column_vectors_multiplies_rather",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6534,8 +6816,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_number_properties__does_not_correctly_apply_commutative",
+            "mis_fractions_decimals__does_not_correctly_apply_commutative",
+            "mis_algebraic_manipulation__does_not_correctly_apply_commutative"
+          ],
+          "canonical_misconception_family": "mis_number_properties__does_not_correctly_apply_commutative",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6655,8 +6941,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_circles_geometry__confuses_radius_with_radius_squared"
+          ],
+          "canonical_misconception_family": "mis_circles_geometry__confuses_radius_with_radius_squared",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6695,8 +6983,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_factoring_polynomials__completing_square_form_x_a2",
+            "mis_factoring_polynomials__completing_square_believes_constant_bracket",
+            "mis_quadratic_equations__believes_completed_square_form_they"
+          ],
+          "canonical_misconception_family": "mis_factoring_polynomials__completing_square_form_x_a2",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -6816,8 +7108,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_basic_probability__does_not_understand_probability_1",
+            "mis_basic_probability__does_not_understand_probability_something"
+          ],
+          "canonical_misconception_family": "mis_basic_probability__does_not_understand_probability_1",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -7210,8 +7505,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_ratios_proportions__thinks_shape_graph_does_not"
+          ],
+          "canonical_misconception_family": "mis_ratios_proportions__thinks_shape_graph_does_not",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -7367,8 +7664,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_ratios_proportions__believes_finding_area_under_graph",
+            "mis_ratios_proportions__thinks_shape_graph_does_not"
+          ],
+          "canonical_misconception_family": "mis_ratios_proportions__believes_finding_area_under_graph",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -7660,8 +7960,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_number_properties__confuses_factors_and_multiples",
+            "mis_number_properties__does_not_understand_factors_are",
+            "mis_number_properties__does_not_know_meaning_common"
+          ],
+          "canonical_misconception_family": "mis_number_properties__confuses_factors_and_multiples",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -7707,8 +8011,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_number_properties__does_not_think_number_can"
+          ],
+          "canonical_misconception_family": "mis_number_properties__does_not_think_number_can",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -7848,8 +8154,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_number_properties__confuses_factors_and_multiples",
+            "mis_number_properties__does_not_think_number_can"
+          ],
+          "canonical_misconception_family": "mis_number_properties__confuses_factors_and_multiples",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -7885,7 +8194,13 @@
             "geometric": "Use parity tiles: pairs of dots split evenly; odd numbers leave one unpaired dot. Multiplying or adding changes whether unpaired dots remain.",
             "algebraic": "Represent even as 2k and odd as 2k+1. Then odd×odd = (2a+1)(2b+1) = 2(2ab+a+b)+1, still odd.",
             "procedural": "Before solving fully, check parity: if product is even, at least one factor is even; if both numbers were odd, product would be odd and sum would be even."
-          }
+          },
+          "canonical_misconception_family": "mis_basic_probability__mixes_up_odd_and_even",
+          "diagnostic_tags": [
+            "mis_basic_probability__mixes_up_odd_and_even",
+            "mis_sequences_series__mixes_up_odd_and_even",
+            "mis_exponent_rules__mixes_up_odd_and_even"
+          ]
         },
         {
           "id": "number_properties__factor_pair_sum_search",
@@ -7981,8 +8296,10 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_measurement_units__does_not_convert_measurements_have"
+          ],
+          "canonical_misconception_family": "mis_measurement_units__does_not_convert_measurements_have",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -8074,8 +8391,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_measurement_units__does_not_recognise_metres_unit",
+            "mis_measurement_units__does_not_recognise_inches_unit"
+          ],
+          "canonical_misconception_family": "mis_measurement_units__does_not_recognise_metres_unit",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -8118,8 +8438,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_measurement_units__converted_hours_minutes_instead_hours",
+            "mis_measurement_units__converted_seconds_minutes_instead_seconds",
+            "mis_measurement_units__does_not_square_conversion_factor"
+          ],
+          "canonical_misconception_family": "mis_measurement_units__converted_hours_minutes_instead_hours",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -8214,8 +8538,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__believes_you_add_terms_together",
+            "mis_algebraic_manipulation__collecting_like_terms_only_simplifies",
+            "mis_algebraic_manipulation__collecting_like_terms_treats_subtractions"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__believes_you_add_terms_together",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -8261,8 +8589,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__changes_given_operation_substituting",
+            "mis_algebraic_manipulation__does_not_consider_variable_evaluating",
+            "mis_algebraic_manipulation__does_not_add_on_constant"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__changes_given_operation_substituting",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -8308,8 +8640,11 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__confuses_term_with_equation",
+            "mis_algebraic_manipulation__does_not_understand_multiplying_both"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__confuses_term_with_equation",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
@@ -8400,8 +8735,12 @@
           },
           "node_type": "ingredient",
           "status": "active",
-          "diagnostic_tags": [],
-          "canonical_misconception_family": null,
+          "diagnostic_tags": [
+            "mis_algebraic_manipulation__simplifies_fraction_adding_or_subtracting",
+            "mis_algebraic_manipulation__believes_they_should_multiply_each",
+            "mis_algebraic_manipulation__subtracting_fractions_subtracts_numerators_and"
+          ],
+          "canonical_misconception_family": "mis_algebraic_manipulation__simplifies_fraction_adding_or_subtracting",
           "observable_evidence": {
             "positive": [
               "Student uses this ingredient correctly in a new context."
