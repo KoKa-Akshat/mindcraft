@@ -101,20 +101,31 @@ def format_message(q: dict) -> str:
 
 def webhook_post(webhook_url: str, text: str) -> None:
     payload = json.dumps({"text": text}).encode()
-    req = urllib.request.Request(
-        webhook_url,
-        data=payload,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req) as r:
-        r.read()
+    for attempt in range(5):
+        req = urllib.request.Request(
+            webhook_url,
+            data=payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            urllib.request.urlopen(req, timeout=15).read()
+            return
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                wait = 2 ** attempt * 3
+                print(f"\n  [rate limited, waiting {wait}s]", end=" ", flush=True)
+                time.sleep(wait)
+            else:
+                raise
+    raise RuntimeError("Slack webhook: too many 429s")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--limit", type=int, default=0, help="Max questions (0 = all)")
+    parser.add_argument("--offset", type=int, default=0, help="Skip first N questions (resume)")
     parser.add_argument("--source", help="Filter by source name")
     parser.add_argument("--concept", help="Filter by conceptId")
     parser.add_argument("--level", type=int, choices=[1, 2, 3])
@@ -136,10 +147,12 @@ def main() -> None:
                          if (q.get("conceptId") or q.get("concept_id")) == args.concept]
     if args.level:
         all_questions = [q for q in all_questions if int(q.get("level", 0)) == args.level]
+    if args.offset:
+        all_questions = all_questions[args.offset:]
     if args.limit:
         all_questions = all_questions[:args.limit]
 
-    print(f"{'[DRY RUN] ' if args.dry_run else ''}Sending {len(all_questions)} questions...")
+    print(f"{'[DRY RUN] ' if args.dry_run else ''}Sending {len(all_questions)} questions{f' (skipped first {args.offset})' if args.offset else ''}...")
 
     for i, q in enumerate(all_questions):
         msg = format_message(q)
@@ -148,7 +161,7 @@ def main() -> None:
             print(msg)
         else:
             webhook_post(webhook_url, msg)
-            time.sleep(0.35)   # ~3 req/s, Slack is fine with this
+            time.sleep(1.1)    # stay well under Slack's 1 msg/s webhook limit
 
         if (i + 1) % 100 == 0:
             print(f"  {i + 1}/{len(all_questions)}...")
