@@ -60,7 +60,7 @@ function pickMostUrgent(nodes: GraphNode[]): string | null {
     )[0]?.id ?? null
 }
 
-function chainSteps(rec: RecommendResult | null) {
+export function chainSteps(rec: RecommendResult | null): ConceptRecommendation[] {
   return rec?.recommendations?.filter(r => !r.isSupplement && !r.isBridgeGap) ?? []
 }
 
@@ -80,16 +80,19 @@ function gapSeverity(gap: ConceptRecommendation, nodeMap: Map<string, GraphNode>
 /**
  * C1 — pick the single most severe **playable** weakness across profile
  * weaknesses, concept-bridge gaps, and format gaps.
+ * excludedConcepts: concepts already assessed/excluded (e.g. gap-scan exclusions).
  */
 export function worstWeakness(
   profileRec: RecommendResult | null,
   pathRec: RecommendResult | null,
   nodeMap: Map<string, GraphNode>,
+  excludedConcepts: ReadonlySet<string> = new Set(),
 ): WeaknessCandidate | null {
   const candidates: WeaknessCandidate[] = []
 
   for (const w of profileRec?.studentProfile?.topWeaknesses ?? []) {
     if (!hasPlayableQuestions(w.conceptId)) continue
+    if (excludedConcepts.has(w.conceptId)) continue
     candidates.push({
       conceptId: w.conceptId,
       severity: 1 - conceptMastery(w.conceptId, nodeMap),
@@ -103,6 +106,7 @@ export function worstWeakness(
       const conceptId = gap.bridgeToConcept
       const formatId = gap.bridgeFromConcept as FormatId | undefined
       if (!conceptId || !formatId || !hasFormatQuestions(conceptId, formatId)) continue
+      if (excludedConcepts.has(conceptId)) continue
       candidates.push({
         conceptId,
         formatId,
@@ -112,6 +116,7 @@ export function worstWeakness(
     } else {
       const conceptId = gap.bridgeToConcept ?? gap.conceptId
       if (!conceptId || !hasPlayableQuestions(conceptId)) continue
+      if (excludedConcepts.has(conceptId)) continue
       candidates.push({
         conceptId,
         severity: gapSeverity(gap, nodeMap),
