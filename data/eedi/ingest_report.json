@@ -1,134 +1,232 @@
 {
   "total_input": 1869,
-  "total_kept": 818,
-  "total_rejected": 1051,
-  "survival_rate": 0.438,
+  "total_kept": 1283,
+  "total_rejected": 586,
+  "survival_rate": 0.686,
   "reject_by_reason": {
-    "R4_latex_fail": 256,
-    "R2_diagram": 522,
-    "R1_excluded": 220,
-    "R4_answer_latex_fail": 38,
-    "R4_duplicate_correct": 3,
+    "R4_latex_fail": 320,
+    "R2_diagram_ambiguous": 48,
+    "R4_answer_latex_fail": 68,
+    "R1_excluded": 91,
+    "R2_diagram_no_alt": 42,
+    "R4_duplicate_correct": 5,
     "R3_too_short": 12
   },
   "kept_by_concept": {
     "order_of_operations": {
-      "total": 33,
+      "total": 34,
       "by_level": {
-        "1": 33,
+        "1": 34,
         "2": 0,
         "3": 0
       },
       "by_format": {
         "symbolic_expression": 28,
+        "diagram": 1,
         "word_problem": 5
       }
     },
     "descriptive_statistics": {
-      "total": 29,
+      "total": 31,
       "by_level": {
-        "1": 27,
+        "1": 29,
         "2": 2,
         "3": 0
       },
       "by_format": {
         "word_problem": 3,
-        "symbolic_expression": 26
+        "symbolic_expression": 26,
+        "diagram": 2
       }
     },
     "fractions_decimals": {
-      "total": 145,
+      "total": 172,
       "by_level": {
-        "1": 118,
-        "2": 27,
+        "1": 143,
+        "2": 29,
         "3": 0
       },
       "by_format": {
-        "symbolic_expression": 145
+        "symbolic_expression": 150,
+        "diagram": 16,
+        "number_line": 6
+      }
+    },
+    "lines_angles": {
+      "total": 32,
+      "by_level": {
+        "1": 23,
+        "2": 9,
+        "3": 0
+      },
+      "by_format": {
+        "diagram": 24,
+        "symbolic_expression": 8
       }
     },
     "measurement_units": {
-      "total": 49,
+      "total": 52,
       "by_level": {
-        "1": 49,
+        "1": 52,
         "2": 0,
         "3": 0
       },
       "by_format": {
         "symbolic_expression": 45,
+        "diagram": 3,
         "word_problem": 4
       }
     },
-    "algebraic_manipulation": {
-      "total": 103,
+    "area_volume": {
+      "total": 60,
       "by_level": {
-        "1": 65,
-        "2": 27,
+        "1": 39,
+        "2": 20,
+        "3": 1
+      },
+      "by_format": {
+        "diagram": 50,
+        "symbolic_expression": 3,
+        "coordinate_graph": 7
+      }
+    },
+    "ratios_proportions": {
+      "total": 73,
+      "by_level": {
+        "1": 51,
+        "2": 18,
+        "3": 4
+      },
+      "by_format": {
+        "diagram": 20,
+        "word_problem": 8,
+        "symbolic_expression": 41,
+        "number_line": 2,
+        "coordinate_graph": 2
+      }
+    },
+    "number_properties": {
+      "total": 215,
+      "by_level": {
+        "1": 179,
+        "2": 34,
+        "3": 2
+      },
+      "by_format": {
+        "number_line": 13,
+        "symbolic_expression": 165,
+        "diagram": 15,
+        "coordinate_graph": 1,
+        "word_problem": 21
+      }
+    },
+    "algebraic_manipulation": {
+      "total": 126,
+      "by_level": {
+        "1": 76,
+        "2": 39,
         "3": 11
       },
       "by_format": {
         "symbolic_expression": 99,
+        "diagram": 23,
         "word_problem": 4
       }
     },
     "factoring_polynomials": {
-      "total": 24,
+      "total": 26,
       "by_level": {
         "1": 7,
-        "2": 15,
-        "3": 2
+        "2": 16,
+        "3": 3
       },
       "by_format": {
-        "symbolic_expression": 23,
-        "word_problem": 1
+        "symbolic_expression": 24,
+        "word_problem": 1,
+        "diagram": 1
       }
     },
-    "number_properties": {
-      "total": 181,
+    "functions_basics": {
+      "total": 47,
       "by_level": {
-        "1": 146,
-        "2": 33,
+        "1": 23,
+        "2": 21,
+        "3": 3
+      },
+      "by_format": {
+        "coordinate_graph": 6,
+        "diagram": 30,
+        "symbolic_expression": 8,
+        "word_problem": 3
+      }
+    },
+    "circles_geometry": {
+      "total": 7,
+      "by_level": {
+        "1": 5,
+        "2": 0,
         "3": 2
       },
       "by_format": {
-        "symbolic_expression": 160,
-        "word_problem": 21
+        "coordinate_graph": 1,
+        "diagram": 3,
+        "symbolic_expression": 3
       }
     },
     "linear_inequalities": {
-      "total": 13,
+      "total": 28,
       "by_level": {
         "1": 0,
-        "2": 13,
-        "3": 0
+        "2": 24,
+        "3": 4
       },
       "by_format": {
-        "symbolic_expression": 12,
-        "word_problem": 1
+        "symbolic_expression": 20,
+        "word_problem": 1,
+        "number_line": 2,
+        "coordinate_graph": 4,
+        "diagram": 1
       }
     },
     "linear_equations": {
-      "total": 56,
+      "total": 106,
       "by_level": {
-        "1": 5,
-        "2": 49,
-        "3": 2
+        "1": 25,
+        "2": 77,
+        "3": 4
       },
       "by_format": {
-        "symbolic_expression": 55,
+        "symbolic_expression": 59,
+        "diagram": 21,
+        "coordinate_graph": 25,
         "word_problem": 1
       }
     },
-    "ratios_proportions": {
-      "total": 44,
+    "triangles_congruence": {
+      "total": 41,
       "by_level": {
-        "1": 40,
-        "2": 4,
-        "3": 0
+        "1": 22,
+        "2": 18,
+        "3": 1
       },
       "by_format": {
-        "word_problem": 8,
-        "symbolic_expression": 36
+        "diagram": 21,
+        "symbolic_expression": 15,
+        "word_problem": 5
+      }
+    },
+    "quadratic_equations": {
+      "total": 34,
+      "by_level": {
+        "1": 0,
+        "2": 30,
+        "3": 4
+      },
+      "by_format": {
+        "diagram": 7,
+        "symbolic_expression": 19,
+        "coordinate_graph": 7,
+        "word_problem": 1
       }
     },
     "exponent_rules": {
@@ -142,85 +240,68 @@
         "symbolic_expression": 48
       }
     },
-    "quadratic_equations": {
-      "total": 19,
-      "by_level": {
-        "1": 0,
-        "2": 19,
-        "3": 0
-      },
-      "by_format": {
-        "symbolic_expression": 18,
-        "word_problem": 1
-      }
-    },
-    "sequences_series": {
-      "total": 34,
-      "by_level": {
-        "1": 0,
-        "2": 29,
-        "3": 5
-      },
-      "by_format": {
-        "symbolic_expression": 34
-      }
-    },
-    "triangles_congruence": {
-      "total": 13,
-      "by_level": {
-        "1": 7,
-        "2": 6,
-        "3": 0
-      },
-      "by_format": {
-        "word_problem": 5,
-        "symbolic_expression": 8
-      }
-    },
-    "area_volume": {
-      "total": 3,
-      "by_level": {
-        "1": 2,
-        "2": 1,
-        "3": 0
-      },
-      "by_format": {
-        "symbolic_expression": 3
-      }
-    },
     "basic_probability": {
-      "total": 7,
+      "total": 29,
       "by_level": {
-        "1": 6,
-        "2": 0,
-        "3": 1
+        "1": 13,
+        "2": 9,
+        "3": 7
       },
       "by_format": {
+        "diagram": 22,
         "symbolic_expression": 5,
         "word_problem": 2
       }
     },
-    "lines_angles": {
-      "total": 3,
+    "sequences_series": {
+      "total": 54,
       "by_level": {
-        "1": 2,
-        "2": 1,
-        "3": 0
+        "1": 0,
+        "2": 46,
+        "3": 8
       },
       "by_format": {
-        "symbolic_expression": 3
+        "symbolic_expression": 35,
+        "diagram": 19
       }
     },
     "systems_of_linear_equations": {
-      "total": 6,
+      "total": 11,
       "by_level": {
         "1": 0,
         "2": 5,
-        "3": 1
+        "3": 6
       },
       "by_format": {
+        "coordinate_graph": 4,
         "symbolic_expression": 2,
+        "diagram": 1,
         "word_problem": 4
+      }
+    },
+    "right_triangle_geometry": {
+      "total": 3,
+      "by_level": {
+        "1": 0,
+        "2": 3,
+        "3": 0
+      },
+      "by_format": {
+        "diagram": 3
+      }
+    },
+    "geometric_transformations": {
+      "total": 47,
+      "by_level": {
+        "1": 8,
+        "2": 39,
+        "3": 0
+      },
+      "by_format": {
+        "diagram": 10,
+        "coordinate_graph": 32,
+        "symbolic_expression": 4,
+        "word_problem": 1
       }
     },
     "radical_expressions": {
@@ -234,19 +315,19 @@
         "symbolic_expression": 6
       }
     },
-    "circles_geometry": {
-      "total": 2,
+    "exponential_functions": {
+      "total": 1,
       "by_level": {
-        "1": 1,
+        "1": 0,
         "2": 0,
         "3": 1
       },
       "by_format": {
-        "symbolic_expression": 2
+        "symbolic_expression": 1
       }
     }
   },
-  "misconceptions_minted": 1636,
+  "misconceptions_minted": 1749,
   "top_misconceptions": [
     {
       "id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
@@ -264,9 +345,19 @@
       "count": 36
     },
     {
+      "id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+      "name": "Fails to reflect across mirror line",
+      "count": 33
+    },
+    {
       "id": "mis_order_of_operations__carries_out_operations_from_left",
       "name": "Carries out operations from left to right regardless of priority order",
       "count": 26
+    },
+    {
+      "id": "mis_linear_inequalities__mixes_up_greater_than_and",
+      "name": "Mixes up greater than and less than symbols",
+      "count": 25
     },
     {
       "id": "mis_measurement_units__answers_if_there_are_100",
@@ -337,16 +428,6 @@
       "id": "mis_algebraic_manipulation__adds_instead_multiplying_expanding_bracket",
       "name": "Adds instead of multiplying when expanding bracket",
       "count": 13
-    },
-    {
-      "id": "mis_algebraic_manipulation__only_multiplies_first_term_expansion",
-      "name": "Only multiplies the first term in the expansion of a bracket",
-      "count": 13
-    },
-    {
-      "id": "mis_algebraic_manipulation__believes_multiplying_two_negatives_gives",
-      "name": "Believes multiplying two negatives gives a negative answer",
-      "count": 12
     }
   ]
 }

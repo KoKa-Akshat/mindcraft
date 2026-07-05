@@ -458,6 +458,44 @@
       "eedi_1252"
     ]
   },
+  "mis_functions_basics__confuses_rest_and_movement_on": {
+    "eedi_misconception_id": 2492,
+    "eedi_name": "Confuses rest and movement on a distance time graph",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_23",
+      "eedi_959",
+      "eedi_959"
+    ]
+  },
+  "mis_functions_basics__believes_gradient_distancetime_graph_acceleration": {
+    "eedi_misconception_id": 2032,
+    "eedi_name": "Believes the gradient of a distance-time graph is the acceleration",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_23",
+      "eedi_1208",
+      "eedi_1464"
+    ]
+  },
+  "mis_functions_basics__believes_downward_slope_on_distancetime": {
+    "eedi_misconception_id": 2437,
+    "eedi_name": "Believes a downward slope on a distance-time graph means travelling away",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_23",
+      "eedi_1464"
+    ]
+  },
   "mis_number_properties__solving_problem_requires_inverse_operation": {
     "eedi_misconception_id": 2271,
     "eedi_name": "When solving a problem that requires an inverse operation (e.g. missing number problems), does the original operation",
@@ -678,6 +716,28 @@
       "eedi_369"
     ]
   },
+  "mis_functions_basics__does_not_interpret_sloping_gradient": {
+    "eedi_misconception_id": 218,
+    "eedi_name": "Does not interpret a sloping gradient as a change in rate",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_33"
+    ]
+  },
+  "mis_functions_basics__does_not_spot_difference_between": {
+    "eedi_misconception_id": 961,
+    "eedi_name": "Does not spot the difference between a gradual change of gradient and 2 distinct line segments with different constant gradients",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_33"
+    ]
+  },
   "mis_number_properties__subtracting_power_10_subtracts_from": {
     "eedi_misconception_id": 2264,
     "eedi_name": "When subtracting a power of 10, subtracts from the wrong column",
@@ -875,6 +935,18 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_39"
+    ]
+  },
+  "mis_functions_basics__thinks_terms_linear_sequence_are": {
+    "eedi_misconception_id": 1582,
+    "eedi_name": "Thinks terms in linear sequence are in direct proportion",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_40",
+      "eedi_632"
     ]
   },
   "mis_sequences_series__believes_there_multiplicative_relationship_between": {
@@ -1239,6 +1311,32 @@
       "eedi_57",
       "eedi_510",
       "eedi_874"
+    ]
+  },
+  "mis_linear_inequalities__mixes_up_greater_than_and": {
+    "eedi_misconception_id": 1880,
+    "eedi_name": "Mixes up greater than and less than symbols",
+    "concept_ids": [
+      "linear_inequalities"
+    ],
+    "occurrence_count": 25,
+    "example_question_ids": [
+      "eedi_58",
+      "eedi_79",
+      "eedi_82"
+    ]
+  },
+  "mis_linear_inequalities__representing_inequality_on_numberline_assumes": {
+    "eedi_misconception_id": 550,
+    "eedi_name": "When representing an inequality on a numberline, assumes the filled and unfilled circles have the opposite meaning.",
+    "concept_ids": [
+      "linear_inequalities"
+    ],
+    "occurrence_count": 7,
+    "example_question_ids": [
+      "eedi_58",
+      "eedi_212",
+      "eedi_278"
     ]
   },
   "mis_ratios_proportions__found_percentage_but_forgot_add": {
@@ -1654,17 +1752,29 @@
       "eedi_79"
     ]
   },
-  "mis_linear_inequalities__mixes_up_greater_than_and": {
-    "eedi_misconception_id": 1880,
-    "eedi_name": "Mixes up greater than and less than symbols",
+  "mis_basic_probability__does_not_know_what_square": {
+    "eedi_misconception_id": 478,
+    "eedi_name": "Does not know what a square number is",
     "concept_ids": [
-      "linear_inequalities"
+      "basic_probability"
     ],
-    "occurrence_count": 9,
+    "occurrence_count": 2,
     "example_question_ids": [
-      "eedi_79",
-      "eedi_270",
-      "eedi_681"
+      "eedi_80",
+      "eedi_80"
+    ]
+  },
+  "mis_basic_probability__mixes_up_odd_and_even": {
+    "eedi_misconception_id": 421,
+    "eedi_name": "Mixes up odd and even numbers",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_80",
+      "eedi_443",
+      "eedi_443"
     ]
   },
   "mis_number_properties__orders_integers_based_on_first": {
@@ -1689,6 +1799,19 @@
       "eedi_81",
       "eedi_657",
       "eedi_1669"
+    ]
+  },
+  "mis_linear_inequalities__using_inequality_notation_thinks_greater": {
+    "eedi_misconception_id": 1660,
+    "eedi_name": "When using inequality notation, thinks \"greater than/less than or equal to\" symbols are instead the \"greater than/less than\" symbols and vice versa",
+    "concept_ids": [
+      "linear_inequalities"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_82",
+      "eedi_264",
+      "eedi_681"
     ]
   },
   "mis_number_properties__rounded_nearest_100_instead_1sf": {
@@ -1987,6 +2110,30 @@
       "eedi_97",
       "eedi_253",
       "eedi_482"
+    ]
+  },
+  "mis_systems_of_linear_equations__mixes_up_value_two_terms": {
+    "eedi_misconception_id": 391,
+    "eedi_name": "Mixes up the value of two terms when substituting",
+    "concept_ids": [
+      "systems_of_linear_equations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_98"
+    ]
+  },
+  "mis_systems_of_linear_equations__believes_solution_mx_c_x": {
+    "eedi_misconception_id": 57,
+    "eedi_name": "Believes the solution to mx + c = a is the x intercept of y = mx +c",
+    "concept_ids": [
+      "systems_of_linear_equations"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_98",
+      "eedi_98",
+      "eedi_862"
     ]
   },
   "mis_measurement_units__given_perimeter_regular_polygon_multiplies": {
@@ -2330,6 +2477,30 @@
       "eedi_114",
       "eedi_237",
       "eedi_445"
+    ]
+  },
+  "mis_geometric_transformations__thinks_negative_x_value_column": {
+    "eedi_misconception_id": 851,
+    "eedi_name": "Thinks a negative x value in a column vector means to move right rather than left ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_115"
+    ]
+  },
+  "mis_geometric_transformations__thinks_movement_top_number_column": {
+    "eedi_misconception_id": 905,
+    "eedi_name": "Thinks the movement of the top number in a column vector is vertical, and the bottom number is horizontal rather than the other way round",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_115",
+      "eedi_422",
+      "eedi_515"
     ]
   },
   "mis_fractions_decimals__does_not_realise_division_can": {
@@ -3034,6 +3205,32 @@
       "eedi_1561"
     ]
   },
+  "mis_functions_basics__makes_assumption_about_squares_on": {
+    "eedi_misconception_id": 1731,
+    "eedi_name": "Makes an assumption about the squares on a scale representing either 1 or 10",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_154",
+      "eedi_154",
+      "eedi_1850"
+    ]
+  },
+  "mis_functions_basics__believes_scales_on_graphs_must": {
+    "eedi_misconception_id": 747,
+    "eedi_name": "Believes scales on graphs must match on both axes",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_154",
+      "eedi_812",
+      "eedi_1850"
+    ]
+  },
   "mis_area_volume__uses_slant_heights_instead_parallel": {
     "eedi_misconception_id": 1788,
     "eedi_name": "Uses slant heights instead of parallel sides to find area of a trapezium",
@@ -3522,6 +3719,32 @@
       "eedi_179",
       "eedi_179",
       "eedi_179"
+    ]
+  },
+  "mis_geometric_transformations__translates_rather_than_reflects_across": {
+    "eedi_misconception_id": 1572,
+    "eedi_name": "Translates rather than reflects across a line of symmetry",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_180",
+      "eedi_543",
+      "eedi_1243"
+    ]
+  },
+  "mis_geometric_transformations__fails_reflect_across_mirror_line": {
+    "eedi_misconception_id": 1990,
+    "eedi_name": "Fails to reflect across mirror line",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 33,
+    "example_question_ids": [
+      "eedi_180",
+      "eedi_180",
+      "eedi_188"
     ]
   },
   "mis_algebraic_manipulation__believes_only_first_term_needs": {
@@ -4221,6 +4444,28 @@
       "eedi_1093"
     ]
   },
+  "mis_geometric_transformations__added_rather_than_multiplied_scale": {
+    "eedi_misconception_id": 306,
+    "eedi_name": "Added rather than multiplied by a scale factor",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_220"
+    ]
+  },
+  "mis_geometric_transformations__enlarges_wrong_centre_enlargement": {
+    "eedi_misconception_id": 36,
+    "eedi_name": "Enlarges by the wrong centre of enlargement",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_220"
+    ]
+  },
   "mis_descriptive_statistics__identifies_biggest_value_for_range": {
     "eedi_misconception_id": 1177,
     "eedi_name": "Identifies the biggest value for the range",
@@ -4256,6 +4501,17 @@
       "eedi_221",
       "eedi_1437",
       "eedi_1721"
+    ]
+  },
+  "mis_linear_inequalities__confuses_lines_yx_and_yx": {
+    "eedi_misconception_id": 1139,
+    "eedi_name": "Confuses the lines y=x and y=-x",
+    "concept_ids": [
+      "linear_inequalities"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_222"
     ]
   },
   "mis_order_of_operations__does_not_follow_arrows_through": {
@@ -4351,6 +4607,19 @@
     "example_question_ids": [
       "eedi_226",
       "eedi_864"
+    ]
+  },
+  "mis_linear_inequalities__does_not_understand_inequality_notation": {
+    "eedi_misconception_id": 1828,
+    "eedi_name": "Does not understand inequality notation",
+    "concept_ids": [
+      "linear_inequalities"
+    ],
+    "occurrence_count": 5,
+    "example_question_ids": [
+      "eedi_227",
+      "eedi_227",
+      "eedi_227"
     ]
   },
   "mis_linear_equations__believes_there_more_than_one": {
@@ -4520,6 +4789,17 @@
       "eedi_235",
       "eedi_350",
       "eedi_794"
+    ]
+  },
+  "mis_geometric_transformations__adding_column_vectors_multiplies_rather": {
+    "eedi_misconception_id": 1145,
+    "eedi_name": "When adding column vectors, multiplies rather than adds",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_238"
     ]
   },
   "mis_quadratic_equations__only_recognises_positive_form_quadratic": {
@@ -5030,6 +5310,32 @@
       "eedi_267"
     ]
   },
+  "mis_geometric_transformations__confuses_left_and_right": {
+    "eedi_misconception_id": 1269,
+    "eedi_name": "Confuses left and right",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_268",
+      "eedi_391",
+      "eedi_1762"
+    ]
+  },
+  "mis_geometric_transformations__counts_squares_rather_than_diagonals": {
+    "eedi_misconception_id": 563,
+    "eedi_name": "Counts the squares rather than the diagonals when reflecting in y=x or y=-x ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 5,
+    "example_question_ids": [
+      "eedi_268",
+      "eedi_673",
+      "eedi_673"
+    ]
+  },
   "mis_fractions_decimals__does_not_understand_value_zeros": {
     "eedi_misconception_id": 539,
     "eedi_name": "Does not understand the value of zeros as placeholders",
@@ -5187,6 +5493,30 @@
       "eedi_275",
       "eedi_333",
       "eedi_755"
+    ]
+  },
+  "mis_basic_probability__does_not_understand_set_notation": {
+    "eedi_misconception_id": 564,
+    "eedi_name": "Does not understand set notation for complement (eg. A')",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_276",
+      "eedi_1668"
+    ]
+  },
+  "mis_basic_probability__believes_complement_set_includes_any": {
+    "eedi_misconception_id": 42,
+    "eedi_name": "Believes that the complement of a set includes any elements which are also in another set.",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_276",
+      "eedi_1668"
     ]
   },
   "mis_linear_equations__does_not_reverse_order_operations": {
@@ -6328,6 +6658,19 @@
       "eedi_1223"
     ]
   },
+  "mis_geometric_transformations__does_not_understand_point_on": {
+    "eedi_misconception_id": 282,
+    "eedi_name": "Does not understand that a point on the line of reflection will stay the same when reflected ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 8,
+    "example_question_ids": [
+      "eedi_341",
+      "eedi_372",
+      "eedi_372"
+    ]
+  },
   "mis_triangles_congruence__does_not_understand_obtuse_angle": {
     "eedi_misconception_id": 599,
     "eedi_name": "Does not understand that an obtuse angle is between 90 and 180 degrees",
@@ -6531,6 +6874,30 @@
       "eedi_354"
     ]
   },
+  "mis_geometric_transformations__does_not_know_how_find": {
+    "eedi_misconception_id": 2355,
+    "eedi_name": "Does not know how to find order of rotational symmetry",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 10,
+    "example_question_ids": [
+      "eedi_355",
+      "eedi_355",
+      "eedi_781"
+    ]
+  },
+  "mis_geometric_transformations__believes_number_sides_gives_order": {
+    "eedi_misconception_id": 926,
+    "eedi_name": "Believes the number of sides gives the order of rotational symmetry",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_355"
+    ]
+  },
   "mis_algebraic_manipulation__does_not_account_for_grammar": {
     "eedi_misconception_id": 190,
     "eedi_name": "Does not account for grammar when writing algebra e.g. ,then making a group",
@@ -6662,6 +7029,30 @@
       "eedi_729"
     ]
   },
+  "mis_geometric_transformations__does_not_recognise_shape_translated": {
+    "eedi_misconception_id": 1779,
+    "eedi_name": "Does not recognise that a shape translated would not change orientation",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_371"
+    ]
+  },
+  "mis_geometric_transformations__mixes_up_clockwise_and_anticlockwise": {
+    "eedi_misconception_id": 860,
+    "eedi_name": "Mixes up clockwise and anticlockwise",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_371",
+      "eedi_374",
+      "eedi_738"
+    ]
+  },
   "mis_lines_angles__confuses_cointerior_and_corresponding_angles": {
     "eedi_misconception_id": 2336,
     "eedi_name": "Confuses co-interior and corresponding angles",
@@ -6686,6 +7077,17 @@
       "eedi_373",
       "eedi_706",
       "eedi_1576"
+    ]
+  },
+  "mis_geometric_transformations__mistakes_rotations_for_translations": {
+    "eedi_misconception_id": 821,
+    "eedi_name": "Mistakes rotations for translations",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_374"
     ]
   },
   "mis_linear_equations__assumes_ratio_part_part_instead": {
@@ -6901,6 +7303,19 @@
       "eedi_1037"
     ]
   },
+  "mis_geometric_transformations__describing_translation_counts_corners_squares": {
+    "eedi_misconception_id": 556,
+    "eedi_name": "When describing a translation, counts the corners of squares (including the starting one) rather than the number of jumps between squares.",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 7,
+    "example_question_ids": [
+      "eedi_391",
+      "eedi_928",
+      "eedi_1590"
+    ]
+  },
   "mis_ratios_proportions__doubles_side_length_for_similar": {
     "eedi_misconception_id": 1956,
     "eedi_name": "Doubles side length for similar shape instead of using correct scale factor",
@@ -7012,6 +7427,18 @@
       "eedi_921"
     ]
   },
+  "mis_basic_probability__does_not_recognise_intersection_venn": {
+    "eedi_misconception_id": 1430,
+    "eedi_name": "Does not recognise that the intersection of a Venn diagram represents those belonging to both sets",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_401",
+      "eedi_401"
+    ]
+  },
   "mis_fractions_decimals__simplifies_fraction_adding_or_subtracting": {
     "eedi_misconception_id": 2078,
     "eedi_name": "Simplifies a fraction by adding or subtracting the same amount from the numerator  and denominator",
@@ -7034,6 +7461,18 @@
     "example_question_ids": [
       "eedi_402",
       "eedi_827"
+    ]
+  },
+  "mis_systems_of_linear_equations__believes_upward_line_has_negative": {
+    "eedi_misconception_id": 608,
+    "eedi_name": "Believes an upward line has a negative gradient",
+    "concept_ids": [
+      "systems_of_linear_equations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_403",
+      "eedi_403"
     ]
   },
   "mis_sequences_series__does_not_recognise_linear_sequence": {
@@ -7262,6 +7701,17 @@
     "example_question_ids": [
       "eedi_421",
       "eedi_1300"
+    ]
+  },
+  "mis_geometric_transformations__thinks_positive_y_value_column": {
+    "eedi_misconception_id": 185,
+    "eedi_name": "Thinks a positive y value in a column vector means to move down rather than up ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_422"
     ]
   },
   "mis_algebraic_manipulation__does_not_divide_2_calculating": {
@@ -7549,6 +7999,31 @@
       "eedi_1433"
     ]
   },
+  "mis_functions_basics__reading_value_from_graph_reads": {
+    "eedi_misconception_id": 11,
+    "eedi_name": "When reading value from graph, reads from the wrong axes.",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 5,
+    "example_question_ids": [
+      "eedi_438",
+      "eedi_707",
+      "eedi_1277"
+    ]
+  },
+  "mis_geometric_transformations__does_not_connect_rotational_symmetry": {
+    "eedi_misconception_id": 1007,
+    "eedi_name": "Does not connect rotational symmetry to number of sides/vertices",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_439",
+      "eedi_439"
+    ]
+  },
   "mis_measurement_units__reading_integers_on_number_line": {
     "eedi_misconception_id": 2053,
     "eedi_name": "When reading integers on a number line, assumes each dash is 1",
@@ -7595,6 +8070,39 @@
       "eedi_444",
       "eedi_470",
       "eedi_624"
+    ]
+  },
+  "mis_geometric_transformations__thinks_x_y_axis": {
+    "eedi_misconception_id": 2508,
+    "eedi_name": "Thinks x = ? is the y axis",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_446"
+    ]
+  },
+  "mis_geometric_transformations__thinks_x_or_y_y": {
+    "eedi_misconception_id": 26,
+    "eedi_name": "Thinks x = ? or y = ? is y = x",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_446"
+    ]
+  },
+  "mis_geometric_transformations__thinks_y_x_axis": {
+    "eedi_misconception_id": 2443,
+    "eedi_name": "Thinks y = ? is the x axis",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_446"
     ]
   },
   "mis_functions_basics__thinks_fraction_bar_means_subtract": {
@@ -7782,6 +8290,19 @@
     "example_question_ids": [
       "eedi_458",
       "eedi_1358"
+    ]
+  },
+  "mis_basic_probability__does_not_reduce_denominator_item": {
+    "eedi_misconception_id": 164,
+    "eedi_name": "Does not reduce the denominator when an item is not replaced in a probability question",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_461",
+      "eedi_1200",
+      "eedi_1326"
     ]
   },
   "mis_linear_equations__believes_solution_equation_with_matching": {
@@ -8180,6 +8701,43 @@
       "eedi_496"
     ]
   },
+  "mis_geometric_transformations__cannot_identify_line_symmetry_simple": {
+    "eedi_misconception_id": 576,
+    "eedi_name": "Cannot identify a line of symmetry in a simple shape",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_497",
+      "eedi_544"
+    ]
+  },
+  "mis_geometric_transformations__believes_lines_reflection_must_be": {
+    "eedi_misconception_id": 268,
+    "eedi_name": "Believes lines of reflection must be vertical or horizontal",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_497",
+      "eedi_1748",
+      "eedi_1748"
+    ]
+  },
+  "mis_geometric_transformations__thinks_rectangles_have_line_symmetry": {
+    "eedi_misconception_id": 226,
+    "eedi_name": "Thinks rectangles have line symmetry in the diagonals ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_497",
+      "eedi_544"
+    ]
+  },
   "mis_sequences_series__goes_wrong_direction_sequence_identifying": {
     "eedi_misconception_id": 1716,
     "eedi_name": "Goes the wrong direction in the sequence when identifying term-to-term rule",
@@ -8358,6 +8916,19 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_514"
+    ]
+  },
+  "mis_geometric_transformations__describing_translation_goes_from_image": {
+    "eedi_misconception_id": 1265,
+    "eedi_name": "When describing a translation, goes from the image to the original",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 5,
+    "example_question_ids": [
+      "eedi_515",
+      "eedi_1168",
+      "eedi_1590"
     ]
   },
   "mis_linear_equations__believes_c_ymxc_will_be": {
@@ -8715,6 +9286,17 @@
       "eedi_542",
       "eedi_741",
       "eedi_944"
+    ]
+  },
+  "mis_geometric_transformations__ignores_colours_or_design_on": {
+    "eedi_misconception_id": 2210,
+    "eedi_name": "Ignores colours or design on shape when looking for symmetry",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_544"
     ]
   },
   "mis_measurement_units__gets_minutes_and_hours_wrong": {
@@ -9094,6 +9676,17 @@
       "eedi_1525"
     ]
   },
+  "mis_systems_of_linear_equations__reading_value_from_graph_reads": {
+    "eedi_misconception_id": 11,
+    "eedi_name": "When reading value from graph, reads from the wrong axes.",
+    "concept_ids": [
+      "systems_of_linear_equations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_579"
+    ]
+  },
   "mis_number_properties__does_not_think_compensation_strategy": {
     "eedi_misconception_id": 1066,
     "eedi_name": "Does not think that the compensation strategy for the multiplication of 2 numbers is valid.",
@@ -9292,6 +9885,19 @@
       "eedi_591",
       "eedi_591",
       "eedi_871"
+    ]
+  },
+  "mis_geometric_transformations__reflects_horizontally_or_vertically_instead": {
+    "eedi_misconception_id": 797,
+    "eedi_name": "Reflects horizontally or vertically instead of across a diagonal line of symmetry",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_593",
+      "eedi_833",
+      "eedi_906"
     ]
   },
   "mis_ratios_proportions__found_percentage_but_added_100": {
@@ -9659,6 +10265,18 @@
       "eedi_926"
     ]
   },
+  "mis_geometric_transformations__thinks_x_horizontal_line_through": {
+    "eedi_misconception_id": 642,
+    "eedi_name": "Thinks x = ? is a horizontal line through ? ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_620",
+      "eedi_1011"
+    ]
+  },
   "mis_measurement_units__writes_times_afternoon_if_they": {
     "eedi_misconception_id": 581,
     "eedi_name": "Writes times in the afternoon as if they are morning on a 24 hour clock",
@@ -9791,6 +10409,19 @@
     "example_question_ids": [
       "eedi_633",
       "eedi_1645"
+    ]
+  },
+  "mis_trigonometry_basics__does_not_understand_obtuse_angle": {
+    "eedi_misconception_id": 599,
+    "eedi_name": "Does not understand that an obtuse angle is between 90 and 180 degrees",
+    "concept_ids": [
+      "trigonometry_basics"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_635",
+      "eedi_635",
+      "eedi_635"
     ]
   },
   "mis_fractions_decimals__does_not_understand_place_value": {
@@ -10271,18 +10902,6 @@
       "eedi_679"
     ]
   },
-  "mis_linear_inequalities__using_inequality_notation_thinks_greater": {
-    "eedi_misconception_id": 1660,
-    "eedi_name": "When using inequality notation, thinks \"greater than/less than or equal to\" symbols are instead the \"greater than/less than\" symbols and vice versa",
-    "concept_ids": [
-      "linear_inequalities"
-    ],
-    "occurrence_count": 2,
-    "example_question_ids": [
-      "eedi_681",
-      "eedi_889"
-    ]
-  },
   "mis_exponent_rules__does_not_know_what_cube": {
     "eedi_misconception_id": 2583,
     "eedi_name": "Does not know what a cube number is",
@@ -10527,6 +11146,18 @@
       "eedi_706"
     ]
   },
+  "mis_functions_basics__believes_direct_proportion_means_11": {
+    "eedi_misconception_id": 1100,
+    "eedi_name": "Believes direct proportion means a 1:1 ratio",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_707",
+      "eedi_1277"
+    ]
+  },
   "mis_linear_equations__counts_squares_instead_correct_scale": {
     "eedi_misconception_id": 445,
     "eedi_name": "Counts squares instead of the correct scale when plotting coordinates",
@@ -10593,6 +11224,28 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_714"
+    ]
+  },
+  "mis_trigonometry_basics__does_not_understand_direction_north": {
+    "eedi_misconception_id": 263,
+    "eedi_name": "Does not understand direction of North East, North West, South East and South West cardinal points",
+    "concept_ids": [
+      "trigonometry_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_716"
+    ]
+  },
+  "mis_trigonometry_basics__does_not_measure_bearing_clockwise": {
+    "eedi_misconception_id": 1040,
+    "eedi_name": "Does not measure bearing clockwise from the north line",
+    "concept_ids": [
+      "trigonometry_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_716"
     ]
   },
   "mis_number_properties__does_not_understand_term_factor": {
@@ -10737,6 +11390,19 @@
       "eedi_731"
     ]
   },
+  "mis_linear_inequalities__confuses_inequality_symbols_with_equality": {
+    "eedi_misconception_id": 1682,
+    "eedi_name": "Confuses inequality symbols with equality",
+    "concept_ids": [
+      "linear_inequalities"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_732",
+      "eedi_1173",
+      "eedi_1378"
+    ]
+  },
   "mis_number_properties__dividing_ignores_any_remainders": {
     "eedi_misconception_id": 339,
     "eedi_name": "When dividing, ignores any remainders",
@@ -10805,6 +11471,29 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_737"
+    ]
+  },
+  "mis_geometric_transformations__confuses_negative_and_positive_coordinates": {
+    "eedi_misconception_id": 1488,
+    "eedi_name": "Confuses negative and positive coordinates when working with graphs in four quadrants",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_738",
+      "eedi_1478"
+    ]
+  },
+  "mis_geometric_transformations__believes_centre_rotation_always_origin": {
+    "eedi_misconception_id": 1640,
+    "eedi_name": "Believes the centre of rotation is always the origin",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_738"
     ]
   },
   "mis_algebraic_manipulation__does_not_correctly_apply_commutative": {
@@ -11200,6 +11889,29 @@
       "eedi_780"
     ]
   },
+  "mis_geometric_transformations__fails_identify_any_rotational_symmetry": {
+    "eedi_misconception_id": 1399,
+    "eedi_name": "Fails to identify any rotational symmetry ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_781"
+    ]
+  },
+  "mis_geometric_transformations__gives_one_fewer_order_rotational": {
+    "eedi_misconception_id": 1687,
+    "eedi_name": "Gives one fewer order of rotational symmetry than there is",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_781",
+      "eedi_1450"
+    ]
+  },
   "mis_quadratic_equations__believes_completed_square_form_they": {
     "eedi_misconception_id": 166,
     "eedi_name": "Believes that in completed square form, they need to change the sign of the constant to get the turning point",
@@ -11254,6 +11966,17 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_788"
+    ]
+  },
+  "mis_geometric_transformations__believes_line_reflection_must_be": {
+    "eedi_misconception_id": 895,
+    "eedi_name": "Believes a line of reflection must be touching the original shape",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_790"
     ]
   },
   "mis_number_properties__starts_wrong_end_dividend_dividing": {
@@ -11486,6 +12209,28 @@
       "eedi_811"
     ]
   },
+  "mis_functions_basics__believes_distance_area_under_graph": {
+    "eedi_misconception_id": 1674,
+    "eedi_name": "Believes distance is the area under the graph on a displacement time graph",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_812"
+    ]
+  },
+  "mis_functions_basics__believes_distance_speed_time": {
+    "eedi_misconception_id": 119,
+    "eedi_name": "Believes distance = speed + time",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_812"
+    ]
+  },
   "mis_basic_probability__assumes_item_has_not_been": {
     "eedi_misconception_id": 1508,
     "eedi_name": "Assumes the item has not been replaced in a probability question where it has actually been replaced",
@@ -11577,6 +12322,30 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_822"
+    ]
+  },
+  "mis_basic_probability__believes_intersection_on_venn_diagram": {
+    "eedi_misconception_id": 1288,
+    "eedi_name": "Believes the intersection on a Venn diagram represents the total of one set",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_823",
+      "eedi_1022"
+    ]
+  },
+  "mis_basic_probability__forgets_include_intersection_value_asked": {
+    "eedi_misconception_id": 1025,
+    "eedi_name": "Forgets to include the intersection value when asked for total value of a set in a Venn diagram",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_823",
+      "eedi_1022"
     ]
   },
   "mis_number_properties__believes_numbers_are_divisible_numbers": {
@@ -12317,6 +13086,17 @@
       "eedi_998"
     ]
   },
+  "mis_geometric_transformations__believes_lines_symmetry_must_be": {
+    "eedi_misconception_id": 1836,
+    "eedi_name": "Believes lines of symmetry must be vertical or horizontal",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_903"
+    ]
+  },
   "mis_triangles_congruence__confuses_obtuse_and_acute_angles": {
     "eedi_misconception_id": 1071,
     "eedi_name": "Confuses obtuse and acute angles",
@@ -12326,6 +13106,29 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_905"
+    ]
+  },
+  "mis_systems_of_linear_equations__believes_solution_mx_c_0": {
+    "eedi_misconception_id": 1691,
+    "eedi_name": "Believes the solution of mx + c = 0 is x =0",
+    "concept_ids": [
+      "systems_of_linear_equations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_908",
+      "eedi_908"
+    ]
+  },
+  "mis_systems_of_linear_equations__believes_they_solve_mx_c": {
+    "eedi_misconception_id": 1776,
+    "eedi_name": "Believes they solve mx + c = 0 by substituting in x = 0",
+    "concept_ids": [
+      "systems_of_linear_equations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_908"
     ]
   },
   "mis_algebraic_manipulation__expanding_brackets_multiplies_out_first": {
@@ -12498,6 +13301,18 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_927"
+    ]
+  },
+  "mis_geometric_transformations__describing_translation_identifies_correct_number": {
+    "eedi_misconception_id": 2354,
+    "eedi_name": "When describing a translation, identifies the correct number of jumps but mixes up the directions .",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_928",
+      "eedi_1168"
     ]
   },
   "mis_basic_probability__believes_sample_space_should_show": {
@@ -12920,6 +13735,19 @@
       "eedi_1756"
     ]
   },
+  "mis_geometric_transformations__cannot_reflect_shape_line_symmetry": {
+    "eedi_misconception_id": 470,
+    "eedi_name": "Cannot reflect shape when line of symmetry is diagonal ",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_974",
+      "eedi_974",
+      "eedi_974"
+    ]
+  },
   "mis_ratios_proportions__uses_numerators_convert_fractions_ratio": {
     "eedi_misconception_id": 1223,
     "eedi_name": "Uses numerators to convert fractions to ratio despite different denominators",
@@ -13143,6 +13971,19 @@
       "eedi_997"
     ]
   },
+  "mis_functions_basics__believes_horizontal_line_can_show": {
+    "eedi_misconception_id": 1784,
+    "eedi_name": "Believes a horizontal line can show a constant rate of change",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_999",
+      "eedi_999",
+      "eedi_1081"
+    ]
+  },
   "mis_algebraic_manipulation__does_not_recognise_one_part": {
     "eedi_misconception_id": 353,
     "eedi_name": "Does not recognise when one part of a fraction is the negative of the other",
@@ -13272,6 +14113,19 @@
       "eedi_1162"
     ]
   },
+  "mis_geometric_transformations__reflects_axis_instead_given_mirror": {
+    "eedi_misconception_id": 2155,
+    "eedi_name": "Reflects in an axis, instead of the given mirror line",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 4,
+    "example_question_ids": [
+      "eedi_1011",
+      "eedi_1011",
+      "eedi_1274"
+    ]
+  },
   "mis_algebraic_manipulation__thinks_raising_variable_with_coefficient": {
     "eedi_misconception_id": 1443,
     "eedi_name": "Thinks that when raising a variable with a coefficient to a power, only the coefficient is affected by the power",
@@ -13388,6 +14242,18 @@
       "eedi_1021",
       "eedi_1241",
       "eedi_1391"
+    ]
+  },
+  "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they": {
+    "eedi_misconception_id": 1464,
+    "eedi_name": "When solving simultaneous equations graphically, they think the solutions are the y-intercepts",
+    "concept_ids": [
+      "systems_of_linear_equations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1025",
+      "eedi_1025"
     ]
   },
   "mis_algebraic_manipulation__assumes_addition_pyramid_works_different": {
@@ -13706,6 +14572,30 @@
       "eedi_1057"
     ]
   },
+  "mis_geometric_transformations__believes_reflection_y_x_changes": {
+    "eedi_misconception_id": 2465,
+    "eedi_name": "Believes reflection in y = -x changes sign of x coordinate only",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1058",
+      "eedi_1058"
+    ]
+  },
+  "mis_geometric_transformations__believes_reflection_y_x_switches": {
+    "eedi_misconception_id": 283,
+    "eedi_name": "Believes reflection in y = -x switches x and y coordinates",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1058",
+      "eedi_1342"
+    ]
+  },
   "mis_number_properties__identifies_first_decimal_place_value": {
     "eedi_misconception_id": 409,
     "eedi_name": "Identifies first decimal place value when asked for first significant figure",
@@ -13874,6 +14764,18 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1080"
+    ]
+  },
+  "mis_functions_basics__assumes_graph_always_starts_origin": {
+    "eedi_misconception_id": 1519,
+    "eedi_name": "Assumes that a graph always starts at the origin",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1081",
+      "eedi_1595"
     ]
   },
   "mis_functions_basics__thinks_multiplying_two_or_more": {
@@ -14619,6 +15521,30 @@
       "eedi_1159"
     ]
   },
+  "mis_basic_probability__does_not_work_out_all": {
+    "eedi_misconception_id": 111,
+    "eedi_name": "Does not work out all possibilites when given an 'at least' question in probability",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_1160",
+      "eedi_1836",
+      "eedi_1836"
+    ]
+  },
+  "mis_basic_probability__thinks_they_can_just_give": {
+    "eedi_misconception_id": 2309,
+    "eedi_name": "Thinks they can just give the probability of the first event for a combined probability",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1160"
+    ]
+  },
   "mis_number_properties__believes_division_sometimes_commutative": {
     "eedi_misconception_id": 1259,
     "eedi_name": "Believes division is sometimes commutative ",
@@ -14639,6 +15565,17 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1167"
+    ]
+  },
+  "mis_geometric_transformations__describing_translation_miscounts_crossing_axis": {
+    "eedi_misconception_id": 1481,
+    "eedi_name": "When describing a translation, miscounts when crossing an axis",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1168"
     ]
   },
   "mis_right_triangle_geometry__thinks_square_root_expression_square": {
@@ -14838,6 +15775,30 @@
       "eedi_1197"
     ]
   },
+  "mis_basic_probability__adds_rather_than_multiplies_for": {
+    "eedi_misconception_id": 1255,
+    "eedi_name": "Adds rather than multiplies for combined probabilities",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_1200",
+      "eedi_1312",
+      "eedi_1312"
+    ]
+  },
+  "mis_basic_probability__thinks_denominator_combined_probablity_will": {
+    "eedi_misconception_id": 724,
+    "eedi_name": "Thinks the denominator in a combined probablity will be the same as the denominator in the probability of the first event.",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1200"
+    ]
+  },
   "mis_lines_angles__does_not_know_right_angle": {
     "eedi_misconception_id": 219,
     "eedi_name": "Does not know that a right angle is 90 degrees",
@@ -14858,6 +15819,18 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1202"
+    ]
+  },
+  "mis_geometric_transformations__rotates_instead_reflects": {
+    "eedi_misconception_id": 772,
+    "eedi_name": "Rotates instead of reflects",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1204",
+      "eedi_1557"
     ]
   },
   "mis_basic_probability__cannot_identify_mutually_exclusive_events": {
@@ -14884,6 +15857,18 @@
       "eedi_1207"
     ]
   },
+  "mis_functions_basics__believes_upward_slope_on_distancetime": {
+    "eedi_misconception_id": 2145,
+    "eedi_name": "Believes an upward slope on a distance-time graph means travelling back towards the starting point.",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1208",
+      "eedi_1208"
+    ]
+  },
   "mis_sequences_series__believes_square_numbers_are_triangle": {
     "eedi_misconception_id": 1882,
     "eedi_name": "Believes square numbers are triangle numbers",
@@ -14906,6 +15891,28 @@
     "example_question_ids": [
       "eedi_1209",
       "eedi_1348"
+    ]
+  },
+  "mis_geometric_transformations__estimates_length_diagonal_lines_rather": {
+    "eedi_misconception_id": 1813,
+    "eedi_name": "Estimates the length of diagonal lines rather than working out based on horizontal and vertical measurements",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1210"
+    ]
+  },
+  "mis_geometric_transformations__does_not_believe_length_diagonal": {
+    "eedi_misconception_id": 591,
+    "eedi_name": "Does not believe the length of a diagonal line can be worked out based on horizontal and vertical measurements",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1210"
     ]
   },
   "mis_fractions_decimals__dividing_fraction_integer_multiplies_both": {
@@ -15065,6 +16072,40 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1233"
+    ]
+  },
+  "mis_geometric_transformations__asked_rotate_180_degrees_rotates": {
+    "eedi_misconception_id": 1633,
+    "eedi_name": "When asked to rotate by 180 degrees rotates by 90 degrees",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1234"
+    ]
+  },
+  "mis_geometric_transformations__rotates_wrong_center_rotation_not": {
+    "eedi_misconception_id": 2572,
+    "eedi_name": "Rotates by the wrong center of rotation (not including the origin)",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1234"
+    ]
+  },
+  "mis_geometric_transformations__reflects_instead_rotates": {
+    "eedi_misconception_id": 2026,
+    "eedi_name": "Reflects instead of rotates",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1234",
+      "eedi_1653"
     ]
   },
   "mis_circles_geometry__doubles_diameter_finding_radius": {
@@ -15349,6 +16390,17 @@
       "eedi_1792"
     ]
   },
+  "mis_geometric_transformations__thinks_y_vertical_line_through": {
+    "eedi_misconception_id": 287,
+    "eedi_name": "Thinks y = ? is a vertical line through ?",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1274"
+    ]
+  },
   "mis_lines_angles__believes_vertically_opposite_angles_sum": {
     "eedi_misconception_id": 1997,
     "eedi_name": "Believes vertically opposite angles sum to 180 degrees",
@@ -15623,6 +16675,17 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1311"
+    ]
+  },
+  "mis_basic_probability__does_not_recognise_choosing_2": {
+    "eedi_misconception_id": 1794,
+    "eedi_name": "Does not recognise that choosing 2 items at once means the first item does not get replaced in a probability question",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1312"
     ]
   },
   "mis_number_properties__identifies_common_multiple_two_numbers": {
@@ -16337,6 +17400,17 @@
       "eedi_1407"
     ]
   },
+  "mis_functions_basics__believes_steeper_downwards_line_on": {
+    "eedi_misconception_id": 1530,
+    "eedi_name": "Believes a steeper downwards line on a graph means a slower decrease",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1417"
+    ]
+  },
   "mis_triangles_congruence__thinks_angles_which_look_same": {
     "eedi_misconception_id": 1321,
     "eedi_name": "Thinks angles which look the same on diagram will be equal",
@@ -16607,6 +17681,28 @@
       "eedi_1441"
     ]
   },
+  "mis_geometric_transformations__believes_shape_touches_mirror_line": {
+    "eedi_misconception_id": 1748,
+    "eedi_name": "Believes that when a shape touches the mirror line, all of its vertices will stay the same when reflected",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1442"
+    ]
+  },
+  "mis_geometric_transformations__believes_reflection_always_switches_x": {
+    "eedi_misconception_id": 101,
+    "eedi_name": "Believes that reflection always switches the x and y coordinates",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1442"
+    ]
+  },
   "mis_descriptive_statistics__subtracts_highest_from_lowest_calculating": {
     "eedi_misconception_id": 2319,
     "eedi_name": "subtracts the highest from the lowest when calculating the range",
@@ -16627,6 +17723,17 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1447"
+    ]
+  },
+  "mis_functions_basics__does_not_realise_gradient_represents": {
+    "eedi_misconception_id": 1187,
+    "eedi_name": "Does not realise that gradient represents rate of change",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1448"
     ]
   },
   "mis_number_properties__carries_out_operations_from_left": {
@@ -16835,6 +17942,17 @@
       "eedi_1472"
     ]
   },
+  "mis_geometric_transformations__finding_distance_between_coordinates_includes": {
+    "eedi_misconception_id": 2269,
+    "eedi_name": "When finding the distance between coordinates, includes the starting number",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1478"
+    ]
+  },
   "mis_fractions_decimals__does_not_understand_denominator_represents": {
     "eedi_misconception_id": 249,
     "eedi_name": "Does not understand a denominator represents equal parts",
@@ -16927,17 +18045,6 @@
       "eedi_1494"
     ]
   },
-  "mis_linear_inequalities__does_not_understand_inequality_notation": {
-    "eedi_misconception_id": 1828,
-    "eedi_name": "Does not understand inequality notation",
-    "concept_ids": [
-      "linear_inequalities"
-    ],
-    "occurrence_count": 1,
-    "example_question_ids": [
-      "eedi_1497"
-    ]
-  },
   "mis_linear_inequalities__believes_inequalities_cannot_be_combined": {
     "eedi_misconception_id": 981,
     "eedi_name": "Believes inequalities cannot be combined",
@@ -17016,6 +18123,29 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1514"
+    ]
+  },
+  "mis_functions_basics__believes_less_steep_gradient_corresponds": {
+    "eedi_misconception_id": 601,
+    "eedi_name": "Believes a less steep gradient corresponds to a faster speed",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1515",
+      "eedi_1524"
+    ]
+  },
+  "mis_functions_basics__believes_displacement_continues_increase_even": {
+    "eedi_misconception_id": 211,
+    "eedi_name": "Believes displacement continues to increase even when returning to starting point",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1515"
     ]
   },
   "mis_measurement_units__thinks_there_are_1000mm_km": {
@@ -17379,6 +18509,17 @@
       "eedi_1855"
     ]
   },
+  "mis_geometric_transformations__thinks_x_0_x_axis": {
+    "eedi_misconception_id": 898,
+    "eedi_name": "Thinks x = 0 is the x axis",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1557"
+    ]
+  },
   "mis_triangles_congruence__believes_rectangle_has_four_equal": {
     "eedi_misconception_id": 551,
     "eedi_name": "Believes a rectangle has four equal sides",
@@ -17501,6 +18642,17 @@
     "example_question_ids": [
       "eedi_1574",
       "eedi_1574"
+    ]
+  },
+  "mis_functions_basics__confuses_negative_and_positive_coordinates": {
+    "eedi_misconception_id": 1488,
+    "eedi_name": "Confuses negative and positive coordinates when working with graphs in four quadrants",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1580"
     ]
   },
   "mis_fractions_decimals__multiplying_fractions_multiplies_reciprocal_2nd": {
@@ -17768,6 +18920,18 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1627"
+    ]
+  },
+  "mis_functions_basics__believes_curve_can_show_constant": {
+    "eedi_misconception_id": 1216,
+    "eedi_name": "Believes a curve can show a constant rate",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1631",
+      "eedi_1631"
     ]
   },
   "mis_algebraic_manipulation__multiplies_coefficients_and_letters_separately": {
@@ -18365,6 +19529,18 @@
       "eedi_1704"
     ]
   },
+  "mis_geometric_transformations__divides_length_original_length_image": {
+    "eedi_misconception_id": 1536,
+    "eedi_name": "Divides length of original by length of image rather finding length of image divided by length of original to find an enlargement scale factor.",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1705",
+      "eedi_1705"
+    ]
+  },
   "mis_circles_geometry__believes_squaring_negative_number_just": {
     "eedi_misconception_id": 876,
     "eedi_name": "Believes squaring a negative number just changes the sign",
@@ -18385,6 +19561,31 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1707"
+    ]
+  },
+  "mis_geometric_transformations__believes_you_do_not_need": {
+    "eedi_misconception_id": 537,
+    "eedi_name": "Believes you do not need to give the direction when describing a rotation",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1712",
+      "eedi_1712"
+    ]
+  },
+  "mis_geometric_transformations__forgets_give_centre_rotation": {
+    "eedi_misconception_id": 801,
+    "eedi_name": "Forgets to give the centre of rotation",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 3,
+    "example_question_ids": [
+      "eedi_1712",
+      "eedi_1868",
+      "eedi_1868"
     ]
   },
   "mis_number_properties__multiplying_multiple_10_just_multiplies": {
@@ -18554,6 +19755,30 @@
       "eedi_1732"
     ]
   },
+  "mis_basic_probability__confuses_number_regions_venn_diagram": {
+    "eedi_misconception_id": 1842,
+    "eedi_name": "Confuses the number of regions in a Venn diagram as the total number of entries in the diagram",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1733",
+      "eedi_1776"
+    ]
+  },
+  "mis_basic_probability__forgets_include_values_outside_venn": {
+    "eedi_misconception_id": 1532,
+    "eedi_name": "Forgets to include values outside of the Venn diagram when finding the total",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 2,
+    "example_question_ids": [
+      "eedi_1733",
+      "eedi_1776"
+    ]
+  },
   "mis_linear_inequalities__expanding_brackets_multiplies_out_first": {
     "eedi_misconception_id": 107,
     "eedi_name": "When expanding brackets, multiplies out the first term correctly but adds together the number outside the bracket with the second term inside the bracket.",
@@ -18632,6 +19857,17 @@
       "eedi_1744"
     ]
   },
+  "mis_geometric_transformations__confuses_lines_yx_and_yx": {
+    "eedi_misconception_id": 1139,
+    "eedi_name": "Confuses the lines y=x and y=-x",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1748"
+    ]
+  },
   "mis_order_of_operations__believes_squaring_fraction_requires_you": {
     "eedi_misconception_id": 27,
     "eedi_name": "Believes squaring a fraction requires you to double both parts",
@@ -18707,6 +19943,17 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1760"
+    ]
+  },
+  "mis_geometric_transformations__thinks_positive_x_value_column": {
+    "eedi_misconception_id": 1796,
+    "eedi_name": "Thinks a positive x value in a column vector means to move left rather than right",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1765"
     ]
   },
   "mis_linear_inequalities__only_multiplies_first_term_expansion": {
@@ -18795,6 +20042,17 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1784"
+    ]
+  },
+  "mis_functions_basics__believes_infinite_gradient_not_possible": {
+    "eedi_misconception_id": 2047,
+    "eedi_name": "Believes infinite gradient is not possible in real life. ",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1787"
     ]
   },
   "mis_number_properties__does_not_understand_meaning_value": {
@@ -19024,6 +20282,17 @@
       "eedi_1835"
     ]
   },
+  "mis_basic_probability__adds_numerators_working_out_combined": {
+    "eedi_misconception_id": 965,
+    "eedi_name": "Adds the numerators when working out a combined probability",
+    "concept_ids": [
+      "basic_probability"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1836"
+    ]
+  },
   "mis_order_of_operations__believes_negative_positive_squared_where": {
     "eedi_misconception_id": 621,
     "eedi_name": "Believes the negative of a positive squared (where there are no brackets) gives a positive answer",
@@ -19033,6 +20302,50 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1837"
+    ]
+  },
+  "mis_functions_basics__believes_change_y_for_gradient": {
+    "eedi_misconception_id": 2280,
+    "eedi_name": "Believes change in y for gradient is always calculated from the origin, regardless of the y-intercept of the line",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1838"
+    ]
+  },
+  "mis_functions_basics__reading_graph_chooses_nearest_marked": {
+    "eedi_misconception_id": 2095,
+    "eedi_name": "When reading graph, chooses nearest marked value on axis instead of reading accurately",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1838"
+    ]
+  },
+  "mis_functions_basics__believes_gradient_speedtime_graph_speed": {
+    "eedi_misconception_id": 284,
+    "eedi_name": "Believes the gradient of a speed-time graph is the speed",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1843"
+    ]
+  },
+  "mis_functions_basics__believes_downward_slope_on_speedtime": {
+    "eedi_misconception_id": 1559,
+    "eedi_name": "Believes a downward slope on a speed-time graph shows positive acceleration",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1843"
     ]
   },
   "mis_quadratic_equations__adds_instead_multiplying_expanding_bracket": {
@@ -19145,6 +20458,17 @@
       "eedi_1849"
     ]
   },
+  "mis_functions_basics__believes_distance_speedtime": {
+    "eedi_misconception_id": 1585,
+    "eedi_name": "Believes distance = speed/time",
+    "concept_ids": [
+      "functions_basics"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1850"
+    ]
+  },
   "mis_fractions_decimals__converts_fraction_percentage_putting_sign": {
     "eedi_misconception_id": 292,
     "eedi_name": "Converts fraction to percentage by putting % sign after the denominator",
@@ -19253,6 +20577,17 @@
     "occurrence_count": 1,
     "example_question_ids": [
       "eedi_1865"
+    ]
+  },
+  "mis_geometric_transformations__does_not_know_about_notation": {
+    "eedi_misconception_id": 95,
+    "eedi_name": "Does not know about the + notation for directions in rotations",
+    "concept_ids": [
+      "geometric_transformations"
+    ],
+    "occurrence_count": 1,
+    "example_question_ids": [
+      "eedi_1868"
     ]
   }
 }

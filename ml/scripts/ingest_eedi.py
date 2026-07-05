@@ -224,30 +224,33 @@ SUBJECT_MAP: dict[str, tuple[str, int]] = {
     # ── RATIONAL EXPRESSIONS ─────────────────────────────────────────────
     "Algebraic Proof":                                   ("EXCLUDE", 0),
 
-    # ── GEOMETRIC TRANSFORMATIONS (almost all diagram-dependent) ─────────
-    "Reflection":                                        ("EXCLUDE", 0),
-    "Rotation":                                          ("EXCLUDE", 0),
-    "Translation and Vectors":                           ("EXCLUDE", 0),
-    "Enlargement":                                       ("EXCLUDE", 0),
-    "Line Symmetry":                                     ("EXCLUDE", 0),
-    "Rotational Symmetry":                               ("EXCLUDE", 0),
+    # ── GEOMETRIC TRANSFORMATIONS ────────────────────────────────────────
+    # Kept but alt-text required (nearly all have useful descriptions)
+    "Reflection":                                        ("geometric_transformations", 2),
+    "Rotation":                                          ("geometric_transformations", 2),
+    "Enlargement":                                       ("geometric_transformations", 2),
+    "Translation and Vectors":                           ("geometric_transformations", 2),
+    "Line Symmetry":                                     ("geometric_transformations", 1),
+    "Rotational Symmetry":                               ("geometric_transformations", 1),
     "Length, Area and Volume Scale Factors":             ("triangles_congruence", 3),
 
-    # ── DIAGRAM-ONLY SUBJECTS ─────────────────────────────────────────────
-    "Real Life Graphs":                                  ("EXCLUDE", 0),
+    # ── SUBJECTS RECOVERED VIA ALT TEXT ──────────────────────────────────
+    # These were excluded but alt texts are often complete descriptions
+    "Real Life Graphs":                                  ("functions_basics", 2),
+    "Venn Diagrams":                                     ("basic_probability", 2),
+    "Tree Diagrams with Dependent Events":               ("basic_probability", 3),
+    "Inequalities on Number Lines":                      ("linear_inequalities", 2),
+    "Graphing Linear Inequalities (Shading Regions)":    ("linear_inequalities", 3),
+    "Graphical Solution of Simultaneous Equations":      ("systems_of_linear_equations", 3),
+    "Bearings":                                          ("trigonometry_basics", 2),
+
+    # ── STILL EXCLUDED (require actual drawing / construction) ────────────
     "Time Series and Line Graphs":                       ("EXCLUDE", 0),
     "Block Graphs and Bar Charts":                       ("EXCLUDE", 0),
     "Pictogram":                                         ("EXCLUDE", 0),
     "Pie Chart":                                         ("EXCLUDE", 0),
-    "Venn Diagrams":                                     ("EXCLUDE", 0),
-    "Tree Diagrams with Dependent Events":               ("EXCLUDE", 0),
     "Nets":                                              ("EXCLUDE", 0),
-    "Graphical Solution of Simultaneous Equations":      ("EXCLUDE", 0),
-    "Graphing Linear Inequalities (Shading Regions)":    ("EXCLUDE", 0),
-    "Inequalities on Number Lines":                      ("EXCLUDE", 0),
-
-    # ── NO ACT EQUIVALENT ────────────────────────────────────────────────
-    "Bearings":                                          ("EXCLUDE", 0),
+    "Algebraic Proof":                                   ("EXCLUDE", 0),
     "Construct Angle":                                   ("EXCLUDE", 0),
     "Construct Triangle":                                ("EXCLUDE", 0),
     "Trial and Improvement and Iterative Methods":       ("EXCLUDE", 0),
@@ -369,6 +372,14 @@ def uk_localize(text: str) -> str:
 
 def assign_format(question: str, answers: list[str]) -> str:
     all_text = ' '.join([question] + answers)
+    q_lower = question.lower()
+    # Diagram: alt-text embedded, shape/graph in description
+    if '(diagram:' in q_lower:
+        if re.search(r'number line|number-line', q_lower):
+            return 'number_line'
+        if re.search(r'graph with|coordinate|axes|x-axis|y-axis|grid', q_lower):
+            return 'coordinate_graph'
+        return 'diagram'
     if re.search(r'\btable\b|\brow\b.*\bcolumn\b|\|.*\|', all_text, re.I):
         return 'table'
     # word problem: narrative context with scenario
@@ -545,16 +556,51 @@ def ingest(
                     if len(misconceptions[minted]['example_question_ids']) < 3:
                         misconceptions[minted]['example_question_ids'].append(f'eedi_{qid}')
 
-        # R2 — diagram detection (question text + answers)
+        # ALT-TEXT RECOVERY — extract `![description]()` before diagram filter.
+        # Eedi embeds accessibility alt text inside markdown image markers.
+        # If every image in the question has a description ≥30 chars, replace
+        # the `![alt]()` with `(Diagram: alt)` so the question becomes text-solvable.
+        raw_q = str(row.QuestionText)
+        IMG_FULL = re.compile(r'!\[([^\]]*)\]\([^)]*\)')   # ![alt](url)
+        IMG_BARE = re.compile(r'!\[([^\]]*)\](?!\()')       # ![alt] no parens
+
+        def extract_images(text: str) -> list[str]:
+            return IMG_FULL.findall(text) + IMG_BARE.findall(text)
+
+        def embed_alt_text(text: str) -> tuple[str, bool]:
+            """Replace ![alt]() with (Diagram: alt). Returns (text, all_alts_useful)."""
+            alts = extract_images(text)
+            if not alts:
+                return text, True
+            if any(len(a.strip()) < 30 for a in alts):
+                return text, False  # alt too short — unresolvable
+            result = IMG_FULL.sub(lambda m: f'(Diagram: {m.group(1).strip()})', text)
+            result = IMG_BARE.sub(lambda m: f'(Diagram: {m.group(1).strip()})', result)
+            return result, True
+
+        q_with_alt, alts_ok = embed_alt_text(raw_q)
+        if not alts_ok:
+            reject(row, 'R2_diagram_no_alt'); continue
+
+        # R2 — diagram detection on the alt-resolved text
         all_text = ' '.join(str(x) for x in [
-            row.QuestionText, row.AnswerAText, row.AnswerBText,
+            q_with_alt, row.AnswerAText, row.AnswerBText,
             row.AnswerCText, row.AnswerDText,
         ] if pd.notna(x))
 
-        # Catch markdown image syntax and explicit image markers
-        if re.search(r'!\[|\\includegraphics|\[image\]|\[img\]', all_text, re.I):
-            reject(row, 'R2_diagram'); continue
-        if DIAGRAM_RE.search(all_text):
+        # After alt extraction, reject only if STILL ambiguously visual
+        # (remaining deictic language that the alt text didn't resolve)
+        STILL_VISUAL_RE = re.compile(
+            r'\b(the highlighted|the shaded|the marked|the coloured|'
+            r'this angle\b|the angle\b|these angles\b|those angles\b|'
+            r'the region\b|as plotted|as drawn|in the figure\b)\b',
+            re.I,
+        )
+        if STILL_VISUAL_RE.search(q_with_alt):
+            reject(row, 'R2_diagram_ambiguous'); continue
+
+        # Catch \includegraphics (LaTeX figure embed — no alt text)
+        if re.search(r'\\includegraphics|\[image\]|\[img\]', all_text, re.I):
             reject(row, 'R2_diagram'); continue
 
         # R3 — structural validity
@@ -566,8 +612,8 @@ def ingest(
         if len(str(row.QuestionText)) < 15:
             reject(row, 'R3_too_short'); continue
 
-        # R4 — LaTeX translation
-        q_plain = translate_latex(str(row.QuestionText))
+        # R4 — LaTeX translation (use alt-resolved text)
+        q_plain = translate_latex(q_with_alt)
         if q_plain is None:
             reject(row, 'R4_latex_fail'); continue
 

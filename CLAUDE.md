@@ -254,25 +254,10 @@ Replaced the old card-based hub. Paw-shaped launcher driven by `/recommend`:
 <Firebase ID token>` via `mlAuthHeaders()`. Required once `ML_AUTH_ENABLED` is
 on in Cloud Run.
 
-**Admin** (`pages/Admin.tsx`) — `/admin`, `role: 'admin'` only. **AppTabBar**
-adds an Admin pill for admins. **Testing** tab:
-- **Gap scan retake** — clears `diagnosticCompleted` per student (or self).
-- **ACT question bank coverage** — all **29** `act_relevance.tested` concepts
-  (banked + gaps). Helpers: `listAllActConceptCoverage()`, `listContentGaps()`,
-  `formatQuestionSources()`, `buildNoContentMessage()` in
-  `lib/ontologyBankCoverage.ts`. Data: `data/actOntologyCoverage.json`
-  (`actConcepts[]`, `byConceptId`, `gapsNeedingContent`; each row has
-  `questionCounts` merged static+generated, `questionSources[]`).
-  Table columns: `concept_id`, name, ontology level, status (`full` / `partial` /
-  `listed_no_questions` / `ontology_only` / `alias_only`), L1–L3 totals,
-  **source file** (`app/src/lib/questionBank.ts` and/or
-  `app/src/data/generatedQuestions.json`; alias rows note bank id e.g.
-  `percent_ratio` for `ratios_proportions`). Actions: **Copy id**, **Copy file**,
-  **Copy details** (gap message). Regenerate after bank edits:
-  `python3 ml/scripts/audit_act_ontology_question_bank.py` (also writes
-  `ml/data/act_ontology_question_bank_audit.json`).
-- **Practice no-content screen** — when static + dynamic both empty, shows the
-  same audit message with **Copy message for co-founder**.
+**Admin** (`pages/Admin.tsx`) — **Testing** tab: retake gap scan, ACT ontology
+vs question-bank coverage table (`lib/ontologyBankCoverage.ts` +
+`data/actOntologyCoverage.json`; regenerate via
+`ml/scripts/audit_act_ontology_question_bank.py`).
 
 CORS must include `mindcraft-93858.web.app` + the Vercel domain. Firestore: a
 bare `firestore.Client()` targets the (empty) Cloud Run project — the client is
@@ -351,9 +336,9 @@ Key notes:
   via `pip install -e ".[dev]"`.
 - Run ML server: `cd ml && source mindcraft/bin/activate && ML_AUTH_ENABLED=false FIRESTORE_PROJECT=mindcraft-93858 uvicorn serve:app --host 0.0.0.0 --port 8080`
 - `LLM_PROVIDER=groq` must be in `ml/.env.local` (alongside `GROQ_API_KEY`) — default is ollama which requires a local server on :11434.
-- Run frontend: `cd app && npm run dev` → **`http://localhost:5173`** (`package.json`
-  binds `--host localhost` — use `localhost`, not `127.0.0.1`, or Google OAuth
-  fails; use a normal browser tab; IDE embedded browsers often break OAuth).
+- Run frontend: `cd app && npm run dev` → `http://localhost:5173` (`host: true`
+  in `vite.config.ts` — use a normal browser tab; IDE embedded browsers often
+  break Google OAuth).
 - Point frontend at local ML: `app/.env.local` →
   `VITE_ML_API_URL=http://localhost:8080` (do not commit).
 - Tests: `cd ml && python scripts/end2end.py` (85/85 on the standardized
@@ -361,9 +346,7 @@ Key notes:
   --complete-ontology ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json
   --questions ml/data/sample_questions/first_15_questions.csv`.
 - ACT bank audit: `python3 ml/scripts/audit_act_ontology_question_bank.py` →
-  refreshes `app/src/data/actOntologyCoverage.json` (app UI) and
-  `ml/data/act_ontology_question_bank_audit.json` (full report). Attributes
-  questions per concept to `questionBank.ts` vs `generatedQuestions.json`.
+  refreshes `app/src/data/actOntologyCoverage.json`.
 - Dashboard **3D** toggle opens `worldUrl()` (`mindcraft-world1.web.app` in prod;
   `localhost:3001` in dev — needs the world static server running locally).
 
@@ -385,8 +368,7 @@ Key notes:
 - **Frontend shipped**: PawHub dashboard, AppTabBar pill nav (Dashboard | Practice
   | Problem Solver | Knowledge Map), direct-to-session from PawHub, worstWeakness
   selection (C1), format-tagged bank, hide-correctness diagnostic (C4), Admin
-  Testing tab (full ACT coverage table, source files, copy id/file/details),
-  ACT gap-scan fixes.
+  Testing tab + ontology/bank coverage, ACT gap-scan fixes.
 - **Diagnostic reconciled** — one diagnostic, one update mechanism:
   `Diagnostic.tsx` (kitchen-world onboarding, reached from "Click Me" in world)
   now POSTs to `/seed-assessment` (confidence) + `/record-outcomes` (probes, C4
@@ -408,21 +390,59 @@ Key notes:
 **Dead code** (safe to ignore): co-founder's agentic layer (`learning_world.py`,
 `/agent/*` endpoints) — excluded from live `serve.py`.
 
+### Question bank (updated 2026-07-04)
+**Total: ~1,500 questions across 24 concepts** (was 227 static across 10 concepts).
+Sources:
+- Static bank embedded in `questionBank.ts`: ~227 ACT-tagged questions
+- `app/src/data/actMasterQuestionBank.generated.json`: 206 human-annotated ACT questions (21 concepts)
+- `app/src/data/eediQuestions.json`: **1,283 questions** from Eedi 2024 Kaggle dataset (24 concepts)
+- `app/src/data/generatedQuestions.json`: 2 stub questions (generation paused)
+
+**Eedi ingestion** (`ml/scripts/ingest_eedi.py`, rerunnable):
+- Source: `data/eedi/train.csv` + `data/eedi/misconception_mapping.csv` (Kaggle)
+- 1,869 raw → 1,283 kept (68.6%). Rejections: LaTeX-fail (320), excluded (91),
+  ambiguous-diagram (48), no-alt-text (42), structural (17).
+- **Alt-text recovery key technique**: Eedi embeds accessibility descriptions in
+  `![alt text]()` markdown. If alt length ≥ 30 chars, replace `![...]()` with
+  `(Diagram: alt)` → question becomes text-solvable. Recovered 465 extra questions
+  including 293 `diagram`, 89 `coordinate_graph`, 23 `number_line` format items
+  (all three format slots were empty before).
+- `examTag: 'GCSE'` — does NOT pollute ACT gap-scan (getQuestions selects by
+  conceptId+level, not examTag). GCSE questions surface in practice for any concept.
+- Concept gains: `geometric_transformations` (47 q), `linear_inequalities` (28),
+  `functions_basics` (47), `systems_of_linear_equations` (11), `circles_geometry` (7).
+
+**Still-uncovered concepts** (not in UK KS3/4 curriculum, Eedi can't help):
+  `combinatorics`, `matrices`, `complex_numbers`, `rational_expressions`,
+  `logarithmic_functions`. `trigonometry_basics` (SOHCAHTOA) needs ACT/SAT sources
+  or manual authoring — Eedi's trig questions are all diagram-dependent.
+
+**Misconceptions**: 1,749 minted at `ml/data/eedi_misconceptions.json`
+  (`mis_{concept}__{slug}`). Enrichment pass (embed → propose ingredient links) is
+  the next Layer-1 annotation step — not yet done.
+
+**To get Groq LLM explanations** (currently template only):
+  add `GROQ_API_KEY=...` to `ml/.env.local`, rerun ingestion without `--no-llm`.
+  Explain cache at `data/eedi/.explain_cache.json` (keyed by question SHA).
+
+**`Question.examTag` union** now includes `'GCSE'` (`questionBank.ts:24`).
+
+**`actOntologyCoverage.json` is stale** — was built against the old 227-question
+  bank. Regenerate: `python3 ml/scripts/audit_act_ontology_question_bank.py`.
+
 ## Known gotchas / open items
 - **Anthropic credits exhausted** → `mindcraft-homework` + dynamic question gen
   return 400. Homework uses the ingredient-pipeline fallback meanwhile.
 - **Existing students lack `diagnosticCompleted`** → one forced gap scan (by design;
   backfill the flag or use Admin Testing → retake).
-- **Practice questions**: `app/src/lib/questionBank.ts` (static) +
-  `app/src/data/generatedQuestions.json` (verified generated, merged at runtime)
-  + dynamic gen via Vercel webhook (gated by `VITE_ENABLE_DYNAMIC_QGEN`). As of
-  last audit: **10 of 29 ACT-tested concepts** fully banked L1–L3; the rest are
-  partial or missing — see Admin Testing tab / `actOntologyCoverage.json`.
-  `getQuestions`/`questionCount` resolve ontology→bank via `BANK_ALIASES`
-  (only `ratios_proportions → percent_ratio` today).
-  `getQuestions` takes optional `format` arg — prefers format-matched questions,
-  falls back to concept pool; format-gap targeting works end-to-end once more
-  questions carry format tags.
+- **Practice questions**: `app/src/lib/questionBank.ts` merges 4 sources (static,
+  actMaster, eedi, generated). Total ~1,500 questions, 24 concepts. `getQuestions`/
+  `questionCount` resolve ontology→bank via `BANK_ALIASES`. `getQuestions` takes
+  optional `format` arg — prefers format-matched questions, falls back to concept pool.
+  The format axis now has real questions in all 5 format slots (word_problem,
+  symbolic_expression, diagram, coordinate_graph, number_line). **5 concepts still
+  zero-coverage**: combinatorics, matrices, complex_numbers, rational_expressions,
+  logarithmic_functions — need AMC/SAT sources or manual authoring.
 - **Generation paused** (`ml/generation/`): verify pass ran (104 kept / 45 dropped,
   ~30% bad key rate). Too high to scale — generation prompt needs arithmetic
   hardening before `--tested --formats all`. 104 verified items committed but NOT
