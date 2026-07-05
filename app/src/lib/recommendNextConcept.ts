@@ -3,6 +3,7 @@ import { fetchKnowledgeGraph } from './graphCache'
 import { fetchExamConceptIds, getRecommendations, type ConceptRecommendation, type RecommendResult } from './mlApi'
 import { loadDiagnostic } from './practiceState'
 import { hasFormatQuestions, questionCount, type FormatId } from './questionBank'
+import type { CurriculumTrack } from './curriculumTrack'
 
 // A concept is a valid PRACTICE target only if the bank can serve it questions.
 // Cross-cutting meta-concepts (e.g. representation_translation) have none, so
@@ -59,7 +60,7 @@ function pickMostUrgent(nodes: GraphNode[]): string | null {
     )[0]?.id ?? null
 }
 
-export function chainSteps(rec: RecommendResult | null) {
+function chainSteps(rec: RecommendResult | null) {
   return rec?.recommendations?.filter(r => !r.isSupplement && !r.isBridgeGap) ?? []
 }
 
@@ -84,12 +85,10 @@ export function worstWeakness(
   profileRec: RecommendResult | null,
   pathRec: RecommendResult | null,
   nodeMap: Map<string, GraphNode>,
-  excluded?: Set<string>,
 ): WeaknessCandidate | null {
   const candidates: WeaknessCandidate[] = []
 
   for (const w of profileRec?.studentProfile?.topWeaknesses ?? []) {
-    if (excluded?.has(w.conceptId)) continue
     if (!hasPlayableQuestions(w.conceptId)) continue
     candidates.push({
       conceptId: w.conceptId,
@@ -103,7 +102,6 @@ export function worstWeakness(
     if (gap.gapType === 'format') {
       const conceptId = gap.bridgeToConcept
       const formatId = gap.bridgeFromConcept as FormatId | undefined
-      if (!conceptId || excluded?.has(conceptId)) continue
       if (!conceptId || !formatId || !hasFormatQuestions(conceptId, formatId)) continue
       candidates.push({
         conceptId,
@@ -113,8 +111,7 @@ export function worstWeakness(
       })
     } else {
       const conceptId = gap.bridgeToConcept ?? gap.conceptId
-      if (!conceptId || excluded?.has(conceptId)) continue
-      if (!hasPlayableQuestions(conceptId)) continue
+      if (!conceptId || !hasPlayableQuestions(conceptId)) continue
       candidates.push({
         conceptId,
         severity: gapSeverity(gap, nodeMap),
@@ -149,15 +146,21 @@ function toNextConcept(
  * Weak spot — `worstWeakness()` across profile + concept/format gaps (C1).
  * Learn next — first 0-exposure playable concept on the exam path.
  */
+/** Map curriculumTrack → exam string for the /exam-concepts/{exam} endpoint. */
+function trackToExam(track: CurriculumTrack | null | undefined, diagnosticExam: string | null): string {
+  if (track === 'middle_school') return 'MIDDLE_SCHOOL'
+  if (track === 'high_school')   return 'HIGH_SCHOOL'
+  return diagnosticExam ?? 'ACT'
+}
+
 export async function fetchPracticeHubRecommendations(
   userId: string,
+  curriculumTrack?: CurriculumTrack | null,
 ): Promise<PracticeHubRecommendations> {
   if (!userId) return { weakness: null, learn: null }
 
   const diagnostic = await loadDiagnostic(userId)
-  const exam = diagnostic?.exam ?? 'ACT'
-  const excludedList = diagnostic?.excludedConcepts ?? []
-  const excluded = new Set(excludedList)
+  const exam = trackToExam(curriculumTrack, diagnostic?.exam ?? null)
   const examConceptIds = await fetchExamConceptIds(exam)
   const scope = examConceptIds.length > 0 ? examConceptIds : undefined
 
@@ -165,33 +168,33 @@ export async function fetchPracticeHubRecommendations(
   const nodes = (kg?.nodes ?? []) as GraphNode[]
   const nodeMap = new Map(nodes.map(n => [n.id, n]))
 
-  const profileRec = await getRecommendations(userId, [], 'curriculum', exam, excludedList)
+  const profileRec = await getRecommendations(userId, [], 'curriculum', exam)
   const anchorWeakness = profileRec?.studentProfile?.topWeaknesses
-    ?.find(w => !excluded.has(w.conceptId) && hasPlayableQuestions(w.conceptId))?.conceptId ?? null
+    ?.find(w => hasPlayableQuestions(w.conceptId))?.conceptId ?? null
   const anchor = anchorWeakness ?? pickMostUrgent(
-    scope ? nodes.filter(n => scope.includes(n.id) && !excluded.has(n.id)) : nodes.filter(n => !excluded.has(n.id)),
+    scope ? nodes.filter(n => scope.includes(n.id)) : nodes,
   )
   const pathRec = anchor
-    ? await getRecommendations(userId, [anchor], 'curriculum', exam, excludedList)
+    ? await getRecommendations(userId, [anchor], 'curriculum', exam)
     : null
 
-  const worst = worstWeakness(profileRec, pathRec, nodeMap, excluded)
+  const worst = worstWeakness(profileRec, pathRec, nodeMap)
   let weaknessId = worst?.conceptId ?? null
   const weaknessFormat = worst?.formatId
 
   if (!weaknessId) {
-    weaknessId = [...(scope ? nodes.filter(n => scope.includes(n.id) && !excluded.has(n.id)) : nodes.filter(n => !excluded.has(n.id)))]
+    weaknessId = [...(scope ? nodes.filter(n => scope.includes(n.id)) : nodes)]
       .filter(n => hasPlayableQuestions(n.id))
       .sort((a, b) =>
         (URGENCY[a.status ?? 'untouched'] - URGENCY[b.status ?? 'untouched'])
         || ((a.mastery ?? 0) - (b.mastery ?? 0)))[0]?.id ?? null
   }
 
-  const examRec = await getRecommendations(userId, [], 'exam', exam, excludedList)
+  const examRec = await getRecommendations(userId, [], 'exam', exam)
   const actPath = chainSteps(examRec).map(s => s.conceptId)
   const learnId =
-    actPath.find(id => id !== weaknessId && !excluded.has(id) && isZeroExposure(id, nodeMap) && hasPlayableQuestions(id))
-    ?? [...(scope ? nodes.filter(n => scope.includes(n.id) && !excluded.has(n.id)) : nodes.filter(n => !excluded.has(n.id)))]
+    actPath.find(id => id !== weaknessId && isZeroExposure(id, nodeMap) && hasPlayableQuestions(id))
+    ?? [...(scope ? nodes.filter(n => scope.includes(n.id)) : nodes)]
         .filter(n => n.id !== weaknessId && isZeroExposure(n.id, nodeMap) && hasPlayableQuestions(n.id))
         .sort((a, b) => (a.mastery ?? 0) - (b.mastery ?? 0))[0]?.id
     ?? null

@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithPopup,
-  browserPopupRedirectResolver,
+  signInWithRedirect,
+  getRedirectResult,
   sendPasswordResetEmail,
   signOut,
 } from 'firebase/auth'
@@ -13,16 +13,36 @@ import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import s from './Login.module.css'
 import { worldUrl } from '../lib/siteUrls'
-import { isDiagnosticComplete } from '../lib/practiceState'
+import {
+  CURRICULUM_TRACK_OPTIONS,
+  type CurriculumTrack,
+} from '../lib/curriculumTrack'
 
 type Role = 'student' | 'parent' | 'tutor'
 type Mode = 'signin' | 'signup'
+type SignupStep = 'auth' | 'curriculum' | 'notified'
 /** Separate admin flow: passcode step → sign in → grant admin once. */
 type AdminFlow = 'auth' | 'passcode' | 'armed'
+
+const ADMIN_GRANT_PENDING_KEY = 'mc_admin_grant_pending'
 
 function isAdminPasscodeValid(passcode: string): boolean {
   const expected = import.meta.env.VITE_ADMIN_PASSCODE
   return !!(expected && passcode.length > 0 && passcode === expected)
+}
+
+function armAdminGrant() {
+  sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, '1')
+}
+
+function consumeAdminGrant(): boolean {
+  const pending = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'
+  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
+  return pending
+}
+
+function clearAdminGrant() {
+  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
 }
 
 function safeReturnPath(raw: string | null): string | null {
@@ -44,8 +64,6 @@ function friendlyError(code: string) {
     case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
     case 'auth/popup-closed-by-user':       return ''
     case 'auth/popup-blocked':              return 'Pop-up was blocked. Allow pop-ups for this site.'
-    case 'auth/unauthorized-domain':        return 'This site isn’t authorized for sign-in. Use http://localhost:5173 locally, or add your domain in Firebase Console → Authentication → Settings → Authorized domains.'
-    case 'auth/operation-not-allowed':     return 'Google sign-in isn’t enabled for this project.'
     case 'auth/network-request-failed':     return 'Network error. Check your connection.'
     default:                                return `Login failed (${code}). Please try again.`
   }
@@ -61,17 +79,37 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [adminFlow, setAdminFlow] = useState<AdminFlow>('auth')
   const [adminPasscode, setAdminPasscode] = useState('')
+  const [signupStep, setSignupStep] = useState<SignupStep>('auth')
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
 
-  async function redirectStudentAfterLogin(uid: string) {
-    if (await isDiagnosticComplete(uid)) {
-      navigate('/dashboard', { replace: true })
-      return
+  useEffect(() => {
+    if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') {
+      setAdminFlow('armed')
     }
-    window.location.href = worldUrl(uid)
-  }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      try {
+        const cred = await getRedirectResult(auth)
+        if (cancelled || !cred?.user) return
+        setLoading(true)
+        const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
+        await routeAfterLogin(cred.user.uid, isNew)
+      } catch (e: unknown) {
+        if (cancelled) return
+        const code = (e as { code?: string })?.code ?? ''
+        const msg = friendlyError(code || 'unknown')
+        if (msg) setError(msg)
+        setLoading(false)
+      }
+    })()
+    return () => { cancelled = true }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function navigateAfterRole(effectiveRole: string) {
     if (effectiveRole === 'tutor' || effectiveRole === 'admin') {
@@ -79,13 +117,30 @@ export default function Login() {
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {
-      void redirectStudentAfterLogin(auth.currentUser!.uid)
+      window.location.href = worldUrl(auth.currentUser!.uid)
     }
+  }
+
+  async function completeNewUserSignup(
+    uid: string,
+    signupRole: string,
+    curriculumTrack?: CurriculumTrack,
+  ) {
+    const payload: Record<string, string> = {
+      role: signupRole,
+      email: auth.currentUser?.email ?? '',
+      displayName: auth.currentUser?.displayName ?? '',
+      createdAt: new Date().toISOString(),
+    }
+    if (curriculumTrack) payload.curriculumTrack = curriculumTrack
+    await setDoc(doc(db, 'users', uid), payload)
+    setSignupStep('auth')
+    navigateAfterRole(signupRole)
   }
 
   async function routeAfterLogin(uid: string, isNewUser = false) {
     await auth.currentUser?.getIdToken(true)
-    const grantAdmin = adminFlow === 'armed'
+    const grantAdmin = consumeAdminGrant()
     if (grantAdmin) setAdminFlow('auth')
 
     const snap = await getDoc(doc(db, 'users', uid))
@@ -93,13 +148,12 @@ export default function Login() {
 
     if (isNewUser) {
       const signupRole = grantAdmin ? 'admin' : role
-      await setDoc(doc(db, 'users', uid), {
-        role: signupRole,
-        email: auth.currentUser?.email ?? '',
-        displayName: auth.currentUser?.displayName ?? '',
-        createdAt: new Date().toISOString(),
-      })
-      navigateAfterRole(signupRole)
+      if (signupRole === 'student') {
+        setSignupStep('curriculum')
+        setLoading(false)
+        return
+      }
+      await completeNewUserSignup(uid, signupRole)
       return
     }
 
@@ -109,7 +163,7 @@ export default function Login() {
       return
     }
 
-    if (firestoreRole && firestoreRole !== role && firestoreRole !== 'admin' && firestoreRole !== 'tutor') {
+    if (firestoreRole && firestoreRole !== role) {
       await signOut(auth)
       setError(`This account is registered as a ${firestoreRole}. Please select the "${firestoreRole}" tab.`)
       setLoading(false)
@@ -121,7 +175,7 @@ export default function Login() {
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {
-      await redirectStudentAfterLogin(uid)
+      window.location.href = worldUrl(uid)
     }
   }
 
@@ -147,9 +201,7 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      const cred = await signInWithPopup(auth, googleProvider, browserPopupRedirectResolver)
-      const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
-      await routeAfterLogin(cred.user.uid, isNew)
+      await signInWithRedirect(auth, googleProvider)
     } catch (e: any) {
       const msg = friendlyError(e.code ?? e.message ?? 'unknown')
       if (msg) setError(msg)
@@ -161,13 +213,71 @@ export default function Login() {
     setError('')
     if (!isAdminPasscodeValid(adminPasscode)) return
     setAdminPasscode('')
+    armAdminGrant()
     setAdminFlow('armed')
   }
 
   function cancelAdminFlow() {
+    clearAdminGrant()
     setAdminPasscode('')
     setAdminFlow('auth')
     setError('')
+  }
+
+  async function handleCurriculumSelect(track: CurriculumTrack) {
+    const uid = auth.currentUser?.uid
+    if (!uid) {
+      setError('Session expired. Please sign in again.')
+      setSignupStep('auth')
+      return
+    }
+    setError('')
+    setLoading(true)
+    try {
+      // Write user doc with track first so the tutor notification is meaningful
+      await completeNewUserSignup(uid, 'student', track)
+      // Show tutor-notified screen briefly; navigateAfterRole already fired above
+      // but completeNewUserSignup redirects — so this is only reached on error
+    } catch (e: unknown) {
+      const code = (e as { code?: string })?.code ?? ''
+      setError(friendlyError(code || 'unknown'))
+      setLoading(false)
+    }
+  }
+
+  async function handleCurriculumSelectWithNotify(track: CurriculumTrack) {
+    const uid = auth.currentUser?.uid
+    if (!uid) {
+      setError('Session expired. Please sign in again.')
+      setSignupStep('auth')
+      return
+    }
+    setError('')
+    setLoading(true)
+    try {
+      // Write user doc immediately so the tutor sees it
+      const payload: Record<string, string> = {
+        role: 'student',
+        email: auth.currentUser?.email ?? '',
+        displayName: auth.currentUser?.displayName ?? '',
+        createdAt: new Date().toISOString(),
+        curriculumTrack: track,
+      }
+      await setDoc(doc(db, 'users', uid), payload)
+      // Show HiTL moment then redirect
+      setSignupStep('notified')
+      setLoading(false)
+      setTimeout(() => {
+        void (async () => {
+          await auth.currentUser?.getIdToken(true)
+          navigateAfterRole('student')
+        })()
+      }, 2800)
+    } catch (e: unknown) {
+      const code = (e as { code?: string })?.code ?? ''
+      setError(friendlyError(code || 'unknown'))
+      setLoading(false)
+    }
   }
 
   async function handleForgot() {
@@ -189,15 +299,15 @@ export default function Login() {
       </div>
       <main className={s.shell}>
         <div className={s.layout}>
-          <section className={s.heroPanel} aria-label="MindCraft parent learning plan">
+          <section className={s.heroPanel} aria-label="MindCraft private learning studio">
             <div className={s.heroContent}>
               <div className={s.heroIntro}>
                 <div className={s.wordmark}>
                   <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
                 </div>
-                <h1 className={s.heroTitle}>Stop guessing what math help should do next.</h1>
+                <h1 className={s.heroTitle}>Your private learning studio.</h1>
                 <p className={s.heroCopy}>
-                  MindCraft maps where your child stands, routes the next skill to practice, and connects tutoring to the plan so progress feels visible.
+                  A calmer way to master math, build confidence, and walk into every exam with a plan.
                 </p>
               </div>
 
@@ -216,8 +326,8 @@ export default function Login() {
                     <path d="M13 7v9" />
                   </svg>
                 </span>
-                <strong>Gap map</strong>
-                <p>See the weak spots behind missed questions.</p>
+                <strong>Practice Sets</strong>
+                <p>Targeted reps that turn weak spots into confident routines.</p>
               </article>
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
@@ -228,8 +338,8 @@ export default function Login() {
                     <path d="M19.75 8.25v2.5" />
                   </svg>
                 </span>
-                <strong>Next route</strong>
-                <p>Know what your child should do next.</p>
+                <strong>Homework Help</strong>
+                <p>Step-by-step support that keeps students moving without panic.</p>
               </article>
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
@@ -242,14 +352,14 @@ export default function Login() {
                     <path d="M9.5 7h5" />
                   </svg>
                 </span>
-                <strong>Tutor context</strong>
-                <p>Make live help start from the real gap.</p>
+                <strong>Knowledge Maps</strong>
+                <p>A visual route through concepts, gaps, and what to learn next.</p>
               </article>
               </div>
               </div>
 
               <blockquote className={s.quote}>
-                Parents deserve more than hope and hourly tutoring bills.
+                A better plan makes a calmer learner.
               </blockquote>
             </div>
           </section>
@@ -261,12 +371,12 @@ export default function Login() {
                 <div className={s.formHeader}>
                   <div className={s.formIntro}>
                     <p className={s.formKicker}>
-                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Begin with clarity'}
+                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Begin your plan'}
                     </p>
                     <h2>
                       {adminFlow === 'passcode'
                         ? 'Enter your admin code.'
-                        : mode === 'signin' ? 'Continue the learning plan.' : 'Create your MindCraft plan.'}
+                        : mode === 'signin' ? 'Continue your learning plan.' : 'Create your MindCraft studio.'}
                     </h2>
                   </div>
                   <span className={s.secureBadge} aria-label="Secure sign in">
@@ -277,7 +387,42 @@ export default function Login() {
                   </span>
                 </div>
 
-                {adminFlow === 'passcode' ? (
+                {signupStep === 'notified' ? (
+                  <div className={s.curriculumStep} style={{ textAlign: 'center', padding: '48px 0' }}>
+                    <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+                    <h2 className={s.curriculumTitle}>Your tutor has been notified.</h2>
+                    <p className={s.curriculumCopy} style={{ maxWidth: 320, margin: '0 auto' }}>
+                      We&apos;re building your personalized learning map now.
+                      Your tutor will review it before your first session.
+                    </p>
+                    <p style={{ marginTop: 24, fontSize: 13, color: 'var(--muted, #888)', fontWeight: 600 }}>
+                      Taking you to your dashboard…
+                    </p>
+                  </div>
+                ) : signupStep === 'curriculum' ? (
+                  <div className={s.curriculumStep}>
+                    <p className={s.formKicker}>One quick step</p>
+                    <h2 className={s.curriculumTitle}>What are you working on?</h2>
+                    <p className={s.curriculumCopy}>
+                      We&apos;ll build your learning path and notify your tutor so they can prepare for your first session.
+                    </p>
+                    <div className={s.trackGrid} role="list">
+                      {CURRICULUM_TRACK_OPTIONS.map(opt => (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          className={s.trackCard}
+                          disabled={loading}
+                          onClick={() => void handleCurriculumSelectWithNotify(opt.id)}
+                        >
+                          <strong>{opt.title}</strong>
+                          <p>{opt.description}</p>
+                        </button>
+                      ))}
+                    </div>
+                    {error && <p className={s.error}>{error}</p>}
+                  </div>
+                ) : adminFlow === 'passcode' ? (
                   <form
                     className={s.form}
                     onSubmit={(e) => { e.preventDefault(); verifyAdminPasscode() }}
@@ -449,7 +594,7 @@ export default function Login() {
             <path d="m9.5 12 1.7 1.7 3.6-4" />
           </svg>
         </span>
-        Built for parents who want clearer math progress, not more guessing.
+        Trusted by students and parents building calmer math confidence.
       </p>
       <div className={s.socialLinks} aria-label="MindCraft social links">
         <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noreferrer" aria-label="Instagram">
@@ -458,7 +603,7 @@ export default function Login() {
         <a href="https://x.com/joinmindcraft" target="_blank" rel="noreferrer" aria-label="X">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25h6.83l4.25 5.62Zm-1.16 17.52h1.83L7.08 4.13H5.12Z" /></svg>
         </a>
-        <a href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noreferrer" aria-label="Spotify">
+        <a href="https://open.spotify.com/playlist/3P9VnnuuoRYLKQB3QYCSe2" target="_blank" rel="noreferrer" aria-label="Spotify">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.31a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 0 1-.33-1.46c4.57-1.04 8.5-.58 11.66 1.35.36.22.47.68.25 1.02Zm1.46-3.25a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.96-1.4a.94.94 0 1 1-.54-1.8c4.36-1.32 9.78-.68 13.48 1.59.44.27.58.85.31 1.3Zm.13-3.39C15.22 8.37 8.83 8.16 5.15 9.28a1.12 1.12 0 1 1-.65-2.14c4.23-1.28 11.28-1.03 15.74 1.62a1.12 1.12 0 0 1-1.15 1.91Z" /></svg>
         </a>
         <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noreferrer" aria-label="LinkedIn">

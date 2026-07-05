@@ -1,6 +1,14 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { doc, getDoc } from 'firebase/firestore'
 import { motion } from 'framer-motion'
+import { db } from '../firebase'
+import {
+  pawHubDisplayText,
+  pawHubLearnSub,
+  pawHubPracticeSub,
+  type CurriculumTrack,
+} from '../lib/curriculumTrack'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import s from './PawHub.module.css'
 
@@ -29,6 +37,16 @@ function WheelIcon() {
           strokeWidth="1.2"
         />
       ))}
+    </svg>
+  )
+}
+
+function TargetIcon() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={s.iconSvg}>
+      <circle cx="16" cy="16" r="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="16" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="16" r="2" fill="currentColor" />
     </svg>
   )
 }
@@ -80,34 +98,53 @@ export default function PawHub({
 }) {
   const navigate = useNavigate()
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
+  const [learn, setLearn] = useState<NextConcept | null>(null)
+  const [curriculumTrack, setCurriculumTrack] = useState<CurriculumTrack | null>(null)
 
   useEffect(() => {
     let cancelled = false
-    void fetchPracticeHubRecommendations(userId).then(rec => {
-      if (!cancelled) setWeakness(rec.weakness)
-    })
+    void (async () => {
+      const snap = await getDoc(doc(db, 'users', userId))
+      if (cancelled) return
+      const track = snap.data()?.curriculumTrack as CurriculumTrack | undefined
+      if (track) setCurriculumTrack(track)
+      const rec = await fetchPracticeHubRecommendations(userId, track ?? null)
+      if (!cancelled) {
+        setWeakness(rec.weakness)
+        setLearn(rec.learn)
+      }
+    })()
     return () => { cancelled = true }
   }, [userId])
 
   function goPractice() {
-    if (weakness) {
-      navigate('/practice', {
-        state: {
-          conceptId: weakness.conceptId,
-          missionType: 'weakness' as const,
-          ...(weakness.formatId ? { formatId: weakness.formatId } : {}),
-        },
-      })
-      return
-    }
     if (onPracticeClick) {
       onPracticeClick()
       return
     }
-    navigate('/practice')
+    navigate('/dashboard')
   }
 
+  function goLearnNext() {
+    if (learn) {
+      navigate(`/dashboard?view=gps&concept=${encodeURIComponent(learn.conceptId)}`)
+    } else {
+      navigate('/dashboard?view=gps&learnNext=1')
+    }
+  }
+
+  const learnLabel = learn ? pawHubDisplayText(learn.label, curriculumTrack) : null
+  const practiceSub = pawHubPracticeSub(weakness?.label, curriculumTrack)
+
   const toes: Toe[] = [
+    {
+      id: 'learn',
+      label: 'Learn Next',
+      sub: learnLabel ?? pawHubLearnSub(curriculumTrack),
+      accent: 'violet',
+      onClick: goLearnNext,
+      icon: <TargetIcon />,
+    },
     {
       id: 'homework',
       label: 'Homework Help',
@@ -149,7 +186,11 @@ export default function PawHub({
               whileTap={{ scale: 0.98 }}
             >
               <span className={s.toeIcon}>{toe.icon}</span>
-              <span className={s.toeLabel}>{toe.label}</span>
+              {toe.id === 'learn' ? (
+                <span className={s.toeTopicOnly}>{learnLabel ?? '···'}</span>
+              ) : (
+                <span className={s.toeLabel}>{toe.label}</span>
+              )}
             </motion.button>
           ))}
         </div>
@@ -164,7 +205,7 @@ export default function PawHub({
           <span className={s.mainGlow} aria-hidden="true" />
           <span className={s.mainIcon}><WheelIcon /></span>
           <span className={s.mainLabel}>Practice</span>
-          <span className={s.mainSub}>{weakness ? weakness.label : 'Your learning path'}</span>
+          <span className={s.mainSub}>{practiceSub}</span>
         </motion.button>
       </div>
     </div>

@@ -144,7 +144,6 @@ app.add_middleware(
 class RecommendRequest(BaseModel):
     student_id: str
     target_concepts: list[str] = []
-    excluded_concepts: list[str] = []
     target_mastery: float = 0.8
     deadline_days: int | None = None
     mode: str = "curriculum"
@@ -158,28 +157,30 @@ def _act_tested_concept_ids() -> list[str]:
     return ontology.act_tested_concept_ids()
 
 
-def _exam_curriculum_scope(exam: str | None, excluded: set[str] | None = None) -> set[str] | None:
-    """Resolve the concept subset for an exam track (ACT → act_relevance.tested)."""
+def _exam_curriculum_scope(exam: str | None) -> set[str] | None:
+    """Resolve the concept subset for an exam track.
+
+    ACT / ACT_MATH / GENERAL → act_relevance.tested (29 concepts)
+    MIDDLE_SCHOOL / HIGH_SCHOOL → foundational + core levels (grade 6-10)
+    """
     if not exam:
         return None
     key = exam.strip().upper()
     if key in ("ACT", "ACT_MATH", "GENERAL"):
-        scope = set(_act_tested_concept_ids())
-        if excluded:
-            scope -= excluded
-        return scope or None
+        return set(_act_tested_concept_ids())
+    if key in ("MIDDLE_SCHOOL", "HIGH_SCHOOL"):
+        return set(ontology.middle_school_concept_ids())
     return None
 
 
 def _resolve_recommend_targets(req: RecommendRequest) -> list[str]:
-    excluded = set(req.excluded_concepts)
     if req.target_concepts:
-        return [concept_id for concept_id in req.target_concepts if concept_id not in excluded]
+        return list(req.target_concepts)
     if req.mode == "exam":
-        scope = _exam_curriculum_scope(req.exam, excluded)
+        scope = _exam_curriculum_scope(req.exam)
         if scope:
             return sorted(scope)
-        return [concept_id for concept_id in _act_tested_concept_ids() if concept_id not in excluded]
+        return _act_tested_concept_ids()
     return []
 
 class SummaryRequest(BaseModel):
@@ -333,7 +334,7 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
     curriculum_scope = (
         set(resolved_targets)
         if resolved_targets
-        else _exam_curriculum_scope(req.exam, set(req.excluded_concepts))
+        else _exam_curriculum_scope(req.exam)
     )
     goal = Goal(
         target_concepts=resolved_targets,
@@ -926,15 +927,21 @@ async def health():
 
 @app.get("/exam-concepts/{exam}")
 async def exam_concepts_endpoint(exam: str):
-    """Concept ids for an exam track. ACT uses act_relevance.tested from Layer 1."""
+    """Concept ids for a curriculum track.
+
+    - ACT / ACT_MATH: act_relevance.tested (~29 concepts)
+    - MIDDLE_SCHOOL / HIGH_SCHOOL: foundational + core levels (~29 concepts)
+    """
     scope = _exam_curriculum_scope(exam)
+    key = exam.strip().upper()
+    source = (
+        "act_relevance.tested" if key in ("ACT", "ACT_MATH", "GENERAL")
+        else "ontology_level.foundational_core" if key in ("MIDDLE_SCHOOL", "HIGH_SCHOOL")
+        else "unsupported"
+    )
     if scope:
-        return {
-            "exam": exam,
-            "conceptIds": sorted(scope),
-            "source": "act_relevance.tested",
-        }
-    return {"exam": exam, "conceptIds": [], "source": "unsupported"}
+        return {"exam": exam, "conceptIds": sorted(scope), "source": source}
+    return {"exam": exam, "conceptIds": [], "source": source}
 
 @app.get("/knowledge-graph/{student_id}")
 async def knowledge_graph_endpoint(student_id: str, auth: AuthContext = Depends(require_auth)):

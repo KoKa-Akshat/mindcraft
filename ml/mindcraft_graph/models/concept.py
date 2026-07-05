@@ -37,3 +37,7 @@ class Ontology(BaseModel):
 
     def act_tested_concept_ids(self) -> list[str]:
         return [c.id for c in self.concepts if c.exam_tested]
+
+    def middle_school_concept_ids(self) -> list[str]:
+        """Foundational + core concepts — appropriate for grades 6-10."""
+        return [c.id for c in self.concepts if c.level in ("foundational", "core")]
