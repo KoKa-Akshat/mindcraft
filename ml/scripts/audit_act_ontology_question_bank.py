@@ -21,6 +21,13 @@ ONTOLOGY_PATH = REPO / "ml/data/5_level_ontology/01_mindcraft_concept_ontology_v
 QUESTION_BANK_PATH = REPO / "app/src/lib/questionBank.ts"
 APP_COVERAGE_PATH = REPO / "app/src/data/actOntologyCoverage.json"
 
+# JSON question bank files imported by questionBank.ts (not inline TS, so regex misses them)
+JSON_BANK_PATHS = [
+    REPO / "app/src/data/generatedQuestions.json",
+    REPO / "app/src/data/actMasterQuestionBank.generated.json",
+    REPO / "app/src/data/eediQuestions.json",
+]
+
 # Known legacy id mismatches (ontology id → question bank id with content).
 KNOWN_BANK_ALIASES: dict[str, str] = {
     "ratios_proportions": "percent_ratio",
@@ -84,6 +91,21 @@ def _parse_question_bank(source: str) -> tuple[set[str], dict[str, str], dict[st
     for concept_id, level in questions:
         counts.setdefault(concept_id, {1: 0, 2: 0, 3: 0})
         counts[concept_id][level] += 1
+
+    # Also count questions from imported JSON bank files
+    for json_path in JSON_BANK_PATHS:
+        if not json_path.exists():
+            continue
+        try:
+            bank = json.loads(json_path.read_text())
+            for q in bank:
+                cid = q.get("conceptId") or q.get("concept_id", "")
+                lvl = int(q.get("level", 1))
+                if cid and lvl in (1, 2, 3):
+                    counts.setdefault(cid, {1: 0, 2: 0, 3: 0})
+                    counts[cid][lvl] += 1
+        except Exception:
+            pass
 
     return practice_ids, labels, counts
 

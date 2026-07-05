@@ -29,6 +29,9 @@ export interface Question {
   // compatible: untagged questions send no format (no format-node event). Bulk
   // tagging is upstream data work — NOT classification done here.
   format?: FormatId
+  // Eedi-sourced misconception data (GCSE questions only)
+  misconception_id?: string
+  misconception_label?: string
 }
 
 /** The format a question should report, or undefined if untagged.

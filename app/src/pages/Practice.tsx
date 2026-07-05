@@ -1932,6 +1932,24 @@ export default function Practice() {
                         </div>
                         <div className={s.feedbackBody}>
                           <div className={s.feedbackExplanation}>{currentQ.explanation}</div>
+                          {selected !== currentQ.correctIndex && currentQ.misconception_label && (
+                            <div className={s.misconceptionTag}>
+                              <span className={s.misconceptionIcon}>⚠</span>
+                              <span className={s.misconceptionText}>
+                                <strong>Common trap:</strong> {currentQ.misconception_label}
+                              </span>
+                            </div>
+                          )}
+                          {selected !== currentQ.correctIndex && (
+                            <button
+                              className={s.walkthroughBtn}
+                              onClick={() => navigate('/practice', {
+                                state: { homeworkHelp: true, problemText: currentQ.question }
+                              })}
+                            >
+                              Get a step-by-step walkthrough →
+                            </button>
+                          )}
                         </div>
                       </div>
                     )}

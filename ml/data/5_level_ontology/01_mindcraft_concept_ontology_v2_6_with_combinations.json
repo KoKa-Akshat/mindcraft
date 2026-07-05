@@ -206,7 +206,7 @@
           "description": "A fraction a/b means a equal parts out of b total parts of one whole unit.",
           "comes_from": "new",
           "failure_mode": "Students treat numerator and denominator as two separate unrelated numbers rather than as a ratio describing parts of a single whole",
-          "failure_prior": 0.45,
+          "failure_prior": 0.41,
           "learning_vector": {
             "geometric": 0.7,
             "algebraic": 0.1,
@@ -250,7 +250,7 @@
           "description": "Multiplying or dividing both numerator and denominator by the same nonzero number produces an equal fraction.",
           "comes_from": "new",
           "failure_mode": "Students add or subtract the same number from both top and bottom instead of multiplying, producing non-equivalent fractions",
-          "failure_prior": 0.55,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.4,
@@ -294,7 +294,7 @@
           "description": "Fractions can only be added or subtracted when they represent parts of the same-sized whole — they need a common denominator.",
           "comes_from": "new",
           "failure_mode": "Students add numerators and denominators separately: 1/2 + 1/3 = 2/5 instead of the correct 5/6",
-          "failure_prior": 0.65,
+          "failure_prior": 0.61,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -338,7 +338,7 @@
           "description": "Each decimal place represents a power of 1/10: tenths, hundredths, thousandths.",
           "comes_from": "new",
           "failure_mode": "Students order decimals by digit count not value: concluding 0.25 is greater than 0.7 because 25 is greater than 7",
-          "failure_prior": 0.5,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -382,7 +382,7 @@
           "description": "Any fraction a/b equals the decimal produced by dividing a by b.",
           "comes_from": "new",
           "failure_mode": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
-          "failure_prior": 0.4,
+          "failure_prior": 0.45,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.2,
@@ -468,7 +468,7 @@
           "description": "A ratio a:b says how many times larger one quantity is than another, not how much more one is than the other.",
           "comes_from": "fractions_decimals__part_whole_meaning",
           "failure_mode": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B",
-          "failure_prior": 0.42,
+          "failure_prior": 0.39,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.2,
@@ -512,7 +512,7 @@
           "description": "A unit rate expresses a ratio with denominator 1, making comparison and scaling straightforward.",
           "comes_from": "fractions_decimals__fraction_arithmetic",
           "failure_mode": "Students cannot identify which quantity goes in the denominator when setting up a unit rate from a word problem",
-          "failure_prior": 0.48,
+          "failure_prior": 0.42,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.3,
@@ -556,7 +556,7 @@
           "description": "Two ratios form a proportion when they are equal; setting them equal lets you solve for an unknown quantity.",
           "comes_from": "ratios_proportions__unit_rate",
           "failure_mode": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation",
-          "failure_prior": 0.52,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.4,
@@ -600,7 +600,7 @@
           "description": "If a/b = c/d then ad = bc — cross multiplication is algebraically equivalent to multiplying both sides by bd.",
           "comes_from": "ratios_proportions__proportion_setup",
           "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal",
-          "failure_prior": 0.58,
+          "failure_prior": 0.51,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.5,
@@ -682,7 +682,7 @@
           "description": "Mathematical operations must be evaluated in fixed priority order: groupings first, then exponents, then multiplication and division, then addition and subtraction.",
           "comes_from": "new",
           "failure_mode": "Students evaluate strictly left-to-right regardless of operation type, computing 2 + 3 times 4 as 20 instead of 14",
-          "failure_prior": 0.55,
+          "failure_prior": 0.59,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.2,
@@ -766,7 +766,7 @@
           "description": "When two operations have equal precedence — both multiplication and division, or both addition and subtraction — evaluate from left to right.",
           "comes_from": "order_of_operations__precedence_hierarchy",
           "failure_mode": "Students compute 12 divided by 4 times 3 as 12 divided by 12 = 1 instead of 3 times 3 = 9 because they multiply 4 and 3 first",
-          "failure_prior": 0.62,
+          "failure_prior": 0.5,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.3,
@@ -925,7 +925,7 @@
           "description": "Addition and subtraction are inverses of each other; multiplication and division are inverses — applying an inverse undoes the original operation.",
           "comes_from": "new",
           "failure_mode": "Students subtract instead of dividing when undoing multiplication: solving 3x = 12 by writing x = 12 minus 3 = 9",
-          "failure_prior": 0.48,
+          "failure_prior": 0.43,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -969,7 +969,7 @@
           "description": "An equation remains true if you add, subtract, multiply, or divide both sides by the same nonzero value.",
           "comes_from": "basic_equations__equals_sign_balance",
           "failure_mode": "Students apply an operation to only one side of the equation, breaking the balance without realizing it",
-          "failure_prior": 0.4,
+          "failure_prior": 0.41,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.3,
@@ -1131,7 +1131,7 @@
           "description": "Slope measures how much y changes for every 1 unit increase in x — it is a rate of change, not merely a steepness number.",
           "comes_from": "ratios_proportions__unit_rate",
           "failure_mode": "Students compute slope correctly but state it as a bare number without units or meaning: slope is 3, not y increases by 3 for every 1 unit increase in x",
-          "failure_prior": 0.58,
+          "failure_prior": 0.45,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -1173,7 +1173,7 @@
           "description": "The y-intercept (b in y = mx + b) is the value of y when x = 0 — it represents the starting or initial value in context.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students think b is just a vertical shift with no real-world meaning and cannot identify the y-intercept from a word problem description",
-          "failure_prior": 0.45,
+          "failure_prior": 0.4,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -1217,7 +1217,7 @@
           "description": "In slope-intercept form, m is readable as the slope and b is readable as the y-intercept directly from the equation.",
           "comes_from": "linear_equations__slope_meaning",
           "failure_mode": "Students cannot identify m and b when the equation is not already in slope-intercept form: from 2y = 6x + 4 they say slope is 6",
-          "failure_prior": 0.5,
+          "failure_prior": 0.41,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.5,
@@ -1259,7 +1259,7 @@
           "description": "Any two distinct points define exactly one straight line, allowing you to find the equation from any two coordinate pairs.",
           "comes_from": "linear_equations__slope_meaning",
           "failure_mode": "Students try to determine slope from a single point alone or confuse which point goes in which position of the slope formula",
-          "failure_prior": 0.4,
+          "failure_prior": 0.36,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.3,
@@ -1301,7 +1301,7 @@
           "description": "Parallel lines have equal slopes; perpendicular lines have slopes whose product is negative one.",
           "comes_from": "linear_equations__slope_meaning",
           "failure_mode": "Students write the perpendicular slope as just the negative of a slope, forgetting to also take the reciprocal: writing minus 2 as perpendicular to 2 instead of minus 1/2",
-          "failure_prior": 0.62,
+          "failure_prior": 0.52,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.4,
@@ -1381,7 +1381,7 @@
           "description": "A function is a rule that assigns exactly one output to every valid input — no input can produce two different outputs.",
           "comes_from": "new",
           "failure_mode": "Students cannot recognize when a relation is not a function because they do not check whether any input maps to multiple outputs",
-          "failure_prior": 0.44,
+          "failure_prior": 0.4,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.1,
@@ -1424,7 +1424,7 @@
           "description": "f(x) is notation meaning the output of function f when the input is x — it is not multiplication of f and x.",
           "comes_from": "functions_basics__function_as_machine",
           "failure_mode": "Students compute f(3) for f(x) = 2x + 1 as f multiplied by 3 giving an undefined product instead of 2(3) + 1 = 7",
-          "failure_prior": 0.6,
+          "failure_prior": 0.48,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.5,
@@ -1507,7 +1507,7 @@
           "description": "f(g(x)) means apply g first using x as input, then use g's output as the input to f.",
           "comes_from": "functions_basics__function_notation_meaning",
           "failure_mode": "Students compute f(g(x)) as f(x) times g(x) or reverse the order by applying f before g",
-          "failure_prior": 0.65,
+          "failure_prior": 0.51,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.4,
@@ -1727,7 +1727,7 @@
           "description": "sin(theta) = opposite over hypotenuse, cos(theta) = adjacent over hypotenuse, tan(theta) = opposite over adjacent.",
           "comes_from": "right_triangle__side_naming",
           "failure_mode": "Students use the wrong trig ratio because they confused opposite and adjacent, or they flip the numerator and denominator",
-          "failure_prior": 0.55,
+          "failure_prior": 0.47,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.4,
@@ -1869,7 +1869,7 @@
           "description": "An angle is not just a shape between two lines but a measure of how far you rotate from a starting direction.",
           "comes_from": "right_triangle__side_naming",
           "failure_mode": "Students believe angles can only be between 0 and 180 degrees and cannot conceptualize angles like 270 degrees or negative angles",
-          "failure_prior": 0.55,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.1,
@@ -1953,7 +1953,7 @@
           "description": "sin(theta) represents how high the endpoint of a unit radius sits above the center — it is literally a vertical distance.",
           "comes_from": "trig_basics__unit_circle_coordinates",
           "failure_mode": "Students know sin as opposite over hypotenuse but cannot connect it to the vertical component of a rotating vector, causing failure on circular motion problems like y = 30 + 18 sin(theta)",
-          "failure_prior": 0.68,
+          "failure_prior": 0.5,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.1,
@@ -1995,7 +1995,7 @@
           "description": "cos(theta) represents how far the endpoint of a unit radius sits horizontally from the center.",
           "comes_from": "trig_basics__unit_circle_coordinates",
           "failure_mode": "Students swap sin and cos in applied problems, using cos for vertical height and sin for horizontal position",
-          "failure_prior": 0.6,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.1,
@@ -2623,7 +2623,7 @@
           "description": "Solving an inequality produces an infinite set of values — a region on the number line — not a single answer.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students write x = 3 instead of x greater than 3, treating the inequality as if it has one solution like an equation",
-          "failure_prior": 0.38,
+          "failure_prior": 0.39,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.1,
@@ -2667,7 +2667,7 @@
           "description": "When you multiply or divide both sides of an inequality by a negative number, the inequality symbol must reverse direction.",
           "comes_from": "basic_equations__do_same_to_both_sides",
           "failure_mode": "Students divide by a negative coefficient without flipping: solving negative-2x greater than 6 and writing x greater than negative-3 instead of x less than negative-3",
-          "failure_prior": 0.68,
+          "failure_prior": 0.53,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -2791,7 +2791,7 @@
           "description": "For |A| > k with k positive, the inside expression must be greater than k or less than negative k, producing two separate outside intervals.",
           "comes_from": "linear_inequalities__inequality_as_region",
           "failure_mode": "Students solve only A > k and forget A < -k, or incorrectly write the answer as a middle interval.",
-          "failure_prior": 0.66,
+          "failure_prior": 0.51,
           "learning_vector": {
             "geometric": 0.25,
             "algebraic": 0.35,
@@ -2859,7 +2859,7 @@
           "description": "The solution to a system of two equations is the point that satisfies both simultaneously — geometrically, where the two lines intersect.",
           "comes_from": "linear_equations__two_points_determine_line",
           "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution",
-          "failure_prior": 0.45,
+          "failure_prior": 0.4,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -2902,7 +2902,7 @@
           "description": "Solve one equation for one variable, then substitute that expression into the other equation to get one equation in one unknown.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students substitute the expression back into the same equation they used to solve it instead of the other equation, producing a tautology",
-          "failure_prior": 0.52,
+          "failure_prior": 0.42,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.4,
@@ -2944,7 +2944,7 @@
           "description": "Multiply equations to make the coefficients of one variable equal and opposite, then add to eliminate that variable.",
           "comes_from": "basic_equations__do_same_to_both_sides",
           "failure_mode": "Students subtract equations when they should add, or forget to multiply the entire equation (not just one term) before adding",
-          "failure_prior": 0.5,
+          "failure_prior": 0.43,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.3,
@@ -2988,7 +2988,7 @@
           "description": "When elimination produces a false statement like 0 = 5, no solution exists (parallel lines); when it produces 0 = 0, infinite solutions exist (same line).",
           "comes_from": "systems__solution_as_intersection",
           "failure_mode": "Students reach 0 = 5 mid-elimination and think they made an arithmetic error, erasing correct work instead of recognizing the system has no solution",
-          "failure_prior": 0.65,
+          "failure_prior": 0.49,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -3072,7 +3072,7 @@
           "description": "When multiplying two powers with the same base, add the exponents: x to the a times x to the b equals x to the (a+b).",
           "comes_from": "order_of_operations__exponent_before_multiply",
           "failure_mode": "Students multiply the exponents instead of adding: x squared times x cubed becomes x to the sixth instead of x to the fifth",
-          "failure_prior": 0.48,
+          "failure_prior": 0.42,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.4,
@@ -3116,7 +3116,7 @@
           "description": "When dividing powers with the same base, subtract the denominator exponent from the numerator exponent.",
           "comes_from": "exponent_rules__product_rule",
           "failure_mode": "Students subtract in the wrong order, computing denominator minus numerator instead of numerator minus denominator",
-          "failure_prior": 0.45,
+          "failure_prior": 0.41,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.4,
@@ -3160,7 +3160,7 @@
           "description": "When raising a power to another power, multiply the exponents: (x to the a) to the b equals x to the (a times b).",
           "comes_from": "exponent_rules__product_rule",
           "failure_mode": "Students add exponents instead of multiplying: (x squared) cubed becomes x to the fifth instead of x to the sixth",
-          "failure_prior": 0.5,
+          "failure_prior": 0.45,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.4,
@@ -3204,7 +3204,7 @@
           "description": "x to the negative n equals 1 divided by x to the n — a negative exponent moves the factor to the other side of the fraction bar.",
           "comes_from": "exponent_rules__quotient_rule",
           "failure_mode": "Students make the base negative: x to the negative-2 becomes negative x squared instead of 1 over x squared",
-          "failure_prior": 0.65,
+          "failure_prior": 0.5,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.4,
@@ -3247,7 +3247,7 @@
           "description": "Any nonzero number to the zero power equals 1. A fractional exponent x to the (p/q) means the q-th root of x to the p.",
           "comes_from": "exponent_rules__quotient_rule",
           "failure_mode": "Students compute x to the zero as zero, and x to the (1/2) as x over 2 instead of the square root of x",
-          "failure_prior": 0.58,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -3330,7 +3330,7 @@
           "description": "Like terms have identical variable parts — the same variables raised to the same powers — and can be added or subtracted by combining their coefficients.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students combine unlike terms: adding 3x squared and 2x to get 5x squared or 5x instead of leaving them separate",
-          "failure_prior": 0.45,
+          "failure_prior": 0.39,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -3373,7 +3373,7 @@
           "description": "When multiplying a monomial by a polynomial, the monomial multiplies each and every term inside — no term can be skipped.",
           "comes_from": "order_of_operations__parentheses_override",
           "failure_mode": "Students multiply the first term only: 3(x squared + 2x + 1) becomes 3x squared + 2x + 1 instead of 3x squared + 6x + 3",
-          "failure_prior": 0.55,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.3,
@@ -3557,7 +3557,7 @@
           "description": "Before any other factoring, identify the greatest common factor of all terms and factor it out — this simplifies every subsequent step.",
           "comes_from": "polynomials__distributive_property",
           "failure_mode": "Students jump to other factoring techniques without extracting the GCF, leaving unnecessarily large numbers that make the remaining steps harder",
-          "failure_prior": 0.48,
+          "failure_prior": 0.41,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.3,
@@ -3601,7 +3601,7 @@
           "description": "For x squared + bx + c, find two numbers that multiply to c and add to b — those numbers are the constants in the factored form.",
           "comes_from": "polynomials__foil_expansion",
           "failure_mode": "Students find pairs that multiply to c but ignore the sum condition, or find pairs that add to b but forget to check the product",
-          "failure_prior": 0.52,
+          "failure_prior": 0.54,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -3645,7 +3645,7 @@
           "description": "For ax squared + bx + c with a not equal to 1: find two numbers multiplying to ac and adding to b, then split the middle term and factor by grouping.",
           "comes_from": "factoring_polynomials__factor_pairs",
           "failure_mode": "Students apply the simple factor pairs method to ax squared + bx + c with a not 1 and get wrong factors because they only look for pairs multiplying to c not to ac",
-          "failure_prior": 0.7,
+          "failure_prior": 0.6,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -3689,7 +3689,7 @@
           "description": "a squared minus b squared factors as (a+b)(a-b); a perfect square trinomial factors as (a plus b) squared.",
           "comes_from": "factoring_polynomials__factor_pairs",
           "failure_mode": "Students do not recognize these patterns and apply the full ac method unnecessarily, or they factor a squared minus b squared as (a-b) squared",
-          "failure_prior": 0.55,
+          "failure_prior": 0.45,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.4,
@@ -3857,7 +3857,7 @@
           "description": "Radicals with the same number under the root sign are like terms and can be added by combining their coefficients.",
           "comes_from": "polynomials__like_terms",
           "failure_mode": "Students add the radicands: 2 times square root of 3 plus 3 times square root of 3 becomes 5 times square root of 6 instead of 5 times square root of 3",
-          "failure_prior": 0.62,
+          "failure_prior": 0.47,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -3900,7 +3900,7 @@
           "description": "To eliminate a radical from a denominator, multiply numerator and denominator by the radical (or conjugate) — this produces an integer in the denominator.",
           "comes_from": "fractions_decimals__equivalent_fractions",
           "failure_mode": "Students add the radical to the denominator instead of multiplying, or only multiply the denominator and not the numerator",
-          "failure_prior": 0.55,
+          "failure_prior": 0.47,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.4,
@@ -3987,7 +3987,7 @@
           "description": "The solutions to ax squared + bx + c = 0 are the x-coordinates where the parabola y = ax squared + bx + c crosses the x-axis.",
           "comes_from": "functions_basics__domain_range",
           "failure_mode": "Students solve quadratics algebraically without any connection to the graph, making it impossible to catch unreasonable answers",
-          "failure_prior": 0.45,
+          "failure_prior": 0.42,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.1,
@@ -4031,7 +4031,7 @@
           "description": "Because a parabola is symmetric, the vertex sits exactly halfway between the two roots — average the x-intercepts to find it.",
           "comes_from": "quadratics__solutions_as_x_intercepts",
           "failure_mode": "Students use the formula x = negative b over 2a without understanding why it works, so they cannot verify it or adapt when the formula is unfamiliar",
-          "failure_prior": 0.55,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.2,
@@ -4074,7 +4074,7 @@
           "description": "If a product of factors equals zero then at least one factor must be zero — set each factor equal to zero and solve independently.",
           "comes_from": "factoring_polynomials__factor_pairs",
           "failure_mode": "Students factor correctly but then add the constants: (x-2)(x-3) = 0 gives x = 5 because they add 2 and 3 instead of setting each factor to zero",
-          "failure_prior": 0.5,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.4,
@@ -4118,7 +4118,7 @@
           "description": "For ax squared + bx + c = 0: x equals negative b plus or minus square root of (b squared minus 4ac) all over 2a.",
           "comes_from": "radicals__simplification",
           "failure_mode": "Students compute negative b as positive b (ignoring the negative) or evaluate 2a as 2 instead of twice the leading coefficient",
-          "failure_prior": 0.52,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.5,
@@ -4160,7 +4160,7 @@
           "description": "The value b squared minus 4ac: positive gives two real solutions, zero gives one, negative gives no real solutions.",
           "comes_from": "quadratics__quadratic_formula",
           "failure_mode": "Students compute the discriminant correctly but cannot state what it means for the graph or for the number of solutions without re-solving from scratch",
-          "failure_prior": 0.65,
+          "failure_prior": 0.49,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -4244,7 +4244,7 @@
           "description": "The mean is the sum of all values divided by the count — it is the single value that would balance the data if placed on a scale.",
           "comes_from": "ratios_proportions__unit_rate",
           "failure_mode": "Students compute the mean correctly but cannot explain what it represents or why outliers pull it far from the center of most values",
-          "failure_prior": 0.35,
+          "failure_prior": 0.38,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -4287,7 +4287,7 @@
           "description": "The median is the middle value when all data is arranged in order — it is not affected by extreme values at either end.",
           "comes_from": "descriptive_statistics__mean_as_balance",
           "failure_mode": "Students find the median of an even-count dataset by picking one of the two middle values instead of averaging both",
-          "failure_prior": 0.42,
+          "failure_prior": 0.43,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.1,
@@ -4331,7 +4331,7 @@
           "description": "The mean is sensitive to extreme values while the median is resistant — choose median when data is skewed or has outliers.",
           "comes_from": "descriptive_statistics__median_as_middle",
           "failure_mode": "Students report the mean as the best measure of center in all situations, not recognizing when it is misleading due to outliers",
-          "failure_prior": 0.55,
+          "failure_prior": 0.49,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.1,
@@ -4558,7 +4558,7 @@
           "description": "P(A and B) is the probability both happen simultaneously; P(A or B) is the probability at least one of them happens.",
           "comes_from": "basic_probability__complement_rule",
           "failure_mode": "Students use the multiplication rule for OR problems and the addition rule for AND problems — they mix up which formula goes with which word",
-          "failure_prior": 0.58,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -5102,7 +5102,7 @@
           "description": "A sequence is arithmetic when each term is produced by adding the same constant (common difference) to the previous term.",
           "comes_from": "linear_equations__slope_meaning",
           "failure_mode": "Students confuse arithmetic and geometric sequences, calling a sequence with multiplied terms arithmetic because the differences appear to follow a pattern",
-          "failure_prior": 0.4,
+          "failure_prior": 0.38,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.2,
@@ -5185,7 +5185,7 @@
           "description": "Arithmetic: a-sub-n = a1 + (n minus 1) times d. Geometric: a-sub-n = a1 times r to the (n minus 1).",
           "comes_from": "sequences__arithmetic_identification",
           "failure_mode": "Students use n instead of (n minus 1) as the multiplier, causing every term to be off by one position",
-          "failure_prior": 0.52,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.4,
@@ -5311,7 +5311,7 @@
           "description": "Two angles are supplementary if they sum to 180 degrees; complementary if they sum to 90 degrees.",
           "comes_from": "basic_equations__do_same_to_both_sides",
           "failure_mode": "Students swap supplementary and complementary — they use 90 for supplementary and 180 for complementary",
-          "failure_prior": 0.4,
+          "failure_prior": 0.38,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -5355,7 +5355,7 @@
           "description": "When two lines intersect they form two pairs of vertical angles — the angles across from each other are always equal.",
           "comes_from": "lines_angles__supplementary_complementary",
           "failure_mode": "Students think adjacent angles at an intersection are equal instead of vertical (opposite) angles",
-          "failure_prior": 0.35,
+          "failure_prior": 0.38,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.1,
@@ -5399,7 +5399,7 @@
           "description": "When a transversal crosses parallel lines: alternate interior angles are equal; corresponding angles are equal; co-interior angles sum to 180.",
           "comes_from": "lines_angles__vertical_angles",
           "failure_mode": "Students cannot distinguish alternate interior, corresponding, and co-interior angle pairs and apply the wrong relationship (equal vs supplementary)",
-          "failure_prior": 0.58,
+          "failure_prior": 0.48,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.1,
@@ -5443,7 +5443,7 @@
           "description": "When parallel lines are cut by transversals, corresponding/alternate angles are equal and same-side interior or linear-pair angles are supplementary; triangle angle sums may also be needed.",
           "comes_from": "lines_angles__transversal_angles",
           "failure_mode": "Students use one memorized angle fact in isolation and miss that a figure may require combining vertical angles, supplementary pairs, transversals, and triangle angle sum.",
-          "failure_prior": 0.57,
+          "failure_prior": 0.47,
           "learning_vector": {
             "geometric": 0.55,
             "algebraic": 0.15,
@@ -5509,7 +5509,7 @@
           "description": "The three interior angles of any triangle always sum to exactly 180 degrees regardless of the triangle's shape.",
           "comes_from": "lines_angles__supplementary_complementary",
           "failure_mode": "Students apply the 180 degree rule to non-triangular polygons or forget to include all three angles when solving for an unknown",
-          "failure_prior": 0.25,
+          "failure_prior": 0.29,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -5593,7 +5593,7 @@
           "description": "Similar triangles have equal angles and proportional sides — corresponding sides must be matched correctly before setting up any ratio.",
           "comes_from": "ratios_proportions__proportion_setup",
           "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios",
-          "failure_prior": 0.55,
+          "failure_prior": 0.45,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -5678,7 +5678,7 @@
           "description": "Arc length and sector area scale proportionally with the central angle as a fraction of 360 degrees.",
           "comes_from": "ratios_proportions__proportion_setup",
           "failure_mode": "Students use the diameter instead of radius in the arc length formula, or forget that the angle must be expressed as a fraction of 360",
-          "failure_prior": 0.45,
+          "failure_prior": 0.39,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -5761,7 +5761,7 @@
           "description": "A tangent line to a circle is perpendicular to the radius drawn to the point of tangency.",
           "comes_from": "lines_angles__supplementary_complementary",
           "failure_mode": "Students draw the tangent line through the center instead of touching only one point, confusing tangent with secant",
-          "failure_prior": 0.4,
+          "failure_prior": 0.37,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.1,
@@ -5805,7 +5805,7 @@
           "description": "If a diameter is known, radius is half of it; semicircle area is one half of πr².",
           "comes_from": "area_volume__standard_formulas",
           "failure_mode": "Students use the diameter as the radius or forget to divide the full circle area by two for a semicircle.",
-          "failure_prior": 0.52,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.45,
             "algebraic": 0.25,
@@ -5871,7 +5871,7 @@
           "description": "Rectangle: length times width. Triangle: half base times height. Circle: pi r squared. Trapezoid: half times sum of parallel sides times height.",
           "comes_from": "ratios_proportions__unit_rate",
           "failure_mode": "Students use the slant height of a triangle as the height in the formula instead of the perpendicular height",
-          "failure_prior": 0.42,
+          "failure_prior": 0.43,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -5955,7 +5955,7 @@
           "description": "For any prism or cylinder, volume equals the area of the base cross-section multiplied by the height of the solid.",
           "comes_from": "area_volume__standard_formulas",
           "failure_mode": "Students use a linear dimension as the base instead of the area of the base, giving volume in square units rather than cubic units",
-          "failure_prior": 0.48,
+          "failure_prior": 0.41,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.2,
@@ -5998,7 +5998,7 @@
           "description": "A rectangular prism with dimensions length, width, and height has faces lw, lh, and wh; the largest side area is the largest of these products.",
           "comes_from": "area_volume__volume_as_base_times_height",
           "failure_mode": "Students compute only the initially visible face area and forget that the third dimension creates other faces that may be larger.",
-          "failure_prior": 0.54,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -6023,7 +6023,7 @@
           "description": "For a square, area equals side squared, so the side length is the square root of the area.",
           "comes_from": "area_volume__standard_formulas",
           "failure_mode": "Students treat area as side length directly or divide by four as if area were perimeter.",
-          "failure_prior": 0.48,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.35,
             "algebraic": 0.3,
@@ -6089,7 +6089,7 @@
           "description": "A translation by vector (a,b) moves every point (x,y) to (x+a, y+b) — shape and orientation are preserved.",
           "comes_from": "linear_equations__y_intercept_meaning",
           "failure_mode": "Students subtract instead of add for translations in the negative direction, or translate only some vertices instead of all of them",
-          "failure_prior": 0.3,
+          "failure_prior": 0.35,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.3,
@@ -6133,7 +6133,7 @@
           "description": "Reflection across the x-axis negates y-coordinates; across the y-axis negates x-coordinates; across y=x swaps x and y.",
           "comes_from": "transformations__translation_rules",
           "failure_mode": "Students negate both coordinates when reflecting across the x-axis instead of only the y-coordinate",
-          "failure_prior": 0.45,
+          "failure_prior": 0.4,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -6177,7 +6177,7 @@
           "description": "Rotation 90 degrees counterclockwise: (x,y) maps to (negative-y, x). Rotation 90 degrees clockwise: (x,y) maps to (y, negative-x).",
           "comes_from": "trig_basics__angle_as_rotation",
           "failure_mode": "Students swap x and y for both clockwise and counterclockwise rotations, forgetting that the direction determines which coordinate gets negated",
-          "failure_prior": 0.62,
+          "failure_prior": 0.49,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -6262,7 +6262,7 @@
           "description": "To simplify a rational expression, factor both top and bottom completely, then cancel common factors — never cancel individual terms.",
           "comes_from": "factoring_polynomials__gcf_extraction",
           "failure_mode": "Students cancel terms rather than factors: in (x squared + 2x)/(x + 2) they cancel the x squared and the 2 instead of factoring x out first",
-          "failure_prior": 0.65,
+          "failure_prior": 0.52,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.4,
@@ -6305,7 +6305,7 @@
           "description": "To add or subtract rational expressions, find the least common denominator by factoring all denominators and taking the highest power of each factor.",
           "comes_from": "fractions_decimals__fraction_arithmetic",
           "failure_mode": "Students multiply the denominators together instead of finding the LCD, creating unnecessarily complex expressions that are harder to simplify",
-          "failure_prior": 0.6,
+          "failure_prior": 0.53,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.3,
@@ -6349,7 +6349,7 @@
           "description": "Any value of x that makes a denominator equal to zero is excluded from the domain — these must be stated even after simplification.",
           "comes_from": "functions_basics__domain_range",
           "failure_mode": "Students simplify correctly but forget to state the excluded values, not realizing cancellation hides them from the simplified form",
-          "failure_prior": 0.55,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.4,
@@ -6434,7 +6434,7 @@
           "description": "The imaginary unit i satisfies i squared = negative-1 — it is a new number created to solve equations with no real solutions.",
           "comes_from": "radical_expressions__root_as_inverse",
           "failure_mode": "Students treat i as a variable like x, not recognizing that i squared has a specific value of negative-1 and must be simplified",
-          "failure_prior": 0.4,
+          "failure_prior": 0.39,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -6639,7 +6639,7 @@
           "description": "To add two vectors, add their x-components to get the resultant x-component and add their y-components to get the resultant y-component.",
           "comes_from": "vectors__component_decomposition",
           "failure_mode": "Students add magnitudes of vectors instead of components, getting a scalar instead of a new vector",
-          "failure_prior": 0.45,
+          "failure_prior": 0.38,
           "learning_vector": {
             "geometric": 0.4,
             "algebraic": 0.3,
@@ -6802,7 +6802,7 @@
           "description": "A times B is generally not equal to B times A — order matters and must be preserved throughout calculations.",
           "comes_from": "matrices__dimensions_and_compatibility",
           "failure_mode": "Students reverse the order of matrix multiplication when it is more convenient, not realizing this gives a completely different result",
-          "failure_prior": 0.62,
+          "failure_prior": 0.48,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -6927,7 +6927,7 @@
           "description": "Circle: x squared + y squared with equal coefficients. Ellipse: x squared + y squared with different positive coefficients. Parabola: only one squared term. Hyperbola: squared terms subtracted.",
           "comes_from": "quadratic_equations__solutions_as_x_intercepts",
           "failure_mode": "Students classify an ellipse as a circle when they see both x squared and y squared, missing that unequal coefficients make it an ellipse",
-          "failure_prior": 0.52,
+          "failure_prior": 0.42,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.4,
@@ -6969,7 +6969,7 @@
           "description": "To find center and radius from a general circle equation, complete the square for both x and y terms separately.",
           "comes_from": "quadratics__vertex_from_roots",
           "failure_mode": "Students add the completing-the-square constant to one side only, forgetting to add it to the other side of the equation as well",
-          "failure_prior": 0.68,
+          "failure_prior": 0.56,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.4,
@@ -7094,7 +7094,7 @@
           "description": "A probability distribution describes how probability is spread across all possible outcomes — all probabilities must sum to exactly 1.",
           "comes_from": "basic_probability__probability_as_ratio",
           "failure_mode": "Students assign probabilities that sum to more or less than 1, not recognizing this violates the fundamental requirement",
-          "failure_prior": 0.4,
+          "failure_prior": 0.37,
           "learning_vector": {
             "geometric": 0.3,
             "algebraic": 0.2,
@@ -7491,7 +7491,7 @@
           "description": "The definite integral from a to b of f(x) dx equals the signed area between the curve and x-axis — positive above the x-axis, negative below.",
           "comes_from": "limits__approaching_not_reaching",
           "failure_mode": "Students compute the definite integral without recognizing that regions below the x-axis contribute negative area, getting incorrect total areas",
-          "failure_prior": 0.58,
+          "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -7650,7 +7650,7 @@
           "description": "The area between two curves is the integral of (upper function minus lower function) over the interval where they bound the region.",
           "comes_from": "integrals__definite_integral_as_area",
           "failure_mode": "Students integrate only the upper function without subtracting the lower, computing the area between the upper function and the x-axis instead of between the two curves",
-          "failure_prior": 0.65,
+          "failure_prior": 0.5,
           "learning_vector": {
             "geometric": 0.5,
             "algebraic": 0.2,
@@ -7990,7 +7990,7 @@
           "description": "A prime number has exactly two positive factors, 1 and itself; composite numbers have more than two.",
           "comes_from": "number_properties__factor_definition",
           "failure_mode": "Students say 1 is prime or think every odd number is prime.",
-          "failure_prior": 0.48,
+          "failure_prior": 0.41,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.2,
@@ -8133,7 +8133,7 @@
           "description": "A positive integer has exactly three positive factors iff it equals p² for prime p.",
           "comes_from": "number_properties__perfect_square_odd_factors",
           "failure_mode": "Students brute-force every integer and miss the structural shortcut that 4=2², 9=3², 25=5², etc.",
-          "failure_prior": 0.58,
+          "failure_prior": 0.5,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.4,
@@ -8183,7 +8183,7 @@
           "description": "The parity of integers restricts possible products and sums: odd times odd is odd, any product with an even factor is even, and two odd integers sum to an even integer.",
           "comes_from": "number_properties__factor_definition",
           "failure_mode": "Students list factor pairs without using parity to eliminate impossible sum choices quickly, or they incorrectly assume an even product implies both numbers are even.",
-          "failure_prior": 0.46,
+          "failure_prior": 0.42,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.25,
@@ -8275,7 +8275,7 @@
           "description": "Each number in a word problem carries a unit; consistent units guide setup and catch impossible operations.",
           "comes_from": "ratios_proportions__unit_rate",
           "failure_mode": "Students divide the wrong way because they ignore whether the answer should be hours per room or rooms per hour.",
-          "failure_prior": 0.52,
+          "failure_prior": 0.42,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.3,
@@ -8370,7 +8370,7 @@
           "description": "Lengths use one-dimensional units; areas use square units and cannot be compared or divided as if they were lengths.",
           "comes_from": "area_volume",
           "failure_mode": "Students use 2-foot side length as if it covers 2 square feet instead of 4 square feet.",
-          "failure_prior": 0.57,
+          "failure_prior": 0.45,
           "learning_vector": {
             "geometric": 0.6,
             "algebraic": 0.2,
@@ -8420,7 +8420,7 @@
           "description": "Rates and areas can require converting both numerator and denominator units before comparing or answering.",
           "comes_from": "measurement_units__unit_label_consistency",
           "failure_mode": "Students convert hours to minutes but forget that area conversion squares the conversion factor.",
-          "failure_prior": 0.5,
+          "failure_prior": 0.43,
           "learning_vector": {
             "geometric": 0.2,
             "algebraic": 0.3,
@@ -8517,7 +8517,7 @@
           "description": "Terms can be added or subtracted only when they have the same variable part and exponent structure.",
           "comes_from": "basic_equations__equals_sign_balance",
           "failure_mode": "Students combine unlike terms such as 5x and 5x² or fail to combine 5x+2x.",
-          "failure_prior": 0.52,
+          "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.5,
@@ -8568,7 +8568,7 @@
           "description": "When a value is given for a variable, replace each occurrence of that variable with the value and then evaluate.",
           "comes_from": "functions_basics__function_notation_meaning",
           "failure_mode": "Students substitute into only one occurrence or forget parentheses around negative numbers.",
-          "failure_prior": 0.5,
+          "failure_prior": 0.43,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.5,
@@ -8619,7 +8619,7 @@
           "description": "Solving for q in terms of p and r means isolate q while treating p and r as known quantities.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students freeze because multiple letters appear, or divide by the wrong symbol, or do not know what “in terms of” means.",
-          "failure_prior": 0.63,
+          "failure_prior": 0.49,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.6,
@@ -8716,7 +8716,7 @@
           "description": "Multiplying every term by the least common denominator can turn a fractional equation into an equivalent integer equation.",
           "comes_from": "fractions_decimals__fraction_arithmetic",
           "failure_mode": "Students multiply only some terms or forget that every term on both sides must be multiplied.",
-          "failure_prior": 0.57,
+          "failure_prior": 0.48,
           "learning_vector": {
             "geometric": 0.1,
             "algebraic": 0.5,
