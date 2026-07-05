@@ -1,8 +1,8 @@
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
+import type { PointerEvent } from 'react'
 import Sidebar from '../components/Sidebar'
-import AppTabBar from '../components/AppTabBar'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
 import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
@@ -21,12 +21,13 @@ import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
 import { getConceptContent } from '../lib/conceptContent'
 import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, allowedLevels, getRecommendedLevel as levelFromConfidence } from '../lib/bridgePractice'
-import { getExamConceptIds } from '../lib/examCurricula'
+import { getExamConceptIds, seedFoundationalConfidence } from '../lib/examCurricula'
 import { seedAssessment, recordOutcomes, getIngredientCards, agentCheckIn, fetchExamConceptIds, type IngredientRecommendResult } from '../lib/mlApi'
-import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
+import { fetchNextConcept } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic, getUserRole } from '../lib/practiceState'
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
+import actOntologyCoverage from '../data/actOntologyCoverage.json'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import s from './Practice.module.css'
@@ -45,6 +46,14 @@ type PracticePhase =
 type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
 type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
+
+const CORE_CONCEPT_IDS = new Set(
+  Object.entries(
+    (actOntologyCoverage as { byConceptId: Record<string, { ontologyLevel: string }> }).byConceptId,
+  )
+    .filter(([, v]) => v.ontologyLevel === 'core')
+    .map(([id]) => id),
+)
 // A resumable mission is one of three kinds; each persists in its own slot so a
 // weakness AND a learn mission can be in-progress at once.
 type MissionType   = 'weakness' | 'learn' | 'gapscan'
@@ -80,6 +89,7 @@ type PracticeDraft = {
   hideCorrectness?: boolean
   /** Concepts still needing self-rating after the question diagnostic. */
   confidenceQueueIds?: string[]
+  excludedConceptIds?: string[]
 }
 
 const EXAMS = ['ACT', 'SAT', 'IB', 'AP', 'General'] as const
@@ -99,7 +109,7 @@ const EXAM_CARD_META: Record<ExamType, { icon: string; accent: string; micro: st
   SAT:     { icon: '800', accent: '#4ECDC4', micro: 'Data + functions' },
   IB:      { icon: 'AI', accent: '#A29BFE', micro: 'Modelling SL' },
   AP:      { icon: 'AP', accent: '#FFE66D', micro: 'Calc readiness' },
-  General: { icon: '+', accent: '#C4F547', micro: 'Custom path' },
+  General: { icon: '+', accent: '#54B948', micro: 'Custom path' },
 }
 
 const CONFIDENCE_COPY: Record<ExamType, string> = {
@@ -288,7 +298,7 @@ function ingredientResultToSession(
 
 function PixelCraft({ size = 'sm', className = '' }: { size?: 'sm' | 'lg' | 'md'; className?: string }) {
   return (
-    <div className={`${s.pixelCraft} ${s[`pixelCraft${size.toUpperCase()}`]} ${className}`} aria-label="Craft mascot" role="img">
+    <div className={`${s.pixelCraft} ${s[`pixelCraft${size.toUpperCase()}`]} ${className}`} aria-label="Craft bear mascot" role="img">
       <span className={s.pixelEarLeft} />
       <span className={s.pixelEarRight} />
       <span className={s.pixelHead}>
@@ -311,6 +321,8 @@ export default function Practice() {
   const { streak, practiceCount } = useStudentData(user)
   const fileRef  = useRef<HTMLInputElement>(null)
   const answerInputRef = useRef<HTMLInputElement>(null)
+  const scratchCanvasRef = useRef<HTMLCanvasElement>(null)
+  const scratchDrawingRef = useRef(false)
   const draftHydratedRef = useRef(false)
   const skipDiagnosticRestoreRef = useRef(
     !!(location.state as { examHelp?: boolean } | null)?.examHelp,
@@ -324,9 +336,11 @@ export default function Practice() {
   const [assessConcepts, setAssessConcepts] = useState<typeof PRACTICE_CONCEPTS>([])
   const [confidenceStep, setConfidenceStep] = useState(0)
   const [confidenceMap,  setConfidenceMap]  = useState<Record<string, Confidence>>({})
+  const [excludedConceptIds, setExcludedConceptIds] = useState<string[]>([])
 
   // ── Practice state ────────────────────────────────────────────────────────
   const [pPhase,     setPPhase]     = useState<PracticePhase>('path')
+  const [preExploreReturnPhase, setPreExploreReturnPhase] = useState<PracticePhase | null>(null)
   const [concept,    setConcept]    = useState<string | null>(null)
   const [level,      setLevel]      = useState<1|2|3>(1)
   const [questions,  setQuestions]  = useState<Question[]>([])
@@ -336,6 +350,7 @@ export default function Practice() {
   const [showCalc,   setShowCalc]   = useState(false)
   const [checked,    setChecked]    = useState(false)
   const [hintsShown, setHintsShown] = useState(0)
+  const [scratchMode, setScratchMode] = useState<'write' | 'erase'>('write')
   const [results,      setResults]      = useState<boolean[]>([])
   const [xp,           setXp]           = useState(0)
   const [requeuedIds,  setRequeuedIds]  = useState<string[]>([])
@@ -357,6 +372,62 @@ export default function Practice() {
   const [confidenceQueue, setConfidenceQueue] = useState<typeof PRACTICE_CONCEPTS>([])
   /** Format vessel for format-gap weakness missions (C3). */
   const [sessionFormat, setSessionFormat] = useState<FormatId | null>(null)
+
+  function prepareScratchCanvas() {
+    const canvas = scratchCanvasRef.current
+    if (!canvas) return null
+    const rect = canvas.getBoundingClientRect()
+    const dpr = window.devicePixelRatio || 1
+    const nextWidth = Math.max(1, Math.floor(rect.width * dpr))
+    const nextHeight = Math.max(1, Math.floor(rect.height * dpr))
+    if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+      canvas.width = nextWidth
+      canvas.height = nextHeight
+    }
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return null
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+    return ctx
+  }
+
+  function scratchPoint(e: PointerEvent<HTMLCanvasElement>) {
+    const rect = e.currentTarget.getBoundingClientRect()
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top }
+  }
+
+  function beginScratch(e: PointerEvent<HTMLCanvasElement>) {
+    e.preventDefault()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const ctx = prepareScratchCanvas()
+    if (!ctx) return
+    const p = scratchPoint(e)
+    scratchDrawingRef.current = true
+    ctx.beginPath()
+    ctx.moveTo(p.x, p.y)
+  }
+
+  function drawScratch(e: PointerEvent<HTMLCanvasElement>) {
+    if (!scratchDrawingRef.current) return
+    e.preventDefault()
+    const ctx = prepareScratchCanvas()
+    if (!ctx) return
+    const pressure = e.pressure && e.pressure > 0 ? e.pressure : 0.45
+    const p = scratchPoint(e)
+    ctx.globalCompositeOperation = scratchMode === 'erase' ? 'destination-out' : 'source-over'
+    ctx.strokeStyle = '#12382f'
+    ctx.lineWidth = scratchMode === 'erase' ? 28 : 2.2 + pressure * 3.4
+    ctx.lineTo(p.x, p.y)
+    ctx.stroke()
+  }
+
+  function endScratch(e: PointerEvent<HTMLCanvasElement>) {
+    scratchDrawingRef.current = false
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
+  }
 
   // ── Check-in state ────────────────────────────────────────────────────────
   const [checkinText,    setCheckinText]    = useState('')
@@ -420,6 +491,7 @@ export default function Practice() {
     setAssessConcepts(restoredConcepts)
     setConfidenceStep(Math.min(draft.confidenceStep, Math.max(restoredConcepts.length - 1, 0)))
     setConfidenceMap(draft.confidenceMap ?? {})
+    setExcludedConceptIds(draft.excludedConceptIds ?? [])
     const restoredPhase = draft.pPhase === 'onboard' ? 'path'
       : draft.pPhase === 'session' && !draft.questions?.length
       ? (type === 'gapscan' ? 'path' : 'level')
@@ -563,7 +635,8 @@ export default function Practice() {
         setConfidenceMap(diagnostic.confidenceMap as Record<string, Confidence>)
         if (!diagnostic.exam) return
         const ids = await fetchExamConceptIds(diagnostic.exam)
-        const source = ids.length > 0 ? ids : getExamConceptIds(diagnostic.exam)
+        const source = (ids.length > 0 ? ids : getExamConceptIds(diagnostic.exam))
+          .filter(id => CORE_CONCEPT_IDS.has(id))
         setAssessConcepts(source.flatMap(id => {
           const c = PRACTICE_CONCEPTS.find(c => c.id === id)
           return c ? [c] : []
@@ -645,6 +718,7 @@ export default function Practice() {
       sessionBridge,
       hideCorrectness,
       confidenceQueueIds: confidenceQueue.map(c => c.id),
+      excludedConceptIds,
     }
 
     localStorage.setItem(practiceDraftKey(user.uid, missionType), JSON.stringify(draft))
@@ -677,6 +751,7 @@ export default function Practice() {
     sessionBridge,
     hideCorrectness,
     confidenceQueue,
+    excludedConceptIds,
   ])
 
   // Auto-submit if navigated from dashboard with problemText; open the requested flow otherwise.
@@ -718,17 +793,6 @@ export default function Practice() {
       setMode('solver')
       setSPhase('input')
       setSearchParams({}, { replace: true })
-    } else if (searchParams.get('learnNext') === '1') {
-      setSearchParams({}, { replace: true })
-      void fetchPracticeHubRecommendations(user.uid).then(rec => {
-        const target = rec.learn
-        navigate(
-          target
-            ? `/dashboard?view=gps&concept=${encodeURIComponent(target.conceptId)}`
-            : '/dashboard?view=gps&learnNext=1',
-          { replace: true },
-        )
-      })
     } else if (searchParams.get('mode') === 'practice') {
       setMode('practice')
       setAssessConcepts([])
@@ -744,7 +808,8 @@ export default function Practice() {
     setExam(e)
     void (async () => {
       const ids = await fetchExamConceptIds(e)
-      const source = ids.length > 0 ? ids : getExamConceptIds(e)
+      const source = (ids.length > 0 ? ids : getExamConceptIds(e))
+        .filter(id => CORE_CONCEPT_IDS.has(id))
       const filtered = source.flatMap(id => {
         const c = PRACTICE_CONCEPTS.find(c => c.id === id)
         return c ? [c] : []
@@ -765,10 +830,11 @@ export default function Practice() {
     })()
   }
 
-  function finishGapScan(updated: Record<string, Confidence>) {
-    void seedAssessment(user.uid, updated)
+  function finishGapScan(updated: Record<string, Confidence>, excluded = excludedConceptIds) {
+    const seeded = seedFoundationalConfidence(updated)
+    void seedAssessment(user.uid, seeded)
     invalidateKnowledgeGraph(user.uid)
-    void markDiagnosticComplete(user.uid, { exam, confidenceMap: updated })
+    void markDiagnosticComplete(user.uid, { exam, confidenceMap: seeded, excludedConcepts: excluded })
     notifyPracticePathUpdated()
     setHideCorrectness(false)
     setConfidenceQueue([])
@@ -842,10 +908,27 @@ export default function Practice() {
   function pickConfidence(conf: Confidence) {
     const ratingList = confidenceQueue.length > 0 ? confidenceQueue : assessConcepts
     const current = ratingList[confidenceStep]
+    const updatedExcluded = excludedConceptIds.filter(id => id !== current.id)
     const updated = { ...confidenceMap, [current.id]: conf }
+    setExcludedConceptIds(updatedExcluded)
     setConfidenceMap(updated)
     if (confidenceStep + 1 >= ratingList.length) {
-      finishGapScan(updated)
+      finishGapScan(updated, updatedExcluded)
+    } else {
+      setConfidenceStep(i => i + 1)
+    }
+  }
+
+  function pickSkipTopic() {
+    const ratingList = confidenceQueue.length > 0 ? confidenceQueue : assessConcepts
+    const current = ratingList[confidenceStep]
+    const updatedExcluded = [...new Set([...excludedConceptIds, current.id])]
+    const updated = { ...confidenceMap }
+    delete updated[current.id]
+    setExcludedConceptIds(updatedExcluded)
+    setConfidenceMap(updated)
+    if (confidenceStep + 1 >= ratingList.length) {
+      finishGapScan(updated, updatedExcluded)
     } else {
       setConfidenceStep(i => i + 1)
     }
@@ -855,6 +938,10 @@ export default function Practice() {
   function getRecommendedLevel(conceptId: string): 1|2|3 {
     const conf = confidenceMap[conceptId]
     return levelFromConfidence(conf)
+  }
+
+  function levelTierNameFor(lv: 1 | 2 | 3) {
+    return lv === 1 ? 'Warm-up' : lv === 2 ? 'Core' : 'Challenge'
   }
 
   function missionLevel(mission: 'weakness' | 'learn', conf: Confidence | undefined): 1|2|3 {
@@ -870,8 +957,7 @@ export default function Practice() {
     setMode('practice')
     setMissionType(mission)
     setSessionFormat(formatId ?? null)
-    const diagnostic = await loadDiagnostic(user.uid)
-    const conf = (diagnostic?.confidenceMap[conceptId] ?? confidenceMap[conceptId]) as Confidence | undefined
+    const conf = confidenceMap[conceptId] as Confidence | undefined
     const lv = missionLevel(mission, conf)
     await startSession(conceptId, lv, undefined, formatId)
   }
@@ -895,15 +981,6 @@ export default function Practice() {
     } finally { setMissionLoading(null) }
   }
 
-  async function startLearnMission() {
-    setMissionLoading('learn')
-    try {
-      const next = await fetchNextNewConcept(user.uid)
-      if (next) enterMission('learn', next.conceptId)
-      else { setAssessConcepts([]); setPPhase('path') }
-    } finally { setMissionLoading(null) }
-  }
-
   // ── Gap analysis helpers ──────────────────────────────────────────────────
 
   const hardConcepts  = assessConcepts.filter(c => confidenceMap[c.id] === 'hard')
@@ -914,9 +991,15 @@ export default function Practice() {
 
   // ── Practice helpers ──────────────────────────────────────────────────────
 
+  function openExplore(returnPhase: PracticePhase) {
+    setPreExploreReturnPhase(returnPhase)
+    setPPhase('explore')
+  }
+
   function pickConcept(conceptId: string) {
     setConcept(conceptId)
-    setPPhase('explore')
+    setCheckinText('')
+    setPPhase('level')
   }
 
   function showCheckin(conceptId: string, lv: 1|2|3, bridge?: BridgeRecommendation) {
@@ -935,6 +1018,20 @@ export default function Practice() {
       setCheckinLoading(false)
     }
     await startSession(pending.conceptId, pending.lv, pending.bridge)
+  }
+
+  async function startLevelWithCheckin(conceptId: string, lv: 1|2|3, bridge?: BridgeRecommendation) {
+    checkinPendingRef.current = { conceptId, lv, bridge }
+    setLevel(lv)
+    if (checkinText.trim()) {
+      setCheckinLoading(true)
+      try {
+        await agentCheckIn(user.uid, checkinText.trim())
+      } finally {
+        setCheckinLoading(false)
+      }
+    }
+    await startSession(conceptId, lv, bridge)
   }
 
   async function startSession(
@@ -1181,10 +1278,26 @@ export default function Practice() {
   void correctCount
   const pct          = questions.length ? Math.round((qIndex / questions.length) * 100) : 0
   const lvBannerGradient = level === 1
-    ? 'linear-gradient(135deg,#58CC02,#3CAD00)'
+    ? 'radial-gradient(circle at 12% 10%, rgba(228,191,106,0.24), transparent 34%), linear-gradient(135deg,#064D36,#123A2A)'
     : level === 2
-    ? 'linear-gradient(135deg,#F97316,#EA580C)'
-    : 'linear-gradient(135deg,#7C3AED,#5B21B6)'
+    ? 'radial-gradient(circle at 12% 10%, rgba(228,191,106,0.28), transparent 34%), linear-gradient(135deg,#064D36,#4B001D)'
+    : 'radial-gradient(circle at 12% 10%, rgba(244,162,97,0.22), transparent 34%), linear-gradient(135deg,#09251D,#4B001D)'
+  const levelTierName = level === 1 ? 'Warm-up' : level === 2 ? 'Core' : 'Challenge'
+
+  useEffect(() => {
+    if (!currentQ) return
+    const reset = () => {
+      const ctx = prepareScratchCanvas()
+      const canvas = scratchCanvasRef.current
+      if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+    const frame = window.requestAnimationFrame(reset)
+    window.addEventListener('resize', reset)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('resize', reset)
+    }
+  }, [currentQ?.id])
 
   const firstAttemptResults  = results.slice(0, initialQCount)
   const firstCorrect         = firstAttemptResults.filter(Boolean).length
@@ -1236,16 +1349,23 @@ export default function Practice() {
   const isPathView = pPhase === 'path' && mode === 'practice'
   const isMatteFlow = mode === 'practice' && ['explore', 'level', 'checkin', 'session', 'complete', 'no-content'].includes(pPhase)
   const isLessonPage = isMatteFlow
-  const hideTopBar = mode === 'practice' && ['exam-pick', 'confidence', 'building'].includes(pPhase)
 
   return (
     <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}`}>
-      <Sidebar />
+      {!isMatteFlow && <Sidebar />}
 
       <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}`}>
 
-        {!hideTopBar && (
-          <AppTabBar active={mode === 'solver' ? 'solver' : 'practice'} isAdmin={isAdmin} />
+        {mode === 'practice' && isMatteFlow && (
+          <a
+            className={s.tutorPing}
+            href={SLACK_INVITE}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span aria-hidden="true">?</span>
+            Ping tutor
+          </a>
         )}
 
         {/* ═══════ PRACTICE MODE ═══════ */}
@@ -1327,7 +1447,9 @@ export default function Practice() {
                       </h1>
                       <p className={s.confSub}>{CONFIDENCE_COPY[selectedExam]}</p>
                       <div className={s.conceptPreview}>
-                        <span className={s.conceptPreviewEmoji}>{current.emoji}</span>
+                        <span className={s.conceptPreviewIcon}>
+                          <ConceptPathIcon conceptId={current.id} size={38} />
+                        </span>
                         <div>
                           <span className={s.conceptPreviewName}>{current.label}</span>
                           <span className={s.conceptPreviewMeta}>
@@ -1357,6 +1479,17 @@ export default function Practice() {
                         <div className={s.confBtnText}>
                           <span className={s.confBtnLabel}>{confOptions.hard.label}</span>
                           <span className={s.confBtnDesc}>{confOptions.hard.desc}</span>
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        className={`${s.confBtn} ${s.confBtnSkip} ${excludedConceptIds.includes(current.id) ? s.confBtnSkipOn : ''}`}
+                        onClick={() => pickSkipTopic()}
+                      >
+                        <span className={s.confBtnIcon}>—</span>
+                        <div className={s.confBtnText}>
+                          <span className={s.confBtnLabel}>Not on my path</span>
+                          <span className={s.confBtnDesc}>Skip this topic for now</span>
                         </div>
                       </button>
                     </div>
@@ -1446,8 +1579,8 @@ export default function Practice() {
                             const cy = nodeY(i)
                             return (
                               <g key={i}>
-                                <circle cx={SPINE} cy={cy} r="19" fill="rgba(8,18,14,0.96)" stroke="rgba(196,245,71,0.55)" strokeWidth="2" />
-                                <text x={SPINE} y={cy + 5} textAnchor="middle" fill="#c4f547" fontSize="12" fontWeight="800" fontFamily="system-ui,sans-serif">{i + 1}</text>
+                                <circle cx={SPINE} cy={cy} r="19" fill="rgba(8,18,14,0.96)" stroke="rgba(84,185,72,0.55)" strokeWidth="2" />
+                                <text x={SPINE} y={cy + 5} textAnchor="middle" fill="#54b948" fontSize="12" fontWeight="800" fontFamily="system-ui,sans-serif">{i + 1}</text>
                               </g>
                             )
                           })}
@@ -1483,7 +1616,7 @@ export default function Practice() {
                     <div className={s.pathProgressCard}>
                       <div
                         className={s.pathProgressRing}
-                        style={{ background: `conic-gradient(#c4f547 ${pathProgressPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
+                        style={{ background: `conic-gradient(#54b948 ${pathProgressPct * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
                       >
                         <span className={s.pathProgressRingInner}>{pathProgressPct}%</span>
                       </div>
@@ -1504,10 +1637,10 @@ export default function Practice() {
                     </div>
 
                     <div className={s.pathStreakCard}>
-                      <span className={s.pathStreakFire} aria-hidden="true">🔥</span>
+                      <span className={s.pathStreakMark} aria-hidden="true">M</span>
                       <div>
                         <p className={s.pathStreakCount}>{streak || 0} day{streak === 1 ? '' : 's'}</p>
-                        <p className={s.pathStreakLabel}>Keep it up!</p>
+                        <p className={s.pathStreakLabel}>Momentum streak</p>
                       </div>
                     </div>
 
@@ -1542,8 +1675,12 @@ export default function Practice() {
               const content = getConceptContent(conceptMeta.id)
               return (
                 <div className={s.exploreScreen}>
-                  <button className={s.backLink} onClick={() => setPPhase('path')}>
-                    ← Back to path
+                  <button className={s.backLink} onClick={() => {
+                    const ret = preExploreReturnPhase ?? 'path'
+                    setPreExploreReturnPhase(null)
+                    setPPhase(ret)
+                  }}>
+                    ← {preExploreReturnPhase === 'session' ? 'Back to question' : 'Back to path'}
                   </button>
 
                   <div className={s.exploreCard}>
@@ -1560,7 +1697,7 @@ export default function Practice() {
                         {/* Show recommended level if this concept was assessed */}
                         {confidenceMap[conceptMeta.id] && (
                           <span className={s.confLevelHint}>
-                            Craft recommends: Level {getRecommendedLevel(conceptMeta.id)} based on your self-assessment
+                            Craft recommends: {LEVEL_META[getRecommendedLevel(conceptMeta.id)].label} based on your self-assessment
                           </span>
                         )}
                       </div>
@@ -1574,13 +1711,13 @@ export default function Practice() {
 
                         <div className={s.exploreGrid}>
                           <div className={s.exploreSection}>
-                            <div className={s.exploreSectionTitle}>📋 Key Rules</div>
+                            <div className={s.exploreSectionTitle}><span>Rules</span> Key moves</div>
                             <ul className={s.exploreList}>
                               {content.keyRules.map((r, i) => <li key={i}>{r}</li>)}
                             </ul>
                           </div>
                           <div className={s.exploreSection}>
-                            <div className={s.exploreSectionTitle}>💡 Pro Tips</div>
+                            <div className={s.exploreSectionTitle}><span>Coach</span> Field notes</div>
                             <ul className={s.exploreList}>
                               {content.tips.map((t, i) => <li key={i}>{t}</li>)}
                             </ul>
@@ -1588,14 +1725,14 @@ export default function Practice() {
                         </div>
 
                         <div className={s.exploreSection}>
-                          <div className={s.exploreSectionTitle}>⚠️ Watch Out</div>
+                          <div className={s.exploreSectionTitle}><span>Trap</span> Watch points</div>
                           <ul className={`${s.exploreList} ${s.watchOutList}`}>
                             {content.watchOut.map((w, i) => <li key={i}>{w}</li>)}
                           </ul>
                         </div>
 
                         <div className={s.exploreSection}>
-                          <div className={s.exploreSectionTitle}>🔍 Worked Examples</div>
+                          <div className={s.exploreSectionTitle}><span>Model</span> Worked examples</div>
                           <div className={s.exploreExamples}>
                             {content.examples.map((ex, i) => (
                               <div key={i} className={s.exploreExample}>
@@ -1608,9 +1745,6 @@ export default function Practice() {
                       </>
                     )}
 
-                    <button className={s.startPracticeBtn} onClick={() => setPPhase('level')}>
-                      Start Practice →
-                    </button>
                   </div>
                 </div>
               )
@@ -1661,52 +1795,76 @@ export default function Practice() {
             {/* ── Level selector ── */}
             {pPhase === 'level' && conceptMeta && (
               <div className={s.levelScreen}>
-                <button className={s.backLink} onClick={() => setPPhase('explore')}>
-                  ← {conceptMeta.label}
+                <button className={s.backLink} onClick={() => setPPhase('path')}>
+                  ← Back to path
                 </button>
-                <div className={s.levelHeader}>
-                  <span className={s.levelConceptIcon}>
-                    <ConceptPathIcon conceptId={conceptMeta.id} size={40} />
-                  </span>
-                  <div>
-                    <h2 className={s.levelConceptName}>{conceptMeta.label}</h2>
-                    <p className={s.levelConceptSub}>Choose your difficulty</p>
-                  </div>
-                </div>
 
-                <div className={s.levelCards}>
-                  {([1, 2, 3] as const)
-                    .filter(lv => allowedLevels(confidenceMap[conceptMeta.id]).includes(lv))
-                    .map(lv => {
-                    const m   = LEVEL_META[lv]
-                    const cnt = questionCount(conceptMeta.id, lv)
-                    const recommended = confidenceMap[conceptMeta.id]
-                      ? getRecommendedLevel(conceptMeta.id) === lv
-                      : false
-                    return (
-                      <button
-                        key={lv}
-                        className={`${s.levelCard} ${recommended ? s.levelCardRec : ''}`}
-                        style={{ '--lv-color': m.color, '--lv-soft': m.colorSoft } as React.CSSProperties}
-                        onClick={() => showCheckin(conceptMeta.id, lv)}
-                      >
-                        {recommended && (
-                          <span className={s.levelRecBadge}>Recommended</span>
-                        )}
-                        <div className={s.levelColorStripe} style={{ background: m.color }} />
-                        <div className={s.levelStars}>
-                          {Array.from({ length: 3 }).map((_, i) => (
-                            <span key={i} className={i < m.stars ? s.starOn : s.starOff}>★</span>
-                          ))}
-                        </div>
-                        <div className={s.levelNum}>Level {lv}</div>
-                        <div className={s.levelName}>{m.label}</div>
-                        <div className={s.levelDesc}>{m.sub}</div>
-                        <div className={s.levelXp}>+{m.xp} XP / question</div>
-                        <div className={s.levelCount}>{cnt > 0 ? `${cnt} bank questions` : 'AI-generated'}</div>
-                      </button>
-                    )
-                  })}
+                <div className={s.levelStudioCard}>
+                  <div className={s.levelHeader}>
+                    <span className={s.levelConceptIcon}>
+                      <ConceptPathIcon conceptId={conceptMeta.id} size={40} />
+                    </span>
+                    <div>
+                      <h2 className={s.levelConceptName}>{conceptMeta.label}</h2>
+                      <p className={s.levelConceptSub}>Choose the version that feels right today.</p>
+                      {confidenceMap[conceptMeta.id] && (
+                        <span className={s.confLevelHint}>
+                          Craft recommends {LEVEL_META[getRecommendedLevel(conceptMeta.id)].label}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={s.levelCards}>
+                    {([1, 2, 3] as const)
+                      .filter(lv => allowedLevels(confidenceMap[conceptMeta.id]).includes(lv))
+                      .map(lv => {
+                      const m   = LEVEL_META[lv]
+                      const cnt = questionCount(conceptMeta.id, lv)
+                      const recommended = confidenceMap[conceptMeta.id]
+                        ? getRecommendedLevel(conceptMeta.id) === lv
+                        : false
+                      return (
+                        <button
+                          key={lv}
+                          className={`${s.levelCard} ${recommended ? s.levelCardRec : ''}`}
+                          style={{ '--lv-color': m.color, '--lv-soft': m.colorSoft } as React.CSSProperties}
+                          onClick={() => void startLevelWithCheckin(conceptMeta.id, lv)}
+                          disabled={checkinLoading}
+                        >
+                          {recommended && (
+                            <span className={s.levelRecBadge}>Recommended</span>
+                          )}
+                          <div className={s.levelColorStripe} style={{ background: m.color }} />
+                          <div className={s.levelTierMeter} aria-label={`${m.stars} of 3 tier intensity`}>
+                            {Array.from({ length: 3 }).map((_, i) => (
+                              <span key={i} className={i < m.stars ? s.tierOn : s.tierOff} />
+                            ))}
+                          </div>
+                          <div className={s.levelNum}>{levelTierNameFor(lv)}</div>
+                          <div className={s.levelName}>{m.label}</div>
+                          <div className={s.levelDesc}>{m.sub}</div>
+                          <div className={s.levelXp}>+{m.xp} insight pts / question</div>
+                          <div className={s.levelCount}>{cnt > 0 ? `${cnt} bank questions` : 'AI-generated'}</div>
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  <div className={s.checkinInline}>
+                    <div className={s.checkinCopy}>
+                      <h3>How are you feeling?</h3>
+                      <p>Optional. Tell Craft what feels tricky, then choose a difficulty above.</p>
+                    </div>
+                    <textarea
+                      rows={3}
+                      value={checkinText}
+                      onChange={e => setCheckinText(e.target.value)}
+                      placeholder="e.g. Circles are fine, but word problems with radius and diameter feel confusing."
+                      maxLength={1000}
+                    />
+                    {checkinLoading && <span className={s.checkinReading}>Reading your note…</span>}
+                  </div>
                 </div>
               </div>
             )}
@@ -1776,191 +1934,233 @@ export default function Practice() {
             {pPhase === 'session' && currentQ && (
               <div className={s.sessionWrap}>
                 <div className={s.sessionCenter}>
-                  <div className={s.progressStrip}>
-                    <button
-                      type="button"
-                      className={s.backDashBtn}
-                      onClick={() => navigate('/dashboard')}
-                    >
-                      ← Dashboard
-                    </button>
-                    <div className={s.stripLeft}>
-                      <span className={s.stripConcept}>
-                        <ConceptPathIcon conceptId={sessionConceptId} size={18} />
-                        {hideCorrectness ? 'Gap scan' : sessionLabel}
-                      </span>
-                      {sessionBridge && !hideCorrectness && (
-                        <span className={s.stripBridge}>
-                          Bridge: {bridgeLabel(sessionBridge.fromId)} → {bridgeLabel(sessionBridge.toId)}
-                        </span>
-                      )}
-                      <span className={s.stripLevel} style={{ color: lvMeta.color }}>
-                        {hideCorrectness
-                          ? sessionLabel
-                          : `${'★'.repeat(level)}${'☆'.repeat(3 - level)} L${level}`}
-                      </span>
-                    </div>
-                    <div className={s.stripCenter}>
-                      <div className={s.progressBar}>
-                        <div className={s.progressFill} style={{ width: `${pct}%`, background: lvMeta.color }} />
-                      </div>
-                      <span className={s.progressLabel}>{qIndex + 1} / {questions.length}</span>
-                    </div>
-                    <div className={s.stripRight}>
-                      {!hideCorrectness && <span className={s.xpBadge}>⚡ {xp} XP</span>}
-                    </div>
-                  </div>
-
                   <div className={s.questionCard}>
+                    <div className={s.workbenchDock}>
+                      <div className={s.workbenchMeta}>
+                        <span className={s.workbenchConcept}>
+                          <ConceptPathIcon conceptId={sessionConceptId} size={18} />
+                          {hideCorrectness ? 'Gap scan' : sessionLabel}
+                        </span>
+                        {sessionBridge && !hideCorrectness && (
+                          <span className={s.workbenchBridge}>
+                            {bridgeLabel(sessionBridge.fromId)} → {bridgeLabel(sessionBridge.toId)}
+                          </span>
+                        )}
+                        <span className={s.workbenchLevel} style={{ color: lvMeta.color }}>
+                          {hideCorrectness ? sessionLabel : levelTierName}
+                        </span>
+                      </div>
+                      <div className={s.workbenchProgress}>
+                        <div className={s.miniProgress}>
+                          <div className={s.miniProgressFill} style={{ width: `${pct}%`, background: lvMeta.color }} />
+                        </div>
+                        <span>{qIndex + 1} / {questions.length}</span>
+                        {!hideCorrectness && <span className={s.xpBadge}>{xp} Insight</span>}
+                      </div>
+                      <div className={s.workbenchActions}>
+                        <button type="button" className={s.workbenchBtn} onClick={() => navigate('/dashboard')}>
+                          Dashboard
+                        </button>
+                        <button type="button" className={s.workbenchBtn} onClick={() => setPPhase('path')}>
+                          Practice Path
+                        </button>
+                        <button type="button" className={s.workbenchBtn} onClick={() => openExplore('session')}>
+                          Lesson Notes
+                        </button>
+                        <button type="button" className={s.workbenchBtn} onClick={() => navigate('/practice?homeworkHelp=1')}>
+                          Homework Help
+                        </button>
+                      </div>
+                    </div>
+
                     <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
-                      {currentQ.examTag && (
-                        <span className={s.examTagLight}>{currentQ.examTag} Style</span>
-                      )}
                       <p className={s.questionText}>{currentQ.question}</p>
                     </div>
-                    <div className={s.questionBody}>
-                      {safeQuestionSvg(currentQ) && (
-                        <div
-                          className={s.questionVisual}
-                          dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
-                        />
-                      )}
-                      <div className={s.choices}>
-                        {currentQ.choices.map((choice, i) => {
-                          let cls = s.choice
-                          if (checked && !hideCorrectness) {
-                            if (i === currentQ.correctIndex) cls = s.choiceCorrect
-                            else if (i === selected)         cls = s.choiceWrong
-                          } else if (i === selected) {
-                            cls = s.choiceSelected
-                          }
-                          return (
-                            <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
-                              <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                              <span className={s.choiceText}>{choice}</span>
-                              {!hideCorrectness && checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
-                              {!hideCorrectness && checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>✗</span>}
-                            </button>
-                          )
-                        })}
-                      </div>
 
-                      {!checked && !hideCorrectness && (
-                        <div className={s.hintCardInline}>
-                          <div className={s.hintCardHeader}>
-                            <span>💡</span>
-                            <span className={s.hintCardTitle}>Need a hint?</span>
+                    <div className={s.questionBody}>
+                      <div className={s.workbenchGrid}>
+                        <section className={s.problemPane} aria-label="Question and answer">
+                          {safeQuestionSvg(currentQ) && (
+                            <div
+                              className={s.questionVisual}
+                              dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
+                            />
+                          )}
+                          <div className={s.choices}>
+                            {currentQ.choices.map((choice, i) => {
+                              let cls = s.choice
+                              if (checked && !hideCorrectness) {
+                                if (i === currentQ.correctIndex) cls = s.choiceCorrect
+                                else if (i === selected)         cls = s.choiceWrong
+                              } else if (i === selected) {
+                                cls = s.choiceSelected
+                              }
+                              return (
+                                <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
+                                  <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
+                                  <span className={s.choiceText}>{choice}</span>
+                                  {!hideCorrectness && checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
+                                  {!hideCorrectness && checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>×</span>}
+                                </button>
+                              )
+                            })}
                           </div>
-                          {hintsShown === 0 ? (
-                            <button type="button" className={s.hintTrigger} onClick={() => setHintsShown(1)}>
-                              Show hint 1 →
-                            </button>
-                          ) : (
-                            <div className={s.hintsBox}>
-                              {currentQ.hints.slice(0, hintsShown).map((h, i) => (
-                                <div key={i} className={s.hintLine}>
-                                  <span className={s.hintNum}>{i + 1}</span> {h}
-                                </div>
-                              ))}
-                              {hintsShown < 3 && (
+
+                          {!checked && (
+                            <div className={s.answerRow}>
+                              <div className={s.answerInputWrap}>
+                                <input
+                                  ref={answerInputRef}
+                                  className={s.answerInput}
+                                  type="text"
+                                  placeholder="Type answer or use the math keyboard"
+                                  value={typedAnswer}
+                                  onChange={e => setTypedAnswer(e.target.value)}
+                                  onKeyDown={e => {
+                                    if (e.key === 'Enter' && !checked) checkAnswer()
+                                  }}
+                                  disabled={checked}
+                                />
+                                <ScientificCalcToggle
+                                  active={showCalc}
+                                  onToggle={() => setShowCalc(v => !v)}
+                                  disabled={checked}
+                                />
                                 <button
                                   type="button"
-                                  className={s.hintTrigger}
-                                  onClick={() => setHintsShown(h => Math.min(h + 1, 3))}
-                                  style={{ borderTop: '1px solid #F1F5F9' }}
+                                  className={s.answerSubmit}
+                                  onClick={checkAnswer}
+                                  disabled={checked || (selected === null && !typedAnswer.trim())}
+                                  aria-label={hideCorrectness ? 'Continue' : 'Submit answer'}
                                 >
-                                  Hint {hintsShown + 1} →
+                                  ↑
                                 </button>
+                              </div>
+                              <ScientificCalcPanel
+                                open={showCalc}
+                                value={typedAnswer}
+                                onChange={setTypedAnswer}
+                                onSubmit={checkAnswer}
+                                inputRef={answerInputRef}
+                              />
+                            </div>
+                          )}
+
+                          {!checked && !hideCorrectness && (
+                            <div className={s.inlineHints}>
+                              {hintsShown === 0 ? (
+                                <button type="button" className={s.hintTrigger} onClick={() => setHintsShown(1)}>
+                                  View hints
+                                </button>
+                              ) : (
+                                <div className={s.hintsBox}>
+                                  {currentQ.hints.slice(0, hintsShown).map((h, i) => (
+                                    <div key={i} className={s.hintLine}>
+                                      <span className={s.hintNum}>{i + 1}</span> {h}
+                                    </div>
+                                  ))}
+                                  {hintsShown < 3 && (
+                                    <button
+                                      type="button"
+                                      className={s.hintTrigger}
+                                      onClick={() => setHintsShown(h => Math.min(h + 1, 3))}
+                                    >
+                                      Show next hint
+                                    </button>
+                                  )}
+                                </div>
                               )}
                             </div>
                           )}
-                        </div>
-                      )}
 
-                      {!checked && (
-                        <div className={s.answerRow}>
-                          <div className={s.answerInputWrap}>
-                            <input
-                              ref={answerInputRef}
-                              className={s.answerInput}
-                              type="text"
-                              placeholder="Type your answer here"
-                              value={typedAnswer}
-                              onChange={e => setTypedAnswer(e.target.value)}
-                              onKeyDown={e => {
-                                if (e.key === 'Enter' && !checked) checkAnswer()
-                              }}
-                              disabled={checked}
-                            />
-                            <ScientificCalcToggle
-                              active={showCalc}
-                              onToggle={() => setShowCalc(v => !v)}
-                              disabled={checked}
-                            />
-                            <button
-                              type="button"
-                              className={s.answerSubmit}
-                              onClick={checkAnswer}
-                              disabled={checked || (selected === null && !typedAnswer.trim())}
-                              aria-label={hideCorrectness ? 'Continue' : 'Submit answer'}
-                            >
-                              {hideCorrectness ? '→' : '↑'}
-                            </button>
-                          </div>
-                          <ScientificCalcPanel
-                            open={showCalc}
-                            value={typedAnswer}
-                            onChange={setTypedAnswer}
-                            onSubmit={checkAnswer}
-                            inputRef={answerInputRef}
-                          />
-                        </div>
-                      )}
-                    </div>
-
-                    {checked && !hideCorrectness && (
-                      <div className={selected === currentQ.correctIndex ? s.feedbackCorrect : s.feedbackWrong}>
-                        <div className={selected === currentQ.correctIndex ? s.feedbackBannerCorrect : s.feedbackBannerWrong}>
-                          <span className={s.feedbackIcon}>
-                            {selected === currentQ.correctIndex ? '✨' : '💡'}
-                          </span>
-                          <span className={s.feedbackTitle}>
-                            {selected === currentQ.correctIndex
-                              ? `Correct! +${lvMeta.xp} XP`
-                              : "Not quite — here's why:"}
-                          </span>
-                        </div>
-                        <div className={s.feedbackBody}>
-                          <div className={s.feedbackExplanation}>{currentQ.explanation}</div>
-                          {selected !== currentQ.correctIndex && currentQ.misconception_label && (
-                            <div className={s.misconceptionTag}>
-                              <span className={s.misconceptionIcon}>⚠</span>
-                              <span className={s.misconceptionText}>
-                                <strong>Common trap:</strong> {currentQ.misconception_label}
-                              </span>
+                          {checked && !hideCorrectness && (
+                            <div className={selected === currentQ.correctIndex ? s.feedbackCorrect : s.feedbackWrong}>
+                              <div className={selected === currentQ.correctIndex ? s.feedbackBannerCorrect : s.feedbackBannerWrong}>
+                                <span className={s.feedbackIcon}>
+                                  {selected === currentQ.correctIndex ? '✓' : 'i'}
+                                </span>
+                                <span className={s.feedbackTitle}>
+                                  {selected === currentQ.correctIndex
+                                    ? `Correct · +${lvMeta.xp} Insight`
+                                    : 'Review the reasoning'}
+                                </span>
+                              </div>
+                              <div className={s.feedbackBody}>
+                                <div className={s.feedbackExplanation}>{currentQ.explanation}</div>
+                                {selected !== currentQ.correctIndex && currentQ.misconception_label && (
+                                  <div className={s.misconceptionTag}>
+                                    <span className={s.misconceptionIcon}>⚠️</span>
+                                    <span className={s.misconceptionText}>
+                                      <strong>Common trap:</strong> {currentQ.misconception_label}
+                                    </span>
+                                  </div>
+                                )}
+                                {selected !== currentQ.correctIndex && (
+                                  <button
+                                    className={s.walkthroughBtn}
+                                    onClick={() => navigate('/practice', {
+                                      state: { homeworkHelp: true, problemText: currentQ.question }
+                                    })}
+                                  >
+                                    Get a step-by-step walkthrough →
+                                  </button>
+                                )}
+                                {selected !== currentQ.correctIndex && concept && getConceptContent(concept) && (
+                                  <button
+                                    type="button"
+                                    className={s.reviewLink}
+                                    onClick={() => openExplore('session')}
+                                  >
+                                    Review {conceptMeta?.label ?? mlIdToLabel(concept)} →
+                                  </button>
+                                )}
+                              </div>
                             </div>
                           )}
-                          {selected !== currentQ.correctIndex && (
-                            <button
-                              className={s.walkthroughBtn}
-                              onClick={() => navigate('/practice', {
-                                state: { homeworkHelp: true, problemText: currentQ.question }
-                              })}
-                            >
-                              Get a step-by-step walkthrough →
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    )}
 
-                    {checked && !hideCorrectness && (
-                      <div className={s.actionRow}>
-                        <button className={s.nextBtn} onClick={nextQuestion}>
-                          {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
-                        </button>
+                          {checked && !hideCorrectness && (
+                            <div className={s.actionRow}>
+                              <button className={s.nextBtn} onClick={nextQuestion}>
+                                {qIndex + 1 < questions.length ? 'Next Question →' : 'Update Map →'}
+                              </button>
+                            </div>
+                          )}
+                        </section>
+
+                        <section className={s.scratchPane} aria-label="Scratch work">
+                          <div className={s.scratchHead}>
+                            <span>Scratch Work</span>
+                            <div className={s.scratchTools} role="group" aria-label="Scratch tool">
+                              <button
+                                type="button"
+                                className={`${s.scratchTool} ${scratchMode === 'write' ? s.scratchToolActive : ''}`}
+                                onClick={() => setScratchMode('write')}
+                              >
+                                Write
+                              </button>
+                              <button
+                                type="button"
+                                className={`${s.scratchTool} ${scratchMode === 'erase' ? s.scratchToolActive : ''}`}
+                                onClick={() => setScratchMode('erase')}
+                              >
+                                Erase
+                              </button>
+                            </div>
+                          </div>
+                          <canvas
+                            key={currentQ.id}
+                            ref={scratchCanvasRef}
+                            className={s.scratchCanvas}
+                            aria-label="Scratch work canvas"
+                            onPointerDown={beginScratch}
+                            onPointerMove={drawScratch}
+                            onPointerUp={endScratch}
+                            onPointerCancel={endScratch}
+                            onPointerLeave={() => { scratchDrawingRef.current = false }}
+                          />
+                        </section>
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1970,15 +2170,15 @@ export default function Practice() {
             {pPhase === 'complete' && (
               <div className={s.completeWrap}>
                 <div className={s.completeStars}>
-                  {mastered ? '🌟🌟🌟' : firstAccuracy >= 0.60 ? '🌟🌟' : '🌟'}
+                  <span>{mastered ? 'Mastery' : firstAccuracy >= 0.60 ? 'Almost locked' : 'Needs reps'}</span>
                 </div>
                 <h2 className={s.completeTitle}>
-                  {mastered ? `Level ${level} Mastered!` : 'Session Complete!'}
+                  {mastered ? `${levelTierName} mastered` : 'Session complete'}
                 </h2>
                 <div className={s.completeStats}>
                   <div className={s.completeStat}>
                     <span className={s.completeStatNum} style={{ color: lvMeta.color }}>{xp}</span>
-                    <span className={s.completeStatLabel}>XP Earned</span>
+                    <span className={s.completeStatLabel}>Insight points</span>
                   </div>
                   <div className={s.completeStat}>
                     <span className={s.completeStatNum}>{firstCorrect}/{initialQCount}</span>
@@ -1991,7 +2191,7 @@ export default function Practice() {
                 </div>
                 <div className={s.completeInsight}>
                   {mastered
-                    ? `${firstCorrect}/${initialQCount} on first attempt — you've got ${conceptMeta?.label}. Ready for Level ${Math.min(level + 1, 3)}!`
+                    ? `${firstCorrect}/${initialQCount} on first attempt — you've got ${conceptMeta?.label}. Ready for ${levelTierNameFor(Math.min(level + 1, 3) as 1 | 2 | 3)}!`
                     : firstAccuracy >= 0.60
                     ? `${firstCorrect}/${initialQCount} first-try — nearly there. One more round and you'll lock it in.`
                     : `${firstCorrect}/${initialQCount} on first attempt. ${conceptMeta?.label} needs more practice — re-queued your misses for extra reps.`}
@@ -2005,8 +2205,8 @@ export default function Practice() {
                     onClick={() => startSession(concept!, mastered ? Math.min(level + 1, 3) as 1|2|3 : level)}
                   >
                     {mastered
-                      ? level < 3 ? `Level ${level + 1} →` : 'Practice Again →'
-                      : `Retry Level ${level} →`}
+                      ? level < 3 ? `${levelTierNameFor(Math.min(level + 1, 3) as 1 | 2 | 3)} →` : 'Practice Again →'
+                      : `Retry ${levelTierName} →`}
                   </button>
                 </div>
                 {/* Next gap concept suggestion */}
@@ -2022,7 +2222,7 @@ export default function Practice() {
                         className={s.nextGapBtn}
                         onClick={() => startSession(nextGap.id, getRecommendedLevel(nextGap.id))}
                       >
-                        {nextGap.emoji} {nextGap.label} → Level {getRecommendedLevel(nextGap.id)}
+                        {nextGap.label} → {LEVEL_META[getRecommendedLevel(nextGap.id)].label}
                       </button>
                     </div>
                   )
@@ -2093,7 +2293,7 @@ export default function Practice() {
                     <span />
                     <svg viewBox="0 0 260 120" fill="none">
                       <path d="M18 92 H242 M36 104 V18" stroke="rgba(255,255,255,.22)" strokeWidth="2" />
-                      <path d="M38 88 C82 74 95 28 130 34 C166 40 171 89 222 28" stroke="#C4F547" strokeWidth="4" strokeLinecap="round" />
+                      <path d="M38 88 C82 74 95 28 130 34 C166 40 171 89 222 28" stroke="#54B948" strokeWidth="4" strokeLinecap="round" />
                       <circle cx="130" cy="34" r="5" fill="#4ECDC4" />
                       <circle cx="222" cy="28" r="5" fill="#FF6B6B" />
                     </svg>
