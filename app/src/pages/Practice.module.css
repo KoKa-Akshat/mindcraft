@@ -1765,52 +1765,27 @@
 
 .examCard {
   position: relative;
-  min-height: 172px;
+  min-height: 160px;
   overflow: hidden;
-  background: var(--exam-accent);
-  border: 1.5px solid rgba(255,255,255,0.18);
-  border-radius: 18px;
-  padding: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
+  border-left: 3px solid var(--exam-accent);
+  border-radius: 4px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
   cursor: pointer;
-  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  transition: background 150ms ease, border-color 150ms ease;
   text-align: left;
-  box-shadow:
-    0 16px 34px rgba(0,0,0,0.20),
-    inset 0 1px 0 rgba(255,255,255,0.22);
-}
-
-.examCard::before {
-  content: '';
-  position: absolute;
-  right: 14px;
-  top: 14px;
-  width: 58px;
-  height: 58px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.16);
-  pointer-events: none;
-}
-
-.examCard::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(0,0,0,0.10));
-  pointer-events: none;
 }
 
 .examCard:hover {
-  border-color: rgba(255,255,255,0.38);
-  transform: translateY(-5px);
-  filter: saturate(1.05) brightness(1.03);
-  box-shadow:
-    0 22px 48px rgba(0,0,0,0.26),
-    inset 0 1px 0 rgba(255,255,255,0.28);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.20);
+  border-left-color: var(--exam-accent);
 }
 
 .examCardTop {
@@ -1826,25 +1801,26 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 46px;
-  height: 46px;
-  padding: 0 10px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.22);
-  color: rgba(5, 24, 32, 0.86);
-  border: 1px solid rgba(255,255,255,0.22);
+  min-width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--exam-accent);
+  border: 1.5px solid var(--exam-accent);
   font-family: var(--f-display);
-  font-size: 14px;
-  font-weight: 900;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 0;
+  opacity: 0.85;
 }
 
 .examCardArrow {
-  color: rgba(5, 24, 32, 0.72);
-  font-size: 18px;
-  font-weight: 900;
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 16px;
+  font-weight: 400;
   opacity: 0;
-  transform: translateX(-8px);
+  transform: translateX(-6px);
   transition: opacity 150ms ease, transform 150ms ease;
 }
 
@@ -1857,17 +1833,17 @@
   position: relative;
   z-index: 1;
   font-family: var(--f-display);
-  font-size: 28px;
-  font-weight: 900;
-  color: rgba(5, 24, 32, 0.90);
-  letter-spacing: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.90);
+  letter-spacing: -0.01em;
 }
 .examCardDesc {
   position: relative;
   z-index: 1;
   max-width: 230px;
   font-size: 12px;
-  color: rgba(5, 24, 32, 0.62);
+  color: rgba(255, 255, 255, 0.50);
   line-height: 1.45;
 }
 
@@ -1879,13 +1855,15 @@
   margin-top: auto;
   padding: 5px 10px;
   border-radius: 999px;
-  color: rgba(5, 24, 32, 0.78);
-  background: rgba(255,255,255,0.20);
-  border: 1px solid rgba(255,255,255,0.20);
-  font-size: 9.5px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.48);
+  background: transparent;
+  border: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  padding: 0;
+  margin-top: 4px;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════

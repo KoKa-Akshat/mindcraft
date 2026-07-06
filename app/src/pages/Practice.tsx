@@ -1328,22 +1328,10 @@ export default function Practice() {
                       />
                     ))}
                   </div>
-                  <div className={s.processInlineBar}>
-                    <span>Process 1 is saved automatically</span>
-                    <div>
-                      <button onClick={showPracticeHome}>Back to processes</button>
-                      <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-                    </div>
-                  </div>
-
                   <div className={s.confLayout}>
                     <div className={s.confPrompt}>
-                      <div className={s.confMascotFloat}>
-                        <PixelCraft size="sm" />
-                      </div>
                       <div className={s.processBadgeRow}>
                         <span className={s.confExamBadge}>{selectedExam} gap scan</span>
-                        <span className={s.processBadge}>{draftRestored ? 'Process 1 resumed' : 'Process 1 saved'}</span>
                       </div>
                       <h1 className={s.confTitle}>
                         How strong is <span>{current.label}</span>?
