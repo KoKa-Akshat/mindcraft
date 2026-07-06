@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MindCraft — System Architecture</title>
+<style>
+  :root {
+    --bg: #080d14;
+    --surface: #0e1520;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8edf5;
+    --dim: rgba(232,237,245,0.45);
+    --dimmer: rgba(232,237,245,0.22);
+
+    /* system colours */
+    --col-fe:  #3b82f6;   /* frontend */
+    --col-fb:  #f59e0b;   /* firebase */
+    --col-ml:  #22c55e;   /* ml backend */
+    --col-llm: #a855f7;   /* llm */
+    --col-data:#06b6d4;   /* static data */
+    --col-wh:  #f97316;   /* webhook */
+
+    /* status */
+    --live:   #22c55e;
+    --partial:#f59e0b;
+    --broken: #ef4444;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+    overflow-x: auto;
+  }
+
+  /* ── top bar ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(8,13,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 28px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .topbar h1 { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+  .topbar .sub { font-size: 11px; color: var(--dim); }
+
+  .legend {
+    display: flex; gap: 16px; margin-left: auto; align-items: center; flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--dim);
+  }
+  .legend-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+
+  .status-key {
+    display: flex; gap: 12px; align-items: center; margin-left: 16px;
+    border-left: 1px solid var(--border); padding-left: 16px;
+  }
+  .sk { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--dim); }
+  .sk-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  /* ── main canvas ── */
+  .canvas {
+    padding: 32px 28px 80px;
+    min-width: 1400px;
+  }
+
+  /* ── phases ── */
+  .phase-row {
+    display: flex; gap: 0; margin-bottom: 0;
+    position: relative;
+  }
+  .phase-label {
+    width: 120px; min-width: 120px;
+    padding: 20px 16px 0 0;
+    font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--dimmer);
+    font-family: "IBM Plex Mono", monospace;
+    line-height: 1.4;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .phase-label::after {
+    content: "";
+    position: absolute; right: -4px; top: 26px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--border);
+  }
+
+  .phase-content {
+    flex: 1; padding: 20px 0 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start;
+  }
+
+  /* ── flow arrows between phases ── */
+  .phase-row + .phase-row .phase-label::before {
+    content: "↓";
+    position: absolute; right: -8px; top: -14px;
+    font-size: 11px; color: var(--dimmer);
+  }
+
+  /* ── nodes ── */
+  .node {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    max-width: 210px;
+    min-width: 150px;
+  }
+  .node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .node.active {
+    box-shadow: 0 0 0 2px var(--node-col, #3b82f6);
+  }
+
+  .node-header {
+    display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px;
+  }
+  .node-icon {
+    width: 26px; height: 26px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0;
+    background: color-mix(in srgb, var(--node-col, #3b82f6) 14%, transparent);
+    color: var(--node-col, #3b82f6);
+  }
+  .node-title {
+    font-size: 12px; font-weight: 600; line-height: 1.3;
+    color: var(--text);
+  }
+  .node-sub {
+    font-size: 10px; color: var(--dim); margin-top: 1px;
+    line-height: 1.35;
+  }
+
+  .node-tags {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px;
+  }
+  .tag {
+    font-size: 9px; padding: 2px 6px; border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    color: var(--dim);
+    font-family: "IBM Plex Mono", monospace;
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .tag.sys {
+    background: color-mix(in srgb, var(--node-col, #3b82f6) 10%, transparent);
+    color: var(--node-col, #3b82f6);
+    border-color: color-mix(in srgb, var(--node-col, #3b82f6) 25%, transparent);
+  }
+
+  .status-badge {
+    width: 7px; height: 7px; border-radius: 50%;
+    position: absolute; top: 10px; right: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ── flow connector strips ── */
+  .flow-strip {
+    display: flex; align-items: center; gap: 0;
+    padding: 0 0 0 24px;
+    position: relative;
+  }
+  .flow-arrow {
+    display: flex; align-items: center;
+    font-size: 10px; color: var(--dimmer);
+    gap: 4px; padding: 0 6px;
+    white-space: nowrap;
+  }
+  .flow-arrow::before, .flow-arrow::after {
+    content: "─"; color: var(--border); font-size: 10px;
+  }
+
+  /* ── data flow arrows (horizontal) ── */
+  .flow-row {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 0 6px 24px; flex-wrap: wrap;
+  }
+  .arrow-line {
+    display: flex; align-items: center; gap: 0;
+    font-size: 10px;
+  }
+  .arrow-label {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px; color: var(--dimmer);
+    white-space: nowrap;
+  }
+  .arrow-tip { color: var(--dimmer); font-size: 11px; }
+
+  /* ── detail panel ── */
+  #detail-panel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 380px;
+    background: #0c1420;
+    border-left: 1px solid rgba(255,255,255,0.08);
+    transform: translateX(100%);
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 200;
+    overflow-y: auto;
+    padding: 24px 22px;
+  }
+  #detail-panel.open {
+    transform: translateX(0);
+  }
+  .dp-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; cursor: pointer;
+    color: var(--dim); font-size: 18px; line-height: 1;
+    padding: 4px 8px; border-radius: 4px;
+  }
+  .dp-close:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+  .dp-sys {
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 6px;
+    font-family: "IBM Plex Mono", monospace;
+  }
+  .dp-title {
+    font-size: 18px; font-weight: 700; margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .dp-sub { font-size: 12px; color: var(--dim); line-height: 1.55; margin-bottom: 18px; }
+
+  .dp-section {
+    margin-bottom: 18px;
+  }
+  .dp-section-label {
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--dimmer); font-family: "IBM Plex Mono", monospace;
+    margin-bottom: 8px;
+    padding-bottom: 5px; border-bottom: 1px solid var(--border);
+  }
+  .dp-list { display: flex; flex-direction: column; gap: 5px; }
+  .dp-item {
+    font-size: 12px; color: var(--dim); line-height: 1.5;
+    padding-left: 10px; position: relative;
+  }
+  .dp-item::before {
+    content: "•"; position: absolute; left: 0;
+    color: var(--dimmer);
+  }
+  .dp-item.warn::before { content: "⚠"; color: var(--partial); }
+  .dp-item.broken::before { content: "✗"; color: var(--broken); }
+  .dp-item.good::before { content: "✓"; color: var(--live); }
+
+  .dp-code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px; color: #64d2ff;
+    background: rgba(100,210,255,0.06);
+    border: 1px solid rgba(100,210,255,0.1);
+    border-radius: 4px; padding: 1px 5px;
+    display: inline;
+    word-break: break-all;
+  }
+  .dp-endpoint {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    background: rgba(34,197,94,0.07);
+    border: 1px solid rgba(34,197,94,0.15);
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin: 3px 0;
+    color: #86efac;
+    display: block;
+  }
+
+  .dp-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .dp-status.live { background: rgba(34,197,94,0.1); color: var(--live); border: 1px solid rgba(34,197,94,0.2); }
+  .dp-status.partial { background: rgba(245,158,11,0.1); color: var(--partial); border: 1px solid rgba(245,158,11,0.2); }
+  .dp-status.broken { background: rgba(239,68,68,0.1); color: var(--broken); border: 1px solid rgba(239,68,68,0.2); }
+
+  /* ── section headers in canvas ── */
+  .section-head {
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--dimmer); font-family: "IBM Plex Mono", monospace;
+    padding: 28px 0 10px 144px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    margin-bottom: 0;
+  }
+
+  /* ── gap callout ── */
+  .gap-note {
+    background: rgba(239,68,68,0.05);
+    border: 1px solid rgba(239,68,68,0.15);
+    border-radius: 8px;
+    padding: 9px 13px;
+    font-size: 11px; color: rgba(252,165,165,0.8);
+    margin: 4px 0;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+  .gap-note strong { color: #fca5a5; }
+
+  /* node colour variants */
+  .fe  { --node-col: var(--col-fe); }
+  .fb  { --node-col: var(--col-fb); }
+  .ml  { --node-col: var(--col-ml); }
+  .llm { --node-col: var(--col-llm); }
+  .dat { --node-col: var(--col-data); }
+  .wh  { --node-col: var(--col-wh); }
+
+  .overlay {
+    position: fixed; inset: 0; z-index: 150;
+    display: none;
+  }
+  .overlay.open { display: block; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <h1>MindCraft — System Architecture</h1>
+      <span style="font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2);">rev 00014</span>
+    </div>
+    <div class="sub" style="margin-top:3px;">Click any node → full detail. Complete data flow from login to mastery update.</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--col-fe)"></div>Frontend (React)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--col-fb)"></div>Firebase</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--col-ml)"></div>ML Backend (Cloud Run)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--col-llm)"></div>LLM Services</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--col-data)"></div>Static Data (JSON)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--col-wh)"></div>Webhook (Vercel)</div>
+  </div>
+
+  <div class="status-key">
+    <div class="sk"><div class="sk-dot" style="background:var(--live)"></div>Live</div>
+    <div class="sk"><div class="sk-dot" style="background:var(--partial)"></div>Partial</div>
+    <div class="sk"><div class="sk-dot" style="background:var(--broken)"></div>Down</div>
+  </div>
+</div>
+
+<!-- CANVAS -->
+<div class="canvas">
+
+  <!-- ═══════════════════════════════ PHASE 1: AUTH ═══════════════════════════════ -->
+  <div class="section-head">Phase 1 — Authentication</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Student<br/>arrives</div>
+    <div class="phase-content">
+
+      <div class="node fe" onclick="openDetail('login-page')" title="Login.tsx">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🔐</div>
+          <div><div class="node-title">Login Page</div><div class="node-sub">Email/pw or Google OAuth</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">Login.tsx</span>
+          <span class="tag">FourierCanvas</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fb" onclick="openDetail('firebase-auth')" title="Firebase Auth">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🔥</div>
+          <div><div class="node-title">Firebase Auth</div><div class="node-sub">Google OAuth + email/password</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Firebase</span>
+          <span class="tag">project: mindcraft-93858</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fb" onclick="openDetail('user-doc')" title="Firestore users/{uid}">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📄</div>
+          <div><div class="node-title">users/{uid}</div><div class="node-sub">role, diagnosticCompleted, practiceDrafts</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Firestore</span>
+          <span class="tag">getDoc()</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fe" onclick="openDetail('role-branch')">
+        <div class="status-badge" style="background:var(--partial)"></div>
+        <div class="node-header">
+          <div class="node-icon">🔀</div>
+          <div><div class="node-title">Role Branch</div><div class="node-sub">student / tutor / parent / admin</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">⚠ client-self-selected</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 2: DIAGNOSTIC ═══════════════════════════════ -->
+  <div class="section-head">Phase 2 — Gap Scan (first visit only)</div>
+
+  <div class="phase-row">
+    <div class="phase-label">New<br/>student<br/>only</div>
+    <div class="phase-content">
+
+      <div class="node fe" onclick="openDetail('diag-check')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🎯</div>
+          <div><div class="node-title">Diagnostic Gate</div><div class="node-sub">No diagnosticCompleted → examHelp flow</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">isDiagnosticComplete()</span>
+          <span class="tag">practiceState.ts</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node ml" onclick="openDetail('exam-concepts')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📚</div>
+          <div><div class="node-title">GET /exam-concepts/act</div><div class="node-sub">Returns ~29 ACT concepts from Layer 1</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">ML Backend</span>
+          <span class="tag">act_relevance.tested</span>
+          <span class="tag">serve.py</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fe" onclick="openDetail('confidence-slider')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🎚️</div>
+          <div><div class="node-title">Confidence Sliders</div><div class="node-sub">easy / kinda / hard per concept</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">Practice.tsx</span>
+          <span class="tag">hide-correctness C4</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node ml" onclick="openDetail('seed-assessment')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🌱</div>
+          <div><div class="node-title">POST /seed-assessment</div><div class="node-sub">Seeds synthetic events in knowledge graph</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">ML Backend</span>
+          <span class="tag">source: onboarding_assessment</span>
+          <span class="tag">REPLACES prior seed</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fb" onclick="openDetail('kg-firestore')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🗄️</div>
+          <div><div class="node-title">knowledge_graphs/{uid}</div><div class="node-sub">42 concept nodes, mastery scores, events</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Firestore</span>
+          <span class="tag">project: mindcraft-93858</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 3: DASHBOARD ═══════════════════════════════ -->
+  <div class="section-head">Phase 3 — Dashboard (returning student)</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Dashboard<br/>loads</div>
+    <div class="phase-content">
+
+      <div class="node fe" onclick="openDetail('graph-cache')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">⚡</div>
+          <div><div class="node-title">Warm Prefetch</div><div class="node-sub">App.tsx prefetches /health + /knowledge-graph on auth</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">graphCache.ts</span>
+          <span class="tag">mlAuthHeaders()</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node ml" onclick="openDetail('recommend')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🧭</div>
+          <div><div class="node-title">POST /recommend</div><div class="node-sub">mode: exam → pathfinder → ACT roadmap</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">ML Backend</span>
+          <span class="tag">pathfinder.py</span>
+          <span class="tag">42-concept ontology</span>
+          <span class="tag">Beta-Binomial edges</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node dat" onclick="openDetail('ontology')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🗺️</div>
+          <div><div class="node-title">Layer 1 Ontology</div><div class="node-sub">42 concepts · 179 ingredients · 16 bridges</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Static Data</span>
+          <span class="tag">01_mindcraft_concept_ontology_v2_6</span>
+          <span class="tag">_with_combinations.json</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fe" onclick="openDetail('dashboard-ui')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📖</div>
+          <div><div class="node-title">Field Journal</div><div class="node-sub">Left: gap + new territory. Right: route cards</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">Dashboard.tsx</span>
+          <span class="tag">worstWeakness()</span>
+          <span class="tag">topWeaknesses + severity</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 4: PRACTICE ═══════════════════════════════ -->
+  <div class="section-head">Phase 4 — Practice Session</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Student<br/>starts<br/>session</div>
+    <div class="phase-content">
+
+      <div class="node fe" onclick="openDetail('launch-mission')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🚀</div>
+          <div><div class="node-title">launchMissionDirect()</div><div class="node-sub">Skips level picker. Level from gap-scan confidence.</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">Practice.tsx</span>
+          <span class="tag">bridgePractice.getRecommendedLevel()</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node dat" onclick="openDetail('question-bank')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📦</div>
+          <div><div class="node-title">Question Bank</div><div class="node-sub">~1,500 questions across 24 concepts</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Static Data</span>
+          <span class="tag">questionBank.ts</span>
+          <span class="tag">4 sources merged</span>
+          <span class="tag">isUsable() filter</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fe" onclick="openDetail('chapter-page')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📚</div>
+          <div><div class="node-title">ConceptChapterPage</div><div class="node-sub">Book-style reader. Story + questions.</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">ConceptChapterPage.tsx</span>
+          <span class="tag">page-flip animation</span>
+          <span class="tag">iPad-optimised</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 4b: STORY + QUESTION DETAIL ═══════════════════════════════ -->
+  <div class="section-head">Phase 4b — Story + Question Rendering</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Question<br/>page<br/>renders</div>
+    <div class="phase-content">
+
+      <div class="node dat" onclick="openDetail('concept-stories')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📖</div>
+          <div><div class="node-title">conceptStories.json</div><div class="node-sub">41 concepts · Fable 5 generated (offline)</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Static Data</span>
+          <span class="tag">protagonist + story text</span>
+          <span class="tag">ingredientStories{}</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">+</div>
+
+      <div class="node dat" onclick="openDetail('context-frames')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🎭</div>
+          <div><div class="node-title">questionContextFrames.json</div><div class="node-sub">40 concepts · settingLine · questionBridge</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Static Data</span>
+          <span class="tag">diceFrame · spinnerFrame</span>
+          <span class="tag">Fable 5 generated</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">+</div>
+
+      <div class="node fe" onclick="openDetail('concept-aliases')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🔗</div>
+          <div><div class="node-title">conceptAliases.ts</div><div class="node-sub">Central ID normalisation. Short-name → canonical.</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend Lib</span>
+          <span class="tag">canonicalConceptId()</span>
+          <span class="tag">quadratics→quadratic_equations</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fe" onclick="openDetail('interactive-widget')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🎲</div>
+          <div><div class="node-title">InteractiveWidget</div><div class="node-sub">Dice · Spinner · Coin — text heuristic detection</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">PROB_CONCEPTS whitelist</span>
+          <span class="tag">SVG animations</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">+</div>
+
+      <div class="node fe" onclick="openDetail('hints-misc')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">💡</div>
+          <div><div class="node-title">Hints + Misconceptions</div><div class="node-sub">Progressive hints. Misconception on wrong answer.</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">q.hints[]</span>
+          <span class="tag">q.misconception_label</span>
+          <span class="tag">write nudge 8s</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 5: ANSWER + RECORDING ═══════════════════════════════ -->
+  <div class="section-head">Phase 5 — Answer Recording → Graph Update</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Session<br/>complete</div>
+    <div class="phase-content">
+
+      <div class="node fe" onclick="openDetail('session-complete')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🏁</div>
+          <div><div class="node-title">Session Complete</div><div class="node-sub">SVG accuracy ring · stats · nav buttons</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">Practice.tsx</span>
+          <span class="tag">OutcomeItem[]</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node ml" onclick="openDetail('record-outcomes')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📊</div>
+          <div><div class="node-title">POST /record-outcomes</div><div class="node-sub">Appends events. source: practice.</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">ML Backend</span>
+          <span class="tag">serve.py</span>
+          <span class="tag">APPENDS (not replaces)</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node ml" onclick="openDetail('mastery-engine')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">⚙️</div>
+          <div><div class="node-title">Mastery Engine</div><div class="node-sub">Deterministic. No LLM. Beta-Binomial posteriors.</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">ML Backend</span>
+          <span class="tag">engine/edges.py</span>
+          <span class="tag">engine/features.py</span>
+          <span class="tag">engine/decay.py</span>
+          <span class="tag">half-life: 60d</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node fb" onclick="openDetail('kg-firestore')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🗄️</div>
+          <div><div class="node-title">knowledge_graphs/{uid}</div><div class="node-sub">Updated mastery · eventCount · isBridgeGap</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Firestore</span>
+          <span class="tag">FIRESTORE_PROJECT=mindcraft-93858</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 6: HOMEWORK / INGREDIENT ═══════════════════════════════ -->
+  <div class="section-head">Phase 6 — Homework Help (Problem Solver)</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Problem<br/>input</div>
+    <div class="phase-content">
+
+      <div class="node fe" onclick="openDetail('solver-input')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">✏️</div>
+          <div><div class="node-title">Problem Solver</div><div class="node-sub">Student pastes or types a problem</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Frontend</span>
+          <span class="tag">Practice.tsx sPhase</span>
+          <span class="tag">mlApi.ts</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node ml" onclick="openDetail('recommend-ingredients')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🧩</div>
+          <div><div class="node-title">POST /recommend-ingredients</div><div class="node-sub">Classify → extract features → minimal DAG → styled cards</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">ML Backend</span>
+          <span class="tag">ingredient_pipeline.py</span>
+          <span class="tag">ingredient_runtime.py</span>
+          <span class="tag">LLM: classify + render</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node llm" onclick="openDetail('groq-classify')">
+        <div class="status-badge" style="background:var(--partial)"></div>
+        <div class="node-header">
+          <div class="node-icon">🤖</div>
+          <div><div class="node-title">Groq LLM</div><div class="node-sub">llama-3.3-70b · classify + feature extract + card text</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">LLM</span>
+          <span class="tag">ml/.env.local → LLM_PROVIDER=groq</span>
+          <span class="tag">bookends only (spine is deterministic)</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">✗</div>
+
+      <div class="node llm" onclick="openDetail('homework-service')">
+        <div class="status-badge" style="background:var(--broken)"></div>
+        <div class="node-header">
+          <div class="node-icon">💬</div>
+          <div><div class="node-title">mindcraft-homework</div><div class="node-sub">Anthropic-powered LLM solver (DOWN)</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Cloud Run</span>
+          <span class="tag">homework/</span>
+          <span class="tag" style="color:var(--broken);border-color:rgba(239,68,68,0.3)">credits exhausted</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 7: TUTOR SESSION ═══════════════════════════════ -->
+  <div class="section-head">Phase 7 — Tutor Session (async pipeline)</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Session<br/>ends</div>
+    <div class="phase-content">
+
+      <div class="node wh" onclick="openDetail('fireflies')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">🎙️</div>
+          <div><div class="node-title">Fireflies.ai</div><div class="node-sub">Session recording → transcript → webhook</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">3rd Party</span>
+          <span class="tag">webhook trigger</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node wh" onclick="openDetail('vercel-webhook')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">⚡</div>
+          <div><div class="node-title">Vercel Webhook</div><div class="node-sub">Fireflies → Anthropic → ML /process-summary</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">Webhook</span>
+          <span class="tag">webhook/</span>
+          <span class="tag">X-Service-Key auth</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node llm" onclick="openDetail('affective-checkin')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">💭</div>
+          <div><div class="node-title">Affective Check-In</div><div class="node-sub">Claude Haiku · stress score → softens mastery target</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">LLM</span>
+          <span class="tag">agent-check-in.ts</span>
+          <span class="tag">affective_state/{uid}/latest</span>
+          <span class="tag">stress &gt;0.7 → −0.1 mastery</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;font-size:18px;color:var(--dimmer);padding-top:8px;">→</div>
+
+      <div class="node ml" onclick="openDetail('process-summary')">
+        <div class="status-badge" style="background:var(--live)"></div>
+        <div class="node-header">
+          <div class="node-icon">📝</div>
+          <div><div class="node-title">POST /process-summary</div><div class="node-sub">Parse events from session → graph update</div></div>
+        </div>
+        <div class="node-tags">
+          <span class="tag sys">ML Backend</span>
+          <span class="tag">serve.py</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ PHASE 8: KNOWN GAPS ═══════════════════════════════ -->
+  <div class="section-head">⚠ Known Gaps + Open Items</div>
+
+  <div class="phase-row">
+    <div class="phase-label">Gaps &<br/>risks</div>
+    <div class="phase-content" style="flex-direction:column;gap:8px;">
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <div class="gap-note" onclick="openDetail('gap-roles')"><strong>🔴 Security</strong> — Role is client-self-selected at signup. Any user can claim role: tutor and read student knowledge graphs. Pre-marketing blocker.</div>
+        <div class="gap-note" onclick="openDetail('gap-homework')"><strong>🔴 Homework</strong> — mindcraft-homework DOWN (Anthropic credits exhausted). Falls back to /recommend-ingredients template only.</div>
+        <div class="gap-note" onclick="openDetail('gap-figures')"><strong>🟡 Figures</strong> — Diagram questions render alt-text as "(Diagram: ...)" callout only. No GeoGebra/Desmos interactive figures yet.</div>
+        <div class="gap-note" onclick="openDetail('gap-eedi')"><strong>🟡 Eedi misconceptions</strong> — misconception_id links to eedi_misconceptions.json (1,749 entries) but label enrichment pass not done (needs Anthropic credits).</div>
+        <div class="gap-note" onclick="openDetail('gap-mcdiag')"><strong>🟡 mc-diagnostic.js overlay</strong> — In-world Projects sign still POSTs to dead /learning-event. Main onboarding flow is fixed; overlay is fast-follow.</div>
+        <div class="gap-note" onclick="openDetail('gap-ml-deploy')"><strong>🟡 ML unreleased</strong> — Local commits beyond rev 00014 (auth, displacement, bridge-gap detection, exam-concepts) deployed. Cloud Build + gcloud run deploy needed.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /canvas -->
+
+<!-- ── OVERLAY ── -->
+<div class="overlay" id="overlay" onclick="closeDetail()"></div>
+
+<!-- ── DETAIL PANEL ── -->
+<div id="detail-panel">
+  <button class="dp-close" onclick="closeDetail()">✕</button>
+  <div id="dp-content"></div>
+</div>
+
+<script>
+const DETAILS = {
+  'login-page': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Login Page',
+    sub: 'Entry point for all users. Renders the Fourier animation canvas + knowledge graph SVG on the left, sign-in form on the right.',
+    files: ['app/src/pages/Login.tsx', 'app/src/pages/Login.module.css', 'app/src/components/FourierCanvas.tsx'],
+    endpoints: [],
+    inputs: ['email + password OR Google OAuth token'],
+    outputs: ['Firebase User object', 'ID token for all subsequent ML API calls'],
+    issues: [],
+    notes: ['FourierCanvas renders animated Fourier series SVG', 'Wordmark + knowledge graph constellation SVG replace old feature cards']
+  },
+  'firebase-auth': {
+    sys: 'Firebase Auth', col: '#f59e0b', status: 'live',
+    title: 'Firebase Auth',
+    sub: 'Google OAuth 2.0 or email/password. Returns a Firebase User with a UID and ID token. Token is attached to every ML API call as Bearer auth.',
+    files: ['app/src/firebase.ts'],
+    endpoints: [],
+    inputs: ['Google OAuth code or email/password'],
+    outputs: ['Firebase User (uid, email, displayName)', 'ID token (JWT, 1-hour expiry)'],
+    issues: [],
+    notes: ['Token auto-refreshed by Firebase SDK', 'ML backend verifies token against project mindcraft-93858']
+  },
+  'user-doc': {
+    sys: 'Firestore', col: '#f59e0b', status: 'live',
+    title: 'users/{uid} Firestore doc',
+    sub: 'Created on first login. Stores role, diagnostic completion flag, and per-mission practice drafts.',
+    files: ['app/src/pages/Login.tsx', 'app/src/lib/practiceState.ts', 'app/src/lib/practiceDrafts.ts'],
+    endpoints: ['Firestore: users/{uid}'],
+    inputs: ['uid from Firebase Auth'],
+    outputs: ['role (student/tutor/parent/admin)', 'diagnosticCompleted (boolean)', 'practiceDrafts.{weakness|learn|gapscan}'],
+    issues: ['⚠ Role is CLIENT-SELF-SELECTED — security blocker before marketing'],
+    notes: ['Tutor/admin exemption in ML auth layer is NOT trusted until server-authoritative roles ship']
+  },
+  'role-branch': {
+    sys: 'Frontend', col: '#3b82f6', status: 'partial',
+    title: 'Role Branch',
+    sub: 'Routes user to the appropriate dashboard after auth resolves.',
+    files: ['app/src/App.tsx', 'app/src/pages/Dashboard.tsx', 'app/src/pages/TutorDashboard.tsx', 'app/src/pages/ParentDashboard.tsx'],
+    endpoints: [],
+    inputs: ['role from users/{uid}'],
+    outputs: ['→ /dashboard (student)', '→ /tutor (tutor)', '→ /parent (parent)'],
+    issues: ['⚠ client-self-selected role — any user can claim tutor and see student data'],
+    notes: ['Admin route: /admin', 'Classroom/join-code model is the fix — designed, not built yet']
+  },
+  'diag-check': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Diagnostic Gate',
+    sub: 'Checks if the student has ever completed a gap scan. If not, forces the gap-scan flow before showing the dashboard.',
+    files: ['app/src/pages/Dashboard.tsx', 'app/src/lib/practiceState.ts'],
+    endpoints: [],
+    inputs: ['users/{uid}.diagnosticCompleted (boolean)'],
+    outputs: ['→ Practice examHelp flow (if no diagnostic)', '→ Dashboard (if completed)'],
+    issues: [],
+    notes: ['Legacy users without diagnosticCompleted flag get one forced gap scan (by design)', 'Admin Testing tab exposes "Retake gap scan"', 'resetDiagnostic() clears both flag and drafts']
+  },
+  'exam-concepts': {
+    sys: 'ML Backend', col: '#22c55e', status: 'live',
+    title: 'GET /exam-concepts/{exam}',
+    sub: 'Returns ~29 ACT concept IDs. Reads act_relevance.tested from the Layer 1 ontology. Used to scope the confidence sliders.',
+    files: ['ml/serve.py', 'ml/mindcraft_graph/models/ontology.py'],
+    endpoints: ['GET /exam-concepts/act'],
+    inputs: ['exam param (act)'],
+    outputs: ['concept_ids[] (~29 for ACT)', 'source: act_relevance.tested from Layer 1 ontology'],
+    issues: [],
+    notes: ['Deployed in Cloud Run rev 00014', 'Uses Ontology.act_tested_concept_ids()']
+  },
+  'confidence-slider': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Confidence Sliders (C4)',
+    sub: 'Student rates each of ~29 ACT concepts as easy / kinda / hard. Diagnostic uses real questions with hide-correctness mode (C4) — correct/wrong never revealed during scan.',
+    files: ['app/src/pages/Practice.tsx', 'app/src/pages/Diagnostic.tsx'],
+    endpoints: [],
+    inputs: ['~29 concept IDs from /exam-concepts/act', 'student answers to real questions'],
+    outputs: ['confidenceMap: {conceptId → easy|kinda|hard}'],
+    issues: [],
+    notes: ['C4 hide-correctness: question outcomes are recorded but correct answer is NOT shown to student', 'Level gating: easy→L3 only, kinda→L2, hard→L1']
+  },
+  'seed-assessment': {
+    sys: 'ML Backend', col: '#22c55e', status: 'live',
+    title: 'POST /seed-assessment',
+    sub: 'Takes per-concept confidence ratings. Creates one synthetic assessment event per concept. REPLACES any prior seed (idempotent). Seeds the knowledge graph so /recommend works before real practice sessions exist.',
+    files: ['ml/serve.py'],
+    endpoints: ['POST /seed-assessment'],
+    inputs: ['student_id: uid', 'confidence_map: {conceptId → easy|kinda|hard}'],
+    outputs: ['Synthetic events written to knowledge_graphs/{uid}', 'easy→outcome=0.9,effort=0.2 | kinda→0.55,0.5 | hard→0.2,0.8'],
+    issues: [],
+    notes: ['source: onboarding_assessment', 'This is NOT the pathfinder — just seeds the graph', 'Run once or retake from Admin Testing tab']
+  },
+  'kg-firestore': {
+    sys: 'Firestore', col: '#f59e0b', status: 'live',
+    title: 'knowledge_graphs/{uid}',
+    sub: 'The core per-student data store. All mastery scores, events, and bridge gaps live here. Read by ML on every /recommend call.',
+    files: ['ml/mindcraft_graph/adapters/firestore_adapter.py'],
+    endpoints: ['Firestore: knowledge_graphs/{uid}'],
+    inputs: ['events from seed-assessment, record-outcomes, process-summary'],
+    outputs: ['42 concept nodes (eventCount, status, mastery, isBridgeGap, bridgeEvidence, severity)', 'student embedding snapshots'],
+    issues: [],
+    notes: ['ML Cloud Run SA granted roles/datastore.user on mindcraft-93858', 'FIRESTORE_PROJECT=mindcraft-93858 MUST be passed on every Cloud Run deploy', 'Tz-aware datetimes normalised via _to_naive()']
+  },
+  'graph-cache': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Warm Prefetch',
+    sub: 'App.tsx fires two prefetch calls on successful auth: /health (wakes the Cloud Run container from cold start) and /knowledge-graph/{uid} (caches the graph for instant Dashboard render).',
+    files: ['app/src/App.tsx', 'app/src/lib/graphCache.ts', 'app/src/lib/mlApi.ts'],
+    endpoints: ['GET /health', 'GET /knowledge-graph/{uid}'],
+    inputs: ['Firebase ID token'],
+    outputs: ['Graph data cached in graphCache.ts', 'Container warm before user reaches Dashboard'],
+    issues: [],
+    notes: ['Only fired for student role', 'mlAuthHeaders() attaches Bearer token', 'ML_AUTH_ENABLED=true in production — unauthenticated calls get 401']
+  },
+  'recommend': {
+    sys: 'ML Backend', col: '#22c55e', status: 'live',
+    title: 'POST /recommend',
+    sub: 'The main recommendation engine. Reads the student graph, runs the pathfinder against the Layer 1 ontology, returns a prioritised learning roadmap.',
+    files: ['ml/serve.py', 'ml/mindcraft_graph/planning/pathfinder.py', 'ml/mindcraft_graph/engine/recommend.py'],
+    endpoints: ['POST /recommend'],
+    inputs: ['student_id', 'mode: exam|curriculum|explore', 'target_concepts[] (curriculum mode)', 'exam: act (exam mode)', 'optional: deadline_days, affective_state'],
+    outputs: ['canonicalChain[]', 'recommendations[] (with severity scores)', 'unlocks[]', 'studentProfile.topWeaknesses, topStrengths, PCA projections', 'bridge/format gaps'],
+    issues: [],
+    notes: ['exam mode defaults target_concepts to act_relevance.tested (~29 concepts)', 'Bridge gaps injected mid-chain; format gaps appended', 'Affective stress >0.7 softens target_mastery by 0.1', 'Three-state trim: mastered (remove), struggling (keep), unknown (keep if not backward-propagated)']
+  },
+  'ontology': {
+    sys: 'Static Data', col: '#06b6d4', status: 'live',
+    title: 'Layer 1 Concept Ontology',
+    sub: 'The canonical 42-concept ontology. Loaded by the ML backend at startup. All concept IDs, ingredient definitions, bridges, and combinations live here.',
+    files: ['ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json'],
+    endpoints: [],
+    inputs: ['Loaded once at ML service startup'],
+    outputs: ['42 concepts (7 foundational / 22 core / 11 advanced / 2 cross-cutting)', '179 ingredients · 537 representations · 16 bridges · 15 combinations', 'act_relevance, population_failure_prior per concept'],
+    issues: [],
+    notes: ['Two variants: _standardized.json (no combinations) and _with_combinations.json — serve.py loads with_combinations', 'Layer 2-5 schemas exist but NOT wired to live engine yet', 'canonical_registries.ingredient_ids lags at 167 vs 179 nested — join on nested, not registry']
+  },
+  'dashboard-ui': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Field Journal Dashboard',
+    sub: 'Two-page notebook layout. Left page: today\'s actions (gap + new territory + index). Right page: route concept cards + explore cards.',
+    files: ['app/src/pages/Dashboard.tsx', 'app/src/pages/Dashboard.module.css', 'app/src/lib/recommendNextConcept.ts'],
+    endpoints: ['POST /recommend', 'GET /knowledge-graph/{uid}'],
+    inputs: ['/recommend response (topWeaknesses, severity)', 'knowledge graph (eventCount, isBridgeGap)'],
+    outputs: ['"The gap" = worstWeakness() across concept + bridge + format gaps', '"New territory" = first eventCount===0 node on ACT path with playable questions', 'Route concept 2-col card grid', 'Explore cards (gradient, symbol)'],
+    issues: [],
+    notes: ['worstWeakness() ranks all gap candidates by severity (higher=worse)', 'hasPlayableQuestions() filters concepts with 0 bank questions', 'flagColor rotates by day of week']
+  },
+  'launch-mission': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'launchMissionDirect()',
+    sub: 'Skips the level picker. Derives level from gap-scan confidence (easy→L3, kinda→L2, hard→L1). Called from PawHub pad taps and dashboard entry blocks.',
+    files: ['app/src/pages/Practice.tsx', 'app/src/lib/bridgePractice.ts'],
+    endpoints: [],
+    inputs: ['conceptId', 'missionType (weakness|learn|gapscan)', 'confidence from gap scan'],
+    outputs: ['level: 1|2|3', 'questions loaded', 'session started'],
+    issues: [],
+    notes: ['Level gating: easy→3 only, kinda→2, hard→1', 'Per-mission drafts autosaved: practiceDrafts.{weakness|learn|gapscan}', 'Fisher-Yates shuffle + seen-ID dedup on each session']
+  },
+  'question-bank': {
+    sys: 'Static Data', col: '#06b6d4', status: 'live',
+    title: 'Question Bank (~1,500 questions)',
+    sub: '4 sources merged at build time. Quality-filtered. Shuffled per session. 24 concepts covered.',
+    files: ['app/src/lib/questionBank.ts', 'app/src/data/actMasterQuestionBank.generated.json', 'app/src/data/eediQuestions.json', 'app/src/data/generatedQuestions.json'],
+    endpoints: [],
+    inputs: ['conceptId + level + count + seenIds + format?'],
+    outputs: ['Question[] shuffled, preferring unseen IDs', 'Format-aware: prefers matching vessel, falls back to concept pool'],
+    issues: ['⚠ 5 concepts zero-coverage: combinatorics, matrices, complex_numbers, rational_expressions, logarithmic_functions'],
+    notes: [
+      'Source 1: RAW_QUESTIONS — 227 static ACT questions (hand-written)',
+      'Source 2: ACT_MASTER — 206 human-annotated from MindCraft_ACT_Question_Bank.xlsm',
+      'Source 3: EEDI_QUESTIONS — 1,283 raw → 1,100 after isUsable() filter (183 removed: single-letter diagram choices, "following figure" without alt-text)',
+      'Source 4: GENERATED_QUESTIONS — 2 stub (generation paused, 30% bad key rate)',
+      'isUsable(): rejects if all choices ≤2 chars, <2 choices, or figure ref without Diagram callout',
+      'BANK_ALIASES maps ontology IDs to bank concept IDs',
+    ]
+  },
+  'chapter-page': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'ConceptChapterPage',
+    sub: 'Book-style reader with 3D page-flip animation. Cluster themes (algebra/geometry/functions/data). Story pages + question pages.',
+    files: ['app/src/pages/ConceptChapterPage.tsx', 'app/src/pages/ConceptChapterPage.module.css'],
+    endpoints: [],
+    inputs: ['conceptId from route params', 'questions from questionBank.ts'],
+    outputs: ['Paginated book: cover → story pages → question pages', 'notepad textarea (54% of width on desktop)'],
+    issues: [],
+    notes: ['Page flip: perspective(1100px) rotateY(-22deg) CSS animation', 'Layout: 46% question | 54% notepad — iPad-first design', 'Cluster themes: 4 colour schemes tied to concept category', 'lookupStory() always returns a story — synthetic fallback for unknown IDs', 'conceptAliases.ts: centralised ID normalisation']
+  },
+  'concept-stories': {
+    sys: 'Static Data', col: '#06b6d4', status: 'live',
+    title: 'conceptStories.json',
+    sub: '41 concept story entries. Each has a protagonist, narrative story text, and per-ingredient sub-stories. Generated offline using Fable 5.',
+    files: ['app/src/data/conceptStories.json'],
+    endpoints: [],
+    inputs: ['conceptId (canonical ontology ID)'],
+    outputs: ['story text (paragraphs for book pages)', 'ingredientStories: {ingredient_slug → story sentence}'],
+    issues: [],
+    notes: ['Keys = canonical ontology IDs (quadratic_equations, basic_probability, etc.)', 'lookupStory() in ConceptChapterPage resolves via conceptAliases.ts → synthetic fallback', 'Missing story → auto-generates: "{ConceptName} is a foundational concept…"']
+  },
+  'context-frames': {
+    sys: 'Static Data', col: '#06b6d4', status: 'live',
+    title: 'questionContextFrames.json',
+    sub: '40 concept entries. Each question page picks from settingLine, questionBridge, diceFrame, or spinnerFrame based on the question text.',
+    files: ['app/src/data/questionContextFrames.json'],
+    endpoints: [],
+    inputs: ['conceptId + question text heuristic'],
+    outputs: ['settingLine (monospace, all-lower e.g. "Bologna, a tavern, 1560")', 'questionBridge (italic serif, accent colour)', 'diceFrame (if die/dice/roll in question)', 'spinnerFrame (if spinner/spin in question)'],
+    issues: [],
+    notes: ['Fable 5 generated with historical protagonist per concept', 'Bridge selection: diceFrame → spinnerFrame → questionBridge priority', 'Shown above question text, creates narrative continuity']
+  },
+  'concept-aliases': {
+    sys: 'Frontend Lib', col: '#3b82f6', status: 'live',
+    title: 'conceptAliases.ts — Central ID Registry',
+    sub: 'Single source of truth for concept ID normalisation. All short-names and legacy IDs resolve here. New concepts from vectorisation only need one entry.',
+    files: ['app/src/lib/conceptAliases.ts'],
+    endpoints: [],
+    inputs: ['any concept ID (short-name, legacy, or canonical)'],
+    outputs: ['canonical ontology ID', 'CROSS_CUTTING_CONCEPT_IDS set', 'NON_ACT_CONCEPT_IDS set', 'FOUNDATIONAL_CONCEPT_IDS set'],
+    issues: [],
+    notes: ['canonicalConceptId("quadratics") → "quadratic_equations"', 'canonicalConceptId("trigonometry") → "trigonometry_basics"', 'Used by ConceptChapterPage, Dashboard, questionBank', 'When new questions are vectorised: add alias here → resolves everywhere']
+  },
+  'interactive-widget': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'InteractiveWidget',
+    sub: 'Auto-detected from concept ID + question text. Renders dice roller, spinner, or coin flip using SVG animations. Only fires on probability concepts.',
+    files: ['app/src/components/InteractiveWidget.tsx', 'app/src/components/InteractiveWidget.module.css'],
+    endpoints: [],
+    inputs: ['conceptId', 'questionText'],
+    outputs: ['DiceRoller (d6 SVG with dot faces, shake animation)', 'SpinnerWidget (arc sectors, CSS transition 2.1s)', 'CoinFlip (SVG coin spin)', 'null if not detected'],
+    issues: [],
+    notes: ['Detection: die/dice/roll → DiceRoller; spinner/spin → SpinnerWidget; coin/heads/tails → CoinFlip', 'Scoped to PROB_CONCEPTS (basic_probability, descriptive_statistics, counting_combinatorics)', 'parseSpinnerSections() extracts sector count from question text', 'parseDiceSides() extracts die type (d4/d6/d8/d12/d20)']
+  },
+  'hints-misc': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Hints + Misconceptions + Write Nudge',
+    sub: 'Progressive hints reveal one-at-a-time. Misconception callout on wrong answer. Write nudge after 8s idle.',
+    files: ['app/src/pages/ConceptChapterPage.tsx', 'app/src/pages/ConceptChapterPage.module.css'],
+    endpoints: [],
+    inputs: ['q.hints[] (all static bank questions have 3 hints)', 'q.misconception_label (Eedi questions only)', 'notes[qIdx] (notepad state)'],
+    outputs: ['💡 "Need a hint?" button → reveals hints sequentially', 'Red-bordered misconception callout after wrong answer', '"try sketching it out first…" nudge after 8s with empty notepad'],
+    issues: ['⚠ ACT/static bank questions have no misconception_label (manual annotation needed)', '⚠ Eedi misconception_id links to eedi_misconceptions.json but label enrichment not done (needs Anthropic credits)'],
+    notes: ['hintsShownPerQ: {qIdx → count}', 'Done note: "Correct. Keep going." vs "Noted. Review your work."']
+  },
+  'session-complete': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Session Complete Screen',
+    sub: 'SVG accuracy ring + stats card + navigation to Dashboard / Knowledge Graph / retry.',
+    files: ['app/src/pages/Practice.tsx', 'app/src/pages/Practice.module.css'],
+    endpoints: [],
+    inputs: ['results[] (boolean per question)', 'firstAccuracy (first-attempt accuracy)'],
+    outputs: ['Animated SVG ring (lime ≥80%, amber 60-79%, coral <60%)', 'Accuracy % + question count', 'Navigation: Dashboard | See progress | Try again'],
+    issues: [],
+    notes: ['Ring: stroke-dasharray from firstAccuracy × circumference', 'sessionLabel from cs.conceptName or mlIdToLabel()']
+  },
+  'record-outcomes': {
+    sys: 'ML Backend', col: '#22c55e', status: 'live',
+    title: 'POST /record-outcomes',
+    sub: 'APPENDS practice events to the knowledge graph. Does NOT replace. Triggers mastery engine recalculation.',
+    files: ['ml/serve.py', 'ml/mindcraft_graph/engine/'],
+    endpoints: ['POST /record-outcomes'],
+    inputs: ['student_id', 'outcomes[]: {conceptId, level, correct, effortScore, timeSeconds}'],
+    outputs: ['Events written to Firestore knowledge_graphs/{uid}', 'Mastery scores recalculated', 'Edge weights updated (Beta-Binomial)'],
+    issues: [],
+    notes: ['source: practice (vs onboarding_assessment for seed)', 'Auth: Firebase ID token (browser) — uid must match student_id unless tutor/admin']
+  },
+  'mastery-engine': {
+    sys: 'ML Backend', col: '#22c55e', status: 'live',
+    title: 'Mastery Engine (Deterministic)',
+    sub: 'No LLM. Fully auditable. Updates per-concept mastery from session events. Beta-Binomial posteriors for edge weights. Temporal decay.',
+    files: ['ml/mindcraft_graph/engine/edges.py', 'ml/mindcraft_graph/engine/features.py', 'ml/mindcraft_graph/engine/decay.py', 'ml/mindcraft_graph/engine/'],
+    endpoints: [],
+    inputs: ['session events (outcome, effort, time, source)'],
+    outputs: ['Updated mastery scores (0.0–1.0)', 'Updated edge weights (prerequisite/related/application/discovered)', 'Decay applied (mastery half-life 60d, edges 90d)'],
+    issues: [],
+    notes: [
+      'Positive outcomes: reward efficiency (outcome / (effort × time))',
+      'Negative outcomes: reward conviction (outcome × effort × time) — high effort + failure = confirmed weakness',
+      'Edge priors: prerequisite=20, related=8, application=5, discovered=2 pseudo-counts',
+      'Pathfinder: three-state trim (mastered/struggling/unknown)',
+      'Embeddings: 384-dim sentence-transformers → 4 PCA axes (~33% variance)'
+    ]
+  },
+  'solver-input': {
+    sys: 'Frontend', col: '#3b82f6', status: 'live',
+    title: 'Problem Solver',
+    sub: 'Student types or pastes a math problem. Sends to /recommend-ingredients via mlApi.ts with Bearer token.',
+    files: ['app/src/pages/Practice.tsx', 'app/src/lib/mlApi.ts'],
+    endpoints: ['POST /recommend-ingredients'],
+    inputs: ['problem text (free-form)'],
+    outputs: ['HomeworkCards component with ordered ingredient cards'],
+    issues: [],
+    notes: ['sPhase: input → loading → cards → done', 'Falls back to /recommend-ingredients if mindcraft-homework is down']
+  },
+  'recommend-ingredients': {
+    sys: 'ML Backend', col: '#22c55e', status: 'live',
+    title: 'POST /recommend-ingredients',
+    sub: 'Full ingredient pipeline: classify problem → extract features → select target ingredients → backtrack prereqs via bridges → build minimal DAG → select styled cards → topological order.',
+    files: ['ml/serve.py', 'ml/mindcraft_graph/engine/ingredient_pipeline.py', 'ml/mindcraft_graph/engine/ingredient_runtime.py'],
+    endpoints: ['POST /recommend-ingredients'],
+    inputs: ['problem_text: string', 'student_id (optional)', 'style: geometric|algebraic|procedural'],
+    outputs: ['ordered cards[]', 'each card: concept_chip, title, explanation, visual_type, visual_data'],
+    issues: [],
+    notes: [
+      'LLM is at the bookends only: classify problem → extract features; render card text',
+      'Deterministic spine: select ingredients, build DAG, prune mastered, detect weak bridges',
+      'Bridge detection: 1.5× priority over nodes',
+      'Styles: geometric/algebraic/procedural (NOT "verbal" — stale style key)',
+      '179 ingredients across 42 concepts in Layer 1 ontology'
+    ]
+  },
+  'groq-classify': {
+    sys: 'LLM', col: '#a855f7', status: 'partial',
+    title: 'Groq LLM (llama-3.3-70b)',
+    sub: 'Used for: problem classification, feature extraction, card text generation. LLM_PROVIDER=groq in ml/.env.local. Default is ollama (requires local server).',
+    files: ['ml/mindcraft_graph/engine/ingredient_pipeline.py', 'ml/generation/', 'ml/.env.local'],
+    endpoints: ['Groq API (external)'],
+    inputs: ['problem text or ingredient spec'],
+    outputs: ['classified concept', 'extracted features', 'card text (geometric/algebraic/procedural)'],
+    issues: ['⚠ 30% bad key rate in generated questions — generation paused', '⚠ Anthropic credits exhausted → mindcraft-homework DOWN'],
+    notes: ['LLM is bookends; deterministic engine is the spine (prevents hallucinated pedagogy)', 'ml/.env.local: LLM_PROVIDER=groq, GROQ_API_KEY=...', 'Do NOT commit .env.local']
+  },
+  'homework-service': {
+    sys: 'Cloud Run', col: '#a855f7', status: 'broken',
+    title: 'mindcraft-homework (DOWN)',
+    sub: 'Stateless Anthropic-powered LLM solver. Deployed to Cloud Run in project mindcraft-93858. Currently DOWN — Anthropic credits exhausted.',
+    files: ['homework/'],
+    endpoints: ['Cloud Run: mindcraft-homework (project mindcraft-93858)'],
+    inputs: ['problem text'],
+    outputs: ['Detailed step-by-step solution with Anthropic Claude'],
+    issues: ['🔴 DOWN — Anthropic credits exhausted', '🔴 Frontend falls back to /recommend-ingredients (ingredient cards only)'],
+    notes: ['Secret: ANTHROPIC_API_KEY', 'Stateless — no Firestore', 'Different GCP project from mindcraft-ml']
+  },
+  'fireflies': {
+    sys: '3rd Party', col: '#f97316', status: 'live',
+    title: 'Fireflies.ai',
+    sub: 'Records tutor-student sessions. On session end, fires a webhook to the Vercel serverless function.',
+    files: ['webhook/'],
+    endpoints: ['Webhook trigger (Fireflies → Vercel)'],
+    inputs: ['session audio/transcript'],
+    outputs: ['Webhook POST with session summary'],
+    issues: [],
+    notes: ['Triggers the async session-summary pipeline']
+  },
+  'vercel-webhook': {
+    sys: 'Webhook', col: '#f97316', status: 'live',
+    title: 'Vercel Serverless Webhook',
+    sub: 'Fireflies → Anthropic Claude (session summary) → ML /process-summary. Uses X-Service-Key for server-to-server auth.',
+    files: ['webhook/api/'],
+    endpoints: ['POST /api/process-summary (Vercel)', 'POST /process-summary (ML)'],
+    inputs: ['Fireflies session transcript'],
+    outputs: ['Parsed events → knowledge graph via /process-summary', 'Anthropic Claude summarises session into structured events'],
+    issues: ['⚠ Anthropic credits exhausted — session summary LLM call may fail'],
+    notes: ['ML_SERVICE_SECRET must match between Vercel env and Cloud Run env', 'X-Service-Key header bypasses Firebase ID token auth', '--set-env-vars REPLACES entire set — always include BOTH env vars on deploy']
+  },
+  'affective-checkin': {
+    sys: 'LLM', col: '#a855f7', status: 'live',
+    title: 'Affective Check-In',
+    sub: 'Pre-session 2-3 sentence student message → Claude Haiku → stress/engagement scores. Stored in Firestore. /recommend reads it before pathfinding.',
+    files: ['webhook/api/agent-check-in.ts'],
+    endpoints: ['POST /api/agent-check-in (Vercel)', 'Firestore: affective_state/{uid}/latest'],
+    inputs: ['2-3 sentence student message', 'student_id'],
+    outputs: ['stress: float 0-1', 'engagement: float 0-1', 'explicit_struggles: string[]'],
+    issues: [],
+    notes: ['stress >0.7 → softens target_mastery in /recommend by 0.1', 'explicit_struggles → injected as STRUGGLING profiles into pathfinder (never silently removed)', 'Model: Claude Haiku (fast, cheap)']
+  },
+  'process-summary': {
+    sys: 'ML Backend', col: '#22c55e', status: 'live',
+    title: 'POST /process-summary',
+    sub: 'Parses session summary text into structured learning events. Updates knowledge graph. Source: session.',
+    files: ['ml/serve.py'],
+    endpoints: ['POST /process-summary'],
+    inputs: ['session_summary: string', 'student_id'],
+    outputs: ['Parsed events written to knowledge_graphs/{uid}'],
+    issues: ['⚠ Depends on Anthropic credits for upstream webhook parsing'],
+    notes: ['Auth: X-Service-Key (server-to-server, not browser)', 'Same mastery update path as /record-outcomes']
+  },
+  'gap-roles': {
+    sys: 'Security', col: '#ef4444', status: 'broken',
+    title: '🔴 Role Security Gap',
+    sub: 'CLIENT-SELF-SELECTED roles. Any user can claim role: tutor at signup and read other students\' knowledge graphs (minor educational records).',
+    files: ['app/src/pages/Login.tsx', 'ml/mindcraft_graph/auth.py'],
+    endpoints: [],
+    inputs: [],
+    outputs: [],
+    issues: ['🔴 PRE-MARKETING BLOCKER', '🔴 Students are minors — FERPA implications'],
+    notes: ['Fix: classroom/join-code model (designed, not built)', 'Server-authoritative role assignment via Firestore function', 'Until fixed: do not market publicly']
+  },
+  'gap-homework': {
+    sys: 'Gap', col: '#f59e0b', status: 'broken',
+    title: '🔴 Homework Service DOWN',
+    sub: 'mindcraft-homework Cloud Run service is down due to exhausted Anthropic API credits.',
+    files: ['homework/'],
+    endpoints: [],
+    inputs: [],
+    outputs: [],
+    issues: ['🔴 Anthropic credits exhausted', '🔴 Dynamic question generation also paused'],
+    notes: ['Frontend falls back to /recommend-ingredients (ingredient cards only)', 'Session summary webhook also affected']
+  },
+  'gap-figures': {
+    sys: 'Gap', col: '#f59e0b', status: 'partial',
+    title: '🟡 No Interactive Figures',
+    sub: 'Questions with diagrams render alt-text as "(Diagram: ...)" styled callouts. No GeoGebra/Desmos interactive rendering yet.',
+    files: ['app/src/pages/ConceptChapterPage.tsx'],
+    endpoints: [],
+    inputs: [],
+    outputs: [],
+    issues: ['⚠ Diagram questions show text description only', '⚠ coordinate_graph and number_line formats have no visual render'],
+    notes: ['Future: GeoGebra/Desmos figure generation from Question.figure spec (designed, not built)', 'Alt-text recovery: 465 questions recovered during Eedi ingestion via ![alt]() extraction']
+  },
+  'gap-eedi': {
+    sys: 'Gap', col: '#f59e0b', status: 'partial',
+    title: '🟡 Eedi Misconceptions Unenriched',
+    sub: '1,749 misconception IDs minted from Eedi dataset. Enrichment pass (embed → propose ingredient links) not done.',
+    files: ['ml/data/eedi_misconceptions.json', 'app/src/data/eediQuestions.json'],
+    endpoints: [],
+    inputs: [],
+    outputs: [],
+    issues: ['⚠ misconception_id populated on Eedi questions', '⚠ misconception_label (human-readable) missing on most', '⚠ Enrichment needs Anthropic credits'],
+    notes: ['misconception_id format: mis_{concept}__{slug}', 'Frontend shows misconception_label in red-bordered callout after wrong answer — only fires when label is non-empty']
+  },
+  'gap-mcdiag': {
+    sys: 'Gap', col: '#f59e0b', status: 'partial',
+    title: '🟡 World Diagnostic Overlay',
+    sub: 'mc-diagnostic.js in-world overlay (Projects sign → MC_onProjectsOpen()) still POSTs to dead /learning-event. Main onboarding flow is fixed.',
+    files: ['worlds/world2/mc-diagnostic.js'],
+    endpoints: ['/learning-event (DEAD)'],
+    inputs: [],
+    outputs: [],
+    issues: ['⚠ 3 fetch() calls need retargeting to /seed-assessment + /record-outcomes'],
+    notes: ['Main flow: Dashboard → "Click Me" → /diagnostic (React) is fixed', 'World overlay is fast-follow']
+  },
+  'gap-ml-deploy': {
+    sys: 'Gap', col: '#f59e0b', status: 'partial',
+    title: '🟡 Local ML Commits Undeployed',
+    sub: 'Commits beyond rev 00014 exist locally but haven\'t been built/deployed to Cloud Run.',
+    files: ['ml/serve.py', 'ml/mindcraft_graph/auth.py'],
+    endpoints: [],
+    inputs: [],
+    outputs: [],
+    issues: ['⚠ Run Cloud Build + gcloud run deploy with BOTH env vars to deploy', '⚠ --set-env-vars REPLACES entire set — always include BOTH FIRESTORE_PROJECT=mindcraft-93858 AND ML_SERVICE_SECRET=<secret>'],
+    notes: ['Cloud Run project: project-e4af30ac-bc17-4691-8b6 (different from Firestore project mindcraft-93858)', 'Deploy command in CLAUDE.md deployment section']
+  },
+}
+
+function openDetail(id) {
+  const d = DETAILS[id]
+  if (!d) return
+
+  document.querySelectorAll('.node.active').forEach(n => n.classList.remove('active'))
+  if (event && event.currentTarget && event.currentTarget.classList) {
+    event.currentTarget.classList.add('active')
+  }
+
+  const statusClass = d.status || 'live'
+  const statusLabel = statusClass === 'live' ? '✓ Live' : statusClass === 'partial' ? '⚠ Partial' : '✗ Down / Broken'
+
+  let html = `
+    <div class="dp-sys" style="color:${d.col}">${d.sys}</div>
+    <div class="dp-title">${d.title}</div>
+    <div class="dp-sub">${d.sub}</div>
+    <div class="dp-status ${statusClass}">${statusLabel}</div>
+  `
+
+  if (d.files && d.files.length) {
+    html += `<div class="dp-section"><div class="dp-section-label">Files</div><div class="dp-list">`
+    d.files.forEach(f => { html += `<div class="dp-item"><span class="dp-code">${f}</span></div>` })
+    html += `</div></div>`
+  }
+
+  if (d.endpoints && d.endpoints.length) {
+    html += `<div class="dp-section"><div class="dp-section-label">API Endpoints</div>`
+    d.endpoints.forEach(e => { html += `<span class="dp-endpoint">${e}</span>` })
+    html += `</div>`
+  }
+
+  if (d.inputs && d.inputs.length) {
+    html += `<div class="dp-section"><div class="dp-section-label">Inputs</div><div class="dp-list">`
+    d.inputs.forEach(i => { html += `<div class="dp-item">${i}</div>` })
+    html += `</div></div>`
+  }
+
+  if (d.outputs && d.outputs.length) {
+    html += `<div class="dp-section"><div class="dp-section-label">Outputs</div><div class="dp-list">`
+    d.outputs.forEach(o => { html += `<div class="dp-item good">${o}</div>` })
+    html += `</div></div>`
+  }
+
+  if (d.issues && d.issues.length) {
+    html += `<div class="dp-section"><div class="dp-section-label">Issues / Gaps</div><div class="dp-list">`
+    d.issues.forEach(i => {
+      const cls = i.startsWith('🔴') ? 'broken' : i.startsWith('⚠') ? 'warn' : ''
+      html += `<div class="dp-item ${cls}">${i}</div>`
+    })
+    html += `</div></div>`
+  }
+
+  if (d.notes && d.notes.length) {
+    html += `<div class="dp-section"><div class="dp-section-label">Notes</div><div class="dp-list">`
+    d.notes.forEach(n => { html += `<div class="dp-item">${n}</div>` })
+    html += `</div></div>`
+  }
+
+  document.getElementById('dp-content').innerHTML = html
+  document.getElementById('detail-panel').classList.add('open')
+  document.getElementById('overlay').classList.add('open')
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open')
+  document.getElementById('overlay').classList.remove('open')
+  document.querySelectorAll('.node.active').forEach(n => n.classList.remove('active'))
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDetail()
+})
+</script>
+</body>
+</html>
