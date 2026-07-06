@@ -42,3 +42,12 @@ ml/img/
 ml/data/*.zip
 ml/scripts/output/
 ml/data/test.py
+
+# Repo-root large/binary files — store in Drive, not git
+data/*.zip
+data/SchemasV2/
+img/Vid.mp4
+*.mp4
+tmp-*.png
+push.sh
+showcase-qr.html

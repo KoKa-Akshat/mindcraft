@@ -21,6 +21,50 @@ all of this — it lives in one workspace.
 
 ---
 
+## Collaboration — canonical spec documents (READ BEFORE TOUCHING THESE AREAS)
+
+These files are the authoritative design + architecture contracts. Read them
+before working in their respective areas. Do not override their decisions
+without a team discussion first.
+
+| File | Owns |
+|------|------|
+| `BRAND_BOOK.md` | Voice, copy, student archetype (Maya), emotional framing, what NOT to say |
+| `AGENT_RULEBOOK.md` | Every LLM call contract: input/output schema, fallbacks, latency budgets, model selection, what agents CAN and CANNOT do |
+| `DASHBOARD_NOTEBOOK_SPEC.md` | Field Journal dashboard: paper system, layout, typography, motion, PawHub replacement spec |
+| `CODEX_BRIEF.md` | Implementation briefs for AI coding agents (Codex/Cursor) |
+
+### Lane ownership — prevents AI agent collisions
+
+Two lanes own **disjoint** trees. Coordinate before crossing a lane boundary.
+
+| Lane | Owner | Tree |
+|------|-------|------|
+| **Engine** | Blake | `ml/**`, `webhook/**`, `data/**`, `worlds/**` |
+| **Product** | Akshat | `app/**`, `index.html`, `blog.html`, root marketing files |
+
+Shared seam files (coordinate before changing):
+- `app/src/lib/questionBank.ts` — question shape contract (C5)
+- `app/src/lib/mlApi.ts` — API client
+- `CLAUDE.md` — this file
+
+### Git rules (critical — read every session)
+
+1. **`git pull origin main` before any session.** Pull/merge if push is rejected — never force-push.
+2. **End every session with `git push origin main` or a named stash** (`git stash push -m "description"`). Do NOT leave staged work uncommitted across sessions.
+3. **CI auto-deploys on push to `main`.** Never run `firebase deploy` locally.
+4. **ML deploy is manual** — see `Deployment` section. Always pass BOTH env vars.
+5. **Stale lock files block git.** If git hangs: `rm .git/*.lock` then retry.
+
+### Security — pre-marketing blocker
+
+Client-self-selected roles allow any user to claim `role: tutor` and read other
+students' knowledge graphs. These are minors' educational records. Ship the
+classroom/join-code model OR a Firestore rule that requires admin to set tutor
+role BEFORE marketing publicly.
+
+---
+
 ## Architecture (two ML layers)
 
 ### Concept layer — "what to teach, in what order"
