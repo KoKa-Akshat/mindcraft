@@ -80,7 +80,7 @@ The marketing site (`mindcraft-marketing-site.web.app`) needs to feel like the b
 | What | Files | Status |
 |---|---|---|
 | Marketing site | `index.html`, `style.css`, static root | Active — Codex works here |
-| Dashboard UI | `app/src/pages/Dashboard.tsx`, `Dashboard.module.css` | Blocked — notebook redesign in progress |
+| Dashboard UI | `app/src/pages/Dashboard.tsx`, `Dashboard.module.css` | **Shipped v1** — Field Journal live. CSS tokens in `Dashboard.module.css` drive the paper system. Extend, don't revert. |
 | Practice flow | `app/src/pages/Practice.tsx`, `Practice.module.css` | Frozen — story splash just shipped |
 | PawHub | `app/src/components/PawHub.tsx`, `PawHub.module.css` | Frozen — Challenge/Explore just shipped |
 | Path mini | `app/src/components/PracticeLearningPathMini.tsx` | Frozen — solid dots just shipped |
