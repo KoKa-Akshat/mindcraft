@@ -439,8 +439,7 @@
 
 .routeConceptNameDone {
   color: var(--ink-faded);
-  text-decoration: line-through;
-  text-decoration-color: var(--paper-edge);
+  opacity: 0.55;
 }
 
 .routeConceptNameActive {
@@ -673,13 +672,23 @@
 /* ── entry block ──────────────────────────────────────────── */
 .entryBlock {
   position: relative;
-  padding: 18px 0 22px;
+  padding: 20px 0 24px;
   cursor: pointer;
   outline: none;
   border: none;
   background: none;
   width: 100%;
   text-align: left;
+  transition: background 150ms;
+}
+
+.entryBlock:hover {
+  background: linear-gradient(
+    transparent 0%,
+    rgba(201,150,63,0.06) 30%,
+    rgba(201,150,63,0.06) 70%,
+    transparent 100%
+  );
 }
 
 .entryBlock:focus-visible {
@@ -705,28 +714,28 @@
 /* ── entry typography ─────────────────────────────────────── */
 .entryLabelDisplay {
   font-family: var(--font-script);
-  font-size: clamp(30px, 3.2vw, 44px);
+  font-size: clamp(32px, 3.4vw, 48px);
   font-weight: 700;
   line-height: 0.95;
-  color: var(--ink-pencil);
-  letter-spacing: -0.01em;
+  color: var(--ink-system);
+  letter-spacing: -0.02em;
   transition: color var(--dur-ink) ease;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .entryBlock:hover .entryLabelDisplay,
 .entryBlock:focus-visible .entryLabelDisplay {
-  color: var(--ink-system);
+  color: var(--ink-katha);
 }
 
 .entryConceptName {
   font-family: var(--font-script);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
-  color: var(--ink-system);
+  color: var(--ink-katha);
   line-height: 1.2;
-  margin-bottom: 4px;
-  min-height: 26px;
+  margin-bottom: 6px;
+  min-height: 28px;
 }
 
 .entryConceptLoading {
@@ -775,31 +784,36 @@
 /* ── index line ───────────────────────────────────────────── */
 .indexLine {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  padding: 18px 0 8px;
+  gap: 6px;
+  padding: 20px 0 8px;
   margin-top: auto;
+  border-top: 1px solid var(--rule);
 }
 
 .indexBtn {
-  background: none;
-  border: none;
+  background: rgba(29, 58, 138, 0.06);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
   cursor: pointer;
-  font-family: var(--font-katha);
-  font-style: italic;
-  font-size: 13px;
-  color: var(--ink-faded);
-  padding: 0;
-  transition: color 120ms;
-  line-height: 1.4;
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-depth);
+  padding: 6px 12px;
+  transition: background 120ms, color 120ms;
+  line-height: 1;
+  white-space: nowrap;
 }
-.indexBtn:hover { color: var(--ink-depth); }
+.indexBtn:hover {
+  background: rgba(29, 58, 138, 0.12);
+  color: var(--ink-katha);
+}
 
 .indexDot {
-  font-family: var(--font-body);
-  color: var(--ink-faded);
-  opacity: 0.4;
-  user-select: none;
+  display: none;
 }
 
 /* ── panel pages (GPS, notes, solver) on paper ────────────── */

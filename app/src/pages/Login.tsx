@@ -233,56 +233,23 @@ export default function Login() {
                 </p>
               </div>
 
-              <div className={s.valueSection}>
-                <div className={s.brushArt} aria-hidden="true">
-                  <span className={s.brushWash} />
-                  <span className={s.brushPeakOne} />
-                  <span className={s.brushPeakTwo} />
-                </div>
-                <div className={s.valueGrid} aria-label="MindCraft benefits">
-              <article className={s.valueCard}>
-                <span className={s.valueIcon} aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M5 19V5h10a4 4 0 0 1 4 4v10H9a4 4 0 0 0-4 0Z" />
-                    <path d="M9 7v9" />
-                    <path d="M13 7v9" />
-                  </svg>
-                </span>
-                <strong>Smart practice</strong>
-                <p>Short reps aimed at the gap that matters today.</p>
-              </article>
-              <article className={s.valueCard}>
-                <span className={s.valueIcon} aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M12 3a4 4 0 0 1 4 4c0 2.2-1.8 4-4 4S8 9.2 8 7a4 4 0 0 1 4-4Z" />
-                    <path d="M5 21a7 7 0 0 1 14 0" />
-                    <path d="M18.5 9.5h2.5" />
-                    <path d="M19.75 8.25v2.5" />
-                  </svg>
-                </span>
-                <strong>Calm support</strong>
-                <p>When a problem feels stuck, the next hint stays small.</p>
-              </article>
-              <article className={s.valueCard}>
-                <span className={s.valueIcon} aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="7" cy="7" r="2.5" />
-                    <circle cx="17" cy="7" r="2.5" />
-                    <circle cx="12" cy="17" r="2.5" />
-                    <path d="M9.2 8.5 10.8 15" />
-                    <path d="m14.8 8.5-1.6 6.5" />
-                    <path d="M9.5 7h5" />
-                  </svg>
-                </span>
-                <strong>Learning map</strong>
-                <p>Mastered, fragile, untouched. Clear at a glance.</p>
-              </article>
-              </div>
-              </div>
-
-              <blockquote className={s.quote}>
-                Math is cool when it finally clicks.
-              </blockquote>
+              <svg className={s.heroGraph} viewBox="0 0 320 180" fill="none" aria-hidden="true">
+                <line x1="80" y1="90" x2="160" y2="50" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
+                <line x1="80" y1="90" x2="160" y2="130" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
+                <line x1="160" y1="50" x2="250" y2="70" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
+                <line x1="160" y1="130" x2="250" y2="110" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
+                <line x1="160" y1="50" x2="160" y2="130" stroke="rgba(196,245,71,0.1)" strokeWidth="1" strokeDasharray="3 4"/>
+                <circle cx="80" cy="90" r="18" fill="rgba(196,245,71,0.12)" stroke="rgba(196,245,71,0.55)" strokeWidth="1.5"/>
+                <circle cx="160" cy="50" r="13" fill="rgba(196,245,71,0.08)" stroke="rgba(196,245,71,0.35)" strokeWidth="1.2"/>
+                <circle cx="160" cy="130" r="13" fill="rgba(196,245,71,0.08)" stroke="rgba(196,245,71,0.35)" strokeWidth="1.2"/>
+                <circle cx="250" cy="70" r="10" fill="rgba(196,245,71,0.06)" stroke="rgba(196,245,71,0.22)" strokeWidth="1"/>
+                <circle cx="250" cy="110" r="10" fill="rgba(196,245,71,0.06)" stroke="rgba(196,245,71,0.22)" strokeWidth="1"/>
+                <text x="80" y="94" textAnchor="middle" fill="rgba(196,245,71,0.65)" fontSize="8" fontFamily="IBM Plex Mono, monospace">your gap</text>
+                <text x="160" y="54" textAnchor="middle" fill="rgba(196,245,71,0.45)" fontSize="7" fontFamily="IBM Plex Mono, monospace">algebra</text>
+                <text x="160" y="134" textAnchor="middle" fill="rgba(196,245,71,0.45)" fontSize="7" fontFamily="IBM Plex Mono, monospace">geometry</text>
+                <text x="250" y="74" textAnchor="middle" fill="rgba(196,245,71,0.32)" fontSize="6" fontFamily="IBM Plex Mono, monospace">functions</text>
+                <text x="250" y="114" textAnchor="middle" fill="rgba(196,245,71,0.32)" fontSize="6" fontFamily="IBM Plex Mono, monospace">data</text>
+              </svg>
             </div>
           </section>
 

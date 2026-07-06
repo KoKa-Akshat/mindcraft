@@ -161,6 +161,13 @@
   background: linear-gradient(90deg, #c4f547, rgba(196,245,71,0.2));
 }
 
+.heroGraph {
+  margin-top: 32px;
+  width: min(340px, 90%);
+  height: auto;
+  opacity: 0.9;
+}
+
 .valueSection {
   position: relative;
   margin: 34px 0 28px;
