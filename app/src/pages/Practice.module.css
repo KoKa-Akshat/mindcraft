@@ -4120,3 +4120,251 @@
     align-items: flex-start;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   FIELD JOURNAL — PAPER QUESTION TREATMENT
+   Overrides matteShell dark-teal question card to warm ivory paper.
+   Written text on dot-grid paper sitting on the teal desk.
+   These rules come last so they win the cascade.
+══════════════════════════════════════════════════════════════════════════════ */
+
+/* Paper sheet on the desk */
+.matteShell .questionCard {
+  background: #fbf8f4;
+  border: none;
+  border-radius: 3px;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.10),
+    0 6px 20px rgba(0,0,0,0.20),
+    0 18px 48px rgba(0,0,0,0.14);
+  color: #1c1a17;
+  overflow: hidden;
+}
+
+/* Dot grid on the question paper */
+.matteShell .questionCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(102,92,78,0.18) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Question prompt area — slightly recessed paper */
+.matteShell .questionBanner {
+  background: #f0ebe2;
+  border-bottom: 1px solid rgba(102,92,78,0.14);
+  padding: 28px 32px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Exam style tag */
+.matteShell .examTagLight {
+  background: rgba(79,138,139,0.14);
+  color: #3a6b6c;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Question text — hand-lettered Caveat on paper */
+.matteShell .questionText {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1c1a17;
+  line-height: 1.55;
+}
+
+/* Choices container + body above it */
+.matteShell .questionBody {
+  padding: 20px 28px 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* SVG visual: off-white paper for diagrams */
+.matteShell .questionVisual {
+  background: #f7f3ee;
+  border: 1px solid rgba(102,92,78,0.18);
+  border-radius: 2px;
+}
+
+/* Choices: vertical journal list — NOT the dark 2×2 grid */
+.matteShell .choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Base choice — ruled-line row */
+.matteShell .choice,
+.matteShell .choiceSelected,
+.matteShell .choiceCorrect,
+.matteShell .choiceWrong {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(102,92,78,0.14);
+  border-radius: 0;
+  padding: 11px 6px;
+  gap: 12px;
+  font-family: 'Caveat', cursive;
+  font-size: 19px;
+  font-weight: 400;
+  color: #1c1a17;
+  transition: background 140ms ease;
+  min-height: auto;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Hover — mustard highlighter swipe */
+.matteShell .choice:hover:not(:disabled) {
+  background: linear-gradient(
+    transparent 55%,
+    rgba(201,150,63,0.24) 55%,
+    rgba(201,150,63,0.24) 93%,
+    transparent 93%
+  );
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(102,92,78,0.14);
+}
+
+/* Selected — teal highlighter */
+.matteShell .choiceSelected {
+  background: linear-gradient(
+    transparent 55%,
+    rgba(79,138,139,0.20) 55%,
+    rgba(79,138,139,0.20) 93%,
+    transparent 93%
+  );
+  box-shadow: none;
+}
+
+/* Correct — green highlight */
+.matteShell .choiceCorrect {
+  background: linear-gradient(
+    transparent 55%,
+    rgba(34,197,94,0.18) 55%,
+    rgba(34,197,94,0.18) 93%,
+    transparent 93%
+  );
+  cursor: default;
+}
+
+/* Wrong — red underline highlight */
+.matteShell .choiceWrong {
+  background: linear-gradient(
+    transparent 55%,
+    rgba(244,63,94,0.14) 55%,
+    rgba(244,63,94,0.14) 93%,
+    transparent 93%
+  );
+  cursor: default;
+  opacity: 1;
+}
+
+/* Choice letter: compact pencil-circle badge */
+.matteShell .choiceLetter {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(102,92,78,0.10);
+  color: #6f6a61;
+  border: 1px solid rgba(102,92,78,0.22);
+}
+
+.matteShell .choiceCorrect .choiceLetter {
+  background: rgba(34,197,94,0.14);
+  color: #166534;
+  border-color: rgba(34,197,94,0.32);
+}
+
+.matteShell .choiceWrong .choiceLetter {
+  background: rgba(244,63,94,0.12);
+  color: #9f1239;
+  border-color: rgba(244,63,94,0.28);
+}
+
+.matteShell .choiceSelected .choiceLetter {
+  background: rgba(79,138,139,0.18);
+  color: #1c1a17;
+  border-color: rgba(79,138,139,0.38);
+}
+
+/* Answer row */
+.matteShell .answerRow {
+  border-top: 1px solid rgba(102,92,78,0.14);
+  padding-top: 16px;
+  margin-top: 12px;
+}
+
+/* Answer input — ink on a single ruled line */
+.matteShell .answerInputWrap {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid rgba(79,138,139,0.38);
+}
+
+.matteShell .answerInput {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: #2b3a5c;
+  caret-color: #2b3a5c;
+  background: transparent;
+}
+
+.matteShell .answerInput::placeholder {
+  color: rgba(74,66,56,0.38);
+  font-style: italic;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 15px;
+}
+
+.matteShell .answerSubmit {
+  background: rgba(79,138,139,0.14);
+  color: #1c1a17;
+  border-left: 1px solid rgba(79,138,139,0.28);
+  font-size: 16px;
+  width: 44px;
+}
+
+.matteShell .answerSubmit:hover:not(:disabled) {
+  background: rgba(79,138,139,0.26);
+  opacity: 1;
+}
+
+/* Hint card — paper side-note with teal left accent */
+.matteShell .hintCardInline {
+  background: #efe9df;
+  border: none;
+  border-left: 3px solid rgba(79,138,139,0.48);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Hint trigger button on paper */
+.matteShell .hintTrigger {
+  color: #3a6b6c;
+  background: rgba(79,138,139,0.08);
+  border-top-color: rgba(102,92,78,0.15);
+}
+
+.matteShell .hintLine {
+  color: #3a3733;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-style: italic;
+}
+
+.matteShell .hintNum {
+  background: rgba(79,138,139,0.15);
+  color: #3a6b6c;
+  border-color: rgba(79,138,139,0.3);
+}
