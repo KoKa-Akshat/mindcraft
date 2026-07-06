@@ -189,9 +189,9 @@ export default function Dashboard() {
                   <div className={s.routeConceptList}>
                     {routeConcepts.map((c, i) => {
                       const isDone = i < (path.completedOnPath ?? 0)
-                      const isActive = c.conceptId === path.activeConceptId
+                      const isActive = c.id === path.activeConceptId
                       return (
-                        <div key={c.conceptId} className={s.routeConceptItem}>
+                        <div key={c.id} className={s.routeConceptItem}>
                           <div className={`${s.routeDot} ${isDone ? s.routeDotDone : isActive ? s.routeDotActive : s.routeDotInactive}`} />
                           <span className={`${s.routeConceptName} ${isDone ? s.routeConceptNameDone : isActive ? s.routeConceptNameActive : ''}`}>
                             {c.label}
