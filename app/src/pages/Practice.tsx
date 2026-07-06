@@ -1377,22 +1377,17 @@ export default function Practice() {
               )
             })()}
 
-            {/* ── Building: animated loading ── */}
+            {/* ── Building: loading ── */}
             {pPhase === 'building' && (
               <div className={s.buildingScreen}>
-                <PixelCraft size="lg" />
-                <h2 className={s.buildingTitle}>Scanning your gaps…</h2>
-                <p className={s.buildingSub}>Mapping concepts → identifying priority order → setting difficulty</p>
-                <div className={s.buildingDots}>
-                  <span /><span /><span />
-                </div>
+                <p className={s.buildingLabel}>Scanning your gaps…</p>
+                <div className={s.buildingRing} />
               </div>
             )}
 
             {pPhase === 'path' && !diagnosticHydrated && (
               <div className={s.buildingScreen}>
-                <PixelCraft size="lg" />
-                <h2 className={s.buildingTitle}>Loading your path…</h2>
+                <div className={s.buildingRing} />
               </div>
             )}
 

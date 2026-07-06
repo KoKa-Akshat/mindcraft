@@ -118,16 +118,19 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   if (user === undefined) {
     return (
       <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#0a2218',
-        color: 'rgba(255,255,255,0.6)',
-        fontFamily: 'system-ui, sans-serif',
-        fontSize: 14,
+        position: 'fixed', inset: 0, background: '#000',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'flex-start', justifyContent: 'flex-end',
+        padding: '28px 32px', gap: '10px',
       }}>
-        Loading…
+        <div style={{
+          width: 22, height: 22,
+          border: '2px solid rgba(255,255,255,0.12)',
+          borderTopColor: 'rgba(255,255,255,0.7)',
+          borderRadius: '50%',
+          animation: 'spin 0.75s linear infinite',
+        }} />
+        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
       </div>
     )
   }

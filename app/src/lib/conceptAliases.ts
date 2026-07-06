@@ -14,19 +14,40 @@
  *    alias mapping here is for ID normalization only.
  */
 export const CONCEPT_ID_ALIASES: Record<string, string> = {
-  // Legacy static bank IDs → canonical ontology IDs
+  // ── Short display names (Dashboard, EXPLORE_CARDS, URL slugs) → canonical ──
+  quadratics:              'quadratic_equations',
+  quadratic:               'quadratic_equations',
+  quadratic_functions:     'quadratic_equations',
+  trigonometry:            'trigonometry_basics',
+  trig:                    'trigonometry_basics',
+  statistics:              'descriptive_statistics',
+  statistics_basics:       'descriptive_statistics',
+  stats:                   'descriptive_statistics',
+  probability:             'basic_probability',
+  circles:                 'circles_geometry',
+  logarithms:              'logarithmic_functions',
+  logs:                    'logarithmic_functions',
+  polynomial_operations:   'polynomials',
+  factors_multiples:       'factoring_polynomials',
+  absolute_value:          'linear_inequalities',
+  function_notation:       'functions_basics',
+  composite_inverse:       'functions_basics',
+  solid_geometry:          'area_volume',
+  regression:              'descriptive_statistics',
+  counting_combinatorics:  'basic_probability',
+  data_interpretation:     'descriptive_statistics',
+  exponents:               'exponent_rules',
+
+  // ── Legacy static bank IDs → canonical ontology IDs ──
   percent_ratio:               'ratios_proportions',
   coordinate_geometry:         'linear_equations',
-  data_interpretation:         'descriptive_statistics',
   statistics_graphs:           'descriptive_statistics',
   word_problems:               'representation_translation',
-  absolute_value:              'linear_inequalities',
   function_transformations:    'functions_basics',
   trigonometric_identities:    'trigonometry_basics',
-  polynomials:                 'polynomial_operations',
+  polynomials:                 'polynomials',              // identity guard
 
-  // v3.0 / annotation-round legacy IDs → canonical
-  polynomial_operations:       'polynomial_operations',   // identity — canonical in v3.0
+  // ── v3.0 / annotation-round legacy IDs → canonical ──
   systems_linear_equations:    'systems_of_linear_equations',
   basics_of_functions:         'functions_basics',
   basic_one_variable_equations:'basic_equations',

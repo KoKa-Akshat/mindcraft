@@ -3,6 +3,7 @@ import { useState, useMemo, useRef } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
+import { canonicalConceptId } from '../lib/conceptAliases'
 import InteractiveWidget from '../components/InteractiveWidget'
 import s from './ConceptChapterPage.module.css'
 
@@ -25,38 +26,41 @@ type ContextFrame = {
 }
 const FRAMES = contextFramesRaw as unknown as Record<string, ContextFrame>
 
-// Bank concept IDs sometimes differ from story keys; map the common ones
+// Resolve any short/legacy concept ID to the canonical ontology ID,
+// then look up in DB (conceptStories.json keys = canonical IDs).
+// Falls back to a synthetic story so the chapter page never hard-errors.
+function resolveId(conceptId: string): string {
+  return canonicalConceptId(conceptId)
+}
+
+// FRAME_ALIAS handles the few cases where frames use a different key than
+// the canonical concept ID (e.g. frames use 'basic_probability', not
+// 'probability'; 'representation_translation' instead of 'coordinate_geometry').
 const FRAME_ALIAS: Record<string, string> = {
-  probability: 'basic_probability',
-  statistics_basics: 'descriptive_statistics',
   coordinate_geometry: 'representation_translation',
-  absolute_value: 'algebraic_manipulation',
-  circles: 'circles_geometry',
-  quadratics: 'quadratic_equations',
-  quadratic_functions: 'quadratic_equations',
-  polynomial_operations: 'polynomials',
-  factors_multiples: 'factoring_polynomials',
+  absolute_value:      'algebraic_manipulation',
 }
 
-// conceptStories.json keys sometimes differ from URL concept IDs
-const DB_ALIAS: Record<string, string> = {
-  quadratics: 'quadratic_equations',
-  quadratic_functions: 'quadratic_equations',
-  probability: 'basic_probability',
-  statistics_basics: 'descriptive_statistics',
-  circles: 'circles_geometry',
-  polynomial_operations: 'polynomials',
-  factors_multiples: 'factoring_polynomials',
-  absolute_value: 'algebraic_manipulation',
-  coordinate_geometry: 'coordinate_geometry',
+function getFrame(rawId: string): ContextFrame | null {
+  const id = resolveId(rawId)
+  return FRAMES[id] ?? FRAMES[FRAME_ALIAS[rawId] ?? ''] ?? FRAMES[FRAME_ALIAS[id] ?? ''] ?? null
 }
 
-function getFrame(conceptId: string): ContextFrame | null {
-  return FRAMES[conceptId] ?? FRAMES[FRAME_ALIAS[conceptId] ?? ''] ?? null
+function makeSyntheticStory(name: string, conceptId: string): CS {
+  return {
+    conceptId,
+    conceptName: name,
+    story: `${name} is a foundational concept in mathematics. Work through the questions below to build your understanding — each one isolates a key idea so you can see exactly where your reasoning holds and where it needs sharpening.`,
+    ingredientStories: {},
+  }
 }
 
-function lookupStory(conceptId: string): CS | undefined {
-  return DB[conceptId] ?? DB[DB_ALIAS[conceptId] ?? ''] ?? undefined
+function lookupStory(rawId: string): CS {
+  const canonical = resolveId(rawId)
+  return DB[canonical] ?? DB[rawId] ?? makeSyntheticStory(
+    canonical.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+    canonical,
+  )
 }
 
 // ── Cluster identity ─────────────────────────────────────────────────────────
@@ -274,7 +278,7 @@ export default function ConceptChapterPage() {
   }, [conceptId])
 
   const totalQs = questionCount(conceptId, 1) + questionCount(conceptId, 2) + questionCount(conceptId, 3)
-  const specs = useMemo(() => cs ? buildSpecs(cs.story, Math.min(questions.length, 4)) : [], [cs, questions.length])
+  const specs = useMemo(() => buildSpecs(cs.story, Math.min(questions.length, 4)), [cs.story, questions.length])
 
   const [pageIdx, setPageIdx] = useState(0)
   const [dir, setDir] = useState<'f' | 'b'>('f')
@@ -303,15 +307,6 @@ export default function ConceptChapterPage() {
     // Stub: would POST to Firestore or a notifications endpoint
     setPingSent(true)
     setTimeout(() => { setShowPing(false); setPingSent(false); setPingMsg('') }, 2200)
-  }
-
-  if (!cs) {
-    return (
-      <div className={s.desk}>
-        <button className={s.backBtn} onClick={() => navigate(-1)}>← back</button>
-        <p className={s.notFound}>No story found for <code>{conceptId}</code>.</p>
-      </div>
-    )
   }
 
   const spec = specs[pageIdx]
