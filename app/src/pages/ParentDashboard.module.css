@@ -1,0 +1,163 @@
+/* ParentDashboard.module.css */
+
+.shell { background: var(--bg); min-height: 100vh; color: var(--tx); }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; top: 10px; left: 14px; right: 14px; z-index: 100;
+  height: 54px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-radius: 16px;
+  border: 1.5px solid rgba(0,105,255,0.22);
+  box-shadow: 0 0 0 4px rgba(0,105,255,0.05), 0 8px 32px rgba(10,37,64,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px;
+}
+.logo { font-size: 20px; font-weight: 900; color: var(--navy); text-decoration: none; letter-spacing: -.3px; }
+.logo span { color: var(--g); }
+.navRight { display: flex; align-items: center; gap: 12px; }
+.navRole {
+  font-size: 11px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: .8px; color: var(--blue-d);
+  background: var(--blue-bg); padding: 4px 10px; border-radius: 20px;
+}
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dd));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 900; color: #fff;
+  cursor: pointer; border: 1.5px solid rgba(0,105,255,0.3);
+}
+
+/* ── PAGE ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 20px 60px;
+}
+
+/* ── SPINNER ── */
+.spinner { display: flex; justify-content: center; padding: 80px 0; }
+.spinnerDot {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px solid rgba(0,0,0,0.08);
+  border-top-color: var(--g);
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── LINK CHILD ── */
+.linkCard {
+  max-width: 480px; margin: 80px auto 0;
+  background: #fff; border-radius: 20px;
+  border: 1.5px solid rgba(0,105,255,0.12);
+  box-shadow: 0 4px 24px rgba(10,37,64,0.08);
+  padding: 40px 36px;
+  text-align: center;
+}
+.linkIcon { font-size: 48px; margin-bottom: 16px; }
+.linkTitle { font-size: 22px; font-weight: 800; color: var(--navy); margin: 0 0 10px; }
+.linkSub { font-size: 13px; color: var(--mu); line-height: 1.6; margin: 0 0 24px; font-weight: 600; }
+.linkRow { display: flex; gap: 8px; }
+.linkInput {
+  flex: 1; padding: 10px 14px; border-radius: 10px;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  font-size: 13px; font-family: inherit;
+  outline: none; transition: border-color .2s;
+}
+.linkInput:focus { border-color: var(--blue); }
+.linkBtn {
+  padding: 10px 20px; border-radius: 10px;
+  background: var(--g); color: #fff;
+  font-size: 13px; font-weight: 800;
+  border: none; cursor: pointer; white-space: nowrap;
+  transition: opacity .15s;
+}
+.linkBtn:disabled { opacity: .5; cursor: default; }
+.linkError { color: #e53e3e; font-size: 12px; font-weight: 600; margin-top: 10px; }
+
+/* ── HERO ── */
+.hero {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.heroEyebrow { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: var(--mu); margin-bottom: 4px; }
+.heroName { font-size: 32px; font-weight: 900; color: var(--navy); margin: 0 0 8px; }
+.examBadge {
+  display: inline-block;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px;
+  padding: 4px 12px; border-radius: 20px;
+  background: rgba(88,204,2,0.1); color: var(--gdd);
+}
+.heroStats { display: flex; gap: 20px; flex-wrap: wrap; }
+.stat {
+  background: #fff; border-radius: 14px; padding: 14px 20px;
+  border: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(10,37,64,0.06);
+  text-align: center; min-width: 80px;
+}
+.statNum { display: block; font-size: 26px; font-weight: 900; color: var(--navy); line-height: 1; }
+.statLabel { display: block; font-size: 10px; font-weight: 700; color: var(--mu); text-transform: uppercase; letter-spacing: .6px; margin-top: 4px; }
+
+/* ── GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 16px;
+}
+@media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
+
+/* ── CARDS ── */
+.card {
+  background: #fff; border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0 2px 12px rgba(10,37,64,0.06);
+  padding: 20px 22px;
+}
+.cardWide { grid-column: 1 / -1; }
+.cardHeader { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.cardLabel { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .8px; color: var(--navy); }
+.cardSub { font-size: 11px; font-weight: 600; color: var(--mu); }
+
+/* ── GRAPH ── */
+.graphSvg { width: 100%; height: auto; display: block; overflow: visible; }
+.graphEmpty { padding: 32px 0; text-align: center; }
+.graphEmpty p { font-size: 13px; color: var(--mu); font-weight: 600; }
+
+/* ── CONCEPT LIST ── */
+.conceptList { display: flex; flex-direction: column; gap: 10px; }
+.conceptRow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.conceptLeft { display: flex; align-items: center; gap: 8px; min-width: 160px; }
+.conceptName { font-size: 13px; font-weight: 700; color: var(--navy); }
+.conceptStatus {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px;
+  padding: 2px 8px; border-radius: 20px;
+}
+.status_mastered   { background: rgba(88,204,2,0.1);  color: var(--gdd); }
+.status_struggling { background: rgba(239,68,68,0.1); color: #dc2626; }
+.status_in_progress { background: rgba(0,105,255,0.1); color: var(--blue-d); }
+.status_untouched  { background: rgba(0,0,0,0.05);    color: var(--mu); }
+
+.masteryBar { flex: 1; min-width: 80px; display: flex; align-items: center; gap: 8px; }
+.masteryFill {
+  height: 6px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--g), var(--blue));
+  transition: width .4s ease;
+}
+.masteryPct { font-size: 11px; font-weight: 700; color: var(--mu); white-space: nowrap; }
+
+/* ── PILLS (strengths/gaps) ── */
+.pillList { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0; }
+.pill {
+  font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px;
+}
+.pillGreen { background: rgba(88,204,2,0.1); color: var(--gdd); }
+.pillRed   { background: rgba(239,68,68,0.1); color: #dc2626; }
+
+.divider { height: 1px; background: rgba(0,0,0,0.07); margin: 16px 0; }
+.emptyState { padding: 12px 0; }
+.emptyState p { font-size: 13px; color: var(--mu); font-weight: 600; line-height: 1.5; }

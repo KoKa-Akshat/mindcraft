@@ -84,15 +84,32 @@ async def require_auth(
 
 
 def _role_for(uid: str) -> str | None:
+    data = _user_doc(uid)
+    if data:
+        return data.get("role")
+    return None
+
+
+def _user_doc(uid: str) -> dict | None:
     try:
         from mindcraft_graph.firestore_adapter import db
 
         snap = db.collection("users").document(uid).get()
         if snap.exists:
-            return (snap.to_dict() or {}).get("role")
+            return snap.to_dict() or {}
     except Exception:
         pass
     return None
+
+
+def _is_parent_of(uid: str, student_id: str) -> bool:
+    data = _user_doc(uid)
+    if not data or data.get("role") != "parent":
+        return False
+    if data.get("childId") == student_id:
+        return True
+    child_ids = data.get("childIds")
+    return isinstance(child_ids, list) and student_id in child_ids
 
 
 def authorize_student(auth: AuthContext, student_id: str) -> None:
@@ -102,6 +119,8 @@ def authorize_student(auth: AuthContext, student_id: str) -> None:
     if auth.is_service:
         return
     if auth.uid and student_id and auth.uid == student_id:
+        return
+    if auth.uid and student_id and _is_parent_of(auth.uid, student_id):
         return
     if auth.uid and _role_for(auth.uid) in _PRIVILEGED_ROLES:
         return

@@ -1,95 +1,24 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { initializeApp, cert, getApps } from 'firebase-admin/app'
 import { getFirestore } from 'firebase-admin/firestore'
+import { existsSync, readFileSync } from 'fs'
+import { resolve } from 'path'
 
 if (!getApps().length) {
   initializeApp({ credential: cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!)) })
 }
 
-const FIRESTORE_RULES = `
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    match /users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    match /articles/{articleId} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-
-    match /sessions/{sessionId} {
-      allow read: if request.auth != null && (
-        resource.data.studentId == request.auth.uid ||
-        resource.data.studentEmail == request.auth.token.email ||
-        resource.data.tutorId == request.auth.uid ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-      allow create: if request.auth != null && (
-        request.resource.data.tutorId == request.auth.uid ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-      allow update: if request.auth != null && (
-        resource.data.tutorId == request.auth.uid ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-      allow delete: if request.auth != null && (
-        resource.data.tutorId == request.auth.uid ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-
-      match /messages/{messageId} {
-        allow read, write: if request.auth != null && (
-          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid ||
-          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email ||
-          get(/databases/$(database)/documents/sessions/$(sessionId)).data.tutorId == request.auth.uid
-        );
-      }
-    }
-
-    match /chats/{chatId} {
-      allow read, write: if request.auth != null && (
-        chatId.split('_')[0] == request.auth.uid ||
-        chatId.split('_')[1] == request.auth.uid
-      );
-      match /messages/{messageId} {
-        allow read, write: if request.auth != null && (
-          chatId.split('_')[0] == request.auth.uid ||
-          chatId.split('_')[1] == request.auth.uid
-        );
-      }
-    }
-
-    match /transcripts/{transcriptId} {
-      allow read: if request.auth != null && (
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'tutor' ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
-      );
-      allow write: if false;
-    }
+function readRulesFile(name: 'firestore.rules' | 'storage.rules') {
+  const candidates = [
+    resolve(process.cwd(), 'firebase', name),
+    resolve(process.cwd(), '../firebase', name),
+  ]
+  const rulesPath = candidates.find(existsSync)
+  if (!rulesPath) {
+    throw new Error(`Missing canonical ${name} file. Checked: ${candidates.join(', ')}`)
   }
+  return readFileSync(rulesPath, 'utf8').trim()
 }
-`.trim()
-
-const STORAGE_RULES = `
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /chat-files/{chatId}/{allPaths=**} {
-      allow read, write: if request.auth != null && (
-        chatId.split('_')[0] == request.auth.uid ||
-        chatId.split('_')[1] == request.auth.uid
-      );
-    }
-    match /sessions/{sessionId}/{allPaths=**} {
-      allow read, write: if request.auth != null;
-    }
-  }
-}
-`.trim()
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed')
@@ -103,6 +32,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const token = await credential.getAccessToken()
     const accessToken = token.access_token
     const projectId = 'mindcraft-93858'
+    const firestoreRules = readRulesFile('firestore.rules')
+    const storageRules = readRulesFile('storage.rules')
 
     // Deploy Firestore rules
     const fsRes = await fetch(
@@ -111,7 +42,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          source: { files: [{ name: 'firestore.rules', content: FIRESTORE_RULES }] }
+          source: { files: [{ name: 'firestore.rules', content: firestoreRules }] }
         }),
       }
     )
@@ -137,7 +68,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          source: { files: [{ name: 'storage.rules', content: STORAGE_RULES }] }
+          source: { files: [{ name: 'storage.rules', content: storageRules }] }
         }),
       }
     )

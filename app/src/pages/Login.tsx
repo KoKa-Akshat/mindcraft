@@ -108,6 +108,8 @@ export default function Login() {
   function navigateAfterRole(effectiveRole: string) {
     if (effectiveRole === 'tutor' || effectiveRole === 'admin') {
       navigate('/tutor', { replace: true })
+    } else if (effectiveRole === 'parent') {
+      navigate('/parent', { replace: true })
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {
@@ -150,6 +152,8 @@ export default function Login() {
 
     if (firestoreRole === 'tutor' || firestoreRole === 'admin') {
       navigate('/tutor', { replace: true })
+    } else if (firestoreRole === 'parent') {
+      navigate('/parent', { replace: true })
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {

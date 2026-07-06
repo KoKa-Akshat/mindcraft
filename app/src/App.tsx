@@ -35,6 +35,7 @@ import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
 import ConstellationGpsLab from './pages/ConstellationGpsLab'
+import ParentDashboard    from './pages/ParentDashboard'
 import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
@@ -71,7 +72,11 @@ function RoleRedirect() {
     getDoc(doc(db, 'users', user.uid))
       .then(snap => {
         const role = snap.data()?.role
-        setDest(role === 'tutor' || role === 'admin' ? '/tutor' : '/dashboard')
+        setDest(
+          role === 'tutor' || role === 'admin' ? '/tutor'
+          : role === 'parent' ? '/parent'
+          : '/dashboard',
+        )
       })
       .catch(() => setDest('/dashboard'))
   }, [user])
@@ -101,8 +106,14 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => onAuthStateChanged(auth, setUser), [])
   useEffect(() => {
     if (!user) return
-    warmML()                          // fastest wake signal (cold-start)
-    void fetchKnowledgeGraph(user.uid) // prefetch graph into the shared cache
+    warmML()
+    // Only students have a personal KG; tutors/parents read other uids on their dashboards.
+    getDoc(doc(db, 'users', user.uid))
+      .then(snap => {
+        const role = snap.data()?.role
+        if (!role || role === 'student') void fetchKnowledgeGraph(user.uid)
+      })
+      .catch(() => { void fetchKnowledgeGraph(user.uid) })
   }, [user])
   if (user === undefined) {
     return (
@@ -152,6 +163,7 @@ export default function App() {
 
         {/* Authenticated routes */}
         <Route path="/dashboard"           element={<AuthGuard><Dashboard /></AuthGuard>} />
+        <Route path="/parent"              element={<AuthGuard><ParentDashboard /></AuthGuard>} />
         <Route path="/tutor"               element={<AuthGuard><TutorDashboard /></AuthGuard>} />
         <Route path="/tutor/session/:id"   element={<AuthGuard><SessionDetail /></AuthGuard>} />
         <Route path="/admin"               element={<AuthGuard><Admin /></AuthGuard>} />

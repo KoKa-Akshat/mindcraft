@@ -23,6 +23,8 @@ export interface Session {
   status: 'scheduled' | 'completed' | 'cancelled'
   meetingUrl: string | null
   summaryStatus?: 'pending' | 'draft' | 'published'
+  plan?: SessionPlan
+  tutorObservation?: TutorObservation
   calendlyEventUri?: string
   firefliesMeetingUrl?: string
   transcript?: {
@@ -50,6 +52,33 @@ export interface TutorStudent {
     date?: string
     bullets?: string[]
   }
+}
+
+// ─── Session plan / observation ───────────────────────────────────────────────
+
+export interface SessionPlan {
+  topics: string[]
+  goals: string
+  notes: string
+  createdAt: number
+}
+
+export interface TutorObservation {
+  rating: 1 | 2 | 3 | 4 | 5
+  notes: string
+  struggled_with: string[]
+  excelled_at: string[]
+  completedAt: number
+}
+
+// ─── Classroom ────────────────────────────────────────────────────────────────
+
+export interface Classroom {
+  code: string
+  tutorId: string
+  tutorName: string
+  studentIds: string[]
+  createdAt: number
 }
 
 // ─── Chat ─────────────────────────────────────────────────────────────────────
