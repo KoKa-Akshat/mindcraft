@@ -371,37 +371,33 @@
 }
 
 .routeConceptList {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
 .routeConceptItem {
-  display: grid;
-  grid-template-columns: 18px 1fr;
-  gap: 10px;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--rule);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0;
+  padding: 10px 10px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
   cursor: pointer;
-  background: none;
-  border-left: none;
-  border-right: none;
-  border-top: none;
+  background: var(--paper-base);
   text-align: left;
   width: 100%;
-  transition: background var(--dur-ink);
-  border-radius: 2px;
+  min-height: 58px;
+  overflow: hidden;
+  transition: border-color 130ms, transform 130ms, box-shadow 130ms;
 }
 
 .routeConceptItem:hover {
-  /* highlighter swipe */
-  background: linear-gradient(
-    transparent 75%,
-    rgba(201,150,63,0.3) 75%,
-    rgba(201,150,63,0.3) 96%,
-    transparent 96%
-  );
-  transform: translateX(3px);
+  border-color: var(--ink-pencil);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
 .routeConceptItem:focus-visible {
@@ -409,17 +405,14 @@
   outline-offset: 2px;
 }
 
+/* state badge top-right */
 .routeDot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  flex-shrink: 0;
-  justify-self: center;
-  transition: transform 120ms var(--ease-spring);
-}
-
-.routeConceptItem:hover .routeDot {
-  transform: scale(1.3);
 }
 
 .routeDotInactive {
@@ -438,9 +431,10 @@
 
 .routeConceptName {
   font-family: var(--font-script);
-  font-size: 18px;
+  font-size: 15px;
   color: var(--ink-system);
   line-height: 1.2;
+  max-width: 90%;
 }
 
 .routeConceptNameDone {
@@ -451,7 +445,7 @@
 
 .routeConceptNameActive {
   color: var(--ink-system);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .seeMapBtn {

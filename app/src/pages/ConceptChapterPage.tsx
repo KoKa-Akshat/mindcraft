@@ -32,13 +32,31 @@ const FRAME_ALIAS: Record<string, string> = {
   coordinate_geometry: 'representation_translation',
   absolute_value: 'algebraic_manipulation',
   circles: 'circles_geometry',
+  quadratics: 'quadratic_equations',
   quadratic_functions: 'quadratic_equations',
   polynomial_operations: 'polynomials',
   factors_multiples: 'factoring_polynomials',
 }
 
+// conceptStories.json keys sometimes differ from URL concept IDs
+const DB_ALIAS: Record<string, string> = {
+  quadratics: 'quadratic_equations',
+  quadratic_functions: 'quadratic_equations',
+  probability: 'basic_probability',
+  statistics_basics: 'descriptive_statistics',
+  circles: 'circles_geometry',
+  polynomial_operations: 'polynomials',
+  factors_multiples: 'factoring_polynomials',
+  absolute_value: 'algebraic_manipulation',
+  coordinate_geometry: 'coordinate_geometry',
+}
+
 function getFrame(conceptId: string): ContextFrame | null {
   return FRAMES[conceptId] ?? FRAMES[FRAME_ALIAS[conceptId] ?? ''] ?? null
+}
+
+function lookupStory(conceptId: string): CS | undefined {
+  return DB[conceptId] ?? DB[DB_ALIAS[conceptId] ?? ''] ?? undefined
 }
 
 // ── Cluster identity ─────────────────────────────────────────────────────────
@@ -65,6 +83,10 @@ const CLUSTER_MAP: Record<string, Cluster> = {
   data_interpretation: 'data',    regression: 'data',
   counting_combinatorics: 'data', complex_numbers: 'data',
   matrices: 'data',
+  quadratics: 'functions',
+  quadratic: 'functions',
+  statistics: 'data',
+  trigonometry: 'functions',
 }
 
 const CLUSTER_THEME = {
@@ -238,7 +260,7 @@ export default function ConceptChapterPage() {
   const location = useLocation()
   const fromDashboard = Boolean((location.state as { fromDashboard?: boolean } | null)?.fromDashboard)
 
-  const cs = DB[conceptId]
+  const cs = lookupStory(conceptId)
   const cluster = CLUSTER_MAP[conceptId] ?? 'algebra'
   const theme = CLUSTER_THEME[cluster]
   const glyph = GLYPH[cluster]
