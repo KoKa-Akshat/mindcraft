@@ -12,16 +12,10 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import s from './Login.module.css'
-import { worldUrl } from '../lib/siteUrls'
-import {
-  CURRICULUM_TRACK_OPTIONS,
-  type CurriculumTrack,
-} from '../lib/curriculumTrack'
 
 type Role = 'student' | 'parent' | 'tutor'
 type Mode = 'signin' | 'signup'
-type SignupStep = 'auth' | 'curriculum' | 'notified'
-/** Separate admin flow: passcode step → sign in → grant admin once. */
+/** Separate admin flow: passcode step, sign in, grant admin once. */
 type AdminFlow = 'auth' | 'passcode' | 'armed'
 
 const ADMIN_GRANT_PENDING_KEY = 'mc_admin_grant_pending'
@@ -79,7 +73,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [adminFlow, setAdminFlow] = useState<AdminFlow>('auth')
   const [adminPasscode, setAdminPasscode] = useState('')
-  const [signupStep, setSignupStep] = useState<SignupStep>('auth')
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
@@ -117,25 +110,8 @@ export default function Login() {
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {
-      window.location.href = worldUrl(auth.currentUser!.uid)
+      navigate('/dashboard', { replace: true })
     }
-  }
-
-  async function completeNewUserSignup(
-    uid: string,
-    signupRole: string,
-    curriculumTrack?: CurriculumTrack,
-  ) {
-    const payload: Record<string, string> = {
-      role: signupRole,
-      email: auth.currentUser?.email ?? '',
-      displayName: auth.currentUser?.displayName ?? '',
-      createdAt: new Date().toISOString(),
-    }
-    if (curriculumTrack) payload.curriculumTrack = curriculumTrack
-    await setDoc(doc(db, 'users', uid), payload)
-    setSignupStep('auth')
-    navigateAfterRole(signupRole)
   }
 
   async function routeAfterLogin(uid: string, isNewUser = false) {
@@ -148,12 +124,13 @@ export default function Login() {
 
     if (isNewUser) {
       const signupRole = grantAdmin ? 'admin' : role
-      if (signupRole === 'student') {
-        setSignupStep('curriculum')
-        setLoading(false)
-        return
-      }
-      await completeNewUserSignup(uid, signupRole)
+      await setDoc(doc(db, 'users', uid), {
+        role: signupRole,
+        email: auth.currentUser?.email ?? '',
+        displayName: auth.currentUser?.displayName ?? '',
+        createdAt: new Date().toISOString(),
+      })
+      navigateAfterRole(signupRole)
       return
     }
 
@@ -175,7 +152,7 @@ export default function Login() {
     } else if (returnTo) {
       navigate(returnTo, { replace: true })
     } else {
-      window.location.href = worldUrl(uid)
+      navigate('/dashboard', { replace: true })
     }
   }
 
@@ -224,62 +201,6 @@ export default function Login() {
     setError('')
   }
 
-  async function handleCurriculumSelect(track: CurriculumTrack) {
-    const uid = auth.currentUser?.uid
-    if (!uid) {
-      setError('Session expired. Please sign in again.')
-      setSignupStep('auth')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      // Write user doc with track first so the tutor notification is meaningful
-      await completeNewUserSignup(uid, 'student', track)
-      // Show tutor-notified screen briefly; navigateAfterRole already fired above
-      // but completeNewUserSignup redirects — so this is only reached on error
-    } catch (e: unknown) {
-      const code = (e as { code?: string })?.code ?? ''
-      setError(friendlyError(code || 'unknown'))
-      setLoading(false)
-    }
-  }
-
-  async function handleCurriculumSelectWithNotify(track: CurriculumTrack) {
-    const uid = auth.currentUser?.uid
-    if (!uid) {
-      setError('Session expired. Please sign in again.')
-      setSignupStep('auth')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      // Write user doc immediately so the tutor sees it
-      const payload: Record<string, string> = {
-        role: 'student',
-        email: auth.currentUser?.email ?? '',
-        displayName: auth.currentUser?.displayName ?? '',
-        createdAt: new Date().toISOString(),
-        curriculumTrack: track,
-      }
-      await setDoc(doc(db, 'users', uid), payload)
-      // Show HiTL moment then redirect
-      setSignupStep('notified')
-      setLoading(false)
-      setTimeout(() => {
-        void (async () => {
-          await auth.currentUser?.getIdToken(true)
-          navigateAfterRole('student')
-        })()
-      }, 2800)
-    } catch (e: unknown) {
-      const code = (e as { code?: string })?.code ?? ''
-      setError(friendlyError(code || 'unknown'))
-      setLoading(false)
-    }
-  }
-
   async function handleForgot() {
     if (!email) { setError('Enter your email address above first.'); return }
     try {
@@ -299,15 +220,15 @@ export default function Login() {
       </div>
       <main className={s.shell}>
         <div className={s.layout}>
-          <section className={s.heroPanel} aria-label="MindCraft private learning studio">
+          <section className={s.heroPanel} aria-label="MindCraft learning map">
             <div className={s.heroContent}>
               <div className={s.heroIntro}>
                 <div className={s.wordmark}>
                   <span className={s.wmMind}>Mind</span><span className={s.wmCraft}>Craft</span>
                 </div>
-                <h1 className={s.heroTitle}>Your private learning studio.</h1>
+                <h1 className={s.heroTitle}>Come back to your map.</h1>
                 <p className={s.heroCopy}>
-                  A calmer way to master math, build confidence, and walk into every exam with a plan.
+                  Pick up where you left off, see the next step, and keep math feeling possible.
                 </p>
               </div>
 
@@ -326,8 +247,8 @@ export default function Login() {
                     <path d="M13 7v9" />
                   </svg>
                 </span>
-                <strong>Practice Sets</strong>
-                <p>Targeted reps that turn weak spots into confident routines.</p>
+                <strong>Smart practice</strong>
+                <p>Short reps aimed at the gap that matters today.</p>
               </article>
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
@@ -338,8 +259,8 @@ export default function Login() {
                     <path d="M19.75 8.25v2.5" />
                   </svg>
                 </span>
-                <strong>Homework Help</strong>
-                <p>Step-by-step support that keeps students moving without panic.</p>
+                <strong>Calm support</strong>
+                <p>When a problem feels stuck, the next hint stays small.</p>
               </article>
               <article className={s.valueCard}>
                 <span className={s.valueIcon} aria-hidden="true">
@@ -352,14 +273,14 @@ export default function Login() {
                     <path d="M9.5 7h5" />
                   </svg>
                 </span>
-                <strong>Knowledge Maps</strong>
-                <p>A visual route through concepts, gaps, and what to learn next.</p>
+                <strong>Learning map</strong>
+                <p>Mastered, fragile, untouched. Clear at a glance.</p>
               </article>
               </div>
               </div>
 
               <blockquote className={s.quote}>
-                A better plan makes a calmer learner.
+                Math is cool when it finally clicks.
               </blockquote>
             </div>
           </section>
@@ -371,12 +292,12 @@ export default function Login() {
                 <div className={s.formHeader}>
                   <div className={s.formIntro}>
                     <p className={s.formKicker}>
-                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Begin your plan'}
+                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Start your map'}
                     </p>
                     <h2>
                       {adminFlow === 'passcode'
                         ? 'Enter your admin code.'
-                        : mode === 'signin' ? 'Continue your learning plan.' : 'Create your MindCraft studio.'}
+                        : mode === 'signin' ? 'Continue where you left off.' : 'Create your MindCraft map.'}
                     </h2>
                   </div>
                   <span className={s.secureBadge} aria-label="Secure sign in">
@@ -387,42 +308,7 @@ export default function Login() {
                   </span>
                 </div>
 
-                {signupStep === 'notified' ? (
-                  <div className={s.curriculumStep} style={{ textAlign: 'center', padding: '48px 0' }}>
-                    <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
-                    <h2 className={s.curriculumTitle}>Your tutor has been notified.</h2>
-                    <p className={s.curriculumCopy} style={{ maxWidth: 320, margin: '0 auto' }}>
-                      We&apos;re building your personalized learning map now.
-                      Your tutor will review it before your first session.
-                    </p>
-                    <p style={{ marginTop: 24, fontSize: 13, color: 'var(--muted, #888)', fontWeight: 600 }}>
-                      Taking you to your dashboard…
-                    </p>
-                  </div>
-                ) : signupStep === 'curriculum' ? (
-                  <div className={s.curriculumStep}>
-                    <p className={s.formKicker}>One quick step</p>
-                    <h2 className={s.curriculumTitle}>What are you working on?</h2>
-                    <p className={s.curriculumCopy}>
-                      We&apos;ll build your learning path and notify your tutor so they can prepare for your first session.
-                    </p>
-                    <div className={s.trackGrid} role="list">
-                      {CURRICULUM_TRACK_OPTIONS.map(opt => (
-                        <button
-                          key={opt.id}
-                          type="button"
-                          className={s.trackCard}
-                          disabled={loading}
-                          onClick={() => void handleCurriculumSelectWithNotify(opt.id)}
-                        >
-                          <strong>{opt.title}</strong>
-                          <p>{opt.description}</p>
-                        </button>
-                      ))}
-                    </div>
-                    {error && <p className={s.error}>{error}</p>}
-                  </div>
-                ) : adminFlow === 'passcode' ? (
+                {adminFlow === 'passcode' ? (
                   <form
                     className={s.form}
                     onSubmit={(e) => { e.preventDefault(); verifyAdminPasscode() }}
@@ -459,7 +345,7 @@ export default function Login() {
                   <>
                 {adminFlow === 'armed' && (
                   <p className={s.formKicker} style={{ marginBottom: 16, textAlign: 'center' }}>
-                    Code accepted — sign in below to activate admin access.{' '}
+                    Code accepted. Sign in below to activate admin access.{' '}
                     <button type="button" onClick={cancelAdminFlow}>Cancel</button>
                   </p>
                 )}
