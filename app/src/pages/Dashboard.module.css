@@ -142,6 +142,33 @@
   box-shadow: var(--shadow-page);
   border-radius: 3px;
   animation: nbSettle 0.5s var(--ease-weight) both;
+  transform-origin: center;
+  transition: transform 450ms var(--ease-weight), opacity 450ms var(--ease-weight), filter 450ms var(--ease-weight);
+}
+
+.notebookTurning {
+  pointer-events: none;
+  transform: translateX(-6%);
+  opacity: 0.86;
+  filter: saturate(0.96) contrast(0.98);
+}
+
+.notebookTurning .leftPage,
+.notebookTurning .rightPage,
+.notebookTurning .gutter {
+  transition: transform 450ms var(--ease-weight), opacity 450ms var(--ease-weight);
+}
+
+.notebookTurning .leftPage {
+  transform: translateX(4%);
+}
+
+.notebookTurning .rightPage {
+  transform: translateX(-4%);
+}
+
+.notebookTurning .gutter {
+  opacity: 0.72;
 }
 
 @keyframes nbSettle {
@@ -962,6 +989,10 @@
     min-height: 100vh;
     box-shadow: none;
     animation: none;
+  }
+
+  .notebookTurning {
+    transform: translateX(-3%);
   }
 
   .gutter,

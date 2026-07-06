@@ -1,18 +1,18 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
 import MathText from '../components/MathText'
 import s from './ConceptChapterPage.module.css'
 
-type IngredientStory = { name?: string; story: string }
+type IngredientStory = string | { name?: string; story: string }
 type ConceptStory = {
   conceptId: string
   conceptName: string
   story: string
   ingredientStories: Record<string, IngredientStory>
 }
-const conceptStories = conceptStoriesRaw as Record<string, ConceptStory>
+const conceptStories = conceptStoriesRaw as unknown as Record<string, ConceptStory>
 
 // --- Concept visual identity --------------------------------------------------
 // Each concept gets a "cluster color" and a simple geometric glyph (SVG path)
@@ -110,9 +110,11 @@ function parseStory(text: string): string[] {
 export default function ConceptChapterPage() {
   const { conceptId = '' } = useParams<{ conceptId: string }>()
   const navigate = useNavigate()
+  const location = useLocation()
   const [open, setOpen] = useState(false)
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null)
   const leftRef = useRef<HTMLDivElement>(null)
+  const fromDashboard = Boolean((location.state as { fromDashboard?: boolean } | null)?.fromDashboard)
 
   const story = conceptStories[conceptId]
   const cluster = clusterFor(conceptId)
@@ -160,7 +162,7 @@ export default function ConceptChapterPage() {
       </button>
 
       {/* The notebook spread */}
-      <div className={`${s.spread} ${open ? s.spreadOpen : ''}`}>
+      <div className={`${s.spread} ${fromDashboard ? s.fromDashboard : ''} ${open ? s.spreadOpen : ''}`}>
 
         {/* ── LEFT PAGE: The Story ──────────────────────────── */}
         <div className={s.leftPage} ref={leftRef}>
@@ -201,7 +203,7 @@ export default function ConceptChapterPage() {
             <div className={s.ingredientNotes}>
               <div className={s.ingredientDivider} aria-hidden />
               {ingredients.map((ing, i) => {
-                const text = ing.story ?? ''
+                const text = typeof ing === 'string' ? ing : (ing.story ?? '')
                 const preview = text.slice(0, 120) + (text.length > 120 ? '…' : '')
                 return (
                   <div key={i} className={s.ingredientNote}>
@@ -245,7 +247,7 @@ export default function ConceptChapterPage() {
           {/* Ingredient list — what's inside this chapter */}
           <div className={s.ingredientList}>
             {Object.entries(story.ingredientStories).slice(0, 4).map(([key, ing], i) => {
-              const name = ing.name ?? key.split('__')[1]?.replace(/_/g, ' ') ?? key
+              const name = (typeof ing === 'object' ? ing.name : undefined) ?? key.split('__')[1]?.replace(/_/g, ' ') ?? key
               return (
                 <div key={key} className={s.ingredientItem}>
                   <span className={s.ingredientBullet} style={{ color: palette.accent }}>▸</span>

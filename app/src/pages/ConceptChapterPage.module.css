@@ -85,6 +85,16 @@
   opacity: 1;
 }
 
+.spread.fromDashboard {
+  transform: perspective(1600px) translateX(4%) rotateY(-4deg) scaleX(0.96);
+  opacity: 0;
+}
+
+.spread.fromDashboard.spreadOpen {
+  transform: perspective(1600px) translateX(0) rotateY(0deg) scaleX(1);
+  opacity: 1;
+}
+
 /* --- Shared page base --------------------------------------- */
 .leftPage,
 .rightPage {
@@ -502,6 +512,10 @@
   .spreadOpen {
     transform: none !important;
   }
+  .spread.fromDashboard,
+  .spread.fromDashboard.spreadOpen {
+    transform: none !important;
+  }
   .gutter {
     display: none;
   }
@@ -527,6 +541,11 @@
 @media (prefers-reduced-motion: reduce) {
   .spread {
     transition: none;
+    transform: none;
+    opacity: 1;
+  }
+  .spread.fromDashboard,
+  .spread.fromDashboard.spreadOpen {
     transform: none;
     opacity: 1;
   }

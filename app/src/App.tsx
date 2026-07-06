@@ -30,6 +30,7 @@ import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
 import ConceptChapterPage from './pages/ConceptChapterPage'
+import GradeOnboard    from './pages/GradeOnboard'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
@@ -158,6 +159,7 @@ export default function App() {
         <Route path="/study-timer"         element={<AuthGuard><StudyTimer /></AuthGuard>} />
         <Route path="/sessions"            element={<AuthGuard><StudentSessions /></AuthGuard>} />
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
+        <Route path="/onboard"             element={<AuthGuard><GradeOnboard /></AuthGuard>} />
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/constellation-gps-lab" element={<AuthGuard><ConstellationGpsLab /></AuthGuard>} />

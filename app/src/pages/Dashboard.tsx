@@ -90,6 +90,7 @@ export default function Dashboard() {
   const [curriculumTrack, setCurriculumTrack] = useState<CurriculumTrack | null>(null)
   const [recLoading, setRecLoading] = useState(true)
   const [solverText, setSolverText] = useState('')
+  const [turningConceptId, setTurningConceptId] = useState<string | null>(null)
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
@@ -125,10 +126,18 @@ export default function Dashboard() {
     }
   }
 
-  function goToConcept(conceptId: string, isDone: boolean) {
-    navigate('/practice', {
-      state: { conceptId, missionType: isDone ? 'learn' : 'weakness' },
-    })
+  function openChapter(conceptId: string) {
+    if (turningConceptId) return
+    setTurningConceptId(conceptId)
+    window.setTimeout(() => {
+      navigate(`/concept/${encodeURIComponent(conceptId)}`, {
+        state: { fromDashboard: true },
+      })
+    }, 450)
+  }
+
+  function goToConcept(conceptId: string, _isDone: boolean) {
+    openChapter(conceptId)
   }
 
   function launchSolver() {
@@ -236,7 +245,7 @@ export default function Dashboard() {
       {!diagChecked ? (
         <div className={s.loading}><div className={s.spinner} /></div>
       ) : (
-        <div className={s.notebook}>
+        <div className={`${s.notebook} ${turningConceptId ? s.notebookTurning : ''}`}>
 
           {/* ── left page: the record ── */}
           <div className={s.leftPage}>
@@ -269,7 +278,8 @@ export default function Dashboard() {
                           type="button"
                           className={s.routeConceptItem}
                           onClick={() => goToConcept(c.id, isDone)}
-                          title={`Practice ${c.label}`}
+                          disabled={Boolean(turningConceptId)}
+                          title={`Open ${c.label}`}
                         >
                           <div className={`${s.routeDot} ${isDone ? s.routeDotDone : isActive ? s.routeDotActive : s.routeDotInactive}`} />
                           <span className={`${s.routeConceptName} ${isDone ? s.routeConceptNameDone : isActive ? s.routeConceptNameActive : ''}`}>
@@ -317,7 +327,8 @@ export default function Dashboard() {
                         key={card.id}
                         type="button"
                         className={s.exploreCard}
-                        onClick={() => navigate('/practice', { state: { conceptId: card.id, missionType: 'learn' } })}
+                        onClick={() => openChapter(card.id)}
+                        disabled={Boolean(turningConceptId)}
                         title={`Explore ${card.label}`}
                       >
                         <div

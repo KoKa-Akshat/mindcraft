@@ -1,6 +1,7 @@
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect } from 'react'
+import MathText from '../components/MathText'
 import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
@@ -1827,7 +1828,7 @@ export default function Practice() {
                       {currentQ.examTag && (
                         <span className={s.examTagLight}>{currentQ.examTag} Style</span>
                       )}
-                      <p className={s.questionText}>{currentQ.question}</p>
+                      <p className={s.questionText}><MathText text={currentQ.question} /></p>
                     </div>
                     <div className={s.questionBody}>
                       {safeQuestionSvg(currentQ) && (
@@ -1848,7 +1849,7 @@ export default function Practice() {
                           return (
                             <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
                               <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                              <span className={s.choiceText}>{choice}</span>
+                              <span className={s.choiceText}><MathText text={choice} /></span>
                               {!hideCorrectness && checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
                               {!hideCorrectness && checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>✗</span>}
                             </button>

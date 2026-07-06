@@ -1,0 +1,330 @@
+/* GradeOnboard — grade-aware conversational diagnostic
+   Paper + deep field aesthetic; matches the journal brand */
+
+.desk {
+  min-height: 100dvh;
+  background: #080e14;
+  background-image: radial-gradient(ellipse at 50% 30%, #0c141c 0%, #080e14 70%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  position: relative;
+}
+
+/* --- Progress line (sits at the very top, inside the desk) --- */
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  z-index: 10;
+}
+.progressFill {
+  height: 100%;
+  background: #c4f547;
+  transition: width 500ms cubic-bezier(0.2,0,0,1);
+}
+
+/* --- Main card (warm ivory page on the desk) --- */
+.page {
+  width: min(620px, 94vw);
+}
+
+.card {
+  background: #f7f3ee;
+  border-radius: 2px;
+  padding: clamp(32px, 5vw, 56px) clamp(28px, 5vw, 52px);
+  box-shadow: 0 1px 2px rgba(8,14,20,0.10), 0 6px 24px rgba(8,14,20,0.18);
+  position: relative;
+  /* Paper grain */
+  isolation: isolate;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  opacity: 0.03;
+  mix-blend-mode: multiply;
+}
+.card > * { position: relative; z-index: 1; }
+
+/* --- Typography --- */
+.kicker {
+  font: 400 11px/16px "IBM Plex Mono", monospace;
+  color: #6f6a61;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  margin: 0 0 12px;
+}
+.title {
+  font: 700 clamp(28px, 5vw, 38px)/1.1 "Space Grotesk", sans-serif;
+  color: #1c1a17;
+  letter-spacing: -0.03em;
+  margin: 0 0 14px;
+}
+.body {
+  font: 400 15px/24px "Inter", sans-serif;
+  color: #6f6a61;
+  margin: 0 0 28px;
+  max-width: 44ch;
+}
+
+/* --- Grade selector --- */
+.gradeRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.gradeBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 80px;
+  background: #fbf8f3;
+  border: 1.5px solid #e6ddd0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 160ms, background 160ms, transform 120ms;
+}
+.gradeBtn:hover {
+  border-color: #1d3a8a;
+  transform: translateY(-2px);
+}
+.gradeBtnActive {
+  background: #1c1a17;
+  border-color: #1c1a17;
+}
+.gradeBtnActive .gradeNum,
+.gradeBtnActive .gradeLabel {
+  color: #f7f3ee;
+}
+.gradeNum {
+  font: 700 28px/1 "Space Grotesk", sans-serif;
+  color: #1c1a17;
+  letter-spacing: -0.04em;
+}
+.gradeLabel {
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  color: #6f6a61;
+  margin-top: 2px;
+}
+
+/* --- Goal grid --- */
+.goalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.goalCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 16px;
+  background: #fbf8f3;
+  border: 1.5px solid #e6ddd0;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms, background 160ms;
+}
+.goalCard:hover {
+  border-color: #1d3a8a;
+}
+.goalCardActive {
+  background: rgba(29,58,138,0.06);
+  border-color: #1d3a8a;
+}
+.goalLabel {
+  font: 600 14px/1.1 "Space Grotesk", sans-serif;
+  color: #1c1a17;
+  letter-spacing: -0.01em;
+}
+.goalDetail {
+  font: 400 11px/16px "IBM Plex Mono", monospace;
+  color: #6f6a61;
+}
+
+/* --- Story card --- */
+.storyCard {
+  border-left: 3px solid rgba(193,18,31,0.28);
+}
+.storyTitle {
+  font: 700 24px/1.15 "Space Grotesk", sans-serif;
+  color: #1c1a17;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+}
+.storyBody {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 31px,
+    rgba(29,58,138,0.10) 31px,
+    rgba(29,58,138,0.10) 32px
+  );
+  padding-bottom: 2px;
+  margin-bottom: 16px;
+}
+.storyPara {
+  font: 400 15px/32px "Source Serif 4", serif;
+  color: #232f4e;
+  margin: 0 0 0;
+  max-width: 50ch;
+}
+.storyParaFirst {
+  font-style: italic;
+}
+.storyNote {
+  font: 400 11px/16px "IBM Plex Mono", monospace;
+  color: #6f6a61;
+  margin: 0 0 24px;
+  letter-spacing: 0.04em;
+}
+
+/* --- Calibration questions --- */
+.questionWrap {
+  margin-bottom: 24px;
+}
+.questionText {
+  font: 400 16px/26px "Inter", sans-serif;
+  color: #1c1a17;
+  margin: 0 0 20px;
+}
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #fbf8f3;
+  border: 1.5px solid #e6ddd0;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: left;
+  font: 400 14px/22px "Inter", sans-serif;
+  color: #1c1a17;
+  transition: border-color 140ms, background 140ms;
+}
+.choice:hover:not(:disabled) {
+  border-color: #1d3a8a;
+  background: #f7f3ee;
+}
+.choiceSelected {
+  background: rgba(29,58,138,0.08);
+  border-color: #1d3a8a;
+}
+.choiceSubmitted {
+  opacity: 0.6;
+  cursor: default;
+}
+.choiceLetter {
+  font: 500 11px/1 "IBM Plex Mono", monospace;
+  color: #6f6a61;
+  width: 14px;
+  flex-shrink: 0;
+}
+
+/* --- Seeding screen (deep field) --- */
+.seedingPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seedingWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+.seedingMap {
+  width: 140px;
+  height: 140px;
+}
+.seedingMap svg {
+  width: 100%;
+  height: 100%;
+}
+.seedingText {
+  font: 400 13px/20px "IBM Plex Mono", monospace;
+  color: rgba(245,245,245,0.64);
+  letter-spacing: 0.06em;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.4); }
+}
+.seedPulse {
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+/* --- CTAs --- */
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  background: #1c1a17;
+  color: #f7f3ee;
+  border: none;
+  border-radius: 2px;
+  font: 500 14px/1 "Space Grotesk", sans-serif;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 160ms, transform 120ms;
+  margin-top: 4px;
+}
+.primary:hover:not(:disabled) {
+  background: #232f4e;
+  transform: translateY(-1px);
+}
+.primary:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.back {
+  display: block;
+  margin-top: 14px;
+  background: transparent;
+  border: none;
+  color: #6f6a61;
+  font: 400 12px/1 "IBM Plex Mono", monospace;
+  cursor: pointer;
+  padding: 4px 0;
+  letter-spacing: 0.04em;
+  transition: color 160ms;
+}
+.back:hover { color: #1c1a17; }
+
+/* --- Mobile --- */
+@media (max-width: 500px) {
+  .goalGrid { grid-template-columns: 1fr; }
+  .gradeRow { gap: 6px; }
+  .gradeBtn { width: 60px; height: 68px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressFill,
+  .primary,
+  .gradeBtn,
+  .goalCard,
+  .choice { transition: none; }
+  .seedPulse { animation: none; }
+}
