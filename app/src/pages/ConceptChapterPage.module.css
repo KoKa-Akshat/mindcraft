@@ -1,552 +1,436 @@
-/* ============================================================
-   ConceptChapterPage — Field Journal chapter spread
-   Design tokens per DASHBOARD_NOTEBOOK_SPEC.md
-   ============================================================ */
+/* ConceptChapterPage — paginated storybook
+   Paper tokens pulled from DASHBOARD_NOTEBOOK_SPEC */
 
-/* --- Tokens ------------------------------------------------- */
-:root {
-  --paper-base:       #f7f3ee;
-  --paper-raised:     #fbf8f3;
-  --paper-recessed:   #efe9e0;
-  --paper-edge:       #e6ddd0;
-  --ink-system:       #1c1a17;
-  --ink-katha:        #232f4e;
-  --ink-pencil:       #6f6a61;
-  --ink-depth:        #1d3a8a;
-  --rule:             rgba(29, 58, 138, 0.10);
-  --rule-pitch:       32px;
-  --margin-rule:      rgba(193, 18, 31, 0.28);
-  --margin-width:     72px;
-  --cover:            #080e14;
-  --chalk:            #f5f5f5;
-  --click:            #c4f547;
-  --stakes:           #c1121f;
-  --shadow-page:      0 1px 2px rgba(8,14,20,0.10), 0 6px 24px rgba(8,14,20,0.18);
-  --shadow-tip-in:    0 1px 3px rgba(8,14,20,0.22), 0 2px 1px -1px rgba(8,14,20,0.12);
-  --ease-weight:      cubic-bezier(0.2, 0, 0, 1);
-  --dur-turn:         500ms;
-  --font-display:     "Space Grotesk", sans-serif;
-  --font-katha:       "Source Serif 4", serif;
-  --font-stamp:       "IBM Plex Mono", monospace;
-  --font-body:        "Inter", "DM Sans", sans-serif;
-}
-
-/* --- Desk (full viewport, deep field) ----------------------- */
+/* ── Desk (full-screen dark backdrop) ─────────────────────────────────── */
 .desk {
   min-height: 100dvh;
-  background: var(--cover);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 40px 16px 64px;
-  position: relative;
-
-  /* Radial desk lamp vignette */
-  background-image: radial-gradient(ellipse at 50% 30%, #0c141c 0%, #080e14 70%);
-}
-
-/* --- Back button — floats on the desk ----------------------- */
-.backBtn {
-  position: relative;
-  align-self: flex-start;
-  margin-bottom: 24px;
-  background: transparent;
-  border: none;
-  color: rgba(245,245,245,0.64);
-  font: 400 13px/1 var(--font-stamp);
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  padding: 4px 0;
-  transition: color 160ms;
-}
-.backBtn:hover { color: var(--chalk); }
-
-/* --- Notebook spread ---------------------------------------- */
-.spread {
-  width: min(1240px, 94vw);
-  display: grid;
-  grid-template-columns: 1fr 24px 1fr;
-  min-height: 80vh;
-  box-shadow: var(--shadow-page);
-  border-radius: 2px;
-
-  /* Entrance: start compressed + rotated, open on .spreadOpen */
-  transform: perspective(1600px) rotateY(-12deg) scaleX(0.88);
-  opacity: 0;
-  transform-origin: center;
-  transition:
-    transform var(--dur-turn) var(--ease-weight),
-    opacity 280ms ease;
-}
-
-.spreadOpen {
-  transform: perspective(1600px) rotateY(0deg) scaleX(1);
-  opacity: 1;
-}
-
-.spread.fromDashboard {
-  transform: perspective(1600px) translateX(4%) rotateY(-4deg) scaleX(0.96);
-  opacity: 0;
-}
-
-.spread.fromDashboard.spreadOpen {
-  transform: perspective(1600px) translateX(0) rotateY(0deg) scaleX(1);
-  opacity: 1;
-}
-
-/* --- Shared page base --------------------------------------- */
-.leftPage,
-.rightPage {
-  background: var(--paper-base);
-  padding: 48px 40px 48px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Paper grain overlay */
-.pageGrain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 128px 128px;
-  opacity: 0.03;
-  mix-blend-mode: multiply;
-}
-
-/* Page-edge shadow stack (the pages beneath) */
-.leftPage {
-  box-shadow:
-    -2px 0 0 var(--paper-edge),
-    -4px 0 0 var(--paper-recessed),
-    -6px 0 0 var(--paper-edge);
-}
-.rightPage {
-  box-shadow:
-    2px 0 0 var(--paper-edge),
-    4px 0 0 var(--paper-recessed),
-    6px 0 0 var(--paper-edge);
-}
-
-/* All content above grain */
-.leftPage > *:not(.pageGrain),
-.rightPage > *:not(.pageGrain) {
-  position: relative;
-  z-index: 1;
-}
-
-/* --- Gutter (binding) --------------------------------------- */
-.gutter {
-  background: linear-gradient(
-    90deg,
-    rgba(8,14,20,0) 0%,
-    rgba(8,14,20,0.18) 45%,
-    rgba(8,14,20,0.28) 50%,
-    rgba(8,14,20,0.18) 55%,
-    rgba(8,14,20,0) 100%
-  );
+  background: #0c0e08;
+  background-image: radial-gradient(ellipse at 50% 20%, #111a0c 0%, #0c0e08 70%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  padding: 12px 0;
-}
-.gutterStitch {
-  width: 3px;
-  height: 10px;
-  background: var(--ink-depth);
-  opacity: 0.30;
-  border-radius: 1px;
+  padding: 20px 16px 80px;
+  position: relative;
 }
 
-/* --- Running header ----------------------------------------- */
-.runHead {
+.backBtn {
+  position: fixed;
+  top: 20px;
+  left: 22px;
+  z-index: 20;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.6);
+  font: 500 12px/1 "IBM Plex Mono", monospace;
+  padding: 9px 16px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 160ms, color 160ms;
+}
+.backBtn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* ── Page (the warm paper sheet) ──────────────────────────────────────── */
+.page {
+  position: relative;
+  width: min(720px, 94vw);
+  min-height: min(540px, 80dvh);
+  border-radius: 4px;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.12),
+    0 12px 40px rgba(0,0,0,0.35),
+    0 40px 80px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Paper grain texture */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  opacity: 0.028;
+  mix-blend-mode: multiply;
+}
+.page > * { position: relative; z-index: 1; }
+
+/* ── Entry animations ──────────────────────────────────────────────────── */
+@keyframes enterRight {
+  from { opacity: 0; transform: translateX(52px) scale(0.975); }
+  to   { opacity: 1; transform: translateX(0)    scale(1); }
+}
+@keyframes enterLeft {
+  from { opacity: 0; transform: translateX(-52px) scale(0.975); }
+  to   { opacity: 1; transform: translateX(0)     scale(1); }
+}
+@keyframes enterGutter {
+  from { opacity: 0; transform: translateX(-80px) scale(0.97); }
+  to   { opacity: 1; transform: translateX(0)     scale(1); }
+}
+
+.enterRight      { animation: enterRight  0.38s cubic-bezier(0, 0.55, 0.45, 1) both; }
+.enterLeft       { animation: enterLeft   0.38s cubic-bezier(0, 0.55, 0.45, 1) both; }
+.enterFromGutter { animation: enterGutter 0.45s cubic-bezier(0, 0.55, 0.45, 1) both; }
+
+/* ── COVER layout ──────────────────────────────────────────────────────── */
+.coverLayout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(36px, 6vw, 72px) clamp(28px, 5vw, 64px);
+}
+
+.coverTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   margin-bottom: 28px;
 }
-.runHeadLabel {
-  font: 400 11px/16px var(--font-stamp);
-  color: var(--ink-pencil);
+
+.coverChip {
+  font: 500 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.coverChNum {
+  font: 400 11px/1 "IBM Plex Mono", monospace;
+  color: #a0907a;
   letter-spacing: 0.08em;
-  text-transform: lowercase;
-}
-.runHeadPage {
-  font: 400 11px/16px var(--font-stamp);
-  color: var(--ink-pencil);
 }
 
-/* --- Chapter marker ---------------------------------------- */
-.chapterMark {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+.coverGlyph {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 28px;
 }
-.chapterStamp {
-  font: 500 11px/16px var(--font-stamp);
-  color: var(--ink-pencil);
-  letter-spacing: 0.12em;
-}
-.clusterPip {
-  font: 400 10px/16px var(--font-stamp);
-  letter-spacing: 0.10em;
-  text-transform: lowercase;
-  padding: 2px 7px;
-  border-radius: 2px;
-  opacity: 0.85;
-}
-
-/* --- Concept title (display size) -------------------------- */
-.conceptTitle {
-  font: 700 clamp(36px, 5vw, 56px)/1.05 var(--font-display);
-  color: var(--ink-system);
-  letter-spacing: -0.03em;
-  margin: 0 0 36px;
-  max-width: 480px;
-}
-
-/* --- Story body: margin rule + ruled text ------------------ */
-.storyBody {
-  position: relative;
-  display: flex;
-  gap: 0;
-}
-
-.marginRule {
-  flex-shrink: 0;
-  width: var(--margin-width);
-  border-right: 1px solid var(--margin-rule);
-  margin-right: 24px;
-  min-height: 100%;
-}
-
-.storyText {
-  flex: 1;
-  /* Rule lines at 32px pitch */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent calc(var(--rule-pitch) - 1px),
-    var(--rule) calc(var(--rule-pitch) - 1px),
-    var(--rule) var(--rule-pitch)
-  );
-  padding-bottom: 4px;
-}
-
-.storyParagraph {
-  font: 400 16px/var(--rule-pitch) var(--font-katha);
-  color: var(--ink-katha);
-  margin: 0 0 var(--rule-pitch);
-  max-width: 52ch;
-}
-.storyParagraph:first-child {
-  font-style: italic;
-}
-.storyParagraph:first-child::first-letter {
-  font-size: 1.6em;
-  font-weight: 500;
-  line-height: 1;
-  float: left;
-  margin: 2px 5px 0 0;
-  color: var(--ink-system);
-}
-
-/* --- Ingredient footnotes ---------------------------------- */
-.ingredientNotes {
-  margin-top: 40px;
-}
-.ingredientDivider {
-  width: 64px;
-  height: 1px;
-  background: var(--ink-pencil);
-  opacity: 0.4;
-  margin-bottom: 16px;
-}
-.ingredientNote {
-  display: grid;
-  grid-template-columns: 16px 1fr;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.ingredientNum {
-  font: 400 10px/20px var(--font-stamp);
-  color: var(--ink-pencil);
-  padding-top: 2px;
-}
-.ingredientText {
-  font: 400 12px/20px var(--font-katha);
-  font-style: italic;
-  color: var(--ink-pencil);
-  margin: 0;
-  max-width: 44ch;
-}
-
-/* ============================================================
-   RIGHT PAGE
-   ============================================================ */
-
-/* --- Hero: glyph + title ----------------------------------- */
-.rightHero {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 36px;
-}
-.glyphWrap {
-  flex-shrink: 0;
-  width: 72px;
-  height: 72px;
-  opacity: 0.7;
-}
-.glyphWrap svg {
+.coverGlyph svg {
   width: 100%;
   height: 100%;
 }
-.heroText {
-  padding-top: 4px;
-}
-.heroLabel {
-  font: 400 11px/16px var(--font-stamp);
-  color: var(--ink-pencil);
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
-  margin: 0 0 6px;
-}
-.heroTitle {
-  font: 600 28px/34px var(--font-display);
-  color: var(--ink-system);
-  letter-spacing: -0.02em;
-  margin: 0;
-}
 
-/* --- Ingredient list --------------------------------------- */
-.ingredientList {
-  margin-bottom: 36px;
-  border-left: 1px solid var(--margin-rule);
-  padding-left: 18px;
-}
-.ingredientItem {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-.ingredientBullet {
-  font-size: 12px;
-  flex-shrink: 0;
-  opacity: 0.8;
-}
-.ingredientName {
-  font: 400 14px/20px var(--font-body);
-  color: var(--ink-system);
-  text-transform: capitalize;
-}
-
-/* --- Question preview -------------------------------------- */
-.questionsSection {
-  background: var(--paper-raised);
-  border: 1px solid var(--paper-edge);
-  border-radius: 2px;
-  padding: 20px 20px 16px;
-  box-shadow: var(--shadow-tip-in);
-  margin-bottom: 28px;
-}
-.questionsSectionLabel {
-  font: 400 11px/16px var(--font-stamp);
-  color: var(--ink-pencil);
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
+.coverTitle {
+  font: 700 clamp(32px, 6vw, 52px)/1.05 "Space Grotesk", sans-serif;
+  letter-spacing: -0.035em;
   margin: 0 0 14px;
 }
-.questionText {
-  font: 400 14px/22px var(--font-body);
-  color: var(--ink-system);
-  margin: 0 0 16px;
-}
-.questionChoices {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.choiceBtn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  padding: 6px 10px;
-  cursor: pointer;
-  text-align: left;
-  font: 400 13px/20px var(--font-body);
-  color: var(--ink-system);
-  transition: background 140ms, border-color 140ms;
-}
-.choiceBtn:hover {
-  background: var(--paper-recessed);
-}
-.choiceSelected {
-  background: rgba(196, 245, 71, 0.18);
-  border-color: rgba(196, 245, 71, 0.5);
-}
-.choiceLetter {
-  font: 500 11px/16px var(--font-stamp);
-  color: var(--ink-pencil);
-  width: 14px;
-  flex-shrink: 0;
+
+.coverSub {
+  font: 400 13px/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  margin: 0 0 36px;
 }
 
-/* --- Footer: question count + CTA ------------------------- */
-.footerRow {
+.coverCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 3px;
+  font: 600 14px/1 "Space Grotesk", sans-serif;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: opacity 140ms, transform 140ms;
+}
+.coverCta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ── STORY layout ──────────────────────────────────────────────────────── */
+.storyLayout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 5vw, 56px) clamp(36px, 7vw, 80px) 0;
+}
+
+.storyHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.storyRunLabel {
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #9a8a6a;
+}
+
+.storyRunPage {
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  color: #9a8a6a;
+}
+
+/* Ruled body: 32px line pitch */
+.storyBody {
+  flex: 1;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 31px,
+    rgba(0,0,0,0.06) 31px,
+    rgba(0,0,0,0.06) 32px
+  );
+  padding-right: 4px;
+  border-left: 2px solid var(--theme-accent, #8b6914);
+  padding-left: clamp(16px, 3vw, 28px);
+  margin-left: -clamp(16px, 3vw, 28px);
+}
+
+.storyPara {
+  font: 400 17px/32px "Source Serif 4", "Georgia", serif;
+  color: var(--theme-ink, #3d2f10);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.firstPara {
+  font-style: italic;
+  font-size: 18px;
+}
+
+.dropCap {
+  float: left;
+  font: 700 72px/0.8 "Source Serif 4", "Georgia", serif;
+  margin: 6px 8px 0 0;
+  line-height: 0.78;
+}
+
+.storyFoot {
+  padding: 16px 0 20px;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  margin-top: auto;
+}
+
+.storyFootLabel {
+  font: 400 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  color: var(--theme-dim, #9a8a6a);
+}
+
+/* ── QUESTION layout ───────────────────────────────────────────────────── */
+.qLayout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.qLeft {
+  padding: clamp(24px, 4vw, 48px) clamp(24px, 5vw, 52px) clamp(20px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(0,0,0,0.07);
+}
+
+.qHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.qKicker {
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #9a8a6a;
+}
+
+.qChipSmall {
+  font: 500 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+}
+
+.qText {
+  font: 400 16px/26px "Inter", sans-serif;
+  color: var(--theme-ink, #3d2f10);
+  margin: 0 0 22px;
+  max-width: 46ch;
+}
+
+.qChoices {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.10);
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 130ms, background 130ms, transform 100ms;
+}
+.choice:hover:not(:disabled) {
+  border-color: var(--theme-accent, #8b6914);
+  transform: translateX(2px);
+}
+.choiceChosen { border-color: var(--theme-accent, #8b6914) !important; }
+.choiceDone   { opacity: 0.6; cursor: default; }
+
+.choiceLetter {
+  font: 600 11px/1 "IBM Plex Mono", monospace;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 14px;
+}
+
+.choiceText {
+  font: 400 13px/20px "Inter", sans-serif;
+  color: var(--theme-ink, #3d2f10);
+}
+
+.submitBtn {
+  align-self: flex-start;
+  padding: 11px 22px;
+  border: none;
+  border-radius: 3px;
+  font: 600 13px/1 "Space Grotesk", sans-serif;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: opacity 140ms, transform 100ms;
+  margin-top: auto;
+}
+.submitBtn:disabled { opacity: 0.4; cursor: default; }
+.submitBtn:not(:disabled):hover { opacity: 0.88; transform: translateY(-1px); }
+
+.qDoneNote {
+  font: 400 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  margin: auto 0 0;
+  padding-top: 8px;
+  color: var(--theme-dim, #9a8a6a);
+}
+
+/* ── Notepad (right side, iPad write space) ────────────────────────────── */
+.notepad {
+  width: clamp(120px, 22vw, 180px);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 4vw, 40px) 16px 20px;
+}
+
+.notepadLabel {
+  font: 400 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  margin: 0 0 12px;
+  color: var(--theme-dim, #9a8a6a);
+}
+
+.notepadLines {
+  flex: 1;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 27px,
+    var(--line-color, rgba(139,105,20,0.12)) 27px,
+    var(--line-color, rgba(139,105,20,0.12)) 28px
+  );
+  border-radius: 1px;
+}
+
+/* ── NAV bar ───────────────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  bottom: 0;
+  padding: 14px clamp(20px, 4vw, 40px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
-}
-.questionCount {
-  font: 400 12px/20px var(--font-stamp);
-  color: var(--ink-pencil);
-  margin: 0;
-}
-.questionCountNum {
-  font-weight: 600;
-  color: var(--ink-system);
+  gap: 12px;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  background: inherit;
 }
 
-.practiceBtn {
+.navArrow {
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--ink-system);
-  color: var(--paper-raised);
-  border: none;
-  border-radius: 2px;
-  padding: 10px 20px;
-  font: 500 14px/1 var(--font-display);
-  letter-spacing: -0.01em;
+  justify-content: center;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 999px;
+  background: transparent;
+  font: 500 16px/1 system-ui;
+  color: var(--theme-ink, #3d2f10);
   cursor: pointer;
-  transition: background 160ms, transform 120ms;
+  transition: background 140ms, border-color 140ms;
 }
-.practiceBtn:hover {
-  background: var(--ink-katha);
-  transform: translateY(-1px);
-}
-.practiceBtn:active { transform: translateY(0); }
-.practiceBtnArrow {
-  font-size: 16px;
-  transition: transform 160ms;
-}
-.practiceBtn:hover .practiceBtnArrow {
-  transform: translateX(3px);
-}
+.navArrow:hover { background: rgba(0,0,0,0.04); }
 
-/* --- Index line (back-pocket references) ------------------- */
-.indexLine {
-  font: 400 11px/16px var(--font-stamp);
-  color: var(--ink-pencil);
-  letter-spacing: 0.04em;
+.navDots {
   display: flex;
   align-items: center;
   gap: 6px;
-  flex-wrap: wrap;
-  border-top: 1px solid var(--paper-edge);
-  padding-top: 16px;
-}
-.indexLink {
-  background: transparent;
-  border: none;
-  color: var(--ink-depth);
-  font: inherit;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  transition: text-decoration-color 160ms, color 160ms;
-}
-.indexLink:hover {
-  text-decoration-color: currentColor;
-  color: var(--ink-system);
+  flex: 1;
+  justify-content: center;
 }
 
-/* --- Not found state --------------------------------------- */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0,0,0,0.15);
+  cursor: pointer;
+  padding: 0;
+  transition: background 200ms, width 200ms;
+}
+.dotActive { width: 18px; }
+.dotPast   { opacity: 0.45; }
+
+.navPrimary {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  font: 600 13px/1 "Space Grotesk", sans-serif;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: opacity 140ms, transform 100ms;
+}
+.navPrimary:hover { opacity: 0.86; transform: translateY(-1px); }
+
+/* ── Mobile ────────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .qLayout { grid-template-columns: 1fr; }
+  .notepad { display: none; }
+  .storyBody { margin-left: -12px; padding-left: 12px; }
+}
+
+/* ── Not-found ─────────────────────────────────────────────────────────── */
 .notFound {
-  color: var(--chalk);
+  color: rgba(255,255,255,0.5);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 40px;
-}
-.notFound code {
-  background: rgba(255,255,255,0.08);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: var(--font-stamp);
+  align-items: flex-start;
 }
 
-/* ============================================================
-   RESPONSIVE — single page on mobile
-   ============================================================ */
-@media (max-width: 800px) {
-  .desk {
-    padding: 24px 0 48px;
-  }
-  .backBtn {
-    padding-left: 16px;
-  }
-  .spread {
-    width: 100%;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    border-radius: 0;
-    transform: none !important;
-    opacity: 1 !important;
-    box-shadow: none;
-  }
-  .spreadOpen {
-    transform: none !important;
-  }
-  .spread.fromDashboard,
-  .spread.fromDashboard.spreadOpen {
-    transform: none !important;
-  }
-  .gutter {
-    display: none;
-  }
-  .leftPage,
-  .rightPage {
-    padding: 32px 20px;
-    box-shadow: none;
-    border-radius: 0;
-  }
-  .leftPage {
-    border-bottom: 1px solid var(--paper-edge);
-  }
-  .marginRule {
-    width: 40px;
-    margin-right: 16px;
-  }
-  .conceptTitle {
-    font-size: 32px;
-  }
-}
-
-/* Reduced motion */
+/* ── Reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .spread {
-    transition: none;
-    transform: none;
-    opacity: 1;
-  }
-  .spread.fromDashboard,
-  .spread.fromDashboard.spreadOpen {
-    transform: none;
-    opacity: 1;
-  }
+  .enterRight, .enterLeft, .enterFromGutter { animation: none; opacity: 1; transform: none; }
+  .choice, .coverCta, .submitBtn, .navArrow, .navPrimary, .dot { transition: none; }
 }

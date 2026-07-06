@@ -60,7 +60,8 @@ button,input,textarea,select{font:inherit}
 .loader-count{color:var(--grape);font-variant-numeric:tabular-nums}
 .page-shell{opacity:0;transform:translateY(18px);transition:opacity .82s var(--ease),transform .82s var(--ease)}
 body.ready .page-shell{opacity:1;transform:none}
-.nav{--nav-bg:rgba(255,253,247,.84);--nav-color:var(--ink);--nav-border:var(--line);--nav-hover:rgba(36,122,77,.08);--nav-login-bg:rgba(255,253,247,.62);--nav-login-border:rgba(20,58,46,.16);--nav-join-bg:var(--ink);--nav-join-color:#fff;--nav-shadow:0 16px 54px rgba(28,55,45,.10);position:fixed;top:18px;left:22px;right:22px;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 14px 12px 18px;border:1px solid var(--nav-border);border-radius:999px;background:var(--nav-bg);color:var(--nav-color);backdrop-filter:blur(18px);box-shadow:var(--nav-shadow);transition:background .45s var(--ease),border-color .45s var(--ease),color .45s var(--ease),box-shadow .45s var(--ease)}
+.nav{--nav-bg:rgba(255,253,247,.84);--nav-color:var(--ink);--nav-border:var(--line);--nav-hover:rgba(36,122,77,.08);--nav-login-bg:rgba(255,253,247,.62);--nav-login-border:rgba(20,58,46,.16);--nav-join-bg:var(--ink);--nav-join-color:#fff;--nav-shadow:0 16px 54px rgba(28,55,45,.10);position:fixed;top:18px;left:22px;right:22px;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 14px 12px 18px;border:1px solid var(--nav-border);border-radius:999px;background:var(--nav-bg);color:var(--nav-color);backdrop-filter:blur(18px);box-shadow:var(--nav-shadow);transition:background .45s var(--ease),border-color .45s var(--ease),color .45s var(--ease),box-shadow .45s var(--ease),transform .32s cubic-bezier(.2,0,0,1),opacity .32s}
+.nav.nav-hide{transform:translateY(calc(-100% - 24px));opacity:0;pointer-events:none}
 .nav.nav-hero{--nav-bg:rgba(255,248,233,.78);--nav-border:rgba(36,122,77,.13)}
 .nav.nav-paper{--nav-bg:rgba(255,253,247,.86);--nav-border:rgba(20,58,46,.13)}
 .nav.nav-mint{--nav-bg:rgba(228,247,220,.82);--nav-border:rgba(36,122,77,.16)}
@@ -560,12 +561,25 @@ document.querySelectorAll("[data-nav]").forEach((el) => navIo.observe(el))
 
 const progress = document.getElementById("scrollProgress")
 const heroArt = document.getElementById("heroArt")
+const navEl = document.querySelector(".nav")
 let ticking = false
+let lastScrollY = 0
 function updateScroll() {
   const max = Math.max(1, document.documentElement.scrollHeight - innerHeight)
   const pct = scrollY / max
   if (progress) progress.style.transform = "scaleX(" + pct + ")"
   if (!reduceMotion && heroArt) heroArt.style.setProperty("--hero-art-y", Math.min(90, scrollY * .08) + "px")
+  // Scroll-hide nav: hide when scrolling down past 80px, reveal on scroll up
+  if (navEl) {
+    if (scrollY < 80) {
+      navEl.classList.remove("nav-hide")
+    } else if (scrollY > lastScrollY + 12) {
+      navEl.classList.add("nav-hide")
+    } else if (scrollY < lastScrollY - 6) {
+      navEl.classList.remove("nav-hide")
+    }
+  }
+  lastScrollY = scrollY
   ticking = false
 }
 addEventListener("scroll", () => {

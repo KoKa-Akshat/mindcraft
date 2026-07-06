@@ -1,309 +1,356 @@
+/**
+ * ConceptChapterPage — paginated storybook experience.
+ *
+ * Pages: cover → story chunks (2 paragraphs each) → questions (with notepad)
+ * Navigation: tap arrow or swipe; page-slide transition between pages.
+ * Questions: no LaTeX, no right/wrong revealed (C4 mode). Lined notepad on right.
+ */
+
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useMemo } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
-import MathText from '../components/MathText'
 import s from './ConceptChapterPage.module.css'
 
-type IngredientStory = string | { name?: string; story: string }
-type ConceptStory = {
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+type CS = {
   conceptId: string
   conceptName: string
   story: string
-  ingredientStories: Record<string, IngredientStory>
+  ingredientStories: Record<string, unknown>
 }
-const conceptStories = conceptStoriesRaw as unknown as Record<string, ConceptStory>
+const DB = conceptStoriesRaw as unknown as Record<string, CS>
 
-// --- Concept visual identity --------------------------------------------------
-// Each concept gets a "cluster color" and a simple geometric glyph (SVG path)
-// representing its mathematical essence. Four clusters map to spec tab dyes.
+// ── Cluster identity ───────────────────────────────────────────────────────────
 
-type ClusterKey = 'algebra' | 'geometry' | 'functions' | 'data'
+type Cluster = 'algebra' | 'geometry' | 'functions' | 'data'
 
-const CLUSTER_MAP: Record<string, ClusterKey> = {
-  fractions_decimals: 'algebra',     ratios_proportions: 'algebra',
-  percent_ratio: 'algebra',          order_of_operations: 'algebra',
-  basic_equations: 'algebra',        linear_equations: 'algebra',
-  linear_inequalities: 'algebra',    systems_of_linear_equations: 'algebra',
-  exponent_rules: 'algebra',         radical_expressions: 'algebra',
-  absolute_value: 'algebra',         integer_operations: 'algebra',
-  polynomial_operations: 'algebra',  factors_multiples: 'algebra',
+const CLUSTER_MAP: Record<string, Cluster> = {
+  fractions_decimals: 'algebra',  ratios_proportions: 'algebra',
+  percent_ratio: 'algebra',       order_of_operations: 'algebra',
+  basic_equations: 'algebra',     linear_equations: 'algebra',
+  linear_inequalities: 'algebra', systems_of_linear_equations: 'algebra',
+  exponent_rules: 'algebra',      radical_expressions: 'algebra',
+  absolute_value: 'algebra',      integer_operations: 'algebra',
+  polynomial_operations: 'algebra', factors_multiples: 'algebra',
   number_properties: 'algebra',
-  functions_basics: 'functions',     function_notation: 'functions',
-  quadratic_functions: 'functions',  exponential_functions: 'functions',
-  logarithms: 'functions',           composite_inverse: 'functions',
-  trigonometry: 'functions',         sequences_series: 'functions',
+  functions_basics: 'functions',  function_notation: 'functions',
+  quadratic_functions: 'functions', exponential_functions: 'functions',
+  logarithms: 'functions',        composite_inverse: 'functions',
+  trigonometry_basics: 'functions', sequences_series: 'functions',
   right_triangle_geometry: 'geometry', triangles_similarity: 'geometry',
-  circles: 'geometry',               coordinate_geometry: 'geometry',
-  transformations: 'geometry',       solid_geometry: 'geometry',
-  vectors_matrices: 'geometry',
-  statistics_basics: 'data',         probability: 'data',
-  data_interpretation: 'data',       regression: 'data',
-  counting_combinatorics: 'data',    complex_numbers: 'data',
+  circles: 'geometry',            coordinate_geometry: 'geometry',
+  geometric_transformations: 'geometry', solid_geometry: 'geometry',
+  statistics_basics: 'data',      probability: 'data',
+  data_interpretation: 'data',    regression: 'data',
+  counting_combinatorics: 'data', complex_numbers: 'data',
+  matrices: 'data',               rational_expressions: 'algebra',
 }
 
-const CLUSTER_COLORS: Record<ClusterKey, { bg: string; ink: string; accent: string }> = {
-  algebra:   { bg: '#d9c8a8', ink: '#4a3a18', accent: '#8b6914' },
-  geometry:  { bg: '#b9c4ce', ink: '#1a2e3a', accent: '#2a5f7e' },
-  functions: { bg: '#c3cdb4', ink: '#1e2f1a', accent: '#3a6b2a' },
-  data:      { bg: '#d4bcb4', ink: '#3a1e1a', accent: '#7e3a2a' },
+const CLUSTER_THEME = {
+  algebra:   { bg: '#f5eedb', paper: '#faf5ec', ink: '#3d2f10', accent: '#8b6914', dim: '#a0906a', chip: '#8b6914' },
+  geometry:  { bg: '#e8eef5', paper: '#f1f5fa', ink: '#172333', accent: '#1e5f8a', dim: '#4a7396', chip: '#1e5f8a' },
+  functions: { bg: '#eaf2e8', paper: '#f1f7f0', ink: '#1a2c16', accent: '#2d6924', dim: '#4a7a42', chip: '#2d6924' },
+  data:      { bg: '#f2ece9', paper: '#f8f3f1', ink: '#321614', accent: '#7a2e26', dim: '#8c5550', chip: '#7a2e26' },
 }
 
-function clusterFor(conceptId: string) {
-  return CLUSTER_MAP[conceptId] ?? 'algebra'
-}
+// ── Cluster SVG glyphs ─────────────────────────────────────────────────────────
 
-// Simple SVG glyphs — one per cluster
-const CLUSTER_GLYPH: Record<ClusterKey, React.ReactNode> = {
+const GLYPH: Record<Cluster, React.ReactNode> = {
   algebra: (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      {/* Balance beam */}
-      <line x1="40" y1="20" x2="40" y2="60" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="10" y1="40" x2="70" y2="40" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      <circle cx="12" cy="40" r="7" stroke="currentColor" strokeWidth="2"/>
-      <circle cx="68" cy="40" r="7" stroke="currentColor" strokeWidth="2"/>
-      <line x1="32" y1="58" x2="48" y2="58" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden>
+      <line x1="40" y1="16" x2="40" y2="56" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <line x1="8"  y1="36" x2="72" y2="36" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="12" cy="36" r="9"  stroke="currentColor" strokeWidth="2" fill="none"/>
+      <circle cx="68" cy="36" r="9"  stroke="currentColor" strokeWidth="2" fill="none"/>
+      <line x1="30" y1="56" x2="50" y2="56" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   ),
   geometry: (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      {/* Triangle + circle */}
-      <circle cx="40" cy="40" r="26" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 4"/>
-      <polygon points="40,14 66,66 14,66" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
-      <line x1="40" y1="14" x2="40" y2="66" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.6"/>
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden>
+      <circle cx="40" cy="40" r="28" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 4"/>
+      <polygon points="40,12 67,67 13,67" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinejoin="round"/>
+      <line x1="40" y1="12" x2="40" y2="67" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.5"/>
     </svg>
   ),
   functions: (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      {/* Smooth curve with axes */}
-      <line x1="10" y1="70" x2="70" y2="70" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="10" y1="10" x2="10" y2="70" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M10 68 C25 68 20 20 40 25 C55 28 50 60 70 55" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-      <circle cx="40" cy="25" r="2.5" fill="currentColor"/>
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden>
+      <line x1="8"  y1="72" x2="72" y2="72" stroke="currentColor" strokeWidth="2"   strokeLinecap="round"/>
+      <line x1="8"  y1="8"  x2="8"  y2="72" stroke="currentColor" strokeWidth="2"   strokeLinecap="round"/>
+      <path d="M8 70 C22 70 18 18 40 23 C56 26 52 62 72 57" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round"/>
+      <circle cx="40" cy="23" r="3.5" fill="currentColor"/>
     </svg>
   ),
   data: (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      {/* Scatter plot with trend line */}
-      <line x1="10" y1="70" x2="70" y2="70" stroke="currentColor" strokeWidth="1.5"/>
-      <line x1="10" y1="10" x2="10" y2="70" stroke="currentColor" strokeWidth="1.5"/>
-      <line x1="10" y1="65" x2="70" y2="18" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6"/>
-      {[{x:18,y:58},{x:28,y:50},{x:36,y:42},{x:44,y:38},{x:56,y:28},{x:64,y:22}].map((p,i) => (
-        <circle key={i} cx={p.x} cy={p.y} r="3.5" fill="currentColor"/>
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden>
+      <line x1="8"  y1="72" x2="72" y2="72" stroke="currentColor" strokeWidth="2"/>
+      <line x1="8"  y1="8"  x2="8"  y2="72" stroke="currentColor" strokeWidth="2"/>
+      <line x1="8"  y1="68" x2="72" y2="16" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 4" opacity="0.55"/>
+      {([{x:16,y:60},{x:26,y:52},{x:36,y:44},{x:46,y:36},{x:56,y:26},{x:66,y:20}] as const).map((p,i) => (
+        <circle key={i} cx={p.x} cy={p.y} r="4" fill="currentColor"/>
       ))}
     </svg>
   ),
 }
 
-// Derive a chapter number from the conceptId (deterministic, just for display)
-function chapterNumber(conceptId: string): number {
-  const ids = Object.keys(conceptStories)
-  const idx = ids.indexOf(conceptId)
-  return idx >= 0 ? idx + 1 : 1
+// ── Page spec ──────────────────────────────────────────────────────────────────
+
+type PageSpec =
+  | { kind: 'cover' }
+  | { kind: 'story'; paras: string[]; isFirst: boolean; pageNum: number }
+  | { kind: 'question'; qIdx: number }
+
+function buildSpecs(text: string, qCount: number): PageSpec[] {
+  const paras = text.split('\n').map(p => p.trim()).filter(p => p.length > 15)
+  const specs: PageSpec[] = [{ kind: 'cover' }]
+  let storyPage = 0
+  for (let i = 0; i < paras.length; i += 2) {
+    specs.push({ kind: 'story', paras: paras.slice(i, i + 2), isFirst: i === 0, pageNum: ++storyPage })
+  }
+  for (let i = 0; i < qCount; i++) specs.push({ kind: 'question', qIdx: i })
+  return specs
 }
 
-// Split story into paragraphs for rendering
-function parseStory(text: string): string[] {
-  return text.split('\n').map(p => p.trim()).filter(Boolean)
+function chapterNum(conceptId: string): number {
+  return Object.keys(DB).indexOf(conceptId) + 1
 }
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export default function ConceptChapterPage() {
   const { conceptId = '' } = useParams<{ conceptId: string }>()
   const navigate = useNavigate()
   const location = useLocation()
-  const [open, setOpen] = useState(false)
-  const [activeQuestion, setActiveQuestion] = useState<number | null>(null)
-  const leftRef = useRef<HTMLDivElement>(null)
   const fromDashboard = Boolean((location.state as { fromDashboard?: boolean } | null)?.fromDashboard)
 
-  const story = conceptStories[conceptId]
-  const cluster = clusterFor(conceptId)
-  const palette = CLUSTER_COLORS[cluster]
-  const glyph = CLUSTER_GLYPH[cluster]
+  const cs = DB[conceptId]
+  const cluster = CLUSTER_MAP[conceptId] ?? 'algebra'
+  const theme = CLUSTER_THEME[cluster]
+  const glyph = GLYPH[cluster]
+  const ch = chapterNum(conceptId)
 
-  // Questions preview (Level 1, up to 2 shown)
-  const previewQs = getQuestions(conceptId, 1, 2)
+  const questions = useMemo(() => {
+    if (!conceptId) return []
+    const qs = [...getQuestions(conceptId, 1, 3), ...getQuestions(conceptId, 2, 3)]
+    const seen = new Set<string>()
+    return qs.filter(q => { if (seen.has(q.question)) return false; seen.add(q.question); return true }).slice(0, 3)
+  }, [conceptId])
+
   const totalQs = questionCount(conceptId, 1) + questionCount(conceptId, 2) + questionCount(conceptId, 3)
 
-  // Ingredient stories for this concept
-  const ingredients = story
-    ? Object.values(story.ingredientStories).slice(0, 3)
-    : []
+  const specs = useMemo(() => cs ? buildSpecs(cs.story, Math.min(questions.length, 3)) : [], [cs, questions.length])
 
-  // Page-open entrance animation
-  useEffect(() => {
-    const t = setTimeout(() => setOpen(true), 60)
-    return () => clearTimeout(t)
-  }, [])
+  const [pageIdx, setPageIdx] = useState(0)
+  const [dir, setDir] = useState<'f' | 'b'>('f')
+  const [answers, setAnswers] = useState<Record<number, number>>({})
+  const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
 
-  if (!story) {
+  const goTo = (i: number, d: 'f' | 'b') => {
+    if (i < 0) { navigate(-1); return }
+    if (i >= specs.length) {
+      navigate('/practice', { state: { conceptId } })
+      return
+    }
+    setDir(d)
+    setPageIdx(i)
+  }
+
+  if (!cs) {
     return (
       <div className={s.desk}>
-        <div className={s.notFound}>
-          <button className={s.backBtn} onClick={() => navigate(-1)}>← back</button>
-          <p>No story found for <code>{conceptId}</code>.</p>
-        </div>
+        <button className={s.backBtn} onClick={() => navigate(-1)}>← back</button>
+        <p style={{ color: 'rgba(255,255,255,.4)', marginTop: 40 }}>No story found for <code>{conceptId}</code>.</p>
       </div>
     )
   }
 
-  const paragraphs = parseStory(story.story)
-  const chapterNum = chapterNumber(conceptId)
-
-  function startPractice() {
-    navigate('/practice', { state: { conceptId } })
-  }
+  const spec = specs[pageIdx]
+  const isLast = pageIdx === specs.length - 1
+  const storyPageCount = specs.filter(p => p.kind === 'story').length
 
   return (
-    <div className={s.desk}>
-      {/* Back navigation — sits on the desk, above the notebook */}
-      <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Go back">
-        ← back
+    <div
+      className={s.desk}
+      style={{ '--theme-bg': theme.bg, '--theme-ink': theme.ink, '--theme-accent': theme.accent, '--theme-dim': theme.dim } as React.CSSProperties}
+    >
+      {/* Back */}
+      <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Back">
+        ←
       </button>
 
-      {/* The notebook spread */}
-      <div className={`${s.spread} ${fromDashboard ? s.fromDashboard : ''} ${open ? s.spreadOpen : ''}`}>
+      {/* Page container — key triggers entry animation */}
+      <div
+        key={pageIdx}
+        className={`${s.page} ${dir === 'f' ? s.enterRight : s.enterLeft} ${fromDashboard && pageIdx === 0 ? s.enterFromGutter : ''}`}
+        style={{ background: theme.paper }}
+      >
+        {/* Grain overlay */}
+        <div className={s.grain} aria-hidden />
 
-        {/* ── LEFT PAGE: The Story ──────────────────────────── */}
-        <div className={s.leftPage} ref={leftRef}>
-          <div className={s.pageGrain} aria-hidden />
-
-          {/* Running header */}
-          <div className={s.runHead}>
-            <span className={s.runHeadLabel}>the story</span>
-            <span className={s.runHeadPage}>{chapterNum}</span>
-          </div>
-
-          {/* Chapter marker */}
-          <div className={s.chapterMark}>
-            <span className={s.chapterStamp}>Ch. {chapterNum}</span>
-            <span
-              className={s.clusterPip}
-              style={{ background: palette.bg, color: palette.ink }}
-            >
-              {cluster}
-            </span>
-          </div>
-
-          {/* Concept name — display typography */}
-          <h1 className={s.conceptTitle}>{story.conceptName}</h1>
-
-          {/* Margin rule + story body */}
-          <div className={s.storyBody}>
-            <div className={s.marginRule} aria-hidden />
-            <div className={s.storyText}>
-              {paragraphs.map((p, i) => (
-                <p key={i} className={s.storyParagraph}>{p}</p>
-              ))}
+        {/* ── COVER ─────────────────────────────────────────── */}
+        {spec.kind === 'cover' && (
+          <div className={s.coverLayout}>
+            <div className={s.coverTop}>
+              <span className={s.coverChip} style={{ color: theme.chip, borderColor: theme.chip + '33', background: theme.chip + '12' }}>
+                {cluster}
+              </span>
+              <span className={s.coverChNum}>Ch. {ch}</span>
             </div>
-          </div>
-
-          {/* Ingredient story excerpts — tipped as footnotes */}
-          {ingredients.length > 0 && (
-            <div className={s.ingredientNotes}>
-              <div className={s.ingredientDivider} aria-hidden />
-              {ingredients.map((ing, i) => {
-                const text = typeof ing === 'string' ? ing : (ing.story ?? '')
-                const preview = text.slice(0, 120) + (text.length > 120 ? '…' : '')
-                return (
-                  <div key={i} className={s.ingredientNote}>
-                    <span className={s.ingredientNum}>{i + 1}</span>
-                    <p className={s.ingredientText}>{preview}</p>
-                  </div>
-                )
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Gutter shadow — the binding */}
-        <div className={s.gutter} aria-hidden>
-          {[0,1,2,3,4].map(i => <div key={i} className={s.gutterStitch} aria-hidden />)}
-        </div>
-
-        {/* ── RIGHT PAGE: The Chapter ──────────────────────── */}
-        <div className={s.rightPage}>
-          <div className={s.pageGrain} aria-hidden />
-
-          {/* Running header */}
-          <div className={s.runHead} style={{ justifyContent: 'flex-end' }}>
-            <span className={s.runHeadPage}>{chapterNum + 1}</span>
-          </div>
-
-          {/* Concept glyph + what you'll master */}
-          <div className={s.rightHero}>
-            <div
-              className={s.glyphWrap}
-              style={{ color: palette.accent }}
-            >
+            <div className={s.coverGlyph} style={{ color: theme.accent }}>
               {glyph}
             </div>
-            <div className={s.heroText}>
-              <p className={s.heroLabel}>what you'll master</p>
-              <h2 className={s.heroTitle}>{story.conceptName}</h2>
-            </div>
+            <h1 className={s.coverTitle} style={{ color: theme.ink }}>
+              {cs.conceptName}
+            </h1>
+            <p className={s.coverSub} style={{ color: theme.dim }}>
+              {totalQs} questions · your story starts here
+            </p>
+            <button
+              className={s.coverCta}
+              style={{ background: theme.ink, color: theme.bg }}
+              onClick={() => goTo(1, 'f')}
+            >
+              Open chapter →
+            </button>
           </div>
+        )}
 
-          {/* Ingredient list — what's inside this chapter */}
-          <div className={s.ingredientList}>
-            {Object.entries(story.ingredientStories).slice(0, 4).map(([key, ing], i) => {
-              const name = (typeof ing === 'object' ? ing.name : undefined) ?? key.split('__')[1]?.replace(/_/g, ' ') ?? key
-              return (
-                <div key={key} className={s.ingredientItem}>
-                  <span className={s.ingredientBullet} style={{ color: palette.accent }}>▸</span>
-                  <span className={s.ingredientName}>{name}</span>
-                </div>
-              )
-            })}
-          </div>
+        {/* ── STORY ─────────────────────────────────────────── */}
+        {spec.kind === 'story' && (
+          <div className={s.storyLayout}>
+            <header className={s.storyHead}>
+              <span className={s.storyRunLabel}>the story</span>
+              <span className={s.storyRunPage}>{spec.pageNum} / {storyPageCount}</span>
+            </header>
 
-          {/* Practice question preview */}
-          {previewQs.length > 0 && (
-            <div className={s.questionsSection}>
-              <p className={s.questionsSectionLabel}>a question from this chapter</p>
-              <div className={s.questionCard}>
-                <p className={s.questionText}>
-                  <MathText text={previewQs[0].question} />
+            <div className={s.storyBody}>
+              {spec.paras.map((p, i) => (
+                <p key={i} className={`${s.storyPara} ${spec.isFirst && i === 0 ? s.firstPara : ''}`}>
+                  {spec.isFirst && i === 0 && p.length > 0 && (
+                    <span className={s.dropCap} style={{ color: theme.accent }}>
+                      {p[0]}
+                    </span>
+                  )}
+                  {spec.isFirst && i === 0 ? p.slice(1) : p}
                 </p>
-                <div className={s.questionChoices}>
-                  {previewQs[0].choices.slice(0, 4).map((choice, i) => (
+              ))}
+            </div>
+
+            {/* Chapter info at foot of last story page */}
+            {spec.pageNum === storyPageCount && (
+              <div className={s.storyFoot}>
+                <span className={s.storyFootLabel} style={{ color: theme.dim }}>
+                  {cs.conceptName} · {totalQs} questions waiting
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── QUESTION ──────────────────────────────────────── */}
+        {spec.kind === 'question' && (() => {
+          const q = questions[spec.qIdx]
+          if (!q) return null
+          const qNum = spec.qIdx + 1
+          const qTotal = specs.filter(p => p.kind === 'question').length
+          const chosen = answers[spec.qIdx] ?? null
+          const isDone = submitted[spec.qIdx] ?? false
+
+          return (
+            <div className={s.qLayout}>
+              {/* Left: question */}
+              <div className={s.qLeft}>
+                <header className={s.qHead}>
+                  <span className={s.qKicker}>Question {qNum} of {qTotal}</span>
+                  <span className={s.qChipSmall} style={{ color: theme.chip }}>Ch. {ch}</span>
+                </header>
+
+                <p className={s.qText}>{q.question}</p>
+
+                <div className={s.qChoices}>
+                  {q.choices.slice(0, 4).map((c, i) => (
                     <button
                       key={i}
-                      className={`${s.choiceBtn} ${activeQuestion === i ? s.choiceSelected : ''}`}
-                      onClick={() => setActiveQuestion(activeQuestion === i ? null : i)}
+                      className={`${s.choice} ${chosen === i ? s.choiceChosen : ''} ${isDone ? s.choiceDone : ''}`}
+                      style={chosen === i ? { borderColor: theme.accent, background: theme.accent + '14' } : undefined}
+                      onClick={() => !isDone && setAnswers(a => ({ ...a, [spec.qIdx]: i }))}
+                      disabled={isDone}
                     >
-                      <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                      <MathText text={choice} />
+                      <span className={s.choiceLetter} style={{ color: theme.accent }}>
+                        {String.fromCharCode(65 + i)}
+                      </span>
+                      <span className={s.choiceText}>{c}</span>
                     </button>
                   ))}
                 </div>
+
+                {!isDone && (
+                  <button
+                    className={s.submitBtn}
+                    style={{ background: theme.ink, color: theme.bg }}
+                    disabled={chosen === null}
+                    onClick={() => setSubmitted(d => ({ ...d, [spec.qIdx]: true }))}
+                  >
+                    {chosen === null ? 'Choose an answer' : 'Lock it in →'}
+                  </button>
+                )}
+
+                {isDone && (
+                  <p className={s.qDoneNote} style={{ color: theme.dim }}>
+                    Recorded. Keep going.
+                  </p>
+                )}
+              </div>
+
+              {/* Right: lined notepad for working */}
+              <div className={s.notepad}>
+                <p className={s.notepadLabel} style={{ color: theme.dim }}>your work</p>
+                <div className={s.notepadLines} style={{ '--line-color': theme.accent + '18' } as React.CSSProperties} />
               </div>
             </div>
-          )}
+          )
+        })()}
 
-          {/* Footer: question count + CTA */}
-          <div className={s.footerRow}>
-            {totalQs > 0 && (
-              <p className={s.questionCount}>
-                <span className={s.questionCountNum}>{totalQs}</span> questions in bank
-              </p>
-            )}
-            <button className={s.practiceBtn} onClick={startPractice}>
-              Practice this chapter
-              <span className={s.practiceBtnArrow}>→</span>
+        {/* ── NAVIGATION BAR ────────────────────────────────── */}
+        {spec.kind !== 'cover' && (
+          <nav className={s.nav}>
+            <button className={s.navArrow} onClick={() => goTo(pageIdx - 1, 'b')} aria-label="Previous page">
+              ←
             </button>
-          </div>
 
-          {/* Back-pocket index line */}
-          <div className={s.indexLine}>
-            <span>see also:</span>
-            <button onClick={() => navigate('/dashboard')} className={s.indexLink}>dashboard</button>
-            <span>·</span>
-            <button onClick={() => navigate('/knowledge-graph')} className={s.indexLink}>the map</button>
-            <span>·</span>
-            <button onClick={() => navigate('/practice')} className={s.indexLink}>full practice</button>
-          </div>
-        </div>
+            <div className={s.navDots}>
+              {specs.slice(1).map((p, i) => {
+                const idx = i + 1
+                const isActive = idx === pageIdx
+                const isPast = idx < pageIdx
+                return (
+                  <button
+                    key={i}
+                    className={`${s.dot} ${isActive ? s.dotActive : ''} ${isPast ? s.dotPast : ''}`}
+                    style={isActive ? { background: theme.accent } : isPast ? { background: theme.accent + '55' } : undefined}
+                    onClick={() => goTo(idx, idx > pageIdx ? 'f' : 'b')}
+                    aria-label={`Page ${idx}`}
+                  />
+                )
+              })}
+            </div>
+
+            {isLast ? (
+              <button
+                className={s.navPrimary}
+                style={{ background: theme.ink, color: theme.bg }}
+                onClick={() => navigate('/practice', { state: { conceptId } })}
+              >
+                Practice →
+              </button>
+            ) : (
+              <button className={s.navArrow} onClick={() => goTo(pageIdx + 1, 'f')} aria-label="Next page">
+                →
+              </button>
+            )}
+          </nav>
+        )}
       </div>
     </div>
   )

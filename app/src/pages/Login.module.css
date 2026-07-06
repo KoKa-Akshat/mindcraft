@@ -38,10 +38,7 @@
   padding: clamp(14px, 2.6vw, 34px);
   color: var(--login-ink);
   font-family: "Nunito Sans", "DM Sans", system-ui, sans-serif;
-  background:
-    radial-gradient(circle at 76% 12%, rgba(185, 232, 111, 0.46), transparent 25%),
-    radial-gradient(circle at 12% 82%, rgba(220, 238, 246, 0.84), transparent 24%),
-    linear-gradient(135deg, #fff8e9 0%, #f4f2dc 48%, #e4f7dc 100%);
+  background: #060c09;
 }
 
 .page::before,
@@ -51,71 +48,11 @@
   pointer-events: none;
 }
 
-.page::before {
-  inset: 0;
-  opacity: 0.24;
-  background-image:
-    linear-gradient(rgba(36, 122, 77, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36, 122, 77, 0.1) 1px, transparent 1px);
-  background-size: 120px 120px;
-  mask-image: linear-gradient(180deg, #000, transparent 88%);
-}
-
+.page::before,
 .page::after {
-  width: 54vw;
-  height: 54vw;
-  right: -22vw;
-  bottom: -30vw;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(36, 122, 77, 0.18), transparent 64%);
-  filter: blur(24px);
+  display: none;
 }
 
-.ambientMap {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0.84;
-}
-
-.ambientMap::before,
-.ambientMap::after {
-  content: "+";
-  position: absolute;
-  font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
-  font-size: clamp(4rem, 10vw, 9rem);
-  font-weight: 700;
-  line-height: 1;
-  color: rgba(36, 122, 77, 0.11);
-}
-
-.ambientMap::before {
-  left: 7%;
-  top: 14%;
-  transform: rotate(-12deg);
-}
-
-.ambientMap::after {
-  right: 9%;
-  bottom: 14%;
-  content: "=";
-  transform: rotate(8deg);
-}
-
-.mapDot {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: var(--login-sprout);
-  box-shadow: 0 0 0 7px rgba(185, 232, 111, 0.18), 0 0 24px rgba(36, 122, 77, 0.2);
-  animation: floatDot 7s ease-in-out infinite;
-}
-
-.dotOne { left: 19%; top: 18%; }
-.dotTwo { right: 24%; top: 31%; animation-delay: -2s; }
-.dotThree { right: 34%; bottom: 18%; animation-delay: -4s; }
 
 .shell {
   position: relative;
@@ -123,50 +60,26 @@
   width: min(1240px, 100%);
   min-height: min(760px, calc(100vh - 104px));
   overflow: hidden;
-  border: 1px solid rgba(20, 58, 46, 0.14);
+  border: 1px solid rgba(196, 245, 71, 0.10);
   border-radius: clamp(28px, 4vw, 48px);
-  padding: clamp(22px, 4.2vw, 62px);
-  background:
-    linear-gradient(118deg, rgba(255, 253, 247, 0.94), rgba(255, 253, 247, 0.78) 58%, rgba(228, 247, 220, 0.72)),
-    var(--login-paper);
-  box-shadow: var(--login-shadow);
-  backdrop-filter: blur(22px);
+  padding: 0;
+  background: #091810;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(196,245,71,0.06);
 }
 
-.shell::before {
-  content: "wrong != bad";
-  position: absolute;
-  left: clamp(28px, 5vw, 76px);
-  bottom: clamp(22px, 4vw, 52px);
-  color: rgba(116, 64, 86, 0.18);
-  font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
-  font-size: clamp(2.7rem, 6vw, 6.5rem);
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  pointer-events: none;
-}
-
+.shell::before,
 .shell::after {
-  content: "";
-  position: absolute;
-  right: -90px;
-  top: -90px;
-  width: 260px;
-  height: 260px;
-  border-radius: 78px;
-  background: linear-gradient(135deg, rgba(95, 183, 121, 0.3), rgba(185, 232, 111, 0.38));
-  transform: rotate(12deg);
-  pointer-events: none;
+  display: none;
 }
 
 .layout {
   position: relative;
   z-index: 1;
-  min-height: 0;
+  min-height: min(760px, calc(100vh - 104px));
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(390px, 500px);
-  gap: clamp(30px, 6vw, 90px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 480px);
+  gap: 0;
+  align-items: stretch;
   min-width: 0;
 }
 
@@ -175,10 +88,26 @@
   min-height: 0;
   display: flex;
   align-items: center;
-  padding: 8px 0;
+  padding: clamp(32px, 5vw, 72px) clamp(28px, 5vw, 64px);
+  overflow: hidden;
+  /* Fade right edge into the card */
+  -webkit-mask-image: linear-gradient(to right, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 72%, transparent 100%);
+}
+
+/* Fourier canvas sits absolutely behind all hero content */
+.fourierBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+  pointer-events: none;
 }
 
 .heroContent {
+  position: relative;
+  z-index: 1;
   width: min(620px, 100%);
   min-width: 0;
 }
@@ -191,33 +120,34 @@
 
 .wordmark {
   width: fit-content;
-  color: var(--login-ink);
+  color: #e8f5e0;
   font-size: clamp(2.4rem, 4.5vw, 4.2rem);
   font-weight: 1000;
   line-height: 0.9;
   letter-spacing: -0.075em;
 }
 
-.wmMind { color: var(--login-ink); }
-.wmCraft { color: #d3a900; }
+.wmMind { color: #e8f5e0; }
+.wmCraft { color: #c4f547; }
 
 .heroTitle {
   margin: 26px 0 0;
   max-width: 11ch;
-  color: var(--login-ink);
+  color: #f0fae8;
   font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
   font-size: clamp(3.2rem, 7.4vw, 6.9rem);
   font-weight: 700;
   line-height: 0.88;
   letter-spacing: -0.045em;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.4);
 }
 
 .heroCopy {
   margin: 24px 0 0;
   max-width: 480px;
-  color: #4f6357;
+  color: rgba(224, 248, 200, 0.72);
   font-size: clamp(1rem, 1.35vw, 1.18rem);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.52;
 }
 
@@ -225,10 +155,10 @@
   content: "";
   display: block;
   width: 116px;
-  height: 8px;
+  height: 3px;
   margin-top: 22px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--login-leaf), var(--login-sprout));
+  background: linear-gradient(90deg, #c4f547, rgba(196,245,71,0.2));
 }
 
 .valueSection {
@@ -293,39 +223,36 @@
 }
 
 .valueCard {
-  min-height: 148px;
-  padding: 18px 14px;
-  border: 1px solid rgba(36, 122, 77, 0.16);
-  border-radius: 28px;
-  background: rgba(255, 253, 247, 0.7);
-  box-shadow: 0 18px 42px rgba(29, 84, 54, 0.08);
+  min-height: 120px;
+  padding: 16px 14px;
+  border: 1px solid rgba(196, 245, 71, 0.14);
+  border-radius: 20px;
+  background: rgba(196, 245, 71, 0.05);
   text-align: center;
-  transition: transform 0.2s var(--login-ease), border-color 0.2s var(--login-ease), box-shadow 0.2s var(--login-ease);
+  transition: transform 0.2s var(--login-ease), border-color 0.2s var(--login-ease);
 }
 
 .valueCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(36, 122, 77, 0.3);
-  box-shadow: 0 24px 54px rgba(29, 84, 54, 0.12);
+  transform: translateY(-3px);
+  border-color: rgba(196, 245, 71, 0.28);
 }
 
 .valueIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  margin-bottom: 12px;
-  border-radius: 20px;
-  border: 1px solid rgba(36, 122, 77, 0.18);
-  background: linear-gradient(180deg, #fff, var(--login-mint));
-  color: var(--login-leaf);
-  box-shadow: 0 12px 24px rgba(29, 84, 54, 0.1);
+  width: 44px;
+  height: 44px;
+  margin-bottom: 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(196, 245, 71, 0.22);
+  background: rgba(196, 245, 71, 0.08);
+  color: #c4f547;
 }
 
 .valueIcon svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.9;
@@ -335,20 +262,20 @@
 
 .valueCard strong {
   display: block;
-  color: var(--login-ink);
+  color: #e8f5e0;
   font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.02em;
 }
 
 .valueCard p {
-  margin: 8px auto 0;
+  margin: 6px auto 0;
   max-width: 145px;
-  color: var(--login-muted);
-  font-size: 0.79rem;
-  font-weight: 800;
+  color: rgba(196, 245, 71, 0.55);
+  font-size: 0.76rem;
+  font-weight: 600;
   line-height: 1.38;
 }
 
@@ -356,16 +283,15 @@
   position: relative;
   width: fit-content;
   margin: 0;
-  padding: 13px 18px;
-  border: 1px solid rgba(36, 122, 77, 0.16);
+  padding: 10px 18px;
+  border: 1px solid rgba(196, 245, 71, 0.22);
   border-radius: 999px;
-  background: #dff5c9;
-  color: var(--login-leaf);
+  background: rgba(196, 245, 71, 0.07);
+  color: #c4f547;
   font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.15;
-  box-shadow: 0 16px 38px rgba(36, 122, 77, 0.1);
 }
 
 .loginWrap {
@@ -373,20 +299,14 @@
   display: flex;
   align-items: center;
   min-width: 0;
+  padding: clamp(22px, 3.5vw, 52px) clamp(22px, 4vw, 52px);
+  background: #faf6ef;
+  /* left edge glow to blend into the dark side */
+  box-shadow: -32px 0 64px rgba(6, 12, 9, 0.5);
 }
 
 .loginWrap::before {
-  content: "?";
-  position: absolute;
-  right: -26px;
-  top: -42px;
-  z-index: 0;
-  color: rgba(36, 122, 77, 0.13);
-  font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
-  font-size: 8rem;
-  font-weight: 700;
-  line-height: 1;
-  transform: rotate(9deg);
+  display: none;
 }
 
 .cardStack {
@@ -397,12 +317,7 @@
 }
 
 .cardShadow {
-  position: absolute;
-  inset: 26px 28px -26px;
-  border-radius: 38px;
-  background: rgba(36, 122, 77, 0.22);
-  filter: blur(28px);
-  pointer-events: none;
+  display: none;
 }
 
 .card {

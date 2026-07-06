@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import FourierCanvas from '../components/FourierCanvas'
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -213,14 +214,10 @@ export default function Login() {
 
   return (
     <div className={s.page}>
-      <div className={s.ambientMap} aria-hidden="true">
-        <span className={`${s.mapDot} ${s.dotOne}`} />
-        <span className={`${s.mapDot} ${s.dotTwo}`} />
-        <span className={`${s.mapDot} ${s.dotThree}`} />
-      </div>
       <main className={s.shell}>
         <div className={s.layout}>
           <section className={s.heroPanel} aria-label="MindCraft learning map">
+            <FourierCanvas className={s.fourierBg} />
             <div className={s.heroContent}>
               <div className={s.heroIntro}>
                 <div className={s.wordmark}>
