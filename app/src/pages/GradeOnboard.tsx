@@ -22,16 +22,46 @@ import type { Confidence } from '../lib/bridgePractice'
 
 // ---------------------------------------------------------------------------
 // Grade → concept scope
+// 7th: 10 foundational, 8th: 14, 9th: 18, 10th: 22, 11th: full ACT set (~29)
+// Goals add 2-4 extra concepts on top of the grade set.
 // ---------------------------------------------------------------------------
 
-const G7 = ['fractions_decimals','ratios_proportions','percent_ratio','order_of_operations','basic_equations','integer_operations','factors_multiples']
-const G8 = [...G7,'linear_equations','exponent_rules','right_triangle_geometry','statistics_basics','probability']
-const G9 = [...G8,'linear_inequalities','absolute_value','systems_of_linear_equations','functions_basics','function_notation','coordinate_geometry','triangles_similarity','data_interpretation']
-const G10 = [...G9,'polynomial_operations','radical_expressions','quadratic_functions','exponential_functions','circles','transformations','sequences_series','geometric_transformations']
-const G11 = [...G10,'complex_numbers','matrices','logarithms','trigonometry_basics','solid_geometry','composite_inverse','rational_expressions','regression','counting_combinatorics']
+const G7 = [
+  'fractions_decimals','ratios_proportions','percent_ratio','order_of_operations',
+  'integer_operations','factors_multiples','basic_equations','number_properties',
+  'statistics_basics','data_interpretation',
+] // 10 concepts
+const G8 = [...G7,
+  'linear_equations','exponent_rules','right_triangle_geometry','probability',
+] // 14 concepts
+const G9 = [...G8,
+  'linear_inequalities','systems_of_linear_equations','functions_basics','coordinate_geometry',
+] // 18 concepts
+const G10 = [...G9,
+  'quadratic_functions','polynomial_operations','radical_expressions','exponential_functions',
+] // 22 concepts
+const G11 = [...G10,
+  'absolute_value','function_notation','triangles_similarity','circles',
+  'trigonometry_basics','sequences_series','logarithms',
+] // 29 concepts — ACT-tested set
 
 const GRADE_CONCEPTS: Record<number, string[]> = {
   7: G7, 8: G8, 9: G9, 10: G10, 11: G11,
+}
+
+// Extra concepts unlocked by goals
+const GOAL_EXTRAS: Record<string, string[]> = {
+  act_prep:     ['composite_inverse','geometric_transformations','solid_geometry','rational_expressions'],
+  get_unstuck:  ['counting_combinatorics','regression','complex_numbers','matrices'],
+}
+
+function conceptsForGradeAndGoals(grade: number, goals: string[]): string[] {
+  const base = [...(GRADE_CONCEPTS[grade] ?? G9)]
+  const extras = new Set(base)
+  for (const goal of goals) {
+    for (const c of GOAL_EXTRAS[goal] ?? []) extras.add(c)
+  }
+  return [...extras]
 }
 
 // The story concept shown per grade (pick one they're ready for)
@@ -52,14 +82,13 @@ const GRADE_CALIBRATION: Record<number, [string, string]> = {
   11: ['functions_basics',         'triangles_similarity'],
 }
 
-// Default confidence per grade (how well a student typically knows concepts)
-// at their grade level: grade concepts start kinda, below-grade start easy
-function gradeConfidence(grade: number): Record<string, Confidence> {
-  const concepts = GRADE_CONCEPTS[grade] ?? G9
+// Default confidence: prior-grade concepts → kinda (some exposure), new-grade → hard
+function gradeConfidence(grade: number, goals: string[]): Record<string, Confidence> {
+  const concepts = conceptsForGradeAndGoals(grade, goals)
+  const priorGrade = GRADE_CONCEPTS[grade - 1] ?? []
   const conf: Record<string, Confidence> = {}
   for (const c of concepts) {
-    const gradeIntro = GRADE_CONCEPTS[grade - 1]?.includes(c)
-    conf[c] = gradeIntro ? 'kinda' : 'hard'  // new concepts assumed hard; prior grade = kinda
+    conf[c] = priorGrade.includes(c) ? 'kinda' : 'hard'
   }
   return conf
 }
@@ -162,7 +191,7 @@ export default function GradeOnboard() {
     setStep('seeding')
 
     const g = grade ?? 9
-    const baseConf = gradeConfidence(g)
+    const baseConf = gradeConfidence(g, goalTags)
 
     // Adjust confidence for calibration concepts based on probe outcome
     for (const r of results) {
