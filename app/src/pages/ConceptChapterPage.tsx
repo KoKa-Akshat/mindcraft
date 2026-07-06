@@ -1,18 +1,10 @@
-/**
- * ConceptChapterPage — paginated storybook experience.
- *
- * Pages: cover → story chunks (2 paragraphs each) → questions (with notepad)
- * Navigation: tap arrow or swipe; page-slide transition between pages.
- * Questions: no LaTeX, no right/wrong revealed (C4 mode). Lined notepad on right.
- */
-
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
 import s from './ConceptChapterPage.module.css'
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// ── Types ───────────────────────────────────────────────────────────────────
 
 type CS = {
   conceptId: string
@@ -22,7 +14,7 @@ type CS = {
 }
 const DB = conceptStoriesRaw as unknown as Record<string, CS>
 
-// ── Cluster identity ───────────────────────────────────────────────────────────
+// ── Cluster identity ─────────────────────────────────────────────────────────
 
 type Cluster = 'algebra' | 'geometry' | 'functions' | 'data'
 
@@ -34,7 +26,7 @@ const CLUSTER_MAP: Record<string, Cluster> = {
   exponent_rules: 'algebra',      radical_expressions: 'algebra',
   absolute_value: 'algebra',      integer_operations: 'algebra',
   polynomial_operations: 'algebra', factors_multiples: 'algebra',
-  number_properties: 'algebra',
+  number_properties: 'algebra',   rational_expressions: 'algebra',
   functions_basics: 'functions',  function_notation: 'functions',
   quadratic_functions: 'functions', exponential_functions: 'functions',
   logarithms: 'functions',        composite_inverse: 'functions',
@@ -45,17 +37,17 @@ const CLUSTER_MAP: Record<string, Cluster> = {
   statistics_basics: 'data',      probability: 'data',
   data_interpretation: 'data',    regression: 'data',
   counting_combinatorics: 'data', complex_numbers: 'data',
-  matrices: 'data',               rational_expressions: 'algebra',
+  matrices: 'data',
 }
 
 const CLUSTER_THEME = {
-  algebra:   { bg: '#f5eedb', paper: '#faf5ec', ink: '#3d2f10', accent: '#8b6914', dim: '#a0906a', chip: '#8b6914' },
-  geometry:  { bg: '#e8eef5', paper: '#f1f5fa', ink: '#172333', accent: '#1e5f8a', dim: '#4a7396', chip: '#1e5f8a' },
-  functions: { bg: '#eaf2e8', paper: '#f1f7f0', ink: '#1a2c16', accent: '#2d6924', dim: '#4a7a42', chip: '#2d6924' },
-  data:      { bg: '#f2ece9', paper: '#f8f3f1', ink: '#321614', accent: '#7a2e26', dim: '#8c5550', chip: '#7a2e26' },
+  algebra:   { bg: '#f5eedb', paper: '#faf5ec', ink: '#3d2f10', accent: '#8b6914', dim: '#a0906a', chip: '#8b6914', lineBg: 'rgba(139,105,20,0.09)' },
+  geometry:  { bg: '#e8eef5', paper: '#f1f5fa', ink: '#172333', accent: '#1e5f8a', dim: '#4a7396', chip: '#1e5f8a', lineBg: 'rgba(30,95,138,0.09)' },
+  functions: { bg: '#eaf2e8', paper: '#f1f7f0', ink: '#1a2c16', accent: '#2d6924', dim: '#4a7a42', chip: '#2d6924', lineBg: 'rgba(45,105,36,0.09)' },
+  data:      { bg: '#f2ece9', paper: '#f8f3f1', ink: '#321614', accent: '#7a2e26', dim: '#8c5550', chip: '#7a2e26', lineBg: 'rgba(122,46,38,0.09)' },
 }
 
-// ── Cluster SVG glyphs ─────────────────────────────────────────────────────────
+// ── Cluster glyphs ───────────────────────────────────────────────────────────
 
 const GLYPH: Record<Cluster, React.ReactNode> = {
   algebra: (
@@ -64,37 +56,35 @@ const GLYPH: Record<Cluster, React.ReactNode> = {
       <line x1="8"  y1="36" x2="72" y2="36" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
       <circle cx="12" cy="36" r="9"  stroke="currentColor" strokeWidth="2" fill="none"/>
       <circle cx="68" cy="36" r="9"  stroke="currentColor" strokeWidth="2" fill="none"/>
-      <line x1="30" y1="56" x2="50" y2="56" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   ),
   geometry: (
     <svg viewBox="0 0 80 80" fill="none" aria-hidden>
       <circle cx="40" cy="40" r="28" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 4"/>
       <polygon points="40,12 67,67 13,67" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinejoin="round"/>
-      <line x1="40" y1="12" x2="40" y2="67" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.5"/>
     </svg>
   ),
   functions: (
     <svg viewBox="0 0 80 80" fill="none" aria-hidden>
-      <line x1="8"  y1="72" x2="72" y2="72" stroke="currentColor" strokeWidth="2"   strokeLinecap="round"/>
-      <line x1="8"  y1="8"  x2="8"  y2="72" stroke="currentColor" strokeWidth="2"   strokeLinecap="round"/>
+      <line x1="8" y1="72" x2="72" y2="72" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="8" y1="8"  x2="8"  y2="72" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       <path d="M8 70 C22 70 18 18 40 23 C56 26 52 62 72 57" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round"/>
       <circle cx="40" cy="23" r="3.5" fill="currentColor"/>
     </svg>
   ),
   data: (
     <svg viewBox="0 0 80 80" fill="none" aria-hidden>
-      <line x1="8"  y1="72" x2="72" y2="72" stroke="currentColor" strokeWidth="2"/>
-      <line x1="8"  y1="8"  x2="8"  y2="72" stroke="currentColor" strokeWidth="2"/>
-      <line x1="8"  y1="68" x2="72" y2="16" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 4" opacity="0.55"/>
-      {([{x:16,y:60},{x:26,y:52},{x:36,y:44},{x:46,y:36},{x:56,y:26},{x:66,y:20}] as const).map((p,i) => (
+      <line x1="8" y1="72" x2="72" y2="72" stroke="currentColor" strokeWidth="2"/>
+      <line x1="8" y1="8"  x2="8"  y2="72" stroke="currentColor" strokeWidth="2"/>
+      <line x1="8" y1="68" x2="72" y2="16" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 4" opacity="0.55"/>
+      {[{x:16,y:60},{x:26,y:52},{x:36,y:44},{x:46,y:36},{x:56,y:26},{x:66,y:20}].map((p,i) => (
         <circle key={i} cx={p.x} cy={p.y} r="4" fill="currentColor"/>
       ))}
     </svg>
   ),
 }
 
-// ── Page spec ──────────────────────────────────────────────────────────────────
+// ── Page spec ────────────────────────────────────────────────────────────────
 
 type PageSpec =
   | { kind: 'cover' }
@@ -116,7 +106,104 @@ function chapterNum(conceptId: string): number {
   return Object.keys(DB).indexOf(conceptId) + 1
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// ── Choice text formatter — clean up "33.333 ... %" etc. ─────────────────────
+
+function fmtChoice(text: string): string {
+  return text
+    .replace(/(\d+(?:\.\d+)?)\s*\.\.\.\s*(\d*)/g, '$1…$2')
+    .replace(/\s+(%|°)/g, '$1')
+    .replace(/(\d)\s+\/\s+(\d)/g, '$1/$2')
+    .trim()
+}
+
+// ── Question text renderer — pulls out (Diagram: ...) callouts ───────────────
+
+function QuestionContent({ text, ink, accent }: { text: string; ink: string; accent: string }) {
+  const parts = text.split(/(\(Diagram:[^)]{0,300}\))/g)
+  return (
+    <p className={s.qText} style={{ color: ink }}>
+      {parts.map((part, i) => {
+        const m = part.match(/^\(Diagram: (.+)\)$/)
+        if (m) {
+          return (
+            <span key={i} className={s.diagramBox} style={{ borderLeftColor: accent }}>
+              <span className={s.diagramIcon} aria-hidden>⬡</span>
+              {m[1]}
+            </span>
+          )
+        }
+        return <span key={i}>{part}</span>
+      })}
+    </p>
+  )
+}
+
+// ── Calculator ───────────────────────────────────────────────────────────────
+
+function Calculator() {
+  const [display, setDisplay] = useState('0')
+  const [prev, setPrev] = useState<number | null>(null)
+  const [op, setOp] = useState<string | null>(null)
+  const [fresh, setFresh] = useState(true)
+
+  const press = (val: string) => {
+    if ('0123456789.'.includes(val)) {
+      if (val === '.' && display.includes('.')) return
+      setDisplay(d => fresh ? val === '.' ? '0.' : val : d === '0' ? val : d + val)
+      setFresh(false)
+    } else if (val === '←') {
+      setDisplay(d => d.length > 1 ? d.slice(0, -1) : '0')
+    } else if (val === 'C') {
+      setDisplay('0'); setPrev(null); setOp(null); setFresh(true)
+    } else if (val === '±') {
+      setDisplay(d => d === '0' ? '0' : d.startsWith('-') ? d.slice(1) : '-' + d)
+    } else if (val === '√') {
+      const n = parseFloat(display)
+      setDisplay(n < 0 ? 'Error' : String(parseFloat(Math.sqrt(n).toFixed(8))))
+      setFresh(true)
+    } else if (['+', '−', '×', '÷'].includes(val)) {
+      setPrev(parseFloat(display)); setOp(val); setFresh(true)
+    } else if (val === '=' && prev !== null && op) {
+      const n = parseFloat(display)
+      let r: number
+      if (op === '+') r = prev + n
+      else if (op === '−') r = prev - n
+      else if (op === '×') r = prev * n
+      else r = n === 0 ? NaN : prev / n
+      setDisplay(isFinite(r) ? String(parseFloat(r.toFixed(10))) : 'Error')
+      setPrev(null); setOp(null); setFresh(true)
+    }
+  }
+
+  const BTNS = [
+    ['C', '←', '√', '÷'],
+    ['7', '8', '9', '×'],
+    ['4', '5', '6', '−'],
+    ['1', '2', '3', '+'],
+    ['±', '0', '.', '='],
+  ]
+
+  return (
+    <div className={s.calcPanel}>
+      <div className={s.calcDisplay}>{display}</div>
+      {BTNS.map((row, ri) => (
+        <div key={ri} className={s.calcRow}>
+          {row.map(btn => (
+            <button
+              key={btn}
+              className={`${s.calcBtn} ${btn === '=' ? s.calcEq : ''} ${['C','←','√','÷','×','−','+'].includes(btn) ? s.calcOp : ''}`}
+              onClick={() => press(btn)}
+            >
+              {btn}
+            </button>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ── Component ────────────────────────────────────────────────────────────────
 
 export default function ConceptChapterPage() {
   const { conceptId = '' } = useParams<{ conceptId: string }>()
@@ -132,19 +219,26 @@ export default function ConceptChapterPage() {
 
   const questions = useMemo(() => {
     if (!conceptId) return []
-    const qs = [...getQuestions(conceptId, 1, 3), ...getQuestions(conceptId, 2, 3)]
+    const qs = [...getQuestions(conceptId, 1, 4), ...getQuestions(conceptId, 2, 4)]
     const seen = new Set<string>()
-    return qs.filter(q => { if (seen.has(q.question)) return false; seen.add(q.question); return true }).slice(0, 3)
+    return qs.filter(q => { if (seen.has(q.question)) return false; seen.add(q.question); return true }).slice(0, 4)
   }, [conceptId])
 
   const totalQs = questionCount(conceptId, 1) + questionCount(conceptId, 2) + questionCount(conceptId, 3)
-
-  const specs = useMemo(() => cs ? buildSpecs(cs.story, Math.min(questions.length, 3)) : [], [cs, questions.length])
+  const specs = useMemo(() => cs ? buildSpecs(cs.story, Math.min(questions.length, 4)) : [], [cs, questions.length])
 
   const [pageIdx, setPageIdx] = useState(0)
   const [dir, setDir] = useState<'f' | 'b'>('f')
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
+  const [notes, setNotes] = useState<Record<number, string>>({})
+
+  // Floating panels
+  const [showCalc, setShowCalc] = useState(false)
+  const [showPing, setShowPing] = useState(false)
+  const [pingMsg, setPingMsg] = useState('')
+  const [pingSent, setPingSent] = useState(false)
+  const pingRef = useRef<HTMLTextAreaElement>(null)
 
   const goTo = (i: number, d: 'f' | 'b') => {
     if (i < 0) { navigate(-1); return }
@@ -156,11 +250,17 @@ export default function ConceptChapterPage() {
     setPageIdx(i)
   }
 
+  const sendPing = () => {
+    // Stub: would POST to Firestore or a notifications endpoint
+    setPingSent(true)
+    setTimeout(() => { setShowPing(false); setPingSent(false); setPingMsg('') }, 2200)
+  }
+
   if (!cs) {
     return (
       <div className={s.desk}>
         <button className={s.backBtn} onClick={() => navigate(-1)}>← back</button>
-        <p style={{ color: 'rgba(255,255,255,.4)', marginTop: 40 }}>No story found for <code>{conceptId}</code>.</p>
+        <p className={s.notFound}>No story found for <code>{conceptId}</code>.</p>
       </div>
     )
   }
@@ -174,21 +274,17 @@ export default function ConceptChapterPage() {
       className={s.desk}
       style={{ '--theme-bg': theme.bg, '--theme-ink': theme.ink, '--theme-accent': theme.accent, '--theme-dim': theme.dim } as React.CSSProperties}
     >
-      {/* Back */}
-      <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Back">
-        ←
-      </button>
+      <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Back">← back</button>
 
-      {/* Page container — key triggers entry animation */}
+      {/* ── Page ── */}
       <div
         key={pageIdx}
         className={`${s.page} ${dir === 'f' ? s.enterRight : s.enterLeft} ${fromDashboard && pageIdx === 0 ? s.enterFromGutter : ''}`}
         style={{ background: theme.paper }}
       >
-        {/* Grain overlay */}
         <div className={s.grain} aria-hidden />
 
-        {/* ── COVER ─────────────────────────────────────────── */}
+        {/* ── COVER ── */}
         {spec.kind === 'cover' && (
           <div className={s.coverLayout}>
             <div className={s.coverTop}>
@@ -197,47 +293,32 @@ export default function ConceptChapterPage() {
               </span>
               <span className={s.coverChNum}>Ch. {ch}</span>
             </div>
-            <div className={s.coverGlyph} style={{ color: theme.accent }}>
-              {glyph}
-            </div>
-            <h1 className={s.coverTitle} style={{ color: theme.ink }}>
-              {cs.conceptName}
-            </h1>
-            <p className={s.coverSub} style={{ color: theme.dim }}>
-              {totalQs} questions · your story starts here
-            </p>
-            <button
-              className={s.coverCta}
-              style={{ background: theme.ink, color: theme.bg }}
-              onClick={() => goTo(1, 'f')}
-            >
+            <div className={s.coverGlyph} style={{ color: theme.accent }}>{glyph}</div>
+            <h1 className={s.coverTitle} style={{ color: theme.ink }}>{cs.conceptName}</h1>
+            <p className={s.coverSub} style={{ color: theme.dim }}>{totalQs} questions · your story starts here</p>
+            <button className={s.coverCta} style={{ background: theme.ink, color: theme.bg }} onClick={() => goTo(1, 'f')}>
               Open chapter →
             </button>
           </div>
         )}
 
-        {/* ── STORY ─────────────────────────────────────────── */}
+        {/* ── STORY ── */}
         {spec.kind === 'story' && (
           <div className={s.storyLayout}>
             <header className={s.storyHead}>
               <span className={s.storyRunLabel}>the story</span>
               <span className={s.storyRunPage}>{spec.pageNum} / {storyPageCount}</span>
             </header>
-
             <div className={s.storyBody}>
               {spec.paras.map((p, i) => (
                 <p key={i} className={`${s.storyPara} ${spec.isFirst && i === 0 ? s.firstPara : ''}`}>
                   {spec.isFirst && i === 0 && p.length > 0 && (
-                    <span className={s.dropCap} style={{ color: theme.accent }}>
-                      {p[0]}
-                    </span>
+                    <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
                   )}
                   {spec.isFirst && i === 0 ? p.slice(1) : p}
                 </p>
               ))}
             </div>
-
-            {/* Chapter info at foot of last story page */}
             {spec.pageNum === storyPageCount && (
               <div className={s.storyFoot}>
                 <span className={s.storyFootLabel} style={{ color: theme.dim }}>
@@ -248,7 +329,7 @@ export default function ConceptChapterPage() {
           </div>
         )}
 
-        {/* ── QUESTION ──────────────────────────────────────── */}
+        {/* ── QUESTION ── */}
         {spec.kind === 'question' && (() => {
           const q = questions[spec.qIdx]
           if (!q) return null
@@ -266,26 +347,30 @@ export default function ConceptChapterPage() {
                   <span className={s.qChipSmall} style={{ color: theme.chip }}>Ch. {ch}</span>
                 </header>
 
-                <p className={s.qText}>{q.question}</p>
+                <QuestionContent text={q.question} ink={theme.ink} accent={theme.accent} />
 
                 <div className={s.qChoices}>
                   {q.choices.slice(0, 4).map((c, i) => (
                     <button
                       key={i}
                       className={`${s.choice} ${chosen === i ? s.choiceChosen : ''} ${isDone ? s.choiceDone : ''}`}
-                      style={chosen === i ? { borderColor: theme.accent, background: theme.accent + '14' } : undefined}
+                      style={chosen === i ? {
+                        borderColor: theme.accent,
+                        background: theme.accent + '14',
+                        '--choice-bg': theme.accent + '14',
+                      } as React.CSSProperties : undefined}
                       onClick={() => !isDone && setAnswers(a => ({ ...a, [spec.qIdx]: i }))}
                       disabled={isDone}
                     >
                       <span className={s.choiceLetter} style={{ color: theme.accent }}>
                         {String.fromCharCode(65 + i)}
                       </span>
-                      <span className={s.choiceText}>{c}</span>
+                      <span className={s.choiceText}>{fmtChoice(c)}</span>
                     </button>
                   ))}
                 </div>
 
-                {!isDone && (
+                {!isDone ? (
                   <button
                     className={s.submitBtn}
                     style={{ background: theme.ink, color: theme.bg }}
@@ -294,33 +379,44 @@ export default function ConceptChapterPage() {
                   >
                     {chosen === null ? 'Choose an answer' : 'Lock it in →'}
                   </button>
-                )}
-
-                {isDone && (
-                  <p className={s.qDoneNote} style={{ color: theme.dim }}>
-                    Recorded. Keep going.
-                  </p>
+                ) : (
+                  <p className={s.qDoneNote} style={{ color: theme.dim }}>Recorded. Keep going.</p>
                 )}
               </div>
 
-              {/* Right: lined notepad for working */}
+              {/* Right: lined notepad */}
               <div className={s.notepad}>
-                <p className={s.notepadLabel} style={{ color: theme.dim }}>your work</p>
-                <div className={s.notepadLines} style={{ '--line-color': theme.accent + '18' } as React.CSSProperties} />
+                <div className={s.notepadHeader}>
+                  <span className={s.notepadLabel} style={{ color: theme.dim }}>your work</span>
+                  {notes[spec.qIdx] && (
+                    <button className={s.notepadClear} onClick={() => setNotes(n => ({ ...n, [spec.qIdx]: '' }))}>
+                      clear
+                    </button>
+                  )}
+                </div>
+                <div className={s.notepadInner} style={{ '--line-color': theme.lineBg } as React.CSSProperties}>
+                  <div className={s.notepadLines} aria-hidden />
+                  <textarea
+                    ref={spec.qIdx === 0 ? pingRef : undefined}
+                    className={s.notepadArea}
+                    style={{ color: theme.ink }}
+                    placeholder="write here…"
+                    value={notes[spec.qIdx] ?? ''}
+                    onChange={e => setNotes(n => ({ ...n, [spec.qIdx]: e.target.value }))}
+                    spellCheck={false}
+                  />
+                </div>
               </div>
             </div>
           )
         })()}
 
-        {/* ── NAVIGATION BAR ────────────────────────────────── */}
+        {/* ── NAV ── */}
         {spec.kind !== 'cover' && (
           <nav className={s.nav}>
-            <button className={s.navArrow} onClick={() => goTo(pageIdx - 1, 'b')} aria-label="Previous page">
-              ←
-            </button>
-
+            <button className={s.navArrow} onClick={() => goTo(pageIdx - 1, 'b')} aria-label="Previous">←</button>
             <div className={s.navDots}>
-              {specs.slice(1).map((p, i) => {
+              {specs.slice(1).map((_, i) => {
                 const idx = i + 1
                 const isActive = idx === pageIdx
                 const isPast = idx < pageIdx
@@ -335,22 +431,54 @@ export default function ConceptChapterPage() {
                 )
               })}
             </div>
-
             {isLast ? (
-              <button
-                className={s.navPrimary}
-                style={{ background: theme.ink, color: theme.bg }}
-                onClick={() => navigate('/practice', { state: { conceptId } })}
-              >
+              <button className={s.navPrimary} style={{ background: theme.ink, color: theme.bg }} onClick={() => navigate('/practice', { state: { conceptId } })}>
                 Practice →
               </button>
             ) : (
-              <button className={s.navArrow} onClick={() => goTo(pageIdx + 1, 'f')} aria-label="Next page">
-                →
-              </button>
+              <button className={s.navArrow} onClick={() => goTo(pageIdx + 1, 'f')} aria-label="Next">→</button>
             )}
           </nav>
         )}
+      </div>
+
+      {/* ── Floating toolbar ── */}
+      <div className={s.floatBar}>
+        {showCalc && <Calculator />}
+        {showPing && (
+          <div className={s.pingPanel}>
+            <p className={s.pingTitle}>Message your tutor</p>
+            {pingSent ? (
+              <p className={s.pingSent}>Sent! Your tutor will see this.</p>
+            ) : (
+              <>
+                <textarea
+                  className={s.pingInput}
+                  placeholder="e.g. Stuck on question 2 — can we go over this next session?"
+                  value={pingMsg}
+                  onChange={e => setPingMsg(e.target.value)}
+                />
+                <button className={s.pingSubmit} disabled={!pingMsg.trim()} onClick={sendPing}>
+                  Send to tutor →
+                </button>
+              </>
+            )}
+          </div>
+        )}
+        <button
+          className={`${s.fabBtn} ${s.fabPing}`}
+          onClick={() => { setShowPing(p => !p); setShowCalc(false) }}
+          aria-label="Message tutor"
+        >
+          ✉ Ping tutor
+        </button>
+        <button
+          className={`${s.fabBtn} ${s.fabCalc}`}
+          onClick={() => { setShowCalc(c => !c); setShowPing(false) }}
+          aria-label="Calculator"
+        >
+          ⊞ Calculator
+        </button>
       </div>
     </div>
   )

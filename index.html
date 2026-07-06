@@ -164,11 +164,34 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .step:nth-child(2){background:#eaf5ea}
 .step:nth-child(3){background:#eef4fb}
 .step .num{font-size:12px;font-weight:900;letter-spacing:.16em;color:var(--leaf)}
-.step .mark{align-self:flex-end;font-size:48px}
 .step h3{font-size:34px;letter-spacing:-.045em}
 .step p{font-size:15px;margin-top:8px}
+.step-art{width:100%;height:88px;margin:8px 0 14px;display:flex;align-items:center}
+.step-art svg{width:100%;height:100%}
+@keyframes gapPulse{0%,100%{opacity:.9}50%{opacity:1;r:7}}
+.gap-dot{animation:gapPulse 1.9s ease-in-out infinite}
+.gap-dot:last-child{animation-delay:.5s}
+@keyframes curveGrow{from{stroke-dashoffset:280}to{stroke-dashoffset:0}}
+.click-curve{stroke-dasharray:280;animation:curveGrow 2.2s cubic-bezier(.4,0,.2,1) infinite alternate}
+@keyframes ringPulse{0%{r:9;opacity:.55}100%{r:20;opacity:0}}
+.pulse-ring{animation:ringPulse 2s ease-out infinite}
 .proof{background:linear-gradient(180deg,#fff7e8,#eaf5ea)}
 .proof-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,72px);align-items:stretch;margin-top:52px}
+.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
+.tcard{background:#fffdf7;padding:32px;cursor:pointer;transition:background .18s;display:flex;flex-direction:column;gap:0}
+.tcard:nth-child(2){background:#eaf5ea}
+.tcard:nth-child(3){background:#eef4fb}
+.tcard:hover{background:#f0e8d4}
+.tcard:nth-child(2):hover{background:#d8edda}
+.tcard:nth-child(3):hover{background:#dce8f4}
+.tcard-front{display:flex;flex-direction:column;gap:14px}
+.tcard-q{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(17px,2vw,22px);line-height:1.3;letter-spacing:-.02em;margin:0}
+.tcard-more{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--leaf);align-self:flex-start;transition:opacity .18s}
+.tcard-open .tcard-more{opacity:0;pointer-events:none}
+.tcard-back{max-height:0;overflow:hidden;opacity:0;transition:max-height .38s cubic-bezier(.4,0,.2,1),opacity .24s ease}
+.tcard-open .tcard-back{max-height:320px;opacity:1}
+.tcard-back p{font-size:15px;line-height:1.65;color:var(--ink);margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+.tcard-back cite{font-style:normal;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#756f66}
 .photo{position:relative;min-height:520px;border-radius:46px;overflow:hidden;box-shadow:var(--shadow);transform-style:preserve-3d}
 .photo img{width:100%;height:100%;object-fit:cover}
 .photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 48%,rgba(23,56,47,.70))}
@@ -230,7 +253,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-map{right:0;top:12vh;width:100vw;height:40vh;opacity:.18}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
-  .vibe-grid,.system-grid,.proof-layout,.price-grid,.intake-grid{grid-template-columns:1fr}
+  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid{grid-template-columns:1fr}
   h1{font-size:clamp(58px,18vw,74px)}
   h2{font-size:clamp(48px,16vw,84px)}
   .hero-copy .lead{max-width:320px}
@@ -351,7 +374,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="hero-copy reveal">
           <p class="label">The moment it clicks</p>
           <h1><span>You were never</span><span>bad at math.</span></h1>
-          <p class="lead">You were waiting for a better story. MindCraft finds exactly where the thinking broke — then rebuilds from there, with a tutor who already knows the map.</p>
+          <p class="lead">You were waiting for a better story. MindCraft finds exactly where the thinking broke. Then rebuilds from there, with a tutor who already knows the map.</p>
           <div class="hero-actions">
             <a class="btn primary" href="#intake">Request a seat</a>
             <a class="btn soft" href="#system">See how it works</a>
@@ -392,7 +415,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="system-copy reveal">
           <p class="label">The learning map</p>
           <h2>Find where it broke.</h2>
-          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map shows tutor and student exactly where to start — and why this problem kept happening.</p>
+          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map shows tutor and student exactly where to start and why this problem kept happening.</p>
         </div>
         <div class="board reveal" data-tilt>
           <article class="board-card card-a">
@@ -420,26 +443,118 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <p class="label">How it works</p>
         <h2>Answer. Map. Tutor. Repeat.</h2>
         <div class="step-grid stagger">
-          <article class="step"><span class="num">01</span><span class="mark script">?</span><div><h3>Scan</h3><p>Short questions reveal the real break.</p></div></article>
-          <article class="step"><span class="num">02</span><span class="mark script">+</span><div><h3>Brief</h3><p>The tutor sees the map before the session starts.</p></div></article>
-          <article class="step"><span class="num">03</span><span class="mark script">=</span><div><h3>Teach</h3><p>The student explains it back. That is the proof.</p></div></article>
+
+          <article class="step">
+            <span class="num">01</span>
+            <div class="step-art step-art-scan" aria-hidden="true">
+              <!-- Dot plot: gaps lighting up -->
+              <svg viewBox="0 0 120 72" fill="none">
+                <g class="scan-dots">
+                  <circle cx="12" cy="36" r="5" fill="var(--leaf-2)" opacity=".9"/>
+                  <circle cx="28" cy="24" r="5" fill="var(--leaf-2)" opacity=".9"/>
+                  <circle cx="44" cy="48" r="5" fill="var(--leaf-2)" opacity=".9"/>
+                  <circle cx="60" cy="20" r="5" fill="#e8d16b" opacity=".9"/>
+                  <circle cx="76" cy="54" r="5" fill="#e8d16b" opacity=".9"/>
+                  <circle cx="92" cy="30" r="5" fill="#c1180b" opacity=".9" class="gap-dot"/>
+                  <circle cx="108" cy="44" r="5" fill="#c1180b" opacity=".9" class="gap-dot"/>
+                </g>
+                <line x1="85" y1="14" x2="85" y2="64" stroke="#c1180b" stroke-width="1.5" stroke-dasharray="3 3" opacity=".6"/>
+                <text x="87" y="12" font-size="8" fill="#c1180b" font-family="IBM Plex Mono,monospace" opacity=".8">gap</text>
+              </svg>
+            </div>
+            <div>
+              <h3>Scan</h3>
+              <p>Short questions reveal the real break, not just the last bad grade.</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <span class="num">02</span>
+            <div class="step-art" aria-hidden="true">
+              <!-- Knowledge graph nodes -->
+              <svg viewBox="0 0 120 72" fill="none">
+                <line x1="30" y1="36" x2="60" y2="20" stroke="var(--leaf)" stroke-width="1.2" opacity=".5"/>
+                <line x1="30" y1="36" x2="60" y2="52" stroke="var(--leaf)" stroke-width="1.2" opacity=".5"/>
+                <line x1="60" y1="20" x2="95" y2="12" stroke="var(--leaf)" stroke-width="1.2" opacity=".5"/>
+                <line x1="60" y1="20" x2="95" y2="32" stroke="var(--leaf)" stroke-width="1.2" opacity=".5"/>
+                <line x1="60" y1="52" x2="95" y2="52" stroke="var(--leaf)" stroke-width="1.2" opacity=".3"/>
+                <circle cx="30"  cy="36" r="9" fill="var(--leaf)" opacity=".9"/>
+                <circle cx="60"  cy="20" r="7" fill="var(--leaf-2)" opacity=".9"/>
+                <circle cx="60"  cy="52" r="6" fill="#e8d16b" opacity=".8"/>
+                <circle cx="95"  cy="12" r="5" fill="rgba(36,122,77,.3)" stroke="var(--leaf)" stroke-width="1.5"/>
+                <circle cx="95"  cy="32" r="5" fill="rgba(36,122,77,.3)" stroke="var(--leaf)" stroke-width="1.5"/>
+                <circle cx="95"  cy="52" r="5" fill="rgba(36,122,77,.3)" stroke="var(--leaf)" stroke-width="1.5"/>
+                <text x="21" y="40" font-size="7" fill="#fff" font-family="IBM Plex Mono,monospace" font-weight="700">gap</text>
+              </svg>
+            </div>
+            <div>
+              <h3>Brief</h3>
+              <p>The tutor reads the map before the session starts. No ramp-up time.</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <span class="num">03</span>
+            <div class="step-art" aria-hidden="true">
+              <!-- Curve being traced: y = x^2 click moment -->
+              <svg viewBox="0 0 120 72" fill="none">
+                <line x1="8"  y1="64" x2="112" y2="64" stroke="var(--ink)" stroke-width="1.2" opacity=".2"/>
+                <line x1="60" y1="4"  x2="60"  y2="68" stroke="var(--ink)" stroke-width="1.2" opacity=".2"/>
+                <path d="M12 64 Q36 62 60 10 Q84 62 108 64" stroke="var(--leaf)" stroke-width="2.5" stroke-linecap="round" fill="none" class="click-curve"/>
+                <circle cx="60" cy="10" r="4" fill="var(--leaf)"/>
+                <circle cx="60" cy="10" r="9" fill="none" stroke="var(--leaf-2)" stroke-width="1.2" opacity=".5" class="pulse-ring"/>
+                <text x="64" y="9" font-size="7.5" fill="var(--leaf)" font-family="IBM Plex Mono,monospace" opacity=".8">click.</text>
+              </svg>
+            </div>
+            <div>
+              <h3>Teach</h3>
+              <p>The student explains it back. That is the proof it actually landed.</p>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
 
     <section class="proof" data-nav="cream">
       <div class="wrap reveal">
-        <p class="label">Family signal</p>
-        <h2>Progress you can see.</h2>
-        <div class="proof-layout">
-          <figure class="photo" data-tilt>
-            <img src="img/mindcraft-study-desk-20260706.jpg" alt="A tablet with handwritten math notes on a calm study desk">
-            <span class="script">2 misses = 1 clue</span>
-          </figure>
-          <div class="quote-stack">
-            <article class="quote"><blockquote>"She opened the homework without being asked. That was new."</blockquote><cite>Gill, parent</cite></article>
-            <article class="quote"><blockquote>"I saw it before my tutor even finished the problem."</blockquote><cite>Seb, student</cite></article>
-          </div>
+        <p class="label">From families</p>
+        <h2>In their words.</h2>
+        <div class="testimonial-grid stagger">
+
+          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
+            <div class="tcard-front">
+              <p class="tcard-q">"She opened the homework without being asked."</p>
+              <span class="tcard-more">read more +</span>
+            </div>
+            <div class="tcard-back">
+              <p>"She opened the homework without being asked. That was new. Three weeks in and I stopped nagging. I don't know what they did but it's working."</p>
+              <cite>Gill, parent of 9th grader</cite>
+            </div>
+          </article>
+
+          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
+            <div class="tcard-front">
+              <p class="tcard-q">"I saw it before my tutor even finished."</p>
+              <span class="tcard-more">read more +</span>
+            </div>
+            <div class="tcard-back">
+              <p>"I saw it before my tutor even finished the problem. I never thought I was the type of person who just gets math. Turns out I just needed the right starting point."</p>
+              <cite>Seb, 10th grade</cite>
+            </div>
+          </article>
+
+          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
+            <div class="tcard-front">
+              <p class="tcard-q">"The tutor already knew where she was stuck."</p>
+              <span class="tcard-more">read more +</span>
+            </div>
+            <div class="tcard-back">
+              <p>"The tutor already knew where she was stuck before the first session started. We didn't have to explain anything. They just picked up and went."</p>
+              <cite>Priya, parent of 8th grader</cite>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
@@ -455,11 +570,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <div class="includes">
             <article class="include"><span>01</span><div><h3>Live 1-on-1 sessions</h3><p>Each session starts with the current map. No ramp-up time.</p></div></article>
             <article class="include"><span>02</span><div><h3>The knowledge map</h3><p>Mastered, fragile, untouched. Everyone sees the same picture.</p></div></article>
-            <article class="include"><span>03</span><div><h3>Targeted daily practice</h3><p>Practice aimed at the exact gap — not the chapter you finished last week.</p></div></article>
+            <article class="include"><span>03</span><div><h3>Targeted daily practice</h3><p>Practice aimed at the exact gap, not the chapter you finished last week.</p></div></article>
             <article class="include"><span>04</span><div><h3>Parent signal</h3><p>What clicked, what is still stuck, what comes next.</p></div></article>
           </div>
           <article class="price-card">
-            <small>MindCraft — Premium</small>
+            <small>MindCraft Premium</small>
             <strong style="font-size:32px;letter-spacing:-0.02em;line-height:1.2;display:block;margin:18px 0 8px;">Tell us their story.</strong>
             <p>We review every application and reach out within 48 hours. No commitment required to apply.</p>
             <a class="btn primary" href="#intake">Apply for a seat</a>
