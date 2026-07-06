@@ -4026,3 +4026,119 @@
     flex-direction: column;
   }
 }
+
+/* ── Story Splash Overlay ──────────────────────────────────────────────────── */
+
+.storyOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(4, 10, 14, 0.96);
+  backdrop-filter: blur(12px);
+  animation: storyFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes storyFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.storyCard {
+  width: 100%;
+  max-width: 600px;
+  padding: 48px 52px;
+  border-radius: 24px;
+  background: #0d1f2b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 60px 120px rgba(0, 0, 0, 0.6);
+  animation: storySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes storySlideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.storyChip {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(193, 18, 31, 0.18);
+  color: #e85d04;
+  border: 1px solid rgba(232, 93, 4, 0.3);
+  margin-bottom: 20px;
+}
+
+.storyConceptName {
+  margin: 0 0 24px;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: #ffffff;
+}
+
+.storyText {
+  margin: 0 0 36px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.72);
+  font-style: italic;
+}
+
+.storyActions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.storyBeginBtn {
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: #c1121f;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.storyBeginBtn:hover {
+  background: #e31c28;
+  transform: translateY(-1px);
+}
+
+.storySkipBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.storySkipBtn:hover {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 560px) {
+  .storyCard {
+    padding: 32px 28px;
+  }
+  .storyActions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

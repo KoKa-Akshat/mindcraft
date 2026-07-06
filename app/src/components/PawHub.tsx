@@ -6,7 +6,6 @@ import { db } from '../firebase'
 import {
   pawHubDisplayText,
   pawHubLearnSub,
-  pawHubPracticeSub,
   type CurriculumTrack,
 } from '../lib/curriculumTrack'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
@@ -42,6 +41,16 @@ function KathaFlame({ size = 18 }: { size?: number }) {
         fill="url(#kf_inner)"
         opacity="0.82"
       />
+    </svg>
+  )
+}
+
+function CompassIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={s.exploreIcon}>
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M10 3v2M10 15v2M3 10h2M15 10h2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M12.5 7.5L11 11 7.5 12.5 9 9 12.5 7.5Z" fill="currentColor" opacity="0.75" />
     </svg>
   )
 }
@@ -110,7 +119,7 @@ export default function PawHub({
     return () => { cancelled = true }
   }, [userId])
 
-  function goPractice() {
+  function goChallenge() {
     if (weakness) {
       navigate('/practice', { state: { conceptId: weakness.conceptId, missionType: 'weakness' } })
     } else {
@@ -118,7 +127,7 @@ export default function PawHub({
     }
   }
 
-  function goLearnNext() {
+  function goExplore() {
     if (learn) {
       navigate('/practice', { state: { conceptId: learn.conceptId, missionType: 'learn' } })
     } else {
@@ -128,17 +137,16 @@ export default function PawHub({
 
   const weaknessLabel = weakness ? pawHubDisplayText(weakness.label, curriculumTrack) : null
   const learnLabel    = learn    ? pawHubDisplayText(learn.label, curriculumTrack)    : null
-  const practiceSub   = pawHubPracticeSub(weakness?.label, curriculumTrack)
   const learnSub      = pawHubLearnSub(curriculumTrack)
 
   return (
     <div className={`${s.deck} ${layout === 'side' ? s.deckSide : ''} ${compact ? s.compact : ''}`}>
 
-      {/* Practice — main action, red */}
+      {/* Challenge — main action, red */}
       <motion.button
         type="button"
         className={s.practiceCard}
-        onClick={goPractice}
+        onClick={goChallenge}
         whileHover={{ scale: 1.018, y: -2 }}
         whileTap={{ scale: 0.982 }}
       >
@@ -146,32 +154,35 @@ export default function PawHub({
         <div className={s.cardTop}>
           <span className={s.practiceChip}>
             <KathaFlame size={13} />
-            Practice
+            Challenge
           </span>
           <span className={s.cardArrow} aria-hidden="true">→</span>
         </div>
         <div className={s.cardTopic}>
           {weaknessLabel ?? 'Your next challenge'}
         </div>
-        <div className={s.cardSub}>{practiceSub}</div>
+        <div className={s.cardSub}>Your biggest gap</div>
       </motion.button>
 
-      {/* Learn Next — blue */}
+      {/* Explore — blue */}
       <motion.button
         type="button"
         className={s.learnCard}
-        onClick={goLearnNext}
+        onClick={goExplore}
         whileHover={{ scale: 1.018, y: -2 }}
         whileTap={{ scale: 0.982 }}
       >
         <div className={s.cardTop}>
-          <span className={s.learnChip}>Learn Next</span>
+          <span className={s.learnChip}>
+            <CompassIcon />
+            Explore
+          </span>
           <span className={s.cardArrow} aria-hidden="true">→</span>
         </div>
         <div className={s.cardTopic}>
           {learnLabel ?? learnSub}
         </div>
-        <div className={s.cardSub}>First time through this concept</div>
+        <div className={s.cardSub}>Fresh territory</div>
       </motion.button>
 
       {/* Quick actions */}

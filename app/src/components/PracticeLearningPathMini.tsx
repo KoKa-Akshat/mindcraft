@@ -102,10 +102,7 @@ export default function PracticeLearningPathMini({
               const cy = nodeY(i)
               return (
                 <g key={i}>
-                  <circle cx={SPINE} cy={cy} r="15" fill="rgba(8,18,14,0.96)" stroke="rgba(196,245,71,0.55)" strokeWidth="1.8" />
-                  <text x={SPINE} y={cy + 4} textAnchor="middle" fill="#c4f547" fontSize="10" fontWeight="800" fontFamily="system-ui,sans-serif">
-                    {i + 1}
-                  </text>
+                  <circle cx={SPINE} cy={cy} r="8" fill="#c4f547" />
                 </g>
               )
             })}
@@ -120,7 +117,7 @@ export default function PracticeLearningPathMini({
                 type="button"
                 className={`${s.flowCard} ${isLeft ? s.flowCardLeft : s.flowCardRight} ${isActive ? s.flowCardActive : ''}`}
                 style={{ top: `${i * STEP + 6}px` }}
-                onClick={() => navigate('/practice', { state: { conceptId: c.id, missionType: 'learn' as const } })}
+                onClick={() => navigate('/practice', { state: { conceptId: c.id } })}
               >
                 <div className={s.flowIcon}>
                   <ConceptPathIcon conceptId={c.id} size={26} />

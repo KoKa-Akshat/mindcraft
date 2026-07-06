@@ -29,6 +29,7 @@ import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemo
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
+import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
 
 const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
@@ -357,6 +358,11 @@ export default function Practice() {
   const [confidenceQueue, setConfidenceQueue] = useState<typeof PRACTICE_CONCEPTS>([])
   /** Format vessel for format-gap weakness missions (C3). */
   const [sessionFormat, setSessionFormat] = useState<FormatId | null>(null)
+  /** Katha story shown before a session starts — null means no splash. */
+  const [storySlide, setStorySlide] = useState<{
+    conceptId: string; conceptName: string; story: string
+    missionType: 'weakness' | 'learn'; formatId?: FormatId
+  } | null>(null)
 
   // ── Check-in state ────────────────────────────────────────────────────────
   const [checkinText,    setCheckinText]    = useState('')
@@ -867,6 +873,23 @@ export default function Practice() {
     mission: 'weakness' | 'learn',
     formatId?: FormatId,
   ) {
+    const stories = conceptStoriesData as Record<string, { conceptName: string; story: string }>
+    const entry = stories[conceptId]
+    if (entry?.story) {
+      setStorySlide({ conceptId, conceptName: entry.conceptName, story: entry.story, missionType: mission, formatId })
+      return
+    }
+    await _runSession(conceptId, mission, formatId)
+  }
+
+  async function beginStorySession() {
+    if (!storySlide) return
+    const { conceptId, missionType: mission, formatId } = storySlide
+    setStorySlide(null)
+    await _runSession(conceptId, mission, formatId)
+  }
+
+  async function _runSession(conceptId: string, mission: 'weakness' | 'learn', formatId?: FormatId) {
     setMode('practice')
     setMissionType(mission)
     setSessionFormat(formatId ?? null)
@@ -2194,6 +2217,26 @@ export default function Practice() {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {storySlide && (
+          <div className={s.storyOverlay}>
+            <div className={s.storyCard}>
+              <span className={s.storyChip}>
+                {storySlide.missionType === 'weakness' ? 'Challenge' : 'Explore'}
+              </span>
+              <h2 className={s.storyConceptName}>{storySlide.conceptName}</h2>
+              <p className={s.storyText}>{storySlide.story}</p>
+              <div className={s.storyActions}>
+                <button className={s.storyBeginBtn} onClick={() => void beginStorySession()}>
+                  Begin {storySlide.missionType === 'weakness' ? 'Challenge' : 'Exploration'}
+                </button>
+                <button className={s.storySkipBtn} onClick={() => void beginStorySession()}>
+                  Skip
+                </button>
+              </div>
+            </div>
           </div>
         )}
 

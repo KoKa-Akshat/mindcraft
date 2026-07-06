@@ -231,3 +231,14 @@
     font-size: 17px;
   }
 }
+
+/* ── Explore compass icon ─────────────────────────────── */
+
+.exploreIcon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 2px;
+}
