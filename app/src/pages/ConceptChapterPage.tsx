@@ -1,5 +1,5 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { useState, useMemo, useRef } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
@@ -285,6 +285,22 @@ export default function ConceptChapterPage() {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
   const [notes, setNotes] = useState<Record<number, string>>({})
+  // hintsShownPerQ tracks how many hints have been revealed per question index
+  const [hintsShownPerQ, setHintsShownPerQ] = useState<Record<number, number>>({})
+  // showWriteNudge: show writing prompt after 8s idle on question with empty notes
+  const [showWriteNudge, setShowWriteNudge] = useState(false)
+
+  // Show write nudge after 8s on a question page if notes are still empty
+  const currentSpec = specs[pageIdx]
+  useEffect(() => {
+    setShowWriteNudge(false)
+    if (currentSpec?.kind !== 'question') return
+    const { qIdx } = currentSpec as { kind: 'question'; qIdx: number }
+    if (notes[qIdx]) return
+    const t = setTimeout(() => setShowWriteNudge(true), 8000)
+    return () => clearTimeout(t)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageIdx])
 
   // Floating panels
   const [showCalc, setShowCalc] = useState(false)
@@ -440,6 +456,34 @@ export default function ConceptChapterPage() {
                   ))}
                 </div>
 
+                {/* Hint strip */}
+                {!isDone && q.hints && q.hints.length > 0 && (
+                  <div className={s.hintStrip}>
+                    {(hintsShownPerQ[spec.qIdx] ?? 0) < q.hints.length && (
+                      <button
+                        className={s.hintBtn}
+                        style={{ borderColor: theme.accent + '55', color: theme.accent }}
+                        onClick={() => setHintsShownPerQ(h => ({ ...h, [spec.qIdx]: (h[spec.qIdx] ?? 0) + 1 }))}
+                      >
+                        💡 {(hintsShownPerQ[spec.qIdx] ?? 0) === 0 ? 'Need a hint?' : 'Another hint'}
+                      </button>
+                    )}
+                    {q.hints.slice(0, hintsShownPerQ[spec.qIdx] ?? 0).map((hint, hi) => (
+                      <div key={hi} className={s.hintBubble} style={{ borderLeftColor: theme.accent + '66', color: theme.dim }}>
+                        {hint}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Misconception callout after wrong answer */}
+                {isDone && chosen !== null && chosen !== q.correctIndex && q.misconception_label && (
+                  <div className={s.misconception}>
+                    <span className={s.misconceptionLabel}>common slip</span>
+                    {q.misconception_label}
+                  </div>
+                )}
+
                 {!isDone ? (
                   <button
                     className={s.submitBtn}
@@ -450,7 +494,9 @@ export default function ConceptChapterPage() {
                     {chosen === null ? 'Choose an answer' : 'Lock it in →'}
                   </button>
                 ) : (
-                  <p className={s.qDoneNote} style={{ color: theme.dim }}>Recorded. Keep going.</p>
+                  <p className={s.qDoneNote} style={{ color: theme.dim }}>
+                    {chosen === q.correctIndex ? 'Correct. Keep going.' : 'Noted. Review your work.'}
+                  </p>
                 )}
               </div>
 
@@ -464,6 +510,9 @@ export default function ConceptChapterPage() {
                     </button>
                   )}
                 </div>
+                {showWriteNudge && !notes[spec.qIdx] && (
+                  <span className={s.writeNudge}>try sketching it out first…</span>
+                )}
                 <div className={s.notepadInner} style={{ '--line-color': theme.lineBg } as React.CSSProperties}>
                   <div className={s.notepadLines} aria-hidden />
                   <textarea

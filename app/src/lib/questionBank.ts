@@ -1928,11 +1928,34 @@ const RAW_QUESTIONS: Question[] = [
     examTag:'AP' },
 ]
 
+/**
+ * Filter out questions that are broken due to stripped diagrams.
+ * Eedi questions that relied on a figure for point labels, region labels,
+ * or other context become unsolvable once the image is removed.
+ *
+ * Reject if ANY of:
+ *  1. All choices are ≤2 chars (single-letter point/region labels from a diagram).
+ *  2. Fewer than 2 choices exist.
+ *  3. Text references "following figure" but has no "(Diagram: ..." callout.
+ *  4. Question text is < 12 chars (too short to be a real question).
+ */
+function isUsable(q: Question): boolean {
+  const choices = q.choices.filter(c => c && c.trim().length > 0)
+  if (choices.length < 2) return false
+  if (choices.every(c => c.trim().replace(/\.$/, '').length <= 2)) return false
+  const text = q.question.toLowerCase()
+  if (text.includes('following figure') && !q.question.includes('(Diagram:')) return false
+  if (q.question.trim().length < 12) return false
+  return true
+}
+
 // Merge: static bank wins on id collision; v4 ACT bank fills concept gaps.
 const STATIC_IDS = new Set(RAW_QUESTIONS.map(q => q.id))
 const GENERATED_QUESTIONS = (generatedQuestionsData as Question[]).filter(q => !STATIC_IDS.has(q.id))
 const ACT_MASTER = (actMasterBankData as Question[]).filter(q => !STATIC_IDS.has(q.id))
-const EEDI_QUESTIONS = (eediQuestionsData as Question[]).filter(q => !STATIC_IDS.has(q.id))
+const EEDI_QUESTIONS = (eediQuestionsData as Question[])
+  .filter(q => !STATIC_IDS.has(q.id))
+  .filter(isUsable)
 const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER, ...EEDI_QUESTIONS])
 
 // ── Concept metadata ──────────────────────────────────────────────────────────

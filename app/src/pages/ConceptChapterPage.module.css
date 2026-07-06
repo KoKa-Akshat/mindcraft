@@ -217,7 +217,8 @@
 .qLayout {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 46% 54%;
+  min-height: 0;
 }
 
 .qLeft {
@@ -350,6 +351,71 @@
   letter-spacing: 0.06em;
   margin: auto 0 0;
   padding-top: 10px;
+}
+
+/* ── Hint strip ───────────────────────────────────────────────────────── */
+.hintStrip {
+  margin-top: 10px;
+}
+.hintBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid;
+  border-radius: 999px;
+  font: 600 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  background: transparent;
+  transition: background 130ms, opacity 130ms;
+  opacity: 0.72;
+}
+.hintBtn:hover { opacity: 1; }
+.hintBubble {
+  margin-top: 8px;
+  padding: 9px 13px;
+  border-radius: 6px;
+  font: 400 13px/1.55 "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  background: rgba(0,0,0,0.04);
+  border-left: 3px solid;
+  animation: fadeSlide 0.18s ease both;
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(-4px); }
+}
+
+/* ── Misconception callout (shown after wrong answer) ─────────────────── */
+.misconception {
+  margin-top: 10px;
+  padding: 9px 13px;
+  border-radius: 6px;
+  background: rgba(193, 18, 31, 0.05);
+  border-left: 3px solid rgba(193, 18, 31, 0.5);
+  font: 400 13px/1.55 "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  color: inherit;
+  animation: fadeSlide 0.18s ease both;
+}
+.misconceptionLabel {
+  display: block;
+  font: 600 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(193, 18, 31, 0.7);
+  margin-bottom: 5px;
+  font-style: normal;
+}
+
+/* ── Write prompt nudge ───────────────────────────────────────────────── */
+.writeNudge {
+  display: block;
+  padding-left: 14px;
+  margin-bottom: 8px;
+  font: 400 italic 11px/1 "Source Serif 4", Georgia, serif;
+  color: rgba(0,0,0,0.28);
+  animation: fadeSlide 0.3s ease both;
 }
 
 /* ── Notepad — iPad writing panel ────────────────────────────────────── */
@@ -612,9 +678,9 @@
 /* ── Responsive — iPad portrait (768-1024) ───────────────────────────── */
 @media (min-width: 768px) and (max-width: 1024px) {
   .page { width: min(800px, 96vw); min-height: min(600px, 82dvh); }
-  .qLayout { grid-template-columns: 1fr 240px; }
+  .qLayout { grid-template-columns: 48% 52%; }
   .notepadArea { font-size: 15px; line-height: 28px; }
-  .notepadArea { min-height: 240px; }
+  .notepadArea { min-height: 260px; }
 }
 
 /* ── Mobile ──────────────────────────────────────────────────────────── */
