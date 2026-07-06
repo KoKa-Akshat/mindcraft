@@ -749,35 +749,33 @@
 @media (max-width: 1080px) {
   .page {
     justify-content: flex-start;
+    padding: 16px;
+    gap: 0;
   }
 
   .shell {
-    min-height: auto;
+    min-height: calc(100vh - 32px);
+    overflow: hidden;
   }
 
   .layout {
-    min-height: auto;
+    min-height: calc(100vh - 32px);
     grid-template-columns: 1fr;
-    gap: 34px;
+    gap: 0;
+  }
+
+  /* Hide the decorative hero panel — form fills the screen cleanly */
+  .heroPanel {
+    display: none;
   }
 
   .loginWrap {
-    align-items: stretch;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 32px);
     order: -1;
-  }
-
-  .heroPanel {
-    order: 2;
-    min-height: auto;
-    padding: 0;
-  }
-
-  .heroContent {
-    width: 100%;
-  }
-
-  .heroTitle {
-    max-width: 12ch;
+    background: transparent;
+    box-shadow: none;
   }
 
   .pageTrust,
@@ -922,8 +920,7 @@
     max-width: calc(100vw - 20px);
     border-radius: 28px;
     padding: 16px;
-    overflow-x: hidden;
-    overflow-y: visible;
+    overflow: hidden;
   }
 
   .shell::before {

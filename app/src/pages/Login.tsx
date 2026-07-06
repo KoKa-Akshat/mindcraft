@@ -233,23 +233,6 @@ export default function Login() {
                 </p>
               </div>
 
-              <svg className={s.heroGraph} viewBox="0 0 320 180" fill="none" aria-hidden="true">
-                <line x1="80" y1="90" x2="160" y2="50" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
-                <line x1="80" y1="90" x2="160" y2="130" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
-                <line x1="160" y1="50" x2="250" y2="70" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
-                <line x1="160" y1="130" x2="250" y2="110" stroke="rgba(196,245,71,0.18)" strokeWidth="1.2"/>
-                <line x1="160" y1="50" x2="160" y2="130" stroke="rgba(196,245,71,0.1)" strokeWidth="1" strokeDasharray="3 4"/>
-                <circle cx="80" cy="90" r="18" fill="rgba(196,245,71,0.12)" stroke="rgba(196,245,71,0.55)" strokeWidth="1.5"/>
-                <circle cx="160" cy="50" r="13" fill="rgba(196,245,71,0.08)" stroke="rgba(196,245,71,0.35)" strokeWidth="1.2"/>
-                <circle cx="160" cy="130" r="13" fill="rgba(196,245,71,0.08)" stroke="rgba(196,245,71,0.35)" strokeWidth="1.2"/>
-                <circle cx="250" cy="70" r="10" fill="rgba(196,245,71,0.06)" stroke="rgba(196,245,71,0.22)" strokeWidth="1"/>
-                <circle cx="250" cy="110" r="10" fill="rgba(196,245,71,0.06)" stroke="rgba(196,245,71,0.22)" strokeWidth="1"/>
-                <text x="80" y="94" textAnchor="middle" fill="rgba(196,245,71,0.65)" fontSize="8" fontFamily="IBM Plex Mono, monospace">your gap</text>
-                <text x="160" y="54" textAnchor="middle" fill="rgba(196,245,71,0.45)" fontSize="7" fontFamily="IBM Plex Mono, monospace">algebra</text>
-                <text x="160" y="134" textAnchor="middle" fill="rgba(196,245,71,0.45)" fontSize="7" fontFamily="IBM Plex Mono, monospace">geometry</text>
-                <text x="250" y="74" textAnchor="middle" fill="rgba(196,245,71,0.32)" fontSize="6" fontFamily="IBM Plex Mono, monospace">functions</text>
-                <text x="250" y="114" textAnchor="middle" fill="rgba(196,245,71,0.32)" fontSize="6" fontFamily="IBM Plex Mono, monospace">data</text>
-              </svg>
             </div>
           </section>
 
