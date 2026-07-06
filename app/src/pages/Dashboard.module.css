@@ -1,5 +1,6 @@
 /* ─────────────────────────────────────────────────────────────
-   The Field Journal — Dashboard Design System v1
+   The Field Journal — Dashboard Design System v2
+   Hand-lettered · Dot-grid · Opens like a real book
    ───────────────────────────────────────────────────────────── */
 
 /* ── design tokens ────────────────────────────────────────── */
@@ -12,15 +13,17 @@
 
   /* paper tones */
   --paper-base:     #f7f3ee;
-  --paper-raised:   #fbf8f3;
-  --paper-recessed: #efe9e0;
-  --paper-edge:     #e6ddd0;
+  --paper-raised:   #fbf8f4;
+  --paper-recessed: #efe9df;
+  --paper-edge:     #e2d8ca;
+  --paper-crease:   #d4c8b6;
 
   /* rules & margins */
-  --rule:         rgba(29, 58, 138, 0.10);
+  --rule:         rgba(29, 58, 138, 0.09);
+  --rule-dot:     rgba(29, 58, 138, 0.16);
   --rule-pitch:   32px;
-  --margin-rule:  rgba(193, 18, 31, 0.28);
-  --margin-width: 72px;
+  --margin-rule:  rgba(193, 18, 31, 0.22);
+  --margin-width: 68px;
 
   /* inks */
   --ink-system:  #1c1a17;
@@ -36,48 +39,53 @@
   --stakes:    #c1121f;
 
   /* shadows */
-  --shadow-page: 0 1px 2px rgba(8, 14, 20, 0.10), 0 6px 24px rgba(8, 14, 20, 0.18);
-  --shadow-tip:  0 1px 3px rgba(8, 14, 20, 0.22), 0 2px 1px -1px rgba(8, 14, 20, 0.12);
+  --shadow-page:  0 2px 4px rgba(8,14,20,0.08), 0 8px 32px rgba(8,14,20,0.22), 0 24px 64px rgba(8,14,20,0.28);
+  --shadow-tip:   0 1px 3px rgba(8,14,20,0.22), 0 2px 1px -1px rgba(8,14,20,0.12);
+  --shadow-card:  0 1px 3px rgba(8,14,20,0.15), 0 4px 12px rgba(8,14,20,0.12);
 
   /* type */
+  --font-script:  "Caveat", cursive;
   --font-display: "Space Grotesk", "DM Sans", sans-serif;
   --font-body:    "DM Sans", sans-serif;
   --font-katha:   "Source Serif 4", "DM Serif Display", Georgia, serif;
   --font-stamp:   "IBM Plex Mono", monospace;
 
   /* motion */
-  --ease-weight: cubic-bezier(0.2, 0, 0, 1);
-  --dur-ink:     180ms;
-  --dur-wipe:    240ms;
+  --ease-weight:  cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-ink:      180ms;
+  --dur-wipe:     260ms;
 }
 
 /* ── shell (the desk) ─────────────────────────────────────── */
 .shell {
   min-height: 100vh;
-  background: radial-gradient(ellipse at 50% 35%, #0c141c 0%, #080e14 70%);
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(29,58,138,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(193,18,31,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 35%, #0c141c 0%, #080e14 70%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 16px 80px;
+  padding: 0 16px 100px;
 }
 
 /* ── desk chrome ──────────────────────────────────────────── */
 .deskChrome {
   width: 100%;
-  max-width: min(1240px, 94vw);
+  max-width: min(1280px, 96vw);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0 14px;
+  padding: 20px 0 16px;
 }
 
 .wordmark {
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--chalk-dim);
-  text-transform: uppercase;
+  font-family: var(--font-script);
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(251,248,244,0.7);
+  letter-spacing: 0.01em;
 }
 
 .deskRight {
@@ -101,10 +109,10 @@
   font-size: 12px;
   color: var(--chalk-dim);
   padding: 0;
-  opacity: 0.5;
+  opacity: 0.4;
   transition: opacity 150ms;
 }
-.signOutBtn:hover { opacity: 0.9; }
+.signOutBtn:hover { opacity: 0.8; }
 
 /* ── loading ──────────────────────────────────────────────── */
 .loading {
@@ -117,7 +125,7 @@
 .spinner {
   width: 22px;
   height: 22px;
-  border: 2px solid rgba(245, 245, 245, 0.12);
+  border: 2px solid rgba(245,245,245,0.12);
   border-top-color: var(--chalk-dim);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
@@ -128,17 +136,17 @@
 /* ── notebook spread ──────────────────────────────────────── */
 .notebook {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
-  width: min(1240px, 94vw);
-  min-height: 700px;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+  width: min(1280px, 96vw);
+  min-height: 740px;
   box-shadow: var(--shadow-page);
-  border-radius: 2px;
-  animation: nbOpen 0.7s var(--ease-weight) both;
+  border-radius: 3px;
+  animation: nbSettle 0.5s var(--ease-weight) both;
 }
 
-@keyframes nbOpen {
-  from { opacity: 0; transform: scale(0.97) translateY(10px); }
-  to   { opacity: 1; transform: scale(1)    translateY(0); }
+@keyframes nbSettle {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── pages ────────────────────────────────────────────────── */
@@ -150,28 +158,52 @@
 
 .leftPage {
   background: var(--paper-recessed);
-  border-radius: 2px 0 0 2px;
+  border-radius: 3px 0 0 3px;
+  animation: leftPageOpen 0.85s var(--ease-weight) both;
+  transform-origin: right center;
+}
+
+@keyframes leftPageOpen {
+  0% {
+    transform: perspective(2200px) rotateY(-88deg);
+    opacity: 0;
+  }
+  60% {
+    transform: perspective(2200px) rotateY(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(2200px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leftPage { animation: none; }
+  .rightPage { animation: none; }
 }
 
 .rightPage {
   background: var(--paper-raised);
-  border-radius: 0 2px 2px 0;
+  border-radius: 0 3px 3px 0;
+  animation: rightPageReveal 0.65s var(--ease-weight) 0.1s both;
 }
 
-/* feint rule lines */
+@keyframes rightPageReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* dot-grid background — warm journal brown dots */
 .leftPage::before,
 .rightPage::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(
-    180deg,
-    transparent 0px,
-    transparent 31px,
-    var(--rule) 31px,
-    var(--rule) 32px
-  );
-  background-position: 0 80px;
+  background-image:
+    radial-gradient(circle, rgba(102,92,78,0.22) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
   pointer-events: none;
   z-index: 0;
   border-radius: inherit;
@@ -190,67 +222,94 @@
   z-index: 0;
 }
 
-/* page depth stack — right edge of left page */
+/* page depth stacks */
 .pageEdgeLeft {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -6px;
-  width: 6px;
+  right: -7px;
+  width: 7px;
   pointer-events: none;
   z-index: 5;
-  box-shadow: inset -2px 0 0 var(--paper-edge), inset -4px 0 0 var(--paper-recessed);
+  box-shadow: inset -2px 0 0 var(--paper-edge), inset -5px 0 0 var(--paper-crease);
 }
 
-/* page depth stack — right edge of right page */
 .pageEdgeRight {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -6px;
-  width: 6px;
+  right: -7px;
+  width: 7px;
   pointer-events: none;
   z-index: 5;
-  box-shadow: 2px 0 0 var(--paper-edge), 4px 0 0 var(--paper-recessed), 6px 0 0 var(--paper-edge);
+  box-shadow: 2px 0 0 var(--paper-edge), 4px 0 0 var(--paper-crease), 7px 0 0 var(--paper-edge);
 }
 
 /* ── page inner ───────────────────────────────────────────── */
 .pageInner {
   position: relative;
   z-index: 1;
-  padding: 36px 40px;
-  min-height: 700px;
+  padding: 40px 44px;
+  min-height: 740px;
   display: flex;
   flex-direction: column;
 }
 
 .rightPage .pageInner {
-  padding: 36px 48px 36px calc(var(--margin-width) + 20px);
+  padding: 40px 52px 40px calc(var(--margin-width) + 24px);
 }
 
 /* ── binding gutter ───────────────────────────────────────── */
 .gutter {
   background: linear-gradient(
     90deg,
-    rgba(8, 14, 20, 0) 0%,
-    rgba(8, 14, 20, 0.18) 45%,
-    rgba(8, 14, 20, 0.28) 50%,
-    rgba(8, 14, 20, 0.18) 55%,
-    rgba(8, 14, 20, 0) 100%
+    rgba(8,14,20,0) 0%,
+    rgba(8,14,20,0.14) 42%,
+    rgba(8,14,20,0.26) 50%,
+    rgba(8,14,20,0.14) 58%,
+    rgba(8,14,20,0) 100%
   );
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 76px;
-  padding: 80px 0;
+  justify-content: space-between;
+  padding: 60px 0;
+  position: relative;
+}
+
+/* vine center line */
+.gutter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(29,58,138,0.15) 10%,
+    rgba(29,58,138,0.15) 90%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .stitch {
-  width: 3px;
-  height: 10px;
-  background: rgba(29, 58, 138, 0.28);
+  width: 4px;
+  height: 12px;
+  background: rgba(29,58,138,0.28);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.stitchSmall {
+  width: 2px;
+  height: 6px;
+  background: rgba(29,58,138,0.14);
   border-radius: 1px;
+  flex-shrink: 0;
 }
 
 /* ── left page: the record ────────────────────────────────── */
@@ -260,7 +319,7 @@
   letter-spacing: 0.12em;
   text-transform: lowercase;
   color: var(--ink-faded);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   flex-shrink: 0;
 }
 
@@ -276,28 +335,51 @@
 /* route concept list */
 .routeSectionLabel {
   font-family: var(--font-stamp);
-  font-size: 11px;
-  letter-spacing: 0.10em;
+  font-size: 10px;
+  letter-spacing: 0.12em;
   color: var(--ink-faded);
   text-transform: lowercase;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   margin-top: 4px;
 }
 
 .routeConceptList {
   display: flex;
   flex-direction: column;
-  flex: 1;
 }
 
 .routeConceptItem {
   display: grid;
-  grid-template-columns: 16px 1fr;
+  grid-template-columns: 18px 1fr;
   gap: 10px;
   align-items: center;
-  padding: 7px 0;
+  padding: 6px 0;
   border-bottom: 1px solid var(--rule);
-  line-height: var(--rule-pitch);
+  cursor: pointer;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  text-align: left;
+  width: 100%;
+  transition: background var(--dur-ink);
+  border-radius: 2px;
+}
+
+.routeConceptItem:hover {
+  /* highlighter swipe */
+  background: linear-gradient(
+    transparent 75%,
+    rgba(201,150,63,0.3) 75%,
+    rgba(201,150,63,0.3) 96%,
+    transparent 96%
+  );
+  transform: translateX(3px);
+}
+
+.routeConceptItem:focus-visible {
+  outline: 2px solid var(--ink-depth);
+  outline-offset: 2px;
 }
 
 .routeDot {
@@ -306,6 +388,11 @@
   border-radius: 50%;
   flex-shrink: 0;
   justify-self: center;
+  transition: transform 120ms var(--ease-spring);
+}
+
+.routeConceptItem:hover .routeDot {
+  transform: scale(1.3);
 }
 
 .routeDotInactive {
@@ -315,16 +402,18 @@
 
 .routeDotActive {
   background: var(--click);
+  box-shadow: 0 0 0 3px rgba(196,245,71,0.2);
 }
 
 .routeDotDone {
-  background: var(--ink-pencil);
+  background: var(--ink-faded);
 }
 
 .routeConceptName {
-  font-family: var(--font-body);
-  font-size: 14px;
+  font-family: var(--font-script);
+  font-size: 18px;
   color: var(--ink-system);
+  line-height: 1.2;
 }
 
 .routeConceptNameDone {
@@ -335,29 +424,112 @@
 
 .routeConceptNameActive {
   color: var(--ink-system);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .seeMapBtn {
-  margin-top: 20px;
+  margin-top: 14px;
   background: none;
   border: none;
   cursor: pointer;
   font-family: var(--font-stamp);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ink-depth);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   padding: 0;
   text-align: left;
   transition: opacity 120ms;
   flex-shrink: 0;
 }
-.seeMapBtn:hover { opacity: 0.6; }
+.seeMapBtn:hover { opacity: 0.5; }
+
+/* ── explore concept cards ────────────────────────────────── */
+.exploreSectionLabel {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--ink-faded);
+  text-transform: lowercase;
+  margin: 24px 0 10px;
+  flex-shrink: 0;
+}
+
+.exploreGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.exploreCard {
+  position: relative;
+  height: 88px;
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  transition: transform 150ms var(--ease-weight), box-shadow 150ms var(--ease-weight);
+}
+
+.exploreCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.exploreCard:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.6);
+  outline-offset: 2px;
+}
+
+.exploreCardBg {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+}
+
+.exploreCardSymbol {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: var(--font-script);
+  font-size: 26px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.22);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.exploreCardLabel {
+  font-family: var(--font-script);
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.1;
+  position: relative;
+  z-index: 1;
+}
+
+.exploreCardArrow {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  position: relative;
+  z-index: 1;
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+}
 
 /* ── fore-edge section tabs ───────────────────────────────── */
 .foreedge {
   position: absolute;
-  top: 56px;
+  top: 52px;
   right: -14px;
   display: flex;
   flex-direction: column;
@@ -367,20 +539,20 @@
 
 .tab {
   width: 14px;
-  height: 64px;
+  height: 66px;
   background: var(--paper-edge);
   border: none;
   cursor: pointer;
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  font-family: var(--font-body);
-  font-size: 11px;
+  font-family: var(--font-stamp);
+  font-size: 10px;
   letter-spacing: 0.07em;
   color: var(--ink-faded);
   text-transform: lowercase;
   padding: 0;
   border-radius: 0 2px 2px 0;
-  transition: width 120ms ease, color 120ms ease, box-shadow 120ms ease;
+  transition: width 120ms ease, color 120ms ease, background 120ms ease;
   overflow: hidden;
   white-space: nowrap;
   display: flex;
@@ -391,6 +563,7 @@
 .tab:hover {
   width: 18px;
   color: var(--ink-system);
+  background: var(--paper-base);
 }
 
 .tabActive {
@@ -401,7 +574,7 @@
 }
 
 .tabMap {
-  background: rgba(8, 14, 20, 0.07);
+  background: rgba(8,14,20,0.08);
 }
 
 .tabMap.tabActive {
@@ -409,27 +582,64 @@
   color: var(--chalk-dim);
 }
 
-/* ── dateline (mega) ──────────────────────────────────────── */
+/* ── dateline ─────────────────────────────────────────────── */
 .dateline {
-  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
   flex-shrink: 0;
 }
 
+.dateFlagWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.dateFlag {
+  width: 34px;
+  height: 52px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 9px;
+  filter: drop-shadow(0 2px 3px rgba(43,38,32,0.25));
+  transform: rotate(2deg);
+}
+
+.dateFlagNum {
+  font-family: var(--font-script);
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  line-height: 1;
+  user-select: none;
+}
+
+.dateTextBlock {
+  flex: 1;
+}
+
 .dateMain {
-  font-family: var(--font-display);
-  font-size: clamp(52px, 6vw, 88px);
-  line-height: 0.92;
+  font-family: var(--font-script);
+  font-size: clamp(48px, 5.5vw, 80px);
+  line-height: 0.9;
   font-weight: 700;
   color: var(--ink-system);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
 }
 
 .dateSub {
   font-family: var(--font-stamp);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ink-pencil);
   margin-top: 8px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
 }
 
 /* ── today's plan ─────────────────────────────────────────── */
@@ -442,9 +652,13 @@
 /* ── entry block ──────────────────────────────────────────── */
 .entryBlock {
   position: relative;
-  padding: 20px 0 24px;
+  padding: 18px 0 22px;
   cursor: pointer;
   outline: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
 }
 
 .entryBlock:focus-visible {
@@ -453,31 +667,30 @@
   border-radius: 2px;
 }
 
-/* gap block carries the red margin flag */
 .gapBlock {
   padding-left: 0;
 }
 
 .marginFlag {
   position: absolute;
-  left: calc(-1 * var(--margin-width) - 12px);
-  top: 28px;
-  width: 20px;
-  height: 12px;
+  left: calc(-1 * var(--margin-width) - 10px);
+  top: 26px;
+  width: 18px;
+  height: 10px;
   background: var(--stakes);
   border-radius: 1px 2px 2px 1px;
 }
 
 /* ── entry typography ─────────────────────────────────────── */
 .entryLabelDisplay {
-  font-family: var(--font-display);
-  font-size: clamp(26px, 3vw, 38px);
+  font-family: var(--font-script);
+  font-size: clamp(30px, 3.2vw, 44px);
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.95;
   color: var(--ink-pencil);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   transition: color var(--dur-ink) ease;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .entryBlock:hover .entryLabelDisplay,
@@ -486,13 +699,13 @@
 }
 
 .entryConceptName {
-  font-family: var(--font-display);
-  font-size: 20px;
+  font-family: var(--font-script);
+  font-size: 22px;
   font-weight: 600;
   color: var(--ink-system);
-  line-height: var(--rule-pitch);
-  margin-bottom: 2px;
-  min-height: var(--rule-pitch);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  min-height: 26px;
 }
 
 .entryConceptLoading {
@@ -509,19 +722,19 @@
 .entryDraft {
   font-family: var(--font-katha);
   font-style: italic;
-  font-size: 15px;
-  line-height: var(--rule-pitch);
+  font-size: 14px;
+  line-height: 1.55;
   color: var(--ink-pencil);
-  transform: rotate(-0.4deg);
+  transform: rotate(-0.3deg);
   margin: 0 0 6px;
   display: block;
 }
 
 .entryCta {
-  font-family: var(--font-body);
-  font-size: 14px;
+  font-family: var(--font-stamp);
+  font-size: 11px;
   color: var(--ink-depth);
-  line-height: var(--rule-pitch);
+  letter-spacing: 0.06em;
   transition: text-decoration var(--dur-ink);
 }
 
@@ -532,7 +745,7 @@
   text-decoration-thickness: 1px;
 }
 
-/* ── divider between blocks ───────────────────────────────── */
+/* ── divider ──────────────────────────────────────────────── */
 .rulesDivider {
   height: 1px;
   background: var(--rule);
@@ -543,7 +756,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 20px 0 8px;
+  padding: 18px 0 8px;
   margin-top: auto;
 }
 
@@ -568,12 +781,12 @@
   user-select: none;
 }
 
-/* ── panel pages (GPS, notes, homework) on paper ─────────── */
+/* ── panel pages (GPS, notes, solver) on paper ────────────── */
 .panelPage {
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 640px;
+  min-height: 660px;
 }
 
 .panelPageHeader {
@@ -582,6 +795,8 @@
   gap: 16px;
   margin-bottom: 20px;
   flex-shrink: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
 }
 
 .panelBackBtn {
@@ -598,11 +813,11 @@
 .panelBackBtn:hover { color: var(--ink-system); }
 
 .panelTitle {
-  font-family: var(--font-stamp);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: lowercase;
-  color: var(--ink-faded);
+  font-family: var(--font-script);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink-pencil);
+  letter-spacing: -0.01em;
 }
 
 .panelContent {
@@ -611,14 +826,142 @@
   min-height: 0;
 }
 
+/* ── paper-native solver ──────────────────────────────────── */
+.solverBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.solverHint {
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-pencil);
+  transform: rotate(-0.3deg);
+  margin: 0;
+}
+
+/* Textarea that looks like writing on ruled paper */
+.solverInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  font-family: var(--font-script);
+  font-size: 20px;
+  color: #2b3a5c;
+  line-height: 32px;
+  padding: 0;
+  caret-color: #2b3a5c;
+  /* Teal-tinted ruled lines under each text row */
+  background-image: repeating-linear-gradient(
+    transparent 0px,
+    transparent 31px,
+    rgba(79,138,139,0.32) 31px,
+    rgba(79,138,139,0.32) 32px
+  );
+  background-attachment: local;
+}
+
+.solverInput::placeholder {
+  font-family: var(--font-katha);
+  font-style: italic;
+  color: rgba(74,66,56,0.4);
+  font-size: 16px;
+}
+
+.solverSubmit {
+  align-self: flex-start;
+  background: none;
+  border: 1.5px solid var(--ink-depth);
+  cursor: pointer;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-depth);
+  padding: 8px 16px;
+  border-radius: 2px;
+  transition: background 120ms, color 120ms;
+}
+.solverSubmit:hover:not(:disabled) {
+  background: var(--ink-depth);
+  color: var(--paper-raised);
+}
+.solverSubmit:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.solverFullLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faded);
+  padding: 0;
+  align-self: flex-start;
+  transition: color 120ms;
+}
+.solverFullLink:hover { color: var(--ink-depth); }
+
+/* ── map panel (dark inset on paper) ─────────────────────── */
+.mapInset {
+  flex: 1;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--paper-edge);
+  box-shadow: inset 0 0 0 1px var(--paper-crease);
+  min-height: 500px;
+}
+
+/* ── notes panel paper override ──────────────────────────── */
+.notesWrap {
+  flex: 1;
+  overflow: auto;
+}
+
+/* ── iPad / two-page at smaller sizes ─────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .notebook {
+    grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+    min-height: 620px;
+  }
+
+  .pageInner {
+    padding: 28px 28px;
+  }
+
+  .rightPage .pageInner {
+    padding: 28px 32px 28px calc(var(--margin-width) + 14px);
+  }
+
+  .dateMain {
+    font-size: clamp(40px, 8vw, 60px);
+  }
+
+  .entryLabelDisplay {
+    font-size: clamp(26px, 5vw, 36px);
+  }
+
+  .exploreGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 /* ── mobile ───────────────────────────────────────────────── */
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .notebook {
     grid-template-columns: 1fr;
     width: 100%;
     border-radius: 0;
     min-height: 100vh;
     box-shadow: none;
+    animation: none;
   }
 
   .gutter,
@@ -629,6 +972,7 @@
   .rightPage {
     border-radius: 0;
     min-height: 100vh;
+    animation: none;
   }
 
   .rightPage .pageInner {
@@ -641,13 +985,13 @@
   }
 
   .foreedge {
-    top: 16px;
+    top: 14px;
     right: -12px;
   }
 
   .tab {
-    height: 52px;
-    font-size: 10px;
+    height: 54px;
+    font-size: 9px;
     width: 12px;
   }
 
@@ -656,7 +1000,7 @@
   }
 
   .dateMain {
-    font-size: clamp(40px, 14vw, 60px);
+    font-size: clamp(40px, 14vw, 56px);
   }
 
   .marginFlag {
@@ -665,11 +1009,11 @@
   }
 
   .entryLabelDisplay {
-    font-size: clamp(22px, 8vw, 30px);
+    font-size: clamp(24px, 8vw, 32px);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .shell {
     padding: 0 0 80px;
   }

@@ -14,8 +14,50 @@ import type { Confidence } from '../lib/bridgePractice'
 import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
-import DashboardHomeworkPanel from '../components/DashboardHomeworkPanel'
 import s from './Dashboard.module.css'
+
+// Concept discovery cards — supplementary ACT concepts to explore
+const EXPLORE_CARDS = [
+  {
+    id: 'quadratics',
+    label: 'Quadratics',
+    symbol: 'x²',
+    bg: 'linear-gradient(135deg, #1e2a4a 0%, #2f4370 55%, #22304f 100%)',
+  },
+  {
+    id: 'trigonometry',
+    label: 'Trig',
+    symbol: 'θ',
+    bg: 'linear-gradient(135deg, #3d1f24 0%, #6b3540 55%, #452328 100%)',
+  },
+  {
+    id: 'statistics',
+    label: 'Statistics',
+    symbol: 'σ',
+    bg: 'linear-gradient(135deg, #402d1a 0%, #6b4a26 55%, #47331d 100%)',
+  },
+  {
+    id: 'coordinate_geometry',
+    label: 'Coord. Plane',
+    symbol: 'xy',
+    bg: 'linear-gradient(135deg, #3b2440 0%, #5c3a63 55%, #402a47 100%)',
+  },
+  {
+    id: 'logarithms',
+    label: 'Logarithms',
+    symbol: 'ln',
+    bg: 'linear-gradient(135deg, #14383a 0%, #226266 55%, #17403f 100%)',
+  },
+  {
+    id: 'probability',
+    label: 'Probability',
+    symbol: 'P',
+    bg: 'linear-gradient(135deg, #1f3a2a 0%, #356247 55%, #24402f 100%)',
+  },
+] as const
+
+// Flag color rotates by day of week
+const FLAG_COLORS = ['#c96a7e', '#4f8a8b', '#c9963f', '#7d6fa8', '#5d8a5e', '#c96a7e', '#4f8a8b']
 
 function formatDateMain() {
   return new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
@@ -23,6 +65,14 @@ function formatDateMain() {
 
 function formatDateSub() {
   return new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()
+}
+
+function getDateDay() {
+  return new Date().getDate()
+}
+
+function getFlagColor() {
+  return FLAG_COLORS[new Date().getDay()]
 }
 
 export default function Dashboard() {
@@ -39,6 +89,7 @@ export default function Dashboard() {
   const [learn, setLearn] = useState<NextConcept | null>(null)
   const [curriculumTrack, setCurriculumTrack] = useState<CurriculumTrack | null>(null)
   const [recLoading, setRecLoading] = useState(true)
+  const [solverText, setSolverText] = useState('')
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
@@ -72,6 +123,18 @@ export default function Dashboard() {
     } else {
       navigate('/practice')
     }
+  }
+
+  function goToConcept(conceptId: string, isDone: boolean) {
+    navigate('/practice', {
+      state: { conceptId, missionType: isDone ? 'learn' : 'weakness' },
+    })
+  }
+
+  function launchSolver() {
+    const text = solverText.trim()
+    if (!text) return
+    navigate('/practice', { state: { problemText: text } })
   }
 
   async function handleSignOut() {
@@ -152,9 +215,12 @@ export default function Dashboard() {
   const learnLabel    = learn    ? pawHubDisplayText(learn.label, curriculumTrack)    : null
   const learnSub      = pawHubLearnSub(curriculumTrack)
   const displayName   = data.displayName ?? user?.email?.split('@')[0] ?? ''
-
-  // Concepts to show in the left-page route list (max 7)
   const routeConcepts = path.pathConcepts.slice(0, 7)
+  const flagColor     = getFlagColor()
+
+  // Filter explore cards to exclude concepts already in the route
+  const routeIds = new Set(path.pathConcepts.map(c => c.id))
+  const visibleExploreCards = EXPLORE_CARDS.filter(c => !routeIds.has(c.id))
 
   return (
     <div className={s.shell}>
@@ -180,7 +246,14 @@ export default function Dashboard() {
 
               {/* Route concept list */}
               {path.loading ? (
-                <p style={{ fontFamily: 'var(--font-katha)', fontStyle: 'italic', fontSize: 14, color: 'var(--ink-pencil)', transform: 'rotate(-0.4deg)' }}>
+                <p style={{
+                  fontFamily: 'var(--font-katha)',
+                  fontStyle: 'italic',
+                  fontSize: 14,
+                  color: 'var(--ink-pencil)',
+                  transform: 'rotate(-0.3deg)',
+                  margin: 0,
+                }}>
                   Loading your path…
                 </p>
               ) : routeConcepts.length > 0 ? (
@@ -191,29 +264,75 @@ export default function Dashboard() {
                       const isDone = i < (path.completedOnPath ?? 0)
                       const isActive = c.id === path.activeConceptId
                       return (
-                        <div key={c.id} className={s.routeConceptItem}>
+                        <button
+                          key={c.id}
+                          type="button"
+                          className={s.routeConceptItem}
+                          onClick={() => goToConcept(c.id, isDone)}
+                          title={`Practice ${c.label}`}
+                        >
                           <div className={`${s.routeDot} ${isDone ? s.routeDotDone : isActive ? s.routeDotActive : s.routeDotInactive}`} />
                           <span className={`${s.routeConceptName} ${isDone ? s.routeConceptNameDone : isActive ? s.routeConceptNameActive : ''}`}>
                             {c.label}
                           </span>
-                        </div>
+                        </button>
                       )
                     })}
                     {path.pathConcepts.length > 7 && (
-                      <div className={s.routeConceptItem} style={{ opacity: 0.5 }}>
+                      <button
+                        type="button"
+                        className={s.routeConceptItem}
+                        style={{ opacity: 0.45 }}
+                        onClick={openGps}
+                      >
                         <div className={`${s.routeDot} ${s.routeDotInactive}`} />
-                        <span className={s.routeConceptName} style={{ fontStyle: 'italic', color: 'var(--ink-faded)' }}>
-                          +{path.pathConcepts.length - 7} more
+                        <span className={s.routeConceptName} style={{ fontStyle: 'italic' }}>
+                          +{path.pathConcepts.length - 7} more on the map
                         </span>
-                      </div>
+                      </button>
                     )}
                   </div>
                   <button className={s.seeMapBtn} onClick={openGps}>see full map ↗</button>
                 </>
               ) : (
-                <span className={s.pageRunningHeader} style={{ fontSize: 13, fontFamily: 'var(--font-katha)', fontStyle: 'italic', letterSpacing: 0 }}>
+                <span style={{
+                  fontSize: 14,
+                  fontFamily: 'var(--font-katha)',
+                  fontStyle: 'italic',
+                  color: 'var(--ink-pencil)',
+                  transform: 'rotate(-0.3deg)',
+                  display: 'block',
+                }}>
                   Complete your gap scan to build your route.
                 </span>
+              )}
+
+              {/* Explore concept cards */}
+              {visibleExploreCards.length > 0 && (
+                <>
+                  <div className={s.exploreSectionLabel}>explore more →</div>
+                  <div className={s.exploreGrid}>
+                    {visibleExploreCards.slice(0, 6).map(card => (
+                      <button
+                        key={card.id}
+                        type="button"
+                        className={s.exploreCard}
+                        onClick={() => navigate('/practice', { state: { conceptId: card.id, missionType: 'learn' } })}
+                        title={`Explore ${card.label}`}
+                      >
+                        <div
+                          className={s.exploreCardBg}
+                          style={{ background: card.bg }}
+                        />
+                        <span className={s.exploreCardSymbol} aria-hidden="true">
+                          {card.symbol}
+                        </span>
+                        <span className={s.exploreCardLabel}>{card.label}</span>
+                        <span className={s.exploreCardArrow}>explore →</span>
+                      </button>
+                    ))}
+                  </div>
+                </>
               )}
 
               <div className={s.pageNumber}>
@@ -227,9 +346,13 @@ export default function Dashboard() {
           {/* ── binding gutter ── */}
           <div className={s.gutter} aria-hidden="true">
             <div className={s.stitch} />
+            <div className={s.stitchSmall} />
             <div className={s.stitch} />
+            <div className={s.stitchSmall} />
             <div className={s.stitch} />
+            <div className={s.stitchSmall} />
             <div className={s.stitch} />
+            <div className={s.stitchSmall} />
             <div className={s.stitch} />
           </div>
 
@@ -248,21 +371,26 @@ export default function Dashboard() {
             <div className={s.pageInner}>
               {todayMode ? (
                 <>
-                  {/* mega dateline */}
+                  {/* mega dateline with pennant flag */}
                   <div className={s.dateline}>
-                    <div className={s.dateMain}>{formatDateMain()}</div>
-                    <div className={s.dateSub}>{formatDateSub()}</div>
+                    <div className={s.dateFlagWrap}>
+                      <div className={s.dateFlag} style={{ background: flagColor }}>
+                        <span className={s.dateFlagNum}>{getDateDay()}</span>
+                      </div>
+                    </div>
+                    <div className={s.dateTextBlock}>
+                      <div className={s.dateMain}>{formatDateMain()}</div>
+                      <div className={s.dateSub}>{formatDateSub()}</div>
+                    </div>
                   </div>
 
                   {/* today's plan */}
                   <div className={s.todayPlan}>
                     {/* The gap */}
-                    <div
+                    <button
+                      type="button"
                       className={`${s.entryBlock} ${s.gapBlock}`}
                       onClick={goChallenge}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={e => e.key === 'Enter' && goChallenge()}
                     >
                       <div className={s.marginFlag} aria-hidden="true" />
                       <div className={s.entryLabelDisplay}>The gap</div>
@@ -277,17 +405,15 @@ export default function Dashboard() {
                             : 'Start your gap scan to find your weakest point.'}
                       </p>
                       <div className={s.entryCta}>▸ open a session</div>
-                    </div>
+                    </button>
 
                     <div className={s.rulesDivider} />
 
                     {/* New territory */}
-                    <div
+                    <button
+                      type="button"
                       className={s.entryBlock}
                       onClick={goExplore}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={e => e.key === 'Enter' && goExplore()}
                     >
                       <div className={s.entryLabelDisplay}>New territory</div>
                       <div className={`${s.entryConceptName} ${recLoading ? s.entryConceptLoading : ''}`}>
@@ -301,7 +427,7 @@ export default function Dashboard() {
                             : 'Pick any concept from your map to start.'}
                       </p>
                       <div className={s.entryCta}>▸ begin at level 1</div>
-                    </div>
+                    </button>
 
                     {/* index line */}
                     <div className={s.indexLine}>
@@ -346,8 +472,35 @@ export default function Dashboard() {
                     <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
                     <span className={s.panelTitle}>problem solver</span>
                   </div>
-                  <div className={s.panelContent}>
-                    <DashboardHomeworkPanel onBack={closePanel} />
+                  <div className={s.solverBody}>
+                    <p className={s.solverHint}>
+                      Paste a stuck problem. Craft builds step-by-step hint cards.
+                    </p>
+                    <textarea
+                      className={s.solverInput}
+                      placeholder="e.g. Solve 2x + 5 = 13…"
+                      value={solverText}
+                      rows={8}
+                      onChange={e => setSolverText(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) launchSolver()
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className={s.solverSubmit}
+                      disabled={!solverText.trim()}
+                      onClick={launchSolver}
+                    >
+                      Build hint path →
+                    </button>
+                    <button
+                      type="button"
+                      className={s.solverFullLink}
+                      onClick={() => navigate('/practice', { state: { homeworkHelp: true } })}
+                    >
+                      Open full problem solver →
+                    </button>
                   </div>
                 </div>
               ) : gpsMode ? (
@@ -356,7 +509,7 @@ export default function Dashboard() {
                     <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
                     <span className={s.panelTitle}>knowledge map</span>
                   </div>
-                  <div className={s.panelContent}>
+                  <div className={`${s.panelContent} ${s.mapInset}`}>
                     <ConstellationGpsExplorer
                       embedded
                       onBack={closePanel}
