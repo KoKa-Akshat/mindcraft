@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
+import MathText from '../components/MathText'
 import s from './ConceptChapterPage.module.css'
 
 type IngredientStory = { name?: string; story: string }
@@ -259,7 +260,9 @@ export default function ConceptChapterPage() {
             <div className={s.questionsSection}>
               <p className={s.questionsSectionLabel}>a question from this chapter</p>
               <div className={s.questionCard}>
-                <p className={s.questionText}>{previewQs[0].question}</p>
+                <p className={s.questionText}>
+                  <MathText text={previewQs[0].question} />
+                </p>
                 <div className={s.questionChoices}>
                   {previewQs[0].choices.slice(0, 4).map((choice, i) => (
                     <button
@@ -268,7 +271,7 @@ export default function ConceptChapterPage() {
                       onClick={() => setActiveQuestion(activeQuestion === i ? null : i)}
                     >
                       <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                      <span>{choice}</span>
+                      <MathText text={choice} />
                     </button>
                   ))}
                 </div>

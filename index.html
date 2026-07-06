@@ -91,9 +91,9 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .btn.soft{background:#fffdf7;color:var(--ink)}
 .hero{min-height:100vh;display:flex;align-items:center;background:radial-gradient(circle at 78% 16%,rgba(185,232,111,.48),transparent 26%),radial-gradient(circle at 16% 82%,rgba(220,238,246,.78),transparent 24%),linear-gradient(135deg,#fff8e9 0%,#f4f2dc 48%,#e4f7dc 100%);overflow:hidden}
 .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.9%,rgba(36,122,77,.075) 50%,transparent 50.1%),linear-gradient(180deg,transparent 63%,rgba(36,122,77,.06) 63.2%,transparent 63.4%)}
-.hero-art{position:absolute;right:clamp(18px,4vw,70px);top:15vh;width:min(42vw,650px);height:58vh;border-radius:52px;overflow:hidden;border:1px solid rgba(20,58,46,.12);box-shadow:0 34px 100px rgba(36,122,77,.16);opacity:.72;transform:translateY(var(--hero-art-y,0))}
-.hero-art img{width:100%;height:100%;object-fit:cover}
-.hero-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,248,233,.96),transparent 44%,rgba(255,248,233,.18))}
+.hero-map{position:absolute;right:clamp(18px,4vw,60px);top:10vh;width:min(44vw,560px);height:60vh;opacity:.82;transform:translateY(var(--hero-art-y,0));pointer-events:none}
+.hero-map-svg{width:100%;height:100%}
+.hero-map-svg text{font-family:"IBM Plex Mono",monospace}
 .hero-inner{position:relative;z-index:1}
 .hero-copy{max-width:980px}
 .hero-copy .lead{max-width:570px;margin-top:24px;color:#4f6357}
@@ -207,7 +207,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 @keyframes sheen{0%{transform:translateX(-56%)}100%{transform:translateX(56%)}}
 @media(max-width:920px){
   .nav-links a:not(.join):not(.login){display:none}
-  .hero-art{right:0;top:18vh;width:100vw;height:50vh;border-radius:0;opacity:.22;box-shadow:none}
+  .hero-map{right:0;top:12vh;width:100vw;height:40vh;opacity:.18}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
   .vibe-grid,.system-grid,.proof-layout,.price-grid,.intake-grid{grid-template-columns:1fr}
@@ -279,24 +279,66 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="math-float" aria-hidden="true">
         <span class="m1">+</span><span class="m2">=</span><span class="m3">x</span><span class="m4">?</span>
       </div>
-      <div class="hero-art" id="heroArt" aria-hidden="true"><img src="img/mindcraft-luxury-map-20260706.jpg" alt=""></div>
-      <div class="math-buddy" aria-hidden="true"><span>+</span></div>
+      <!-- CSS knowledge map — no stock photo, type is the image -->
+      <div class="hero-map" id="heroArt" aria-hidden="true">
+        <svg class="hero-map-svg" viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- edges first, behind nodes -->
+          <path d="M130 90 Q200 140 240 160" stroke="rgba(29,58,138,0.22)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <path d="M240 160 Q290 170 340 145" stroke="rgba(29,58,138,0.28)" stroke-width="1.5"/>
+          <path d="M340 145 Q400 120 420 170" stroke="rgba(29,58,138,0.22)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <path d="M240 160 Q255 230 260 280" stroke="rgba(29,58,138,0.20)" stroke-width="1.5" stroke-dasharray="3 6"/>
+          <path d="M340 145 Q340 240 300 300" stroke="rgba(29,58,138,0.18)" stroke-width="1.5" stroke-dasharray="3 6"/>
+          <path d="M130 90 Q155 200 180 280" stroke="rgba(29,58,138,0.15)" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <!-- nodes — mastered: lime ring; active: navy; untouched: faded -->
+          <!-- Linear Equations — mastered -->
+          <circle cx="240" cy="160" r="28" fill="#f7f3ee" stroke="#c4f547" stroke-width="2.5"/>
+          <circle cx="240" cy="160" r="22" fill="none" stroke="#c4f547" stroke-width="1" opacity="0.5"/>
+          <text x="240" y="155" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1c1a17" opacity="0.7">linear</text>
+          <text x="240" y="167" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1c1a17" opacity="0.7">equations</text>
+          <!-- Functions — active -->
+          <circle cx="340" cy="145" r="24" fill="#f7f3ee" stroke="#1d3a8a" stroke-width="2"/>
+          <text x="340" y="140" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1d3a8a" font-weight="600">functions</text>
+          <text x="340" y="152" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1d3a8a">basics</text>
+          <!-- Fractions — untouched -->
+          <circle cx="130" cy="90" r="20" fill="#f7f3ee" stroke="rgba(29,58,138,0.3)" stroke-width="1.5" stroke-dasharray="3 4"/>
+          <text x="130" y="86" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">fractions</text>
+          <text x="130" y="98" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">decimals</text>
+          <!-- Quadratics — untouched -->
+          <circle cx="420" cy="170" r="20" fill="#f7f3ee" stroke="rgba(29,58,138,0.3)" stroke-width="1.5" stroke-dasharray="3 4"/>
+          <text x="420" y="166" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">quadratic</text>
+          <text x="420" y="178" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">functions</text>
+          <!-- Triangles — dim -->
+          <circle cx="180" cy="280" r="18" fill="#f7f3ee" stroke="rgba(29,58,138,0.2)" stroke-width="1" stroke-dasharray="2 5" opacity="0.7"/>
+          <text x="180" y="276" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">triangles</text>
+          <text x="180" y="286" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">geometry</text>
+          <!-- Circles — dim -->
+          <circle cx="300" cy="300" r="18" fill="#f7f3ee" stroke="rgba(29,58,138,0.2)" stroke-width="1" stroke-dasharray="2 5" opacity="0.7"/>
+          <text x="300" y="296" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">circles</text>
+          <text x="300" y="306" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">geometry</text>
+          <!-- gap label -->
+          <text x="360" y="228" font-family="IBM Plex Mono,monospace" font-size="9" fill="#c1121f" opacity="0.7" transform="rotate(-8,360,228)">← the gap</text>
+          <!-- lime dot = student position -->
+          <circle cx="258" cy="175" r="4" fill="#c4f547"/>
+          <circle cx="258" cy="175" r="8" fill="none" stroke="#c4f547" stroke-width="1" opacity="0.4"/>
+          <!-- chalk annotation -->
+          <text x="100" y="320" font-family="Source Serif 4,serif" font-size="11" font-style="italic" fill="rgba(29,58,138,0.35)" transform="rotate(-4,100,320)">42 concepts · your map</text>
+        </svg>
+      </div>
       <div class="note script" aria-hidden="true">wrong is a clue</div>
       <div class="wrap hero-inner">
         <div class="hero-copy reveal">
           <p class="label">The moment it clicks</p>
           <h1><span>You were never</span><span>bad at math.</span></h1>
-          <p class="lead">You were waiting for a better story. MindCraft finds exactly where the thinking broke — then builds the path back from there.</p>
-          <div class="cool-badge">The click was always there.</div>
+          <p class="lead">You were waiting for a better story. MindCraft finds exactly where the thinking broke — then rebuilds from there, with a tutor who already knows the map.</p>
           <div class="hero-actions">
             <a class="btn primary" href="#intake">Request a seat</a>
             <a class="btn soft" href="#system">See how it works</a>
           </div>
         </div>
         <div class="stats reveal stagger">
-          <div class="stat"><strong>42</strong><span>Concepts</span></div>
-          <div class="stat"><strong>1,718</strong><span>Questions</span></div>
-          <div class="stat"><strong>6 to ACT</strong><span>Math path</span></div>
+          <div class="stat"><strong>42</strong><span>Concepts mapped</span></div>
+          <div class="stat"><strong>1,718</strong><span>Practice questions</span></div>
+          <div class="stat"><strong>Limited</strong><span>Seats available</span></div>
         </div>
       </div>
     </section>

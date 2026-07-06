@@ -545,7 +545,91 @@ Alerts:
 
 ---
 
-## 7. Build Order
+## 7. Adaptive Model — Four-Layer Framework
+
+This is the company's core IP. Every agent call should be aware of which layer
+it is serving and what data is available to it.
+
+### 7.1 The four layers
+
+| Layer | Question it answers | Data source | Current status |
+|-------|---------------------|-------------|----------------|
+| **Math** | What concept is weak? | `/recommend` gaps, `studentProfile.topWeaknesses` | ✅ Live in engine |
+| **Cognitive** | What mental process is overloaded? | `time_seconds`, `attempt_count` per question | ⚠️ Partially collected; `cognitive_signal` not yet derived |
+| **Affective** | What emotional state is blocking learning? | Pre-session check-in → `affective_state/{uid}/latest` | ✅ Check-in exists; `affective_modifier` live in `/recommend` |
+| **Independence** | How much support can we safely remove today? | Bridge gap severity + session history + hint usage | ❌ Not yet tracked |
+
+### 7.2 Cognitive signal derivation (deterministic)
+
+When a student answers a question, derive `cognitive_signal` from timing and correctness. This is deterministic — no LLM needed.
+
+| Condition | Signal | Interpretation |
+|-----------|--------|----------------|
+| correct + fast (< 15s) | `fluent` | Concept is solid; can increase difficulty |
+| correct + slow (> 45s) | `effortful` | Understands but working memory loading; consider scaffolding |
+| wrong + fast (< 15s) | `anxious` | Guessing or overconfident gap; slow down, no timer |
+| wrong + slow (> 45s) | `overloaded` | Multiple processes failing; reduce load, use visuals |
+| wrong + multiple attempts | `stuck` | Scaffolding needed; trigger `/hint-agent` |
+
+Frontend: derive `cognitive_signal` in `Practice.tsx` before calling `/record-outcomes`.
+Backend: include as optional field in `OutcomeItem` (non-breaking addition).
+
+### 7.3 The adaptive agent loop
+
+Every session, the agents collectively run:
+
+```
+Detect     → What does the student graph say is weak? (/recommend)
+Diagnose   → Why is it weak? (cognitive + affective signals)
+Scaffold   → Choose question level + format that reduces load (/hint-agent, format rotation)
+Regulate   → Adjust tone: urgent (weakness) vs. curious (learn next) vs. reflective (review)
+Retry      → Present next question at adjusted difficulty
+Fade       → When fluent signal appears, remove hint affordance
+Reflect    → Post-session: what changed, what's next (/post-session-agent)
+```
+
+### 7.4 Reduce extraneous load first
+
+For every learner — especially those with attention fatigue or high math
+anxiety — reduce presentation burden before increasing content difficulty.
+
+**Remove from all question and session screens:**
+- Timers (cause anxiety, consume working memory)
+- Red × marks on wrong answers
+- Dense multi-step instructions on one screen
+- Noisy animations or transitions during active reading
+- Forced gamification pressure (streaks, leaderboards)
+- Exclamation marks on any feedback
+
+**Use instead:**
+- One question per screen
+- Persistent scratchpad / visible previous steps
+- Calm pacing (never auto-advance)
+- Visual representations as default for geometry/functions concepts
+- Micro-confirmations: "There it is." not "Great job!!"
+- Optional hint path (always available, never forced)
+
+### 7.5 The learner profile moat
+
+Over time, each student builds a profile that the system reads:
+
+```json
+{
+  "preferred_formats": ["visual", "word_problem"],   // from format-tagged outcomes
+  "optimal_session_length": 12,                       // minutes before fluency drops
+  "scaffold_need": "medium",                          // from independence model
+  "anxiety_threshold": 0.6,                           // from affective modifier
+  "cognitive_signals_history": ["effortful", "fluent", "anxious", "fluent"]
+}
+```
+
+This profile makes MindCraft more valuable over time — not because it has
+more problems, but because it knows *what kind of support this child needs today
+and what support can be safely removed.*
+
+---
+
+## 8. Build Order
 
 | Phase | Agent | Endpoint | Depends on |
 |-------|-------|----------|------------|
@@ -553,6 +637,7 @@ Alerts:
 | 2 | Story enrichment | `/story-agent` | `conceptStories.json`, `/recommend` |
 | 3 | Hints | `/hint-agent` | `/knowledge-graph`, ingredient tags |
 | 4 | Question framing | `/question-frame` | Bridge gaps, active story state |
+| 4a | Cognitive tagging | deterministic in frontend | `time_seconds` + correctness → `cognitive_signal` |
 | 5 | Post-session | `/post-session-agent` | `/record-outcomes` response |
 | 6 | World builder | `/world-builder` | Full graph + story history |
 | 7 | Manim/Desmos | Via story + question agents | Visual asset pipeline |

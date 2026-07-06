@@ -1,0 +1,37 @@
+.mathText {
+  /* inherits from parent — font, size, color all flow through */
+}
+
+/* inline math sits on the baseline, same size as surrounding text */
+.mathInline {
+  display: inline;
+  vertical-align: baseline;
+  /* KaTeX resets some font properties — restore paper-appropriate color */
+  color: inherit;
+}
+.mathInline .katex {
+  font-size: 1em; /* match surrounding text exactly */
+  color: inherit;
+}
+
+/* block math — centered, slightly more space */
+.mathBlock {
+  display: block;
+  text-align: center;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+.mathBlock .katex {
+  font-size: 1.1em;
+  color: inherit;
+}
+
+/* fallback when KaTeX hasn't loaded or expression is malformed */
+.texFallback {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9em;
+  color: var(--ink-depth, #1d3a8a);
+  background: rgba(29,58,138,0.05);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
