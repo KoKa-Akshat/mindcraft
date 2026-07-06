@@ -29,6 +29,7 @@ import StudentSessions   from './pages/StudentSessions'
 import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
+import ConceptChapterPage from './pages/ConceptChapterPage'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
@@ -164,6 +165,7 @@ export default function App() {
         <Route path="/constellation"       element={<AuthGuard><ConstellationPage /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
+        <Route path="/concept/:conceptId"      element={<AuthGuard><ConceptChapterPage /></AuthGuard>} />
         <Route path="/prep"                    element={<Prep />} />
 
         {/* Root of app host → marketing site (landing lives on mindcraft-marketing-site.web.app) */}

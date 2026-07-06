@@ -1,0 +1,533 @@
+/* ============================================================
+   ConceptChapterPage — Field Journal chapter spread
+   Design tokens per DASHBOARD_NOTEBOOK_SPEC.md
+   ============================================================ */
+
+/* --- Tokens ------------------------------------------------- */
+:root {
+  --paper-base:       #f7f3ee;
+  --paper-raised:     #fbf8f3;
+  --paper-recessed:   #efe9e0;
+  --paper-edge:       #e6ddd0;
+  --ink-system:       #1c1a17;
+  --ink-katha:        #232f4e;
+  --ink-pencil:       #6f6a61;
+  --ink-depth:        #1d3a8a;
+  --rule:             rgba(29, 58, 138, 0.10);
+  --rule-pitch:       32px;
+  --margin-rule:      rgba(193, 18, 31, 0.28);
+  --margin-width:     72px;
+  --cover:            #080e14;
+  --chalk:            #f5f5f5;
+  --click:            #c4f547;
+  --stakes:           #c1121f;
+  --shadow-page:      0 1px 2px rgba(8,14,20,0.10), 0 6px 24px rgba(8,14,20,0.18);
+  --shadow-tip-in:    0 1px 3px rgba(8,14,20,0.22), 0 2px 1px -1px rgba(8,14,20,0.12);
+  --ease-weight:      cubic-bezier(0.2, 0, 0, 1);
+  --dur-turn:         500ms;
+  --font-display:     "Space Grotesk", sans-serif;
+  --font-katha:       "Source Serif 4", serif;
+  --font-stamp:       "IBM Plex Mono", monospace;
+  --font-body:        "Inter", "DM Sans", sans-serif;
+}
+
+/* --- Desk (full viewport, deep field) ----------------------- */
+.desk {
+  min-height: 100dvh;
+  background: var(--cover);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 16px 64px;
+  position: relative;
+
+  /* Radial desk lamp vignette */
+  background-image: radial-gradient(ellipse at 50% 30%, #0c141c 0%, #080e14 70%);
+}
+
+/* --- Back button — floats on the desk ----------------------- */
+.backBtn {
+  position: relative;
+  align-self: flex-start;
+  margin-bottom: 24px;
+  background: transparent;
+  border: none;
+  color: rgba(245,245,245,0.64);
+  font: 400 13px/1 var(--font-stamp);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 160ms;
+}
+.backBtn:hover { color: var(--chalk); }
+
+/* --- Notebook spread ---------------------------------------- */
+.spread {
+  width: min(1240px, 94vw);
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr;
+  min-height: 80vh;
+  box-shadow: var(--shadow-page);
+  border-radius: 2px;
+
+  /* Entrance: start compressed + rotated, open on .spreadOpen */
+  transform: perspective(1600px) rotateY(-12deg) scaleX(0.88);
+  opacity: 0;
+  transform-origin: center;
+  transition:
+    transform var(--dur-turn) var(--ease-weight),
+    opacity 280ms ease;
+}
+
+.spreadOpen {
+  transform: perspective(1600px) rotateY(0deg) scaleX(1);
+  opacity: 1;
+}
+
+/* --- Shared page base --------------------------------------- */
+.leftPage,
+.rightPage {
+  background: var(--paper-base);
+  padding: 48px 40px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Paper grain overlay */
+.pageGrain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  opacity: 0.03;
+  mix-blend-mode: multiply;
+}
+
+/* Page-edge shadow stack (the pages beneath) */
+.leftPage {
+  box-shadow:
+    -2px 0 0 var(--paper-edge),
+    -4px 0 0 var(--paper-recessed),
+    -6px 0 0 var(--paper-edge);
+}
+.rightPage {
+  box-shadow:
+    2px 0 0 var(--paper-edge),
+    4px 0 0 var(--paper-recessed),
+    6px 0 0 var(--paper-edge);
+}
+
+/* All content above grain */
+.leftPage > *:not(.pageGrain),
+.rightPage > *:not(.pageGrain) {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Gutter (binding) --------------------------------------- */
+.gutter {
+  background: linear-gradient(
+    90deg,
+    rgba(8,14,20,0) 0%,
+    rgba(8,14,20,0.18) 45%,
+    rgba(8,14,20,0.28) 50%,
+    rgba(8,14,20,0.18) 55%,
+    rgba(8,14,20,0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 12px 0;
+}
+.gutterStitch {
+  width: 3px;
+  height: 10px;
+  background: var(--ink-depth);
+  opacity: 0.30;
+  border-radius: 1px;
+}
+
+/* --- Running header ----------------------------------------- */
+.runHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.runHeadLabel {
+  font: 400 11px/16px var(--font-stamp);
+  color: var(--ink-pencil);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+.runHeadPage {
+  font: 400 11px/16px var(--font-stamp);
+  color: var(--ink-pencil);
+}
+
+/* --- Chapter marker ---------------------------------------- */
+.chapterMark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.chapterStamp {
+  font: 500 11px/16px var(--font-stamp);
+  color: var(--ink-pencil);
+  letter-spacing: 0.12em;
+}
+.clusterPip {
+  font: 400 10px/16px var(--font-stamp);
+  letter-spacing: 0.10em;
+  text-transform: lowercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+/* --- Concept title (display size) -------------------------- */
+.conceptTitle {
+  font: 700 clamp(36px, 5vw, 56px)/1.05 var(--font-display);
+  color: var(--ink-system);
+  letter-spacing: -0.03em;
+  margin: 0 0 36px;
+  max-width: 480px;
+}
+
+/* --- Story body: margin rule + ruled text ------------------ */
+.storyBody {
+  position: relative;
+  display: flex;
+  gap: 0;
+}
+
+.marginRule {
+  flex-shrink: 0;
+  width: var(--margin-width);
+  border-right: 1px solid var(--margin-rule);
+  margin-right: 24px;
+  min-height: 100%;
+}
+
+.storyText {
+  flex: 1;
+  /* Rule lines at 32px pitch */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent calc(var(--rule-pitch) - 1px),
+    var(--rule) calc(var(--rule-pitch) - 1px),
+    var(--rule) var(--rule-pitch)
+  );
+  padding-bottom: 4px;
+}
+
+.storyParagraph {
+  font: 400 16px/var(--rule-pitch) var(--font-katha);
+  color: var(--ink-katha);
+  margin: 0 0 var(--rule-pitch);
+  max-width: 52ch;
+}
+.storyParagraph:first-child {
+  font-style: italic;
+}
+.storyParagraph:first-child::first-letter {
+  font-size: 1.6em;
+  font-weight: 500;
+  line-height: 1;
+  float: left;
+  margin: 2px 5px 0 0;
+  color: var(--ink-system);
+}
+
+/* --- Ingredient footnotes ---------------------------------- */
+.ingredientNotes {
+  margin-top: 40px;
+}
+.ingredientDivider {
+  width: 64px;
+  height: 1px;
+  background: var(--ink-pencil);
+  opacity: 0.4;
+  margin-bottom: 16px;
+}
+.ingredientNote {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.ingredientNum {
+  font: 400 10px/20px var(--font-stamp);
+  color: var(--ink-pencil);
+  padding-top: 2px;
+}
+.ingredientText {
+  font: 400 12px/20px var(--font-katha);
+  font-style: italic;
+  color: var(--ink-pencil);
+  margin: 0;
+  max-width: 44ch;
+}
+
+/* ============================================================
+   RIGHT PAGE
+   ============================================================ */
+
+/* --- Hero: glyph + title ----------------------------------- */
+.rightHero {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+.glyphWrap {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  opacity: 0.7;
+}
+.glyphWrap svg {
+  width: 100%;
+  height: 100%;
+}
+.heroText {
+  padding-top: 4px;
+}
+.heroLabel {
+  font: 400 11px/16px var(--font-stamp);
+  color: var(--ink-pencil);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  margin: 0 0 6px;
+}
+.heroTitle {
+  font: 600 28px/34px var(--font-display);
+  color: var(--ink-system);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* --- Ingredient list --------------------------------------- */
+.ingredientList {
+  margin-bottom: 36px;
+  border-left: 1px solid var(--margin-rule);
+  padding-left: 18px;
+}
+.ingredientItem {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.ingredientBullet {
+  font-size: 12px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+.ingredientName {
+  font: 400 14px/20px var(--font-body);
+  color: var(--ink-system);
+  text-transform: capitalize;
+}
+
+/* --- Question preview -------------------------------------- */
+.questionsSection {
+  background: var(--paper-raised);
+  border: 1px solid var(--paper-edge);
+  border-radius: 2px;
+  padding: 20px 20px 16px;
+  box-shadow: var(--shadow-tip-in);
+  margin-bottom: 28px;
+}
+.questionsSectionLabel {
+  font: 400 11px/16px var(--font-stamp);
+  color: var(--ink-pencil);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  margin: 0 0 14px;
+}
+.questionText {
+  font: 400 14px/22px var(--font-body);
+  color: var(--ink-system);
+  margin: 0 0 16px;
+}
+.questionChoices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.choiceBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 6px 10px;
+  cursor: pointer;
+  text-align: left;
+  font: 400 13px/20px var(--font-body);
+  color: var(--ink-system);
+  transition: background 140ms, border-color 140ms;
+}
+.choiceBtn:hover {
+  background: var(--paper-recessed);
+}
+.choiceSelected {
+  background: rgba(196, 245, 71, 0.18);
+  border-color: rgba(196, 245, 71, 0.5);
+}
+.choiceLetter {
+  font: 500 11px/16px var(--font-stamp);
+  color: var(--ink-pencil);
+  width: 14px;
+  flex-shrink: 0;
+}
+
+/* --- Footer: question count + CTA ------------------------- */
+.footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.questionCount {
+  font: 400 12px/20px var(--font-stamp);
+  color: var(--ink-pencil);
+  margin: 0;
+}
+.questionCountNum {
+  font-weight: 600;
+  color: var(--ink-system);
+}
+
+.practiceBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ink-system);
+  color: var(--paper-raised);
+  border: none;
+  border-radius: 2px;
+  padding: 10px 20px;
+  font: 500 14px/1 var(--font-display);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 160ms, transform 120ms;
+}
+.practiceBtn:hover {
+  background: var(--ink-katha);
+  transform: translateY(-1px);
+}
+.practiceBtn:active { transform: translateY(0); }
+.practiceBtnArrow {
+  font-size: 16px;
+  transition: transform 160ms;
+}
+.practiceBtn:hover .practiceBtnArrow {
+  transform: translateX(3px);
+}
+
+/* --- Index line (back-pocket references) ------------------- */
+.indexLine {
+  font: 400 11px/16px var(--font-stamp);
+  color: var(--ink-pencil);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--paper-edge);
+  padding-top: 16px;
+}
+.indexLink {
+  background: transparent;
+  border: none;
+  color: var(--ink-depth);
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 160ms, color 160ms;
+}
+.indexLink:hover {
+  text-decoration-color: currentColor;
+  color: var(--ink-system);
+}
+
+/* --- Not found state --------------------------------------- */
+.notFound {
+  color: var(--chalk);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px;
+}
+.notFound code {
+  background: rgba(255,255,255,0.08);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--font-stamp);
+}
+
+/* ============================================================
+   RESPONSIVE — single page on mobile
+   ============================================================ */
+@media (max-width: 800px) {
+  .desk {
+    padding: 24px 0 48px;
+  }
+  .backBtn {
+    padding-left: 16px;
+  }
+  .spread {
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    border-radius: 0;
+    transform: none !important;
+    opacity: 1 !important;
+    box-shadow: none;
+  }
+  .spreadOpen {
+    transform: none !important;
+  }
+  .gutter {
+    display: none;
+  }
+  .leftPage,
+  .rightPage {
+    padding: 32px 20px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .leftPage {
+    border-bottom: 1px solid var(--paper-edge);
+  }
+  .marginRule {
+    width: 40px;
+    margin-right: 16px;
+  }
+  .conceptTitle {
+    font-size: 32px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .spread {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}

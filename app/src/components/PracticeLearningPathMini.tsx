@@ -117,7 +117,7 @@ export default function PracticeLearningPathMini({
                 type="button"
                 className={`${s.flowCard} ${isLeft ? s.flowCardLeft : s.flowCardRight} ${isActive ? s.flowCardActive : ''}`}
                 style={{ top: `${i * STEP + 6}px` }}
-                onClick={() => navigate('/practice', { state: { conceptId: c.id } })}
+                onClick={() => navigate(`/concept/${c.id}`)}
               >
                 <div className={s.flowIcon}>
                   <ConceptPathIcon conceptId={c.id} size={26} />
