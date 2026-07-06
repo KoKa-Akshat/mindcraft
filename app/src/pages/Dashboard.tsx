@@ -247,110 +247,79 @@ export default function Dashboard() {
       ) : (
         <div className={`${s.notebook} ${turningConceptId ? s.notebookTurning : ''}`}>
 
-          {/* ── left page: the record ── */}
+          {/* ── left page: today's actions ── */}
           <div className={s.leftPage}>
             <div className={s.pageEdgeLeft} aria-hidden="true" />
             <div className={s.pageInner}>
-              <div className={s.pageRunningHeader}>the record</div>
 
-              {/* Route concept list */}
-              {path.loading ? (
-                <p style={{
-                  fontFamily: 'var(--font-katha)',
-                  fontStyle: 'italic',
-                  fontSize: 14,
-                  color: 'var(--ink-pencil)',
-                  transform: 'rotate(-0.3deg)',
-                  margin: 0,
-                }}>
-                  Loading your path…
-                </p>
-              ) : routeConcepts.length > 0 ? (
-                <>
-                  <div className={s.routeSectionLabel}>your act route · {path.exam ?? 'act'}</div>
-                  <div className={s.routeConceptList}>
-                    {routeConcepts.map((c, i) => {
-                      const isDone = i < (path.completedOnPath ?? 0)
-                      const isActive = c.id === path.activeConceptId
-                      return (
-                        <button
-                          key={c.id}
-                          type="button"
-                          className={s.routeConceptItem}
-                          onClick={() => goToConcept(c.id, isDone)}
-                          disabled={Boolean(turningConceptId)}
-                          title={`Open ${c.label}`}
-                        >
-                          <div className={`${s.routeDot} ${isDone ? s.routeDotDone : isActive ? s.routeDotActive : s.routeDotInactive}`} />
-                          <span className={`${s.routeConceptName} ${isDone ? s.routeConceptNameDone : isActive ? s.routeConceptNameActive : ''}`}>
-                            {c.label}
-                          </span>
-                        </button>
-                      )
-                    })}
-                    {path.pathConcepts.length > 7 && (
-                      <button
-                        type="button"
-                        className={s.routeConceptItem}
-                        style={{ opacity: 0.45 }}
-                        onClick={openGps}
-                      >
-                        <div className={`${s.routeDot} ${s.routeDotInactive}`} />
-                        <span className={s.routeConceptName} style={{ fontStyle: 'italic' }}>
-                          +{path.pathConcepts.length - 7} more on the map
-                        </span>
-                      </button>
-                    )}
+              {/* mega dateline with pennant flag */}
+              <div className={s.dateline}>
+                <div className={s.dateFlagWrap}>
+                  <div className={s.dateFlag} style={{ background: flagColor }}>
+                    <span className={s.dateFlagNum}>{getDateDay()}</span>
                   </div>
-                  <button className={s.seeMapBtn} onClick={openGps}>see full map ↗</button>
-                </>
-              ) : (
-                <span style={{
-                  fontSize: 14,
-                  fontFamily: 'var(--font-katha)',
-                  fontStyle: 'italic',
-                  color: 'var(--ink-pencil)',
-                  transform: 'rotate(-0.3deg)',
-                  display: 'block',
-                }}>
-                  Complete your gap scan to build your route.
-                </span>
-              )}
-
-              {/* Explore concept cards */}
-              {visibleExploreCards.length > 0 && (
-                <>
-                  <div className={s.exploreSectionLabel}>explore more →</div>
-                  <div className={s.exploreGrid}>
-                    {visibleExploreCards.slice(0, 6).map(card => (
-                      <button
-                        key={card.id}
-                        type="button"
-                        className={s.exploreCard}
-                        onClick={() => openChapter(card.id)}
-                        disabled={Boolean(turningConceptId)}
-                        title={`Explore ${card.label}`}
-                      >
-                        <div
-                          className={s.exploreCardBg}
-                          style={{ background: card.bg }}
-                        />
-                        <span className={s.exploreCardSymbol} aria-hidden="true">
-                          {card.symbol}
-                        </span>
-                        <span className={s.exploreCardLabel}>{card.label}</span>
-                        <span className={s.exploreCardArrow}>explore →</span>
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              <div className={s.pageNumber}>
-                {path.completedOnPath > 0
-                  ? `${path.completedOnPath} concept${path.completedOnPath !== 1 ? 's' : ''} completed`
-                  : 'entry 1 · unwritten'}
+                </div>
+                <div className={s.dateTextBlock}>
+                  <div className={s.dateMain}>{formatDateMain()}</div>
+                  <div className={s.dateSub}>{formatDateSub()}</div>
+                </div>
               </div>
+
+              {/* today's plan */}
+              <div className={s.todayPlan}>
+                {/* The gap */}
+                <button
+                  type="button"
+                  className={`${s.entryBlock} ${s.gapBlock}`}
+                  onClick={goChallenge}
+                >
+                  <div className={s.marginFlag} aria-hidden="true" />
+                  <div className={s.entryLabelDisplay}>The gap</div>
+                  <div className={`${s.entryConceptName} ${recLoading ? s.entryConceptLoading : ''}`}>
+                    {weaknessLabel ?? (recLoading ? 'reading your graph…' : 'no gap found')}
+                  </div>
+                  <p className={s.entryDraft}>
+                    {weakness
+                      ? 'The margin says this is the one.'
+                      : recLoading
+                        ? 'Scanning your knowledge graph.'
+                        : 'Start your gap scan to find your weakest point.'}
+                  </p>
+                  <div className={s.entryCta}>▸ open a session</div>
+                </button>
+
+                <div className={s.rulesDivider} />
+
+                {/* New territory */}
+                <button
+                  type="button"
+                  className={s.entryBlock}
+                  onClick={goExplore}
+                >
+                  <div className={s.entryLabelDisplay}>New territory</div>
+                  <div className={`${s.entryConceptName} ${recLoading ? s.entryConceptLoading : ''}`}>
+                    {learnLabel ?? (recLoading ? 'plotting your route…' : learnSub ?? 'explore your map')}
+                  </div>
+                  <p className={s.entryDraft}>
+                    {learn
+                      ? 'Unwritten. First lines are the easiest.'
+                      : recLoading
+                        ? 'Calculating your next concept.'
+                        : 'Pick any concept from your map to start.'}
+                  </p>
+                  <div className={s.entryCta}>▸ begin at level 1</div>
+                </button>
+
+                {/* index line */}
+                <div className={s.indexLine}>
+                  <button className={s.indexBtn} onClick={openHomework}>problem solver</button>
+                  <span className={s.indexDot}>·</span>
+                  <button className={s.indexBtn} onClick={openNotes}>session notes</button>
+                  <span className={s.indexDot}>·</span>
+                  <button className={s.indexBtn} onClick={openGps}>the map ↗</button>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -367,13 +336,13 @@ export default function Dashboard() {
             <div className={s.stitch} />
           </div>
 
-          {/* ── right page: today / panels ── */}
+          {/* ── right page: topics / panels ── */}
           <div className={s.rightPage}>
             <div className={s.pageEdgeRight} aria-hidden="true" />
 
             {/* fore-edge tabs */}
             <div className={s.foreedge}>
-              <button className={`${s.tab} ${todayMode ? s.tabActive : ''}`} onClick={closePanel}>Today</button>
+              <button className={`${s.tab} ${todayMode ? s.tabActive : ''}`} onClick={closePanel}>Topics</button>
               <button className={`${s.tab} ${s.tabMap} ${(gpsMode || routeMode) ? s.tabActive : ''}`} onClick={openGps}>Map</button>
               <button className={`${s.tab} ${homeworkMode ? s.tabActive : ''}`} onClick={openHomework}>Solver</button>
               <button className={`${s.tab} ${notesMode ? s.tabActive : ''}`} onClick={openNotes}>Notes</button>
@@ -382,72 +351,100 @@ export default function Dashboard() {
             <div className={s.pageInner}>
               {todayMode ? (
                 <>
-                  {/* mega dateline with pennant flag */}
-                  <div className={s.dateline}>
-                    <div className={s.dateFlagWrap}>
-                      <div className={s.dateFlag} style={{ background: flagColor }}>
-                        <span className={s.dateFlagNum}>{getDateDay()}</span>
+                  <div className={s.pageRunningHeader}>the record</div>
+
+                  {/* Route concept list */}
+                  {path.loading ? (
+                    <p style={{
+                      fontFamily: 'var(--font-katha)',
+                      fontStyle: 'italic',
+                      fontSize: 14,
+                      color: 'var(--ink-pencil)',
+                      transform: 'rotate(-0.3deg)',
+                      margin: 0,
+                    }}>
+                      Loading your path…
+                    </p>
+                  ) : routeConcepts.length > 0 ? (
+                    <>
+                      <div className={s.routeSectionLabel}>your act route · {path.exam ?? 'act'}</div>
+                      <div className={s.routeConceptList}>
+                        {routeConcepts.map((c, i) => {
+                          const isDone = i < (path.completedOnPath ?? 0)
+                          const isActive = c.id === path.activeConceptId
+                          return (
+                            <button
+                              key={c.id}
+                              type="button"
+                              className={s.routeConceptItem}
+                              onClick={() => goToConcept(c.id, isDone)}
+                              disabled={Boolean(turningConceptId)}
+                              title={`Open ${c.label}`}
+                            >
+                              <div className={`${s.routeDot} ${isDone ? s.routeDotDone : isActive ? s.routeDotActive : s.routeDotInactive}`} />
+                              <span className={`${s.routeConceptName} ${isDone ? s.routeConceptNameDone : isActive ? s.routeConceptNameActive : ''}`}>
+                                {c.label}
+                              </span>
+                            </button>
+                          )
+                        })}
+                        {path.pathConcepts.length > 9 && (
+                          <button
+                            type="button"
+                            className={s.routeConceptItem}
+                            style={{ opacity: 0.45 }}
+                            onClick={openGps}
+                          >
+                            <div className={`${s.routeDot} ${s.routeDotInactive}`} />
+                            <span className={s.routeConceptName} style={{ fontStyle: 'italic' }}>
+                              +{path.pathConcepts.length - 9} more on the map
+                            </span>
+                          </button>
+                        )}
                       </div>
-                    </div>
-                    <div className={s.dateTextBlock}>
-                      <div className={s.dateMain}>{formatDateMain()}</div>
-                      <div className={s.dateSub}>{formatDateSub()}</div>
-                    </div>
-                  </div>
+                      <button className={s.seeMapBtn} onClick={openGps}>see full map ↗</button>
+                    </>
+                  ) : (
+                    <span style={{
+                      fontSize: 14,
+                      fontFamily: 'var(--font-katha)',
+                      fontStyle: 'italic',
+                      color: 'var(--ink-pencil)',
+                      transform: 'rotate(-0.3deg)',
+                      display: 'block',
+                    }}>
+                      Complete your gap scan to build your route.
+                    </span>
+                  )}
 
-                  {/* today's plan */}
-                  <div className={s.todayPlan}>
-                    {/* The gap */}
-                    <button
-                      type="button"
-                      className={`${s.entryBlock} ${s.gapBlock}`}
-                      onClick={goChallenge}
-                    >
-                      <div className={s.marginFlag} aria-hidden="true" />
-                      <div className={s.entryLabelDisplay}>The gap</div>
-                      <div className={`${s.entryConceptName} ${recLoading ? s.entryConceptLoading : ''}`}>
-                        {weaknessLabel ?? (recLoading ? 'reading your graph…' : 'no gap found')}
+                  {/* Explore concept cards */}
+                  {visibleExploreCards.length > 0 && (
+                    <>
+                      <div className={s.exploreSectionLabel}>explore more →</div>
+                      <div className={s.exploreGrid}>
+                        {visibleExploreCards.slice(0, 6).map(card => (
+                          <button
+                            key={card.id}
+                            type="button"
+                            className={s.exploreCard}
+                            onClick={() => openChapter(card.id)}
+                            disabled={Boolean(turningConceptId)}
+                            title={`Explore ${card.label}`}
+                          >
+                            <div className={s.exploreCardBg} style={{ background: card.bg }} />
+                            <span className={s.exploreCardSymbol} aria-hidden="true">{card.symbol}</span>
+                            <span className={s.exploreCardLabel}>{card.label}</span>
+                            <span className={s.exploreCardArrow}>explore →</span>
+                          </button>
+                        ))}
                       </div>
-                      <p className={s.entryDraft}>
-                        {weakness
-                          ? 'The margin says this is the one.'
-                          : recLoading
-                            ? 'Scanning your knowledge graph.'
-                            : 'Start your gap scan to find your weakest point.'}
-                      </p>
-                      <div className={s.entryCta}>▸ open a session</div>
-                    </button>
+                    </>
+                  )}
 
-                    <div className={s.rulesDivider} />
-
-                    {/* New territory */}
-                    <button
-                      type="button"
-                      className={s.entryBlock}
-                      onClick={goExplore}
-                    >
-                      <div className={s.entryLabelDisplay}>New territory</div>
-                      <div className={`${s.entryConceptName} ${recLoading ? s.entryConceptLoading : ''}`}>
-                        {learnLabel ?? (recLoading ? 'plotting your route…' : learnSub ?? 'explore your map')}
-                      </div>
-                      <p className={s.entryDraft}>
-                        {learn
-                          ? 'Unwritten. First lines are the easiest.'
-                          : recLoading
-                            ? 'Calculating your next concept.'
-                            : 'Pick any concept from your map to start.'}
-                      </p>
-                      <div className={s.entryCta}>▸ begin at level 1</div>
-                    </button>
-
-                    {/* index line */}
-                    <div className={s.indexLine}>
-                      <button className={s.indexBtn} onClick={openHomework}>problem solver</button>
-                      <span className={s.indexDot}>·</span>
-                      <button className={s.indexBtn} onClick={openNotes}>session notes</button>
-                      <span className={s.indexDot}>·</span>
-                      <button className={s.indexBtn} onClick={openGps}>the map ↗</button>
-                    </div>
+                  <div className={s.pageNumber}>
+                    {path.completedOnPath > 0
+                      ? `${path.completedOnPath} concept${path.completedOnPath !== 1 ? 's' : ''} completed`
+                      : 'entry 1 · unwritten'}
                   </div>
                 </>
               ) : routeMode && targetParam ? (

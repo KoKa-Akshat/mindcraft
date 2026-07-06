@@ -1979,68 +1979,112 @@ export default function Practice() {
             )}
 
             {/* ── Session complete ── */}
-            {pPhase === 'complete' && (
-              <div className={s.completeWrap}>
-                <div className={s.completeStars}>
-                  {mastered ? '🌟🌟🌟' : firstAccuracy >= 0.60 ? '🌟🌟' : '🌟'}
-                </div>
-                <h2 className={s.completeTitle}>
-                  {mastered ? `Level ${level} Mastered!` : 'Session Complete!'}
-                </h2>
-                <div className={s.completeStats}>
-                  <div className={s.completeStat}>
-                    <span className={s.completeStatNum} style={{ color: lvMeta.color }}>{xp}</span>
-                    <span className={s.completeStatLabel}>XP Earned</span>
+            {pPhase === 'complete' && (() => {
+              const ringPct   = Math.round(firstAccuracy * 100)
+              const ringColor = mastered ? '#c4f547' : firstAccuracy >= 0.60 ? '#e8d16b' : '#ff7b6b'
+              const circ      = 2 * Math.PI * 46   // r=46
+              const dash      = (firstAccuracy * circ).toFixed(1)
+              const nextGap   = mastered
+                ? pathConcepts.find(c => c.id !== concept && (confidenceMap[c.id] === 'hard' || confidenceMap[c.id] === 'kinda'))
+                : null
+
+              const insightText = mastered
+                ? `${firstCorrect} of ${initialQCount} first-try. ${conceptMeta?.label ?? 'This concept'} is filed. Level ${Math.min(level + 1, 3)} is the next step.`
+                : firstAccuracy >= 0.60
+                ? `${firstCorrect} of ${initialQCount} first-try. You're close — one focused round will lock this in.`
+                : `${firstCorrect} of ${initialQCount} first-try. The gaps are queued for extra reps. Work through them once more.`
+
+              return (
+                <div className={s.completeWrap}>
+
+                  {/* Ring + label */}
+                  <div className={s.completeRingWrap}>
+                    <svg width="108" height="108" viewBox="0 0 108 108" aria-hidden>
+                      <circle cx="54" cy="54" r="46" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="7"/>
+                      <circle cx="54" cy="54" r="46" fill="none"
+                        stroke={ringColor} strokeWidth="7"
+                        strokeDasharray={`${dash} ${circ.toFixed(1)}`}
+                        strokeDashoffset={(circ / 4).toFixed(1)}
+                        strokeLinecap="round"
+                        className={s.ringArc}
+                      />
+                      <text x="54" y="50" textAnchor="middle" dominantBaseline="middle"
+                        fill="#ffffff" fontSize="20" fontWeight="800" fontFamily="var(--f-display)">
+                        {ringPct}%
+                      </text>
+                      <text x="54" y="66" textAnchor="middle" dominantBaseline="middle"
+                        fill="rgba(255,255,255,0.45)" fontSize="9" fontFamily="IBM Plex Mono,monospace"
+                        letterSpacing="0.08em">
+                        accuracy
+                      </text>
+                    </svg>
                   </div>
-                  <div className={s.completeStat}>
-                    <span className={s.completeStatNum}>{firstCorrect}/{initialQCount}</span>
-                    <span className={s.completeStatLabel}>First-try correct</span>
+
+                  {/* Title */}
+                  <div className={s.completeHeading}>
+                    <h2 className={s.completeTitle}>
+                      {mastered ? `Level ${level} locked in.` : firstAccuracy >= 0.60 ? 'Getting there.' : 'Keep going.'}
+                    </h2>
+                    <p className={s.completeSubtitle}>
+                      {sessionLabel} · Level {level}
+                    </p>
                   </div>
-                  <div className={s.completeStat}>
-                    <span className={s.completeStatNum}>{Math.round(firstAccuracy * 100)}%</span>
-                    <span className={s.completeStatLabel}>Accuracy</span>
+
+                  {/* Stats row */}
+                  <div className={s.completeStats}>
+                    <div className={s.completeStat}>
+                      <span className={s.completeStatNum} style={{ color: lvMeta.color }}>+{xp}</span>
+                      <span className={s.completeStatLabel}>XP</span>
+                    </div>
+                    <div className={s.completeStatDivider} />
+                    <div className={s.completeStat}>
+                      <span className={s.completeStatNum}>{firstCorrect}<span style={{fontSize:16,fontWeight:400,opacity:.5}}>/{initialQCount}</span></span>
+                      <span className={s.completeStatLabel}>First-try</span>
+                    </div>
+                    <div className={s.completeStatDivider} />
+                    <div className={s.completeStat}>
+                      <span className={s.completeStatNum} style={{ color: ringColor }}>{ringPct}%</span>
+                      <span className={s.completeStatLabel}>Accuracy</span>
+                    </div>
                   </div>
-                </div>
-                <div className={s.completeInsight}>
-                  {mastered
-                    ? `${firstCorrect}/${initialQCount} on first attempt — you've got ${conceptMeta?.label}. Ready for Level ${Math.min(level + 1, 3)}!`
-                    : firstAccuracy >= 0.60
-                    ? `${firstCorrect}/${initialQCount} first-try — nearly there. One more round and you'll lock it in.`
-                    : `${firstCorrect}/${initialQCount} on first attempt. ${conceptMeta?.label} needs more practice — re-queued your misses for extra reps.`}
-                </div>
-                <div className={s.completeActions}>
-                  <button className={s.btnSecondary} onClick={returnToPath}>
-                    New Mission
-                  </button>
-                  <button
-                    className={s.btnPrimary}
-                    onClick={() => startSession(concept!, mastered ? Math.min(level + 1, 3) as 1|2|3 : level)}
-                  >
-                    {mastered
-                      ? level < 3 ? `Level ${level + 1} →` : 'Practice Again →'
-                      : `Retry Level ${level} →`}
-                  </button>
-                </div>
-                {/* Next gap concept suggestion */}
-                {mastered && assessConcepts.length > 0 && (() => {
-                  const nextGap = pathConcepts.find(c =>
-                    c.id !== concept && (confidenceMap[c.id] === 'hard' || confidenceMap[c.id] === 'kinda')
-                  )
-                  if (!nextGap) return null
-                  return (
+
+                  {/* Insight */}
+                  <p className={s.completeInsight}>{insightText}</p>
+
+                  {/* Primary actions */}
+                  <div className={s.completeActions}>
+                    <button className={s.btnSecondary} onClick={() => navigate('/dashboard')}>
+                      Dashboard
+                    </button>
+                    <button className={s.btnSecondary} onClick={() => navigate('/knowledge-graph')}>
+                      See progress →
+                    </button>
+                    <button
+                      className={s.btnPrimary}
+                      onClick={() => startSession(concept!, mastered ? Math.min(level + 1, 3) as 1|2|3 : level)}
+                    >
+                      {mastered
+                        ? level < 3 ? `Level ${level + 1} →` : 'Go again →'
+                        : `Retry →`}
+                    </button>
+                  </div>
+
+                  {/* Next gap shortcut */}
+                  {nextGap && (
                     <div className={s.nextGapSuggestion}>
-                      <span className={s.nextGapLabel}>Next gap to close:</span>
+                      <span className={s.nextGapLabel}>Next gap to close</span>
                       <button
                         className={s.nextGapBtn}
                         onClick={() => startSession(nextGap.id, getRecommendedLevel(nextGap.id))}
                       >
-                        {nextGap.emoji} {nextGap.label} → Level {getRecommendedLevel(nextGap.id)}
+                        {nextGap.emoji} {nextGap.label} · Level {getRecommendedLevel(nextGap.id)} →
                       </button>
                     </div>
-                  )
-                })()}
-              </div>
-            )}
+                  )}
+
+                </div>
+              )
+            })()}
           </>
         )}
 

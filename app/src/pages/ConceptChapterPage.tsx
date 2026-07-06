@@ -1,7 +1,9 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useMemo, useRef } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
+import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
+import InteractiveWidget from '../components/InteractiveWidget'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -13,6 +15,31 @@ type CS = {
   ingredientStories: Record<string, unknown>
 }
 const DB = conceptStoriesRaw as unknown as Record<string, CS>
+
+type ContextFrame = {
+  protagonist: string
+  settingLine: string
+  questionBridge: string
+  diceFrame: string | null
+  spinnerFrame: string | null
+}
+const FRAMES = contextFramesRaw as unknown as Record<string, ContextFrame>
+
+// Bank concept IDs sometimes differ from story keys; map the common ones
+const FRAME_ALIAS: Record<string, string> = {
+  probability: 'basic_probability',
+  statistics_basics: 'descriptive_statistics',
+  coordinate_geometry: 'representation_translation',
+  absolute_value: 'algebraic_manipulation',
+  circles: 'circles_geometry',
+  quadratic_functions: 'quadratic_equations',
+  polynomial_operations: 'polynomials',
+  factors_multiples: 'factoring_polynomials',
+}
+
+function getFrame(conceptId: string): ContextFrame | null {
+  return FRAMES[conceptId] ?? FRAMES[FRAME_ALIAS[conceptId] ?? ''] ?? null
+}
 
 // ── Cluster identity ─────────────────────────────────────────────────────────
 
@@ -337,6 +364,17 @@ export default function ConceptChapterPage() {
           const qTotal = specs.filter(p => p.kind === 'question').length
           const chosen = answers[spec.qIdx] ?? null
           const isDone = submitted[spec.qIdx] ?? false
+          const frame = getFrame(conceptId)
+
+          // Pick the best bridge line for this question
+          const txt = q.question.toLowerCase()
+          const bridge = frame
+            ? (txt.includes('die') || txt.includes('dice') || txt.includes('roll')) && frame.diceFrame
+              ? frame.diceFrame
+              : (txt.includes('spinner') || txt.includes('spin')) && frame.spinnerFrame
+              ? frame.spinnerFrame
+              : frame.questionBridge
+            : null
 
           return (
             <div className={s.qLayout}>
@@ -347,7 +385,22 @@ export default function ConceptChapterPage() {
                   <span className={s.qChipSmall} style={{ color: theme.chip }}>Ch. {ch}</span>
                 </header>
 
+                {/* Story context bridge */}
+                {frame && (
+                  <div className={s.storyBridge}>
+                    <span className={s.storyBridgeSetting} style={{ color: theme.dim }}>{frame.settingLine}</span>
+                    <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
+                  </div>
+                )}
+
                 <QuestionContent text={q.question} ink={theme.ink} accent={theme.accent} />
+
+                {/* Interactive widget (dice / spinner / coin) */}
+                <InteractiveWidget
+                  conceptId={conceptId}
+                  questionText={q.question}
+                  theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
+                />
 
                 <div className={s.qChoices}>
                   {q.choices.slice(0, 4).map((c, i) => (

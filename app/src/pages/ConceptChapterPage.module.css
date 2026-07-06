@@ -244,6 +244,26 @@
   letter-spacing: 0.06em;
 }
 
+/* Story context bridge — sets the scene before each question */
+.storyBridge {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.storyBridgeSetting {
+  font: 400 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+}
+.storyBridgeText {
+  font: 400 italic 14px/1.5 "Source Serif 4", Georgia, serif;
+  margin: 0;
+  max-width: 48ch;
+}
+
 /* Question text — supports inline diagram callouts */
 .qText {
   font: 400 16px/26px "Inter", sans-serif;

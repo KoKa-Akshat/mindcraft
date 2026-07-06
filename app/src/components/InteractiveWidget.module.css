@@ -1,0 +1,162 @@
+/* InteractiveWidget — dice, spinners, coins */
+
+.widgetWrap {
+  margin: 6px 0 14px;
+}
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 12px;
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 6px;
+}
+
+.widgetLabel {
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  align-self: flex-start;
+}
+
+/* ── Dice ──────────────────────────────────────────────────────────────────── */
+
+.diceRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.die {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 80ms;
+}
+
+@keyframes dieShake {
+  0%   { transform: rotate(-8deg) scale(1.05); }
+  20%  { transform: rotate(7deg)  scale(0.96); }
+  40%  { transform: rotate(-5deg) scale(1.04); }
+  60%  { transform: rotate(4deg)  scale(0.97); }
+  80%  { transform: rotate(-3deg) scale(1.02); }
+  100% { transform: rotate(0deg)  scale(1); }
+}
+
+.dieRolling {
+  animation: dieShake 0.55s ease-in-out;
+}
+
+.dieFace {
+  width: 36px;
+  height: 36px;
+}
+
+.dieNum {
+  font: 700 24px/1 "IBM Plex Mono", monospace;
+  letter-spacing: -0.02em;
+}
+
+.diceSum {
+  font: 400 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+}
+
+/* ── Spinner ───────────────────────────────────────────────────────────────── */
+
+.spinnerOuter {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinnerWheel {
+  width: 150px;
+  height: 150px;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.12));
+}
+
+.spinnerPointer {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  color: #1a2c16;
+  line-height: 1;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.spinResult {
+  font: 400 14px/1 "Inter", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* ── Coin ──────────────────────────────────────────────────────────────────── */
+
+.coin {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes coinSpin {
+  0%   { transform: scaleX(1); }
+  25%  { transform: scaleX(0.1); }
+  50%  { transform: scaleX(1); }
+  75%  { transform: scaleX(0.1); }
+  100% { transform: scaleX(1); }
+}
+
+.coinFlipping {
+  animation: coinSpin 0.6s ease-in-out;
+}
+
+/* ── Shared ────────────────────────────────────────────────────────────────── */
+
+.rollHistory {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  max-width: 260px;
+  justify-content: center;
+}
+
+.rollChip {
+  padding: 3px 6px;
+  border-radius: 3px;
+  font: 500 10px/1 "IBM Plex Mono", monospace;
+}
+
+.rollBtn {
+  padding: 9px 22px;
+  border: none;
+  border-radius: 3px;
+  font: 600 12px/1 "Space Grotesk", sans-serif;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: opacity 130ms, transform 100ms;
+  min-width: 120px;
+}
+.rollBtn:hover:not(:disabled) { opacity: 0.87; transform: translateY(-1px); }
+.rollBtn:disabled { opacity: 0.4; cursor: default; }
