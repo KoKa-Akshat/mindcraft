@@ -10,7 +10,7 @@ import type { Confidence } from '../lib/bridgePractice'
 import HeroBar from '../components/HeroBar'
 import MasteryBadge from '../components/MasteryBadge'
 import PawHub from '../components/PawHub'
-import NextConceptCard from '../components/NextConceptCard'
+import PracticeLearningPathMini from '../components/PracticeLearningPathMini'
 import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
@@ -38,7 +38,6 @@ export default function Dashboard() {
   const routeMode = view === 'route'
   const notesMode = view === 'notes'
   const homeworkMode = view === 'homework'
-  const panelMode = gpsMode || routeMode || notesMode || homeworkMode
 
   const conceptParam = searchParams.get('concept')
   const targetParam = searchParams.get('target')
@@ -92,7 +91,7 @@ export default function Dashboard() {
           await applyDiagnosticConfidence(user.uid, exam ?? 'ACT', confidence, goals, {
             excludedConcepts: excluded ?? [],
           })
-        } catch { /* fall through — worst case they get the gap-scan */ }
+        } catch { /* fall through */ }
         if (cancelled) return
         navigate('/dashboard', { replace: true })
         setDiagChecked(true)
@@ -176,10 +175,14 @@ export default function Dashboard() {
                       onStartRoute={openRoute}
                     />
                   ) : (
-                    <NextConceptCard
-                      concept={path.pathConcepts[0] ?? null}
-                      loading={path.loading}
+                    <PracticeLearningPathMini
+                      concepts={path.pathConcepts}
+                      activeConceptId={path.activeConceptId}
+                      progressPct={path.progressPct}
+                      completedCount={path.completedOnPath}
+                      totalCount={path.pathQueue.length}
                       exam={path.exam}
+                      loading={path.loading}
                     />
                   )}
                 </div>
