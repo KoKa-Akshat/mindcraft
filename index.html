@@ -74,6 +74,7 @@ body.ready .page-shell{opacity:1;transform:none}
 .nav-links a:hover{background:var(--nav-hover);transform:translateY(-1px)}
 .nav-links .login{border:1px solid var(--nav-login-border);background:var(--nav-login-bg)}
 .nav-links .join{background:var(--nav-join-bg);color:var(--nav-join-color)}
+.mobile-login{display:none}
 section{position:relative;padding:clamp(84px,8vw,128px) clamp(20px,5vw,72px)}
 .wrap{max-width:1180px;margin:0 auto}
 .label{display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:10px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase;color:rgba(20,58,46,.58)}
@@ -222,10 +223,13 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 }
 @media(max-width:560px){
   section{padding:82px 20px}
-  .nav{left:14px;right:14px;top:14px}
+  .nav{left:14px;right:auto;top:14px;width:calc(100vw - 28px);overflow:hidden}
   .brand{font-size:17px}
-  .nav-links{gap:5px}
-  .nav-links .join,.nav-links .login{font-size:10px;padding:9px 10px;letter-spacing:.08em}
+  .nav-links{gap:5px;margin-left:auto;flex:0 0 auto}
+  .nav-links a{display:none!important}
+  .nav-links .login{display:inline-flex!important;position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;padding:9px 10px;letter-spacing:.08em}
+  .nav-links{display:none}
+  .mobile-login{display:inline-flex;position:absolute;right:10px;top:50%;transform:translateY(-50%);padding:9px 10px;border-radius:999px;border:1px solid var(--nav-login-border);background:var(--nav-login-bg);font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
   .hero{align-items:flex-start;padding-top:116px}
   .hero .wrap{width:100%}
   h1{font-size:clamp(47px,14vw,58px);line-height:.95;letter-spacing:-.035em}
@@ -264,10 +268,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <div class="nav-links">
       <a href="#map">Map</a>
       <a href="#system">System</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#intake">Apply</a>
       <a class="login app-login-link" href="https://mindcraft-93858.web.app/login">Login</a>
       <a class="join" href="#intake">Join</a>
     </div>
+    <a class="mobile-login app-login-link" href="https://mindcraft-93858.web.app/login">Login</a>
   </nav>
   <main>
     <section class="hero" id="top" data-nav="hero">
@@ -279,12 +284,12 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="note script" aria-hidden="true">wrong is a clue</div>
       <div class="wrap hero-inner">
         <div class="hero-copy reveal">
-          <p class="label">Math tutoring for momentum</p>
-          <h1><span>Make math</span><span>feel possible.</span></h1>
-          <p class="lead">For students who want to get better, feel lighter, and stop guessing what to work on next.</p>
-          <div class="cool-badge">Math is cool when it clicks.</div>
+          <p class="label">The moment it clicks</p>
+          <h1><span>You were never</span><span>bad at math.</span></h1>
+          <p class="lead">You were waiting for a better story. MindCraft finds exactly where the thinking broke — then builds the path back from there.</p>
+          <div class="cool-badge">The click was always there.</div>
           <div class="hero-actions">
-            <a class="btn primary" href="#intake">Start inside MindCraft</a>
+            <a class="btn primary" href="#intake">Request a seat</a>
             <a class="btn soft" href="#system">See how it works</a>
           </div>
         </div>
@@ -322,8 +327,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap system-grid">
         <div class="system-copy reveal">
           <p class="label">The learning map</p>
-          <h2>Know where to begin.</h2>
-          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map gives tutor and student the same starting point.</p>
+          <h2>Find where it broke.</h2>
+          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map shows tutor and student exactly where to start — and why this problem kept happening.</p>
         </div>
         <div class="board reveal" data-tilt>
           <article class="board-card card-a">
@@ -368,8 +373,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <span class="script">2 misses = 1 clue</span>
           </figure>
           <div class="quote-stack">
-            <article class="quote"><blockquote>"We finally saw where the problem was."</blockquote><cite>Gill, parent</cite></article>
-            <article class="quote"><blockquote>"I know what to work on now."</blockquote><cite>Seb, student</cite></article>
+            <article class="quote"><blockquote>"She opened the homework without being asked. That was new."</blockquote><cite>Gill, parent</cite></article>
+            <article class="quote"><blockquote>"I saw it before my tutor even finished the problem."</blockquote><cite>Seb, student</cite></article>
           </div>
         </div>
       </div>
@@ -378,21 +383,22 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="pricing" id="pricing" data-nav="green">
       <div class="wrap">
         <div class="reveal">
-          <p class="label">One clear plan</p>
-          <h2>$100 per month.</h2>
+          <p class="label">Limited enrollment</p>
+          <h2>A few seats remain.</h2>
+          <p style="color:rgba(255,255,255,0.82);max-width:520px;font-size:18px;line-height:1.6;margin-top:12px;">We keep cohorts small so the map stays personal. Each student gets a tutor who has read their story before the first session starts.</p>
         </div>
         <div class="price-grid reveal">
           <div class="includes">
-            <article class="include"><span>01</span><div><h3>Live 1-on-1 tutor sessions</h3><p>Each session starts with the current map.</p></div></article>
-            <article class="include"><span>02</span><div><h3>Personalized knowledge map</h3><p>Mastered, fragile, untouched. Clear at a glance.</p></div></article>
-            <article class="include"><span>03</span><div><h3>Targeted daily practice</h3><p>Practice aimed at the exact gap.</p></div></article>
-            <article class="include"><span>04</span><div><h3>Parent progress dashboard</h3><p>What clicked, what is stuck, what comes next.</p></div></article>
+            <article class="include"><span>01</span><div><h3>Live 1-on-1 sessions</h3><p>Each session starts with the current map. No ramp-up time.</p></div></article>
+            <article class="include"><span>02</span><div><h3>The knowledge map</h3><p>Mastered, fragile, untouched. Everyone sees the same picture.</p></div></article>
+            <article class="include"><span>03</span><div><h3>Targeted daily practice</h3><p>Practice aimed at the exact gap — not the chapter you finished last week.</p></div></article>
+            <article class="include"><span>04</span><div><h3>Parent signal</h3><p>What clicked, what is still stuck, what comes next.</p></div></article>
           </div>
           <article class="price-card">
-            <small>MindCraft Complete</small>
-            <strong>$100</strong>
-            <p>Everything included. No long contracts. Cancel anytime.</p>
-            <a class="btn primary" href="#intake">Start the plan</a>
+            <small>MindCraft — Premium</small>
+            <strong style="font-size:32px;letter-spacing:-0.02em;line-height:1.2;display:block;margin:18px 0 8px;">Tell us their story.</strong>
+            <p>We review every application and reach out within 48 hours. No commitment required to apply.</p>
+            <a class="btn primary" href="#intake">Apply for a seat</a>
           </article>
         </div>
       </div>
@@ -401,9 +407,9 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="intake" id="intake" data-nav="sand">
       <div class="wrap intake-grid">
         <div class="intake-copy reveal">
-          <p class="label">Join MindCraft</p>
-          <h2>Tell us where to start.</h2>
-          <p>Send a quick note here and we will follow up with the next step.</p>
+          <p class="label">Apply for a seat</p>
+          <h2>Tell us their story.</h2>
+          <p>One form. We review it, reach out within 48 hours, and find the right tutor match. No commitment to apply.</p>
         </div>
         <form class="form-card reveal" id="intakeForm">
           <div class="form-grid">
@@ -413,15 +419,15 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
             <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Homework, confidence, ACT math, algebra, geometry, test anxiety..." required></textarea></div>
           </div>
-          <button class="btn primary" type="submit">Send intake</button>
-          <p class="form-note">This opens a pre-filled email so we get the details cleanly.</p>
+          <button class="btn primary" type="submit">Apply now</button>
+          <p class="form-note">Opens a pre-filled email. We reply within 48 hours.</p>
           <div class="status" id="formStatus">Opening your email with the intake details.</div>
         </form>
       </div>
     </section>
   </main>
   <footer>
-    <div><strong>Mind<span>Craft</span></strong><p>Math tutoring with a map.</p></div>
+    <div><strong>Mind<span>Craft</span></strong><p>They were never bad at math. They were waiting for a better story.</p></div>
     <div class="footer-links"><a href="mailto:joinmindcraft@gmail.com">Email</a><a href="tel:+17633405616">Call</a><a href="#top">Top</a></div>
   </footer>
 </div>
