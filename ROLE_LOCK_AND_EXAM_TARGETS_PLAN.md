@@ -65,13 +65,13 @@ own `users/{uid}` doc. Privileges attached to fields on that doc:
 | `role: 'parent'` | nothing by itself (safe) |
 
 Today: the admin grant is a client-side sessionStorage flag
-(`Login.tsx:23,77`) — anyone can set it in devtools and self-promote to
+(`Login.tsx:18-26,85`) — anyone can set it in devtools and self-promote to
 admin. The parent link (`ParentDashboard.tsx:150`) writes `childId` from an
 unverified email lookup — anyone can link themselves to any student and
 read a minor's educational records. Both must move server-side.
 
 Legitimate client writes that must KEEP working:
-- `Login.tsx:85` + `useStudentData.ts:115` — default/self-heal `role: 'student'`.
+- `Login.tsx:93` + `useStudentData.ts:115` — default/self-heal `role: 'student'`.
 - QAToolbar "delete my own knowledge graph" (already covered by rules).
 - Students writing non-privileged fields on their own doc (drafts,
   diagnostic flags, `parentEmail` — see 2b).
@@ -151,7 +151,7 @@ Follow the existing patterns in `join-classroom.ts` / `create-classroom.ts`
 
 ### 2c — App migrations (Lane: **Product**, `app/**`)
 
-1. **`Login.tsx:77`** — replace the direct `setDoc(role:'admin')` with a
+1. **`Login.tsx:85`** — replace the direct `setDoc(role:'admin')` with a
    call to `grant-admin` (existing webhook base URL pattern; send the ID
    token). Keep the sessionStorage arming UX; on 403 show a plain
    "not authorized" error and route to `/dashboard`.
