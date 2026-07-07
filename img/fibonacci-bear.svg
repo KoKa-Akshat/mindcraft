@@ -16,9 +16,6 @@
   <circle cx="162" cy="58" r="13" fill="#ffe8c8"/>
   <!-- head -->
   <ellipse cx="120" cy="112" rx="72" ry="64" fill="url(#fur)"/>
-  <!-- cheeks -->
-  <ellipse cx="88" cy="128" rx="12" ry="8" fill="#ffb4a2" opacity="0.45"/>
-  <ellipse cx="152" cy="128" rx="12" ry="8" fill="#ffb4a2" opacity="0.45"/>
   <!-- muzzle -->
   <ellipse cx="120" cy="132" rx="34" ry="26" fill="url(#belly)"/>
   <!-- eyes -->

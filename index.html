@@ -10,12 +10,12 @@
 <meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
 <meta property="og:title" content="MindCraft | Math tutoring that feels possible">
 <meta property="og:description" content="Real tutors, targeted practice, and a calm learning map for students who want math to finally click.">
-<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-luxury-map-20260706.jpg">
+<meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MindCraft | Math tutoring that feels possible">
 <meta name="twitter:description" content="Real tutors, targeted practice, and a calm learning map for students who want math to finally click.">
-<meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-luxury-map-20260706.jpg">
-<link rel="preload" as="image" href="img/mindcraft-luxury-map-20260706.jpg">
+<meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-logo.png">
+<link rel="preload" as="image" href="img/mindcraft-logo.png">
 <link rel="preload" as="image" href="img/mindcraft-study-desk-20260706.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +51,7 @@ button,input,textarea,select{font:inherit}
 .loader.done{opacity:0;visibility:hidden}
 .loader-card{width:min(760px,calc(100vw - 42px));display:grid;gap:20px}
 .loader-frame{position:relative;aspect-ratio:16/9;border:1px solid rgba(20,58,46,.15);border-radius:38px;overflow:hidden;background:#fffdf7;box-shadow:0 38px 110px rgba(29,84,54,.18)}
-.loader-frame img{width:100%;height:100%;display:block;object-fit:cover;transform:scale(1.12);filter:saturate(.86) contrast(.96);animation:loaderDrift 1.9s var(--ease) both}
+.loader-frame img{width:100%;height:100%;display:block;object-fit:contain;padding:clamp(32px,7vw,78px);transform:scale(.9);filter:saturate(.95) contrast(1);animation:loaderDrift 1.9s var(--ease) both}
 .loader-frame:before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,#fff8e9 0%,rgba(255,248,233,.96) calc(var(--load,0%) - 10%),rgba(255,248,233,.18) var(--load,0%),transparent calc(var(--load,0%) + 18%));transition:background .16s linear}
 .loader-frame:after{content:"";position:absolute;inset:-16%;z-index:3;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.56) 49%,transparent 60%);transform:translateX(-56%);animation:sheen 1.45s .18s var(--ease) infinite}
 .loader-meta{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;color:var(--ink);font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.16em}
@@ -315,7 +315,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 <body class="is-loading">
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader-card">
-    <div class="loader-frame" id="loaderFrame"><img src="img/mindcraft-luxury-map-20260706.jpg" alt=""></div>
+    <div class="loader-frame" id="loaderFrame"><img src="img/mindcraft-logo.png" alt=""></div>
     <div class="loader-meta">
       <span>MindCraft</span>
       <span class="loader-bar"><span id="loaderBar"></span></span>
@@ -399,7 +399,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap vibe-grid">
         <div class="vibe-copy reveal">
           <p class="label">The energy</p>
-          <h2>Chill enough to try.</h2>
+          <h2>Calm enough to begin.</h2>
           <p>MindCraft is for students who want to do big things, but do not need pressure in their face. We make the next step obvious, then help them take it.</p>
           <div class="pill-row">
             <span class="pill">stuck is not lazy</span>
@@ -424,11 +424,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <line x1="72" y1="24" x2="72" y2="196" stroke="rgba(193,18,31,0.22)" stroke-width="2"/>
               <path d="M92 168 L148 118 L204 132 L268 78" stroke="#247a4d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="148" cy="118" r="5" fill="#247a4d"/>
-              <text x="278" y="72" font-family="Caveat,cursive" font-size="22" fill="#1d3a8a">m = rise/run</text>
+              <text x="278" y="72" font-family="Caveat,cursive" font-size="22" fill="#1d3a8a">one clear next step</text>
             </svg>
             <figcaption class="script">every page tells the story</figcaption>
           </figure>
-          <div class="scribble-note script">m = rise/run</div>
+          <div class="scribble-note script">small steps count</div>
         </div>
       </div>
     </section>
@@ -610,7 +610,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap">
         <div class="tryapp-card reveal">
           <figure class="tryapp-bear" aria-hidden="false">
-            <img src="img/fibonacci-bear.svg" alt="Fib, the MindCraft bear with a golden spiral on his journal" loading="lazy" width="240" height="280">
+            <img src="img/fibonacci-bear.svg" alt="Fib, the MindCraft bear holding a little learning map" loading="lazy" width="240" height="280">
             <figcaption>Fib has your map ready.</figcaption>
           </figure>
           <div class="tryapp-copy">
