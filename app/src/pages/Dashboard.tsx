@@ -206,9 +206,18 @@ export default function Dashboard() {
       }
 
       let done = await isDiagnosticComplete(user.uid)
+      // Only trust localStorage shortcut if Firestore already has some data for
+      // this student — prevents a stale 'mc-diag-done' from bypassing the gap
+      // scan on a fresh or reset account.
       if (!done && localStorage.getItem('mc-diag-done') === '1') {
-        await markDiagnosticComplete(user.uid, { exam: 'ACT', confidenceMap: {} })
-        done = true
+        const userSnap = await getDoc(doc(db, 'users', user.uid))
+        const hasPriorData = !!(userSnap.data()?.practiceCount || userSnap.data()?.lastActive)
+        if (hasPriorData) {
+          await markDiagnosticComplete(user.uid, { exam: 'ACT', confidenceMap: {} })
+          done = true
+        } else {
+          localStorage.removeItem('mc-diag-done')
+        }
       }
       if (cancelled) return
       if (!done) navigate('/practice', { state: { examHelp: true } })
