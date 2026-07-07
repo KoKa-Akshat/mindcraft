@@ -1,7 +1,9 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
+import { useEffect, useState } from 'react'
 import { auth } from '../firebase'
 import { useUser } from '../App'
+import { getUserRole } from '../lib/practiceState'
 import MindCraftLogo from './MindCraftLogo'
 import s from './Sidebar.module.css'
 
@@ -16,6 +18,12 @@ export default function Sidebar() {
   const loc      = useLocation()
   const navigate = useNavigate()
   const user     = useUser()
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    if (!user?.uid) return
+    getUserRole(user.uid).then(role => setIsAdmin(role === 'admin'))
+  }, [user?.uid])
 
   const active = (path: string) =>
     loc.pathname === path || (path !== '/dashboard' && loc.pathname.startsWith(path))
@@ -40,6 +48,11 @@ export default function Sidebar() {
           >
             Community
           </a>
+          {isAdmin && (
+            <Link to="/admin" className={s.link}>
+              Admin Panel
+            </Link>
+          )}
         </div>
 
         {user && (

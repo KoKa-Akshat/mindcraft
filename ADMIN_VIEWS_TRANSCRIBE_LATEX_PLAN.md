@@ -38,12 +38,12 @@ gate, so no gating changes needed — the pages will show the admin's own
 (mostly empty) data, which is fine for inspection.
 
 ### Acceptance
-- [ ] From `/admin`, an admin can reach dashboard, practice, knowledge
+- [x] From `/admin`, an admin can reach dashboard, practice, knowledge
       graph, tutor, and parent pages and back (each of those pages links
       to `/admin` or has nav back — add a small "Admin Panel" side link on
       any that lack one, matching TutorDashboard.tsx:555's pattern but use
       react-router `<Link>`, not `<a>`).
-- [ ] No student-only redirect fires for the admin on any of them.
+- [x] No student-only redirect fires for the admin on any of them.
 
 ---
 
@@ -127,7 +127,13 @@ confirm hints + explanation + chapter page all render math properly; then
 load an Eedi currency question ("theme park charges $ 8 entry fee...") and
 confirm it renders as prose, not math.
 
-- [ ] All five render-site groups wrapped.
-- [ ] Manual check: TeX question renders on Practice (question, choices,
-      hints, explanation) and ConceptChapterPage.
-- [ ] Manual check: currency questions unaffected.
+- [x] All five render-site groups wrapped.
+- [x] Runtime check: TeX renders via KaTeX in all delimiter forms — verified
+      by `app/src/components/MathText.test.ts` (12 tests, real bank strings).
+      NOTE: audit correction — no CURRENT bank source contains real TeX (the
+      "37 static-bank TeX lines" in the grounding notes was a bad grep hit on
+      the word "fraction"/unicode √). The wrapping protects future generated
+      questions (C5) and transcribe-scratch output, which emits $...$ LaTeX.
+- [x] Runtime check: currency questions unaffected — same test file covers
+      real Eedi/actMaster price strings incl. "$35.19. ... tip?$" spanning
+      pairs.

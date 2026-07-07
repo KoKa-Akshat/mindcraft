@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import type { Gap, ExamType } from '../pages/Prep'
+import MathText from './MathText'
 import s from './PracticeCards.module.css'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -229,7 +230,7 @@ export default function PracticeCards({
 
           {/* Question */}
           <div className={s.qCard}>
-            <p className={s.question}>{q.question}</p>
+            <p className={s.question}><MathText text={q.question} /></p>
 
             {/* Visual */}
             {q.visual_type === 'svg' && q.visual_data && (
@@ -253,7 +254,7 @@ export default function PracticeCards({
                           type="button"
                         >
                           <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                          <span className={s.choiceText}>{choice}</span>
+                          <span className={s.choiceText}><MathText text={choice} /></span>
                         </button>
                       ))}
                     </div>
@@ -293,7 +294,7 @@ export default function PracticeCards({
                     disabled={revealed}
                   >
                     <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                    <span className={s.choiceText}>{choice}</span>
+                    <span className={s.choiceText}><MathText text={choice} /></span>
                   </button>
                 ))}
               </div>
@@ -308,7 +309,7 @@ export default function PracticeCards({
                     {q.hints.slice(0, hintsShown).map((h, i) => (
                       <div key={i} className={s.hint}>
                         <span className={s.hintNum}>Hint {i + 1}</span>
-                        <span className={s.hintText}>{h}</span>
+                        <span className={s.hintText}><MathText text={h} /></span>
                       </div>
                     ))}
                   </div>
@@ -328,7 +329,7 @@ export default function PracticeCards({
                       disabled={revealed}
                     >
                       <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                      <span className={s.choiceText}>{choice}</span>
+                      <span className={s.choiceText}><MathText text={choice} /></span>
                     </button>
                   ))}
                 </div>
@@ -360,7 +361,7 @@ export default function PracticeCards({
                       ? 'Exactly.'
                       : 'Good. We found the real gap.'}
                   </div>
-                  <p className={s.explanation}>{q.explanation}</p>
+                  <p className={s.explanation}><MathText text={q.explanation} /></p>
                   {!correct && (
                     <div className={s.microLesson}>
                       <span className={s.microLabel}>Build from here:</span>

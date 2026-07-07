@@ -81,6 +81,11 @@ export interface StudentWorkEntry {
   studentId: string
   prompt: string
   scratchImage?: string
+  scratchTranscription?: {
+    text: string
+    latex: string
+    editedByStudent: boolean
+  }
   reasoningText: string
   wasStuck: boolean
   createdAt: number

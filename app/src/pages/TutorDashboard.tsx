@@ -552,10 +552,10 @@ export default function TutorDashboard() {
           <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Documents
         </a>
-        <a href="/admin" className={s.sideItem}>
+        <Link to="/admin" className={s.sideItem}>
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
           Admin Panel
-        </a>
+        </Link>
       </aside>
 
       <main className={s.page}>

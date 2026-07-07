@@ -2079,7 +2079,8 @@ export default function Practice() {
                             <div className={s.hintsBox}>
                               {hintList.slice(0, hintsShown).map((h, i) => (
                                 <div key={i} className={s.hintLine}>
-                                  <span className={s.hintNum}>{i + 1}</span> {h}
+                                  <span className={s.hintNum}>{i + 1}</span>{' '}
+                                  <MathText text={h} />
                                 </div>
                               ))}
                               {hintsShown < Math.min(hintList.length, 3) && (
@@ -2152,7 +2153,9 @@ export default function Practice() {
                           </span>
                         </div>
                         <div className={s.feedbackBody}>
-                          <div className={s.feedbackExplanation}>{currentQ.explanation}</div>
+                          <div className={s.feedbackExplanation}>
+                            <MathText text={currentQ.explanation} />
+                          </div>
                           {selected !== currentQ.correctIndex && storyItem?.misconceptionCallout && (
                             <div className={s.misconceptionTag}>
                               <span className={s.misconceptionIcon}>⚠</span>

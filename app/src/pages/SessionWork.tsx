@@ -13,6 +13,7 @@ import {
 import { db } from '../firebase'
 import { useUser } from '../App'
 import ScratchPad from '../components/ScratchPad'
+import ScratchTranscriptionPane, { type ScratchTranscription } from '../components/ScratchTranscriptionPane'
 import s from './SessionWork.module.css'
 
 export default function SessionWork() {
@@ -28,6 +29,8 @@ export default function SessionWork() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [subject, setSubject] = useState('')
+  const [scratchImage, setScratchImage] = useState('')
+  const [scratchTranscription, setScratchTranscription] = useState<ScratchTranscription | null>(null)
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
@@ -102,7 +105,8 @@ export default function SessionWork() {
         prompt,
         wasStuck,
         reasoningText: reasoningText.trim(),
-        scratchImage: canvasRef.current?.toDataURL('image/png') ?? '',
+        scratchImage,
+        scratchTranscription: scratchTranscription ?? { text: '', latex: '', editedByStudent: false },
         createdAt: Date.now(),
       })
 
@@ -113,6 +117,8 @@ export default function SessionWork() {
         setStep(next)
         setWasStuck(null)
         setReasoningText('')
+        setScratchImage('')
+        setScratchTranscription(null)
         canvasRef.current = null
       }
     } catch {
@@ -164,7 +170,15 @@ export default function SessionWork() {
               <ScratchPad
                 key={`${step}-${prompt}`}
                 height={300}
-                onChange={canvas => { canvasRef.current = canvas }}
+                onChange={canvas => {
+                  canvasRef.current = canvas
+                  setScratchImage(canvas.toDataURL('image/png'))
+                }}
+              />
+              <ScratchTranscriptionPane
+                imageDataUrl={scratchImage}
+                resetKey={`${step}-${prompt}`}
+                onChange={setScratchTranscription}
               />
 
               <div>

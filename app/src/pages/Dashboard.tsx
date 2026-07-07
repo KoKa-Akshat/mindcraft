@@ -2,12 +2,12 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { Compass, NotebookPen, Wand2 } from 'lucide-react'
+import { Compass, NotebookPen, Wand2, Settings } from 'lucide-react'
 import { auth, db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
-import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal } from '../lib/practiceState'
+import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal, getUserRole } from '../lib/practiceState'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import { pawHubDisplayText, pawHubLearnSub, type CurriculumTrack } from '../lib/curriculumTrack'
@@ -104,6 +104,7 @@ export default function Dashboard() {
   const [turningConceptId, setTurningConceptId] = useState<string | null>(null)
   const [parentEmail, setParentEmail] = useState('')
   const [parentEmailSaved, setParentEmailSaved] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
@@ -170,6 +171,11 @@ export default function Dashboard() {
   }
 
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
+
+  useEffect(() => {
+    if (!uid) return
+    getUserRole(uid).then(role => setIsAdmin(role === 'admin'))
+  }, [uid])
 
   useEffect(() => {
     if (!gpsMode) { setPlotConceptId(null); return }
@@ -388,6 +394,15 @@ export default function Dashboard() {
                 active={gpsMode || routeMode}
                 onClick={openGps}
               />
+              {isAdmin && (
+                <CoverNavItem
+                  icon={<Settings size={19} strokeWidth={1.75} />}
+                  label="Admin Panel"
+                  sub="Internal ops and testing tools"
+                  active={false}
+                  onClick={() => navigate('/admin')}
+                />
+              )}
             </CoverNavSection>
 
             <div className={s.parentEmailBox}>

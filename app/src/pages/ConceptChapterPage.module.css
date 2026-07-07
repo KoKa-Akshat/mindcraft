@@ -457,6 +457,9 @@
   opacity: 0.55;
 }
 .notepadClear:hover { opacity: 1; background: rgba(0,0,0,0.05); }
+.transcriptionPane {
+  margin: 12px 0 0 14px;
+}
 .notepadInner {
   flex: 1;
   position: relative;

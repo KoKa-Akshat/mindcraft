@@ -12,7 +12,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   doc, getDoc, getDocs,
   collection, query, where, orderBy, limit,
@@ -65,12 +65,14 @@ export default function ParentDashboard() {
   const [graphNodes,   setGraphNodes]   = useState<GraphNode[]>([])
   const [tutorName,    setTutorName]    = useState<string | null>(null)
   const [tutorEmail,   setTutorEmail]   = useState<string | null>(null)
+  const [isAdmin,      setIsAdmin]      = useState(false)
 
   // ── load parent doc ──
   useEffect(() => {
     getDoc(doc(db, 'users', user.uid)).then(snap => {
       const data = snap.data() ?? {}
       if (data.role !== 'parent' && data.role !== 'admin') navigate('/dashboard', { replace: true })
+      if (data.role === 'admin') setIsAdmin(true)
       if (data.childId) setChildId(data.childId)
       else setLoading(false)
     })
@@ -214,6 +216,11 @@ export default function ParentDashboard() {
         <a href={MARKETING_BASE} className={s.logo}>Mind<span>Craft</span></a>
         <div className={s.navRight}>
           <span className={s.navRole}>Parent</span>
+          {isAdmin && (
+            <Link to="/admin" className={s.navRole} style={{ textDecoration: 'none' }}>
+              Admin Panel
+            </Link>
+          )}
           <div className={s.avatar}
             onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
             title="Sign out">

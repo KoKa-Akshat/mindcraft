@@ -5,7 +5,9 @@ import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import InteractiveWidget from '../components/InteractiveWidget'
+import MathText from '../components/MathText'
 import ScratchPad from '../components/ScratchPad'
+import ScratchTranscriptionPane from '../components/ScratchTranscriptionPane'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -201,7 +203,7 @@ function QuestionContent({ text, ink, accent }: { text: string; ink: string; acc
             </span>
           )
         }
-        return <span key={i}>{part}</span>
+        return <MathText key={i} text={part} />
       })}
     </p>
   )
@@ -489,7 +491,7 @@ export default function ConceptChapterPage() {
                       <span className={s.choiceLetter} style={{ color: theme.accent }}>
                         {String.fromCharCode(65 + i)}
                       </span>
-                      <span className={s.choiceText}>{fmtChoice(c)}</span>
+                      <span className={s.choiceText}><MathText text={fmtChoice(c)} /></span>
                     </button>
                   ))}
                 </div>
@@ -508,7 +510,7 @@ export default function ConceptChapterPage() {
                     )}
                     {q.hints.slice(0, hintsShownPerQ[spec.qIdx] ?? 0).map((hint, hi) => (
                       <div key={hi} className={s.hintBubble} style={{ borderLeftColor: theme.accent + '66', color: theme.dim }}>
-                        {hint}
+                        <MathText text={hint} />
                       </div>
                     ))}
                   </div>
@@ -564,6 +566,11 @@ export default function ConceptChapterPage() {
                   onChange={canvas => {
                     setNotes(n => ({ ...n, [spec.qIdx]: canvas.toDataURL('image/png') }))
                   }}
+                />
+                <ScratchTranscriptionPane
+                  imageDataUrl={notes[spec.qIdx] ?? ''}
+                  resetKey={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
+                  className={s.transcriptionPane}
                 />
               </div>
             </div>

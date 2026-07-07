@@ -291,7 +291,58 @@ what's next in the story.
 
 ---
 
-### 1.6 `/world-builder` (future — do not build yet)
+### 1.6 `/transcribe-scratch`
+
+**Purpose:** Transcribe a student's ScratchPad canvas image into plain text
+and LaTeX so later deterministic parsing can read the student's actual work.
+
+**Reads from deterministic engine:**
+- No graph or ontology reads. The endpoint only verifies the Firebase ID token
+  and reads the submitted canvas image.
+
+**Input contract:**
+```json
+{
+  "imageBase64": "data:image/png;base64,..."
+}
+```
+
+Request must include `Authorization: Bearer <Firebase ID token>`. Reject
+missing/invalid tokens with 401 and reject canvas payloads larger than about
+1.5 MB with 413.
+
+**Output contract:**
+```json
+{
+  "text": "line-by-line plain-language reading",
+  "latex": "$x+2=5$\n$x=3$",
+  "unavailable": false
+}
+```
+
+`unavailable` is optional and appears only when the provider path fails. If
+the image is blank or illegible, return `{ "text": "", "latex": "" }`.
+
+**Model:** Primary `claude-haiku-4-5-20251001` vision call. If Anthropic is
+unavailable, fall back to Groq vision
+`meta-llama/llama-4-scout-17b-16e-instruct` behind the same response schema.
+
+**Latency budget:** 4000ms. The UI treats this as an enhancement and hides the
+pane quietly when unavailable.
+
+**Rules:**
+- Transcribe only. Do not solve, correct, complete, or explain the work.
+- Output valid JSON only: `{ "text": string, "latex": string }`.
+- `text` and `latex` should preserve one written line per output line.
+- `latex` uses `$...$` inline delimiters for each math line.
+- Parse defensively because providers may wrap JSON in markdown fences.
+
+**Fallback:** `{ "text": "", "latex": "", "unavailable": true }`. Silent,
+never blocks ScratchPad saving or practice.
+
+---
+
+### 1.7 `/world-builder` (future — do not build yet)
 
 **Purpose:** Generate a persistent game environment that evolves with the
 student's learning arc. Concepts are crises. Sessions are missions. Mastery
@@ -377,9 +428,11 @@ shape. Fallbacks are not errors — they are the guaranteed floor.
 | `/question-frame` | Empty frame (question renders without wrapper) |
 | `/hint-agent` | Fixed generic nudge text |
 | `/post-session-agent` | Fixed "Nice work. Keep going." with mastery signal `improving` |
+| `/transcribe-scratch` | Empty strings with `unavailable: true` |
 
 Fallbacks must be indistinguishable from successful responses in shape. The
-frontend should not need to know whether the LLM succeeded.
+frontend should not need to know whether the LLM succeeded, except when an
+endpoint explicitly defines an `unavailable` enhancement flag.
 
 ### 2.5 Model selection
 
@@ -390,6 +443,7 @@ frontend should not need to know whether the LLM succeeded.
 | Question framing | `llama-3.3-70b` (Groq) | Short output, latency-sensitive (in session) |
 | Hint generation | `llama-3.3-70b` (Groq) | In-session, must be < 500ms |
 | Post-session | `claude-fable-5` | Reflective quality over speed |
+| Scratch transcription | `claude-haiku-4-5` vision, fallback `llama-4-scout` vision (Groq) | Small image-to-JSON task; graceful if provider credits fail |
 | World builder 🔮 | `claude-opus-4-8` | Complex world-state reasoning |
 
 Switch models by setting `LLM_PROVIDER` in env. The agent layer MUST be
@@ -405,6 +459,7 @@ provider-agnostic — no Groq-specific or Anthropic-specific code outside of
 | `/question-frame` | 800ms | Skip frame silently; show raw question |
 | `/hint-agent` | 600ms | Show generic fallback hint immediately |
 | `/post-session-agent` | 3000ms | Show generic reflection |
+| `/transcribe-scratch` | 4000ms | Hide transcription pane quietly |
 
 Timeouts are enforced in `llm_client.py` via `httpx.AsyncClient(timeout=...)`.
 Never let a hung LLM call block a student mid-session.

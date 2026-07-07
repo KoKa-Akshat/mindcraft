@@ -1,0 +1,85 @@
+.pane {
+  border: 1px solid rgba(36, 122, 77, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #247a4d;
+}
+
+.editBtn {
+  border: none;
+  background: transparent;
+  color: #557063;
+  font: 800 11px/1.2 var(--f, Inter, sans-serif);
+  cursor: pointer;
+  padding: 4px 0;
+  text-align: right;
+}
+
+.loading {
+  color: #6f7f77;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.preview {
+  color: #1a2234;
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 650;
+  white-space: pre-wrap;
+}
+
+.editGrid {
+  display: grid;
+  gap: 9px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field span {
+  color: #6f7f77;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid rgba(36, 122, 77, 0.18);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #1a2234;
+  font: 600 13px/1.5 var(--f, Inter, sans-serif);
+  padding: 9px 10px;
+  outline: none;
+}
+
+.field textarea:focus {
+  border-color: #247a4d;
+  box-shadow: 0 0 0 3px rgba(36, 122, 77, 0.1);
+}
