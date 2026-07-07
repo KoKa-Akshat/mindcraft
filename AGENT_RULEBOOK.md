@@ -303,12 +303,18 @@ and LaTeX so later deterministic parsing can read the student's actual work.
 **Input contract:**
 ```json
 {
-  "imageBase64": "data:image/png;base64,..."
+  "imageBase64": "data:image/png;base64,...",
+  "lines": [
+    { "imageBase64": "data:image/png;base64,..." }
+  ]
 }
 ```
 
-Request must include `Authorization: Bearer <Firebase ID token>`. Reject
-missing/invalid tokens with 401 and reject canvas payloads larger than about
+Request must include `Authorization: Bearer <Firebase ID token>`. `imageBase64`
+is the whole-page back-compat path. `lines` is optional and, when present,
+contains per-line crops; the endpoint transcribes each crop and derives the
+flat `text` / `latex` fields by joining the per-line results. Reject
+missing/invalid tokens with 401 and reject any image payload larger than about
 1.5 MB with 413.
 
 **Output contract:**
@@ -316,16 +322,23 @@ missing/invalid tokens with 401 and reject canvas payloads larger than about
 {
   "text": "line-by-line plain-language reading",
   "latex": "$x+2=5$\n$x=3$",
+  "perLine": [
+    { "text": "x plus 2 equals 5", "latex": "$x+2=5$" },
+    { "text": "x equals 3", "latex": "$x=3$" }
+  ],
   "unavailable": false
 }
 ```
 
-`unavailable` is optional and appears only when the provider path fails. If
-the image is blank or illegible, return `{ "text": "", "latex": "" }`.
+`perLine` is optional and appears only for the `lines` input path.
+`unavailable` is optional and appears when the provider path fails. If the
+image is blank or illegible, return `{ "text": "", "latex": "" }`.
 
-**Model:** Primary `claude-haiku-4-5-20251001` vision call. If Anthropic is
+**Model:** Primary `TRANSCRIBE_MODEL` env var, defaulting to
+`claude-haiku-4-5-20251001` vision. Use `temperature: 0`. If Anthropic is
 unavailable, fall back to Groq vision
-`meta-llama/llama-4-scout-17b-16e-instruct` behind the same response schema.
+`meta-llama/llama-4-scout-17b-16e-instruct` behind the same response schema
+unless `TRANSCRIBE_MODEL` names a Groq Llama model.
 
 **Latency budget:** 4000ms. The UI treats this as an enhancement and hides the
 pane quietly when unavailable.
@@ -335,6 +348,7 @@ pane quietly when unavailable.
 - Output valid JSON only: `{ "text": string, "latex": string }`.
 - `text` and `latex` should preserve one written line per output line.
 - `latex` uses `$...$` inline delimiters for each math line.
+- Same image input should produce identical output across retries.
 - Parse defensively because providers may wrap JSON in markdown fences.
 
 **Fallback:** `{ "text": "", "latex": "", "unavailable": true }`. Silent,

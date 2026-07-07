@@ -1,5 +1,10 @@
 .wrap { display: flex; flex-direction: column; gap: 8px; }
 
+.canvasWrap {
+  position: relative;
+  width: 100%;
+}
+
 .canvas {
   width: 100%;
   touch-action: none;
@@ -23,3 +28,28 @@
 }
 
 .clearBtn:hover { border-color: #bbb; color: var(--tx, #111); }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.lineBox {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.lineDebug {
+  border: 1.5px dashed rgba(36, 122, 77, 0.5);
+  background: rgba(36, 122, 77, 0.06);
+}
+
+.lineSuspect {
+  border: 2px solid rgba(245, 158, 11, 0.8);
+  background: rgba(245, 158, 11, 0.2);
+}
+

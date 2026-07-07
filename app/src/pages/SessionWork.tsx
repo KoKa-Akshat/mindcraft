@@ -5,15 +5,16 @@
  * Scratch pad + optional "what were you thinking" when stuck.
  */
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import {
   doc, getDoc, getDocs, addDoc, collection,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
-import ScratchPad from '../components/ScratchPad'
-import ScratchTranscriptionPane, { type ScratchTranscription } from '../components/ScratchTranscriptionPane'
+import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
+import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
+import type { ScratchStrokeData } from '../types'
 import s from './SessionWork.module.css'
 
 export default function SessionWork() {
@@ -30,9 +31,9 @@ export default function SessionWork() {
   const [error, setError] = useState('')
   const [subject, setSubject] = useState('')
   const [scratchImage, setScratchImage] = useState('')
-  const [scratchTranscription, setScratchTranscription] = useState<ScratchTranscription | null>(null)
-
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [scratchStrokes, setScratchStrokes] = useState<ScratchStrokeData | null>(null)
+  const [scratchInk, setScratchInk] = useState<ScratchInkState | null>(null)
+  const [debugOutlines, setDebugOutlines] = useState(false)
 
   useEffect(() => {
     if (!sessionId || !user?.email) return
@@ -106,7 +107,9 @@ export default function SessionWork() {
         wasStuck,
         reasoningText: reasoningText.trim(),
         scratchImage,
-        scratchTranscription: scratchTranscription ?? { text: '', latex: '', editedByStudent: false },
+        scratchStrokes: scratchStrokes ?? { strokes: [], width: 0, height: 0 },
+        workLines: scratchInk?.workLines ?? [],
+        scratchTranscription: scratchInk?.transcription ?? { text: '', latex: '', editedByStudent: false },
         createdAt: Date.now(),
       })
 
@@ -118,8 +121,9 @@ export default function SessionWork() {
         setWasStuck(null)
         setReasoningText('')
         setScratchImage('')
-        setScratchTranscription(null)
-        canvasRef.current = null
+        setScratchStrokes(null)
+        setScratchInk(null)
+        setDebugOutlines(false)
       }
     } catch {
       setError('Could not save your work. Try again.')
@@ -170,15 +174,33 @@ export default function SessionWork() {
               <ScratchPad
                 key={`${step}-${prompt}`}
                 height={300}
-                onChange={canvas => {
-                  canvasRef.current = canvas
-                  setScratchImage(canvas.toDataURL('image/png'))
+                lineOverlays={(() => {
+                  const lines = scratchInk?.workLines ?? []
+                  const overlays: LineOverlay[] = []
+                  for (const line of lines) {
+                    if (line.verdict === 'wrong') {
+                      overlays.push({ bbox: line.bbox, kind: 'suspect' })
+                    } else if (debugOutlines) {
+                      overlays.push({ bbox: line.bbox, kind: 'debug' })
+                    }
+                  }
+                  return overlays.length ? overlays : undefined
+                })()}
+                onChange={(_canvas, strokeData) => {
+                  setScratchStrokes(strokeData)
+                  setScratchImage(
+                    strokeData.strokes.length
+                      ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
+                      : '',
+                  )
                 }}
               />
               <ScratchTranscriptionPane
                 imageDataUrl={scratchImage}
+                strokeData={scratchStrokes}
                 resetKey={`${step}-${prompt}`}
-                onChange={setScratchTranscription}
+                onChange={setScratchInk}
+                onDebugChange={setDebugOutlines}
               />
 
               <div>

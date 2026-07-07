@@ -6,8 +6,9 @@ import { getQuestions, questionCount } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import InteractiveWidget from '../components/InteractiveWidget'
 import MathText from '../components/MathText'
-import ScratchPad from '../components/ScratchPad'
-import ScratchTranscriptionPane from '../components/ScratchTranscriptionPane'
+import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
+import type { ScratchStrokeData } from '../types'
+import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -320,6 +321,9 @@ export default function ConceptChapterPage() {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
   const [notes, setNotes] = useState<Record<number, string>>({})
+  const [scratchStrokes, setScratchStrokes] = useState<Record<number, ScratchStrokeData>>({})
+  const [scratchInk, setScratchInk] = useState<Record<number, ScratchInkState>>({})
+  const [debugOutlines, setDebugOutlines] = useState(false)
   const [scratchRev, setScratchRev] = useState<Record<number, number>>({})
   // hintsShownPerQ tracks how many hints have been revealed per question index
   const [hintsShownPerQ, setHintsShownPerQ] = useState<Record<number, number>>({})
@@ -550,6 +554,17 @@ export default function ConceptChapterPage() {
                       type="button"
                       onClick={() => {
                         setNotes(n => ({ ...n, [spec.qIdx]: '' }))
+                        setScratchStrokes(s => {
+                          const next = { ...s }
+                          delete next[spec.qIdx]
+                          return next
+                        })
+                        setScratchInk(s => {
+                          const next = { ...s }
+                          delete next[spec.qIdx]
+                          return next
+                        })
+                        setDebugOutlines(false)
                         setScratchRev(r => ({ ...r, [spec.qIdx]: (r[spec.qIdx] ?? 0) + 1 }))
                       }}
                     >
@@ -563,14 +578,40 @@ export default function ConceptChapterPage() {
                 <ScratchPad
                   key={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
                   height={240}
-                  onChange={canvas => {
-                    setNotes(n => ({ ...n, [spec.qIdx]: canvas.toDataURL('image/png') }))
+                  lineOverlays={(() => {
+                    const lines = scratchInk[spec.qIdx]?.workLines ?? []
+                    const overlays: LineOverlay[] = lines
+                      .filter(line => line.verdict === 'wrong')
+                      .map(line => ({ bbox: line.bbox, kind: 'suspect' as const }))
+                    if (debugOutlines) {
+                      overlays.push(...lines.map(line => ({ bbox: line.bbox, kind: 'debug' as const })))
+                    }
+                    return overlays.length ? overlays : undefined
+                  })()}
+                  onChange={(_canvas, strokeData) => {
+                    setScratchStrokes(s => ({ ...s, [spec.qIdx]: strokeData }))
+                    setNotes(n => ({
+                      ...n,
+                      [spec.qIdx]: strokeData.strokes.length
+                        ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
+                        : '',
+                    }))
                   }}
                 />
                 <ScratchTranscriptionPane
                   imageDataUrl={notes[spec.qIdx] ?? ''}
+                  strokeData={scratchStrokes[spec.qIdx] ?? null}
                   resetKey={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
                   className={s.transcriptionPane}
+                  onChange={state => {
+                    if (state) setScratchInk(s => ({ ...s, [spec.qIdx]: state }))
+                    else setScratchInk(s => {
+                      const next = { ...s }
+                      delete next[spec.qIdx]
+                      return next
+                    })
+                  }}
+                  onDebugChange={setDebugOutlines}
                 />
               </div>
             </div>

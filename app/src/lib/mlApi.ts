@@ -107,6 +107,21 @@ export interface StudentProfileResult {
   topWeaknesses: Array<{ conceptId: string; strength: number }>
 }
 
+export interface CheckWorkResult {
+  firstBrokenLine: number | null
+  verdictPerLine: Array<{
+    line: number
+    latex: string
+    normalized: string
+    verdict: 'ok' | 'wrong' | 'unparsed'
+    reason: string
+  }>
+  hypothesis?: {
+    misconception_id: string
+    label: string
+  } | null
+}
+
 // ── API calls ──────────────────────────────────────────────────────────────
 
 export async function getRecommendations(
@@ -290,6 +305,29 @@ export async function getStudentProfile(
   try {
     const res = await fetch(`${ML_BASE}/student-profile/${studentId}`, {
       headers: await mlAuthHeaders(),
+    })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
+}
+
+export async function checkWork(
+  studentId: string,
+  lines: Array<{ latex: string }>,
+  problemText?: string,
+): Promise<CheckWorkResult | null> {
+  if (lines.length < 2) return null
+  try {
+    const res = await fetch(`${ML_BASE}/check-work`, {
+      method: 'POST',
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify({
+        student_id: studentId,
+        problem_text: problemText ?? null,
+        lines,
+      }),
     })
     if (!res.ok) return null
     return res.json()

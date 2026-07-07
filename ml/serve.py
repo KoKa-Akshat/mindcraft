@@ -249,6 +249,16 @@ class SubmitIngredientAnswerRequest(BaseModel):
     student_succeeded: bool
 
 
+class CheckWorkLine(BaseModel):
+    latex: str
+
+
+class CheckWorkRequest(BaseModel):
+    student_id: str
+    problem_text: str | None = None
+    lines: list[CheckWorkLine]
+
+
 def _serialize_minimal_dag(dag):
     return {
         "nodes": {
@@ -298,6 +308,21 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
 
 
 # ── Endpoints ──
+
+@app.post("/check-work")
+async def check_work_endpoint(req: CheckWorkRequest, auth: AuthContext = Depends(require_auth)):
+    """Deterministically check whether consecutive transcribed work lines preserve value.
+
+    Parsing failures are `unparsed`, never wrong. Only cleanly parsed,
+    inequivalent consecutive lines produce `firstBrokenLine`.
+    """
+    authorize_student(auth, req.student_id)
+    from mindcraft_graph.work_check import check_work_lines
+
+    if len(req.lines) > 20:
+        raise HTTPException(status_code=400, detail="Too many lines")
+
+    return check_work_lines([line.latex for line in req.lines])
 
 @app.post("/recommend")
 async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(require_auth)):

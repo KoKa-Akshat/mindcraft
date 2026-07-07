@@ -4,20 +4,25 @@ import { setCors } from '../lib/cors'
 import { auth } from '../lib/firebase'
 
 const MAX_IMAGE_BASE64_BYTES = 1.5 * 1024 * 1024
+const MAX_LINES = 20
 const MODEL_TIMEOUT_MS = 4000
-const ANTHROPIC_MODEL = 'claude-haiku-4-5-20251001'
-const GROQ_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
+const DEFAULT_ANTHROPIC_MODEL = 'claude-haiku-4-5-20251001'
+const DEFAULT_GROQ_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
+const TRANSCRIBE_MODEL = process.env.TRANSCRIBE_MODEL ?? DEFAULT_ANTHROPIC_MODEL
 
 interface TranscriptionResult {
   text: string
   latex: string
   unavailable?: boolean
+  perLine?: Array<{ text: string; latex: string }>
 }
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? '' })
 
-function fallback(unavailable = false): TranscriptionResult {
-  return unavailable ? { text: '', latex: '', unavailable: true } : { text: '', latex: '' }
+function fallback(unavailable = false, perLine?: Array<{ text: string; latex: string }>): TranscriptionResult {
+  const result: TranscriptionResult = unavailable ? { text: '', latex: '', unavailable: true } : { text: '', latex: '' }
+  if (perLine) result.perLine = perLine
+  return result
 }
 
 function stripDataUrl(raw: string): { base64: string; mediaType: 'image/png' | 'image/jpeg' | 'image/webp' | 'image/gif' } {
@@ -71,8 +76,9 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 async function transcribeWithAnthropic(base64: string, mediaType: 'image/png' | 'image/jpeg' | 'image/webp' | 'image/gif') {
   if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY missing')
   const result = await withTimeout(anthropic.messages.create({
-    model: ANTHROPIC_MODEL,
+    model: TRANSCRIBE_MODEL,
     max_tokens: 700,
+    temperature: 0,
     system: systemPrompt(),
     messages: [{
       role: 'user',
@@ -89,6 +95,9 @@ async function transcribeWithAnthropic(base64: string, mediaType: 'image/png' | 
 async function transcribeWithGroq(base64: string, mediaType: string) {
   const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) throw new Error('GROQ_API_KEY missing')
+  const model = TRANSCRIBE_MODEL.includes('llama') || TRANSCRIBE_MODEL.includes('meta-')
+    ? TRANSCRIBE_MODEL
+    : DEFAULT_GROQ_MODEL
   const res = await withTimeout(fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -96,7 +105,7 @@ async function transcribeWithGroq(base64: string, mediaType: string) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: GROQ_MODEL,
+      model,
       temperature: 0,
       max_tokens: 700,
       messages: [
@@ -116,6 +125,44 @@ async function transcribeWithGroq(base64: string, mediaType: string) {
   return safeJson(data.choices?.[0]?.message?.content ?? '')
 }
 
+async function transcribeImage(rawImage: string): Promise<TranscriptionResult> {
+  const { base64, mediaType } = stripDataUrl(rawImage)
+  if (Buffer.byteLength(base64, 'base64') > MAX_IMAGE_BASE64_BYTES) {
+    throw Object.assign(new Error('Image too large'), { statusCode: 413 })
+  }
+
+  try {
+    return await transcribeWithAnthropic(base64, mediaType)
+  } catch (anthropicErr: any) {
+    console.warn('transcribe-scratch anthropic fallback:', anthropicErr?.message ?? anthropicErr)
+  }
+
+  try {
+    return await transcribeWithGroq(base64, mediaType)
+  } catch (groqErr: any) {
+    console.warn('transcribe-scratch unavailable:', groqErr?.message ?? groqErr)
+    return fallback(true)
+  }
+}
+
+async function transcribeLines(lines: Array<{ imageBase64: string }>): Promise<TranscriptionResult> {
+  const perLine: Array<{ text: string; latex: string }> = []
+  let unavailable = false
+
+  for (const line of lines) {
+    const result = await transcribeImage(line.imageBase64)
+    if (result.unavailable) unavailable = true
+    perLine.push({ text: result.text, latex: result.latex })
+  }
+
+  return {
+    text: perLine.map(line => line.text).filter(Boolean).join('\n'),
+    latex: perLine.map(line => line.latex).filter(Boolean).join('\n'),
+    perLine,
+    ...(unavailable ? { unavailable: true } : {}),
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
@@ -130,26 +177,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
-  const imageBase64 = typeof req.body?.imageBase64 === 'string' ? req.body.imageBase64 : ''
-  if (!imageBase64) return res.status(400).json({ error: 'Missing imageBase64' })
-
-  const { base64, mediaType } = stripDataUrl(imageBase64)
-  if (Buffer.byteLength(base64, 'base64') > MAX_IMAGE_BASE64_BYTES) {
-    return res.status(413).json({ error: 'Image too large' })
-  }
-
   try {
-    const result = await transcribeWithAnthropic(base64, mediaType)
-    return res.status(200).json(result)
-  } catch (anthropicErr: any) {
-    console.warn('transcribe-scratch anthropic fallback:', anthropicErr?.message ?? anthropicErr)
-  }
+    const rawLines: unknown[] = Array.isArray(req.body?.lines) ? req.body.lines : []
+    const lines = rawLines
+      .filter((line): line is { imageBase64: string } => (
+        !!line
+        && typeof line === 'object'
+        && 'imageBase64' in line
+        && typeof line.imageBase64 === 'string'
+      ))
+      .slice(0, MAX_LINES)
 
-  try {
-    const result = await transcribeWithGroq(base64, mediaType)
+    if (lines.length > 0) {
+      const result = await transcribeLines(lines)
+      return res.status(200).json(result)
+    }
+
+    const imageBase64 = typeof req.body?.imageBase64 === 'string' ? req.body.imageBase64 : ''
+    if (!imageBase64) return res.status(400).json({ error: 'Missing imageBase64' })
+
+    const result = await transcribeImage(imageBase64)
     return res.status(200).json(result)
-  } catch (groqErr: any) {
-    console.warn('transcribe-scratch unavailable:', groqErr?.message ?? groqErr)
+  } catch (err: any) {
+    if (err?.statusCode === 413) return res.status(413).json({ error: 'Image too large' })
+    console.warn('transcribe-scratch request failed:', err?.message ?? err)
     return res.status(200).json(fallback(true))
   }
 }

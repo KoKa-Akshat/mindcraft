@@ -75,12 +75,34 @@ export interface TutorObservation {
 
 // ─── Student async reasoning (session follow-up work) ─────────────────────────
 
+export type ScratchStrokePoint = [number, number, number]
+
+export interface ScratchStrokeData {
+  strokes: ScratchStrokePoint[][]
+  width: number
+  height: number
+}
+
+export type InkBbox = [number, number, number, number]
+
+export interface WorkLine {
+  bbox: InkBbox
+  strokeIdx: number[]
+  text: string
+  latex: string
+  editedByStudent: boolean
+  verdict?: 'ok' | 'wrong' | 'unparsed'
+  checkReason?: string
+}
+
 export interface StudentWorkEntry {
   id: string
   sessionId: string
   studentId: string
   prompt: string
   scratchImage?: string
+  scratchStrokes?: ScratchStrokeData
+  workLines?: WorkLine[]
   scratchTranscription?: {
     text: string
     latex: string

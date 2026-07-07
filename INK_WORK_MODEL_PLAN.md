@@ -34,7 +34,7 @@ notation; failures hide the pane so degradation is invisible.
   `scratchTranscription` (types/index.ts `StudentWorkEntry`). JSON of a page
   of work is tens of KB — fine for Firestore, but round coordinates to 1
   decimal to keep it lean.
-- [ ] Drawing in SessionWork lands strokes JSON in the studentWork doc.
+- [x] Drawing in SessionWork lands strokes JSON in the studentWork doc.
 
 ### 1b — transcription quality fixes (Lane: **Engine**, `webhook/**`)
 In `transcribe-scratch.ts`:
@@ -81,9 +81,9 @@ change (1b already covers it).
 - **Highlight overlay**: absolutely-positioned div over the canvas that can
   tint a line's bbox (amber = suspect step). Renders from `workLines[i].bbox`
   — no canvas re-render needed. Ship it behind a prop; Phase 3 drives it.
-- [ ] Multi-line work → N workLines with sane bboxes (eyeball with a debug
+- [x] Multi-line work → N workLines with sane bboxes (eyeball with a debug
       outline toggle).
-- [ ] Editing one line's LaTeX updates only that line.
+- [x] Editing one line's LaTeX updates only that line.
 
 ## Phase 3 — deterministic step check + misconception hints (the payoff)
 
