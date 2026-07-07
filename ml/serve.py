@@ -134,8 +134,7 @@ app.add_middleware(
         "https://mindcraft-93858.web.app",
         "https://mindcraft-93858.firebaseapp.com",
         "https://app-beta-one-59.vercel.app",
-        # Replace <org> with the actual HF Space owner before deploying.
-        "https://<org>-mindcraft-ml.hf.space",
+        "https://joinmindcraft-mindcraft-ml.hf.space",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -950,6 +949,51 @@ async def health():
         "edgeCount": len(ontology.edges),
         "embeddingsLoaded": len(concept_embs) > 0,
     }
+
+
+@app.get("/firestore-health")
+async def firestore_health(auth: AuthContext = Depends(require_auth)):
+    if not auth.is_service:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    import json
+    import os
+
+    credential_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+    credential_exists = bool(credential_path and pathlib.Path(credential_path).exists())
+    credential_json_ok = False
+    credential_project_id = None
+    if credential_exists:
+        try:
+            credential_data = json.loads(pathlib.Path(credential_path).read_text())
+            credential_json_ok = True
+            credential_project_id = credential_data.get("project_id")
+        except Exception:
+            credential_json_ok = False
+
+    try:
+        from mindcraft_graph.firestore_adapter import FIRESTORE_PROJECT, db
+
+        doc = db.collection("ingredient_states").document("__health__").get()
+        return {
+            "ok": True,
+            "firestoreProject": FIRESTORE_PROJECT,
+            "credentialPathSet": bool(credential_path),
+            "credentialExists": credential_exists,
+            "credentialJsonOk": credential_json_ok,
+            "credentialProjectId": credential_project_id,
+            "healthDocExists": doc.exists,
+        }
+    except Exception as exc:
+        return {
+            "ok": False,
+            "credentialPathSet": bool(credential_path),
+            "credentialExists": credential_exists,
+            "credentialJsonOk": credential_json_ok,
+            "credentialProjectId": credential_project_id,
+            "errorType": type(exc).__name__,
+            "error": str(exc),
+        }
 
 
 @app.get("/exam-concepts/{exam}")

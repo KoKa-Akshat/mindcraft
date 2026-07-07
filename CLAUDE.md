@@ -332,7 +332,28 @@ is all naive datetimes — mixing them raises).
 
 ## Deployment
 
-### `mindcraft-ml` (engine) — Cloud Run, project `project-e4af30ac-bc17-4691-8b6`
+### `mindcraft-ml` (engine) — NOW ON HUGGING FACE SPACES (2026-07-07)
+
+**Live URL: `https://joinmindcraft-mindcraft-ml.hf.space`** (free CPU Space
+`joinmindcraft/mindcraft-ml`, Docker SDK). The GCP billing account was closed
+Jul 6 → Cloud Run cannot start instances; the Space is the serving bridge.
+Frontend `.env.production` + Vercel `ML_API_URL` point here.
+- Deploy: `ml/scripts/deploy_hf.sh` (git-push of `ml/` to the Space repo;
+  needs an HF write token). Config: `ml/README_HF.md` frontmatter.
+- Secrets on the Space: `FIREBASE_SERVICE_ACCOUNT_JSON` (SA
+  `mindcraft-ml-hf@project-e4af30ac-….iam.gserviceaccount.com` — lives in the
+  e4af project but holds `roles/datastore.user` on `mindcraft-93858` via
+  cross-project grant; TODO: re-mint inside mindcraft-93858),
+  `ML_SERVICE_SECRET` (matches Vercel), `FIRESTORE_PROJECT=mindcraft-93858`.
+- `ml/entrypoint.sh` writes the JSON secret to disk →
+  `GOOGLE_APPLICATION_CREDENTIALS`. Dockerfile caches the model under
+  `/app/.cache` (HF runs containers as uid 1000 — never `/root`).
+- Free-tier: sleeps after ~48h idle (~60s wake), single instance. Rollback =
+  revert `.env.production` + Vercel env, redeploy Cloud Run (below) once GCP
+  billing is reopened. Do NOT delete the e4af project — it holds the Cloud Run
+  config/images and (for now) the Space's service account.
+
+### `mindcraft-ml` on Cloud Run — DORMANT (billing closed), project `project-e4af30ac-bc17-4691-8b6`
 - Build: `gcloud builds submit --tag us-central1-docker.pkg.dev/project-e4af30ac-bc17-4691-8b6/mindcraft-ml/mindcraft-ml`
 - Deploy: `gcloud run deploy mindcraft-ml --image [same] --region us-central1 --memory 1Gi --cpu 1 --min-instances 0 --max-instances 3 --allow-unauthenticated --set-env-vars FIRESTORE_PROJECT=mindcraft-93858,ML_SERVICE_SECRET=<secret>`
 - **MUST pass `--set-env-vars FIRESTORE_PROJECT=mindcraft-93858`** or it talks to

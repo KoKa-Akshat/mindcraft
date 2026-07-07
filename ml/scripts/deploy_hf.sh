@@ -36,6 +36,7 @@ git clone "$REMOTE" "$TMP_DIR"
 find "$TMP_DIR" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 tar -C "$ML_DIR" \
   --exclude=.git \
+  --exclude='.env*' \
   --exclude=.pytest_cache \
   --exclude=.ruff_cache \
   --exclude=__pycache__ \
@@ -45,6 +46,11 @@ tar -C "$ML_DIR" \
   --exclude=.venv \
   --exclude=venv \
   --exclude=env \
+  --exclude=img \
+  --exclude='*.png' \
+  --exclude='*.jpg' \
+  --exclude='*.jpeg' \
+  --exclude='*.mp4' \
   --exclude=mindcraft \
   --exclude=google-cloud-sdk \
   --exclude=google-cloud-cli-linux-x86_64.tar.gz \
