@@ -1973,6 +1973,7 @@ const EEDI_QUESTIONS = (eediQuestionsData as Question[])
   .filter(isUsable)
   .filter(hasValidKey)
 const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER, ...EEDI_QUESTIONS])
+const Q_BY_ID = new Map<string, Question>(Q.map(q => [q.id, q]))
 
 // ── Concept metadata ──────────────────────────────────────────────────────────
 
@@ -2066,6 +2067,11 @@ const BANK_ALIASES: Record<string, string> = {
 function bankConceptId(conceptId: string): string {
   if (Q.some(q => q.conceptId === conceptId)) return conceptId
   return BANK_ALIASES[conceptId] ?? conceptId
+}
+
+/** Resolve a question across all four bank sources. */
+export function getQuestionById(id: string): Question | undefined {
+  return Q_BY_ID.get(id)
 }
 
 // Return up to `count` questions shuffled, prioritising unseen IDs

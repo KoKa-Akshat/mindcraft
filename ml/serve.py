@@ -134,6 +134,8 @@ app.add_middleware(
         "https://mindcraft-93858.web.app",
         "https://mindcraft-93858.firebaseapp.com",
         "https://app-beta-one-59.vercel.app",
+        # Replace <org> with the actual HF Space owner before deploying.
+        "https://<org>-mindcraft-ml.hf.space",
     ],
     allow_credentials=True,
     allow_methods=["*"],

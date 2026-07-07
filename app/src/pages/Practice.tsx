@@ -5,6 +5,7 @@ import MathText from '../components/MathText'
 import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
 import PingTutor from '../components/PingTutor'
+import BookmarkButton from '../components/BookmarkButton'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
 import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
@@ -15,6 +16,7 @@ import {
   PRACTICE_CONCEPTS,
   LEVEL_META,
   getQuestions,
+  getQuestionById,
   questionCount,
   questionFormat,
   shuffle,
@@ -30,6 +32,7 @@ import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic, getUserRole } from '../lib/practiceState'
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
+import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import { sanitizeAnswer, sanitizeProblemText, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
@@ -364,6 +367,7 @@ export default function Practice() {
   const [missionLoading, setMissionLoading] = useState<'weakness' | 'learn' | null>(null)
   const [diagnosticHydrated, setDiagnosticHydrated] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   /** C4 — gap-scan question diagnostic: record outcomes, never show right/wrong. */
   const [hideCorrectness, setHideCorrectness] = useState(false)
   /** Concepts still needing self-rating after the question diagnostic. */
@@ -566,6 +570,11 @@ export default function Practice() {
   }, [user.uid])
 
   useEffect(() => {
+    if (!user?.uid) return
+    void loadDashboardPersonalization(user.uid).then(p => setBookmarkedQuestions(p.bookmarkedQuestions))
+  }, [user.uid])
+
+  useEffect(() => {
     if (draftHydratedRef.current) return
     const state = location.state as {
       problemText?: string
@@ -753,11 +762,16 @@ export default function Practice() {
       formatId?: FormatId
       resumeMission?: 'weakness' | 'learn'
       showPath?: boolean
+      questionId?: string
     } | null
     if (state?.problemText) {
       setMode('solver')
       setProblem(state.problemText)
       submitProblem(state.problemText)
+      window.history.replaceState({}, '')
+    } else if (state?.questionId) {
+      const q = getQuestionById(state.questionId)
+      if (q) startBookmarkedSession(q)
       window.history.replaceState({}, '')
     } else if (state?.conceptId) {
       void launchMissionDirect(state.conceptId, state.missionType ?? 'weakness', state.formatId)
@@ -1100,6 +1114,26 @@ export default function Practice() {
     setXp(0)
     setRequeuedIds([])
     setInitialQCount(qs.length)
+    setEarlyExit(false)
+    setPPhase('session')
+  }
+
+  function startBookmarkedSession(q: Question) {
+    setMode('practice')
+    setMissionType(null)
+    setConcept(q.conceptId)
+    setLevel(q.level)
+    setSessionBridge(null)
+    setSessionFormat(questionFormat(q) ?? null)
+    setQuestions([q])
+    setQIndex(0)
+    setSelected(null)
+    setChecked(false)
+    setHintsShown(0)
+    setResults([])
+    setXp(0)
+    setRequeuedIds([])
+    setInitialQCount(1)
     setEarlyExit(false)
     setPPhase('session')
   }
@@ -2032,11 +2066,23 @@ export default function Practice() {
 
                   <div className={s.questionCard}>
                     <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
-                      {storyItem ? (
-                        <span className={s.examTagLight}>Story · {sessionLabel}</span>
-                      ) : currentQ.examTag ? (
-                        <span className={s.examTagLight}>{currentQ.examTag} Style</span>
-                      ) : null}
+                      <div className={s.questionBannerTop}>
+                        <div>
+                          {storyItem ? (
+                            <span className={s.examTagLight}>Story · {sessionLabel}</span>
+                          ) : currentQ.examTag ? (
+                            <span className={s.examTagLight}>{currentQ.examTag} Style</span>
+                          ) : null}
+                        </div>
+                        <BookmarkButton
+                          active={bookmarkedQuestions.includes(currentQ.id)}
+                          onToggle={() => {
+                            if (!user?.uid) return
+                            void toggleBookmark(user.uid, currentQ.id, bookmarkedQuestions)
+                              .then(setBookmarkedQuestions)
+                          }}
+                        />
+                      </div>
                       <p className={s.questionText}><MathText text={storyItem?.storyStem ?? currentQ.question} /></p>
                     </div>
                     <div className={s.questionBody}>

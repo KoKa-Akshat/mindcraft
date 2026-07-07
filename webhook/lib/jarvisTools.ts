@@ -21,6 +21,11 @@ import { db }    from './firebase'
 const client = new Anthropic()
 const MODEL  = 'claude-sonnet-4-20250514'
 
+export const DEFAULT_ML_BASE =
+  process.env.ML_API_URL ??
+  process.env.ML_URL ??
+  'https://mindcraft-ml-630302850770.us-central1.run.app'
+
 // JARVIS runs server-side with no end-user token, so it authenticates to the ML
 // service as a trusted backend via the shared secret (verified in serve.py).
 function mlServiceHeaders(extra: Record<string, string> = {}): Record<string, string> {

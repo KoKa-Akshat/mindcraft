@@ -12,14 +12,22 @@ export default function BookShell({
   left,
   right,
   className,
+  paper = 'cream',
+  font = 'script',
 }: {
   chromeRight?: ReactNode
   left: ReactNode
   right: ReactNode
   className?: string
+  paper?: 'cream' | 'beige' | 'greyblue' | 'sage' | 'blush'
+  font?: 'script' | 'print' | 'mono'
 }) {
   return (
-    <div className={`${s.shell} ${className ?? ''}`}>
+    <div
+      className={`${s.shell} ${className ?? ''}`}
+      data-paper={paper}
+      data-font={font}
+    >
       <div className={s.chrome}>
         <span className={s.wordmark}>MindCraft</span>
         <div className={s.chromeRight}>{chromeRight}</div>

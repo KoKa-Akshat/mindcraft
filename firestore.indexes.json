@@ -41,6 +41,14 @@
         { "fieldPath": "studentId",  "order": "ASCENDING" },
         { "fieldPath": "timestamp",  "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "student_work",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "studentId", "order": "ASCENDING" },
+        { "fieldPath": "updatedAt", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

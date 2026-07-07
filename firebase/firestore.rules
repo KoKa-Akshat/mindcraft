@@ -80,6 +80,16 @@ service cloud.firestore {
       }
     }
 
+    match /student_work/{docId} {
+      allow create, update: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+      );
+      allow delete: if false;
+    }
+
     match /chats/{chatId} {
       allow read, write: if request.auth != null && (
         chatId.split('_')[0] == request.auth.uid ||

@@ -111,7 +111,10 @@ ${JSON_SHAPE}`
     })
 
     // Fire-and-forget: push session data to ML engine to update student mastery
-    const mlBase    = process.env.ML_URL
+    const mlBase =
+      process.env.ML_API_URL ??
+      process.env.ML_URL ??
+      'https://mindcraft-ml-630302850770.us-central1.run.app'
     const studentId = session.studentId
     const { topics, homework, progress } = summaryCard as any
     if (mlBase && studentId && topics?.length) {

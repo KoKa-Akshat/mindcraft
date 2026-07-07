@@ -1,9 +1,13 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import contextFramesRaw from '../data/questionContextFrames.json'
-import { getQuestions, questionCount } from '../lib/questionBank'
+import { getQuestions, questionCount, questionFormat } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
+import { useUser } from '../App'
+import BookmarkButton from '../components/BookmarkButton'
+import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
+import { loadQuestionWork, saveQuestionWork } from '../lib/studentWork'
 import InteractiveWidget from '../components/InteractiveWidget'
 import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
@@ -282,7 +286,9 @@ export default function ConceptChapterPage() {
   const { conceptId = '' } = useParams<{ conceptId: string }>()
   const navigate = useNavigate()
   const location = useLocation()
+  const user = useUser()
   const fromDashboard = Boolean((location.state as { fromDashboard?: boolean } | null)?.fromDashboard)
+  const canonicalId = resolveId(conceptId)
 
   const cs = lookupStory(conceptId)
   const cluster = CLUSTER_MAP[conceptId] ?? 'algebra'
@@ -330,6 +336,9 @@ export default function ConceptChapterPage() {
   const [hintsShownPerQ, setHintsShownPerQ] = useState<Record<number, number>>({})
   // showWriteNudge: show writing prompt after 8s idle on question with empty notes
   const [showWriteNudge, setShowWriteNudge] = useState(false)
+  const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
+  const hydratedWorkRef = useRef<Set<string>>(new Set())
+  const [showCalc, setShowCalc] = useState(false)
 
   // Show write nudge after 8s on a question page if notes are still empty
   const currentSpec = specs[pageIdx]
@@ -343,8 +352,64 @@ export default function ConceptChapterPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageIdx])
 
-  // Floating panels
-  const [showCalc, setShowCalc] = useState(false)
+  useEffect(() => {
+    if (!user?.uid) return
+    void loadDashboardPersonalization(user.uid).then(p => setBookmarkedQuestions(p.bookmarkedQuestions))
+  }, [user?.uid])
+
+  const spec = specs[pageIdx]
+
+  useEffect(() => {
+    if (!user?.uid || spec.kind !== 'question') return
+    const q = questions[spec.qIdx]
+    if (!q?.id || hydratedWorkRef.current.has(q.id)) return
+    let cancelled = false
+    void loadQuestionWork(user.uid, q.id).then(doc => {
+      if (cancelled || !doc) {
+        if (q.id) hydratedWorkRef.current.add(q.id)
+        return
+      }
+      const qIdx = spec.qIdx
+      if (doc.scratchStrokes) {
+        setScratchStrokes(s => ({ ...s, [qIdx]: doc.scratchStrokes! }))
+      }
+      if (doc.scratchImage) {
+        setNotes(n => ({ ...n, [qIdx]: doc.scratchImage! }))
+      }
+      if (doc.workLines?.length || doc.scratchTranscription) {
+        setScratchInk(s => ({
+          ...s,
+          [qIdx]: {
+            workLines: doc.workLines ?? [],
+            transcription: doc.scratchTranscription ?? { text: '', latex: '', editedByStudent: false },
+          },
+        }))
+      }
+      hydratedWorkRef.current.add(q.id)
+    })
+    return () => { cancelled = true }
+  }, [user?.uid, pageIdx, spec, questions])
+
+  useEffect(() => {
+    if (!user?.uid || spec.kind !== 'question') return
+    const q = questions[spec.qIdx]
+    if (!q?.id || !hydratedWorkRef.current.has(q.id)) return
+    const qIdx = spec.qIdx
+    const timer = window.setTimeout(() => {
+      void saveQuestionWork(user.uid, {
+        questionId: q.id,
+        conceptId: canonicalId,
+        source: 'chapter',
+        level: q.level,
+        formatId: questionFormat(q),
+        scratchImage: notes[qIdx] ?? '',
+        scratchStrokes: scratchStrokes[qIdx] ?? { strokes: [], width: 0, height: 0 },
+        workLines: scratchInk[qIdx]?.workLines ?? [],
+        scratchTranscription: scratchInk[qIdx]?.transcription ?? { text: '', latex: '', editedByStudent: false },
+      })
+    }, 1200)
+    return () => window.clearTimeout(timer)
+  }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, pageIdx])
 
   const goTo = (i: number, d: 'f' | 'b') => {
     if (i < 0) { navigate(-1); return }
@@ -356,7 +421,6 @@ export default function ConceptChapterPage() {
     setPageIdx(i)
   }
 
-  const spec = specs[pageIdx]
   const isLast = pageIdx === specs.length - 1
   const storyPageCount = specs.filter(p => p.kind === 'story').length
 
@@ -468,6 +532,14 @@ export default function ConceptChapterPage() {
                 )}
                 <header className={s.qHead}>
                   <span className={s.qKicker}>Question {qNum} of {qTotal}</span>
+                  <BookmarkButton
+                    active={bookmarkedQuestions.includes(q.id)}
+                    onToggle={() => {
+                      if (!user?.uid) return
+                      void toggleBookmark(user.uid, q.id, bookmarkedQuestions)
+                        .then(setBookmarkedQuestions)
+                    }}
+                  />
                   <span className={s.qChipSmall} style={{ color: theme.chip }}>Ch. {ch}</span>
                 </header>
 

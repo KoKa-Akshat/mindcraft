@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { Compass, NotebookPen, Wand2, Settings } from 'lucide-react'
+import { Compass, NotebookPen, Wand2, Settings, Bookmark, Sparkles } from 'lucide-react'
 import { auth, db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
@@ -16,6 +16,19 @@ import type { Confidence } from '../lib/bridgePractice'
 import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
+import DashboardSavedQuestionsPanel from '../components/DashboardSavedQuestionsPanel'
+import JournalStyleDrawer from '../components/book/JournalStyleDrawer'
+import StickerLayer from '../components/book/StickerLayer'
+import {
+  loadDashboardPersonalization,
+  saveDashboardStickers,
+  saveDashboardTheme,
+  STICKER_CAP,
+  type DashboardSticker,
+  type DashboardTheme,
+  type StickerId,
+  DEFAULT_THEME,
+} from '../lib/dashboardPersonalization'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import CoverNavItem, { CoverNavSection } from '../components/book/CoverNavItem'
@@ -105,13 +118,19 @@ export default function Dashboard() {
   const [parentEmail, setParentEmail] = useState('')
   const [parentEmailSaved, setParentEmailSaved] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [dashboardTheme, setDashboardTheme] = useState<DashboardTheme>(DEFAULT_THEME)
+  const [dashboardStickers, setDashboardStickers] = useState<DashboardSticker[]>([])
+  const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
+  const [styleDrawerOpen, setStyleDrawerOpen] = useState(false)
+  const [selectedStickerId, setSelectedStickerId] = useState<StickerId | null>(null)
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
   const routeMode = view === 'route'
   const notesMode = view === 'notes'
   const homeworkMode = view === 'homework'
-  const todayMode = !gpsMode && !routeMode && !notesMode && !homeworkMode
+  const savedMode = view === 'saved'
+  const todayMode = !gpsMode && !routeMode && !notesMode && !homeworkMode && !savedMode
 
   const conceptParam = searchParams.get('concept')
   const targetParam = searchParams.get('target')
@@ -122,6 +141,7 @@ export default function Dashboard() {
   }
   function openNotes() { navigate('/dashboard?view=notes', { replace: true }) }
   function openHomework() { navigate('/dashboard?view=homework', { replace: true }) }
+  function openSaved() { navigate('/dashboard?view=saved', { replace: true }) }
   function closePanel() { navigate('/dashboard', { replace: true }) }
 
   function goChallenge() {
@@ -168,6 +188,51 @@ export default function Dashboard() {
     setParentEmail(clean)
     setParentEmailSaved(true)
     window.setTimeout(() => setParentEmailSaved(false), 1800)
+  }
+
+  useEffect(() => {
+    if (!uid) return
+    void loadDashboardPersonalization(uid).then(p => {
+      setDashboardTheme(p.theme)
+      setDashboardStickers(p.stickers)
+      setBookmarkedQuestions(p.bookmarkedQuestions)
+    })
+  }, [uid])
+
+  function handleThemeChange(theme: DashboardTheme) {
+    setDashboardTheme(theme)
+    if (uid) void saveDashboardTheme(uid, theme)
+  }
+
+  function handlePlaceSticker(x: number, y: number) {
+    if (!selectedStickerId || dashboardStickers.length >= STICKER_CAP) return
+    const next = [
+      ...dashboardStickers,
+      { stickerId: selectedStickerId, x, y, rotation: Math.round((Math.random() - 0.5) * 16) },
+    ]
+    setDashboardStickers(next)
+    setSelectedStickerId(null)
+    if (uid) void saveDashboardStickers(uid, next)
+  }
+
+  function handleMoveSticker(index: number, x: number, y: number) {
+    const next = dashboardStickers.map((sticker, i) => (
+      i === index ? { ...sticker, x, y } : sticker
+    ))
+    setDashboardStickers(next)
+    if (uid) void saveDashboardStickers(uid, next)
+  }
+
+  function handleRemoveSticker(index: number) {
+    const next = dashboardStickers.filter((_, i) => i !== index)
+    setDashboardStickers(next)
+    if (uid) void saveDashboardStickers(uid, next)
+  }
+
+  function handleClearStickers() {
+    setDashboardStickers([])
+    setSelectedStickerId(null)
+    if (uid) void saveDashboardStickers(uid, [])
   }
 
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
@@ -304,7 +369,10 @@ export default function Dashboard() {
   }
 
   return (
+    <>
     <BookShell
+      paper={dashboardTheme.paper}
+      font={dashboardTheme.font}
       chromeRight={
         <>
           {displayName && <span className={book.chromeUser}>{displayName}</span>}
@@ -313,6 +381,23 @@ export default function Dashboard() {
       }
       left={
         <BookPage side="left" flipping={Boolean(turningConceptId)}>
+          <StickerLayer
+            stickers={dashboardStickers}
+            editable={styleDrawerOpen}
+            selectedStickerId={selectedStickerId}
+            onPlace={handlePlaceSticker}
+            onMove={handleMoveSticker}
+            onRemove={handleRemoveSticker}
+          />
+          <button
+            type="button"
+            className={s.decorateBtn}
+            onClick={() => setStyleDrawerOpen(open => !open)}
+            aria-label="Decorate journal"
+          >
+            <Sparkles size={14} strokeWidth={1.75} />
+            <span>decorate</span>
+          </button>
           {/* mega dateline with pennant flag */}
           <div className={s.dateline}>
             <div className={s.dateFlagWrap}>
@@ -388,6 +473,13 @@ export default function Dashboard() {
                 onClick={openNotes}
               />
               <CoverNavItem
+                icon={<Bookmark size={19} strokeWidth={1.75} />}
+                label="Saved Questions"
+                sub={`${bookmarkedQuestions.length} bookmarked for later`}
+                active={savedMode}
+                onClick={openSaved}
+              />
+              <CoverNavItem
                 icon={<Compass size={19} strokeWidth={1.75} />}
                 label="The Map"
                 sub="Your whole knowledge world, plotted"
@@ -441,6 +533,7 @@ export default function Dashboard() {
               <button className={`${s.tab} ${s.tabMap} ${(gpsMode || routeMode) ? s.tabActive : ''}`} onClick={openGps}>Map</button>
               <button className={`${s.tab} ${homeworkMode ? s.tabActive : ''}`} onClick={openHomework}>Solver</button>
               <button className={`${s.tab} ${notesMode ? s.tabActive : ''}`} onClick={openNotes}>Notes</button>
+              <button className={`${s.tab} ${savedMode ? s.tabActive : ''}`} onClick={openSaved}>Saved</button>
             </div>
           }
         >
@@ -529,6 +622,20 @@ export default function Dashboard() {
                   <DashboardNotesPanel />
                 </div>
               </div>
+            ) : savedMode ? (
+              <div className={s.panelPage}>
+                <div className={s.panelPageHeader}>
+                  <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
+                  <span className={s.panelTitle}>saved questions</span>
+                </div>
+                <div className={s.panelContent}>
+                  <DashboardSavedQuestionsPanel
+                    uid={uid}
+                    bookmarkedIds={bookmarkedQuestions}
+                    onBookmarksChange={setBookmarkedQuestions}
+                  />
+                </div>
+              </div>
             ) : homeworkMode ? (
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
@@ -587,5 +694,16 @@ export default function Dashboard() {
         </BookPage>
       }
     />
+    <JournalStyleDrawer
+      open={styleDrawerOpen}
+      onClose={() => { setStyleDrawerOpen(false); setSelectedStickerId(null) }}
+      theme={dashboardTheme}
+      stickers={dashboardStickers}
+      selectedStickerId={selectedStickerId}
+      onThemeChange={handleThemeChange}
+      onSelectSticker={setSelectedStickerId}
+      onClearStickers={handleClearStickers}
+    />
+    </>
   )
 }

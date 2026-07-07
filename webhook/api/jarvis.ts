@@ -21,12 +21,12 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../lib/cors'
 import { loadHistory, saveExchange } from '../lib/conversationStore'
-import { TOOLS, makeExecutors } from '../lib/jarvisTools'
+import { DEFAULT_ML_BASE, TOOLS, makeExecutors } from '../lib/jarvisTools'
 import { verifyToken } from '../lib/verifyToken'
 
 const client  = new Anthropic()
 const MODEL   = 'claude-sonnet-4-20250514'
-const ML_BASE = process.env.ML_URL ?? 'http://localhost:8000'
+const ML_BASE = DEFAULT_ML_BASE
 
 const MAX_ITERATIONS = 6
 

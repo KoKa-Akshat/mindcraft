@@ -22,7 +22,7 @@ cover/pages.
   Field Journal, not sticker-bomb; cap ~10 placed.
 - Persist: `users/{uid}.dashboardStickers: [{ stickerId, x, y, rotation }]`
   (x/y as fractions of the cover, so it survives resizes).
-- [ ] Stickers survive reload and render on both cover states.
+- [x] Stickers survive reload and render on both cover states.
 
 ### 1b — Theme: font + background color
 Curated choices only (free-form color pickers will fight the paper system):
@@ -33,7 +33,7 @@ Curated choices only (free-form color pickers will fight the paper system):
 - UI: a small “journal style” popover (same drawer as stickers is fine).
 - Persist: `users/{uid}.dashboardTheme: { paper, font }`; apply via CSS
   vars on the book root; default = current look.
-- [ ] Theme applies across dashboard book pages + panels, persists, and
+- [x] Theme applies across dashboard book pages + panels, persists, and
       never breaks contrast (test the darkest paper preset with ink text).
 
 ### 1c — Bookmark practice questions
@@ -46,7 +46,7 @@ Curated choices only (free-form color pickers will fight the paper system):
   → tap opens that question in the practice layout.
 - `questionBank.getQuestionById(id)` helper if none exists — bookmarks
   must resolve across all four bank sources.
-- [ ] Bookmark from Practice + chapter page; list shows both; unbookmark
+- [x] Bookmark from Practice + chapter page; list shows both; unbookmark
       works from the list.
 
 ---

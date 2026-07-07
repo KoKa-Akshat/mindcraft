@@ -15,7 +15,13 @@ import { useUser } from '../App'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
 import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
 import type { ScratchStrokeData } from '../types'
+import { saveQuestionWork } from '../lib/studentWork'
 import s from './SessionWork.module.css'
+
+function sessionConceptId(subject: string): string {
+  const slug = subject.trim().toLowerCase().replace(/[^a-z0-9]+/g, '_')
+  return slug || 'act_strategy'
+}
 
 export default function SessionWork() {
   const { sessionId } = useParams<{ sessionId: string }>()
@@ -104,6 +110,8 @@ export default function SessionWork() {
         sessionId,
         studentId: user.uid,
         prompt,
+        source: 'session',
+        conceptId: sessionConceptId(subject),
         wasStuck,
         reasoningText: reasoningText.trim(),
         scratchImage,
@@ -111,6 +119,19 @@ export default function SessionWork() {
         workLines: scratchInk?.workLines ?? [],
         scratchTranscription: scratchInk?.transcription ?? { text: '', latex: '', editedByStudent: false },
         createdAt: Date.now(),
+      })
+
+      void saveQuestionWork(user.uid, {
+        source: 'session',
+        sessionId,
+        prompt,
+        conceptId: sessionConceptId(subject),
+        scratchImage,
+        scratchStrokes: scratchStrokes ?? { strokes: [], width: 0, height: 0 },
+        workLines: scratchInk?.workLines ?? [],
+        scratchTranscription: scratchInk?.transcription ?? { text: '', latex: '', editedByStudent: false },
+        wasStuck,
+        reasoningText: reasoningText.trim(),
       })
 
       const next = step + 1

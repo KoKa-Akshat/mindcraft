@@ -95,11 +95,39 @@ export interface WorkLine {
   checkReason?: string
 }
 
+export type WorkSource = 'practice' | 'chapter' | 'session'
+
+export interface QuestionWorkDoc {
+  studentId: string
+  questionId?: string
+  conceptId: string
+  source: WorkSource
+  level?: 1 | 2 | 3
+  formatId?: string
+  sessionId?: string
+  prompt?: string
+  scratchImage?: string
+  scratchStrokes: ScratchStrokeData
+  workLines: WorkLine[]
+  scratchTranscription: {
+    text: string
+    latex: string
+    editedByStudent: boolean
+  }
+  wasStuck?: boolean
+  reasoningText?: string
+  createdAt: number
+  updatedAt: number
+}
+
 export interface StudentWorkEntry {
   id: string
   sessionId: string
   studentId: string
   prompt: string
+  questionId?: string
+  conceptId?: string
+  source?: WorkSource
   scratchImage?: string
   scratchStrokes?: ScratchStrokeData
   workLines?: WorkLine[]

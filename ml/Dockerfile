@@ -4,6 +4,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+ENV HF_HOME=/app/.cache
+ENV SENTENCE_TRANSFORMERS_HOME=/app/.cache
+
 # Install system deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
@@ -14,6 +17,9 @@ COPY pyproject.toml .
 COPY mindcraft_graph/ mindcraft_graph/
 COPY data/ data/
 COPY serve.py .
+COPY entrypoint.sh .
+
+RUN mkdir -p /app/.cache
 
 RUN pip install --no-cache-dir ".[ml]" \
     uvicorn fastapi google-cloud-firestore firebase-admin
@@ -36,6 +42,10 @@ embeddings.save_concept_embeddings(embs, 'data/concept_embeddings.npz'); \
 embeddings.save_pca_axes(comps, mean, var, 'data/pca_axes.npz'); \
 print('Embeddings cached:', len(embs), 'concepts')"
 
+RUN chmod +x /app/entrypoint.sh \
+    && chmod -R a+rX /app \
+    && chmod -R a+w /app/.cache /app/data
+
 EXPOSE 8080
 
-CMD ["uvicorn", "serve:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["/app/entrypoint.sh"]

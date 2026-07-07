@@ -688,3 +688,44 @@
     to   { transform: translateX(-10%);   opacity: 0.25; }
   }
 }
+
+/* ── journal theme presets ───────────────────────────────── */
+.shell[data-paper="beige"] {
+  --paper-base: #f5efe4;
+  --paper-raised: #faf6ef;
+  --paper-recessed: #ebe2d4;
+  --paper-edge: #ddd2c2;
+  --paper-crease: #cfc3b0;
+}
+
+.shell[data-paper="greyblue"] {
+  --paper-base: #eef1f4;
+  --paper-raised: #f5f7fa;
+  --paper-recessed: #e3e8ee;
+  --paper-edge: #cfd6df;
+  --paper-crease: #bcc5d0;
+}
+
+.shell[data-paper="sage"] {
+  --paper-base: #eef2ea;
+  --paper-raised: #f4f7f1;
+  --paper-recessed: #e2e8dc;
+  --paper-edge: #cfd7c8;
+  --paper-crease: #bcc6b4;
+}
+
+.shell[data-paper="blush"] {
+  --paper-base: #f6eeea;
+  --paper-raised: #fbf5f2;
+  --paper-recessed: #ebe0da;
+  --paper-edge: #dccfc8;
+  --paper-crease: #ccbeb6;
+}
+
+.shell[data-font="print"] {
+  --font-script: var(--font-body);
+}
+
+.shell[data-font="mono"] {
+  --font-script: var(--font-stamp);
+}
