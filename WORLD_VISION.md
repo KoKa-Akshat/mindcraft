@@ -51,7 +51,43 @@ Minute one: instead of a placement test, Maya gets a mission briefing. The gap s
 
 By minute twelve she's opened her first concept chapter. It reads like a book because it is one — a cover, a story about a real person with a real problem, pages she turns herself. Then the questions arrive, and they aren't a quiz bolted to the end; they're the problem the protagonist faced, handed to her. She misses one. The world doesn't scold her; it shows her where the current took her. She tries again. At minute twenty she looks up and realizes she wasn't enduring math. She was somewhere.
 
-## 7. A Note to Engineers
+## 7. The Infrastructure That Makes Scale Possible
+
+The world isn't built once. It's built in layers, each one modular enough to be replaced, extended, or swapped without touching the others.
+
+**Question pipelines.** The Eedi ingestion (`ml/scripts/ingest_eedi.py`) proved the pattern: a source adapter → filter → normalizer → annotator → validator → output. The new multi-source pipeline (`ml/scripts/pipeline/`) generalizes this to OpenStax (84K exercises cached), AMC competitions, Khan Academy, and any future source. Each source is a 200-line file that knows its own tag format and hands clean `Question` objects to shared infrastructure. Adding a new source — AMC 12, IB past papers, UKMT — is adding one file. This is intentional. Data must scale faster than engineering hours.
+
+**Story pipelines.** `story_generator.py` samples 3 real questions per concept before generating a story world, so the setting is always compatible with the actual problems. This breaks the most common failure mode: a 1585 bookkeeper wrapping questions about calculators. Stories get regenerated when their quality falls below threshold — the pipeline is rerunnable, not a one-time ritual.
+
+**Ontology as the spine.** The 42-concept ontology with 179 ingredients, 16 bridges, and 450+ question instances isn't just a lookup table — it's the canonical ID space that joins every data layer. Every pipeline writes `conceptId` as a canonical slug. Every source maps to this space. When we expand to science or history, we add concepts to the ontology first, and all pipelines inherit the new ID space automatically.
+
+**MCP and AI connections.** The architecture intentionally leaves seams for LLM integration: the story module calls Groq, the check-in agent calls Claude, the webhook calls Anthropic. The next integration layer — AI tutors with access to a student's full knowledge graph, concept stories, and Firestore history via MCP — is already implied by how these seams are shaped. The student's world isn't just a UI; it's a context that an AI guide can read and reason about. Claude with MCP access to the graph can say "you've mastered derivatives but keep failing the chain rule bridge — here's what that means in Jesse's world." That's Horizon 2.
+
+## 8. The Roblox Dimension
+
+The co-founder is building in Roblox. This isn't a distraction — it's the fastest path to Horizon 3.
+
+Roblox reaches 70M daily active users, most of them the age of Maya. The social graph is already there. The avatar is already there. The student who builds a game on Roblox and realizes she needs to understand probability to make the loot drops feel fair — that student is already in the world. She just doesn't know it yet.
+
+The bridge between the Roblox world and the MindCraft knowledge graph is a small seam: a Roblox game calls an API endpoint, passes a student ID and a math concept encountered in the game, and the graph updates. Jesse's boat navigating by trig and the Roblox game where probability governs loot drops are the same concept, expressed differently. The 42-concept spine handles both.
+
+Stay modular. Stay API-first. The 3D world at `worlds/world2/` and the Roblox world are not competitors — they're two skins on the same graph.
+
+## 9. What the Story Experience Must Feel Like
+
+This deserves its own section because it's the one thing that can't be fixed with a backend hotfix.
+
+Stories are not UI copy. They are the atmosphere the student walks into before a question lands. Every element must be considered:
+
+- **Typography.** Source Serif 4 at 17px/32px with a drop cap. Not Inter, not a sans-serif. The story body is a book, not a dashboard.
+- **The scene stamp.** Before the first sentence, the student sees who she's following and where: *William Harrison · At sea, bound for Jamaica, 1761.* She knows whose problem she's inheriting before she reads a word.
+- **The ruled margin.** The story body has horizontal rules and a left margin accent line. This is intentional. It feels like a journal entry, not a web page.
+- **Question integration.** The story-module rewraps question stems so the problem *is* the protagonist's problem. Archimedes doesn't explain buoyancy; he discovers it in the problem the student is about to solve.
+- **No ugly fallbacks.** If there's no story for a concept, the fallback reads like a letter, not a missing-page error. `makeSyntheticStory` should feel intentional. Every concept eventually gets a real story.
+
+The test: show the story page to someone who has never used MindCraft. Within 10 seconds they should understand: *this is a person, this is a place, this is a problem I'm being asked to help solve.* If they don't get that in 10 seconds, the story isn't ready yet.
+
+## 10. A Note to Engineers
 
 If you're reading this with the repo open: the codebase is already carrying this vision. The 42 stories are in `conceptStories.json`. The knowledge graph is live and tracking real students. The 3D world is deployed and walkable. The question bank is real, tagged, and growing. You're not being asked to build a dream from nothing — you're being asked to keep making a real thing more real.
 
