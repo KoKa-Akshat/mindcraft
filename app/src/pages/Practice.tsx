@@ -1287,7 +1287,7 @@ export default function Practice() {
     <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}`}>
       <Sidebar />
 
-      <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}`}>
+      <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}${mode === 'solver' ? ` ${s.solverPage}` : ''}`}>
 
         {!hideTopBar && (
           <AppTabBar active={mode === 'solver' ? 'solver' : 'practice'} isAdmin={isAdmin} />
@@ -2187,7 +2187,14 @@ export default function Practice() {
 
         {/* ═══════ SOLVER MODE ═══════ */}
         {mode === 'solver' && (
-          <div className={s.solverWrap}>
+          <>
+            <div className={s.solverHeader}>
+              <div className={s.solverHeaderLeft}>
+                <h1 className={s.solverPageTitle}>Problem Solver</h1>
+                <p className={s.solverPageSub}>Paste or upload a stuck problem for step-by-step hints</p>
+              </div>
+            </div>
+            <div className={s.solverWrap}>
             {sPhase === 'input' && (
               <div className={s.solverPanel}>
                 <div className={s.solverCopy}>
@@ -2348,6 +2355,7 @@ export default function Practice() {
               </div>
             )}
           </div>
+          </>
         )}
 
         {storySlide && (
