@@ -283,11 +283,7 @@ export default function Login() {
                     </p>
 
                     {/* SECONDARY: email toggle */}
-                    {!emailMode ? (
-                      <p className={s.bottomLink} style={{ marginTop: 16, textAlign: 'center' }}>
-                        <button type="button" onClick={() => { setEmailMode(true); setError('') }}>Use a password account instead</button>
-                      </p>
-                    ) : (
+                    {emailMode && (
                       <>
                         <div className={s.divider}><span>password account</span></div>
                         <p className={s.emailNote}>
@@ -341,14 +337,6 @@ export default function Login() {
                           <button type="button" onClick={() => { setEmailMode(false); setIsSignup(false); setError('') }}>Back to Google sign in</button>
                         </p>
                       </>
-                    )}
-
-                    {adminFlow === 'auth' && (
-                      <p className={s.bottomLink} style={{ marginTop: 8 }}>
-                        <button type="button" onClick={() => { setAdminFlow('passcode'); setAdminPw(''); setError('') }}>
-                          Have an admin code?
-                        </button>
-                      </p>
                     )}
                   </>
                 )}
