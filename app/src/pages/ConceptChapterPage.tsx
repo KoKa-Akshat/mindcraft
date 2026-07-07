@@ -447,7 +447,7 @@ export default function ConceptChapterPage() {
       hydratedWorkRef.current.add(q.id)
     })
     return () => { cancelled = true }
-  }, [user?.uid, pageIdx, spec, questions])
+  }, [user?.uid, spreadIdx, spec, questions])
 
   useEffect(() => {
     if (!user?.uid || spec.kind !== 'question') return
