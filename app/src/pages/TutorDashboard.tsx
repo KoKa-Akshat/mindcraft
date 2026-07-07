@@ -41,6 +41,16 @@ interface ActivityItem {
   ts:        number
 }
 
+interface FlaggedQuestion {
+  id: string
+  studentId: string
+  studentName: string
+  conceptName: string | null
+  questionLabel: string | null
+  questionText: string
+  ts: number
+}
+
 interface AssignedStudent {
   id: string
   name: string
@@ -100,6 +110,7 @@ export default function TutorDashboard() {
   const [calendlyToken, setCalendlyToken] = useState('')
   const [connectingCalendly, setConnectingCalendly] = useState(false)
   const [activity, setActivity] = useState<ActivityItem[]>([])
+  const [flaggedQs, setFlaggedQs] = useState<FlaggedQuestion[]>([])
   const [classroom, setClassroom] = useState<{ code: string; studentIds: string[] } | null>(null)
   const [classroomLoading, setClassroomLoading] = useState(true)
 
@@ -214,6 +225,45 @@ export default function TutorDashboard() {
     )
     return () => unsub()
   }, [heroStudent?.id])
+
+  // Flagged questions — students tag questions mid-practice for their tutor.
+  // Single-field query (tutorId only) so no composite index is needed;
+  // unresolved filter + recency sort happen client-side.
+  useEffect(() => {
+    const unsub = onSnapshot(
+      query(collection(db, 'flagged_questions'), where('tutorId', '==', user.uid)),
+      snap => {
+        const rows: FlaggedQuestion[] = snap.docs
+          .map(d => {
+            const data = d.data()
+            if (data.resolved) return null
+            return {
+              id: d.id,
+              studentId: data.studentId ?? '',
+              studentName: data.studentName || 'Student',
+              conceptName: data.conceptName ?? null,
+              questionLabel: data.questionLabel ?? null,
+              questionText: data.questionText ?? '',
+              ts: data.createdAt?.toMillis?.() ?? 0,
+            }
+          })
+          .filter((r): r is FlaggedQuestion => r !== null)
+          .sort((a, b) => b.ts - a.ts)
+          .slice(0, 12)
+        setFlaggedQs(rows)
+      },
+      () => setFlaggedQs([]),
+    )
+    return () => unsub()
+  }, [user.uid])
+
+  async function resolveFlag(flagId: string) {
+    try {
+      await updateDoc(doc(db, 'flagged_questions', flagId), { resolved: true })
+    } catch {
+      showToast('Could not update flag')
+    }
+  }
 
   // One-time parent lookup + mailto — no extra state needed
   async function emailParent(studentId: string, studentName: string) {
@@ -791,6 +841,41 @@ export default function TutorDashboard() {
 
             {/* ══════════ RIGHT COLUMN ══════════ */}
             <div className={s.col}>
+              {/* Flagged questions — students tagged these mid-practice */}
+              {flaggedQs.length > 0 && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Flagged Questions</span>
+                    <span className={s.cardSubName}>{flaggedQs.length} open</span>
+                  </div>
+                  <div className={s.flagList}>
+                    {flaggedQs.map(f => (
+                      <div key={f.id} className={s.flagRow}>
+                        <div className={s.flagBody}>
+                          <div className={s.flagMeta}>
+                            <span className={s.flagStudent}>{f.studentName}</span>
+                            {f.conceptName && <span className={s.flagConcept}>{f.conceptName}</span>}
+                            <span className={s.flagTime}>{timeAgo(f.ts)}</span>
+                          </div>
+                          <div className={s.flagText}>
+                            {f.questionLabel ? `${f.questionLabel} · ` : ''}{f.questionText}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className={s.flagResolve}
+                          onClick={() => void resolveFlag(f.id)}
+                          title="Mark reviewed"
+                          aria-label="Mark reviewed"
+                        >
+                          ✓
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Live Activity */}
               <div className={s.card}>
                 <div className={s.cardHeader}>

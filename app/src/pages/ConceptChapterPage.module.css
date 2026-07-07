@@ -17,24 +17,66 @@
   position: relative;
 }
 
-.backBtn {
-  position: fixed;
-  top: 20px;
-  left: 22px;
-  z-index: 30;
-  background: color-mix(in srgb, var(--theme-paper, #fffdf7) 72%, transparent);
-  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 15%, transparent);
-  border-radius: 999px;
-  color: var(--theme-ink, #3d2f10);
-  font: 500 12px/1 "IBM Plex Mono", monospace;
-  padding: 10px 18px;
+/* Back — quiet mark in the top-left corner of the paper itself.
+   (.desk prefix beats the `.page > *` position:relative reset below.) */
+.desk .backBtn {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  z-index: 5;
+  background: transparent;
+  border: none;
+  color: color-mix(in srgb, var(--theme-ink, #3d2f10) 55%, transparent);
+  font: 500 11px/1 "IBM Plex Mono", monospace;
+  padding: 6px 8px;
   cursor: pointer;
-  letter-spacing: 0.04em;
-  transition: background 160ms, border-color 160ms;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  transition: color 160ms, background 160ms;
 }
 .backBtn:hover {
-  background: color-mix(in srgb, var(--theme-paper, #fffdf7) 92%, transparent);
-  border-color: color-mix(in srgb, var(--theme-ink, #3d2f10) 24%, transparent);
+  color: var(--theme-ink, #3d2f10);
+  background: color-mix(in srgb, var(--theme-ink, #3d2f10) 6%, transparent);
+}
+
+/* Corner tools — small tutor + calculator marks in the top-right of the paper */
+.desk .pageTools {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.calcWrap {
+  position: relative;
+  display: inline-flex;
+}
+.miniCalc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: transparent;
+  color: color-mix(in srgb, var(--theme-ink, #3d2f10) 62%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 14%, transparent);
+  transition: color 140ms, border-color 140ms, background 140ms;
+}
+.miniCalc:hover,
+.miniCalc[aria-expanded="true"] {
+  color: var(--theme-ink, #3d2f10);
+  border-color: color-mix(in srgb, var(--theme-ink, #3d2f10) 30%, transparent);
+  background: color-mix(in srgb, var(--theme-ink, #3d2f10) 5%, transparent);
+}
+.calcDrop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
 }
 
 /* ── Page — the warm paper sheet ─────────────────────────────────────── */
@@ -509,38 +551,6 @@
 }
 
 /* ── Floating toolbar: calculator + ping tutor ──────────────────────── */
-.floatBar {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 40;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
-.fabBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 18px;
-  border-radius: 999px;
-  font: 600 12px/1 "IBM Plex Mono", monospace;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: transform 140ms, box-shadow 140ms, opacity 140ms, border-color 140ms;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-.fabBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-.fabCalc {
-  background: var(--theme-paper, #fffdf7);
-  color: var(--theme-ink, #3d2f10);
-  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 15%, transparent);
-}
-
 /* Calculator panel */
 .calcPanel {
   background: var(--theme-paper, #fffdf7);
@@ -660,8 +670,8 @@
   .qLayout { grid-template-columns: 1fr; }
   .notepad { display: none; }
   .storyBody { margin-left: -12px; padding-left: 12px; }
-  .floatBar { bottom: 16px; right: 14px; }
-  .fabBtn { padding: 10px 14px; font-size: 11px; }
+  .desk .backBtn { top: 10px; left: 12px; }
+  .desk .pageTools { top: 10px; right: 12px; }
 }
 
 /* ── Not-found ───────────────────────────────────────────────────────── */
@@ -682,5 +692,5 @@
     filter: none;
   }
   .choice, .coverCta, .submitBtn, .navArrow, .navPrimary, .dot,
-  .fabBtn, .calcBtn { transition: none; }
+  .miniCalc, .backBtn, .calcBtn { transition: none; }
 }

@@ -446,8 +446,6 @@ export default function ConceptChapterPage() {
         '--theme-dim': theme.dim,
       } as React.CSSProperties}
     >
-      <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Back">← back</button>
-
       {/* ── Page ── */}
       <div
         key={pageIdx}
@@ -455,6 +453,32 @@ export default function ConceptChapterPage() {
         style={{ background: theme.paper }}
       >
         <div className={s.grain} aria-hidden />
+
+        {/* In-page corner controls — merged into the paper, not floating on the desk */}
+        <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Back">← back</button>
+        <div className={s.pageTools}>
+          <PingTutor context={pingContext} compact />
+          <div className={s.calcWrap}>
+            <button
+              type="button"
+              className={s.miniCalc}
+              onClick={() => setShowCalc(c => !c)}
+              aria-label="Calculator"
+              aria-expanded={showCalc}
+              title="Calculator"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="4" y="2" width="16" height="20" rx="2" />
+                <line x1="8" x2="16" y1="6" y2="6" />
+                <line x1="16" x2="16" y1="14" y2="18" />
+                <path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" />
+                <path d="M12 14h.01" /><path d="M8 14h.01" />
+                <path d="M12 18h.01" /><path d="M8 18h.01" />
+              </svg>
+            </button>
+            {showCalc && <div className={s.calcDrop}><Calculator /></div>}
+          </div>
+        </div>
 
         {/* ── COVER ── */}
         {spec.kind === 'cover' && (
@@ -728,20 +752,6 @@ export default function ConceptChapterPage() {
             )}
           </nav>
         )}
-      </div>
-
-      {/* ── Floating toolbar ── */}
-      <div className={s.floatBar}>
-        {showCalc && <Calculator />}
-        <PingTutor context={pingContext} embedded />
-        <button
-          type="button"
-          className={`${s.fabBtn} ${s.fabCalc}`}
-          onClick={() => setShowCalc(c => !c)}
-          aria-label="Calculator"
-        >
-          ⊞ Calculator
-        </button>
       </div>
     </div>
   )

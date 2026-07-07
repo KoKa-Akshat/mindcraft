@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
 import PingTutor from '../components/PingTutor'
 import BookmarkButton from '../components/BookmarkButton'
+import FlagQuestion from '../components/FlagQuestion'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
 import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
@@ -2049,6 +2050,16 @@ export default function Practice() {
                     </div>
                     <div className={s.stripRight}>
                       {!hideCorrectness && <span className={s.xpBadge}>⚡ {xp} XP</span>}
+                      <PingTutor
+                        compact
+                        className={s.stripPing}
+                        context={{
+                          conceptName: PRACTICE_CONCEPTS.find(c => c.id === currentQ.conceptId)?.label
+                            ?? bridgeLabel(toOntologyId(currentQ.conceptId)),
+                          questionLabel: `Q${qIndex + 1}`,
+                          questionText: storyItem?.storyStem ?? currentQ.question,
+                        }}
+                      />
                     </div>
                   </div>
 
@@ -2074,14 +2085,25 @@ export default function Practice() {
                             <span className={s.examTagLight}>{currentQ.examTag} Style</span>
                           ) : null}
                         </div>
-                        <BookmarkButton
-                          active={bookmarkedQuestions.includes(currentQ.id)}
-                          onToggle={() => {
-                            if (!user?.uid) return
-                            void toggleBookmark(user.uid, currentQ.id, bookmarkedQuestions)
-                              .then(setBookmarkedQuestions)
-                          }}
-                        />
+                        <div className={s.bannerTools}>
+                          <FlagQuestion
+                            className={s.qFlag}
+                            questionId={currentQ.id}
+                            questionText={currentQ.question}
+                            conceptId={toOntologyId(currentQ.conceptId)}
+                            conceptName={PRACTICE_CONCEPTS.find(c => c.id === currentQ.conceptId)?.label
+                              ?? bridgeLabel(toOntologyId(currentQ.conceptId))}
+                            questionLabel={`Q${qIndex + 1}`}
+                          />
+                          <BookmarkButton
+                            active={bookmarkedQuestions.includes(currentQ.id)}
+                            onToggle={() => {
+                              if (!user?.uid) return
+                              void toggleBookmark(user.uid, currentQ.id, bookmarkedQuestions)
+                                .then(setBookmarkedQuestions)
+                            }}
+                          />
+                        </div>
                       </div>
                       <p className={s.questionText}><MathText text={storyItem?.storyStem ?? currentQ.question} /></p>
                     </div>
@@ -2561,17 +2583,6 @@ export default function Practice() {
         )}
 
       </main>
-
-      {pPhase === 'session' && currentQ && (
-        <PingTutor
-          context={{
-            conceptName: PRACTICE_CONCEPTS.find(c => c.id === currentQ.conceptId)?.label
-              ?? bridgeLabel(toOntologyId(currentQ.conceptId)),
-            questionLabel: `Q${qIndex + 1}`,
-            questionText: storyItem?.storyStem ?? currentQ.question,
-          }}
-        />
-      )}
     </div>
   )
 }

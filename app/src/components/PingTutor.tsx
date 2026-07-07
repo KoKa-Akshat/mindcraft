@@ -35,9 +35,11 @@ type Props = {
   className?: string
   /** When true, render inside a parent float bar (no fixed positioning). */
   embedded?: boolean
+  /** Small in-page control: tiny "✉ tutor" button, panel drops down from it. */
+  compact?: boolean
 }
 
-export default function PingTutor({ context = {}, className, embedded = false }: Props) {
+export default function PingTutor({ context = {}, className, embedded = false, compact = false }: Props) {
   const user = useUser()
   const [open, setOpen] = useState(false)
   const [msg, setMsg] = useState('')
@@ -95,7 +97,7 @@ export default function PingTutor({ context = {}, className, embedded = false }:
   }
 
   const panel = open ? (
-    <div className={s.pingPanel}>
+    <div className={`${s.pingPanel}${compact ? ` ${s.pingPanelDrop}` : ''}`}>
       <p className={s.pingTitle}>Message your tutor</p>
       {!tutorLoaded ? (
         <p className={s.pingHint}>Checking your classroom link…</p>
@@ -131,14 +133,24 @@ export default function PingTutor({ context = {}, className, embedded = false }:
   const button = (
     <button
       type="button"
-      className={s.fabPing}
+      className={compact ? s.miniPing : s.fabPing}
       onClick={() => setOpen(o => !o)}
       aria-label="Message tutor"
       aria-expanded={open}
+      title="Message your tutor"
     >
-      ✉ Ping tutor
+      {compact ? <>✉ tutor</> : <>✉ Ping tutor</>}
     </button>
   )
+
+  if (compact) {
+    return (
+      <div className={`${s.compactWrap}${className ? ` ${className}` : ''}`}>
+        {button}
+        {panel}
+      </div>
+    )
+  }
 
   if (embedded) {
     return (

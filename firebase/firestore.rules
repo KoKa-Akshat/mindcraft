@@ -146,6 +146,26 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Student-flagged practice questions → surfaced on the tutor dashboard.
+    // A student may only flag to their OWN linked tutor (users/{uid}.tutorId,
+    // which is Admin-SDK-written via the classroom join flow, so it can't be
+    // spoofed client-side). Tutors may mark their own flags resolved.
+    match /flagged_questions/{flagId} {
+      allow create: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid
+        && request.resource.data.tutorId is string
+        && request.resource.data.tutorId ==
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tutorId;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid ||
+        resource.data.tutorId == request.auth.uid
+      );
+      allow update: if request.auth != null
+        && resource.data.tutorId == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['resolved']);
+      allow delete: if request.auth != null && resource.data.tutorId == request.auth.uid;
+    }
+
     match /knowledge_graphs/{studentId} {
       allow read: if request.auth != null && (
         request.auth.uid == studentId ||

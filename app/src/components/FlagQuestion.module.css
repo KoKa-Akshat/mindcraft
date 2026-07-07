@@ -1,0 +1,29 @@
+.flagBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font: 600 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: background 140ms, border-color 140ms, color 140ms;
+}
+
+.flagBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+.flagBtn:disabled { cursor: default; }
+
+.flagged {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: transparent;
+  color: #fff;
+  opacity: 0.9;
+}

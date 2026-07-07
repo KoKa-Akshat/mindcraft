@@ -308,7 +308,25 @@
 }
 .stripLeft  { display: flex; flex-direction: column; gap: 2px; min-width: 130px; }
 .stripCenter{ flex: 1; display: flex; flex-direction: column; gap: 6px; }
-.stripRight { text-align: right; min-width: 80px; }
+.stripRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 80px;
+}
+
+/* Compact tutor ping lives in the strip on a dark desk — lighten the button
+   only (the drop-down panel keeps its own paper styling). */
+.stripPing > button {
+  color: rgba(245,245,245,0.62);
+  border-color: rgba(245,245,245,0.18);
+}
+.stripPing > button:hover {
+  color: rgba(245,245,245,0.95);
+  border-color: rgba(196,245,71,0.4);
+  background: rgba(255,255,255,0.06);
+}
 
 .stripConcept {
   font-size: 12px;
@@ -373,6 +391,32 @@
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 10px;
+}
+
+.bannerTools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Flag button contrast on the light matte / paper banners */
+.matteShell .qFlag,
+.paperScan .qFlag {
+  background: transparent;
+  color: #8a8073;
+  border-color: rgba(102,92,78,0.28);
+}
+.matteShell .qFlag:hover:not(:disabled),
+.paperScan .qFlag:hover:not(:disabled) {
+  background: rgba(102,92,78,0.08);
+  color: #4a4237;
+  border-color: rgba(102,92,78,0.45);
+}
+.matteShell .qFlag[aria-pressed="true"],
+.paperScan .qFlag[aria-pressed="true"] {
+  background: rgba(102,92,78,0.12);
+  color: #4a4237;
+  border-color: transparent;
 }
 
 .examTagLight {
