@@ -3,9 +3,10 @@
  *
  * View for parents (role: 'parent'). Shows:
  *  - Link to child by email (one-time setup)
- *  - Child's current curriculum (active concepts from knowledge graph)
- *  - SVG performance line chart: weekly avg outcome over last 12 weeks
- *  - Top strengths / open gaps from ML profile
+ *  - "This week" hero with stat pills (avg mastery / week avg / concepts)
+ *  - What they're working on (top active concepts, horizontal pills)
+ *  - Strengths + open gaps
+ *  - Assigned tutor card + weekly digest callout
  */
 
 import { useEffect, useState, useMemo } from 'react'
@@ -33,6 +34,9 @@ function conceptLabel(id: string) {
   return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
+// Test account — digest / dashboard content disabled
+const TEST_UID = 'gBFn9vUGIIa7tAiTTQSl8CbPSao2'
+
 // ── types ─────────────────────────────────────────────────────────────────────
 
 interface WeekPoint { week: string; avg: number; count: number }
@@ -40,95 +44,6 @@ interface WeekPoint { week: string; avg: number; count: number }
 interface GraphNode {
   id: string; name: string; mastery: number
   strengthScore: number; eventCount: number; status: string
-}
-
-// ── SVG line chart ────────────────────────────────────────────────────────────
-
-function PerfGraph({ points }: { points: WeekPoint[] }) {
-  const W = 560, H = 160, PAD = { t: 16, r: 16, b: 28, l: 36 }
-  const inner = { w: W - PAD.l - PAD.r, h: H - PAD.t - PAD.b }
-
-  if (points.length < 2) {
-    return (
-      <div className={s.graphEmpty}>
-        <p>Not enough data yet — performance will chart as your child completes practice.</p>
-      </div>
-    )
-  }
-
-  const vals = points.map(p => p.avg)
-  const lo = Math.min(...vals)
-  const hi = Math.max(...vals)
-  const span = hi - lo < 0.05 ? 0.2 : hi - lo
-  const yOf = (v: number) => PAD.t + inner.h * (1 - (v - lo) / span)
-  const xOf = (i: number) => PAD.l + (i / (points.length - 1)) * inner.w
-
-  // smooth bezier path
-  const path = points.reduce((acc, p, i) => {
-    const x = xOf(i), y = yOf(p.avg)
-    if (i === 0) return `M${x},${y}`
-    const px = xOf(i - 1), py = yOf(points[i - 1].avg)
-    const cx = (px + x) / 2
-    return `${acc} C${cx},${py} ${cx},${y} ${x},${y}`
-  }, '')
-
-  // fill under the curve
-  const fill = `${path} L${xOf(points.length - 1)},${PAD.t + inner.h} L${PAD.l},${PAD.t + inner.h} Z`
-
-  // axis labels: first, middle, last week label
-  const labelIdxs = [0, Math.floor((points.length - 1) / 2), points.length - 1]
-  const shortWeek = (w: string) => {
-    const [, wk] = w.split('-W')
-    return `Wk ${wk}`
-  }
-
-  // y grid lines at 0%, 50%, 100% of range
-  const gridVals = [lo, (lo + hi) / 2, hi]
-
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className={s.graphSvg} aria-label="Performance over time">
-      <defs>
-        <linearGradient id="perfGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="var(--g)" stopOpacity="0.22" />
-          <stop offset="100%" stopColor="var(--g)" stopOpacity="0.01" />
-        </linearGradient>
-      </defs>
-
-      {/* grid */}
-      {gridVals.map((v, i) => (
-        <g key={i}>
-          <line
-            x1={PAD.l} y1={yOf(v)} x2={PAD.l + inner.w} y2={yOf(v)}
-            stroke="rgba(0,0,0,0.06)" strokeWidth="1"
-          />
-          <text x={PAD.l - 6} y={yOf(v) + 4} textAnchor="end"
-            fontSize="9" fill="rgba(0,0,0,0.35)" fontFamily="system-ui">
-            {Math.round(v * 100)}%
-          </text>
-        </g>
-      ))}
-
-      {/* fill */}
-      <path d={fill} fill="url(#perfGrad)" />
-
-      {/* line */}
-      <path d={path} fill="none" stroke="var(--g)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-
-      {/* dots */}
-      {points.map((p, i) => (
-        <circle key={i} cx={xOf(i)} cy={yOf(p.avg)} r="3.5"
-          fill="white" stroke="var(--g)" strokeWidth="2" />
-      ))}
-
-      {/* x labels */}
-      {labelIdxs.map(i => (
-        <text key={i} x={xOf(i)} y={H - 4} textAnchor="middle"
-          fontSize="9" fill="rgba(0,0,0,0.4)" fontFamily="system-ui">
-          {shortWeek(points[i].week)}
-        </text>
-      ))}
-    </svg>
-  )
 }
 
 // ── main ──────────────────────────────────────────────────────────────────────
@@ -147,6 +62,8 @@ export default function ParentDashboard() {
 
   const [interactions, setInteractions] = useState<{ outcome: number; ts: number }[]>([])
   const [graphNodes,   setGraphNodes]   = useState<GraphNode[]>([])
+  const [tutorName,    setTutorName]    = useState<string | null>(null)
+  const [tutorEmail,   setTutorEmail]   = useState<string | null>(null)
 
   // ── load parent doc ──
   useEffect(() => {
@@ -161,6 +78,7 @@ export default function ParentDashboard() {
   // ── load child data once linked ──
   useEffect(() => {
     if (!childId) return
+    if (childId === TEST_UID) { setLoading(false); return }
     setLoading(true)
 
     Promise.all([
@@ -174,7 +92,15 @@ export default function ParentDashboard() {
         ),
       ),
       getDoc(doc(db, 'knowledge_graphs', childId)),
-    ]).then(([userSnap, interSnap, graphSnap]) => {
+      getDocs(
+        query(
+          collection(db, 'sessions'),
+          where('studentId', '==', childId),
+          orderBy('scheduledAt', 'desc'),
+          limit(1),
+        ),
+      ).catch(() => null),
+    ]).then(([userSnap, interSnap, graphSnap, sessSnap]) => {
       const ud = userSnap.data() ?? {}
       setChildName(ud.displayName || ud.email?.split('@')[0] || 'Your child')
       setChildExam(ud.examTrack || ud.exam || '')
@@ -189,6 +115,19 @@ export default function ParentDashboard() {
 
       const gd = graphSnap.data()
       if (gd?.nodes) setGraphNodes(gd.nodes as GraphNode[])
+
+      // Latest session → assigned tutor (name + email via users/{tutorId})
+      if (sessSnap && !sessSnap.empty) {
+        const sd = sessSnap.docs[0].data()
+        if (sd.tutorName) setTutorName(sd.tutorName)
+        if (sd.tutorId) {
+          getDoc(doc(db, 'users', sd.tutorId)).then(ts => {
+            const td = ts.data()
+            if (td?.email) setTutorEmail(td.email)
+            if (!sd.tutorName && td?.displayName) setTutorName(td.displayName)
+          }).catch(() => {})
+        }
+      }
     }).finally(() => setLoading(false))
   }, [childId])
 
@@ -309,80 +248,66 @@ export default function ParentDashboard() {
           <div className={s.spinner}><div className={s.spinnerDot} /></div>
         )}
 
+        {/* ── test account ── */}
+        {!loading && childId === TEST_UID && (
+          <div className={s.testBanner}>Test account — digest not available.</div>
+        )}
+
         {/* ── main content ── */}
-        {!loading && childId && (
+        {!loading && childId && childId !== TEST_UID && (
           <>
+            {/* Hero — this week at a glance */}
             <div className={s.hero}>
-              <div>
-                <div className={s.heroEyebrow}>Viewing progress for</div>
-                <h1 className={s.heroName}>{childName}</h1>
+              <div className={s.heroTop}>
+                <h1 className={s.heroName}>This week for {childName}</h1>
                 {childExam && <span className={s.examBadge}>{childExam} track</span>}
               </div>
               <div className={s.heroStats}>
                 {avgMastery !== null && (
-                  <div className={s.stat}>
+                  <div className={s.statPill}>
                     <span className={s.statNum}>{Math.round(avgMastery * 100)}%</span>
                     <span className={s.statLabel}>Avg Mastery</span>
                   </div>
                 )}
                 {latestWeekAvg !== null && (
-                  <div className={s.stat}>
+                  <div className={s.statPill}>
                     <span className={s.statNum}>{Math.round(latestWeekAvg * 100)}%</span>
                     <span className={s.statLabel}>This Week</span>
                   </div>
                 )}
-                <div className={s.stat}>
+                <div className={s.statPill}>
                   <span className={s.statNum}>{activeNodes.length}</span>
                   <span className={s.statLabel}>Concepts Practiced</span>
                 </div>
               </div>
             </div>
 
-            <div className={s.grid}>
-              {/* Performance graph */}
-              <div className={`${s.card} ${s.cardWide}`}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Performance Over Time</span>
-                  <span className={s.cardSub}>Weekly avg — higher is better</span>
+            {/* What they're working on */}
+            <div className={s.workSection}>
+              <div className={s.sectionLabel}>What they're working on</div>
+              {activeNodes.length === 0 ? (
+                <div className={s.emptyState}>
+                  <p>No practice data yet. Encourage your child to complete a session.</p>
                 </div>
-                <PerfGraph points={weekPoints} />
-              </div>
-
-              {/* Curriculum — what they're working on */}
-              <div className={s.card}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Current Curriculum</span>
-                </div>
-                {activeNodes.length === 0 ? (
-                  <div className={s.emptyState}>
-                    <p>No practice data yet. Encourage your child to complete a session.</p>
-                  </div>
-                ) : (
-                  <div className={s.conceptList}>
-                    {activeNodes.slice(0, 10).map(n => (
-                      <div key={n.id} className={s.conceptRow}>
-                        <div className={s.conceptLeft}>
-                          <span className={s.conceptName}>{n.name || conceptLabel(n.id)}</span>
-                          <span className={`${s.conceptStatus} ${s[`status_${n.status}`]}`}>
-                            {n.status === 'mastered' ? 'Mastered' :
-                             n.status === 'struggling' ? 'Needs work' :
-                             n.status === 'in_progress' ? 'In progress' : 'Started'}
-                          </span>
-                        </div>
-                        <div className={s.masteryBar}>
-                          <div
-                            className={s.masteryFill}
-                            style={{ width: `${Math.round(n.mastery * 100)}%` }}
-                          />
-                          <span className={s.masteryPct}>{Math.round(n.mastery * 100)}%</span>
-                        </div>
+              ) : (
+                <div className={s.workScroll}>
+                  {activeNodes.slice(0, 5).map(n => (
+                    <div key={n.id} className={s.workPill}>
+                      <span className={s.workName}>{n.name || conceptLabel(n.id)}</span>
+                      <div className={s.workBar}>
+                        <div
+                          className={s.workFill}
+                          style={{ width: `${Math.round(n.mastery * 100)}%` }}
+                        />
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-              {/* Strengths + Gaps */}
+            {/* Strengths | Open Gaps */}
+            <div className={s.grid}>
               <div className={s.card}>
                 <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Strengths</span>
@@ -398,10 +323,10 @@ export default function ParentDashboard() {
                     ))}
                   </div>
                 )}
+              </div>
 
-                <div className={s.divider} />
-
-                <div className={s.cardHeader} style={{ marginTop: 0 }}>
+              <div className={s.card}>
+                <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Open Gaps</span>
                 </div>
                 {gaps.length === 0 ? (
@@ -416,6 +341,37 @@ export default function ParentDashboard() {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Your tutor */}
+            <div className={`${s.card} ${s.tutorCard}`}>
+              <div className={s.cardHeader}>
+                <span className={s.cardLabel}>Your tutor</span>
+              </div>
+              {tutorName ? (
+                <div className={s.tutorRow}>
+                  <div className={s.tutorAvatar}>{tutorName[0]?.toUpperCase()}</div>
+                  <div>
+                    <div className={s.tutorName}>{tutorName}</div>
+                    {tutorEmail && (
+                      <a
+                        className={s.tutorMail}
+                        href={`mailto:${tutorEmail}?subject=${encodeURIComponent(`About ${childName}`)}`}
+                      >
+                        Message tutor
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className={s.emptyState}><p>A tutor will be assigned soon.</p></div>
+              )}
+            </div>
+
+            {/* Weekly digest callout */}
+            <div className={s.digestCallout}>
+              You'll receive a weekly progress summary every Sunday. No need to check in
+              here — it comes to you.
             </div>
           </>
         )}

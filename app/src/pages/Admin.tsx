@@ -13,14 +13,18 @@ import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import {
   collection, query, orderBy, onSnapshot,
-  doc, getDoc, setDoc, updateDoc, serverTimestamp, getDocs, where, deleteField,
+  doc, getDoc, setDoc, updateDoc, serverTimestamp, getDocs, where, deleteField, limit,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
 import { listAllActConceptCoverage, coverageSummaryLine, formatQuestionSources, type ConceptCoverage } from '../lib/ontologyBankCoverage'
+import StudentIntelPanel from '../components/StudentIntelPanel'
 import s from './Admin.module.css'
+
+// Test account — excluded / flagged everywhere in admin views
+const TEST_EMAIL = 'shreeyutk@gmail.com'
 
 // Admin sees a flattened view of sessions — simpler than tutor/student views
 interface AdminSession {
@@ -39,9 +43,37 @@ interface AdminSession {
 }
 
 interface AdminStudent {
+  id:                string
+  displayName:       string
+  email:             string
+  assignedTutorName?: string | null
+}
+
+interface AdminParent {
   id:          string
   displayName: string
   email:       string
+  childId:     string | null
+}
+
+interface AdminTutor {
+  id:          string
+  displayName: string
+  email:       string
+}
+
+interface StudentMeta {
+  lastActive:   number | null
+  avgMastery:   number | null
+  conceptCount: number
+}
+
+function activityBadge(lastActive: number | null): { label: string; cls: 'active' | 'slowing' | 'inactive' } {
+  if (!lastActive) return { label: 'Inactive', cls: 'inactive' }
+  const days = (Date.now() - lastActive) / 86400000
+  if (days < 7)   return { label: 'Active',   cls: 'active' }
+  if (days <= 21) return { label: 'Slowing',  cls: 'slowing' }
+  return { label: 'Inactive', cls: 'inactive' }
 }
 
 const STATUS_COLOR: Record<string, string> = {
@@ -62,7 +94,14 @@ export default function Admin() {
   const { toast, showToast } = useToast()
   const [sessions, setSessions] = useState<AdminSession[]>([])
   const [students, setStudents] = useState<AdminStudent[]>([])
-  const [tab, setTab]           = useState<'sessions' | 'new' | 'testing'>('sessions')
+  const [parents, setParents]   = useState<AdminParent[]>([])
+  const [tutors, setTutors]     = useState<AdminTutor[]>([])
+  const [childNames, setChildNames]   = useState<Record<string, string>>({})
+  const [studentMeta, setStudentMeta] = useState<Record<string, StudentMeta>>({})
+  const [metaLoaded, setMetaLoaded]   = useState(false)
+  const [intelStudent, setIntelStudent] = useState<{ id: string; name: string } | null>(null)
+  const [matchTutorPick, setMatchTutorPick] = useState<Record<string, string>>({})
+  const [tab, setTab]           = useState<'sessions' | 'students' | 'parents' | 'match' | 'new' | 'testing'>('sessions')
   const [coverageRows]          = useState<ConceptCoverage[]>(() => listAllActConceptCoverage())
   const [coverageSummary]       = useState(() => coverageSummaryLine())
   const [loading, setLoading]   = useState(true)
@@ -96,10 +135,81 @@ export default function Admin() {
   useEffect(() => {
     getDocs(query(collection(db, 'users'), where('role', '==', 'student')))
       .then(snap => setStudents(
-        snap.docs.map(d => ({ id: d.id, displayName: d.data().displayName, email: d.data().email }))
+        snap.docs.map(d => ({
+          id: d.id,
+          displayName: d.data().displayName,
+          email: d.data().email,
+          assignedTutorName: d.data().assignedTutorName ?? null,
+        }))
       ))
       .catch(() => {})
   }, [])
+
+  // Parents + tutors — loaded once (parents feed the stats bar too)
+  useEffect(() => {
+    getDocs(query(collection(db, 'users'), where('role', '==', 'parent')))
+      .then(snap => setParents(snap.docs.map(d => ({
+        id: d.id,
+        displayName: d.data().displayName ?? '',
+        email: d.data().email ?? '',
+        childId: d.data().childId ?? null,
+      }))))
+      .catch(() => {})
+    getDocs(query(collection(db, 'users'), where('role', '==', 'tutor')))
+      .then(snap => setTutors(snap.docs.map(d => ({
+        id: d.id,
+        displayName: d.data().displayName ?? '',
+        email: d.data().email ?? '',
+      }))))
+      .catch(() => {})
+  }, [])
+
+  // Resolve parents' childId → child display name (batch, reuses students list first)
+  useEffect(() => {
+    const ids = [...new Set(parents.map(p => p.childId).filter(Boolean))] as string[]
+    if (ids.length === 0) return
+    const known: Record<string, string> = {}
+    const missing: string[] = []
+    ids.forEach(id => {
+      const st = students.find(x => x.id === id)
+      if (st) known[id] = st.displayName || st.email
+      else missing.push(id)
+    })
+    Promise.all(missing.map(id =>
+      getDoc(doc(db, 'users', id))
+        .then(snap => { const d = snap.data(); if (d) known[id] = d.displayName || d.email || id })
+        .catch(() => {})
+    )).then(() => setChildNames(prev => ({ ...prev, ...known })))
+  }, [parents, students])
+
+  // Per-student meta (last active + mastery) — lazy-loaded when Students tab opens
+  useEffect(() => {
+    if (tab !== 'students' || metaLoaded || students.length === 0) return
+    setMetaLoaded(true)
+    const real = students.filter(st => st.email !== TEST_EMAIL)
+    Promise.all(real.map(async st => {
+      const [interSnap, graphSnap] = await Promise.all([
+        getDocs(query(
+          collection(db, 'interactions'),
+          where('studentId', '==', st.id),
+          orderBy('timestamp', 'desc'),
+          limit(1),
+        )).catch(() => null),
+        getDoc(doc(db, 'knowledge_graphs', st.id)).catch(() => null),
+      ])
+      let lastActive: number | null = null
+      if (interSnap && !interSnap.empty) {
+        const t = interSnap.docs[0].data().timestamp
+        lastActive = t?.toMillis?.() ?? (typeof t === 'number' ? t : null)
+      }
+      const nodes = (graphSnap?.data()?.nodes ?? []) as { mastery?: number; eventCount?: number }[]
+      const active = nodes.filter(n => (n.eventCount ?? 0) > 0)
+      const avgMastery = active.length
+        ? active.reduce((sum, n) => sum + (n.mastery ?? 0), 0) / active.length
+        : null
+      return [st.id, { lastActive, avgMastery, conceptCount: active.length }] as const
+    })).then(entries => setStudentMeta(Object.fromEntries(entries)))
+  }, [tab, students, metaLoaded])
 
   async function createSession() {
     if (!form.studentEmail || !form.date || !form.time) {
@@ -159,6 +269,62 @@ export default function Admin() {
     showToast('Gap scan reset — user will be prompted on next login.')
   }
 
+  function tutorForStudent(st: AdminStudent): string | null {
+    const sess = sessions
+      .filter(x => x.studentId === st.id || (st.email && x.studentEmail === st.email))
+      .sort((a, b) => b.scheduledAt - a.scheduledAt)[0]
+    return sess?.tutorName ?? st.assignedTutorName ?? null
+  }
+
+  function tutorLoad(tutorId: string): number {
+    return new Set(
+      sessions
+        .filter(x => x.tutorId === tutorId)
+        .map(x => x.studentId || x.studentEmail)
+        .filter(Boolean)
+    ).size
+  }
+
+  async function assignTutor(studentId: string) {
+    const tid = matchTutorPick[studentId] || tutors[0]?.id
+    const t = tutors.find(x => x.id === tid)
+    if (!t) { showToast('No tutors available to assign.'); return }
+    try {
+      await updateDoc(doc(db, 'users', studentId), {
+        assignedTutorId:   t.id,
+        assignedTutorName: t.displayName || t.email,
+      })
+      setStudents(prev => prev.map(st =>
+        st.id === studentId ? { ...st, assignedTutorName: t.displayName || t.email } : st
+      ))
+      showToast(`Assigned ${t.displayName || t.email}`)
+    } catch {
+      showToast('Assignment failed — check permissions.')
+    }
+  }
+
+  const realStudents = students.filter(st => st.email !== TEST_EMAIL)
+
+  const thirtyDaysAgo = Date.now() - 30 * 86400000
+  const unmatchedStudents = realStudents.filter(st =>
+    !sessions.some(x =>
+      (x.studentId === st.id || (st.email && x.studentEmail === st.email)) &&
+      x.scheduledAt > thirtyDaysAgo
+    )
+  )
+
+  function digestMailto(p: AdminParent): string {
+    const childName = (p.childId && childNames[p.childId]) || 'your child'
+    const parentName = p.displayName || 'there'
+    const subject = `MindCraft weekly update for ${childName}`
+    const body =
+      `Hi ${parentName},\n\n` +
+      `Here's a quick look at ${childName}'s week on MindCraft — recent practice, ` +
+      `strengths, and where we're focusing next. Reply to this email any time with questions.\n\n` +
+      `Best,\nThe MindCraft Team`
+    return `mailto:${p.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
+
   const counts = {
     scheduled: sessions.filter(s => s.status === 'scheduled').length,
     completed: sessions.filter(s => s.status === 'completed').length,
@@ -180,6 +346,7 @@ export default function Admin() {
             { label: 'Upcoming', val: counts.scheduled, color: '#3A8500', bg: 'rgba(88,204,2,.08)' },
             { label: 'Completed', val: counts.completed, color: '#4A7BF7', bg: 'rgba(74,123,247,.08)' },
             { label: 'Students', val: students.length, color: '#F59E0B', bg: 'rgba(245,158,11,.08)' },
+            { label: 'Parents linked', val: parents.filter(p => p.childId).length, color: '#8B5CF6', bg: 'rgba(139,92,246,.08)' },
           ].map(st => (
             <div key={st.label} className={s.statCard} style={{ background: st.bg, border: `1px solid ${st.bg}` }}>
               <div className={s.statVal} style={{ color: st.color }}>{st.val}</div>
@@ -197,6 +364,15 @@ export default function Admin() {
         <div className={s.tabs}>
           <button className={`${s.tab} ${tab === 'sessions' ? s.tabActive : ''}`} onClick={() => setTab('sessions')}>
             All Sessions
+          </button>
+          <button className={`${s.tab} ${tab === 'students' ? s.tabActive : ''}`} onClick={() => setTab('students')}>
+            Students
+          </button>
+          <button className={`${s.tab} ${tab === 'parents' ? s.tabActive : ''}`} onClick={() => setTab('parents')}>
+            Parents
+          </button>
+          <button className={`${s.tab} ${tab === 'match' ? s.tabActive : ''}`} onClick={() => setTab('match')}>
+            Match
           </button>
           <button className={`${s.tab} ${tab === 'new' ? s.tabActive : ''}`} onClick={() => setTab('new')}>
             + Book Session
@@ -255,6 +431,176 @@ export default function Admin() {
               </table>
             )}
           </div>
+        )}
+
+        {tab === 'students' && (
+          <div className={s.tableWrap}>
+            {realStudents.length === 0 ? (
+              <div className={s.empty}>No students yet.</div>
+            ) : (
+              <div className={s.rowList}>
+                {realStudents.map(st => {
+                  const meta  = studentMeta[st.id]
+                  const badge = activityBadge(meta?.lastActive ?? null)
+                  const tutorName = tutorForStudent(st)
+                  const name = st.displayName || st.email?.split('@')[0] || 'Student'
+                  return (
+                    <div key={st.id} className={s.studentRow}>
+                      <div className={s.rowAvatar}>{name[0]?.toUpperCase()}</div>
+                      <div className={s.rowMain}>
+                        <div className={s.studentName}>{name}</div>
+                        <div className={s.studentEmail}>{st.email}</div>
+                      </div>
+                      <span className={`${s.statusBadge} ${
+                        badge.cls === 'active' ? s.badgeActive :
+                        badge.cls === 'slowing' ? s.badgeSlowing : s.badgeInactive
+                      }`}>
+                        {badge.label}
+                      </span>
+                      <div className={s.rowStat}>
+                        <span className={s.rowStatNum}>
+                          {meta?.avgMastery != null ? `${Math.round(meta.avgMastery * 100)}%` : '—'}
+                        </span>
+                        <span className={s.rowStatLabel}>Avg mastery</span>
+                      </div>
+                      <div className={s.rowStat}>
+                        <span className={s.rowStatNum}>{meta ? meta.conceptCount : '—'}</span>
+                        <span className={s.rowStatLabel}>Concepts</span>
+                      </div>
+                      <div className={s.rowStat}>
+                        <span className={s.rowStatNum} style={{ fontSize: 13 }}>{tutorName ?? '—'}</span>
+                        <span className={s.rowStatLabel}>Tutor</span>
+                      </div>
+                      <button
+                        type="button"
+                        className={s.actionBtn}
+                        onClick={() => setIntelStudent({ id: st.id, name })}
+                      >
+                        View ML
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'parents' && (
+          <div className={s.tableWrap}>
+            {parents.length === 0 ? (
+              <div className={s.empty}>No parent accounts yet.</div>
+            ) : (
+              <div className={s.rowList}>
+                {parents.map(p => {
+                  const name = p.displayName || p.email?.split('@')[0] || 'Parent'
+                  const childName = p.childId ? (childNames[p.childId] ?? '…') : null
+                  return (
+                    <div key={p.id} className={s.studentRow}>
+                      <div className={s.rowAvatar}>{name[0]?.toUpperCase()}</div>
+                      <div className={s.rowMain}>
+                        <div className={s.studentName}>{name}</div>
+                        <div className={s.studentEmail}>{p.email}</div>
+                      </div>
+                      <div className={s.rowStat}>
+                        <span className={s.rowStatNum} style={{ fontSize: 13 }}>{childName ?? '—'}</span>
+                        <span className={s.rowStatLabel}>Child</span>
+                      </div>
+                      <span className={`${s.statusBadge} ${p.childId ? s.badgeActive : s.badgeInactive}`}>
+                        {p.childId ? 'Linked' : 'Not linked'}
+                      </span>
+                      {p.childId && p.email ? (
+                        <a
+                          href={digestMailto(p)}
+                          target="_blank"
+                          rel="noopener"
+                          className={`${s.actionBtn} ${s.linkAction}`}
+                        >
+                          Send digest
+                        </a>
+                      ) : (
+                        <span className={s.noZoom}>—</span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'match' && (
+          <>
+            <div className={s.matchBanner}>
+              Full classroom model is coming — this is a manual assignment stub.
+            </div>
+            <div className={s.matchGrid}>
+              <div className={s.tableWrap}>
+                <div className={s.matchColTitle}>Unmatched Students</div>
+                {unmatchedStudents.length === 0 ? (
+                  <div className={s.empty}>Every student has had a session in the last 30 days.</div>
+                ) : (
+                  <div className={s.rowList}>
+                    {unmatchedStudents.map(st => {
+                      const name = st.displayName || st.email?.split('@')[0] || 'Student'
+                      return (
+                        <div key={st.id} className={s.studentRow}>
+                          <div className={s.rowAvatar}>{name[0]?.toUpperCase()}</div>
+                          <div className={s.rowMain}>
+                            <div className={s.studentName}>{name}</div>
+                            <div className={s.studentEmail}>{st.email}</div>
+                          </div>
+                          <select
+                            className={s.matchSelect}
+                            value={matchTutorPick[st.id] ?? tutors[0]?.id ?? ''}
+                            onChange={e => setMatchTutorPick(prev => ({ ...prev, [st.id]: e.target.value }))}
+                          >
+                            {tutors.map(t => (
+                              <option key={t.id} value={t.id}>{t.displayName || t.email}</option>
+                            ))}
+                          </select>
+                          <button
+                            type="button"
+                            className={s.actionBtn}
+                            onClick={() => assignTutor(st.id)}
+                            disabled={tutors.length === 0}
+                          >
+                            Assign
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+              <div className={s.tableWrap}>
+                <div className={s.matchColTitle}>Active Tutors</div>
+                {tutors.length === 0 ? (
+                  <div className={s.empty}>No tutor accounts yet.</div>
+                ) : (
+                  <div className={s.rowList}>
+                    {tutors.map(t => {
+                      const name = t.displayName || t.email?.split('@')[0] || 'Tutor'
+                      const load = tutorLoad(t.id)
+                      return (
+                        <div key={t.id} className={s.studentRow}>
+                          <div className={s.rowAvatar}>{name[0]?.toUpperCase()}</div>
+                          <div className={s.rowMain}>
+                            <div className={s.studentName}>{name}</div>
+                            <div className={s.studentEmail}>{t.email}</div>
+                          </div>
+                          <div className={s.rowStat}>
+                            <span className={s.rowStatNum}>{load}</span>
+                            <span className={s.rowStatLabel}>{load === 1 ? 'Student' : 'Students'}</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
         )}
 
         {tab === 'new' && (
@@ -438,6 +784,25 @@ export default function Admin() {
           </>
         )}
       </div>
+
+      {intelStudent && (
+        <div className={s.overlay} onClick={() => setIntelStudent(null)}>
+          <div className={s.overlayCard} onClick={e => e.stopPropagation()}>
+            <div className={s.overlayHead}>
+              <span className={s.overlayTitle}>ML profile — {intelStudent.name}</span>
+              <button
+                type="button"
+                className={s.overlayClose}
+                onClick={() => setIntelStudent(null)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <StudentIntelPanel studentId={intelStudent.id} studentName={intelStudent.name} />
+          </div>
+        </div>
+      )}
 
       {toast && <div className={s.toast}>{toast}</div>}
     </div>
