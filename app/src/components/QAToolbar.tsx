@@ -5,13 +5,8 @@
  * Exit: click ✕ on the toolbar.
  */
 import { useState } from 'react'
-import {
-  doc, updateDoc, deleteField, deleteDoc,
-  collection, query, where, getDocs, writeBatch,
-} from 'firebase/firestore'
-import { db } from '../firebase'
 import { useUser } from '../App'
-import { invalidateKnowledgeGraph } from '../lib/graphCache'
+import { resetStudentProfile } from '../lib/testProfile'
 
 type Status = 'idle' | 'working' | 'done' | 'error'
 
@@ -23,38 +18,9 @@ export default function QAToolbar() {
   async function handleRestart() {
     if (status === 'working') return
     setStatus('working')
-    setDetail('clearing…')
+    setDetail('resetting user…')
     try {
-      setDetail('resetting user…')
-      await updateDoc(doc(db, 'users', user.uid), {
-        diagnosticCompleted:   deleteField(),
-        diagnosticCompletedAt: deleteField(),
-        diagnostic:            deleteField(),
-        goals:                 deleteField(),
-        practiceDrafts:        deleteField(),
-        practiceDraftAt:       deleteField(),
-      })
-
-      setDetail('deleting events…')
-      const [interSnap, learnSnap] = await Promise.all([
-        getDocs(query(collection(db, 'interactions'),    where('studentId', '==', user.uid))),
-        getDocs(query(collection(db, 'learning_events'), where('studentId', '==', user.uid))),
-      ])
-      const all = [...interSnap.docs, ...learnSnap.docs]
-      for (let i = 0; i < all.length; i += 499) {
-        const b = writeBatch(db)
-        all.slice(i, i + 499).forEach(d => b.delete(d.ref))
-        await b.commit()
-      }
-
-      setDetail('deleting graph…')
-      await deleteDoc(doc(db, 'knowledge_graphs', user.uid))
-      invalidateKnowledgeGraph(user.uid)
-
-      localStorage.removeItem('mc-diag-done')
-      sessionStorage.removeItem('mc-clicked-me')
-      document.cookie = 'mc_diag_done=0; domain=.web.app; path=/; max-age=0; SameSite=Lax'
-      document.cookie = 'mc_diag_done=0; path=/; max-age=0'
+      await resetStudentProfile(user.uid)
 
       setStatus('done')
       setDetail('done!')

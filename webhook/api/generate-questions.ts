@@ -298,6 +298,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!conceptId || !level) {
     return res.status(400).json({ error: 'conceptId and level are required' })
   }
+  // Abuse guard: concept ids are snake_case ontology slugs, never free text.
+  if (typeof conceptId !== 'string' || !/^[a-z0-9_-]{1,80}$/i.test(conceptId)) {
+    return res.status(400).json({ error: 'Invalid conceptId' })
+  }
 
   const examType = normalizeExamType(rawExamType)
   const normalizedBridgeFrom = normalizeBridgeFrom(bridgeFrom)

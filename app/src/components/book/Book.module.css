@@ -1,0 +1,690 @@
+/* ─────────────────────────────────────────────────────────────
+   The Field Journal — Book system v3
+   Premium open-book shell · cover nav · study plan · page flip
+   Shared by BookShell / BookPage / CoverNavItem / StudyPlanList
+   ───────────────────────────────────────────────────────────── */
+
+.shell {
+  /* world / chrome */
+  --cover:        #080e14;
+  --cover-object: #0b1119;
+  --chalk:        #f5f5f5;
+  --chalk-dim:    rgba(245, 245, 245, 0.64);
+
+  /* paper tones */
+  --paper-base:     #f7f3ee;
+  --paper-raised:   #fbf8f4;
+  --paper-recessed: #f1eadf;
+  --paper-edge:     #e2d8ca;
+  --paper-crease:   #d4c8b6;
+
+  /* rules & margins */
+  --rule:         rgba(29, 58, 138, 0.09);
+  --margin-rule:  rgba(193, 18, 31, 0.20);
+  --margin-width: 64px;
+
+  /* inks */
+  --ink-system:  #1c1a17;
+  --ink-katha:   #232f4e;
+  --ink-pencil:  #6f6a61;
+  --ink-depth:   #1d3a8a;
+  --ink-faded:   #a39b8e;
+
+  /* brand */
+  --click:     #c4f547;
+  --click-ink: #5a7a10;
+  --stakes:    #c1121f;
+
+  /* shadows */
+  --shadow-book:  0 2px 4px rgba(8,14,20,0.10), 0 12px 40px rgba(8,14,20,0.30), 0 32px 80px rgba(8,14,20,0.34);
+  --shadow-card:  0 1px 3px rgba(8,14,20,0.12), 0 4px 14px rgba(8,14,20,0.10);
+  --shadow-tip:   0 1px 3px rgba(8,14,20,0.22), 0 2px 1px -1px rgba(8,14,20,0.12);
+  --dur-ink:      180ms;
+  --dur-wipe:     260ms;
+
+  /* type */
+  --font-script:  "Caveat", cursive;
+  --font-body:    "DM Sans", sans-serif;
+  --font-katha:   "Source Serif 4", "DM Serif Display", Georgia, serif;
+  --font-stamp:   "IBM Plex Mono", monospace;
+
+  /* motion */
+  --ease-weight:  cubic-bezier(0.2, 0, 0, 1);
+
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(29,58,138,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(193,18,31,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 35%, #0c141c 0%, #080e14 70%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 90px;
+}
+
+/* ── desk chrome ─────────────────────────────────────────── */
+.chrome {
+  width: 100%;
+  max-width: min(1280px, 96vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0 16px;
+}
+
+.wordmark {
+  font-family: var(--font-script);
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(251,248,244,0.72);
+}
+
+.chromeRight { display: flex; align-items: center; gap: 18px; }
+
+.chromeUser {
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  color: var(--chalk-dim);
+  letter-spacing: 0.03em;
+}
+
+.chromeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--chalk-dim);
+  padding: 0;
+  opacity: 0.45;
+  transition: opacity 150ms;
+}
+.chromeBtn:hover { opacity: 0.85; }
+
+/* ── the open book ───────────────────────────────────────── */
+.book {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+  width: min(1280px, 96vw);
+  min-height: 720px;
+  box-shadow: var(--shadow-book);
+  border-radius: 4px;
+  animation: bookSettle 0.55s var(--ease-weight) both;
+  perspective: 2400px;
+}
+
+@keyframes bookSettle {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── pages ───────────────────────────────────────────────── */
+.page { position: relative; }
+
+.pageLeft {
+  background:
+    linear-gradient(105deg, rgba(8,14,20,0.045) 0%, transparent 9%),
+    var(--paper-recessed);
+  border-radius: 4px 0 0 4px;
+  animation: leftOpen 0.85s var(--ease-weight) both;
+  transform-origin: right center;
+}
+
+@keyframes leftOpen {
+  0%   { transform: perspective(2200px) rotateY(-88deg); opacity: 0; }
+  60%  { transform: perspective(2200px) rotateY(4deg);  opacity: 1; }
+  100% { transform: perspective(2200px) rotateY(0deg);  opacity: 1; }
+}
+
+.pageRight {
+  background:
+    linear-gradient(255deg, rgba(8,14,20,0.03) 0%, transparent 8%),
+    var(--paper-raised);
+  border-radius: 0 4px 4px 0;
+  animation: rightReveal 0.65s var(--ease-weight) 0.1s both;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+}
+
+@keyframes rightReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* soft paper grain */
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(102,92,78,0.16) 1px, transparent 1px);
+  background-size: 19px 19px;
+  background-position: 9px 9px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* red margin rule — right page */
+.pageRight::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: var(--margin-width);
+  width: 1px;
+  background: var(--margin-rule);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* page-depth stacks on the fore-edges */
+.edgeLeft {
+  position: absolute;
+  top: 3px; bottom: 3px; left: -6px; width: 6px;
+  pointer-events: none;
+  border-radius: 3px 0 0 3px;
+  background:
+    linear-gradient(90deg, var(--paper-crease) 0 1px, transparent 1px 2px,
+      var(--paper-edge) 2px 3px, transparent 3px 4px, var(--paper-crease) 4px 5px, transparent 5px);
+}
+
+.edgeRight {
+  position: absolute;
+  top: 3px; bottom: 3px; right: -6px; width: 6px;
+  pointer-events: none;
+  border-radius: 0 3px 3px 0;
+  background:
+    linear-gradient(90deg, transparent 0 1px, var(--paper-crease) 1px 2px,
+      transparent 2px 3px, var(--paper-edge) 3px 4px, transparent 4px 5px, var(--paper-crease) 5px 6px);
+}
+
+.pageInner {
+  position: relative;
+  z-index: 1;
+  padding: 42px 46px 36px;
+  min-height: 720px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageRight .pageInner {
+  padding: 42px 50px 36px calc(var(--margin-width) + 26px);
+}
+
+/* ── binding gutter ──────────────────────────────────────── */
+.gutter {
+  background: linear-gradient(90deg,
+    rgba(8,14,20,0) 0%, rgba(8,14,20,0.14) 42%,
+    rgba(8,14,20,0.26) 50%,
+    rgba(8,14,20,0.14) 58%, rgba(8,14,20,0) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 56px 0;
+  position: relative;
+}
+
+.gutter::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent 0%,
+    rgba(29,58,138,0.15) 10%, rgba(29,58,138,0.15) 90%, transparent 100%);
+}
+
+.stitch      { width: 4px; height: 12px; background: rgba(29,58,138,0.28); border-radius: 2px; flex-shrink: 0; }
+.stitchSmall { width: 2px; height: 6px;  background: rgba(29,58,138,0.14); border-radius: 1px; flex-shrink: 0; }
+
+/* ── bookmark ribbon (right page, top) ───────────────────── */
+.ribbon {
+  position: absolute;
+  top: -6px;
+  right: 54px;
+  width: 22px;
+  height: 74px;
+  z-index: 6;
+  pointer-events: none;
+  background: linear-gradient(180deg, #d31527 0%, var(--stakes) 60%, #a30e19 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+  filter: drop-shadow(0 3px 4px rgba(8,14,20,0.28));
+}
+
+/* ── page flip (topic → chapter) ─────────────────────────── */
+.flipping {
+  animation: pageFlip 560ms var(--ease-weight) both;
+  pointer-events: none;
+  z-index: 8;
+}
+
+@keyframes pageFlip {
+  0%   { transform: perspective(2400px) rotateY(0deg);   filter: brightness(1); }
+  55%  { transform: perspective(2400px) rotateY(-56deg); filter: brightness(0.94); }
+  100% { transform: perspective(2400px) rotateY(-84deg); filter: brightness(0.88); }
+}
+
+/* shadow the flipping page casts on the left page */
+.flipShadow {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent 40%, rgba(8,14,20,0.18) 100%);
+  border-radius: inherit;
+}
+.flipShadowActive { animation: flipShadowIn 560ms var(--ease-weight) both; }
+@keyframes flipShadowIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pageLeft, .pageRight, .book { animation: none; }
+  .flipping { animation: none; opacity: 0.4; transition: opacity 300ms; }
+}
+
+/* ── running heads / folios ──────────────────────────────── */
+.runningHead {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  color: var(--ink-faded);
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.folio {
+  margin-top: auto;
+  padding-top: 22px;
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* ── cover nav (left page "contents") ────────────────────── */
+.navSection {
+  margin-top: auto;
+  padding-top: 26px;
+  flex-shrink: 0;
+}
+
+.navHeading {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.navHeadingLabel {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  color: var(--ink-faded);
+  white-space: nowrap;
+}
+
+.navHeadingRule { flex: 1; height: 1px; background: var(--rule); }
+
+.navList {
+  display: flex;
+  flex-direction: column;
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 13px 12px 13px 14px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 160ms var(--ease-weight), transform 160ms var(--ease-weight);
+}
+
+.navItem + .navItem { border-top: 1px solid var(--rule); border-radius: 0 0 6px 6px; }
+
+.navItem:hover {
+  background: rgba(29, 58, 138, 0.05);
+  transform: translateX(3px);
+}
+
+.navItem:focus-visible {
+  outline: 2px solid var(--ink-depth);
+  outline-offset: 2px;
+}
+
+.navItemActive {
+  background: rgba(29, 58, 138, 0.07);
+}
+
+/* left ink bar for the active chapter */
+.navItemActive::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px; bottom: 10px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--ink-depth);
+}
+
+.navIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-katha);
+  background: var(--paper-raised);
+  border: 1px solid var(--paper-edge);
+  box-shadow: 0 1px 2px rgba(8,14,20,0.07);
+  transition: color 160ms, border-color 160ms, background 160ms;
+}
+
+.navItem:hover .navIcon { color: var(--ink-depth); border-color: var(--ink-faded); }
+.navItemActive .navIcon {
+  color: var(--ink-depth);
+  background: #fff;
+  border-color: rgba(29,58,138,0.3);
+}
+
+.navText { flex: 1; min-width: 0; }
+
+.navLabel {
+  font-family: var(--font-script);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--ink-system);
+  letter-spacing: -0.01em;
+}
+
+.navItemActive .navLabel { color: var(--ink-katha); }
+
+.navSub {
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-pencil);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navArrow {
+  flex-shrink: 0;
+  color: var(--ink-faded);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 160ms, transform 160ms, color 160ms;
+}
+
+.navItem:hover .navArrow,
+.navItemActive .navArrow { opacity: 1; transform: translateX(0); color: var(--ink-depth); }
+
+/* ── study plan (right page) ─────────────────────────────── */
+.plan {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.planHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.planTitle {
+  font-family: var(--font-script);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ink-system);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.planExam {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  border: 1px solid var(--paper-edge);
+  border-radius: 3px;
+  padding: 3px 8px;
+  background: var(--paper-base);
+}
+
+.planProgress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 18px;
+}
+
+.planProgressTrack {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(29,58,138,0.10);
+  overflow: hidden;
+}
+
+.planProgressFill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--click), #a8d83a);
+  transition: width 600ms var(--ease-weight);
+}
+
+.planProgressLabel {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  color: var(--ink-pencil);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* the route spine */
+.planList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.planList::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 18px;
+  bottom: 18px;
+  width: 1px;
+  background-image: linear-gradient(180deg, var(--ink-faded) 33%, transparent 33%);
+  background-size: 1px 9px;
+  opacity: 0.5;
+}
+
+.planRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 9px 10px 9px 4px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 150ms var(--ease-weight), transform 150ms var(--ease-weight);
+}
+
+.planRow:hover:not(:disabled) {
+  background: rgba(201,150,63,0.07);
+  transform: translateX(3px);
+}
+
+.planRow:focus-visible { outline: 2px solid var(--ink-depth); outline-offset: 2px; }
+.planRow:disabled { cursor: default; }
+
+.planNode {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-raised);
+}
+
+.planNodeDone     { color: var(--ink-faded); }
+.planNodeActive   { color: var(--click-ink); }
+.planNodeUpcoming { color: var(--paper-crease); }
+
+.planNodeActive::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(196,245,71,0.55);
+  animation: nodePulse 2.4s ease-in-out infinite;
+}
+
+@keyframes nodePulse {
+  0%, 100% { transform: scale(1);   opacity: 0.9; }
+  50%      { transform: scale(1.18); opacity: 0.35; }
+}
+
+.planRowText { flex: 1; min-width: 0; }
+
+.planRowName {
+  font-family: var(--font-script);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink-system);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.planRowNameDone { color: var(--ink-faded); text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: rgba(163,155,142,0.6); }
+.planRowNameActive { color: var(--ink-katha); font-weight: 700; }
+
+.planRowMeta {
+  font-family: var(--font-stamp);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faded);
+  text-transform: lowercase;
+  margin-top: 1px;
+}
+
+.planRowBadge {
+  flex-shrink: 0;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--click-ink);
+  background: rgba(196,245,71,0.28);
+  border: 1px solid rgba(168,216,58,0.5);
+  border-radius: 999px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+
+.planRowChevron {
+  flex-shrink: 0;
+  color: var(--ink-faded);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 150ms, transform 150ms;
+}
+
+.planRow:hover .planRowChevron { opacity: 1; transform: translateX(0); }
+
+.planMore {
+  background: none;
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-pencil);
+  padding: 8px 0 0 42px;
+  transition: color 130ms;
+}
+.planMore:hover { color: var(--ink-depth); }
+
+.planEmpty {
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-pencil);
+  transform: rotate(-0.3deg);
+}
+
+/* ── responsive ──────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .book { grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr); min-height: 600px; }
+  .pageInner { padding: 30px 28px; min-height: 600px; }
+  .pageRight .pageInner { padding: 30px 30px 30px calc(var(--margin-width) + 16px); }
+  .navLabel { font-size: 19px; }
+  .planRowName { font-size: 18px; }
+}
+
+@media (max-width: 767px) {
+  .shell { padding: 0 0 70px; }
+  .chrome { padding: 14px 16px; max-width: 100%; }
+
+  /* pages stack — the book becomes a scroll of sections */
+  .book {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-height: unset;
+    border-radius: 0;
+    box-shadow: none;
+    animation: none;
+  }
+
+  .gutter { display: none; }
+
+  .page, .pageLeft, .pageRight { animation: none; border-radius: 0; }
+  .pageLeft { border-bottom: 1px solid var(--paper-crease); }
+
+  .pageInner { padding: 26px 22px 30px; min-height: unset; }
+  .pageRight .pageInner { padding: 26px 22px 40px 30px; min-height: 60vh; }
+  .pageRight::after { left: 18px; }
+
+  .edgeLeft, .edgeRight { display: none; }
+  .ribbon { right: 22px; height: 56px; width: 18px; }
+
+  .navSection { margin-top: 20px; }
+  .navLabel { font-size: 20px; }
+  .navSub { white-space: normal; }
+
+  .flipping { animation: mobileFlip 420ms var(--ease-weight) both; }
+  @keyframes mobileFlip {
+    from { transform: translateX(0);      opacity: 1; }
+    to   { transform: translateX(-10%);   opacity: 0.25; }
+  }
+}

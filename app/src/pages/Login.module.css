@@ -346,6 +346,8 @@
 .form,
 .divider,
 .googleBtn,
+.authHint,
+.emailNote,
 .bottomLink {
   position: relative;
   z-index: 1;
@@ -652,6 +654,25 @@
   border-color: rgba(36, 122, 77, 0.3);
   background: #fffdf7;
   box-shadow: 0 16px 32px rgba(29, 84, 54, 0.1);
+}
+
+.authHint,
+.emailNote {
+  margin: 10px 0 0;
+  color: rgba(20, 58, 46, 0.62);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.emailNote {
+  margin: -3px 0 14px;
+  padding: 10px 12px;
+  border: 1px solid rgba(36, 122, 77, 0.13);
+  border-radius: 16px;
+  background: rgba(228, 247, 220, 0.46);
+  color: rgba(20, 58, 46, 0.7);
 }
 
 .bottomLink {

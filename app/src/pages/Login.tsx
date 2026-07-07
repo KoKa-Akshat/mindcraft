@@ -10,6 +10,8 @@ import { auth, googleProvider } from '../firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { isTestProfileEmail, resetStudentProfile } from '../lib/testProfile'
+import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
 import s from './Login.module.css'
 
 type AdminFlow = 'auth' | 'passcode' | 'armed'
@@ -33,9 +35,9 @@ function friendlyError(code: string) {
     case 'auth/user-not-found':             return 'No account found with that email.'
     case 'auth/wrong-password':
     case 'auth/invalid-credential':
-    case 'auth/invalid-login-credentials':  return 'Incorrect email or password. If you signed up with Google, use the button above.'
-    case 'auth/account-exists-with-different-credential': return 'This email is linked to a different sign-in method. Try Google.'
-    case 'auth/email-already-in-use':       return 'An account with this email already exists.'
+    case 'auth/invalid-login-credentials':  return 'That password did not match a password account. If this is your Google email, continue with Google above.'
+    case 'auth/account-exists-with-different-credential': return 'This email is already linked to Google. Continue with Google above.'
+    case 'auth/email-already-in-use':       return 'That email already has an account. If you used Google before, continue with Google above.'
     case 'auth/weak-password':              return 'Password must be at least 6 characters.'
     case 'auth/invalid-email':              return 'Please enter a valid email address.'
     case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
@@ -66,6 +68,12 @@ export default function Login() {
 
   async function routeAfterLogin(uid: string) {
     await auth.currentUser?.getIdToken(true)
+
+    // Test accounts start fresh on every login — diagnostic, graph, drafts all wiped.
+    if (isTestProfileEmail(auth.currentUser?.email)) {
+      await resetStudentProfile(uid)
+    }
+
     const grantAdmin = consumeAdminGrant()
     if (grantAdmin) setAdminFlow('auth')
 
@@ -105,14 +113,21 @@ export default function Login() {
 
   async function handleEmailSubmit() {
     if (!email || !password) { setError('Please fill in all fields.'); return }
+    const blockedMs = loginBlockedForMs()
+    if (blockedMs > 0) {
+      setError(`Too many attempts. Try again in ${Math.ceil(blockedMs / 1000)}s.`)
+      return
+    }
     setError('')
     setLoading(true)
     try {
       const cred = isSignup
         ? await createUserWithEmailAndPassword(auth, email, password)
         : await signInWithEmailAndPassword(auth, email, password)
+      clearLoginFailures()
       await routeAfterLogin(cred.user.uid)
     } catch (e: any) {
+      recordLoginFailure()
       setError(friendlyError(e.code ?? e.message ?? 'unknown'))
       setLoading(false)
     }
@@ -241,15 +256,21 @@ export default function Login() {
                       </svg>
                       <span>{loading ? 'Signing in…' : 'Continue with Google'}</span>
                     </button>
+                    <p className={s.authHint}>
+                      Use this for any Gmail or account you originally created with Google.
+                    </p>
 
                     {/* SECONDARY: email toggle */}
                     {!emailMode ? (
                       <p className={s.bottomLink} style={{ marginTop: 16, textAlign: 'center' }}>
-                        <button type="button" onClick={() => setEmailMode(true)}>Use email instead</button>
+                        <button type="button" onClick={() => { setEmailMode(true); setError('') }}>Use a password account instead</button>
                       </p>
                     ) : (
                       <>
-                        <div className={s.divider}><span>or use email</span></div>
+                        <div className={s.divider}><span>password account</span></div>
+                        <p className={s.emailNote}>
+                          Only use this if you created a MindCraft password. Google accounts do not use this password box.
+                        </p>
                         <form className={s.form} onSubmit={e => { e.preventDefault(); handleEmailSubmit() }}>
                           <div className={s.field}>
                             <label htmlFor="email">Email</label>
@@ -294,6 +315,8 @@ export default function Login() {
                             ? <><span>Have an account? </span><button type="button" onClick={() => { setIsSignup(false); setError('') }}>Sign in</button></>
                             : <><span>New here? </span><button type="button" onClick={() => { setIsSignup(true); setError('') }}>Create account</button></>
                           }
+                          <br />
+                          <button type="button" onClick={() => { setEmailMode(false); setIsSignup(false); setError('') }}>Back to Google sign in</button>
                         </p>
                       </>
                     )}

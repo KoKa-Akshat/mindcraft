@@ -212,6 +212,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const action  = body.action  as string | undefined
   const product = body.product as string | undefined
 
+  // Abuse guard: cap free-text fields before they reach any model call.
+  for (const key of ['textDescription', 'problem_text', 'problemText'] as const) {
+    const v = body[key]
+    if (typeof v === 'string' && v.length > 4000) body[key] = v.slice(0, 4000)
+  }
+
   // ── Diagnose ──────────────────────────────────────────────────────────────────
   if (action === 'diagnose') {
     const { examType, inputType, fileBase64, fileMimeType, textDescription, confidenceMap, studentId, timeToExam } = body as {

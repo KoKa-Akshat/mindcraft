@@ -717,6 +717,49 @@
 }
 .walkthroughBtn:hover { background: #eef2ff; border-color: #818cf8; }
 
+/* ── Story-module guided path (wrong-answer walkthrough) ── */
+.guidedPath {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+.guidedPathTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+.guidedStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5px 0;
+}
+.guidedStepNum {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #4f46e5;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.guidedStepText {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.55;
+}
+
 @keyframes feedbackIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -4394,4 +4437,203 @@
   background: rgba(79,138,139,0.15);
   color: #3a6b6c;
   border-color: rgba(79,138,139,0.3);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAPER SCAN — gap-scan questions rendered like pages of an exam booklet.
+   Applied on the shell when hideCorrectness && session (diagnostic mode).
+   Matches the Field Journal book system: warm paper, dot grid, red margin
+   rule, script/serif inks, ruled writing space for the answer.
+══════════════════════════════════════════════════════════════════════════════ */
+
+.paperScan {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(29,58,138,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(193,18,31,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 35%, #0c141c 0%, #080e14 70%);
+}
+
+.paperScan .sessionCenter {
+  width: min(100%, 720px);
+}
+
+/* strip becomes pencil marks above the sheet */
+.paperScan .backDashBtn {
+  border-color: rgba(245,245,245,0.18);
+  background: rgba(245,245,245,0.05);
+  color: rgba(245,245,245,0.7);
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+}
+.paperScan .stripConcept { color: rgba(245,245,245,0.85); font-family: "IBM Plex Mono", monospace; font-weight: 500; }
+.paperScan .stripLevel   { color: rgba(245,245,245,0.5) !important; font-family: "IBM Plex Mono", monospace; }
+.paperScan .progressBar  { background: rgba(245,245,245,0.12); height: 4px; }
+.paperScan .progressFill { background: #c4f547 !important; }
+.paperScan .progressLabel{ color: rgba(245,245,245,0.55); font-family: "IBM Plex Mono", monospace; font-size: 10px; }
+
+/* the question becomes a sheet of paper */
+.paperScan .questionCard {
+  position: relative;
+  background:
+    radial-gradient(circle, rgba(102,92,78,0.16) 1px, transparent 1px) 9px 9px / 19px 19px,
+    #fbf8f4;
+  border: none;
+  border-radius: 4px;
+  box-shadow:
+    0 2px 4px rgba(8,14,20,0.10),
+    0 12px 40px rgba(8,14,20,0.30),
+    0 32px 80px rgba(8,14,20,0.34);
+  overflow: visible;
+}
+
+/* red margin rule + stacked page edges */
+.paperScan .questionCard::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 46px;
+  width: 1px;
+  background: rgba(193, 18, 31, 0.20);
+  pointer-events: none;
+}
+.paperScan .questionCard::after {
+  content: '';
+  position: absolute;
+  top: 3px; bottom: 3px; right: -6px; width: 6px;
+  pointer-events: none;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(90deg, transparent 0 1px, #d4c8b6 1px 2px,
+    transparent 2px 3px, #e2d8ca 3px 4px, transparent 4px 5px, #d4c8b6 5px 6px);
+}
+
+.paperScan .questionBanner {
+  background: transparent !important;
+  padding: 30px 34px 6px 62px;
+}
+
+.paperScan .examTagLight {
+  color: #a39b8e;
+  background: transparent;
+  border: 1px solid #e2d8ca;
+  border-radius: 3px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.paperScan .questionText {
+  font-family: "Source Serif 4", "DM Serif Display", Georgia, serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: #1c1a17;
+  line-height: 1.6;
+}
+
+.paperScan .questionBody {
+  padding: 16px 34px 24px 62px;
+}
+
+.paperScan .questionVisual {
+  background: #f7f3ee;
+  border: 1px solid #e2d8ca;
+  border-radius: 4px;
+}
+
+/* choices — pencil-boxed options on the sheet */
+.paperScan .choices {
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.paperScan .choice,
+.paperScan .choiceSelected {
+  background: transparent;
+  border: 1px solid #e2d8ca;
+  border-radius: 4px;
+  color: #3a3733;
+  font-family: "DM Sans", sans-serif;
+  box-shadow: none;
+}
+
+.paperScan .choice:hover:not(:disabled) {
+  background: rgba(29,58,138,0.04);
+  border-color: #a39b8e;
+  transform: none;
+  box-shadow: none;
+}
+
+.paperScan .choiceSelected {
+  background: rgba(29,58,138,0.06);
+  border: 1.5px solid #1d3a8a;
+  box-shadow: none;
+}
+
+.paperScan .choiceLetter {
+  background: transparent;
+  border: 1px solid #d4c8b6;
+  border-radius: 50%;
+  color: #6f6a61;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.paperScan .choiceSelected .choiceLetter {
+  background: #1d3a8a;
+  border-color: #1d3a8a;
+  color: #fbf8f4;
+}
+
+/* answer area — ruled writing space */
+.paperScan .answerRow {
+  border-top: 1px dashed #d4c8b6;
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+.paperScan .answerRow::before {
+  content: 'show your thinking · write your answer';
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: #a39b8e;
+  margin-bottom: 8px;
+}
+
+.paperScan .answerInputWrap {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.paperScan .answerInput {
+  font-family: "Caveat", cursive;
+  font-size: 22px;
+  color: #232f4e;
+  caret-color: #232f4e;
+  padding: 4px 2px 6px;
+  background-image: linear-gradient(transparent calc(100% - 1px), rgba(79,138,139,0.4) calc(100% - 1px));
+}
+
+.paperScan .answerInput::placeholder {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(111,106,97,0.55);
+}
+
+.paperScan .answerSubmit {
+  width: 44px;
+  height: 40px;
+  border-radius: 4px;
+  background: #1d3a8a;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+@media (max-width: 640px) {
+  .paperScan .questionBanner { padding: 24px 20px 4px 44px; }
+  .paperScan .questionBody   { padding: 14px 20px 20px 44px; }
+  .paperScan .questionCard::before { left: 32px; }
+  .paperScan .choices { grid-template-columns: 1fr; }
 }
