@@ -1949,13 +1949,29 @@ function isUsable(q: Question): boolean {
   return true
 }
 
+// Reject structurally corrupt records (truncated choice lists, correctIndex
+// pointing past the end). A wrong key silently records bad outcomes into the
+// mastery graph, so these must never reach a session.
+function hasValidKey(q: Question): boolean {
+  return (
+    Array.isArray(q.choices) &&
+    q.choices.length >= 3 &&
+    Number.isInteger(q.correctIndex) &&
+    q.correctIndex >= 0 &&
+    q.correctIndex < q.choices.length
+  )
+}
+
 // Merge: static bank wins on id collision; v4 ACT bank fills concept gaps.
 const STATIC_IDS = new Set(RAW_QUESTIONS.map(q => q.id))
 const GENERATED_QUESTIONS = (generatedQuestionsData as Question[]).filter(q => !STATIC_IDS.has(q.id))
-const ACT_MASTER = (actMasterBankData as Question[]).filter(q => !STATIC_IDS.has(q.id))
+const ACT_MASTER = (actMasterBankData as Question[])
+  .filter(q => !STATIC_IDS.has(q.id))
+  .filter(hasValidKey)
 const EEDI_QUESTIONS = (eediQuestionsData as Question[])
   .filter(q => !STATIC_IDS.has(q.id))
   .filter(isUsable)
+  .filter(hasValidKey)
 const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER, ...EEDI_QUESTIONS])
 
 // ── Concept metadata ──────────────────────────────────────────────────────────

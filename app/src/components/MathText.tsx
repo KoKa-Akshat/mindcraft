@@ -63,6 +63,18 @@ function looksLikeMath(expr: string): boolean {
   return true
 }
 
+/**
+ * Eedi-sourced items embed accessibility descriptions as markdown images with
+ * empty URLs (`![long alt text]()`). Ingestion rewrites stems but choice text
+ * can still carry the raw markdown — surface the alt text instead.
+ */
+function replaceMarkdownImages(text: string): string {
+  return text.replace(/!\[([^\]]*)\]\(\s*[^)]*\)/g, (_, alt: string) => {
+    const trimmed = alt.trim()
+    return trimmed ? `(Diagram: ${trimmed})` : '(Diagram)'
+  })
+}
+
 function parse(text: string): Segment[] {
   const segments: Segment[] = []
   // Match (in priority order):
@@ -106,12 +118,13 @@ interface Props {
 }
 
 export default function MathText({ text, className }: Props) {
-  const segments = useMemo(() => parse(text), [text])
+  const cleaned = useMemo(() => replaceMarkdownImages(text), [text])
+  const segments = useMemo(() => parse(cleaned), [cleaned])
 
   const hasMath = segments.some(s => s.type !== 'text')
 
   if (!hasMath) {
-    return <span className={className}>{text}</span>
+    return <span className={className}>{cleaned}</span>
   }
 
   return (
