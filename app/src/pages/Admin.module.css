@@ -120,6 +120,74 @@
 .submitBtn:hover:not(:disabled) { filter: brightness(1.05); transform: translateY(-1px); }
 .submitBtn:disabled { opacity: .6; cursor: default; }
 
+/* ── STUDENT / PARENT ROWS ── */
+.rowList { display: flex; flex-direction: column; }
+.studentRow {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 18px; border-bottom: 1px solid var(--bd);
+}
+.studentRow:last-child { border-bottom: none; }
+.rowAvatar {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(88,204,2,.12); color: var(--gdd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 900;
+}
+.rowMain { flex: 1; min-width: 140px; }
+.rowStat { text-align: center; min-width: 74px; }
+.rowStatNum { display: block; font-size: 15px; font-weight: 900; color: var(--tx); line-height: 1.2; }
+.rowStatLabel { display: block; font-size: 10px; font-weight: 800; color: var(--mu); text-transform: uppercase; letter-spacing: .6px; margin-top: 2px; }
+.badgeActive   { color: #3A8500; background: rgba(88,204,2,.12); }
+.badgeSlowing  { color: #b07a00; background: rgba(245,158,11,.14); }
+.badgeInactive { color: #C53030; background: rgba(197,48,48,.1); }
+.linkAction { text-decoration: none; display: inline-block; }
+
+/* ── MATCH TAB ── */
+.matchBanner {
+  background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.25);
+  color: #b07a00; border-radius: 12px;
+  padding: 12px 18px; margin-bottom: 16px;
+  font-size: 13px; font-weight: 700;
+}
+.matchGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+@media (max-width: 760px) { .matchGrid { grid-template-columns: 1fr; } }
+.matchColTitle {
+  font-size: 10px; font-weight: 900; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .8px;
+  padding: 14px 18px 10px; border-bottom: 1px solid var(--bd);
+}
+.matchSelect {
+  font-size: 12px; font-weight: 700; font-family: var(--f);
+  color: var(--tx); background: var(--w);
+  border: 1.5px solid var(--bd); border-radius: 8px;
+  padding: 5px 8px; outline: none; max-width: 150px;
+  transition: border-color .15s;
+}
+.matchSelect:focus { border-color: var(--g); }
+
+/* ── ML MODAL OVERLAY ── */
+.overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(20, 30, 20, .45);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.overlayCard {
+  background: var(--w); border-radius: 18px; border: 1px solid var(--bd);
+  box-shadow: 0 12px 40px rgba(0,0,0,.2);
+  width: 100%; max-width: 560px; max-height: 85vh; overflow-y: auto;
+  padding: 20px 24px 24px;
+}
+.overlayHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.overlayTitle { font-size: 15px; font-weight: 900; color: var(--tx); letter-spacing: -.2px; }
+.overlayClose {
+  font-size: 13px; font-weight: 800; color: var(--mu);
+  background: var(--bg); border: 1px solid var(--bd); border-radius: 8px;
+  padding: 4px 10px; cursor: pointer; font-family: var(--f);
+  transition: color .15s, border-color .15s;
+}
+.overlayClose:hover { color: var(--tx); border-color: #aaa; }
+
 /* ── TOAST ── */
 .toast {
   position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);

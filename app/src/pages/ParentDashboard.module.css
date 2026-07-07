@@ -79,28 +79,50 @@
 .linkError { color: #e53e3e; font-size: 12px; font-weight: 600; margin-top: 10px; }
 
 /* ── HERO ── */
-.hero {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 24px; flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-.heroEyebrow { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: var(--mu); margin-bottom: 4px; }
-.heroName { font-size: 32px; font-weight: 900; color: var(--navy); margin: 0 0 8px; }
+.hero { margin-bottom: 28px; }
+.heroTop { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.heroName { font-size: 28px; font-weight: 900; color: var(--navy); margin: 0; letter-spacing: -.3px; }
 .examBadge {
   display: inline-block;
   font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px;
   padding: 4px 12px; border-radius: 20px;
   background: rgba(88,204,2,0.1); color: var(--gdd);
 }
-.heroStats { display: flex; gap: 20px; flex-wrap: wrap; }
-.stat {
-  background: #fff; border-radius: 14px; padding: 14px 20px;
+.heroStats { display: flex; gap: 10px; flex-wrap: wrap; }
+.statPill {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  background: #fff; border-radius: 40px; padding: 8px 16px;
   border: 1px solid rgba(0,0,0,0.07);
   box-shadow: 0 2px 8px rgba(10,37,64,0.06);
-  text-align: center; min-width: 80px;
 }
-.statNum { display: block; font-size: 26px; font-weight: 900; color: var(--navy); line-height: 1; }
-.statLabel { display: block; font-size: 10px; font-weight: 700; color: var(--mu); text-transform: uppercase; letter-spacing: .6px; margin-top: 4px; }
+.statNum { font-size: 18px; font-weight: 900; color: var(--navy); line-height: 1; }
+.statLabel { font-size: 10px; font-weight: 700; color: var(--mu); text-transform: uppercase; letter-spacing: .6px; }
+
+/* ── WHAT THEY'RE WORKING ON ── */
+.workSection { margin-bottom: 20px; }
+.sectionLabel {
+  font-size: 12px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: .8px; color: var(--navy); margin-bottom: 10px;
+}
+.workScroll {
+  display: flex; gap: 10px;
+  overflow-x: auto; padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+.workPill {
+  flex-shrink: 0;
+  background: #fff; border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(10,37,64,0.05);
+  padding: 10px 14px; min-width: 130px;
+}
+.workName { display: block; font-size: 12px; font-weight: 700; color: var(--navy); white-space: nowrap; margin-bottom: 7px; }
+.workBar { height: 5px; border-radius: 5px; background: rgba(0,0,0,0.06); overflow: hidden; }
+.workFill {
+  height: 100%; border-radius: 5px;
+  background: linear-gradient(90deg, var(--g), var(--blue));
+  transition: width .4s ease;
+}
 
 /* ── GRID ── */
 .grid {
@@ -118,37 +140,8 @@
   box-shadow: 0 2px 12px rgba(10,37,64,0.06);
   padding: 20px 22px;
 }
-.cardWide { grid-column: 1 / -1; }
 .cardHeader { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
 .cardLabel { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .8px; color: var(--navy); }
-.cardSub { font-size: 11px; font-weight: 600; color: var(--mu); }
-
-/* ── GRAPH ── */
-.graphSvg { width: 100%; height: auto; display: block; overflow: visible; }
-.graphEmpty { padding: 32px 0; text-align: center; }
-.graphEmpty p { font-size: 13px; color: var(--mu); font-weight: 600; }
-
-/* ── CONCEPT LIST ── */
-.conceptList { display: flex; flex-direction: column; gap: 10px; }
-.conceptRow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.conceptLeft { display: flex; align-items: center; gap: 8px; min-width: 160px; }
-.conceptName { font-size: 13px; font-weight: 700; color: var(--navy); }
-.conceptStatus {
-  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px;
-  padding: 2px 8px; border-radius: 20px;
-}
-.status_mastered   { background: rgba(88,204,2,0.1);  color: var(--gdd); }
-.status_struggling { background: rgba(239,68,68,0.1); color: #dc2626; }
-.status_in_progress { background: rgba(0,105,255,0.1); color: var(--blue-d); }
-.status_untouched  { background: rgba(0,0,0,0.05);    color: var(--mu); }
-
-.masteryBar { flex: 1; min-width: 80px; display: flex; align-items: center; gap: 8px; }
-.masteryFill {
-  height: 6px; border-radius: 6px;
-  background: linear-gradient(90deg, var(--g), var(--blue));
-  transition: width .4s ease;
-}
-.masteryPct { font-size: 11px; font-weight: 700; color: var(--mu); white-space: nowrap; }
 
 /* ── PILLS (strengths/gaps) ── */
 .pillList { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0; }
@@ -158,6 +151,40 @@
 .pillGreen { background: rgba(88,204,2,0.1); color: var(--gdd); }
 .pillRed   { background: rgba(239,68,68,0.1); color: #dc2626; }
 
-.divider { height: 1px; background: rgba(0,0,0,0.07); margin: 16px 0; }
 .emptyState { padding: 12px 0; }
 .emptyState p { font-size: 13px; color: var(--mu); font-weight: 600; line-height: 1.5; }
+
+/* ── YOUR TUTOR ── */
+.tutorCard { margin-top: 16px; }
+.tutorRow { display: flex; align-items: center; gap: 12px; }
+.tutorAvatar {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dd));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 900; color: #fff;
+}
+.tutorName { font-size: 14px; font-weight: 800; color: var(--navy); }
+.tutorMail { font-size: 12px; font-weight: 700; color: var(--gdd); text-decoration: none; }
+.tutorMail:hover { text-decoration: underline; }
+
+/* ── DIGEST CALLOUT ── */
+.digestCallout {
+  margin-top: 16px;
+  background: rgba(88,204,2,0.07);
+  border: 1px solid rgba(88,204,2,0.2);
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 13px; font-weight: 600; color: var(--gdd);
+  line-height: 1.6;
+}
+
+/* ── TEST ACCOUNT BANNER ── */
+.testBanner {
+  margin-top: 24px;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 16px;
+  padding: 20px 24px;
+  font-size: 14px; font-weight: 700; color: #b07a00;
+  text-align: center;
+}

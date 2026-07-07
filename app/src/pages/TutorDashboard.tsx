@@ -31,6 +31,29 @@ import { MARKETING_BASE } from '../lib/siteUrls'
 
 const FIFTEEN_MIN = 15 * 60 * 1000
 
+// Test account — excluded from the live activity feed
+const TEST_UID = 'gBFn9vUGIIa7tAiTTQSl8CbPSao2'
+
+interface ActivityItem {
+  studentId: string
+  conceptId: string
+  outcome:   number
+  ts:        number
+}
+
+function timeAgo(ts: number): string {
+  if (!ts) return ''
+  const diff = Date.now() - ts
+  if (diff < 60_000)     return 'just now'
+  if (diff < 3_600_000)  return `${Math.floor(diff / 60_000)}m ago`
+  if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`
+  return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+function conceptTitle(id: string): string {
+  return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+}
+
 export default function TutorDashboard() {
   const user = useUser()
   const navigate = useNavigate()
@@ -47,6 +70,56 @@ export default function TutorDashboard() {
   const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
   const [calendlyToken, setCalendlyToken] = useState('')
   const [connectingCalendly, setConnectingCalendly] = useState(false)
+  const [activity, setActivity] = useState<ActivityItem[]>([])
+
+  // Stable key so the interactions listener only re-subscribes when the id set changes
+  const activityIdsKey = students
+    .map(st => st.id)
+    .filter(id => id && id !== TEST_UID)
+    .slice(0, 10)
+    .join(',')
+
+  // Live activity feed — realtime interactions for this tutor's students
+  useEffect(() => {
+    if (!activityIdsKey) { setActivity([]); return }
+    const ids = activityIdsKey.split(',')
+    const unsub = onSnapshot(
+      query(
+        collection(db, 'interactions'),
+        where('studentId', 'in', ids),
+        orderBy('timestamp', 'desc'),
+        limit(15),
+      ),
+      snap => setActivity(snap.docs.map(d => {
+        const data = d.data()
+        const raw = data.timestamp
+        const ts = raw?.toMillis?.() ?? (typeof raw === 'number' ? raw : 0)
+        return {
+          studentId: data.studentId ?? '',
+          conceptId: data.conceptId ?? '',
+          outcome:   Number(data.outcome ?? 0),
+          ts,
+        }
+      })),
+      () => setActivity([])
+    )
+    return () => unsub()
+  }, [activityIdsKey])
+
+  // One-time parent lookup + mailto — no extra state needed
+  async function emailParent(st: Student) {
+    try {
+      const snap = await getDocs(
+        query(collection(db, 'users'), where('childId', '==', st.id), limit(1))
+      )
+      const parentEmail = snap.empty ? null : snap.docs[0].data().email
+      if (!parentEmail) { showToast('No parent linked yet.'); return }
+      const name = st.displayName || st.email?.split('@')[0] || 'your student'
+      window.open(`mailto:${parentEmail}?subject=${encodeURIComponent(`Update on ${name}`)}`)
+    } catch {
+      showToast('No parent linked yet.')
+    }
+  }
 
   useEffect(() => {
     getDoc(doc(db, 'users', user.uid)).then(snap => {
@@ -244,14 +317,24 @@ const nextSession = sessions[0] ?? null
               All Students
             </button>
             {students.map(st => (
-              <button
-                key={st.id}
-                className={`${s.sideItem} ${selectedStudent === st.id ? s.sideActive : ''}`}
-                onClick={() => setSelectedStudent(st.id)}
-              >
-                <div className={s.sideAvatar}>{(st.displayName || st.email)?.[0]?.toUpperCase()}</div>
-                {st.displayName || st.email?.split('@')[0]}
-              </button>
+              <div key={st.id}>
+                <button
+                  className={`${s.sideItem} ${selectedStudent === st.id ? s.sideActive : ''}`}
+                  onClick={() => setSelectedStudent(st.id)}
+                >
+                  <div className={s.sideAvatar}>{(st.displayName || st.email)?.[0]?.toUpperCase()}</div>
+                  {st.displayName || st.email?.split('@')[0]}
+                </button>
+                {selectedStudent === st.id && (
+                  <button
+                    type="button"
+                    className={s.emailParentLink}
+                    onClick={() => emailParent(st)}
+                  >
+                    ✉ Email parent
+                  </button>
+                )}
+              </div>
             ))}
           </>
         )}
@@ -441,6 +524,39 @@ const nextSession = sessions[0] ?? null
                       Get it at calendly.com → Integrations → API & Webhooks
                     </p>
                   </>
+                )}
+              </div>
+
+              {/* Live student activity feed */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Student Activity</span>
+                </div>
+                {activity.length === 0 ? (
+                  <div className={s.emptyState}>
+                    <span>Activity updates as students practice.</span>
+                  </div>
+                ) : (
+                  <div className={s.feedList}>
+                    {activity.map((a, i) => {
+                      const st = students.find(x => x.id === a.studentId)
+                      const name = st?.displayName || st?.email?.split('@')[0] || 'Student'
+                      const mark = a.outcome > 0.3
+                        ? { sym: '✓', cls: s.feedGood }
+                        : a.outcome < -0.1
+                          ? { sym: '✗', cls: s.feedBad }
+                          : { sym: '~', cls: s.feedMid }
+                      return (
+                        <div key={`${a.studentId}-${a.ts}-${i}`} className={s.feedRow}>
+                          <span className={`${s.feedMark} ${mark.cls}`}>{mark.sym}</span>
+                          <span className={s.feedText}>
+                            <strong>{name}</strong> · {conceptTitle(a.conceptId) || 'Practice'}
+                          </span>
+                          <span className={s.feedTime}>{timeAgo(a.ts)}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
                 )}
               </div>
 
