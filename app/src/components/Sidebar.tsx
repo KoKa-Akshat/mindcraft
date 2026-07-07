@@ -8,7 +8,7 @@ import MindCraftLogo from './MindCraftLogo'
 import s from './Sidebar.module.css'
 
 const NAV = [
-  { to: '/sessions',       label: 'Session Notes' },
+  { to: '/sessions',       label: 'Notes' },
   { to: '/practice',       label: 'Practice'      },
   { to: '/join-classroom', label: 'Join Classroom' },
   { to: '/organize-notes', label: 'Organize'      },

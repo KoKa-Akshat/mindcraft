@@ -14,6 +14,7 @@ import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/
 import type { ScratchStrokeData } from '../types'
 import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
+import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -340,6 +341,22 @@ export default function ConceptChapterPage() {
   const hydratedWorkRef = useRef<Set<string>>(new Set())
   const [showCalc, setShowCalc] = useState(false)
 
+  // Story module — the same Groq reskin practice sessions use, so the chapter's
+  // questions are told inside the chapter's story instead of dropped in raw.
+  // Fail-soft: null keeps the plain bank stems.
+  const [storyMod, setStoryMod] = useState<StoryModule | null>(null)
+  // Stems the student has already seen in story form — never revert those,
+  // and never swap a stem under a question they already started answering.
+  const storyAppliedRef = useRef<Set<string>>(new Set())
+  useEffect(() => {
+    if (questions.length === 0 || !cs.story) return
+    let cancelled = false
+    void fetchStoryModule(canonicalId, cs.conceptName, cs.story, questions)
+      .then(mod => { if (!cancelled && mod) setStoryMod(mod) })
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canonicalId, questions])
+
   // Show write nudge after 8s on a question page if notes are still empty
   const currentSpec = specs[pageIdx]
   useEffect(() => {
@@ -421,6 +438,29 @@ export default function ConceptChapterPage() {
     setPageIdx(i)
   }
 
+  // Touch swipe — flip pages like a real book on iPad. Ignores gestures that
+  // start on interactive surfaces (scratch canvas, inputs, buttons) so writing
+  // and tapping never accidentally turn the page.
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const onTouchStart = (e: React.TouchEvent) => {
+    const target = e.target as HTMLElement
+    if (target.closest('canvas, textarea, input, button, select, a')) {
+      touchStart.current = null
+      return
+    }
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current
+    touchStart.current = null
+    if (!start) return
+    const dx = e.changedTouches[0].clientX - start.x
+    const dy = e.changedTouches[0].clientY - start.y
+    if (Math.abs(dx) < 64 || Math.abs(dx) < Math.abs(dy) * 2) return
+    if (dx < 0) goTo(pageIdx + 1, 'f')   // swipe left → next page
+    else if (pageIdx > 0) goTo(pageIdx - 1, 'b') // swipe right → previous
+  }
+
   const isLast = pageIdx === specs.length - 1
   const storyPageCount = specs.filter(p => p.kind === 'story').length
 
@@ -451,6 +491,8 @@ export default function ConceptChapterPage() {
         key={pageIdx}
         className={`${s.page} ${dir === 'f' ? s.enterRight : s.enterLeft} ${fromDashboard && pageIdx === 0 ? s.enterFromGutter : ''}`}
         style={{ background: theme.paper }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         <div className={s.grain} aria-hidden />
 
@@ -535,9 +577,21 @@ export default function ConceptChapterPage() {
           const isDone = submitted[spec.qIdx] ?? false
           const frame = getFrame(conceptId)
 
-          // Pick the best bridge line for this question
+          // Story-mode stem: apply only before the student engages the question,
+          // then keep it stable for the rest of the visit.
+          const storyItem = storyMod?.[q.id]
+          const useStoryStem = Boolean(storyItem) && (
+            storyAppliedRef.current.has(q.id) || (chosen === null && !isDone)
+          )
+          if (useStoryStem) storyAppliedRef.current.add(q.id)
+          const stemText = useStoryStem ? storyItem!.storyStem : q.question
+          const socraticHints = useStoryStem ? (storyItem!.socratic ?? []) : []
+          const allHints = [...socraticHints, ...(q.hints ?? [])]
+
+          // Pick the best bridge line for this question — skipped when the
+          // story module already carries the scene (would double-narrate).
           const txt = q.question.toLowerCase()
-          const bridge = frame
+          const bridge = frame && !useStoryStem
             ? (txt.includes('die') || txt.includes('dice') || txt.includes('roll')) && frame.diceFrame
               ? frame.diceFrame
               : (txt.includes('spinner') || txt.includes('spin')) && frame.spinnerFrame
@@ -567,15 +621,15 @@ export default function ConceptChapterPage() {
                   <span className={s.qChipSmall} style={{ color: theme.chip }}>Ch. {ch}</span>
                 </header>
 
-                {/* Story context bridge */}
-                {frame && (
+                {/* Story context bridge (only when no story-module scene) */}
+                {frame && bridge && (
                   <div className={s.storyBridge}>
                     <span className={s.storyBridgeSetting} style={{ color: theme.dim }}>{frame.settingLine}</span>
                     <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
                   </div>
                 )}
 
-                <QuestionContent text={q.question} ink={theme.ink} accent={theme.accent} />
+                <QuestionContent text={stemText} ink={theme.ink} accent={theme.accent} />
 
                 {/* Interactive widget (dice / spinner / coin) */}
                 <InteractiveWidget
@@ -605,10 +659,10 @@ export default function ConceptChapterPage() {
                   ))}
                 </div>
 
-                {/* Hint strip */}
-                {!isDone && q.hints && q.hints.length > 0 && (
+                {/* Hint strip — Socratic story prompts lead, bank hints backfill */}
+                {!isDone && allHints.length > 0 && (
                   <div className={s.hintStrip}>
-                    {(hintsShownPerQ[spec.qIdx] ?? 0) < q.hints.length && (
+                    {(hintsShownPerQ[spec.qIdx] ?? 0) < allHints.length && (
                       <button
                         className={s.hintBtn}
                         style={{ borderColor: theme.accent + '55', color: theme.accent }}
@@ -617,7 +671,7 @@ export default function ConceptChapterPage() {
                         💡 {(hintsShownPerQ[spec.qIdx] ?? 0) === 0 ? 'Need a hint?' : 'Another hint'}
                       </button>
                     )}
-                    {q.hints.slice(0, hintsShownPerQ[spec.qIdx] ?? 0).map((hint, hi) => (
+                    {allHints.slice(0, hintsShownPerQ[spec.qIdx] ?? 0).map((hint, hi) => (
                       <div key={hi} className={s.hintBubble} style={{ borderLeftColor: theme.accent + '66', color: theme.dim }}>
                         <MathText text={hint} />
                       </div>

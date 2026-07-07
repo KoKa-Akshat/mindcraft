@@ -164,7 +164,7 @@ export default function SessionWork() {
     <div className={s.shell}>
       <nav className={s.nav}>
         <Link to="/sessions" className={s.logo}>Mind<span>Craft</span></Link>
-        <Link to="/sessions" className={s.back}>← Session Notes</Link>
+        <Link to="/sessions" className={s.back}>← Notes</Link>
       </nav>
 
       <main className={s.page}>
@@ -176,7 +176,7 @@ export default function SessionWork() {
               Your tutor will review your scratch work and reasoning.
             </p>
             <Link to="/sessions" className={s.submitBtn} style={{ display: 'inline-block', textDecoration: 'none' }}>
-              Back to Session Notes
+              Back to Notes
             </Link>
           </div>
         ) : (

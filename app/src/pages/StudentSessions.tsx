@@ -103,7 +103,7 @@ export default function StudentSessions() {
       <main className={s.page}>
         <div className={s.header}>
           <div className={s.headerLeft}>
-            <h1 className={s.title}>Session Notes</h1>
+            <h1 className={s.title}>Notes</h1>
             <p className={s.sub}>
               {sessions.filter(sess => sess.bullets.length > 0).length} session{sessions.filter(sess => sess.bullets.length > 0).length !== 1 ? 's' : ''} published
             </p>

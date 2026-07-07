@@ -19,7 +19,7 @@ interface Props {
 
 const NAV = [
   { to: '/dashboard',      label: 'Dashboard'     },
-  { to: '/sessions',       label: 'Session Notes' },
+  { to: '/sessions',       label: 'Notes' },
   { to: '/practice',       label: 'Practice'      },
 ]
 

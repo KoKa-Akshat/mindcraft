@@ -5,7 +5,7 @@ export type AppTabId = 'dashboard' | 'practice' | 'solver' | 'map' | 'admin'
 
 const BASE_TABS: { id: AppTabId; label: string }[] = [
   { id: 'dashboard', label: 'Dashboard' },
-  { id: 'solver',    label: 'Problem Solver' },
+  { id: 'solver',    label: 'Solver' },
 ]
 
 type Props = {

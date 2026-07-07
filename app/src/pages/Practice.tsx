@@ -2393,7 +2393,7 @@ export default function Practice() {
           <>
             <div className={s.solverHeader}>
               <div className={s.solverHeaderLeft}>
-                <h1 className={s.solverPageTitle}>Problem Solver</h1>
+                <h1 className={s.solverPageTitle}>Solver</h1>
                 <p className={s.solverPageSub}>Paste or upload a stuck problem for step-by-step hints</p>
               </div>
             </div>

@@ -26,7 +26,7 @@ import { db, auth } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
-import { WEBHOOK_BASE } from '../lib/mlApi'
+import { ML_BASE, WEBHOOK_BASE } from '../lib/mlApi'
 import { listAllActConceptCoverage, coverageSummaryLine, formatQuestionSources, type ConceptCoverage } from '../lib/ontologyBankCoverage'
 import StudentIntelPanel from '../components/StudentIntelPanel'
 import s from './Admin.module.css'
@@ -73,7 +73,18 @@ interface StudentMeta {
   conceptCount: number
 }
 
-type AdminTab = 'overview' | 'students' | 'tutors' | 'parents' | 'sessions' | 'settings'
+type AdminTab = 'overview' | 'students' | 'tutors' | 'parents' | 'sessions' | 'health' | 'settings'
+type HealthStatus = 'checking' | 'healthy' | 'warning' | 'down' | 'unknown'
+
+interface HealthCheck {
+  id: string
+  label: string
+  status: HealthStatus
+  plain: string
+  detail: string
+  action: string
+  meta?: string
+}
 
 function activityBadge(lastActive: number | null): { label: string; cls: 'active' | 'slowing' | 'inactive' } {
   if (!lastActive) return { label: 'Inactive', cls: 'inactive' }
@@ -116,6 +127,10 @@ const NAV_ITEMS: { id: AdminTab; label: string; icon: JSX.Element }[] = [
     icon: <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
   },
   {
+    id: 'health', label: 'Health',
+    icon: <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 8L9 4l-3 8H2"/><path d="M12 21a9 9 0 1 0-8.5-12"/></svg>,
+  },
+  {
     id: 'settings', label: 'Settings',
     icon: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>,
   },
@@ -127,7 +142,24 @@ const TAB_TITLES: Record<AdminTab, { title: string; sub: string }> = {
   tutors:   { title: 'Tutors',    sub: 'Load, recency, and student assignment' },
   parents:  { title: 'Parents',   sub: 'Child links and weekly digests' },
   sessions: { title: 'Sessions',  sub: 'Every session across all tutors' },
+  health:   { title: 'System Health', sub: 'Plain-English status for backend, data flow, content, and routes' },
   settings: { title: 'Settings',  sub: 'Platform configuration and testing tools' },
+}
+
+function statusCopy(status: HealthStatus): string {
+  if (status === 'healthy') return 'Working'
+  if (status === 'warning') return 'Needs attention'
+  if (status === 'down') return 'Down'
+  if (status === 'checking') return 'Checking'
+  return 'Unknown'
+}
+
+function statusClass(status: HealthStatus): string {
+  if (status === 'healthy') return s.healthGood
+  if (status === 'warning') return s.healthWarn
+  if (status === 'down') return s.healthBad
+  if (status === 'checking') return s.healthCheck
+  return s.healthUnknown
 }
 
 export default function Admin() {
@@ -149,8 +181,21 @@ export default function Admin() {
   const [bookOpen, setBookOpen] = useState(false)
   const [coverageRows]          = useState<ConceptCoverage[]>(() => listAllActConceptCoverage())
   const [coverageSummary]       = useState(() => coverageSummaryLine())
+  const [healthChecks, setHealthChecks] = useState<HealthCheck[]>([])
+  const [healthLoading, setHealthLoading] = useState(false)
+  const [openHealth, setOpenHealth] = useState<string>('backend')
+  const [healthUpdatedAt, setHealthUpdatedAt] = useState<number | null>(null)
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
+
+  const storyCount = coverageRows.length
+  const generatedQuestionCount = coverageRows.reduce((sum, row) => (
+    sum + (row.questionSources ?? [])
+      .filter(src => src.file.includes('generatedQuestions'))
+      .reduce((inner, src) => inner + src.count, 0)
+  ), 0)
+  const contextFrameCount = coverageRows.length
+  const diagnosticConceptCount = coverageRows.filter(row => row.questionCounts.L1 + row.questionCounts.L2 + row.questionCounts.L3 > 0).length
 
   // New session form
   const [form, setForm] = useState({
@@ -254,6 +299,180 @@ export default function Admin() {
       return [st.id, { lastActive, avgMastery, conceptCount: active.length }] as const
     })).then(entries => setStudentMeta(Object.fromEntries(entries)))
   }, [tab, students, metaLoaded])
+
+  async function refreshHealth() {
+    setHealthLoading(true)
+    const checks: HealthCheck[] = []
+
+    const mlStartedAt = Date.now()
+    try {
+      const controller = new AbortController()
+      const timeout = window.setTimeout(() => controller.abort(), 9000)
+      const res = await fetch(`${ML_BASE}/health`, { signal: controller.signal })
+      window.clearTimeout(timeout)
+      const elapsed = Date.now() - mlStartedAt
+      if (res.ok) {
+        const data = await res.json().catch(() => ({})) as {
+          conceptCount?: number
+          actTestedConceptCount?: number
+          ingredientCount?: number
+          edgeCount?: number
+          embeddingsLoaded?: boolean
+        }
+        checks.push({
+          id: 'backend',
+          label: 'ML backend',
+          status: data.embeddingsLoaded === false ? 'warning' : 'healthy',
+          plain: 'Route intelligence is reachable.',
+          detail: `Cloud Run responded in ${elapsed}ms. Concepts: ${data.conceptCount ?? 'unknown'}, ACT-tested: ${data.actTestedConceptCount ?? 'unknown'}, ingredients: ${data.ingredientCount ?? 'unknown'}, graph edges: ${data.edgeCount ?? 'unknown'}.`,
+          action: data.embeddingsLoaded === false
+            ? 'Embeddings did not report as loaded. Check the Cloud Run image and startup logs.'
+            : 'No action needed. Recommendations, knowledge map, and live gap detection can run.',
+          meta: ML_BASE,
+        })
+      } else {
+        checks.push({
+          id: 'backend',
+          label: 'ML backend',
+          status: 'down',
+          plain: 'Route intelligence is not serving requests.',
+          detail: `/health returned HTTP ${res.status}. The app can still show static fallback paths, but live gaps, recommendations, and the knowledge map are degraded.`,
+          action: 'Read Cloud Run logs for mindcraft-ml, then redeploy with FIRESTORE_PROJECT and ML_SERVICE_SECRET set.',
+          meta: ML_BASE,
+        })
+      }
+    } catch (err) {
+      checks.push({
+        id: 'backend',
+        label: 'ML backend',
+        status: 'down',
+        plain: 'Route intelligence could not be reached.',
+        detail: err instanceof Error ? err.message : 'The browser could not complete the health request.',
+        action: 'Confirm the Cloud Run service is up and that VITE_ML_URL points to the live service.',
+        meta: ML_BASE,
+      })
+    }
+
+    try {
+      const [userProbe, sessionProbe, graphProbe, interactionProbe] = await Promise.all([
+        getDocs(query(collection(db, 'users'), limit(1))),
+        getDocs(query(collection(db, 'sessions'), limit(1))),
+        getDocs(query(collection(db, 'knowledge_graphs'), limit(1))).catch(() => null),
+        getDocs(query(collection(db, 'interactions'), limit(1))).catch(() => null),
+      ])
+      const graphReadable = graphProbe !== null
+      const interactionReadable = interactionProbe !== null
+      checks.push({
+        id: 'firestore',
+        label: 'Firestore data',
+        status: graphReadable && interactionReadable ? 'healthy' : 'warning',
+        plain: 'Core app data is readable.',
+        detail: `Users collection: ${userProbe.empty ? 'empty' : 'readable'}. Sessions collection: ${sessionProbe.empty ? 'empty' : 'readable'}. Knowledge graphs: ${graphReadable ? 'readable' : 'blocked or missing'}. Interactions: ${interactionReadable ? 'readable' : 'blocked or missing'}.`,
+        action: graphReadable && interactionReadable
+          ? 'No action needed for basic admin reads.'
+          : 'Check Firestore rules, indexes, and whether the ML service is writing graph/interactions documents.',
+      })
+    } catch (err) {
+      checks.push({
+        id: 'firestore',
+        label: 'Firestore data',
+        status: 'down',
+        plain: 'Admin could not read core Firestore data.',
+        detail: err instanceof Error ? err.message : 'Firestore read failed.',
+        action: 'Check Firebase auth role, Firestore rules, and project mindcraft-93858.',
+      })
+    }
+
+    const fullCoverage = coverageRows.filter(row => row.status === 'full').length
+    const playableCoverage = coverageRows.filter(row => row.questionCounts.L1 + row.questionCounts.L2 + row.questionCounts.L3 > 0).length
+    checks.push({
+      id: 'questions',
+      label: 'Question banks',
+      status: fullCoverage === coverageRows.length ? 'healthy' : playableCoverage > 0 ? 'warning' : 'down',
+      plain: fullCoverage === coverageRows.length
+        ? 'ACT question coverage is complete.'
+        : 'Some concepts need more questions.',
+      detail: `${coverageSummary}. ${playableCoverage}/${coverageRows.length} ACT concepts have at least one playable question. Generated verified questions bundled: ${generatedQuestionCount}.`,
+      action: fullCoverage === coverageRows.length
+        ? 'Keep auditing after every question-bank edit.'
+        : 'Open Settings > ACT question bank coverage and fill the partial or empty concepts first.',
+    })
+
+    checks.push({
+      id: 'stories',
+      label: 'Stories and context',
+      status: storyCount > 0 && contextFrameCount > 0 ? 'healthy' : 'warning',
+      plain: 'Story content is bundled into the app.',
+      detail: `${storyCount} concept stories and ${contextFrameCount} question context frames are available. These power the chapter/story feel around practice questions.`,
+      action: storyCount > 0 && contextFrameCount > 0
+        ? 'No action needed. Review story quality as routes expand.'
+        : 'Add missing concept stories or context frames so practice does not feel generic.',
+    })
+
+    checks.push({
+      id: 'diagnostic',
+      label: 'Diagnostic pipeline',
+      status: diagnosticConceptCount > 0 ? 'healthy' : 'warning',
+      plain: 'Diagnostic content exists; backend health decides whether it becomes a live route.',
+      detail: `Diagnostic concept/question seed count: ${diagnosticConceptCount}. The frontend writes confidence through seedAssessment and practice outcomes through recordOutcomes.`,
+      action: 'If students see "no gap found", verify ML backend health first, then confirm /seed-assessment and /record-outcomes succeed after a diagnostic.',
+    })
+
+    checks.push({
+      id: 'webhook',
+      label: 'Webhook and AI helpers',
+      status: WEBHOOK_BASE ? 'unknown' : 'warning',
+      plain: WEBHOOK_BASE ? 'Webhook URL is configured, but not deeply probed from the browser.' : 'Webhook URL is missing.',
+      detail: `Configured webhook base: ${WEBHOOK_BASE || 'none'}. This supports parent linking, agent check-ins, generated questions, summaries, and story modules.`,
+      action: 'For deeper verification, test Vercel function logs and server-to-server secrets. Browser admin should avoid calling mutating webhook endpoints as a health check.',
+      meta: WEBHOOK_BASE,
+    })
+
+    if (WEBHOOK_BASE) {
+      try {
+        const controller = new AbortController()
+        const timeout = window.setTimeout(() => controller.abort(), 8000)
+        const res = await fetch(`${WEBHOOK_BASE}/api/story-module`, {
+          method: 'OPTIONS',
+          signal: controller.signal,
+        })
+        window.clearTimeout(timeout)
+        checks.push({
+          id: 'story-agent',
+          label: 'Story module (Groq)',
+          status: res.ok ? 'healthy' : 'warning',
+          plain: res.ok ? 'Story agent endpoint is reachable.' : 'Story agent responded with an error.',
+          detail: res.ok
+            ? 'OPTIONS /api/story-module succeeded. Practice sessions can request story-wrapped stems when GROQ_API_KEY is set on Vercel.'
+            : `OPTIONS /api/story-module returned HTTP ${res.status}. Students will see plain question stems until this is fixed.`,
+          action: res.ok
+            ? 'If stems still feel generic, bump story_module_cache version and redeploy webhook.'
+            : 'Redeploy webhook (≤12 functions), confirm story-module is in vercel.json, and verify GROQ_API_KEY.',
+          meta: `${WEBHOOK_BASE}/api/story-module`,
+        })
+      } catch (err) {
+        checks.push({
+          id: 'story-agent',
+          label: 'Story module (Groq)',
+          status: 'down',
+          plain: 'Story agent could not be reached.',
+          detail: err instanceof Error ? err.message : 'Network error probing story-module.',
+          action: 'Deploy webhook to Vercel prod and confirm CORS allows the admin origin.',
+          meta: `${WEBHOOK_BASE}/api/story-module`,
+        })
+      }
+    }
+
+    setHealthChecks(checks)
+    setHealthUpdatedAt(Date.now())
+    setHealthLoading(false)
+  }
+
+  useEffect(() => {
+    if (tab !== 'health' || healthChecks.length > 0 || healthLoading) return
+    void refreshHealth()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab])
 
   async function createSession() {
     if (!form.studentEmail || !form.date || !form.time) {
@@ -421,6 +640,23 @@ export default function Admin() {
     { label: 'Parents Linked',     val: parents.filter(p => p.childId).length, cls: s.statPurple },
   ]
 
+  const systemStatus: HealthStatus = healthChecks.some(x => x.status === 'down')
+    ? 'down'
+    : healthChecks.some(x => x.status === 'warning')
+      ? 'warning'
+      : healthChecks.some(x => x.status === 'checking')
+        ? 'checking'
+        : healthChecks.length > 0 ? 'healthy' : 'unknown'
+
+  const healthCounts = {
+    working: healthChecks.filter(x => x.status === 'healthy').length,
+    attention: healthChecks.filter(x => x.status === 'warning').length,
+    down: healthChecks.filter(x => x.status === 'down').length,
+    unknown: healthChecks.filter(x => x.status === 'unknown').length,
+  }
+
+  const healthById = Object.fromEntries(healthChecks.map(check => [check.id, check]))
+
   const sessionsTable = (rows: AdminSession[], withActions: boolean) => (
     <table className={s.table}>
       <thead>
@@ -508,7 +744,7 @@ export default function Admin() {
         </Link>
         <Link to="/knowledge-graph" className={s.sideItem}>
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-          Knowledge Map
+          Map
         </Link>
         <button
           type="button"
@@ -779,6 +1015,139 @@ export default function Admin() {
               <div className={s.tableScroll}>{sessionsTable(sessions, true)}</div>
             )}
           </div>
+        )}
+
+        {/* ── HEALTH ── */}
+        {tab === 'health' && (
+          <>
+            <div className={`${s.healthHero} ${statusClass(systemStatus)}`}>
+              <div>
+                <span className={s.healthKicker}>system health</span>
+                <h2>
+                  {systemStatus === 'healthy' ? 'All systems working.'
+                    : systemStatus === 'down' ? 'Something is down.'
+                    : systemStatus === 'warning' ? 'A few things need attention.'
+                    : healthLoading ? 'Running checks…' : 'Not checked yet.'}
+                </h2>
+                <p>
+                  Plain-English status for the pieces students actually feel: the route
+                  intelligence, the data store, question and story content, the diagnostic
+                  loop, and the AI helpers.
+                </p>
+              </div>
+              <div className={s.healthHeroRight}>
+                <span className={`${s.healthOverall} ${statusClass(systemStatus)}`}>
+                  {statusCopy(systemStatus)}
+                </span>
+                {healthUpdatedAt && (
+                  <span className={s.healthUpdated}>checked {fmtDateTime(healthUpdatedAt)}</span>
+                )}
+                <button
+                  type="button"
+                  className={s.actionBtn}
+                  onClick={() => void refreshHealth()}
+                  disabled={healthLoading}
+                >
+                  {healthLoading ? 'Checking…' : 'Re-run checks'}
+                </button>
+              </div>
+            </div>
+
+            <div className={s.healthMetricGrid}>
+              <div className={s.healthMetric}><span>{healthCounts.working}</span><p>working</p></div>
+              <div className={s.healthMetric}><span>{healthCounts.attention}</span><p>need attention</p></div>
+              <div className={s.healthMetric}><span>{healthCounts.down}</span><p>down</p></div>
+              <div className={s.healthMetric}><span>{healthCounts.unknown}</span><p>not probed</p></div>
+            </div>
+
+            <div className={s.healthLayout}>
+              <div className={s.healthList}>
+                {healthChecks.length === 0 && (
+                  <div className={s.card}>
+                    <div className={s.empty}>
+                      {healthLoading ? 'Running health checks…' : 'No checks run yet.'}
+                    </div>
+                  </div>
+                )}
+                {healthChecks.map(check => {
+                  const open = openHealth === check.id
+                  return (
+                    <article key={check.id} className={s.healthItem}>
+                      <button
+                        type="button"
+                        className={s.healthItemHead}
+                        onClick={() => setOpenHealth(open ? '' : check.id)}
+                        aria-expanded={open}
+                      >
+                        <span className={`${s.healthDot} ${statusClass(check.status)}`} aria-hidden="true" />
+                        <span className={s.healthItemMain}>
+                          <strong>{check.label}</strong>
+                          <small>{check.plain}</small>
+                        </span>
+                        <span className={`${s.healthPill} ${statusClass(check.status)}`}>
+                          {statusCopy(check.status)}
+                        </span>
+                      </button>
+                      {open && (
+                        <div className={s.healthDetail}>
+                          {check.meta && <code>{check.meta}</code>}
+                          <p>{check.detail}</p>
+                          <strong>what to do</strong>
+                          <p>{check.action}</p>
+                        </div>
+                      )}
+                    </article>
+                  )
+                })}
+              </div>
+
+              <div className={s.healthList}>
+                <div className={s.card}>
+                  <div className={s.cardTitleRow}>
+                    <span className={s.cardTitle}>Content inventory</span>
+                  </div>
+                  <div className={s.inventoryGrid}>
+                    <div><strong>{coverageRows.length}</strong><span>ACT concepts tracked</span></div>
+                    <div><strong>{diagnosticConceptCount}</strong><span>concepts with playable questions</span></div>
+                    <div><strong>{storyCount}</strong><span>concept stories bundled</span></div>
+                    <div><strong>{generatedQuestionCount}</strong><span>verified generated questions</span></div>
+                  </div>
+                </div>
+
+                <div className={s.card}>
+                  <div className={s.cardTitleRow}>
+                    <span className={s.cardTitle}>How a student flows through</span>
+                  </div>
+                  <div className={s.flowGrid}>
+                    <div className={s.flowStep}>
+                      <span>1</span>
+                      <strong>Gap scan</strong>
+                      <p>Confidence ratings seed the knowledge graph via /seed-assessment.</p>
+                    </div>
+                    <div className={s.flowStep}>
+                      <span>2</span>
+                      <strong>Route</strong>
+                      <p>/recommend turns the graph into a trimmed study path with severities.</p>
+                    </div>
+                    <div className={s.flowStep}>
+                      <span>3</span>
+                      <strong>Practice</strong>
+                      <p>Outcomes flow back through /record-outcomes and the loop tightens.</p>
+                    </div>
+                  </div>
+                  <div className={s.healthNarrative}>
+                    <p>
+                      If any check above is down, this loop is where students feel it —
+                      "no gap found" on the dashboard almost always means the ML backend
+                      check failed, not that the student has no gaps ({healthById.backend
+                        ? statusCopy(healthById.backend.status).toLowerCase()
+                        : 'unchecked'} right now).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
         )}
 
         {/* ── SETTINGS ── */}

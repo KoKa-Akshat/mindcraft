@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { getQuestionById } from '../lib/questionBank'
 import { toggleBookmark } from '../lib/dashboardPersonalization'
 import BookmarkButton from './BookmarkButton'
+import EtchedQuestion from './book/EtchedQuestion'
 import n from './DashboardPanels.module.css'
 
 export default function DashboardSavedQuestionsPanel({
@@ -39,21 +40,12 @@ export default function DashboardSavedQuestionsPanel({
           <div className={n.notesList}>
             {items.map(({ id, q }) => (
               <article key={id} className={n.noteEntry}>
-                <div className={n.noteHead}>
-                  <span className={n.noteMeta}>
-                    {q.examTag ?? 'practice'} · level {q.level}
-                  </span>
-                  <button
-                    type="button"
-                    className={n.noteTitle}
-                    style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left' }}
-                    onClick={() => navigate('/practice', { state: { questionId: id, conceptId: q.conceptId } })}
-                  >
-                    {q.question.length > 120 ? `${q.question.slice(0, 119)}…` : q.question}
-                  </button>
-                  <span className={n.noteTutor}>{q.conceptId.replace(/_/g, ' ')}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 8 }}>
+                <EtchedQuestion
+                  text={q.question}
+                  tag={`${q.examTag ?? 'practice'} · L${q.level}`}
+                  compact
+                />
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 10 }}>
                   <button
                     type="button"
                     className={n.paperTextLink}

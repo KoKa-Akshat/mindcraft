@@ -603,3 +603,61 @@
 @media (max-width: 480px) {
   .foreedge { display: none; }
 }
+
+/* ── chapter turn spread (both pages during topic flip) ─────── */
+.chapterTurnLeft,
+.chapterTurnRight {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px 40px 40px;
+  background: inherit;
+  pointer-events: none;
+}
+
+.chapterTurnLeft {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.chapterTurnRight {
+  align-items: flex-end;
+  text-align: right;
+  padding-left: 28%;
+}
+
+.chapterTurnKicker,
+.chapterTurnHint {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-top: 12px;
+}
+
+.chapterTurnStory,
+.chapterTurnContinued {
+  margin: 8px 0 0;
+  font-family: var(--font-katha);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-katha);
+  max-width: 280px;
+}
+
+.chapterTurnName {
+  font-family: var(--font-script);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink-katha);
+}
+
+.chapterTurnVignette {
+  width: 88px;
+  height: 58px;
+  opacity: 0.88;
+}

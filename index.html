@@ -73,9 +73,8 @@ body.ready .page-shell{opacity:1;transform:none}
 .nav-links{display:flex;align-items:center;gap:8px}
 .nav-links a{padding:10px 12px;border-radius:999px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.13em;transition:background .2s var(--ease),transform .2s var(--ease)}
 .nav-links a:hover{background:var(--nav-hover);transform:translateY(-1px)}
-.nav-links .login{border:1px solid var(--nav-login-border);background:var(--nav-login-bg)}
 .nav-links .join{background:var(--nav-join-bg);color:var(--nav-join-color)}
-.mobile-login{display:none}
+.mobile-try{display:none}
 section{position:relative;padding:clamp(84px,8vw,128px) clamp(20px,5vw,72px)}
 .wrap{max-width:1180px;margin:0 auto}
 .label{display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:10px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase;color:rgba(20,58,46,.58)}
@@ -130,10 +129,11 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .math-buddy:before{left:31px}
 .math-buddy:after{right:31px}
 .math-buddy span{position:relative;z-index:1;margin-top:20px;color:#fff;font-family:"Fredoka",system-ui,sans-serif;font-size:42px;font-weight:700;line-height:1}
-.stats{display:flex;gap:10px;max-width:none;margin-top:36px;border:none;background:transparent;box-shadow:none}
-.stat{background:rgba(255,253,247,.9);padding:18px 20px;border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 24px rgba(29,84,54,.07);flex:1}
+.stats{display:flex;gap:34px;max-width:none;margin-top:36px;border:none;background:transparent;box-shadow:none}
+.stat{background:transparent;padding:0;border:none;box-shadow:none;flex:0 0 auto}
 .stat strong{display:block;font-size:34px;line-height:1;color:var(--leaf);letter-spacing:-.04em;font-family:"Fredoka",system-ui,sans-serif}
 .stat span{display:block;margin-top:8px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#7a806f}
+.stat-limited strong{color:#e1306c}
 .vibe{background:#fffdf7}
 .vibe-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,82px);align-items:center}
 .vibe-copy p{max-width:580px;margin-top:24px}
@@ -217,6 +217,21 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .price-card strong{display:block;margin:18px 0 8px;font-family:"Fredoka",system-ui,sans-serif;font-size:68px;line-height:.9;color:var(--leaf);letter-spacing:-.04em}
 .price-card p{font-size:15px}
 .price-card .btn{margin-top:24px;width:100%}
+.tryapp{background:var(--cream)}
+.tryapp-card{display:grid;grid-template-columns:.62fr 1fr;gap:clamp(24px,5vw,64px);align-items:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:34px;padding:clamp(26px,4.5vw,54px);box-shadow:0 24px 70px rgba(29,84,54,.10)}
+.tryapp-bear{position:relative;text-align:center}
+.tryapp-bear img{width:min(300px,82%);border-radius:26px;box-shadow:0 18px 44px rgba(60,44,20,.18);transform:rotate(-2.5deg);transition:transform .5s var(--ease)}
+.tryapp-card:hover .tryapp-bear img{transform:rotate(0deg) scale(1.02)}
+.tryapp-bear figcaption{margin-top:14px;font-family:"Caveat",cursive;font-size:20px;color:#7a806f;transform:rotate(-1deg)}
+.tryapp-copy h2{margin-top:10px}
+.tryapp-copy>p{margin-top:18px;max-width:460px}
+.tryapp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:28px}
+.tryapp-note{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a39b8e}
+.notebook-photo{margin:18px 0 0}
+.notebook-photo img{width:100%;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
+.notebook-photo figcaption{margin-top:12px;text-align:center;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
+.price-photo{margin:26px -6px -6px}
+.price-photo img{width:100%;border-radius:16px;display:block;opacity:.92;box-shadow:0 14px 36px rgba(0,0,0,.35)}
 .intake{background:var(--sand)}
 .intake-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(28px,6vw,80px);align-items:start}
 .intake-copy p{margin-top:20px;max-width:420px}
@@ -257,7 +272,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-art{max-width:480px;margin:0 auto;opacity:.82}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
-  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid{grid-template-columns:1fr}
+  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.tryapp-card{grid-template-columns:1fr}
   h1{font-size:clamp(58px,18vw,74px)}
   h2{font-size:clamp(48px,16vw,84px)}
   .hero-copy .lead{max-width:320px}
@@ -274,9 +289,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .brand{font-size:17px}
   .nav-links{gap:5px;margin-left:auto;flex:0 0 auto}
   .nav-links a{display:none!important}
-  .nav-links .login{display:inline-flex!important;position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;padding:9px 10px;letter-spacing:.08em}
   .nav-links{display:none}
-  .mobile-login{display:inline-flex;position:absolute;right:10px;top:50%;transform:translateY(-50%);padding:9px 10px;border-radius:999px;border:1px solid var(--nav-login-border);background:var(--nav-login-bg);font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+  .mobile-try{display:inline-flex;position:absolute;right:10px;top:50%;transform:translateY(-50%);padding:9px 10px;border-radius:999px;border:1px solid var(--nav-login-border);background:var(--nav-login-bg);font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
   .hero{align-items:flex-start;padding-top:116px}
   .hero .wrap{width:100%}
   h1{font-size:clamp(47px,14vw,58px);line-height:.95;letter-spacing:-.035em}
@@ -318,10 +332,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <a href="#map">Map</a>
       <a href="#system">System</a>
       <a href="#intake">Apply</a>
+      <a href="#try-app">Try it</a>
       <a class="join" href="#intake">Join</a>
-      <a class="login app-login-link" href="https://mindcraft-93858.web.app/login">Login</a>
     </div>
-    <a class="mobile-login app-login-link" href="https://mindcraft-93858.web.app/login">Login</a>
+    <a class="mobile-try" href="#try-app">Try it</a>
   </nav>
   <main>
     <section class="hero" id="top" data-nav="hero">
@@ -342,7 +356,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <div class="stats reveal stagger">
             <div class="stat"><strong>42</strong><span>Concepts mapped</span></div>
             <div class="stat"><strong>1,718</strong><span>Practice questions</span></div>
-            <div class="stat"><strong>Limited</strong><span>Seats available</span></div>
+            <div class="stat stat-limited"><strong>Limited</strong><span>Seats available</span></div>
           </div>
         </div>
         <div class="hero-art reveal" aria-hidden="true" id="heroArt">
@@ -398,6 +412,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <b class="script">breathe, then try again</b>
             <p>A missed problem becomes a clue. The map shows where the thinking broke.</p>
           </div>
+          <figure class="notebook-photo">
+            <img src="img/mindcraft-study-desk-20260706.jpg" alt="A student's tablet notebook full of worked math, gold underlines marking the breakthroughs" loading="lazy">
+            <figcaption class="script">every page tells the story</figcaption>
+          </figure>
           <div class="scribble-note script">m = rise/run</div>
         </div>
       </div>
@@ -571,7 +589,30 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <strong style="font-size:32px;letter-spacing:-0.02em;line-height:1.2;display:block;margin:18px 0 8px;">Tell us their story.</strong>
             <p>We review every application and reach out within 48 hours. No commitment required to apply.</p>
             <a class="btn primary" href="#intake">Apply for a seat</a>
+            <figure class="price-photo" aria-hidden="true">
+              <img src="img/mindcraft-luxury-map-20260706.jpg" alt="" loading="lazy">
+            </figure>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="tryapp" id="try-app" data-nav="cream">
+      <div class="wrap">
+        <div class="tryapp-card reveal">
+          <figure class="tryapp-bear" aria-hidden="false">
+            <img src="img/fibonacci-bear.svg" alt="Fib, the MindCraft bear with a golden spiral on his journal" loading="lazy" width="240" height="280">
+            <figcaption>Fib has your map ready.</figcaption>
+          </figure>
+          <div class="tryapp-copy">
+            <p class="label">Try our app</p>
+            <h2>Come see your map.</h2>
+            <p>The gap scan, the story chapters, the practice that knows exactly where you are — it's all inside. Fib the bear grew up on the golden ratio; he'll walk you in.</p>
+            <div class="tryapp-actions">
+              <a class="btn primary app-login-link" href="https://mindcraft-93858.web.app/login">Open MindCraft →</a>
+              <span class="tryapp-note">Free to explore · works great on iPad</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

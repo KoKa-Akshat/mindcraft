@@ -1,11 +1,14 @@
 /**
- * Embedded session notes — scrollable list with keyword search.
+ * Embedded session notes — paginated into book leaves. Clicking a note flips
+ * to a detail leaf (no vertical accordion). Swipe left/right on iPad to turn.
  */
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../firebase'
 import { useUser } from '../App'
+import PageFlipTransition from './book/PageFlipTransition'
+import { useSwipeFlip } from '../hooks/useSwipeFlip'
 import n from './DashboardPanels.module.css'
 
 interface Session {
@@ -18,13 +21,18 @@ interface Session {
   bullets: string[]
 }
 
+const NOTES_PER_LEAF = 3
+
 export default function DashboardNotesPanel() {
   const navigate = useNavigate()
   const authUser = useUser()
+  const swipeRef = useRef<HTMLDivElement>(null)
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [expanded, setExpanded] = useState<string | null>(null)
+  const [leaf, setLeaf] = useState(0)
+  const [detailId, setDetailId] = useState<string | null>(null)
+  const [flipDir, setFlipDir] = useState<'forward' | 'back'>('forward')
 
   useEffect(() => {
     if (!authUser?.email) return
@@ -65,14 +73,54 @@ export default function DashboardNotesPanel() {
     )
   }, [sessions, search])
 
+  const leafCount = Math.max(1, Math.ceil(filtered.length / NOTES_PER_LEAF))
+  const currentLeaf = Math.min(leaf, leafCount - 1)
+  const visible = filtered.slice(
+    currentLeaf * NOTES_PER_LEAF,
+    (currentLeaf + 1) * NOTES_PER_LEAF,
+  )
+  const detail = detailId ? filtered.find(s => s.id === detailId) ?? null : null
+
+  const turnLeaf = useCallback((next: number) => {
+    if (next < 0 || next >= leafCount) return
+    setFlipDir(next > currentLeaf ? 'forward' : 'back')
+    setDetailId(null)
+    setLeaf(next)
+  }, [currentLeaf, leafCount])
+
+  const openDetail = useCallback((id: string) => {
+    setFlipDir('forward')
+    setDetailId(id)
+  }, [])
+
+  const closeDetail = useCallback(() => {
+    setFlipDir('back')
+    setDetailId(null)
+  }, [])
+
+  useSwipeFlip(
+    swipeRef,
+    () => {
+      if (detailId) closeDetail()
+      else turnLeaf(currentLeaf + 1)
+    },
+    () => {
+      if (detailId) closeDetail()
+      else turnLeaf(currentLeaf - 1)
+    },
+    !loading && filtered.length > 0,
+  )
+
+  const viewKey = detailId ? `detail-${detailId}` : `leaf-${currentLeaf}-${search}`
+
   return (
-    <div className={n.paperPanelBody}>
+    <div className={n.paperPanelBody} ref={swipeRef}>
       <input
         className={n.paperSearchLine}
         placeholder="search notes by keyword…"
         value={search}
-        onChange={e => setSearch(e.target.value)}
-        aria-label="Search session notes"
+        onChange={e => { setSearch(e.target.value); setLeaf(0); setDetailId(null) }}
+        aria-label="Search notes"
       />
 
       <div className={n.scrollBody}>
@@ -81,42 +129,73 @@ export default function DashboardNotesPanel() {
         ) : filtered.length === 0 ? (
           <div className={n.empty}>
             <p className={n.paperEmptyHint}>
-              {search ? 'No notes match that search.' : 'No published session notes yet.'}
+              {search ? 'No notes match that search.' : 'No published notes yet.'}
             </p>
             <button type="button" className={n.paperTextLink} onClick={() => navigate('/book')}>
               Book a session →
             </button>
           </div>
         ) : (
-          <div className={n.notesList}>
-            {filtered.map(sess => {
-              const open = expanded === sess.id
-              return (
-                <article key={sess.id} className={n.noteEntry}>
-                  <button
-                    type="button"
-                    className={n.noteHead}
-                    onClick={() => setExpanded(open ? null : sess.id)}
-                  >
-                    <span className={n.noteMeta}>{sess.date} · {sess.tutorName}</span>
-                    <strong className={n.noteTitle}>{sess.title}</strong>
-                    <span className={n.noteTutor}>{sess.subject}{sess.duration ? ` · ${sess.duration}` : ''}</span>
-                  </button>
-                  {open && (
-                    <ul className={n.noteBullets}>
-                      {sess.bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
-                    </ul>
-                  )}
-                </article>
-              )
-            })}
+          <PageFlipTransition viewKey={viewKey} direction={flipDir}>
+            {detail ? (
+              <article className={n.noteDetailLeaf}>
+                <button type="button" className={n.noteDetailBack} onClick={closeDetail}>
+                  ← notes
+                </button>
+                <span className={n.noteMeta}>{detail.date} · {detail.tutorName}</span>
+                <h3 className={n.noteDetailTitle}>{detail.title}</h3>
+                <p className={n.noteTutor}>{detail.subject}{detail.duration ? ` · ${detail.duration}` : ''}</p>
+                <ul className={n.noteBullets}>
+                  {detail.bullets.map((b, i) => (
+                    <li key={i}>{b}</li>
+                  ))}
+                </ul>
+              </article>
+            ) : (
+              <div className={n.notesList}>
+                {visible.map(sess => (
+                  <article key={sess.id} className={n.noteEntry}>
+                    <button
+                      type="button"
+                      className={n.noteHead}
+                      onClick={() => openDetail(sess.id)}
+                    >
+                      <span className={n.noteMeta}>{sess.date} · {sess.tutorName}</span>
+                      <strong className={n.noteTitle}>{sess.title}</strong>
+                      <span className={n.noteTutor}>{sess.subject}{sess.duration ? ` · ${sess.duration}` : ''}</span>
+                      <span className={n.noteTurnHint}>turn page →</span>
+                    </button>
+                  </article>
+                ))}
+              </div>
+            )}
+          </PageFlipTransition>
+        )}
+
+        {!detailId && leafCount > 1 && (
+          <div className={n.leafNav}>
+            <button
+              type="button"
+              className={n.leafNavBtn}
+              onClick={() => turnLeaf(currentLeaf + 1)}
+              disabled={currentLeaf >= leafCount - 1}
+            >
+              ← older
+            </button>
+            <span className={n.leafNavCount}>leaf {currentLeaf + 1} of {leafCount}</span>
+            <button
+              type="button"
+              className={n.leafNavBtn}
+              onClick={() => turnLeaf(currentLeaf - 1)}
+              disabled={currentLeaf === 0}
+            >
+              newer →
+            </button>
           </div>
         )}
 
         <button type="button" className={n.paperTextLink} onClick={() => navigate('/sessions')}>
-          Open full notes page →
+          Open full notes →
         </button>
       </div>
     </div>

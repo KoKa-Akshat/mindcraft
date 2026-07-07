@@ -38,7 +38,7 @@ const ALLOWED_ORIGINS = new Set([
   'http://localhost:5173',
 ])
 const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000 // 30 d — bank questions are static
-const CACHE_VERSION = 'v1'
+const CACHE_VERSION = 'v3' // v3: math must be woven into scene action, not appended
 const MAX_QUESTIONS = 12
 const MAX_STORY_CHARS = 4000
 
@@ -113,6 +113,8 @@ ABSOLUTE RULES — the math is frozen:
 3. Keep any LaTeX (\\( \\), $ $, \\[ \\]) exactly as written.
 4. Each storyStem must stand alone (2-4 sentences of scene + the full mathematical ask). Do NOT reference other questions or "the previous scene" — questions can appear in any order.
 5. Use the story's actual characters, places, and stakes. If the original stem's context conflicts with the story world, translate the surface context but keep the math identical.
+6. The math must be WOVEN INTO the scene's action — a named character must need this exact equation/quantity for a concrete reason inside the story ("the ledger shows 9x − 3y = 10, and Stevin needs the slope to set the ramp"), never a scene followed by an unrelated textbook ask. If you cannot tie the exact math to the story naturally, set the scene around the character ENCOUNTERING that exact expression (a chart, a ledger, an instrument reading) — the connection must always be explicit.
+7. BAD example: "William watches planes land. If 9x - 3y = 10, what is the slope?" GOOD example: "Stevin opens the cargo ledger where today's balance reads 9x − 3y = 10 — what slope does that constraint line show for the airlift ramp?"
 
 GUIDANCE — derived from the signals given per question:
 • "socratic": exactly 2 short guiding questions a great tutor would ask, in story voice. Lead toward the method, never reveal the answer or the correct choice.

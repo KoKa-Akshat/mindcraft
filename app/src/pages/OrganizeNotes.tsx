@@ -2,7 +2,7 @@
  * OrganizeNotes.tsx
  *
  * Student-facing page to upload their own notes, have AI generate a
- * structured summary card, edit it, and publish it to their Session Notes.
+ * structured summary card, edit it, and publish it to their Notes.
  */
 
 import { useRef, useState } from 'react'
@@ -115,16 +115,16 @@ export default function OrganizeNotes() {
       <main className={s.page}>
         <div className={s.header}>
           <h1>Organize Notes</h1>
-          <p>Paste or upload your notes — AI will build a structured summary card you can save to Session Notes.</p>
+          <p>Paste or upload your notes — AI will build a structured summary card you can save to Notes.</p>
         </div>
 
         {published ? (
           <div className={s.successBox}>
             <div className={s.successIcon}>✓</div>
             <h2>Summary card saved!</h2>
-            <p>It's now in your Session Notes.</p>
+            <p>It's now in your Notes.</p>
             <div className={s.successBtns}>
-              <button className={s.btnPrimary} onClick={() => navigate('/sessions')}>View Session Notes</button>
+              <button className={s.btnPrimary} onClick={() => navigate('/sessions')}>View Notes</button>
               <button className={s.btnOutline} onClick={() => { setPublished(false); setCardReady(false); setNotes(''); setCard(BLANK); setSubject('') }}>Create Another</button>
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function OrganizeNotes() {
                   </div>
 
                   <button className={s.btnPrimary} onClick={publish} disabled={publishing || !card.title}>
-                    {publishing ? 'Saving…' : 'Save to Session Notes →'}
+                    {publishing ? 'Saving…' : 'Save to Notes →'}
                   </button>
                 </div>
               )}

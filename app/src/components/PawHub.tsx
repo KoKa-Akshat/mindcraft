@@ -193,7 +193,7 @@ export default function PawHub({
           onClick={onHomeworkClick ?? (() => navigate('/dashboard?view=homework'))}
         >
           <PencilIcon />
-          <span>Problem Solver</span>
+          <span>Solver</span>
         </button>
         <button
           type="button"
@@ -201,7 +201,7 @@ export default function PawHub({
           onClick={onGpsClick ?? (() => navigate('/learning-gps'))}
         >
           <MapIcon />
-          <span>Knowledge Map</span>
+          <span>Map</span>
         </button>
         <button
           type="button"
@@ -209,7 +209,7 @@ export default function PawHub({
           onClick={onNotesClick ?? (() => navigate('/dashboard?view=notes'))}
         >
           <NotesIcon />
-          <span>Session Notes</span>
+          <span>Notes</span>
         </button>
       </div>
 

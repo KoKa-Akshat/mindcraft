@@ -29,6 +29,8 @@ import {
   type StickerId,
   DEFAULT_THEME,
 } from '../lib/dashboardPersonalization'
+import conceptStoriesData from '../data/conceptStories.json'
+import ConceptVignette from '../components/book/ConceptVignette'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import CoverNavItem, { CoverNavSection } from '../components/book/CoverNavItem'
@@ -40,45 +42,50 @@ import s from './Dashboard.module.css'
 /** Max characters accepted by the inline problem-solver pad. */
 const SOLVER_MAX_CHARS = 1200
 
-// Concept discovery cards — supplementary ACT concepts to explore
+// Concept discovery cards — supplementary ACT concepts to explore.
+// Each card gets an animated ConceptVignette drawing keyed by its id.
 const EXPLORE_CARDS = [
   {
     id: 'quadratic_equations',
     label: 'Quadratics',
-    symbol: 'x²',
     bg: 'linear-gradient(135deg, #1e2a4a 0%, #2f4370 55%, #22304f 100%)',
   },
   {
     id: 'trigonometry_basics',
     label: 'Trig',
-    symbol: 'θ',
     bg: 'linear-gradient(135deg, #3d1f24 0%, #6b3540 55%, #452328 100%)',
   },
   {
     id: 'descriptive_statistics',
     label: 'Statistics',
-    symbol: 'σ',
     bg: 'linear-gradient(135deg, #402d1a 0%, #6b4a26 55%, #47331d 100%)',
   },
   {
     id: 'linear_equations',
     label: 'Coord. Plane',
-    symbol: 'xy',
     bg: 'linear-gradient(135deg, #3b2440 0%, #5c3a63 55%, #402a47 100%)',
   },
   {
     id: 'logarithmic_functions',
     label: 'Logarithms',
-    symbol: 'ln',
     bg: 'linear-gradient(135deg, #14383a 0%, #226266 55%, #17403f 100%)',
   },
   {
     id: 'basic_probability',
     label: 'Probability',
-    symbol: 'P',
     bg: 'linear-gradient(135deg, #1f3a2a 0%, #356247 55%, #24402f 100%)',
   },
 ] as const
+
+const STORIES = conceptStoriesData as Record<string, { conceptName: string; story: string }>
+
+function storyTeaser(conceptId: string, max = 160): string {
+  const raw = STORIES[conceptId]?.story ?? ''
+  if (raw.length <= max) return raw
+  const cut = raw.slice(0, max)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${(lastSpace > 80 ? cut.slice(0, lastSpace) : cut).trim()}…`
+}
 
 // Flag color rotates by day of week
 const FLAG_COLORS = ['#c96a7e', '#4f8a8b', '#c9963f', '#7d6fa8', '#5d8a5e', '#c96a7e', '#4f8a8b']
@@ -381,6 +388,15 @@ export default function Dashboard() {
       }
       left={
         <BookPage side="left" flipping={Boolean(turningConceptId)}>
+          {turningConceptId && STORIES[turningConceptId] && (
+            <div className={s.chapterTurnLeft} aria-live="polite">
+              <div className={s.chapterTurnVignette}>
+                <ConceptVignette id={turningConceptId} />
+              </div>
+              <span className={s.chapterTurnKicker}>opening chapter</span>
+              <p className={s.chapterTurnStory}>{storyTeaser(turningConceptId, 140)}</p>
+            </div>
+          )}
           <StickerLayer
             stickers={dashboardStickers}
             editable={styleDrawerOpen}
@@ -460,28 +476,28 @@ export default function Dashboard() {
             <CoverNavSection heading="contents">
               <CoverNavItem
                 icon={<Wand2 size={19} strokeWidth={1.75} />}
-                label="Problem Solver"
+                label="Solver"
                 sub="Paste a stuck problem, get a hint path"
                 active={homeworkMode}
                 onClick={openHomework}
               />
               <CoverNavItem
                 icon={<NotebookPen size={19} strokeWidth={1.75} />}
-                label="Session Notes"
+                label="Notes"
                 sub="Everything your tutor wrote down"
                 active={notesMode}
                 onClick={openNotes}
               />
               <CoverNavItem
                 icon={<Bookmark size={19} strokeWidth={1.75} />}
-                label="Saved Questions"
+                label="Saved"
                 sub={`${bookmarkedQuestions.length} bookmarked for later`}
                 active={savedMode}
                 onClick={openSaved}
               />
               <CoverNavItem
                 icon={<Compass size={19} strokeWidth={1.75} />}
-                label="The Map"
+                label="Map"
                 sub="Your whole knowledge world, plotted"
                 active={gpsMode || routeMode}
                 onClick={openGps}
@@ -537,6 +553,13 @@ export default function Dashboard() {
             </div>
           }
         >
+          {turningConceptId && STORIES[turningConceptId] && (
+            <div className={s.chapterTurnRight} aria-live="polite">
+              <span className={s.chapterTurnName}>{STORIES[turningConceptId].conceptName}</span>
+              <p className={s.chapterTurnContinued}>{storyTeaser(turningConceptId, 100)}</p>
+              <span className={s.chapterTurnHint}>turning page…</span>
+            </div>
+          )}
           <PageFlipTransition viewKey={view}>
             {todayMode ? (
               <>
@@ -577,7 +600,7 @@ export default function Dashboard() {
                           title={`Explore ${card.label}`}
                         >
                           <div className={s.exploreCardBg} style={{ background: card.bg }} />
-                          <span className={s.exploreCardSymbol} aria-hidden="true">{card.symbol}</span>
+                          <ConceptVignette id={card.id} />
                           <span className={s.exploreCardLabel}>{card.label}</span>
                           <span className={s.exploreCardArrow}>explore →</span>
                         </button>
@@ -616,7 +639,7 @@ export default function Dashboard() {
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
                   <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>session notes</span>
+                  <span className={s.panelTitle}>notes</span>
                 </div>
                 <div className={s.panelContent}>
                   <DashboardNotesPanel />
@@ -626,7 +649,7 @@ export default function Dashboard() {
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
                   <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>saved questions</span>
+                  <span className={s.panelTitle}>saved</span>
                 </div>
                 <div className={s.panelContent}>
                   <DashboardSavedQuestionsPanel
@@ -640,7 +663,7 @@ export default function Dashboard() {
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
                   <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>problem solver</span>
+                  <span className={s.panelTitle}>solver</span>
                 </div>
                 <div className={s.solverBody}>
                   <p className={s.solverHint}>
@@ -678,7 +701,7 @@ export default function Dashboard() {
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
                   <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>knowledge map</span>
+                  <span className={s.panelTitle}>map</span>
                 </div>
                 <div className={`${s.panelContent} ${s.mapInset}`}>
                   <ConstellationGpsExplorer

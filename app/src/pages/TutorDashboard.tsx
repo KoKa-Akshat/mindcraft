@@ -931,7 +931,7 @@ export default function TutorDashboard() {
                     ✉ Email parent
                   </button>
                   <button className={s.actionBtn} onClick={() => navigate('/knowledge-graph')}>
-                    📋 View Knowledge Map →
+                    📋 View Map →
                   </button>
                 </div>
               </div>
@@ -971,7 +971,7 @@ export default function TutorDashboard() {
               {/* Session Notes (stub) */}
               <div className={s.card}>
                 <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Session Notes</span>
+                  <span className={s.cardLabel}>Notes</span>
                 </div>
                 <p className={s.emptyText}>
                   Session notes coming soon — use Fireflies transcript in session review.

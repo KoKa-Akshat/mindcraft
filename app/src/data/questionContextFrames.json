@@ -2,280 +2,329 @@
   "fractions_decimals": {
     "protagonist": "Simon Stevin",
     "settingLine": "Antwerp, the Low Countries, 1585",
-    "questionBridge": "Simon dips his pen and slides the ledger toward you. One entry refuses to balance.",
+    "questionBridge": "Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "ratios_proportions": {
     "protagonist": "Thales of Miletus",
     "settingLine": "Giza, foot of the pyramid, 600 BC",
-    "questionBridge": "Thales plants his staff in the sand and measures its shadow. Now he turns to you.",
+    "questionBridge": "Thales measures the shadow against his staff. If one thing scales, so does the other.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "order_of_operations": {
     "protagonist": "Ada Lovelace",
     "settingLine": "London, a lamplit study, 1843",
-    "questionBridge": "Ada taps the stack of punch cards. One step out of order and the machine fails.",
+    "questionBridge": "Ada taps the punch cards. Do the steps in the right order — the machine forgives nothing.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "basic_equations": {
     "protagonist": "Diophantus of Alexandria",
     "settingLine": "Alexandria, 250 AD",
-    "questionBridge": "Diophantus loved hiding numbers inside riddles. He scratches a fresh one into the wax.",
+    "questionBridge": "Diophantus scratches a riddle into the wax. A number is hiding — undo each step until you find it.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "linear_equations": {
     "protagonist": "William Harrison",
     "settingLine": "At sea, bound for Jamaica, 1761",
-    "questionBridge": "William checks his watch against the noon sighting. The navigator hands you the numbers.",
+    "questionBridge": "William stares at the balance. One unknown. Find what makes both sides equal.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "functions_basics": {
     "protagonist": "Leonhard Euler",
     "settingLine": "St. Petersburg, 1734",
-    "questionBridge": "Leonhard scrawls f(x) on fresh paper, a brand-new shorthand. He tests it on you first.",
+    "questionBridge": "Euler scrawls f(x). Feed it a number — watch what comes out.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "right_triangle_geometry": {
     "protagonist": "Ahmes the rope-stretcher",
     "settingLine": "The Nile floodplain, ancient Egypt",
-    "questionBridge": "The flood retreats. Ahmes stretches the knotted rope taut across the mud and waves you closer.",
+    "questionBridge": "Ahmes pulls the knotted rope taut. Two sides fix the third — the right angle keeps its promise.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "trigonometry_basics": {
     "protagonist": "Hipparchus of Nicaea",
     "settingLine": "Rhodes, a hilltop observatory, 150 BC",
-    "questionBridge": "Hipparchus sights a star and lowers his instrument. He needs this angle checked tonight.",
+    "questionBridge": "Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "linear_inequalities": {
     "protagonist": "General William Tunner",
     "settingLine": "West Berlin, the airfields, 1948",
-    "questionBridge": "William watches another cargo plane touch down. Every flight has limits, and lives ride on them.",
+    "questionBridge": "William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "systems_of_linear_equations": {
     "protagonist": "Liu Hui",
     "settingLine": "Ancient China, counting rods, 263 AD",
-    "questionBridge": "Liu Hui lays counting rods in careful rows and columns, then looks up at you.",
+    "questionBridge": "Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "exponent_rules": {
     "protagonist": "Jacob Bernoulli",
     "settingLine": "Basel, Switzerland, 1683",
-    "questionBridge": "Jacob compounds the interest again and again. The pattern in the powers stops him cold.",
+    "questionBridge": "Jacob watches the powers stack. Repeated multiplication has its own rules — use them.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "polynomials": {
     "protagonist": "Omar Khayyam",
     "settingLine": "Persia, an observatory, 1074",
-    "questionBridge": "Omar sets down his cup and sketches a curve in the margin of his manuscript.",
+    "questionBridge": "Omar sketches the curve in the margin. Many terms, one expression — read what it does.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "factoring_polynomials": {
     "protagonist": "François Viète",
     "settingLine": "France, the royal court, 1591",
-    "questionBridge": "François, the king's codebreaker, sees every equation as a cipher. He hands you one to crack.",
+    "questionBridge": "François treats every expression as a cipher. It was built from factors — take it apart.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "radical_expressions": {
     "protagonist": "Hippasus of Metapontum",
     "settingLine": "The Mediterranean, aboard ship, 500 BC",
-    "questionBridge": "Hippasus lowers his voice on the deck. Some numbers, he whispers, cannot be written down.",
+    "questionBridge": "Hippasus lowers his voice. Some numbers hide under the root sign — handle them exactly.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "quadratic_equations": {
     "protagonist": "Muhammad al-Khwarizmi",
     "settingLine": "Baghdad, House of Wisdom, 820 AD",
-    "questionBridge": "Muhammad sketches a square in the courtyard dust and begins completing it, piece by piece.",
+    "questionBridge": "Muhammad draws the square. Find the side that makes it whole.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "descriptive_statistics": {
     "protagonist": "Florence Nightingale",
     "settingLine": "Scutari hospital, Crimea, 1854",
-    "questionBridge": "Florence walks the ward at midnight, counting. The numbers must be made to speak.",
+    "questionBridge": "Florence sets down her pen. What does the data actually say?",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "basic_probability": {
     "protagonist": "Gerolamo Cardano",
     "settingLine": "Bologna, a tavern, 1560",
-    "questionBridge": "Cardano sweeps the coins aside and leans across the tavern table with a wager.",
+    "questionBridge": "Cardano taps the table. Before you wager, you need the true odds.",
     "diceFrame": "Cardano shakes the dice in his cupped hands and slams them onto the table.",
     "spinnerFrame": "Cardano flicks the pointer into a blur and dares you to call where it stops."
   },
   "exponential_functions": {
     "protagonist": "John Napier",
     "settingLine": "Merchiston Castle, Scotland, 1614",
-    "questionBridge": "John has spent twenty years on his tables. He shows you how fast doubling runs away.",
+    "questionBridge": "John traces the doubling. Growth that feeds on itself — track how fast it runs.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "logarithmic_functions": {
     "protagonist": "John Napier",
     "settingLine": "Merchiston Castle, Scotland, 1614",
-    "questionBridge": "John slides his great table across the desk. Multiplication, he says, can become addition.",
+    "questionBridge": "John slides his great table across the desk. To undo a power, ask what exponent got you there.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "sequences_series": {
     "protagonist": "Carl Friedrich Gauss",
     "settingLine": "Brunswick, a schoolroom, 1787",
-    "questionBridge": "The schoolmaster sets his trap. Carl, age ten, is already reaching for his slate.",
+    "questionBridge": "Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "lines_angles": {
     "protagonist": "Euclid of Alexandria",
     "settingLine": "Alexandria, the great Library, 300 BC",
-    "questionBridge": "Euclid draws two lines crossing in the sand and waits for you to see it.",
+    "questionBridge": "Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "triangles_congruence": {
     "protagonist": "Euclid of Alexandria",
     "settingLine": "Alexandria, the great Library, 300 BC",
-    "questionBridge": "Euclid lays one triangle over another. Prove they match, he says, and everything follows.",
+    "questionBridge": "Euclid lays the triangles side by side. Show they are the same — every side, every angle.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "circles_geometry": {
     "protagonist": "Archimedes of Syracuse",
     "settingLine": "Syracuse, Sicily, 250 BC",
-    "questionBridge": "Archimedes drags his stick through the sand, tracing a perfect circle around your feet.",
+    "questionBridge": "Archimedes traces the perfect curve. Every point is the same distance from the center — build from that.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "area_volume": {
     "protagonist": "Archimedes of Syracuse",
     "settingLine": "Syracuse, the public baths, 250 BC",
-    "questionBridge": "Archimedes leaps from the bath, still dripping. He needs you to measure what he found.",
+    "questionBridge": "Archimedes submerges the crown. Space and substance — measure what's inside.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "geometric_transformations": {
     "protagonist": "M.C. Escher",
     "settingLine": "The Alhambra, Granada, 1936",
-    "questionBridge": "Maurits stares at the Alhambra tiles for hours. Every shape slides, flips, and repeats forever.",
+    "questionBridge": "Maurits studies the tiles. Slide it, flip it, turn it — and ask what stays the same.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "rational_expressions": {
     "protagonist": "Gottfried Leibniz",
     "settingLine": "Hanover, a rivalry by letter, 1699",
-    "questionBridge": "Gottfried reads Newton's latest letter and sharpens his quill. Every ratio must be airtight.",
+    "questionBridge": "Gottfried sharpens his quill. A fraction of expressions — treat the top and bottom with equal rigor.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "complex_numbers": {
     "protagonist": "Rafael Bombelli",
     "settingLine": "Bologna, Italy, 1572",
-    "questionBridge": "Rafael refuses to throw the impossible number away. He follows it, and an answer appears.",
+    "questionBridge": "Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "vectors": {
     "protagonist": "James Clerk Maxwell",
     "settingLine": "London, King's College, 1865",
-    "questionBridge": "James watches the compass needle swing and reaches for arrows to describe the invisible.",
+    "questionBridge": "James reaches for his arrows. Magnitude and direction — both matter here.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "matrices": {
     "protagonist": "Arthur Cayley",
     "settingLine": "London, a law office, 1858",
-    "questionBridge": "Arthur arranges the numbers into a neat grid, then discovers the grids themselves obey algebra.",
+    "questionBridge": "Arthur arranges the numbers into a grid. The grid itself obeys algebra — work it row by column.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "conic_sections": {
     "protagonist": "Johannes Kepler",
     "settingLine": "Prague, an observatory, 1609",
-    "questionBridge": "Johannes checks Tycho's data one more time. The orbit of Mars refuses to be a circle.",
+    "questionBridge": "Johannes checks the data once more. Slice the cone — the curve tells you which cut was made.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "probability_distributions": {
     "protagonist": "Abraham de Moivre",
     "settingLine": "London, Slaughter's coffeehouse, 1733",
-    "questionBridge": "Abraham names the odds for gamblers over cold coffee. A curve is hiding inside the chaos.",
-    "diceFrame": "Abraham stacks the tally of a thousand dice throws and points at the shape emerging.",
+    "questionBridge": "Abraham tallies a thousand trials. Chance has a shape — read the whole distribution.",
+    "diceFrame": null,
     "spinnerFrame": null
   },
   "applications_of_derivatives": {
     "protagonist": "Isaac Newton",
     "settingLine": "Woolsthorpe orchard, England, 1666",
-    "questionBridge": "Isaac watches the apple fall and wonders how fast, exactly, at each single instant.",
+    "questionBridge": "Isaac watches the apple fall. How fast, and exactly when — the rate of change answers both.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "integrals": {
     "protagonist": "Archimedes of Syracuse",
     "settingLine": "Syracuse, Sicily, 250 BC",
-    "questionBridge": "Archimedes slices the shape into slivers thinner than hairs. Now add them all, he says.",
+    "questionBridge": "Archimedes slices the shape into slivers thinner than hairs. Add up the small pieces — the total is exact.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "applications_of_integrals": {
     "protagonist": "John Roebling",
     "settingLine": "Brooklyn Bridge works, New York, 1870",
-    "questionBridge": "John checks the cable calculations one more time. Thousands will cross, so the sums must hold.",
+    "questionBridge": "John checks the cables one more time. Accumulate the small pieces — the whole must hold.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "inferential_statistics": {
     "protagonist": "Ronald Fisher",
     "settingLine": "Rothamsted farm, England, 1919",
-    "questionBridge": "Ronald walks the muddy field plots at dawn. One harvest proves nothing, unless you test it right.",
+    "questionBridge": "Ronald walks the muddy plots at dawn. One sample proves nothing — test what the evidence can bear.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "number_properties": {
     "protagonist": "Srinivasa Ramanujan",
     "settingLine": "Madras, the port office, 1913",
-    "questionBridge": "Srinivasa fills another notebook page after his shift. The numbers, he says, confide in him.",
+    "questionBridge": "Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "measurement_units": {
     "protagonist": "Antoine Lavoisier",
     "settingLine": "Paris, the Revolution, 1793",
-    "questionBridge": "Antoine weighs everything twice, even now. The world needs one measure it can trust.",
+    "questionBridge": "Antoine weighs everything twice. Convert precisely — the measurement must be exact.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "algebraic_manipulation": {
     "protagonist": "Muhammad al-Khwarizmi",
     "settingLine": "Baghdad, House of Wisdom, 820 AD",
-    "questionBridge": "Muhammad calls it al-jabr, the restoring. Move the piece, he says, but keep the balance.",
+    "questionBridge": "Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "representation_translation": {
     "protagonist": "René Descartes",
     "settingLine": "A stove-heated room, France, 1637",
-    "questionBridge": "René watches a fly walk the ceiling and realizes every point can become two numbers.",
+    "questionBridge": "René sees the same truth in a graph, a table, an equation. Translate between them.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "act_strategy": {
     "protagonist": "Maya",
     "settingLine": "A kitchen table, Saturday morning, present day",
-    "questionBridge": "Maya flips her practice test over as the timer starts. Every second is a choice.",
+    "questionBridge": "Maya starts the timer. Every second is a choice — pick your approach and commit.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "coordinate_geometry": {
+    "protagonist": "René Descartes",
+    "settingLine": "Paris, a fever dream, 1637",
+    "questionBridge": "Descartes watches a fly on the ceiling. Two numbers are enough to name any point.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "absolute_value": {
+    "protagonist": "Jean-Robert Argand",
+    "settingLine": "Paris, 1806",
+    "questionBridge": "Argand draws the number line. Distance from zero — direction doesn't matter here.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "integer_operations": {
+    "protagonist": "Brahmagupta",
+    "settingLine": "Ujjain, India, 628 AD",
+    "questionBridge": "Brahmagupta argues that debts are real numbers. Work with what you have.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "polynomial_operations": {
+    "protagonist": "Gerolamo Cardano",
+    "settingLine": "Milan, 1545",
+    "questionBridge": "Cardano combines the terms carefully. Like with like — simplify until it's clean.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "percent_ratio": {
+    "protagonist": "Luca Pacioli",
+    "settingLine": "Venice, 1494",
+    "questionBridge": "Pacioli checks the ledger. Out of every hundred — what portion is this?",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "data_interpretation": {
+    "protagonist": "John Snow",
+    "settingLine": "London, Broad Street, 1854",
+    "questionBridge": "Snow marks each case on the map. The data is telling a story — read it.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "combinatorics": {
+    "protagonist": "Blaise Pascal",
+    "settingLine": "Paris, 1654",
+    "questionBridge": "Pascal writes to Fermat. How many ways can this happen? Count them all.",
     "diceFrame": null,
     "spinnerFrame": null
   }

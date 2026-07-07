@@ -91,6 +91,39 @@
   margin-bottom: 8px;
 }
 
+/* Leaf pagination — notes flip like turning journal pages */
+.leafNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 10px 0 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--ink-faded, #a89c8a);
+}
+
+.leafNavBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-depth, #4a4238);
+  padding: 2px 4px;
+}
+
+.leafNavBtn:disabled { opacity: 0.35; cursor: default; }
+.leafNavBtn:not(:disabled):hover { text-decoration: underline; }
+
+.leafNavCount {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faded, #a89c8a);
+}
+
 .noteEntry {
   border: none;
   border-bottom: 1px solid var(--rule);
@@ -135,6 +168,44 @@
   font-size: 10px;
   color: var(--ink-faded);
   letter-spacing: 0.04em;
+}
+
+.noteTurnHint {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--ink-faded);
+  opacity: 0.7;
+}
+
+.noteDetailLeaf {
+  padding: 4px 2px 8px;
+  min-height: 200px;
+}
+
+.noteDetailBack {
+  border: none;
+  background: transparent;
+  padding: 0 0 12px;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--ink-faded);
+  cursor: pointer;
+}
+
+.noteDetailBack:hover { color: var(--ink-katha); }
+
+.noteDetailTitle {
+  margin: 6px 0 4px;
+  font-family: var(--font-script);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink-katha);
+  line-height: 1.25;
 }
 
 .noteBullets {

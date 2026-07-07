@@ -29,10 +29,26 @@ without a team discussion first.
 
 | File | Owns |
 |------|------|
+| `WORLD_VISION.md` | **THE WHY — read first.** Math as a world: stories, proven questions, tutor support. Three-horizon roadmap. Every feature should move toward this. |
 | `BRAND_BOOK.md` | Voice, copy, student archetype (Maya), emotional framing, what NOT to say |
 | `AGENT_RULEBOOK.md` | Every LLM call contract: input/output schema, fallbacks, latency budgets, model selection, what agents CAN and CANNOT do |
 | `DASHBOARD_NOTEBOOK_SPEC.md` | Field Journal dashboard: paper system, layout, typography, motion, PawHub replacement spec |
+| `FABLE5_VISION.md` | Frontend product/design spec (Product lane): design tokens, cluster colors, area briefs |
 | `CODEX_BRIEF.md` | Implementation briefs for AI coding agents (Codex/Cursor) |
+
+### Shared product conventions (all agents)
+
+- **Naming**: the three student sections are **Notes**, **Solver**, **Map** —
+ everywhere (nav, tabs, panel titles, buttons). Not "Session Notes" / "Problem
+ Solver" / "Knowledge Map" / "GPS" in student-facing copy.
+- **Story-first questions**: practice/chapter questions should live INSIDE the
+ concept's story world (story-module reskin, context frames), never a scene
+ followed by an unrelated textbook ask. The math is frozen; the narrative wraps
+ it. Characters have full backstories but students see only the basics — the
+ world reveals itself as mastery grows (see `WORLD_VISION.md` Horizons).
+- **Modularity**: data clearly labeled and stored in its layer (bank JSONs in
+ `app/src/data/`, ontology in `ml/data/5_level_ontology/`, generated content
+ caches out of git). New pipelines should be rerunnable scripts, not one-offs.
 
 ### Lane ownership — prevents AI agent collisions
 

@@ -10,18 +10,33 @@ import s from './InteractiveWidget.module.css'
 
 // ── Detection ────────────────────────────────────────────────────────────────
 
-type WidgetKind = 'dice' | 'spinner' | 'coin' | 'numberline' | null
+type WidgetKind = 'dice' | 'spinner' | 'coin' | 'numberline' | 'linegraph' | null
 
 interface DiceConfig    { kind: 'dice';       sides: number; count: number }
 interface SpinnerConfig { kind: 'spinner';    sections: number; labels?: string[] }
 interface CoinConfig    { kind: 'coin' }
 interface NumberLineConfig { kind: 'numberline'; min: number; max: number }
+interface LineGraphConfig {
+  kind: 'linegraph'
+  /** y = m·x + c (slope-intercept), or a vertical line x = v. */
+  m: number
+  c: number
+  vertical?: number
+  label: string
+}
 
-type WidgetConfig = DiceConfig | SpinnerConfig | CoinConfig | NumberLineConfig
+type WidgetConfig = DiceConfig | SpinnerConfig | CoinConfig | NumberLineConfig | LineGraphConfig
 
 const PROB_CONCEPTS = new Set([
   'basic_probability', 'probability', 'probability_distributions',
   'counting_combinatorics', 'descriptive_statistics',
+])
+
+/** Concepts where graphing a detected linear equation genuinely helps. */
+const LINE_CONCEPTS = new Set([
+  'linear_equations', 'linear_inequalities', 'systems_of_linear_equations',
+  'coordinate_geometry', 'functions_basics', 'function_notation',
+  'basic_equations', 'representation_translation',
 ])
 
 function parseSpinnerSections(txt: string): number {
@@ -50,7 +65,61 @@ function parseDiceCount(txt: string): number {
   return 1
 }
 
+/**
+ * Parse the first linear equation in a stem into slope-intercept form.
+ * Handles `y = mx + b`, `ax + by = c`, and vertical `x = v`. Unicode minus
+ * signs and LaTeX wrappers are normalised away first. Returns null when the
+ * text has no clean linear equation — the widget must never guess.
+ */
+export function parseLinearEquation(questionText: string): LineGraphConfig | null {
+  const txt = questionText
+    .replace(/[−–—]/g, '-')
+    .replace(/\\\(|\\\)|\\\[|\\\]|\$/g, ' ')
+    .replace(/\s+/g, ' ')
+
+  const num = (s: string | undefined, fallback: number): number => {
+    if (s === undefined || s === '' || s === '+') return fallback
+    if (s === '-') return -fallback
+    const frac = s.match(/^(-?\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/)
+    if (frac) return parseFloat(frac[1]) / parseFloat(frac[2])
+    const v = parseFloat(s)
+    return Number.isFinite(v) ? v : fallback
+  }
+
+  // y = mx + b   (m may be a fraction like 2/3)
+  let m = txt.match(/y\s*=\s*(-?\s*\d*(?:\.\d+)?(?:\s*\/\s*\d+(?:\.\d+)?)?)\s*x\s*(?:([+-])\s*(\d+(?:\.\d+)?))?/)
+  if (m) {
+    const slope = num(m[1].replace(/\s/g, ''), 1)
+    const intercept = m[2] ? (m[2] === '-' ? -1 : 1) * num(m[3], 0) : 0
+    return { kind: 'linegraph', m: slope, c: intercept, label: m[0].trim() }
+  }
+
+  // ax + by = c  →  y = (c - ax)/b
+  m = txt.match(/(-?\d*(?:\.\d+)?)\s*x\s*([+-])\s*(\d*(?:\.\d+)?)\s*y\s*=\s*(-?\d+(?:\.\d+)?)/)
+  if (m) {
+    const a = num(m[1], 1)
+    const b = (m[2] === '-' ? -1 : 1) * num(m[3], 1)
+    const cVal = num(m[4], 0)
+    if (b === 0) return null
+    return { kind: 'linegraph', m: -a / b, c: cVal / b, label: m[0].trim() }
+  }
+
+  // x = v (vertical line) — only when the stem talks about a line/graph
+  m = txt.match(/\bline\b[^.]*\bx\s*=\s*(-?\d+(?:\.\d+)?)/)
+  if (m) {
+    return { kind: 'linegraph', m: 0, c: 0, vertical: num(m[1], 0), label: `x = ${m[1]}` }
+  }
+
+  return null
+}
+
 export function detectWidget(conceptId: string, questionText: string): WidgetConfig | null {
+  // Linear-equation stems get a plotted graph — seeing the line IS the lesson.
+  if (LINE_CONCEPTS.has(conceptId) || /\bslope\b|\by-intercept\b/i.test(questionText)) {
+    const line = parseLinearEquation(questionText)
+    if (line && Math.abs(line.m) <= 25 && Math.abs(line.c) <= 100) return line
+  }
+
   if (!PROB_CONCEPTS.has(conceptId)) return null
 
   const txt = questionText.toLowerCase()
@@ -328,6 +397,62 @@ function CoinFlip({ theme }: { theme: ThemeProps }) {
   )
 }
 
+// ── LineGraph ────────────────────────────────────────────────────────────────
+
+function LineGraphWidget({ m, c, vertical, label, theme }: LineGraphConfig & { theme: ThemeProps }) {
+  // Pick a window that keeps the interesting part of the line visible.
+  const span = vertical !== undefined
+    ? Math.max(6, Math.ceil(Math.abs(vertical)) + 2)
+    : Math.max(6, Math.min(12, Math.ceil(Math.abs(c)) + 3))
+  const size = 230
+  const pad = 14
+  const scale = (size - 2 * pad) / (2 * span)
+  const toX = (x: number) => size / 2 + x * scale
+  const toY = (y: number) => size / 2 - y * scale
+
+  // Endpoints clipped to the window
+  let x1: number, y1: number, x2: number, y2: number
+  if (vertical !== undefined) {
+    x1 = x2 = vertical; y1 = -span; y2 = span
+  } else {
+    x1 = -span; y1 = m * -span + c
+    x2 = span;  y2 = m * span + c
+  }
+
+  const gridLines: number[] = []
+  const step = span > 8 ? 4 : 2
+  for (let v = -span + (span % step); v <= span; v += step) if (v !== 0) gridLines.push(v)
+
+  return (
+    <div className={s.widget}>
+      <div className={s.widgetLabel} style={{ color: theme.dim }}>
+        the line, drawn — <span style={{ fontFamily: 'IBM Plex Mono, monospace' }}>{label}</span>
+      </div>
+      <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} role="img"
+        aria-label={`Graph of ${label}`} style={{ maxWidth: '100%' }}>
+        {gridLines.map(v => (
+          <g key={v}>
+            <line x1={toX(v)} y1={pad} x2={toX(v)} y2={size - pad} stroke={theme.dim} strokeOpacity="0.16" strokeWidth="1" />
+            <line x1={pad} y1={toY(v)} x2={size - pad} y2={toY(v)} stroke={theme.dim} strokeOpacity="0.16" strokeWidth="1" />
+            <text x={toX(v)} y={toY(0) + 12} fontSize="8" fill={theme.dim} textAnchor="middle">{v}</text>
+            <text x={toX(0) - 5} y={toY(v) + 3} fontSize="8" fill={theme.dim} textAnchor="end">{v}</text>
+          </g>
+        ))}
+        {/* axes */}
+        <line x1={pad} y1={toY(0)} x2={size - pad} y2={toY(0)} stroke={theme.ink} strokeOpacity="0.55" strokeWidth="1.2" />
+        <line x1={toX(0)} y1={pad} x2={toX(0)} y2={size - pad} stroke={theme.ink} strokeOpacity="0.55" strokeWidth="1.2" />
+        <text x={size - pad - 2} y={toY(0) - 4} fontSize="9" fill={theme.dim} textAnchor="end">x</text>
+        <text x={toX(0) + 5} y={pad + 8} fontSize="9" fill={theme.dim}>y</text>
+        {/* the line — no slope/intercept callouts: those are often the answer */}
+        <line
+          x1={toX(x1)} y1={toY(y1)} x2={toX(x2)} y2={toY(y2)}
+          stroke={theme.accent} strokeWidth="2.4" strokeLinecap="round"
+        />
+      </svg>
+    </div>
+  )
+}
+
 // ── Public component ─────────────────────────────────────────────────────────
 
 interface Props {
@@ -342,9 +467,10 @@ export default function InteractiveWidget({ conceptId, questionText, theme }: Pr
 
   return (
     <div className={s.widgetWrap}>
-      {config.kind === 'dice'    && <DiceRoller    {...config} theme={theme} />}
-      {config.kind === 'spinner' && <SpinnerWidget {...config} theme={theme} />}
-      {config.kind === 'coin'    && <CoinFlip theme={theme} />}
+      {config.kind === 'dice'      && <DiceRoller     {...config} theme={theme} />}
+      {config.kind === 'spinner'   && <SpinnerWidget  {...config} theme={theme} />}
+      {config.kind === 'coin'      && <CoinFlip theme={theme} />}
+      {config.kind === 'linegraph' && <LineGraphWidget {...config} theme={theme} />}
     </div>
   )
 }
