@@ -2,7 +2,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import contextFramesRaw from '../data/questionContextFrames.json'
-import { getQuestions, questionCount, questionFormat } from '../lib/questionBank'
+import { getQuestions, questionFormat } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import { useUser } from '../App'
 import BookmarkButton from '../components/BookmarkButton'
@@ -15,6 +15,9 @@ import type { ScratchStrokeData } from '../types'
 import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
+import BookShell from '../components/book/BookShell'
+import BookPage from '../components/book/BookPage'
+import PageFlipTransition from '../components/book/PageFlipTransition'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -170,26 +173,50 @@ const GLYPH: Record<Cluster, React.ReactNode> = {
   ),
 }
 
-// ── Page spec ────────────────────────────────────────────────────────────────
+// ── Spread spec — left + right pages flip together like the dashboard book ──
 
-type PageSpec =
+type SpreadSide =
   | { kind: 'cover' }
-  | { kind: 'story'; paras: string[]; isFirst: boolean; pageNum: number }
+  | { kind: 'story'; paras: string[]; isFirst?: boolean }
   | { kind: 'question'; qIdx: number }
+  | { kind: 'work'; qIdx: number }
 
-function buildSpecs(text: string, qCount: number): PageSpec[] {
+type Spread = { left: SpreadSide; right: SpreadSide }
+
+function buildSpreads(text: string, qCount: number): Spread[] {
   const paras = text.split('\n').map(p => p.trim()).filter(p => p.length > 15)
-  const specs: PageSpec[] = [{ kind: 'cover' }]
-  let storyPage = 0
-  for (let i = 0; i < paras.length; i += 2) {
-    specs.push({ kind: 'story', paras: paras.slice(i, i + 2), isFirst: i === 0, pageNum: ++storyPage })
+  const spreads: Spread[] = []
+
+  // Opening spread: cover (left) + first story beat (right)
+  spreads.push({
+    left: { kind: 'cover' },
+    right: paras[0]
+      ? { kind: 'story', paras: [paras[0]], isFirst: true }
+      : { kind: 'story', paras: ['Your chapter opens here.'], isFirst: true },
+  })
+
+  // One short paragraph per page — story continues across spreads
+  for (let i = 1; i < paras.length; i += 2) {
+    spreads.push({
+      left: { kind: 'story', paras: [paras[i]] },
+      right: paras[i + 1]
+        ? { kind: 'story', paras: [paras[i + 1]] }
+        : { kind: 'story', paras: ['The scene holds. Turn the page when you are ready.'] },
+    })
   }
-  for (let i = 0; i < qCount; i++) specs.push({ kind: 'question', qIdx: i })
-  return specs
+
+  for (let q = 0; q < qCount; q++) {
+    spreads.push({
+      left: { kind: 'question', qIdx: q },
+      right: { kind: 'work', qIdx: q },
+    })
+  }
+
+  return spreads
 }
 
-function chapterNum(conceptId: string): number {
-  return Object.keys(DB).indexOf(conceptId) + 1
+function folioNum(spreadIdx: number, side: 'left' | 'right'): number {
+  return spreadIdx * 2 + (side === 'left' ? 1 : 2)
 }
 
 // ── Choice text formatter — clean up "33.333 ... %" etc. ─────────────────────
@@ -303,7 +330,6 @@ export default function ConceptChapterPage() {
   const cluster = CLUSTER_MAP[conceptId] ?? 'algebra'
   const theme = CLUSTER_THEME[cluster]
   const glyph = GLYPH[cluster]
-  const ch = chapterNum(conceptId)
 
   const questions = useMemo(() => {
     if (!conceptId) return []
@@ -312,27 +338,31 @@ export default function ConceptChapterPage() {
     return qs.filter(q => { if (seen.has(q.question)) return false; seen.add(q.question); return true }).slice(0, 4)
   }, [conceptId])
 
-  const totalQs = questionCount(conceptId, 1) + questionCount(conceptId, 2) + questionCount(conceptId, 3)
-  const specs = useMemo(() => buildSpecs(cs.story, Math.min(questions.length, 4)), [cs.story, questions.length])
+  const spreads = useMemo(
+    () => buildSpreads(cs.story, Math.min(questions.length, 4)),
+    [cs.story, questions.length],
+  )
 
   // Story is shown once per concept — return visits skip straight to the questions.
   const storySeenKey = `mc-story-seen-${resolveId(conceptId)}`
   const [hasSeenStory] = useState(() => typeof window !== 'undefined' && !!localStorage.getItem(storySeenKey))
 
-  // Start at the first question page on return visits
-  const firstQuestionIdx = useMemo(
-    () => specs.findIndex(p => p.kind === 'question'),
-    [specs]
+  const firstQuestionSpread = useMemo(
+    () => spreads.findIndex(sp => sp.left.kind === 'question'),
+    [spreads],
   )
-  const [pageIdx, setPageIdx] = useState(() => hasSeenStory && firstQuestionIdx > 0 ? firstQuestionIdx : 0)
+  const [spreadIdx, setSpreadIdx] = useState(() => (
+    hasSeenStory && firstQuestionSpread > 0 ? firstQuestionSpread : 0
+  ))
+  const [flipping, setFlipping] = useState(false)
 
-  // Mark the story as seen once the student reaches any question page.
+  // Mark the story as seen once the student reaches any question spread.
   useEffect(() => {
-    const cur = specs[pageIdx]
-    if (cur?.kind === 'question' && !localStorage.getItem(storySeenKey)) {
+    const sp = spreads[spreadIdx]
+    if (sp?.left.kind === 'question' && !localStorage.getItem(storySeenKey)) {
       localStorage.setItem(storySeenKey, '1')
     }
-  }, [pageIdx, specs, storySeenKey])
+  }, [spreadIdx, spreads, storySeenKey])
   const [dir, setDir] = useState<'f' | 'b'>('f')
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
@@ -365,24 +395,28 @@ export default function ConceptChapterPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canonicalId, questions])
 
-  // Show write nudge after 8s on a question page if notes are still empty
-  const currentSpec = specs[pageIdx]
+  // Show write nudge after 8s on a question spread if notes are still empty
+  const currentSpread = spreads[spreadIdx]
   useEffect(() => {
     setShowWriteNudge(false)
-    if (currentSpec?.kind !== 'question') return
-    const { qIdx } = currentSpec as { kind: 'question'; qIdx: number }
+    if (currentSpread?.left.kind !== 'question') return
+    const qIdx = currentSpread.left.qIdx
     if (notes[qIdx]) return
     const t = setTimeout(() => setShowWriteNudge(true), 8000)
     return () => clearTimeout(t)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageIdx])
+  }, [spreadIdx])
 
   useEffect(() => {
     if (!user?.uid) return
     void loadDashboardPersonalization(user.uid).then(p => setBookmarkedQuestions(p.bookmarkedQuestions))
   }, [user?.uid])
 
-  const spec = specs[pageIdx]
+  const spec = currentSpread?.left.kind === 'question'
+    ? { kind: 'question' as const, qIdx: currentSpread.left.qIdx }
+    : currentSpread?.right.kind === 'question'
+      ? { kind: 'question' as const, qIdx: currentSpread.right.qIdx }
+      : { kind: 'other' as const, qIdx: -1 }
 
   useEffect(() => {
     if (!user?.uid || spec.kind !== 'question') return
@@ -434,24 +468,28 @@ export default function ConceptChapterPage() {
       })
     }, 1200)
     return () => window.clearTimeout(timer)
-  }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, pageIdx])
+  }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, spreadIdx])
 
   const goBack = () => {
     if (fromDashboard) navigate('/dashboard')
     else navigate(-1)
   }
 
-  const goTo = (i: number, d: 'f' | 'b') => {
+  const goToSpread = (i: number, d: 'f' | 'b') => {
     if (i < 0) {
       goBack()
       return
     }
-    if (i >= specs.length) {
+    if (i >= spreads.length) {
       navigate('/dashboard', { replace: true })
       return
     }
     setDir(d)
-    setPageIdx(i)
+    setFlipping(true)
+    window.setTimeout(() => {
+      setSpreadIdx(i)
+      setFlipping(false)
+    }, 320)
   }
 
   // Touch swipe — flip pages like a real book on iPad. Ignores gestures that
@@ -473,12 +511,12 @@ export default function ConceptChapterPage() {
     const dx = e.changedTouches[0].clientX - start.x
     const dy = e.changedTouches[0].clientY - start.y
     if (Math.abs(dx) < 64 || Math.abs(dx) < Math.abs(dy) * 2) return
-    if (dx < 0) goTo(pageIdx + 1, 'f')   // swipe left → next page
-    else if (pageIdx > 0) goTo(pageIdx - 1, 'b') // swipe right → previous
+    if (dx < 0) goToSpread(spreadIdx + 1, 'f')
+    else if (spreadIdx > 0) goToSpread(spreadIdx - 1, 'b')
   }
 
-  const isLast = pageIdx === specs.length - 1
-  const storyPageCount = specs.filter(p => p.kind === 'story').length
+  const isLast = spreadIdx === spreads.length - 1
+  const qSpreadCount = spreads.filter(sp => sp.left.kind === 'question').length
 
   const pingContext = useMemo(() => {
     const base = { conceptName: cs.conceptName }
@@ -491,9 +529,246 @@ export default function ConceptChapterPage() {
     }
   }, [spec, questions, cs.conceptName])
 
+  const spread = spreads[spreadIdx]
+
+  function renderStory(side: Extract<SpreadSide, { kind: 'story' }>) {
+    const frame = getFrame(conceptId)
+    return (
+      <div className={s.storyLayout}>
+        {side.isFirst && frame && (
+          <div className={s.sceneStamp}>
+            <span className={s.sceneProtagonist} style={{ color: theme.accent }}>{frame.protagonist}</span>
+            <span className={s.sceneDivider} style={{ color: theme.dim }}>·</span>
+            <span className={s.sceneSetting} style={{ color: theme.dim }}>{frame.settingLine}</span>
+          </div>
+        )}
+        <div className={s.storyBody}>
+          {side.paras.map((p, i) => (
+            <p key={i} className={`${s.storyPara} ${side.isFirst && i === 0 ? s.firstPara : ''}`}>
+              {side.isFirst && i === 0 && p.length > 0 && (
+                <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
+              )}
+              {side.isFirst && i === 0 ? p.slice(1) : p}
+            </p>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  function renderQuestionPanel(qIdx: number) {
+    const q = questions[qIdx]
+    if (!q) return null
+    const qNum = qIdx + 1
+    const chosen = answers[qIdx] ?? null
+    const isDone = submitted[qIdx] ?? false
+    const frame = getFrame(conceptId)
+    const storyItem = storyMod?.[q.id]
+    const useStoryStem = Boolean(storyItem) && (
+      storyAppliedRef.current.has(q.id) || (chosen === null && !isDone)
+    )
+    if (useStoryStem) storyAppliedRef.current.add(q.id)
+    const stemText = useStoryStem ? storyItem!.storyStem : q.question
+    const socraticHints = useStoryStem ? (storyItem!.socratic ?? []) : []
+    const allHints = [...socraticHints, ...(q.hints ?? [])]
+    const txt = q.question.toLowerCase()
+    const bridge = frame && !useStoryStem
+      ? (txt.includes('die') || txt.includes('dice') || txt.includes('roll')) && frame.diceFrame
+        ? frame.diceFrame
+        : (txt.includes('spinner') || txt.includes('spin')) && frame.spinnerFrame
+          ? frame.spinnerFrame
+          : frame.questionBridge
+      : null
+
+    return (
+      <div className={s.qPanel}>
+        <header className={s.qHead}>
+          <span className={s.qKicker}>question {qNum} of {qSpreadCount}</span>
+          <BookmarkButton
+            active={bookmarkedQuestions.includes(q.id)}
+            onToggle={() => {
+              if (!user?.uid) return
+              void toggleBookmark(user.uid, q.id, bookmarkedQuestions).then(setBookmarkedQuestions)
+            }}
+          />
+        </header>
+        {frame && bridge && (
+          <div className={s.storyBridge}>
+            <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
+          </div>
+        )}
+        <QuestionContent text={stemText} ink={theme.ink} accent={theme.accent} />
+        <InteractiveWidget
+          conceptId={conceptId}
+          questionText={q.question}
+          theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
+        />
+        <div className={s.qChoices}>
+          {q.choices.slice(0, 4).map((c, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`${s.choice} ${chosen === i ? s.choiceChosen : ''} ${isDone ? s.choiceDone : ''}`}
+              style={chosen === i ? {
+                borderColor: theme.accent,
+                background: theme.accent + '10',
+                '--choice-bg': theme.accent + '10',
+              } as React.CSSProperties : undefined}
+              onClick={() => !isDone && setAnswers(a => ({ ...a, [qIdx]: i }))}
+              disabled={isDone}
+            >
+              <span className={s.choiceLetter} style={{ color: theme.accent }}>
+                {String.fromCharCode(65 + i)}
+              </span>
+              <span className={s.choiceText}><MathText text={fmtChoice(c)} /></span>
+            </button>
+          ))}
+        </div>
+        {!isDone && allHints.length > 0 && (
+          <div className={s.hintStrip}>
+            {(hintsShownPerQ[qIdx] ?? 0) < allHints.length && (
+              <button
+                type="button"
+                className={s.hintBtn}
+                style={{ borderColor: theme.accent + '55', color: theme.accent }}
+                onClick={() => setHintsShownPerQ(h => ({ ...h, [qIdx]: (h[qIdx] ?? 0) + 1 }))}
+              >
+                need a hint?
+              </button>
+            )}
+            {allHints.slice(0, hintsShownPerQ[qIdx] ?? 0).map((hint, hi) => (
+              <div key={hi} className={s.hintBubble} style={{ borderLeftColor: theme.accent + '66', color: theme.dim }}>
+                <MathText text={hint} />
+              </div>
+            ))}
+          </div>
+        )}
+        {isDone && chosen !== null && chosen !== q.correctIndex && q.misconception_label && (
+          <div className={s.misconception}>
+            <span className={s.misconceptionLabel}>common slip</span>
+            {q.misconception_label}
+          </div>
+        )}
+        {!isDone ? (
+          <button
+            type="button"
+            className={s.submitBtn}
+            style={{ background: theme.ink, color: theme.paper }}
+            disabled={chosen === null}
+            onClick={() => setSubmitted(d => ({ ...d, [qIdx]: true }))}
+          >
+            {chosen === null ? 'choose an answer' : 'lock it in →'}
+          </button>
+        ) : (
+          <p className={s.qDoneNote} style={{ color: theme.dim }}>
+            {chosen === q.correctIndex ? 'noted. keep going.' : 'noted. check your work.'}
+          </p>
+        )}
+      </div>
+    )
+  }
+
+  function renderWorkPanel(qIdx: number) {
+    return (
+      <div className={s.notepad}>
+        <div className={s.notepadHeader}>
+          <span className={s.notepadLabel} style={{ color: theme.dim }}>your work</span>
+          {notes[qIdx] && (
+            <button
+              type="button"
+              className={s.notepadClear}
+              onClick={() => {
+                setNotes(n => ({ ...n, [qIdx]: '' }))
+                setScratchStrokes(st => {
+                  const next = { ...st }
+                  delete next[qIdx]
+                  return next
+                })
+                setScratchInk(st => {
+                  const next = { ...st }
+                  delete next[qIdx]
+                  return next
+                })
+                setDebugOutlines(false)
+                setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
+              }}
+            >
+              clear
+            </button>
+          )}
+        </div>
+        <div className={s.notepadInner} style={{ '--line-color': theme.lineBg } as React.CSSProperties}>
+          <div className={s.notepadLines} aria-hidden />
+          <ScratchPad
+            key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
+            paperMode
+            height={420}
+            lineOverlays={(() => {
+              const lines = scratchInk[qIdx]?.workLines ?? []
+              const overlays: LineOverlay[] = lines
+                .filter(line => line.verdict === 'wrong')
+                .map(line => ({ bbox: line.bbox, kind: 'suspect' as const }))
+              if (debugOutlines) {
+                overlays.push(...lines.map(line => ({ bbox: line.bbox, kind: 'debug' as const })))
+              }
+              return overlays.length ? overlays : undefined
+            })()}
+            onChange={(_canvas, strokeData) => {
+              setScratchStrokes(st => ({ ...st, [qIdx]: strokeData }))
+              setNotes(n => ({
+                ...n,
+                [qIdx]: strokeData.strokes.length
+                  ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
+                  : '',
+              }))
+            }}
+          />
+        </div>
+        <ScratchTranscriptionPane
+          imageDataUrl={notes[qIdx] ?? ''}
+          strokeData={scratchStrokes[qIdx] ?? null}
+          resetKey={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
+          className={s.transcriptionPane}
+          onChange={state => {
+            if (state) setScratchInk(st => ({ ...st, [qIdx]: state }))
+            else setScratchInk(st => {
+              const next = { ...st }
+              delete next[qIdx]
+              return next
+            })
+          }}
+          onDebugChange={setDebugOutlines}
+        />
+      </div>
+    )
+  }
+
+  function renderSpreadSide(side: SpreadSide, runningHead?: string) {
+    if (side.kind === 'cover') {
+      return (
+        <div className={s.coverLayout}>
+          <div className={s.coverGlyph} style={{ color: theme.accent }}>{glyph}</div>
+          <h1 className={s.coverTitle} style={{ color: theme.ink }}>{cs.conceptName}</h1>
+        </div>
+      )
+    }
+    if (side.kind === 'story') return renderStory(side)
+    if (side.kind === 'question') return renderQuestionPanel(side.qIdx)
+    if (side.kind === 'work') return renderWorkPanel(side.qIdx)
+    return null
+  }
+
+  function runningHeadFor(side: SpreadSide): string | undefined {
+    if (side.kind === 'cover') return undefined
+    if (side.kind === 'story') return 'the story'
+    if (side.kind === 'question') return cs.conceptName
+    if (side.kind === 'work') return 'your work'
+    return undefined
+  }
+
   return (
     <div
-      className={s.desk}
+      className={s.chapterDesk}
       style={{
         '--theme-bg': theme.bg,
         '--theme-paper': theme.paper,
@@ -501,346 +776,88 @@ export default function ConceptChapterPage() {
         '--theme-accent': theme.accent,
         '--theme-dim': theme.dim,
       } as React.CSSProperties}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
-      {/* ── Page ── */}
-      <div
-        key={pageIdx}
-        className={`${s.page} ${dir === 'f' ? s.enterRight : s.enterLeft} ${fromDashboard && pageIdx === 0 ? s.enterFromGutter : ''}`}
-        style={{ background: theme.paper }}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
-        <div className={s.grain} aria-hidden />
-
-        {/* In-page corner controls — merged into the paper, not floating on the desk */}
-        <button className={s.backBtn} onClick={goBack} aria-label="Back">← back</button>
-        <div className={s.pageTools}>
-          <PingTutor context={pingContext} compact />
-          <div className={s.calcWrap}>
-            <button
-              type="button"
-              className={s.miniCalc}
-              onClick={() => setShowCalc(c => !c)}
-              aria-label="Calculator"
-              aria-expanded={showCalc}
-              title="Calculator"
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="4" y="2" width="16" height="20" rx="2" />
-                <line x1="8" x2="16" y1="6" y2="6" />
-                <line x1="16" x2="16" y1="14" y2="18" />
-                <path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" />
-                <path d="M12 14h.01" /><path d="M8 14h.01" />
-                <path d="M12 18h.01" /><path d="M8 18h.01" />
-              </svg>
-            </button>
-            {showCalc && <div className={s.calcDrop}><Calculator /></div>}
-          </div>
-        </div>
-
-        {/* ── COVER ── */}
-        {spec.kind === 'cover' && (
-          <div className={s.coverLayout}>
-            <div className={s.coverTop}>
-              <span className={s.coverChip} style={{ color: theme.chip, borderColor: theme.chip + '33', background: theme.chip + '12' }}>
-                {cluster}
-              </span>
-              <span className={s.coverChNum}>Ch. {ch}</span>
-            </div>
-            <div className={s.coverGlyph} style={{ color: theme.accent }}>{glyph}</div>
-            <h1 className={s.coverTitle} style={{ color: theme.ink }}>{cs.conceptName}</h1>
-            <p className={s.coverSub} style={{ color: theme.dim }}>{totalQs} questions · your story starts here</p>
-            <button className={s.coverCta} style={{ background: theme.ink, color: theme.bg }} onClick={() => goTo(1, 'f')}>
-              Open chapter →
-            </button>
-          </div>
+      <BookShell
+        wordmark={cs.conceptName}
+        chromeLeft={(
+          <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
         )}
-
-        {/* ── STORY ── */}
-        {spec.kind === 'story' && (() => {
-          const frame = getFrame(conceptId)
-          return (
-            <div className={s.storyLayout}>
-              <header className={s.storyHead}>
-                <span className={s.storyRunLabel}>the story</span>
-                <span className={s.storyRunPage}>{spec.pageNum} / {storyPageCount}</span>
-              </header>
-
-              {/* Scene stamp — protagonist + setting on the first story page */}
-              {spec.isFirst && frame && (
-                <div className={s.sceneStamp}>
-                  <span className={s.sceneProtagonist} style={{ color: theme.accent }}>
-                    {frame.protagonist}
-                  </span>
-                  <span className={s.sceneDivider} style={{ color: theme.dim }}>·</span>
-                  <span className={s.sceneSetting} style={{ color: theme.dim }}>
-                    {frame.settingLine}
-                  </span>
-                </div>
-              )}
-
-              <div className={s.storyBody}>
-                {spec.paras.map((p, i) => (
-                  <p key={i} className={`${s.storyPara} ${spec.isFirst && i === 0 ? s.firstPara : ''}`}>
-                    {spec.isFirst && i === 0 && p.length > 0 && (
-                      <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
-                    )}
-                    {spec.isFirst && i === 0 ? p.slice(1) : p}
-                  </p>
-                ))}
-              </div>
-              {spec.pageNum === storyPageCount && (
-                <div className={s.storyFoot}>
-                  <span className={s.storyFootLabel} style={{ color: theme.dim }}>
-                    {cs.conceptName} · {totalQs} questions waiting
-                  </span>
-                </div>
-              )}
-            </div>
-          )
-        })()}
-
-        {/* ── QUESTION ── */}
-        {spec.kind === 'question' && (() => {
-          const q = questions[spec.qIdx]
-          if (!q) return null
-          const qNum = spec.qIdx + 1
-          const qTotal = specs.filter(p => p.kind === 'question').length
-          const chosen = answers[spec.qIdx] ?? null
-          const isDone = submitted[spec.qIdx] ?? false
-          const frame = getFrame(conceptId)
-
-          // Story-mode stem: apply only before the student engages the question,
-          // then keep it stable for the rest of the visit.
-          const storyItem = storyMod?.[q.id]
-          const useStoryStem = Boolean(storyItem) && (
-            storyAppliedRef.current.has(q.id) || (chosen === null && !isDone)
-          )
-          if (useStoryStem) storyAppliedRef.current.add(q.id)
-          const stemText = useStoryStem ? storyItem!.storyStem : q.question
-          const socraticHints = useStoryStem ? (storyItem!.socratic ?? []) : []
-          const allHints = [...socraticHints, ...(q.hints ?? [])]
-
-          // Pick the best bridge line for this question — skipped when the
-          // story module already carries the scene (would double-narrate).
-          const txt = q.question.toLowerCase()
-          const bridge = frame && !useStoryStem
-            ? (txt.includes('die') || txt.includes('dice') || txt.includes('roll')) && frame.diceFrame
-              ? frame.diceFrame
-              : (txt.includes('spinner') || txt.includes('spin')) && frame.spinnerFrame
-              ? frame.spinnerFrame
-              : frame.questionBridge
-            : null
-
-          return (
-            <div className={s.qLayout}>
-              {/* Left: question */}
-              <div className={s.qLeft}>
-                {hasSeenStory && pageIdx === firstQuestionIdx && (
-                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: theme.dim, marginBottom: 16 }}>
-                    Ch. {ch} · {cs.conceptName}
-                  </div>
-                )}
-                <header className={s.qHead}>
-                  <span className={s.qKicker}>Question {qNum} of {qTotal}</span>
-                  <BookmarkButton
-                    active={bookmarkedQuestions.includes(q.id)}
-                    onToggle={() => {
-                      if (!user?.uid) return
-                      void toggleBookmark(user.uid, q.id, bookmarkedQuestions)
-                        .then(setBookmarkedQuestions)
-                    }}
-                  />
-                  <span className={s.qChipSmall} style={{ color: theme.chip }}>Ch. {ch}</span>
-                </header>
-
-                {/* Story context bridge (only when no story-module scene) */}
-                {frame && bridge && (
-                  <div className={s.storyBridge}>
-                    <span className={s.storyBridgeSetting} style={{ color: theme.dim }}>{frame.settingLine}</span>
-                    <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
-                  </div>
-                )}
-
-                <QuestionContent text={stemText} ink={theme.ink} accent={theme.accent} />
-
-                {/* Interactive widget (dice / spinner / coin) */}
-                <InteractiveWidget
-                  conceptId={conceptId}
-                  questionText={q.question}
-                  theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
-                />
-
-                <div className={s.qChoices}>
-                  {q.choices.slice(0, 4).map((c, i) => (
-                    <button
-                      key={i}
-                      className={`${s.choice} ${chosen === i ? s.choiceChosen : ''} ${isDone ? s.choiceDone : ''}`}
-                      style={chosen === i ? {
-                        borderColor: theme.accent,
-                        background: theme.accent + '14',
-                        '--choice-bg': theme.accent + '14',
-                      } as React.CSSProperties : undefined}
-                      onClick={() => !isDone && setAnswers(a => ({ ...a, [spec.qIdx]: i }))}
-                      disabled={isDone}
-                    >
-                      <span className={s.choiceLetter} style={{ color: theme.accent }}>
-                        {String.fromCharCode(65 + i)}
-                      </span>
-                      <span className={s.choiceText}><MathText text={fmtChoice(c)} /></span>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Hint strip — Socratic story prompts lead, bank hints backfill */}
-                {!isDone && allHints.length > 0 && (
-                  <div className={s.hintStrip}>
-                    {(hintsShownPerQ[spec.qIdx] ?? 0) < allHints.length && (
-                      <button
-                        className={s.hintBtn}
-                        style={{ borderColor: theme.accent + '55', color: theme.accent }}
-                        onClick={() => setHintsShownPerQ(h => ({ ...h, [spec.qIdx]: (h[spec.qIdx] ?? 0) + 1 }))}
-                      >
-                        💡 {(hintsShownPerQ[spec.qIdx] ?? 0) === 0 ? 'Need a hint?' : 'Another hint'}
-                      </button>
-                    )}
-                    {allHints.slice(0, hintsShownPerQ[spec.qIdx] ?? 0).map((hint, hi) => (
-                      <div key={hi} className={s.hintBubble} style={{ borderLeftColor: theme.accent + '66', color: theme.dim }}>
-                        <MathText text={hint} />
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Misconception callout after wrong answer */}
-                {isDone && chosen !== null && chosen !== q.correctIndex && q.misconception_label && (
-                  <div className={s.misconception}>
-                    <span className={s.misconceptionLabel}>common slip</span>
-                    {q.misconception_label}
-                  </div>
-                )}
-
-                {!isDone ? (
-                  <button
-                    className={s.submitBtn}
-                    style={{ background: theme.ink, color: theme.bg }}
-                    disabled={chosen === null}
-                    onClick={() => setSubmitted(d => ({ ...d, [spec.qIdx]: true }))}
-                  >
-                    {chosen === null ? 'Choose an answer' : 'Lock it in →'}
-                  </button>
-                ) : (
-                  <p className={s.qDoneNote} style={{ color: theme.dim }}>
-                    {chosen === q.correctIndex ? 'Correct. Keep going.' : 'Noted. Review your work.'}
-                  </p>
-                )}
-              </div>
-
-              {/* Right: full-page work area */}
-              <div className={s.notepad}>
-                <div className={s.notepadHeader}>
-                  <span className={s.notepadLabel} style={{ color: theme.dim }}>your work</span>
-                  {notes[spec.qIdx] && (
-                    <button
-                      className={s.notepadClear}
-                      type="button"
-                      onClick={() => {
-                        setNotes(n => ({ ...n, [spec.qIdx]: '' }))
-                        setScratchStrokes(s => {
-                          const next = { ...s }
-                          delete next[spec.qIdx]
-                          return next
-                        })
-                        setScratchInk(s => {
-                          const next = { ...s }
-                          delete next[spec.qIdx]
-                          return next
-                        })
-                        setDebugOutlines(false)
-                        setScratchRev(r => ({ ...r, [spec.qIdx]: (r[spec.qIdx] ?? 0) + 1 }))
-                      }}
-                    >
-                      clear
-                    </button>
-                  )}
-                </div>
-                <div className={s.notepadInner} style={{ '--line-color': theme.lineBg } as React.CSSProperties}>
-                  <div className={s.notepadLines} aria-hidden />
-                  <ScratchPad
-                    key={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
-                    paperMode
-                    height={480}
-                    lineOverlays={(() => {
-                      const lines = scratchInk[spec.qIdx]?.workLines ?? []
-                      const overlays: LineOverlay[] = lines
-                        .filter(line => line.verdict === 'wrong')
-                        .map(line => ({ bbox: line.bbox, kind: 'suspect' as const }))
-                      if (debugOutlines) {
-                        overlays.push(...lines.map(line => ({ bbox: line.bbox, kind: 'debug' as const })))
-                      }
-                      return overlays.length ? overlays : undefined
-                    })()}
-                    onChange={(_canvas, strokeData) => {
-                      setScratchStrokes(s => ({ ...s, [spec.qIdx]: strokeData }))
-                      setNotes(n => ({
-                        ...n,
-                        [spec.qIdx]: strokeData.strokes.length
-                          ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
-                          : '',
-                      }))
-                    }}
-                  />
-                </div>
-                <ScratchTranscriptionPane
-                  imageDataUrl={notes[spec.qIdx] ?? ''}
-                  strokeData={scratchStrokes[spec.qIdx] ?? null}
-                  resetKey={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
-                  className={s.transcriptionPane}
-                  onChange={state => {
-                    if (state) setScratchInk(s => ({ ...s, [spec.qIdx]: state }))
-                    else setScratchInk(s => {
-                      const next = { ...s }
-                      delete next[spec.qIdx]
-                      return next
-                    })
-                  }}
-                  onDebugChange={setDebugOutlines}
-                />
-              </div>
-            </div>
-          )
-        })()}
-
-        {/* ── NAV ── */}
-        {spec.kind !== 'cover' && (
-          <nav className={s.nav}>
-            <button className={s.navArrow} onClick={() => goTo(pageIdx - 1, 'b')} aria-label="Previous">←</button>
-            <div className={s.navDots}>
-              {specs.slice(1).map((_, i) => {
-                const idx = i + 1
-                const isActive = idx === pageIdx
-                const isPast = idx < pageIdx
-                return (
-                  <button
-                    key={i}
-                    className={`${s.dot} ${isActive ? s.dotActive : ''} ${isPast ? s.dotPast : ''}`}
-                    style={isActive ? { background: theme.accent } : isPast ? { background: theme.accent + '55' } : undefined}
-                    onClick={() => goTo(idx, idx > pageIdx ? 'f' : 'b')}
-                    aria-label={`Page ${idx}`}
-                  />
-                )
-              })}
-            </div>
-            {isLast ? (
-              <button className={s.navPrimary} style={{ background: theme.ink, color: theme.bg }} onClick={() => navigate('/practice', { state: { conceptId } })}>
-                Practice →
+        chromeRight={(
+          <>
+            <PingTutor context={pingContext} compact />
+            <div className={s.calcWrap}>
+              <button
+                type="button"
+                className={s.miniCalc}
+                onClick={() => setShowCalc(c => !c)}
+                aria-label="Calculator"
+                aria-expanded={showCalc}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <rect x="4" y="2" width="16" height="20" rx="2" />
+                  <line x1="8" x2="16" y1="6" y2="6" />
+                </svg>
               </button>
-            ) : (
-              <button className={s.navArrow} onClick={() => goTo(pageIdx + 1, 'f')} aria-label="Next">→</button>
-            )}
-          </nav>
+              {showCalc && <div className={s.calcDrop}><Calculator /></div>}
+            </div>
+          </>
         )}
-      </div>
+        left={(
+          <BookPage
+            side="left"
+            flipping={flipping && dir === 'f'}
+            runningHead={runningHeadFor(spread.left)}
+            folio={<span>page {folioNum(spreadIdx, 'left')}</span>}
+          >
+            <PageFlipTransition viewKey={`${spreadIdx}-L`} direction={dir === 'f' ? 'forward' : 'back'}>
+              {renderSpreadSide(spread.left)}
+            </PageFlipTransition>
+          </BookPage>
+        )}
+        right={(
+          <BookPage
+            side="right"
+            ribbon={spread.left.kind === 'cover'}
+            flipping={flipping && dir === 'f'}
+            runningHead={runningHeadFor(spread.right)}
+            folio={<span>page {folioNum(spreadIdx, 'right')}</span>}
+          >
+            <PageFlipTransition viewKey={`${spreadIdx}-R`} direction={dir === 'f' ? 'forward' : 'back'}>
+              {renderSpreadSide(spread.right)}
+            </PageFlipTransition>
+          </BookPage>
+        )}
+      />
+
+      <nav className={s.spreadNav}>
+        <button type="button" className={s.navArrow} onClick={() => goToSpread(spreadIdx - 1, 'b')} aria-label="Previous spread">←</button>
+        <div className={s.navDots}>
+          {spreads.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`${s.dot} ${i === spreadIdx ? s.dotActive : ''} ${i < spreadIdx ? s.dotPast : ''}`}
+              style={i === spreadIdx ? { background: theme.accent } : i < spreadIdx ? { background: theme.accent + '55' } : undefined}
+              onClick={() => goToSpread(i, i > spreadIdx ? 'f' : 'b')}
+              aria-label={`Spread ${i + 1}`}
+            />
+          ))}
+        </div>
+        {isLast ? (
+          <button
+            type="button"
+            className={s.navPrimary}
+            style={{ background: theme.ink, color: theme.paper }}
+            onClick={() => navigate('/practice', { state: { conceptId } })}
+          >
+            practice →
+          </button>
+        ) : (
+          <button type="button" className={s.navArrow} onClick={() => goToSpread(spreadIdx + 1, 'f')} aria-label="Next spread">→</button>
+        )}
+      </nav>
     </div>
   )
 }

@@ -70,6 +70,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 0 16px;
+  gap: 16px;
+}
+
+.chromeLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
 }
 
 .wordmark {

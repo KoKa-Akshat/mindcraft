@@ -11,7 +11,6 @@ import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLoca
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import { pawHubDisplayText, pawHubLearnSub, type CurriculumTrack } from '../lib/curriculumTrack'
-import { isTestProfileEmail } from '../lib/testProfile'
 import type { Confidence } from '../lib/bridgePractice'
 import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
@@ -311,18 +310,11 @@ export default function Dashboard() {
         persistDiagnosticDoneLocal()
         return
       }
-      const forceFreshDiagnostic = isTestProfileEmail(user.email)
-      if (forceFreshDiagnostic) {
-        try { localStorage.removeItem('mc-diag-done') } catch { /* ignore */ }
-        if (cancelled) return
-        navigate('/onboard', { replace: true })
-        return
-      }
       let done = await isDiagnosticComplete(user.uid)
       // Only trust localStorage shortcut if Firestore already has some data for
       // this student — prevents a stale 'mc-diag-done' from bypassing the gap
       // scan on a fresh or reset account.
-      if (!forceFreshDiagnostic && !done && localStorage.getItem('mc-diag-done') === '1') {
+      if (!done && localStorage.getItem('mc-diag-done') === '1') {
         const userSnap = await getDoc(doc(db, 'users', user.uid))
         const hasPriorData = !!(userSnap.data()?.practiceCount || userSnap.data()?.lastActive)
         if (hasPriorData) {

@@ -33,6 +33,68 @@
 .page {
   width: min(620px, 94vw);
 }
+.page:has(.probeCard) {
+  width: min(980px, 96vw);
+}
+
+.journalPage {
+  position: relative;
+}
+
+.goalTextarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  background: #fbf8f3;
+  border: 1.5px solid #e6ddd0;
+  border-radius: 2px;
+  font: 400 14px/22px "Source Serif 4", serif;
+  color: #1c1a17;
+  resize: vertical;
+  min-height: 96px;
+  box-sizing: border-box;
+}
+.goalTextarea::placeholder {
+  color: #9a9288;
+}
+.goalTextarea:focus {
+  outline: none;
+  border-color: #1d3a8a;
+}
+
+.probeBook {
+  width: 100%;
+  padding: 0 0 24px;
+}
+
+.probePanel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 12px;
+}
+
+.probeStoryLine {
+  font: 400 italic 14px/22px "Source Serif 4", Georgia, serif;
+  color: #232f4e;
+  margin: 0;
+  max-width: 42ch;
+}
+
+.probeScratch {
+  flex: 1;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.questionText {
+  font: 400 16px/26px "Inter", sans-serif;
+  color: #1c1a17;
+  margin: 0;
+}
 
 .card {
   background: #f7f3ee;
@@ -212,23 +274,23 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
-  background: #fbf8f3;
-  border: 1.5px solid #e6ddd0;
-  border-radius: 2px;
+  padding: 10px 6px 10px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(29, 58, 138, 0.12);
+  border-radius: 0;
   cursor: pointer;
   text-align: left;
   font: 400 14px/22px "Inter", sans-serif;
   color: #1c1a17;
-  transition: border-color 140ms, background 140ms;
+  transition: background 140ms, border-color 140ms;
 }
 .choice:hover:not(:disabled) {
-  border-color: #1d3a8a;
-  background: #f7f3ee;
+  background: rgba(29, 58, 138, 0.04);
 }
 .choiceSelected {
-  background: rgba(29,58,138,0.08);
-  border-color: #1d3a8a;
+  background: rgba(29, 58, 138, 0.06);
+  border-bottom-color: #1d3a8a;
 }
 .choiceSubmitted {
   opacity: 0.6;
@@ -314,6 +376,17 @@
 .back:hover { color: #1c1a17; }
 
 /* --- Mobile --- */
+@media (max-width: 760px) {
+  .probeGrid {
+    grid-template-columns: 1fr;
+  }
+  .probeScratch {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid rgba(29,58,138,0.12);
+    padding-top: 16px;
+  }
+}
 @media (max-width: 500px) {
   .goalGrid { grid-template-columns: 1fr; }
   .gradeRow { gap: 6px; }

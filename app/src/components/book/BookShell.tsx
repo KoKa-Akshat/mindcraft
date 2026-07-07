@@ -8,19 +8,23 @@ import s from './Book.module.css'
  * via <BookPage side="left|right">.
  */
 export default function BookShell({
+  chromeLeft,
   chromeRight,
   left,
   right,
   className,
   paper = 'cream',
   font = 'script',
+  wordmark = 'MindCraft',
 }: {
+  chromeLeft?: ReactNode
   chromeRight?: ReactNode
   left: ReactNode
   right: ReactNode
   className?: string
   paper?: 'cream' | 'beige' | 'greyblue' | 'sage' | 'blush'
   font?: 'script' | 'print' | 'mono'
+  wordmark?: ReactNode
 }) {
   return (
     <div
@@ -29,7 +33,12 @@ export default function BookShell({
       data-font={font}
     >
       <div className={s.chrome}>
-        <span className={s.wordmark}>MindCraft</span>
+        <div className={s.chromeLeft}>
+          {chromeLeft}
+          {typeof wordmark === 'string'
+            ? <span className={s.wordmark}>{wordmark}</span>
+            : wordmark}
+        </div>
         <div className={s.chromeRight}>{chromeRight}</div>
       </div>
 

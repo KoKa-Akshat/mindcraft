@@ -12,6 +12,8 @@ import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { isTestProfileEmail, resetStudentProfile } from '../lib/testProfile'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
+import { isDiagnosticComplete } from '../lib/practiceState'
+import { worldUrl } from '../lib/siteUrls'
 import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './Login.module.css'
 
@@ -117,6 +119,13 @@ export default function Login() {
         displayName: auth.currentUser?.displayName ?? '',
         createdAt: new Date().toISOString(),
       }, { merge: true })
+      if (!returnTo) {
+        const done = await isDiagnosticComplete(uid)
+        if (!done) {
+          window.location.href = `${worldUrl()}?entry=1`
+          return
+        }
+      }
       navigate(returnTo ?? '/dashboard', { replace: true })
       return
     }
@@ -129,6 +138,13 @@ export default function Login() {
     } else if (existingRole === 'parent') {
       navigate('/parent', { replace: true })
     } else {
+      if (!returnTo) {
+        const done = await isDiagnosticComplete(uid)
+        if (!done) {
+          window.location.href = `${worldUrl()}?entry=1`
+          return
+        }
+      }
       navigate(returnTo ?? '/dashboard', { replace: true })
     }
   }
