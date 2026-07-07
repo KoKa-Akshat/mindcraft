@@ -33,7 +33,10 @@ import { ChatPromptTemplate } from '@langchain/core/prompts'
 import { JsonOutputParser } from '@langchain/core/output_parsers'
 import { db } from '../lib/firebase'
 
-const ALLOWED_ORIGIN = 'https://mindcraft-93858.web.app'
+const ALLOWED_ORIGINS = new Set([
+  'https://mindcraft-93858.web.app',
+  'http://localhost:5173',
+])
 const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000 // 30 d — bank questions are static
 const CACHE_VERSION = 'v1'
 const MAX_QUESTIONS = 12
@@ -124,7 +127,11 @@ Return ONLY a JSON object keyed by question id — no markdown fences, no commen
 {{"<questionId>": {{"storyStem": "...", "socratic": ["...", "..."], "steps": ["...", "..."], "misconceptionCallout": "..."}}}}`
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN)
+  const origin = String(req.headers.origin ?? '')
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    ALLOWED_ORIGINS.has(origin) ? origin : 'https://mindcraft-93858.web.app',
+  )
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
   if (req.method === 'OPTIONS') return res.status(200).end()

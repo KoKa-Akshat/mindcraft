@@ -9,9 +9,9 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { db } from '../lib/firebase'
-import { setCors } from '../lib/cors'
-import { verifyToken } from '../lib/verifyToken'
+import { db } from '../firebase'
+import { setCors } from '../cors'
+import { verifyToken } from '../verifyToken'
 
 const WEBHOOK_URL = 'https://mindcraft-webhook.vercel.app/api/calendly'
 

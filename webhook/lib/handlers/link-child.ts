@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { db, auth } from '../lib/firebase'
-import { setCors } from '../lib/cors'
+import { db, auth } from '../firebase'
+import { setCors } from '../cors'
 
 const PARENT_EMAIL_MESSAGE =
   'Ask your child to add your email as their parent email in MindCraft, then try again.'

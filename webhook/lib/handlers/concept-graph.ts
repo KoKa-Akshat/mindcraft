@@ -12,8 +12,8 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { db } from '../lib/firebase'
-import { setCors } from '../lib/cors'
+import { db } from '../firebase'
+import { setCors } from '../cors'
 
 // ── Math Ontology (domain prior) ─────────────────────────────────────────────
 // Undirected adjacency list. Each edge = ontology relationship.

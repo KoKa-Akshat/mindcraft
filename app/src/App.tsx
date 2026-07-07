@@ -41,6 +41,7 @@ import JoinClassroom      from './pages/JoinClassroom'
 import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
+import { isTestProfileEmail, resetStudentProfile } from './lib/testProfile'
 
 
 export const UserContext = createContext<User | null>(null)
@@ -109,6 +110,13 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => onAuthStateChanged(auth, setUser), [])
   useEffect(() => {
     if (!user) return
+    // Test profiles start fresh even when Firebase restores a persisted session
+    // (reload / reopened tab), where Login's routeAfterLogin never runs. Once
+    // per tab session — the login-path reset covers explicit sign-ins.
+    if (isTestProfileEmail(user.email) && sessionStorage.getItem('mc-test-reset') !== '1') {
+      sessionStorage.setItem('mc-test-reset', '1')
+      void resetStudentProfile(user.uid)
+    }
     warmML()
     // Only students have a personal KG; tutors/parents read other uids on their dashboards.
     getDoc(doc(db, 'users', user.uid))

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { db, auth } from '../lib/firebase'
-import { setCors } from '../lib/cors'
+import { db, auth } from '../firebase'
+import { setCors } from '../cors'
 
 function adminEmailSet(): Set<string> {
   return new Set(

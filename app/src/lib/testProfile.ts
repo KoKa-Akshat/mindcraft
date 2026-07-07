@@ -41,7 +41,7 @@ export function clearLocalStudentState(uid: string): void {
     const doomed: string[] = []
     for (let i = 0; i < sessionStorage.length; i++) {
       const key = sessionStorage.key(i)
-      if (key?.startsWith('qgen_v2_')) doomed.push(key)
+      if (key?.startsWith('qgen_v2_') || key?.startsWith('storymod_v1_')) doomed.push(key)
     }
     doomed.forEach(k => sessionStorage.removeItem(k))
     sessionStorage.removeItem('mc-clicked-me')

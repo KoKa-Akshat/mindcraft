@@ -3,13 +3,26 @@
     "api/calendly.ts":        { "maxDuration": 10 },
     "api/fireflies.ts":       { "maxDuration": 30 },
     "api/generate-summary.ts":{ "maxDuration": 30 },
-    "api/register-calendly.ts":{ "maxDuration": 15 },
     "api/cron-fireflies.ts":   { "maxDuration": 60 },
-    "api/publish-summary.ts":  { "maxDuration": 10 },
     "api/research-agent.ts":   { "maxDuration": 60 },
     "api/generate-questions.ts": { "maxDuration": 30 },
-    "api/gemini.ts":             { "maxDuration": 30 }
+    "api/gemini.ts":             { "maxDuration": 30 },
+    "api/story-module.ts":       { "maxDuration": 30 },
+    "api/jarvis.ts":             { "maxDuration": 60 },
+    "api/agent-check-in.ts":     { "maxDuration": 15 },
+    "api/transcribe-scratch.ts": { "maxDuration": 30 },
+    "api/app-actions.ts":        { "maxDuration": 15 }
   },
+  "rewrites": [
+    { "source": "/api/create-classroom",  "destination": "/api/app-actions?action=create-classroom" },
+    { "source": "/api/join-classroom",    "destination": "/api/app-actions?action=join-classroom" },
+    { "source": "/api/link-child",        "destination": "/api/app-actions?action=link-child" },
+    { "source": "/api/grant-admin",       "destination": "/api/app-actions?action=grant-admin" },
+    { "source": "/api/delete-session",    "destination": "/api/app-actions?action=delete-session" },
+    { "source": "/api/publish-summary",   "destination": "/api/app-actions?action=publish-summary" },
+    { "source": "/api/register-calendly", "destination": "/api/app-actions?action=register-calendly" },
+    { "source": "/api/concept-graph",     "destination": "/api/app-actions?action=concept-graph" }
+  ],
   "crons": [
     {
       "path": "/api/cron-fireflies",
