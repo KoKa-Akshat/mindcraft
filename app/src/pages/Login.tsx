@@ -5,7 +5,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   sendPasswordResetEmail,
-  signOut,
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
@@ -13,43 +12,27 @@ import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import s from './Login.module.css'
 
-type Role = 'student' | 'parent' | 'tutor'
-type Mode = 'signin' | 'signup'
-/** Separate admin flow: passcode step, sign in, grant admin once. */
 type AdminFlow = 'auth' | 'passcode' | 'armed'
-
 const ADMIN_GRANT_PENDING_KEY = 'mc_admin_grant_pending'
 
-function isAdminPasscodeValid(passcode: string): boolean {
+function isAdminPasscodeValid(p: string) {
   const expected = import.meta.env.VITE_ADMIN_PASSCODE
-  return !!(expected && passcode.length > 0 && passcode === expected)
+  return !!(expected && p.length > 0 && p === expected)
 }
+function armAdminGrant()      { sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, '1') }
+function consumeAdminGrant()  { const v = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'; sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY); return v }
+function clearAdminGrant()    { sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY) }
 
-function armAdminGrant() {
-  sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, '1')
-}
-
-function consumeAdminGrant(): boolean {
-  const pending = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'
-  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
-  return pending
-}
-
-function clearAdminGrant() {
-  sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY)
-}
-
-function safeReturnPath(raw: string | null): string | null {
-  if (!raw || !raw.startsWith('/') || raw.startsWith('//')) return null
-  if (raw.startsWith('/login')) return null
+function safeReturnPath(raw: string | null) {
+  if (!raw || !raw.startsWith('/') || raw.startsWith('//') || raw.startsWith('/login')) return null
   return raw
 }
 
 function friendlyError(code: string) {
   switch (code) {
     case 'auth/user-not-found':             return 'No account found with that email.'
-    case 'auth/wrong-password':             return 'Incorrect password. Try again.'
-    case 'auth/invalid-credential':         return 'Incorrect email or password.'
+    case 'auth/wrong-password':
+    case 'auth/invalid-credential':
     case 'auth/invalid-login-credentials':  return 'Incorrect email or password.'
     case 'auth/account-exists-with-different-credential': return 'This email is linked to a different sign-in method. Try Google.'
     case 'auth/email-already-in-use':       return 'An account with this email already exists.'
@@ -57,101 +40,78 @@ function friendlyError(code: string) {
     case 'auth/invalid-email':              return 'Please enter a valid email address.'
     case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
     case 'auth/popup-closed-by-user':       return ''
-    case 'auth/cancelled-popup-request':    return ''
     case 'auth/popup-blocked':              return 'Pop-up was blocked. Allow pop-ups for this site.'
     case 'auth/network-request-failed':     return 'Network error. Check your connection.'
-    default:                                return `Login failed (${code}). Please try again.`
+    default:                                return `Sign-in failed (${code}). Please try again.`
   }
 }
 
 export default function Login() {
-  const [role, setRole]         = useState<Role>('student')
-  const [mode, setMode]         = useState<Mode>('signin')
-  const [email, setEmail]       = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError]       = useState('')
-  const [loading, setLoading]   = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const [emailMode, setEmailMode] = useState(false)      // show email form toggle
+  const [isSignup,  setIsSignup]  = useState(false)
+  const [email,     setEmail]     = useState('')
+  const [password,  setPassword]  = useState('')
+  const [showPw,    setShowPw]    = useState(false)
+  const [error,     setError]     = useState('')
+  const [loading,   setLoading]   = useState(false)
   const [adminFlow, setAdminFlow] = useState<AdminFlow>('auth')
-  const [adminPasscode, setAdminPasscode] = useState('')
-  const navigate = useNavigate()
+  const [adminPw,   setAdminPw]   = useState('')
+  const navigate    = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
 
   useEffect(() => {
-    if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') {
-      setAdminFlow('armed')
-    }
+    if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') setAdminFlow('armed')
   }, [])
 
-  function navigateAfterRole(effectiveRole: string) {
-    if (effectiveRole === 'tutor' || effectiveRole === 'admin') {
-      navigate('/tutor', { replace: true })
-    } else if (effectiveRole === 'parent') {
-      navigate('/parent', { replace: true })
-    } else if (returnTo) {
-      navigate(returnTo, { replace: true })
-    } else {
-      navigate('/dashboard', { replace: true })
-    }
-  }
-
-  async function routeAfterLogin(uid: string, isNewUser = false) {
+  async function routeAfterLogin(uid: string) {
     await auth.currentUser?.getIdToken(true)
     const grantAdmin = consumeAdminGrant()
     if (grantAdmin) setAdminFlow('auth')
 
     const snap = await getDoc(doc(db, 'users', uid))
-    const firestoreRole = snap.data()?.role
+    const existingRole = snap.data()?.role
 
-    if (isNewUser) {
-      const signupRole = grantAdmin ? 'admin' : role
+    // Admin grant takes priority
+    if (grantAdmin) {
+      await setDoc(doc(db, 'users', uid), { role: 'admin', email: auth.currentUser?.email ?? '', displayName: auth.currentUser?.displayName ?? '' }, { merge: true })
+      navigate('/admin', { replace: true })
+      return
+    }
+
+    // No Firestore doc (new user, or doc was deleted) → create as student
+    if (!snap.exists() || !existingRole) {
       await setDoc(doc(db, 'users', uid), {
-        role: signupRole,
+        role: 'student',
         email: auth.currentUser?.email ?? '',
         displayName: auth.currentUser?.displayName ?? '',
         createdAt: new Date().toISOString(),
-      })
-      navigateAfterRole(signupRole)
+      }, { merge: true })
+      navigate(returnTo ?? '/dashboard', { replace: true })
       return
     }
 
-    if (grantAdmin) {
-      await setDoc(doc(db, 'users', uid), { role: 'admin' }, { merge: true })
-      navigateAfterRole('admin')
-      return
-    }
-
-    if (firestoreRole && firestoreRole !== role) {
-      await signOut(auth)
-      setError(`This account is registered as a ${firestoreRole}. Please select the "${firestoreRole}" tab.`)
-      setLoading(false)
-      return
-    }
-
-    if (firestoreRole === 'tutor' || firestoreRole === 'admin') {
+    // Route based on existing role
+    if (existingRole === 'admin') {
+      navigate('/admin', { replace: true })
+    } else if (existingRole === 'tutor') {
       navigate('/tutor', { replace: true })
-    } else if (firestoreRole === 'parent') {
+    } else if (existingRole === 'parent') {
       navigate('/parent', { replace: true })
-    } else if (returnTo) {
-      navigate(returnTo, { replace: true })
     } else {
-      navigate('/dashboard', { replace: true })
+      navigate(returnTo ?? '/dashboard', { replace: true })
     }
   }
 
-  async function handleSubmit() {
+  async function handleEmailSubmit() {
     if (!email || !password) { setError('Please fill in all fields.'); return }
     setError('')
     setLoading(true)
     try {
-      if (mode === 'signin') {
-        const cred = await signInWithEmailAndPassword(auth, email, password)
-        await routeAfterLogin(cred.user.uid, false)
-      } else {
-        const cred = await createUserWithEmailAndPassword(auth, email, password)
-        await routeAfterLogin(cred.user.uid, true)
-      }
+      const cred = isSignup
+        ? await createUserWithEmailAndPassword(auth, email, password)
+        : await signInWithEmailAndPassword(auth, email, password)
+      await routeAfterLogin(cred.user.uid)
     } catch (e: any) {
       setError(friendlyError(e.code ?? e.message ?? 'unknown'))
       setLoading(false)
@@ -163,8 +123,7 @@ export default function Login() {
     setLoading(true)
     try {
       const cred = await signInWithPopup(auth, googleProvider)
-      const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
-      await routeAfterLogin(cred.user.uid, isNew)
+      await routeAfterLogin(cred.user.uid)
     } catch (e: any) {
       const msg = friendlyError(e.code ?? e.message ?? 'unknown')
       if (msg) setError(msg)
@@ -172,23 +131,8 @@ export default function Login() {
     }
   }
 
-  function verifyAdminPasscode() {
-    setError('')
-    if (!isAdminPasscodeValid(adminPasscode)) return
-    setAdminPasscode('')
-    armAdminGrant()
-    setAdminFlow('armed')
-  }
-
-  function cancelAdminFlow() {
-    clearAdminGrant()
-    setAdminPasscode('')
-    setAdminFlow('auth')
-    setError('')
-  }
-
   async function handleForgot() {
-    if (!email) { setError('Enter your email address above first.'); return }
+    if (!email) { setError('Enter your email address first.'); return }
     try {
       await sendPasswordResetEmail(auth, email)
       alert(`Password reset email sent to ${email}`)
@@ -197,11 +141,21 @@ export default function Login() {
     }
   }
 
+  function verifyAdminPasscode() {
+    setError('')
+    if (!isAdminPasscodeValid(adminPw)) { setError('Incorrect passcode.'); return }
+    setAdminPw('')
+    armAdminGrant()
+    setAdminFlow('armed')
+  }
+
   return (
     <div className={s.page}>
       <main className={s.shell}>
         <div className={s.layout}>
-          <section className={s.heroPanel} aria-label="MindCraft learning map">
+
+          {/* Left hero panel */}
+          <section className={s.heroPanel} aria-label="MindCraft">
             <FourierCanvas className={s.fourierBg} />
             <div className={s.heroContent}>
               <div className={s.heroIntro}>
@@ -213,190 +167,144 @@ export default function Login() {
                   Pick up where you left off, see the next step, and keep math feeling possible.
                 </p>
               </div>
-
             </div>
           </section>
 
+          {/* Right sign-in panel */}
           <aside className={s.loginWrap}>
             <div className={s.cardStack}>
               <div className={s.cardShadow} aria-hidden="true" />
               <div className={s.card}>
-                <div className={s.formHeader}>
-                  <div className={s.formIntro}>
-                    <p className={s.formKicker}>
-                      {adminFlow === 'passcode' ? 'Admin access' : mode === 'signin' ? 'Welcome back' : 'Start your map'}
-                    </p>
-                    <h2>
-                      {adminFlow === 'passcode'
-                        ? 'Enter your admin code.'
-                        : mode === 'signin' ? 'Continue where you left off.' : 'Create your MindCraft map.'}
-                    </h2>
-                  </div>
-                  <span className={s.secureBadge} aria-label="Secure sign in">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 3 19 6v5c0 4.5-2.9 8.4-7 10-4.1-1.6-7-5.5-7-10V6l7-3Z" />
-                      <path d="m9.5 12 1.7 1.7 3.6-4" />
-                    </svg>
-                  </span>
-                </div>
 
+                {/* Admin passcode step */}
                 {adminFlow === 'passcode' ? (
-                  <form
-                    className={s.form}
-                    onSubmit={(e) => { e.preventDefault(); verifyAdminPasscode() }}
-                  >
-                    <div className={s.field}>
-                      <label htmlFor="adminPasscode">Admin passcode</label>
-                      <div className={s.inputShell}>
-                        <span className={s.inputIcon} aria-hidden="true">
-                          <svg viewBox="0 0 24 24">
-                            <rect x="5" y="10" width="14" height="10" rx="2" />
-                            <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                          </svg>
-                        </span>
-                        <input
-                          id="adminPasscode"
-                          type="password"
-                          placeholder="Enter code"
-                          value={adminPasscode}
-                          onChange={e => setAdminPasscode(e.target.value)}
-                          autoComplete="off"
-                          autoFocus
-                        />
+                  <>
+                    <div className={s.formHeader}>
+                      <div className={s.formIntro}>
+                        <p className={s.formKicker}>Admin access</p>
+                        <h2>Enter your admin code.</h2>
                       </div>
                     </div>
-                    <button className={s.submitBtn} type="submit" disabled={!adminPasscode.trim()}>
-                      <span>Continue</span>
-                      <span aria-hidden="true">-&gt;</span>
-                    </button>
-                    <p className={s.bottomLink}>
-                      <button type="button" onClick={cancelAdminFlow}>Back to sign in</button>
-                    </p>
-                  </form>
+                    <form className={s.form} onSubmit={e => { e.preventDefault(); verifyAdminPasscode() }}>
+                      <div className={s.field}>
+                        <label htmlFor="adminPw">Admin passcode</label>
+                        <div className={s.inputShell}>
+                          <span className={s.inputIcon} aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+                          </span>
+                          <input id="adminPw" type="password" placeholder="Enter code" value={adminPw}
+                            onChange={e => setAdminPw(e.target.value)} autoComplete="off" autoFocus />
+                        </div>
+                      </div>
+                      {error && <p className={s.error}>{error}</p>}
+                      <button className={s.submitBtn} type="submit" disabled={!adminPw.trim()}>
+                        <span>Continue</span><span aria-hidden="true">-&gt;</span>
+                      </button>
+                      <p className={s.bottomLink}><button type="button" onClick={() => { clearAdminGrant(); setAdminPw(''); setAdminFlow('auth'); setError('') }}>Back to sign in</button></p>
+                    </form>
+                  </>
                 ) : (
                   <>
-                {adminFlow === 'armed' && (
-                  <p className={s.formKicker} style={{ marginBottom: 16, textAlign: 'center' }}>
-                    Code accepted. Sign in below to activate admin access.{' '}
-                    <button type="button" onClick={cancelAdminFlow}>Cancel</button>
-                  </p>
-                )}
-
-                <div className={s.roleSelector} aria-label="Select your role">
-                  {(['student', 'parent', 'tutor'] as Role[]).map(r => (
-                    <button
-                      key={r}
-                      className={`${s.roleOpt} ${role === r ? s.active : ''}`}
-                      onClick={() => setRole(r)}
-                      type="button"
-                    >
-                      {r.charAt(0).toUpperCase() + r.slice(1)}
-                    </button>
-                  ))}
-                </div>
-
-                <form className={s.form} onSubmit={(e) => { e.preventDefault(); handleSubmit() }}>
-                  <div className={s.field}>
-                    <label htmlFor="email">Email</label>
-                    <div className={s.inputShell}>
-                      <span className={s.inputIcon} aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M4 6.5h16v11H4z" />
-                          <path d="m5 7 7 6 7-6" />
-                        </svg>
-                      </span>
-                      <input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        autoComplete="email"
-                      />
-                    </div>
-                  </div>
-
-                  <div className={s.field}>
-                    <label htmlFor="password">Password</label>
-                    <div className={s.inputShell}>
-                      <span className={s.inputIcon} aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                          <rect x="5" y="10" width="14" height="10" rx="2" />
-                          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                        </svg>
-                      </span>
-                      <input
-                        id="password"
-                        type={showPassword ? 'text' : 'password'}
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-                      />
-                      <button
-                        className={s.revealBtn}
-                        type="button"
-                        onClick={() => setShowPassword(v => !v)}
-                        aria-label={showPassword ? 'Hide password' : 'Show password'}
-                      >
+                    <div className={s.formHeader}>
+                      <div className={s.formIntro}>
+                        <p className={s.formKicker}>
+                          {adminFlow === 'armed' ? 'Admin access ready' : 'Welcome'}
+                        </p>
+                        <h2>
+                          {adminFlow === 'armed' ? 'Sign in to activate admin.' : isSignup ? 'Create your account.' : 'Sign in to continue.'}
+                        </h2>
+                      </div>
+                      <span className={s.secureBadge} aria-label="Secure sign in">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
-                          <circle cx="12" cy="12" r="2.5" />
+                          <path d="M12 3 19 6v5c0 4.5-2.9 8.4-7 10-4.1-1.6-7-5.5-7-10V6l7-3Z" />
+                          <path d="m9.5 12 1.7 1.7 3.6-4" />
                         </svg>
-                      </button>
+                      </span>
                     </div>
-                  </div>
 
-                  {mode === 'signin' && (
-                    <div className={s.forgot}>
-                      <button type="button" onClick={handleForgot}>Forgot password?</button>
-                    </div>
-                  )}
+                    {adminFlow === 'armed' && (
+                      <p className={s.formKicker} style={{ marginBottom: 16, textAlign: 'center' }}>
+                        Code accepted.{' '}
+                        <button type="button" onClick={() => { clearAdminGrant(); setAdminFlow('auth') }}>Cancel</button>
+                      </p>
+                    )}
 
-                  {error && <p className={s.error}>{error}</p>}
+                    {error && <p className={s.error}>{error}</p>}
 
-                  <button className={s.submitBtn} disabled={loading} type="submit">
-                    <span>{loading ? 'Please wait...' : mode === 'signin' ? 'Sign in' : 'Create account'}</span>
-                    <span aria-hidden="true">-&gt;</span>
-                  </button>
-                </form>
-
-                <div className={s.divider}><span>or</span></div>
-
-                <button
-                  className={s.googleBtn}
-                  onClick={handleGoogle}
-                  disabled={loading}
-                  type="button"
-                >
-                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                  </svg>
-                  <span>Continue with Google</span>
-                </button>
-
-                <p className={s.bottomLink}>
-                  {mode === 'signin' ? (
-                    <>New to MindCraft?{' '}
-                      <button type="button" onClick={() => { setMode('signup'); setError('') }}>Create account -&gt;</button>
-                    </>
-                  ) : (
-                    <>Already have an account?{' '}
-                      <button type="button" onClick={() => { setMode('signin'); setError('') }}>Sign in</button>
-                    </>
-                  )}
-                </p>
-
-                {adminFlow === 'auth' && (
-                  <p className={s.bottomLink}>
-                    <button type="button" onClick={() => { setAdminFlow('passcode'); setAdminPasscode(''); setError('') }}>
-                      Have an admin code?
+                    {/* PRIMARY: Google button */}
+                    <button className={s.googleBtn} onClick={handleGoogle} disabled={loading} type="button">
+                      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                      </svg>
+                      <span>{loading ? 'Signing in…' : 'Continue with Google'}</span>
                     </button>
-                  </p>
-                )}
+
+                    {/* SECONDARY: email toggle */}
+                    {!emailMode ? (
+                      <p className={s.bottomLink} style={{ marginTop: 16, textAlign: 'center' }}>
+                        <button type="button" onClick={() => setEmailMode(true)}>Use email instead</button>
+                      </p>
+                    ) : (
+                      <>
+                        <div className={s.divider}><span>or use email</span></div>
+                        <form className={s.form} onSubmit={e => { e.preventDefault(); handleEmailSubmit() }}>
+                          <div className={s.field}>
+                            <label htmlFor="email">Email</label>
+                            <div className={s.inputShell}>
+                              <span className={s.inputIcon} aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><path d="M4 6.5h16v11H4z" /><path d="m5 7 7 6 7-6" /></svg>
+                              </span>
+                              <input id="email" type="email" placeholder="you@email.com"
+                                value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" />
+                            </div>
+                          </div>
+                          <div className={s.field}>
+                            <label htmlFor="password">Password</label>
+                            <div className={s.inputShell}>
+                              <span className={s.inputIcon} aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+                              </span>
+                              <input id="password" type={showPw ? 'text' : 'password'}
+                                placeholder="Password" value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                autoComplete={isSignup ? 'new-password' : 'current-password'} />
+                              <button className={s.revealBtn} type="button"
+                                onClick={() => setShowPw(v => !v)}
+                                aria-label={showPw ? 'Hide password' : 'Show password'}>
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
+                                  <circle cx="12" cy="12" r="2.5" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                          {!isSignup && (
+                            <div className={s.forgot}><button type="button" onClick={handleForgot}>Forgot password?</button></div>
+                          )}
+                          <button className={s.submitBtn} disabled={loading} type="submit">
+                            <span>{loading ? 'Please wait…' : isSignup ? 'Create account' : 'Sign in'}</span>
+                            <span aria-hidden="true">-&gt;</span>
+                          </button>
+                        </form>
+                        <p className={s.bottomLink}>
+                          {isSignup
+                            ? <><span>Have an account? </span><button type="button" onClick={() => { setIsSignup(false); setError('') }}>Sign in</button></>
+                            : <><span>New here? </span><button type="button" onClick={() => { setIsSignup(true); setError('') }}>Create account</button></>
+                          }
+                        </p>
+                      </>
+                    )}
+
+                    {adminFlow === 'auth' && (
+                      <p className={s.bottomLink} style={{ marginTop: 8 }}>
+                        <button type="button" onClick={() => { setAdminFlow('passcode'); setAdminPw(''); setError('') }}>
+                          Have an admin code?
+                        </button>
+                      </p>
+                    )}
                   </>
                 )}
 
@@ -405,6 +313,7 @@ export default function Login() {
           </aside>
         </div>
       </main>
+
       <p className={s.pageTrust}>
         <span aria-hidden="true">
           <svg viewBox="0 0 24 24">

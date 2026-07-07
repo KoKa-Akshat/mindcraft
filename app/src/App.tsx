@@ -75,7 +75,8 @@ function RoleRedirect() {
       .then(snap => {
         const role = snap.data()?.role
         setDest(
-          role === 'tutor' || role === 'admin' ? '/tutor'
+          role === 'admin' ? '/admin'
+          : role === 'tutor' ? '/tutor'
           : role === 'parent' ? '/parent'
           : '/dashboard',
         )
