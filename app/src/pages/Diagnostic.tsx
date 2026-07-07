@@ -106,7 +106,7 @@ export default function Diagnostic() {
 
         {step === 'intro' && (
           <section className={s.card}>
-            <p className={s.kicker}>MindCraft diagnostic</p>
+            <p className={s.kicker}>Jesse's kitchen</p>
             <h1 className={s.title}>{(spec as { intro: { title: string } }).intro.title}</h1>
             <p className={s.body}>{(spec as { intro: { body: string } }).intro.body}</p>
             <button className={s.primary} onClick={() => setStep('goals')}>Start</button>
@@ -127,14 +127,14 @@ export default function Diagnostic() {
             </div>
             <textarea
               className={s.textarea}
-              placeholder="Anything specific? (optional)"
+              placeholder={(spec as { goals_step: { placeholder?: string } }).goals_step.placeholder ?? 'What are you aiming for?'}
               value={goalText}
               onChange={e => setGoalText(e.target.value)}
-              rows={3}
+              rows={4}
             />
             <button
               className={s.primary}
-              disabled={goalTags.length === 0 && !goalText.trim()}
+              disabled={!goalText.trim() && goalTags.length === 0}
               onClick={() => setStep('confidence')}
             >Next</button>
           </section>
@@ -180,8 +180,8 @@ export default function Diagnostic() {
           <section className={s.card}>
             <h1 className={s.title}>You're mapped.</h1>
             <p className={s.body}>
-              Nox now has a starting picture of your strengths and gaps. The more you
-              practice, the sharper your learning world gets.
+              Jesse really cooked. Your journal knows your strengths and gaps now.
+              The more you practice, the sharper your route gets.
             </p>
             <button className={s.primary} onClick={goToDashboard} disabled={saving}>
               {saving ? 'Saving…' : 'Go to my dashboard'}

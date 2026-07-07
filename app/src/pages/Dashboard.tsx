@@ -315,7 +315,7 @@ export default function Dashboard() {
       if (forceFreshDiagnostic) {
         try { localStorage.removeItem('mc-diag-done') } catch { /* ignore */ }
         if (cancelled) return
-        navigate('/practice', { state: { examHelp: true } })
+        navigate('/onboard', { replace: true })
         return
       }
       let done = await isDiagnosticComplete(user.uid)
@@ -333,7 +333,7 @@ export default function Dashboard() {
         }
       }
       if (cancelled) return
-      if (!done) navigate('/practice', { state: { examHelp: true } })
+      if (!done) navigate('/onboard', { replace: true })
       else {
         setDiagChecked(true)
         persistDiagnosticDoneLocal()

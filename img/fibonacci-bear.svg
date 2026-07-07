@@ -1,37 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" role="img" aria-label="Fib, the MindCraft bear with a golden spiral">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" role="img" aria-label="Fib, a friendly MindCraft bear holding a little map">
   <defs>
     <linearGradient id="fur" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#c9a66b"/>
-      <stop offset="100%" stop-color="#8b6914"/>
+      <stop offset="0%" stop-color="#d4a574"/>
+      <stop offset="100%" stop-color="#a67c3a"/>
     </linearGradient>
-    <linearGradient id="spiral" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#247a4d"/>
-      <stop offset="100%" stop-color="#c4f547"/>
+    <linearGradient id="belly" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff8ef"/>
+      <stop offset="100%" stop-color="#f5e6c8"/>
     </linearGradient>
   </defs>
   <!-- ears -->
-  <circle cx="72" cy="52" r="28" fill="url(#fur)"/>
-  <circle cx="168" cy="52" r="28" fill="url(#fur)"/>
-  <circle cx="72" cy="52" r="14" fill="#f5e6c8"/>
-  <circle cx="168" cy="52" r="14" fill="#f5e6c8"/>
+  <circle cx="78" cy="58" r="26" fill="url(#fur)"/>
+  <circle cx="162" cy="58" r="26" fill="url(#fur)"/>
+  <circle cx="78" cy="58" r="13" fill="#ffe8c8"/>
+  <circle cx="162" cy="58" r="13" fill="#ffe8c8"/>
   <!-- head -->
-  <ellipse cx="120" cy="108" rx="78" ry="70" fill="url(#fur)"/>
+  <ellipse cx="120" cy="112" rx="72" ry="64" fill="url(#fur)"/>
+  <!-- cheeks -->
+  <ellipse cx="88" cy="128" rx="12" ry="8" fill="#ffb4a2" opacity="0.45"/>
+  <ellipse cx="152" cy="128" rx="12" ry="8" fill="#ffb4a2" opacity="0.45"/>
   <!-- muzzle -->
-  <ellipse cx="120" cy="128" rx="38" ry="30" fill="#f5e6c8"/>
-  <ellipse cx="104" cy="112" rx="8" ry="10" fill="#3d2f10"/>
-  <ellipse cx="136" cy="112" rx="8" ry="10" fill="#3d2f10"/>
-  <path d="M108 138 Q120 148 132 138" stroke="#3d2f10" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="120" cy="132" rx="34" ry="26" fill="url(#belly)"/>
+  <!-- eyes -->
+  <ellipse cx="98" cy="108" rx="9" ry="11" fill="#2a2010"/>
+  <ellipse cx="142" cy="108" rx="9" ry="11" fill="#2a2010"/>
+  <circle cx="101" cy="104" r="3" fill="#fff"/>
+  <circle cx="145" cy="104" r="3" fill="#fff"/>
+  <!-- nose + smile -->
+  <ellipse cx="120" cy="126" rx="7" ry="5" fill="#5c3d1e"/>
+  <path d="M108 140 Q120 152 132 140" stroke="#5c3d1e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
   <!-- body -->
-  <ellipse cx="120" cy="210" rx="68" ry="58" fill="url(#fur)"/>
-  <!-- Fibonacci spiral on chest -->
-  <path d="M120 188
-           a 8 8 0 1 1 0 16
-           a 13 13 0 1 1 0 26
-           a 21 21 0 1 1 0 42
-           a 34 34 0 1 1 -34 0"
-        fill="none" stroke="url(#spiral)" stroke-width="4" stroke-linecap="round"/>
-  <!-- journal -->
-  <rect x="148" y="196" width="44" height="36" rx="4" fill="#fbf8f4" stroke="#8b6914" stroke-width="2"/>
-  <line x1="158" y1="206" x2="182" y2="206" stroke="#247a4d" stroke-width="1.5" opacity="0.6"/>
-  <line x1="158" y1="214" x2="176" y2="214" stroke="#247a4d" stroke-width="1.5" opacity="0.4"/>
+  <ellipse cx="120" cy="214" rx="62" ry="54" fill="url(#fur)"/>
+  <ellipse cx="120" cy="220" rx="38" ry="32" fill="url(#belly)"/>
+  <!-- little map scroll -->
+  <rect x="154" y="188" width="38" height="48" rx="6" fill="#f7f3ee" stroke="#247a4d" stroke-width="2"/>
+  <path d="M162 202 C168 196 178 196 184 202" stroke="#c4f547" stroke-width="2" fill="none"/>
+  <circle cx="166" cy="214" r="3" fill="#247a4d"/>
+  <circle cx="178" cy="222" r="3" fill="#c1121f"/>
+  <circle cx="182" cy="208" r="3" fill="#247a4d"/>
+  <!-- wave paw -->
+  <ellipse cx="62" cy="208" rx="16" ry="14" fill="url(#belly)" stroke="#a67c3a" stroke-width="2"/>
+  <path d="M54 202 L54 214 M62 200 L62 216 M70 202 L70 214" stroke="#a67c3a" stroke-width="2" stroke-linecap="round"/>
 </svg>

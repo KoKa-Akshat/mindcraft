@@ -1,4 +1,22 @@
 .wrap { display: flex; flex-direction: column; gap: 8px; }
+.wrapPaper {
+  flex: 1;
+  min-height: 0;
+  gap: 0;
+}
+.wrapPaper .clearBtn { display: none; }
+.canvasWrapPaper {
+  flex: 1;
+  min-height: 280px;
+  display: flex;
+}
+.canvasPaper {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  flex: 1;
+  min-height: 280px;
+}
 
 .canvasWrap {
   position: relative;

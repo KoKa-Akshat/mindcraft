@@ -40,9 +40,12 @@ function drawStrokes(
   strokes: Point[][],
   width: number,
   height: number,
+  transparentBg = false,
 ) {
-  ctx.fillStyle = '#ffffff'
-  ctx.fillRect(0, 0, width, height)
+  if (!transparentBg) {
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(0, 0, width, height)
+  }
   ctx.fillStyle = '#1a2234'
   for (const pts of strokes) {
     const outline = getStroke(pts, { size: 3, thinning: 0.6, smoothing: 0.5 })
@@ -71,9 +74,11 @@ interface Props {
   onChange?: (canvas: HTMLCanvasElement, data: ScratchStrokeData) => void
   height?: number
   lineOverlays?: LineOverlay[]
+  /** Transparent canvas over ruled paper — chapter pages. */
+  paperMode?: boolean
 }
 
-export default function ScratchPad({ onChange, height = 320, lineOverlays }: Props) {
+export default function ScratchPad({ onChange, height = 320, lineOverlays, paperMode = false }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const strokesRef = useRef<Point[][]>([])
   const pointsRef = useRef<Point[]>([])
@@ -94,8 +99,8 @@ export default function ScratchPad({ onChange, height = 320, lineOverlays }: Pro
 
     const all = [...strokesRef.current]
     if (pointsRef.current.length) all.push(pointsRef.current)
-    drawStrokes(ctx, all, w, h)
-  }, [])
+    drawStrokes(ctx, all, w, h, paperMode)
+  }, [paperMode])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -159,12 +164,12 @@ export default function ScratchPad({ onChange, height = 320, lineOverlays }: Pro
   }
 
   return (
-    <div className={s.wrap}>
-      <div className={s.canvasWrap}>
+    <div className={`${s.wrap} ${paperMode ? s.wrapPaper : ''}`}>
+      <div className={`${s.canvasWrap} ${paperMode ? s.canvasWrapPaper : ''}`}>
         <canvas
           ref={canvasRef}
-          className={s.canvas}
-          style={{ height }}
+          className={`${s.canvas} ${paperMode ? s.canvasPaper : ''}`}
+          style={paperMode ? { flex: 1, minHeight: height ?? 320 } : { height }}
           onPointerDown={begin}
           onPointerMove={move}
           onPointerUp={end}
