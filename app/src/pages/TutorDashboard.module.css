@@ -84,6 +84,43 @@
   font-size: 10px; font-weight: 900; color: #fff;
 }
 
+.classroomCard {
+  margin: 0 4px 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(88, 204, 2, 0.08);
+  border: 1px solid rgba(88, 204, 2, 0.2);
+}
+
+.classroomCode {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: var(--gdd);
+  margin-bottom: 8px;
+}
+
+.classroomCopy {
+  font-family: var(--f);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(88, 204, 2, 0.35);
+  background: #fff;
+  color: var(--gdd);
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.classroomMeta {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mu);
+  line-height: 1.4;
+}
+
 /* ── MAIN ── */
 .page { margin-left: 238px; padding: 90px 28px 48px; }
 

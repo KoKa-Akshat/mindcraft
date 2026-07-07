@@ -50,6 +50,19 @@ type Segment =
   | { type: 'inline'; expr: string }
   | { type: 'block'; expr: string }
 
+/** Reject prose-with-currency mistaken for inline LaTeX (e.g. $14 ... $16). */
+function looksLikeMath(expr: string): boolean {
+  if (/\\[a-zA-Z]+/.test(expr)) return true
+  const words = expr.trim().split(/\s+/)
+  const alphaWords = words.filter(w => /^[a-zA-Z]+$/.test(w))
+  const hasOperator = /[+*/^_=]/.test(expr) || /\d\s*[-+]\s*\d/.test(expr)
+  if (hasOperator) return true
+  // Currency-like decimal (e.g. "3.25") plus a trailing word → price line, not math.
+  if (/\d+\.\d{2}\b/.test(expr) && alphaWords.length >= 1) return false
+  if (alphaWords.length >= 2) return false
+  return true
+}
+
 function parse(text: string): Segment[] {
   const segments: Segment[] = []
   // Match $$...$$ then $...$
@@ -65,7 +78,12 @@ function parse(text: string): Segment[] {
     if (raw.startsWith('$$')) {
       segments.push({ type: 'block', expr: raw.slice(2, -2).trim() })
     } else {
-      segments.push({ type: 'inline', expr: raw.slice(1, -1).trim() })
+      const expr = raw.slice(1, -1).trim()
+      if (looksLikeMath(expr)) {
+        segments.push({ type: 'inline', expr })
+      } else {
+        segments.push({ type: 'text', content: raw })
+      }
     }
     last = m.index + raw.length
   }

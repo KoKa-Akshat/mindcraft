@@ -12,7 +12,7 @@
  * Selecting "All Students" resets filters.
  */
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
@@ -28,6 +28,7 @@ import type { Session, TutorStudent as Student } from '../types'
 import StudentIntelPanel from '../components/StudentIntelPanel'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 
 const FIFTEEN_MIN = 15 * 60 * 1000
 
@@ -54,6 +55,17 @@ function conceptTitle(id: string): string {
   return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
+function mergeStudents(...lists: Student[][]): Student[] {
+  const map = new Map<string, Student>()
+  for (const list of lists) {
+    for (const st of list) {
+      if (!st.id) continue
+      map.set(st.id, { ...map.get(st.id), ...st })
+    }
+  }
+  return Array.from(map.values())
+}
+
 export default function TutorDashboard() {
   const user = useUser()
   const navigate = useNavigate()
@@ -63,7 +75,12 @@ export default function TutorDashboard() {
   const [sessions, setSessions]           = useState<Session[]>([])
   const [toReview, setToReview]           = useState<Session[]>([])
   const [studentIdByEmail, setStudentIdByEmail] = useState<Record<string, string>>({})
-  const [students, setStudents]           = useState<Student[]>([])
+  const [sessionStudents, setSessionStudents] = useState<Student[]>([])
+  const [extraStudents, setExtraStudents] = useState<Student[]>([])
+  const students = useMemo(
+    () => mergeStudents(sessionStudents, extraStudents),
+    [sessionStudents, extraStudents],
+  )
   const [selectedStudent, setSelectedStudent]   = useState<string>('all')
   const [chatMessages, setChatMessages]   = useState<{ senderId: string; text: string; createdAt: any }[]>([])
   const [loading, setLoading]             = useState(true)
@@ -71,6 +88,8 @@ export default function TutorDashboard() {
   const [calendlyToken, setCalendlyToken] = useState('')
   const [connectingCalendly, setConnectingCalendly] = useState(false)
   const [activity, setActivity] = useState<ActivityItem[]>([])
+  const [classroom, setClassroom] = useState<{ code: string; studentIds: string[] } | null>(null)
+  const [classroomLoading, setClassroomLoading] = useState(true)
 
   // Stable key so the interactions listener only re-subscribes when the id set changes
   const activityIdsKey = students
@@ -128,6 +147,62 @@ export default function TutorDashboard() {
       if (data?.calendlyEmail) setCalendlyConnected(data.calendlyEmail)
     })
   }, [user, navigate])
+
+  // Classroom code + roster sources beyond session bookings (join-code + admin Match stub)
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      setClassroomLoading(true)
+      try {
+        const token = await user.getIdToken()
+        const extras: Student[] = []
+
+        const cr = await fetch(`${WEBHOOK_BASE}/api/create-classroom`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        })
+        if (cr.ok) {
+          const data = await cr.json()
+          const studentIds: string[] = data.studentIds ?? []
+          if (!cancelled) {
+            setClassroom({ code: data.code, studentIds })
+          }
+          const idSnaps = await Promise.all(
+            studentIds.slice(0, 30).map((id: string) => getDoc(doc(db, 'users', id))),
+          )
+          idSnaps.forEach(snap => {
+            if (snap.exists()) {
+              extras.push({ id: snap.id, ...(snap.data() as Omit<Student, 'id'>) })
+            }
+          })
+        }
+
+        const assignedSnap = await getDocs(
+          query(collection(db, 'users'), where('assignedTutorId', '==', user.uid), limit(30)),
+        )
+        assignedSnap.docs.forEach(d => {
+          extras.push({ id: d.id, ...(d.data() as Omit<Student, 'id'>) })
+        })
+
+        if (!cancelled) setExtraStudents(extras)
+      } catch {
+        if (!cancelled) setExtraStudents([])
+      } finally {
+        if (!cancelled) setClassroomLoading(false)
+      }
+    })()
+    return () => { cancelled = true }
+  }, [user])
+
+  async function copyClassroomCode() {
+    if (!classroom?.code) return
+    try {
+      await navigator.clipboard.writeText(classroom.code)
+      showToast('Classroom code copied')
+    } catch {
+      showToast(classroom.code)
+    }
+  }
 
   async function handleConnectCalendly() {
     if (!calendlyToken.trim()) return
@@ -228,7 +303,7 @@ export default function TutorDashboard() {
             if (sid) list.push({ id: sid, displayName: email.split('@')[0], email })
           }
         })
-        setStudents(list)
+        setSessionStudents(list)
       })
       .catch(() => {})
   }, [sessions, toReview, studentIdByEmail])
@@ -338,6 +413,25 @@ const nextSession = sessions[0] ?? null
             ))}
           </>
         )}
+        <div className={s.sideDivider} />
+        <p className={s.sideLabel}>My Classroom</p>
+        <div className={s.classroomCard}>
+          {classroomLoading ? (
+            <span className={s.classroomMeta}>Loading…</span>
+          ) : classroom ? (
+            <>
+              <div className={s.classroomCode}>{classroom.code}</div>
+              <button type="button" className={s.classroomCopy} onClick={copyClassroomCode}>
+                Copy code
+              </button>
+              <span className={s.classroomMeta}>
+                {classroom.studentIds.length} student{classroom.studentIds.length !== 1 ? 's' : ''} joined via code
+              </span>
+            </>
+          ) : (
+            <span className={s.classroomMeta}>Could not load classroom</span>
+          )}
+        </div>
         <div className={s.sideDivider} />
         <p className={s.sideLabel}>Tools</p>
         <a href="#" className={s.sideItem}>

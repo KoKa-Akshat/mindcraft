@@ -3,8 +3,7 @@ import FourierCanvas from '../components/FourierCanvas'
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   sendPasswordResetEmail,
   signOut,
 } from 'firebase/auth'
@@ -58,6 +57,7 @@ function friendlyError(code: string) {
     case 'auth/invalid-email':              return 'Please enter a valid email address.'
     case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
     case 'auth/popup-closed-by-user':       return ''
+    case 'auth/cancelled-popup-request':    return ''
     case 'auth/popup-blocked':              return 'Pop-up was blocked. Allow pop-ups for this site.'
     case 'auth/network-request-failed':     return 'Network error. Check your connection.'
     default:                                return `Login failed (${code}). Please try again.`
@@ -82,27 +82,6 @@ export default function Login() {
     if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') {
       setAdminFlow('armed')
     }
-  }, [])
-
-  useEffect(() => {
-    let cancelled = false
-    void (async () => {
-      try {
-        const cred = await getRedirectResult(auth)
-        if (cancelled || !cred?.user) return
-        setLoading(true)
-        const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
-        await routeAfterLogin(cred.user.uid, isNew)
-      } catch (e: unknown) {
-        if (cancelled) return
-        const code = (e as { code?: string })?.code ?? ''
-        const msg = friendlyError(code || 'unknown')
-        if (msg) setError(msg)
-        setLoading(false)
-      }
-    })()
-    return () => { cancelled = true }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function navigateAfterRole(effectiveRole: string) {
@@ -183,7 +162,9 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      await signInWithRedirect(auth, googleProvider)
+      const cred = await signInWithPopup(auth, googleProvider)
+      const isNew = cred.user.metadata.creationTime === cred.user.metadata.lastSignInTime
+      await routeAfterLogin(cred.user.uid, isNew)
     } catch (e: any) {
       const msg = friendlyError(e.code ?? e.message ?? 'unknown')
       if (msg) setError(msg)

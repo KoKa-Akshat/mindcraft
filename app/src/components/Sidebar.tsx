@@ -8,6 +8,7 @@ import s from './Sidebar.module.css'
 const NAV = [
   { to: '/sessions',       label: 'Session Notes' },
   { to: '/practice',       label: 'Practice'      },
+  { to: '/join-classroom', label: 'Join Classroom' },
   { to: '/organize-notes', label: 'Organize'      },
 ]
 

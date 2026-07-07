@@ -1,10 +1,11 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionCount } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import InteractiveWidget from '../components/InteractiveWidget'
+import ScratchPad from '../components/ScratchPad'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -300,6 +301,7 @@ export default function ConceptChapterPage() {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
   const [notes, setNotes] = useState<Record<number, string>>({})
+  const [scratchRev, setScratchRev] = useState<Record<number, number>>({})
   // hintsShownPerQ tracks how many hints have been revealed per question index
   const [hintsShownPerQ, setHintsShownPerQ] = useState<Record<number, number>>({})
   // showWriteNudge: show writing prompt after 8s idle on question with empty notes
@@ -322,7 +324,6 @@ export default function ConceptChapterPage() {
   const [showPing, setShowPing] = useState(false)
   const [pingMsg, setPingMsg] = useState('')
   const [pingSent, setPingSent] = useState(false)
-  const pingRef = useRef<HTMLTextAreaElement>(null)
 
   const goTo = (i: number, d: 'f' | 'b') => {
     if (i < 0) { navigate(-1); return }
@@ -515,12 +516,19 @@ export default function ConceptChapterPage() {
                 )}
               </div>
 
-              {/* Right: lined notepad */}
+              {/* Right: scratch pad for handwritten work */}
               <div className={s.notepad}>
                 <div className={s.notepadHeader}>
                   <span className={s.notepadLabel} style={{ color: theme.dim }}>your work</span>
                   {notes[spec.qIdx] && (
-                    <button className={s.notepadClear} onClick={() => setNotes(n => ({ ...n, [spec.qIdx]: '' }))}>
+                    <button
+                      className={s.notepadClear}
+                      type="button"
+                      onClick={() => {
+                        setNotes(n => ({ ...n, [spec.qIdx]: '' }))
+                        setScratchRev(r => ({ ...r, [spec.qIdx]: (r[spec.qIdx] ?? 0) + 1 }))
+                      }}
+                    >
                       clear
                     </button>
                   )}
@@ -528,18 +536,13 @@ export default function ConceptChapterPage() {
                 {showWriteNudge && !notes[spec.qIdx] && (
                   <span className={s.writeNudge}>try sketching it out first…</span>
                 )}
-                <div className={s.notepadInner} style={{ '--line-color': theme.lineBg } as React.CSSProperties}>
-                  <div className={s.notepadLines} aria-hidden />
-                  <textarea
-                    ref={spec.qIdx === 0 ? pingRef : undefined}
-                    className={s.notepadArea}
-                    style={{ color: theme.ink }}
-                    placeholder="write here…"
-                    value={notes[spec.qIdx] ?? ''}
-                    onChange={e => setNotes(n => ({ ...n, [spec.qIdx]: e.target.value }))}
-                    spellCheck={false}
-                  />
-                </div>
+                <ScratchPad
+                  key={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
+                  height={240}
+                  onChange={canvas => {
+                    setNotes(n => ({ ...n, [spec.qIdx]: canvas.toDataURL('image/png') }))
+                  }}
+                />
               </div>
             </div>
           )
