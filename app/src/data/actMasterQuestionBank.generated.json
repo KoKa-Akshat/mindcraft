@@ -2732,8 +2732,8 @@
       "0.75",
       "1.25",
       "2.5",
-      "â_x0080__x0093_0.75",
-      "â_x0080__x0093_1.25"
+      "–0.75",
+      "–1.25"
     ],
     "correctIndex": 0,
     "explanation": "Sum of roots of ax²+bx+c=0 is –b/a. Here a=4, b=–3, so sum = –(–3)/4 = 3/4 = 0.75.",
@@ -2877,9 +2877,9 @@
     "choices": [
       "0.5",
       "1",
-      "Ï_x0080_",
-      "2 Ï_x0080_",
-      "4 Ï_x0080_"
+      "π",
+      "2 π",
+      "4 π"
     ],
     "correctIndex": 0,
     "explanation": "Step 1: Amplitude = maximum y-value of the sinusoidal function (or half the peak-to-trough height). Step 2: The graph shows peaks at y = 0.5 and troughs at y = −0.5. Step 3: Amplitude = 0.5. Answer: A. 0.5.",
@@ -3511,13 +3511,13 @@
     "id": "act_math_t13_q10",
     "conceptId": "lines_angles",
     "level": 2,
-    "question": "In the figure below, F , G , H , and J are collinear. , , and are line segments of equivalent length, and the measure of JHK is 120Â°. What is the degree measure of GFK ?",
+    "question": "In the figure below, F , G , H , and J are collinear. , , and are line segments of equivalent length, and the measure of JHK is 120°. What is the degree measure of GFK ?",
     "choices": [
-      "30Â°",
-      "45Â°",
-      "60Â°",
-      "120Â°",
-      "150Â°"
+      "30°",
+      "45°",
+      "60°",
+      "120°",
+      "150°"
     ],
     "correctIndex": 0,
     "explanation": "Step 1: F,G,H,J collinear; ∠JHK=120° → ∠GHK=180°-120°=60° (supplementary). Step 2: GK=HK → triangle GHK is isosceles (apex K). Base angles: ∠KGH=∠KHG=60°. So ∠GKH=60°; triangle GHK is equilateral → GH=GK. Step 3: FG=GK; ∠FGK=180°-∠KGH=180°-60°=120° (angles on line). Step 4: Triangle FGK: FG=GK, ∠FGK=120° → base angles ∠GFK=∠GKF=(180°-120°)/2=30° → F.",
@@ -3616,13 +3616,13 @@
     "id": "act_math_t13_q15",
     "conceptId": "lines_angles",
     "level": 3,
-    "question": "In Î_x0094_ XYZ , Y is a right angle and Z measures less than 52Â°. Which of the following phrases best describes the measure of X ?",
+    "question": "In Δ XYZ , Y is a right angle and Z measures less than 52°. Which of the following phrases best describes the measure of X ?",
     "choices": [
-      "Greater than 38Â°",
-      "Equal to 38Â°",
-      "Equal to 45Â°",
-      "Equal to 142Â°",
-      "Less than 38Â°"
+      "Greater than 38°",
+      "Equal to 38°",
+      "Equal to 45°",
+      "Equal to 142°",
+      "Less than 38°"
     ],
     "correctIndex": 0,
     "explanation": "Step 1: Triangle angle sum: ∠X+∠Y+∠Z=180°. Step 2: ∠Y=90° → ∠X+∠Z=90°. Step 3: ∠Z<52° → ∠X=90°-∠Z > 90°-52°=38°. Answer: A. Greater than 38°.",
@@ -3684,7 +3684,7 @@
       "3(6 - x ) = + 15",
       "3(6 - x ) + 15 =",
       "3(6 - x ) = 15 -",
-      "x - 6 Ã_x0097_ 3 =",
+      "x - 6 × 3 =",
       "6 + 3 = + 15"
     ],
     "correctIndex": 0,
@@ -3908,13 +3908,13 @@
     "id": "act_math_t14_q14",
     "conceptId": "descriptive_statistics",
     "level": 3,
-    "question": "In early November in Winnipeg, Manitoba, the temperatures for each of nine consecutive days were -9Â°C, 3Â°C, -7Â°C, 2Â°C, 5Â°C, 1Â°C, 0Â°C, -8Â°C, and -7Â°",
+    "question": "In early November in Winnipeg, Manitoba, the temperatures for each of nine consecutive days were -9°C, 3°C, -7°C, 2°C, 5°C, 1°C, 0°C, -8°C, and -7°",
     "choices": [
-      "-7Â°C",
-      "0Â°C",
-      "1.5Â°C",
-      "3Â°C",
-      "5Â°C"
+      "-7°C",
+      "0°C",
+      "1.5°C",
+      "3°C",
+      "5°C"
     ],
     "correctIndex": 1,
     "explanation": "Step 1: Temperatures: -9,3,-7,2,5,1,0,-8,-7. Step 2: Sort ascending: -9,-8,-7,-7,0,1,2,3,5. Step 3: 9 values → median = 5th value = 0°C → B.",
@@ -3971,7 +3971,7 @@
     "id": "act_math_t15_q02",
     "conceptId": "linear_equations",
     "level": 1,
-    "question": "Let x , y , and z be distinct positive integers. What is the fourth term of the geometric sequence below? 2 xz , 2 x 2 yz , 2 x 3 y 2 z ,â_x0080_¦",
+    "question": "Let x , y , and z be distinct positive integers. What is the fourth term of the geometric sequence below? 2 xz , 2 x 2 yz , 2 x 3 y 2 z ,…",
     "choices": [
       "2 x 2 yz",
       "2 x 4 y 3 z",
@@ -4011,11 +4011,11 @@
     "level": 1,
     "question": "A recent survey of book critics asked 30 critics how many stars out of a possible 5 they gave to a recent novel from a popular author. The 30 critics' responses are summarized by the histogram below. The group that took the survey wants to show the data in a circle graph (pie chart). What should be the measure of the central angle of the portion for one-star reviews?",
     "choices": [
-      "15Â°",
-      "24Â°",
-      "30Â°",
-      "48Â°",
-      "60Â°"
+      "15°",
+      "24°",
+      "30°",
+      "48°",
+      "60°"
     ],
     "correctIndex": 3,
     "explanation": "Step 1: 1-star reviews = 4 out of 30. Step 2: Central angle = (fraction)×360° = (4/30)×360° = 48° → J.",
@@ -4051,11 +4051,11 @@
     "id": "act_math_t15_q07",
     "conceptId": "trigonometry_basics",
     "level": 2,
-    "question": "A rock band, The Young Sohcahtoans, is trying to design a t-shirt logo. The measurements they have chosen are represented on the figure below. The angle to the right of the logo \"TYS\" has a degree measure of 35Â°, and the side of the figure has a measure of 10 in. Which of the following expressions gives the measure, in inches, of the diagonal top side of the figure?",
+    "question": "A rock band, The Young Sohcahtoans, is trying to design a t-shirt logo. The measurements they have chosen are represented on the figure below. The angle to the right of the logo \"TYS\" has a degree measure of 35°, and the side of the figure has a measure of 10 in. Which of the following expressions gives the measure, in inches, of the diagonal top side of the figure?",
     "choices": [
-      "10 tan 35Â°",
-      "10 cos 35Â°",
-      "10 sin 35Â°",
+      "10 tan 35°",
+      "10 cos 35°",
+      "10 sin 35°",
       "E."
     ],
     "correctIndex": 3,
@@ -4175,7 +4175,7 @@
     "id": "act_math_t15_q13",
     "conceptId": "area_volume",
     "level": 3,
-    "question": "The volume of the right circular cylinder shown below is 64Ï_x0080_ cubic inches. If its height is 4 in., what is its radius in., what is its radius in inches?",
+    "question": "The volume of the right circular cylinder shown below is 64π cubic inches. If its height is 4 in., what is its radius in., what is its radius in inches?",
     "choices": [
       "2",
       "4",
@@ -4196,7 +4196,7 @@
     "id": "act_math_t15_q14",
     "conceptId": "ratios_proportions",
     "level": 3,
-    "question": "Line segments , , and are parallel and intersect line segments and as shown in the figure below. The ratio of the perimeter of Î_x0094_ FJK to the perimeter of Î_x0094_ FLM is 3:5, and the ratio of to is 1:5. What is the ratio of to ?",
+    "question": "Line segments , , and are parallel and intersect line segments and as shown in the figure below. The ratio of the perimeter of Δ FJK to the perimeter of Δ FLM is 3:5, and the ratio of to is 1:5. What is the ratio of to ?",
     "choices": [
       "1:05",
       "1:03",
@@ -4217,7 +4217,7 @@
     "id": "act_math_t15_q15",
     "conceptId": "trigonometry_basics",
     "level": 3,
-    "question": "Avi is trying to draw a map of his most recent bike ride. He chose to place Market Street on the x -axis and Broad Street on the y -axis. He rode 60 m at an angle of 60Â° relative to Market Street, then rode 100 m at an angle of 45Â° relative to Market Street, and finally rode 35 m directly north on Broad Street. How many meters north of Market Street did Avi ride?",
+    "question": "Avi is trying to draw a map of his most recent bike ride. He chose to place Market Street on the x -axis and Broad Street on the y -axis. He rode 60 m at an angle of 60° relative to Market Street, then rode 100 m at an angle of 45° relative to Market Street, and finally rode 35 m directly north on Broad Street. How many meters north of Market Street did Avi ride?",
     "choices": [
       "35",
       "115",
