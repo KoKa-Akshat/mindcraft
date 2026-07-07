@@ -41,7 +41,7 @@ const PRACTICE_DRAFT_VERSION = 2
 const PATH_SLOT_COUNT = 6
 
 type PracticePhase =
-  | 'onboard' | 'exam-pick' | 'confidence' | 'building'
+  | 'onboard' | 'exam-pick' | 'diag-intro' | 'confidence' | 'building'
   | 'gap-analysis' | 'path' | 'explore' | 'level' | 'checkin' | 'session' | 'complete'
   | 'no-content'
 type SolverPhase   = 'input' | 'loading' | 'cards' | 'done'
@@ -357,6 +357,8 @@ export default function Practice() {
   const [hideCorrectness, setHideCorrectness] = useState(false)
   /** Concepts still needing self-rating after the question diagnostic. */
   const [confidenceQueue, setConfidenceQueue] = useState<typeof PRACTICE_CONCEPTS>([])
+  /** Playable concepts + exam track held while the diag-intro briefing screen shows. */
+  const [pendingDiagPlay, setPendingDiagPlay] = useState<{ playable: typeof PRACTICE_CONCEPTS; examTrack: string } | null>(null)
   /** Format vessel for format-gap weakness missions (C3). */
   const [sessionFormat, setSessionFormat] = useState<FormatId | null>(null)
   /** Katha story shown before a session starts — null means no splash. */
@@ -427,18 +429,27 @@ export default function Practice() {
     setAssessConcepts(restoredConcepts)
     setConfidenceStep(Math.min(draft.confidenceStep, Math.max(restoredConcepts.length - 1, 0)))
     setConfidenceMap(draft.confidenceMap ?? {})
-    const restoredPhase = draft.pPhase === 'onboard' ? 'path'
+    let restoredPhase = draft.pPhase === 'onboard' ? 'path'
       : draft.pPhase === 'session' && !draft.questions?.length
       ? (type === 'gapscan' ? 'path' : 'level')
       : draft.pPhase === 'building' || draft.pPhase === 'gap-analysis'
       ? 'path'
       : draft.pPhase
+    if (restoredPhase === 'diag-intro') {
+      // Rebuild the briefing payload (it isn't persisted) or fall back to the
+      // confidence slider if no concept has playable questions anymore.
+      const playable = restoredConcepts.filter(c =>
+        ([1, 2, 3] as const).some(l => questionCount(c.id, l) > 0),
+      )
+      if (playable.length > 0) setPendingDiagPlay({ playable, examTrack: draft.exam })
+      else restoredPhase = 'confidence'
+    }
     setPPhase(restoredPhase)
     setConcept(draft.concept)
     setLevel(draft.level ?? 1)
     setQuestions(Array.isArray(draft.questions) ? draft.questions : [])
-    const questionCount = Array.isArray(draft.questions) ? draft.questions.length : 0
-    setQIndex(Math.min(draft.qIndex ?? 0, Math.max(questionCount - 1, 0)))
+    const draftQuestionCount = Array.isArray(draft.questions) ? draft.questions.length : 0
+    setQIndex(Math.min(draft.qIndex ?? 0, Math.max(draftQuestionCount - 1, 0)))
     setSelected(draft.selected ?? null)
     setChecked(draft.checked ?? false)
     setHintsShown(draft.hintsShown ?? 0)
@@ -763,9 +774,14 @@ export default function Practice() {
         ([1, 2, 3] as const).some(l => questionCount(c.id, l) > 0),
       )
       const notPlayable = filtered.filter(c => !playable.some(p => p.id === c.id))
-      setConfidenceQueue(notPlayable)
+      // Skip manual confidence slider for zero-coverage concepts — seed them as 'kinda'
+      // so they still appear in the confidence map without adding a tedious rating step.
+      setConfidenceMap(Object.fromEntries(notPlayable.map(c => [c.id, 'kinda' as Confidence])))
+      setConfidenceQueue([])
       if (playable.length > 0) {
-        startGapQuestionDiagnostic(playable, e)
+        // Mission-briefing intro before the questions — no more cold jump.
+        setPendingDiagPlay({ playable, examTrack: e })
+        setPPhase('diag-intro')
       } else {
         setPPhase('confidence')
       }
@@ -780,6 +796,9 @@ export default function Practice() {
     setHideCorrectness(false)
     setConfidenceQueue([])
     setPPhase('building')
+    // Set a same-session flag so the dashboard gate doesn't re-trigger the diagnostic
+    // while the Firestore write is still in flight (Firestore race condition fix).
+    sessionStorage.setItem('mc-diag-just-completed', '1')
     setTimeout(() => {
       clearPracticeDraft('gapscan')
       navigate('/dashboard', { replace: true })
@@ -791,8 +810,10 @@ export default function Practice() {
     setMissionType('gapscan')
     setPPhase('building')
     const examType = (EXAMS.includes(examTrack as ExamType) ? examTrack : FALLBACK_EXAM) as ExamType
+    // Cap the diagnostic at 15 questions so the scan stays short.
+    const limited = playable.slice(0, 15)
     const qs: Question[] = []
-    for (const c of playable) {
+    for (const c of limited) {
       const lv = ([1, 2, 3] as const).find(l => questionCount(c.id, l) > 0) ?? 2
       const batch = getQuestions(c.id, lv, 1, [], examType)
       if (batch[0]) qs.push(batch[0])
@@ -1260,7 +1281,7 @@ export default function Practice() {
   const isPathView = pPhase === 'path' && mode === 'practice'
   const isMatteFlow = mode === 'practice' && ['explore', 'level', 'checkin', 'session', 'complete', 'no-content'].includes(pPhase)
   const isLessonPage = isMatteFlow
-  const hideTopBar = mode === 'practice' && ['exam-pick', 'confidence', 'building'].includes(pPhase)
+  const hideTopBar = mode === 'practice' && ['exam-pick', 'confidence', 'building', 'diag-intro'].includes(pPhase)
 
   return (
     <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}`}>
@@ -1308,6 +1329,60 @@ export default function Practice() {
                 </div>
               </div>
             )}
+
+            {/* ── Diagnostic intro: mission-briefing screen before the scan ── */}
+            {pPhase === 'diag-intro' && pendingDiagPlay && (() => {
+              const scanCount = Math.min(pendingDiagPlay.playable.length, 15)
+              return (
+                <div style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  minHeight: '100vh', background: '#08120e', padding: '40px 24px', textAlign: 'center',
+                  gap: 0,
+                }}>
+                  <span style={{
+                    display: 'inline-block', marginBottom: 28,
+                    fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
+                    color: 'rgba(196,245,71,0.7)', background: 'rgba(196,245,71,0.08)',
+                    border: '1px solid rgba(196,245,71,0.18)', borderRadius: 20, padding: '5px 14px',
+                  }}>
+                    {exam} gap scan
+                  </span>
+                  <h1 style={{ fontSize: 'clamp(28px,6vw,42px)', fontWeight: 800, color: '#f0ede4', margin: '0 0 16px', lineHeight: 1.15 }}>
+                    Let's map where you stand.
+                  </h1>
+                  <p style={{ fontSize: 16, color: 'rgba(240,237,228,0.6)', maxWidth: 400, margin: '0 0 36px', lineHeight: 1.6 }}>
+                    We'll show you {scanCount} questions across {scanCount} topics.
+                    Answer honestly — we're learning your starting point, not grading you.
+                  </p>
+                  <div style={{ display: 'flex', gap: 24, marginBottom: 40, justifyContent: 'center' }}>
+                    {[
+                      [`${scanCount}`, 'questions'],
+                      [`${scanCount}`, 'topics'],
+                      ['~10', 'min'],
+                    ].map(([val, lbl]) => (
+                      <div key={lbl} style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 28, fontWeight: 800, color: '#c4f547' }}>{val}</div>
+                        <div style={{ fontSize: 12, color: 'rgba(240,237,228,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{lbl}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    style={{
+                      background: '#c4f547', color: '#08120e', border: 'none', borderRadius: 14,
+                      padding: '16px 40px', fontSize: 16, fontWeight: 800, cursor: 'pointer',
+                      letterSpacing: '0.02em',
+                    }}
+                    onClick={() => {
+                      const { playable, examTrack } = pendingDiagPlay
+                      setPendingDiagPlay(null)
+                      startGapQuestionDiagnostic(playable, examTrack)
+                    }}
+                  >
+                    Start the scan →
+                  </button>
+                </div>
+              )
+            })()}
 
             {/* ── Confidence: one concept at a time ── */}
             {pPhase === 'confidence' && (confidenceQueue.length > 0 || assessConcepts.length > 0) && (() => {
@@ -1379,9 +1454,24 @@ export default function Practice() {
 
             {/* ── Building: loading ── */}
             {pPhase === 'building' && (
-              <div className={s.buildingScreen}>
-                <p className={s.buildingLabel}>Scanning your gaps…</p>
-                <div className={s.buildingRing} />
+              <div style={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                minHeight: '100vh', background: '#08120e', gap: 20, textAlign: 'center', padding: 32,
+              }}>
+                <div style={{
+                  width: 48, height: 48,
+                  border: '3px solid rgba(196,245,71,0.15)',
+                  borderTopColor: '#c4f547',
+                  borderRadius: '50%',
+                  animation: 'spin 0.9s linear infinite',
+                }} />
+                <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+                <p style={{ color: 'rgba(240,237,228,0.7)', fontSize: 15, fontWeight: 600, margin: 0 }}>
+                  Building your path…
+                </p>
+                <p style={{ color: 'rgba(240,237,228,0.35)', fontSize: 13, margin: 0 }}>
+                  We mapped your gaps — personalizing your recommendations.
+                </p>
               </div>
             )}
 
@@ -1817,6 +1907,18 @@ export default function Practice() {
                       {!hideCorrectness && <span className={s.xpBadge}>⚡ {xp} XP</span>}
                     </div>
                   </div>
+
+                  {missionType === 'gapscan' && currentQ && (
+                    <div style={{
+                      fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
+                      color: 'rgba(196,245,71,0.65)', marginBottom: 12, paddingBottom: 10,
+                      borderBottom: '1px solid rgba(196,245,71,0.12)',
+                    }}>
+                      {PRACTICE_CONCEPTS.find(c => c.id === currentQ.conceptId)?.label
+                        ?? bridgeLabel(toOntologyId(currentQ.conceptId))}
+                      {' · '}question {qIndex + 1} of {questions.length}
+                    </div>
+                  )}
 
                   <div className={s.questionCard}>
                     <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
