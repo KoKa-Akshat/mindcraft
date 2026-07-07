@@ -46,6 +46,11 @@ tar -C "$ML_DIR" \
   --exclude=.venv \
   --exclude=venv \
   --exclude=env \
+  --exclude=img \
+  --exclude='*.png' \
+  --exclude='*.jpg' \
+  --exclude='*.jpeg' \
+  --exclude='*.mp4' \
   --exclude=mindcraft \
   --exclude=google-cloud-sdk \
   --exclude=google-cloud-cli-linux-x86_64.tar.gz \
