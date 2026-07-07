@@ -1,0 +1,787 @@
+{
+  "_meta": {
+    "source": "openstax",
+    "ingested_at": "2026-07-07T21:34:09.608717+00:00",
+    "total": 37,
+    "pipeline_version": "2.0"
+  },
+  "questions": [
+    {
+      "id": "openstax_8fa1d96b",
+      "conceptId": "linear_inequalities",
+      "level": 2,
+      "question": "Choose the correct solution(s) to the equation 6 y + 10 = 12 y .",
+      "choices": [
+        "y = 5",
+        "y = -1",
+        "y = 1/2",
+        "y = 5/3"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is y = 5/3. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_5bc16f82",
+      "conceptId": "linear_inequalities",
+      "level": 2,
+      "question": "Choose the correct solution to the equation 6y + 10 = 12y .",
+      "choices": [
+        "y = 5",
+        "y = -1",
+        "y = 1/2",
+        "y = 5/3"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is y = 5/3. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_aa3df36f",
+      "conceptId": "linear_equations",
+      "level": 1,
+      "question": "The conversion formula between the Fahrenheit temperature scale and the Celsius temperature scale is given by this formula: C = 5/9( F-32 ) , where C is the temperature in degrees Celsius and F is the temperature in degrees Fahrenheit. What is the correct formula when solved for F ?",
+      "choices": [
+        "F = 5/9C-32",
+        "F = 9/5C-32",
+        "F = 5/9C + 32",
+        "F = 9/5C + 32"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is F = 9/5C + 32. Review the key steps for linear equations to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear equations that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_f670d432",
+      "conceptId": "linear_equations",
+      "level": 1,
+      "question": "To find a temperature on the Kelvin temperature scale, add 273 degrees to the temperature in Celsius. Which formula illustrates this?",
+      "choices": [
+        "C = K + 273",
+        "K = C + 273",
+        "K = C-273",
+        "C = K-273"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is K = C + 273. Review the key steps for linear equations to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear equations that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_ad696090",
+      "conceptId": "linear_equations",
+      "level": 1,
+      "question": "Using the information from exercise 18 and exercise 19, which conversion formula would you use to find degrees Kelvin when given degrees Fahrenheit?",
+      "choices": [
+        "K = 5/9( F-32 ) + 273",
+        "K = 5/9F + 241",
+        "K = 9/5( F-32 ) + 273",
+        "K = 9/5F + 241"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is K = 5/9( F-32 ) + 273. Review the key steps for linear equations to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear equations that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_345fb0fd",
+      "conceptId": "quadratic_equations",
+      "level": 2,
+      "question": "Which quadratic equation equals ( x-3 )( x + 5 ) ?",
+      "choices": [
+        "x^2-15",
+        "x^2-3x + 15",
+        "x^2-2x-15",
+        "x^2 + 2x-15"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is x^2 + 2x-15. Review the key steps for quadratic equations to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of quadratic equations that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_7c63b175",
+      "conceptId": "linear_equations",
+      "level": 1,
+      "question": "There is a fourth temperature scale, although it is not used much today. The Rankin temperature scale varies from the Fahrenheit scale by about 460 degrees. So given a temperature in Fahrenheit, add 460 degrees to get the temperature in Rankin. Which formula represents a formula to find degrees Rankin when given degrees Celsius?",
+      "choices": [
+        "R = 5/9C-492",
+        "R = 9/5C + 492",
+        "R = C + 492",
+        "R = 5/9( C-492 )"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is R = 9/5C + 492. Review the key steps for linear equations to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear equations that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_8c72838f",
+      "conceptId": "quadratic_equations",
+      "level": 2,
+      "question": "Which product is equal to x^2-8x + 15 ?",
+      "choices": [
+        "( x-3 )( x + 5 )",
+        "( x-3 )( x-5 )",
+        "( x + 3 )( x + 5 )",
+        "( x + 3 )( x-5 )"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is ( x-3 )( x-5 ). Review the key steps for quadratic equations to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of quadratic equations that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_93141095",
+      "conceptId": "linear_inequalities",
+      "level": 1,
+      "question": "Choose the correct interval notation for the following graph:",
+      "choices": [
+        "[ 3/2,∞ )",
+        "(1,∞ )",
+        "[1,∞ )",
+        "( 3/2,∞ )"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is [ 3/2,∞ ). Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "diagram"
+    },
+    {
+      "id": "openstax_136ec1db",
+      "conceptId": "linear_inequalities",
+      "level": 1,
+      "question": "[4,∞ ) is the solution for which inequality?",
+      "choices": [
+        "6x ≥ 24",
+        "4x ≥ 0",
+        "4x ≤ 0",
+        "6x < 24"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 6x ≥ 24. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_5df81ac8",
+      "conceptId": "linear_inequalities",
+      "level": 1,
+      "question": "{( - ∞ , - 3)} is the solution for which inequality?",
+      "choices": [
+        "- 6x > 18",
+        "- 6x < 18",
+        "- 6x ≤ 18",
+        "- 6x ≥ 18"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is - 6x > 18. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_2d8f9a78",
+      "conceptId": "linear_inequalities",
+      "level": 1,
+      "question": "( - 2,∞ ) is the solution for which inequality?",
+      "choices": [
+        "4x - 3 > - 11",
+        "- 4x > - 8",
+        "4x + 3 > - 11",
+        "- 4x ≤ - 8"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 4x - 3 > - 11. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_c9aed56b",
+      "conceptId": "linear_inequalities",
+      "level": 1,
+      "question": "( - ∞ ,9) is the solution for which inequality?",
+      "choices": [
+        "- 3x + 14 > - 13",
+        "9x < 0",
+        "- 3x ≥ 27",
+        "- 3x - 14 > - 13"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is - 3x + 14 > - 13. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_ae433896",
+      "conceptId": "linear_inequalities",
+      "level": 1,
+      "question": "For the following exercises, choose the equation that best models the situation. Renaldo is hauling boxes of lawn chairs. Each box is the same size, 8 cubic feet. Renaldo’s truck has a capacity of 764 cubic feet. How many boxes of lawn chairs can Renaldo put in his truck?",
+      "choices": [
+        "8x < 764",
+        "8 < 764x",
+        "8 > 764x",
+        "8x > 764"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 8x < 764. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_2b69d983",
+      "conceptId": "linear_inequalities",
+      "level": 1,
+      "question": "Choose the equation that best models this situation: Bernadette babysits the neighbor’s kids, making on average 50 dollars a night. How many nights will she have to babysit in order to earn enough money to buy a used car, whose cost is 8120 dollars?",
+      "choices": [
+        "50 < 8120x",
+        "50x < 8120",
+        "50 < 8120x",
+        "50x > 8120"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is 50x > 8120. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_796a0a0e",
+      "conceptId": "linear_inequalities",
+      "level": 3,
+      "question": "Kellie makes tables and chairs. Kellie profits 20 dollars from a table ( t ), and 10 dollars from a chair ( c ). The objective function for profit in this situation is:",
+      "choices": [
+        "P = 20t - 10c",
+        "P = 20c + 10t",
+        "P = 20t + 10c",
+        "P = 20c - 10t"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is P = 20t + 10c. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_39aadb95",
+      "conceptId": "linear_inequalities",
+      "level": 3,
+      "question": "Dave grows wheat ( w ) and barley ( b ) on a farm. Dave expects to profit 150 dollars per acre for wheat and 180 dollars per acre for barley. The objective function for profit in this situation is:",
+      "choices": [
+        "P = 150w + 180b",
+        "P = 150b + 180w",
+        "P = 180w + 150b",
+        "P = 150w - 180b"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is P = 150w + 180b. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_90b61335",
+      "conceptId": "linear_inequalities",
+      "level": 3,
+      "question": "An antique music store sells two types of vinyl records; 45 rpm records ( f ) and 33 rpm records ( t ). It makes a profit of 2.50 dollars for each 45 rpm record and 6.75 dollars for each 33 rpm record. The objective function for profit in this situation is:",
+      "choices": [
+        "P = 2.50f + 6.75c",
+        "P = 2.50f + 6.75t",
+        "P = 2.50t + 6.75f",
+        "None of these"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is P = 2.50f + 6.75t. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_35eca3d6",
+      "conceptId": "linear_inequalities",
+      "level": 3,
+      "question": "Kellie makes tables and chairs. Kellie profits 20 dollars from a table ( t ), and 10 dollars from a chair ( c ). A table requires 15 board feet of wood, while a chair requires 4 board feet of wood. Kellie has 70 board feet available. What is the constraint inequality in this situation?",
+      "choices": [
+        "20t + 10c ≤ 70",
+        "t + c ≤ 70",
+        "15t + 4c ≥ 70",
+        "15t + 4c ≤ 70"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is 15t + 4c ≤ 70. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_495370f1",
+      "conceptId": "linear_inequalities",
+      "level": 3,
+      "question": "Kellie makes tables and chairs. Kellie profits 20 dollars from a table ( t ), and 10 dollars from a chair ( c ). The maximum number of tables and chairs Kellie can make in any one day is 12. What is the constraint inequality in this situation?",
+      "choices": [
+        "t + c ≤ 12",
+        "20t + 10c ≤ 12",
+        "20t + 10c ≥ 12",
+        "20t + 10c ≤ 70"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is t + c ≤ 12. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_78c48d2b",
+      "conceptId": "linear_inequalities",
+      "level": 3,
+      "question": "Dave grows wheat ( w ) and barley ( b ) on a farm. Dave expects to profit 150 dollars per acre for wheat and 180 dollars per acre for barley. The cost of seed is 10 dollars per acre for wheat and 15 dollars per acre for barley. Dave can only afford to spend 945 dollars on seed. What is the constraint inequality in this situation?",
+      "choices": [
+        "w + b ≤ 945",
+        "10w + 15b ≥ 945",
+        "10w + 15b ≤ 945",
+        "150w + 180w ≤ 945"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is 10w + 15b ≤ 945. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_8a18af57",
+      "conceptId": "linear_inequalities",
+      "level": 3,
+      "question": "Dave grows wheat ( w ) and barley ( b ) on a farm. Dave expects to profit 150 dollars per acre for wheat and 180 dollars per acre for barley. The cost of raising each crop is 30 dollars per acre for wheat and 25 dollars per acre for barley. Dave budgets 1,635 dollars for the raising of both crops. What is the constraint inequality in this situation?",
+      "choices": [
+        "150w + 180b ≤ 1,635",
+        "25w + 30b ≤ 1,635",
+        "w + b ≤ 1,635",
+        "30w + 25b ≤ 1,635"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is 30w + 25b ≤ 1,635. Review the key steps for linear inequalities to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of linear inequalities that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_60b54e5d",
+      "conceptId": "quadratic_equations",
+      "level": 2,
+      "question": "What is the solution to x^2-49 = 0 ?",
+      "choices": [
+        "x = 7",
+        "x = -7",
+        "x = ± 49",
+        "x = ± 7"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is x = ± 7. Review the key steps for quadratic equations to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of quadratic equations that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_7d8a72c4",
+      "conceptId": "basic_probability",
+      "level": 2,
+      "question": "Use the following information to answer the next three exercises: A Lake Tahoe Community College instructor is interested in the mean number of days Lake Tahoe Community College math students are absent from class during a quarter. What is the population she is interested in?",
+      "choices": [
+        "all Lake Tahoe Community College students",
+        "all Lake Tahoe Community College English students",
+        "all Lake Tahoe Community College students in the instructor’s classes",
+        "all Lake Tahoe Community College math students"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is all Lake Tahoe Community College math students. Review the key steps for basic probability to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of basic probability that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_77489f51",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "The instructor takes a sample by gathering data on five randomly selected students from each Lake Tahoe Community College math class. The type of sampling used is",
+      "choices": [
+        "cluster sampling",
+        "stratified sampling",
+        "simple random sampling",
+        "convenience sampling"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is stratified sampling. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_d4a960c5",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "Use the following information to answer the next two exercises: The following table contains data on hurricanes that have made direct hits on the U.S. Between 1851 and 2004. A hurricane is given a strength category rating based on the minimum wind speed generated by the storm.\nFrequency of Hurricane Direct Hits\nCategory\nNumber of Direct Hits\nRelative Frequency\nCumulative Frequency\n1\n109\n0.3993\n0.3993\n2\n72\n0.2637\n0.6630\n3\n71\n0.2601\n4\n18\n0.9890\n5\n3\n0.0110\n1.0000\nTotal = 273\nWhat is the relative frequency of direct hits that were category 4 hurricanes?",
+      "choices": [
+        "0.0768",
+        "0.0659",
+        "0.2601",
+        "Not enough information to calculate"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is 0.0659. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_78b4ca76",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "If the correlation between age of an auto and money spent for repairs is +.90",
+      "choices": [
+        "81% of the variation in the money spent for repairs is explained by the age of the auto",
+        "81% of money spent for repairs is unexplained by the age of the auto",
+        "90% of the money spent for repairs is explained by the age of the auto",
+        "none of the above"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 81% of the variation in the money spent for repairs is explained by the age of the auto. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_b2186967",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "Suppose that college grade-point average and verbal portion of an IQ test had a correlation of .40. What percentage of the variance do these two have in common?",
+      "choices": [
+        "20",
+        "16",
+        "40",
+        "80"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is 16. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_b2527bb5",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "The correlation coefficient for X and Y is known to be zero. We then can conclude that:",
+      "choices": [
+        "there exists no linear relationship between X and Y",
+        "X and Y have standard distributions",
+        "the variances of X and Y are equal",
+        "there exists no relationship between X and Y"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is there exists no linear relationship between X and Y. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_4fbfe57a",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "What would you guess the value of the correlation coefficient to be for the pair of variables: \"number of manhours worked\" and \"number of units of work completed\"?",
+      "choices": [
+        "Approximately 0.9",
+        "Approximately 0.4",
+        "Approximately 0.0",
+        "Approximately -0.4"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is Approximately 0.9. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_a6182935",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "In a given group, the correlation between height measured in feet and weight measured in pounds is +.68. Which of the following would alter the value of r?",
+      "choices": [
+        "height is expressed centimeters.",
+        "weight is expressed in Kilograms.",
+        "both of the above will affect r.",
+        "neither of the above changes will affect r."
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is neither of the above changes will affect r.. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_e21f5c84",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "Use the following information to answer the next four exercises: A study was done to determine the age, number of times per week, and the duration (amount of time) of residents using a local park in San Antonio, Texas. The first house in the neighborhood around the park was selected randomly, and then the resident of every eighth house in the neighborhood around the park was interviewed.\nThe sampling method was",
+      "choices": [
+        "simple random",
+        "systematic",
+        "stratified",
+        "cluster"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is systematic. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_c83f8837",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "The instructor takes her sample by gathering data on five randomly selected students from each Lake Tahoe Community College math class. The type of sampling she used is",
+      "choices": [
+        "cluster sampling",
+        "stratified sampling",
+        "simple random sampling",
+        "convenience sampling"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is stratified sampling. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_6f6a6dfe",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "Use the following information to answer the next two exercises: The following table contains data on hurricanes that have made direct hits on the United States. Between 1851 and 2004. A hurricane is given a strength category rating based on the minimum wind speed generated by the storm.\nFrequency of Hurricane Direct Hits\nCategory\nNumber of Direct Hits\nRelative Frequency\nCumulative Frequency\n1\n109\n0.3993\n0.3993\n2\n72\n0.2637\n0.6630\n3\n71\n0.2601\n4\n18\n0.9890\n5\n3\n0.0110\n1.0000\nTotal = 273\nWhat is the relative frequency of direct hits that were category 4 hurricanes?",
+      "choices": [
+        "0.0768",
+        "0.0659",
+        "0.2601",
+        "Not enough information to calculate"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is 0.0659. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_f7224ebb",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "Use the following information to answer the next four exercises: A study was done to determine the age, number of times per week, and the duration (amount of time) of residents using a local park in San Antonio, Texas. The first house in the neighborhood around the park was selected randomly, and then the resident of every eighth house in the neighborhood around the park was interviewed. The sampling method was",
+      "choices": [
+        "simple random",
+        "systematic",
+        "stratified",
+        "cluster"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is systematic. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_8e784207",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "An instructor takes a sample by gathering data on five randomly selected students from each Lake Tahoe Community College math class. The type of sampling used is",
+      "choices": [
+        "cluster sampling",
+        "stratified sampling",
+        "simple random sampling",
+        "convenience sampling"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is stratified sampling. Review the key steps for descriptive statistics to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of descriptive statistics that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    },
+    {
+      "id": "openstax_cb381ada",
+      "conceptId": "functions_basics",
+      "level": 2,
+      "question": "The function A(d) gives the pain level on a scale of 0 to 10 experienced by a patient with d milligrams of a pain-reducing drug in their system. The milligrams of the drug in the patient’s system after t minutes is modeled by m(t). To determine when the patient will be at a pain level of 4, you would need to:",
+      "choices": [
+        "A( m(4) ).",
+        "Evaluate m( A(4) ).",
+        "Solve A( m(t) ) = 4.",
+        "Solve m( A(d) ) = 4."
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is Solve A( m(t) ) = 4.. Review the key steps for basics of functions to confirm your reasoning.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of basics of functions that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "ACT",
+      "format": "word_problem"
+    }
+  ]
+}
