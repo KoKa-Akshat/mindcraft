@@ -205,6 +205,14 @@ export default function Dashboard() {
         return
       }
 
+      // Trust a diagnostic that just completed in this same tab — set by finishGapScan
+      // to avoid re-gating while the Firestore write is still in flight.
+      if (sessionStorage.getItem('mc-diag-just-completed') === '1') {
+        sessionStorage.removeItem('mc-diag-just-completed')
+        setDiagChecked(true)
+        persistDiagnosticDoneLocal()
+        return
+      }
       let done = await isDiagnosticComplete(user.uid)
       // Only trust localStorage shortcut if Firestore already has some data for
       // this student — prevents a stale 'mc-diag-done' from bypassing the gap

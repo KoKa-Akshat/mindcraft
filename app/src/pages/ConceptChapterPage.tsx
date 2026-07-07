@@ -296,7 +296,24 @@ export default function ConceptChapterPage() {
   const totalQs = questionCount(conceptId, 1) + questionCount(conceptId, 2) + questionCount(conceptId, 3)
   const specs = useMemo(() => buildSpecs(cs.story, Math.min(questions.length, 4)), [cs.story, questions.length])
 
-  const [pageIdx, setPageIdx] = useState(0)
+  // Story is shown once per concept — return visits skip straight to the questions.
+  const storySeenKey = `mc-story-seen-${resolveId(conceptId)}`
+  const [hasSeenStory] = useState(() => typeof window !== 'undefined' && !!localStorage.getItem(storySeenKey))
+
+  // Start at the first question page on return visits
+  const firstQuestionIdx = useMemo(
+    () => specs.findIndex(p => p.kind === 'question'),
+    [specs]
+  )
+  const [pageIdx, setPageIdx] = useState(() => hasSeenStory && firstQuestionIdx > 0 ? firstQuestionIdx : 0)
+
+  // Mark the story as seen once the student reaches any question page.
+  useEffect(() => {
+    const cur = specs[pageIdx]
+    if (cur?.kind === 'question' && !localStorage.getItem(storySeenKey)) {
+      localStorage.setItem(storySeenKey, '1')
+    }
+  }, [pageIdx, specs, storySeenKey])
   const [dir, setDir] = useState<'f' | 'b'>('f')
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
@@ -429,6 +446,11 @@ export default function ConceptChapterPage() {
             <div className={s.qLayout}>
               {/* Left: question */}
               <div className={s.qLeft}>
+                {hasSeenStory && pageIdx === firstQuestionIdx && (
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: theme.dim, marginBottom: 16 }}>
+                    Ch. {ch} · {cs.conceptName}
+                  </div>
+                )}
                 <header className={s.qHead}>
                   <span className={s.qKicker}>Question {qNum} of {qTotal}</span>
                   <span className={s.qChipSmall} style={{ color: theme.chip }}>Ch. {ch}</span>

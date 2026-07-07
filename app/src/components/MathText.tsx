@@ -65,8 +65,12 @@ function looksLikeMath(expr: string): boolean {
 
 function parse(text: string): Segment[] {
   const segments: Segment[] = []
-  // Match $$...$$ then $...$
-  const re = /(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$)/g
+  // Match (in priority order):
+  //   $$...$$  block dollar
+  //   \[...\]  block LaTeX
+  //   $...$    inline dollar
+  //   \(...\)  inline LaTeX
+  const re = /(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\$[^$\n]+?\$|\\\([\s\S]+?\\\))/g
   let last = 0
   let m: RegExpExecArray | null
 
@@ -75,8 +79,11 @@ function parse(text: string): Segment[] {
       segments.push({ type: 'text', content: text.slice(last, m.index) })
     }
     const raw = m[0]
-    if (raw.startsWith('$$')) {
-      segments.push({ type: 'block', expr: raw.slice(2, -2).trim() })
+    if (raw.startsWith('$$') || raw.startsWith('\\[')) {
+      const expr = raw.startsWith('$$') ? raw.slice(2, -2).trim() : raw.slice(2, -2).trim()
+      segments.push({ type: 'block', expr })
+    } else if (raw.startsWith('\\(')) {
+      segments.push({ type: 'inline', expr: raw.slice(2, -2).trim() })
     } else {
       const expr = raw.slice(1, -1).trim()
       if (looksLikeMath(expr)) {

@@ -33,7 +33,7 @@ function friendlyError(code: string) {
     case 'auth/user-not-found':             return 'No account found with that email.'
     case 'auth/wrong-password':
     case 'auth/invalid-credential':
-    case 'auth/invalid-login-credentials':  return 'Incorrect email or password.'
+    case 'auth/invalid-login-credentials':  return 'Incorrect email or password. If you signed up with Google, use the button above.'
     case 'auth/account-exists-with-different-credential': return 'This email is linked to a different sign-in method. Try Google.'
     case 'auth/email-already-in-use':       return 'An account with this email already exists.'
     case 'auth/weak-password':              return 'Password must be at least 6 characters.'
