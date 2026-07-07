@@ -14,11 +14,12 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc, collection, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
+import type { StudentWorkEntry } from '../types'
 import s from './SessionDetail.module.css'
 
 const GENERATE_URL = 'https://mindcraft-webhook.vercel.app/api/generate-summary'
@@ -50,6 +51,7 @@ interface SessionData {
   summaryCard?:   SummaryCard
   tutorNotes?:    string
   tutorNotesUrl?: string
+  workPrompts?:   string[]
   transcript?: {
     fullText:  string
     sentences: any[]
@@ -77,6 +79,10 @@ export default function SessionDetail() {
   const [publishing, setPublishing] = useState(false)
   const [deleting, setDeleting]     = useState(false)
 
+  const [workPrompts, setWorkPrompts] = useState<string[]>([])
+  const [savingPrompts, setSavingPrompts] = useState(false)
+  const [studentWork, setStudentWork] = useState<StudentWorkEntry[]>([])
+
   const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -88,10 +94,27 @@ export default function SessionDetail() {
       if (data.tutorId !== user.uid) { navigate('/tutor', { replace: true }); return }
       setSession(data)
       setTutorNotes(data.tutorNotes ?? '')
+      setWorkPrompts(data.workPrompts ?? [])
       if (data.summaryCard) setCard(data.summaryCard)
       setLoading(false)
     }).catch(() => navigate('/tutor', { replace: true }))
   }, [id, user, navigate])
+
+  useEffect(() => {
+    if (!id) return
+    const unsub = onSnapshot(collection(db, 'sessions', id, 'studentWork'), snap => {
+      const entries: StudentWorkEntry[] = snap.docs.map(d => ({
+        id: d.id,
+        ...(d.data() as Omit<StudentWorkEntry, 'id'>),
+      }))
+      entries.sort((a, b) => {
+        if (a.wasStuck !== b.wasStuck) return a.wasStuck ? -1 : 1
+        return b.createdAt - a.createdAt
+      })
+      setStudentWork(entries)
+    })
+    return () => unsub()
+  }, [id])
 
 
   // Read file as plain text client-side — no upload to Storage needed.
@@ -197,6 +220,27 @@ export default function SessionDetail() {
   function addHw() { setCard(c => ({ ...c, homework: [...c.homework, ''] })) }
   function removeHw(i: number) { setCard(c => ({ ...c, homework: c.homework.filter((_, j) => j !== i) })) }
 
+  function updateWorkPrompt(i: number, val: string) {
+    setWorkPrompts(p => { const next = [...p]; next[i] = val; return next })
+  }
+  function addWorkPrompt() { setWorkPrompts(p => [...p, '']) }
+  function removeWorkPrompt(i: number) { setWorkPrompts(p => p.filter((_, j) => j !== i)) }
+
+  async function saveWorkPrompts() {
+    if (!id) return
+    const prompts = workPrompts.map(p => p.trim()).filter(Boolean)
+    setSavingPrompts(true)
+    try {
+      await updateDoc(doc(db, 'sessions', id), { workPrompts: prompts })
+      setWorkPrompts(prompts)
+      showToast('Follow-up prompts saved for student')
+    } catch {
+      showToast('Could not save prompts')
+    } finally {
+      setSavingPrompts(false)
+    }
+  }
+
   if (loading) return (
     <div className={s.loadWrap}><div className={s.spinner} /></div>
   )
@@ -289,6 +333,59 @@ export default function SessionDetail() {
                 </span>
               </div>
             </div>
+
+            {/* Follow-up work prompts for student */}
+            <div className={s.card}>
+              <div className={s.cardLabel} style={{ marginBottom: 8 }}>Student Follow-up Work</div>
+              <p className={s.workHint}>
+                Flag 1–3 problems for the student to work through after the session.
+                They'll see a scratch pad and can explain their thinking if stuck.
+              </p>
+              {workPrompts.map((p, i) => (
+                <div key={i} className={s.listRow}>
+                  <input
+                    className={s.fieldInput}
+                    value={p}
+                    onChange={e => updateWorkPrompt(i, e.target.value)}
+                    placeholder={`Problem / topic ${i + 1}`}
+                  />
+                  <button className={s.removeBtn} type="button" onClick={() => removeWorkPrompt(i)}>✕</button>
+                </div>
+              ))}
+              <button className={s.addBtn} type="button" onClick={addWorkPrompt}>+ Add prompt</button>
+              <button
+                className={s.btnOutline}
+                type="button"
+                onClick={saveWorkPrompts}
+                disabled={savingPrompts}
+                style={{ marginTop: 12 }}
+              >
+                {savingPrompts ? 'Saving…' : 'Save prompts for student'}
+              </button>
+            </div>
+
+            {/* Student reasoning submissions */}
+            {studentWork.length > 0 && (
+              <div className={s.card}>
+                <div className={s.cardLabel} style={{ marginBottom: 12 }}>Student Work Submitted</div>
+                {studentWork.map(entry => (
+                  <div key={entry.id} className={s.workEntry}>
+                    <div className={s.workEntryHead}>
+                      <span className={s.workPrompt}>{entry.prompt}</span>
+                      <span className={entry.wasStuck ? s.stuckBadge : s.okBadge}>
+                        {entry.wasStuck ? 'Got stuck' : 'Knew it'}
+                      </span>
+                    </div>
+                    {entry.scratchImage && (
+                      <img src={entry.scratchImage} alt="Student scratch work" className={s.scratchImg} />
+                    )}
+                    {entry.reasoningText && (
+                      <p className={s.reasoningText}>{entry.reasoningText}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
 
             <button className={s.btnGenerate} onClick={handleGenerate} disabled={generating}>
               {generating ? (

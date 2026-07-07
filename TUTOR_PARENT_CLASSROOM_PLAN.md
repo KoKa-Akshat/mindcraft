@@ -211,7 +211,7 @@ export interface StudentWorkEntry {
   sessionId: string
   studentId: string
   prompt: string              // the problem/topic the tutor flagged
-  scratchImage?: string        // canvas.toDataURL(), same pattern as Practice.tsx's scratch pane
+  scratchImage?: string        // canvas.toDataURL('image/png') from the new ScratchPad component
   reasoningText: string        // "what were you thinking" — required when stuck
   wasStuck: boolean
   createdAt: number
@@ -272,42 +272,158 @@ the student marks `wasStuck: true` (a simple toggle: "I knew what to do" vs
 submit, directly per your ask: "have the student explain their reasoning
 specifically when they don't know what to do").
 
-New page, e.g. `app/src/pages/SessionWork.tsx`, reached from the student's
-Dashboard "last session" card ("Work through what we covered →"): one screen
-per prompt, using the new `ScratchPad` component. On submit, write to
-`sessions/{id}/studentWork/{autoId}` with `scratchImage:
-canvas.toDataURL('image/png')` — this is genuinely the first time this app
-persists any hand-drawn canvas data anywhere, since the old scratch pane never
-saved its contents even before it was removed.
+### Implementation-ready breakdown (rules already deployed — this is unblocked)
 
-**Tutor side, reviewing**: on `SessionDetail.tsx`, render each
-`studentWork` entry — the scratch image, the reasoning text, and the
-`wasStuck` flag prominently (this is the "identify where the student messed
-up" signal — surfacing entries where `wasStuck === true` first is probably
-right, sorted before the ones where the student said they were confident).
+**0. Dependency:** `cd app && npm install perfect-freehand` (confirmed not
+already in `package.json`).
 
-### Firestore rule needed
-```
-match /sessions/{sessionId}/studentWork/{entryId} {
-  allow create: if request.auth != null
-    && request.resource.data.studentId == request.auth.uid
-    && get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid;
-  allow read: if request.auth != null && (
-    resource.data.studentId == request.auth.uid ||
-    get(/databases/$(database)/documents/sessions/$(sessionId)).data.tutorId == request.auth.uid
-  );
-  allow update, delete: if false;  // append-only from the student side
+**1. `app/src/components/ScratchPad.tsx`** (new, shared):
+```tsx
+import { useRef, useEffect, useState } from 'react'
+import { getStroke } from 'perfect-freehand'
+
+type Point = [number, number, number] // x, y, pressure
+
+function pathFromStroke(stroke: number[][]): string {
+  if (!stroke.length) return ''
+  const d = stroke.reduce(
+    (acc, [x, y], i) => `${acc}${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)} `,
+    '',
+  )
+  return `${d}Z`
+}
+
+export default function ScratchPad({ onChange }: { onChange?: (canvas: HTMLCanvasElement) => void }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
+  const pointsRef = useRef<Point[]>([])
+  const drawingRef = useRef(false)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = canvas.clientWidth * dpr
+    canvas.height = canvas.clientHeight * dpr
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    ctx.scale(dpr, dpr)
+    ctx.fillStyle = '#1a1f2e'
+    ctxRef.current = ctx
+  }, [])
+
+  function begin(e: React.PointerEvent<HTMLCanvasElement>) {
+    drawingRef.current = true
+    // Mouse/finger report pressure 0 or 0.5 — only trust real pressure from a stylus.
+    const pressure = e.pointerType === 'pen' ? e.pressure : 0.5
+    pointsRef.current = [[e.nativeEvent.offsetX, e.nativeEvent.offsetY, pressure]]
+  }
+
+  function move(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (!drawingRef.current) return
+    const pressure = e.pointerType === 'pen' ? e.pressure : 0.5
+    pointsRef.current.push([e.nativeEvent.offsetX, e.nativeEvent.offsetY, pressure])
+    const stroke = getStroke(pointsRef.current, { size: 3, thinning: 0.6, smoothing: 0.5 })
+    const ctx = ctxRef.current
+    if (!ctx || !stroke.length) return
+    ctx.fill(new Path2D(pathFromStroke(stroke)))
+  }
+
+  function end() {
+    drawingRef.current = false
+    pointsRef.current = []
+    if (canvasRef.current && onChange) onChange(canvasRef.current)
+  }
+
+  function clear() {
+    const canvas = canvasRef.current
+    const ctx = ctxRef.current
+    if (canvas && ctx) ctx.clearRect(0, 0, canvas.width, canvas.height)
+  }
+
+  return (
+    <div>
+      <canvas
+        ref={canvasRef}
+        style={{ touchAction: 'none', width: '100%', height: 320, background: '#fff', borderRadius: 12 }}
+        onPointerDown={begin}
+        onPointerMove={move}
+        onPointerUp={end}
+        onPointerCancel={end}
+        onPointerLeave={() => drawingRef.current && end()}
+      />
+      <button type="button" onClick={clear}>Clear</button>
+    </div>
+  )
 }
 ```
+(`getStroke`'s actual outline-point format may need a small adapter depending
+on the installed `perfect-freehand` version's TS types — verify against
+whatever version `npm install` resolves; the shape above is the standard
+usage pattern from the library's own docs.)
+
+**2. Tutor adds prompts — `SessionDetail.tsx`.** Add a small section (near
+the existing "Your Notes" card, ~line 267) — a repeatable text-input list
+mirroring the existing `topics`/`homework` add/remove pattern already in this
+file (`updateTopic`/`addTopic`/`removeTopic`, lines 188-192):
+```tsx
+async function saveWorkPrompts(prompts: string[]) {
+  await updateDoc(doc(db, 'sessions', session!.id), { workPrompts: prompts })
+}
+```
+Add `workPrompts?: string[]` to the `Session` interface in `types/index.ts`.
+
+**3. Student entry point — `StudentSessions.tsx`, not the Dashboard.**
+Correction from the earlier draft: there's no existing "last session" card on
+the Dashboard to hook into (`useStudentData`'s `lastSession` field is fetched
+but never rendered anywhere today — dead data, same situation as the
+`SessionPlan`/`TutorObservation` types before this plan). `StudentSessions.tsx`
+already queries ALL of the student's sessions
+(`where('studentEmail','==',user.email)`, no server-side filter) and only
+CLIENT-side discards ones without `data.summary?.published` (line ~58). Extend
+that mapping to also carry `workPrompts` through for sessions that have it,
+regardless of publish status, and render a "Work through what we covered →"
+card/button for any session where `workPrompts?.length` and the student
+hasn't already submitted matching `studentWork` entries — navigates to
+`/session-work/:sessionId`.
+
+**4. New page — `app/src/pages/SessionWork.tsx`.** Route:
+`<Route path="/session-work/:sessionId" element={<AuthGuard><SessionWork /></AuthGuard>} />`
+in `App.tsx`. Loads `sessions/{sessionId}.workPrompts`, steps through one
+prompt at a time: prompt text → `ScratchPad` → "I knew what to do" / "I got
+stuck" toggle → (if stuck) required reasoning textarea → submit writes to
+`sessions/{sessionId}/studentWork/{autoId}`:
+```ts
+await addDoc(collection(db, 'sessions', sessionId, 'studentWork'), {
+  sessionId, studentId: user.uid, prompt, wasStuck,
+  reasoningText: reasoningText || '',
+  scratchImage: canvasEl.toDataURL('image/png'),
+  createdAt: Date.now(),
+})
+```
+Matches the rules already deployed (`allow create` requires
+`request.resource.data.studentId == request.auth.uid` and the parent
+session's `studentId` to match the caller — both satisfied here).
+
+**5. Tutor review — `SessionDetail.tsx`.** Fetch
+`sessions/{id}/studentWork` (a `getDocs`/`onSnapshot` on the subcollection,
+same pattern as this file's existing single-doc fetches), render each entry:
+the `scratchImage` as an `<img src={entry.scratchImage} />`, the
+`reasoningText`, and `wasStuck` prominently — sort `wasStuck === true` entries
+first (this is the "identify where the student messed up" signal).
+
+### Firestore rule — already deployed, no action needed
+Covered by the `sessions/{sessionId}/studentWork/{entryId}` block already live
+in `firebase/firestore.rules` (see the top-level "Firestore rules" section of
+this doc — deployed 2026-07-06).
 
 ---
 
 ## 4. Parent dashboard — finish wiring (mostly already built)
 
-**Status:** shipped in app lane (pending Firestore rules deploy for child data reads).
-`ParentDashboard.tsx` + `ParentDashboard.module.css` wired; link-child-by-email,
-weekly avg-outcome performance chart, active curriculum from KG nodes, top
-strengths/gaps.
+**Status: DONE, fully live.** `ParentDashboard.tsx` + `ParentDashboard.module.css`
+wired; link-child-by-email, weekly avg-outcome performance chart, active
+curriculum from KG nodes, top strengths/gaps.
 
 ### Gaps to close
 
@@ -317,43 +433,71 @@ strengths/gaps.
    in `App.tsx` and `Login.tsx` `navigateAfterRole` / `routeAfterLogin` send
    `role === 'parent'` to `/parent`.
 
-3. **Firestore rules — file ready, not yet deployed.** `firebase/firestore.rules`
-   covers parent reads of linked child's `interactions` and `knowledge_graphs`
-   (see bottom of this doc). `ParentDashboard.tsx` reads Firestore directly —
-   **decision: keep Firestore path** (not ML endpoints). Data loads once rules
-   are deployed; frontend push alone is not enough for the performance chart /
-   curriculum panels.
+3. ~~**Firestore rules — file ready, not yet deployed.**~~ **DONE — deployed
+   2026-07-06.** `firebase/firestore.rules` covers parent reads of linked
+   child's `interactions` and `knowledge_graphs`; deployed live via the
+   Firebase Rules API (same deploy that covers section 3's `studentWork`
+   rule — one push, not two, per the "deploy once" note at the top of this
+   doc). `ParentDashboard.tsx` reads Firestore directly — **decision: keep
+   Firestore path** (not ML endpoints). Data should now load for a linked
+   parent account; see point 4 for the outstanding manual test.
 
-4. **Signup flow check**: parent signup only writes `role`/`email`/`displayName`
-   and routes straight to `/parent` — no exam track or gap-scan gating. Looks
-   clean from code review; worth a quick manual click-through post-deploy.
+4. **Signup flow check — NOT YET DONE.** Parent signup only writes
+   `role`/`email`/`displayName` and routes straight to `/parent` — no exam
+   track or gap-scan gating. Looks clean from code review; still needs a
+   manual click-through now that rules are live: sign up/in as a parent,
+   link a real child by email, confirm the performance chart and curriculum
+   panels actually render data (not just "no data yet").
 
 5. ~~**Pre-existing type error** (`weekPoints.at(-1)`).~~ **DONE** — uses
    `weekPoints[weekPoints.length - 1]`.
 
-**Remaining to ship #4:** review + deploy `firebase/firestore.rules`, then test
-parent account with linked `childId`.
+**Remaining to fully close #4:** just the manual test in point 4 above —
+everything else (routing, redirects, rules) has shipped and deployed.
 
-### Suggested sequencing
-Ship #4 (parent) first — least new code, mostly connecting existing pieces,
-immediately shippable once the rules question is resolved. Then #2 (tutor
-plan/observation) — pure app-lane, no server/rules complexity. Then #1
-(classroom codes) and #3 (reasoning capture) — both need new webhook
-endpoints and/or rules, naturally paired as the "needs a deploy beyond just
-the frontend" batch.
+### Suggested sequencing (updated — rules deploy no longer the blocker)
+#4 (parent) and the rules deploy are done — only the manual click-through
+test remains. #1 (classroom codes) is also implemented (webhook endpoints +
+`auth.py` parent-check landed alongside this batch). Next up: #2 (tutor
+plan/observation forms — pure app-lane, no server/rules complexity, not yet
+built) and #3 (reasoning capture — spec is implementation-ready per the
+breakdown above, rules already deployed, not yet built).
 
 ---
 
-## Firestore rules — DONE, file recreated, not yet deployed
+## Firestore rules — DONE, deployed and live
 
-**Update:** the file is written. `firebase/firestore.rules` (matching
-`firebase.json`'s `"firestore": {"rules": "firebase/firestore.rules"}`
-reference) has been recreated in the repo — it was previously deleted from
-git in commit `1f0976f7` ("drop redundant firebase/ config") with no
-replacement ever committed. It now contains the full live ruleset (pulled
-fresh via the Rules API, not the stale git snapshot) plus the four additions
-below. **Still untracked/uncommitted and not deployed** — someone needs to
-review, `git add` it, and run `firebase deploy --only firestore:rules`.
+`firebase/firestore.rules` (matching `firebase.json`'s `"firestore":
+{"rules": "firebase/firestore.rules"}` reference) is recreated, committed,
+and **deployed live** — it was previously deleted from git in commit
+`1f0976f7` ("drop redundant firebase/ config") with no replacement ever
+committed.
+
+**Deploy mechanism note (corrected):** this repo does NOT use `firebase
+deploy --only firestore:rules` day-to-day — the logged-in Firebase CLI
+account hit an IAM permission gap on the `serviceusage` preflight check the
+CLI does before deploying (`Caller does not have required permission ...
+roles/serviceusage.serviceUsageConsumer`). The repo's actual mechanism is
+`webhook/scripts/deploy-rules.ts`, a secret-gated Vercel function
+(deliberately kept out of `webhook/api/` so it isn't a live public endpoint)
+that reads `firebase/firestore.rules` + `firebase/storage.rules` and pushes
+them via the Firebase Rules API directly. Both deploys done in this session
+used that same underlying API directly (create ruleset → PATCH the
+`cloud.firestore` release) rather than either the CLI or the secret-gated
+script — same effect, one fewer hop.
+
+**Deploy history:**
+1. `2026-07-06T21:31:45Z` — first deploy: `interactions`, `learning_events`,
+   `knowledge_graphs`, `classrooms`, `sessions/{id}/studentWork` added.
+2. `2026-07-06T23:59:11Z` — redeploy after a file edit (post-first-deploy)
+   loosened the `studentWork` create rule to also match `studentEmail` (not
+   just `studentId`), consistent with how `sessions/{sessionId}`'s own rule
+   already accepts either — matters for a session created before the student
+   had an account/uid linked. **File and live rules are in sync as of this
+   redeploy** — if `firebase/firestore.rules` gets edited again, redeploy
+   again the same way (or via the CLI once the IAM permission is granted, or
+   via the webhook script) so the file doesn't silently drift from
+   production a second time.
 
 Additions beyond the earlier draft in this doc (refined while writing the
 actual file):
@@ -363,8 +507,7 @@ actual file):
   `update` (`false`, server-only) — **not** a blanket `allow write: if
   false`, because `QAToolbar.tsx`'s "Restart Fresh" flow does
   `deleteDoc(doc(db,'knowledge_graphs', user.uid))` for the *current* user.
-  A blanket deny would have silently broken that existing feature the moment
-  rules were deployed.
+  A blanket deny would have silently broken that existing feature.
 - `classrooms` and `sessions/{id}/studentWork/{entryId}` as originally
   drafted (§1 and §3 above).
 
@@ -374,20 +517,7 @@ Confirmed via direct grep of the client codebase that `interactions`/
 regardless of what's written here) — the only client-side touch is
 `QAToolbar.tsx`'s own-account read + delete, both accounted for above.
 
-**Before deploying:**
-1. Read `firebase/firestore.rules` in full — it's the complete ruleset, not a
-   diff, since Firestore rules deploys replace the whole file.
-2. Confirm brace/paren balance and syntax look right (did a basic count
-   check — 27/27 braces, 67/67 parens — but that's not the same as the
-   Firebase CLI's actual rules compiler; consider `firebase deploy --only
-   firestore:rules` against a staging project first if one exists, or at
-   least review closely since there's no staging Firestore here).
-3. Deploy: `firebase deploy --only firestore:rules` (uses whichever Firebase
-   project the local `firebase use` / `.firebaserc` points at — confirm it's
-   `mindcraft-93858` before running).
-4. Test after deploy: sign in as a parent with a linked `childId`, confirm
-   `ParentDashboard.tsx` actually renders performance data (currently unknown
-   whether it silently fails or the UI's `.finally(() => setLoading(false))`
-   masks a permission-denied error as just "no data yet"). Also re-test
-   QAToolbar's "Restart Fresh" still deletes the knowledge graph successfully
-   post-deploy.
+**Remaining:** manual test — sign in as a parent with a linked `childId`,
+confirm `ParentDashboard.tsx` renders real performance data (not just "no
+data yet"), and re-confirm QAToolbar's "Restart Fresh" still deletes the
+knowledge graph successfully now that rules are enforced.

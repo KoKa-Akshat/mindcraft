@@ -67,6 +67,9 @@ function lookupStory(rawId: string): CS {
 
 type Cluster = 'algebra' | 'geometry' | 'functions' | 'data'
 
+// Cluster accent per concept — keys must match canonical ontology concept ids.
+// Source of truth: ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json
+// See DASHBOARD_CONCEPT_ID_CONSISTENCY_FIX.md when adding/renaming concepts.
 const CLUSTER_MAP: Record<string, Cluster> = {
   fractions_decimals: 'algebra',  ratios_proportions: 'algebra',
   percent_ratio: 'algebra',       order_of_operations: 'algebra',
@@ -76,13 +79,23 @@ const CLUSTER_MAP: Record<string, Cluster> = {
   absolute_value: 'algebra',      integer_operations: 'algebra',
   polynomial_operations: 'algebra', factors_multiples: 'algebra',
   number_properties: 'algebra',   rational_expressions: 'algebra',
+  algebraic_manipulation: 'algebra', measurement_units: 'algebra',
+  factoring_polynomials: 'algebra', polynomials: 'algebra',
+  quadratic_equations: 'algebra',
+  act_strategy: 'algebra', representation_translation: 'algebra',
   functions_basics: 'functions',  function_notation: 'functions',
   quadratic_functions: 'functions', exponential_functions: 'functions',
   logarithms: 'functions',        composite_inverse: 'functions',
   trigonometry_basics: 'functions', sequences_series: 'functions',
+  logarithmic_functions: 'functions',
+  applications_of_derivatives: 'functions', applications_of_integrals: 'functions',
+  derivatives: 'functions', integrals: 'functions', limits_continuity: 'functions',
   right_triangle_geometry: 'geometry', triangles_similarity: 'geometry',
   circles: 'geometry',            coordinate_geometry: 'geometry',
   geometric_transformations: 'geometry', solid_geometry: 'geometry',
+  area_volume: 'geometry', circles_geometry: 'geometry',
+  lines_angles: 'geometry', triangles_congruence: 'geometry',
+  conic_sections: 'geometry', vectors: 'geometry',
   statistics_basics: 'data',      probability: 'data',
   data_interpretation: 'data',    regression: 'data',
   counting_combinatorics: 'data', complex_numbers: 'data',
@@ -91,6 +104,8 @@ const CLUSTER_MAP: Record<string, Cluster> = {
   quadratic: 'functions',
   statistics: 'data',
   trigonometry: 'functions',
+  basic_probability: 'data', descriptive_statistics: 'data',
+  inferential_statistics: 'data', probability_distributions: 'data',
 }
 
 const CLUSTER_THEME = {

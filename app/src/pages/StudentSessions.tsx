@@ -2,14 +2,12 @@
  * StudentSessions.tsx
  *
  * Student-facing "Session Notes" page.
- * Lists all completed sessions with published summaries, most-recent first.
- * Fetched live from Firestore: sessions where studentEmail == user.email
- *                                          and summary.published == true
+ * Lists published session summaries + follow-up work prompts from tutors.
  */
 
 import { useEffect, useState } from 'react'
 import { db } from '../firebase'
-import { collection, query, where, onSnapshot } from 'firebase/firestore'
+import { collection, query, where, onSnapshot, getDocs } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
 import Sidebar  from '../components/Sidebar'
@@ -24,6 +22,8 @@ interface Session {
   duration:    string
   title:       string
   bullets:     string[]
+  workPrompts: string[]
+  pendingWork: boolean
 }
 
 const SUBJECT_COLORS: Record<string, string> = {
@@ -47,47 +47,66 @@ export default function StudentSessions() {
 
   useEffect(() => {
     if (!user?.email) return
-    // No orderBy — avoids requiring a composite Firestore index; sort in JS instead
     const q = query(
       collection(db, 'sessions'),
       where('studentEmail', '==', user.email),
     )
-    const unsub = onSnapshot(q, snap => {
-      const docs: Session[] = []
-      snap.forEach(d => {
-        const data = d.data()
-        if (!data.summary?.published) return
-        docs.push({
-          id:          d.id,
-          subject:     data.subject     ?? 'General',
-          tutorName:   data.tutorName   ?? 'Tutor',
-          scheduledAt: data.scheduledAt ?? 0,
-          date:        data.summary.date ?? '',
-          duration:    data.summary.duration ?? '',
-          title:       data.summary.title ?? '(no title)',
-          bullets:     data.summary.bullets ?? [],
-        })
-      })
-      docs.sort((a, b) => b.scheduledAt - a.scheduledAt)
-      setSessions(docs)
-      setLoading(false)
+    const unsub = onSnapshot(q, async snap => {
+      try {
+        const docs: Session[] = []
+        await Promise.all(snap.docs.map(async d => {
+          const data = d.data()
+          const published = !!data.summary?.published
+          const workPrompts: string[] = (data.workPrompts ?? []).filter(Boolean)
+
+          let pendingWork = false
+          if (workPrompts.length) {
+            const workSnap = await getDocs(collection(db, 'sessions', d.id, 'studentWork'))
+            const submitted = new Set(workSnap.docs.map(w => w.data().prompt as string))
+            pendingWork = workPrompts.some(p => !submitted.has(p))
+          }
+
+          if (!published && !pendingWork) return
+
+          docs.push({
+            id:          d.id,
+            subject:     data.subject     ?? 'General',
+            tutorName:   data.tutorName   ?? 'Tutor',
+            scheduledAt: data.scheduledAt ?? 0,
+            date:        data.summary?.date ?? data.date ?? '',
+            duration:    data.summary?.duration ?? data.duration ?? '',
+            title:       data.summary?.title ?? `${data.subject ?? 'Session'} follow-up`,
+            bullets:     data.summary?.bullets ?? [],
+            workPrompts,
+            pendingWork,
+          })
+        }))
+        docs.sort((a, b) => b.scheduledAt - a.scheduledAt)
+        setSessions(docs)
+      } finally {
+        setLoading(false)
+      }
     }, () => setLoading(false))
     return () => unsub()
   }, [user?.email])
 
-  const subjects = ['All', ...Array.from(new Set(sessions.map(s => s.subject))).sort()]
-  const visible  = filterSub === 'All' ? sessions : sessions.filter(s => s.subject === filterSub)
+  const pendingSessions = sessions.filter(sess => sess.pendingWork)
+  const subjects = ['All', ...Array.from(new Set(sessions.filter(sess => sess.bullets.length > 0).map(sess => sess.subject))).sort()]
+  const visible  = filterSub === 'All'
+    ? sessions.filter(sess => sess.bullets.length > 0)
+    : sessions.filter(sess => sess.bullets.length > 0 && sess.subject === filterSub)
 
   return (
     <div className={s.shell}>
       <Sidebar />
 
       <main className={s.page}>
-        {/* ── Header ── */}
         <div className={s.header}>
           <div className={s.headerLeft}>
             <h1 className={s.title}>Session Notes</h1>
-            <p className={s.sub}>{sessions.length} session{sessions.length !== 1 ? 's' : ''} published</p>
+            <p className={s.sub}>
+              {sessions.filter(sess => sess.bullets.length > 0).length} session{sessions.filter(sess => sess.bullets.length > 0).length !== 1 ? 's' : ''} published
+            </p>
           </div>
           <button className={s.graphBtn} onClick={() => navigate('/knowledge-graph')}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -101,7 +120,26 @@ export default function StudentSessions() {
           </button>
         </div>
 
-        {/* ── Subject filter tabs ── */}
+        {!loading && pendingSessions.length > 0 && (
+          <div className={s.workSection}>
+            <h2 className={s.workSectionTitle}>Follow-up work from your tutor</h2>
+            {pendingSessions.map(sess => (
+              <div key={sess.id} className={s.workCard}>
+                <div>
+                  <span className={s.workSubject}>{sess.subject}</span>
+                  <p className={s.workMeta}>{sess.tutorName} · {sess.workPrompts.length} problem{sess.workPrompts.length !== 1 ? 's' : ''}</p>
+                </div>
+                <button
+                  className={s.workBtn}
+                  onClick={() => navigate(`/session-work/${sess.id}`)}
+                >
+                  Work through what we covered →
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
         {!loading && subjects.length > 2 && (
           <div className={s.filters}>
             {subjects.map(sub => (
@@ -117,17 +155,16 @@ export default function StudentSessions() {
           </div>
         )}
 
-        {/* ── Content ── */}
         {loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
-        ) : visible.length === 0 ? (
+        ) : visible.length === 0 && pendingSessions.length === 0 ? (
           <div className={s.empty}>
             <div className={s.emptyIcon}>📋</div>
             <p className={s.emptyTitle}>No sessions yet</p>
             <p className={s.emptySub}>Once your tutor publishes a session summary it'll appear here.</p>
             <button className={s.bookBtn} onClick={() => navigate('/book')}>Book a Session →</button>
           </div>
-        ) : (
+        ) : visible.length === 0 ? null : (
           <div className={s.list}>
             {visible.map(sess => {
               const color   = SUBJECT_COLORS[sess.subject] ?? '#00d2c8'
@@ -135,7 +172,6 @@ export default function StudentSessions() {
               return (
                 <div key={sess.id} className={`${s.card} ${isOpen ? s.cardOpen : ''}`}
                      style={{ '--accent': color } as React.CSSProperties}>
-                  {/* Colored left border */}
                   <div className={s.cardAccent} />
 
                   <div className={s.cardTop} onClick={() => setExpanded(isOpen ? null : sess.id)}>
@@ -167,6 +203,14 @@ export default function StudentSessions() {
                         </div>
                       ))}
                       <div className={s.cardActions}>
+                        {sess.pendingWork && (
+                          <button
+                            className={s.workBtnInline}
+                            onClick={() => navigate(`/session-work/${sess.id}`)}
+                          >
+                            Work through what we covered →
+                          </button>
+                        )}
                         <button className={s.graphLink}
                           onClick={() => navigate(`/knowledge-graph/${encodeURIComponent(sess.subject)}`)}>
                           Explore {sess.subject} Graph →

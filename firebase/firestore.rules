@@ -47,7 +47,10 @@ service cloud.firestore {
       match /studentWork/{entryId} {
         allow create: if request.auth != null
           && request.resource.data.studentId == request.auth.uid
-          && get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid;
+          && (
+            get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid
+            || get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email
+          );
         allow read: if request.auth != null && (
           resource.data.studentId == request.auth.uid ||
           get(/databases/$(database)/documents/sessions/$(sessionId)).data.tutorId == request.auth.uid

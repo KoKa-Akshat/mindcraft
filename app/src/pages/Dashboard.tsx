@@ -19,37 +19,37 @@ import s from './Dashboard.module.css'
 // Concept discovery cards — supplementary ACT concepts to explore
 const EXPLORE_CARDS = [
   {
-    id: 'quadratics',
+    id: 'quadratic_equations',
     label: 'Quadratics',
     symbol: 'x²',
     bg: 'linear-gradient(135deg, #1e2a4a 0%, #2f4370 55%, #22304f 100%)',
   },
   {
-    id: 'trigonometry',
+    id: 'trigonometry_basics',
     label: 'Trig',
     symbol: 'θ',
     bg: 'linear-gradient(135deg, #3d1f24 0%, #6b3540 55%, #452328 100%)',
   },
   {
-    id: 'statistics',
+    id: 'descriptive_statistics',
     label: 'Statistics',
     symbol: 'σ',
     bg: 'linear-gradient(135deg, #402d1a 0%, #6b4a26 55%, #47331d 100%)',
   },
   {
-    id: 'coordinate_geometry',
+    id: 'linear_equations',
     label: 'Coord. Plane',
     symbol: 'xy',
     bg: 'linear-gradient(135deg, #3b2440 0%, #5c3a63 55%, #402a47 100%)',
   },
   {
-    id: 'logarithms',
+    id: 'logarithmic_functions',
     label: 'Logarithms',
     symbol: 'ln',
     bg: 'linear-gradient(135deg, #14383a 0%, #226266 55%, #17403f 100%)',
   },
   {
-    id: 'probability',
+    id: 'basic_probability',
     label: 'Probability',
     symbol: 'P',
     bg: 'linear-gradient(135deg, #1f3a2a 0%, #356247 55%, #24402f 100%)',

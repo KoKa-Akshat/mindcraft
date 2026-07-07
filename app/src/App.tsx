@@ -36,6 +36,7 @@ import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
 import ConstellationGpsLab from './pages/ConstellationGpsLab'
 import ParentDashboard    from './pages/ParentDashboard'
+import SessionWork        from './pages/SessionWork'
 import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
@@ -173,6 +174,7 @@ export default function App() {
         <Route path="/chat/:partnerId"     element={<AuthGuard><Chat /></AuthGuard>} />
         <Route path="/study-timer"         element={<AuthGuard><StudyTimer /></AuthGuard>} />
         <Route path="/sessions"            element={<AuthGuard><StudentSessions /></AuthGuard>} />
+        <Route path="/session-work/:sessionId" element={<AuthGuard><SessionWork /></AuthGuard>} />
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
         <Route path="/onboard"             element={<AuthGuard><GradeOnboard /></AuthGuard>} />
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />

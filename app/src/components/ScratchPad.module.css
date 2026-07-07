@@ -1,0 +1,25 @@
+.wrap { display: flex; flex-direction: column; gap: 8px; }
+
+.canvas {
+  width: 100%;
+  touch-action: none;
+  background: #fff;
+  border-radius: 12px;
+  border: 1.5px solid var(--bd, rgba(0, 0, 0, 0.1));
+  cursor: crosshair;
+}
+
+.clearBtn {
+  align-self: flex-start;
+  font-family: var(--f, system-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mu, #666);
+  background: none;
+  border: 1.5px solid var(--bd, rgba(0, 0, 0, 0.1));
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.clearBtn:hover { border-color: #bbb; color: var(--tx, #111); }

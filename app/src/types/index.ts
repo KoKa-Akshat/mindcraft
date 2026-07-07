@@ -25,6 +25,8 @@ export interface Session {
   summaryStatus?: 'pending' | 'draft' | 'published'
   plan?: SessionPlan
   tutorObservation?: TutorObservation
+  /** Tutor-flagged follow-up problems for async student reasoning capture (§3). */
+  workPrompts?: string[]
   calendlyEventUri?: string
   firefliesMeetingUrl?: string
   transcript?: {
@@ -69,6 +71,19 @@ export interface TutorObservation {
   struggled_with: string[]
   excelled_at: string[]
   completedAt: number
+}
+
+// ─── Student async reasoning (session follow-up work) ─────────────────────────
+
+export interface StudentWorkEntry {
+  id: string
+  sessionId: string
+  studentId: string
+  prompt: string
+  scratchImage?: string
+  reasoningText: string
+  wasStuck: boolean
+  createdAt: number
 }
 
 // ─── Classroom ────────────────────────────────────────────────────────────────
