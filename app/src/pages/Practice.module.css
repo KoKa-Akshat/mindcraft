@@ -902,8 +902,8 @@
 ══════════════════════════════════════════════════════════════════════════════ */
 
 .solverWrap {
-  width: min(100%, 980px);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 .solverPanel {
@@ -911,7 +911,46 @@
   grid-template-columns: minmax(260px, 0.9fr) minmax(420px, 1.1fr);
   gap: 22px;
   align-items: stretch;
-  margin-top: 10px;
+  margin-top: 0;
+}
+
+/* Solver page shell — matches StudentSessions header + full-bleed content */
+.solverPage {
+  max-width: none;
+  padding: 0 28px 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.solverHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 22px 0 18px;
+  border-bottom: 1px solid var(--bd);
+  margin-bottom: 20px;
+}
+
+.solverHeaderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.solverPageTitle {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.4px;
+  margin: 0;
+  font-family: var(--f-display);
+}
+
+.solverPageSub {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 600;
+  margin: 0;
 }
 
 .solverCopy,
