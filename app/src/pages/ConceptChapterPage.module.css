@@ -3,12 +3,10 @@
 /* ── Desk ──────────────────────────────────────────────────────────────── */
 .desk {
   min-height: 100dvh;
-  background: var(--theme-bg, #f5f0e6);
-  background-image: radial-gradient(
-    ellipse at 50% 18%,
-    transparent 0%,
-    color-mix(in srgb, var(--theme-ink, #3d2f10) 4%, transparent) 100%
-  );
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(29,58,138,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(193,18,31,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 35%, #0c141c 0%, #080e14 70%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,14 +84,23 @@
   min-height: calc(100dvh - 80px);
   flex: 1;
   border-radius: 4px;
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.06),
-    0 8px 24px rgba(0, 0, 0, 0.08),
-    0 20px 40px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   will-change: transform, opacity;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 27px,
+      rgba(29, 58, 138, 0.09) 27px,
+      rgba(29, 58, 138, 0.09) 28px
+    );
+  box-shadow:
+    inset 64px 0 0 -62px rgba(193, 18, 31, 0.18),
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 /* Paper grain */
@@ -204,6 +211,31 @@
 .coverCta:hover { opacity: 0.88; transform: translateY(-1px); }
 
 /* ── STORY ────────────────────────────────────────────────────────────── */
+
+/* Scene stamp — protagonist name + place/time, above the first story page */
+.sceneStamp {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+.sceneProtagonist {
+  font: 600 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.sceneDivider {
+  font: 400 11px/1 "IBM Plex Mono", monospace;
+  opacity: 0.5;
+}
+.sceneSetting {
+  font: 400 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  font-style: italic;
+}
+
 .storyLayout {
   flex: 1;
   display: flex;
@@ -480,7 +512,8 @@
   flex-direction: column;
   padding: clamp(22px, 3.5vw, 40px) 16px clamp(16px, 2vw, 24px) 0;
   min-height: 0;
-  overflow-y: auto;
+  flex: 1;
+  overflow: hidden;
 }
 .notepadHeader {
   display: flex;
@@ -513,9 +546,9 @@
 .notepadInner {
   flex: 1;
   position: relative;
-  border-left: 2px solid rgba(200,120,120,0.28); /* margin line */
-  margin-left: 12px;
-  padding-left: 8px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
 }
 .notepadLines {
   position: absolute;

@@ -118,11 +118,19 @@ const CLUSTER_MAP: Record<string, Cluster> = {
   inferential_statistics: 'data', probability_distributions: 'data',
 }
 
+const JOURNAL_PAPER = {
+  bg: '#080e14',
+  paper: '#f7f3ee',
+  ink: '#1c1a17',
+  dim: '#6f6a61',
+  lineBg: 'rgba(29, 58, 138, 0.09)',
+}
+
 const CLUSTER_THEME = {
-  algebra:   { bg: '#f5eedb', paper: '#faf5ec', ink: '#3d2f10', accent: '#8b6914', dim: '#a0906a', chip: '#8b6914', lineBg: 'rgba(139,105,20,0.09)' },
-  geometry:  { bg: '#e8eef5', paper: '#f1f5fa', ink: '#172333', accent: '#1e5f8a', dim: '#4a7396', chip: '#1e5f8a', lineBg: 'rgba(30,95,138,0.09)' },
-  functions: { bg: '#eaf2e8', paper: '#f1f7f0', ink: '#1a2c16', accent: '#2d6924', dim: '#4a7a42', chip: '#2d6924', lineBg: 'rgba(45,105,36,0.09)' },
-  data:      { bg: '#f2ece9', paper: '#f8f3f1', ink: '#321614', accent: '#7a2e26', dim: '#8c5550', chip: '#7a2e26', lineBg: 'rgba(122,46,38,0.09)' },
+  algebra:   { ...JOURNAL_PAPER, accent: '#1d3a8a', chip: '#1d3a8a' },
+  geometry:  { ...JOURNAL_PAPER, accent: '#1e5f8a', chip: '#1e5f8a' },
+  functions: { ...JOURNAL_PAPER, accent: '#247a4d', chip: '#247a4d' },
+  data:      { ...JOURNAL_PAPER, accent: '#7a2e26', chip: '#7a2e26' },
 }
 
 // ── Cluster glyphs ───────────────────────────────────────────────────────────
@@ -429,9 +437,12 @@ export default function ConceptChapterPage() {
   }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, pageIdx])
 
   const goTo = (i: number, d: 'f' | 'b') => {
-    if (i < 0) { navigate(-1); return }
+    if (i < 0) {
+      navigate(fromDashboard ? '/dashboard' : -1)
+      return
+    }
     if (i >= specs.length) {
-      navigate('/practice', { state: { conceptId } })
+      navigate('/dashboard', { replace: true })
       return
     }
     setDir(d)
@@ -497,7 +508,7 @@ export default function ConceptChapterPage() {
         <div className={s.grain} aria-hidden />
 
         {/* In-page corner controls — merged into the paper, not floating on the desk */}
-        <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Back">← back</button>
+        <button className={s.backBtn} onClick={() => navigate(fromDashboard ? '/dashboard' : -1)} aria-label="Back">← back</button>
         <div className={s.pageTools}>
           <PingTutor context={pingContext} compact />
           <div className={s.calcWrap}>
@@ -541,31 +552,48 @@ export default function ConceptChapterPage() {
         )}
 
         {/* ── STORY ── */}
-        {spec.kind === 'story' && (
-          <div className={s.storyLayout}>
-            <header className={s.storyHead}>
-              <span className={s.storyRunLabel}>the story</span>
-              <span className={s.storyRunPage}>{spec.pageNum} / {storyPageCount}</span>
-            </header>
-            <div className={s.storyBody}>
-              {spec.paras.map((p, i) => (
-                <p key={i} className={`${s.storyPara} ${spec.isFirst && i === 0 ? s.firstPara : ''}`}>
-                  {spec.isFirst && i === 0 && p.length > 0 && (
-                    <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
-                  )}
-                  {spec.isFirst && i === 0 ? p.slice(1) : p}
-                </p>
-              ))}
-            </div>
-            {spec.pageNum === storyPageCount && (
-              <div className={s.storyFoot}>
-                <span className={s.storyFootLabel} style={{ color: theme.dim }}>
-                  {cs.conceptName} · {totalQs} questions waiting
-                </span>
+        {spec.kind === 'story' && (() => {
+          const frame = getFrame(conceptId)
+          return (
+            <div className={s.storyLayout}>
+              <header className={s.storyHead}>
+                <span className={s.storyRunLabel}>the story</span>
+                <span className={s.storyRunPage}>{spec.pageNum} / {storyPageCount}</span>
+              </header>
+
+              {/* Scene stamp — protagonist + setting on the first story page */}
+              {spec.isFirst && frame && (
+                <div className={s.sceneStamp}>
+                  <span className={s.sceneProtagonist} style={{ color: theme.accent }}>
+                    {frame.protagonist}
+                  </span>
+                  <span className={s.sceneDivider} style={{ color: theme.dim }}>·</span>
+                  <span className={s.sceneSetting} style={{ color: theme.dim }}>
+                    {frame.settingLine}
+                  </span>
+                </div>
+              )}
+
+              <div className={s.storyBody}>
+                {spec.paras.map((p, i) => (
+                  <p key={i} className={`${s.storyPara} ${spec.isFirst && i === 0 ? s.firstPara : ''}`}>
+                    {spec.isFirst && i === 0 && p.length > 0 && (
+                      <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
+                    )}
+                    {spec.isFirst && i === 0 ? p.slice(1) : p}
+                  </p>
+                ))}
               </div>
-            )}
-          </div>
-        )}
+              {spec.pageNum === storyPageCount && (
+                <div className={s.storyFoot}>
+                  <span className={s.storyFootLabel} style={{ color: theme.dim }}>
+                    {cs.conceptName} · {totalQs} questions waiting
+                  </span>
+                </div>
+              )}
+            </div>
+          )
+        })()}
 
         {/* ── QUESTION ── */}
         {spec.kind === 'question' && (() => {
@@ -703,7 +731,7 @@ export default function ConceptChapterPage() {
                 )}
               </div>
 
-              {/* Right: scratch pad for handwritten work */}
+              {/* Right: full-page work area */}
               <div className={s.notepad}>
                 <div className={s.notepadHeader}>
                   <span className={s.notepadLabel} style={{ color: theme.dim }}>your work</span>
@@ -731,32 +759,33 @@ export default function ConceptChapterPage() {
                     </button>
                   )}
                 </div>
-                {showWriteNudge && !notes[spec.qIdx] && (
-                  <span className={s.writeNudge}>try sketching it out first…</span>
-                )}
-                <ScratchPad
-                  key={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
-                  height={240}
-                  lineOverlays={(() => {
-                    const lines = scratchInk[spec.qIdx]?.workLines ?? []
-                    const overlays: LineOverlay[] = lines
-                      .filter(line => line.verdict === 'wrong')
-                      .map(line => ({ bbox: line.bbox, kind: 'suspect' as const }))
-                    if (debugOutlines) {
-                      overlays.push(...lines.map(line => ({ bbox: line.bbox, kind: 'debug' as const })))
-                    }
-                    return overlays.length ? overlays : undefined
-                  })()}
-                  onChange={(_canvas, strokeData) => {
-                    setScratchStrokes(s => ({ ...s, [spec.qIdx]: strokeData }))
-                    setNotes(n => ({
-                      ...n,
-                      [spec.qIdx]: strokeData.strokes.length
-                        ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
-                        : '',
-                    }))
-                  }}
-                />
+                <div className={s.notepadInner} style={{ '--line-color': theme.lineBg } as React.CSSProperties}>
+                  <div className={s.notepadLines} aria-hidden />
+                  <ScratchPad
+                    key={`${spec.qIdx}-${scratchRev[spec.qIdx] ?? 0}`}
+                    paperMode
+                    height={480}
+                    lineOverlays={(() => {
+                      const lines = scratchInk[spec.qIdx]?.workLines ?? []
+                      const overlays: LineOverlay[] = lines
+                        .filter(line => line.verdict === 'wrong')
+                        .map(line => ({ bbox: line.bbox, kind: 'suspect' as const }))
+                      if (debugOutlines) {
+                        overlays.push(...lines.map(line => ({ bbox: line.bbox, kind: 'debug' as const })))
+                      }
+                      return overlays.length ? overlays : undefined
+                    })()}
+                    onChange={(_canvas, strokeData) => {
+                      setScratchStrokes(s => ({ ...s, [spec.qIdx]: strokeData }))
+                      setNotes(n => ({
+                        ...n,
+                        [spec.qIdx]: strokeData.strokes.length
+                          ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
+                          : '',
+                      }))
+                    }}
+                  />
+                </div>
                 <ScratchTranscriptionPane
                   imageDataUrl={notes[spec.qIdx] ?? ''}
                   strokeData={scratchStrokes[spec.qIdx] ?? null}
