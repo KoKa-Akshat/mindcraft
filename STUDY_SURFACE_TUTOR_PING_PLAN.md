@@ -75,14 +75,9 @@ Acceptance:
 
 ## Task 3 — Book panels: session notes + knowledge map in the paper style
 
-> **STATUS (2026-07-07): half-done — CSS only.** The paper styles are
-> already written in `DashboardPanels.module.css` (`paperPanelBody`,
-> `paperSearchLine`, `noteEntry`, `routeBody`, `coverage*`, `btn*` etc.)
-> but NO component uses them yet — all three components below still import
-> the dark `ConstellationGpsLab.module.css`, so nothing visually changed.
-> Remaining work = switch the three components' imports/classNames to the
-> new paper classes (and delete any now-unused dark-class usage), then run
-> the acceptance checks.
+> **STATUS (2026-07-07): done.** `DashboardNotesPanel`, `DashboardRoutePanel`,
+> and embedded `ConstellationGpsExplorer` now use `DashboardPanels.module.css`
+> paper classes. Full lab page still uses `ConstellationGpsLab.module.css`.
 
 The dashboard book's **problem solver** panel is the reference: content
 sits directly on the ruled/dotted paper — mono `← today` nav + lowercase
@@ -124,10 +119,10 @@ Per panel:
    status as small ink chips).
 
 Acceptance:
-- [ ] No dark card inside any book page — solver, notes, map, and route
+- [x] No dark card inside any book page — solver, notes, map, and route
       panels all read as the same paper journal.
-- [ ] All interactions unchanged (search, expand, plot route, step click).
-- [ ] Full-page knowledge graph route untouched.
+- [x] All interactions unchanged (search, expand, plot route, step click).
+- [x] Full-page knowledge graph route untouched.
 
 ## Task 4 — Admin view-all (already shipped — verify only)
 

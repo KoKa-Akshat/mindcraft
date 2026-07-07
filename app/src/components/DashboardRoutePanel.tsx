@@ -11,7 +11,7 @@ import { getRecommendations } from '../lib/mlApi'
 import type { ConceptRecommendation } from '../lib/mlApi'
 import { buildGraph, GPS_W, GPS_H, STATUS_COLOR } from '../lib/learningPathGraph'
 import type { GPSGraph, GPSMLNode } from '../lib/learningPathGraph'
-import s from '../pages/ConstellationGpsLab.module.css'
+import n from './DashboardPanels.module.css'
 
 interface RouteStep {
   id: string
@@ -26,10 +26,9 @@ type KGNode = { id: string; mastery?: number; status?: string }
 
 export default function DashboardRoutePanel({
   targetId,
-  onBack,
 }: {
   targetId: string
-  onBack: () => void
+  onBack?: () => void
 }) {
   const user = useUser()
   const navigate = useNavigate()
@@ -46,7 +45,7 @@ export default function DashboardRoutePanel({
       try {
         const kg = await fetchKnowledgeGraph(user.uid)
         const nodes = (kg?.nodes ?? []) as KGNode[]
-        const map = new Map(nodes.map(n => [n.id, n]))
+        const map = new Map(nodes.map(nd => [nd.id, nd]))
         if (cancelled) return
 
         const result = await getRecommendations(user.uid, [targetId], 'curriculum')
@@ -57,14 +56,14 @@ export default function DashboardRoutePanel({
         for (const r of result?.recommendations ?? []) recMap.set(r.conceptId, r)
 
         const routeSteps: RouteStep[] = chain.map((id, i) => {
-          const n = map.get(id)
+          const nd = map.get(id)
           const rec = recMap.get(id)
           const isTarget = id === targetId
           return {
             id,
             name: mlIdToLabel(id),
-            mastery: n?.mastery ?? 0,
-            status: n?.status ?? 'untouched',
+            mastery: nd?.mastery ?? 0,
+            status: nd?.status ?? 'untouched',
             reason: rec?.reason ?? (isTarget
               ? 'This is your target. Focus your practice here.'
               : `Step ${i + 1}: strengthen this prerequisite first.`),
@@ -74,8 +73,8 @@ export default function DashboardRoutePanel({
 
         const gpsNodeMap = new Map<string, GPSMLNode>(
           chain.map(id => {
-            const n = map.get(id)
-            return [id, { id, mastery: n?.mastery ?? 0, status: n?.status ?? 'untouched' }]
+            const nd = map.get(id)
+            return [id, { id, mastery: nd?.mastery ?? 0, status: nd?.status ?? 'untouched' }]
           }),
         )
         setSteps(routeSteps)
@@ -100,103 +99,85 @@ export default function DashboardRoutePanel({
   }
 
   return (
-    <div className={s.embeddedRoot}>
-      <div className={s.embeddedHeader}>
-        <button type="button" className={s.embeddedBack} onClick={onBack}>
-          ← Back to map
-        </button>
-        <div className={s.embeddedTitleRow}>
-          <h2 className={s.embeddedTitle}>Your Route</h2>
-          <span className={s.embeddedSub}>{targetLabel}</span>
-        </div>
+    <div className={n.routeBody}>
+      <div>
+        <span className={n.routeEyebrow}>mission path</span>
+        <span className={n.routeMeta}> · {targetLabel}</span>
       </div>
 
-      <div className={s.panelRoute}>
-        {loading ? (
-          <p className={s.sectionHint}>Plotting your route…</p>
-        ) : steps.length === 0 ? (
-          <p className={s.sectionHint}>No route found for this concept yet.</p>
-        ) : (
-          <>
-            <div className={s.routeHeader}>
-              <span className={s.routeEyebrow}>Mission path</span>
-              <span className={s.routeMeta}>{steps.length} steps · curriculum mode</span>
+      {loading ? (
+        <p className={n.paperEmptyHint}>Plotting your route…</p>
+      ) : steps.length === 0 ? (
+        <p className={n.paperEmptyHint}>No route found for this concept yet.</p>
+      ) : (
+        <>
+          <p className={n.routeMeta}>{steps.length} steps · curriculum mode</p>
+
+          {gpsGraph && (
+            <div className={n.miniMapWrap}>
+              <svg viewBox={`0 0 ${GPS_W} ${GPS_H}`} width="100%" height={170} className={n.miniMapSvg}>
+                {gpsGraph.edges.map((e, i) => (
+                  <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+                    stroke={e.needsWork ? 'rgba(124,58,237,0.35)' : 'rgba(29,58,138,0.18)'}
+                    strokeWidth={e.needsWork ? 1.4 : 1}
+                    strokeDasharray={e.needsWork ? undefined : '3 2'}
+                  />
+                ))}
+                {[...gpsGraph.nodes]
+                  .sort((a, b) => Math.abs(b.depth) - Math.abs(a.depth))
+                  .map(nd => {
+                    const color = nd.isTarget ? '#1d3a8a' : (STATUS_COLOR[nd.status] ?? '#9aabb6')
+                    const r = nd.isTarget ? 9 : 6
+                    return (
+                      <g key={nd.id}>
+                        <circle cx={nd.x} cy={nd.y} r={r}
+                          fill={nd.isTarget ? 'rgba(29,58,138,0.08)' : 'rgba(251,248,244,0.9)'}
+                          stroke={color} strokeWidth={nd.isTarget ? 2.2 : 1.6}
+                        />
+                        <text x={nd.x} y={nd.y + r + 9} textAnchor="middle"
+                          fontSize={nd.isTarget ? 8.5 : 7.5}
+                          fontWeight={nd.isTarget ? 700 : 500}
+                          fill={nd.isTarget ? '#1d3a8a' : '#6f6a61'}
+                          fontFamily="system-ui, -apple-system, sans-serif"
+                        >
+                          {nd.short}
+                        </text>
+                      </g>
+                    )
+                  })}
+              </svg>
             </div>
+          )}
 
-            {gpsGraph && (
-              <div className={s.miniMapWrap}>
-                <svg viewBox={`0 0 ${GPS_W} ${GPS_H}`} width="100%" height={170} className={s.miniMapSvg}>
-                  {gpsGraph.edges.map((e, i) => (
-                    <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-                      stroke={e.needsWork ? 'rgba(124,58,237,0.28)' : 'rgba(0,135,90,0.2)'}
-                      strokeWidth={e.needsWork ? 1.4 : 1}
-                      strokeDasharray={e.needsWork ? undefined : '3 2'}
-                    />
-                  ))}
-                  {[...gpsGraph.nodes]
-                    .sort((a, b) => Math.abs(b.depth) - Math.abs(a.depth))
-                    .map(n => {
-                      const color = n.isTarget ? '#7c3aed' : (STATUS_COLOR[n.status] ?? '#9aabb6')
-                      const r = n.isTarget ? 9 : 6
-                      return (
-                        <g key={n.id}>
-                          <circle cx={n.x} cy={n.y} r={r}
-                            fill={n.isTarget ? 'rgba(124,58,237,0.12)' : 'rgba(20,30,40,0.05)'}
-                            stroke={color} strokeWidth={n.isTarget ? 2.2 : 1.6}
-                          />
-                          <text x={n.x} y={n.y + r + 9} textAnchor="middle"
-                            fontSize={n.isTarget ? 8.5 : 7.5}
-                            fontWeight={n.isTarget ? 700 : 500}
-                            fill={n.isTarget ? '#5b21b6' : '#607d8b'}
-                            fontFamily="system-ui, -apple-system, sans-serif"
-                          >
-                            {n.short}
-                          </text>
-                        </g>
-                      )
-                    })}
-                </svg>
-              </div>
-            )}
+          <div className={n.routeSteps}>
+            {steps.map((step, i) => (
+              <button
+                key={step.id}
+                type="button"
+                className={`${n.routeStep} ${step.isTarget ? n.routeStepTarget : ''}`}
+                onClick={() => startStep(step.id, step.isTarget)}
+              >
+                <div className={n.stepNum}>{i + 1}</div>
+                <div className={n.stepBody}>
+                  <div className={`${n.stepName} ${step.isTarget ? n.stepNameTarget : ''}`}>
+                    {step.name}
+                  </div>
+                  <div className={n.stepReason}>{step.reason}</div>
+                </div>
+                <span className={n.stepChip}>{Math.round(step.mastery * 100)}%</span>
+              </button>
+            ))}
+          </div>
 
-            <div className={s.routeSteps}>
-              {steps.map((step, i) => (
-                <button
-                  key={step.id}
-                  type="button"
-                  className={`${s.routeStep} ${step.isTarget ? s.routeStepTarget : ''}`}
-                  onClick={() => startStep(step.id, step.isTarget)}
-                >
-                  <div className={`${s.stepNum} ${step.isTarget ? s.stepNumTarget : ''}`}>
-                    {i + 1}
-                  </div>
-                  <div className={s.stepBody}>
-                    <div className={`${s.stepName} ${step.isTarget ? s.stepNameTarget : ''}`}>
-                      {step.name}
-                    </div>
-                    <div className={s.stepReason}>{step.reason}</div>
-                  </div>
-                  <div className={s.stepBadge}
-                    style={step.isTarget
-                      ? { background: '#ede9ff', color: '#7c3aed' }
-                      : { background: '#e6f6f0', color: '#00875a' }}
-                  >
-                    {Math.round(step.mastery * 100)}%
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className={s.btnPrimary}
-              onClick={() => startStep(steps[0].id, steps[0].isTarget)}
-            >
-              Begin with {steps[0].name} →
-            </button>
-          </>
-        )}
-      </div>
+          <button
+            type="button"
+            className={n.paperSubmit}
+            onClick={() => startStep(steps[0].id, steps[0].isTarget)}
+          >
+            Begin with {steps[0].name} →
+          </button>
+        </>
+      )}
     </div>
   )
 }

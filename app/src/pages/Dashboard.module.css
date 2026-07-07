@@ -533,14 +533,14 @@
 }
 .solverFullLink:hover { color: var(--ink-depth); }
 
-/* ── map panel (dark inset on paper) ─────────────────────── */
+/* ── map panel (paper inset) ─────────────────────────────── */
 .mapInset {
   flex: 1;
   border-radius: 2px;
   overflow: hidden;
-  border: 1px solid var(--paper-edge);
-  box-shadow: inset 0 0 0 1px var(--paper-crease);
+  border: 1px solid var(--rule);
   min-height: 500px;
+  background: transparent;
 }
 
 /* ── responsive ───────────────────────────────────────────── */

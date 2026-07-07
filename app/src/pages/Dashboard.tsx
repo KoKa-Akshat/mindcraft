@@ -526,7 +526,7 @@ export default function Dashboard() {
                   <span className={s.panelTitle}>session notes</span>
                 </div>
                 <div className={s.panelContent}>
-                  <DashboardNotesPanel onBack={closePanel} />
+                  <DashboardNotesPanel />
                 </div>
               </div>
             ) : homeworkMode ? (

@@ -721,3 +721,198 @@
 }
 
 .btnGhost:hover { color: var(--ink-depth); }
+
+/* Detail side panel (embedded map) */
+.detailStatus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusLabel {
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.metric { display: flex; flex-direction: column; gap: 5px; }
+
+.metricLabel {
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faded);
+}
+
+.metricBarRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metricBar {
+  flex: 1;
+  height: 4px;
+  background: var(--rule);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.metricBarFill {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 300ms ease;
+}
+
+.metricPct {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  color: var(--ink-pencil);
+  min-width: 32px;
+  text-align: right;
+}
+
+.momentumVal {
+  font-family: var(--font-stamp);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.detailMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
+}
+
+.metaDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--ink-faded);
+}
+
+.section { display: flex; flex-direction: column; gap: 6px; }
+
+.sectionLabel {
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faded);
+  text-transform: lowercase;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  padding: 3px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-pencil);
+  background: var(--paper-raised);
+}
+
+.ingredientList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ingredientCard {
+  padding: 8px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--paper-raised);
+}
+
+.ingredientName {
+  font-family: var(--font-script);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-katha);
+  margin-bottom: 2px;
+}
+
+.ingredientDesc {
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-pencil);
+  line-height: 1.4;
+}
+
+.detailActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.routeHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.routeTitle {
+  font-family: var(--font-script);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-katha);
+}
+
+.routeLoading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  color: var(--ink-faded);
+}
+
+.routeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-depth);
+  animation: paperPulse 1.3s ease-in-out infinite;
+}
+
+.routeEmpty {
+  margin: 0;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-pencil);
+  line-height: 1.45;
+}
+
+.stepBadge {
+  flex-shrink: 0;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 4px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-pencil);
+  background: var(--paper-recessed);
+  margin-top: 2px;
+}

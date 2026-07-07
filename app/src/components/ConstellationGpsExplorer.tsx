@@ -13,6 +13,7 @@ import type { ConceptRecommendation } from '../lib/mlApi'
 import { buildGraph, GPS_W, GPS_H, STATUS_COLOR } from '../lib/learningPathGraph'
 import type { GPSGraph, GPSMLNode } from '../lib/learningPathGraph'
 import s from '../pages/ConstellationGpsLab.module.css'
+import p from './DashboardPanels.module.css'
 
 interface MLNode {
   id: string; name: string; level: string
@@ -119,6 +120,7 @@ export default function ConstellationGpsExplorer({
 }) {
   const user = useUser()
   const navigate = useNavigate()
+  const c = embedded ? p : s
 
   const [kgData,     setKgData]     = useState<KGData | null>(null)
   const [loading,    setLoading]    = useState(false)
@@ -329,15 +331,15 @@ export default function ConstellationGpsExplorer({
   }, [kgData, levelFilter, statusFilter])
 
   const filterRow = (levels.length > 0 || kgData) && (
-    <div className={s.filters} role="group" aria-label="Map filters">
+    <div className={c.filters} role="group" aria-label="Map filters">
       <button
-        className={`${s.chip} ${!statusFilter ? s.chipActive : ''}`}
+        className={`${c.chip} ${!statusFilter ? c.chipActive : ''}`}
         onClick={() => setStatusFilter(null)}
       >All status</button>
       {(['stable', 'progress', 'needs', 'unknown'] as const).map(kind => (
         <button
           key={kind}
-          className={`${s.chip} ${statusFilter === kind ? s.chipActive : ''}`}
+          className={`${c.chip} ${statusFilter === kind ? c.chipActive : ''}`}
           onClick={() => setStatusFilter(statusFilter === kind ? null : kind)}
         >
           {KIND_LABEL[kind]}
@@ -345,14 +347,14 @@ export default function ConstellationGpsExplorer({
       ))}
       {levels.length > 0 && (
         <>
-          <span className={s.filterSep} aria-hidden />
+          <span className={c.filterSep} aria-hidden />
           <button
-            className={`${s.chip} ${!levelFilter ? s.chipActive : ''}`}
+            className={`${c.chip} ${!levelFilter ? c.chipActive : ''}`}
             onClick={() => setLevelFilter(null)}
           >All levels</button>
           {levels.map(lv => (
             <button key={lv}
-              className={`${s.chip} ${levelFilter === lv ? s.chipActive : ''}`}
+              className={`${c.chip} ${levelFilter === lv ? c.chipActive : ''}`}
               onClick={() => setLevelFilter(levelFilter === lv ? null : lv)}
             >
               {lv.replace(/_/g, ' ')}
@@ -364,14 +366,14 @@ export default function ConstellationGpsExplorer({
   )
 
   const searchForm = (
-    <form className={s.searchRow} onSubmit={handleSearchSubmit}>
-      <div className={s.searchWrap}>
-        <svg className={s.searchIcon} viewBox="0 0 24 24" fill="none"
+    <form className={c.searchRow} onSubmit={handleSearchSubmit}>
+      <div className={c.searchWrap}>
+        <svg className={c.searchIcon} viewBox="0 0 24 24" fill="none"
           stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
         </svg>
         <input
-          className={s.searchInput}
+          className={c.searchInput}
           placeholder="Type a concept to plot your route…"
           value={search}
           onChange={e => { setSearch(e.target.value); setSearchOpen(true) }}
@@ -380,26 +382,26 @@ export default function ConstellationGpsExplorer({
           autoComplete="off"
         />
         {search && (
-          <button type="button" className={s.searchClear}
+          <button type="button" className={c.searchClear}
             onClick={() => { setSearch(''); setSearchOpen(false) }}>✕</button>
         )}
       </div>
-      <button type="submit" className={s.searchBtn} disabled={!search.trim()}>
+      <button type="submit" className={c.searchBtn} disabled={!search.trim()}>
         Plot route →
       </button>
       {searchOpen && searchMatches.size > 0 && (
-        <div className={s.suggestions} role="listbox">
+        <div className={c.suggestions} role="listbox">
           {Array.from(searchMatches).slice(0, 7).map(id => {
             const n = nodeMap.get(id)
             if (!n) return null
             const kind = statusKind(n.status)
             return (
-              <button key={id} role="option" className={s.suggItem}
+              <button key={id} role="option" className={c.suggItem}
                 onMouseDown={() => { setSearch(mlIdToLabel(id)); setSearchOpen(false); plotRoute(id) }}
               >
-                <span className={s.suggDot} style={{ background: KIND_COLOR[kind] }} />
-                <span className={s.suggName}>{mlIdToLabel(id)}</span>
-                <span className={s.suggStatus}>{KIND_LABEL[kind]}</span>
+                <span className={c.suggDot} style={{ background: KIND_COLOR[kind] }} />
+                <span className={c.suggName}>{mlIdToLabel(id)}</span>
+                <span className={c.suggStatus}>{KIND_LABEL[kind]}</span>
               </button>
             )
           })}
@@ -408,17 +410,14 @@ export default function ConstellationGpsExplorer({
     </form>
   )
 
+  const edgeLit = embedded ? 'rgba(29, 58, 138, 0.42)' : 'rgba(255,255,255,0.62)'
+  const edgeDim = embedded ? 'rgba(29, 58, 138, 0.14)' : 'rgba(255,255,255,0.18)'
+  const axisFill = embedded ? 'rgba(111, 106, 97, 0.72)' : 'rgba(255,255,255,0.42)'
+
   return (
-    <div className={embedded ? s.embeddedRoot : s.explorerStandalone}>
+    <div className={embedded ? p.paperExplorerRoot : s.explorerStandalone}>
       {embedded ? (
-        <header className={s.embeddedHeader}>
-          {onBack && (
-            <button type="button" className={s.embeddedBack} onClick={onBack}>
-              ← Practice path
-            </button>
-          )}
-          {searchForm}
-        </header>
+        <div className={p.paperSearchSection}>{searchForm}</div>
       ) : (
         <header className={s.hero}>
           <div className={s.heroInner}>
@@ -461,31 +460,31 @@ export default function ConstellationGpsExplorer({
         </header>
       )}
 
-      {filterRow && <div className={s.filterBar}>{filterRow}</div>}
+      {filterRow && <div className={c.filterBar}>{filterRow}</div>}
 
-      <div className={`${s.mapArea} ${embedded ? s.mapAreaEmbedded : ''}`}>
-        <div className={s.mapWrap}>
+      <div className={`${c.mapArea} ${embedded ? c.mapAreaEmbedded : ''}`}>
+        <div className={c.mapWrap}>
           {loading && (
-            <div className={s.mapState}>
-              <span className={s.mapDot} />
+            <div className={c.mapState}>
+              <span className={c.mapDot} />
               <span>Loading your learning world…</span>
             </div>
           )}
 
           {!loading && !kgData && (
-            <div className={s.mapState}>
+            <div className={c.mapState}>
               <p>No learning data yet — complete a session or answer practice questions to populate your map.</p>
             </div>
           )}
 
           {kgData && (
             <>
-            <div className={s.zoomControls}>
-              <button type="button" className={s.zoomBtn} onClick={() => setView(v => ({ ...v, scale: Math.min(4, v.scale * 1.2) }))}>+</button>
-              <button type="button" className={s.zoomBtn} onClick={() => setView(v => ({ ...v, scale: Math.max(0.5, v.scale * 0.8) }))}>−</button>
-              <button type="button" className={s.zoomBtn} onClick={resetView}>Reset</button>
+            <div className={c.zoomControls}>
+              <button type="button" className={c.zoomBtn} onClick={() => setView(v => ({ ...v, scale: Math.min(4, v.scale * 1.2) }))}>+</button>
+              <button type="button" className={c.zoomBtn} onClick={() => setView(v => ({ ...v, scale: Math.max(0.5, v.scale * 0.8) }))}>−</button>
+              <button type="button" className={c.zoomBtn} onClick={resetView}>Reset</button>
             </div>
-            <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} className={s.mapSvg}
+            <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} className={c.mapSvg}
               xmlns="http://www.w3.org/2000/svg" aria-label="Knowledge constellation"
               onWheel={onWheel}
               onPointerDown={onPointerDown}
@@ -499,13 +498,13 @@ export default function ConstellationGpsExplorer({
               {kgData.axisLabels && (
                 <>
                   <text x={SVG_W / 2} y={SVG_H - 10} textAnchor="middle"
-                    fontSize="9" fill="rgba(255,255,255,0.42)"
+                    fontSize="9" fill={axisFill}
                     fontFamily="system-ui, sans-serif" fontWeight="600"
                     pointerEvents="none">
                     {kgData.axisLabels.x}
                   </text>
                   <text x={14} y={SVG_H / 2} textAnchor="middle"
-                    fontSize="9" fill="rgba(255,255,255,0.42)"
+                    fontSize="9" fill={axisFill}
                     fontFamily="system-ui, sans-serif" fontWeight="600"
                     transform={`rotate(-90, 14, ${SVG_H / 2})`}
                     pointerEvents="none">
@@ -522,7 +521,7 @@ export default function ConstellationGpsExplorer({
                 return (
                   <line key={i}
                     x1={sp.sx} y1={sp.sy} x2={tp.sx} y2={tp.sy}
-                    stroke={lit ? 'rgba(255,255,255,0.62)' : 'rgba(255,255,255,0.18)'}
+                    stroke={lit ? edgeLit : edgeDim}
                     strokeWidth={lit ? 1.6 : 0.9}
                     strokeLinecap="round"
                   />
@@ -600,9 +599,13 @@ export default function ConstellationGpsExplorer({
                       />
                     )}
                     <circle r={r}
-                      fill={dimmed ? 'rgba(255,255,255,0.22)' : '#ffffff'}
-                      fillOpacity={dimmed ? 1 : (isSel ? 1 : isHov ? 0.96 : hasData ? 0.9 : 0.55)}
-                      stroke={isSel ? accent : 'rgba(255,255,255,0.85)'}
+                      fill={embedded
+                        ? (dimmed ? 'rgba(29, 58, 138, 0.06)' : '#fbf8f4')
+                        : (dimmed ? 'rgba(255,255,255,0.22)' : '#ffffff')}
+                      fillOpacity={embedded
+                        ? (dimmed ? 1 : (isSel ? 1 : isHov ? 0.98 : hasData ? 0.95 : 0.7))
+                        : (dimmed ? 1 : (isSel ? 1 : isHov ? 0.96 : hasData ? 0.9 : 0.55))}
+                      stroke={isSel ? accent : (embedded ? '#c8c2b8' : 'rgba(255,255,255,0.85)')}
                       strokeWidth={isSel ? 2.2 : 1}
                       strokeOpacity={dimmed ? 0.3 : 1}
                     />
@@ -621,7 +624,9 @@ export default function ConstellationGpsExplorer({
                         textAnchor="middle"
                         fontSize={isSel ? 9.5 : 8.5}
                         fontWeight={isSel ? 700 : 500}
-                        fill={isSel ? '#ffffff' : dimmed ? 'rgba(255,255,255,0.28)' : 'rgba(255,255,255,0.72)'}
+                        fill={embedded
+                          ? (isSel ? '#1d3a8a' : dimmed ? 'rgba(111, 106, 97, 0.38)' : '#6f6a61')
+                          : (isSel ? '#ffffff' : dimmed ? 'rgba(255,255,255,0.28)' : 'rgba(255,255,255,0.72)')}
                         fontFamily="system-ui, -apple-system, sans-serif"
                         style={{ userSelect: 'none', pointerEvents: 'none' }}
                       >
@@ -639,33 +644,33 @@ export default function ConstellationGpsExplorer({
             </>
           )}
 
-          <div className={s.legend}>
-            <div className={s.legendItems}>
+          <div className={c.legend}>
+            <div className={c.legendItems}>
               {([
                 ['#00875a', 'Stable'],
                 ['#4361ee', 'Repairing'],
                 ['#d63e3e', 'Open Gap'],
                 ['#9aabb6', 'Unexplored'],
               ] as const).map(([color, label]) => (
-                <span key={label} className={s.legendItem}>
-                  <span className={s.legendDot} style={{ background: color }} />
+                <span key={label} className={c.legendItem}>
+                  <span className={c.legendDot} style={{ background: color }} />
                   {label}
                 </span>
               ))}
             </div>
-            <div className={s.coverage}>
-              <span className={s.coverageLabel}>Coverage</span>
-              <div className={s.coverageBar} role="progressbar"
+            <div className={c.coverage}>
+              <span className={c.coverageLabel}>Coverage</span>
+              <div className={c.coverageBar} role="progressbar"
                 aria-valuenow={coveragePct} aria-valuemin={0} aria-valuemax={100}>
-                <div className={s.coverageFill} style={{ width: `${coveragePct}%` }} />
+                <div className={c.coverageFill} style={{ width: `${coveragePct}%` }} />
               </div>
-              <span className={s.coverageText}>{stats.stable} of {stats.total} stable</span>
+              <span className={c.coverageText}>{stats.stable} of {stats.total} stable</span>
             </div>
           </div>
         </div>
 
         {panel.mode !== 'none' && (
-          <aside className={s.panel}>
+          <aside className={c.panel}>
             {panel.mode === 'detail' && (() => {
               const node = panel.node
               const kind = statusKind(node.status)
@@ -673,85 +678,85 @@ export default function ConstellationGpsExplorer({
               const mom = node.strengthScore
               const content = getConceptContent(node.id)
               return (
-                <div className={s.panelDetail}>
-                  <button className={s.panelClose} onClick={closePanel} aria-label="Close panel">✕</button>
+                <div className={c.panelDetail}>
+                  <button className={c.panelClose} onClick={closePanel} aria-label="Close panel">✕</button>
 
-                  <div className={s.detailStatus}>
-                    <span className={s.statusDot} style={{ background: KIND_COLOR[kind] }} />
-                    <span className={s.statusLabel} style={{ color: KIND_COLOR[kind] }}>
+                  <div className={c.detailStatus}>
+                    <span className={c.statusDot} style={{ background: KIND_COLOR[kind] }} />
+                    <span className={c.statusLabel} style={{ color: KIND_COLOR[kind] }}>
                       {KIND_LABEL[kind].toUpperCase()}
                     </span>
                   </div>
 
-                  <h2 className={s.detailName}>{mlIdToLabel(node.id)}</h2>
+                  <h2 className={c.detailName}>{mlIdToLabel(node.id)}</h2>
                   {content?.tagline && (
-                    <p className={s.detailTagline}>{content.tagline}</p>
+                    <p className={c.detailTagline}>{content.tagline}</p>
                   )}
 
-                  <div className={s.metric}>
-                    <span className={s.metricLabel}>ROUTE STRENGTH</span>
-                    <div className={s.metricBarRow}>
-                      <div className={s.metricBar}>
-                        <div className={s.metricBarFill}
+                  <div className={c.metric}>
+                    <span className={c.metricLabel}>ROUTE STRENGTH</span>
+                    <div className={c.metricBarRow}>
+                      <div className={c.metricBar}>
+                        <div className={c.metricBarFill}
                           style={{ width: `${masteryPct}%`, background: KIND_COLOR[kind] }} />
                       </div>
-                      <span className={s.metricPct}>{masteryPct}%</span>
+                      <span className={c.metricPct}>{masteryPct}%</span>
                     </div>
                   </div>
 
-                  <div className={s.metric}>
-                    <span className={s.metricLabel}>MOMENTUM</span>
-                    <span className={s.momentumVal}
+                  <div className={c.metric}>
+                    <span className={c.metricLabel}>MOMENTUM</span>
+                    <span className={c.momentumVal}
                       style={{ color: mom < 0 ? '#d63e3e' : mom > 0 ? '#00875a' : '#9aabb6' }}
                     >
                       {mom > 0 ? '+' : ''}{mom.toFixed(2)}
                     </span>
                   </div>
 
-                  <div className={s.detailMeta}>
+                  <div className={c.detailMeta}>
                     <span>{node.eventCount} INTERACTION{node.eventCount !== 1 ? 'S' : ''}</span>
-                    {node.level && <><span className={s.metaDot} /><span>{node.level.toUpperCase()}</span></>}
+                    {node.level && <><span className={c.metaDot} /><span>{node.level.toUpperCase()}</span></>}
                   </div>
 
                   {node.tags?.length > 0 && (
-                    <div className={s.section}>
-                      <div className={s.sectionLabel}>Topic tags</div>
-                      <div className={s.tagList}>
+                    <div className={c.section}>
+                      <div className={c.sectionLabel}>Topic tags</div>
+                      <div className={c.tagList}>
                         {node.tags.slice(0, 10).map(t => (
-                          <span key={t} className={s.tag}>{t.replace(/_/g, ' ')}</span>
+                          <span key={t} className={c.tag}>{t.replace(/_/g, ' ')}</span>
                         ))}
                       </div>
                     </div>
                   )}
 
                   {node.ingredients?.length > 0 && (
-                    <div className={s.section}>
-                      <div className={s.sectionLabel}>
+                    <div className={c.section}>
+                      <div className={c.sectionLabel}>
                         {kind !== 'stable'
                           ? `Repair ingredients (${node.ingredients.length})`
                           : `Ingredients (${node.ingredients.length})`}
                       </div>
                       {kind !== 'stable' && (
-                        <p className={s.sectionHint}>
+                        <p className={c.sectionHint}>
                           Tap one ingredient to practice the smallest repairable piece
                         </p>
                       )}
-                      <div className={s.ingredientList}>
+                      <div className={c.ingredientList}>
                         {node.ingredients.slice(0, 4).map(ing => (
-                          <div key={ing.id} className={s.ingredientCard}>
-                            <div className={s.ingredientName}>{ing.name}</div>
-                            <div className={s.ingredientDesc}>{ing.description}</div>
+                          <div key={ing.id} className={c.ingredientCard}>
+                            <div className={c.ingredientName}>{ing.name}</div>
+                            <div className={c.ingredientDesc}>{ing.description}</div>
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  <div className={s.detailActions}>
-                    <button className={s.btnPrimary} onClick={() => plotRoute(node.id)}>
+                  <div className={c.detailActions}>
+                    <button className={c.btnPrimary} onClick={() => plotRoute(node.id)}>
                       Plot route →
                     </button>
-                    <button className={s.btnGhost}
+                    <button className={c.btnGhost}
                       onClick={() => navigate('/practice', { state: { conceptId: node.id, missionType: 'learn' } })}
                     >
                       Start practice
@@ -762,8 +767,8 @@ export default function ConstellationGpsExplorer({
             })()}
 
             {panel.mode === 'route' && (
-              <div className={s.panelRoute}>
-                <button className={s.panelBack}
+              <div className={c.panelRoute}>
+                <button className={c.panelBack}
                   onClick={() => {
                     const n = selectedId ? nodeMap.get(selectedId) : null
                     n ? setPanel({ mode: 'detail', node: n }) : closePanel()
@@ -771,24 +776,24 @@ export default function ConstellationGpsExplorer({
                   aria-label="Back"
                 >← Back</button>
 
-                <div className={s.routeHeader}>
-                  <span className={s.routeTitle}>Your Next Route</span>
+                <div className={c.routeHeader}>
+                  <span className={c.routeTitle}>Your Next Route</span>
                   {!panel.loading && panel.steps.length > 0 && (
-                    <span className={s.routeMeta}>
+                    <span className={c.routeMeta}>
                       {panel.steps.length} step{panel.steps.length !== 1 ? 's' : ''} · curriculum mode
                     </span>
                   )}
                 </div>
 
                 {panel.loading && (
-                  <div className={s.routeLoading}>
-                    <span className={s.routeDot} />
+                  <div className={c.routeLoading}>
+                    <span className={c.routeDot} />
                     <span>Building your path…</span>
                   </div>
                 )}
 
                 {!panel.loading && panel.steps.length === 0 && (
-                  <p className={s.routeEmpty}>
+                  <p className={c.routeEmpty}>
                     Route unavailable — the ML service may be warming up. Try again in a moment.
                   </p>
                 )}
@@ -796,11 +801,13 @@ export default function ConstellationGpsExplorer({
                 {!panel.loading && panel.steps.length > 0 && (
                   <>
                     {panel.gpsGraph && (
-                      <div className={s.miniMapWrap}>
-                        <svg viewBox={`0 0 ${GPS_W} ${GPS_H}`} width="100%" height={170} className={s.miniMapSvg}>
+                      <div className={c.miniMapWrap}>
+                        <svg viewBox={`0 0 ${GPS_W} ${GPS_H}`} width="100%" height={170} className={c.miniMapSvg}>
                           {panel.gpsGraph.edges.map((e, i) => (
                             <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-                              stroke={e.needsWork ? 'rgba(124,58,237,0.28)' : 'rgba(0,135,90,0.2)'}
+                              stroke={embedded
+                                ? (e.needsWork ? 'rgba(29, 58, 138, 0.35)' : 'rgba(29, 58, 138, 0.18)')
+                                : (e.needsWork ? 'rgba(124,58,237,0.28)' : 'rgba(0,135,90,0.2)')}
                               strokeWidth={e.needsWork ? 1.4 : 1}
                               strokeDasharray={e.needsWork ? undefined : '3 2'}
                             />
@@ -808,12 +815,16 @@ export default function ConstellationGpsExplorer({
                           {[...panel.gpsGraph.nodes]
                             .sort((a, b) => Math.abs(b.depth) - Math.abs(a.depth))
                             .map(n => {
-                              const color = n.isTarget ? '#7c3aed' : (STATUS_COLOR[n.status] ?? '#9aabb6')
+                              const color = embedded
+                                ? (n.isTarget ? '#1d3a8a' : (STATUS_COLOR[n.status] ?? '#9aabb6'))
+                                : (n.isTarget ? '#7c3aed' : (STATUS_COLOR[n.status] ?? '#9aabb6'))
                               const r = n.isTarget ? 9 : 6
                               return (
                                 <g key={n.id}>
                                   <circle cx={n.x} cy={n.y} r={r}
-                                    fill={n.isTarget ? 'rgba(124,58,237,0.12)' : 'rgba(20,30,40,0.05)'}
+                                    fill={embedded
+                                      ? (n.isTarget ? 'rgba(29, 58, 138, 0.08)' : 'rgba(251, 248, 244, 0.9)')
+                                      : (n.isTarget ? 'rgba(124,58,237,0.12)' : 'rgba(20,30,40,0.05)')}
                                     stroke={color} strokeWidth={n.isTarget ? 2.2 : 1.6}
                                   />
                                   {n.mastery > 0.05 && (
@@ -825,7 +836,9 @@ export default function ConstellationGpsExplorer({
                                     textAnchor="middle"
                                     fontSize={n.isTarget ? 8.5 : 7.5}
                                     fontWeight={n.isTarget ? 700 : 500}
-                                    fill={n.isTarget ? '#5b21b6' : '#607d8b'}
+                                    fill={embedded
+                                      ? (n.isTarget ? '#1d3a8a' : '#6f6a61')
+                                      : (n.isTarget ? '#5b21b6' : '#607d8b')}
                                     fontFamily="system-ui, -apple-system, sans-serif"
                                   >
                                     {n.short}
@@ -837,36 +850,40 @@ export default function ConstellationGpsExplorer({
                       </div>
                     )}
 
-                    <div className={s.routeSteps}>
+                    <div className={c.routeSteps}>
                       {panel.steps.map((step, i) => (
                         <div key={step.id}
-                          className={`${s.routeStep} ${step.isTarget ? s.routeStepTarget : ''}`}
+                          className={`${c.routeStep} ${step.isTarget ? c.routeStepTarget : ''}`}
                           onClick={() => {
                             const n = nodeMap.get(step.id)
                             if (n) { setSelectedId(step.id); setPanel({ mode: 'detail', node: n }) }
                           }}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={e => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              const n = nodeMap.get(step.id)
+                              if (n) { setSelectedId(step.id); setPanel({ mode: 'detail', node: n }) }
+                            }
+                          }}
                         >
-                          <div className={`${s.stepNum} ${step.isTarget ? s.stepNumTarget : ''}`}>
+                          <div className={c.stepNum}>
                             {i + 1}
                           </div>
-                          <div className={s.stepBody}>
-                            <div className={`${s.stepName} ${step.isTarget ? s.stepNameTarget : ''}`}>
+                          <div className={c.stepBody}>
+                            <div className={`${c.stepName} ${step.isTarget ? c.stepNameTarget : ''}`}>
                               {step.name}
                             </div>
-                            <div className={s.stepReason}>{step.reason}</div>
+                            <div className={c.stepReason}>{step.reason}</div>
                           </div>
-                          <div className={s.stepBadge}
-                            style={step.isTarget
-                              ? { background: '#ede9ff', color: '#7c3aed' }
-                              : { background: '#e6f6f0', color: '#00875a' }}
-                          >
+                          <div className={c.stepBadge}>
                             {Math.round(step.mastery * 100)}%
                           </div>
                         </div>
                       ))}
                     </div>
 
-                    <button className={s.btnPrimary}
+                    <button className={c.btnPrimary}
                       onClick={() => {
                         if (onStartRoute) onStartRoute(panel.targetId)
                         else navigate(`/dashboard?view=route&target=${encodeURIComponent(panel.targetId)}`)
