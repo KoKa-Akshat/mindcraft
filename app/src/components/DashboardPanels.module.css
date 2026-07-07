@@ -1,3 +1,43 @@
+/* ── Shared paper panel styles (dashboard book pages) ───────────────
+   Used by DashboardNotesPanel, DashboardRoutePanel, and embedded
+   ConstellationGpsExplorer. Tokens inherit from BookShell.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* ── Notes panel ─────────────────────────────────────────────────── */
+
+.paperPanelBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 16px;
+}
+
+.paperSearchLine {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  outline: none;
+  font-family: var(--font-stamp);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-katha);
+  padding: 6px 0 8px;
+}
+
+.paperSearchLine::placeholder {
+  font-family: var(--font-katha);
+  font-style: italic;
+  color: var(--ink-faded);
+  font-size: 13px;
+}
+
+.paperSearchLine:focus {
+  border-bottom-color: var(--ink-depth);
+}
+
 .scrollBody {
   flex: 1;
   min-height: 0;
@@ -10,114 +50,674 @@
   flex-direction: column;
   gap: 12px;
   align-items: flex-start;
-  padding: 12px 0 20px;
+  padding: 8px 0 16px;
+}
+
+.paperEmptyHint {
+  margin: 0;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-pencil);
+  line-height: 1.55;
+}
+
+.paperTextLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faded);
+  padding: 0;
+  transition: color 120ms;
+}
+
+.paperTextLink:hover { color: var(--ink-depth); }
+
+.paperLoading {
+  margin: 0;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
 }
 
 .notesList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 0;
+  margin-bottom: 8px;
 }
 
-.noteCard {
-  border: 1px solid rgba(6, 77, 54, 0.14);
-  border-radius: 12px;
-  background: var(--mc-cream);
-  overflow: hidden;
-  border-left: 4px solid var(--accent);
+.noteEntry {
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  padding: 14px 0 12px;
 }
 
-.noteCardOpen {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-}
+.noteEntry:last-child { border-bottom: none; }
 
 .noteHead {
   width: 100%;
   border: none;
   background: transparent;
   text-align: left;
-  padding: 12px 14px;
+  padding: 0;
   cursor: pointer;
   font-family: inherit;
 }
 
-.noteSubject {
-  display: inline-block;
+.noteMeta {
+  display: block;
+  font-family: var(--font-stamp);
   font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mc-forest);
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
   margin-bottom: 4px;
 }
 
 .noteTitle {
   display: block;
-  font-size: 14px;
-  color: var(--mc-ink);
-  margin-bottom: 4px;
+  font-family: var(--font-script);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink-katha);
+  margin-bottom: 2px;
+  line-height: 1.3;
 }
 
-.noteMeta {
-  font-size: 11px;
-  color: #60756c;
+.noteTutor {
+  display: block;
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.04em;
 }
 
 .noteBullets {
-  margin: 0;
-  padding: 0 14px 14px 28px;
-  color: #334d3e;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.noteBullets li + li {
-  margin-top: 6px;
-}
-
-.homeworkCopy {
-  margin-bottom: 16px;
-}
-
-.homeworkCopy p {
-  margin: 0;
-  font-size: 13px;
-  color: #60756c;
-  line-height: 1.55;
-}
-
-.homeworkInput {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1.5px solid rgba(6, 77, 54, 0.16);
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-family: inherit;
+  margin: 10px 0 0;
+  padding: 0 0 0 18px;
+  list-style: disc;
+  font-family: var(--font-script);
   font-size: 14px;
-  line-height: 1.5;
-  resize: vertical;
-  min-height: 120px;
+  line-height: 32px;
+  color: var(--ink-katha);
+  background-image: repeating-linear-gradient(
+    transparent 0px,
+    transparent 31px,
+    rgba(79, 138, 139, 0.22) 31px,
+    rgba(79, 138, 139, 0.22) 32px
+  );
+}
+
+.noteBullets li { margin: 0; }
+
+/* ── Route panel ───────────────────────────────────────────────────── */
+
+.routeBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.routeEyebrow {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--ink-faded);
+}
+
+.routeMeta {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.04em;
+}
+
+.miniMapWrap {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 12px;
+}
+
+.miniMapSvg {
+  display: block;
+  width: 100%;
+}
+
+.routeSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.routeStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  text-align: left;
+  padding: 12px 0;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 120ms;
+}
+
+.routeStep:hover { background: rgba(29, 58, 138, 0.03); }
+
+.routeStepTarget .stepNum {
+  border-color: var(--ink-depth);
+  color: var(--ink-depth);
+}
+
+.stepNum {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ink-faded);
+  border-radius: 2px;
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-pencil);
+  margin-top: 2px;
+}
+
+.stepBody { flex: 1; min-width: 0; }
+
+.stepName {
+  font-family: var(--font-script);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-katha);
+  margin-bottom: 3px;
+}
+
+.stepNameTarget { color: var(--ink-depth); }
+
+.stepReason {
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-pencil);
+  line-height: 1.45;
+}
+
+.stepChip {
+  flex-shrink: 0;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 4px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--ink-pencil);
+  background: var(--paper-recessed);
+  margin-top: 2px;
+}
+
+.paperSubmit {
+  align-self: flex-start;
+  background: none;
+  border: 1.5px solid var(--ink-depth);
+  cursor: pointer;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-depth);
+  padding: 8px 16px;
+  border-radius: 2px;
+  transition: background 120ms, color 120ms;
+}
+
+.paperSubmit:hover {
+  background: var(--ink-depth);
+  color: var(--paper-raised);
+}
+
+/* ── Embedded knowledge map (paper) ────────────────────────────────── */
+
+.paperExplorerRoot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  flex: 1;
+}
+
+.paperSearchSection {
+  flex-shrink: 0;
   margin-bottom: 12px;
 }
 
-.homeworkInput:focus {
-  outline: none;
-  border-color: var(--mc-forest);
+.searchRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px;
+  position: relative;
 }
 
-.homeworkTags {
+.searchWrap {
+  flex: 1;
+  min-width: 180px;
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: var(--ink-faded);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  outline: none;
+  font-family: var(--font-stamp);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-katha);
+  padding: 6px 24px 8px 20px;
+}
+
+.searchInput::placeholder {
+  font-family: var(--font-katha);
+  font-style: italic;
+  color: var(--ink-faded);
+}
+
+.searchInput:focus { border-bottom-color: var(--ink-depth); }
+
+.searchClear {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: var(--ink-faded);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 2px 4px;
+}
+
+.searchBtn {
+  flex-shrink: 0;
+  background: none;
+  border: 1.5px solid var(--ink-depth);
+  cursor: pointer;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-depth);
+  padding: 8px 14px;
+  border-radius: 2px;
+  transition: background 120ms, color 120ms;
+}
+
+.searchBtn:hover:not(:disabled) {
+  background: var(--ink-depth);
+  color: var(--paper-raised);
+}
+
+.searchBtn:disabled { opacity: 0.35; cursor: default; }
+
+.suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: var(--paper-raised);
+  border: 1px solid var(--paper-edge);
+  box-shadow: var(--shadow-card);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.suggItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  color: var(--ink-katha);
+}
+
+.suggItem:hover { background: var(--paper-recessed); }
+
+.suggDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.suggName { flex: 1; }
+
+.suggStatus {
+  font-size: 9px;
+  color: var(--ink-faded);
+  letter-spacing: 0.04em;
+}
+
+.filterBar {
+  flex-shrink: 0;
+  padding: 8px 0 10px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 8px;
+}
+
+.filters {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 16px;
+  align-items: center;
 }
 
-.homeworkTag {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(78, 181, 67, 0.12);
-  color: var(--mc-forest);
+.chip {
+  border: 1px solid var(--rule);
+  background: transparent;
+  border-radius: 2px;
+  padding: 4px 9px;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-pencil);
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms, color 120ms;
 }
+
+.chip:hover { border-color: var(--ink-faded); }
+
+.chipActive {
+  border-color: var(--ink-depth);
+  color: var(--ink-depth);
+  background: rgba(29, 58, 138, 0.05);
+}
+
+.filterSep {
+  width: 1px;
+  height: 16px;
+  background: var(--rule);
+  margin: 0 2px;
+}
+
+.mapArea {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.mapAreaEmbedded {
+  min-height: 0;
+  height: 100%;
+}
+
+.mapWrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  background-color: var(--paper-raised);
+  background-image: radial-gradient(circle at 1px 1px, rgba(29, 58, 138, 0.07) 1px, transparent 0);
+  background-size: 18px 18px;
+}
+
+.mapState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-pencil);
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.mapDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink-depth);
+  animation: paperPulse 1.3s ease-in-out infinite;
+}
+
+@keyframes paperPulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.mapSvg {
+  flex: 1;
+  width: 100%;
+  display: block;
+  min-height: 280px;
+  touch-action: none;
+}
+
+.zoomControls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  display: flex;
+  gap: 5px;
+}
+
+.zoomBtn {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 7px;
+  border-radius: 2px;
+  border: 1px solid var(--paper-edge);
+  background: rgba(251, 248, 244, 0.92);
+  color: var(--ink-katha);
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(8, 14, 20, 0.08);
+}
+
+.zoomBtn:hover { background: var(--paper-raised); }
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding: 8px 2px 4px;
+  border-top: 1px solid var(--rule);
+  background: transparent;
+}
+
+.legendItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
+  text-transform: lowercase;
+}
+
+.legendDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.coverage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+}
+
+.coverageLabel {
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
+  text-transform: lowercase;
+}
+
+.coverageBar {
+  flex: 1;
+  height: 3px;
+  background: var(--rule);
+  border-radius: 1px;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.coverageFill {
+  height: 100%;
+  background: var(--ink-depth);
+  border-radius: 1px;
+  transition: width 300ms ease;
+}
+
+.coverageText {
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  color: var(--ink-faded);
+  white-space: nowrap;
+}
+
+/* Side detail / route panel (embedded) */
+.panel {
+  width: min(300px, 38%);
+  flex-shrink: 0;
+  border-left: 1px solid var(--rule);
+  background: var(--paper-recessed);
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.panelDetail,
+.panelRoute {
+  padding: 14px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.panelClose,
+.panelBack {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-faded);
+  cursor: pointer;
+  padding: 0;
+}
+
+.panelClose:hover,
+.panelBack:hover { color: var(--ink-depth); }
+
+.detailName {
+  margin: 0;
+  font-family: var(--font-script);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink-katha);
+}
+
+.detailTagline {
+  margin: 0;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-pencil);
+  line-height: 1.45;
+}
+
+.sectionHint {
+  margin: 0;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-pencil);
+  line-height: 1.45;
+}
+
+.btnPrimary {
+  align-self: flex-start;
+  background: none;
+  border: 1.5px solid var(--ink-depth);
+  cursor: pointer;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-depth);
+  padding: 8px 14px;
+  border-radius: 2px;
+  transition: background 120ms, color 120ms;
+}
+
+.btnPrimary:hover {
+  background: var(--ink-depth);
+  color: var(--paper-raised);
+}
+
+.btnGhost {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faded);
+  padding: 0;
+}
+
+.btnGhost:hover { color: var(--ink-depth); }

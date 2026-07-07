@@ -75,6 +75,15 @@ Acceptance:
 
 ## Task 3 — Book panels: session notes + knowledge map in the paper style
 
+> **STATUS (2026-07-07): half-done — CSS only.** The paper styles are
+> already written in `DashboardPanels.module.css` (`paperPanelBody`,
+> `paperSearchLine`, `noteEntry`, `routeBody`, `coverage*`, `btn*` etc.)
+> but NO component uses them yet — all three components below still import
+> the dark `ConstellationGpsLab.module.css`, so nothing visually changed.
+> Remaining work = switch the three components' imports/classNames to the
+> new paper classes (and delete any now-unused dark-class usage), then run
+> the acceptance checks.
+
 The dashboard book's **problem solver** panel is the reference: content
 sits directly on the ruled/dotted paper — mono `← today` nav + lowercase
 panel title, italic serif helper line, underlined-paper input, mono
