@@ -69,7 +69,7 @@ export default function ParentDashboard() {
   useEffect(() => {
     getDoc(doc(db, 'users', user.uid)).then(snap => {
       const data = snap.data() ?? {}
-      if (data.role !== 'parent') navigate('/dashboard', { replace: true })
+      if (data.role !== 'parent' && data.role !== 'admin') navigate('/dashboard', { replace: true })
       if (data.childId) setChildId(data.childId)
       else setLoading(false)
     })
