@@ -54,18 +54,19 @@ Output files use `{"_meta": {...}, "questions": [...]}` envelope.
 
 ## What Needs Doing Next (in priority order)
 
-### 1. Khan Academy ingestion (run first — no auth wall)
+### 1. Khan Academy ingestion — API returns 410 Gone (blocked like AMC)
 ```bash
 cd /Users/akoirala/Desktop/Business\ Ideas/mindcraft-site
-source ml/mindcraft/bin/activate  # or use anaconda: /Users/akoirala/anaconda3/envs/apollo/bin/python3
-python ml/scripts/pipeline/ingest.py --source khan --out app/src/data/khanQuestions.json --no-llm
+/Users/akoirala/anaconda3/envs/apollo/bin/python3 ml/scripts/pipeline/ingest.py --source khan --topic algebra --out app/src/data/khanQuestions.json --no-llm
 ```
-Khan uses the Perseus format. Check `sources/khan.py` for the adapter. The Khan API may require a subject slug — look at the `--topic` arg in `ingest.py`. Try `--topic algebra` first.
+**Status (2026-07-07):** Khan v1 API returns `410 Gone`. Adapter degrades gracefully.
+`khanQuestions.json` is wired into `questionBank.ts` (empty envelope until cache exists).
+**Unblock:** Place a pre-downloaded dump at `ml/data/khan/exercises.json` (see `sources/khan.py`), then re-run ingest.
 
 Wire into `questionBank.ts` like OpenStax was wired:
 ```typescript
 import khanQuestionsData from '../data/khanQuestions.json'
-// add KHAN_QUESTIONS merge at line ~1975
+// KHAN_QUESTIONS merge — DONE
 ```
 
 ### 2. AMC ingestion — needs a proxy or offline source
@@ -135,4 +136,5 @@ FABLE5_VISION.md                             — Cursor spec: question cards, da
 - Python venv: `ml/mindcraft/` (per CLAUDE.md) OR `/Users/akoirala/anaconda3/envs/apollo/bin/python3` (both work for pipeline — only needs stdlib + requests)
 - Frontend: `cd app && npm run dev` → localhost:5173
 - ML is on HF Spaces: `https://joinmindcraft-mindcraft-ml.hf.space` (not Cloud Run anymore)
+- Webhook fallbacks updated to HF Spaces URL — confirm `ML_API_URL` in Vercel env matches
 - `LLM_PROVIDER=groq` + `GROQ_API_KEY` needed for LLM annotation in pipeline

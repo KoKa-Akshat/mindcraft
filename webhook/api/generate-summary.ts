@@ -114,7 +114,7 @@ ${JSON_SHAPE}`
     const mlBase =
       process.env.ML_API_URL ??
       process.env.ML_URL ??
-      'https://mindcraft-ml-630302850770.us-central1.run.app'
+      'https://joinmindcraft-mindcraft-ml.hf.space'
     const studentId = session.studentId
     const { topics, homework, progress } = summaryCard as any
     if (mlBase && studentId && topics?.length) {

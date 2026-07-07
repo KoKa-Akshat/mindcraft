@@ -535,7 +535,7 @@ export default function ConceptChapterPage() {
     const frame = getFrame(conceptId)
     return (
       <div className={s.storyLayout}>
-        {side.isFirst && frame && (
+        {frame && (
           <div className={s.sceneStamp}>
             <span className={s.sceneProtagonist} style={{ color: theme.accent }}>{frame.protagonist}</span>
             <span className={s.sceneDivider} style={{ color: theme.dim }}>·</span>

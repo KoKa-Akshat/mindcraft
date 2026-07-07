@@ -2,6 +2,7 @@ import generatedQuestionsData from '../data/generatedQuestions.json'
 import actMasterBankData from '../data/actMasterQuestionBank.generated.json'
 import eediQuestionsData from '../data/eediQuestions.json'
 import openstaxQuestionsData from '../data/openstaxQuestions.json'
+import khanQuestionsData from '../data/khanQuestions.json'
 
 // Canonical representation/format ("vessel") ids — mirrors the ML config
 // FORMAT_IDS (Layer 4 representation_profile). The question-side of the same
@@ -1976,7 +1977,10 @@ const EEDI_QUESTIONS = (eediQuestionsData as Question[])
 const OPENSTAX_QUESTIONS = ((openstaxQuestionsData as { questions?: Question[] }).questions ?? [])
   .filter(q => !STATIC_IDS.has(q.id))
   .filter(hasValidKey)
-const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER, ...EEDI_QUESTIONS, ...OPENSTAX_QUESTIONS])
+const KHAN_QUESTIONS = ((khanQuestionsData as { questions?: Question[] }).questions ?? [])
+  .filter(q => !STATIC_IDS.has(q.id))
+  .filter(hasValidKey)
+const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER, ...EEDI_QUESTIONS, ...OPENSTAX_QUESTIONS, ...KHAN_QUESTIONS])
 const Q_BY_ID = new Map<string, Question>(Q.map(q => [q.id, q]))
 
 // ── Concept metadata ──────────────────────────────────────────────────────────
