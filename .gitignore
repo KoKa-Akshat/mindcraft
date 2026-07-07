@@ -43,6 +43,12 @@ ml/data/*.zip
 ml/scripts/output/
 ml/data/test.py
 
+# Pipeline source caches (large fetched datasets — keep locally, not in git)
+ml/data/openstax/
+ml/data/amc/
+ml/data/khan/
+ml/data/.story_cache.json
+
 # Repo-root large/binary files — store in Drive, not git
 data/*.zip
 data/SchemasV2/
