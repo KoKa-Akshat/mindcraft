@@ -58,10 +58,13 @@ Shared seam files (coordinate before changing):
 
 ### Security — pre-marketing blocker
 
-Client-self-selected roles allow any user to claim `role: tutor` and read other
-students' knowledge graphs. These are minors' educational records. Ship the
-classroom/join-code model OR a Firestore rule that requires admin to set tutor
-role BEFORE marketing publicly.
+Privileged user fields are server-authoritative. Browser writes to
+`users/{uid}` may create/self-heal ordinary student fields, but Firestore rules
+block client changes to `role`, `childId`, `tutorId`, and `classroomId`.
+Admin/tutor/parent grants must be written through Admin-SDK webhook paths
+(`grant-admin`, `link-child`, `create-classroom`, `join-classroom`) or one-time
+Admin SDK scripts. Keep `firebase/firestore.rules` deployed via the Rules API
+helper in `webhook/scripts/deploy-rules.ts`; do not use local `firebase deploy`.
 
 ---
 
@@ -499,9 +502,12 @@ Sources:
   Retarget its 3 `fetch` calls to `/seed-assessment` + `/record-outcomes` (same
   mapping as Diagnostic.tsx).
 - **`HomeworkProgress.tsx` / `LastSession.tsx`** are unused.
-- **Role assignment is client-self-selected** at signup (`Login.tsx`) — tutor
-  exemption in ML auth is not fully trusted until server-authoritative roles
-  (see Designed, not built).
+- **Role/link assignment is server-authoritative**: `Login.tsx` calls
+  `grant-admin` for allowlisted admins; `ParentDashboard.tsx` calls
+  `link-child`; classroom joins are Admin-SDK webhooks. Firestore rules reject
+  client writes to `role`, `childId`, `tutorId`, and `classroomId`. After rule
+  deployment, run `webhook/scripts/audit-user-privileges.ts` and clean any stale
+  privilege/link fields via Admin SDK.
 - **Bridge-gap fields not in UI** — in `/knowledge-graph` response only (`isBridgeGap`,
   `bridgeEvidence`, `severity`). `worstWeakness()` consumes severity from
   `/recommend` gaps; the knowledge-graph bridge visualisation is open.
@@ -579,16 +585,6 @@ client-side render + render-verify). Confer with Opus → build file → divvy.
 - Problem decomposition (invariant skeletons) — feeds ingredient runtime.
 - Confidence-gated card routing (4 tiers).
 - Interactive cards (Desmos/GeoGebra) in the geometric card representation.
-- **Classroom/roster model** (server-authoritative roles): tutor creates a
-  classroom → gets a join code → students enter the code to enroll → system
-  writes `role: student` (server-side, not client-set) and links
-  `students[].tutorId`. Replaces the current email-matching approach in
-  TutorDashboard. Makes the tutor "my students" view reliable and closes the
-  self-promotion gap (today any user can select `role: tutor` at signup).
-  Firestore shape: `classrooms/{classroomId}` with `{tutorId, code, studentIds[]}`;
-  `users/{uid}` gets `role` and `classroomId` written by a server function, not
-  the client. The `auth.py` `_role_for()` lookup is already wired — once roles
-  are server-assigned, the tutor exemption in the ML auth layer becomes trusted.
 
 ---
 

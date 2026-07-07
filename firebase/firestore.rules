@@ -4,7 +4,21 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
+
+      // Create: own doc, no privileged links; role may only be student.
+      allow create: if request.auth != null && request.auth.uid == userId
+        && !request.resource.data.keys().hasAny(['childId', 'tutorId', 'classroomId'])
+        && (!('role' in request.resource.data) || request.resource.data.role == 'student');
+
+      // Update: own doc, may not touch privileged links; may set role to
+      // student only when the existing doc had no role yet.
+      allow update: if request.auth != null && request.auth.uid == userId
+        && !request.resource.data.diff(resource.data).affectedKeys()
+             .hasAny(['childId', 'tutorId', 'classroomId'])
+        && (
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
+          || (!('role' in resource.data) && request.resource.data.role == 'student')
+        );
     }
 
     match /articles/{articleId} {

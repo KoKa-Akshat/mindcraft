@@ -14,10 +14,11 @@ import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import {
-  doc, getDoc, getDocs, updateDoc,
+  doc, getDoc, getDocs,
   collection, query, where, orderBy, limit,
 } from 'firebase/firestore'
 import { useUser } from '../App'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import s from './ParentDashboard.module.css'
 
@@ -138,17 +139,22 @@ export default function ParentDashboard() {
     setLinking(true)
     setLinkError('')
     try {
-      const snap = await getDocs(
-        query(collection(db, 'users'), where('email', '==', email), limit(1))
-      )
-      if (snap.empty) {
-        setLinkError('No account found with that email. Make sure your child has signed up.')
+      const token = await auth.currentUser?.getIdToken(true)
+      if (!token) {
+        setLinkError('Please sign in again.')
         return
       }
-      const childDoc = snap.docs[0]
-      const cid = childDoc.id
-      await updateDoc(doc(db, 'users', user.uid), { childId: cid })
-      setChildId(cid)
+      const res = await fetch(`${WEBHOOK_BASE}/api/link-child`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ childEmail: email }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setLinkError(data.error ?? 'Something went wrong. Try again.')
+        return
+      }
+      setChildId(data.childId)
       setLinkEmail('')
     } catch {
       setLinkError('Something went wrong. Try again.')

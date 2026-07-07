@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { Compass, NotebookPen, Wand2 } from 'lucide-react'
 import { auth, db } from '../firebase'
 import { useUser } from '../App'
@@ -102,6 +102,8 @@ export default function Dashboard() {
   const [recLoading, setRecLoading] = useState(true)
   const [solverText, setSolverText] = useState('')
   const [turningConceptId, setTurningConceptId] = useState<string | null>(null)
+  const [parentEmail, setParentEmail] = useState('')
+  const [parentEmailSaved, setParentEmailSaved] = useState(false)
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
@@ -158,6 +160,15 @@ export default function Dashboard() {
     navigate('/login')
   }
 
+  async function saveParentEmail() {
+    if (!uid) return
+    const clean = parentEmail.trim().toLowerCase()
+    await setDoc(doc(db, 'users', uid), { parentEmail: clean || null }, { merge: true })
+    setParentEmail(clean)
+    setParentEmailSaved(true)
+    window.setTimeout(() => setParentEmailSaved(false), 1800)
+  }
+
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
 
   useEffect(() => {
@@ -174,8 +185,10 @@ export default function Dashboard() {
       try {
         const snap = await getDoc(doc(db, 'users', uid))
         if (cancelled) return
-        const track = snap.data()?.curriculumTrack as CurriculumTrack | undefined
+        const profile = snap.data()
+        const track = profile?.curriculumTrack as CurriculumTrack | undefined
         if (track) setCurriculumTrack(track)
+        setParentEmail(typeof profile?.parentEmail === 'string' ? profile.parentEmail : '')
         const rec = await fetchPracticeHubRecommendations(uid, track ?? null)
         if (!cancelled) {
           setWeakness(rec.weakness)
@@ -376,6 +389,29 @@ export default function Dashboard() {
                 onClick={openGps}
               />
             </CoverNavSection>
+
+            <div className={s.parentEmailBox}>
+              <label className={s.parentEmailLabel} htmlFor="parent-email">parent email</label>
+              <div className={s.parentEmailRow}>
+                <input
+                  id="parent-email"
+                  className={s.parentEmailInput}
+                  type="email"
+                  placeholder="parent@email.com"
+                  value={parentEmail}
+                  onChange={e => setParentEmail(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') void saveParentEmail() }}
+                />
+                <button
+                  type="button"
+                  className={s.parentEmailBtn}
+                  onClick={() => void saveParentEmail()}
+                  aria-label="Save parent email"
+                >
+                  {parentEmailSaved ? 'ok' : 'save'}
+                </button>
+              </div>
+            </div>
           </div>
         </BookPage>
       }

@@ -26,6 +26,7 @@ import { db, auth } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 import { listAllActConceptCoverage, coverageSummaryLine, formatQuestionSources, type ConceptCoverage } from '../lib/ontologyBankCoverage'
 import StudentIntelPanel from '../components/StudentIntelPanel'
 import s from './Admin.module.css'
@@ -143,6 +144,7 @@ export default function Admin() {
   const [metaLoaded, setMetaLoaded]   = useState(false)
   const [intelStudent, setIntelStudent] = useState<{ id: string; name: string } | null>(null)
   const [assignPick, setAssignPick]   = useState<Record<string, string>>({})
+  const [parentMatch, setParentMatch] = useState<Record<string, string>>({})
   const [tab, setTab]           = useState<AdminTab>('overview')
   const [bookOpen, setBookOpen] = useState(false)
   const [coverageRows]          = useState<ConceptCoverage[]>(() => listAllActConceptCoverage())
@@ -352,6 +354,30 @@ export default function Admin() {
       showToast(`Assigned ${st.displayName || st.email} → ${t.displayName || t.email}`)
     } catch {
       showToast('Assignment failed — check permissions.')
+    }
+  }
+
+  async function linkParentChild(parentUid: string) {
+    const childEmail = (parentMatch[parentUid] ?? '').trim().toLowerCase()
+    if (!childEmail) { showToast('Enter the child email first.'); return }
+    try {
+      const token = await auth.currentUser?.getIdToken(true)
+      if (!token) { showToast('Sign in again.'); return }
+      const res = await fetch(`${WEBHOOK_BASE}/api/link-child`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ parentUid, childEmail }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        showToast(data.error ?? 'Parent link failed.')
+        return
+      }
+      setParents(prev => prev.map(p => p.id === parentUid ? { ...p, childId: data.childId } : p))
+      setParentMatch(prev => ({ ...prev, [parentUid]: '' }))
+      showToast('Parent linked.')
+    } catch {
+      showToast('Parent link failed.')
     }
   }
 
@@ -704,7 +730,23 @@ export default function Admin() {
                           Send digest
                         </a>
                       ) : (
-                        <span className={s.noZoom}>—</span>
+                        <>
+                          <input
+                            className={s.assignSelect}
+                            type="email"
+                            placeholder="child@email.com"
+                            value={parentMatch[p.id] ?? ''}
+                            onChange={e => setParentMatch(prev => ({ ...prev, [p.id]: e.target.value }))}
+                          />
+                          <button
+                            type="button"
+                            className={s.actionBtn}
+                            onClick={() => linkParentChild(p.id)}
+                            disabled={!parentMatch[p.id]?.trim()}
+                          >
+                            Match
+                          </button>
+                        </>
                       )}
                     </div>
                   )

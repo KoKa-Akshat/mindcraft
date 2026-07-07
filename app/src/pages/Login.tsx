@@ -12,6 +12,7 @@ import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { isTestProfileEmail, resetStudentProfile } from '../lib/testProfile'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
+import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './Login.module.css'
 
 type AdminFlow = 'auth' | 'passcode' | 'armed'
@@ -28,6 +29,20 @@ function clearAdminGrant()    { sessionStorage.removeItem(ADMIN_GRANT_PENDING_KE
 function safeReturnPath(raw: string | null) {
   if (!raw || !raw.startsWith('/') || raw.startsWith('//') || raw.startsWith('/login')) return null
   return raw
+}
+
+async function grantAdminRole() {
+  const token = await auth.currentUser?.getIdToken(true)
+  if (!token) throw new Error('Not authorized')
+
+  const res = await fetch(`${WEBHOOK_BASE}/api/grant-admin`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data.error ?? 'Not authorized')
+  }
 }
 
 function friendlyError(code: string) {
@@ -82,7 +97,14 @@ export default function Login() {
 
     // Admin grant takes priority
     if (grantAdmin) {
-      await setDoc(doc(db, 'users', uid), { role: 'admin', email: auth.currentUser?.email ?? '', displayName: auth.currentUser?.displayName ?? '' }, { merge: true })
+      try {
+        await grantAdminRole()
+      } catch {
+        setError('Not authorized.')
+        setLoading(false)
+        navigate('/dashboard', { replace: true })
+        return
+      }
       navigate('/admin', { replace: true })
       return
     }

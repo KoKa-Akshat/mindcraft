@@ -328,10 +328,11 @@ def find_path(
         )
 
     # ── Exam / Curriculum: prerequisite-chain approach ──
-    # Exam mode with no explicit targets defaults to the exam-priority concepts.
+    # Exam mode with no explicit targets defaults to the canonical exam-tested
+    # concept set. Keep high-priority concepts as a fallback for non-ACT data.
     targets = list(goal.target_concepts)
     if not targets and goal.mode == "exam":
-        targets = list(ontology.high_priority_concepts)
+        targets = list(ontology.act_tested_concept_ids() or ontology.high_priority_concepts)
     if not targets:
         return {
             "canonical_chain": [],
