@@ -51,8 +51,15 @@ service cloud.firestore {
             get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid
             || get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email
           );
+        // NOTE: must depend only on the parent session doc's fields, never on
+        // resource.data of the studentWork doc itself — both StudentSessions.tsx
+        // (pending-work check) and SessionDetail.tsx (tutor review) call
+        // getDocs()/onSnapshot() on this subcollection with NO where filter, and
+        // Firestore rejects an entire unfiltered list() if the rule can't be
+        // proven safe without per-document resource.data evaluation.
         allow read: if request.auth != null && (
-          resource.data.studentId == request.auth.uid ||
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid ||
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email ||
           get(/databases/$(database)/documents/sessions/$(sessionId)).data.tutorId == request.auth.uid
         );
         allow update, delete: if false;
