@@ -36,6 +36,7 @@ git clone "$REMOTE" "$TMP_DIR"
 find "$TMP_DIR" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 tar -C "$ML_DIR" \
   --exclude=.git \
+  --exclude='.env*' \
   --exclude=.pytest_cache \
   --exclude=.ruff_cache \
   --exclude=__pycache__ \
