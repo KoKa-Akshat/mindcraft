@@ -1,15 +1,15 @@
 /**
  * TutorDashboard.tsx
  *
- * Main dashboard for tutors. Shows:
- *   - Sidebar: student list derived from their sessions (auto-populates as students book)
- *   - Sessions to Review: completed sessions waiting for a summary
- *   - Session Summary + Recent Chat: filtered to the selected student
- *   - Upcoming Sessions: scheduled future sessions
- *   - Calendly card: connect/display integration status
+ * Main dashboard for tutors. Layout:
+ *   - Dark top bar: logo + "Tutor Dashboard" · tutor name + date + sign out
+ *   - Left sidebar: student list derived from sessions + classroom code (kept)
+ *   - Left column: "Your Student" hero card (assigned student + ML profile),
+ *     Sessions to Review (hidden when empty), Upcoming Sessions (hidden when empty)
+ *   - Right column: Live Activity feed, Quick Actions, Calendly, Session Notes stub
  *
- * Selecting a student in the sidebar filters ALL cards to that student.
- * Selecting "All Students" resets filters.
+ * The hero student is the first user whose `assignedTutorId` matches this tutor;
+ * falls back to the first student derived from sessions.
  */
 
 import { useEffect, useState, useMemo } from 'react'
@@ -28,18 +28,30 @@ import type { Session, TutorStudent as Student } from '../types'
 import StudentIntelPanel from '../components/StudentIntelPanel'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
-import { WEBHOOK_BASE } from '../lib/mlApi'
+import { WEBHOOK_BASE, getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
+import { fetchKnowledgeGraph } from '../lib/graphCache'
 
 const FIFTEEN_MIN = 15 * 60 * 1000
-
-// Test account — excluded from the live activity feed
-const TEST_UID = 'gBFn9vUGIIa7tAiTTQSl8CbPSao2'
+const FIVE_MIN = 5 * 60 * 1000
 
 interface ActivityItem {
   studentId: string
   conceptId: string
   outcome:   number
   ts:        number
+}
+
+interface AssignedStudent {
+  id: string
+  name: string
+  email: string
+  examTrack: string
+}
+
+interface ConceptBar {
+  id: string
+  name: string
+  mastery: number
 }
 
 function timeAgo(ts: number): string {
@@ -91,23 +103,101 @@ export default function TutorDashboard() {
   const [classroom, setClassroom] = useState<{ code: string; studentIds: string[] } | null>(null)
   const [classroomLoading, setClassroomLoading] = useState(true)
 
-  // Stable key so the interactions listener only re-subscribes when the id set changes
-  const activityIdsKey = students
-    .map(st => st.id)
-    .filter(id => id && id !== TEST_UID)
-    .slice(0, 10)
-    .join(',')
+  // ── Assigned student (hero card) ──────────────────────────────────────────
+  const [assignedStudent, setAssignedStudent] = useState<AssignedStudent | null>(null)
+  const [profile, setProfile]           = useState<StudentProfileResult | null>(null)
+  const [profileLoading, setProfileLoading] = useState(true)
+  const [conceptBars, setConceptBars]   = useState<ConceptBar[]>([])
+  const [lastActiveTs, setLastActiveTs] = useState<number | null>(null)
+  const [showIntel, setShowIntel]       = useState(false)
 
-  // Live activity feed — realtime interactions for this tutor's students
+  // Load the first assigned student (users.assignedTutorId === tutor uid)
   useEffect(() => {
-    if (!activityIdsKey) { setActivity([]); return }
-    const ids = activityIdsKey.split(',')
+    let cancelled = false
+    getDocs(query(collection(db, 'users'), where('assignedTutorId', '==', user.uid), limit(1)))
+      .then(snap => {
+        if (cancelled || snap.empty) return
+        const d = snap.docs[0]
+        const data = d.data()
+        setAssignedStudent({
+          id: d.id,
+          name: data.displayName || data.email?.split('@')[0] || 'Student',
+          email: data.email || '',
+          examTrack: data.examTrack || data.exam || data.diagnosticExam || 'ACT',
+        })
+      })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [user.uid])
+
+  // Hero student: assigned student, else the first session-derived student
+  const heroStudent: AssignedStudent | null = useMemo(() => {
+    if (assignedStudent) return assignedStudent
+    const first = students[0]
+    if (!first) return null
+    return {
+      id: first.id,
+      name: first.displayName || first.email?.split('@')[0] || 'Student',
+      email: first.email || '',
+      examTrack: 'ACT',
+    }
+  }, [assignedStudent, students])
+
+  // ML profile + knowledge graph + last-active for the hero student
+  useEffect(() => {
+    const sid = heroStudent?.id
+    if (!sid) { setProfile(null); setConceptBars([]); setLastActiveTs(null); return }
+    let cancelled = false
+    setProfileLoading(true)
+
+    getStudentProfile(sid)
+      .then(p => { if (!cancelled) setProfile(p) })
+      .finally(() => { if (!cancelled) setProfileLoading(false) })
+
+    fetchKnowledgeGraph(sid)
+      .then(kg => {
+        if (cancelled || !kg?.nodes) return
+        const nodes = (kg.nodes as Array<Record<string, unknown>>)
+          .map(n => ({
+            id: String(n.id ?? ''),
+            name: String(n.name ?? conceptTitle(String(n.id ?? ''))),
+            mastery: Number(n.mastery ?? 0),
+            eventCount: Number(n.eventCount ?? 0),
+          }))
+          .filter(n => n.id && n.eventCount > 0)
+          .sort((a, b) => b.eventCount - a.eventCount || b.mastery - a.mastery)
+          .slice(0, 6)
+        setConceptBars(nodes)
+      })
+      .catch(() => {})
+
+    getDocs(query(
+      collection(db, 'interactions'),
+      where('studentId', '==', sid),
+      orderBy('timestamp', 'desc'),
+      limit(1),
+    ))
+      .then(snap => {
+        if (cancelled || snap.empty) return
+        const raw = snap.docs[0].data().timestamp
+        const ts = raw?.toMillis?.() ?? (typeof raw === 'number' ? raw : 0)
+        if (ts) setLastActiveTs(ts)
+      })
+      .catch(() => {})
+
+    return () => { cancelled = true }
+  }, [heroStudent?.id])
+
+  // Live activity feed — realtime interactions for the hero student
+  useEffect(() => {
+    const sid = heroStudent?.id
+    if (!sid) { setActivity([]); return }
     const unsub = onSnapshot(
       query(
         collection(db, 'interactions'),
-        where('studentId', 'in', ids),
+        where('studentId', '==', sid),
         orderBy('timestamp', 'desc'),
-        limit(15),
+        limit(10),
       ),
       snap => setActivity(snap.docs.map(d => {
         const data = d.data()
@@ -123,20 +213,19 @@ export default function TutorDashboard() {
       () => setActivity([])
     )
     return () => unsub()
-  }, [activityIdsKey])
+  }, [heroStudent?.id])
 
   // One-time parent lookup + mailto — no extra state needed
-  async function emailParent(st: Student) {
+  async function emailParent(studentId: string, studentName: string) {
     try {
       const snap = await getDocs(
-        query(collection(db, 'users'), where('childId', '==', st.id), limit(1))
+        query(collection(db, 'users'), where('childId', '==', studentId), limit(1))
       )
       const parentEmail = snap.empty ? null : snap.docs[0].data().email
-      if (!parentEmail) { showToast('No parent linked yet.'); return }
-      const name = st.displayName || st.email?.split('@')[0] || 'your student'
-      window.open(`mailto:${parentEmail}?subject=${encodeURIComponent(`Update on ${name}`)}`)
+      if (!parentEmail) { showToast('No parent linked'); return }
+      window.open(`mailto:${parentEmail}?subject=${encodeURIComponent(`Update on ${studentName}`)}`)
     } catch {
-      showToast('No parent linked yet.')
+      showToast('No parent linked')
     }
   }
 
@@ -320,16 +409,15 @@ export default function TutorDashboard() {
     return () => unsub()
   }, [selectedStudent, user.uid])
 
-  // Default to next session's student on first load
+  // Default the selection to the assigned student, else the next session's student
   useEffect(() => {
     if (selectedStudent !== 'all') return
+    if (heroStudent) { setSelectedStudent(heroStudent.id); return }
     const next = sessions[0]
     if (!next) return
     const sid = next.studentId ?? studentIdByEmail[next.studentEmail] ?? null
     if (sid) setSelectedStudent(sid)
-  }, [sessions, studentIdByEmail])
-
-
+  }, [heroStudent, sessions, studentIdByEmail])
 
   async function handleDeleteSession(id: string, e: React.MouseEvent) {
     e.preventDefault()
@@ -351,28 +439,54 @@ export default function TutorDashboard() {
     }
   }
 
-const nextSession = sessions[0] ?? null
   const now = Date.now()
-  const sessionLive = nextSession &&
-    now >= nextSession.scheduledAt - FIFTEEN_MIN &&
-    now <= nextSession.endAt + FIFTEEN_MIN
-  const canJoin = sessionLive && !!nextSession?.meetingUrl
-
   const selectedStudentData = students.find(st => st.id === selectedStudent)
 
+  // ── Derived hero-card values ───────────────────────────────────────────────
+  const hasMlData = !!profile && profile.eventCount > 0
+  const masteryPct = useMemo(() => {
+    if (!profile) return null
+    const vals = Object.values(profile.masteryByConcept ?? {})
+    if (vals.length > 0) return Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 100)
+    if (profile.topStrengths.length > 0) {
+      return Math.round(
+        (profile.topStrengths.reduce((a, b) => a + b.strength, 0) / profile.topStrengths.length) * 100
+      )
+    }
+    return null
+  }, [profile])
+
+  const activityLiveNow = activity.length > 0 && now - activity[0].ts < FIVE_MIN
+  const heroFirstName = heroStudent?.name.split(' ')[0] ?? 'Your student'
+
+  const reviewFiltered = selectedStudent === 'all'
+    ? toReview
+    : toReview.filter(s => s.studentId === selectedStudent || studentIdByEmail[s.studentEmail] === selectedStudent)
+  const upcomingFiltered = selectedStudent === 'all'
+    ? sessions
+    : sessions.filter(s => s.studentId === selectedStudent || studentIdByEmail[s.studentEmail] === selectedStudent)
+
+  const todayLabel = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
 
   return (
     <div className={s.shell}>
-      <nav className={s.nav}>
-        <a href={MARKETING_BASE} className={s.logo}>Mind<span>Craft</span></a>
-        <div className={s.navRight}>
-          <span className={s.navRole}>Tutor</span>
-          <div className={s.avatar} onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
-            title="Sign out">
-            {(user.displayName?.[0] || user.email?.[0] || 'T').toUpperCase()}
-          </div>
+      {/* ── Top bar ── */}
+      <header className={s.topBar}>
+        <div className={s.topLeft}>
+          <a href={MARKETING_BASE} className={s.logo}>Mind<span>Craft</span></a>
+          <span className={s.topLabel}>Tutor Dashboard</span>
         </div>
-      </nav>
+        <div className={s.topRight}>
+          <span className={s.topName}>{user.displayName || user.email?.split('@')[0]}</span>
+          <span className={s.topDate}>{todayLabel}</span>
+          <button
+            className={s.signOutBtn}
+            onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}
+          >
+            Sign out
+          </button>
+        </div>
+      </header>
 
       <aside className={s.sidebar}>
         <p className={s.sideLabel}>Manage</p>
@@ -404,7 +518,7 @@ const nextSession = sessions[0] ?? null
                   <button
                     type="button"
                     className={s.emailParentLink}
-                    onClick={() => emailParent(st)}
+                    onClick={() => emailParent(st.id, st.displayName || st.email?.split('@')[0] || 'your student')}
                   >
                     ✉ Email parent
                   </button>
@@ -445,229 +559,150 @@ const nextSession = sessions[0] ?? null
       </aside>
 
       <main className={s.page}>
-        <div className={s.hero}>
-          <div className={s.heroLeft}>
-            <h1>Welcome back, <em>{user.displayName?.split(' ')[0] || user.email?.split('@')[0]}</em></h1>
-            {nextSession ? (
-              <div className={s.pill}>
-                <div className={s.pillDot} style={sessionLive ? {} : { background: 'var(--bd)', animation: 'none' }} />
-                <div className={s.pillText}>
-                  {nextSession.subject} · {new Date(nextSession.scheduledAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
-                  <span> · {nextSession.studentName}</span>
-                </div>
-              </div>
-            ) : (
-              <div className={s.pill}>
-                <div className={s.pillDot} style={{ background: 'var(--bd)', animation: 'none' }} />
-                <div className={s.pillText} style={{ color: 'var(--mu)' }}>No upcoming sessions</div>
-              </div>
-            )}
-            <div className={s.heroBtns}>
-              {canJoin
-                ? <a href={nextSession!.meetingUrl!} target="_blank" rel="noopener" className={`${s.btnPrimary} ${s.btnLive}`}>Join Session →</a>
-                : <button className={s.btnPrimary} disabled>Join Session →</button>
-              }
-            </div>
-          </div>
-        </div>
-
         {loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
           <div className={s.grid}>
+            {/* ══════════ LEFT COLUMN ══════════ */}
             <div className={s.col}>
-              {/* Sessions to Review */}
-              <div className={s.card}>
+              {/* Your Student — hero card */}
+              <div className={`${s.card} ${s.heroCard}`}>
                 <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Sessions to Review</span>
-                  {toReview.length > 0 && <span className={s.reviewBadge}>{toReview.length}</span>}
-                </div>
-                {(() => {
-                  const filtered = selectedStudent === 'all' ? toReview : toReview.filter(s => s.studentId === selectedStudent || studentIdByEmail[s.studentEmail] === selectedStudent)
-                  return filtered.length === 0 ? (
-                    <div className={s.emptyState}>
-                      <span>All caught up</span>
-                      <p>Completed sessions pending your review will appear here.</p>
-                    </div>
-                  ) : (
-                    <div className={s.sessionList}>
-                      {filtered.slice(0, 4).map(sess => (
-                        <Link key={sess.id} to={`/tutor/session/${sess.id}`} className={s.reviewRow}>
-                          <div className={s.sessionLeft}>
-                            <div className={s.sessionName}>{sess.studentName}</div>
-                            <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
-                            <div className={s.sessionDate}>{fmtDateTime(sess.scheduledAt)}</div>
-                          </div>
-                          <div className={s.sessionRight}>
-                            <span className={`${s.sessionBadge} ${
-                              sess.summaryStatus === 'draft' ? s.badgeDraft :
-                              sess.summaryStatus === 'pending' ? s.badgePending : s.badgeNeedsReview
-                            }`}>
-                              {sess.summaryStatus === 'draft' ? 'Draft' :
-                               sess.summaryStatus === 'pending' ? 'Has transcript' : 'Needs review'}
-                            </span>
-                            <button className={s.deleteRowBtn} onClick={e => handleDeleteSession(sess.id, e)} title="Delete">✕</button>
-                            <span className={s.reviewArrow}>→</span>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  )
-                })()}
-              </div>
-
-              {/* Session Summary */}
-              <div className={s.card}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Session Summary</span>
-                  {selectedStudentData && (
-                    <span style={{ fontSize: 12, color: 'var(--mu)', fontWeight: 600 }}>
-                      {selectedStudentData.displayName || selectedStudentData.email?.split('@')[0]}
-                    </span>
+                  <span className={s.cardLabel}>Your Student</span>
+                  {lastActiveTs && (
+                    <span className={s.lastActive}>Last active {timeAgo(lastActiveTs)}</span>
                   )}
                 </div>
 
-                {selectedStudentData?.lastSession ? (
+                {heroStudent ? (
                   <>
-                    <div className={s.summaryMeta}>
-                      <span className={s.tag}>{selectedStudentData.lastSession.subject}</span>
-                      <span className={s.date}>{selectedStudentData.lastSession.date}</span>
-                    </div>
-                    <div className={s.summaryTitle}>{selectedStudentData.lastSession.title || 'Session Summary'}</div>
-                    {selectedStudentData.lastSession.bullets?.length ? (
-                      <ul className={s.bullets}>
-                        {selectedStudentData.lastSession.bullets.slice(0, 3).map((b, i) => (
-                          <li key={i}>{b}</li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </>
-                ) : (
-                  <div className={s.emptyState}>
-                    <span>No session summary yet</span>
-                    <p>Summaries appear here after sessions are completed.</p>
-                  </div>
-                )}
-
-                {/* Student ML intelligence — only when a specific student is selected */}
-                {selectedStudent !== 'all' && (
-                  <StudentIntelPanel
-                    studentId={selectedStudent}
-                    studentName={selectedStudentData?.displayName || selectedStudentData?.email?.split('@')[0] || 'Student'}
-                  />
-                )}
-
-                <div className={s.divider} />
-
-                <div className={s.cardHeader} style={{ marginBottom: 10 }}>
-                  <span className={s.cardLabel}>Recent Chat</span>
-                  {selectedStudent && selectedStudent !== 'all' && (
-                    <Link to={`/chat/${selectedStudent}`} style={{ fontSize: 12, color: 'var(--gdd)', fontWeight: 600 }}>Open chat →</Link>
-                  )}
-                </div>
-                {chatMessages.length > 0 ? chatMessages.slice(-3).map((msg, i) => {
-                  const isMe = msg.senderId === user.uid
-                  const name = isMe ? 'You' : (selectedStudentData?.displayName || selectedStudentData?.email?.split('@')[0] || 'Student')
-                  return (
-                    <div key={i} className={s.msgRow}>
-                      <div className={`${s.msgAv} ${isMe ? s.msgAvTutor : ''}`}>{name[0]?.toUpperCase()}</div>
-                      <div className={s.msgBody}>
-                        <div className={s.msgMeta}>
-                          <span className={s.msgName}>{name}</span>
-                        </div>
-                        <div className={s.msgText}>{msg.text || '📎 File'}</div>
+                    <div className={s.heroTop}>
+                      <div className={s.heroAvatar}>{heroStudent.name[0]?.toUpperCase()}</div>
+                      <div className={s.heroId}>
+                        <span className={s.heroName}>{heroStudent.name}</span>
+                        <span className={s.heroEmail}>{heroStudent.email}</span>
                       </div>
+                      <span className={s.examBadge}>{heroStudent.examTrack}</span>
                     </div>
-                  )
-                }) : (
-                  <div className={s.emptyState} style={{ padding: '12px 0 0' }}>
-                    <span>No messages yet</span>
-                  </div>
-                )}
-              </div>
-            </div>
 
-            <div className={s.col}>
-              {/* Connect Calendly */}
-              <div className={s.card}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Calendly</span>
-                  {calendlyConnected && <span className={s.reviewBadge} style={{ background: 'rgba(88,204,2,.12)', color: 'var(--gdd)' }}>Connected</span>}
-                </div>
-                {calendlyConnected ? (
-                  <div style={{ fontSize: 13, color: 'var(--mu)', fontWeight: 600 }}>
-                    ✓ {calendlyConnected} — bookings and Fireflies bot are wired automatically.
-                  </div>
-                ) : (
-                  <>
-                    <p style={{ fontSize: 12, color: 'var(--mu)', fontWeight: 600, marginBottom: 12, lineHeight: 1.5 }}>
-                      Paste your Calendly Personal Access Token to auto-register your bookings and Fireflies recording.
-                    </p>
-                    <input
-                      className={s.tokenInput}
-                      type="password"
-                      placeholder="eyJraWQi..."
-                      value={calendlyToken}
-                      onChange={e => setCalendlyToken(e.target.value)}
-                    />
-                    <button className={s.btnPrimary} style={{ marginTop: 10, width: '100%', justifyContent: 'center' }}
-                      onClick={handleConnectCalendly} disabled={connectingCalendly || !calendlyToken.trim()}>
-                      {connectingCalendly ? 'Connecting…' : 'Connect Calendly →'}
-                    </button>
-                    <p style={{ fontSize: 11, color: '#C4C9D4', marginTop: 8, fontWeight: 600 }}>
-                      Get it at calendly.com → Integrations → API & Webhooks
-                    </p>
+                    {profileLoading ? (
+                      <div className={s.loadRow}><div className={s.spinnerSm} /> Loading profile…</div>
+                    ) : hasMlData ? (
+                      <>
+                        {masteryPct !== null && (
+                          <div className={s.masteryRow}>
+                            <span className={s.masteryNum}>{masteryPct}%</span>
+                            <div className={s.masteryMeta}>
+                              <span className={s.masteryLabel}>Overall mastery</span>
+                              <span className={s.masterySub}>{profile!.eventCount} recorded interactions</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {profile!.topStrengths.length > 0 && (
+                          <div className={s.pillSection}>
+                            <span className={s.pillTitle}>Strengths</span>
+                            <div className={s.pillRow}>
+                              {profile!.topStrengths.slice(0, 3).map(sw => (
+                                <span key={sw.conceptId} className={s.pillStrength}>
+                                  {conceptLabel(sw.conceptId)}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {profile!.topWeaknesses.length > 0 && (
+                          <div className={s.pillSection}>
+                            <span className={s.pillTitle}>Weak spots</span>
+                            <div className={s.pillRow}>
+                              {profile!.topWeaknesses.slice(0, 3).map(sw => (
+                                <span key={sw.conceptId} className={s.pillWeak}>
+                                  {conceptLabel(sw.conceptId)}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {conceptBars.length > 0 && (
+                          <div className={s.barSection}>
+                            <span className={s.pillTitle}>Concept mastery</span>
+                            {conceptBars.map(c => (
+                              <div key={c.id} className={s.barRow}>
+                                <span className={s.barLabel}>{c.name}</span>
+                                <div className={s.barTrack}>
+                                  <div
+                                    className={s.barFill}
+                                    style={{ width: `${Math.round(Math.max(0, Math.min(1, c.mastery)) * 100)}%` }}
+                                  />
+                                </div>
+                                <span className={s.barPct}>{Math.round(c.mastery * 100)}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <button className={s.intelToggle} onClick={() => setShowIntel(v => !v)}>
+                          {showIntel ? 'Hide Intelligence Report' : 'Full Intelligence Report →'}
+                        </button>
+                        {showIntel && (
+                          <StudentIntelPanel studentId={heroStudent.id} studentName={heroStudent.name} />
+                        )}
+                      </>
+                    ) : (
+                      <p className={s.heroEmpty}>
+                        {heroFirstName} hasn't practiced yet — share the dashboard link to get started
+                      </p>
+                    )}
                   </>
-                )}
-              </div>
-
-              {/* Live student activity feed */}
-              <div className={s.card}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Student Activity</span>
-                </div>
-                {activity.length === 0 ? (
-                  <div className={s.emptyState}>
-                    <span>Activity updates as students practice.</span>
-                  </div>
                 ) : (
-                  <div className={s.feedList}>
-                    {activity.map((a, i) => {
-                      const st = students.find(x => x.id === a.studentId)
-                      const name = st?.displayName || st?.email?.split('@')[0] || 'Student'
-                      const mark = a.outcome > 0.3
-                        ? { sym: '✓', cls: s.feedGood }
-                        : a.outcome < -0.1
-                          ? { sym: '✗', cls: s.feedBad }
-                          : { sym: '~', cls: s.feedMid }
-                      return (
-                        <div key={`${a.studentId}-${a.ts}-${i}`} className={s.feedRow}>
-                          <span className={`${s.feedMark} ${mark.cls}`}>{mark.sym}</span>
-                          <span className={s.feedText}>
-                            <strong>{name}</strong> · {conceptTitle(a.conceptId) || 'Practice'}
-                          </span>
-                          <span className={s.feedTime}>{timeAgo(a.ts)}</span>
-                        </div>
-                      )
-                    })}
-                  </div>
+                  <p className={s.heroEmpty}>
+                    No students assigned yet — students appear here once they book a session or join with your classroom code.
+                  </p>
                 )}
               </div>
 
-              <div className={s.card}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Upcoming Sessions</span>
-                </div>
-                {(() => {
-                  const filtered = selectedStudent === 'all' ? sessions : sessions.filter(s => s.studentId === selectedStudent || studentIdByEmail[s.studentEmail] === selectedStudent)
-                  return filtered.length === 0 ? (
-                    <div className={s.emptyState}>
-                      <span>No sessions scheduled</span>
-                      <p>New bookings from Calendly will appear here automatically.</p>
-                    </div>
-                  ) : (
+              {/* Sessions to Review — hidden entirely when empty */}
+              {reviewFiltered.length > 0 && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Sessions to Review</span>
+                    <span className={s.reviewBadge}>{reviewFiltered.length}</span>
+                  </div>
                   <div className={s.sessionList}>
-                    {filtered.slice(0, 5).map(sess => {
+                    {reviewFiltered.slice(0, 4).map(sess => (
+                      <Link key={sess.id} to={`/tutor/session/${sess.id}`} className={s.reviewRow}>
+                        <div className={s.sessionLeft}>
+                          <div className={s.sessionName}>{sess.studentName}</div>
+                          <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
+                          <div className={s.sessionDate}>{fmtDateTime(sess.scheduledAt)}</div>
+                        </div>
+                        <div className={s.sessionRight}>
+                          <span className={`${s.sessionBadge} ${
+                            sess.summaryStatus === 'draft' ? s.badgeDraft :
+                            sess.summaryStatus === 'pending' ? s.badgePending : s.badgeNeedsReview
+                          }`}>
+                            {sess.summaryStatus === 'draft' ? 'Draft' :
+                             sess.summaryStatus === 'pending' ? 'Has transcript' : 'Needs review'}
+                          </span>
+                          <button className={s.deleteRowBtn} onClick={e => handleDeleteSession(sess.id, e)} title="Delete">✕</button>
+                          <span className={s.reviewArrow}>→</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Upcoming Sessions — hidden entirely when empty */}
+              {upcomingFiltered.length > 0 && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Upcoming Sessions</span>
+                  </div>
+                  <div className={s.sessionList}>
+                    {upcomingFiltered.slice(0, 5).map(sess => {
                       const live = now >= sess.scheduledAt - FIFTEEN_MIN && now <= sess.endAt + FIFTEEN_MIN
                       return (
                         <div key={sess.id} className={`${s.sessionRow} ${live ? s.sessionRowLive : ''}`}>
@@ -686,7 +721,7 @@ const nextSession = sessions[0] ?? null
                               </a>
                             )}
                             {(sess.studentId || studentIdByEmail[sess.studentEmail]) && (
-                              <Link to={`/chat/${sess.studentId || studentIdByEmail[sess.studentEmail]}`} className={s.joinLink} style={{ background: 'rgba(59,130,246,.1)', color: '#1d5aab' }}>
+                              <Link to={`/chat/${sess.studentId || studentIdByEmail[sess.studentEmail]}`} className={`${s.joinLink} ${s.chatLink}`}>
                                 💬
                               </Link>
                             )}
@@ -695,8 +730,167 @@ const nextSession = sessions[0] ?? null
                       )
                     })}
                   </div>
-                  )
-                })()}
+                </div>
+              )}
+
+              {/* Session summary + recent chat — hidden when both empty */}
+              {(selectedStudentData?.lastSession || chatMessages.length > 0) && (
+                <div className={s.card}>
+                  {selectedStudentData?.lastSession && (
+                    <>
+                      <div className={s.cardHeader}>
+                        <span className={s.cardLabel}>Session Summary</span>
+                        <span className={s.cardSubName}>
+                          {selectedStudentData.displayName || selectedStudentData.email?.split('@')[0]}
+                        </span>
+                      </div>
+                      <div className={s.summaryMeta}>
+                        <span className={s.tag}>{selectedStudentData.lastSession.subject}</span>
+                        <span className={s.date}>{selectedStudentData.lastSession.date}</span>
+                      </div>
+                      <div className={s.summaryTitle}>{selectedStudentData.lastSession.title || 'Session Summary'}</div>
+                      {selectedStudentData.lastSession.bullets?.length ? (
+                        <ul className={s.bullets}>
+                          {selectedStudentData.lastSession.bullets.slice(0, 3).map((b, i) => (
+                            <li key={i}>{b}</li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </>
+                  )}
+
+                  {chatMessages.length > 0 && (
+                    <>
+                      {selectedStudentData?.lastSession && <div className={s.divider} />}
+                      <div className={s.cardHeader}>
+                        <span className={s.cardLabel}>Recent Chat</span>
+                        {selectedStudent && selectedStudent !== 'all' && (
+                          <Link to={`/chat/${selectedStudent}`} className={s.openChatLink}>Open chat →</Link>
+                        )}
+                      </div>
+                      {chatMessages.slice(-3).map((msg, i) => {
+                        const isMe = msg.senderId === user.uid
+                        const name = isMe ? 'You' : (selectedStudentData?.displayName || selectedStudentData?.email?.split('@')[0] || 'Student')
+                        return (
+                          <div key={i} className={s.msgRow}>
+                            <div className={`${s.msgAv} ${isMe ? s.msgAvTutor : ''}`}>{name[0]?.toUpperCase()}</div>
+                            <div className={s.msgBody}>
+                              <div className={s.msgMeta}>
+                                <span className={s.msgName}>{name}</span>
+                              </div>
+                              <div className={s.msgText}>{msg.text || '📎 File'}</div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* ══════════ RIGHT COLUMN ══════════ */}
+            <div className={s.col}>
+              {/* Live Activity */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabelRow}>
+                    {activityLiveNow && <span className={s.livePip} />}
+                    <span className={s.cardLabel}>Live Activity</span>
+                  </span>
+                </div>
+                {activity.length === 0 ? (
+                  <p className={s.emptyText}>No practice activity yet</p>
+                ) : (
+                  <div className={s.feedList}>
+                    {activity.map((a, i) => {
+                      const mark = a.outcome > 0.3
+                        ? { sym: '✓', cls: s.feedGood }
+                        : a.outcome < -0.1
+                          ? { sym: '✗', cls: s.feedBad }
+                          : { sym: '~', cls: s.feedMid }
+                      return (
+                        <div key={`${a.studentId}-${a.ts}-${i}`} className={s.feedRow}>
+                          <span className={`${s.feedMark} ${mark.cls}`}>{mark.sym}</span>
+                          <span className={s.feedText}>{conceptTitle(a.conceptId) || 'Practice'}</span>
+                          <span className={s.feedTime}>{timeAgo(a.ts)}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Quick Actions */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Quick Actions</span>
+                </div>
+                <div className={s.actionList}>
+                  <a
+                    className={s.actionBtn}
+                    href={heroStudent?.email
+                      ? `mailto:${heroStudent.email}?subject=${encodeURIComponent('MindCraft Update')}`
+                      : undefined}
+                    onClick={e => { if (!heroStudent?.email) { e.preventDefault(); showToast('No student email yet') } }}
+                  >
+                    ✉ Email student
+                  </a>
+                  <button
+                    className={s.actionBtn}
+                    onClick={() => {
+                      if (!heroStudent) { showToast('No student assigned yet'); return }
+                      void emailParent(heroStudent.id, heroStudent.name)
+                    }}
+                  >
+                    ✉ Email parent
+                  </button>
+                  <button className={s.actionBtn} onClick={() => navigate('/knowledge-graph')}>
+                    📋 View Knowledge Map →
+                  </button>
+                </div>
+              </div>
+
+              {/* Calendly */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Calendly</span>
+                  {calendlyConnected && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Connected</span>}
+                </div>
+                {calendlyConnected ? (
+                  <div className={s.calendlyDone}>✓ Connected · {calendlyConnected}</div>
+                ) : (
+                  <>
+                    <p className={s.calendlyHint}>
+                      Paste your Calendly Personal Access Token to auto-register your bookings and Fireflies recording.
+                    </p>
+                    <input
+                      className={s.tokenInput}
+                      type="password"
+                      autoComplete="off"
+                      placeholder="Personal Access Token"
+                      value={calendlyToken}
+                      onChange={e => setCalendlyToken(e.target.value)}
+                    />
+                    <button className={s.btnPrimary}
+                      onClick={handleConnectCalendly} disabled={connectingCalendly || !calendlyToken.trim()}>
+                      {connectingCalendly ? 'Connecting…' : 'Connect Calendly →'}
+                    </button>
+                    <p className={s.calendlyFoot}>
+                      Get it at calendly.com → Integrations → API & Webhooks
+                    </p>
+                  </>
+                )}
+              </div>
+
+              {/* Session Notes (stub) */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Session Notes</span>
+                </div>
+                <p className={s.emptyText}>
+                  Session notes coming soon — use Fireflies transcript in session review.
+                </p>
               </div>
             </div>
           </div>
