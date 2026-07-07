@@ -290,7 +290,7 @@ DIAGRAM_RE = re.compile(
     re.I,
 )
 
-# ── LaTeX → plain text translator ────────────────────────────────────────────
+# ── LaTeX → MathText-safe translator ─────────────────────────────────────────
 LATEX_SUBS = [
     (re.compile(r'\\left\s*\('), '('),
     (re.compile(r'\\right\s*\)'), ')'),
@@ -339,6 +339,74 @@ LATEX_SUBS = [
 ]
 
 RESIDUAL_LATEX_RE = re.compile(r'\\[a-zA-Z]+')
+LATEX_DELIM_RE = re.compile(r'(\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\])')
+NONTRIVIAL_MATH_RE = re.compile(r'[\\^_{}=+\-*/]|\\frac|\\sqrt')
+MATH_NORMALIZE_SUBS = [
+    (re.compile(r'\\degree\b'), r'^{\\circ}'),
+    (re.compile(r'\\space\b'), ' '),
+    (re.compile(r'\\,'), ' '),
+    (re.compile(r'\\;'), ' '),
+    (re.compile(r'\\quad\b'), ' '),
+    (re.compile(r'\\qquad\b'), ' '),
+    (re.compile(r'\s{2,}'), ' '),
+    (re.compile(r'^\s+|\s+$'), ''),
+]
+KATEX_SAFE_COMMANDS = {
+    'Delta',
+    'Leftrightarrow',
+    'Rightarrow',
+    'approx',
+    'bigcirc',
+    'bigstar',
+    'boldsymbol',
+    'bullet',
+    'cdot',
+    'cdots',
+    'circ',
+    'color',
+    'cos',
+    'cup',
+    'div',
+    'dot',
+    'dfrac',
+    'equiv',
+    'fbox',
+    'frac',
+    'ge',
+    'geq',
+    'hat',
+    'hspace',
+    'ldots',
+    'le',
+    'left',
+    'leq',
+    'longrightarrow',
+    'mathbf',
+    'mathit',
+    'mathrm',
+    'nabla',
+    'neq',
+    'operatorname',
+    'omega',
+    'pi',
+    'pm',
+    'prime',
+    'rightarrow',
+    'right',
+    'sin',
+    'sqrt',
+    'square',
+    'star',
+    'tan',
+    'text',
+    'textbf',
+    'textit',
+    'theta',
+    'times',
+    'triangle',
+    'underline',
+    'xi',
+}
 
 UK_SUBS = [
     ('£', '$'),
@@ -352,16 +420,62 @@ UK_SUBS = [
 ]
 
 
-def translate_latex(text: str) -> Optional[str]:
-    """Convert LaTeX to plain text. Returns None if residual LaTeX remains."""
-    if pd.isna(text):
-        return None
-    s = str(text)
+def translate_latex_plain(text: str, *, strip: bool = True) -> Optional[str]:
+    """Convert flattened LaTeX/prose to plain text."""
+    s = text
     for pattern, repl in LATEX_SUBS:
+        if not strip and pattern.pattern == r'^\s+|\s+$':
+            continue
         s = pattern.sub(repl, s)
     if RESIDUAL_LATEX_RE.search(s):
         return None  # untranslatable
-    return s.strip()
+    return s.strip() if strip else s
+
+
+def normalize_math_latex(expr: str) -> Optional[str]:
+    """Keep renderable TeX, while dropping only spacing/no-op commands."""
+    s = expr.strip()
+    for pattern, repl in MATH_NORMALIZE_SUBS:
+        s = pattern.sub(repl, s)
+    for cmd in re.findall(r'\\([a-zA-Z]+)', s):
+        if cmd not in KATEX_SAFE_COMMANDS:
+            return None
+    return s
+
+
+def translate_latex(text: str) -> Optional[str]:
+    """Preserve real delimited LaTeX and flatten only trivially plain math."""
+    if pd.isna(text):
+        return None
+    s = str(text)
+    parts: list[str] = []
+    last = 0
+
+    for match in LATEX_DELIM_RE.finditer(s):
+        plain = translate_latex_plain(s[last:match.start()], strip=False)
+        if plain is None:
+            return None
+        parts.append(plain)
+
+        raw = match.group(0)
+        is_block = raw.startswith('\\[')
+        inner = raw[2:-2].strip()
+        flattened = translate_latex_plain(inner)
+        if flattened is not None and not NONTRIVIAL_MATH_RE.search(inner):
+            parts.append(flattened)
+        else:
+            normalized = normalize_math_latex(inner)
+            if normalized is None:
+                return None
+            opener, closer = ('\\[', '\\]') if is_block else ('\\(', '\\)')
+            parts.append(f'{opener}{normalized}{closer}')
+        last = match.end()
+
+    plain = translate_latex_plain(s[last:], strip=False)
+    if plain is None:
+        return None
+    parts.append(plain)
+    return re.sub(r'\s{2,}', ' ', ''.join(parts)).strip()
 
 
 def uk_localize(text: str) -> str:

@@ -37,6 +37,12 @@ describe('TeX renders as math', () => {
   ])('%s', (_name, text) => {
     expect(render(text)).toContain('katex')
   })
+
+  it('renders a reingested Eedi factorise question while preserving prose', () => {
+    const html = render('Factorise this expression, if possible:\n\\(p^{2}-99p\\)')
+    expect(html).toContain('Factorise this expression, if possible:')
+    expect(html).toContain('katex')
+  })
 })
 
 describe('real bank currency prose stays prose', () => {

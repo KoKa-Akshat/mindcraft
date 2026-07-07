@@ -2,7 +2,7 @@
   "summary": {
     "actTestedConcepts": 29,
     "practiceConceptSlots": 38,
-    "staticQuestionsTotal": 1718,
+    "staticQuestionsTotal": 1943,
     "fullCoverage": 20,
     "partialCoverage": 6,
     "listedNoQuestions": 0,
@@ -73,13 +73,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 44,
-        "L2": 28,
-        "L3": 8,
-        "total": 80
+        "L1": 46,
+        "L2": 29,
+        "L3": 9,
+        "total": 84
       },
       "bankAlias": null,
-      "message": "OK \u2014 area_volume (Area and Volume) [core]: static bank has L1=44, L2=28, L3=8 questions."
+      "message": "OK \u2014 area_volume (Area and Volume) [core]: static bank has L1=46, L2=29, L3=9 questions."
     },
     {
       "conceptId": "basic_probability",
@@ -90,12 +90,12 @@
       "inPracticeConcepts": true,
       "questionCounts": {
         "L1": 19,
-        "L2": 14,
+        "L2": 15,
         "L3": 12,
-        "total": 45
+        "total": 46
       },
       "bankAlias": null,
-      "message": "OK \u2014 basic_probability (Basic Probability) [core]: static bank has L1=19, L2=14, L3=12 questions."
+      "message": "OK \u2014 basic_probability (Basic Probability) [core]: static bank has L1=19, L2=15, L3=12 questions."
     },
     {
       "conceptId": "circles_geometry",
@@ -137,13 +137,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 43,
-        "L2": 25,
+        "L1": 45,
+        "L2": 27,
         "L3": 9,
-        "total": 77
+        "total": 81
       },
       "bankAlias": null,
-      "message": "OK \u2014 exponent_rules (Exponent Rules) [core]: static bank has L1=43, L2=25, L3=9 questions."
+      "message": "OK \u2014 exponent_rules (Exponent Rules) [core]: static bank has L1=45, L2=27, L3=9 questions."
     },
     {
       "conceptId": "exponential_functions",
@@ -155,11 +155,11 @@
       "questionCounts": {
         "L1": 0,
         "L2": 0,
-        "L3": 1,
-        "total": 1
+        "L3": 2,
+        "total": 2
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] exponential_functions (Exponential Functions). Have L1=0, L2=0, L3=1. Missing: L1, L2. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] exponential_functions (Exponential Functions). Have L1=0, L2=0, L3=2. Missing: L1, L2. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     {
       "conceptId": "factoring_polynomials",
@@ -169,13 +169,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 7,
-        "L2": 17,
-        "L3": 3,
-        "total": 27
+        "L1": 12,
+        "L2": 20,
+        "L3": 9,
+        "total": 41
       },
       "bankAlias": null,
-      "message": "OK \u2014 factoring_polynomials (Factoring Polynomials) [core]: static bank has L1=7, L2=17, L3=3 questions."
+      "message": "OK \u2014 factoring_polynomials (Factoring Polynomials) [core]: static bank has L1=12, L2=20, L3=9 questions."
     },
     {
       "conceptId": "functions_basics",
@@ -185,13 +185,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 34,
-        "L2": 35,
-        "L3": 22,
-        "total": 91
+        "L1": 40,
+        "L2": 36,
+        "L3": 24,
+        "total": 100
       },
       "bankAlias": null,
-      "message": "OK \u2014 functions_basics (Basics of Functions) [core]: static bank has L1=34, L2=35, L3=22 questions."
+      "message": "OK \u2014 functions_basics (Basics of Functions) [core]: static bank has L1=40, L2=36, L3=24 questions."
     },
     {
       "conceptId": "geometric_transformations",
@@ -202,12 +202,12 @@
       "inPracticeConcepts": true,
       "questionCounts": {
         "L1": 8,
-        "L2": 39,
+        "L2": 42,
         "L3": 0,
-        "total": 47
+        "total": 50
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] geometric_transformations (Geometric Transformations). Have L1=8, L2=39, L3=0. Missing: L3. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] geometric_transformations (Geometric Transformations). Have L1=8, L2=42, L3=0. Missing: L3. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     {
       "conceptId": "linear_equations",
@@ -217,13 +217,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 55,
-        "L2": 104,
-        "L3": 25,
-        "total": 184
+        "L1": 64,
+        "L2": 111,
+        "L3": 29,
+        "total": 204
       },
       "bankAlias": null,
-      "message": "OK \u2014 linear_equations (Linear Equations) [core]: static bank has L1=55, L2=104, L3=25 questions."
+      "message": "OK \u2014 linear_equations (Linear Equations) [core]: static bank has L1=64, L2=111, L3=29 questions."
     },
     {
       "conceptId": "linear_inequalities",
@@ -235,11 +235,11 @@
       "questionCounts": {
         "L1": 5,
         "L2": 31,
-        "L3": 9,
-        "total": 45
+        "L3": 15,
+        "total": 51
       },
       "bankAlias": null,
-      "message": "OK \u2014 linear_inequalities (Linear Inequalities) [core]: static bank has L1=5, L2=31, L3=9 questions."
+      "message": "OK \u2014 linear_inequalities (Linear Inequalities) [core]: static bank has L1=5, L2=31, L3=15 questions."
     },
     {
       "conceptId": "lines_angles",
@@ -249,13 +249,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 26,
-        "L2": 10,
+        "L1": 28,
+        "L2": 11,
         "L3": 3,
-        "total": 39
+        "total": 42
       },
       "bankAlias": null,
-      "message": "OK \u2014 lines_angles (Lines and Angles) [core]: static bank has L1=26, L2=10, L3=3 questions."
+      "message": "OK \u2014 lines_angles (Lines and Angles) [core]: static bank has L1=28, L2=11, L3=3 questions."
     },
     {
       "conceptId": "polynomials",
@@ -282,12 +282,12 @@
       "inPracticeConcepts": true,
       "questionCounts": {
         "L1": 12,
-        "L2": 43,
-        "L3": 16,
-        "total": 71
+        "L2": 54,
+        "L3": 18,
+        "total": 84
       },
       "bankAlias": null,
-      "message": "OK \u2014 quadratic_equations (Quadratic Equations) [core]: static bank has L1=12, L2=43, L3=16 questions."
+      "message": "OK \u2014 quadratic_equations (Quadratic Equations) [core]: static bank has L1=12, L2=54, L3=18 questions."
     },
     {
       "conceptId": "radical_expressions",
@@ -299,11 +299,11 @@
       "questionCounts": {
         "L1": 0,
         "L2": 5,
-        "L3": 1,
-        "total": 6
+        "L3": 2,
+        "total": 7
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] radical_expressions (Radical Expressions). Have L1=0, L2=5, L3=1. Missing: L1. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] radical_expressions (Radical Expressions). Have L1=0, L2=5, L3=2. Missing: L1. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     {
       "conceptId": "right_triangle_geometry",
@@ -314,12 +314,12 @@
       "inPracticeConcepts": true,
       "questionCounts": {
         "L1": 2,
-        "L2": 3,
+        "L2": 5,
         "L3": 0,
-        "total": 5
+        "total": 7
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] right_triangle_geometry (Right Triangle Geometry). Have L1=2, L2=3, L3=0. Missing: L3. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
+      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [core] right_triangle_geometry (Right Triangle Geometry). Have L1=2, L2=5, L3=0. Missing: L3. Tier: Standard high-school units directly exercised on ACT Math (algebra, geometry, stats/probability)."
     },
     {
       "conceptId": "sequences_series",
@@ -330,12 +330,12 @@
       "inPracticeConcepts": true,
       "questionCounts": {
         "L1": 4,
-        "L2": 46,
-        "L3": 8,
-        "total": 58
+        "L2": 57,
+        "L3": 13,
+        "total": 74
       },
       "bankAlias": null,
-      "message": "OK \u2014 sequences_series (Sequences and Series) [core]: static bank has L1=4, L2=46, L3=8 questions."
+      "message": "OK \u2014 sequences_series (Sequences and Series) [core]: static bank has L1=4, L2=57, L3=13 questions."
     },
     {
       "conceptId": "systems_of_linear_equations",
@@ -361,13 +361,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 22,
-        "L2": 19,
+        "L1": 29,
+        "L2": 22,
         "L3": 1,
-        "total": 42
+        "total": 52
       },
       "bankAlias": null,
-      "message": "OK \u2014 triangles_congruence (Triangles and Congruence) [core]: static bank has L1=22, L2=19, L3=1 questions."
+      "message": "OK \u2014 triangles_congruence (Triangles and Congruence) [core]: static bank has L1=29, L2=22, L3=1 questions."
     },
     {
       "conceptId": "trigonometry_basics",
@@ -378,12 +378,12 @@
       "inPracticeConcepts": true,
       "questionCounts": {
         "L1": 1,
-        "L2": 6,
-        "L3": 4,
-        "total": 11
+        "L2": 9,
+        "L3": 5,
+        "total": 15
       },
       "bankAlias": null,
-      "message": "OK \u2014 trigonometry_basics (Trigonometry Basics) [core]: static bank has L1=1, L2=6, L3=4 questions."
+      "message": "OK \u2014 trigonometry_basics (Trigonometry Basics) [core]: static bank has L1=1, L2=9, L3=5 questions."
     },
     {
       "conceptId": "act_strategy",
@@ -425,13 +425,13 @@
       "status": "full",
       "inPracticeConcepts": false,
       "questionCounts": {
-        "L1": 76,
-        "L2": 39,
-        "L3": 11,
-        "total": 126
+        "L1": 86,
+        "L2": 61,
+        "L3": 16,
+        "total": 163
       },
       "bankAlias": null,
-      "message": "OK \u2014 algebraic_manipulation (Algebraic Structure and Symbolic Manipulation) [foundational]: static bank has L1=76, L2=39, L3=11 questions."
+      "message": "OK \u2014 algebraic_manipulation (Algebraic Structure and Symbolic Manipulation) [foundational]: static bank has L1=86, L2=61, L3=16 questions."
     },
     {
       "conceptId": "basic_equations",
@@ -457,13 +457,13 @@
       "status": "partial",
       "inPracticeConcepts": false,
       "questionCounts": {
-        "L1": 143,
-        "L2": 29,
+        "L1": 161,
+        "L2": 30,
         "L3": 0,
-        "total": 172
+        "total": 191
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [foundational] fractions_decimals (Fractions and Decimals). Have L1=143, L2=29, L3=0. Missing: L3. Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
+      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [foundational] fractions_decimals (Fractions and Decimals). Have L1=161, L2=30, L3=0. Missing: L3. Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
     },
     {
       "conceptId": "measurement_units",
@@ -473,13 +473,13 @@
       "status": "full",
       "inPracticeConcepts": false,
       "questionCounts": {
-        "L1": 53,
+        "L1": 75,
         "L2": 3,
         "L3": 3,
-        "total": 59
+        "total": 81
       },
       "bankAlias": null,
-      "message": "OK \u2014 measurement_units (Units, Measurement, and Dimensional Reasoning) [foundational]: static bank has L1=53, L2=3, L3=3 questions."
+      "message": "OK \u2014 measurement_units (Units, Measurement, and Dimensional Reasoning) [foundational]: static bank has L1=75, L2=3, L3=3 questions."
     },
     {
       "conceptId": "number_properties",
@@ -489,13 +489,13 @@
       "status": "full",
       "inPracticeConcepts": true,
       "questionCounts": {
-        "L1": 188,
-        "L2": 39,
+        "L1": 213,
+        "L2": 41,
         "L3": 9,
-        "total": 236
+        "total": 263
       },
       "bankAlias": null,
-      "message": "OK \u2014 number_properties (Number Properties, Factors, and Divisibility) [foundational]: static bank has L1=188, L2=39, L3=9 questions."
+      "message": "OK \u2014 number_properties (Number Properties, Factors, and Divisibility) [foundational]: static bank has L1=213, L2=41, L3=9 questions."
     },
     {
       "conceptId": "order_of_operations",
@@ -505,13 +505,13 @@
       "status": "partial",
       "inPracticeConcepts": false,
       "questionCounts": {
-        "L1": 34,
+        "L1": 40,
         "L2": 0,
         "L3": 0,
-        "total": 34
+        "total": 40
       },
       "bankAlias": null,
-      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [foundational] order_of_operations (Order of Operations). Have L1=34, L2=0, L3=0. Missing: L2, L3. Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
+      "message": "This concept has static questions at some levels but not all. Sessions at missing levels need dynamic generation or more bank items. [foundational] order_of_operations (Order of Operations). Have L1=40, L2=0, L3=0. Missing: L2, L3. Tier: Prerequisite arithmetic, notation, and fluency (fractions, ratios, order of ops). Many core topics assume these skills."
     },
     {
       "conceptId": "ratios_proportions",
@@ -521,13 +521,13 @@
       "status": "full",
       "inPracticeConcepts": false,
       "questionCounts": {
-        "L1": 58,
+        "L1": 61,
         "L2": 24,
         "L3": 9,
-        "total": 91
+        "total": 94
       },
       "bankAlias": "percent_ratio",
-      "message": "OK \u2014 ratios_proportions (Ratios and Proportions) [foundational]: static bank has L1=58, L2=24, L3=9 questions."
+      "message": "OK \u2014 ratios_proportions (Ratios and Proportions) [foundational]: static bank has L1=61, L2=24, L3=9 questions."
     }
   ],
   "bankConceptsNotActTested": [
