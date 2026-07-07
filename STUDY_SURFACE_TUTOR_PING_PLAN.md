@@ -1,4 +1,4 @@
-# Build plan: beige full-bleed study surface + real Ping-a-tutor
+# Build plan: beige full-bleed study surface + real Ping-a-tutor + paper book panels
 
 All Product lane (`app/**`), one agent can take the whole file. Read
 DASHBOARD_NOTEBOOK_SPEC.md (paper system) and BRAND_BOOK.md (copy voice)
@@ -32,11 +32,11 @@ Changes in `ConceptChapterPage.module.css`:
    paper-white cards with an ink border + shadow work on beige.
 
 Acceptance:
-- [ ] No black anywhere on cover/story/question/scratch pages, all 4
+- [x] No black anywhere on cover/story/question/scratch pages, all 4
       cluster themes (algebra beige, geometry blue-grey, functions green,
       data warm red — visit one concept from each).
-- [ ] back button, dots, arrows, floating pills all legible on the light desk.
-- [ ] Page-flip transition still looks right (no dark flash between pages).
+- [x] back button, dots, arrows, floating pills all legible on the light desk.
+- [x] Page-flip transition still looks right (no dark flash between pages).
 
 ## Task 2 — Make “Ping tutor” real (and add it to Practice)
 
@@ -67,13 +67,60 @@ success and writes nothing. Wire it to the existing chat infrastructure
    (`components/PingTutor.tsx`) rather than duplicating.
 
 Acceptance:
-- [ ] Student with a linked tutor pings from chapter page → message appears
+- [x] Student with a linked tutor pings from chapter page → message appears
       in `chats/{uid_tutorId}/messages` and in the Chat page thread.
-- [ ] Ping includes concept/question context automatically.
-- [ ] Student without a tutor gets the explainer, no write, no error.
-- [ ] Same flow works from a Practice session.
+- [x] Ping includes concept/question context automatically.
+- [x] Student without a tutor gets the explainer, no write, no error.
+- [x] Same flow works from a Practice session.
 
-## Task 3 — Admin view-all (already shipped — verify only)
+## Task 3 — Book panels: session notes + knowledge map in the paper style
+
+The dashboard book's **problem solver** panel is the reference: content
+sits directly on the ruled/dotted paper — mono `← today` nav + lowercase
+panel title, italic serif helper line, underlined-paper input, mono
+`Build hint path →` button, mono `Open full … →` text link. The **session
+notes** and **knowledge map** panels instead render as dark rounded cards
+floating in the book — because `DashboardNotesPanel.tsx`,
+`ConstellationGpsExplorer.tsx`, and `DashboardRoutePanel.tsx` all import
+the dark `ConstellationGpsLab.module.css`. Re-skin all three to the paper
+language.
+
+Rules of engagement:
+- Do NOT edit `ConstellationGpsLab.module.css` (shared with the full
+  constellation/GPS pages). Add paper styles to
+  `DashboardPanels.module.css` (already imported as `n` in the notes
+  panel) and switch the three components' class usage over.
+- Do NOT touch the full-page `/knowledge-graph` route — only the embedded
+  book panels.
+- Match the solver panel's existing classes in `Dashboard.module.css`
+  (`solverHint`, `solverInput`, `solverSubmit`) — reuse or mirror them.
+
+Per panel:
+1. **Session notes** (`DashboardNotesPanel.tsx`): search box → single-line
+   underlined paper input with mono placeholder; each note = a journal
+   entry (mono date + tutor line, serif title, bullets on ruled lines,
+   expand inline); empty state = italic serif line
+   ("No published session notes yet.") with mono text links
+   `Book a session →` and `Open full notes page →` styled like
+   `Open full problem solver →`. No dark card, no rounded dark header.
+2. **Knowledge map** (`ConstellationGpsExplorer.tsx`): concept search +
+   `Plot route →` as paper input + mono button; the map field renders on
+   the page's dotted paper, not a black canvas — ink-toned edges/labels,
+   keep the four status hues for nodes (they read fine on paper); legend
+   becomes a small mono caption row under the field; coverage bar = thin
+   ink progress line; empty state = italic serif message on the dotted
+   paper.
+3. **Route panel** (`DashboardRoutePanel.tsx`): same treatment — step list
+   as journal checklist on ruled lines (mono step numbers, serif names,
+   status as small ink chips).
+
+Acceptance:
+- [ ] No dark card inside any book page — solver, notes, map, and route
+      panels all read as the same paper journal.
+- [ ] All interactions unchanged (search, expand, plot route, step click).
+- [ ] Full-page knowledge graph route untouched.
+
+## Task 4 — Admin view-all (already shipped — verify only)
 
 Shipped in commit `101dc07a`: admin sidebar links to Student Dashboard /
 Practice / Knowledge Map (+ tutor/parent), and role-gated “Admin Panel”

@@ -1,0 +1,111 @@
+.floatBar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.fabPing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font: 600 12px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 140ms, box-shadow 140ms, opacity 140ms, border-color 140ms;
+  background: var(--theme-paper, #fffdf7);
+  color: var(--theme-ink, #3d2f10);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 15%, transparent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.fabPing:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--theme-accent, #8b6914) 40%, transparent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pingPanel {
+  background: var(--theme-paper, #fffdf7);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 12%, transparent);
+  border-radius: 12px;
+  padding: 16px;
+  width: 260px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+}
+
+.pingTitle {
+  font: 700 13px/1 "Space Grotesk", sans-serif;
+  color: var(--theme-ink, #3d2f10);
+  margin: 0 0 8px;
+}
+
+.pingHint,
+.pingExplainer {
+  font: 400 13px/1.5 "Inter", sans-serif;
+  color: var(--theme-dim, #9a8a6a);
+  margin: 0;
+}
+
+.pingInput {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 14%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--theme-bg, #f5f0e6) 60%, white);
+  padding: 9px 12px;
+  font: 400 13px/1.4 "Inter", sans-serif;
+  color: var(--theme-ink, #3d2f10);
+  outline: none;
+  resize: none;
+  min-height: 68px;
+  box-sizing: border-box;
+}
+
+.pingInput:focus {
+  border-color: var(--theme-accent, #247a4d);
+}
+
+.pingSubmit {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: var(--theme-accent, #247a4d);
+  color: var(--theme-paper, #fff);
+  border: none;
+  border-radius: 6px;
+  font: 600 12px/1 "Space Grotesk", sans-serif;
+  cursor: pointer;
+  transition: opacity 140ms;
+}
+
+.pingSubmit:hover:not(:disabled) { opacity: 0.87; }
+.pingSubmit:disabled { opacity: 0.45; cursor: default; }
+
+.pingSent {
+  font: 400 12px/1.4 "IBM Plex Mono", monospace;
+  color: var(--theme-accent, #247a4d);
+  text-align: center;
+  padding: 6px 0 2px;
+  margin: 0;
+}
+
+.pingError {
+  font: 400 12px/1.4 "Inter", sans-serif;
+  color: #a12828;
+  margin: 0 0 8px;
+}
+
+@media (max-width: 700px) {
+  .floatBar { bottom: 16px; right: 14px; }
+  .fabPing { padding: 10px 14px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fabPing, .pingSubmit { transition: none; }
+}

@@ -9,6 +9,7 @@ import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
 import type { ScratchStrokeData } from '../types'
 import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
+import PingTutor from '../components/PingTutor'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -344,9 +345,6 @@ export default function ConceptChapterPage() {
 
   // Floating panels
   const [showCalc, setShowCalc] = useState(false)
-  const [showPing, setShowPing] = useState(false)
-  const [pingMsg, setPingMsg] = useState('')
-  const [pingSent, setPingSent] = useState(false)
 
   const goTo = (i: number, d: 'f' | 'b') => {
     if (i < 0) { navigate(-1); return }
@@ -358,20 +356,31 @@ export default function ConceptChapterPage() {
     setPageIdx(i)
   }
 
-  const sendPing = () => {
-    // Stub: would POST to Firestore or a notifications endpoint
-    setPingSent(true)
-    setTimeout(() => { setShowPing(false); setPingSent(false); setPingMsg('') }, 2200)
-  }
-
   const spec = specs[pageIdx]
   const isLast = pageIdx === specs.length - 1
   const storyPageCount = specs.filter(p => p.kind === 'story').length
 
+  const pingContext = useMemo(() => {
+    const base = { conceptName: cs.conceptName }
+    if (spec.kind !== 'question') return base
+    const q = questions[spec.qIdx]
+    return {
+      ...base,
+      questionLabel: `Q${spec.qIdx + 1}`,
+      questionText: q?.question,
+    }
+  }, [spec, questions, cs.conceptName])
+
   return (
     <div
       className={s.desk}
-      style={{ '--theme-bg': theme.bg, '--theme-ink': theme.ink, '--theme-accent': theme.accent, '--theme-dim': theme.dim } as React.CSSProperties}
+      style={{
+        '--theme-bg': theme.bg,
+        '--theme-paper': theme.paper,
+        '--theme-ink': theme.ink,
+        '--theme-accent': theme.accent,
+        '--theme-dim': theme.dim,
+      } as React.CSSProperties}
     >
       <button className={s.backBtn} onClick={() => navigate(-1)} aria-label="Back">← back</button>
 
@@ -652,36 +661,11 @@ export default function ConceptChapterPage() {
       {/* ── Floating toolbar ── */}
       <div className={s.floatBar}>
         {showCalc && <Calculator />}
-        {showPing && (
-          <div className={s.pingPanel}>
-            <p className={s.pingTitle}>Message your tutor</p>
-            {pingSent ? (
-              <p className={s.pingSent}>Sent! Your tutor will see this.</p>
-            ) : (
-              <>
-                <textarea
-                  className={s.pingInput}
-                  placeholder="e.g. Stuck on question 2 — can we go over this next session?"
-                  value={pingMsg}
-                  onChange={e => setPingMsg(e.target.value)}
-                />
-                <button className={s.pingSubmit} disabled={!pingMsg.trim()} onClick={sendPing}>
-                  Send to tutor →
-                </button>
-              </>
-            )}
-          </div>
-        )}
+        <PingTutor context={pingContext} embedded />
         <button
-          className={`${s.fabBtn} ${s.fabPing}`}
-          onClick={() => { setShowPing(p => !p); setShowCalc(false) }}
-          aria-label="Message tutor"
-        >
-          ✉ Ping tutor
-        </button>
-        <button
+          type="button"
           className={`${s.fabBtn} ${s.fabCalc}`}
-          onClick={() => { setShowCalc(c => !c); setShowPing(false) }}
+          onClick={() => setShowCalc(c => !c)}
           aria-label="Calculator"
         >
           ⊞ Calculator

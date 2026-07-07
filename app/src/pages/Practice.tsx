@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from 'react'
 import MathText from '../components/MathText'
 import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
+import PingTutor from '../components/PingTutor'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
 import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
@@ -2514,6 +2515,17 @@ export default function Practice() {
         )}
 
       </main>
+
+      {pPhase === 'session' && currentQ && (
+        <PingTutor
+          context={{
+            conceptName: PRACTICE_CONCEPTS.find(c => c.id === currentQ.conceptId)?.label
+              ?? bridgeLabel(toOntologyId(currentQ.conceptId)),
+            questionLabel: `Q${qIndex + 1}`,
+            questionText: storyItem?.storyStem ?? currentQ.question,
+          }}
+        />
+      )}
     </div>
   )
 }

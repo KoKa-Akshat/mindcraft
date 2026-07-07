@@ -3,13 +3,17 @@
 /* ── Desk ──────────────────────────────────────────────────────────────── */
 .desk {
   min-height: 100dvh;
-  background: #0c0e08;
-  background-image: radial-gradient(ellipse at 50% 20%, #111a0c 0%, #0c0e08 70%);
+  background: var(--theme-bg, #f5f0e6);
+  background-image: radial-gradient(
+    ellipse at 50% 18%,
+    transparent 0%,
+    color-mix(in srgb, var(--theme-ink, #3d2f10) 4%, transparent) 100%
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px 16px 90px;
+  justify-content: flex-start;
+  padding: 56px 16px 24px;
   position: relative;
 }
 
@@ -18,28 +22,32 @@
   top: 20px;
   left: 22px;
   z-index: 30;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.13);
+  background: color-mix(in srgb, var(--theme-paper, #fffdf7) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 15%, transparent);
   border-radius: 999px;
-  color: rgba(255,255,255,0.65);
+  color: var(--theme-ink, #3d2f10);
   font: 500 12px/1 "IBM Plex Mono", monospace;
   padding: 10px 18px;
   cursor: pointer;
   letter-spacing: 0.04em;
-  transition: background 160ms, color 160ms;
+  transition: background 160ms, border-color 160ms;
 }
-.backBtn:hover { background: rgba(255,255,255,0.11); color: #fff; }
+.backBtn:hover {
+  background: color-mix(in srgb, var(--theme-paper, #fffdf7) 92%, transparent);
+  border-color: color-mix(in srgb, var(--theme-ink, #3d2f10) 24%, transparent);
+}
 
 /* ── Page — the warm paper sheet ─────────────────────────────────────── */
 .page {
   position: relative;
   width: min(1280px, 96vw);
-  height: min(820px, 88dvh);
+  min-height: calc(100dvh - 80px);
+  flex: 1;
   border-radius: 4px;
   box-shadow:
-    0 2px 4px rgba(0,0,0,0.12),
-    0 12px 40px rgba(0,0,0,0.38),
-    0 40px 80px rgba(0,0,0,0.26);
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 20px 40px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -62,11 +70,11 @@
 /* ── Page-flip entry animations ───────────────────────────────────────── */
 @keyframes flipRight {
   0% {
-    opacity: 0.2;
+    opacity: 0.35;
     transform: perspective(1100px) rotateY(-22deg) translateX(14px) scale(0.97);
-    filter: brightness(0.7);
+    filter: brightness(0.92);
   }
-  55% { opacity: 1; filter: brightness(0.94); }
+  55% { opacity: 1; filter: brightness(0.98); }
   100% {
     opacity: 1;
     transform: perspective(1100px) rotateY(0deg) translateX(0) scale(1);
@@ -75,11 +83,11 @@
 }
 @keyframes flipLeft {
   0% {
-    opacity: 0.2;
+    opacity: 0.35;
     transform: perspective(1100px) rotateY(22deg) translateX(-14px) scale(0.97);
-    filter: brightness(0.7);
+    filter: brightness(0.92);
   }
-  55% { opacity: 1; filter: brightness(0.94); }
+  55% { opacity: 1; filter: brightness(0.98); }
   100% {
     opacity: 1;
     transform: perspective(1100px) rotateY(0deg) translateX(0) scale(1);
@@ -516,42 +524,39 @@
   align-items: center;
   gap: 8px;
   padding: 12px 18px;
-  border: none;
   border-radius: 999px;
   font: 600 12px/1 "IBM Plex Mono", monospace;
   letter-spacing: 0.04em;
   cursor: pointer;
-  transition: transform 140ms, box-shadow 140ms, opacity 140ms;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.32);
+  transition: transform 140ms, box-shadow 140ms, opacity 140ms, border-color 140ms;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
-.fabBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.38); }
+.fabBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
 .fabCalc {
-  background: #1a2c1a;
-  color: #b8f0a0;
-  border: 1px solid rgba(196,245,71,0.18);
-}
-.fabPing {
-  background: #fffdf7;
-  color: #2d4a2d;
-  border: 1px solid rgba(36,122,77,0.2);
+  background: var(--theme-paper, #fffdf7);
+  color: var(--theme-ink, #3d2f10);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 15%, transparent);
 }
 
 /* Calculator panel */
 .calcPanel {
-  background: #13201a;
-  border: 1px solid rgba(196,245,71,0.14);
+  background: var(--theme-paper, #fffdf7);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 12%, transparent);
   border-radius: 12px;
   padding: 14px;
   width: 220px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
 }
 .calcDisplay {
-  background: #0c1510;
-  border: 1px solid rgba(196,245,71,0.10);
+  background: color-mix(in srgb, var(--theme-bg, #f5f0e6) 55%, white);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 10%, transparent);
   border-radius: 6px;
   padding: 10px 12px;
   font: 600 22px/1 "IBM Plex Mono", monospace;
-  color: #c4f547;
+  color: var(--theme-ink, #3d2f10);
   text-align: right;
   letter-spacing: -0.02em;
   margin-bottom: 10px;
@@ -566,68 +571,26 @@
   margin-bottom: 5px;
 }
 .calcBtn {
-  background: #1e2f24;
-  border: 1px solid rgba(196,245,71,0.09);
+  background: color-mix(in srgb, var(--theme-bg, #f5f0e6) 70%, white);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 10%, transparent);
   border-radius: 6px;
-  color: #d0f0b8;
+  color: var(--theme-ink, #3d2f10);
   font: 500 13px/1 "IBM Plex Mono", monospace;
   padding: 10px 4px;
   cursor: pointer;
   transition: background 100ms, transform 80ms;
 }
-.calcBtn:hover { background: #243b2c; }
+.calcBtn:hover { background: color-mix(in srgb, var(--theme-bg, #f5f0e6) 40%, white); }
 .calcBtn:active { transform: scale(0.93); }
-.calcOp { color: #c4f547; background: #162619; }
-.calcEq { background: #c4f547; color: #0c1510; font-weight: 700; }
-.calcEq:hover { background: #d4ff55; }
+.calcOp { color: var(--theme-accent, #8b6914); }
+.calcEq {
+  background: var(--theme-ink, #3d2f10);
+  color: var(--theme-paper, #fffdf7);
+  font-weight: 700;
+}
+.calcEq:hover { opacity: 0.9; }
 
-/* Ping tutor panel */
-.pingPanel {
-  background: #fffdf7;
-  border: 1px solid rgba(36,122,77,0.14);
-  border-radius: 12px;
-  padding: 16px;
-  width: 260px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-}
-.pingTitle {
-  font: 700 13px/1 "Space Grotesk", sans-serif;
-  color: #1a2c16;
-  margin: 0 0 8px;
-}
-.pingInput {
-  width: 100%;
-  border: 1px solid rgba(36,122,77,0.18);
-  border-radius: 6px;
-  background: #f5f0e8;
-  padding: 9px 12px;
-  font: 400 13px/1.4 "Inter", sans-serif;
-  color: #1a2c16;
-  outline: none;
-  resize: none;
-  min-height: 68px;
-  box-sizing: border-box;
-}
-.pingInput:focus { border-color: var(--leaf, #247a4d); }
-.pingSubmit {
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px;
-  background: #247a4d;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font: 600 12px/1 "Space Grotesk", sans-serif;
-  cursor: pointer;
-  transition: opacity 140ms;
-}
-.pingSubmit:hover { opacity: 0.87; }
-.pingSent {
-  font: 400 12px/1 "IBM Plex Mono", monospace;
-  color: #247a4d;
-  text-align: center;
-  padding: 6px 0 2px;
-}
+/* Ping tutor — styles live in PingTutor.module.css */
 
 /* ── NAV bar ─────────────────────────────────────────────────────────── */
 .nav {
@@ -688,7 +651,7 @@
 
 /* ── Responsive — iPad portrait (768-1024) ───────────────────────────── */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .page { width: min(1180px, 96vw); height: min(780px, 86dvh); }
+  .page { width: min(1180px, 96vw); min-height: calc(100dvh - 72px); }
   .qLayout { grid-template-columns: 48% 52%; }
 }
 
@@ -703,7 +666,7 @@
 
 /* ── Not-found ───────────────────────────────────────────────────────── */
 .notFound {
-  color: rgba(255,255,255,0.5);
+  color: var(--theme-dim, #9a8a6a);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -719,5 +682,5 @@
     filter: none;
   }
   .choice, .coverCta, .submitBtn, .navArrow, .navPrimary, .dot,
-  .fabBtn, .calcBtn, .pingSubmit { transition: none; }
+  .fabBtn, .calcBtn { transition: none; }
 }
