@@ -436,9 +436,14 @@ export default function ConceptChapterPage() {
     return () => window.clearTimeout(timer)
   }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, pageIdx])
 
+  const goBack = () => {
+    if (fromDashboard) navigate('/dashboard')
+    else navigate(-1)
+  }
+
   const goTo = (i: number, d: 'f' | 'b') => {
     if (i < 0) {
-      navigate(fromDashboard ? '/dashboard' : -1)
+      goBack()
       return
     }
     if (i >= specs.length) {
@@ -508,7 +513,7 @@ export default function ConceptChapterPage() {
         <div className={s.grain} aria-hidden />
 
         {/* In-page corner controls — merged into the paper, not floating on the desk */}
-        <button className={s.backBtn} onClick={() => navigate(fromDashboard ? '/dashboard' : -1)} aria-label="Back">← back</button>
+        <button className={s.backBtn} onClick={goBack} aria-label="Back">← back</button>
         <div className={s.pageTools}>
           <PingTutor context={pingContext} compact />
           <div className={s.calcWrap}>
