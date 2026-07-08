@@ -10,6 +10,9 @@ Usage:
     python ml/scripts/pipeline/ingest.py --all --out-dir app/src/data/
     python ml/scripts/pipeline/ingest.py --source openstax --dry-run --limit 20 --no-llm
     python ml/scripts/pipeline/ingest.py --stories        # regenerate concept stories
+    # Free-response -> triple-verified MCQ conversion (see PIPELINE_MCQ_SPEC.md):
+    python ml/scripts/pipeline/ingest.py --source openstax --convert-free-response \
+        --verify-count 3 --story-wrap --limit 50 --out /tmp/mcq_test.json
 
 Notes:
 - `eedi` delegates to the battle-tested ml/scripts/ingest_eedi.py (its output
@@ -62,9 +65,20 @@ def parse_years(spec: str | None) -> tuple[int, int] | None:
     return year, year
 
 
-def build_adapter(source: str, mapper: ConceptMapper):
+def build_adapter(source: str, mapper: ConceptMapper,
+                  args: argparse.Namespace | None = None):
     if source == "openstax":
         from openstax import OpenStaxAdapter
+        if args is not None and args.convert_free_response:
+            return OpenStaxAdapter(
+                mapper,
+                convert_free_response=True,
+                verify_count=args.verify_count,
+                story_wrap=args.story_wrap,
+                use_llm=not args.no_llm,
+                concept_filter=(set(args.concepts.split(","))
+                                if args.concepts else None),
+            )
         return OpenStaxAdapter(mapper)
     if source == "amc":
         from amc import AMCAdapter
@@ -97,21 +111,27 @@ def run_source(source: str, args: argparse.Namespace, out_path: Path,
     if source == "eedi":
         run_eedi(args)
         return
-    adapter = build_adapter(source, mapper)
+    adapter = build_adapter(source, mapper, args)
     fetch_kwargs: dict = {}
     if source == "amc" and args.years:
         fetch_kwargs["years"] = parse_years(args.years)
     if source == "khan" and args.topic:
         fetch_kwargs["topic"] = args.topic
-    run_pipeline(
-        adapter,
-        out_path=out_path,
-        annotate=not args.no_llm,
-        dry_run=args.dry_run,
-        limit=args.limit,
-        concept_filter=set(args.concepts.split(",")) if args.concepts else None,
-        fetch_kwargs=fetch_kwargs,
-    )
+    try:
+        run_pipeline(
+            adapter,
+            out_path=out_path,
+            annotate=not args.no_llm,
+            dry_run=args.dry_run,
+            limit=args.limit,
+            concept_filter=set(args.concepts.split(",")) if args.concepts else None,
+            fetch_kwargs=fetch_kwargs,
+        )
+    finally:
+        # Flush MCQ/story caches + skip report even on interrupt — the whole
+        # point of the cache is that a 6-hour conversion run is resumable.
+        if hasattr(adapter, "finalize"):
+            adapter.finalize()
 
 
 def main() -> None:
@@ -139,7 +159,22 @@ def main() -> None:
                         help="Regenerate concept stories instead of questions")
     parser.add_argument("--force-stories", action="store_true",
                         help="With --stories: regenerate even passing stories")
+    parser.add_argument("--convert-free-response", action="store_true",
+                        help="openstax only: generate triple-verified MCQs "
+                             "from free-response math items")
+    parser.add_argument("--verify-count", type=int, default=3,
+                        help="Independent verify solves per question "
+                             "(default 3, minimum 2)")
+    parser.add_argument("--story-wrap", action="store_true",
+                        help="LLM-generate storyContext + protagonist-voiced "
+                             "explanations (fallback: frame.questionBridge)")
     args = parser.parse_args()
+
+    if args.verify_count < 2:
+        parser.error("--verify-count must be at least 2")
+    if args.convert_free_response and args.source != "openstax":
+        parser.error("--convert-free-response is only supported with "
+                     "--source openstax")
 
     load_env_local()
     os.chdir(REPO)  # relative default paths (eedi) resolve against repo root

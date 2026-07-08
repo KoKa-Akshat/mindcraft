@@ -920,8 +920,10 @@ def run_pipeline(
             reject("R4_duplicate_correct")
             continue
 
-        # ── ID + dedupe
-        qid = f"{adapter.name()}_{hashlib.sha1(q_norm.encode()).hexdigest()[:8]}"
+        # ── ID + dedupe (adapters may supply a stable `_id`, e.g. the
+        # MCQ-conversion path uses openstax_mcq_{uid})
+        qid = parsed.pop("_id", None) or \
+            f"{adapter.name()}_{hashlib.sha1(q_norm.encode()).hexdigest()[:8]}"
         if qid in seen_ids:
             reject("R5_duplicate_question")
             continue
@@ -942,9 +944,12 @@ def run_pipeline(
             "correctIndex": ci,
         }
 
-        # ── LLM annotation (explanation + hints), with template fallback
-        explanation, hints = "", []
-        if annotator is not None:
+        # ── LLM annotation (explanation + hints), with template fallback.
+        # Adapters that already produced these (MCQ conversion writes a
+        # protagonist-voiced explanation) pre-empt the annotator.
+        explanation = str(parsed.get("explanation") or "")
+        hints = [str(h) for h in (parsed.get("hints") or [])]
+        if annotator is not None and not explanation:
             result = annotator.annotate(q_norm, choices_norm, ci,
                                         concept_id, f"L{level}")
             explanation, hints = result["explanation"], result["hints"]
@@ -965,6 +970,9 @@ def run_pipeline(
             entry["misconception_id"] = parsed["misconception_id"]
         if parsed.get("misconception_label"):
             entry["misconception_label"] = parsed["misconception_label"]
+        if parsed.get("storyContext"):
+            # Narrative scene-setter rendered above the stem (WORLD_VISION).
+            entry["storyContext"] = str(parsed["storyContext"]).strip()
 
         # ── Final validation
         errors = validator.validate(entry)

@@ -42,7 +42,8 @@ from pathlib import Path
 # Allow running both as a package module and as a loose script
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from base import (  # noqa: E402
-    ML_DATA, SourceAdapter, http_get, strip_html,
+    DiagramFilter, LaTeXNormalizer, ML_DATA, SourceAdapter, detect_format,
+    http_get, strip_html,
 )
 
 API_URL = "https://exercises.openstax.org/api/exercises"
@@ -311,7 +312,56 @@ def _inline_data_math(raw_html: str) -> str:
 
 
 class OpenStaxAdapter(SourceAdapter):
-    """OpenStax Exercises -> MindCraft Question dicts."""
+    """OpenStax Exercises -> MindCraft Question dicts.
+
+    Two modes:
+    - default: harvest the (rare) natively-keyed >=4-choice MCQs.
+    - convert_free_response=True: run the triple-verified MCQ generation
+      pipeline (mcq_generator.MCQFromFreeResponse) over the ~6k free-response
+      math items — solve, 2/3-verify, taxonomy distractors, story wrapping.
+    """
+
+    def __init__(self, mapper=None, *, convert_free_response: bool = False,
+                 verify_count: int = 3, story_wrap: bool = False,
+                 use_llm: bool = True,
+                 concept_filter: set[str] | None = None) -> None:
+        super().__init__(mapper)
+        self.convert_free_response = convert_free_response
+        self.verify_count = verify_count
+        self.story_wrap = story_wrap
+        self.use_llm = use_llm
+        # In convert mode the filter must apply BEFORE the solve chain, or
+        # LLM credits are spent on questions run_pipeline will discard at R1.
+        self.concept_filter = concept_filter
+        self._mcq = None            # lazy MCQFromFreeResponse
+        self._diagram = DiagramFilter()
+        self._latex = LaTeXNormalizer()
+
+    def _mcq_gen(self):
+        """Lazy-build the MCQ generator (imports pull in the story frames)."""
+        if self._mcq is None:
+            from base import LLMClient
+            from mcq_generator import MCQFromFreeResponse
+            from story_wrapper import StoryWrapper
+            client = LLMClient()
+            if not self.use_llm:
+                client.provider = "none"   # --no-llm: template mode even
+                #                            when API keys are in the env
+            wrapper = StoryWrapper(
+                client=client, use_llm=self.story_wrap and self.use_llm)
+            self._mcq = MCQFromFreeResponse(
+                client=client, story_wrapper=wrapper,
+                verify_count=self.verify_count)
+        return self._mcq
+
+    def finalize(self) -> None:
+        """Flush MCQ/story caches + the skip report after a run."""
+        if self._mcq is not None:
+            self._mcq.save_cache()
+            if self._mcq.story_wrapper is not None:
+                self._mcq.story_wrapper.save_cache()
+            print(f"  [openstax-mcq] stats: {self._mcq.stats}"
+                  f"  skips logged: {len(self._mcq.skips)}")
 
     def name(self) -> str:
         return "openstax"
@@ -335,6 +385,14 @@ class OpenStaxAdapter(SourceAdapter):
             cached = json.loads(CACHE_PATH.read_text())
             print(f"  [openstax] loaded {len(cached)} exercises from cache "
                   f"({CACHE_PATH})")
+            if self.convert_free_response:
+                # Pre-filter so --limit N counts CANDIDATES, not raw items
+                # (the first thousands of raw items are all biology), and so
+                # the 84k list can be garbage-collected early.
+                candidates = [it for it in cached if self._is_fr_candidate(it)]
+                print(f"  [openstax] {len(candidates)} free-response math "
+                      "candidates for MCQ conversion")
+                return candidates
             return cached
 
         items: list[dict] = []
@@ -374,6 +432,8 @@ class OpenStaxAdapter(SourceAdapter):
     # ------------------------------------------------------------------
 
     def parse_item(self, raw: dict) -> dict | None:
+        if self.convert_free_response:
+            return self._parse_free_response(raw)
         tags = [str(t).lower() for t in (raw.get("tags") or [])]
         if not self._is_math_book(tags):
             return None  # bio/physics/nursing/... — out of scope
@@ -436,6 +496,107 @@ class OpenStaxAdapter(SourceAdapter):
                 t for t in tags if t.startswith(("module-slug:", "book-slug:")))[:300],
             "_act_if_tested": True,           # examTag='ACT' if concept is ACT-tested
         }
+
+    # ------------------------------------------------------------------
+    # free-response -> MCQ conversion (--convert-free-response)
+    # ------------------------------------------------------------------
+
+    def _is_fr_candidate(self, raw: dict) -> bool:
+        """Math-book item whose first question part is free-response."""
+        tags = [str(t).lower() for t in (raw.get("tags") or [])]
+        if not self._is_math_book(tags):
+            return False
+        parts = raw.get("questions") or []
+        if not parts:
+            return False
+        part = parts[0]
+        formats = part.get("formats") or []
+        answers = part.get("answers") or []
+        return "free-response" in formats and len(answers) < 4 and \
+            bool(part.get("stem_html") or raw.get("stimulus_html"))
+
+    def _parse_free_response(self, raw: dict) -> dict | None:
+        """One free-response item -> verified MCQ, or None (skip-logged).
+
+        Cheap structural/diagram/language gates run BEFORE the (expensive)
+        solve→verify→distractor LLM chain so credits are never spent on items
+        run_pipeline would reject anyway.
+        """
+        if not self._is_fr_candidate(raw):
+            return None
+        part = (raw.get("questions") or [{}])[0]
+        uid = str(raw.get("uid") or raw.get("uuid") or "")
+        if not uid:
+            return None
+
+        stem_html = (raw.get("stimulus_html") or "") + " " + \
+            (part.get("stem_html") or "")
+        if "<img" in stem_html:
+            return None  # figure-dependent — unanswerable as text
+        stem = _spell_currency(strip_html(_inline_data_math(stem_html)))
+        if len(stem.strip()) < 25:
+            return None  # fragments like "Explain." / sub-part references
+        if SPANISH_RE.search(stem):
+            return None
+
+        # Diagram gates (same order run_pipeline applies later — fail fast).
+        stem, alts_ok = self._diagram.recover_alt_text(stem)
+        if not alts_ok or self._diagram.still_visual(stem):
+            return None
+        if "(diagram:" not in stem.lower() and \
+                self._diagram.is_diagram_dependent(stem):
+            return None
+        # Un-normalizable LaTeX would be rejected at R4 — check before LLM.
+        if self._latex.has_residual_latex(self._latex.normalize(stem)):
+            return None
+        # References to other parts / preceding exercises can't stand alone.
+        if re.search(r'\b(previous (exercise|problem|part)|part \([a-f]\)|'
+                     r'in exercise \d|use the (data|information|results?) '
+                     r'(from|in) (the|exercise))\b', stem, re.I):
+            return None
+
+        tags = [str(t).lower() for t in (raw.get("tags") or [])]
+        concept_id, level = self._match_tags(tags)
+        if concept_id and self.mapper is not None:
+            concept_id = self.mapper.resolve(concept_id)
+        if not concept_id:
+            return None  # no LLM-mapping for FR items: story frame needs a
+            #              known concept BEFORE the solve, and unmapped slugs
+            #              are mostly blackholed topics anyway.
+        if self.concept_filter and concept_id not in self.concept_filter:
+            return None
+        level = self._level_from_tags(tags, level)
+
+        concept_name = self.mapper.concept_name(concept_id) \
+            if self.mapper else concept_id
+        result = self._mcq_gen().convert(
+            uid=uid, stem=stem, concept_id=concept_id,
+            level=level, concept_name=concept_name)
+        if result is None:
+            return None  # skip-logged inside MCQFromFreeResponse
+
+        # Generated choices are text, so the shared content heuristic beats
+        # this adapter's HTML-based _detect_format (whose default is
+        # word_problem — wrong for symbolic drill items).
+        result["format"] = ("coordinate_graph"
+                            if COORDINATE_LANGUAGE_RE.search(stem)
+                            else detect_format(stem, result["choices"]))
+        result["_source_concept"] = ", ".join(
+            t for t in tags if t.startswith(("module-slug:", "book-slug:")))[:300]
+        result["_act_if_tested"] = True
+        return result
+
+    @staticmethod
+    def _level_from_tags(tags: list[str], default: int) -> int:
+        """Refine the tag-map level with OpenStax depth-of-knowledge tags."""
+        for tag in tags:
+            if tag.startswith("dok:"):
+                dok = tag.split(":", 1)[1]
+                if dok == "1":
+                    return max(1, default - 1)
+                if dok in ("3", "4"):
+                    return min(3, default + 1)
+        return default
 
     # ------------------------------------------------------------------
     # helpers
