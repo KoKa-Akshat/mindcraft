@@ -74,7 +74,27 @@ const STICKER_COLORS: Record<StickerId, string> = {
   feather: '#6f6a61',
 }
 
-export function StickerGlyph({ id, size = 28 }: { id: StickerId; size?: number }) {
+function isCuratedId(id: string): id is StickerId {
+  return id in STICKER_VIEW
+}
+
+export function StickerGlyph({
+  id,
+  customUrl,
+  size = 28,
+}: {
+  id: string
+  customUrl?: string
+  size?: number
+}) {
+  if (customUrl) {
+    return (
+      <span className={s.glyph} style={{ width: size, height: size }}>
+        <img src={customUrl} alt="" className={s.customImg} draggable={false} />
+      </span>
+    )
+  }
+  if (!isCuratedId(id)) return null
   const color = STICKER_COLORS[id]
   return (
     <span className={s.glyph} style={{ width: size, height: size }}>
@@ -86,20 +106,20 @@ export function StickerGlyph({ id, size = 28 }: { id: StickerId; size?: number }
 export default function StickerLayer({
   stickers,
   editable,
-  selectedStickerId,
+  selectedSticker,
   onPlace,
   onMove,
   onRemove,
 }: {
   stickers: DashboardSticker[]
   editable?: boolean
-  selectedStickerId?: StickerId | null
+  selectedSticker?: { stickerId: string; customUrl?: string } | null
   onPlace?: (x: number, y: number) => void
   onMove?: (index: number, x: number, y: number) => void
   onRemove?: (index: number) => void
 }) {
   function handleSurfaceClick(e: React.MouseEvent<HTMLDivElement>) {
-    if (!editable || !selectedStickerId || !onPlace) return
+    if (!editable || !selectedSticker || !onPlace) return
     const rect = e.currentTarget.getBoundingClientRect()
     const x = (e.clientX - rect.left) / rect.width
     const y = (e.clientY - rect.top) / rect.height
@@ -108,7 +128,7 @@ export default function StickerLayer({
 
   return (
     <div
-      className={`${s.layer} ${editable ? s.editable : ''} ${selectedStickerId ? s.placing : ''}`}
+      className={`${s.layer} ${editable ? s.editable : ''} ${selectedSticker ? s.placing : ''}`}
       onClick={handleSurfaceClick}
       aria-hidden={!stickers.length && !editable}
     >
@@ -147,9 +167,13 @@ export default function StickerLayer({
               window.addEventListener('touchend', clear, { once: true })
               window.addEventListener('touchmove', clear, { once: true })
             }}
-            aria-label={`Sticker ${sticker.stickerId}`}
+            aria-label="Journal sticker"
           >
-            <StickerGlyph id={sticker.stickerId as StickerId} size={34} />
+            <StickerGlyph
+              id={sticker.stickerId}
+              customUrl={sticker.customUrl}
+              size={34}
+            />
           </button>
         )
       })}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { auth } from '../firebase'
 import { WEBHOOK_BASE, checkWork, type CheckWorkResult } from '../lib/mlApi'
+import { mapCheckWorkRule } from '../lib/workEvidence'
 import {
   buildInkLines,
   exportLineCrop,
@@ -274,7 +275,12 @@ export default function ScratchTranscriptionPane({
         const updated = prev.map((line, i) => {
           const verdict = result.verdictPerLine.find(v => v.line === i)
           return verdict
-            ? { ...line, verdict: verdict.verdict, checkReason: verdict.reason }
+            ? {
+                ...line,
+                verdict: verdict.verdict,
+                checkReason: verdict.reason,
+                rule: mapCheckWorkRule(verdict.rule),
+              }
             : line
         })
         workLinesRef.current = updated
@@ -355,6 +361,9 @@ export default function ScratchTranscriptionPane({
                   : line.text
                     ? <span>{line.text}</span>
                     : null}
+                {line.rule?.label && (
+                  <span className={s.ruleChip}>{line.rule.label}</span>
+                )}
               </div>
             ))
           ) : transcription.latex ? (

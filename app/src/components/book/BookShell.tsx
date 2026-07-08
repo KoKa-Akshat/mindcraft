@@ -1,4 +1,6 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
+import type { DashboardTheme } from '../../lib/dashboardPersonalization'
+import { resolvedFontPreset, resolvedPaperPreset, themeShellStyle } from '../../lib/dashboardPersonalization'
 import s from './Book.module.css'
 
 /**
@@ -13,8 +15,7 @@ export default function BookShell({
   left,
   right,
   className,
-  paper = 'cream',
-  font = 'script',
+  theme,
   wordmark = 'MindCraft',
 }: {
   chromeLeft?: ReactNode
@@ -22,15 +23,20 @@ export default function BookShell({
   left: ReactNode
   right: ReactNode
   className?: string
-  paper?: 'cream' | 'beige' | 'greyblue' | 'sage' | 'blush'
-  font?: 'script' | 'print' | 'mono'
+  theme?: DashboardTheme
   wordmark?: ReactNode
 }) {
+  const paper = theme ? resolvedPaperPreset(theme) : 'cream'
+  const font = theme ? resolvedFontPreset(theme) : 'script'
+  const shellStyle = theme ? themeShellStyle(theme) as CSSProperties : undefined
+
   return (
     <div
       className={`${s.shell} ${className ?? ''}`}
       data-paper={paper}
       data-font={font}
+      data-custom-theme={theme?.paper === 'custom' || theme?.font === 'custom' ? 'true' : undefined}
+      style={shellStyle}
     >
       <div className={s.chrome}>
         <div className={s.chromeLeft}>

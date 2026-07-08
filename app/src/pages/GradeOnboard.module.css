@@ -7,8 +7,12 @@
   max-height: 100dvh;
   overflow: hidden;
   box-sizing: border-box;
-  background: #080e14;
-  background-image: radial-gradient(ellipse at 50% 30%, #0c141c 0%, #080e14 70%);
+  background:
+    linear-gradient(180deg, rgba(251, 248, 244, 0.82), rgba(247, 243, 238, 0.96)),
+    radial-gradient(circle at 1px 1px, var(--paper-rule) 1px, transparent 0);
+  background-size: auto, 18px 18px;
+  color: var(--paper-ink);
+  font-family: var(--font-serif);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,12 +28,12 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(255,255,255,0.08);
+  background: var(--paper-edge);
   z-index: 10;
 }
 .progressFill {
   height: 100%;
-  background: #c4f547;
+  background: var(--paper-accent-blue);
   transition: width 500ms cubic-bezier(0.2,0,0,1);
 }
 
@@ -160,8 +164,8 @@
   margin: 0 0 12px;
 }
 .title {
-  font: 700 clamp(28px, 5vw, 38px)/1.1 "Space Grotesk", sans-serif;
-  color: #1c1a17;
+  font: 700 clamp(28px, 5vw, 38px)/1.1 var(--font-hand);
+  color: var(--paper-ink);
   letter-spacing: -0.03em;
   margin: 0 0 14px;
 }
@@ -281,8 +285,8 @@
   border-left: 3px solid rgba(193,18,31,0.28);
 }
 .storyTitle {
-  font: 700 24px/1.15 "Space Grotesk", sans-serif;
-  color: #1c1a17;
+  font: 700 24px/1.15 var(--font-hand);
+  color: var(--paper-ink);
   letter-spacing: -0.02em;
   margin: 0 0 20px;
 }
@@ -381,8 +385,8 @@
   height: 100%;
 }
 .seedingText {
-  font: 400 13px/20px "IBM Plex Mono", monospace;
-  color: rgba(245,245,245,0.64);
+  font: 400 13px/20px var(--font-mono);
+  color: var(--paper-ink-dim);
   letter-spacing: 0.06em;
 }
 @keyframes pulse {
@@ -400,18 +404,19 @@
   justify-content: center;
   min-height: 44px;
   padding: 0 22px;
-  background: #1c1a17;
-  color: #f7f3ee;
+  background: var(--paper-ink);
+  color: var(--paper-bg);
   border: none;
   border-radius: 2px;
-  font: 500 14px/1 "Space Grotesk", sans-serif;
-  letter-spacing: -0.01em;
+  font: 500 14px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
   cursor: pointer;
   transition: background 160ms, transform 120ms;
   margin-top: 4px;
 }
 .primary:hover:not(:disabled) {
-  background: #232f4e;
+  background: var(--paper-ink-katha);
   transform: translateY(-1px);
 }
 .primary:disabled {

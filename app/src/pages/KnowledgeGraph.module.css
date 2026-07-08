@@ -1215,3 +1215,324 @@
     min-height: 620px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAPER STANDARDIZATION — Map
+   The plot stays a dark chart field inside a paper journal frame.
+══════════════════════════════════════════════════════════════════════════════ */
+
+.shell {
+  background:
+    linear-gradient(180deg, rgba(251, 248, 244, 0.82), rgba(247, 243, 238, 0.96)),
+    radial-gradient(circle at 1px 1px, var(--paper-rule) 1px, transparent 0);
+  background-size: auto, 18px 18px;
+  color: var(--paper-ink);
+  font-family: var(--font-serif);
+}
+
+.page {
+  color: var(--paper-ink);
+}
+
+.topBar,
+.worldHero {
+  border-bottom-color: var(--paper-edge);
+}
+
+.backBtn,
+.conceptBadge,
+.searchBtn,
+.examChip,
+.viewSessionBtn,
+.bookBtn,
+.zoomBtn,
+.zoomReset,
+.flashcardAction,
+.flashcardActionSecondary,
+.mlPracticeBtn {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  border-radius: 2px;
+}
+
+.backBtn,
+.searchBtn,
+.examChip,
+.viewSessionBtn,
+.bookBtn,
+.flashcardAction,
+.mlPracticeBtn {
+  background: transparent;
+  border: 1.5px solid var(--paper-accent-blue);
+  color: var(--paper-accent-blue);
+}
+
+.backBtn:hover,
+.searchBtn:not(:disabled):hover,
+.examChip:hover,
+.viewSessionBtn:hover,
+.bookBtn:hover,
+.flashcardAction:hover,
+.mlPracticeBtn:hover {
+  background: var(--paper-accent-blue);
+  border-color: var(--paper-accent-blue);
+  color: var(--paper-sheet);
+}
+
+.pageTitle,
+.worldTitle,
+.detailTitle,
+.mlTitle,
+.flashcardTitle {
+  color: var(--paper-ink-katha);
+  font-family: var(--font-hand);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pageTitle {
+  font-size: 28px;
+}
+
+.conceptBadge,
+.worldEyebrow,
+.examLabel,
+.legendTitle,
+.detailBadge,
+.detailMeta,
+.masteryLabel,
+.coverageLabel,
+.ingredientLabel,
+.ingredientHint,
+.flashcardTag,
+.flashcardFaceLabel,
+.mlAlignBadge {
+  color: var(--paper-ink-faded);
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+.conceptBadge,
+.tag,
+.mlAlignBadge {
+  background: transparent;
+  border: 1px solid var(--paper-edge);
+  border-radius: 999px;
+}
+
+.worldCopy,
+.detailTagline,
+.detailBullets li,
+.notStudied,
+.detailLoading,
+.mlSub,
+.mlReason,
+.ingredientDesc,
+.flashcardBody,
+.flashcardPrompt,
+.coverageTxt {
+  color: var(--paper-ink-dim);
+  font-family: var(--font-serif);
+}
+
+.worldStats div,
+.detailPanel,
+.coverage,
+.mlPanel,
+.mlStep,
+.ingredientItem,
+.flashcardPanel,
+.flashcardCard {
+  background: var(--paper-sheet);
+  border: 1px solid var(--paper-edge);
+  border-radius: 2px;
+  box-shadow: var(--paper-shadow-card);
+}
+
+.worldStats strong,
+.detailSessionTitle,
+.masteryPct,
+.mlConceptName,
+.ingredientName {
+  color: var(--paper-ink-katha);
+}
+
+.worldStats span {
+  color: var(--paper-ink-faded);
+  font-family: var(--font-mono);
+  text-transform: lowercase;
+}
+
+.searchIcon,
+.micBtn,
+.closePanel,
+.flashcardClose {
+  color: var(--paper-ink-faded);
+}
+
+.micBtn:hover,
+.closePanel:hover,
+.flashcardClose:hover {
+  color: var(--paper-accent-blue);
+}
+
+.searchInput {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--paper-edge);
+  border-radius: 0;
+  color: var(--paper-ink);
+  font-family: var(--font-serif);
+}
+
+.searchInput::placeholder {
+  color: var(--paper-ink-faded);
+}
+
+.searchInput:focus {
+  background: transparent;
+  border-color: var(--paper-accent-blue);
+}
+
+.error {
+  background: rgba(193, 18, 31, 0.08);
+  border-color: var(--paper-margin-rule);
+  color: var(--paper-accent-red);
+  border-radius: 2px;
+}
+
+.svgWrap {
+  background:
+    radial-gradient(ellipse at 50% 46%, rgba(29, 58, 138, 0.28), transparent 58%),
+    linear-gradient(180deg, var(--paper-ink-katha), var(--mc-deep));
+  border: 1px solid var(--paper-crease);
+  border-radius: 2px;
+  box-shadow: var(--paper-shadow-card);
+}
+
+.svgWrap::before {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(251, 248, 244, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.legend,
+.zoomControls {
+  background: rgba(251, 248, 244, 0.92);
+  border: 1px solid var(--paper-edge);
+  border-radius: 2px;
+  box-shadow: var(--paper-shadow-tip);
+}
+
+.legendItem,
+.zoomValue {
+  color: var(--paper-ink-dim);
+  font-family: var(--font-mono);
+}
+
+.legendDot {
+  box-shadow: 0 0 0 3px rgba(251, 248, 244, 0.75);
+}
+
+.zoomBtn,
+.zoomReset {
+  background: transparent;
+  border: 1px solid var(--paper-edge);
+  color: var(--paper-ink-katha);
+}
+
+.zoomBtn:hover:not(:disabled),
+.zoomReset:hover:not(:disabled) {
+  background: rgba(29, 58, 138, 0.06);
+  border-color: var(--paper-accent-blue);
+}
+
+.gritHud {
+  background: rgba(251, 248, 244, 0.9);
+  border: 1px solid var(--paper-edge);
+  border-radius: 2px;
+  box-shadow: var(--paper-shadow-tip);
+}
+
+.gritHud strong {
+  color: var(--paper-ink-katha);
+  font-family: var(--font-mono);
+}
+
+.gritHud span {
+  color: var(--paper-ink-dim);
+  font-family: var(--font-serif);
+}
+
+.emptyOrb,
+.loadingOrb {
+  background: var(--paper-sheet-recessed);
+  border-color: var(--paper-edge);
+  animation: none;
+}
+
+.emptyRing,
+.loadRing,
+.loadRing2 {
+  border-color: var(--paper-edge);
+  border-top-color: var(--paper-accent-blue);
+}
+
+.emptyJ,
+.emptyText {
+  color: var(--paper-ink-katha);
+}
+
+.emptySub {
+  color: var(--paper-ink-dim);
+}
+
+.masteryBar,
+.coverageBar {
+  background: var(--paper-sheet-recessed);
+}
+
+.masteryFill,
+.coverageFill {
+  background: var(--paper-accent-blue);
+}
+
+.coverageFill::after {
+  background: linear-gradient(90deg, transparent, rgba(251, 248, 244, 0.45));
+}
+
+.ingredientItem:hover,
+.ingredientItemActive {
+  background: var(--paper-sheet-recessed);
+  border-color: var(--paper-accent-blue);
+  box-shadow: var(--paper-shadow-card);
+}
+
+.flashcardPanel {
+  background: var(--paper-sheet-recessed);
+}
+
+.flashcardDivider {
+  background: linear-gradient(90deg, transparent, var(--paper-edge), transparent);
+}
+
+.flashcardActionSecondary {
+  background: transparent;
+  border: 1px solid var(--paper-edge);
+  color: var(--paper-ink-dim);
+}
+
+.flashcardActionSecondary:hover {
+  border-color: var(--paper-accent-blue);
+  color: var(--paper-accent-blue);
+}
+
+.profileConcept {
+  color: var(--paper-ink);
+}
+
+.profileScore {
+  color: var(--paper-ink-dim);
+}

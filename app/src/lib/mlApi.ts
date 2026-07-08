@@ -107,6 +107,12 @@ export interface StudentProfileResult {
   topWeaknesses: Array<{ conceptId: string; strength: number }>
 }
 
+export interface CheckWorkLineRule {
+  id: string
+  label: string
+  ingredientIds?: string[]
+}
+
 export interface CheckWorkResult {
   firstBrokenLine: number | null
   verdictPerLine: Array<{
@@ -115,11 +121,29 @@ export interface CheckWorkResult {
     normalized: string
     verdict: 'ok' | 'wrong' | 'unparsed'
     reason: string
+    rule?: CheckWorkLineRule
   }>
   hypothesis?: {
     misconception_id: string
     label: string
   } | null
+}
+
+export interface WorkEvidenceStep {
+  rule_id?: string | null
+  verdict: 'ok' | 'wrong'
+  rule?: {
+    id: string
+    label?: string | null
+    ingredientIds?: string[]
+  } | null
+}
+
+export interface RecordWorkEvidenceRequest {
+  student_id: string
+  question_id: string
+  concept_id: string
+  steps: WorkEvidenceStep[]
 }
 
 // ── API calls ──────────────────────────────────────────────────────────────
@@ -339,6 +363,20 @@ export async function checkWork(
     return res.json()
   } catch {
     return null
+  }
+}
+
+export async function recordWorkEvidence(req: RecordWorkEvidenceRequest): Promise<boolean> {
+  if (!req.steps.length) return false
+  try {
+    const res = await fetch(`${ML_BASE}/record-work-evidence`, {
+      method: 'POST',
+      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(req),
+    })
+    return res.ok
+  } catch {
+    return false
   }
 }
 

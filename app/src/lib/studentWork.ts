@@ -31,6 +31,7 @@ export interface SaveQuestionWorkInput {
   scratchTranscription?: { text: string; latex: string; editedByStudent: boolean }
   wasStuck?: boolean
   reasoningText?: string
+  selectedAnswerIndex?: number
 }
 
 function resolveDocId(studentId: string, input: SaveQuestionWorkInput): string | null {
@@ -79,6 +80,7 @@ export async function saveQuestionWork(
     scratchTranscription: input.scratchTranscription ?? existing?.scratchTranscription ?? EMPTY_TRANSCRIPTION,
     wasStuck: input.wasStuck ?? existing?.wasStuck,
     reasoningText: input.reasoningText ?? existing?.reasoningText,
+    selectedAnswerIndex: input.selectedAnswerIndex ?? existing?.selectedAnswerIndex,
     createdAt: existing?.createdAt ?? now,
     updatedAt: now,
   }

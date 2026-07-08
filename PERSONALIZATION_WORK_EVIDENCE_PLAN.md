@@ -61,9 +61,9 @@ count), the drawer should stay open until the user hits ✕ or switches to
 the theme tab — remove `onClick={onClose}` from `.backdrop` (or restrict
 it to fire only when `tab==='theme'` and no sticker is selected, if some
 click-outside-to-close behavior is still wanted for the theme tab).
-- [ ] Open drawer → pick a sticker → tap the cover → sticker appears AND
+- [x] Open drawer → pick a sticker → tap the cover → sticker appears AND
       drawer stays open → tap cover again → second sticker appears.
-- [ ] ✕ still closes the drawer from either tab.
+- [x] ✕ still closes the drawer from either tab.
 
 ### 1e — Custom sticker upload (Lane: **Product** + one **Engine** rules file)
 
@@ -98,10 +98,10 @@ Students can upload their own sticker image alongside the curated set.
   `users/{uid}.customStickers: [{ id, url, uploadedAt }]` (separate from
   placed instances) so an uploaded sticker can be placed multiple times /
   removed from the library without re-uploading.
-- [ ] Upload a PNG → appears in the drawer's sticker grid → placeable →
+- [x] Upload a PNG → appears in the drawer's sticker grid → placeable →
       persists across reload.
-- [ ] Oversized/wrong-type file rejected client-side with a clear message.
-- [ ] Non-owner cannot write to another uid's sticker path (rules test).
+- [x] Oversized/wrong-type file rejected client-side with a clear message.
+- [x] Non-owner cannot write to another uid's sticker path (rules test).
 
 ### 1f — Custom typography + color (Lane: **Product**)
 
@@ -123,10 +123,10 @@ Expand within that guardrail rather than dropping it entirely:
   guardrail from the original spec while giving real freedom.
   `dashboardTheme` gains optional `customPaper?: string; customInk?: string`
   (hex), applied as CSS var overrides same as the presets.
-- [ ] Custom font renders on the book pages + panels.
-- [ ] Contrast guard blocks an unreadable combo; a readable custom combo
+- [x] Custom font renders on the book pages + panels.
+- [x] Contrast guard blocks an unreadable combo; a readable custom combo
       saves and persists.
-- [ ] Presets remain the default/one-click option — custom is opt-in via
+- [x] Presets remain the default/one-click option — custom is opt-in via
       an "advanced" toggle, not the primary UI.
 
 ### 1c — Bookmark practice questions
@@ -226,7 +226,7 @@ the tutor-session notes:
 - Tutor access is OUT OF SCOPE v1 (the `student_work` rules only allow
   owner + parent reads today — widening to tutors is a rules change that
   rides with the tutor-view workstream).
-- [ ] Worked questions appear after practice; replay shows ink + labeled
+- [x] Worked questions appear after practice; replay shows ink + labeled
       steps; empty state is paper-styled per BRAND_BOOK.
 
 ### 2d — Feed the strength vector (Lane: **Engine**, `ml/**`; needs 2b)

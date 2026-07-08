@@ -1,7 +1,18 @@
 .shell {
-  background: var(--bg);
+  --tx: var(--paper-ink);
+  --mu: var(--paper-ink-dim);
+  --bd: var(--paper-edge);
+  --w: var(--paper-sheet);
+  --bg: var(--paper-bg);
+  --blue: var(--paper-accent-blue);
+  --blue-d: var(--paper-ink-katha);
+  --f: var(--font-serif);
+  background:
+    linear-gradient(180deg, rgba(251, 248, 244, 0.82), rgba(247, 243, 238, 0.96)),
+    radial-gradient(circle at 1px 1px, var(--paper-rule) 1px, transparent 0);
+  background-size: auto, 18px 18px;
   min-height: 100vh;
-  color: var(--tx);
+  color: var(--paper-ink);
 }
 
 .page {
@@ -25,9 +36,10 @@
 
 .pickerTitle {
   font-size: 28px;
-  font-weight: 900;
-  color: var(--tx);
-  letter-spacing: -.5px;
+  font-weight: 700;
+  font-family: var(--font-hand);
+  color: var(--paper-ink-katha);
+  letter-spacing: -.02em;
   margin-bottom: 6px;
 }
 
@@ -44,13 +56,13 @@
 }
 
 .techCard {
-  background: var(--w);
-  border-radius: 20px;
+  background: var(--paper-sheet);
+  border-radius: 2px;
   padding: 22px 20px 18px;
-  border: 1.5px solid rgba(0,0,0,0.06);
+  border: 1px solid var(--paper-edge);
   cursor: pointer;
   transition: transform .18s, box-shadow .18s, border-color .18s;
-  box-shadow: 0 2px 12px rgba(10,37,64,0.05);
+  box-shadow: var(--paper-shadow-card);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -218,12 +230,13 @@
 /* ── Time display ── */
 .timeDisplay {
   font-size: 72px;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -3px;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   transition: color .4s;
-  font-family: var(--f);
+  font-family: var(--font-mono);
+  color: var(--paper-ink-katha);
 }
 .colon {
   display: inline-block;
@@ -284,19 +297,19 @@
 .btnRound {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(0,105,255,0.15);
-  background: var(--w);
-  color: var(--mu);
+  border-radius: 2px;
+  border: 1.5px solid var(--paper-edge);
+  background: var(--paper-sheet);
+  color: var(--paper-ink-dim);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all .15s;
-  box-shadow: 0 2px 8px rgba(10,37,64,0.06);
+  box-shadow: var(--paper-shadow-tip);
 }
 .btnRound svg { width: 18px; height: 18px; }
-.btnRound:hover { color: var(--tx); border-color: rgba(0,105,255,0.3); transform: scale(1.05); }
+.btnRound:hover { color: var(--paper-accent-blue); border-color: var(--paper-accent-blue); transform: scale(1.05); }
 
 /* ── Settings link ── */
 .settingsBtn {
@@ -329,19 +342,20 @@
   z-index: 200;
 }
 .modal {
-  background: var(--w);
-  border-radius: 24px;
+  background: var(--paper-sheet);
+  border-radius: 2px;
   padding: 32px 28px 24px;
   width: 360px;
-  border: 1.5px solid rgba(0,105,255,0.1);
-  box-shadow: 0 24px 60px rgba(10,37,64,0.2);
+  border: 1px solid var(--paper-edge);
+  box-shadow: var(--paper-shadow-card);
 }
 .modalTitle {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--tx);
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--font-hand);
+  color: var(--paper-ink-katha);
   margin-bottom: 24px;
-  letter-spacing: -.3px;
+  letter-spacing: -.02em;
 }
 .row {
   display: flex;
@@ -397,17 +411,19 @@
 .btnSave {
   flex: 1;
   padding: 12px;
-  border-radius: 12px;
+  border-radius: 2px;
   border: none;
-  background: var(--blue);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 900;
-  font-family: var(--f);
+  background: var(--paper-ink);
+  color: var(--paper-sheet);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
   cursor: pointer;
-  transition: filter .15s;
+  transition: background .15s;
 }
-.btnSave:hover { filter: brightness(1.1); }
+.btnSave:hover { background: var(--paper-ink-katha); }
 
 @media (max-width: 720px) {
   .page { margin-left: 0; padding: 80px 16px 40px; }

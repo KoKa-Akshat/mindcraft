@@ -1,0 +1,208 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.metaChip {
+  font: 600 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faded, #7c7468);
+  border: 1px solid rgba(102, 92, 78, 0.16);
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.prompt {
+  margin: 0;
+  font: 600 15px/1.45 "Source Serif 4", Georgia, serif;
+  color: var(--ink-katha, #232f4e);
+}
+
+.choices {
+  display: grid;
+  gap: 8px;
+}
+
+.choice {
+  border: 1px solid rgba(102, 92, 78, 0.14);
+  border-radius: 8px;
+  background: rgba(251, 248, 244, 0.75);
+  padding: 9px 11px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.choiceSelected {
+  border-color: rgba(29, 58, 138, 0.35);
+  background: rgba(29, 58, 138, 0.06);
+}
+
+.choiceMark {
+  margin-left: auto;
+  font: 700 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1d3a8a;
+}
+
+.choiceLetter {
+  min-width: 18px;
+  font: 700 10px/1.6 "IBM Plex Mono", monospace;
+  color: var(--ink-depth, #1d3a8a);
+}
+
+.choiceText {
+  flex: 1;
+  font: 500 13px/1.5 "Source Serif 4", Georgia, serif;
+  color: #2e2a24;
+}
+
+.scratch {
+  width: 100%;
+  max-height: 260px;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid rgba(102, 92, 78, 0.14);
+  background: #fff;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionLabel {
+  font: 700 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faded, #7c7468);
+}
+
+.transcription {
+  margin: 0;
+  border-left: 2px solid rgba(29, 58, 138, 0.2);
+  padding-left: 10px;
+  font: italic 500 13px/1.55 "Source Serif 4", Georgia, serif;
+  color: #4a453d;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step {
+  border: 1px solid rgba(102, 92, 78, 0.14);
+  border-radius: 8px;
+  background: rgba(251, 248, 244, 0.75);
+  padding: 10px 11px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.stepNum {
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(102, 92, 78, 0.18);
+  border-radius: 999px;
+  font: 700 10px/1 "IBM Plex Mono", monospace;
+  color: #6f6a61;
+}
+
+.stepBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stepTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stepChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.ruleChip {
+  font: 600 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1d3a8a;
+  background: rgba(29, 58, 138, 0.08);
+  border-radius: 999px;
+  padding: 4px 7px;
+}
+
+.stepChip {
+  font: 700 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 4px 7px;
+}
+
+.ok {
+  color: #1b6b3a;
+  background: rgba(27, 107, 58, 0.1);
+}
+
+.wrong {
+  color: #b54a1a;
+  background: rgba(181, 74, 26, 0.1);
+}
+
+.unparsed {
+  color: #6e5b28;
+  background: rgba(110, 91, 40, 0.1);
+}
+
+.stepText {
+  font: 500 13px/1.5 "Source Serif 4", Georgia, serif;
+  color: #2e2a24;
+}
+
+.reason {
+  font: italic 500 12px/1.45 "Source Serif 4", Georgia, serif;
+  color: #6f6a61;
+}
+
+.thinking {
+  margin: 0;
+  font: italic 500 13px/1.6 "Source Serif 4", Georgia, serif;
+  color: #4a453d;
+}
+
+.practiceAgain {
+  align-self: flex-start;
+  border: none;
+  background: transparent;
+  color: #1d3a8a;
+  font: 600 12px/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 0;
+}

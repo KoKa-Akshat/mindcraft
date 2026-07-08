@@ -8,6 +8,7 @@ import { useUser } from '../App'
 import BookmarkButton from '../components/BookmarkButton'
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { loadQuestionWork, saveQuestionWork } from '../lib/studentWork'
+import { submitWorkEvidenceIfReady } from '../lib/workEvidence'
 import InteractiveWidget from '../components/InteractiveWidget'
 import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
@@ -463,10 +464,11 @@ export default function ConceptChapterPage() {
         scratchStrokes: scratchStrokes[qIdx] ?? { strokes: [], width: 0, height: 0 },
         workLines: scratchInk[qIdx]?.workLines ?? [],
         scratchTranscription: scratchInk[qIdx]?.transcription ?? { text: '', latex: '', editedByStudent: false },
+        selectedAnswerIndex: answers[qIdx] ?? undefined,
       })
     }, 1200)
     return () => window.clearTimeout(timer)
-  }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, spreadIdx])
+  }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, spreadIdx, answers])
 
   const goBack = () => {
     if (fromDashboard) navigate('/dashboard')
@@ -552,6 +554,35 @@ export default function ConceptChapterPage() {
         </div>
       </div>
     )
+  }
+
+  function lockAnswer(qIdx: number) {
+    const chosen = answers[qIdx]
+    if (chosen === null || chosen === undefined) return
+    setSubmitted(d => ({ ...d, [qIdx]: true }))
+
+    const q = questions[qIdx]
+    if (!user?.uid || !q?.id) return
+
+    const workLines = scratchInk[qIdx]?.workLines ?? []
+    void saveQuestionWork(user.uid, {
+      questionId: q.id,
+      conceptId: canonicalId,
+      source: 'chapter',
+      level: q.level,
+      formatId: questionFormat(q),
+      scratchImage: notes[qIdx] ?? '',
+      scratchStrokes: scratchStrokes[qIdx] ?? { strokes: [], width: 0, height: 0 },
+      workLines,
+      scratchTranscription: scratchInk[qIdx]?.transcription ?? { text: '', latex: '', editedByStudent: false },
+      selectedAnswerIndex: chosen,
+    })
+    void submitWorkEvidenceIfReady({
+      studentId: user.uid,
+      questionId: q.id,
+      conceptId: canonicalId,
+      workLines,
+    })
   }
 
   function renderQuestionPanel(qIdx: number) {
@@ -661,7 +692,7 @@ export default function ConceptChapterPage() {
             className={s.submitBtn}
             style={{ background: theme.ink, color: theme.paper }}
             disabled={chosen === null}
-            onClick={() => setSubmitted(d => ({ ...d, [qIdx]: true }))}
+            onClick={() => lockAnswer(qIdx)}
           >
             {chosen === null ? 'choose an answer' : 'lock it in →'}
           </button>

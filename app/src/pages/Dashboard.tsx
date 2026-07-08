@@ -22,12 +22,15 @@ import {
   loadDashboardPersonalization,
   saveDashboardStickers,
   saveDashboardTheme,
+  saveCustomStickers,
   STICKER_CAP,
+  type CustomSticker,
   type DashboardSticker,
   type DashboardTheme,
-  type StickerId,
+  type StickerSelection,
   DEFAULT_THEME,
 } from '../lib/dashboardPersonalization'
+import { ensureGoogleFont } from '../lib/themeUtils'
 import conceptStoriesData from '../data/conceptStories.json'
 import ConceptVignette from '../components/book/ConceptVignette'
 import BookShell from '../components/book/BookShell'
@@ -126,9 +129,10 @@ export default function Dashboard() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [dashboardTheme, setDashboardTheme] = useState<DashboardTheme>(DEFAULT_THEME)
   const [dashboardStickers, setDashboardStickers] = useState<DashboardSticker[]>([])
+  const [customStickers, setCustomStickers] = useState<CustomSticker[]>([])
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   const [styleDrawerOpen, setStyleDrawerOpen] = useState(false)
-  const [selectedStickerId, setSelectedStickerId] = useState<StickerId | null>(null)
+  const [selectedSticker, setSelectedSticker] = useState<StickerSelection | null>(null)
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
@@ -201,23 +205,41 @@ export default function Dashboard() {
     void loadDashboardPersonalization(uid).then(p => {
       setDashboardTheme(p.theme)
       setDashboardStickers(p.stickers)
+      setCustomStickers(p.customStickers)
       setBookmarkedQuestions(p.bookmarkedQuestions)
+      if (p.theme.font === 'custom' && p.theme.customFontFamily) {
+        ensureGoogleFont(p.theme.customFontFamily)
+      }
     })
   }, [uid])
 
+  useEffect(() => {
+    if (dashboardTheme.font === 'custom' && dashboardTheme.customFontFamily) {
+      ensureGoogleFont(dashboardTheme.customFontFamily)
+    }
+  }, [dashboardTheme.font, dashboardTheme.customFontFamily])
+
   function handleThemeChange(theme: DashboardTheme) {
     setDashboardTheme(theme)
+    if (theme.font === 'custom' && theme.customFontFamily) {
+      ensureGoogleFont(theme.customFontFamily)
+    }
     if (uid) void saveDashboardTheme(uid, theme)
   }
 
   function handlePlaceSticker(x: number, y: number) {
-    if (!selectedStickerId || dashboardStickers.length >= STICKER_CAP) return
+    if (!selectedSticker || dashboardStickers.length >= STICKER_CAP) return
     const next = [
       ...dashboardStickers,
-      { stickerId: selectedStickerId, x, y, rotation: Math.round((Math.random() - 0.5) * 16) },
+      {
+        stickerId: selectedSticker.stickerId,
+        customUrl: selectedSticker.customUrl,
+        x,
+        y,
+        rotation: Math.round((Math.random() - 0.5) * 16),
+      },
     ]
     setDashboardStickers(next)
-    setSelectedStickerId(null)
     if (uid) void saveDashboardStickers(uid, next)
   }
 
@@ -237,8 +259,13 @@ export default function Dashboard() {
 
   function handleClearStickers() {
     setDashboardStickers([])
-    setSelectedStickerId(null)
+    setSelectedSticker(null)
     if (uid) void saveDashboardStickers(uid, [])
+  }
+
+  function handleCustomStickersChange(next: CustomSticker[]) {
+    setCustomStickers(next)
+    if (uid) void saveCustomStickers(uid, next)
   }
 
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
@@ -370,8 +397,7 @@ export default function Dashboard() {
   return (
     <>
     <BookShell
-      paper={dashboardTheme.paper}
-      font={dashboardTheme.font}
+      theme={dashboardTheme}
       chromeRight={
         <>
           {displayName && <span className={book.chromeUser}>{displayName}</span>}
@@ -392,7 +418,7 @@ export default function Dashboard() {
           <StickerLayer
             stickers={dashboardStickers}
             editable={styleDrawerOpen}
-            selectedStickerId={selectedStickerId}
+            selectedSticker={selectedSticker}
             onPlace={handlePlaceSticker}
             onMove={handleMoveSticker}
             onRemove={handleRemoveSticker}
@@ -685,7 +711,7 @@ export default function Dashboard() {
                     className={s.solverFullLink}
                     onClick={() => navigate('/practice', { state: { homeworkHelp: true } })}
                   >
-                    Open full problem solver →
+                    Open full solver →
                   </button>
                 </div>
               </div>
@@ -711,13 +737,16 @@ export default function Dashboard() {
     />
     <JournalStyleDrawer
       open={styleDrawerOpen}
-      onClose={() => { setStyleDrawerOpen(false); setSelectedStickerId(null) }}
+      onClose={() => { setStyleDrawerOpen(false); setSelectedSticker(null) }}
+      uid={uid}
       theme={dashboardTheme}
       stickers={dashboardStickers}
-      selectedStickerId={selectedStickerId}
+      customStickers={customStickers}
+      selectedSticker={selectedSticker}
       onThemeChange={handleThemeChange}
-      onSelectSticker={setSelectedStickerId}
+      onSelectSticker={setSelectedSticker}
       onClearStickers={handleClearStickers}
+      onCustomStickersChange={handleCustomStickersChange}
     />
     </>
   )

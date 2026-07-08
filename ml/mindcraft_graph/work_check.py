@@ -89,7 +89,7 @@ def _parse_expr(text: str) -> sp.Expr:
         text,
         local_dict=_LOCAL_DICT,
         transformations=_TRANSFORMS,
-        evaluate=True,
+        evaluate=False,
     )
 
 
@@ -150,6 +150,8 @@ def equivalent_steps(prev: ParsedLine, cur: ParsedLine) -> bool | None:
 
 
 def check_work_lines(lines: list[str]) -> dict:
+    from mindcraft_graph.step_rules import classify_step_rule
+
     parsed = [parse_line(line) for line in lines]
     verdicts: list[dict] = []
     first_broken: int | None = None
@@ -175,13 +177,20 @@ def check_work_lines(lines: list[str]) -> dict:
                 if first_broken is None:
                     first_broken = idx
 
-        verdicts.append({
+        item_verdict = {
             "line": idx,
             "latex": item.raw,
             "normalized": item.normalized,
             "verdict": verdict,
             "reason": reason,
-        })
+        }
+        if idx > 0 and verdict in ("ok", "wrong") and not parsed[idx - 1].error and not item.error:
+            item_verdict["rule"] = classify_step_rule(
+                parsed[idx - 1],
+                item,
+                equivalent=(verdict == "ok"),
+            ).__dict__
+        verdicts.append(item_verdict)
 
     hypothesis = None
     if first_broken is not None:

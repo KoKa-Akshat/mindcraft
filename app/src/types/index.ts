@@ -85,6 +85,12 @@ export interface ScratchStrokeData {
 
 export type InkBbox = [number, number, number, number]
 
+export interface WorkLineRule {
+  id: string
+  label: string
+  ingredientIds: string[]
+}
+
 export interface WorkLine {
   bbox: InkBbox
   strokeIdx: number[]
@@ -93,6 +99,7 @@ export interface WorkLine {
   editedByStudent: boolean
   verdict?: 'ok' | 'wrong' | 'unparsed'
   checkReason?: string
+  rule?: WorkLineRule
 }
 
 export type WorkSource = 'practice' | 'chapter' | 'session'
@@ -116,13 +123,14 @@ export interface QuestionWorkDoc {
   }
   wasStuck?: boolean
   reasoningText?: string
+  selectedAnswerIndex?: number
   createdAt: number
   updatedAt: number
 }
 
 export interface StudentWorkEntry {
   id: string
-  sessionId: string
+  sessionId?: string
   studentId: string
   prompt: string
   questionId?: string
@@ -138,7 +146,9 @@ export interface StudentWorkEntry {
   }
   reasoningText: string
   wasStuck: boolean
+  selectedAnswerIndex?: number
   createdAt: number
+  updatedAt?: number
 }
 
 // ─── Classroom ────────────────────────────────────────────────────────────────

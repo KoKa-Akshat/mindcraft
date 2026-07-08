@@ -1,32 +1,43 @@
-:root { --g: #58CC02; --gd: #3d8f01; --forest: #1B4D2E; --tx: #1a1a1a; --mu: #8A9099; --bd: #E8EBF0; --w: #fff; --bg: #F7F8FA; }
-
 .shell {
+  --tx: var(--paper-ink);
+  --mu: var(--paper-ink-dim);
+  --bd: var(--paper-edge);
+  --w: var(--paper-sheet);
+  --bg: var(--paper-bg);
+  --g: var(--paper-ink);
+  --gd: var(--paper-ink-katha);
+  --forest: var(--paper-ink-katha);
   display: flex; flex-direction: column; height: 100vh;
-  background: var(--bg); font-family: 'Nunito', sans-serif;
+  background:
+    linear-gradient(180deg, rgba(251, 248, 244, 0.82), rgba(247, 243, 238, 0.96)),
+    radial-gradient(circle at 1px 1px, var(--paper-rule) 1px, transparent 0);
+  background-size: auto, 18px 18px;
+  font-family: var(--font-serif);
 }
 
 /* HEADER */
 .header {
   display: flex; align-items: center; gap: 14px;
   padding: 0 20px; height: 62px;
-  background: var(--w); border-bottom: 1px solid var(--bd);
+  background: var(--paper-sheet); border-bottom: 1px solid var(--paper-edge);
   position: sticky; top: 0; z-index: 10;
 }
 .back {
-  font-size: 20px; color: var(--tx); text-decoration: none;
-  font-weight: 900; padding: 4px 8px; border-radius: 8px;
+  font-size: 20px; color: var(--paper-ink-katha); text-decoration: none;
+  font-weight: 700; padding: 4px 8px; border-radius: 2px;
   transition: background .15s;
 }
-.back:hover { background: var(--bg); }
+.back:hover { background: rgba(29, 58, 138, 0.06); }
 .headerInfo { display: flex; align-items: center; gap: 10px; }
 .avatar {
   width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gd), var(--forest));
-  color: #fff; font-size: 14px; font-weight: 900;
+  background: var(--paper-ink-katha);
+  color: var(--paper-sheet); font-size: 14px; font-weight: 900;
+  font-family: var(--font-mono);
   display: flex; align-items: center; justify-content: center;
 }
-.partnerName { font-size: 15px; font-weight: 900; color: var(--tx); }
-.subtext { font-size: 11px; color: var(--mu); font-weight: 600; }
+.partnerName { font-size: 15px; font-weight: 700; color: var(--paper-ink-katha); font-family: var(--font-hand); }
+.subtext { font-size: 11px; color: var(--paper-ink-dim); font-weight: 600; font-family: var(--font-mono); letter-spacing: 0.06em; }
 
 /* MESSAGES */
 .messages {
@@ -38,22 +49,25 @@
   font-size: 13px; font-weight: 700; margin-top: 40px;
 }
 .bubble {
-  max-width: 72%; padding: 10px 14px; border-radius: 18px;
-  font-size: 14px; font-weight: 600; line-height: 1.5; word-break: break-word;
+  max-width: 72%; padding: 10px 14px; border-radius: 2px;
+  font-size: 14px; font-weight: 500; line-height: 1.5; word-break: break-word;
+  box-shadow: var(--paper-shadow-tip);
 }
 .bubble p { margin: 0; }
 .mine {
   align-self: flex-end;
-  background: var(--g); color: #fff;
-  border-bottom-right-radius: 4px;
+  background: var(--paper-sheet);
+  color: var(--paper-ink);
+  border: 1px solid var(--paper-accent-blue);
+  border-bottom-right-radius: 0;
 }
 .theirs {
   align-self: flex-start;
-  background: var(--w); color: var(--tx);
-  border: 1px solid var(--bd);
-  border-bottom-left-radius: 4px;
+  background: var(--paper-sheet-recessed); color: var(--paper-ink);
+  border: 1px solid var(--paper-edge);
+  border-bottom-left-radius: 0;
 }
-.senderName { font-size: 11px; font-weight: 800; color: var(--mu); margin-bottom: 4px; }
+.senderName { font-size: 11px; font-weight: 700; color: var(--paper-ink-faded); margin-bottom: 4px; font-family: var(--font-mono); }
 
 /* FILES */
 .imgPreview {
@@ -73,37 +87,38 @@
 
 /* PROGRESS BAR */
 .progressBar {
-  height: 3px; background: var(--bd); margin: 0 16px;
+  height: 3px; background: var(--paper-edge); margin: 0 16px;
 }
-.progressFill { height: 100%; background: var(--g); transition: width .2s; border-radius: 2px; }
+.progressFill { height: 100%; background: var(--paper-accent-blue); transition: width .2s; border-radius: 0; }
 
 /* INPUT ROW */
 .inputRow {
   display: flex; align-items: center; gap: 8px;
   padding: 12px 16px;
-  background: var(--w); border-top: 1px solid var(--bd);
+  background: var(--paper-sheet); border-top: 1px solid var(--paper-edge);
 }
 .attachBtn {
   background: none; border: none; font-size: 20px;
-  cursor: pointer; padding: 4px; border-radius: 8px;
+  cursor: pointer; padding: 4px; border-radius: 2px;
   transition: background .15s; line-height: 1;
 }
-.attachBtn:hover { background: var(--bg); }
+.attachBtn:hover { background: rgba(29, 58, 138, 0.06); }
 .textInput {
-  flex: 1; border: 1.5px solid var(--bd); border-radius: 22px;
-  padding: 10px 16px; font-size: 14px; font-weight: 600;
-  font-family: 'Nunito', sans-serif; outline: none;
-  background: var(--bg); color: var(--tx); transition: border-color .15s;
+  flex: 1; border: none; border-bottom: 1.5px solid var(--paper-edge); border-radius: 0;
+  padding: 10px 4px; font-size: 14px; font-weight: 500;
+  font-family: var(--font-serif); outline: none;
+  background: transparent; color: var(--paper-ink); transition: border-color .15s;
 }
-.textInput:focus { border-color: var(--g); background: var(--w); }
+.textInput:focus { border-bottom-color: var(--paper-accent-blue); }
 .sendBtn {
-  background: var(--g); color: #fff; border: none;
-  border-radius: 22px; padding: 10px 20px;
-  font-size: 14px; font-weight: 900; font-family: 'Nunito', sans-serif;
-  cursor: pointer; box-shadow: 0 3px 0 var(--gd); transition: all .15s;
+  background: var(--paper-ink); color: var(--paper-sheet); border: none;
+  border-radius: 2px; padding: 10px 20px;
+  font-size: 12px; font-weight: 700; font-family: var(--font-mono);
+  letter-spacing: 0.06em; text-transform: lowercase;
+  cursor: pointer; transition: background .15s, transform .15s;
 }
-.sendBtn:hover:not(:disabled) { filter: brightness(1.05); transform: translateY(-1px); }
-.sendBtn:disabled { opacity: .4; cursor: not-allowed; box-shadow: none; }
+.sendBtn:hover:not(:disabled) { background: var(--paper-ink-katha); transform: translateY(-1px); }
+.sendBtn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
 
 @media (max-width: 600px) {
   .bubble { max-width: 88%; }

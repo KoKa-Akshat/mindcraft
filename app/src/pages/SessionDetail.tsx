@@ -17,6 +17,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import { doc, getDoc, updateDoc, collection, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
+import QuestionWorkView from '../components/QuestionWorkView'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
 import type { StudentWorkEntry } from '../types'
@@ -371,17 +372,12 @@ export default function SessionDetail() {
                 {studentWork.map(entry => (
                   <div key={entry.id} className={s.workEntry}>
                     <div className={s.workEntryHead}>
-                      <span className={s.workPrompt}>{entry.prompt}</span>
+                      <span className={s.workPrompt}>{entry.questionId ? 'Worked question' : entry.prompt}</span>
                       <span className={entry.wasStuck ? s.stuckBadge : s.okBadge}>
                         {entry.wasStuck ? 'Got stuck' : 'Knew it'}
                       </span>
                     </div>
-                    {entry.scratchImage && (
-                      <img src={entry.scratchImage} alt="Student scratch work" className={s.scratchImg} />
-                    )}
-                    {entry.reasoningText && (
-                      <p className={s.reasoningText}>{entry.reasoningText}</p>
-                    )}
+                    <QuestionWorkView entry={entry} showPrompt={Boolean(entry.questionId)} />
                   </div>
                 ))}
               </div>

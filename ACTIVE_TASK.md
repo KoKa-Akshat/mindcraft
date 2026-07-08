@@ -55,6 +55,13 @@ Files changed — `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `
 
 ## Recently completed (this session)
 
+- ✅ Paper standardization: extracted shared `paper.css` tokens and imported them once in `main.tsx`
+- ✅ Paper standardization: reskinned Notes/session surfaces (`StudentSessions`, `SessionDetail`)
+- ✅ Paper standardization: reskinned `/practice` hub/path/picker screens while preserving session behavior
+- ✅ Paper standardization: reskinned `/knowledge-graph` as the student Map with a paper frame and dark chart field
+- ✅ Paper standardization: reskinned `/onboard` (GradeOnboard) onto paper + hand/mono typography
+- ✅ Paper standardization: reskinned `/session-work/:id` (SessionWork) scratch frame
+- ✅ Paper standardization: reskinned `/chat/:partnerId`, `/study-timer`, `/organize-notes`, `/join-classroom`
 - ✅ Concept vignettes: 40 SVGs in `ConceptVignette.tsx` (was 6)
 - ✅ Scene stamp on story pages: protagonist + setting shown on first story spread
 - ✅ Multi-source pipeline: `ml/scripts/pipeline/` with OpenStax/AMC/Khan adapters

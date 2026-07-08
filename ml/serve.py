@@ -1,8 +1,10 @@
 # ml/serve.py
 
 from fastapi import FastAPI, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
+import hashlib
+import json
 import pathlib
 from typing import Literal
 
@@ -260,6 +262,41 @@ class CheckWorkRequest(BaseModel):
     lines: list[CheckWorkLine]
 
 
+class ClassifyProblemRequest(BaseModel):
+    text: str
+
+
+class WorkEvidenceRule(BaseModel):
+    id: str
+    label: str | None = None
+    ingredientIds: list[str] = Field(default_factory=list)
+
+
+class WorkEvidenceStep(BaseModel):
+    rule_id: str | None = None
+    verdict: Literal["ok", "wrong"]
+    rule: WorkEvidenceRule | None = None
+
+    def normalized(self) -> dict:
+        rule = self.rule
+        if rule is None:
+            from mindcraft_graph.step_rules import RULE_INGREDIENTS
+
+            rule_id = self.rule_id or ""
+            rule = WorkEvidenceRule(id=rule_id, ingredientIds=list(RULE_INGREDIENTS.get(rule_id, [])))
+        return {
+            "verdict": self.verdict,
+            "rule": rule.model_dump(),
+        }
+
+
+class RecordWorkEvidenceRequest(BaseModel):
+    student_id: str
+    question_id: str
+    concept_id: str
+    steps: list[WorkEvidenceStep]
+
+
 def _serialize_minimal_dag(dag):
     return {
         "nodes": {
@@ -308,6 +345,54 @@ def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
     return []
 
 
+_problem_classifier = None
+
+
+def _get_problem_classifier():
+    global _problem_classifier
+    if _problem_classifier is None:
+        from mindcraft_graph.problem_classifier import ProblemClassifier
+
+        _problem_classifier = ProblemClassifier(summary_model)
+    return _problem_classifier
+
+
+def _payload_hash(payload: dict) -> str:
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _work_evidence_submission_key(student_id: str, question_id: str) -> str:
+    return hashlib.sha256(f"{student_id}:{question_id}".encode("utf-8")).hexdigest()
+
+
+def _is_recent_identical_work_evidence(student_id: str, question_id: str, payload_hash: str, now: datetime) -> bool:
+    from mindcraft_graph.firestore_adapter import db, _to_naive
+
+    doc = db.collection("work_evidence_submissions").document(
+        _work_evidence_submission_key(student_id, question_id)
+    ).get()
+    if not doc.exists:
+        return False
+    data = doc.to_dict() or {}
+    submitted_at = _to_naive(data.get("submittedAt", datetime.min))
+    age_seconds = (now - submitted_at).total_seconds() if isinstance(submitted_at, datetime) else 999999
+    return data.get("payloadHash") == payload_hash and age_seconds <= 10 * 60
+
+
+def _save_work_evidence_submission(student_id: str, question_id: str, payload_hash: str, now: datetime):
+    from mindcraft_graph.firestore_adapter import db
+
+    db.collection("work_evidence_submissions").document(
+        _work_evidence_submission_key(student_id, question_id)
+    ).set({
+        "studentId": student_id,
+        "questionId": question_id,
+        "payloadHash": payload_hash,
+        "submittedAt": now,
+    })
+
+
 # ── Endpoints ──
 
 @app.post("/check-work")
@@ -324,6 +409,20 @@ async def check_work_endpoint(req: CheckWorkRequest, auth: AuthContext = Depends
         raise HTTPException(status_code=400, detail="Too many lines")
 
     return check_work_lines([line.latex for line in req.lines])
+
+
+@app.post("/classify-problem")
+async def classify_problem_endpoint(req: ClassifyProblemRequest, auth: AuthContext = Depends(require_auth)):
+    """Classify problem text along independent concept and format axes."""
+    if len(req.text) > 4000:
+        raise HTTPException(status_code=400, detail="Problem text too long")
+    try:
+        return _get_problem_classifier().classify(req.text)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
 
 @app.post("/recommend")
 async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(require_auth)):
@@ -834,6 +933,115 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthC
         "studentSucceeded": req.student_succeeded,
         "updatedConceptMastery": updated_concepts,
         "styleScores": student_state.style_scores,
+    }
+
+
+@app.post("/record-work-evidence")
+async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: AuthContext = Depends(require_auth)):
+    authorize_student(auth, req.student_id)
+    from mindcraft_graph.firestore_adapter import (
+        append_interactions,
+        load_ingredient_state,
+        load_student_events,
+        save_ingredient_state,
+        save_personal_graph,
+    )
+    from mindcraft_graph.models.events import SessionEvent
+    from mindcraft_graph.models.student_state import ConceptMastery
+    from mindcraft_graph.work_evidence import apply_work_evidence
+
+    valid_concepts = {concept.id for concept in ontology.concepts}
+    if req.concept_id not in valid_concepts:
+        raise HTTPException(status_code=400, detail="Unknown concept_id")
+
+    normalized_steps = [step.normalized() for step in req.steps]
+    payload = {
+        "student_id": req.student_id,
+        "question_id": req.question_id,
+        "concept_id": req.concept_id,
+        "steps": normalized_steps,
+    }
+    payload_hash = _payload_hash(payload)
+    now = datetime.now()
+    if _is_recent_identical_work_evidence(req.student_id, req.question_id, payload_hash, now):
+        return {
+            "studentId": req.student_id,
+            "questionId": req.question_id,
+            "ignored": True,
+            "reason": "duplicate_within_10_minutes",
+            "eventsCreated": 0,
+        }
+
+    student_state = load_ingredient_state(req.student_id)
+    student_state, evidence_events = apply_work_evidence(student_state, normalized_steps, req.concept_id)
+    save_ingredient_state(req.student_id, student_state)
+
+    concept_events: list[SessionEvent] = []
+    for event in evidence_events:
+        if event.kind != "concept":
+            continue
+        concept_events.append(SessionEvent(
+            student_id=req.student_id,
+            concept_id=event.target_id,
+            event_type="problem_set",
+            outcome=max(-1.0, min(1.0, event.delta)),
+            effort=0.6 if event.delta < 0 else 0.4,
+            duration_minutes=1.0,
+            timestamp=now,
+            exposure_weight=min(1.0, abs(event.delta)),
+        ))
+    if concept_events:
+        append_interactions(req.student_id, concept_events, source="verified_step")
+
+    touched_concepts = {req.concept_id}
+    for event in evidence_events:
+        if event.kind != "ingredient":
+            continue
+        ingredient = ingredient_graph.get_ingredient(event.target_id)
+        if ingredient is not None:
+            touched_concepts.add(ingredient.concept_id)
+
+    all_events = load_student_events(req.student_id)
+    graph = create_personal_graph(req.student_id, ontology)
+    if all_events:
+        graph = update_personal_graph(graph, all_events, ontology)
+
+    updated_concepts = {}
+    for concept_id in touched_concepts:
+        if concept_id not in valid_concepts:
+            continue
+        aggregated_mastery = aggregate_to_concept_mastery(
+            student_state,
+            concept_id,
+            ingredient_graph,
+        )
+        current = graph.state.mastery_by_concept.get(concept_id)
+        if current is None:
+            graph.state.mastery_by_concept[concept_id] = ConceptMastery(
+                concept_id=concept_id,
+                mastery=aggregated_mastery,
+                exposure_count=0,
+                last_interaction=now,
+                cumulative_outcome=0.0,
+                attempts=0,
+            )
+        else:
+            graph.state.mastery_by_concept[concept_id] = current.model_copy(update={
+                "mastery": aggregated_mastery,
+                "last_interaction": now,
+            })
+        updated_concepts[concept_id] = aggregated_mastery
+
+    graph.updated_at = now
+    save_personal_graph(req.student_id, graph)
+    _save_work_evidence_submission(req.student_id, req.question_id, payload_hash, now)
+
+    return {
+        "studentId": req.student_id,
+        "questionId": req.question_id,
+        "ignored": False,
+        "eventsCreated": len(evidence_events),
+        "updatedConceptMastery": updated_concepts,
     }
 
 

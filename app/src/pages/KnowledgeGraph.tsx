@@ -385,7 +385,7 @@ export default function KnowledgeGraph() {
         <div className={s.topBar}>
           <button className={s.backBtn} onClick={() => navigate('/dashboard')}>← Dashboard</button>
           <div className={s.titleRow}>
-            <span className={s.pageTitle}>Learning World</span>
+            <span className={s.pageTitle}>Map</span>
             <span className={s.conceptBadge}>Grit Map</span>
           </div>
         </div>
@@ -531,7 +531,7 @@ export default function KnowledgeGraph() {
                   <div className={s.emptyRing} />
                   <span className={s.emptyJ}>J</span>
                 </div>
-                <p className={s.emptyText}>Your Learning World will appear here</p>
+                <p className={s.emptyText}>Your Map will appear here</p>
                 <p className={s.emptySub}>Complete questions to see concepts, gaps, and comebacks connect</p>
               </div>
             )}
@@ -544,7 +544,7 @@ export default function KnowledgeGraph() {
                   <div className={s.loadRing2} />
                   <span className={s.emptyJ}>J</span>
                 </div>
-                <p className={s.emptyText}>Building your Learning World...</p>
+                <p className={s.emptyText}>Building your Map...</p>
                 {slowLoad && (
                   <p className={s.emptySub} style={{ maxWidth: 320, textAlign: 'center' }}>
                     The ML engine is waking up — this first load takes ~30–60 seconds. Hang tight.

@@ -68,7 +68,7 @@ export default function DashboardHomeworkPanel({ onBack }: { onBack: () => void 
           style={{ marginTop: 8 }}
           onClick={() => navigate('/practice', { state: { homeworkHelp: true } })}
         >
-          Open full problem solver →
+          Open full solver →
         </button>
       </div>
     </div>

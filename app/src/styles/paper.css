@@ -1,0 +1,30 @@
+:root {
+  --paper-bg: #f7f3ee;
+  --paper-sheet: #fbf8f4;
+  --paper-sheet-recessed: #f1eadf;
+  --paper-edge: #e2d8ca;
+  --paper-crease: #d4c8b6;
+  --paper-ink: #1c1a17;
+  --paper-ink-katha: #232f4e;
+  --paper-ink-dim: #6f6a61;
+  --paper-ink-faded: #a39b8e;
+  --paper-accent-blue: #1d3a8a;
+  --paper-accent-red: #c1121f;
+  --paper-rule: rgba(29, 58, 138, 0.09);
+  --paper-margin-rule: rgba(193, 18, 31, 0.20);
+
+  --font-hand: "Caveat", cursive;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-serif: "Source Serif 4", "DM Serif Display", Georgia, serif;
+
+  --paper-shadow-card: 0 1px 3px rgba(8, 14, 20, 0.12), 0 4px 14px rgba(8, 14, 20, 0.10);
+  --paper-shadow-tip: 0 1px 3px rgba(8, 14, 20, 0.22), 0 2px 1px -1px rgba(8, 14, 20, 0.12);
+
+  /* Aliases for pages still using the older app vars. */
+  --tx: var(--paper-ink);
+  --mu: var(--paper-ink-dim);
+  --w: var(--paper-sheet);
+  --bd: var(--paper-edge);
+  --bg: var(--paper-bg);
+  --forest: var(--paper-ink-katha);
+}

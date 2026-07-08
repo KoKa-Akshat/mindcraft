@@ -5,12 +5,16 @@
  * Lists published session summaries + follow-up work prompts from tutors.
  */
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { db } from '../firebase'
-import { collection, query, where, onSnapshot, getDocs } from 'firebase/firestore'
+import { collection, query, where, onSnapshot, getDocs, orderBy } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
+import QuestionWorkView from '../components/QuestionWorkView'
 import Sidebar  from '../components/Sidebar'
+import { getQuestionById } from '../lib/questionBank'
+import { groupStudentWorkLedger } from '../lib/workEvidence'
+import type { StudentWorkEntry } from '../types'
 import s        from './StudentSessions.module.css'
 
 interface Session {
@@ -41,8 +45,10 @@ export default function StudentSessions() {
   const user     = useUser()
   const navigate = useNavigate()
   const [sessions,  setSessions]  = useState<Session[]>([])
+  const [workEntries, setWorkEntries] = useState<StudentWorkEntry[]>([])
   const [loading,   setLoading]   = useState(true)
   const [expanded,  setExpanded]  = useState<string | null>(null)
+  const [expandedWork, setExpandedWork] = useState<string | null>(null)
   const [filterSub, setFilterSub] = useState<string>('All')
 
   useEffect(() => {
@@ -90,6 +96,30 @@ export default function StudentSessions() {
     return () => unsub()
   }, [user?.email])
 
+  useEffect(() => {
+    if (!user?.uid) return
+    const q = query(
+      collection(db, 'student_work'),
+      where('studentId', '==', user.uid),
+      orderBy('updatedAt', 'desc'),
+    )
+    const unsub = onSnapshot(q, snap => {
+      setWorkEntries(snap.docs.map(d => {
+        const data = d.data() as Omit<StudentWorkEntry, 'id'>
+        return {
+          ...data,
+          id: d.id,
+          prompt: data.prompt ?? '',
+          reasoningText: data.reasoningText ?? '',
+          wasStuck: Boolean(data.wasStuck),
+        }
+      }))
+    })
+    return () => unsub()
+  }, [user?.uid])
+
+  const workLedger = useMemo(() => groupStudentWorkLedger(workEntries), [workEntries])
+
   const pendingSessions = sessions.filter(sess => sess.pendingWork)
   const subjects = ['All', ...Array.from(new Set(sessions.filter(sess => sess.bullets.length > 0).map(sess => sess.subject))).sort()]
   const visible  = filterSub === 'All'
@@ -105,7 +135,7 @@ export default function StudentSessions() {
           <div className={s.headerLeft}>
             <h1 className={s.title}>Notes</h1>
             <p className={s.sub}>
-              {sessions.filter(sess => sess.bullets.length > 0).length} session{sessions.filter(sess => sess.bullets.length > 0).length !== 1 ? 's' : ''} published
+              {workLedger.length} question{workLedger.length !== 1 ? 's' : ''} in my work
             </p>
           </div>
           <button className={s.graphBtn} onClick={() => navigate('/knowledge-graph')}>
@@ -116,7 +146,7 @@ export default function StudentSessions() {
               <line x1="14" y1="8" x2="17" y2="6"/><line x1="14" y1="16" x2="17" y2="18"/>
               <line x1="13" y1="10" x2="13" y2="14"/>
             </svg>
-            View Knowledge Graph
+            View Map
           </button>
         </div>
 
@@ -137,6 +167,49 @@ export default function StudentSessions() {
                 </button>
               </div>
             ))}
+          </div>
+        )}
+
+        {!loading && workLedger.length > 0 && (
+          <div className={s.workLedger}>
+            <h2 className={s.workSectionTitle}>My work</h2>
+            <div className={s.list}>
+              {workLedger.map(entry => {
+                const question = entry.questionId ? getQuestionById(entry.questionId) : undefined
+                const title = question?.question ?? (entry.prompt || 'Worked question')
+                const isOpen = expandedWork === entry.id
+                return (
+                  <div key={entry.id} className={`${s.card} ${isOpen ? s.cardOpen : ''}`}>
+                    <div className={s.cardTop} onClick={() => setExpandedWork(isOpen ? null : entry.id)}>
+                      <div className={s.cardLeft}>
+                        <span className={s.subject}>{entry.source ?? 'work'}</span>
+                        <h3 className={s.sessionTitle}>
+                          {title.length > 110 ? `${title.slice(0, 109)}…` : title}
+                        </h3>
+                        <div className={s.meta}>
+                          <span>{(entry.conceptId ?? 'general').replace(/_/g, ' ')}</span>
+                          <span className={s.dot}>·</span>
+                          <span>{new Date(entry.createdAt).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                      <div className={s.cardRight}>
+                        <span className={s.bulletCount}>{entry.workLines?.length ?? 0} steps</span>
+                        <svg className={`${s.chevron} ${isOpen ? s.chevronOpen : ''}`}
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                      </div>
+                    </div>
+
+                    {isOpen && (
+                      <div className={s.bullets}>
+                        <QuestionWorkView entry={entry} />
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         )}
 
@@ -161,11 +234,13 @@ export default function StudentSessions() {
           <div className={s.empty}>
             <div className={s.emptyIcon}>📋</div>
             <p className={s.emptyTitle}>No sessions yet</p>
-            <p className={s.emptySub}>Once your tutor publishes a session summary it'll appear here.</p>
+            <p className={s.emptySub}>Once you work through a question or your tutor publishes notes, it’ll appear here.</p>
             <button className={s.bookBtn} onClick={() => navigate('/book')}>Book a Session →</button>
           </div>
         ) : visible.length === 0 ? null : (
-          <div className={s.list}>
+          <div className={s.summarySection}>
+            <h2 className={s.workSectionTitle}>Published summaries</h2>
+            <div className={s.list}>
             {visible.map(sess => {
               const color   = SUBJECT_COLORS[sess.subject] ?? '#00d2c8'
               const isOpen  = expanded === sess.id
@@ -221,6 +296,7 @@ export default function StudentSessions() {
                 </div>
               )
             })}
+            </div>
           </div>
         )}
       </main>
