@@ -33,6 +33,7 @@ split (Engine = `ml/**`, `webhook/**`, `data/**`, `worlds/**`; Product =
 | [cross-cutting/PERSONALIZATION_WORK_EVIDENCE_PLAN.md](cross-cutting/PERSONALIZATION_WORK_EVIDENCE_PLAN.md) | Product (Part 1) + Engine (Part 2b/2d, Part 3a) | Part 1 shipped; 2b/2d/3a in progress |
 | [product/PAPER_STANDARDIZATION_PLAN.md](product/PAPER_STANDARDIZATION_PLAN.md) | Product | Open |
 | [engine/EEDI_LATEX_REINGEST_PLAN.md](engine/EEDI_LATEX_REINGEST_PLAN.md) | Engine | Shipped |
+| [cross-cutting/TIER3_MISCONCEPTION_GAPS_PLAN.md](cross-cutting/TIER3_MISCONCEPTION_GAPS_PLAN.md) | Engine (E1, F1) + Product (P1, P2) | Open — implements EXTENSION_RECOMMEND.md |
 
 Update the Status column as work lands — don't let this drift like a stale
 changelog; if a spec is fully done and superseded, note that instead of
