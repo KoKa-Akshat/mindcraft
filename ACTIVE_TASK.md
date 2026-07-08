@@ -15,6 +15,11 @@
 | Story Intelligence spec v2 — agent-loop human gates, diagnostic IG selection, worstWeakness tier 3, voice skins | Claude (architecture) | `STORY_INTELLIGENCE_SPEC_V2.md` (new), `CLAUDE_HANDOFF.md` (lane rows + done markers), `ACTIVE_TASK.md` | ✅ Done — design only, no code touched; implementation lanes assigned in spec §5 |
 | Founder portrait expansion polish | Codex | `index.html`, `ACTIVE_TASK.md` | ✅ Done |
 | Diagnostic placeholder cleanup + landing profiles | Codex | `app/src/data/storyCells.json`, `app/src/lib/questionBank.ts`, `app/src/components/QuestionFigure.tsx`, `app/src/pages/GradeOnboard.module.css`, `index.html`, `img/ab-founder.jpeg`, `img/mindcraftmascot.jpg`, `ACTIVE_TASK.md` | ✅ Done |
+| Landing mascot/map/founder flip polish | Codex | `index.html`, `ACTIVE_TASK.md` | ✅ Done |
+
+**Codex landing polish summary (2026-07-08):** ✅ Done — mascot is cropped instead of squished, CTA copy is punchier, map labels are shorter, and founder cards flip as full rectangles.
+Files changed: `index.html`, `ACTIVE_TASK.md`.
+Verification: `npm run build` passed from `~/Developer/mindcraft/app`.
 
 **Codex diagnostic/landing summary (2026-07-08):** ✅ Done — removed stale tank placeholder cells from app data, added frontend safety filter, and stopped generic area/volume tags from drawing random XY grids.
 Files changed: `storyCells.json`, `questionBank.ts`, `QuestionFigure.tsx`, `GradeOnboard.module.css`, `index.html`, `img/ab-founder.jpeg`, `img/mindcraftmascot.jpg`, `ACTIVE_TASK.md`.

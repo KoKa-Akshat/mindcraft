@@ -205,10 +205,14 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .about-head h2{font-size:clamp(26px,3.6vw,50px);line-height:1.1;overflow:visible;max-width:min(100%,480px)}
 .about-head p{max-width:620px}
 .founder-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:50px;border:1px solid var(--line);border-radius:42px;overflow:hidden;background:var(--line);box-shadow:var(--shadow)}
-.founder-card{position:relative;display:grid;grid-template-columns:1fr;gap:24px;align-content:start;min-height:620px;padding:clamp(26px,3vw,38px);background:#fffdf7;overflow:hidden}
+.founder-card{position:relative;min-height:610px;background:#fffdf7;perspective:1400px;overflow:hidden}
 .founder-card:nth-child(2){background:#eef7f1}
 .founder-card:nth-child(3){background:#f7fbef}
 .founder-card:before{content:"";position:absolute;inset:auto -18% -42% 42%;height:72%;border-radius:999px;background:radial-gradient(circle,rgba(196,245,71,.28),transparent 68%);pointer-events:none}
+.founder-flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .62s var(--ease)}
+.founder-card.story-open .founder-flip{transform:rotateY(180deg)}
+.founder-face{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;gap:24px;align-content:start;padding:clamp(26px,3vw,38px);backface-visibility:hidden;overflow:hidden}
+.founder-back{transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;background:linear-gradient(145deg,rgba(255,253,247,.96),rgba(228,247,220,.92));border:1px solid rgba(36,122,77,.10)}
 .founder-photo{position:relative;z-index:1;width:min(260px,100%);aspect-ratio:4/5;border:0;border-radius:34px;background:linear-gradient(135deg,#143a2e,#247a4d 55%,#c4f547);display:grid;place-items:center;box-shadow:0 24px 60px rgba(20,58,46,.16);overflow:hidden;cursor:pointer}
 .founder-photo:before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,253,247,.46);border-radius:26px}
 .founder-photo:after{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 70% 18%,rgba(255,253,247,.26),transparent 32%),linear-gradient(135deg,transparent,rgba(255,253,247,.12));transform:rotate(-12deg)}
@@ -216,18 +220,14 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .founder-photo img:not([src=""])+span{opacity:0}
 .founder-photo span{position:relative;z-index:1;color:#fffdf7;font-family:"Fredoka",system-ui,sans-serif;font-size:58px;font-weight:700;letter-spacing:-.06em}
 .founder-copy{position:relative;z-index:1}
-.founder-copy small{display:block;margin-bottom:12px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.16em}
-.founder-copy h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(30px,3.2vw,46px);line-height:.95;letter-spacing:-.045em}
+.founder-copy small,.founder-back small{display:block;margin-bottom:12px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.16em}
+.founder-copy h3,.founder-back h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(30px,3.2vw,46px);line-height:.95;letter-spacing:-.045em}
 .founder-copy p{margin-top:14px;font-size:15px;line-height:1.65}
-.founder-story{position:absolute;z-index:4;left:clamp(18px,2vw,28px);right:clamp(18px,2vw,28px);bottom:clamp(18px,2vw,28px);max-height:46%;overflow:auto;padding:22px clamp(20px,2.4vw,28px);border:1px solid rgba(36,122,77,.18);border-radius:28px;background:rgba(255,253,247,.95);box-shadow:0 24px 70px rgba(20,58,46,.18),inset 0 1px 0 rgba(255,255,255,.8);backdrop-filter:blur(10px)}
-.founder-story[hidden]{display:none}
-.founder-story p{max-width:780px;margin:0;font-size:16px;line-height:1.72;color:rgba(20,58,46,.82)}
-.founder-story p+p{margin-top:14px}
-.founder-open{margin-top:16px;color:var(--leaf);font-size:10px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase}
-.story-open .founder-photo{box-shadow:0 28px 72px rgba(20,58,46,.22),0 0 0 4px rgba(196,245,71,.28)}
-.story-open .founder-open{color:#bf8b00}
-.founder-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.founder-tags span{padding:8px 10px;border:1px solid rgba(36,122,77,.16);border-radius:999px;background:#e4f7dc;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}
+.founder-back p{margin-top:18px;font-size:17px;line-height:1.72;color:rgba(20,58,46,.84)}
+.founder-back p+p{margin-top:14px}
+.founder-open{margin-top:18px;color:var(--leaf);font-size:10px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase}
+.founder-card.story-open .founder-photo{box-shadow:0 28px 72px rgba(20,58,46,.22),0 0 0 4px rgba(196,245,71,.28)}
+.founder-card:focus-visible{outline:4px solid rgba(196,245,71,.85);outline-offset:-8px}
 .photo{position:relative;min-height:520px;border-radius:46px;overflow:hidden;box-shadow:var(--shadow);transform-style:preserve-3d}
 .photo img{width:100%;height:100%;object-fit:cover}
 .photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 48%,rgba(23,56,47,.70))}
@@ -253,9 +253,9 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .tryapp{background:var(--cream)}
 .tryapp-card{display:grid;grid-template-columns:.62fr 1fr;gap:clamp(24px,5vw,64px);align-items:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:34px;padding:clamp(26px,4.5vw,54px);box-shadow:0 24px 70px rgba(29,84,54,.10)}
 .tryapp-bear{position:relative;text-align:center}
-.tryapp-bear img{width:min(300px,82%);border-radius:26px;box-shadow:0 18px 44px rgba(60,44,20,.18);transform:rotate(-2.5deg);transition:transform .5s var(--ease)}
+.tryapp-bear img{width:min(320px,88%);height:320px;object-fit:cover;object-position:center 28%;border-radius:30px;box-shadow:0 18px 44px rgba(60,44,20,.18);transform:rotate(-2.5deg);transition:transform .5s var(--ease)}
 .tryapp-card:hover .tryapp-bear img{transform:rotate(0deg) scale(1.02)}
-.tryapp-bear figcaption{margin-top:14px;font-family:"Caveat",cursive;font-size:20px;color:#7a806f;transform:rotate(-1deg)}
+.tryapp-bear figcaption{margin-top:14px;font-family:"Caveat",cursive;font-size:24px;color:#7a806f;transform:rotate(-1deg)}
 .tryapp-copy h2{margin-top:10px}
 .tryapp-copy>p{margin-top:18px;max-width:460px}
 .tryapp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:28px}
@@ -313,9 +313,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
   .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.tryapp-card,.about-head,.founder-grid,.founder-card{grid-template-columns:1fr}
-  .founder-card{min-height:auto}
+  .founder-card{min-height:560px}
   .founder-photo{width:min(260px,100%);justify-self:start}
-  .founder-story{position:relative;left:auto;right:auto;bottom:auto;grid-column:1/-1;max-height:none;margin-top:2px}
   .footer-nav{justify-items:start}
   h1{font-size:clamp(58px,18vw,74px)}
   h2{font-size:clamp(48px,16vw,84px)}
@@ -423,32 +422,25 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <circle cx="310" cy="180" r="58" fill="#fffdf7" stroke="#c4f547" stroke-width="7"/>
             <circle cx="310" cy="180" r="45" fill="none" stroke="#247a4d" stroke-width="2" opacity=".38"/>
             <circle cx="348" cy="218" r="13" fill="#c4f547" stroke="#247a4d" stroke-width="3"/>
-            <text x="310" y="174" text-anchor="middle" font-size="17" fill="#143a2e" font-weight="800">linear</text>
-            <text x="310" y="196" text-anchor="middle" font-size="17" fill="#143a2e" font-weight="800">equations</text>
+            <text x="310" y="187" text-anchor="middle" font-size="20" fill="#143a2e" font-weight="900">linear</text>
 
             <circle cx="514" cy="164" r="48" fill="#fffdf7" stroke="#1d3a8a" stroke-width="5"/>
-            <text x="514" y="159" text-anchor="middle" font-size="15" fill="#1d3a8a" font-weight="900">functions</text>
-            <text x="514" y="180" text-anchor="middle" font-size="15" fill="#1d3a8a" font-weight="700">basics</text>
+            <text x="514" y="171" text-anchor="middle" font-size="17" fill="#1d3a8a" font-weight="900">functions</text>
 
             <circle cx="100" cy="124" r="41" fill="#fffdf7" stroke="rgba(29,58,138,.34)" stroke-width="3" stroke-dasharray="7 7"/>
-            <text x="100" y="116" text-anchor="middle" font-size="15" fill="#6f6a61">fractions</text>
-            <text x="100" y="139" text-anchor="middle" font-size="15" fill="#6f6a61">decimals</text>
+            <text x="100" y="131" text-anchor="middle" font-size="14" fill="#6f6a61">fractions</text>
 
             <circle cx="586" cy="274" r="37" fill="#fffdf7" stroke="rgba(29,58,138,.32)" stroke-width="3" stroke-dasharray="7 7"/>
-            <text x="586" y="269" text-anchor="middle" font-size="12.5" fill="#6f6a61">quadratic</text>
-            <text x="586" y="286" text-anchor="middle" font-size="12.5" fill="#6f6a61">functions</text>
+            <text x="586" y="280" text-anchor="middle" font-size="12" fill="#6f6a61">quadratics</text>
 
             <circle cx="216" cy="378" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
-            <text x="216" y="373" text-anchor="middle" font-size="12" fill="#8a8377">triangles</text>
-            <text x="216" y="390" text-anchor="middle" font-size="12" fill="#8a8377">geometry</text>
+            <text x="216" y="383" text-anchor="middle" font-size="11.5" fill="#8a8377">triangles</text>
 
             <circle cx="426" cy="412" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
-            <text x="426" y="407" text-anchor="middle" font-size="12" fill="#8a8377">circles</text>
-            <text x="426" y="424" text-anchor="middle" font-size="12" fill="#8a8377">geometry</text>
+            <text x="426" y="417" text-anchor="middle" font-size="11.5" fill="#8a8377">circles</text>
 
             <circle cx="552" cy="342" r="30" fill="#fffdf7" stroke="rgba(36,122,77,.34)" stroke-width="2.5" stroke-dasharray="5 7"/>
-            <text x="552" y="336" text-anchor="middle" font-size="11" fill="#6f786a">rates</text>
-            <text x="552" y="352" text-anchor="middle" font-size="11" fill="#6f786a">change</text>
+            <text x="552" y="347" text-anchor="middle" font-size="11.5" fill="#6f786a">rates</text>
 
             <circle cx="552" cy="342" r="39" fill="none" stroke="#c1121f" stroke-width="2" stroke-dasharray="5 8" opacity=".55"/>
             <circle cx="586" cy="342" r="7" fill="#fffdf7" stroke="#c1121f" stroke-width="3" opacity=".95"/>
@@ -625,55 +617,70 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <p>A sharper way to find the gap, then build from there.</p>
         </div>
         <div class="founder-grid reveal">
-          <article class="founder-card">
-            <button class="founder-photo founder-trigger" type="button" aria-label="Open Akshat Koirala story" aria-expanded="false">
-              <img src="img/akshat-koirala.jpg" alt="" onerror="this.remove()">
-              <span>AK</span>
-            </button>
-            <div class="founder-copy">
-              <small>Founder · Math learning</small>
-              <h3>Akshat Koirala</h3>
-              <p>Math and economics at Macalester. Eight years helping students find the first step that finally makes sense.</p>
-              <div class="founder-open">Click portrait</div>
-              <div class="founder-tags"><span>Math</span><span>Tutoring</span><span>Mentorship</span></div>
-            </div>
-            <div class="founder-story" hidden>
-              <p>Akshat has taught math across Nepal, South Africa, and the United States. At Macalester, he has worked as a statistics preceptor and peer tutor. The pattern was always the same: students did not need louder explanations. They needed the right starting point.</p>
-              <p>MindCraft is that instinct turned into a system. Find the break. Name the next move. Let confidence return through work the student can actually do.</p>
-            </div>
-          </article>
-          <article class="founder-card">
-            <button class="founder-photo founder-trigger" type="button" aria-label="Open Blake Kell story" aria-expanded="false">
-              <img src="img/blake-kell.jpg" alt="" onerror="this.remove()">
-              <span>BK</span>
-            </button>
-            <div class="founder-copy">
-              <small>Founder · Product + data</small>
-              <h3>Blake Kell</h3>
-              <p>Data science and math. Builds the calm interface, learning signals, and product feel behind MindCraft.</p>
-              <div class="founder-open">Click portrait</div>
-              <div class="founder-tags"><span>Data</span><span>Design</span><span>Focus</span></div>
-            </div>
-            <div class="founder-story" hidden>
-              <p>Blake builds the parts that make MindCraft feel clear: the data flow, the interface, and the small signals that tell a student, "you are here."</p>
-              <p>His work is personal. Learning with ADHD or neurodivergence should not feel like being the problem. The tool should lower the noise and make progress visible.</p>
+          <article class="founder-card founder-trigger" tabindex="0" role="button" aria-label="Flip Akshat Koirala profile" aria-expanded="false">
+            <div class="founder-flip">
+              <div class="founder-face founder-front">
+                <div class="founder-photo" aria-hidden="true">
+                  <img src="img/akshat-koirala.jpg" alt="" onerror="this.remove()">
+                  <span>AK</span>
+                </div>
+                <div class="founder-copy">
+                  <small>Founder · Math learning</small>
+                  <h3>Akshat Koirala</h3>
+                  <p>Math and economics at Macalester. Eight years helping students find the first step that finally makes sense.</p>
+                  <div class="founder-open">Click card</div>
+                </div>
+              </div>
+              <div class="founder-face founder-back">
+                <small>Why MindCraft exists</small>
+                <h3>Find the real break.</h3>
+                <p>Akshat has taught math across Nepal, South Africa, and the United States. The pattern kept repeating: students did not need louder explanations. They needed the right starting point.</p>
+                <p>MindCraft turns that tutor instinct into a system: find the break, name the next move, and let confidence return through work the student can actually do.</p>
+              </div>
             </div>
           </article>
-          <article class="founder-card">
-            <button class="founder-photo founder-trigger" type="button" aria-label="Open Ab story" aria-expanded="false">
-              <img src="img/ab-founder.jpeg" alt="" onerror="this.remove()">
-              <span>AB</span>
-            </button>
-            <div class="founder-copy">
-              <small>Applied math · Research</small>
-              <h3>Ab</h3>
-              <p>Applied mathematics PhD at UNC. Helps turn hard ideas into clear routes students can actually follow.</p>
-              <div class="founder-open">Click portrait</div>
-              <div class="founder-tags"><span>Applied math</span><span>Research</span><span>Clarity</span></div>
+          <article class="founder-card founder-trigger" tabindex="0" role="button" aria-label="Flip Blake Kell profile" aria-expanded="false">
+            <div class="founder-flip">
+              <div class="founder-face founder-front">
+                <div class="founder-photo" aria-hidden="true">
+                  <img src="img/blake-kell.jpg" alt="" onerror="this.remove()">
+                  <span>BK</span>
+                </div>
+                <div class="founder-copy">
+                  <small>Founder · Product + data</small>
+                  <h3>Blake Kell</h3>
+                  <p>Data science and math. Builds the calm interface, learning signals, and product feel behind MindCraft.</p>
+                  <div class="founder-open">Click card</div>
+                </div>
+              </div>
+              <div class="founder-face founder-back">
+                <small>Designed for focus</small>
+                <h3>Less noise. More signal.</h3>
+                <p>Blake builds the parts that make MindCraft feel clear: the data flow, the interface, and the small signals that tell a student, “you are here.”</p>
+                <p>Learning with ADHD or neurodivergence should not feel like being the problem. The tool should lower the noise and make progress visible.</p>
+              </div>
             </div>
-            <div class="founder-story" hidden>
-              <p>Ab brings the applied math lens: precise, patient, and allergic to fake understanding. He helps MindCraft keep the route honest when a concept gets deep.</p>
-              <p>The mission is simple: make difficult math feel navigable without watering it down.</p>
+          </article>
+          <article class="founder-card founder-trigger" tabindex="0" role="button" aria-label="Flip Abhigya Koirala profile" aria-expanded="false">
+            <div class="founder-flip">
+              <div class="founder-face founder-front">
+                <div class="founder-photo" aria-hidden="true">
+                  <img src="img/ab-founder.jpeg" alt="" onerror="this.remove()">
+                  <span>AB</span>
+                </div>
+                <div class="founder-copy">
+                  <small>Applied math · Research</small>
+                  <h3>Abhigya Koirala</h3>
+                  <p>Incoming applied mathematics PhD student at UNC. Helps turn hard ideas into clear routes students can actually follow.</p>
+                  <div class="founder-open">Click card</div>
+                </div>
+              </div>
+              <div class="founder-face founder-back">
+                <small>Applied math backbone</small>
+                <h3>Hard math, made navigable.</h3>
+                <p>Abhigya brings the applied math lens: precise, patient, and allergic to fake understanding. He helps MindCraft keep the route honest when a concept gets deep.</p>
+                <p>The mission is simple: make difficult math feel navigable without watering it down.</p>
+              </div>
             </div>
           </article>
         </div>
@@ -753,17 +760,17 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="tryapp" id="try-app" data-nav="cream">
       <div class="wrap">
         <div class="tryapp-card reveal">
-          <figure class="tryapp-bear" aria-hidden="false">
+          <figure class="tryapp-bear mascot-crop" aria-hidden="false">
             <img src="img/mindcraftmascot.jpg" alt="MindCraft mascot" loading="lazy" width="240" height="280">
-            <figcaption>Study better from the first step.</figcaption>
+            <figcaption>Smart students start here.</figcaption>
           </figure>
           <div class="tryapp-copy">
             <p class="label">Try our app</p>
-            <h2>Math finally knows where to begin.</h2>
-            <p>The gap scan finds the break, the map names the route, and practice starts where confidence can actually return.</p>
+            <h2>The students who get ahead know where to start.</h2>
+            <p>MindCraft finds the exact break, builds the route, and turns practice into the unfair advantage every parent wants for their kid.</p>
             <div class="tryapp-actions">
               <a class="btn primary app-login-link" href="https://mindcraft-93858.web.app/login">Open MindCraft →</a>
-              <span class="tryapp-note">Free to explore · works great on iPad</span>
+              <span class="tryapp-note">Free to explore · built for sharp students</span>
             </div>
           </div>
         </div>
@@ -869,22 +876,21 @@ const navIo = new IntersectionObserver((entries) => {
 }, { rootMargin:"-38% 0px -52% 0px", threshold:0 })
 document.querySelectorAll("[data-nav]").forEach((el) => navIo.observe(el))
 
-document.querySelectorAll(".founder-trigger").forEach((button) => {
-  button.addEventListener("click", () => {
-    const card = button.closest(".founder-card")
-    const story = card?.querySelector(".founder-story")
-    if (!card || !story) return
+document.querySelectorAll(".founder-trigger").forEach((card) => {
+  const toggleFounder = () => {
     document.querySelectorAll(".founder-card.story-open").forEach((openCard) => {
       if (openCard === card) return
       openCard.classList.remove("story-open")
-      const openStory = openCard.querySelector(".founder-story")
-      const openButton = openCard.querySelector(".founder-trigger")
-      if (openStory) openStory.hidden = true
-      if (openButton) openButton.setAttribute("aria-expanded", "false")
+      openCard.setAttribute("aria-expanded", "false")
     })
     const isOpen = card.classList.toggle("story-open")
-    button.setAttribute("aria-expanded", String(isOpen))
-    story.hidden = !isOpen
+    card.setAttribute("aria-expanded", String(isOpen))
+  }
+  card.addEventListener("click", toggleFounder)
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return
+    event.preventDefault()
+    toggleFounder()
   })
 })
 
