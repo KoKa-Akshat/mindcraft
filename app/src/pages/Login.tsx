@@ -29,13 +29,12 @@ function armAdminGrant()      { sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, 
 function consumeAdminGrant()  { const v = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'; sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY); return v }
 function clearAdminGrant()    { sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY) }
 
-/** iPad / touch browsers block OAuth pop-ups — redirect is reliable. */
+/** iPad / iPhone only — redirect is required there; desktop popup is more reliable. */
 function preferGoogleRedirect() {
   if (typeof window === 'undefined') return false
   const ua = navigator.userAgent
-  const isIOS = /iPad|iPhone|iPod/.test(ua)
+  return /iPad|iPhone|iPod/.test(ua)
     || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-  return isIOS || window.matchMedia('(pointer: coarse)').matches
 }
 
 function safeReturnPath(raw: string | null) {
@@ -112,68 +111,74 @@ export default function Login() {
   }, [])
 
   async function routeAfterLogin(uid: string) {
-    await auth.currentUser?.getIdToken(true)
+    try {
+      await auth.currentUser?.getIdToken(true)
 
-    // Test accounts start fresh on every login — diagnostic, graph, drafts all wiped.
-    if (isTestProfileEmail(auth.currentUser?.email)) {
-      await resetStudentProfile(uid)
-    }
+      // Test accounts start fresh on every login — never block routing on the wipe.
+      if (isTestProfileEmail(auth.currentUser?.email)) {
+        void resetStudentProfile(uid)
+      }
 
-    const grantAdmin = consumeAdminGrant()
-    if (grantAdmin) setAdminFlow('auth')
+      const grantAdmin = consumeAdminGrant()
+      if (grantAdmin) setAdminFlow('auth')
 
-    const snap = await getDoc(doc(db, 'users', uid))
-    const existingRole = snap.data()?.role
+      const snap = await getDoc(doc(db, 'users', uid))
+      const existingRole = snap.data()?.role
 
-    // Admin grant takes priority
-    if (grantAdmin) {
-      try {
-        await grantAdminRole()
-      } catch {
-        setError('Not authorized.')
-        setLoading(false)
-        navigate('/dashboard', { replace: true })
+      // Admin grant takes priority
+      if (grantAdmin) {
+        try {
+          await grantAdminRole()
+        } catch {
+          setError('Not authorized.')
+          navigate('/dashboard', { replace: true })
+          return
+        }
+        navigate('/admin', { replace: true })
         return
       }
-      navigate('/admin', { replace: true })
-      return
-    }
 
-    // No Firestore doc (new user, or doc was deleted) → create as student
-    if (!snap.exists() || !existingRole) {
-      await setDoc(doc(db, 'users', uid), {
-        role: 'student',
-        email: auth.currentUser?.email ?? '',
-        displayName: auth.currentUser?.displayName ?? '',
-        createdAt: new Date().toISOString(),
-      }, { merge: true })
-      if (!returnTo) {
-        const done = await isDiagnosticComplete(uid)
-        if (!done) {
-          navigate('/onboard?entry=1', { replace: true })
-          return
+      // No Firestore doc (new user, or doc was deleted) → create as student
+      if (!snap.exists() || !existingRole) {
+        await setDoc(doc(db, 'users', uid), {
+          role: 'student',
+          email: auth.currentUser?.email ?? '',
+          displayName: auth.currentUser?.displayName ?? '',
+          createdAt: new Date().toISOString(),
+        }, { merge: true })
+        if (!returnTo) {
+          const done = await isDiagnosticComplete(uid)
+          if (!done) {
+            navigate('/onboard?entry=1', { replace: true })
+            return
+          }
         }
+        navigate(returnTo ?? '/dashboard', { replace: true })
+        return
       }
-      navigate(returnTo ?? '/dashboard', { replace: true })
-      return
-    }
 
-    // Route based on existing role
-    if (existingRole === 'admin') {
-      navigate('/admin', { replace: true })
-    } else if (existingRole === 'tutor') {
-      navigate('/tutor', { replace: true })
-    } else if (existingRole === 'parent') {
-      navigate('/parent', { replace: true })
-    } else {
-      if (!returnTo) {
-        const done = await isDiagnosticComplete(uid)
-        if (!done) {
-          navigate('/onboard?entry=1', { replace: true })
-          return
+      // Route based on existing role
+      if (existingRole === 'admin') {
+        navigate('/admin', { replace: true })
+      } else if (existingRole === 'tutor') {
+        navigate('/tutor', { replace: true })
+      } else if (existingRole === 'parent') {
+        navigate('/parent', { replace: true })
+      } else {
+        if (!returnTo) {
+          const done = await isDiagnosticComplete(uid)
+          if (!done) {
+            navigate('/onboard?entry=1', { replace: true })
+            return
+          }
         }
+        navigate(returnTo ?? '/dashboard', { replace: true })
       }
-      navigate(returnTo ?? '/dashboard', { replace: true })
+    } catch (e: unknown) {
+      const code = (e as { code?: string })?.code
+      const message = (e as { message?: string })?.message
+      setError(friendlyError(code ?? message ?? 'unknown') || 'Sign-in succeeded but routing failed. Please try again.')
+      setLoading(false)
     }
   }
 
@@ -342,7 +347,11 @@ export default function Login() {
                     </p>
 
                     {/* SECONDARY: email toggle */}
-                    {emailMode && (
+                    {!emailMode ? (
+                      <p className={s.bottomLink} style={{ marginTop: 16, textAlign: 'center' }}>
+                        <button type="button" onClick={() => { setEmailMode(true); setError('') }}>Use a password account instead</button>
+                      </p>
+                    ) : (
                       <>
                         <div className={s.divider}><span>password account</span></div>
                         <p className={s.emailNote}>
@@ -396,6 +405,14 @@ export default function Login() {
                           <button type="button" onClick={() => { setEmailMode(false); setIsSignup(false); setError('') }}>Back to Google sign in</button>
                         </p>
                       </>
+                    )}
+
+                    {adminFlow === 'auth' && (
+                      <p className={s.bottomLink} style={{ marginTop: 8 }}>
+                        <button type="button" onClick={() => { setAdminFlow('passcode'); setAdminPw(''); setError('') }}>
+                          Have an admin code?
+                        </button>
+                      </p>
                     )}
                   </>
                 )}
