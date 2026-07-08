@@ -21,8 +21,15 @@ export interface HighlightSpan {
   kind: 'ask' | 'given' | 'focus'
 }
 
-const ASK_PATTERNS = [
-  /\b(find|solve for|determine|calculate|compute|what is|how many|how much|which|evaluate|choose|select|identify|simplify|expand|factorise|factorize|write)\b/i,
+const ASK_VERBS = /\b(find|solve for|determine|calculate|compute|how many|how much|which|evaluate|choose|select|identify|simplify|expand|factorise|factorize|write)\b/i
+
+const MATH_FOCUS = [
+  /\b(interior angles?)\b/i,
+  /\b(regular\s+(?:hexagon|pentagon|octagon|heptagon|nonagon|decagon))\b/i,
+  /\b(hexagon|pentagon|octagon|heptagon|nonagon|decagon)\b/i,
+  /\b(mode|median|mean|range|standard deviation)\b/i,
+  /\b(congruent|parallel|perpendicular|hypotenuse|circumference|diameter|radius|slope|vertex)\b/i,
+  /\b(probability|ratio|proportion)\b/i,
 ]
 
 function clipWords(text: string, max = 12): string {
@@ -42,20 +49,29 @@ export function extractHighlights(questionText: string): HighlightSpan[] {
 
   const spans: HighlightSpan[] = []
 
-  for (const re of ASK_PATTERNS) {
+  // Math vocabulary beats generic "what is" / article phrases.
+  for (const re of MATH_FOCUS) {
     const m = plain.match(re)
     if (m?.[0]) {
-      spans.push({ phrase: m[0], kind: 'ask' })
+      spans.push({ phrase: m[0], kind: 'focus' })
       break
     }
+  }
+
+  const whatIs = plain.match(/\bwhat is (?:the )?([a-z][\w\s-]{2,32}?)(?:\s+(?:of|for|in)\b|[?.!,]|$)/i)
+  if (whatIs?.[1] && !spans.length) {
+    spans.push({ phrase: whatIs[1].trim(), kind: 'focus' })
+  }
+
+  const askMatch = plain.match(ASK_VERBS)
+  if (askMatch?.[0]) {
+    spans.push({ phrase: askMatch[0], kind: 'ask' })
   }
 
   const numMatch = plain.match(/\b\d+(?:\.\d+)?\b/)
   if (numMatch?.[0]) spans.push({ phrase: numMatch[0], kind: 'given' })
 
-  // Only add a focus highlight if no ask was found AND the match doesn't land
-  // at position 0 (which just highlights the subject of the sentence, not the key ask).
-  if (!spans.some(s => s.kind === 'ask')) {
+  if (!spans.some(s => s.kind === 'focus' || s.kind === 'ask')) {
     const focusMatch = plain.match(/\b(?:the|a|an)\s+[a-z][\w\s-]{2,28}/i)
     if (focusMatch?.[0] && (focusMatch.index ?? 0) > 5) {
       spans.push({ phrase: focusMatch[0].trim(), kind: 'focus' })

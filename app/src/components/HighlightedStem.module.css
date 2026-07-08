@@ -33,3 +33,31 @@
   margin-right: 6px;
   opacity: 0.55;
 }
+
+.glossaryTerm {
+  position: relative;
+  cursor: help;
+}
+
+.glossaryTip {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  z-index: 4;
+  min-width: 180px;
+  max-width: 260px;
+  padding: 8px 10px;
+  font: 400 11px/1.45 "IBM Plex Mono", monospace;
+  color: #1c1a17;
+  background: #fbf8f3;
+  border: 1px solid rgba(29, 58, 138, 0.18);
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+.glossaryTerm:hover .glossaryTip,
+.glossaryTerm:focus .glossaryTip {
+  display: block;
+}

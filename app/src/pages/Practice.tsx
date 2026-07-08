@@ -1,6 +1,6 @@
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useUser } from '../App'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useMemo } from 'react'
 import MathText from '../components/MathText'
 import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
@@ -38,6 +38,8 @@ import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practi
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
+import { buildStoryDisplay } from '../lib/storyDisplay'
+import InteractiveWidget from '../components/InteractiveWidget'
 import { sanitizeAnswer, sanitizeProblemText, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
@@ -1447,6 +1449,11 @@ export default function Practice() {
     ? (storyItem ? [...storyItem.socratic, ...currentQ.hints] : currentQ.hints).slice(0, 3)
     : []
 
+  const sessionStem = useMemo(() => {
+    if (!currentQ) return ''
+    return storyItem?.storyStem ?? buildStoryDisplay(currentQ).stem
+  }, [currentQ, storyItem])
+
   const wrongChoiceEvidence = checked && selected !== null && currentQ && selected !== currentQ.correctIndex
     ? resolveChoiceEvidence(currentQ, selected)
     : null
@@ -2132,7 +2139,7 @@ export default function Practice() {
                           conceptName: PRACTICE_CONCEPTS.find(c => c.id === currentQ.conceptId)?.label
                             ?? bridgeLabel(toOntologyId(currentQ.conceptId)),
                           questionLabel: `Q${qIndex + 1}`,
-                          questionText: storyItem?.storyStem ?? currentQ.question,
+                          questionText: sessionStem,
                         }}
                       />
                     </div>
@@ -2180,13 +2187,26 @@ export default function Practice() {
                           />
                         </div>
                       </div>
-                      <p className={s.questionText}><MathText text={storyItem?.storyStem ?? currentQ.question} /></p>
+                      {currentQ.storyIntro && (
+                        <p className={s.storyIntroBlock}>{currentQ.storyIntro}</p>
+                      )}
+                      {currentQ.storyContext && !storyItem && (
+                        <p className={s.storyContextLine}><MathText text={currentQ.storyContext} /></p>
+                      )}
+                      <p className={s.questionText}><MathText text={sessionStem} /></p>
                     </div>
                     <div className={s.questionBody}>
-                      {safeQuestionSvg(currentQ) && (
+                      {safeQuestionSvg(currentQ) ? (
                         <div
                           className={s.questionVisual}
                           dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
+                        />
+                      ) : (
+                        <InteractiveWidget
+                          conceptId={currentQ.conceptId}
+                          questionText={sessionStem}
+                          format={questionFormat(currentQ)}
+                          theme={{ accent: '#1d3a8a', ink: '#1a1a1a', bg: '#ffffff', dim: 'rgba(26,26,26,0.45)' }}
                         />
                       )}
                       <div className={s.choices}>

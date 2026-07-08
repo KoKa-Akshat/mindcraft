@@ -1,0 +1,35 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vignetteWrap {
+  position: relative;
+  height: 88px;
+  margin: 8px 0 10px;
+  border-radius: 6px;
+  background: #efe9e0;
+  border: 1px solid rgba(29, 58, 138, 0.12);
+  overflow: hidden;
+}
+
+/* Dashboard vignettes use white strokes; invert for ink-on-paper. */
+.vignetteWrap[data-tone="paper"] svg {
+  filter: invert(1) hue-rotate(180deg);
+  opacity: 0.88;
+}
+
+.polygonWrap {
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: rgba(29, 58, 138, 0.04);
+  border: 1px solid rgba(29, 58, 138, 0.1);
+}
+
+.caption {
+  margin: 8px 0 0;
+  font: 400 11px/1.45 "IBM Plex Mono", monospace;
+  text-align: center;
+}

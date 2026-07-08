@@ -15,44 +15,154 @@
   },
   "confidence_step": {
     "prompt": "How confident are you with each of these?",
-    "note": "Self-report only — no wrong answers here. Tap and move on.",
+    "note": "Self-report only — no score here. Tap and move on.",
     "scale": [
-      { "label": "Not there yet", "value": "hard" },
-      { "label": "Getting there", "value": "kinda" },
-      { "label": "Got it", "value": "easy" }
+      {
+        "label": "Not there yet",
+        "value": "hard"
+      },
+      {
+        "label": "Getting there",
+        "value": "kinda"
+      },
+      {
+        "label": "Got it",
+        "value": "easy"
+      }
     ],
     "concepts": [
-      { "concept_id": "linear_equations", "name": "Linear Equations", "act_high_priority": true },
-      { "concept_id": "linear_inequalities", "name": "Linear Inequalities", "act_high_priority": false },
-      { "concept_id": "systems_of_linear_equations", "name": "Systems of Linear Equations", "act_high_priority": true },
-      { "concept_id": "functions_basics", "name": "Basics of Functions", "act_high_priority": true },
-      { "concept_id": "exponent_rules", "name": "Exponent Rules", "act_high_priority": false },
-      { "concept_id": "polynomials", "name": "Polynomial Operations", "act_high_priority": false },
-      { "concept_id": "factoring_polynomials", "name": "Factoring Polynomials", "act_high_priority": true },
-      { "concept_id": "quadratic_equations", "name": "Quadratic Equations", "act_high_priority": true },
-      { "concept_id": "radical_expressions", "name": "Radical Expressions", "act_high_priority": false },
-      { "concept_id": "exponential_functions", "name": "Exponential Functions", "act_high_priority": false },
-      { "concept_id": "sequences_series", "name": "Sequences and Series", "act_high_priority": false },
-      { "concept_id": "descriptive_statistics", "name": "Descriptive Statistics", "act_high_priority": false },
-      { "concept_id": "basic_probability", "name": "Basic Probability", "act_high_priority": false },
-      { "concept_id": "right_triangle_geometry", "name": "Right Triangle Geometry", "act_high_priority": true },
-      { "concept_id": "trigonometry_basics", "name": "Trigonometry Basics", "act_high_priority": false },
-      { "concept_id": "lines_angles", "name": "Lines and Angles", "act_high_priority": false },
-      { "concept_id": "triangles_congruence", "name": "Triangles and Congruence", "act_high_priority": false },
-      { "concept_id": "circles_geometry", "name": "Geometry of Circles", "act_high_priority": false },
-      { "concept_id": "area_volume", "name": "Area and Volume", "act_high_priority": true },
-      { "concept_id": "geometric_transformations", "name": "Geometric Transformations", "act_high_priority": false }
+      {
+        "concept_id": "linear_equations",
+        "name": "Linear Equations",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "linear_inequalities",
+        "name": "Linear Inequalities",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "systems_of_linear_equations",
+        "name": "Systems of Linear Equations",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "functions_basics",
+        "name": "Basics of Functions",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "exponent_rules",
+        "name": "Exponent Rules",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "polynomials",
+        "name": "Polynomial Operations",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "factoring_polynomials",
+        "name": "Factoring Polynomials",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "quadratic_equations",
+        "name": "Quadratic Equations",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "radical_expressions",
+        "name": "Radical Expressions",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "exponential_functions",
+        "name": "Exponential Functions",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "sequences_series",
+        "name": "Sequences and Series",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "descriptive_statistics",
+        "name": "Descriptive Statistics",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "basic_probability",
+        "name": "Basic Probability",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "right_triangle_geometry",
+        "name": "Right Triangle Geometry",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "trigonometry_basics",
+        "name": "Trigonometry Basics",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "lines_angles",
+        "name": "Lines and Angles",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "triangles_congruence",
+        "name": "Triangles and Congruence",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "circles_geometry",
+        "name": "Geometry of Circles",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "area_volume",
+        "name": "Area and Volume",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "geometric_transformations",
+        "name": "Geometric Transformations",
+        "act_high_priority": false
+      }
     ]
   },
   "probe_step": {
-    "prompt": "",
-    "questions": [],
-    "note": "Probes unwired — confidence-only diagnostic for now."
+    "prompt": "First, look at four ACT math moments.",
+    "questions": [
+      {
+        "question_id": "act_math_t01_q06",
+        "concept_id": "linear_equations",
+        "cluster": "Algebra"
+      },
+      {
+        "question_id": "act_math_t02_q08",
+        "concept_id": "functions_basics",
+        "cluster": "Functions"
+      },
+      {
+        "question_id": "act_math_t15_q08",
+        "concept_id": "coordinate_geometry",
+        "cluster": "Geometry"
+      },
+      {
+        "question_id": "act_math_t03_q07",
+        "concept_id": "ratios_proportions",
+        "cluster": "Data"
+      }
+    ],
+    "note": "Use these as anchors. You can still adjust every rating on the next page."
   },
   "event_emission": {
     "note": "Canonical sinks (FORMAT_WEAKNESS_PLAN.md diagnostic reconciliation). Do NOT use /learning-event.",
     "confidence_step": "POST {ML_BASE}/seed-assessment — per-concept hard|kinda|easy from scale",
-    "probe_step": "disabled — probes unwired",
+    "probe_step": "local prefill only — maps cluster probe answers to confidence seeds before /seed-assessment",
     "completion": "users/{uid}.diagnosticCompleted via markDiagnosticComplete + goals on users/{uid}.goals"
   }
 }

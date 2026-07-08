@@ -1,5 +1,5 @@
 import { getQuestions, shuffle, questionFormat, inferQuestionFormat, isStoryCellQuestion, type Question } from './questionBank'
-import { shouldRenderFigure } from '../components/QuestionFigure'
+import { buildStoryDisplay } from './storyDisplay'
 import type { CurriculumTrack } from './curriculumTrack'
 import type { Confidence } from './bridgePractice'
 
@@ -53,14 +53,19 @@ export function isRenderableQuestion(q: Question): boolean {
   return true
 }
 
+function storyVisualScore(q: Question): number {
+  const d = buildStoryDisplay(q)
+  if (d.table) return 4
+  if (d.visual === 'polygon') return 3
+  if (d.visual === 'vignette') return 2
+  if (d.visual === 'figure') return 1
+  return 0
+}
+
 function pickBestProbe(pool: Question[]): Question | undefined {
   if (!pool.length) return undefined
-  const visual = pool.filter(q => shouldRenderFigure(
-    q.conceptId,
-    q.question,
-    questionFormat(q) ?? inferQuestionFormat(q),
-  ))
-  return visual[0] ?? pool[0]
+  const ranked = [...pool].sort((a, b) => storyVisualScore(b) - storyVisualScore(a))
+  return ranked[0]
 }
 
 /** Difficulty bands for onboarding — never L3 (too punishing for a welcome diagnostic). */

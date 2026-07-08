@@ -32,6 +32,8 @@ import HighlightedStem from '../components/HighlightedStem'
 import JarvisGuide from '../components/JarvisGuide'
 import { useJournalGuide } from '../hooks/useJournalGuide'
 import { insightsForSide } from '../lib/journalGuide'
+import { useStoryQuestion } from '../hooks/useStoryQuestion'
+import { resolveStoryScene } from '../lib/storyDisplay'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import PageFlipTransition from '../components/book/PageFlipTransition'
@@ -101,7 +103,8 @@ export default function GradeOnboard() {
 
   const currentQ = probeQs[probeIdx]
   void storyMod  // kept for potential future use; storyItem display removed
-  const stemText = currentQ?.question ?? ''
+  const { display: storyDisplay, stemText } = useStoryQuestion(currentQ)
+  const sceneLine = currentQ && storyDisplay ? resolveStoryScene(currentQ, storyDisplay) : currentQ?.storyContext
 
   const probeTheme = useMemo(() => ({
     accent: '#1d3a8a',
@@ -137,7 +140,7 @@ export default function GradeOnboard() {
 
   const journalGuide = useJournalGuide({
     conceptId: currentQ?.conceptId ?? '',
-    questionText: currentQ?.question ?? '',
+    questionText: stemText,
     strokeData: probeStrokes,
     inkState: probeInk,
     transcribing: probeTranscribing,
@@ -328,8 +331,8 @@ export default function GradeOnboard() {
                         {currentQ?.storyIntro && (
                           <p className={s.storyIntroBlock}>{currentQ.storyIntro}</p>
                         )}
-                        {currentQ?.storyContext && (
-                          <p className={s.probeStoryLine}><MathText text={currentQ.storyContext} /></p>
+                        {sceneLine && (
+                          <p className={s.probeStoryLine}><MathText text={sceneLine} /></p>
                         )}
                         <HighlightedStem
                           text={stemText}
@@ -340,7 +343,7 @@ export default function GradeOnboard() {
                         />
                         <InteractiveWidget
                           conceptId={currentQ.conceptId}
-                          questionText={currentQ.question}
+                          questionText={storyDisplay?.stem ?? currentQ.question}
                           format={questionFormat(currentQ)}
                           theme={probeTheme}
                         />

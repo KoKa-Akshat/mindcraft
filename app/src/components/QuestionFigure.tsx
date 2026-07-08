@@ -6,6 +6,8 @@ import type { ReactNode } from 'react'
 import { parseLinearEquation } from './InteractiveWidget'
 import type { FormatId } from '../lib/questionBank'
 import { inferQuestionFormat } from '../lib/questionBank'
+import type { StoryDisplay } from '../lib/storyDisplay'
+import { buildStoryDisplay } from '../lib/storyDisplay'
 import s from './QuestionFigure.module.css'
 
 interface Theme {
@@ -46,14 +48,32 @@ export function shouldRenderFigure(
   conceptId: string,
   questionText: string,
   format?: FormatId,
+  display?: StoryDisplay,
 ): boolean {
+  const plan = display ?? buildStoryDisplay({
+    id: '',
+    conceptId,
+    level: 2,
+    question: questionText,
+    choices: [],
+    correctIndex: 0,
+    explanation: '',
+    hints: [],
+    format,
+  })
+
+  if (plan.visual === 'vignette' || plan.visual === 'polygon') return false
+  if (plan.table) return false
+
   const fmt = format ?? inferQuestionFormat(formatStub(conceptId, questionText))
   if (fmt === 'diagram' || fmt === 'coordinate_graph' || fmt === 'number_line') return true
   if (diagramCaption(questionText)) return true
   if (parseLinearEquation(questionText)) return true
   if (decimalMultiply(questionText)) return true
-  const visualWords = /\b(triangle|circle|angle|graph|diagram|coordinate|grid|rectangle|square|polygon|number line)\b/i
+  const visualWords = /\b(triangle|circle|graph|diagram|coordinate|grid|rectangle|square|polygon|number line)\b/i
   if (visualWords.test(questionText)) return true
+  // "angle" alone is too broad — regular polygons get polygon figures instead.
+  if (/\bangle\b/i.test(questionText)) return true
   return false
 }
 
@@ -129,6 +149,30 @@ function AngleFigure({ theme }: { theme: Theme }) {
   )
 }
 
+/** Regular n-gon for hexagon / pentagon / octagon stems. */
+export function RegularPolygonFigure({ sides, theme }: { sides: number; theme: Theme }) {
+  const cx = 80
+  const cy = 80
+  const r = 52
+  const pts: string[] = []
+  for (let i = 0; i < sides; i++) {
+    const a = (Math.PI * 2 * i) / sides - Math.PI / 2
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`)
+  }
+  return (
+    <svg viewBox="0 0 160 160" className={s.fig} aria-hidden>
+      <polygon
+        points={pts.join(' ')}
+        fill={theme.accent}
+        fillOpacity={0.12}
+        stroke={theme.accent}
+        strokeWidth={2}
+      />
+      <circle cx={cx} cy={cy} r={3} fill={theme.accent} fillOpacity={0.5} />
+    </svg>
+  )
+}
+
 function CoordGrid({ theme }: { theme: Theme }) {
   const n = 160
   const p = 14
@@ -179,13 +223,28 @@ export default function QuestionFigure({
   questionText,
   format,
   theme,
+  display,
 }: {
   conceptId: string
   questionText: string
   format?: FormatId
   theme: Theme
+  display?: StoryDisplay
 }) {
-  if (!shouldRenderFigure(conceptId, questionText, format)) return null
+  const plan = display ?? buildStoryDisplay({
+    id: '',
+    conceptId,
+    level: 2,
+    question: questionText,
+    choices: [],
+    correctIndex: 0,
+    explanation: '',
+    hints: [],
+    format,
+  })
+
+  if (plan.visual === 'vignette' || plan.visual === 'polygon' || plan.table) return null
+  if (!shouldRenderFigure(conceptId, questionText, format, plan)) return null
 
   const caption = diagramCaption(questionText)
   const line = parseLinearEquation(questionText)
@@ -204,6 +263,8 @@ export default function QuestionFigure({
     body = <RightTriangle theme={theme} />
   } else if (conceptId === 'circles_geometry' || /\bcircle\b|radius|diameter|circumference/i.test(questionText)) {
     body = <CircleFigure theme={theme} />
+  } else if (plan.polygonSides) {
+    body = <RegularPolygonFigure sides={plan.polygonSides} theme={theme} />
   } else if (conceptId === 'lines_angles' || /angle|parallel|transversal/i.test(questionText)) {
     body = <AngleFigure theme={theme} />
   } else if (fmt === 'coordinate_graph' || conceptId === 'coordinate_geometry' || /graph|coordinate|plotted|slope/i.test(questionText)) {

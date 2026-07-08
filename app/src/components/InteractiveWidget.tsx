@@ -1,12 +1,10 @@
 /**
- * InteractiveWidget — renders an interactive math manipulative when the
- * question text or concept implies one (dice, spinner, number line, etc.).
- *
- * Detection is text-heuristic + concept-based; always degrades gracefully to null.
+ * InteractiveWidget — manipulatives when implied; otherwise story-aligned visuals.
  */
-
-import { useState, useRef, useEffect } from 'react'
-import QuestionFigure from './QuestionFigure'
+import { useState, useRef, useEffect, useMemo } from 'react'
+import StoryVisualPanel from './StoryVisualPanel'
+import { shouldRenderFigure } from './QuestionFigure'
+import { buildStoryDisplay } from '../lib/storyDisplay'
 import type { FormatId } from '../lib/questionBank'
 import s from './InteractiveWidget.module.css'
 
@@ -465,6 +463,21 @@ interface Props {
 }
 
 export default function InteractiveWidget({ conceptId, questionText, format, theme }: Props) {
+  const display = useMemo(
+    () => buildStoryDisplay({
+      id: '',
+      conceptId,
+      level: 2,
+      question: questionText,
+      choices: [],
+      correctIndex: 0,
+      explanation: '',
+      hints: [],
+      format,
+    }),
+    [conceptId, questionText, format],
+  )
+
   const config = detectWidget(conceptId, questionText)
   if (config) {
     return (
@@ -477,11 +490,20 @@ export default function InteractiveWidget({ conceptId, questionText, format, the
     )
   }
 
+  const hasVisual = display.table
+    || display.visual === 'vignette'
+    || display.visual === 'polygon'
+    || display.visual === 'figure'
+    || shouldRenderFigure(conceptId, questionText, format, display)
+
+  if (!hasVisual) return null
+
   return (
-    <QuestionFigure
+    <StoryVisualPanel
       conceptId={conceptId}
       questionText={questionText}
       format={format}
+      display={display}
       theme={theme}
     />
   )

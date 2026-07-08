@@ -10,6 +10,7 @@ import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPe
 import { loadQuestionWork, saveQuestionWork } from '../lib/studentWork'
 import { submitWorkEvidenceIfReady } from '../lib/workEvidence'
 import InteractiveWidget from '../components/InteractiveWidget'
+import { buildStoryDisplay } from '../lib/storyDisplay'
 import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
 import type { ScratchStrokeData } from '../types'
@@ -401,6 +402,10 @@ export default function ConceptChapterPage() {
   }, [journalQIdx, spreadIdx])
 
   const activeQuestion = journalQIdx >= 0 ? questions[journalQIdx] : null
+  const activeStem = useMemo(
+    () => (activeQuestion ? buildStoryDisplay(activeQuestion).stem : ''),
+    [activeQuestion],
+  )
   const transcribing = Boolean(
     journalQIdx >= 0
     && (scratchStrokes[journalQIdx]?.strokes?.length ?? 0) > 0
@@ -409,7 +414,7 @@ export default function ConceptChapterPage() {
 
   const journalGuide = useJournalGuide({
     conceptId: canonicalId,
-    questionText: activeQuestion?.question ?? '',
+    questionText: activeStem,
     strokeData: journalQIdx >= 0 ? scratchStrokes[journalQIdx] : null,
     inkState: journalQIdx >= 0 ? scratchInk[journalQIdx] : null,
     transcribing,
@@ -597,7 +602,8 @@ export default function ConceptChapterPage() {
       storyAppliedRef.current.has(q.id) || (chosen === null && !isDone)
     )
     if (useStoryStem) storyAppliedRef.current.add(q.id)
-    const stemText = useStoryStem ? storyItem!.storyStem : q.question
+    const storyDisplay = buildStoryDisplay(q)
+    const stemText = useStoryStem ? storyItem!.storyStem : storyDisplay.stem
     const socraticHints = useStoryStem ? (storyItem!.socratic ?? []) : []
     const allHints = [...socraticHints, ...(q.hints ?? [])]
     const txt = q.question.toLowerCase()
@@ -646,7 +652,7 @@ export default function ConceptChapterPage() {
             />
             <InteractiveWidget
               conceptId={conceptId}
-              questionText={q.question}
+              questionText={stemText}
               format={questionFormat(q)}
               theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
             />

@@ -4,6 +4,7 @@
  */
 import MathText from './MathText'
 import type { HighlightSpan } from '../lib/journalGuide'
+import { glossaryFor } from '../lib/mathGlossary'
 import s from './HighlightedStem.module.css'
 
 function escapeRegExp(str: string): string {
@@ -20,6 +21,8 @@ function highlightPlainText(text: string, spans: HighlightSpan[], accent: string
   const parts = text.split(re)
   if (parts.length < 2) return <MathText text={text} />
 
+  const definition = glossaryFor(focus.phrase)
+
   return (
     <>
       {parts.map((part, i) => {
@@ -27,10 +30,13 @@ function highlightPlainText(text: string, spans: HighlightSpan[], accent: string
           return (
             <mark
               key={i}
-              className={s.focusStroke}
+              className={`${s.focusStroke} ${definition ? s.glossaryTerm : ''}`}
               style={{ backgroundImage: `linear-gradient(104deg, transparent 2%, ${accent}55 4%, ${accent}44 96%, transparent 98%)` }}
+              title={definition}
+              tabIndex={definition ? 0 : undefined}
             >
               <MathText text={part} />
+              {definition && <span className={s.glossaryTip}>{definition}</span>}
             </mark>
           )
         }

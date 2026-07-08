@@ -7,7 +7,7 @@
  *   - confidence  → POST /seed-assessment (hard|kinda|easy per concept → L1/L2/L3)
  *   - complete    → markDiagnosticComplete (diagnosticCompleted: true) + goals
  *
- * Probe step unwired — spec from data/actDiagnostic.json (probe_step.questions []).
+ * Probe step anchors confidence with one ACT question per cluster.
  */
 
 import { useMemo, useState } from 'react'
@@ -16,14 +16,24 @@ import { useUser } from '../App'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import type { Confidence } from '../lib/bridgePractice'
 import spec from '../data/actDiagnostic.json'
+import actBankData from '../data/actMasterQuestionBank.generated.json'
+import MathText from '../components/MathText'
 import s from './Diagnostic.module.css'
 
 interface ConfConcept { concept_id: string; name: string; act_high_priority: boolean }
 interface ScalePoint { value: Confidence; label: string }
+interface ProbeQuestionSpec { question_id: string; concept_id: string; cluster: string }
+interface ActQuestion { id: string; conceptId: string; level: 1 | 2 | 3; question: string; choices: string[]; correctIndex: number }
+
+const PROBE_ANSWERS: { value: Confidence; label: string }[] = [
+  { value: 'easy', label: 'Yes, I know it' },
+  { value: 'kinda', label: 'Seen it before' },
+  { value: 'hard', label: 'New to me' },
+]
 
 const EXAM = 'ACT'
 
-type Step = 'intro' | 'goals' | 'confidence' | 'done'
+type Step = 'intro' | 'goals' | 'probe' | 'confidence' | 'done'
 
 export default function Diagnostic() {
   const user = useUser()
@@ -31,22 +41,38 @@ export default function Diagnostic() {
   const concepts = (spec as { confidence_step: { concepts: ConfConcept[] } }).confidence_step.concepts
   const scale = (spec as { confidence_step: { scale: ScalePoint[] } }).confidence_step.scale
   const presets = (spec as { goals_step: { presets: string[] } }).goals_step.presets
+  const probeStep = (spec as { probe_step?: { prompt?: string; note?: string; questions?: ProbeQuestionSpec[] } }).probe_step
+  const probeSpecs = probeStep?.questions ?? []
 
   const [step, setStep] = useState<Step>('intro')
   const [goalTags, setGoalTags] = useState<string[]>([])
   const [goalText, setGoalText] = useState('')
   const [confidence, setConfidence] = useState<Record<string, Confidence>>({})
+  const [probeAnswers, setProbeAnswers] = useState<Record<string, Confidence>>({})
   const [excludedIds, setExcludedIds] = useState<Set<string>>(() => new Set())
   const [saving, setSaving] = useState(false)
 
   const progress = useMemo(() => {
-    const order: Step[] = ['intro', 'goals', 'confidence', 'done']
+    const order: Step[] = ['intro', 'goals', 'probe', 'confidence', 'done']
     return (order.indexOf(step) / (order.length - 1)) * 100
   }, [step])
 
   const allRated = useMemo(
     () => concepts.every(c => confidence[c.concept_id] || excludedIds.has(c.concept_id)),
     [concepts, confidence, excludedIds],
+  )
+
+  const probeQuestions = useMemo(() => {
+    const bank = actBankData as ActQuestion[]
+    return probeSpecs.flatMap(item => {
+      const question = bank.find(q => q.id === item.question_id && q.conceptId === item.concept_id)
+      return question ? [{ ...item, question }] : []
+    })
+  }, [probeSpecs])
+
+  const allProbesAnswered = useMemo(
+    () => probeQuestions.length > 0 && probeQuestions.every(item => probeAnswers[item.concept_id]),
+    [probeQuestions, probeAnswers],
   )
 
   function toggleGoal(tag: string) {
@@ -60,6 +86,22 @@ export default function Diagnostic() {
       return next
     })
     setConfidence(prev => ({ ...prev, [conceptId]: value }))
+  }
+
+  function setProbeAnswer(conceptId: string, value: Confidence) {
+    setProbeAnswers(prev => ({ ...prev, [conceptId]: value }))
+  }
+
+  function applyProbeAnswers() {
+    setConfidence(prev => {
+      const next = { ...prev }
+      for (const item of probeQuestions) {
+        const answer = probeAnswers[item.concept_id]
+        if (answer) next[item.concept_id] = answer
+      }
+      return next
+    })
+    setStep('confidence')
   }
 
   function toggleSkip(conceptId: string) {
@@ -135,8 +177,41 @@ export default function Diagnostic() {
             <button
               className={s.primary}
               disabled={!goalText.trim() && goalTags.length === 0}
-              onClick={() => setStep('confidence')}
+              onClick={() => setStep(probeQuestions.length > 0 ? 'probe' : 'confidence')}
             >Next</button>
+          </section>
+        )}
+
+
+        {step === 'probe' && (
+          <section className={`${s.card} ${s.probeStage}`}>
+            <p className={s.kicker}>ACT anchors</p>
+            <h2 className={s.h2}>{probeStep?.prompt ?? 'Look at four ACT math moments.'}</h2>
+            <p className={s.probeIntro}>{probeStep?.note ?? 'Use these as anchors. You can still adjust every rating on the next page.'}</p>
+            <div className={s.probeGrid}>
+              {probeQuestions.map(item => (
+                <article key={item.question_id} className={s.probeCard}>
+                  <div className={s.probeCluster}>{item.cluster}</div>
+                  <p className={s.probeStem}><MathText text={item.question.question} /></p>
+                  <p className={s.probeAsk}>Do you recognize this kind of problem?</p>
+                  <div className={s.probeButtons}>
+                    {PROBE_ANSWERS.map(answer => (
+                      <button
+                        key={answer.value}
+                        type="button"
+                        className={`${s.probeBtn} ${answer.value === 'easy' ? s.probeBtnKnown : ''} ${probeAnswers[item.concept_id] === answer.value ? s.probeBtnOn : ''}`}
+                        onClick={() => setProbeAnswer(item.concept_id, answer.value)}
+                      >{answer.label}</button>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <button
+              className={s.primary}
+              disabled={!allProbesAnswered}
+              onClick={applyProbeAnswers}
+            >Use these anchors</button>
           </section>
         )}
 
