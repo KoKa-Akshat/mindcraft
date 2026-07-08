@@ -43,16 +43,16 @@
       <path d="M57 78 C57 63 69 53 83 58 C93 62 97 75 90 85 C85 92 74 91 70 84 C67 79 70 73 75 72" fill="none" stroke-width="2.3" opacity=".8"/>
       <path d="M183 78 C183 63 171 53 157 58 C147 62 143 75 150 85 C155 92 166 91 170 84 C173 79 170 73 165 72" fill="none" stroke-width="2.3" opacity=".8"/>
 
-      <ellipse cx="120" cy="120" rx="70" ry="64" fill="url(#leafWash)" stroke-width="4.5"/>
-      <ellipse cx="120" cy="142" rx="40" ry="27" fill="#fffdf7" stroke-width="3"/>
+      <ellipse cx="120" cy="119" rx="72" ry="66" fill="url(#leafWash)" stroke-width="4.5"/>
+      <ellipse cx="120" cy="143" rx="43" ry="29" fill="#fffdf7" stroke-width="3"/>
       <path d="M106 54 C113 43 121 40 129 49 M119 55 C126 45 136 44 143 52" fill="none" stroke-width="3"/>
 
-      <ellipse cx="120" cy="213" rx="57" ry="49" fill="url(#leafWash)" stroke-width="4.5"/>
-      <ellipse cx="120" cy="216" rx="40" ry="34" fill="#fffdf7" stroke-width="3"/>
+      <ellipse cx="120" cy="212" rx="59" ry="50" fill="url(#leafWash)" stroke-width="4.5"/>
+      <ellipse cx="120" cy="216" rx="42" ry="35" fill="#fffdf7" stroke-width="3"/>
       <path d="M120 228 C96 228 88 206 103 190 C118 173 148 183 148 207 C148 226 129 236 116 225 C107 217 111 202 123 201 C130 201 135 208 132 215 C130 219 125 220 122 217" fill="none" stroke-width="3"/>
 
-      <ellipse cx="63" cy="223" rx="29" ry="24" fill="#fffdf7" stroke-width="4"/>
-      <ellipse cx="177" cy="223" rx="29" ry="24" fill="#fffdf7" stroke-width="4"/>
+      <ellipse cx="63" cy="223" rx="31" ry="25" fill="#fffdf7" stroke-width="4"/>
+      <ellipse cx="177" cy="223" rx="31" ry="25" fill="#fffdf7" stroke-width="4"/>
       <path d="M49 225 C57 215 72 215 80 225 M160 225 C168 215 183 215 191 225" fill="none" stroke-width="2"/>
       <circle cx="53" cy="214" r="5" fill="#fffdf7" stroke-width="2"/>
       <circle cx="65" cy="210" r="5" fill="#fffdf7" stroke-width="2"/>
@@ -71,18 +71,20 @@
     </g>
 
     <g>
-      <path d="M89 105 C95 96 105 96 110 103" stroke="#143a2e" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-      <path d="M130 103 C136 96 146 96 151 105" stroke="#143a2e" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-      <circle cx="98" cy="119" r="13" fill="#143a2e"/>
-      <circle cx="142" cy="119" r="13" fill="#143a2e"/>
-      <circle cx="94" cy="114" r="4.5" fill="#fffdf7"/>
-      <circle cx="138" cy="114" r="4.5" fill="#fffdf7"/>
-      <circle cx="102" cy="123" r="2.4" fill="#fffdf7" opacity=".86"/>
-      <circle cx="146" cy="123" r="2.4" fill="#fffdf7" opacity=".86"/>
-      <ellipse cx="120" cy="138" rx="15" ry="10" fill="#143a2e"/>
-      <ellipse cx="120" cy="134" rx="8" ry="3" fill="#fffdf7" opacity=".72"/>
-      <path d="M120 146 V156" stroke="#143a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M100 154 C106 171 134 171 140 154" stroke="#143a2e" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="88" cy="139" rx="11" ry="7" fill="#fffdf7" opacity=".34"/>
+      <ellipse cx="152" cy="139" rx="11" ry="7" fill="#fffdf7" opacity=".34"/>
+      <path d="M88 104 C95 95 106 95 112 103" stroke="#143a2e" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+      <path d="M128 103 C135 95 146 95 153 104" stroke="#143a2e" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+      <circle cx="98" cy="120" r="15" fill="#143a2e"/>
+      <circle cx="142" cy="120" r="15" fill="#143a2e"/>
+      <circle cx="94" cy="114" r="5.2" fill="#fffdf7"/>
+      <circle cx="138" cy="114" r="5.2" fill="#fffdf7"/>
+      <circle cx="104" cy="125" r="2.8" fill="#fffdf7" opacity=".9"/>
+      <circle cx="148" cy="125" r="2.8" fill="#fffdf7" opacity=".9"/>
+      <ellipse cx="120" cy="139" rx="15.5" ry="10.5" fill="#143a2e"/>
+      <ellipse cx="120" cy="135" rx="8.5" ry="3.2" fill="#fffdf7" opacity=".78"/>
+      <path d="M120 147 V156" stroke="#143a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M99 154 C106 172 134 172 141 154" stroke="#143a2e" stroke-width="3.4" fill="none" stroke-linecap="round"/>
     </g>
   </g>
 </svg>
