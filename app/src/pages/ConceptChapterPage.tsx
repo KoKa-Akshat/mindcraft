@@ -623,11 +623,21 @@ export default function ConceptChapterPage() {
                 }}
               />
             </header>
-            {frame && bridge && (
+            {q.storyIntro ? (
+              <div className={s.storyBridge}>
+                <p className={s.storyBridgeText} style={{ color: theme.ink, opacity: 0.72, fontSize: 13 }}>
+                  {q.storyIntro}
+                </p>
+              </div>
+            ) : q.storyContext ? (
+              <div className={s.storyBridge}>
+                <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{q.storyContext}</p>
+              </div>
+            ) : frame && bridge ? (
               <div className={s.storyBridge}>
                 <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
               </div>
-            )}
+            ) : null}
             <HighlightedStem
               text={stemText}
               ink={theme.ink}
