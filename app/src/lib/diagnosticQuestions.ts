@@ -24,7 +24,7 @@ export const GRADE_STORY: Record<number, string> = {
   11: 'linear_equations',
 }
 
-const GOAL_EXTRAS: Record<string, string[]> = {
+export const GOAL_EXTRAS: Record<string, string[]> = {
   act_prep: ['geometric_transformations', 'circles_geometry', 'area_volume', 'trigonometry_basics'],
   get_unstuck: ['systems_of_linear_equations', 'factoring_polynomials', 'sequences_series'],
 }

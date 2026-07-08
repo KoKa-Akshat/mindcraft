@@ -163,6 +163,7 @@ export default function PawHub({
           <span className={s.practiceChip}>
             <KathaFlame size={13} />
             Challenge
+            {weakness?.isTutorPick && <span className={s.tutorPick}>Tutor pick</span>}
           </span>
           <span className={s.cardArrow} aria-hidden="true">→</span>
         </div>

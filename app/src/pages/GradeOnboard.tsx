@@ -7,7 +7,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { useUser } from '../App'
 import { db } from '../firebase'
 import { isDiagnosticComplete, persistDiagnosticDoneLocal } from '../lib/practiceState'
@@ -22,7 +22,7 @@ import {
 } from '../lib/diagnosticQuestions'
 import { questionFormat, resolveChoiceEvidence } from '../lib/questionBank'
 import { toOntologyId } from '../lib/conceptMap'
-import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
+import { fetchStoryModuleForQuestions, ensureStorySkins, type StoryModule } from '../lib/storyModule'
 import MathText from '../components/MathText'
 import InteractiveWidget from '../components/InteractiveWidget'
 import ScratchPad, { exportScratchImage } from '../components/ScratchPad'
@@ -34,6 +34,12 @@ import { useJournalGuide } from '../hooks/useJournalGuide'
 import { insightsForSide } from '../lib/journalGuide'
 import { useStoryQuestion } from '../hooks/useStoryQuestion'
 import { resolveStoryScene } from '../lib/storyDisplay'
+import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, type StudyPathConfig } from '../lib/studyPathConfig'
+import {
+  initBelief, applyProbeOutcome, type BeliefState,
+} from '../lib/adaptiveDiagnostic'
+import { storyBridgeLine } from '../lib/storyBridge'
+import { GOAL_EXTRAS } from '../lib/diagnosticQuestions'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import PageFlipTransition from '../components/book/PageFlipTransition'
@@ -96,14 +102,19 @@ export default function GradeOnboard() {
   const [probeStrokes, setProbeStrokes] = useState<ScratchStrokeData | null>(null)
   const [probeInk, setProbeInk] = useState<ScratchInkState | null>(null)
   const [probeScratchRev, setProbeScratchRev] = useState(0)
+  const [belief, setBelief] = useState<BeliefState>({})
+  const [usedProbeIds, setUsedProbeIds] = useState<Set<string>>(() => new Set())
+  const [bridgeLine, setBridgeLine] = useState<string | null>(null)
+  const [pathConfig, setPathConfig] = useState<StudyPathConfig>(DEFAULT_STUDY_PATH)
+  const [tutorFocus, setTutorFocus] = useState<string[]>([])
 
   const storyData = grade ? storyExcerpt(GRADE_STORY[grade]) : null
   const progressSteps: Step[] = ['welcome', 'grade', 'goals', 'probe', 'seeding']
   const progressPct = Math.round((progressSteps.indexOf(step) / (progressSteps.length - 1)) * 100)
 
   const currentQ = probeQs[probeIdx]
-  void storyMod  // kept for potential future use; storyItem display removed
-  const { display: storyDisplay, stemText } = useStoryQuestion(currentQ)
+  const storyItem = currentQ ? storyMod?.[currentQ.id] : undefined
+  const { display: storyDisplay, stemText } = useStoryQuestion(currentQ, storyItem?.storyStem)
   const sceneLine = currentQ && storyDisplay ? resolveStoryScene(currentQ, storyDisplay) : currentQ?.storyContext
 
   const probeTheme = useMemo(() => ({
@@ -112,6 +123,14 @@ export default function GradeOnboard() {
     bg: '#f7f3ee',
     dim: '#6f6a61',
   }), [])
+
+  useEffect(() => {
+    void getDoc(doc(db, 'users', user.uid)).then(snap => {
+      const data = snap.data()
+      setPathConfig(resolveStudyPathConfig(data?.studyPathConfig))
+      setTutorFocus(Array.isArray(data?.tutorFocusConcepts) ? data.tutorFocusConcepts : [])
+    })
+  }, [user.uid])
 
   useEffect(() => {
     if (isTestProfileEmail(user.email)) return
@@ -125,6 +144,7 @@ export default function GradeOnboard() {
 
   useEffect(() => {
     if (step !== 'probe') return
+    setBridgeLine(null)
     setQSelected(null)
     setQSubmitted(false)
     setQStartTime(Date.now())
@@ -207,19 +227,27 @@ export default function GradeOnboard() {
 
   function beginProbes() {
     if (!grade) return
-    const qs = pickDiagnosticQuestions(grade, goalTags, 10, 2)
+    const goalBoost = goalTags.flatMap(t => GOAL_EXTRAS[t] ?? [])
+    const qs = pickDiagnosticQuestions(
+      grade,
+      goalTags,
+      pathConfig.diagnosticProbeCount,
+      2,
+    )
     setProbeQs(qs)
     setProbeIdx(0)
     setProbeResults([])
+    setBelief(initBelief(qs.map(q => q.conceptId)))
+    setUsedProbeIds(new Set(qs.map(q => q.id)))
     setStep('probe')
 
-    if (qs.length === 0 || !storyData?.story) return
-    void fetchStoryModule(
-      GRADE_STORY[grade],
-      storyData.title,
-      storyData.story,
-      qs,
-    ).then(mod => { if (mod) setStoryMod(mod) })
+    if (qs.length === 0) return
+    const skinCtx = {
+      goals: { tags: goalTags, text: goalText.trim() },
+      tutorFocusConcepts: tutorFocus,
+      sessionKind: 'diagnostic' as const,
+    }
+    void fetchStoryModuleForQuestions(qs, skinCtx).then(mod => { if (mod) setStoryMod(mod) })
   }
 
   async function finishDiagnostic(results: ProbeResult[]) {
@@ -287,6 +315,9 @@ export default function GradeOnboard() {
     const time = Math.round((Date.now() - qStartTime) / 1000)
     setQSubmitted(true)
 
+    const prevItem = storyMod?.[currentQ.id]
+    setBridgeLine(storyBridgeLine(prevItem, correct))
+
     const result: ProbeResult = {
       conceptId: currentQ.conceptId,
       questionId: currentQ.id,
@@ -296,7 +327,37 @@ export default function GradeOnboard() {
     }
     const nextResults = [...probeResults, result]
 
-    if (probeIdx + 1 < probeQs.length) {
+    const goalBoost = goalTags.flatMap(t => GOAL_EXTRAS[t] ?? [])
+    const adapted = applyProbeOutcome(
+      probeQs,
+      probeIdx,
+      { conceptId: currentQ.conceptId, questionId: currentQ.id, correct },
+      belief,
+      {
+        followUps: pathConfig.diagnosticFollowUps,
+        tutorFocus,
+        goalBoost,
+        usedIds: usedProbeIds,
+      },
+    )
+    setProbeQs(adapted.queue)
+    setBelief(adapted.belief)
+
+    const skinCtx = {
+      goals: { tags: goalTags, text: goalText.trim() },
+      tutorFocusConcepts: tutorFocus,
+      priorOutcomes: nextResults.map(r => ({
+        conceptId: r.conceptId,
+        questionId: r.questionId,
+        correct: r.correct,
+      })),
+      sessionKind: 'diagnostic' as const,
+    }
+    void ensureStorySkins(storyMod, adapted.queue, skinCtx).then(merged => {
+      setStoryMod(prev => ({ ...(prev ?? {}), ...merged }))
+    })
+
+    if (probeIdx + 1 < adapted.queue.length) {
       window.setTimeout(() => {
         setProbeResults(nextResults)
         setProbeIdx(i => i + 1)
@@ -328,8 +389,18 @@ export default function GradeOnboard() {
                   <div className={s.guideRow}>
                     <div className={s.guideBody}>
                       <div className={s.probePanel}>
+                        {bridgeLine && probeIdx > 0 && (
+                          <p className={s.probeBridgeLine} style={{ color: probeTheme.accent, opacity: 0.85, fontSize: 13 }}>
+                            <MathText text={bridgeLine} />
+                          </p>
+                        )}
                         {currentQ?.storyIntro && (
                           <p className={s.storyIntroBlock}>{currentQ.storyIntro}</p>
+                        )}
+                        {storyItem?.socratic?.[0] && (
+                          <p className={s.probeStoryLine} style={{ opacity: 0.72, fontSize: 13 }}>
+                            <MathText text={storyItem.socratic[0]} />
+                          </p>
                         )}
                         {sceneLine && (
                           <p className={s.probeStoryLine}><MathText text={sceneLine} /></p>

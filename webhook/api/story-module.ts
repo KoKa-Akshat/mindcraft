@@ -38,7 +38,7 @@ const ALLOWED_ORIGINS = new Set([
   'http://localhost:5173',
 ])
 const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000 // 30 d — bank questions are static
-const CACHE_VERSION = 'v3' // v3: math must be woven into scene action, not appended
+const CACHE_VERSION = 'v5' // v5: per-question conceptStory for multi-concept diagnostic
 const MAX_QUESTIONS = 12
 const MAX_STORY_CHARS = 4000
 
@@ -59,12 +59,20 @@ interface IncomingQuestion {
   level?: number
   format?: string
   misconceptionLabel?: string
+  /** Per-question story world (multi-concept diagnostic). */
+  conceptId?: string
+  conceptName?: string
+  conceptStory?: string
+  protagonist?: string
+  storyContext?: string
+  storyIntro?: string
 }
 
 function cacheDocId(conceptId: string, questionId: string): string {
   // Firestore doc ids cannot contain '/'
   const safe = (s: string) => s.replace(/\//g, '_').slice(0, 180)
-  return `${CACHE_VERSION}__${safe(conceptId)}__${safe(questionId)}`
+  const cid = conceptId === 'diagnostic_mixed' ? 'mixed' : conceptId
+  return `${CACHE_VERSION}__${safe(cid)}__${safe(questionId)}`
 }
 
 /** Every digit-run in the original stem must survive into the story stem —
@@ -102,12 +110,22 @@ function isValidItem(
   return true
 }
 
-const SYSTEM_TEMPLATE = `You are MindCraft's story-module composer. A student is about to practice the math concept "{concept_name}". The concept has an origin story — a real historical narrative of why this math exists. Your job is to re-set each practice question INSIDE that story's world and attach guidance, so the session feels like living the story rather than grinding a worksheet.
+const SYSTEM_TEMPLATE = `You are MindCraft's story-module composer. A student is about to practice math. Each question may belong to a different concept with its own origin story — a real historical or folkloric narrative of why that math exists. Your job is to re-set each practice question INSIDE the best story world for THAT question and attach guidance, so the session feels like living those worlds rather than grinding a worksheet.
 
-THE STORY:
+DEFAULT STORY (when a question has no conceptStory field):
 {story}
 
-ABSOLUTE RULES — the math is frozen:
+STUDENT CONTEXT (surface the world toward these — never change the math):
+• Goals: {goals_summary}
+• Tutor focus concepts: {tutor_focus}
+• Session: {session_kind}
+• Recent probes: {prior_outcomes}
+
+When goals mention a career, exam, or interest, let each protagonist's scene reflect that
+tone (e.g. ACT prep → mission briefing; music → studio) while keeping every number frozen.
+When a question includes its own "conceptStory", "protagonist", or "storyIntro", use THAT
+world for THAT question only — do not force every question into one protagonist.
+Prefer story cells / storyIntro when present — they are pre-authored immersive scenes.
 1. NEVER change, remove, or reorder any number, variable, equation, unit, or mathematical relationship in a question. Every numeric value in the original stem MUST appear verbatim in your rewrite.
 2. NEVER mention the answer choices — the app renders them unchanged. Your stem must ask for exactly the same quantity the original asks for.
 3. Keep any LaTeX (\\( \\), $ $, \\[ \\]) exactly as written.
@@ -143,11 +161,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const contentLength = Number(req.headers['content-length'] ?? 0)
   if (contentLength > 120_000) return res.status(413).json({ error: 'Payload too large' })
 
-  const { conceptId, conceptName, story, questions } = (req.body ?? {}) as {
+  const { conceptId, conceptName, story, questions, goals, tutorFocusConcepts, priorOutcomes, sessionKind } = (req.body ?? {}) as {
     conceptId?: string
     conceptName?: string
     story?: string
     questions?: IncomingQuestion[]
+    goals?: { tags?: string[]; text?: string }
+    tutorFocusConcepts?: string[]
+    priorOutcomes?: Array<{ conceptId: string; questionId: string; correct: boolean }>
+    sessionKind?: string
   }
 
   if (!conceptId || !conceptName || !story || !Array.isArray(questions) || questions.length === 0) {
@@ -172,7 +194,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // ── 1. Per-question cache lookup ────────────────────────────────────────────
   let uncached: IncomingQuestion[] = batch
   try {
-    const refs = batch.map(q => db.collection('story_module_cache').doc(cacheDocId(conceptId, q.id)))
+    const refs = batch.map(q => db.collection('story_module_cache').doc(
+      cacheDocId(q.conceptId ?? conceptId, q.id),
+    ))
     const snaps = await db.getAll(...refs)
     const missing: IncomingQuestion[] = []
     snaps.forEach((snap, i) => {
@@ -205,6 +229,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const questionsJson = JSON.stringify(uncached.map(q => ({
       id: q.id,
+      conceptId: q.conceptId ?? conceptId,
+      conceptName: q.conceptName ?? conceptName,
+      conceptStory: q.conceptStory?.slice(0, 3000) ?? null,
+      protagonist: q.protagonist ?? null,
+      storyContext: q.storyContext ?? null,
+      storyIntro: q.storyIntro ?? null,
       stem: q.question,
       choices: q.choices,
       correctAnswer: q.choices[q.correctIndex] ?? '',
@@ -216,9 +246,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     })))
 
     try {
+      const goalsSummary = [
+        goals?.text?.trim(),
+        ...(goals?.tags?.length ? [`tags: ${goals.tags.join(', ')}`] : []),
+      ].filter(Boolean).join(' · ') || '(not specified)'
+
+      const tutorFocus = tutorFocusConcepts?.length
+        ? tutorFocusConcepts.join(', ')
+        : '(none)'
+
+      const priorSummary = (priorOutcomes ?? []).slice(-3).map(o =>
+        `${o.conceptId}: ${o.correct ? 'solid' : 'uncertain'}`,
+      ).join('; ') || '(first questions)'
+
       const raw = await chain.invoke({
         concept_name: conceptName,
         story: story.slice(0, MAX_STORY_CHARS),
+        goals_summary: goalsSummary.slice(0, 500),
+        tutor_focus: tutorFocus.slice(0, 300),
+        session_kind: sessionKind ?? 'practice',
+        prior_outcomes: priorSummary.slice(0, 400),
         questions_json: questionsJson,
       }) as Record<string, unknown>
 
@@ -228,9 +275,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (isValidItem(candidate, q)) {
           items[q.id] = candidate
           writes.push(
-            db.collection('story_module_cache').doc(cacheDocId(conceptId, q.id)).set({
+            db.collection('story_module_cache').doc(
+              cacheDocId(q.conceptId ?? conceptId, q.id),
+            ).set({
               item: candidate,
-              conceptId,
+              conceptId: q.conceptId ?? conceptId,
               questionId: q.id,
               cachedAt: Date.now(),
             }).catch(() => { /* non-fatal */ }),

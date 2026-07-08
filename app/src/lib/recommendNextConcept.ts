@@ -8,6 +8,7 @@ import {
   type RecommendResult,
 } from './mlApi'
 import { loadDiagnostic } from './practiceState'
+import { loadStudentPathContext } from './studyPathConfig'
 import { hasFormatQuestions, lookupMisconceptionTrap, questionCount, type FormatId } from './questionBank'
 import type { CurriculumTrack } from './curriculumTrack'
 
@@ -37,6 +38,8 @@ export interface NextConcept {
   misconceptionId?: string
   ingredientId?: string
   distractorChoiceIndex?: number
+  /** True when tutorFocusConcepts overrides engine weakness pick (Fable5 Area 4). */
+  isTutorPick?: boolean
 }
 
 export interface PracticeHubRecommendations {
@@ -186,6 +189,7 @@ function toNextConcept(
   conceptId: string | null | undefined,
   nodeMap: Map<string, GraphNode>,
   weakness?: WeaknessCandidate | null,
+  opts?: { isTutorPick?: boolean },
 ): NextConcept | null {
   if (!conceptId) return null
   const node = nodeMap.get(conceptId)
@@ -202,6 +206,7 @@ function toNextConcept(
     misconceptionId: weakness?.misconceptionId,
     ingredientId: weakness?.ingredientId,
     distractorChoiceIndex: weakness?.distractorChoiceIndex,
+    isTutorPick: opts?.isTutorPick,
   }
 }
 
@@ -243,10 +248,17 @@ export async function fetchPracticeHubRecommendations(
     ? await getRecommendations(userId, [anchor], 'curriculum', exam)
     : null
 
+  const pathCtx = await loadStudentPathContext(userId)
+  const tutorPickId = pathCtx.tutorFocusConcepts.find(hasPlayableQuestions) ?? null
+
   const worst = worstWeakness(profileRec, pathRec, nodeMap)
   let weaknessId = worst?.conceptId ?? null
+  let tutorPick = false
 
-  if (!weaknessId) {
+  if (tutorPickId) {
+    weaknessId = tutorPickId
+    tutorPick = true
+  } else if (!weaknessId) {
     weaknessId = [...(scope ? nodes.filter(n => scope.includes(n.id)) : nodes)]
       .filter(n => hasPlayableQuestions(n.id))
       .sort((a, b) =>
@@ -264,7 +276,7 @@ export async function fetchPracticeHubRecommendations(
     ?? null
 
   return {
-    weakness: toNextConcept(weaknessId, nodeMap, worst),
+    weakness: toNextConcept(weaknessId, nodeMap, tutorPick ? null : worst, { isTutorPick: tutorPick }),
     learn: toNextConcept(learnId, nodeMap),
   }
 }

@@ -30,6 +30,7 @@ import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import { WEBHOOK_BASE, getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
+import { DEFAULT_STUDY_PATH } from '../lib/studyPathConfig'
 
 const FIFTEEN_MIN = 15 * 60 * 1000
 const FIVE_MIN = 5 * 60 * 1000
@@ -121,6 +122,9 @@ export default function TutorDashboard() {
   const [conceptBars, setConceptBars]   = useState<ConceptBar[]>([])
   const [lastActiveTs, setLastActiveTs] = useState<number | null>(null)
   const [showIntel, setShowIntel]       = useState(false)
+  const [tutorFocusInput, setTutorFocusInput] = useState('')
+  const [masteryMin, setMasteryMin] = useState(DEFAULT_STUDY_PATH.masteryExitMin)
+  const [savingPath, setSavingPath] = useState(false)
 
   // Load the first assigned student (users.assignedTutorId === tutor uid)
   useEffect(() => {
@@ -153,6 +157,36 @@ export default function TutorDashboard() {
       examTrack: 'ACT',
     }
   }, [assignedStudent, students])
+
+  useEffect(() => {
+    if (!heroStudent?.id) return
+    void getDoc(doc(db, 'users', heroStudent.id)).then(snap => {
+      const d = snap.data()
+      const focus = Array.isArray(d?.tutorFocusConcepts) ? d.tutorFocusConcepts as string[] : []
+      setTutorFocusInput(focus.join(', '))
+      setMasteryMin(d?.studyPathConfig?.masteryExitMin ?? DEFAULT_STUDY_PATH.masteryExitMin)
+    })
+  }, [heroStudent?.id])
+
+  async function saveStudyPathForStudent() {
+    if (!heroStudent?.id) return
+    setSavingPath(true)
+    try {
+      const concepts = tutorFocusInput.split(',').map(c => c.trim()).filter(Boolean)
+      await updateDoc(doc(db, 'users', heroStudent.id), {
+        tutorFocusConcepts: concepts,
+        studyPathConfig: {
+          ...DEFAULT_STUDY_PATH,
+          masteryExitMin: Math.max(3, Math.min(14, masteryMin)),
+        },
+      })
+      showToast('Study path updated for student')
+    } catch {
+      showToast('Could not save — try again')
+    } finally {
+      setSavingPath(false)
+    }
+  }
 
   // ML profile + knowledge graph + last-active for the hero student
   useEffect(() => {
@@ -692,6 +726,38 @@ export default function TutorDashboard() {
                             ))}
                           </div>
                         )}
+
+                        <div className={s.studyPathPanel}>
+                          <p className={s.cardLabel}>Study path</p>
+                          <label className={s.pathField}>
+                            Focus concepts (comma-separated slugs)
+                            <input
+                              className={s.pathInput}
+                              value={tutorFocusInput}
+                              onChange={e => setTutorFocusInput(e.target.value)}
+                              placeholder="descriptive_statistics, linear_equations"
+                            />
+                          </label>
+                          <label className={s.pathField}>
+                            Mastery exit after N questions
+                            <input
+                              className={s.pathInput}
+                              type="number"
+                              min={3}
+                              max={14}
+                              value={masteryMin}
+                              onChange={e => setMasteryMin(parseInt(e.target.value, 10) || 5)}
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            className={s.intelToggle}
+                            disabled={savingPath}
+                            onClick={() => void saveStudyPathForStudent()}
+                          >
+                            {savingPath ? 'Saving…' : 'Save study path'}
+                          </button>
+                        </div>
 
                         <button className={s.intelToggle} onClick={() => setShowIntel(v => !v)}>
                           {showIntel ? 'Hide Intelligence Report' : 'Full Intelligence Report →'}

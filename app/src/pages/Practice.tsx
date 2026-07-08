@@ -37,7 +37,8 @@ import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
-import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
+import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
+import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
 import { buildStoryDisplay } from '../lib/storyDisplay'
 import InteractiveWidget from '../components/InteractiveWidget'
 import { sanitizeAnswer, sanitizeProblemText, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
@@ -419,6 +420,9 @@ export default function Practice() {
   const interactedRef = useRef(false)
   /** Session ended early because mastery was already demonstrated. */
   const [earlyExit, setEarlyExit] = useState(false)
+  const [pathConfig, setPathConfig] = useState<StudyPathConfig>(DEFAULT_STUDY_PATH)
+  const [studentGoals, setStudentGoals] = useState<{ tags: string[]; text: string }>({ tags: [], text: '' })
+  const [tutorFocus, setTutorFocus] = useState<string[]>([])
 
   // ── Check-in state ────────────────────────────────────────────────────────
   const [checkinText,    setCheckinText]    = useState('')
@@ -438,6 +442,15 @@ export default function Practice() {
 
   // Mirror question progress into refs so the async story-module callback can
   // decide whether the current question is safe to reskin.
+  useEffect(() => {
+    if (!user?.uid) return
+    void loadStudentPathContext(user.uid).then(ctx => {
+      setPathConfig(ctx.pathConfig)
+      setStudentGoals(ctx.goals)
+      setTutorFocus(ctx.tutorFocusConcepts)
+    })
+  }, [user?.uid])
+
   useEffect(() => {
     qIndexRef.current = qIndex
     interactedRef.current = selected !== null || checked || typedAnswer.trim().length > 0 || hintsShown > 0
@@ -530,7 +543,6 @@ export default function Practice() {
     // usually resolves instantly). Applies from the current question onward.
     if (
       restoredPhase === 'session'
-      && !draft.hideCorrectness
       && draft.concept
       && Array.isArray(draft.questions)
       && draft.questions.length > 0
@@ -1099,7 +1111,12 @@ export default function Practice() {
     const stories = conceptStoriesData as Record<string, { conceptName: string; story: string }>
     const entry = stories[conceptId] ?? stories[toOntologyId(conceptId)]
     if (!entry?.story || qs.length === 0) return
-    void fetchStoryModule(conceptId, entry.conceptName, entry.story, qs).then(mod => {
+    const ctx: StoryModuleContext = {
+      goals: studentGoals,
+      tutorFocusConcepts: tutorFocus,
+      sessionKind: hideCorrectness ? 'gapscan' : 'practice',
+    }
+    void fetchStoryModule(conceptId, entry.conceptName, entry.story, qs, ctx).then(mod => {
       if (!mod) return
       // If the student already started working the current question, only
       // apply story stems from the next question on.
@@ -1292,9 +1309,9 @@ export default function Practice() {
       !hideCorrectness
       && !isLast
       && resultsSnapshot.length < initialQCount
-      && firstTry.length >= MASTERY_EXIT_MIN
-      && firstTry.slice(-MASTERY_EXIT_STREAK).every(Boolean)
-      && firstTry.filter(Boolean).length / firstTry.length >= MASTERY_EXIT_ACC
+      && firstTry.length >= pathConfig.masteryExitMin
+      && firstTry.slice(-pathConfig.masteryExitStreak).every(Boolean)
+      && firstTry.filter(Boolean).length / firstTry.length >= pathConfig.masteryExitAcc
     ) {
       setEarlyExit(true)
       setInitialQCount(resultsSnapshot.length)
@@ -1440,7 +1457,7 @@ export default function Practice() {
 
   // Story-mode content for the current question (never in the gap scan, never
   // swapped onto a question the student is already reading).
-  const storyItem = currentQ && !hideCorrectness && qIndex >= storyFromIndexRef.current
+  const storyItem = currentQ && qIndex >= storyFromIndexRef.current
     ? storyModule?.[currentQ.id]
     : undefined
   // Socratic prompts from the story module lead the hint ladder; static bank
