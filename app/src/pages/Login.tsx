@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import FourierCanvas from '../components/FourierCanvas'
 import {
   signInWithEmailAndPassword,
@@ -9,16 +9,9 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { db } from '../firebase'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import {
-  clearStudentDiagnosticState,
-  isTestProfileEmail,
-  purgeStudentLearningHistory,
-} from '../lib/testProfile'
+import { useSearchParams } from 'react-router-dom'
+import { completePostLoginNavigate, resolvePostLoginPath } from '../lib/postLogin'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
-import { isDiagnosticComplete } from '../lib/practiceState'
 import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './Login.module.css'
 
@@ -88,9 +81,9 @@ export default function Login() {
   const [loading,   setLoading]   = useState(false)
   const [adminFlow, setAdminFlow] = useState<AdminFlow>('auth')
   const [adminPw,   setAdminPw]   = useState('')
-  const navigate    = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
+  const routedRef = useRef(false)
 
   useEffect(() => {
     if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') setAdminFlow('armed')
@@ -98,104 +91,57 @@ export default function Login() {
 
   useEffect(() => {
     let cancelled = false
-    getRedirectResult(auth)
-      .then(async (result) => {
-        if (cancelled || !result?.user) return
+    void (async () => {
+      await auth.authStateReady()
+      const redirect = await getRedirectResult(auth).catch(() => null)
+      if (cancelled || routedRef.current) return
+
+      if (redirect?.user) {
         setLoading(true)
         setError('')
-        await routeAfterLogin(result.user.uid)
-      })
-      .catch((e: { code?: string; message?: string }) => {
-        if (cancelled) return
-        const msg = friendlyError(e.code ?? e.message ?? 'unknown')
-        if (msg) setError(msg)
-        setLoading(false)
-      })
+        await routeAfterLogin(redirect.user.uid)
+        return
+      }
+
+      // Already signed in (restored session) — don't leave them on the login form.
+      if (auth.currentUser) {
+        setLoading(true)
+        await routeAfterLogin(auth.currentUser.uid)
+      }
+    })().catch((e: { code?: string; message?: string }) => {
+      if (cancelled) return
+      const msg = friendlyError(e.code ?? e.message ?? 'unknown')
+      if (msg) setError(msg)
+      setLoading(false)
+    })
     return () => { cancelled = true }
   }, [])
 
   async function routeAfterLogin(uid: string) {
+    if (routedRef.current) return
+    routedRef.current = true
     try {
       await auth.currentUser?.getIdToken(true)
-
-      const isTest = isTestProfileEmail(auth.currentUser?.email)
-      if (isTest) {
-        // Clear diagnostic flags before routing so onboard isn't skipped.
-        sessionStorage.setItem('mc-test-reset', '1')
-        await clearStudentDiagnosticState(uid)
-        void purgeStudentLearningHistory(uid)
-      }
 
       const grantAdmin = consumeAdminGrant()
       if (grantAdmin) setAdminFlow('auth')
 
-      const snap = await getDoc(doc(db, 'users', uid))
-      const existingRole = snap.data()?.role
-
-      // Test students always land in the diagnostic — every login is a fresh run.
-      if (isTest && !grantAdmin && existingRole !== 'admin' && existingRole !== 'tutor' && existingRole !== 'parent') {
-        if (!snap.exists() || !existingRole) {
-          await setDoc(doc(db, 'users', uid), {
-            role: 'student',
-            email: auth.currentUser?.email ?? '',
-            displayName: auth.currentUser?.displayName ?? '',
-            createdAt: new Date().toISOString(),
-          }, { merge: true })
-        }
-        navigate('/onboard?entry=1', { replace: true })
-        return
-      }
-
-      // Admin grant takes priority
       if (grantAdmin) {
         try {
           await grantAdminRole()
         } catch {
           setError('Not authorized.')
-          navigate('/dashboard', { replace: true })
+          await completePostLoginNavigate('/dashboard')
           return
         }
-        navigate('/admin', { replace: true })
+        await completePostLoginNavigate('/admin')
         return
       }
 
-      // No Firestore doc (new user, or doc was deleted) → create as student
-      if (!snap.exists() || !existingRole) {
-        await setDoc(doc(db, 'users', uid), {
-          role: 'student',
-          email: auth.currentUser?.email ?? '',
-          displayName: auth.currentUser?.displayName ?? '',
-          createdAt: new Date().toISOString(),
-        }, { merge: true })
-        if (!returnTo) {
-          const done = await isDiagnosticComplete(uid)
-          if (!done) {
-            navigate('/onboard?entry=1', { replace: true })
-            return
-          }
-        }
-        navigate(returnTo ?? '/dashboard', { replace: true })
-        return
-      }
-
-      // Route based on existing role
-      if (existingRole === 'admin') {
-        navigate('/admin', { replace: true })
-      } else if (existingRole === 'tutor') {
-        navigate('/tutor', { replace: true })
-      } else if (existingRole === 'parent') {
-        navigate('/parent', { replace: true })
-      } else {
-        if (!returnTo) {
-          const done = await isDiagnosticComplete(uid)
-          if (!done) {
-            navigate('/onboard?entry=1', { replace: true })
-            return
-          }
-        }
-        navigate(returnTo ?? '/dashboard', { replace: true })
-      }
+      const dest = await resolvePostLoginPath(uid, { returnTo, grantAdmin: false })
+      await completePostLoginNavigate(dest)
     } catch (e: unknown) {
+      routedRef.current = false
       const code = (e as { code?: string })?.code
       const message = (e as { message?: string })?.message
       setError(friendlyError(code ?? message ?? 'unknown') || 'Sign-in succeeded but routing failed. Please try again.')

@@ -98,6 +98,7 @@ function QAEntry() {
 /** Blocks unauthenticated access. Redirects to /login if not signed in. */
 function AuthGuard({ children }: { children: React.ReactNode }) {
   const location = useLocation()
+  const [authReady, setAuthReady] = useState(false)
   const [user, setUser] = useState<User | null | undefined>(undefined)
   const isQA = sessionStorage.getItem('mc-qa-mode') === '1'
 
@@ -107,7 +108,11 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
     }
   }, [location.search])
 
-  useEffect(() => onAuthStateChanged(auth, setUser), [])
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, setUser)
+    void auth.authStateReady().then(() => setAuthReady(true))
+    return unsub
+  }, [])
   useEffect(() => {
     if (!user) return
     // Test profiles start fresh even when Firebase restores a persisted session
@@ -126,7 +131,7 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
       })
       .catch(() => { void fetchKnowledgeGraph(user.uid) })
   }, [user])
-  if (user === undefined) {
+  if (!authReady || user === undefined) {
     return (
       <div style={{
         position: 'fixed', inset: 0, background: '#000',
