@@ -64,6 +64,14 @@ export interface RecommendResult {
   canonicalChain: string[]
   recommendations: ConceptRecommendation[]
   studentProfile: StudentProfile
+  misconceptionGaps?: Array<{
+    misconceptionId: string
+    label?: string
+    conceptId: string
+    ingredientIds: string[]
+    hits: number
+    severity: number
+  }>
 }
 
 export interface PracticeCard {
