@@ -1,0 +1,28 @@
+.stem {
+  font: 400 17px/1.55 "Source Serif 4", Georgia, serif;
+  margin: 0 0 12px;
+}
+
+.focusStroke {
+  background: linear-gradient(104deg, transparent 2%, rgba(196,245,71,0.55) 4%, rgba(196,245,71,0.42) 96%, transparent 98%);
+  border-radius: 2px;
+  padding: 0 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.diagramBox {
+  display: block;
+  margin: 10px 0;
+  padding: 8px 10px 8px 12px;
+  border-left: 2px solid;
+  font: 400 12px/1.45 "IBM Plex Mono", monospace;
+  color: #6f6a61;
+  background: rgba(29, 58, 138, 0.04);
+  border-radius: 0 3px 3px 0;
+}
+
+.diagramIcon {
+  margin-right: 6px;
+  opacity: 0.55;
+}

@@ -1,4 +1,5 @@
-import { getQuestions, shuffle, type Question } from './questionBank'
+import { getQuestions, shuffle, questionFormat, inferQuestionFormat, type Question } from './questionBank'
+import { shouldRenderFigure } from '../components/QuestionFigure'
 import type { CurriculumTrack } from './curriculumTrack'
 import type { Confidence } from './bridgePractice'
 
@@ -52,6 +53,16 @@ export function isRenderableQuestion(q: Question): boolean {
   return true
 }
 
+function pickBestProbe(pool: Question[]): Question | undefined {
+  if (!pool.length) return undefined
+  const visual = pool.filter(q => shouldRenderFigure(
+    q.conceptId,
+    q.question,
+    questionFormat(q) ?? inferQuestionFormat(q),
+  ))
+  return visual[0] ?? pool[0]
+}
+
 /** Spread ~10 playable probes across the student's grade scope. */
 export function pickDiagnosticQuestions(
   grade: number,
@@ -68,9 +79,10 @@ export function pickDiagnosticQuestions(
       ...getQuestions(conceptId, 1, 6, [], 'General'),
       ...getQuestions(conceptId, 2, 4, [], 'General'),
     ]).filter(q => isRenderableQuestion(q) && !usedIds.has(q.id))
-    if (pool[0]) {
-      picked.push(pool[0])
-      usedIds.add(pool[0].id)
+    const best = pickBestProbe(pool)
+    if (best) {
+      picked.push(best)
+      usedIds.add(best.id)
     }
   }
 

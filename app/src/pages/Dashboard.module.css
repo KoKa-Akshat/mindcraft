@@ -570,9 +570,16 @@
 
 /* ── responsive ───────────────────────────────────────────── */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .dateMain { font-size: clamp(38px, 7vw, 56px); }
-  .entryLabelDisplay { font-size: clamp(26px, 5vw, 36px); }
-  .exploreGrid { grid-template-columns: 1fr 1fr; }
+  .dateMain { font-size: clamp(32px, 5vw, 48px); }
+  .dateline { margin-bottom: 12px; gap: 10px; }
+  .dateFlag { width: 28px; height: 44px; padding-top: 7px; }
+  .dateFlagNum { font-size: 15px; }
+  .entryBlock { padding: 10px 12px 12px; }
+  .entryLabelDisplay { font-size: clamp(22px, 4vw, 30px); }
+  .exploreGrid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .exploreSectionLabel { margin: 10px 0 8px; }
+  .todayPlan { min-height: 0; }
+  .parentEmailBox { padding-top: 10px; }
 }
 
 @media (max-width: 767px) {

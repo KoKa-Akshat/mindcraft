@@ -1,11 +1,11 @@
 .pane {
-  border: 1px solid rgba(36, 122, 77, 0.14);
-  background: rgba(255, 255, 255, 0.72);
-  border-radius: 8px;
-  padding: 12px;
+  margin-top: 10px;
+  padding: 10px 0 0;
+  border-top: 1px dashed rgba(111, 106, 97, 0.22);
+  background: transparent;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 8px;
 }
 
 .header {
@@ -24,51 +24,50 @@
 }
 
 .label {
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #247a4d;
+  font: 400 italic 11px/1.2 "Source Serif 4", Georgia, serif;
+  letter-spacing: 0.04em;
+  color: #6f6a61;
+  transform: rotate(-0.3deg);
 }
 
 .editBtn {
   border: none;
   background: transparent;
-  color: #557063;
-  font: 800 11px/1.2 var(--f, Inter, sans-serif);
+  color: #6f6a61;
+  font: 400 10px/1.2 "IBM Plex Mono", monospace;
   cursor: pointer;
   padding: 4px 0;
   text-align: right;
+  opacity: 0.75;
 }
+
+.editBtn:hover { opacity: 1; }
 
 .failedMsg {
   margin: 0;
   color: #8a6a3a;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.45;
+  font: 400 italic 12px/1.45 "Source Serif 4", Georgia, serif;
 }
 
 .loading {
-  color: #6f7f77;
-  font-size: 12px;
-  font-weight: 700;
+  color: #6f6a61;
+  font: 400 italic 12px/1.45 "Source Serif 4", Georgia, serif;
+  opacity: 0.8;
 }
 
 .preview {
-  color: #1a2234;
-  font-size: 14px;
-  line-height: 1.55;
-  font-weight: 650;
+  color: #1c1a17;
+  font: 400 italic 14px/1.55 "Source Serif 4", Georgia, serif;
   white-space: pre-wrap;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  transform: rotate(0.3deg);
 }
 
 .linePreview:not(:last-child) {
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(36, 122, 77, 0.1);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(111, 106, 97, 0.12);
 }
 
 .lineEditList {
@@ -82,7 +81,7 @@
   flex-direction: column;
   gap: 6px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(36, 122, 77, 0.1);
+  border-bottom: 1px solid rgba(111, 106, 97, 0.12);
 }
 
 .lineEditBlock:last-child {
@@ -91,43 +90,38 @@
 }
 
 .lineLabel {
-  color: #247a4d;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  color: #6f6a61;
+  font: 400 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
 }
 
 .previewLine,
 .suspectLine {
-  padding: 4px 7px;
-  border-radius: 6px;
+  padding: 2px 4px;
+  border-radius: 2px;
 }
 
 .suspectLine {
-  background: rgba(245, 158, 11, 0.16);
-  box-shadow: inset 3px 0 0 rgba(245, 158, 11, 0.72);
+  background: linear-gradient(104deg, transparent 2%, rgba(196,245,71,0.35) 4%, rgba(196,245,71,0.22) 96%, transparent 98%);
 }
 
 .hintChip {
-  border: 1px solid rgba(245, 158, 11, 0.22);
-  background: rgba(245, 158, 11, 0.1);
-  color: #6f4a05;
-  border-radius: 8px;
-  padding: 9px 10px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.45;
+  border-left: 2px solid rgba(193, 18, 31, 0.35);
+  background: transparent;
+  color: #6f6a61;
+  padding: 6px 0 6px 10px;
+  font: 400 italic 12px/1.4 "Source Serif 4", Georgia, serif;
 }
 
 .hintChip span {
   display: block;
-  margin-bottom: 3px;
-  color: #9a6508;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  margin-bottom: 2px;
+  color: #6f6a61;
+  font: 400 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  font-style: normal;
 }
 
 .editGrid {
@@ -142,27 +136,25 @@
 }
 
 .field span {
-  color: #6f7f77;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  color: #6f6a61;
+  font: 400 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
 }
 
 .field textarea {
   width: 100%;
   box-sizing: border-box;
   resize: vertical;
-  border: 1px solid rgba(36, 122, 77, 0.18);
-  border-radius: 7px;
-  background: rgba(255, 255, 255, 0.78);
-  color: #1a2234;
-  font: 600 13px/1.5 var(--f, Inter, sans-serif);
-  padding: 9px 10px;
+  border: 1px solid rgba(111, 106, 97, 0.2);
+  border-radius: 2px;
+  background: rgba(251, 248, 244, 0.6);
+  color: #1c1a17;
+  font: 400 13px/1.5 "Source Serif 4", Georgia, serif;
+  padding: 8px 10px;
   outline: none;
 }
 
 .field textarea:focus {
-  border-color: #247a4d;
-  box-shadow: 0 0 0 3px rgba(36, 122, 77, 0.1);
+  border-color: rgba(29, 58, 138, 0.35);
 }

@@ -21,10 +21,17 @@ import {
   GRADE_STORY,
   pickDiagnosticQuestions,
 } from '../lib/diagnosticQuestions'
+import { questionFormat } from '../lib/questionBank'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import MathText from '../components/MathText'
 import InteractiveWidget from '../components/InteractiveWidget'
-import ScratchPad from '../components/ScratchPad'
+import ScratchPad, { exportScratchImage } from '../components/ScratchPad'
+import type { ScratchStrokeData } from '../types'
+import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
+import HighlightedStem from '../components/HighlightedStem'
+import JarvisGuide from '../components/JarvisGuide'
+import { useJournalGuide } from '../hooks/useJournalGuide'
+import { insightsForSide } from '../lib/journalGuide'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import PageFlipTransition from '../components/book/PageFlipTransition'
@@ -77,6 +84,10 @@ export default function GradeOnboard() {
   const [storyMod, setStoryMod] = useState<StoryModule | null>(null)
   const [seedingMsg, setSeedingMsg] = useState('Reading your map…')
   const [finishing, setFinishing] = useState(false)
+  const [probeScratchImage, setProbeScratchImage] = useState('')
+  const [probeStrokes, setProbeStrokes] = useState<ScratchStrokeData | null>(null)
+  const [probeInk, setProbeInk] = useState<ScratchInkState | null>(null)
+  const [probeScratchRev, setProbeScratchRev] = useState(0)
 
   const storyData = grade ? storyExcerpt(GRADE_STORY[grade]) : null
   const progressSteps: Step[] = ['welcome', 'grade', 'goals', 'story', 'probe', 'seeding']
@@ -107,7 +118,26 @@ export default function GradeOnboard() {
     setQSelected(null)
     setQSubmitted(false)
     setQStartTime(Date.now())
+    setProbeScratchImage('')
+    setProbeStrokes(null)
+    setProbeInk(null)
   }, [step, probeIdx])
+
+  const probeTranscribing = Boolean(
+    (probeStrokes?.strokes?.length ?? 0) > 0
+    && !(probeInk?.workLines?.some(l => l.text.trim() || l.latex.trim())),
+  )
+
+  const journalGuide = useJournalGuide({
+    conceptId: currentQ?.conceptId ?? '',
+    questionText: currentQ?.question ?? '',
+    strokeData: probeStrokes,
+    inkState: probeInk,
+    transcribing: probeTranscribing,
+    answerSelected: qSelected != null,
+    questionStartedAt: qStartTime || Date.now(),
+    enableCoach: false,
+  })
 
   useEffect(() => {
     if (step !== 'seeding') return
@@ -224,38 +254,54 @@ export default function GradeOnboard() {
                 folio={<span>page {probeIdx + 1}</span>}
               >
                 <PageFlipTransition viewKey={`probe-${probeIdx}-L`}>
-                  <div className={s.probePanel}>
-                    {storyItem?.storyStem && (
-                      <p className={s.probeStoryLine}><MathText text={storyItem.storyStem.split(/[.!?]/)[0] + '.'} /></p>
-                    )}
-                    <p className={s.questionText}><MathText text={stemText} /></p>
-                    <InteractiveWidget
-                      conceptId={currentQ.conceptId}
-                      questionText={currentQ.question}
-                      theme={probeTheme}
-                    />
-                    <div className={s.choices}>
-                      {currentQ.choices.slice(0, 4).map((choice, i) => (
+                  <div className={s.guideRow}>
+                    <div className={s.guideBody}>
+                      <div className={s.probePanel}>
+                        {storyItem?.storyStem && (
+                          <p className={s.probeStoryLine}><MathText text={storyItem.storyStem.split(/[.!?]/)[0] + '.'} /></p>
+                        )}
+                        <HighlightedStem
+                          text={stemText}
+                          ink={probeTheme.ink}
+                          accent={probeTheme.accent}
+                          highlights={journalGuide.highlights}
+                          className={s.questionText}
+                        />
+                        <InteractiveWidget
+                          conceptId={currentQ.conceptId}
+                          questionText={currentQ.question}
+                          format={questionFormat(currentQ)}
+                          theme={probeTheme}
+                        />
+                        <div className={s.choices}>
+                          {currentQ.choices.slice(0, 4).map((choice, i) => (
+                            <button
+                              key={i}
+                              type="button"
+                              className={`${s.choice} ${qSelected === i ? s.choiceSelected : ''} ${qSubmitted ? s.choiceSubmitted : ''}`}
+                              onClick={() => !qSubmitted && setQSelected(i)}
+                              disabled={qSubmitted}
+                            >
+                              <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
+                              <span><MathText text={choice} /></span>
+                            </button>
+                          ))}
+                        </div>
                         <button
-                          key={i}
                           type="button"
-                          className={`${s.choice} ${qSelected === i ? s.choiceSelected : ''} ${qSubmitted ? s.choiceSubmitted : ''}`}
-                          onClick={() => !qSubmitted && setQSelected(i)}
-                          disabled={qSubmitted}
+                          className={s.primary}
+                          disabled={qSelected === null || qSubmitted}
+                          onClick={submitProbeAnswer}
                         >
-                          <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
-                          <span><MathText text={choice} /></span>
+                          {qSubmitted ? '…' : 'submit'}
                         </button>
-                      ))}
+                      </div>
                     </div>
-                    <button
-                      type="button"
-                      className={s.primary}
-                      disabled={qSelected === null || qSubmitted}
-                      onClick={submitProbeAnswer}
-                    >
-                      {qSubmitted ? '…' : 'submit'}
-                    </button>
+                    <JarvisGuide
+                      insights={insightsForSide(journalGuide.insights, 'question')}
+                      thinking={journalGuide.thinking}
+                      side="question"
+                    />
                   </div>
                 </PageFlipTransition>
               </BookPage>
@@ -268,8 +314,34 @@ export default function GradeOnboard() {
                 folio={<span>page {probeIdx + 2}</span>}
               >
                 <PageFlipTransition viewKey={`probe-${probeIdx}-R`}>
-                  <div className={s.probeScratch}>
-                    <ScratchPad paperMode height={420} />
+                  <div className={s.guideRow}>
+                    <div className={s.guideBody}>
+                      <div className={s.probeScratch}>
+                        <ScratchPad
+                          key={`probe-${probeIdx}-${probeScratchRev}`}
+                          paperMode
+                          onChange={(_canvas, strokeData) => {
+                            setProbeStrokes(strokeData)
+                            setProbeScratchImage(
+                              strokeData.strokes.length
+                                ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
+                                : '',
+                            )
+                          }}
+                        />
+                        <ScratchTranscriptionPane
+                          imageDataUrl={probeScratchImage}
+                          strokeData={probeStrokes}
+                          resetKey={`probe-${probeIdx}-${probeScratchRev}`}
+                          onChange={state => setProbeInk(state)}
+                        />
+                      </div>
+                    </div>
+                    <JarvisGuide
+                      insights={insightsForSide(journalGuide.insights, 'work')}
+                      thinking={journalGuide.thinking}
+                      side="work"
+                    />
                   </div>
                 </PageFlipTransition>
               </BookPage>

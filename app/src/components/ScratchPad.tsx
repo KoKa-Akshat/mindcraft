@@ -132,6 +132,7 @@ export default function ScratchPad({ onChange, height = 320, lineOverlays, paper
   }
 
   function begin(e: React.PointerEvent<HTMLCanvasElement>) {
+    if (e.pointerType !== 'mouse') e.preventDefault()
     e.currentTarget.setPointerCapture(e.pointerId)
     drawingRef.current = true
     pointsRef.current = [[e.nativeEvent.offsetX, e.nativeEvent.offsetY, strokePressure(e)]]
@@ -169,7 +170,7 @@ export default function ScratchPad({ onChange, height = 320, lineOverlays, paper
         <canvas
           ref={canvasRef}
           className={`${s.canvas} ${paperMode ? s.canvasPaper : ''}`}
-          style={paperMode ? { flex: 1, minHeight: height ?? 320 } : { height }}
+          style={paperMode ? { flex: 1, minHeight: height ?? 0, height: height ? undefined : '100%' } : { height }}
           onPointerDown={begin}
           onPointerMove={move}
           onPointerUp={end}

@@ -14,6 +14,10 @@ import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/
 import type { ScratchStrokeData } from '../types'
 import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
+import HighlightedStem from '../components/HighlightedStem'
+import JarvisGuide from '../components/JarvisGuide'
+import { useJournalGuide } from '../hooks/useJournalGuide'
+import { insightsForSide } from '../lib/journalGuide'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
@@ -229,28 +233,6 @@ function fmtChoice(text: string): string {
     .trim()
 }
 
-// ── Question text renderer — pulls out (Diagram: ...) callouts ───────────────
-
-function QuestionContent({ text, ink, accent }: { text: string; ink: string; accent: string }) {
-  const parts = text.split(/(\(Diagram:[^)]{0,300}\))/g)
-  return (
-    <p className={s.qText} style={{ color: ink }}>
-      {parts.map((part, i) => {
-        const m = part.match(/^\(Diagram: (.+)\)$/)
-        if (m) {
-          return (
-            <span key={i} className={s.diagramBox} style={{ borderLeftColor: accent }}>
-              <span className={s.diagramIcon} aria-hidden>⬡</span>
-              {m[1]}
-            </span>
-          )
-        }
-        return <MathText key={i} text={part} />
-      })}
-    </p>
-  )
-}
-
 // ── Calculator ───────────────────────────────────────────────────────────────
 
 function Calculator() {
@@ -373,8 +355,7 @@ export default function ConceptChapterPage() {
   const [scratchRev, setScratchRev] = useState<Record<number, number>>({})
   // hintsShownPerQ tracks how many hints have been revealed per question index
   const [hintsShownPerQ, setHintsShownPerQ] = useState<Record<number, number>>({})
-  // showWriteNudge: show writing prompt after 8s idle on question with empty notes
-  const [showWriteNudge, setShowWriteNudge] = useState(false)
+  const [questionStartedAt, setQuestionStartedAt] = useState(() => Date.now())
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   const hydratedWorkRef = useRef<Set<string>>(new Set())
   const [showCalc, setShowCalc] = useState(false)
@@ -395,17 +376,7 @@ export default function ConceptChapterPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canonicalId, questions])
 
-  // Show write nudge after 8s on a question spread if notes are still empty
   const currentSpread = spreads[spreadIdx]
-  useEffect(() => {
-    setShowWriteNudge(false)
-    if (currentSpread?.left.kind !== 'question') return
-    const qIdx = currentSpread.left.qIdx
-    if (notes[qIdx]) return
-    const t = setTimeout(() => setShowWriteNudge(true), 8000)
-    return () => clearTimeout(t)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spreadIdx])
 
   useEffect(() => {
     if (!user?.uid) return
@@ -417,6 +388,33 @@ export default function ConceptChapterPage() {
     : currentSpread?.right.kind === 'question'
       ? { kind: 'question' as const, qIdx: currentSpread.right.qIdx }
       : { kind: 'other' as const, qIdx: -1 }
+
+  const journalQIdx = currentSpread?.left.kind === 'question'
+    ? currentSpread.left.qIdx
+    : currentSpread?.right.kind === 'work'
+      ? currentSpread.right.qIdx
+      : -1
+
+  useEffect(() => {
+    if (journalQIdx >= 0) setQuestionStartedAt(Date.now())
+  }, [journalQIdx, spreadIdx])
+
+  const activeQuestion = journalQIdx >= 0 ? questions[journalQIdx] : null
+  const transcribing = Boolean(
+    journalQIdx >= 0
+    && (scratchStrokes[journalQIdx]?.strokes?.length ?? 0) > 0
+    && !(scratchInk[journalQIdx]?.workLines?.some(l => l.text.trim() || l.latex.trim())),
+  )
+
+  const journalGuide = useJournalGuide({
+    conceptId: canonicalId,
+    questionText: activeQuestion?.question ?? '',
+    strokeData: journalQIdx >= 0 ? scratchStrokes[journalQIdx] : null,
+    inkState: journalQIdx >= 0 ? scratchInk[journalQIdx] : null,
+    transcribing,
+    answerSelected: journalQIdx >= 0 ? answers[journalQIdx] != null : false,
+    questionStartedAt,
+  })
 
   useEffect(() => {
     if (!user?.uid || spec.kind !== 'question') return
@@ -581,29 +579,37 @@ export default function ConceptChapterPage() {
       : null
 
     return (
-      <div className={s.qPanel}>
-        <header className={s.qHead}>
-          <span className={s.qKicker}>question {qNum} of {qSpreadCount}</span>
-          <BookmarkButton
-            active={bookmarkedQuestions.includes(q.id)}
-            onToggle={() => {
-              if (!user?.uid) return
-              void toggleBookmark(user.uid, q.id, bookmarkedQuestions).then(setBookmarkedQuestions)
-            }}
-          />
-        </header>
-        {frame && bridge && (
-          <div className={s.storyBridge}>
-            <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
-          </div>
-        )}
-        <QuestionContent text={stemText} ink={theme.ink} accent={theme.accent} />
-        <InteractiveWidget
-          conceptId={conceptId}
-          questionText={q.question}
-          theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
-        />
-        <div className={s.qChoices}>
+      <div className={s.guideRow}>
+        <div className={s.guideBody}>
+          <div className={s.qPanel}>
+            <header className={s.qHead}>
+              <span className={s.qKicker}>question {qNum} of {qSpreadCount}</span>
+              <BookmarkButton
+                active={bookmarkedQuestions.includes(q.id)}
+                onToggle={() => {
+                  if (!user?.uid) return
+                  void toggleBookmark(user.uid, q.id, bookmarkedQuestions).then(setBookmarkedQuestions)
+                }}
+              />
+            </header>
+            {frame && bridge && (
+              <div className={s.storyBridge}>
+                <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
+              </div>
+            )}
+            <HighlightedStem
+              text={stemText}
+              ink={theme.ink}
+              accent={theme.accent}
+              highlights={journalGuide.highlights}
+            />
+            <InteractiveWidget
+              conceptId={conceptId}
+              questionText={q.question}
+              format={questionFormat(q)}
+              theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
+            />
+            <div className={s.qChoices}>
           {q.choices.slice(0, 4).map((c, i) => (
             <button
               key={i}
@@ -664,12 +670,21 @@ export default function ConceptChapterPage() {
             {chosen === q.correctIndex ? 'noted. keep going.' : 'noted. check your work.'}
           </p>
         )}
+          </div>
+        </div>
+        <JarvisGuide
+          insights={insightsForSide(journalGuide.insights, 'question')}
+          thinking={journalGuide.thinking}
+          side="question"
+        />
       </div>
     )
   }
 
   function renderWorkPanel(qIdx: number) {
     return (
+      <div className={s.guideRow}>
+        <div className={s.guideBody}>
       <div className={s.notepad}>
         <div className={s.notepadHeader}>
           <span className={s.notepadLabel} style={{ color: theme.dim }}>your work</span>
@@ -702,7 +717,6 @@ export default function ConceptChapterPage() {
           <ScratchPad
             key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
             paperMode
-            height={420}
             lineOverlays={(() => {
               const lines = scratchInk[qIdx]?.workLines ?? []
               const overlays: LineOverlay[] = lines
@@ -738,6 +752,13 @@ export default function ConceptChapterPage() {
             })
           }}
           onDebugChange={setDebugOutlines}
+        />
+      </div>
+        </div>
+        <JarvisGuide
+          insights={insightsForSide(journalGuide.insights, 'work')}
+          thinking={journalGuide.thinking}
+          side="work"
         />
       </div>
     )

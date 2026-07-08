@@ -3,13 +3,17 @@
 
 .desk {
   min-height: 100dvh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  box-sizing: border-box;
   background: #080e14;
   background-image: radial-gradient(ellipse at 50% 30%, #0c141c 0%, #080e14 70%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 40px 16px;
+  justify-content: flex-start;
+  padding: 12px 12px 0;
   position: relative;
 }
 
@@ -32,6 +36,11 @@
 /* --- Main card (warm ivory page on the desk) --- */
 .page {
   width: min(620px, 94vw);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 .page:has(.probeCard) {
   width: min(980px, 96vw);
@@ -63,9 +72,31 @@
   border-color: #1d3a8a;
 }
 
+.desk:has(.probeBook) {
+  padding: 3px 8px 8px;
+  overflow: hidden;
+}
+
 .probeBook {
   width: 100%;
-  padding: 0 0 24px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.probeBook :global(.shell) {
+  flex: 1;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  padding-bottom: 0;
+}
+
+.probeBook :global(.book) {
+  max-height: calc(100% - 44px);
+  height: calc(100% - 44px);
 }
 
 .probePanel {
@@ -73,7 +104,28 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  gap: 12px;
+  gap: 10px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.guideRow {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.guideBody {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .probeStoryLine {
@@ -85,9 +137,10 @@
 
 .probeScratch {
   flex: 1;
-  min-height: 420px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  touch-action: none;
 }
 
 .questionText {

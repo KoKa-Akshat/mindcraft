@@ -1,0 +1,27 @@
+.wrap {
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: rgba(29, 58, 138, 0.04);
+  border: 1px solid rgba(29, 58, 138, 0.1);
+}
+
+.fig {
+  display: block;
+  width: min(160px, 100%);
+  height: auto;
+  margin: 0 auto;
+}
+
+.figWide {
+  display: block;
+  width: min(220px, 100%);
+  height: auto;
+  margin: 0 auto;
+}
+
+.caption {
+  margin: 8px 0 0;
+  font: 400 11px/1.45 "IBM Plex Mono", monospace;
+  text-align: center;
+}

@@ -6,6 +6,8 @@
  */
 
 import { useState, useRef, useEffect } from 'react'
+import QuestionFigure from './QuestionFigure'
+import type { FormatId } from '../lib/questionBank'
 import s from './InteractiveWidget.module.css'
 
 // ── Detection ────────────────────────────────────────────────────────────────
@@ -458,19 +460,29 @@ function LineGraphWidget({ m, c, vertical, label, theme }: LineGraphConfig & { t
 interface Props {
   conceptId: string
   questionText: string
+  format?: FormatId
   theme: ThemeProps
 }
 
-export default function InteractiveWidget({ conceptId, questionText, theme }: Props) {
+export default function InteractiveWidget({ conceptId, questionText, format, theme }: Props) {
   const config = detectWidget(conceptId, questionText)
-  if (!config) return null
+  if (config) {
+    return (
+      <div className={s.widgetWrap}>
+        {config.kind === 'dice'      && <DiceRoller     {...config} theme={theme} />}
+        {config.kind === 'spinner'   && <SpinnerWidget  {...config} theme={theme} />}
+        {config.kind === 'coin'      && <CoinFlip theme={theme} />}
+        {config.kind === 'linegraph' && <LineGraphWidget {...config} theme={theme} />}
+      </div>
+    )
+  }
 
   return (
-    <div className={s.widgetWrap}>
-      {config.kind === 'dice'      && <DiceRoller     {...config} theme={theme} />}
-      {config.kind === 'spinner'   && <SpinnerWidget  {...config} theme={theme} />}
-      {config.kind === 'coin'      && <CoinFlip theme={theme} />}
-      {config.kind === 'linegraph' && <LineGraphWidget {...config} theme={theme} />}
-    </div>
+    <QuestionFigure
+      conceptId={conceptId}
+      questionText={questionText}
+      format={format}
+      theme={theme}
+    />
   )
 }
