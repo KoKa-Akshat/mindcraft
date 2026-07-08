@@ -4314,9 +4314,11 @@
   z-index: 0;
 }
 
-/* Question prompt area — slightly recessed paper */
+/* Question prompt area — slightly recessed paper.
+   !important beats the inline lvBannerGradient (level color) the JSX sets;
+   .paperScan's own !important transparent still wins later in the cascade. */
 .matteShell .questionBanner {
-  background: #f0ebe2;
+  background: #f0ebe2 !important;
   border-bottom: 1px solid rgba(102,92,78,0.14);
   padding: 28px 32px 24px;
   position: relative;
@@ -4528,6 +4530,131 @@
   background: rgba(79,138,139,0.15);
   color: #3a6b6c;
   border-color: rgba(79,138,139,0.3);
+}
+
+/* ── Session journal paper — FABLE5 Area 1 completion ─────────────────────────
+   Extends the Field Journal treatment above to the session elements it missed:
+   hint header, feedback card, guided path, walkthrough + next buttons. All of
+   these render only in regular practice (guarded by !hideCorrectness in JSX),
+   so nothing here can leak into the gap scan's paperScan styling. */
+
+/* Hint note header — was a blue gradient bar; becomes part of the paper note */
+.matteShell .hintCardHeader {
+  background: transparent;
+  border-bottom: 1px solid rgba(102,92,78,0.14);
+  padding: 10px 16px;
+}
+
+.matteShell .hintCardTitle {
+  color: #4a4237;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.matteShell .hintsBox {
+  background: transparent;
+}
+
+/* Feedback — a margin note pinned to the sheet, not a white modal */
+.matteShell .feedbackCorrect,
+.matteShell .feedbackWrong {
+  background: #f3eee5;
+  border-radius: 3px;
+  box-shadow: none;
+  margin: 0 28px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.matteShell .feedbackCorrect { border: 1px solid rgba(34,197,94,0.35); }
+.matteShell .feedbackWrong   { border: 1px solid rgba(201,150,63,0.45); }
+
+/* Result banners — highlighter swipe instead of saturated gradient */
+.matteShell .feedbackBannerCorrect {
+  background: rgba(34,197,94,0.16);
+  border-bottom: 1px solid rgba(34,197,94,0.28);
+}
+
+.matteShell .feedbackBannerWrong {
+  background: rgba(201,150,63,0.18);
+  border-bottom: 1px solid rgba(201,150,63,0.32);
+}
+
+.matteShell .feedbackTitle {
+  color: #1c1a17;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.matteShell .feedbackExplanation {
+  color: #3a3733;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 14px;
+}
+
+/* Misconception callout — warm paper tones */
+.matteShell .misconceptionTag {
+  background: rgba(201,150,63,0.10);
+  border-color: rgba(201,150,63,0.35);
+}
+
+.matteShell .misconceptionText { color: #6b4d1f; }
+
+/* Guided path — pencil worksteps on the sheet */
+.matteShell .guidedPath {
+  background: rgba(102,92,78,0.06);
+  border: 1px solid rgba(102,92,78,0.16);
+  border-radius: 3px;
+}
+
+.matteShell .guidedPathTitle {
+  color: #8a8073;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.matteShell .guidedStepNum {
+  background: rgba(79,138,139,0.14);
+  border-color: rgba(79,138,139,0.32);
+  color: #3a6b6c;
+}
+
+.matteShell .guidedStepText {
+  color: #3a3733;
+  font-family: 'Source Serif 4', Georgia, serif;
+}
+
+/* Walkthrough link-button — teal ink, not indigo */
+.matteShell .walkthroughBtn {
+  border-color: rgba(79,138,139,0.38);
+  color: #3a6b6c;
+}
+
+.matteShell .walkthroughBtn:hover {
+  background: rgba(79,138,139,0.08);
+  border-color: rgba(79,138,139,0.6);
+}
+
+/* Next Question — ink-stamped teal, no neon glow on paper */
+.matteShell .actionRow {
+  position: relative;
+  z-index: 1;
+}
+
+.matteShell .nextBtn {
+  background: #3a6b6c;
+  color: #fbf8f4;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(8,14,20,0.18);
+}
+
+.matteShell .nextBtn:hover {
+  background: #2f5859;
+  transform: none;
+  box-shadow: 0 2px 6px rgba(8,14,20,0.22);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
