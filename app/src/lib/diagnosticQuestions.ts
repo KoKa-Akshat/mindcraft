@@ -1,4 +1,4 @@
-import { getQuestions, shuffle, questionFormat, inferQuestionFormat, type Question } from './questionBank'
+import { getQuestions, shuffle, questionFormat, inferQuestionFormat, isStoryCellQuestion, type Question } from './questionBank'
 import { shouldRenderFigure } from '../components/QuestionFigure'
 import type { CurriculumTrack } from './curriculumTrack'
 import type { Confidence } from './bridgePractice'
@@ -63,22 +63,45 @@ function pickBestProbe(pool: Question[]): Question | undefined {
   return visual[0] ?? pool[0]
 }
 
-/** Spread ~10 playable probes across the student's grade scope. */
+/** Difficulty bands for onboarding — never L3 (too punishing for a welcome diagnostic). */
+function levelsForGrade(grade: number): (1 | 2)[] {
+  if (grade <= 8) return [1]
+  return [1, 2]
+}
+
+function poolForConcept(conceptId: string, levels: (1 | 2)[], perLevel = 6): Question[] {
+  return shuffle(levels.flatMap(l => getQuestions(conceptId, l, perLevel, [], 'General')))
+}
+
+/** Spread ~10 playable probes across the student's grade scope.
+ *  Optional story-cell slots (rich misconception signal) + bank probes at grade-appropriate levels. */
 export function pickDiagnosticQuestions(
   grade: number,
   goalTags: string[],
   target = 10,
+  storyCellSlots = 0,
 ): Question[] {
   const concepts = shuffle(conceptsForGradeAndGoals(grade, goalTags))
+  const levels = levelsForGrade(grade)
   const picked: Question[] = []
   const usedIds = new Set<string>()
 
+  if (storyCellSlots > 0) {
+    for (const conceptId of concepts) {
+      if (picked.filter(isStoryCellQuestion).length >= storyCellSlots) break
+      const cell = getQuestions(conceptId, 2, 1, [...usedIds], 'General', undefined, true)[0]
+      if (cell && isRenderableQuestion(cell) && !usedIds.has(cell.id)) {
+        picked.push(cell)
+        usedIds.add(cell.id)
+      }
+    }
+  }
+
   for (const conceptId of concepts) {
     if (picked.length >= target) break
-    const pool = shuffle([
-      ...getQuestions(conceptId, 1, 6, [], 'General'),
-      ...getQuestions(conceptId, 2, 4, [], 'General'),
-    ]).filter(q => isRenderableQuestion(q) && !usedIds.has(q.id))
+    const pool = poolForConcept(conceptId, levels).filter(
+      q => isRenderableQuestion(q) && !usedIds.has(q.id) && !isStoryCellQuestion(q),
+    )
     const best = pickBestProbe(pool)
     if (best) {
       picked.push(best)
@@ -89,9 +112,9 @@ export function pickDiagnosticQuestions(
   if (picked.length < Math.min(target, 6)) {
     for (const conceptId of concepts) {
       if (picked.length >= target) break
-      const pool = getQuestions(conceptId, 1, 10, [], 'General')
-        .concat(getQuestions(conceptId, 2, 6, [], 'General'))
-        .filter(q => isRenderableQuestion(q) && !usedIds.has(q.id))
+      const pool = poolForConcept(conceptId, levels, 10).filter(
+        q => isRenderableQuestion(q) && !usedIds.has(q.id),
+      )
       for (const q of pool) {
         if (picked.length >= target) break
         picked.push(q)

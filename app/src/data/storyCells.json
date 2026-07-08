@@ -1,0 +1,2644 @@
+{
+  "_meta": {
+    "pipeline": "story_cell_studio",
+    "generated_at": "2026-07-08T09:09:50.694509+00:00",
+    "total": 42,
+    "no_llm": false,
+    "concepts_requested": "all"
+  },
+  "cells": [
+    {
+      "id": "cell_act_strategy_afd167",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "act_strategy",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "ACT Mathematical Strategy and Test-Taking Heuristics: At 5:29 in the morning on July 16, 1945, in the New Mexico desert, Enrico Fermi stood in a bunker waiting for the first atomic bomb to detonate, holding a handful of ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_act_strategy__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_algebraic_manipulation_082a93",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "algebraic_manipulation",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Algebraic Structure and Symbolic Manipulation: In Baghdad, around the year 830, the scholar Muhammad ibn Musa al-Khwarizmi watched ordinary people drown in arithmetic they could not do. In the House of Wisdom, the caliph",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_algebraic_manipulation__believes_you_add_terms_together",
+      "misconception_label": "believes you add terms together",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_applications_of_derivatives_334a0c",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "applications_of_derivatives",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Applications of Derivatives: In February 1962, John Glenn sat atop an Atlas rocket, about to become the first American to orbit the Earth, and refused to fly until one thing happened. The trajectory calculations had been",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_applications_of_derivatives__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_applications_of_integrals_7ff03e",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "applications_of_integrals",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Applications of Integrals: In 1870, the Royal Navy's newest warship, HMS Captain, rolled over in a night gale off Spain and sank with nearly five hundred men. She was a prestige project, championed over the objections of",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_ratios_proportions__believes_finding_area_under_graph",
+      "misconception_label": "believes finding area under graph",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_area_volume_c20ec7",
+      "title": "The Signal Gap",
+      "world": "builder_world",
+      "primitive": "repair_tile_cover",
+      "conceptId": "area_volume",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Area and Volume: Around 1550 BC, an Egyptian scribe named Ahmes sat down with a reed pen and copied out what he called the entrance into the knowledge of all existing things: a scroll of eighty-four solved problems we no",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_area_volume__has_used_slant_height_and",
+      "misconception_label": "has used slant height and",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_basic_equations_3d1d32",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "basic_equations",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Basic One-Variable Equations: Everything we know about the life of Diophantus of Alexandria comes from a single riddle. Sometime around 250 AD, in the greatest library city on Earth, he wrote the Arithmetica, thirteen bo",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_linear_equations__thinks_inverse_subtraction_multiplication",
+      "misconception_label": "thinks inverse subtraction multiplication",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_basic_probability_f8c6f1",
+      "title": "The Signal Gap",
+      "world": "creature_sanctuary",
+      "primitive": "predict_uncertain_event",
+      "conceptId": "basic_probability",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Basic Probability: The candles burned low in a Paris gambling salon in 1654, and Antoine Gombaud was losing everything. He was a gambler with a reputation to protect and a fortune melting away, and he could not see why. ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_algebraic_manipulation__confuses_collecting_like_terms_with",
+      "misconception_label": "confuses collecting like terms with",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_circles_geometry_5406d0",
+      "title": "The Signal Gap",
+      "world": "builder_world",
+      "primitive": "repair_tile_cover",
+      "conceptId": "circles_geometry",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Geometry of Circles: In fifth-century China, the mathematician Zu Chongzhi staked his reputation, and his standing at court, on a circle. The empire's calendar was drifting; eclipses arrived unannounced, festivals slid o",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_circles_geometry__confuses_arc_and_diameter",
+      "misconception_label": "confuses arc and diameter",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_complex_numbers_638358",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "complex_numbers",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Complex Numbers: In 1572, an Italian engineer named Rafael Bombelli sat in the marshlands of the Val di Chiana, waiting. He drained swamps for a living, and when the reclamation project stalled, he filled the idle months",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_exponent_rules__can_not_square_root_negative",
+      "misconception_label": "can not square root negative",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_conic_sections_de9ad2",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "conic_sections",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Conic Sections: In the winter of 1605, Johannes Kepler was drowning in numbers. He had spent six years trying to trace the path of Mars across the sky, using Tycho Brahe's observations, the most precise ever recorded. Ev",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_circles_geometry__confuses_radius_with_radius_squared",
+      "misconception_label": "confuses radius with radius squared",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_derivatives_5ca9ae",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "derivatives",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Derivatives: In the summer of 1665, the plague came to Cambridge, and the university closed its gates. A twenty-two-year-old student named Isaac Newton packed his books and retreated to his mother's farm at Woolsthorpe. ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_derivatives__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_descriptive_statistics_7278c5",
+      "title": "The Signal Gap",
+      "world": "creature_sanctuary",
+      "primitive": "predict_uncertain_event",
+      "conceptId": "descriptive_statistics",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Descriptive Statistics: The hospital at Scutari smelled like death, and Florence Nightingale could not yet prove why. It was 1854, the Crimean War, and British soldiers were dying faster inside her wards than on the batt",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_descriptive_statistics__believes_outlier_value_data_set",
+      "misconception_label": "believes outlier value data set",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_exponent_rules_242761",
+      "title": "The Signal Gap",
+      "world": "sky_workshop",
+      "primitive": "grow_shrink",
+      "conceptId": "exponent_rules",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Exponent Rules: Around 216 BC, Archimedes of Syracuse set out to do something his contemporaries considered literally insane: count every grain of sand it would take to fill the universe. He announced it to King Gelon in",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_exponent_rules__multiplying_numbers_with_different_bases",
+      "misconception_label": "multiplying numbers with different bases",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_exponential_functions_48ccc9",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "exponential_functions",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Exponential Functions: In September 1918, Dr. Wilmer Krusen, Philadelphia's director of public health, faced a decision with a number hiding inside it. Influenza had appeared among sailors at the Navy Yard: a handful of ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_exponential_functions__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_factoring_polynomials_70af11",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "factoring_polynomials",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Factoring Polynomials: By day, Pierre de Fermat was a magistrate in seventeenth-century Toulouse, sentencing smugglers and settling land disputes. By night, he was the most dangerous mathematician in Europe, and he never",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_factoring_polynomials__believes_they_can_fully_factorise",
+      "misconception_label": "believes they can fully factorise",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_fractions_decimals_0ac1ca",
+      "title": "The Overflowing Moon Tank",
+      "world": "creature_sanctuary",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "fractions_decimals",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Fractions and Decimals: In 1585, in the war-torn Low Countries, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages among soldiers by candlelight, wrestling twelfths of",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_fractions_decimals__mixes_up_numerator_and_denominator",
+      "misconception_label": "mixes up numerator and denominator",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_functions_basics_af12b7",
+      "title": "The Signal Gap",
+      "world": "signal_tower",
+      "primitive": "decode_hidden_rule",
+      "conceptId": "functions_basics",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Basics of Functions: In St. Petersburg in 1734, Leonhard Euler was drowning in mathematics of his own making. He wrote faster than any mathematician who ever lived, hundreds of papers, on planets, ships, bridges, sound, ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_functions_basics__using_function_machine_confuses_input",
+      "misconception_label": "using function machine confuses input",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_geometric_transformations_3d32bd",
+      "title": "The Overflowing Moon Tank",
+      "world": "builder_world",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "geometric_transformations",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Geometric Transformations: In 1922, a young Dutch artist named Maurits Cornelis Escher walked into the Alhambra palace in Granada and stopped, stunned, in front of a wall. The Moorish artisans who tiled it six centuries ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_geometric_transformations__describing_translation_miscounts_crossing_axis",
+      "misconception_label": "describing translation miscounts crossing axis",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_inferential_statistics_c40bcf",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "inferential_statistics",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Inferential Statistics: The captured German tank sat in a muddy field in 1943, and Allied analysts crawled over it, copying down one unglamorous thing: the serial number stamped on its gearbox. In London, planners were c",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_inferential_statistics__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_integrals_e61351",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "integrals",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Integrals: At his own wedding in Linz, in 1613, Johannes Kepler got into an argument about a barrel. The wine merchant priced the wine by dipping a single rod diagonally into each cask and reading off one length, one mea",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_ratios_proportions__thinks_shape_graph_does_not",
+      "misconception_label": "thinks shape graph does not",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_limits_continuity_da6e72",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "limits_continuity",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "A student in the limits continuity chapter faces a problem that matters to the story.",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_limits_continuity__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_linear_equations_9d13eb",
+      "title": "The Signal Gap",
+      "world": "market_world",
+      "primitive": "trade_price_bargain",
+      "conceptId": "linear_equations",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Linear Equations: In 1761, a wooden ship left England for Jamaica carrying the strangest treasure of the age: a five-inch watch, and a carpenter's son named William Harrison guarding it with his life. His father, John Ha",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_functions_basics__does_not_interpret_sloping_gradient",
+      "misconception_label": "does not interpret sloping gradient",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_linear_inequalities_d624f5",
+      "title": "The Signal Gap",
+      "world": "sky_workshop",
+      "primitive": "balance_two_conditions",
+      "conceptId": "linear_inequalities",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Linear Inequalities: In the summer of 1948, the Soviet Union sealed every road and rail line into West Berlin, and two million people began to starve in slow motion. The only way in was the air. American and British plan",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_linear_inequalities__believes_solving_inequality_gives_single",
+      "misconception_label": "believes solving inequality gives single",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_lines_angles_3760ff",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "lines_angles",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Lines and Angles: Around 240 BC, Eratosthenes, the chief librarian of Alexandria, read something in a scroll that most people would have skimmed past: in the town of Syene, far to the south, at noon on the summer solstic",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_lines_angles__thinks_corresponding_angles_sum_180",
+      "misconception_label": "thinks corresponding angles sum 180",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_logarithmic_functions_d60f4a",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "logarithmic_functions",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Logarithmic Functions: The candle had burned down to nothing, and Johannes Kepler was still multiplying. It was 1605, and he was trying to map the orbit of Mars using the most precise observations ever recorded, which me",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_logarithmic_functions__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_matrices_2f61fd",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "matrices",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Matrices: Arthur Cayley spent fourteen years as a London lawyer, drafting property deeds by day and writing close to three hundred mathematical papers in the margins of his life. In 1858 he published the strangest of the",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_number_properties__does_not_correctly_apply_commutative",
+      "misconception_label": "does not correctly apply commutative",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_measurement_units_32258f",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "measurement_units",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Units, Measurement, and Dimensional Reasoning: In September 1999, a room full of NASA engineers watched their Mars Climate Orbiter vanish. Nine months of flight, 416 million miles, hundreds of millions of dollars, gone i",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_measurement_units__does_not_convert_measurements_have",
+      "misconception_label": "does not convert measurements have",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_number_properties_0fe3f6",
+      "title": "The Signal Gap",
+      "world": "sky_workshop",
+      "primitive": "split_fairly",
+      "conceptId": "number_properties",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Number Properties, Factors, and Divisibility: In 1918, in a hospital outside London, a young Indian mathematician named Srinivasa Ramanujan lay seriously ill, far from home. Five years earlier he had been a clerk in Madr",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_number_properties__confuses_factors_and_multiples",
+      "misconception_label": "confuses factors and multiples",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_order_of_operations_23578f",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "order_of_operations",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Order of Operations: In 1843, in a London study lit by oil lamps, Ada Lovelace was writing instructions for a machine that did not yet exist. Charles Babbage had designed his Analytical Engine, a hall-sized calculator of",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_order_of_operations__performs_subtraction_right_left_if",
+      "misconception_label": "performs subtraction right left if",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_polynomials_c01825",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "polynomials",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Polynomial Operations: In 1537, in Venice, a mathematician with a stammer published a book that made gunners across Europe put down their instruments and stare. His name was Niccolò Tartaglia, the nickname means the stut",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_algebraic_manipulation__believes_you_add_terms_together",
+      "misconception_label": "believes you add terms together",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_probability_distributions_0e06ca",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "probability_distributions",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Probability Distributions: Every day for decades, a French exile named Abraham de Moivre sat in Slaughter's Coffee House in London, selling something no one had ever sold before: mathematical advice on uncertainty. Gambl",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_basic_probability__does_not_understand_probability_1",
+      "misconception_label": "does not understand probability 1",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_quadratic_equations_29a4da",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "quadratic_equations",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Quadratic Equations: In the armories of Venice, around 1608, Galileo Galilei was watching cannonballs fly, and everyone around him was certain they already knew what he was seeing. The gunners' manuals said a ball travel",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_quadratic_equations__solving_simultaneous_equations_graphically_they",
+      "misconception_label": "solving simultaneous equations graphically they",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_radical_expressions_d1fd03",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "radical_expressions",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Radical Expressions: Sometime in the fifth century BC, on a ship in the Mediterranean, a member of the Pythagorean brotherhood named Hippasus of Metapontum was, the old stories say, thrown into the sea by his own brother",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_radical_expressions__simplifying_surds_leaves_square_root",
+      "misconception_label": "simplifying surds leaves square root",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_rational_expressions_108be8",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "rational_expressions",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Rational Expressions: In 97 AD, the emperor handed Sextus Julius Frontinus the least glamorous and most vital job in Rome: commissioner of the aqueducts. A million people drank from nine channels of water crossing miles ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_algebraic_manipulation__thinks_you_cancel_identical_terms",
+      "misconception_label": "thinks you cancel identical terms",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "id": "cell_ratios_proportions_448c40",
+      "title": "The Overflowing Moon Tank",
+      "world": "market_world",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "ratios_proportions",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Ratios and Proportions: Around 600 BC, a traveler from Miletus named Thales stood at the foot of the Great Pyramid while Egyptian priests smiled at him. They had posed a challenge they considered impossible: tell us the ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_ratios_proportions__thinks_ratios_are_written_1total",
+      "misconception_label": "thinks ratios are written 1total",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_representation_translation_9d67f1",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "representation_translation",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Representation Translation and Mathematical Modeling: In the winter of 1619, a twenty-three-year-old soldier named René Descartes was snowed in near Ulm, in Germany, with nothing to do but sit in a stove-heated room and ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_representation_translation__generic_slip",
+      "misconception_label": "procedural slip",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_right_triangle_geometry_5418d6",
+      "title": "The Overflowing Moon Tank",
+      "world": "map_world",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "right_triangle_geometry",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Right Triangle Geometry: Every year the Nile flooded, and every year it erased the world. Field boundaries, temple corners, property stones, all swallowed by mud. When the waters withdrew, Egyptian surveyors called rope ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio",
+      "misconception_label": "confuses order sides trigonometric ratio",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_sequences_series_ba06ff",
+      "title": "The Signal Gap",
+      "world": "signal_tower",
+      "primitive": "grow_shrink",
+      "conceptId": "sequences_series",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Sequences and Series: In 1787, in a schoolroom in Brunswick, a schoolmaster named Büttner set his class a punishment problem: add every number from one to one hundred. It was meant to buy him an hour of silence. Within m",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_sequences_series__believes_you_multiply_constant_difference",
+      "misconception_label": "believes you multiply constant difference",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_systems_of_linear_equations_f7e454",
+      "title": "The Signal Gap",
+      "world": "market_world",
+      "primitive": "balance_two_conditions",
+      "conceptId": "systems_of_linear_equations",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Systems of Linear Equations: Two thousand years ago in Han dynasty China, a grain official stood in a dusty storehouse with a problem that could starve a village. Farmers paid taxes in bundles of rice of three qualities,",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they",
+      "misconception_label": "solving simultaneous equations graphically they",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_triangles_congruence_af34cd",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "triangles_congruence",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Triangles and Congruence: In the 1230s, a master builder named Villard de Honnecourt traveled between the great cathedral sites of France with a satchel of parchment, sketching everything: rose windows, roof trusses, lif",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_triangles_congruence__does_not_know_angles_triangle",
+      "misconception_label": "does not know angles triangle",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_trigonometry_basics_dab47d",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "trigonometry_basics",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Trigonometry Basics: On the island of Rhodes, around 140 BC, Hipparchus spent his nights cataloguing the sky. He logged over eight hundred stars, discovered that Earth's axis itself slowly wobbles, and predicted eclipses",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_triangles_congruence__uses_more_than_3_letters",
+      "misconception_label": "uses more than 3 letters",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      },
+      "examTag": "ACT"
+    },
+    {
+      "id": "cell_vectors_9413d0",
+      "title": "The Overflowing Moon Tank",
+      "world": "sky_workshop",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "vectors",
+      "level": 2,
+      "question": "The tank is 3/4 full. A helper adds 1/2 tank. The tank holds 1 full tank. How much overflows?",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2",
+        "0"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "3/4 + 1/2 = 3/4 + 2/4 = 5/4, so 1/4 overflows.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "adds 3+1=4 and 4+2=6 → 4/6"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "thinks 1/2 is the overflow, ignores 3/4"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "thinks tank empties not overflows"
+        }
+      ],
+      "hints": [
+        "Draw the tank divided into fourths.",
+        "How many fourths equal one half?",
+        "Add the two amounts — does it exceed 1 full tank?"
+      ],
+      "world_feedback": "The tank glows too bright and spills exactly 1/4 moon-fuel onto the workshop floor.",
+      "transfer_question": "If the tank is 2/3 full and you add 1/2, what happens?",
+      "pedagogy_score": {
+        "math_integrity": 8,
+        "diagnostic_power": 8,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 8,
+        "representation_options": 8,
+        "transfer": 8
+      },
+      "explanation": "When two partial amounts combine, compare their sum to one whole. Here the total passes a full tank, so the extra spills out.",
+      "storyContext": "Vectors: On the night of October 22, 1707, four ships of the Royal Navy drove onto the rocks of the Scilly Isles in fog, and nearly two thousand men drowned, including the fleet's admiral, Sir Cloudesley Shovell. It was ",
+      "format": "word_problem",
+      "narrative_need": "Repair a flying machine's fuel tank before the storm hits.",
+      "student_action": "Decide whether to add the second canister and predict overflow.",
+      "misconception_id": "mis_geometric_transformations__adding_column_vectors_multiplies_rather",
+      "misconception_label": "adding column vectors multiplies rather",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "pass",
+        "misconception_student": "partial"
+      }
+    }
+  ]
+}

@@ -269,6 +269,9 @@ export interface OutcomeInput {
   level?: 1 | 2 | 3
   questionId?: string
   succeeded?: boolean
+  selectedChoiceIndex?: number
+  misconceptionId?: string
+  errorType?: string
 }
 
 export async function recordOutcomes(
@@ -289,6 +292,9 @@ export async function recordOutcomes(
           level: o.level,
           question_id: o.questionId,
           succeeded: o.succeeded,
+          selected_choice_index: o.selectedChoiceIndex,
+          misconception_id: o.misconceptionId,
+          error_type: o.errorType,
         })),
       }),
     })

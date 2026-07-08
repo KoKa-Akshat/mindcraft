@@ -2,6 +2,8 @@ import generatedQuestionsData from '../data/generatedQuestions.json'
 import actMasterBankData from '../data/actMasterQuestionBank.generated.json'
 import eediQuestionsData from '../data/eediQuestions.json'
 import openstaxQuestionsData from '../data/openstaxQuestions.json'
+import openstaxMcqData from '../data/openstaxMCQ.json'
+import storyCellsData from '../data/storyCells.json'
 import khanQuestionsData from '../data/khanQuestions.json'
 
 // Canonical representation/format ("vessel") ids — mirrors the ML config
@@ -34,6 +36,86 @@ export interface Question {
   // Eedi-sourced misconception data (GCSE questions only)
   misconception_id?: string
   misconception_label?: string
+  /** Per-choice distractor taxonomy (Story Cells, annotated banks). */
+  distractor_taxonomy?: {
+    choice_index: number
+    error_type: string
+    student_thinking?: string
+    misconception_id?: string
+  }[]
+  ingredient_id?: string
+  /** Scene setter for story-first delivery (OpenStax MCQ, Story Cells, ACT master). */
+  storyContext?: string
+}
+
+export function resolveChoiceEvidence(
+  q: Question,
+  selectedIndex: number,
+): { selectedChoiceIndex: number; misconceptionId?: string; errorType?: string } {
+  const selectedChoiceIndex = selectedIndex
+  if (selectedIndex === q.correctIndex) {
+    return { selectedChoiceIndex }
+  }
+  const entry = q.distractor_taxonomy?.find(d => d.choice_index === selectedIndex)
+  if (entry) {
+    return {
+      selectedChoiceIndex,
+      misconceptionId: entry.misconception_id,
+      errorType: entry.error_type,
+    }
+  }
+  if (q.misconception_id) {
+    return { selectedChoiceIndex, misconceptionId: q.misconception_id }
+  }
+  return { selectedChoiceIndex }
+}
+
+const VALID_FORMATS = new Set<FormatId>([
+  'word_problem', 'diagram', 'number_line', 'symbolic_expression', 'coordinate_graph', 'table',
+])
+
+export function isStoryCellQuestion(q: Pick<Question, 'id'>): boolean {
+  return q.id.startsWith('cell_')
+}
+
+function normalizeBankFormat(raw: unknown): FormatId | undefined {
+  if (typeof raw === 'string' && VALID_FORMATS.has(raw as FormatId)) return raw as FormatId
+  return undefined
+}
+
+function normalizeExamTag(raw: unknown): Question['examTag'] | undefined {
+  if (raw === 'ACT' || (typeof raw === 'string' && raw.startsWith('ACT'))) return 'ACT'
+  if (raw === 'SAT' || raw === 'IB' || raw === 'AP' || raw === 'GCSE') return raw
+  return undefined
+}
+
+function loadStoryCellQuestions(existingIds: Set<string>): Question[] {
+  const cells = (storyCellsData as { cells?: Record<string, unknown>[] }).cells ?? []
+  return cells.map((cell) => {
+    const c = cell as Record<string, unknown>
+    const choices = (c.choices as string[]) ?? []
+    const correctIndex = Number(c.correctIndex ?? 0)
+    const q: Question = {
+      id: String(c.id ?? ''),
+      conceptId: String(c.conceptId ?? ''),
+      level: (Number(c.level) || 2) as 1 | 2 | 3,
+      question: String(c.question ?? ''),
+      choices,
+      correctIndex,
+      explanation: String(c.explanation ?? c.correct_reasoning ?? ''),
+      hints: Array.isArray(c.hints) ? (c.hints as string[]).slice(0, 3) : [],
+      format: normalizeBankFormat(c.format) ?? 'word_problem',
+      examTag: normalizeExamTag(c.examTag),
+      storyContext: typeof c.storyContext === 'string' ? c.storyContext : undefined,
+      misconception_id: typeof c.misconception_id === 'string' ? c.misconception_id : undefined,
+      misconception_label: typeof c.misconception_label === 'string' ? c.misconception_label : undefined,
+      distractor_taxonomy: Array.isArray(c.distractor_taxonomy)
+        ? (c.distractor_taxonomy as Question['distractor_taxonomy'])
+        : undefined,
+      ingredient_id: typeof c.ingredient_id === 'string' ? c.ingredient_id : undefined,
+    }
+    return q
+  }).filter(q => q.id && q.question && hasValidKey(q) && !existingIds.has(q.id))
 }
 
 /** The format a question should report, or undefined if untagged.
@@ -1977,10 +2059,32 @@ const EEDI_QUESTIONS = (eediQuestionsData as Question[])
 const OPENSTAX_QUESTIONS = ((openstaxQuestionsData as { questions?: Question[] }).questions ?? [])
   .filter(q => !STATIC_IDS.has(q.id))
   .filter(hasValidKey)
+const OPENSTAX_MCQ_QUESTIONS = ((openstaxMcqData as { questions?: Question[] }).questions ?? [])
+  .filter(q => !STATIC_IDS.has(q.id))
+  .filter(hasValidKey)
 const KHAN_QUESTIONS = ((khanQuestionsData as { questions?: Question[] }).questions ?? [])
   .filter(q => !STATIC_IDS.has(q.id))
   .filter(hasValidKey)
-const Q: Question[] = tagQuestionFormats([...RAW_QUESTIONS, ...GENERATED_QUESTIONS, ...ACT_MASTER, ...EEDI_QUESTIONS, ...OPENSTAX_QUESTIONS, ...KHAN_QUESTIONS])
+const MERGED_IDS = new Set([
+  ...STATIC_IDS,
+  ...GENERATED_QUESTIONS.map(q => q.id),
+  ...ACT_MASTER.map(q => q.id),
+  ...EEDI_QUESTIONS.map(q => q.id),
+  ...OPENSTAX_QUESTIONS.map(q => q.id),
+  ...OPENSTAX_MCQ_QUESTIONS.map(q => q.id),
+  ...KHAN_QUESTIONS.map(q => q.id),
+])
+const STORY_CELL_QUESTIONS = loadStoryCellQuestions(MERGED_IDS)
+const Q: Question[] = tagQuestionFormats([
+  ...RAW_QUESTIONS,
+  ...GENERATED_QUESTIONS,
+  ...ACT_MASTER,
+  ...EEDI_QUESTIONS,
+  ...OPENSTAX_QUESTIONS,
+  ...OPENSTAX_MCQ_QUESTIONS,
+  ...KHAN_QUESTIONS,
+  ...STORY_CELL_QUESTIONS,
+])
 const Q_BY_ID = new Map<string, Question>(Q.map(q => [q.id, q]))
 
 // ── Concept metadata ──────────────────────────────────────────────────────────
@@ -2090,18 +2194,38 @@ export function getQuestions(
   seenIds: string[] = [],
   examType: Question['examTag'] | 'General' = 'General',
   format?: FormatId,
+  preferStoryCells = false,
 ): Question[] {
   const id = bankConceptId(conceptId)
   const basePool = Q.filter(q => q.conceptId === id && q.level === level)
-  // Format-targeted (the format → concept edge): prefer questions in the
-  // requested vessel, falling back to the concept pool when none are tagged.
   const formatPool = format ? basePool.filter(q => questionFormat(q) === format) : []
   const afterFormat = formatPool.length > 0 ? formatPool : basePool
   const examPool = examType === 'General' ? [] : afterFormat.filter(q => q.examTag === examType)
   const pool     = examPool.length > 0 ? examPool : afterFormat
+
+  if (preferStoryCells) {
+    const cells = shuffle(pool.filter(q => isStoryCellQuestion(q) && !seenIds.includes(q.id)))
+    if (cells.length > 0) {
+      const rest = shuffle(pool.filter(q => !isStoryCellQuestion(q) && !seenIds.includes(q.id)))
+      return [...cells, ...rest].slice(0, Math.min(count, pool.length))
+    }
+  }
+
   const unseen   = shuffle(pool.filter(q => !seenIds.includes(q.id)))
   const seen     = shuffle(pool.filter(q =>  seenIds.includes(q.id)))
   return [...unseen, ...seen].slice(0, Math.min(count, pool.length))
+}
+
+/** Story Cell for a concept (any level), for weak-spot flagship missions. */
+export function getStoryCell(conceptId: string, level?: 1|2|3): Question | undefined {
+  const id = bankConceptId(conceptId)
+  const cells = Q.filter(q => q.conceptId === id && isStoryCellQuestion(q))
+  if (cells.length === 0) return undefined
+  if (level != null) {
+    const atLevel = cells.find(q => q.level === level)
+    if (atLevel) return atLevel
+  }
+  return cells[0]
 }
 
 // Total question count for a concept + level (alias-resolved, so a concept whose
