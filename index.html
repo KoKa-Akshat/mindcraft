@@ -132,7 +132,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .stats{display:flex;gap:34px;max-width:none;margin-top:36px;border:none;background:transparent;box-shadow:none}
 .stat{background:transparent;padding:0;border:none;box-shadow:none;flex:0 0 auto}
 .stat strong{display:block;font-size:34px;line-height:1;color:var(--leaf);letter-spacing:-.04em;font-family:"Fredoka",system-ui,sans-serif}
-.stat span{display:block;margin-top:8px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#7a806f}
+.stat span{display:block;margin-top:8px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#7a806f;position:relative;z-index:2}
 .stat-limited strong{color:#e1306c}
 .vibe{background:#fffdf7}
 .vibe-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,82px);align-items:center}
@@ -201,6 +201,8 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .proof-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .about{background:linear-gradient(180deg,#eaf5ea,#fffdf7)}
 .about-head{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,5vw,64px);align-items:end}
+.about-head>div{overflow:visible}
+.about-head h2{font-size:clamp(26px,3.6vw,50px);line-height:1.1;overflow:visible;max-width:min(100%,480px)}
 .about-head p{max-width:620px}
 .founder-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:50px;border:1px solid var(--line);border-radius:42px;overflow:hidden;background:var(--line);box-shadow:var(--shadow)}
 .founder-card{position:relative;display:grid;grid-template-columns:190px 1fr;gap:28px;align-items:center;padding:clamp(26px,4vw,42px);background:#fffdf7;overflow:hidden}
@@ -366,15 +368,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   <nav class="nav nav-hero">
     <a class="brand" href="#top">Mind<span>Craft</span></a>
     <div class="nav-links">
-      <a href="#map">Map</a>
-      <a href="#system">System</a>
-      <a href="#about">About</a>
       <a href="blog.html">Blog</a>
-      <a href="#intake">Apply</a>
-      <a href="#try-app">Try it</a>
-      <a class="join" href="#intake">Join</a>
+      <a href="#about">About</a>
+      <a class="join" href="#intake">Apply</a>
     </div>
-    <a class="mobile-try" href="#try-app">Try it</a>
+    <a class="mobile-try" href="#intake">Apply</a>
   </nav>
   <main>
     <section class="hero" id="top" data-nav="hero">
@@ -393,9 +391,9 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             </div>
           </div>
           <div class="stats reveal stagger">
-            <div class="stat"><strong>42</strong><span>Concepts mapped</span></div>
-            <div class="stat"><strong>1,718</strong><span>Practice questions</span></div>
-            <div class="stat stat-limited"><strong>Limited</strong><span>Seats open</span></div>
+            <div class="stat"><strong>42</strong><span>Stories</span></div>
+            <div class="stat"><strong>1,714</strong><span>Questions</span></div>
+            <div class="stat"><strong>84,000</strong><span>Practice Problems</span></div>
           </div>
         </div>
         <div class="hero-art reveal" aria-hidden="true" id="heroArt">
@@ -734,6 +732,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap">
         <div class="tryapp-card reveal">
           <figure class="tryapp-bear" aria-hidden="false">
+            <!-- TODO: replace with img/mindcraft-bear-mascot.png when user places file -->
             <img src="img/fibonacci-bear.svg" alt="Fib, the MindCraft bear holding a little learning map" loading="lazy" width="240" height="280">
             <figcaption>Fib has your map ready.</figcaption>
           </figure>

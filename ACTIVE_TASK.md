@@ -8,10 +8,15 @@
 
 | Task | Agent | Files touched | Status |
 |------|-------|--------------|--------|
+| Marketing nav + stats + about fix | Claude Code | `index.html` | ✅ Done |
 | Jarvis on-screen journal guide | Cursor | `app/src/lib/journalGuide.ts`, `app/src/hooks/useJournalGuide.ts`, `app/src/components/JarvisGuide.tsx`, `app/src/components/JarvisGuide.module.css`, `app/src/components/HighlightedStem.tsx`, `app/src/components/HighlightedStem.module.css`, `app/src/components/ScratchTranscriptionPane.module.css`, `app/src/pages/ConceptChapterPage.tsx`, `app/src/pages/ConceptChapterPage.module.css`, `app/src/pages/GradeOnboard.tsx`, `app/src/pages/GradeOnboard.module.css` | ✅ Done |
 | MCQ triple-verify pipeline | ✅ Done (Fable 5) | `ml/scripts/pipeline/mcq_generator.py`, `story_wrapper.py`, `sources/openstax.py`, `ingest.py`, `PIPELINE_MCQ_SPEC.md` | Committed `43e3d62d`, pushed |
 | Practice session journal paper reskin | ✅ Done (Fable 5) | `app/src/pages/Practice.module.css` | Committed `0b698e2a`, pushed |
 | iPad login + world diagnostic flow | Codex | `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `worlds/world2/index.html`, `worlds/world2/mc-world-chrome.js`, `worlds/world2/mc-diagnostic.css` | ✅ Done |
+| Google login fullscreen bug | Cursor | `app/src/pages/Login.tsx` | ✅ Done — redirect auth on iPad; no fullscreen on login; fullscreen stays on Enter World |
+| OpenStax MCQ 50-item test batch | Cursor | `/tmp/openstax_mcq_test_v3.json`, `ml/data/.mcq_test_v3_log.txt` | ✅ Done — **52% yield** (26/50) after concept balance + HTML alt recovery; full batch running |
+| Story Cell Studio LLM batch (3) | Cursor | `ml/data/story_cells/batch_llm_002.json`, `story_cell_studio.py` | ✅ Done — real LLM cells (Steady Drift, Waterfowl Pond, Thales shadow) |
+| OpenStax MCQ full batch (5 concepts) | Cursor | `ml/data/openstaxMCQ.json`, `ml/data/.openstax_mcq_full_log.txt` | ✅ Done — **221 questions** (29.3% of 753); wire in Product lane |
 | Founder section copy + photos | Codex | `index.html`, `img/akshat-koirala.jpg` | ✅ Done |
 | Landing visual polish + mascot | Codex | `index.html`, `img/fibonacci-bear.svg` | ✅ Done |
 
@@ -61,7 +66,8 @@ Files changed — `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `
 
 ## Next up (in priority order)
 
-1. **Run MCQ generation** — `python ml/scripts/pipeline/ingest.py --source openstax --convert-free-response --verify-count 3 --story-wrap --limit 50 --out app/src/data/openstaxMCQ.json` (50-item test first; then full run ~2,300–2,800 Qs). See `PIPELINE_MCQ_SPEC.md`.
+1. **Wire OpenStax MCQ bank** — `ml/data/openstaxMCQ.json` ready (**221** story-wrapped MCQs, 5 concepts). Product lane: import in `questionBank.ts` like `openstaxQuestions.json`.
+2. **Story Cell Studio scale** — run `--concepts all --refresh` batch to `ml/data/story_cells/batch_all.json` (3-concept LLM pilot ✅ in `batch_llm_002.json`).
 2. **FABLE5 Area 2** — Dashboard personalization: mastery bars, top-6 weaknesses, skeleton shimmer (see `FABLE5_VISION.md §Area 2`)
 3. **FABLE5 Area 3** — PawHub upgrades: concept labels in pads, pulse animation, SVG progress ring
 4. **FABLE5 Area 4** — Tutor focus areas
