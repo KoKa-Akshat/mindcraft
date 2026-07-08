@@ -1,0 +1,213 @@
+{
+  "_meta": {
+    "pipeline": "fable5_manual",
+    "generator_version": "scs-v1.1",
+    "generated_at": "2026-07-08T13:55:30Z",
+    "total": 3,
+    "pilot_concepts": ["linear_equations", "fractions_decimals", "ratios_proportions"],
+    "note": "Slot-2 cells for each pilot concept. Slot-1 cells live in batch_llm_002.json. Merge script reads both files; ships only gate_status=approved."
+  },
+  "cells": [
+    {
+      "id": "cell_linear_equations_7c4f2b",
+      "generator_version": "scs-v1.1",
+      "title": "The Joining Fee",
+      "world": "market_world",
+      "primitive": "trade_price_bargain",
+      "conceptId": "linear_equations",
+      "ingredient_id": "linear_equations__y_intercept_meaning",
+      "misconception_id": "mis_linear_equations__believes_y_intercept_given_difference",
+      "misconception_label": "believes y-intercept is a given data point rather than the value at x=0",
+      "level": 2,
+      "format": "multiple_choice",
+      "examTag": "ACT_linear_functions",
+      "storyContext": "At Kingston's harbor chandlery, 1762: William must find the joining fee buried in the merchant's ledger before his father's voyage runs over budget.",
+      "narrative_need": "William must identify the joining fee (y-intercept) from two ledger entries. His father needs this number to set the voyage's financial plan — a wrong answer miscalculates the entire budget before the ship sails.",
+      "student_action": "Find the y-intercept by computing slope from two data points, then back-substituting to find the cost at zero weeks — not by reading off the first data value in the table.",
+      "question": "The harbor chandlery posts its storage rates as a ledger:\n\n| Weeks stored | Running total (£) |\n|---|---|\n| 3 | 47 |\n| 7 | 83 |\n\nThe rate per week is fixed. William must find the joining fee — the amount owed before any weeks pass — to plan the voyage budget. What is the joining fee?",
+      "choices": ["£20", "£47", "£36", "£9"],
+      "correctIndex": 0,
+      "correct_reasoning": "Step 1 — find the weekly rate (slope): the total increases by £83 − £47 = £36 over 7 − 3 = 4 weeks, giving £36 ÷ 4 = £9 per week. Step 2 — find the joining fee (y-intercept): use the 3-week entry: £47 = £9 × 3 + joining_fee → joining_fee = £47 − £27 = £20. Verify: £9 × 7 + £20 = £63 + £20 = £83 ✓. The joining fee is £20 — the cost that existed before any weeks of storage had passed.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "Student reads £47 (the first entry in the ledger) as the joining fee, treating 'the first number I see' as 'the starting value'. They do not extend the line back to week zero — they conflate 'earliest data point' with 'value at x=0'.",
+          "misconception_id": "mis_linear_equations__believes_y_intercept_given_difference"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "Student computes the raw difference between the two totals (£83 − £47 = £36) and treats that as the joining fee. They mistake the total change across 4 weeks for the initial cost, confusing a rise in y with a y-intercept.",
+          "misconception_id": null
+        },
+        {
+          "choice_index": 3,
+          "error_type": "wrong_formula",
+          "student_thinking": "Student correctly computes the weekly rate (£9) but then names it as the joining fee, confusing the slope m with the y-intercept b in y = mx + b.",
+          "misconception_id": null
+        }
+      ],
+      "hints": [
+        "Find the weekly rate first: how much does the total change per week? Use both ledger entries — the difference in totals divided by the difference in weeks.",
+        "Rate = (83 − 47) ÷ (7 − 3) = 36 ÷ 4 = £9 per week. Now use one entry to work backwards: if 3 weeks costs £47 and each week adds £9, what was the cost at week 0?",
+        "Total = 9 × weeks + joining_fee. Plug in the 3-week row: 47 = 9 × 3 + joining_fee → joining_fee = 47 − 27 = £20. Check: 9 × 7 + 20 = 83 ✓"
+      ],
+      "world_feedback": "William writes £20 in the margin of his father's ledger. The chandler nods slowly: 'You found the starting price. Most who come in here just copy the first number they see. Your father's clock needs a sharp mind behind it — and it seems it has one.'",
+      "transfer_question": "A harbor porter charges a flat joining fee plus a daily rate. After 4 days the total owed is £38; after 10 days it is £74. Find the joining fee.",
+      "explanation": "The y-intercept is the output value when the input equals zero — here, the cost before any weeks of storage have passed. Students who read off the first data point (£47 at week 3) have confused 'first number given' with 'starting value'. The two-step process — slope first, then back-substitution — is what separates coordinate reasoning from single-point recall.",
+      "pedagogy_score": {
+        "math_integrity": 10,
+        "diagnostic_power": 9,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 9,
+        "representation_options": 7,
+        "transfer": 9
+      },
+      "gate_status": "approved",
+      "gate_passed": "A",
+      "tone_flags": [],
+      "persona_simulation": {
+        "fast_guesser": "fail",
+        "misconception_student_hit_primary": true,
+        "fast_guesser_correct": false
+      },
+      "queue_id": null
+    },
+    {
+      "id": "cell_fractions_decimals_3e8a15",
+      "generator_version": "scs-v1.1",
+      "title": "Simon's Grain Scale",
+      "world": "creature_sanctuary",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "fractions_decimals",
+      "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+      "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_denominator",
+      "misconception_label": "converts fraction to decimal by concatenating digits rather than dividing",
+      "level": 2,
+      "format": "multiple_choice",
+      "examTag": null,
+      "storyContext": "Simon's measuring strip shows three-eighths of the grain remaining; the sanctuary's digital scale needs a decimal entry, and a wrong number sets the night alarm at the wrong level.",
+      "narrative_need": "The night keeper relies on Simon's decimal log to set the scale alarm for the morning feed. A concatenated '0.38' would trigger the alarm too early, leaving the animals underfed — or too late, leaving them overfed and sick.",
+      "student_action": "Perform 3 ÷ 8 as long division to produce 0.375, not digit-concatenation. Recognise that the denominator tells you what to divide by, not a digit to copy.",
+      "question": "Simon's measuring strip — eight equal sections, the bottom three filled in green — records how much grain has been set aside for the morning feeding. The sanctuary's digital scale only accepts decimal input. What decimal should Simon write for three-eighths?",
+      "choices": ["0.38", "0.3", "0.375", "3.8"],
+      "correctIndex": 2,
+      "correct_reasoning": "3/8 means 3 ÷ 8. Long division: 3.000 ÷ 8 → 8 into 30 goes 3 times (3 × 8 = 24), remainder 6; 8 into 60 goes 7 times (7 × 8 = 56), remainder 4; 8 into 40 goes 5 times exactly. Result: 0.375. The denominator 8 tells you what to divide by — it is not a digit to place after the decimal point.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "wrong_formula",
+          "student_thinking": "Student reads 3/8 as 'three-point-eight' and writes 0.38, concatenating the numerator and denominator with a decimal point in between. They skip the required division operation entirely.",
+          "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_denominator"
+        },
+        {
+          "choice_index": 1,
+          "error_type": "unit_confusion",
+          "student_thinking": "Student reads only the numerator and writes 'three-tenths' (0.3), ignoring the denominator. They treat 3/8 as if the denominator were 10, defaulting to the most familiar decimal position.",
+          "misconception_id": null
+        },
+        {
+          "choice_index": 3,
+          "error_type": "wrong_formula",
+          "student_thinking": "Student concatenates the digits in the opposite direction — 3 as the whole-number part and 8 as the decimal part — writing 3.8. They do not notice that 3/8 < 1, so the result must also be less than 1.",
+          "misconception_id": null
+        }
+      ],
+      "hints": [
+        "A fraction means division: 3/8 means 3 divided by 8. You cannot read the digits as a decimal — you must carry out the division.",
+        "Set up long division: 3.000 ÷ 8. How many times does 8 go into 30? Write that digit after the decimal point, note the remainder, bring down the next zero, and repeat.",
+        "8 into 30: three times (3 × 8 = 24), remainder 6. 8 into 60: seven times (7 × 8 = 56), remainder 4. 8 into 40: five times exactly. So 3 ÷ 8 = 0.375."
+      ],
+      "world_feedback": "Simon enters 0.375 and the scale's needle settles precisely on the mark. 'Three-eighths isn't three-point-eight,' he murmurs, closing the logbook. 'It's three divided by eight — and that's a different creature entirely.' The night keeper files the reading and the animals settle quietly for the morning.",
+      "transfer_question": "A feeding tube delivers 5/8 of a litre of supplement per dose. Write 5/8 as a decimal for the digital pump display.",
+      "explanation": "Converting a fraction to a decimal requires division, not digit-copying. 3/8 means 'three divided by eight', and the result (0.375) cannot be inferred by reading the digits 3 and 8 in sequence. The long division scaffold makes the operation explicit: each step asks how many times 8 goes into the current dividend, tracking remainders into successive decimal places.",
+      "pedagogy_score": {
+        "math_integrity": 10,
+        "diagnostic_power": 9,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 10,
+        "representation_options": 7,
+        "transfer": 8
+      },
+      "gate_status": "approved",
+      "gate_passed": "A",
+      "tone_flags": [],
+      "persona_simulation": {
+        "fast_guesser": "fail",
+        "misconception_student_hit_primary": true,
+        "fast_guesser_correct": false
+      },
+      "queue_id": null
+    },
+    {
+      "id": "cell_ratios_proportions_9d2e47",
+      "generator_version": "scs-v1.1",
+      "title": "The Spice Merchant's Table",
+      "world": "market_world",
+      "primitive": "trade_price_bargain",
+      "conceptId": "ratios_proportions",
+      "ingredient_id": "ratios_proportions__unit_rate",
+      "misconception_id": "mis_ratios_proportions__thinks_difference_one_part_ratio",
+      "misconception_label": "subtracts quantity from price to find unit rate instead of dividing",
+      "level": 2,
+      "format": "multiple_choice",
+      "examTag": "ACT_ratios",
+      "storyContext": "William scans Kingston harbor's spice stalls to find the best pepper price. A merchant posts a notice board — but the price per bag only emerges if you divide correctly, not subtract.",
+      "narrative_need": "To compare two stalls fairly, William needs price per bag. Without the unit rate, he cannot tell which merchant is cheaper — he will pay more than he should for the voyage's provisions.",
+      "student_action": "Divide total price by quantity (20 ÷ 5) to find pence per one bag. Recognise that pence and bags are different units and cannot be subtracted from each other.",
+      "question": "A spice merchant at Kingston harbor posts this notice:\n\n| Pepper | Price |\n|---|---|\n| 5 bags | 20 pence |\n\nWilliam must find the price per bag to compare with the merchant next door. What is the price per bag?",
+      "choices": ["15 pence per bag", "4 pence per bag", "0.25 pence per bag", "100 pence per bag"],
+      "correctIndex": 1,
+      "correct_reasoning": "Unit rate means 'how much per one'. Price per bag = total price ÷ number of bags = 20 ÷ 5 = 4 pence per bag. Check: 4 pence × 5 bags = 20 pence ✓. Subtraction (20 − 5 = 15) fails because pence and bags are different units — you cannot subtract a count of bags from a count of pence any more than you can subtract kilograms from pounds.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "arithmetic",
+          "student_thinking": "Student computes 20 − 5 = 15, subtracting the number of bags from the total price. They treat the two table entries as if they can be combined by subtraction, failing to recognise that a rate requires dividing one quantity by the other.",
+          "misconception_id": "mis_ratios_proportions__thinks_difference_one_part_ratio"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "wrong_formula",
+          "student_thinking": "Student writes 5 ÷ 20 = 0.25, flipping numerator and denominator. They divide bags by pence rather than pence by bags, producing bags-per-penny instead of the asked pence-per-bag.",
+          "misconception_id": "mis_ratios_proportions__does_not_realise_ratio_worded"
+        },
+        {
+          "choice_index": 3,
+          "error_type": "wrong_formula",
+          "student_thinking": "Student multiplies 20 × 5 = 100, combining both values as if finding a total area or combined quantity. They have no model for rate as a division — they reach for multiplication because both numbers are 'in the problem'.",
+          "misconception_id": null
+        }
+      ],
+      "hints": [
+        "Unit rate means 'per one'. To find the price per ONE bag, ask: if I share 20 pence equally among 5 bags, how many pence does each bag get?",
+        "Sharing equally means division: 20 ÷ 5. Subtraction (20 − 5) would only make sense if pence and bags were the same kind of thing — but they are not.",
+        "20 ÷ 5 = 4 pence per bag. Always check: unit rate × quantity = total. 4 × 5 = 20 ✓. If your answer times 5 does not give 20 pence, go back."
+      ],
+      "world_feedback": "William marks '4 pence per bag' in his provisioning log and moves to the next stall. The first merchant watches him go: 'Clever lad. Most just look at the two numbers and take away the smaller.' William does not look back — he already knows which stall wins.",
+      "transfer_question": "A chandler sells rope: 8 metres for 32 pence. Find the price per metre.",
+      "explanation": "Unit rate means 'per one unit' — it requires dividing the measured total by the count to rescale to a single-unit basis. The subtraction error (20 − 5 = 15) treats pence and bags as the same kind of quantity, confusing an additive comparison with a multiplicative rate. The check (unit rate × quantity = total) reinforces that unit rate is a multiplicative, not additive, relationship.",
+      "pedagogy_score": {
+        "math_integrity": 10,
+        "diagnostic_power": 9,
+        "cognitive_load": 7,
+        "agency": 8,
+        "emotional_safety": 10,
+        "representation_options": 7,
+        "transfer": 9
+      },
+      "gate_status": "approved",
+      "gate_passed": "A",
+      "tone_flags": [],
+      "persona_simulation": {
+        "fast_guesser": "fail",
+        "misconception_student_hit_primary": true,
+        "fast_guesser_correct": false
+      },
+      "queue_id": null
+    }
+  ]
+}
