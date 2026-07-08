@@ -22,7 +22,7 @@ export interface HighlightSpan {
 }
 
 const ASK_PATTERNS = [
-  /\b(find|solve for|determine|calculate|compute|what is|how many|how much|which|evaluate)\b/i,
+  /\b(find|solve for|determine|calculate|compute|what is|how many|how much|which|evaluate|choose|select|identify|simplify|expand|factorise|factorize|write)\b/i,
 ]
 
 function clipWords(text: string, max = 12): string {
@@ -53,8 +53,14 @@ export function extractHighlights(questionText: string): HighlightSpan[] {
   const numMatch = plain.match(/\b\d+(?:\.\d+)?\b/)
   if (numMatch?.[0]) spans.push({ phrase: numMatch[0], kind: 'given' })
 
-  const focusMatch = plain.match(/\b(?:the|a|an)\s+[a-z][\w\s-]{2,28}/i)
-  if (focusMatch?.[0]) spans.push({ phrase: focusMatch[0].trim(), kind: 'focus' })
+  // Only add a focus highlight if no ask was found AND the match doesn't land
+  // at position 0 (which just highlights the subject of the sentence, not the key ask).
+  if (!spans.some(s => s.kind === 'ask')) {
+    const focusMatch = plain.match(/\b(?:the|a|an)\s+[a-z][\w\s-]{2,28}/i)
+    if (focusMatch?.[0] && (focusMatch.index ?? 0) > 5) {
+      spans.push({ phrase: focusMatch[0].trim(), kind: 'focus' })
+    }
+  }
 
   return spans.slice(0, 3)
 }
