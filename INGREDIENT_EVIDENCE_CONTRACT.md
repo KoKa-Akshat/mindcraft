@@ -296,7 +296,7 @@ Add when `/check-work` + step_rules return verdicts on submit:
 |----------|--------|---------|
 | `POST /record-outcomes` | ✅ | Concept mastery + observations |
 | `POST /check-work` | ✅ | Line-by-line equivalence |
-| `POST /record-work-evidence` | ❌ | Ingredient mastery from steps |
+| `POST /record-work-evidence` | ✅ | Ingredient mastery from steps (live on HF Space 2026-07-08) |
 | `POST /recommend` + `misconceptionGaps[]` | ❌ | Tier-3 weak spot |
 
 ---
@@ -312,21 +312,21 @@ Add when `/check-work` + step_rules return verdicts on submit:
 | Story Cells with `ingredient_id` + taxonomy | Fable 5 | 🟡 6/12 pilot |
 | `enrich_questions.py` (cold-start taxonomy) | Engine | ✅ Script exists |
 | `aggregate_misconception_evidence.py` | Codex | ✅ Report only |
-| `step_rules.py` + rule chips UI | Blake + Product | ❌ §2b |
-| `POST /record-work-evidence` | Blake | ❌ §2d |
+| `step_rules.py` (engine side) | Blake | ✅ Live on HF Space (rule chips UI still ❌ Product) |
+| `POST /record-work-evidence` | Blake | ✅ Live on HF Space (correlated-step cap included) |
 | `attempt_fusion` + alignment | Blake + Cursor | ❌ |
 | `update_distractor_priors.py` | Blake | ❌ Spec §5 |
 | `enrich_combinations_from_bank.py` | Blake | ❌ This doc §6 |
-| `misconceptionGaps[]` on `/recommend` | Blake | ❌ Spec V2 §3 |
+| `misconceptionGaps[]` on `/recommend` | Blake | ❌ Build file: `agent_work/cross-cutting/TIER3_MISCONCEPTION_GAPS_PLAN.md` (Task E1) |
 | `ingredient_path_expectations.json` | Blake + Fable 5 | ❌ |
 
 ---
 
 ## 11. Co-founder work order (recommended)
 
-1. **`step_rules.py`** — classify each verified work line → `rule_id` + `ingredientIds[]`; extend `/check-work` response with `verdictPerLine[].rule`.
-2. **`POST /record-work-evidence`** — cap correlated step weight per problem (plan §2d).
-3. **`attempt_fusion` writer** — on Practice/GradeOnboard submit when ink + choice both exist; compute `alignment`.
+1. ~~**`step_rules.py`**~~ ✅ DONE — shipped + deployed 2026-07-08; `/check-work` returns `verdictPerLine[].rule`.
+2. ~~**`POST /record-work-evidence`**~~ ✅ DONE — shipped + deployed 2026-07-08.
+3. **`attempt_fusion` writer** ← **UNBLOCKED, next up** (Task F1 in `agent_work/cross-cutting/TIER3_MISCONCEPTION_GAPS_PLAN.md`) — on Practice/GradeOnboard submit when ink + choice both exist; compute `alignment`.
 4. **`enrich_combinations_from_bank.py`** — dry-run report; Blake reviews before ontology touch.
 5. **`update_distractor_priors.py`** — after ~500 observations per concept.
 6. **`ingredient_path_expectations.json`** — seed from Story Cell pilot (3 concepts × 4 cells).
