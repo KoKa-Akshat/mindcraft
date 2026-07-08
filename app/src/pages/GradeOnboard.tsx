@@ -323,6 +323,9 @@ export default function GradeOnboard() {
                   <div className={s.guideRow}>
                     <div className={s.guideBody}>
                       <div className={s.probePanel}>
+                        {currentQ?.storyIntro && (
+                          <p className={s.storyIntroBlock}>{currentQ.storyIntro}</p>
+                        )}
                         {currentQ?.storyContext && (
                           <p className={s.probeStoryLine}><MathText text={currentQ.storyContext} /></p>
                         )}

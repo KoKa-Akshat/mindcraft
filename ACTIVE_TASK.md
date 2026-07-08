@@ -18,6 +18,12 @@ Add the `storyIntro` rich narrative scene block. Three files to touch:
 
 Verify: `npm run build` passes. Commit, push to main.
 
+✅ Done (Fable 5) — `storyIntro?: string` added to `Question`; storyContext only actually
+renders in `GradeOnboard.tsx` (spec's assumed `book/QuestionPage.tsx` doesn't exist), so the
+italic `.storyIntroBlock` was added to `GradeOnboard.module.css` and rendered above the
+existing `storyContext` line there; 6 storyCells.json cells (fractions_decimals ×2,
+linear_equations ×2, ratios_proportions ×2) got real storyIntro content. `npm run build` green.
+
 **Do NOT touch:** `ml/**`, `homework/**`, `webhook/**`, `index.html`
 
 ---

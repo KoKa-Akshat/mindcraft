@@ -46,6 +46,8 @@ export interface Question {
   ingredient_id?: string
   /** Scene setter for story-first delivery (OpenStax MCQ, Story Cells, ACT master). */
   storyContext?: string
+  /** Immersive narrative scene (3–4 sentences, ≤500 chars) rendered above storyContext. Optional. */
+  storyIntro?: string
 }
 
 export function resolveChoiceEvidence(
@@ -125,6 +127,7 @@ function loadStoryCellQuestions(existingIds: Set<string>): Question[] {
       format: normalizeBankFormat(c.format) ?? 'word_problem',
       examTag: normalizeExamTag(c.examTag),
       storyContext: compactStoryContext(c.storyContext),
+      storyIntro: typeof c.storyIntro === 'string' ? c.storyIntro : undefined,
       misconception_id: typeof c.misconception_id === 'string' ? c.misconception_id : undefined,
       misconception_label: typeof c.misconception_label === 'string' ? c.misconception_label : undefined,
       distractor_taxonomy: Array.isArray(c.distractor_taxonomy)
