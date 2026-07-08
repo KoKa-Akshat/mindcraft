@@ -11,6 +11,11 @@
 | Marketing nav + stats + about fix | Claude Code | `index.html` | ✅ Done |
 | Jarvis on-screen journal guide | Cursor | `app/src/lib/journalGuide.ts`, `app/src/hooks/useJournalGuide.ts`, `app/src/components/JarvisGuide.tsx`, `app/src/components/JarvisGuide.module.css`, `app/src/components/HighlightedStem.tsx`, `app/src/components/HighlightedStem.module.css`, `app/src/components/ScratchTranscriptionPane.module.css`, `app/src/pages/ConceptChapterPage.tsx`, `app/src/pages/ConceptChapterPage.module.css`, `app/src/pages/GradeOnboard.tsx`, `app/src/pages/GradeOnboard.module.css` | ✅ Done |
 | UX fixes (7 items) | Claude Code | see below | ✅ Done |
+| Ingredient story cells + evidence reports | Codex | `ml/scripts/pipeline/story_cell_studio.py`, `ml/scripts/enrich_questions.py`, `ml/scripts/aggregate_misconception_evidence.py`, `ml/data/story_cells/batch_ingredient_v1.json`, `ml/data/story_cells/dry_run_ingredient_v1.json`, `ml/data/enriched/eediQuestions.json`, `ml/data/enriched/openstaxMCQ.json`, `ml/data/enrich_report.json`, `ml/data/misconception_evidence_report.json`, `ml/data/.story_cell_cache.json` | ✅ Done |
+| Story Intelligence spec v2 — agent-loop human gates, diagnostic IG selection, worstWeakness tier 3, voice skins | Claude (architecture) | `STORY_INTELLIGENCE_SPEC_V2.md` (new), `CLAUDE_HANDOFF.md` (lane rows + done markers), `ACTIVE_TASK.md` | ✅ Done — design only, no code touched; implementation lanes assigned in spec §5 |
+
+**Codex ML summary (2026-07-08):** ✅ Done — story studio `--per-concept`, aggregate + enrich scripts, 99 ingredient cells structurally valid.
+⚠️ **Quality gate:** deterministic fallback = same tank stem ×99 — **do not ship to app** until LLM batch completes. Use `python3 ml/scripts/merge_story_cells_for_app.py` (ships 3 LLM cells only).
 
 **UX fix summary (2026-07-08):**
 - ✅ Fix 1 — Jarvis right-side only: removed `<JarvisGuide side="question">` from `ConceptChapterPage.tsx` and `GradeOnboard.tsx`; added `user-select: none; cursor: default` to `HighlightedStem.module.css`.
