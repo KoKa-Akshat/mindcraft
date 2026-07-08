@@ -64,11 +64,11 @@ Decisions this plan adds (the brief left them open):
    modal choice index among that student's hits.
 
 Tests (`ml/tests/test_misconception_gaps.py`):
-- [ ] 2 hits / 3 attempts on one misconception, no priors → severity 0.4,
+- [x] 2 hits / 3 attempts on one misconception, no priors → severity 0.4,
       emitted.
-- [ ] 1 hit / 1 attempt, no priors → NOT emitted (below 2-attempt floor).
-- [ ] Observation older than 60d ignored.
-- [ ] Known Eedi misconception maps to its ingredient via the reverse map;
+- [x] 1 hit / 1 attempt, no priors → NOT emitted (below 2-attempt floor).
+- [x] Observation older than 60d ignored.
+- [x] Known Eedi misconception maps to its ingredient via the reverse map;
       unknown slug emits with null ingredientId.
 - [ ] end2end still green; deploy via `deploy_hf.sh`; live `/recommend`
       for the test student returns the field (empty array is fine).
@@ -106,8 +106,8 @@ contract's deterministic table (no LLM), store per contract §9
 `attempt_fusions` schema. Server-side in `/record-work-evidence` (it
 already receives the steps; extend its payload with the outcome fields
 rather than adding a new endpoint).
-- [ ] Unit tests: one fixture per alignment value.
-- [ ] `confirmed` fusion boosts the same ingredient's negative evidence
+- [x] Unit tests: one fixture per alignment value.
+- [x] `confirmed` fusion boosts the same ingredient's negative evidence
       weight vs outcome-only (respect Layer-4 ambiguous policy: `ambiguous`
       gets minimal weight).
 

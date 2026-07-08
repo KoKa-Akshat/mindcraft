@@ -155,7 +155,15 @@ export default function Dashboard() {
 
   function goChallenge() {
     if (weakness) {
-      navigate('/practice', { state: { conceptId: weakness.conceptId, missionType: 'weakness' } })
+      navigate('/practice', {
+        state: {
+          conceptId: weakness.conceptId,
+          missionType: 'weakness',
+          formatId: weakness.formatId,
+          ingredientId: weakness.ingredientId,
+          misconceptionId: weakness.misconceptionId,
+        },
+      })
     } else {
       navigate('/practice')
     }

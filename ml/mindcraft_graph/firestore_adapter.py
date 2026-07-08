@@ -185,11 +185,66 @@ def load_attempt_observations(student_id: str, limit: int = 2000) -> list[dict]:
                 "level": int(d.get("level", 1)),
                 "correct": float(d.get("correct", 0.0)),
                 "question_id": d.get("questionId"),
+                "selected_choice_index": d.get("selectedChoiceIndex"),
+                "misconception_id": d.get("misconceptionId"),
+                "error_type": d.get("errorType"),
                 "timestamp": _to_naive(d.get("timestamp", datetime.now())),
             })
         return out
     except Exception:
         return []
+
+
+def load_recent_attempt_observations(student_id: str, limit: int = 200) -> list[dict]:
+    """Read recent per-question observations with outcome-stream fields."""
+    try:
+        docs = (
+            db.collection("attempt_observations")
+            .where("studentId", "==", student_id)
+            .order_by("timestamp", direction=firestore.Query.DESCENDING)
+            .limit(limit)
+            .stream()
+        )
+        out = []
+        for doc in docs:
+            d = doc.to_dict()
+            out.append({
+                "student_id": student_id,
+                "concept_id": d.get("conceptId"),
+                "format_id": d.get("formatId"),
+                "level": int(d.get("level", 1)),
+                "correct": float(d.get("correct", 0.0)),
+                "question_id": d.get("questionId"),
+                "selected_choice_index": d.get("selectedChoiceIndex"),
+                "misconception_id": d.get("misconceptionId"),
+                "error_type": d.get("errorType"),
+                "timestamp": _to_naive(d.get("timestamp", datetime.now())),
+            })
+        return out
+    except Exception:
+        return []
+
+
+def append_attempt_fusion(student_id: str, fusion: dict, now: datetime) -> str:
+    """Append one joined outcome/process attempt record."""
+    payload = {
+        "studentId": student_id,
+        "questionId": fusion.get("questionId"),
+        "conceptId": fusion.get("conceptId"),
+        "formatId": fusion.get("formatId"),
+        "level": int(fusion.get("level", 1)),
+        "correct": float(fusion.get("correct", 0.0)),
+        "selectedChoiceIndex": fusion.get("selectedChoiceIndex"),
+        "misconceptionId": fusion.get("misconceptionId"),
+        "errorType": fusion.get("errorType"),
+        "ingredientId": fusion.get("ingredientId"),
+        "processSteps": fusion.get("processSteps", []),
+        "alignment": fusion.get("alignment"),
+        "firstBrokenLine": fusion.get("firstBrokenLine"),
+        "timestamp": now,
+    }
+    _, ref = db.collection("attempt_fusions").add(payload)
+    return ref.id
 
 
 def load_format_events(student_id: str, limit: int = 500) -> list[SessionEvent]:
@@ -309,6 +364,7 @@ def save_recommendation_result(student_id: str, result: dict):
         "mode": result.get("mode"),
         "recommendations": result.get("recommendations", []),
         "studentProfile": result.get("studentProfile", {}),
+        "misconceptionGaps": result.get("misconceptionGaps", []),
     })
 
 
