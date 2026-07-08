@@ -50,27 +50,7 @@
   position: relative;
 }
 
-.goalTextarea {
-  display: block;
-  width: 100%;
-  margin-bottom: 24px;
-  padding: 14px 16px;
-  background: #fbf8f3;
-  border: 1.5px solid #e6ddd0;
-  border-radius: 2px;
-  font: 400 14px/22px "Source Serif 4", serif;
-  color: #1c1a17;
-  resize: vertical;
-  min-height: 96px;
-  box-sizing: border-box;
-}
-.goalTextarea::placeholder {
-  color: #9a9288;
-}
-.goalTextarea:focus {
-  outline: none;
-  border-color: #1d3a8a;
-}
+/* .goalTextarea is replaced by .goalInput — kept as a no-op */
 
 .desk:has(.probeBook) {
   padding: 3px 8px 8px;
@@ -195,22 +175,21 @@
 /* --- Grade selector --- */
 .gradeRow {
   display: flex;
-  gap: 8px;
-  margin-bottom: 28px;
+  gap: 10px;
+  margin-bottom: 8px;
   flex-wrap: wrap;
 }
 .gradeBtn {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 72px;
+  width: 80px;
   height: 80px;
   background: #fbf8f3;
   border: 1.5px solid #e6ddd0;
   border-radius: 2px;
   cursor: pointer;
-  transition: border-color 160ms, background 160ms, transform 120ms;
+  transition: border-color 140ms, background 140ms, transform 110ms;
 }
 .gradeBtn:hover {
   border-color: #1d3a8a;
@@ -220,56 +199,81 @@
   background: #1c1a17;
   border-color: #1c1a17;
 }
-.gradeBtnActive .gradeNum,
-.gradeBtnActive .gradeLabel {
+.gradeBtnActive .gradeNum {
   color: #f7f3ee;
 }
 .gradeNum {
-  font: 700 28px/1 "Space Grotesk", sans-serif;
+  font: 700 32px/1 "Space Grotesk", sans-serif;
   color: #1c1a17;
   letter-spacing: -0.04em;
 }
-.gradeLabel {
-  font: 400 10px/1 "IBM Plex Mono", monospace;
-  color: #6f6a61;
-  margin-top: 2px;
+
+/* --- Goal input (replaces chip grid) --- */
+.goalInputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
-/* --- Goal grid --- */
-.goalGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 28px;
-}
-.goalCard {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  padding: 14px 16px;
+.goalInput {
+  flex: 1;
+  padding: 12px 14px;
   background: #fbf8f3;
   border: 1.5px solid #e6ddd0;
   border-radius: 2px;
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 160ms, background 160ms;
-}
-.goalCard:hover {
-  border-color: #1d3a8a;
-}
-.goalCardActive {
-  background: rgba(29,58,138,0.06);
-  border-color: #1d3a8a;
-}
-.goalLabel {
-  font: 600 14px/1.1 "Space Grotesk", sans-serif;
+  font: 400 15px/22px "Source Serif 4", serif;
   color: #1c1a17;
-  letter-spacing: -0.01em;
+  outline: none;
+  transition: border-color 140ms;
 }
-.goalDetail {
+.goalInput::placeholder { color: #9a9288; }
+.goalInput:focus { border-color: #1d3a8a; }
+
+.voiceBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  border: 1.5px solid #e6ddd0;
+  background: #fbf8f3;
+  color: #6f6a61;
+  cursor: pointer;
+  transition: border-color 140ms, background 140ms, color 140ms;
+}
+.voiceBtn:hover { border-color: #1d3a8a; color: #1d3a8a; }
+
+.voiceBtnActive {
+  border-color: #c1121f;
+  background: rgba(193,18,31,0.06);
+  color: #c1121f;
+  animation: voicePulse 1s ease-in-out infinite;
+}
+@keyframes voicePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(193,18,31,0); }
+  50%       { box-shadow: 0 0 0 5px rgba(193,18,31,0.15); }
+}
+
+.voiceBtnDone {
+  border-color: #3a5a30;
+  color: #3a5a30;
+}
+
+.voiceHint {
   font: 400 11px/16px "IBM Plex Mono", monospace;
   color: #6f6a61;
+  letter-spacing: 0.04em;
+  margin: 0 0 14px;
+}
+
+.goalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 4px;
 }
 
 /* --- Story card --- */

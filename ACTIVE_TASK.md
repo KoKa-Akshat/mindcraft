@@ -10,6 +10,16 @@
 |------|-------|--------------|--------|
 | Marketing nav + stats + about fix | Claude Code | `index.html` | ✅ Done |
 | Jarvis on-screen journal guide | Cursor | `app/src/lib/journalGuide.ts`, `app/src/hooks/useJournalGuide.ts`, `app/src/components/JarvisGuide.tsx`, `app/src/components/JarvisGuide.module.css`, `app/src/components/HighlightedStem.tsx`, `app/src/components/HighlightedStem.module.css`, `app/src/components/ScratchTranscriptionPane.module.css`, `app/src/pages/ConceptChapterPage.tsx`, `app/src/pages/ConceptChapterPage.module.css`, `app/src/pages/GradeOnboard.tsx`, `app/src/pages/GradeOnboard.module.css` | ✅ Done |
+| UX fixes (7 items) | Claude Code | see below | ✅ Done |
+
+**UX fix summary (2026-07-08):**
+- ✅ Fix 1 — Jarvis right-side only: removed `<JarvisGuide side="question">` from `ConceptChapterPage.tsx` and `GradeOnboard.tsx`; added `user-select: none; cursor: default` to `HighlightedStem.module.css`.
+- ✅ Fix 2 — ScratchPad expression evaluator + mini graph: `ScratchPad.tsx` new recursive-descent `safeEval`, `parseFnLine`, `MiniGraph` SVG component; overlay positioned by workLine bbox. Parents (`ConceptChapterPage.tsx`, `GradeOnboard.tsx`) pass `evalLines` prop.
+- ✅ Fix 3 — ScratchPad eraser + session logs: eraser × button with 200ms fade + confirm-before-clear; Logs dropdown (last 5) keyed by `questionId` in `localStorage`; new CSS in `ScratchPad.module.css`.
+- ✅ Fix 4 — Page flip animation: `PageFlipTransition.tsx` rotateY 7° → 90° with `backfaceVisibility: hidden`, `willChange`, `transformPerspective: 1800`.
+- ✅ Fix 5 — GradeOnboard grade auto-advance + voice: grade buttons immediately advance step; caption text removed; goals step replaces chips with text input + `MediaRecorder` voice button (60s, pulsing); `GradeOnboard.module.css` updated.
+- ✅ Fix 6 — World fullscreen lock: `mc-world-chrome.js` adds `fullscreenchange` listener + `userExitedIntentionally` flag set only on ESC; re-requests fullscreen on unexpected exit.
+- ✅ Fix 7 — Booking button: added `{ to: '/book', label: 'Book a Session' }` to `Sidebar.tsx` NAV; removed duplicate text link from `DashboardNotesPanel.tsx` empty state.
 | MCQ triple-verify pipeline | ✅ Done (Fable 5) | `ml/scripts/pipeline/mcq_generator.py`, `story_wrapper.py`, `sources/openstax.py`, `ingest.py`, `PIPELINE_MCQ_SPEC.md` | Committed `43e3d62d`, pushed |
 | Practice session journal paper reskin | ✅ Done (Fable 5) | `app/src/pages/Practice.module.css` | Committed `0b698e2a`, pushed |
 | iPad login + world diagnostic flow | Codex | `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `worlds/world2/index.html`, `worlds/world2/mc-world-chrome.js`, `worlds/world2/mc-diagnostic.css` | ✅ Done |

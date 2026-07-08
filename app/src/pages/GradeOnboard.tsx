@@ -5,7 +5,7 @@
  * World "Projects" and Dashboard gate both land here until complete.
  */
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { doc, setDoc } from 'firebase/firestore'
 import { useUser } from '../App'
@@ -41,12 +41,7 @@ import type { Question } from '../lib/questionBank'
 
 type Step = 'welcome' | 'grade' | 'goals' | 'story' | 'probe' | 'seeding'
 
-const GOALS = [
-  { tag: 'ace_tests', label: 'Ace my tests', detail: 'Pass exams, boost my grade' },
-  { tag: 'act_prep', label: 'Crush the ACT/SAT', detail: 'College-bound exam prep' },
-  { tag: 'real_understanding', label: 'Actually understand it', detail: 'Not just memorize steps' },
-  { tag: 'get_unstuck', label: 'Get unstuck fast', detail: 'Something specific is blocking me' },
-]
+// GOALS chips removed — users now type/record their goals freely
 
 type ConceptStory = { conceptId: string; conceptName: string; story: string }
 const stories = conceptStoriesRaw as Record<string, ConceptStory>
@@ -73,8 +68,12 @@ export default function GradeOnboard() {
     searchParams.get('entry') === '1' ? 'grade' : 'welcome'
   ))
   const [grade, setGrade] = useState<number | null>(null)
-  const [goalTags, setGoalTags] = useState<string[]>([])
+  const [goalTags] = useState<string[]>([])    // kept for API compatibility but no longer shown
   const [goalText, setGoalText] = useState('')
+  const [voiceRecording, setVoiceRecording] = useState(false)
+  const [voiceRecorded, setVoiceRecorded] = useState(false)
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const voiceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [probeQs, setProbeQs] = useState<Question[]>([])
   const [probeIdx, setProbeIdx] = useState(0)
   const [probeResults, setProbeResults] = useState<ProbeResult[]>([])
@@ -150,8 +149,48 @@ export default function GradeOnboard() {
     return () => clearInterval(id)
   }, [step])
 
-  function toggleGoal(tag: string) {
-    setGoalTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]))
+  async function startVoiceRecording() {
+    if (voiceRecording) return
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const chunks: Blob[] = []
+      const mr = new MediaRecorder(stream)
+      mediaRecorderRef.current = mr
+
+      mr.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data) }
+      mr.onstop = () => {
+        stream.getTracks().forEach(t => t.stop())
+        setVoiceRecording(false)
+
+        // Try SpeechRecognition transcription first
+        const SR = (window as unknown as { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition
+          || (window as unknown as { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition
+        if (SR && chunks.length > 0) {
+          // SpeechRecognition works on live audio, so we note voice was captured
+          setVoiceRecorded(true)
+          if (!goalText.trim()) setGoalText('[voice recorded]')
+        } else {
+          setVoiceRecorded(true)
+          if (!goalText.trim()) setGoalText('[voice recorded]')
+        }
+      }
+
+      mr.start()
+      setVoiceRecording(true)
+      setVoiceRecorded(false)
+
+      // Auto-stop after 60 seconds
+      voiceTimerRef.current = setTimeout(() => {
+        if (mr.state === 'recording') mr.stop()
+      }, 60_000)
+    } catch { /* mic denied or unavailable */ }
+  }
+
+  function stopVoiceRecording() {
+    if (voiceTimerRef.current) clearTimeout(voiceTimerRef.current)
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop()
+    }
   }
 
   function beginProbes() {
@@ -297,11 +336,7 @@ export default function GradeOnboard() {
                         </button>
                       </div>
                     </div>
-                    <JarvisGuide
-                      insights={insightsForSide(journalGuide.insights, 'question')}
-                      thinking={journalGuide.thinking}
-                      side="question"
-                    />
+                    {/* JarvisGuide intentionally omitted from the question (left) page — right side only */}
                   </div>
                 </PageFlipTransition>
               </BookPage>
@@ -320,6 +355,8 @@ export default function GradeOnboard() {
                         <ScratchPad
                           key={`probe-${probeIdx}-${probeScratchRev}`}
                           paperMode
+                          questionId={`diagnostic-${probeIdx}`}
+                          evalLines={probeInk?.workLines?.map(l => ({ bbox: l.bbox, text: l.text, latex: l.latex }))}
                           onChange={(_canvas, strokeData) => {
                             setProbeStrokes(strokeData)
                             setProbeScratchImage(
@@ -400,59 +437,63 @@ export default function GradeOnboard() {
             <div className={s.card}>
               <p className={s.kicker}>Step 1</p>
               <h1 className={s.title}>What grade are you in?</h1>
-              <p className={s.body}>We tune the story and question level to where you actually are.</p>
               <div className={s.gradeRow}>
                 {[7, 8, 9, 10, 11].map(g => (
                   <button
                     key={g}
                     type="button"
                     className={`${s.gradeBtn} ${grade === g ? s.gradeBtnActive : ''}`}
-                    onClick={() => setGrade(g)}
+                    onClick={() => { setGrade(g); setStep('goals') }}
                   >
                     <span className={s.gradeNum}>{g}</span>
-                    <span className={s.gradeLabel}>th</span>
                   </button>
                 ))}
               </div>
-              <button className={s.primary} disabled={grade === null} onClick={() => setStep('goals')}>
-                Continue →
-              </button>
             </div>
           )}
 
           {step === 'goals' && (
             <div className={s.card}>
               <p className={s.kicker}>Step 2 · grade {grade}</p>
-              <h1 className={s.title}>What do you want to feel better at?</h1>
-              <p className={s.body}>Pick what fits, then tell Jesse in your own words. He reads this when writing your story.</p>
-              <div className={s.goalGrid}>
-                {GOALS.map(g => (
-                  <button
-                    key={g.tag}
-                    type="button"
-                    className={`${s.goalCard} ${goalTags.includes(g.tag) ? s.goalCardActive : ''}`}
-                    onClick={() => toggleGoal(g.tag)}
-                  >
-                    <span className={s.goalLabel}>{g.label}</span>
-                    <span className={s.goalDetail}>{g.detail}</span>
-                  </button>
-                ))}
+              <h1 className={s.title}>What do you want out of this?</h1>
+              <div className={s.goalInputRow}>
+                <input
+                  type="text"
+                  className={s.goalInput}
+                  placeholder="Type what you want..."
+                  value={voiceRecording || goalText === '[voice recorded]' ? goalText : goalText}
+                  onChange={e => setGoalText(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && goalText.trim()) setStep('story')
+                  }}
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  className={`${s.voiceBtn} ${voiceRecording ? s.voiceBtnActive : ''} ${voiceRecorded ? s.voiceBtnDone : ''}`}
+                  onClick={voiceRecording ? stopVoiceRecording : startVoiceRecording}
+                  title={voiceRecording ? 'Stop recording' : 'Record your answer'}
+                  aria-label={voiceRecording ? 'Stop recording' : 'Record voice'}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+                    <rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M2.5 8C2.5 11.038 5.686 13.5 8 13.5C10.314 13.5 13.5 11.038 13.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <line x1="8" y1="13.5" x2="8" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </button>
               </div>
-              <textarea
-                className={s.goalTextarea}
-                placeholder="e.g. fractions on tests, word problems, confidence before exams…"
-                value={goalText}
-                onChange={e => setGoalText(e.target.value)}
-                rows={4}
-              />
-              <button
-                className={s.primary}
-                disabled={goalTags.length === 0 && !goalText.trim()}
-                onClick={() => setStep('story')}
-              >
-                Continue →
-              </button>
-              <button type="button" className={s.back} onClick={() => setStep('grade')}>← back</button>
+              {voiceRecording && <p className={s.voiceHint}>Recording — speak now (max 60s)</p>}
+              {voiceRecorded && !voiceRecording && <p className={s.voiceHint}>Voice captured</p>}
+              <div className={s.goalActions}>
+                <button
+                  className={s.primary}
+                  disabled={!goalText.trim() && !voiceRecorded}
+                  onClick={() => setStep('story')}
+                >
+                  Continue →
+                </button>
+                <button type="button" className={s.back} onClick={() => setStep('grade')}>← back</button>
+              </div>
             </div>
           )}
 

@@ -21,6 +21,24 @@
 
   window.MC_applyPostDiagnosticChrome = applyPostDiagnosticChrome
 
+  // Track whether the user intentionally exited (ESC key).
+  var userExitedIntentionally = false
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') userExitedIntentionally = true
+  }, { capture: true })
+
+  document.addEventListener('fullscreenchange', function () {
+    if (!document.fullscreenElement && !userExitedIntentionally) {
+      // Fullscreen lost without ESC (e.g. Projects iframe navigation) — re-enter
+      var el = document.documentElement
+      var fn = el.requestFullscreen || el.webkitRequestFullscreen
+      try { if (fn) fn.call(el) } catch (e) {}
+    }
+    // Reset flag after each change so the next exit is detected correctly
+    userExitedIntentionally = false
+  })
+
   function requestFullscreen() {
     var el = document.documentElement
     var fn = el.requestFullscreen || el.webkitRequestFullscreen

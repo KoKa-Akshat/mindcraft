@@ -672,11 +672,7 @@ export default function ConceptChapterPage() {
         )}
           </div>
         </div>
-        <JarvisGuide
-          insights={insightsForSide(journalGuide.insights, 'question')}
-          thinking={journalGuide.thinking}
-          side="question"
-        />
+        {/* JarvisGuide intentionally omitted from the question (left) page — right side only */}
       </div>
     )
   }
@@ -717,6 +713,8 @@ export default function ConceptChapterPage() {
           <ScratchPad
             key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
             paperMode
+            questionId={`${conceptId}-q${qIdx}`}
+            evalLines={scratchInk[qIdx]?.workLines?.map(l => ({ bbox: l.bbox, text: l.text, latex: l.latex }))}
             lineOverlays={(() => {
               const lines = scratchInk[qIdx]?.workLines ?? []
               const overlays: LineOverlay[] = lines
