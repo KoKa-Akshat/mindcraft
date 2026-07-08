@@ -1,0 +1,2895 @@
+{
+  "_meta": {
+    "generated_at": "2026-07-08T19:56:40.102280+00:00",
+    "mode": "dry_run",
+    "firestore_project": null,
+    "top_n": 30,
+    "n_questions": 46,
+    "n_ready": 0,
+    "n_needs_world_feedback": 46,
+    "note": "After Fable 5 fills world_feedback on distractor entries: run with --merge to apply to eediQuestions.json. world_feedback rules: ≤200 chars, names the cognitive error through what the student was trying to do, never says 'wrong'."
+  },
+  "questions": [
+    {
+      "id": "eedi_180",
+      "conceptId": "geometric_transformations",
+      "level": 1,
+      "question": "Which image completes a symmetric figure using the red line of symmetry? (Diagram: A figure drawn in the upper half of a box with a red dotted line immediately below.)",
+      "choices": [
+        "![The correct completion of the figure given in the question. ]()",
+        "![An incorrect completion of the figure given in the question. ]()",
+        "![An incorrect completion of the figure given in the question. ]()",
+        "![An incorrect completion of the figure given in the question. ]()"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is ![The correct completion of the figure given in the question. ](). A common mistake here: Translates rather than reflects across a line of symmetry.  Double-check each step in complete a symmetric figure with respect to a specific line of symmetry to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of complete a symmetric figure with respect to a specific line of symmetry that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_geometric_transformations__translates_rather_than_reflects_across",
+      "misconception_label": "Translates rather than reflects across a line of symmetry",
+      "storyContext": "The Alhambra, Granada, 1936. Maurits studies the tiles. Slide it, flip it, turn it — and ask what stays the same.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_geometric_transformations__translates_rather_than_reflects_across",
+          "distractor_label": "Translates rather than reflects across a line of symmetry",
+          "error_type": "misconception",
+          "student_thinking": "Translates rather than reflects across a line of symmetry",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+          "distractor_label": "Fails to reflect across mirror line",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+          "distractor_label": "Fails to reflect across mirror line",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+        "student_hits": 33,
+        "score": 117.326,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_188",
+      "conceptId": "geometric_transformations",
+      "level": 2,
+      "question": "Tom and Katie are arguing about how to reflect the object in the line of reflection. Who reflects it correctly? (Diagram: A grid with a left-leaning parallelogram drawn in the upper half and a blue line across the middle, marked 'line of reflection'.) (Diagram: Tom does this: an image of a grid with a left-leaning parallelogram drawn in the upper half, a blue line across the middle and a left-leaning parallelogram drawn immediately below.) (Diagram: Katie does this: An image of a grid with a left-leaning parallelogram drawn in the upper half, a blue line across the middle and a left-leaning parallelogram drawn one line down from the blue line.)",
+      "choices": [
+        "Only Tom",
+        "Only Katie",
+        "Both Tom and Katie",
+        "Neither is correct"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is Neither is correct. A common mistake here: Fails to reflect across mirror line.  Double-check each step in reflect an object or a point in a horizontal line with the line of reflection drawn, where the line of reflection lies on the edge or outside the object to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of reflect an object or a point in a horizontal line with the line of reflection drawn, where the line of reflection lies on the edge or outside the object that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "coordinate_graph",
+      "misconception_id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+      "misconception_label": "Fails to reflect across mirror line",
+      "storyContext": "The Alhambra, Granada, 1936. Maurits studies the tiles. Slide it, flip it, turn it — and ask what stays the same.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+          "distractor_label": "Fails to reflect across mirror line",
+          "error_type": "misconception",
+          "student_thinking": "Fails to reflect across mirror line",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+          "distractor_label": "Fails to reflect across mirror line",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+          "distractor_label": "Fails to reflect across mirror line",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_geometric_transformations__fails_reflect_across_mirror_line",
+        "student_hits": 33,
+        "score": 117.326,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_73",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "What is 326 rounded to the nearest 1000 ?",
+      "choices": [
+        "1000",
+        "3000",
+        "500",
+        "0"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is 0. A common mistake here: Rounds up instead of down.  Double-check each step in round integers to the nearest 1000 to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of round integers to the nearest 1000 that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__rounds_up_instead_down",
+      "misconception_label": "Rounds up instead of down",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_number_properties__rounds_up_instead_down",
+          "distractor_label": "Rounds up instead of down",
+          "error_type": "misconception",
+          "student_thinking": "Rounds up instead of down",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "arithmetic",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+          "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+        "student_hits": 22,
+        "score": 85.62,
+        "enriched_choices": [
+          0,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_152",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "What is 5050 rounded to the nearest 10 ?",
+      "choices": [
+        "5050",
+        "5100",
+        "5000",
+        "5010"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 5050. A common mistake here: Rounds to the wrong degree of accuracy (rounds too much).  Double-check each step in round integers to the nearest 10 to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of round integers to the nearest 10 that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+      "misconception_label": "Rounds to the wrong degree of accuracy (rounds too much)",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+          "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
+          "error_type": "misconception",
+          "student_thinking": "Rounds to the wrong degree of accuracy (rounds too much)",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "arithmetic",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_number_properties__believes_rounding_must_change_number",
+          "distractor_label": "Believes that rounding must change the number",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+        "student_hits": 22,
+        "score": 85.62,
+        "enriched_choices": [
+          1,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_512",
+      "conceptId": "functions_basics",
+      "level": 1,
+      "question": "Which of the following pairs of function machines are correct?",
+      "choices": [
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is ![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.](). A common mistake here: Does not follow the arrows through a function machine, changes the order of the operations asked.  Double-check each step in for a given algebraic input, find the output of a function machine to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of for a given algebraic input, find the output of a function machine that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_functions_basics__does_not_follow_arrows_through",
+      "misconception_label": "Does not follow the arrows through a function machine, changes the order of the operati...",
+      "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_functions_basics__does_not_follow_arrows_through",
+          "distractor_label": "Does not follow the arrows through a function machine, changes the order of the operations asked.",
+          "error_type": "misconception",
+          "student_thinking": "Does not follow the arrows through a function machine, changes the order of the operati...",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_functions_basics__does_not_follow_arrows_through",
+          "distractor_label": "Does not follow the arrows through a function machine, changes the order of the operations asked.",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_functions_basics__does_not_follow_arrows_through",
+          "distractor_label": "Does not follow the arrows through a function machine, changes the order of the operations asked.",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_functions_basics__does_not_follow_arrows_through",
+        "student_hits": 22,
+        "score": 65.906,
+        "enriched_choices": [
+          0,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1645",
+      "conceptId": "quadratic_equations",
+      "level": 2,
+      "question": "Solve this equation, giving all solutions:\n\\(3 p^{2}+9=39\\)",
+      "choices": [
+        "\\[n=5\\] or \\[n=-5\\]",
+        "\\(p=\\sqrt{10}\\) or \\(p=-\\sqrt{10}\\)",
+        "\\[p=2\\] or \\[p=-2\\]",
+        "\\[p=4\\] or \\[p=-4\\]"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is \\(p=\\sqrt{10}\\) or \\(p=-\\sqrt{10}\\). A common mistake here: Believes the inverse of square rooting is halving.  Double-check each step in solve quadratic equations using balancing to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of solve quadratic equations using balancing that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_quadratic_equations__believes_inverse_square_rooting_halving",
+      "misconception_label": "Believes the inverse of square rooting is halving",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_functions_basics__believes_inverse_square_rooting_halving",
+          "distractor_label": "Believes the inverse of square rooting is halving",
+          "error_type": "misconception",
+          "student_thinking": "Believes the inverse of square rooting is halving",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_quadratic_equations__does_not_reverse_order_operations",
+          "distractor_label": "Does not reverse the order of operations when solving an equation",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_quadratic_equations__solving_equation_uses_same_operation",
+          "distractor_label": "When solving an equation, uses the same operation rather than the inverse.",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_quadratic_equations__solving_equation_uses_same_operation",
+        "student_hits": 54,
+        "score": 59.325,
+        "enriched_choices": [
+          0,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_83",
+      "conceptId": "number_properties",
+      "level": 2,
+      "question": "Round this number to 1 significant figure:\n400099",
+      "choices": [
+        "400000",
+        "500000",
+        "400100",
+        "400099"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 400000. A common mistake here: Rounds up instead of down.  Double-check each step in round numbers greater than 1 to one significant figure to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of round numbers greater than 1 to one significant figure that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__rounds_up_instead_down",
+      "misconception_label": "Rounds up instead of down",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_number_properties__rounds_up_instead_down",
+          "distractor_label": "Rounds up instead of down",
+          "error_type": "misconception",
+          "student_thinking": "Rounds up instead of down",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_number_properties__rounded_nearest_100_instead_1sf",
+          "distractor_label": "Rounded to nearest 100 instead of 1sf",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__rounds_up_instead_down",
+        "student_hits": 17,
+        "score": 50.055,
+        "enriched_choices": [
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_572",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "What is 623 rounded to the nearest 50 ?",
+      "choices": [
+        "600",
+        "700",
+        "620",
+        "650"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 600. A common mistake here: Rounds to the wrong degree of accuracy (rounds too much).  Double-check each step in round integers to the nearest other integer value (e.g. 20, 50 etc) to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of round integers to the nearest other integer value (e.g. 20, 50 etc) that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+      "misconception_label": "Rounds to the wrong degree of accuracy (rounds too much)",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+          "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
+          "error_type": "misconception",
+          "student_thinking": "Rounds to the wrong degree of accuracy (rounds too much)",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+          "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_number_properties__rounds_up_instead_down",
+          "distractor_label": "Rounds up instead of down",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__rounds_up_instead_down",
+        "student_hits": 17,
+        "score": 50.055,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1455",
+      "conceptId": "linear_equations",
+      "level": 2,
+      "question": "I think of a number. I add on five and then multiply the result by four. The answer I get is 17.\nWhich of the following equations represents this?",
+      "choices": [
+        "\\(n+5 \\times 4=17\\)",
+        "\\(4 n+5=17\\)",
+        "\\(n^{4}+5=17\\)",
+        "\\(4(n+5)=17\\)"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is \\(4(n+5)=17\\). A common mistake here: Carries out operations from left to right regardless of priority order.  Double-check each step in form expressions from situations described in words to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of form expressions from situations described in words that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_linear_equations__carries_out_operations_from_left",
+      "misconception_label": "Carries out operations from left to right regardless of priority order",
+      "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_linear_equations__carries_out_operations_from_left",
+          "distractor_label": "Carries out operations from left to right regardless of priority order",
+          "error_type": "misconception",
+          "student_thinking": "Carries out operations from left to right regardless of priority order",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_linear_equations__does_not_include_brackets_attempting",
+          "distractor_label": "Does not include brackets when attempting to multiply an expression",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: wrong formula",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_linear_equations__carries_out_operations_from_left",
+        "student_hits": 36,
+        "score": 49.907,
+        "enriched_choices": [
+          0,
+          1
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1615",
+      "conceptId": "linear_equations",
+      "level": 2,
+      "question": "I think of a number. I take away six and then divide the result by three. The answer I get is 21.\nWhich of the following equations represents this?",
+      "choices": [
+        "\\(\\frac{n-6}{3}=21\\)",
+        "\\(n-6 \\div 3=21\\)",
+        "\\(3(n-6)=21\\)",
+        "\\(\\frac{n}{3}-6=21\\)"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is \\(\\frac{n-6}{3}=21\\). A common mistake here: Carries out operations from left to right regardless of priority order.  Double-check each step in form expressions from situations described in words to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of form expressions from situations described in words that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_linear_equations__carries_out_operations_from_left",
+      "misconception_label": "Carries out operations from left to right regardless of priority order",
+      "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_linear_equations__carries_out_operations_from_left",
+          "distractor_label": "Carries out operations from left to right regardless of priority order",
+          "error_type": "misconception",
+          "student_thinking": "Carries out operations from left to right regardless of priority order",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_linear_equations__thinks_number_front_bracket_means",
+          "distractor_label": "Thinks that a number in front of a bracket means divide",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: wrong formula",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_linear_equations__believes_order_worded_calculation_should",
+          "distractor_label": "Believes that the order of a worded calculation should be changed to follow BIDMAS",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_linear_equations__carries_out_operations_from_left",
+        "student_hits": 36,
+        "score": 49.907,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_151",
+      "conceptId": "sequences_series",
+      "level": 2,
+      "question": "Which of the following term-to-term rule describes this sequence? \\(4, 10, 14, 24, \\ldots\\)",
+      "choices": [
+        "To get the next term you add 6 to the previous term",
+        "To get the next term you add the previous two terms together",
+        "To get the next term you double the previous term and add 2",
+        "To get the next term you multiply the previous term by 3 and subtract 2"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is To get the next term you add the previous two terms together. A common mistake here: Uses only the first two terms of a sequence to work out a term-to-term rule.  Double-check each step in describe a term-to-term sequence to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of describe a term-to-term sequence that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
+      "misconception_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
+          "distractor_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+          "error_type": "misconception",
+          "student_thinking": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
+          "distractor_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
+          "distractor_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_sequences_series__uses_only_first_two_terms",
+        "student_hits": 16,
+        "score": 46.246,
+        "enriched_choices": [
+          0,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_404",
+      "conceptId": "sequences_series",
+      "level": 3,
+      "question": "Tom and Katie are discussing sequences\nTom says \\((\\boldsymbol{n}+\\mathbf{1})^{3}\\) would produce a linear sequence.\nKatie says \\(3-\\frac{n}{3}\\) would produce a linear sequence\nWho is correct?",
+      "choices": [
+        "Only Tom",
+        "Only Katie",
+        "Both Tom and Katie",
+        "Neither is correct"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is Only Katie. A common mistake here: Does not recognise that a linear sequence must increase or decrease by same amount.  Double-check each step in generate a descending integer linear sequence from the nth term rule to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of generate a descending integer linear sequence from the nth term rule that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
+      "misconception_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
+          "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
+          "error_type": "misconception",
+          "student_thinking": "Does not recognise that a linear sequence must increase or decrease by same amount",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
+          "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_sequences_series__believes_linear_sequences_cannot_include",
+          "distractor_label": "Believes linear sequences cannot include fractions",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_sequences_series__does_not_recognise_linear_sequence",
+        "student_hits": 16,
+        "score": 46.246,
+        "enriched_choices": [
+          0,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_456",
+      "conceptId": "sequences_series",
+      "level": 2,
+      "question": "Tom and Katie are discussing arithmetic sequences. Tom says this is an arithmetic sequence: \\(5,8,11,14,17, \\ldots\\) Katie says this is an arithmetic sequence: \\(5,15,45,135,405, \\ldots\\) Who is correct?",
+      "choices": [
+        "Only Tom",
+        "Only Katie",
+        "Both Tom and Katie",
+        "Neither is correct"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is Only Tom. A common mistake here: Does not recognise that a linear sequence must increase or decrease by same amount.  Double-check each step in recognise an arithmetic sequence to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of recognise an arithmetic sequence that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
+      "misconception_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
+          "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
+          "error_type": "misconception",
+          "student_thinking": "Does not recognise that a linear sequence must increase or decrease by same amount",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
+          "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
+          "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_sequences_series__does_not_recognise_linear_sequence",
+        "student_hits": 16,
+        "score": 46.246,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_734",
+      "conceptId": "triangles_congruence",
+      "level": 1,
+      "question": "Which shape has rotational symmetry order 2 ?",
+      "choices": [
+        "![Rectangle]()",
+        "![Square]()",
+        "![Trapezium]()",
+        "![Hexagon]()"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is ![Rectangle](). A common mistake here: Does not know how to find order of rotational symmetry.  Double-check each step in identify the order of rotational symmetry of a shape to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of identify the order of rotational symmetry of a shape that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_triangles_congruence__does_not_know_how_find",
+      "misconception_label": "Does not know how to find order of rotational symmetry",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_triangles_congruence__does_not_know_how_find",
+          "distractor_label": "Does not know how to find order of rotational symmetry",
+          "error_type": "misconception",
+          "student_thinking": "Does not know how to find order of rotational symmetry",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_triangles_congruence__does_not_know_how_find",
+          "distractor_label": "Does not know how to find order of rotational symmetry",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_triangles_congruence__does_not_connect_rotational_symmetry",
+          "distractor_label": "Does not connect rotational symmetry to number of sides/vertices",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_triangles_congruence__does_not_know_how_find",
+        "student_hits": 19,
+        "score": 45.56,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_885",
+      "conceptId": "triangles_congruence",
+      "level": 1,
+      "question": "Which shape has rotational symmetry order 4 ?",
+      "choices": [
+        "![Rectangle]()",
+        "![Square]()",
+        "![Trapezium]()",
+        "![Hexagon]()"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is ![Square](). A common mistake here: Thinks rectangles have rotational symmetry or order 4.  Double-check each step in identify the order of rotational symmetry of a shape to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of identify the order of rotational symmetry of a shape that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_triangles_congruence__thinks_rectangles_have_rotational_symmetry",
+      "misconception_label": "Thinks rectangles have rotational symmetry or order 4",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_triangles_congruence__thinks_rectangles_have_rotational_symmetry",
+          "distractor_label": "Thinks rectangles have rotational symmetry or order 4",
+          "error_type": "misconception",
+          "student_thinking": "Thinks rectangles have rotational symmetry or order 4",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_triangles_congruence__does_not_know_how_find",
+          "distractor_label": "Does not know how to find order of rotational symmetry",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_triangles_congruence__does_not_connect_rotational_symmetry",
+          "distractor_label": "Does not connect rotational symmetry to number of sides/vertices",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_triangles_congruence__does_not_know_how_find",
+        "student_hits": 19,
+        "score": 45.56,
+        "enriched_choices": [
+          0,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_13",
+      "conceptId": "measurement_units",
+      "level": 1,
+      "question": "Hannah's journey to camp is 3 hours and 16 minutes.\nTori's journey to camp is 214 minutes.\nWhat is the difference in their journeys in minutes?",
+      "choices": [
+        "196 minutes",
+        "18 minutes",
+        "102 minutes",
+        "12 minutes"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is 18 minutes. A common mistake here: Answers as if there are 100 minutes in an hour when changing from hours to minutes.  Double-check each step in convert from hours to minutes to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of convert from hours to minutes that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_measurement_units__answers_if_there_are_100",
+      "misconception_label": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
+      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_measurement_units__answers_if_there_are_100",
+          "distractor_label": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
+          "error_type": "misconception",
+          "student_thinking": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_measurement_units__answers_if_there_are_100",
+          "distractor_label": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_measurement_units__answers_if_there_are_100",
+        "student_hits": 14,
+        "score": 43.275,
+        "enriched_choices": [
+          0,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_259",
+      "conceptId": "measurement_units",
+      "level": 1,
+      "question": "3 hours is the same as ___________ minutes",
+      "choices": [
+        "180",
+        "90",
+        "30",
+        "300"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 180. A common mistake here: Thinks there are 30 minutes in a hour.  Double-check each step in convert from hours to minutes to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of convert from hours to minutes that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_measurement_units__thinks_there_are_30_minutes",
+      "misconception_label": "Thinks there are 30 minutes in a hour",
+      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_measurement_units__thinks_there_are_30_minutes",
+          "distractor_label": "Thinks there are 30 minutes in a hour",
+          "error_type": "misconception",
+          "student_thinking": "Thinks there are 30 minutes in a hour",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_measurement_units__thinks_there_are_10_minutes",
+          "distractor_label": "Thinks there are 10 minutes in an hour",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_measurement_units__answers_if_there_are_100",
+          "distractor_label": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_measurement_units__answers_if_there_are_100",
+        "student_hits": 14,
+        "score": 43.275,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_261",
+      "conceptId": "measurement_units",
+      "level": 1,
+      "question": "90 minutes is the same as _________ hours",
+      "choices": [
+        "9",
+        "1.9",
+        "1.5",
+        "1.3"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is 1.5. A common mistake here: Thinks there are 10 minutes in an hour.  Double-check each step in change minutes into decimals of hours (e.g. 90 minutes = 1.5 hours) to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of change minutes into decimals of hours (e.g. 90 minutes = 1.5 hours) that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_measurement_units__thinks_there_are_10_minutes",
+      "misconception_label": "Thinks there are 10 minutes in an hour",
+      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_measurement_units__thinks_there_are_10_minutes",
+          "distractor_label": "Thinks there are 10 minutes in an hour",
+          "error_type": "misconception",
+          "student_thinking": "Thinks there are 10 minutes in an hour",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "arithmetic",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_measurement_units__answers_if_there_are_100",
+        "student_hits": 14,
+        "score": 43.275,
+        "enriched_choices": [
+          0
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_182",
+      "conceptId": "algebraic_manipulation",
+      "level": 2,
+      "question": "Factorise this expression, if possible:\n\\(p^{2}-16\\)",
+      "choices": [
+        "\\((p-4)(p-4)\\)",
+        "\\((p+4)(p-4)\\)",
+        "\\(p(p-16)\\)",
+        "Does not factorise"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is \\((p+4)(p-4)\\). A common mistake here: Factorises difference of two squares with the same sign in both brackets.  Double-check each step in factorise a quadratic expression in the form x² - c to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of factorise a quadratic expression in the form x² - c that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_algebraic_manipulation__factorises_difference_two_squares_with",
+      "misconception_label": "Factorises difference of two squares with the same sign in both brackets",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_quadratic_equations__factorises_difference_two_squares_with",
+          "distractor_label": "Factorises difference of two squares with the same sign in both brackets",
+          "error_type": "misconception",
+          "student_thinking": "Factorises difference of two squares with the same sign in both brackets",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_factoring_polynomials__believes_only_first_term_needs",
+          "distractor_label": "Believes only the first term needs to be divided when factorising an expression",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: wrong formula",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+          "distractor_label": "Does not recognise difference of two squares",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+        "student_hits": 15,
+        "score": 42.498,
+        "enriched_choices": [
+          0,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_700",
+      "conceptId": "algebraic_manipulation",
+      "level": 2,
+      "question": "Simplify the following, if possible: \\(\\frac{t^{2}-1}{t+1}\\)",
+      "choices": [
+        "t",
+        "\\(t+1\\)",
+        "\\(t-1\\)",
+        "Does not simplify"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is \\(t-1\\). A common mistake here: Thinks you can divide terms by different factors when simplifying an algebraic fraction.  Double-check each step in simplify an algebraic fraction by factorising both the numerator and denominator to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of simplify an algebraic fraction by factorising both the numerator and denominator that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_algebraic_manipulation__thinks_you_can_divide_terms",
+      "misconception_label": "Thinks you can divide terms by different factors when simplifying an algebraic fraction",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_algebraic_manipulation__thinks_you_can_divide_terms",
+          "distractor_label": "Thinks you can divide terms by different factors when simplifying an algebraic fraction",
+          "error_type": "misconception",
+          "student_thinking": "Students add the radical to the denominator instead of multiplying, or only multiply the denominator and not the numerator",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "arithmetic",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+          "distractor_label": "Does not recognise difference of two squares",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+        "student_hits": 15,
+        "score": 42.498,
+        "enriched_choices": [
+          0,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_717",
+      "conceptId": "algebraic_manipulation",
+      "level": 2,
+      "question": "Factorise this expression, if possible: \\(p^{2}-100\\)",
+      "choices": [
+        "\\(p(p-10)\\)",
+        "\\((p-10)(p-10)\\)",
+        "\\((p-10)(p+10)\\)",
+        "Does not factorise"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is \\((p-10)(p+10)\\). A common mistake here: Does not recognise difference of two squares.  Double-check each step in factorise a quadratic expression in the form x² - c to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of factorise a quadratic expression in the form x² - c that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+      "misconception_label": "Does not recognise difference of two squares",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+          "distractor_label": "Does not recognise difference of two squares",
+          "error_type": "misconception",
+          "student_thinking": "Does not recognise difference of two squares",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_quadratic_equations__factorises_difference_two_squares_with",
+          "distractor_label": "Factorises difference of two squares with the same sign in both brackets",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+          "distractor_label": "Does not recognise difference of two squares",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_algebraic_manipulation__does_not_recognise_difference_two",
+        "student_hits": 15,
+        "score": 42.498,
+        "enriched_choices": [
+          0,
+          1,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1547",
+      "conceptId": "algebraic_manipulation",
+      "level": 1,
+      "question": "Which of the following means the same as\n\\(a^{2} b\\)",
+      "choices": [
+        "\\(a \\times b \\times b\\)",
+        "\\(2 \\times a \\times b\\)",
+        "\\(a \\times b \\times a \\times b\\)",
+        "\\(a \\times a \\times b\\)"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is \\(a \\times a \\times b\\). A common mistake here: Mixes up squaring and multiplying by 2 or doubling.  Double-check each step in describe the meaning algebraic terms with powers to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of describe the meaning algebraic terms with powers that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_algebraic_manipulation__mixes_up_squaring_and_multiplying",
+      "misconception_label": "Mixes up squaring and multiplying by 2 or doubling",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_algebraic_manipulation__mixes_up_squaring_and_multiplying",
+          "distractor_label": "Mixes up squaring and multiplying by 2 or doubling",
+          "error_type": "misconception",
+          "student_thinking": "Mixes up squaring and multiplying by 2 or doubling",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_algebraic_manipulation__mixes_up_squaring_and_multiplying",
+          "distractor_label": "Mixes up squaring and multiplying by 2 or doubling",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_algebraic_manipulation__variable_expression_has_power_thinks",
+          "distractor_label": "When a variable in an expression has a power, thinks the power applies to the whole expression",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_algebraic_manipulation__mixes_up_squaring_and_multiplying",
+        "student_hits": 38,
+        "score": 41.747,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1010",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "Tom and Katie are discussing written division strategies. Tom says \\(918 \\div 34=934 \\div 18\\) Katie says \\(918 \\div 34=34 \\div 918\\) Who is correct?",
+      "choices": [
+        "Only Tom",
+        "Only Katie",
+        "Both Tom and Katie",
+        "Neither is correct"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is Neither is correct. A common mistake here: Believes division is commutative .  Double-check each step in understand the non-commutativity of division to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of understand the non-commutativity of division that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__believes_division_commutative",
+      "misconception_label": "Believes division is commutative",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_number_properties__believes_division_commutative",
+          "distractor_label": "Believes division is commutative",
+          "error_type": "misconception",
+          "student_thinking": "Believes division is commutative",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_number_properties__believes_division_commutative",
+          "distractor_label": "Believes division is commutative",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__believes_division_commutative",
+        "student_hits": 19,
+        "score": 39.509,
+        "enriched_choices": [
+          0,
+          1
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1131",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "Miran says the following: \"It doesn't matter if you do \\(\\mathbf{7} \\div \\mathbf{1 4 0}\\) or \\(\\mathbf{1 4 0} \\div \\mathbf{7}\\), you get the same answer\" What do you think?",
+      "choices": [
+        "Miran is correct because division is commutative",
+        "Miran is incorrect because division is commutative",
+        "Miran is correct because division is not commutative",
+        "Miran is incorrect because division is not commutative"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is Miran is incorrect because division is not commutative. A common mistake here: Believes division is commutative .  Double-check each step in understand the non-commutativity of division to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of understand the non-commutativity of division that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__believes_division_commutative",
+      "misconception_label": "Believes division is commutative",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_number_properties__believes_division_commutative",
+          "distractor_label": "Believes division is commutative",
+          "error_type": "misconception",
+          "student_thinking": "Believes division is commutative",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_number_properties__does_not_understand_meaning_word",
+          "distractor_label": "Does not understand the meaning of the word commutative",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_number_properties__does_not_understand_meaning_word",
+          "distractor_label": "Does not understand the meaning of the word commutative",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__believes_division_commutative",
+        "student_hits": 19,
+        "score": 39.509,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1162",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "Jacob makes a conjecture: If you have two different numbers, P and Q, the order you divide does not matter. \\(P \\div Q=Q \\div P\\) Is Jacob's conjecture...",
+      "choices": [
+        "Always true",
+        "Sometimes true",
+        "Never true",
+        "I don't know"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is Never true. A common mistake here: Believes division is commutative .  Double-check each step in understand the non-commutativity of division to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of understand the non-commutativity of division that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_number_properties__believes_division_commutative",
+      "misconception_label": "Believes division is commutative",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_number_properties__believes_division_commutative",
+          "distractor_label": "Believes division is commutative",
+          "error_type": "misconception",
+          "student_thinking": "Believes division is commutative",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_number_properties__believes_division_sometimes_commutative",
+          "distractor_label": "Believes division is sometimes commutative",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__believes_division_commutative",
+        "student_hits": 19,
+        "score": 39.509,
+        "enriched_choices": [
+          0,
+          1
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1545",
+      "conceptId": "order_of_operations",
+      "level": 1,
+      "question": "\\[8+12 \\div 4 \\square(8+12) \\div 4\\]\nWhich symbol belongs in the box?",
+      "choices": [
+        ">",
+        "<",
+        "\\(=\\)",
+        "\\(\\geq\\)"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is >. A common mistake here: Mixes up greater than and less than symbols.  Double-check each step in carry out, interpret and represent subtraction using the part-whole model to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of carry out, interpret and represent subtraction using the part-whole model that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_order_of_operations__mixes_up_greater_than_and",
+      "misconception_label": "Mixes up greater than and less than symbols",
+      "storyContext": "London, a lamplit study, 1843. Ada taps the punch cards. Do the steps in the right order — the machine forgives nothing.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_order_of_operations__mixes_up_greater_than_and",
+          "distractor_label": "Mixes up greater than and less than symbols",
+          "error_type": "misconception",
+          "student_thinking": "Mixes up greater than and less than symbols",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_linear_equations__carries_out_operations_from_left",
+          "distractor_label": "Carries out operations from left to right regardless of priority order",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_number_properties__does_not_understand_inequality_notation",
+          "distractor_label": "Does not understand inequality notation",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_order_of_operations__mixes_up_greater_than_and",
+        "student_hits": 32,
+        "score": 35.156,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_229",
+      "conceptId": "sequences_series",
+      "level": 2,
+      "question": "How many squares will the next term in this sequence have? (Diagram: A diagram showing the first 3 patterns in a sequence. Pattern 1 contains 3 squares in this arrangement :. Pattern 2 contains 5 squares in this arrangement ::.\nPattern 3 contains 7 squares in this arrangement :::.)",
+      "choices": [
+        "9",
+        "8",
+        "10",
+        "14"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 9. A common mistake here: When asked for the next term in the sequence adds one to the last term given, despite the sequence not going up in ones.  Double-check each step in continue linear sequences expressed as patterns by drawing the next pattern to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of continue linear sequences expressed as patterns by drawing the next pattern that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_sequences_series__asked_for_next_term_sequence",
+      "misconception_label": "When asked for the next term in the sequence adds one to the last term given, despite t...",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_sequences_series__asked_for_next_term_sequence",
+          "distractor_label": "When asked for the next term in the sequence adds one to the last term given, despite the sequence not going up in ones.",
+          "error_type": "misconception",
+          "student_thinking": "When asked for the next term in the sequence adds one to the last term given, despite t...",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+          "distractor_label": "Does not notice all changes in a sequence of visual patterns",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+          "distractor_label": "Does not notice all changes in a sequence of visual patterns",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_sequences_series__does_not_notice_all_changes",
+        "student_hits": 12,
+        "score": 31.669,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_453",
+      "conceptId": "sequences_series",
+      "level": 2,
+      "question": "What is the next pattern in this linear sequence? (Diagram: A sequence of 4 patterns. The first pattern is a rectangle, made of 3 squares stacked vertically. The second pattern is the same as the first pattern but with 2 more squares added, to the right of the bottom 2 squares of Pattern 1. The 3rd pattern is the same as the second pattern but with 2 more squares added, to the right of the bottom 2 squares of Pattern 2. The 4th pattern is the same as the 3rd pattern but with 2 more squares added, to the right of the bottom 2 squares of Pattern 3.)",
+      "choices": [
+        "![This pattern is the same as Pattern 4: it is made up of 9 squares as a 4 (width) by 2 (height) rectangle and then an extra square on top of the top left square of the rectangle.]()",
+        "![This pattern is made up of 11 squares as a 5 (width) by 2 (height) rectangle and then an extra square on top of the top left square of the rectangle.]()",
+        "![This pattern is made up of 12 squares as a 5 (width) by 2 (height) rectangle and then 2 extra squares on top of the top left square of the rectangle.]()",
+        "![This pattern is made up of 12 squares as a 5 (width) by 2 (height) rectangle and then an extra square on top of the top left square of the rectangle, and one more square to the right of that one.]()"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is ![This pattern is made up of 11 squares as a 5 (width) by 2 (height) rectangle and then an extra square on top of the top left square of the rectangle.](). A common mistake here: Does not notice all changes in a sequence of visual patterns.  Double-check each step in continue linear sequences expressed as patterns by drawing the next pattern to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of continue linear sequences expressed as patterns by drawing the next pattern that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+      "misconception_label": "Does not notice all changes in a sequence of visual patterns",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+          "distractor_label": "Does not notice all changes in a sequence of visual patterns",
+          "error_type": "misconception",
+          "student_thinking": "Does not notice all changes in a sequence of visual patterns",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+          "distractor_label": "Does not notice all changes in a sequence of visual patterns",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
+          "distractor_label": "Does not notice all changes in a sequence of visual patterns",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_sequences_series__does_not_notice_all_changes",
+        "student_hits": 12,
+        "score": 31.669,
+        "enriched_choices": [
+          0,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_400",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "58.2684 to 1 decimal place is....",
+      "choices": [
+        "58.3",
+        "58.2",
+        "59.3",
+        "59.2"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 58.3. A common mistake here: Rounds down instead of up.  Double-check each step in round numbers to one decimal place to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of round numbers to one decimal place that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__rounds_down_instead_up",
+      "misconception_label": "Rounds down instead of up",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_descriptive_statistics__rounds_down_instead_up",
+          "distractor_label": "Rounds down instead of up",
+          "error_type": "misconception",
+          "student_thinking": "Rounds down instead of up",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_number_properties__rounds_incorrectly_changing_multiple_place",
+          "distractor_label": "Rounds incorrectly by changing multiple place values",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_number_properties__rounds_incorrectly_changing_multiple_place",
+          "distractor_label": "Rounds incorrectly by changing multiple place values",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__rounds_incorrectly_changing_multiple_place",
+        "student_hits": 11,
+        "score": 28.214,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_921",
+      "conceptId": "number_properties",
+      "level": 1,
+      "question": "What is 20.15349 rounded to 3 decimal places?",
+      "choices": [
+        "20.153",
+        "20.15",
+        "20.154",
+        "20.253"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 20.153. A common mistake here: Rounds to the wrong degree of accuracy (rounds too much).  Double-check each step in round numbers to three or more decimal places to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of round numbers to three or more decimal places that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+      "misconception_label": "Rounds to the wrong degree of accuracy (rounds too much)",
+      "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_number_properties__rounds_wrong_degree_accuracy_rounds",
+          "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
+          "error_type": "misconception",
+          "student_thinking": "Rounds to the wrong degree of accuracy (rounds too much)",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_number_properties__rounds_up_instead_down",
+          "distractor_label": "Rounds up instead of down",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_number_properties__rounds_incorrectly_changing_multiple_place",
+          "distractor_label": "Rounds incorrectly by changing multiple place values",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_number_properties__rounds_incorrectly_changing_multiple_place",
+        "student_hits": 11,
+        "score": 28.214,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1282",
+      "conceptId": "factoring_polynomials",
+      "level": 2,
+      "question": "When \\(x^{2}+9 x+14\\) is factorised, what will appear in the box below? (Diagram: Bracket (x+2) and a rectangular box beside it where the second bracket should be.)",
+      "choices": [
+        "\\((x+12)\\)",
+        "\\((x+8)\\)",
+        "\\((x-7)\\)",
+        "\\((x+7)\\)"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is \\((x+7)\\). A common mistake here: When factorising into double brackets, finds the sum of two values which give the non variable term in the expression rather than the product.  Double-check each step in factorise a quadratic expression in the form x² + bx + c to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of factorise a quadratic expression in the form x² + bx + c that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_factoring_polynomials__factorising_into_double_brackets_finds",
+      "misconception_label": "When factorising into double brackets, finds the sum of two values which give the non v...",
+      "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_factoring_polynomials__factorising_into_double_brackets_finds",
+          "distractor_label": "When factorising into double brackets, finds the sum of two values which give the non variable term in the expression ra",
+          "error_type": "misconception",
+          "student_thinking": "When factorising into double brackets, finds the sum of two values which give the non v...",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "arithmetic",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_factoring_polynomials__believes_multiplying_positive_negative_gives",
+          "distractor_label": "Believes multiplying a positive by a negative gives a positive answer",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_factoring_polynomials__believes_multiplying_positive_negative_gives",
+        "student_hits": 18,
+        "score": 24.953,
+        "enriched_choices": [
+          0,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_16",
+      "conceptId": "ratios_proportions",
+      "level": 1,
+      "question": "In the diagram, AN : NB \\(=3: 5\\) What is the distance AN? (Diagram: A line that begins with point A, ends with point B, and has point N in between. The entire length of the line measures 48 m.)",
+      "choices": [
+        "\\(16 \\mathrm{~m}\\)",
+        "\\(30 \\mathrm{~m}\\)",
+        "\\(6 \\mathrm{~m}\\)",
+        "\\(18 \\mathrm{~m}\\)"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is \\(18 \\mathrm{~m}\\). A common mistake here: Divides total amount by each side of the ratio instead of dividing by the sum of the parts.  Double-check each step in divide a quantity into two parts for a given a ratio, where each part is an integer to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of divide a quantity into two parts for a given a ratio, where each part is an integer that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_ratios_proportions__divides_total_amount_each_side",
+      "misconception_label": "Divides total amount by each side of the ratio instead of dividing by the sum of the parts",
+      "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_ratios_proportions__divides_total_amount_each_side",
+          "distractor_label": "Divides total amount by each side of the ratio instead of dividing by the sum of the parts",
+          "error_type": "misconception",
+          "student_thinking": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_ratios_proportions__mixes_up_sides_ratio",
+          "distractor_label": "Mixes up sides of a ratio",
+          "error_type": "misconception",
+          "student_thinking": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_ratios_proportions__finds_one_part_ratio_but",
+          "distractor_label": "Finds one part of a ratio but doesn't multiply that by the number of parts needed",
+          "error_type": "misconception",
+          "student_thinking": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_ratios_proportions__mixes_up_sides_ratio",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_95",
+      "conceptId": "ratios_proportions",
+      "level": 1,
+      "question": "Percy, Quentin and Robbie share gold coins in the ratio of\n3: 7: 8\nPercy gets 36 fewer coins than Quentin.\nHow many gold coins did Robbie get?",
+      "choices": [
+        "96",
+        "72",
+        "12",
+        "63"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is 72. A common mistake here: In ratio question where the difference between the sides is given, uses that as the total for one side instead.  Double-check each step in given information about the relationship between two parts (e.g. one part is worth 5 more than another), work out other parts to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of given information about the relationship between two parts (e.g. one part is worth 5 more than another), work out other parts that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_ratios_proportions__ratio_question_where_difference_between",
+      "misconception_label": "In ratio question where the difference between the sides is given, uses that as the tot...",
+      "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_ratios_proportions__ratio_question_where_difference_between",
+          "distractor_label": "In ratio question where the difference between the sides is given, uses that as the total for one side instead",
+          "error_type": "misconception",
+          "student_thinking": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "wrong_formula",
+          "student_thinking": "Alternative error: wrong formula",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_ratios_proportions__mixes_up_sides_ratio",
+          "distractor_label": "Mixes up sides of a ratio",
+          "error_type": "misconception",
+          "student_thinking": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_ratios_proportions__mixes_up_sides_ratio",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          0,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_117",
+      "conceptId": "ratios_proportions",
+      "level": 1,
+      "question": "To make pink paint, you mix red paint with white paint in the ratio 3: 4.\nWhat should replace the star? (Diagram: Red, White, Total | 1200 ml, Star, Blank)",
+      "choices": [
+        "\\(1201 \\ \\mathrm{ml}\\)",
+        "\\(900 \\ \\mathrm{ml}\\)",
+        "\\(4800 \\ \\mathrm{ml}\\)",
+        "\\(1600 \\ \\mathrm{ml}\\)"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is \\(1600 \\ \\mathrm{ml}\\). A common mistake here: Thinks a difference of one part in a ratio means the quantities will differ by one unit.  Double-check each step in given information about one part, work out other parts to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of given information about one part, work out other parts that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_ratios_proportions__thinks_difference_one_part_ratio",
+      "misconception_label": "Thinks a difference of one part in a ratio means the quantities will differ by one unit",
+      "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_ratios_proportions__thinks_difference_one_part_ratio",
+          "distractor_label": "Thinks a difference of one part in a ratio means the quantities will differ by one unit",
+          "error_type": "misconception",
+          "student_thinking": "Students interpret ratio additively: ratio 3:1 means A is 2 more than B, not that A is 3 times B",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_ratios_proportions__mixes_up_sides_ratio",
+          "distractor_label": "Mixes up sides of a ratio",
+          "error_type": "misconception",
+          "student_thinking": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_ratios_proportions__ratio_question_where_one_side",
+          "distractor_label": "In ratio question where one side of ratio is given, uses that as one part in ratio without dividing",
+          "error_type": "misconception",
+          "student_thinking": "Students mix which values go in numerator vs denominator when translating a word problem into a proportion equation",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_ratios_proportions__mixes_up_sides_ratio",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_140",
+      "conceptId": "factoring_polynomials",
+      "level": 1,
+      "question": "Factorise this expression, if possible:\n\\(p^{2}-99p\\)",
+      "choices": [
+        "\\((p+9)(p-9)\\)",
+        "\\((p+3 \\sqrt{11})(p-3 \\sqrt{11})\\)",
+        "\\(p(p-99)\\)",
+        "Does not factorise"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is \\(p(p-99)\\). A common mistake here: When factorising a quadratic without a non variable term, tries to double bracket factorise.  Double-check each step in factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+      "misconception_label": "When factorising a quadratic without a non variable term, tries to double bracket facto...",
+      "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+          "distractor_label": "When factorising a quadratic without a non variable term, tries to double bracket factorise",
+          "error_type": "misconception",
+          "student_thinking": "Students apply the simple factor pairs method to ax squared + bx + c with a not 1 and get wrong factors because they only look for pairs multiplying to c not to ac",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+          "distractor_label": "When factorising a quadratic without a non variable term, tries to double bracket factorise",
+          "error_type": "misconception",
+          "student_thinking": "Students apply the simple factor pairs method to ax squared + bx + c with a not 1 and get wrong factors because they only look for pairs multiplying to c not to ac",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          0,
+          1
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_455",
+      "conceptId": "factoring_polynomials",
+      "level": 1,
+      "question": "Factorise this expression, if possible:\n\\(p^{2}-5 p\\)",
+      "choices": [
+        "\\(p(p-5)\\)",
+        "\\((p+5)(p-5)\\)",
+        "\\((p+\\sqrt{5})(p-\\sqrt{5})\\)",
+        "Does not factorise"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is \\(p(p-5)\\). A common mistake here: When factorising a quadratic without a non variable term, tries to double bracket factorise.  Double-check each step in factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+      "misconception_label": "When factorising a quadratic without a non variable term, tries to double bracket facto...",
+      "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+          "distractor_label": "When factorising a quadratic without a non variable term, tries to double bracket factorise",
+          "error_type": "misconception",
+          "student_thinking": "Students apply the simple factor pairs method to ax squared + bx + c with a not 1 and get wrong factors because they only look for pairs multiplying to c not to ac",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+          "distractor_label": "When factorising a quadratic without a non variable term, tries to double bracket factorise",
+          "error_type": "misconception",
+          "student_thinking": "Students apply the simple factor pairs method to ax squared + bx + c with a not 1 and get wrong factors because they only look for pairs multiplying to c not to ac",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_842",
+      "conceptId": "fractions_decimals",
+      "level": 1,
+      "question": "Convert \\(\\frac{4}{20}\\) into a decimal",
+      "choices": [
+        "5.0",
+        "0.4",
+        "0.2",
+        "4.20"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is 0.2. A common mistake here: Believes that a fraction means dividing the denominator by the numerator.  Double-check each step in convert fractions less than 1 to terminating decimals of 1 decimal place to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of convert fractions less than 1 to terminating decimals of 1 decimal place that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_fractions_decimals__believes_fraction_means_dividing_denominator",
+      "misconception_label": "Believes that a fraction means dividing the denominator by the numerator",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_fractions_decimals__believes_fraction_means_dividing_denominator",
+          "distractor_label": "Believes that a fraction means dividing the denominator by the numerator",
+          "error_type": "misconception",
+          "student_thinking": "Students treat numerator and denominator as two separate unrelated numbers rather than as a ratio describing parts of a single whole",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_only",
+          "distractor_label": "Converts a fraction to a decimal by using only the numerator after the decimal point",
+          "error_type": "misconception",
+          "student_thinking": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_placing_decimal",
+          "distractor_label": "Converts a fraction to a decimal by placing a decimal point between the numerator and denominator",
+          "error_type": "misconception",
+          "student_thinking": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_fractions_decimals__converts_fraction_decimal_using_only",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          0,
+          1,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1002",
+      "conceptId": "fractions_decimals",
+      "level": 1,
+      "question": "Convert \\(\\frac{3}{20}\\) into a decimal",
+      "choices": [
+        "0.15",
+        "0.3",
+        "3.20",
+        "0.12"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 0.15. A common mistake here: Converts a fraction to a decimal by using only the numerator after the decimal point.  Double-check each step in convert fractions less than 1 to terminating decimals of 2 decimal places to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of convert fractions less than 1 to terminating decimals of 2 decimal places that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_only",
+      "misconception_label": "Converts a fraction to a decimal by using only the numerator after the decimal point",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_only",
+          "distractor_label": "Converts a fraction to a decimal by using only the numerator after the decimal point",
+          "error_type": "misconception",
+          "student_thinking": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_placing_decimal",
+          "distractor_label": "Converts a fraction to a decimal by placing a decimal point between the numerator and denominator",
+          "error_type": "misconception",
+          "student_thinking": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "sign_error",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_fractions_decimals__converts_fraction_decimal_using_only",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1005",
+      "conceptId": "fractions_decimals",
+      "level": 1,
+      "question": "What is \\(\\frac{3}{5}\\) as a decimal?",
+      "choices": [
+        "0.5",
+        "0.3",
+        "0.35",
+        "None of these."
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is None of these.. A common mistake here: Converts a fraction to a decimal by using the denominator after the decimal point.  Double-check each step in convert fractions less than 1 to terminating decimals of 1 decimal place to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of convert fractions less than 1 to terminating decimals of 1 decimal place that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_denominator",
+      "misconception_label": "Converts a fraction to a decimal by using the denominator after the decimal point",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_basic_probability__converts_fraction_decimal_using_denominator",
+          "distractor_label": "Converts a fraction to a decimal by using the denominator after the decimal point",
+          "error_type": "misconception",
+          "student_thinking": "Converts a fraction to a decimal by using the denominator after the decimal point",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_only",
+          "distractor_label": "Converts a fraction to a decimal by using only the numerator after the decimal point",
+          "error_type": "misconception",
+          "student_thinking": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_placing_all",
+          "distractor_label": "Converts a fraction to a decimal by placing all values of the fraction after the decimal point",
+          "error_type": "misconception",
+          "student_thinking": "Students write 3/4 as 0.34 or 3.4 by simply concatenating digits without performing the division",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_fractions_decimals__converts_fraction_decimal_using_only",
+        "student_hits": 10,
+        "score": 24.849,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1766",
+      "conceptId": "linear_inequalities",
+      "level": 2,
+      "question": "Solve\n\\[36 \\leq 4(5 n-1)\\]",
+      "choices": [
+        "\\(2 \\leq n\\)",
+        "\\(\\frac{33}{5} \\leq n\\)",
+        "\\(n \\leq 2\\)",
+        "\\(\\frac{37}{20} \\leq n\\)"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is \\(2 \\leq n\\). A common mistake here: Believes the sides of an inequality can be switched without changing the direction of the sign.  Double-check each step in solve linear inequalities in one variable that require three or more steps where the variable appears on one side of the equation  to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of solve linear inequalities in one variable that require three or more steps where the variable appears on one side of the equation  that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_linear_inequalities__believes_sides_inequality_can_be",
+      "misconception_label": "Believes the sides of an inequality can be switched without changing the direction of t...",
+      "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_linear_inequalities__believes_sides_inequality_can_be",
+          "distractor_label": "Believes the sides of an inequality can be switched without changing the direction of the sign",
+          "error_type": "misconception",
+          "student_thinking": "Believes the sides of an inequality can be switched without changing the direction of t...",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_linear_inequalities__believes_sides_inequality_can_be",
+          "distractor_label": "Believes the sides of an inequality can be switched without changing the direction of the sign",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_linear_inequalities__only_multiplies_first_term_expansion",
+          "distractor_label": "Only multiplies the first term in the expansion of a bracket",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_linear_inequalities__only_multiplies_first_term_expansion",
+        "student_hits": 22,
+        "score": 24.169,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_317",
+      "conceptId": "fractions_decimals",
+      "level": 1,
+      "question": "\\(1.39+2.53=\\)",
+      "choices": [
+        "4.01",
+        "3.812",
+        "3.82",
+        "3.92"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is 3.92. A common mistake here: When adding decimals, just adds the digits and ignores place value.  Double-check each step in add decimals with the same number of decimals places to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of add decimals with the same number of decimals places that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_fractions_decimals__adding_decimals_just_adds_digits",
+      "misconception_label": "When adding decimals, just adds the digits and ignores place value",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_fractions_decimals__adding_decimals_just_adds_digits",
+          "distractor_label": "When adding decimals, just adds the digits and ignores place value",
+          "error_type": "misconception",
+          "student_thinking": "When adding decimals, just adds the digits and ignores place value",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_fractions_decimals__two_digits_sum_10_or",
+          "distractor_label": "When two digits sum to 10 or more during an addition problem, does not add one to the preceding digit",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: wrong formula",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_fractions_decimals__two_digits_sum_10_or",
+          "distractor_label": "When two digits sum to 10 or more during an addition problem, does not add one to the preceding digit",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_fractions_decimals__two_digits_sum_10_or",
+        "student_hits": 13,
+        "score": 23.293,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1521",
+      "conceptId": "right_triangle_geometry",
+      "level": 2,
+      "question": "What length replaces the \\(\\color{green}\\bigstar\\) ? (Diagram: A diagram showing a compound shape. It is an L shape rotated 90 degrees clockwise. The top full width is 3x+4, the partial width to the right is x+4. The left full height is 5, the partial height on the right is 3. There is a green star on the left partial width at the bottom of the diagram.)",
+      "choices": [
+        "3",
+        "2 x",
+        "\\(4 x+16\\)",
+        "Not enough information"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is 2 x. A common mistake here: Does not realise that two letters together, or a number and letter together, are multiplying.  Double-check each step in calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_right_triangle_geometry__does_not_realise_two_letters",
+      "misconception_label": "Does not realise that two letters together, or a number and letter together, are multip...",
+      "storyContext": "The Nile floodplain, ancient Egypt. Ahmes pulls the knotted rope taut. Two sides fix the third — the right angle keeps its promise.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_functions_basics__does_not_realise_two_letters",
+          "distractor_label": "Does not realise that two letters together, or a number and letter together, are multiplying",
+          "error_type": "misconception",
+          "student_thinking": "Does not realise that two letters together, or a number and letter together, are multip...",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "arithmetic",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_right_triangle_geometry__does_not_know_how_find",
+          "distractor_label": "Does not know how to find missing lengths in a composite shape",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_right_triangle_geometry__does_not_know_how_find",
+        "student_hits": 14,
+        "score": 22.532,
+        "enriched_choices": [
+          0,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1726",
+      "conceptId": "right_triangle_geometry",
+      "level": 2,
+      "question": "What length replaces the \\(\\color{green}\\bigstar\\)? (Diagram: A diagram showing a compound shape. It is an L shape rotated 90 degrees clockwise. The top full width is 3x+4, the partial width to the right is 2x. The left full height is 5, the partial height on the right is 2. There is a green star on the left partial width at the bottom of the diagram.)",
+      "choices": [
+        "\\(5 x+11\\)",
+        "\\(x-3\\)",
+        "\\(x+4\\)",
+        "Not enough information"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is \\(x+4\\). A common mistake here: Does not know how to find missing lengths in a composite shape.  Double-check each step in calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "diagram",
+      "misconception_id": "mis_right_triangle_geometry__does_not_know_how_find",
+      "misconception_label": "Does not know how to find missing lengths in a composite shape",
+      "storyContext": "The Nile floodplain, ancient Egypt. Ahmes pulls the knotted rope taut. Two sides fix the third — the right angle keeps its promise.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_right_triangle_geometry__does_not_know_how_find",
+          "distractor_label": "Does not know how to find missing lengths in a composite shape",
+          "error_type": "misconception",
+          "student_thinking": "Does not know how to find missing lengths in a composite shape",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_right_triangle_geometry__does_not_know_how_find",
+          "distractor_label": "Does not know how to find missing lengths in a composite shape",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_right_triangle_geometry__does_not_know_how_find",
+          "distractor_label": "Does not know how to find missing lengths in a composite shape",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_right_triangle_geometry__does_not_know_how_find",
+        "student_hits": 14,
+        "score": 22.532,
+        "enriched_choices": [
+          0,
+          1,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_1679",
+      "conceptId": "linear_equations",
+      "level": 2,
+      "question": "Jodie was y years old on her birthday 3 years ago.\nHer father was 43 years old. This year Jodie is half her father's age.\nWhich answer does not correctly represent this scenario?",
+      "choices": [
+        "\\(2(y+3)=43\\)",
+        "\\(y+3=\\frac{43+3}{2}\\)",
+        "![A bar model showing a bar for Jodie's age as y + 3 which is half the width of her father's bar. Her father's bar is shown as 2 lots of y + 3, where the first y + 3 + y total to 43.]()",
+        "![A bar model showing a bar for Jodie's age as y + 3 which is half the width of her father's bar. Her father's bar is shown as 46 in total, split into 2 lots of 23.]()"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is \\(2(y+3)=43\\). A common mistake here: Does not understand bar modelling in algebra.  Double-check each step in write a formula to describe a situation to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of write a formula to describe a situation that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_linear_equations__does_not_understand_bar_modelling",
+      "misconception_label": "Does not understand bar modelling in algebra",
+      "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_linear_equations__does_not_understand_bar_modelling",
+          "distractor_label": "Does not understand bar modelling in algebra",
+          "error_type": "misconception",
+          "student_thinking": "Does not understand bar modelling in algebra",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_linear_equations__does_not_understand_bar_modelling",
+          "distractor_label": "Does not understand bar modelling in algebra",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 3,
+          "misconception_id": "mis_linear_equations__does_not_understand_bar_modelling",
+          "distractor_label": "Does not understand bar modelling in algebra",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_linear_equations__does_not_understand_bar_modelling",
+        "student_hits": 16,
+        "score": 22.181,
+        "enriched_choices": [
+          1,
+          2,
+          3
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_279",
+      "conceptId": "lines_angles",
+      "level": 1,
+      "question": "Which diagram shows an angle of \\(325^{\\circ}\\) ?",
+      "choices": [
+        "![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 160 and 150 (inner scale) and halfway between 20 and 30 (outer scale).]()",
+        "![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 30 and 20 (inner scale) and halfway between 150 and 160 (outer scale).]()",
+        "![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 150 and 140 (inner scale) and halfway between 30 and 40 (outer scale).]()",
+        "![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 40 and 30 (inner scale) and halfway between 140 and 150 (outer scale).]()"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is ![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 40 and 30 (inner scale) and halfway between 140 and 150 (outer scale).](). A common mistake here: Reads the wrong scale on the protractor when measuring obtuse angles.  Double-check each step in use a protractor to measure angles between 270° and 360° to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of use a protractor to measure angles between 270° and 360° that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_lines_angles__reads_wrong_scale_on_protractor",
+      "misconception_label": "Reads the wrong scale on the protractor when measuring obtuse angles",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_lines_angles__reads_wrong_scale_on_protractor",
+          "distractor_label": "Reads the wrong scale on the protractor when measuring reflex angles",
+          "error_type": "misconception",
+          "student_thinking": "Reads the wrong scale on the protractor when measuring obtuse angles",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_lines_angles__chooses_correct_scale_measuring_angles",
+          "distractor_label": "Chooses the correct scale when measuring angles on a protractor but starts from the wrong number when the angle is in be",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: wrong formula",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": null,
+          "distractor_label": null,
+          "error_type": "arithmetic",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_lines_angles__reads_wrong_scale_on_protractor",
+        "student_hits": 8,
+        "score": 22.181,
+        "enriched_choices": [
+          0,
+          1
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    },
+    {
+      "id": "eedi_111",
+      "conceptId": "triangles_congruence",
+      "level": 2,
+      "question": "Which quadrilateral below is a regular polygon?",
+      "choices": [
+        "![Trapezium]()",
+        "![Rhombus]()",
+        "![Rectangle]()",
+        "![Square]()"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is ![Square](). A common mistake here: Does not know the meaning of the word regular .  Double-check each step in understand the terms equilateral and regular, and recognise the notation for regular polygons to avoid this error.",
+      "hints": [
+        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Think about the key property of understand the terms equilateral and regular, and recognise the notation for regular polygons that applies here.",
+        "Set up the calculation step by step before combining terms."
+      ],
+      "examTag": "GCSE",
+      "format": "symbolic_expression",
+      "misconception_id": "mis_triangles_congruence__does_not_know_meaning_word",
+      "misconception_label": "Does not know the meaning of the word regular",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "misconception_id": "mis_triangles_congruence__does_not_know_meaning_word",
+          "distractor_label": "Does not know the meaning of the word regular",
+          "error_type": "misconception",
+          "student_thinking": "Does not know the meaning of the word regular",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 1,
+          "misconception_id": "mis_triangles_congruence__does_not_know_meaning_word",
+          "distractor_label": "Does not know the meaning of the word regular",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: arithmetic",
+          "world_feedback": null
+        },
+        {
+          "choice_index": 2,
+          "misconception_id": "mis_triangles_congruence__does_not_know_meaning_word",
+          "distractor_label": "Does not know the meaning of the word regular",
+          "error_type": "misconception",
+          "student_thinking": "Alternative error: sign error",
+          "world_feedback": null
+        }
+      ],
+      "_promotion": {
+        "trigger_misconception": "mis_triangles_congruence__does_not_know_meaning_word",
+        "student_hits": 10,
+        "score": 21.972,
+        "enriched_choices": [
+          0,
+          1,
+          2
+        ],
+        "world_feedback_filled": 0,
+        "world_feedback_total": 3,
+        "status": "needs_world_feedback"
+      }
+    }
+  ]
+}
