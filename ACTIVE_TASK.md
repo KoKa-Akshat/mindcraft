@@ -9,8 +9,8 @@
 | Task | Agent | Files touched | Status |
 |------|-------|--------------|--------|
 | Jarvis on-screen journal guide | Cursor | `app/src/lib/journalGuide.ts`, `app/src/hooks/useJournalGuide.ts`, `app/src/components/JarvisGuide.tsx`, `app/src/components/JarvisGuide.module.css`, `app/src/components/HighlightedStem.tsx`, `app/src/components/HighlightedStem.module.css`, `app/src/components/ScratchTranscriptionPane.module.css`, `app/src/pages/ConceptChapterPage.tsx`, `app/src/pages/ConceptChapterPage.module.css`, `app/src/pages/GradeOnboard.tsx`, `app/src/pages/GradeOnboard.module.css` | ✅ Done |
-| MCQ triple-verify pipeline | Fable 5 (Claude) | `ml/scripts/pipeline/mcq_generator.py` (NEW), `ml/scripts/pipeline/story_wrapper.py` (NEW), `ml/scripts/pipeline/sources/openstax.py`, `ml/scripts/pipeline/ingest.py`, `PIPELINE_MCQ_SPEC.md` (NEW) | 🔄 Running — DO NOT touch these files |
-| Practice session journal paper reskin | ✅ Done (Fable 5) | `app/src/pages/Practice.module.css` | Committed `0b698e2a` |
+| MCQ triple-verify pipeline | ✅ Done (Fable 5) | `ml/scripts/pipeline/mcq_generator.py`, `story_wrapper.py`, `sources/openstax.py`, `ingest.py`, `PIPELINE_MCQ_SPEC.md` | Committed `43e3d62d`, pushed |
+| Practice session journal paper reskin | ✅ Done (Fable 5) | `app/src/pages/Practice.module.css` | Committed `0b698e2a`, pushed |
 | iPad login + world diagnostic flow | Codex | `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `worlds/world2/index.html`, `worlds/world2/mc-world-chrome.js`, `worlds/world2/mc-diagnostic.css` | ✅ Done |
 | Founder section copy + photos | Codex | `index.html`, `img/akshat-koirala.jpg` | ✅ Done |
 | Landing visual polish + mascot | Codex | `index.html`, `img/fibonacci-bear.svg` | ✅ Done |
@@ -61,11 +61,11 @@ Files changed — `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `
 
 ## Next up (in priority order)
 
-1. **Wait for MCQ pipeline agent to finish** → review `PIPELINE_MCQ_SPEC.md` → run full OpenStax MCQ generation (`--limit 50` test first)
+1. **Run MCQ generation** — `python ml/scripts/pipeline/ingest.py --source openstax --convert-free-response --verify-count 3 --story-wrap --limit 50 --out app/src/data/openstaxMCQ.json` (50-item test first; then full run ~2,300–2,800 Qs). See `PIPELINE_MCQ_SPEC.md`.
 2. **FABLE5 Area 2** — Dashboard personalization: mastery bars, top-6 weaknesses, skeleton shimmer (see `FABLE5_VISION.md §Area 2`)
 3. **FABLE5 Area 3** — PawHub upgrades: concept labels in pads, pulse animation, SVG progress ring
 4. **FABLE5 Area 4** — Tutor focus areas
-5. ~~**Jarvis feedback UX**~~ — margin guide + scratch readout wired (chapter + diagnostic); dashboard margin notes still open
+5. **Jarvis dashboard margin notes** — chapter + diagnostic done; dashboard margin notes still open
 
 ---
 
