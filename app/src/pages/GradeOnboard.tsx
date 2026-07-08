@@ -38,6 +38,7 @@ import PageFlipTransition from '../components/book/PageFlipTransition'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import s from './GradeOnboard.module.css'
 import type { Question } from '../lib/questionBank'
+import { isTestProfileEmail } from '../lib/testProfile'
 
 type Step = 'welcome' | 'grade' | 'goals' | 'probe' | 'seeding'
 
@@ -110,13 +111,14 @@ export default function GradeOnboard() {
   }), [])
 
   useEffect(() => {
+    if (isTestProfileEmail(user.email)) return
     let cancelled = false
     void (async () => {
       const done = await isDiagnosticComplete(user.uid)
       if (!cancelled && done) navigate('/dashboard', { replace: true })
     })()
     return () => { cancelled = true }
-  }, [user.uid, navigate])
+  }, [user.uid, user.email, navigate])
 
   useEffect(() => {
     if (step !== 'probe') return

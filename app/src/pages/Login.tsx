@@ -12,7 +12,11 @@ import { auth, googleProvider } from '../firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { isTestProfileEmail, resetStudentProfile } from '../lib/testProfile'
+import {
+  clearStudentDiagnosticState,
+  isTestProfileEmail,
+  purgeStudentLearningHistory,
+} from '../lib/testProfile'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
 import { isDiagnosticComplete } from '../lib/practiceState'
 import { WEBHOOK_BASE } from '../lib/mlApi'
@@ -114,9 +118,12 @@ export default function Login() {
     try {
       await auth.currentUser?.getIdToken(true)
 
-      // Test accounts start fresh on every login — never block routing on the wipe.
-      if (isTestProfileEmail(auth.currentUser?.email)) {
-        void resetStudentProfile(uid)
+      const isTest = isTestProfileEmail(auth.currentUser?.email)
+      if (isTest) {
+        // Clear diagnostic flags before routing so onboard isn't skipped.
+        sessionStorage.setItem('mc-test-reset', '1')
+        await clearStudentDiagnosticState(uid)
+        void purgeStudentLearningHistory(uid)
       }
 
       const grantAdmin = consumeAdminGrant()
@@ -124,6 +131,20 @@ export default function Login() {
 
       const snap = await getDoc(doc(db, 'users', uid))
       const existingRole = snap.data()?.role
+
+      // Test students always land in the diagnostic — every login is a fresh run.
+      if (isTest && !grantAdmin && existingRole !== 'admin' && existingRole !== 'tutor' && existingRole !== 'parent') {
+        if (!snap.exists() || !existingRole) {
+          await setDoc(doc(db, 'users', uid), {
+            role: 'student',
+            email: auth.currentUser?.email ?? '',
+            displayName: auth.currentUser?.displayName ?? '',
+            createdAt: new Date().toISOString(),
+          }, { merge: true })
+        }
+        navigate('/onboard?entry=1', { replace: true })
+        return
+      }
 
       // Admin grant takes priority
       if (grantAdmin) {

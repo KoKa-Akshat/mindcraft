@@ -52,12 +52,8 @@ export function clearLocalStudentState(uid: string): void {
   document.cookie = 'mc_diag_done=0; path=/; max-age=0'
 }
 
-/**
- * Wipe a student's learning record: diagnostic flags, practice drafts,
- * interactions, learning events, and the knowledge graph doc. Each step
- * fails soft so a partial wipe never blocks login.
- */
-export async function resetStudentProfile(uid: string): Promise<void> {
+/** Fast path — clear diagnostic + draft flags before post-login routing. */
+export async function clearStudentDiagnosticState(uid: string): Promise<void> {
   try {
     await setDoc(doc(db, 'users', uid), {
       diagnosticCompleted:   deleteField(),
@@ -68,7 +64,11 @@ export async function resetStudentProfile(uid: string): Promise<void> {
       practiceDraftAt:       deleteField(),
     }, { merge: true })
   } catch { /* fail soft */ }
+  clearLocalStudentState(uid)
+}
 
+/** Slow path — purge interactions/events/kg (client rules may block deletes; fail soft). */
+export async function purgeStudentLearningHistory(uid: string): Promise<void> {
   try {
     const [interSnap, learnSnap] = await Promise.all([
       getDocs(query(collection(db, 'interactions'),    where('studentId', '==', uid))),
@@ -86,6 +86,14 @@ export async function resetStudentProfile(uid: string): Promise<void> {
     await deleteDoc(doc(db, 'knowledge_graphs', uid))
   } catch { /* fail soft */ }
   invalidateKnowledgeGraph(uid)
+}
 
-  clearLocalStudentState(uid)
+/**
+ * Wipe a student's learning record: diagnostic flags, practice drafts,
+ * interactions, learning events, and the knowledge graph doc. Each step
+ * fails soft so a partial wipe never blocks login.
+ */
+export async function resetStudentProfile(uid: string): Promise<void> {
+  await clearStudentDiagnosticState(uid)
+  await purgeStudentLearningHistory(uid)
 }
