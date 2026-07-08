@@ -44,6 +44,91 @@ Curated choices only (free-form color pickers will fight the paper system):
 - [x] Theme applies across dashboard book pages + panels, persists, and
       never breaks contrast (test the darkest paper preset with ink text).
 
+### 1d — BUG: sticker placement never works (fix before anything else in this section)
+
+`JournalStyleDrawer.module.css:10-19`'s `.backdrop` is `position:fixed;
+inset:0; z-index:40` with `onClick={onClose}` (`JournalStyleDrawer.tsx:39`).
+The book cover (and `StickerLayer`, z-index 2) sits underneath it. Per the
+drawer's own hint text ("Pick a sticker, then tap the cover to place it"),
+the user is supposed to click the cover WHILE the drawer is open — but that
+click hits the backdrop first and closes the drawer instead of reaching
+`StickerLayer.handleSurfaceClick`. 100% reproducible; stickers have never
+been placeable in production.
+
+Fix: stop closing the drawer on backdrop click. Since placing several
+stickers in one session is the intended flow (the hint shows a running
+count), the drawer should stay open until the user hits ✕ or switches to
+the theme tab — remove `onClick={onClose}` from `.backdrop` (or restrict
+it to fire only when `tab==='theme'` and no sticker is selected, if some
+click-outside-to-close behavior is still wanted for the theme tab).
+- [ ] Open drawer → pick a sticker → tap the cover → sticker appears AND
+      drawer stays open → tap cover again → second sticker appears.
+- [ ] ✕ still closes the drawer from either tab.
+
+### 1e — Custom sticker upload (Lane: **Product** + one **Engine** rules file)
+
+Students can upload their own sticker image alongside the curated set.
+
+- **Storage path**: `users/{uid}/stickers/{stickerId}.{ext}` in Firebase
+  Storage. New rule in `firebase/storage.rules`:
+  ```
+  match /users/{uid}/stickers/{fileName} {
+    allow read: if true;
+    allow write: if request.auth != null && request.auth.uid == uid
+      && request.resource.size < 300 * 1024
+      && request.resource.contentType.matches('image/(png|jpeg|svg\\+xml)');
+    allow delete: if request.auth != null && request.auth.uid == uid;
+  }
+  ```
+  (Deploy via the same Rules API mechanism as Firestore rules — see
+  TUTOR_PARENT_CLASSROOM_PLAN.md's deploy note. `<img src>` never executes
+  script from an SVG payload, so the SVG allowance is safe as long as it's
+  only ever rendered via `<img>`, never `dangerouslySetInnerHTML`.)
+- **Upload UI**: new "upload your own" tile in the drawer's stickers tab
+  (`JournalStyleDrawer.tsx`) — file input, client-side downscale to ≤512px
+  longest side before upload (canvas resize), reject >300KB post-resize.
+- **Data model**: extend `DashboardSticker` (dashboardPersonalization.ts)
+  with an optional `customUrl?: string`; when present, `stickerId` stores
+  the Storage path instead of a `StickerId` enum value.
+  `StickerLayer`/`StickerGlyph` render `<img src={customUrl}>` instead of
+  the SVG lookup when `customUrl` is set. `cleanStickers` must validate
+  `customUrl` is same-origin Storage URL (reject arbitrary external URLs
+  to avoid hotlinking/tracking pixels), keep the existing STICKER_CAP.
+- **Library**: a student's uploaded stickers persist in
+  `users/{uid}.customStickers: [{ id, url, uploadedAt }]` (separate from
+  placed instances) so an uploaded sticker can be placed multiple times /
+  removed from the library without re-uploading.
+- [ ] Upload a PNG → appears in the drawer's sticker grid → placeable →
+      persists across reload.
+- [ ] Oversized/wrong-type file rejected client-side with a clear message.
+- [ ] Non-owner cannot write to another uid's sticker path (rules test).
+
+### 1f — Custom typography + color (Lane: **Product**)
+
+Today: 5 curated paper tones + 3 curated fonts, deliberately NOT a free
+picker (see the scope note above — avoids clashing with the paper system).
+Expand within that guardrail rather than dropping it entirely:
+
+- **Font**: add a "custom font" option that accepts a Google Fonts family
+  name (validated against a small allowlist of ~15 legible
+  handwriting/serif/mono fonts loaded via `@fontsource` or a Google Fonts
+  `<link>` built from the name — do NOT allow arbitrary font-family CSS
+  injection). Store as `dashboardTheme.font = 'custom'` +
+  `dashboardTheme.customFontFamily: string`.
+- **Color**: add a color picker for the paper tone AND ink color, but gate
+  it with a contrast check — compute WCAG contrast ratio between the
+  chosen paper and ink colors client-side; require ≥4.5:1 before allowing
+  save (grey out the save action + show "too low contrast to read"
+  otherwise). This keeps the "no free-for-all that breaks legibility"
+  guardrail from the original spec while giving real freedom.
+  `dashboardTheme` gains optional `customPaper?: string; customInk?: string`
+  (hex), applied as CSS var overrides same as the presets.
+- [ ] Custom font renders on the book pages + panels.
+- [ ] Contrast guard blocks an unreadable combo; a readable custom combo
+      saves and persists.
+- [ ] Presets remain the default/one-click option — custom is opt-in via
+      an "advanced" toggle, not the primary UI.
+
 ### 1c — Bookmark practice questions
 - Bookmark toggle (small ribbon icon — the book already has a red bookmark
   motif) on the question card in Practice AND on chapter-page question
@@ -173,9 +258,9 @@ Semantics (the contract — implementer must not deviate):
   this is a new evidence SOURCE, not a new mastery model.
 - Frontend wiring: after `/check-work` settles on submit, map verdicts →
   steps payload and fire-and-forget (failures logged, never block UX).
-- [ ] Unit test: 3-step correct problem moves ingredient mastery less than
+- [x] Unit test: 3-step correct problem moves ingredient mastery less than
       two separate 1-step problems (cap works).
-- [ ] Unit test: wrong-at-step-2 problem records exactly one negative
+- [x] Unit test: wrong-at-step-2 problem records exactly one negative
       event (step 3 ignored).
 - [ ] Live: solved problem in Practice shifts the student's weak-spot
       ranking on the dashboard after refresh.
@@ -231,8 +316,8 @@ Deterministic kNN over the already-labeled bank. No training.
    usual) returning the classify() payload. First consumer: Problem
    Solver auto-tagging (Product follow-up, separate task: show “looks
    like {concept} / {format}” chip on pasted problems).
-- [ ] Index builds from all 4 sources (count logged ≥ 1,700).
-- [ ] Eval JSON committed with the numbers + error-correlation stat.
+- [x] Index builds from all 4 sources (count logged ≥ 1,700).
+- [x] Eval JSON committed with the numbers + error-correlation stat.
 - [ ] `/classify-problem` live on the Space; classifying one Eedi holdout
       question returns its true labels.
 
