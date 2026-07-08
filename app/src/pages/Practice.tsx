@@ -21,6 +21,7 @@ import {
   getQuestionById,
   questionCount,
   questionFormat,
+  resolveChoiceEvidence,
   shuffle,
 } from '../lib/questionBank'
 import { generateQuestions, evictQuestionCache } from '../lib/questionAgent'
@@ -28,7 +29,7 @@ import { getConceptContent } from '../lib/conceptContent'
 import { mlIdToLabel, toOntologyId } from '../lib/conceptMap'
 import { type BridgeRecommendation, allowedLevels, getRecommendedLevel as levelFromConfidence } from '../lib/bridgePractice'
 import { getExamConceptIds } from '../lib/examCurricula'
-import { seedAssessment, recordOutcomes, getIngredientCards, agentCheckIn, fetchExamConceptIds, type IngredientRecommendResult } from '../lib/mlApi'
+import { seedAssessment, recordOutcomes, getIngredientCards, agentCheckIn, fetchExamConceptIds, type IngredientRecommendResult, type OutcomeInput } from '../lib/mlApi'
 import { fetchNextConcept, fetchNextNewConcept, fetchPracticeHubRecommendations } from '../lib/recommendNextConcept'
 import { invalidateKnowledgeGraph } from '../lib/graphCache'
 import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemote, loadDiagnostic, getUserRole } from '../lib/practiceState'
@@ -90,6 +91,8 @@ type PracticeDraft = {
   checked: boolean
   hintsShown: number
   results: boolean[]
+  /** Parallel to results — choice index recorded on each checkAnswer. */
+  selectedIndices: number[]
   xp: number
   requeuedIds: string[]
   initialQCount: number
@@ -98,6 +101,24 @@ type PracticeDraft = {
   hideCorrectness?: boolean
   /** Concepts still needing self-rating after the question diagnostic. */
   confidenceQueueIds?: string[]
+}
+
+function buildOutcomeFromAnswer(
+  q: Question,
+  correct: boolean,
+  selectedIndex: number | undefined,
+  conceptIdOverride?: string,
+  levelOverride?: 1 | 2 | 3,
+): OutcomeInput {
+  const base: OutcomeInput = {
+    conceptId: conceptIdOverride ?? toOntologyId(q.conceptId),
+    score: correct ? 1 : 0,
+    level: levelOverride ?? q.level,
+    questionId: q.id,
+    formatId: questionFormat(q),
+  }
+  if (selectedIndex === undefined) return base
+  return { ...base, ...resolveChoiceEvidence(q, selectedIndex) }
 }
 
 const EXAMS = ['ACT', 'SAT', 'IB', 'AP', 'General'] as const
@@ -355,6 +376,7 @@ export default function Practice() {
   const [checked,    setChecked]    = useState(false)
   const [hintsShown, setHintsShown] = useState(0)
   const [results,      setResults]      = useState<boolean[]>([])
+  const [selectedIndices, setSelectedIndices] = useState<number[]>([])
   const [xp,           setXp]           = useState(0)
   const [requeuedIds,  setRequeuedIds]  = useState<string[]>([])
   const [initialQCount,setInitialQCount]= useState(0)
@@ -440,6 +462,7 @@ export default function Practice() {
     setChecked(false)
     setHintsShown(0)
     setResults([])
+    setSelectedIndices([])
     setXp(0)
     setRequeuedIds([])
     setInitialQCount(0)
@@ -490,6 +513,7 @@ export default function Practice() {
     setChecked(draft.checked ?? false)
     setHintsShown(draft.hintsShown ?? 0)
     setResults(Array.isArray(draft.results) ? draft.results : [])
+    setSelectedIndices(Array.isArray(draft.selectedIndices) ? draft.selectedIndices : [])
     setXp(draft.xp ?? 0)
     setRequeuedIds(Array.isArray(draft.requeuedIds) ? draft.requeuedIds : [])
     setInitialQCount(draft.initialQCount ?? 0)
@@ -713,6 +737,7 @@ export default function Practice() {
       checked,
       hintsShown,
       results,
+      selectedIndices,
       xp,
       requeuedIds,
       initialQCount,
@@ -745,6 +770,7 @@ export default function Practice() {
     checked,
     hintsShown,
     results,
+    selectedIndices,
     xp,
     requeuedIds,
     initialQCount,
@@ -897,6 +923,7 @@ export default function Practice() {
     setChecked(false)
     setHintsShown(0)
     setResults([])
+    setSelectedIndices([])
     setXp(0)
     setRequeuedIds([])
     setInitialQCount(qs.length)
@@ -904,7 +931,10 @@ export default function Practice() {
     setPPhase('session')
   }
 
-  async function completeGapQuestionDiagnostic(resultsSnapshot: boolean[]) {
+  async function completeGapQuestionDiagnostic(
+    resultsSnapshot: boolean[],
+    indicesSnapshot: number[] = selectedIndices,
+  ) {
     const fromQuestions: Record<string, Confidence> = {}
     questions.forEach((q, i) => {
       fromQuestions[toOntologyId(q.conceptId)] = resultsSnapshot[i] ? 'easy' : 'hard'
@@ -912,13 +942,17 @@ export default function Practice() {
     const merged = { ...fromQuestions, ...confidenceMap }
     setConfidenceMap(merged)
 
-    const perQuestion = resultsSnapshot.map((correct, i) => ({
-      conceptId: toOntologyId(questions[i].conceptId),
-      score: correct ? 1 : 0,
-      level: questions[i].level,
-      questionId: questions[i].id,
-      formatId: questionFormat(questions[i]),
-    }))
+    const perQuestion = resultsSnapshot.map((correct, i) => {
+      const q = questions[i]
+      if (!q) {
+        return {
+          conceptId: toOntologyId(questions[0]?.conceptId ?? ''),
+          score: correct ? 1 : 0,
+          level: questions[0]?.level ?? 2,
+        } satisfies OutcomeInput
+      }
+      return buildOutcomeFromAnswer(q, correct, indicesSnapshot[i])
+    })
     void recordOutcomes(user.uid, perQuestion)
     invalidateKnowledgeGraph(user.uid)
 
@@ -926,6 +960,7 @@ export default function Practice() {
     setQuestions([])
     setQIndex(0)
     setResults([])
+    setSelectedIndices([])
     setSelected(null)
     setChecked(false)
 
@@ -1143,6 +1178,7 @@ export default function Practice() {
     setChecked(false)
     setHintsShown(0)
     setResults([])
+    setSelectedIndices([])
     setXp(0)
     setRequeuedIds([])
     setInitialQCount(qs.length)
@@ -1163,6 +1199,7 @@ export default function Practice() {
     setChecked(false)
     setHintsShown(0)
     setResults([])
+    setSelectedIndices([])
     setXp(0)
     setRequeuedIds([])
     setInitialQCount(1)
@@ -1195,7 +1232,10 @@ export default function Practice() {
   }
 
   /** Close out a session: mark mastery, feed the graph, show the complete screen. */
-  function finishSession(resultsSnapshot: boolean[]) {
+  function finishSession(
+    resultsSnapshot: boolean[],
+    indicesSnapshot: number[] = selectedIndices,
+  ) {
     const passRate = resultsSnapshot.filter(Boolean).length / resultsSnapshot.length
     if (concept && passRate >= 0.8) {
       evictQuestionCache(concept, level, exam || 'General')
@@ -1203,26 +1243,33 @@ export default function Practice() {
     }
     if (concept) {
       const conceptId = toOntologyId(concept)
-      const perQuestion = resultsSnapshot.map((correct, i) => ({
-        conceptId,
-        score: correct ? 1 : 0,
-        level,
-        questionId: questions[i]?.id,
-        formatId: questions[i] ? questionFormat(questions[i]) : undefined,
-      }))
+      const perQuestion = resultsSnapshot.map((correct, i) => {
+        const q = questions[i]
+        if (!q) {
+          return {
+            conceptId,
+            score: correct ? 1 : 0,
+            level,
+          } satisfies OutcomeInput
+        }
+        return buildOutcomeFromAnswer(q, correct, indicesSnapshot[i], conceptId, level)
+      })
       void recordOutcomes(user.uid, perQuestion)
       invalidateKnowledgeGraph(user.uid)
     }
     setPPhase('complete')
   }
 
-  function advanceQuestion(resultsSnapshot: boolean[]) {
+  function advanceQuestion(
+    resultsSnapshot: boolean[],
+    indicesSnapshot: number[] = selectedIndices,
+  ) {
     const currentQ = questions[qIndex]
     const isLast = qIndex + 1 >= questions.length
 
     if (hideCorrectness && missionType === 'gapscan') {
       if (isLast) {
-        void completeGapQuestionDiagnostic(resultsSnapshot)
+        void completeGapQuestionDiagnostic(resultsSnapshot, indicesSnapshot)
         return
       }
       setQIndex(i => i + 1)
@@ -1249,7 +1296,7 @@ export default function Practice() {
     ) {
       setEarlyExit(true)
       setInitialQCount(resultsSnapshot.length)
-      finishSession(resultsSnapshot)
+      finishSession(resultsSnapshot, indicesSnapshot)
       return
     }
 
@@ -1265,7 +1312,7 @@ export default function Practice() {
     }
 
     if (isLast && !shouldRequeue) {
-      finishSession(resultsSnapshot)
+      finishSession(resultsSnapshot, indicesSnapshot)
     } else {
       setQIndex(i => i + 1)
       setSelected(null)
@@ -1288,18 +1335,20 @@ export default function Practice() {
     if (sel === null) return
     const correct = sel === questions[qIndex].correctIndex
     const nextResults = [...results, correct]
+    const nextIndices = [...selectedIndices, sel]
     if (!hideCorrectness) {
       setChecked(true)
       if (correct) setXp(x => x + LEVEL_META[level].xp)
     }
     setResults(nextResults)
+    setSelectedIndices(nextIndices)
     if (hideCorrectness) {
-      window.setTimeout(() => advanceQuestion(nextResults), 400)
+      window.setTimeout(() => advanceQuestion(nextResults, nextIndices), 400)
     }
   }
 
   function nextQuestion() {
-    advanceQuestion(results)
+    advanceQuestion(results, selectedIndices)
   }
 
   function returnToPath() {
@@ -1397,6 +1446,13 @@ export default function Practice() {
   const hintList = currentQ
     ? (storyItem ? [...storyItem.socratic, ...currentQ.hints] : currentQ.hints).slice(0, 3)
     : []
+
+  const wrongChoiceEvidence = checked && selected !== null && currentQ && selected !== currentQ.correctIndex
+    ? resolveChoiceEvidence(currentQ, selected)
+    : null
+  const wrongChoiceThinking = selected !== null && currentQ
+    ? currentQ.distractor_taxonomy?.find(d => d.choice_index === selected)?.student_thinking
+    : undefined
 
   const pathQueue = diagnosticHydrated && assessConcepts.length > 0
     ? [...assessConcepts].sort((a, b) => {
@@ -2244,13 +2300,24 @@ export default function Practice() {
                           <div className={s.feedbackExplanation}>
                             <MathText text={currentQ.explanation} />
                           </div>
+                          {selected !== currentQ.correctIndex && wrongChoiceEvidence?.misconceptionId && wrongChoiceThinking && (
+                            <div className={s.misconceptionTag}>
+                              <span className={s.misconceptionIcon}>⚠</span>
+                              <span className={s.misconceptionText}>
+                                You picked the answer that trips up students who {wrongChoiceThinking}
+                              </span>
+                            </div>
+                          )}
                           {selected !== currentQ.correctIndex && storyItem?.misconceptionCallout && (
                             <div className={s.misconceptionTag}>
                               <span className={s.misconceptionIcon}>⚠</span>
                               <span className={s.misconceptionText}>{storyItem.misconceptionCallout}</span>
                             </div>
                           )}
-                          {selected !== currentQ.correctIndex && !storyItem?.misconceptionCallout && currentQ.misconception_label && (
+                          {selected !== currentQ.correctIndex
+                            && !(wrongChoiceEvidence?.misconceptionId && wrongChoiceThinking)
+                            && !storyItem?.misconceptionCallout
+                            && currentQ.misconception_label && (
                             <div className={s.misconceptionTag}>
                               <span className={s.misconceptionIcon}>⚠</span>
                               <span className={s.misconceptionText}>

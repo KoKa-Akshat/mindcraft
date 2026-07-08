@@ -299,3 +299,111 @@ Shared seam files — coordinate before changing:
 
 If a design element, copy choice, or feature does not directly lead Maya
 toward the moment she suddenly sees the pattern — cut it.
+
+---
+
+## Current Sprint Task (Codex)
+
+> Read this section first. Every var name, path, and API call you need is here.
+> Do NOT read ML backend files (`ml/`) — that is a separate lane.
+
+### Task: Diagnostic probe step — show one real question per ACT cluster
+
+**Context.** `app/src/pages/Diagnostic.tsx` is a 4-step onboarding flow for
+students coming from the 3D kitchen world. Steps: `intro → goals → confidence
+→ done`. The confidence step shows all 29 ACT concepts as a self-rating list.
+
+There is an intentional slot between `goals` and `confidence` called the
+**probe step** — it shows one real question per ACT math cluster so the
+student's confidence ratings are anchored in actual problems, not just concept
+names. This slot is not yet built.
+
+**What to build:**
+
+1. **Add a `probe` step to `app/src/pages/Diagnostic.tsx`** between `goals`
+   and `confidence`. The step type is already `type Step = 'intro' | 'goals' |
+   'confidence' | 'done'` — extend it to `'probe'`. The step renders 4 cards
+   (one per cluster), each showing one question stem and asking "Do you
+   recognize this kind of problem?" with three buttons: `"Yes, I know it"`,
+   `"Seen it before"`, `"New to me"`. These answers map to `easy`, `kinda`,
+   `hard` — they pre-fill the `confidence` map so the rating step starts partly
+   populated. Students can still override.
+
+2. **Use `MathText`** (already imported in `ConceptChapterPage.tsx` at
+   `import MathText from '../components/MathText'`) to render question stems —
+   most questions contain `$x^2$`-style LaTeX.
+
+3. **Source the probe questions** by reading the JSON files directly:
+   - `app/src/data/actMasterQuestionBank.generated.json` — 206 human-annotated
+     ACT questions. Each record has `conceptId`, `level`, `question` (the stem),
+     `choices`, `correctIndex`. Pick level 2 (mid-difficulty). Select one
+     question per cluster using the cluster map below.
+   - Do NOT import the full `questionBank.ts` barrel — just import the JSON
+     directly and pull what you need.
+
+4. **The 4 ACT clusters and representative concept IDs to pick from:**
+   ```
+   Algebra:     linear_equations, systems_of_linear_equations, algebraic_manipulation
+   Functions:   functions_basics, quadratic_equations, exponents_radicals
+   Geometry:    right_triangle_geometry, coordinate_geometry, circles_geometry
+   Data:        basic_statistics, ratios_proportions, fractions_decimals
+   ```
+   For each cluster, find the first question at level 2 whose `conceptId` is
+   in the cluster list. Hard-code the 4 selected question IDs into
+   `app/src/data/actDiagnostic.json` under a new `probe_step.questions[]`
+   array (schema: `{question_id, concept_id, cluster}`).
+
+5. **Styling rules** (journal system — NEVER a dark card on dark background):
+   - Probe cards sit on `var(--paper-base, #f7f3ee)` — warm ivory
+   - Question text: `font-family: 'Source Serif 4', serif; font-style: italic`
+   - Cluster name: `font-family: 'IBM Plex Mono'; font-size: 12px; color: #6f6a61; text-transform: uppercase`
+   - Buttons: pill shape, `background: #fffdf7; border: 1.5px solid rgba(29,58,138,.22); color: #1c1a17`
+   - "Yes, I know it" button gets a thin lime left-border (`border-left: 3px solid #c4f547`)
+   - No confetti, no "Great job!", no red X
+
+6. **Wire the probe answers back into confidence state:** After the student
+   responds to all 4 probe cards, call `setConfidence(prev => ({ ...prev,
+   [conceptId]: answer }))` for each one (same `Confidence` type: `'easy' |
+   'kinda' | 'hard'`).
+
+**Files to touch:**
+- `app/src/pages/Diagnostic.tsx` — add `'probe'` step, probe card UI
+- `app/src/data/actDiagnostic.json` — add `probe_step.questions[]` array
+- `app/src/pages/Diagnostic.module.css` — add probe card styles
+
+**Files NOT to touch:**
+- `app/src/pages/Practice.tsx` — separate gap scan flow (Cursor's turf)
+- `app/src/lib/mlApi.ts` — no API changes needed
+- Anything in `ml/`
+
+**Key imports already in the file:**
+```ts
+import { useUser } from '../App'          // user.uid: string
+import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
+import type { Confidence } from '../lib/bridgePractice'   // 'easy'|'kinda'|'hard'
+import spec from '../data/actDiagnostic.json'
+import s from './Diagnostic.module.css'
+```
+
+**New import to add:**
+```ts
+import actBankData from '../data/actMasterQuestionBank.generated.json'
+import MathText from '../components/MathText'
+```
+
+**The actMasterQuestionBank.generated.json record shape:**
+```ts
+{
+  id: string,
+  conceptId: string,
+  level: 1 | 2 | 3,
+  question: string,      // stem, may contain $...$ LaTeX
+  choices: string[],     // 4 choices
+  correctIndex: number,
+  explanation: string,
+  hints: string[]
+}
+```
+
+**Never say** wrong, incorrect, try again, easy, fix, catch up, behind, AI
+tutor, quiz, great job!!, awesome, diagnostic test in any copy you write.

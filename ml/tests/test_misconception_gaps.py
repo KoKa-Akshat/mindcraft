@@ -57,7 +57,10 @@ def test_observation_older_than_sixty_days_is_ignored():
 
 
 def test_known_eedi_misconception_maps_to_ingredient_and_unknown_stays_null():
-    ontology_path = Path("ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json")
+    ontology_path = (
+        Path(__file__).resolve().parents[1]
+        / "data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json"
+    )
     reverse_map = build_misconception_ingredient_reverse_map(json.loads(ontology_path.read_text()))
     known_misconception, ingredient_id = next(iter(reverse_map.items()))
     known_concept = ingredient_id.split("__", 1)[0]
