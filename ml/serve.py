@@ -1,8 +1,9 @@
 # ml/serve.py
 
 from fastapi import FastAPI, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
+import json
 import pathlib
 from typing import Literal
 
@@ -27,6 +28,16 @@ from mindcraft_graph.engine.decay import decay_student_state, decay_all_edges
 from mindcraft_graph.planning.goal import Goal
 from mindcraft_graph.api.recommend import recommend
 from mindcraft_graph.auth import require_auth, authorize_student, AuthContext
+from mindcraft_graph.attempt_fusion import (
+    apply_fusion_evidence,
+    determine_alignment,
+    normalize_process_steps,
+)
+from mindcraft_graph.misconception_gaps import (
+    build_misconception_gaps,
+    build_misconception_ingredient_reverse_map,
+    load_distractor_priors,
+)
 
 # ── Startup: load once, reuse forever ──
 
@@ -48,6 +59,7 @@ PCA_PATH = DATA_DIR / "pca_axes.npz"
 # Reviewed misconception → ingredient map (produced by enrich_ingredient_misconception_map.py,
 # audited by Fable 5). Loaded at startup; empty dict when not yet generated.
 _MIS_MAP_PATH = DATA_DIR / "misconception_ingredient_map.json"
+DISTRACTOR_PRIORS_DIR = DATA_DIR / "distractor_priors"
 
 # Combination firing threshold for /recommend-ingredients. Pinned to the value
 # the harness (scripts/test_concept_paths.py) validated against so the live API
@@ -69,6 +81,11 @@ else:
     _ontology_source = LEGACY_ONTOLOGY_PATH.name
 
 ingredient_graph = IngredientGraph(ingredient_ontology)
+_standardized_ontology_data = (
+    json.loads(STANDARDIZED_ONTOLOGY_PATH.read_text())
+    if STANDARDIZED_ONTOLOGY_PATH.exists()
+    else {}
+)
 
 
 def _rebuild_concept_embeddings():
@@ -120,6 +137,18 @@ if _MIS_MAP_PATH.exists():
 else:
     misconception_ingredient_map: dict[str, list[dict]] = {}
     print("[startup] misconception_ingredient_map: not found — distractor evidence disabled")
+
+misconception_ingredient_reverse_map = build_misconception_ingredient_reverse_map(
+    _standardized_ontology_data
+)
+for mis_id, links in misconception_ingredient_map.items():
+    if mis_id not in misconception_ingredient_reverse_map and links:
+        ingredient_id = links[0].get("ingredient_id")
+        if ingredient_id:
+            misconception_ingredient_reverse_map[mis_id] = ingredient_id
+print(
+    f"[startup] misconception reverse map: {len(misconception_ingredient_reverse_map)} entries"
+)
 
 # Classification embeddings for the ingredient runtime. With the standardized
 # ontology these are exactly the concept embeddings — no synthesized concepts.
@@ -279,6 +308,53 @@ class CheckWorkRequest(BaseModel):
     lines: list[CheckWorkLine]
 
 
+class WorkEvidenceRule(BaseModel):
+    id: str
+    label: str | None = None
+    ingredientIds: list[str] = Field(default_factory=list)
+
+
+class WorkEvidenceStep(BaseModel):
+    line: int | None = None
+    rule_id: str | None = None
+    verdict: Literal["ok", "wrong", "unparsed"]
+    rule: WorkEvidenceRule | None = None
+
+    def normalized(self) -> dict:
+        rule = self.rule
+        if rule is None:
+            from mindcraft_graph.step_rules import RULE_INGREDIENTS
+
+            rule_id = self.rule_id or ""
+            rule = WorkEvidenceRule(
+                id=rule_id,
+                ingredientIds=list(RULE_INGREDIENTS.get(rule_id, [])),
+            )
+        return {
+            "line": self.line,
+            "verdict": self.verdict,
+            "rule": rule.model_dump(),
+        }
+
+
+class WorkEvidenceOutcome(BaseModel):
+    selected_choice_index: int | None = None
+    misconception_id: str | None = None
+    error_type: str | None = None
+    correct: float | None = None
+    ingredient_id: str | None = None
+    format_id: str | None = None
+    level: int = 1
+
+
+class RecordWorkEvidenceRequest(BaseModel):
+    student_id: str
+    question_id: str
+    concept_id: str
+    steps: list[WorkEvidenceStep] = Field(default_factory=list)
+    outcome: WorkEvidenceOutcome | None = None
+
+
 def _serialize_minimal_dag(dag):
     return {
         "nodes": {
@@ -308,67 +384,22 @@ def _serialize_minimal_dag(dag):
     }
 
 
-def _build_misconception_gaps(ingredient_state) -> list[dict]:
-    """Convert misconception hit counts into severity-ranked gap entries for /recommend.
+def _recommend_misconception_gaps(student_id: str, now: datetime) -> list[dict]:
+    from mindcraft_graph.firestore_adapter import load_recent_attempt_observations
 
-    Uses the same Beta-Binomial severity model as bridge gaps: prior seeded from
-    ingredient failure_prior (4 pseudo-counts), each hit increments alpha.
-    Only emits entries for misconceptions that have at least one linked ingredient
-    in the reviewed map. Empty list when map is not loaded.
-    """
-    if not misconception_ingredient_map or not ingredient_state.misconception_counts:
-        return []
-
-    # Build ingredient → concept lookup once
-    ing_to_concept: dict[str, str] = {
-        ing.id: ing.concept_id
-        for ing in ingredient_ontology.ingredients
+    observations = load_recent_attempt_observations(student_id, limit=200)
+    concept_ids = {
+        str(obs.get("concept_id"))
+        for obs in observations
+        if obs.get("concept_id")
     }
-
-    # Ingredient failure priors from ontology (keyed by ingredient_id)
-    _ont_data: dict[str, float] = {}
-    try:
-        import json as _json
-        _raw_ont = _json.loads(STANDARDIZED_ONTOLOGY_PATH.read_text())
-        for _c in _raw_ont.get("concepts", []):
-            for _i in _c.get("ingredients", []):
-                _ont_data[_i.get("id", "")] = float(_i.get("failure_prior", 0.5))
-    except Exception:
-        pass
-
-    gaps = []
-    for mis_id, hits in ingredient_state.misconception_counts.items():
-        if hits <= 0:
-            continue
-        links = misconception_ingredient_map.get(mis_id, [])
-        if not links:
-            continue
-
-        # Average failure_prior across linked ingredients as the Beta prior
-        ingredient_ids = [lnk["ingredient_id"] for lnk in links]
-        avg_prior = sum(_ont_data.get(iid, 0.5) for iid in ingredient_ids) / len(ingredient_ids)
-        pseudo = 4.0
-        alpha0 = avg_prior * pseudo
-        beta0 = (1.0 - avg_prior) * pseudo
-        severity = min(1.0, (alpha0 + hits) / (alpha0 + beta0 + hits))
-
-        # Concept = most common concept among linked ingredients
-        concept_votes: dict[str, int] = {}
-        for iid in ingredient_ids:
-            cid = ing_to_concept.get(iid, "")
-            if cid:
-                concept_votes[cid] = concept_votes.get(cid, 0) + 1
-        concept_id = max(concept_votes, key=concept_votes.get) if concept_votes else ""
-
-        gaps.append({
-            "misconceptionId": mis_id,
-            "hits": hits,
-            "severity": round(severity, 4),
-            "conceptId": concept_id,
-            "ingredientIds": ingredient_ids,
-        })
-
-    return sorted(gaps, key=lambda g: -g["severity"])
+    priors = load_distractor_priors(DISTRACTOR_PRIORS_DIR, concept_ids)
+    return build_misconception_gaps(
+        observations,
+        misconception_to_ingredient=misconception_ingredient_reverse_map,
+        priors=priors,
+        now=now,
+    )
 
 
 def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
@@ -541,9 +572,7 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
                 for cid, s in result.student_profile.top_weaknesses
             ],
         },
-        # B3: misconception severity gaps — parallel to bridgeGaps; each entry has
-        # enough data for worst_weakness() ranking and the practice feedback label.
-        "misconceptionGaps": _build_misconception_gaps(ingredient_state),
+        "misconceptionGaps": _recommend_misconception_gaps(req.student_id, now),
     }
 
     save_recommendation_result(req.student_id, response)
@@ -799,7 +828,6 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
             save_ingredient_state,
         )
         from mindcraft_graph.engine.ingredient_runtime import update_ingredient_state
-        from mindcraft_graph.models.ingredient import CardTemplate, CardRepresentation
 
         ing_state = load_ingredient_state(req.student_id)
         fired: set[tuple[str, str]] = set()  # (misconception_id, ingredient_id)
@@ -816,19 +844,16 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
                 if (mis_id, ing_id) in fired:
                     continue
                 fired.add((mis_id, ing_id))
-                # Build a synthetic card so update_ingredient_state has context
-                card = CardTemplate(
-                    id=f"mis_{mis_id}",
+                card = CardRecommendation(
+                    card_template_id=f"mis_{mis_id}",
                     target_type="ingredient",
                     target_id=ing_id,
-                    representations={
-                        "algebraic": CardRepresentation(
-                            title="Misconception probe",
-                            body=f"Distractor chosen: {obs.get('error_type', 'wrong')}",
-                        )
-                    },
+                    representation_key="misconception",
+                    title="Misconception probe",
+                    body=f"Distractor chosen: {obs.get('error_type', 'wrong')}",
                     prompt="",
-                    difficulty=0.5,
+                    need_score=0.0,
+                    reason="distractor_misconception",
                 )
                 ing_state = update_ingredient_state(
                     ing_state, card, student_succeeded=False
@@ -974,6 +999,154 @@ async def submit_answer_endpoint(req: SubmitIngredientAnswerRequest, auth: AuthC
         "studentSucceeded": req.student_succeeded,
         "updatedConceptMastery": updated_concepts,
         "styleScores": student_state.style_scores,
+    }
+
+
+@app.post("/record-work-evidence")
+async def record_work_evidence_endpoint(req: RecordWorkEvidenceRequest, auth: AuthContext = Depends(require_auth)):
+    authorize_student(auth, req.student_id)
+    from mindcraft_graph.firestore_adapter import (
+        append_attempt_fusion,
+        append_interactions,
+        load_ingredient_state,
+        load_student_events,
+        save_ingredient_state,
+        save_personal_graph,
+    )
+    from mindcraft_graph.models.events import SessionEvent
+    from mindcraft_graph.work_evidence import apply_work_evidence
+
+    valid_concepts = {concept.id for concept in ontology.concepts}
+    if req.concept_id not in valid_concepts:
+        raise HTTPException(status_code=400, detail="Unknown concept_id")
+
+    now = datetime.now()
+    normalized_steps = [step.normalized() for step in req.steps]
+    student_state = load_ingredient_state(req.student_id)
+    student_state, evidence_events = apply_work_evidence(
+        student_state,
+        normalized_steps,
+        req.concept_id,
+    )
+
+    outcome = req.outcome
+    fusion_id = None
+    alignment = None
+    outcome_ingredient_id = None
+    if outcome is not None:
+        outcome_ingredient_id = (
+            outcome.ingredient_id
+            or misconception_ingredient_reverse_map.get(outcome.misconception_id or "")
+        )
+        process_steps = normalize_process_steps(normalized_steps)
+        alignment = determine_alignment(
+            correct=outcome.correct,
+            misconception_id=outcome.misconception_id,
+            outcome_ingredient_id=outcome_ingredient_id,
+            process_steps=process_steps,
+        )
+        is_correct = outcome.correct is not None and float(outcome.correct) >= 1.0
+        if outcome_ingredient_id and ((not is_correct) or alignment == "ambiguous"):
+            student_state = apply_fusion_evidence(
+                student_state,
+                ingredient_id=outcome_ingredient_id,
+                alignment=alignment,
+            )
+        first_broken = next(
+            (
+                step.get("line", idx)
+                for idx, step in enumerate(process_steps)
+                if step.get("verdict") == "wrong"
+            ),
+            None,
+        )
+        fusion_id = append_attempt_fusion(req.student_id, {
+            "questionId": req.question_id,
+            "conceptId": req.concept_id,
+            "formatId": outcome.format_id,
+            "level": outcome.level,
+            "correct": outcome.correct if outcome.correct is not None else 0.0,
+            "selectedChoiceIndex": outcome.selected_choice_index,
+            "misconceptionId": outcome.misconception_id,
+            "errorType": outcome.error_type,
+            "ingredientId": outcome_ingredient_id,
+            "processSteps": process_steps,
+            "alignment": alignment,
+            "firstBrokenLine": first_broken,
+        }, now)
+
+    save_ingredient_state(req.student_id, student_state)
+
+    concept_events: list[SessionEvent] = []
+    for event in evidence_events:
+        if event.kind != "concept":
+            continue
+        concept_events.append(SessionEvent(
+            student_id=req.student_id,
+            concept_id=event.target_id,
+            event_type="problem_set",
+            outcome=max(-1.0, min(1.0, event.delta)),
+            effort=0.6 if event.delta < 0 else 0.4,
+            duration_minutes=1.0,
+            timestamp=now,
+            exposure_weight=min(1.0, abs(event.delta)),
+        ))
+    if concept_events:
+        append_interactions(req.student_id, concept_events, source="verified_step")
+
+    touched_concepts = {req.concept_id}
+    if outcome_ingredient_id:
+        ingredient = ingredient_graph.get_ingredient(outcome_ingredient_id)
+        if ingredient is not None:
+            touched_concepts.add(ingredient.concept_id)
+    for event in evidence_events:
+        if event.kind != "ingredient":
+            continue
+        ingredient = ingredient_graph.get_ingredient(event.target_id)
+        if ingredient is not None:
+            touched_concepts.add(ingredient.concept_id)
+
+    all_events = load_student_events(req.student_id)
+    graph = create_personal_graph(req.student_id, ontology)
+    if all_events:
+        graph = update_personal_graph(graph, all_events, ontology)
+
+    updated_concepts = {}
+    for concept_id in touched_concepts:
+        if concept_id not in valid_concepts:
+            continue
+        aggregated_mastery = aggregate_to_concept_mastery(
+            student_state,
+            concept_id,
+            ingredient_graph,
+        )
+        current = graph.state.mastery_by_concept.get(concept_id)
+        if current is None:
+            graph.state.mastery_by_concept[concept_id] = ConceptMastery(
+                concept_id=concept_id,
+                mastery=aggregated_mastery,
+                exposure_count=0,
+                last_interaction=now,
+                cumulative_outcome=0.0,
+                attempts=0,
+            )
+        else:
+            graph.state.mastery_by_concept[concept_id] = current.model_copy(update={
+                "mastery": aggregated_mastery,
+                "last_interaction": now,
+            })
+        updated_concepts[concept_id] = aggregated_mastery
+
+    graph.updated_at = now
+    save_personal_graph(req.student_id, graph)
+
+    return {
+        "studentId": req.student_id,
+        "questionId": req.question_id,
+        "eventsCreated": len(evidence_events),
+        "fusionId": fusion_id,
+        "alignment": alignment,
+        "updatedConceptMastery": updated_concepts,
     }
 
 

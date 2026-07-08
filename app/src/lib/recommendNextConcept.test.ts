@@ -86,6 +86,18 @@ function allCandidates(
     }
   }
 
+  for (const g of profileRec.misconceptionGaps ?? []) {
+    if (!hasPlayableQuestions(g.conceptId)) continue
+    candidates.push({
+      conceptId: g.conceptId,
+      severity: g.severity,
+      source: 'misconception_gap',
+      misconceptionId: g.misconceptionId,
+      ingredientId: g.ingredientId ?? g.ingredientIds?.[0],
+      distractorChoiceIndex: g.distractorChoiceIndex,
+    })
+  }
+
   return candidates.sort((a, b) => b.severity - a.severity)
 }
 
@@ -138,4 +150,56 @@ describe('worstWeakness — C1 shared fixture', () => {
       })
     })
   }
+})
+
+describe('worstWeakness — tier-3 misconception gaps', () => {
+  const c = (fixture.cases as FixtureCase[])[0]
+  const nodeMap = nodeMapFromFixture(c.nodeMap)
+
+  it('empty misconceptionGaps[] is byte-identical to omitting the field', () => {
+    const baseline = worstWeakness(c.profileRec, c.pathRec, nodeMap)
+    const withEmpty = worstWeakness(
+      { ...c.profileRec, misconceptionGaps: [] },
+      c.pathRec,
+      nodeMap,
+    )
+    expect(withEmpty).toEqual(baseline)
+    expect(baseline?.source).toBe('format_gap')
+    expect(baseline?.conceptId).toBe('functions_basics')
+  })
+
+  it('0.9-severity misconception gap beats format/concept/profile tiers', () => {
+    const profileWithGap: RecommendResult = {
+      ...c.profileRec,
+      misconceptionGaps: [{
+        conceptId: 'ratios_proportions',
+        misconceptionId: 'mis_ratios_proportions__thinks_difference_one_part_ratio',
+        ingredientId: 'ratios_proportions__unit_rate',
+        distractorChoiceIndex: 0,
+        severity: 0.9,
+      }],
+    }
+    const result = worstWeakness(profileWithGap, c.pathRec, nodeMap)
+    expect(result?.source).toBe('misconception_gap')
+    expect(result?.conceptId).toBe('ratios_proportions')
+    expect(result?.severity).toBeCloseTo(0.9)
+    expect(result?.ingredientId).toBe('ratios_proportions__unit_rate')
+  })
+
+  it('same response minus misconceptionGaps restores today\'s winner', () => {
+    const profileWithGap: RecommendResult = {
+      ...c.profileRec,
+      misconceptionGaps: [{
+        conceptId: 'ratios_proportions',
+        misconceptionId: 'mis_ratios_proportions__thinks_difference_one_part_ratio',
+        ingredientId: 'ratios_proportions__unit_rate',
+        severity: 0.9,
+      }],
+    }
+    const tier3 = worstWeakness(profileWithGap, c.pathRec, nodeMap)
+    const today = worstWeakness(c.profileRec, c.pathRec, nodeMap)
+    expect(tier3?.source).toBe('misconception_gap')
+    expect(today?.source).toBe('format_gap')
+    expect(today?.conceptId).toBe('functions_basics')
+  })
 })

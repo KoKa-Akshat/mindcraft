@@ -1,8 +1,14 @@
 import { mlIdToLabel } from './conceptMap'
 import { fetchKnowledgeGraph } from './graphCache'
-import { fetchExamConceptIds, getRecommendations, type ConceptRecommendation, type RecommendResult } from './mlApi'
+import {
+  fetchExamConceptIds,
+  getRecommendations,
+  type ConceptRecommendation,
+  type MisconceptionGap,
+  type RecommendResult,
+} from './mlApi'
 import { loadDiagnostic } from './practiceState'
-import { hasFormatQuestions, questionCount, type FormatId } from './questionBank'
+import { hasFormatQuestions, lookupMisconceptionTrap, questionCount, type FormatId } from './questionBank'
 import type { CurriculumTrack } from './curriculumTrack'
 
 // A concept is a valid PRACTICE target only if the bank can serve it questions.
@@ -27,6 +33,10 @@ export interface NextConcept {
   status: string
   /** Set when the worst weakness is a format↔concept gap (C1 / C3). */
   formatId?: FormatId
+  /** Tier-3 misconception gap — optional; present only when that tier wins. */
+  misconceptionId?: string
+  ingredientId?: string
+  distractorChoiceIndex?: number
 }
 
 export interface PracticeHubRecommendations {
@@ -38,7 +48,10 @@ export type WeaknessCandidate = {
   conceptId: string
   formatId?: FormatId
   severity: number
-  source: 'profile' | 'concept_gap' | 'format_gap'
+  source: 'profile' | 'concept_gap' | 'format_gap' | 'misconception_gap'
+  misconceptionId?: string
+  ingredientId?: string
+  distractorChoiceIndex?: number
 }
 
 type GraphNode = { id: string; mastery?: number; status?: string; eventCount?: number }
@@ -75,6 +88,33 @@ function gapSeverity(gap: ConceptRecommendation, nodeMap: Map<string, GraphNode>
   let base = 1 - conceptMastery(anchorId ?? '', nodeMap)
   if (gap.bridgeEvidence === 'hypothesis') base *= 0.5
   return base
+}
+
+function gapIngredientId(gap: MisconceptionGap): string | undefined {
+  if (gap.ingredientId) return gap.ingredientId
+  if (gap.ingredientIds?.length) return gap.ingredientIds[0]
+  return undefined
+}
+
+/** Human label from a Layer-1 ingredient id slug (e.g. ratios_proportions__unit_rate). */
+export function ingredientIdToLabel(ingredientId: string): string {
+  const slug = ingredientId.includes('__') ? ingredientId.split('__').pop()! : ingredientId
+  return slug
+    .split('_')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
+}
+
+/** PawHub weak-spot copy when tier 3 wins (BRAND_BOOK — places on the map, not failures). */
+export function formatMisconceptionWeaknessLabel(
+  ingredientId: string | undefined,
+  misconceptionId: string | undefined,
+  conceptLabel: string,
+): string {
+  const headline = ingredientId ? ingredientIdToLabel(ingredientId) : conceptLabel
+  const trap = misconceptionId ? lookupMisconceptionTrap(misconceptionId) : null
+  if (trap) return `${headline} — the ${trap} keeps catching you`
+  return headline
 }
 
 /**
@@ -125,6 +165,19 @@ export function worstWeakness(
     }
   }
 
+  for (const g of profileRec?.misconceptionGaps ?? []) {
+    if (!hasPlayableQuestions(g.conceptId)) continue
+    if (excludedConcepts.has(g.conceptId)) continue
+    candidates.push({
+      conceptId: g.conceptId,
+      severity: g.severity,
+      source: 'misconception_gap',
+      misconceptionId: g.misconceptionId,
+      ingredientId: gapIngredientId(g),
+      distractorChoiceIndex: g.distractorChoiceIndex,
+    })
+  }
+
   if (!candidates.length) return null
   return candidates.reduce((best, c) => (c.severity > best.severity ? c : best))
 }
@@ -132,16 +185,23 @@ export function worstWeakness(
 function toNextConcept(
   conceptId: string | null | undefined,
   nodeMap: Map<string, GraphNode>,
-  formatId?: FormatId,
+  weakness?: WeaknessCandidate | null,
 ): NextConcept | null {
   if (!conceptId) return null
   const node = nodeMap.get(conceptId)
+  const baseLabel = mlIdToLabel(conceptId)
+  const label = weakness?.source === 'misconception_gap'
+    ? formatMisconceptionWeaknessLabel(weakness.ingredientId, weakness.misconceptionId, baseLabel)
+    : baseLabel
   return {
     conceptId,
-    label: mlIdToLabel(conceptId),
+    label,
     mastery: node?.mastery ?? 0,
     status: node?.status ?? 'untouched',
-    formatId,
+    formatId: weakness?.formatId,
+    misconceptionId: weakness?.misconceptionId,
+    ingredientId: weakness?.ingredientId,
+    distractorChoiceIndex: weakness?.distractorChoiceIndex,
   }
 }
 
@@ -185,7 +245,6 @@ export async function fetchPracticeHubRecommendations(
 
   const worst = worstWeakness(profileRec, pathRec, nodeMap)
   let weaknessId = worst?.conceptId ?? null
-  const weaknessFormat = worst?.formatId
 
   if (!weaknessId) {
     weaknessId = [...(scope ? nodes.filter(n => scope.includes(n.id)) : nodes)]
@@ -205,7 +264,7 @@ export async function fetchPracticeHubRecommendations(
     ?? null
 
   return {
-    weakness: toNextConcept(weaknessId, nodeMap, weaknessFormat),
+    weakness: toNextConcept(weaknessId, nodeMap, worst),
     learn: toNextConcept(learnId, nodeMap),
   }
 }

@@ -58,20 +58,29 @@ export interface StudentProfile {
   topWeaknesses: Array<{ conceptId: string; strength: number }>
 }
 
+/** Tier-3 weak spot from `/recommend` misconceptionGaps[] (EXTENSION_RECOMMEND §5.1). */
+export interface MisconceptionGap {
+  conceptId: string
+  misconceptionId: string
+  severity: number
+  ingredientId?: string | null
+  /** Legacy server field — first linked ingredient when singular id absent. */
+  ingredientIds?: string[]
+  distractorChoiceIndex?: number
+  personalHitRate?: number
+  populationHitRate?: number
+  nObservations?: number
+  /** Legacy server field before E1 contract shipped. */
+  hits?: number
+}
+
 export interface RecommendResult {
   mode: string
   targetConcepts: string[]
   canonicalChain: string[]
   recommendations: ConceptRecommendation[]
   studentProfile: StudentProfile
-  misconceptionGaps?: Array<{
-    misconceptionId: string
-    label?: string
-    conceptId: string
-    ingredientIds: string[]
-    hits: number
-    severity: number
-  }>
+  misconceptionGaps?: MisconceptionGap[]
 }
 
 export interface PracticeCard {

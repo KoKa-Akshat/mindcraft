@@ -2246,6 +2246,103 @@ export function getStoryCell(conceptId: string, level?: 1|2|3): Question | undef
   return cells[0]
 }
 
+type MisconceptionTrapMeta = { label?: string; errorType?: string }
+
+const MISCONCEPTION_TRAP_LOOKUP: Map<string, MisconceptionTrapMeta> = (() => {
+  const map = new Map<string, MisconceptionTrapMeta>()
+  const cells = (storyCellsData as { cells?: Record<string, unknown>[] }).cells ?? []
+  for (const cell of cells) {
+    const c = cell as Record<string, unknown>
+    const misId = typeof c.misconception_id === 'string' ? c.misconception_id : null
+    if (!misId) continue
+    const taxonomy = Array.isArray(c.distractor_taxonomy)
+      ? (c.distractor_taxonomy as { misconception_id?: string; error_type?: string }[])
+      : []
+    const primary = taxonomy.find(d => d.misconception_id === misId)
+    map.set(misId, {
+      label: typeof c.misconception_label === 'string' ? c.misconception_label : undefined,
+      errorType: primary?.error_type,
+    })
+  }
+  return map
+})()
+
+/** Short trap nickname for PawHub tier-3 copy (e.g. "difference trap"). */
+export function lookupMisconceptionTrap(misconceptionId: string): string | null {
+  const meta = MISCONCEPTION_TRAP_LOOKUP.get(misconceptionId)
+  if (!meta) return null
+  const err = meta.errorType ?? ''
+  if (err.includes('additive') || err.includes('difference')) return 'difference trap'
+  if (meta.label?.toLowerCase().includes('subtract')) return 'difference trap'
+  if (meta.label?.toLowerCase().includes('divide') && meta.label.toLowerCase().includes('instead')) {
+    return 'division trap'
+  }
+  if (meta.label) {
+    const short = meta.label.split(/[.;,—]/)[0].trim().toLowerCase()
+    if (short.length > 0 && short.length <= 36) return `${short} trap`
+  }
+  return 'trap'
+}
+
+function matchesMisconceptionTarget(
+  q: Question,
+  target: { ingredientId?: string; misconceptionId?: string },
+): boolean {
+  if (target.ingredientId && q.ingredient_id !== target.ingredientId) return false
+  if (!target.misconceptionId) return true
+  if (q.misconception_id === target.misconceptionId) return true
+  return q.distractor_taxonomy?.some(d => d.misconception_id === target.misconceptionId) ?? false
+}
+
+/**
+ * Tier-3 weakness session draw — story cell + ingredient/distractor match first,
+ * then concept pool (EXTENSION_RECOMMEND §5.3).
+ */
+export function getQuestionsForMisconceptionWeakness(
+  conceptId: string,
+  level: 1|2|3,
+  count = 10,
+  seenIds: string[] = [],
+  examType: Question['examTag'] | 'General' = 'General',
+  format: FormatId | undefined,
+  target: { ingredientId?: string; misconceptionId?: string },
+): Question[] {
+  const id = bankConceptId(conceptId)
+  const basePool = Q.filter(q => q.conceptId === id && q.level === level)
+  const formatPool = format ? basePool.filter(q => questionFormat(q) === format) : []
+  const afterFormat = formatPool.length > 0 ? formatPool : basePool
+  const examPool = examType === 'General' ? [] : afterFormat.filter(q => q.examTag === examType)
+  const pool = examPool.length > 0 ? examPool : afterFormat
+  if (pool.length === 0) {
+    return getQuestions(conceptId, level, count, seenIds, examType, format, true)
+  }
+
+  const unseen = (qs: Question[]) => qs.filter(q => !seenIds.includes(q.id))
+  const storyCells = shuffle(unseen(pool.filter(q =>
+    isStoryCellQuestion(q) && matchesMisconceptionTarget(q, target),
+  )))
+  const ingredientTagged = shuffle(unseen(pool.filter(q =>
+    !isStoryCellQuestion(q)
+    && target.ingredientId
+    && q.ingredient_id === target.ingredientId
+    && matchesMisconceptionTarget(q, target),
+  )))
+  const ingredientOnly = shuffle(unseen(pool.filter(q =>
+    !isStoryCellQuestion(q)
+    && target.ingredientId
+    && q.ingredient_id === target.ingredientId
+    && !ingredientTagged.some(t => t.id === q.id)
+    && !storyCells.some(t => t.id === q.id),
+  )))
+  const prioritizedIds = new Set([
+    ...storyCells.map(q => q.id),
+    ...ingredientTagged.map(q => q.id),
+    ...ingredientOnly.map(q => q.id),
+  ])
+  const rest = shuffle(unseen(pool.filter(q => !prioritizedIds.has(q.id))))
+  return [...storyCells, ...ingredientTagged, ...ingredientOnly, ...rest].slice(0, Math.min(count, pool.length))
+}
+
 // Total question count for a concept + level (alias-resolved, so a concept whose
 // content lives under a legacy bank id still reports its real coverage).
 export function questionCount(conceptId: string, level: 1|2|3): number {
