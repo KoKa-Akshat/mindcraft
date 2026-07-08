@@ -51,10 +51,11 @@ Curated choices only (free-form color pickers will fight the paper system):
 
 ---
 
-## Part 2 — FUTURE WORK: ink → named steps → session notes → strength vector
+## Part 2 — ACTIVE (unblocked 2026-07-07): ink → named steps → session notes → strength vector
 
-The full loop, building on INK_WORK_MODEL_PLAN (strokes/workLines/
-`/check-work` are the substrate — Phases 1-3 shipped):
+Engine is live on the HF Space (`https://joinmindcraft-mindcraft-ml.hf.space`);
+engine changes deploy via `ml/scripts/deploy_hf.sh`. 2a shipped with Part 1.
+Build order: 2b (Engine) ∥ 2c (Product) → 2d (Engine, needs 2b).
 
 ### 2a — Tag written work to its question
 Every scratch capture gets `questionId` (+ `conceptId`, `source:
@@ -63,44 +64,118 @@ per-question ink only in component state — persist it (Firestore
 `student_work` entries keyed by student + question) so work is queryable
 by question later. SessionWork already persists; add the question linkage.
 
-### 2b — Rule-naming step highlights (Engine + Product)
-Extend `/check-work` from verdicts to **named transformations**: for each
-consecutive OK line pair, classify the step deterministically by diffing
-the sympy equations — `subtracted 4 from both sides`, `divided both sides
-by 2`, `distributed`, `factored`, `combined like terms`, `squared both
-sides`… (a rule taxonomy ~15 entries covers most algebra; map each rule id
-to ontology ingredient ids). Response gains
-`verdictPerLine[i].rule: { id, label, ingredientIds }`.
-Frontend: the existing line-overlay (bbox highlights) gets a hover/tap
-label naming the rule — highlights that TEACH, not just flag.
+### 2b — Rule-naming step highlights (Lane: **Engine**, `ml/**`; small Product follow-up)
 
-### 2c — Session notes as a question-work ledger
-Session notes view becomes: list of questions the student worked (from 2a
-tags) → selecting one opens the SAME layout as practice solving, but
-read-only with the ink + rule-named highlights from 2b. Tutor sees exactly
-what the student did and which rules they used. (This replaces/augments
-the bullets-from-transcript view for practice-derived entries.)
+New module `ml/mindcraft_graph/step_rules.py` + wiring into
+`work_check.check_work_lines`. For each consecutive pair of parsed lines
+that `equivalent_steps` already verified, classify the transformation
+**deterministically** by diffing the sympy objects — detection recipes:
 
-### 2d — Feed the strength vector (the payoff)
-Today mastery evidence is answer-level (right/wrong + effort). Named,
-CAS-verified steps are **ingredient-level evidence with near-zero noise**:
-- Each verified rule application = a positive learning event on that
-  rule's `ingredientIds` (via existing `/submit-answer`-style aggregation
-  or a new `source: 'verified_step'` event with high confidence weight).
-- A broken step (first wrong line) = targeted negative evidence on the
-  attempted rule's ingredients — this is exactly the “confirmed weakness”
-  the asymmetric strength scoring (engine/features.py) wants: high effort
-  + failure, now WITH the specific mechanism.
-- Design constraint: follow Layer-4 `evidence_update_policy` — don't
-  over-update from one problem; steps within one problem are correlated,
-  cap their combined weight.
-- This also sharpens bridge-gap detection: a student who executes rules
-  fine inside concept A but never successfully applies A-rules inside
-  B-context problems is a bridge failure with direct evidence.
+| rule id | detection (prev → cur, both `sp.Eq`) |
+|---|---|
+| `added_to_both_sides` / `subtracted_from_both_sides` | `d = simplify(cur.lhs - prev.lhs)` equals `simplify(cur.rhs - prev.rhs)` and `d != 0` (sign picks add vs subtract; label includes `d`) |
+| `multiplied_both_sides` / `divided_both_sides` | `simplify(cur.lhs / prev.lhs) == simplify(cur.rhs / prev.rhs) == k`, k a nonzero constant |
+| `moved_term` | lhs gained what rhs lost (or vice versa): `simplify((cur.lhs - prev.lhs) + (cur.rhs - prev.rhs)) == 0` with both deltas nonzero |
+| `distributed` | `cur.lhs == expand(prev.lhs)` (or rhs), structurally different |
+| `factored` | `cur.lhs == factor(prev.lhs)` (or rhs), structurally different |
+| `combined_like_terms` | semantically equal side, `count_ops` strictly decreased, and neither expand nor factor matches |
+| `squared_both_sides` / `took_sqrt_both_sides` | `cur.lhs == prev.lhs**2` etc. |
+| `rewrote_equivalent` | fallback — verified equivalent but none of the above matched. EVERY ok step gets a rule; never return null for a verified step. |
 
-Sequencing: 2a is small and should ride with Part 1 (it's just tagging +
-persistence — every session without it loses evidence we can't recover).
-2b-2d gate on wanting the engine deployed (currently HF migration).
+Order matters: test specific rules before generic (`moved_term` before
+`rewrote_equivalent`; add/subtract before moved_term). Expression-only
+lines (no `=`) use the same expand/factor/combine subset.
+
+**Ingredient mapping** — static dict in `step_rules.py`, seeded with REAL
+nested ingredient ids (verify each against Layer 1 before adding; do not
+invent ids):
+- add/subtract/multiply/divide/moved_term →
+  `basic_equations__do_same_to_both_sides`,
+  `basic_equations__inverse_operations`
+- isolate-style final steps → `basic_equations__isolate_variable`
+- distributed / factored / combined_like_terms → the matching
+  `algebraic_manipulation__*` / `polynomial_operations__*` /
+  `factoring_polynomials__*` ingredients (agent: grep the ontology's
+  nested ingredient ids and pick exact matches; leave `[]` where none
+  exists).
+
+API: `verdictPerLine[i]` gains `rule: { id, label, ingredientIds }` (only
+on verdict `ok`/`wrong` lines; `wrong` lines get the rule the diff
+BEST-matches as the attempted rule, or `rewrote_equivalent` variant
+`unknown_transformation`). Keep response back-compatible.
+
+Tests (`ml/tests/test_step_rules.py`): one fixture per rule id + a
+3-line derivation asserting the full pipeline labels every step.
+
+**Product follow-up** (after deploy): line-overlay highlights get a
+tap/hover chip showing `rule.label` — teaching highlights. Amber for the
+broken step (existing), quiet ink-tone chips for verified steps.
+
+- [ ] Every rule id has a passing fixture; end2end still green.
+- [ ] Deployed to the Space (`deploy_hf.sh`); `/check-work` on
+      `2x+4=10 → 2x=6 → x=3` names `subtracted_from_both_sides` then
+      `divided_both_sides`.
+
+### 2c — Session notes as a question-work ledger (Lane: **Product**, `app/**`)
+
+Extend the (paper-styled) notes panel with a **“my work”** section beside
+the tutor-session notes:
+- Query: `student_work` where `studentId == uid` orderBy `updatedAt` desc
+  (composite index already deployed with 2a), grouped by `questionId`,
+  newest attempt per question; cap the list at ~50.
+- Each row: question stem (via `getQuestionById` — 1c's helper), concept
+  chip, date. Selecting a row opens a read-only replay view using the SAME
+  question layout as practice: question + choices (student's answer marked
+  if recorded), the ink (render `scratchImage`; strokes are the fallback),
+  and the workLines overlay with 2b's rule labels on each line.
+- Read-only — no re-answering; a “practice this again” link routes into a
+  real session for that concept.
+- Tutor access is OUT OF SCOPE v1 (the `student_work` rules only allow
+  owner + parent reads today — widening to tutors is a rules change that
+  rides with the tutor-view workstream).
+- [ ] Worked questions appear after practice; replay shows ink + labeled
+      steps; empty state is paper-styled per BRAND_BOOK.
+
+### 2d — Feed the strength vector (Lane: **Engine**, `ml/**`; needs 2b)
+
+New endpoint `POST /record-work-evidence` (auth like every data endpoint):
+```json
+{ "student_id": "...", "question_id": "...", "concept_id": "...",
+  "steps": [ { "rule_id": "...", "verdict": "ok" | "wrong" } ] }
+```
+Semantics (the contract — implementer must not deviate):
+- **When called**: frontend fires it ONCE per (question, attempt), at
+  answer-submit / session-save — never mid-writing. Client de-dupes; the
+  endpoint also ignores an identical (student, question) submission within
+  10 minutes (idempotency guard).
+- **Weighting (Layer-4 `evidence_update_policy`: steps within one problem
+  are correlated)**: the problem's total step evidence is capped at the
+  weight of ONE normal practice outcome. Per-step weight
+  `= 0.5 / max(1, n_steps)` on each of the rule's `ingredientIds`,
+  positive for `ok`.
+- **Negative evidence**: only the FIRST `wrong` step contributes, full
+  0.5 weight on its attempted rule's ingredients — a broken step is the
+  high-conviction “confirmed weakness” signal (engine/features.py
+  asymmetry), but later lines poisoned by the first error must not pile
+  on.
+- Steps whose rule has empty `ingredientIds` aggregate to the
+  `concept_id` only (existing concept-level event path,
+  `source: 'verified_step'`).
+- Reuses the `/submit-answer` → `aggregate_to_concept_mastery` machinery —
+  this is a new evidence SOURCE, not a new mastery model.
+- Frontend wiring: after `/check-work` settles on submit, map verdicts →
+  steps payload and fire-and-forget (failures logged, never block UX).
+- [ ] Unit test: 3-step correct problem moves ingredient mastery less than
+      two separate 1-step problems (cap works).
+- [ ] Unit test: wrong-at-step-2 problem records exactly one negative
+      event (step 3 ignored).
+- [ ] Live: solved problem in Practice shifts the student's weak-spot
+      ranking on the dashboard after refresh.
+
+Bridge-gap note (kept from the brainstorm): once this lands, a student who
+applies concept-A rules successfully only inside A-context problems but
+never in B-context problems gives bridge-gap detection direct evidence —
+no schema change needed, the events already carry question `concept_id`.
 
 ---
 
@@ -114,18 +189,44 @@ existing problems and **generating** new ones. That grid is what powers
 format-gap vs concept-gap separation (C1/C2 contracts) and the bridge-gap
 mechanism.
 
-### 3a — Identification: (concept, format) classifier
-- Input: raw problem text → output canonical `conceptId` + `FormatId`
-  (+ confidence). Grounding data already exists: ~1,700 questions tagged
-  with both axes (the bank IS a labeled dataset), plus Layer-2 archetypes'
-  `concept_path_template`s.
-- Approach order: (1) embedding nearest-neighbors against the tagged bank
-  (deterministic, no training, reuses representation/embeddings.py);
-  (2) only if precision disappoints, a small supervised head. Evaluate on
-  a held-out slice; report per-axis accuracy separately — the whole point
-  is the axes must not contaminate each other.
-- Immediate use: auto-tag past papers / pasted problems (Problem Solver
-  input!) with (concept, format) → routes into the right practice cell.
+### 3a — Identification: (concept, format) classifier (Lane: **Engine**, `ml/**` — ACTIVE, independent of Part 2)
+
+Deterministic kNN over the already-labeled bank. No training.
+
+1. **Bank export** — `ml/scripts/build_bank_index.py`: assemble the
+   labeled dataset from the app data files: read
+   `app/src/data/eediQuestions.json`, `actMasterQuestionBank.generated.json`,
+   `generatedQuestions.json` directly (they're JSON), and parse the inline
+   static bank out of `questionBank.ts` the way
+   `audit_act_ontology_question_bank.py::_parse_question_bank` already does
+   (reuse/extract that parser — extend it to capture `question`, `format`,
+   `conceptId` per item, not just counts). Strip `\(...\)` delimiters from
+   question text before embedding. Output:
+   `ml/data/bank_index.npz` (MiniLM embeddings via
+   `representation/embeddings.py`) + `bank_index_meta.json`
+   (`[{id, conceptId, format, examTag}]`).
+2. **Classifier** — `ml/mindcraft_graph/problem_classifier.py`:
+   `classify(text) -> { concept_id, format, concept_confidence,
+   format_confidence, neighbors }` = embed → cosine top-k (k=10) →
+   majority vote PER AXIS, confidence = vote share. The axes vote
+   independently — that's the disentanglement claim being tested.
+3. **Eval** — `ml/scripts/eval_problem_classifier.py`: stratified 80/20
+   split (by conceptId), leave-one-out on the 20%, report per-axis
+   accuracy + top-3 concept accuracy + a concept-axis confusion summary
+   and a format-axis one. Write `ml/data/problem_classifier_eval.json`.
+   Useful-bar (not a hard gate — this is measurement): concept top-1
+   ≥ ~70%, top-3 ≥ ~85%; format ≥ ~85%. If format accuracy is high while
+   concept accuracy is high AND their errors are uncorrelated, the
+   orthogonal-axes hypothesis holds on real data — report the error
+   correlation explicitly.
+4. **Endpoint** — `POST /classify-problem { text }` on serve.py (auth as
+   usual) returning the classify() payload. First consumer: Problem
+   Solver auto-tagging (Product follow-up, separate task: show “looks
+   like {concept} / {format}” chip on pasted problems).
+- [ ] Index builds from all 4 sources (count logged ≥ 1,700).
+- [ ] Eval JSON committed with the numbers + error-correlation stat.
+- [ ] `/classify-problem` live on the Space; classifying one Eedi holdout
+      question returns its true labels.
 
 ### 3b — Generation conditioned on the grid
 - Generation prompt takes (concept, format) as independent knobs:
@@ -150,7 +251,7 @@ workstream is what finally populates it with real data.
 ---
 
 ## Suggested order
-1. Part 1 (+ 2a tagging) — one Product agent session now.
-2. Part 3a identification — Engine, cheap, high leverage (auto-tagging).
-3. Part 2b-2d — after the HF migration stabilizes the engine deploy.
-4. Part 3b — after the generation key-accuracy blocker is fixed.
+1. ~~Part 1 (+ 2a tagging)~~ — DONE (commit a39148e5).
+2. NOW: 2b + 3a (Codex, Engine — disjoint modules) ∥ 2c (Cursor, Product).
+3. Then 2d (Engine, needs 2b) + the 2b/3a Product follow-ups (rule chips, classify chip).
+4. Part 3b stays gated on the generation bad-key fix (FORMAT_WEAKNESS_PLAN).
