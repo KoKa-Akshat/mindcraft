@@ -2,16 +2,25 @@
   "_meta": {
     "pipeline": "fable5_manual",
     "generator_version": "scs-v1.1",
-    "generated_at": "2026-07-08T18:00:00Z",
-    "total": 9,
-    "pilot_concepts": ["linear_equations", "fractions_decimals", "ratios_proportions"],
+    "generated_at": "2026-07-08T22:00:00Z",
+    "total": 13,
+    "pilot_concepts": [
+      "linear_equations",
+      "fractions_decimals",
+      "ratios_proportions",
+      "algebraic_manipulation",
+      "quadratic_equations",
+      "systems_of_linear_equations",
+      "exponent_rules"
+    ],
     "note": "Slot-2 cells (3) + Slot-3/4 cells (6). Slot-1 cells live in batch_llm_002.json with ingredient_ids backfilled below. Merge script reads both files; ships only gate_status=approved.",
     "slot1_backfill": {
       "note": "Add these ingredient_ids to batch_llm_002.json cells before merging",
       "linear_equations": "linear_equations__slope_meaning",
       "fractions_decimals": "fractions_decimals__part_whole_meaning",
       "ratios_proportions": "ratios_proportions__ratio_as_comparison"
-    }
+    },
+    "cell_count": 13
   },
   "cells": [
     {
@@ -28,40 +37,45 @@
       "format": "multiple_choice",
       "examTag": "ACT_linear_functions",
       "storyContext": "At Kingston's harbor chandlery, 1762: William must find the joining fee buried in the merchant's ledger before his father's voyage runs over budget.",
-      "narrative_need": "William must identify the joining fee (y-intercept) from two ledger entries. His father needs this number to set the voyage's financial plan — a wrong answer miscalculates the entire budget before the ship sails.",
-      "student_action": "Find the y-intercept by computing slope from two data points, then back-substituting to find the cost at zero weeks — not by reading off the first data value in the table.",
-      "question": "The harbor chandlery posts its storage rates as a ledger:\n\n| Weeks stored | Running total (£) |\n|---|---|\n| 3 | 47 |\n| 7 | 83 |\n\nThe rate per week is fixed. William must find the joining fee — the amount owed before any weeks pass — to plan the voyage budget. What is the joining fee?",
-      "choices": ["£20", "£47", "£36", "£9"],
+      "narrative_need": "William must identify the joining fee (y-intercept) from two ledger entries. His father needs this number to set the voyage's financial plan \u2014 a wrong answer miscalculates the entire budget before the ship sails.",
+      "student_action": "Find the y-intercept by computing slope from two data points, then back-substituting to find the cost at zero weeks \u2014 not by reading off the first data value in the table.",
+      "question": "The harbor chandlery posts its storage rates as a ledger:\n\n| Weeks stored | Running total (\u00a3) |\n|---|---|\n| 3 | 47 |\n| 7 | 83 |\n\nThe rate per week is fixed. William must find the joining fee \u2014 the amount owed before any weeks pass \u2014 to plan the voyage budget. What is the joining fee?",
+      "choices": [
+        "\u00a320",
+        "\u00a347",
+        "\u00a336",
+        "\u00a39"
+      ],
       "correctIndex": 0,
-      "correct_reasoning": "Step 1 — find the weekly rate (slope): the total increases by £83 − £47 = £36 over 7 − 3 = 4 weeks, giving £36 ÷ 4 = £9 per week. Step 2 — find the joining fee (y-intercept): use the 3-week entry: £47 = £9 × 3 + joining_fee → joining_fee = £47 − £27 = £20. Verify: £9 × 7 + £20 = £63 + £20 = £83 ✓. The joining fee is £20 — the cost that existed before any weeks of storage had passed.",
+      "correct_reasoning": "Step 1 \u2014 find the weekly rate (slope): the total increases by \u00a383 \u2212 \u00a347 = \u00a336 over 7 \u2212 3 = 4 weeks, giving \u00a336 \u00f7 4 = \u00a39 per week. Step 2 \u2014 find the joining fee (y-intercept): use the 3-week entry: \u00a347 = \u00a39 \u00d7 3 + joining_fee \u2192 joining_fee = \u00a347 \u2212 \u00a327 = \u00a320. Verify: \u00a39 \u00d7 7 + \u00a320 = \u00a363 + \u00a320 = \u00a383 \u2713. The joining fee is \u00a320 \u2014 the cost that existed before any weeks of storage had passed.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
           "error_type": "wrong_formula",
-          "student_thinking": "Student reads £47 (the first entry in the ledger) as the joining fee, treating 'the first number I see' as 'the starting value'. They do not extend the line back to week zero — they conflate 'earliest data point' with 'value at x=0'.",
+          "student_thinking": "Student reads \u00a347 (the first entry in the ledger) as the joining fee, treating 'the first number I see' as 'the starting value'. They do not extend the line back to week zero \u2014 they conflate 'earliest data point' with 'value at x=0'.",
           "misconception_id": "mis_linear_equations__believes_y_intercept_given_difference"
         },
         {
           "choice_index": 2,
           "error_type": "arithmetic",
-          "student_thinking": "Student computes the raw difference between the two totals (£83 − £47 = £36) and treats that as the joining fee. They mistake the total change across 4 weeks for the initial cost, confusing a rise in y with a y-intercept.",
+          "student_thinking": "Student computes the raw difference between the two totals (\u00a383 \u2212 \u00a347 = \u00a336) and treats that as the joining fee. They mistake the total change across 4 weeks for the initial cost, confusing a rise in y with a y-intercept.",
           "misconception_id": null
         },
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student correctly computes the weekly rate (£9) but then names it as the joining fee, confusing the slope m with the y-intercept b in y = mx + b.",
+          "student_thinking": "Student correctly computes the weekly rate (\u00a39) but then names it as the joining fee, confusing the slope m with the y-intercept b in y = mx + b.",
           "misconception_id": null
         }
       ],
       "hints": [
-        "Find the weekly rate first: how much does the total change per week? Use both ledger entries — the difference in totals divided by the difference in weeks.",
-        "Rate = (83 − 47) ÷ (7 − 3) = 36 ÷ 4 = £9 per week. Now use one entry to work backwards: if 3 weeks costs £47 and each week adds £9, what was the cost at week 0?",
-        "Total = 9 × weeks + joining_fee. Plug in the 3-week row: 47 = 9 × 3 + joining_fee → joining_fee = 47 − 27 = £20. Check: 9 × 7 + 20 = 83 ✓"
+        "Find the weekly rate first: how much does the total change per week? Use both ledger entries \u2014 the difference in totals divided by the difference in weeks.",
+        "Rate = (83 \u2212 47) \u00f7 (7 \u2212 3) = 36 \u00f7 4 = \u00a39 per week. Now use one entry to work backwards: if 3 weeks costs \u00a347 and each week adds \u00a39, what was the cost at week 0?",
+        "Total = 9 \u00d7 weeks + joining_fee. Plug in the 3-week row: 47 = 9 \u00d7 3 + joining_fee \u2192 joining_fee = 47 \u2212 27 = \u00a320. Check: 9 \u00d7 7 + 20 = 83 \u2713"
       ],
-      "world_feedback": "William writes £20 in the margin of his father's ledger. The chandler nods slowly: 'You found the starting price. Most who come in here just copy the first number they see. Your father's clock needs a sharp mind behind it — and it seems it has one.'",
-      "transfer_question": "A harbor porter charges a flat joining fee plus a daily rate. After 4 days the total owed is £38; after 10 days it is £74. Find the joining fee.",
-      "explanation": "The y-intercept is the output value when the input equals zero — here, the cost before any weeks of storage have passed. Students who read off the first data point (£47 at week 3) have confused 'first number given' with 'starting value'. The two-step process — slope first, then back-substitution — is what separates coordinate reasoning from single-point recall.",
+      "world_feedback": "William writes \u00a320 in the margin of his father's ledger. The chandler nods slowly: 'You found the starting price. Most who come in here just copy the first number they see. Your father's clock needs a sharp mind behind it \u2014 and it seems it has one.'",
+      "transfer_question": "A harbor porter charges a flat joining fee plus a daily rate. After 4 days the total owed is \u00a338; after 10 days it is \u00a374. Find the joining fee.",
+      "explanation": "The y-intercept is the output value when the input equals zero \u2014 here, the cost before any weeks of storage have passed. Students who read off the first data point (\u00a347 at week 3) have confused 'first number given' with 'starting value'. The two-step process \u2014 slope first, then back-substitution \u2014 is what separates coordinate reasoning from single-point recall.",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -95,12 +109,17 @@
       "format": "multiple_choice",
       "examTag": null,
       "storyContext": "Simon's measuring strip shows three-eighths of the grain remaining; the sanctuary's digital scale needs a decimal entry, and a wrong number sets the night alarm at the wrong level.",
-      "narrative_need": "The night keeper relies on Simon's decimal log to set the scale alarm for the morning feed. A concatenated '0.38' would trigger the alarm too early, leaving the animals underfed — or too late, leaving them overfed and sick.",
-      "student_action": "Perform 3 ÷ 8 as long division to produce 0.375, not digit-concatenation. Recognise that the denominator tells you what to divide by, not a digit to copy.",
-      "question": "Simon's measuring strip — eight equal sections, the bottom three filled in green — records how much grain has been set aside for the morning feeding. The sanctuary's digital scale only accepts decimal input. What decimal should Simon write for three-eighths?",
-      "choices": ["0.38", "0.3", "0.375", "3.8"],
+      "narrative_need": "The night keeper relies on Simon's decimal log to set the scale alarm for the morning feed. A concatenated '0.38' would trigger the alarm too early, leaving the animals underfed \u2014 or too late, leaving them overfed and sick.",
+      "student_action": "Perform 3 \u00f7 8 as long division to produce 0.375, not digit-concatenation. Recognise that the denominator tells you what to divide by, not a digit to copy.",
+      "question": "Simon's measuring strip \u2014 eight equal sections, the bottom three filled in green \u2014 records how much grain has been set aside for the morning feeding. The sanctuary's digital scale only accepts decimal input. What decimal should Simon write for three-eighths?",
+      "choices": [
+        "0.38",
+        "0.3",
+        "0.375",
+        "3.8"
+      ],
       "correctIndex": 2,
-      "correct_reasoning": "3/8 means 3 ÷ 8. Long division: 3.000 ÷ 8 → 8 into 30 goes 3 times (3 × 8 = 24), remainder 6; 8 into 60 goes 7 times (7 × 8 = 56), remainder 4; 8 into 40 goes 5 times exactly. Result: 0.375. The denominator 8 tells you what to divide by — it is not a digit to place after the decimal point.",
+      "correct_reasoning": "3/8 means 3 \u00f7 8. Long division: 3.000 \u00f7 8 \u2192 8 into 30 goes 3 times (3 \u00d7 8 = 24), remainder 6; 8 into 60 goes 7 times (7 \u00d7 8 = 56), remainder 4; 8 into 40 goes 5 times exactly. Result: 0.375. The denominator 8 tells you what to divide by \u2014 it is not a digit to place after the decimal point.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -117,16 +136,16 @@
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student concatenates the digits in the opposite direction — 3 as the whole-number part and 8 as the decimal part — writing 3.8. They do not notice that 3/8 < 1, so the result must also be less than 1.",
+          "student_thinking": "Student concatenates the digits in the opposite direction \u2014 3 as the whole-number part and 8 as the decimal part \u2014 writing 3.8. They do not notice that 3/8 < 1, so the result must also be less than 1.",
           "misconception_id": null
         }
       ],
       "hints": [
-        "A fraction means division: 3/8 means 3 divided by 8. You cannot read the digits as a decimal — you must carry out the division.",
-        "Set up long division: 3.000 ÷ 8. How many times does 8 go into 30? Write that digit after the decimal point, note the remainder, bring down the next zero, and repeat.",
-        "8 into 30: three times (3 × 8 = 24), remainder 6. 8 into 60: seven times (7 × 8 = 56), remainder 4. 8 into 40: five times exactly. So 3 ÷ 8 = 0.375."
+        "A fraction means division: 3/8 means 3 divided by 8. You cannot read the digits as a decimal \u2014 you must carry out the division.",
+        "Set up long division: 3.000 \u00f7 8. How many times does 8 go into 30? Write that digit after the decimal point, note the remainder, bring down the next zero, and repeat.",
+        "8 into 30: three times (3 \u00d7 8 = 24), remainder 6. 8 into 60: seven times (7 \u00d7 8 = 56), remainder 4. 8 into 40: five times exactly. So 3 \u00f7 8 = 0.375."
       ],
-      "world_feedback": "Simon enters 0.375 and the scale's needle settles precisely on the mark. 'Three-eighths isn't three-point-eight,' he murmurs, closing the logbook. 'It's three divided by eight — and that's a different creature entirely.' The night keeper files the reading and the animals settle quietly for the morning.",
+      "world_feedback": "Simon enters 0.375 and the scale's needle settles precisely on the mark. 'Three-eighths isn't three-point-eight,' he murmurs, closing the logbook. 'It's three divided by eight \u2014 and that's a different creature entirely.' The night keeper files the reading and the animals settle quietly for the morning.",
       "transfer_question": "A feeding tube delivers 5/8 of a litre of supplement per dose. Write 5/8 as a decimal for the digital pump display.",
       "explanation": "Converting a fraction to a decimal requires division, not digit-copying. 3/8 means 'three divided by eight', and the result (0.375) cannot be inferred by reading the digits 3 and 8 in sequence. The long division scaffold makes the operation explicit: each step asks how many times 8 goes into the current dividend, tracking remainders into successive decimal places.",
       "pedagogy_score": {
@@ -161,41 +180,46 @@
       "level": 2,
       "format": "multiple_choice",
       "examTag": "ACT_ratios",
-      "storyContext": "William scans Kingston harbor's spice stalls to find the best pepper price. A merchant posts a notice board — but the price per bag only emerges if you divide correctly, not subtract.",
-      "narrative_need": "To compare two stalls fairly, William needs price per bag. Without the unit rate, he cannot tell which merchant is cheaper — he will pay more than he should for the voyage's provisions.",
-      "student_action": "Divide total price by quantity (20 ÷ 5) to find pence per one bag. Recognise that pence and bags are different units and cannot be subtracted from each other.",
+      "storyContext": "William scans Kingston harbor's spice stalls to find the best pepper price. A merchant posts a notice board \u2014 but the price per bag only emerges if you divide correctly, not subtract.",
+      "narrative_need": "To compare two stalls fairly, William needs price per bag. Without the unit rate, he cannot tell which merchant is cheaper \u2014 he will pay more than he should for the voyage's provisions.",
+      "student_action": "Divide total price by quantity (20 \u00f7 5) to find pence per one bag. Recognise that pence and bags are different units and cannot be subtracted from each other.",
       "question": "A spice merchant at Kingston harbor posts this notice:\n\n| Pepper | Price |\n|---|---|\n| 5 bags | 20 pence |\n\nWilliam must find the price per bag to compare with the merchant next door. What is the price per bag?",
-      "choices": ["15 pence per bag", "4 pence per bag", "0.25 pence per bag", "100 pence per bag"],
+      "choices": [
+        "15 pence per bag",
+        "4 pence per bag",
+        "0.25 pence per bag",
+        "100 pence per bag"
+      ],
       "correctIndex": 1,
-      "correct_reasoning": "Unit rate means 'how much per one'. Price per bag = total price ÷ number of bags = 20 ÷ 5 = 4 pence per bag. Check: 4 pence × 5 bags = 20 pence ✓. Subtraction (20 − 5 = 15) fails because pence and bags are different units — you cannot subtract a count of bags from a count of pence any more than you can subtract kilograms from pounds.",
+      "correct_reasoning": "Unit rate means 'how much per one'. Price per bag = total price \u00f7 number of bags = 20 \u00f7 5 = 4 pence per bag. Check: 4 pence \u00d7 5 bags = 20 pence \u2713. Subtraction (20 \u2212 5 = 15) fails because pence and bags are different units \u2014 you cannot subtract a count of bags from a count of pence any more than you can subtract kilograms from pounds.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
           "error_type": "arithmetic",
-          "student_thinking": "Student computes 20 − 5 = 15, subtracting the number of bags from the total price. They treat the two table entries as if they can be combined by subtraction, failing to recognise that a rate requires dividing one quantity by the other.",
+          "student_thinking": "Student computes 20 \u2212 5 = 15, subtracting the number of bags from the total price. They treat the two table entries as if they can be combined by subtraction, failing to recognise that a rate requires dividing one quantity by the other.",
           "misconception_id": "mis_ratios_proportions__thinks_difference_one_part_ratio"
         },
         {
           "choice_index": 2,
           "error_type": "wrong_formula",
-          "student_thinking": "Student writes 5 ÷ 20 = 0.25, flipping numerator and denominator. They divide bags by pence rather than pence by bags, producing bags-per-penny instead of the asked pence-per-bag.",
+          "student_thinking": "Student writes 5 \u00f7 20 = 0.25, flipping numerator and denominator. They divide bags by pence rather than pence by bags, producing bags-per-penny instead of the asked pence-per-bag.",
           "misconception_id": "mis_ratios_proportions__does_not_realise_ratio_worded"
         },
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student multiplies 20 × 5 = 100, combining both values as if finding a total area or combined quantity. They have no model for rate as a division — they reach for multiplication because both numbers are 'in the problem'.",
+          "student_thinking": "Student multiplies 20 \u00d7 5 = 100, combining both values as if finding a total area or combined quantity. They have no model for rate as a division \u2014 they reach for multiplication because both numbers are 'in the problem'.",
           "misconception_id": null
         }
       ],
       "hints": [
         "Unit rate means 'per one'. To find the price per ONE bag, ask: if I share 20 pence equally among 5 bags, how many pence does each bag get?",
-        "Sharing equally means division: 20 ÷ 5. Subtraction (20 − 5) would only make sense if pence and bags were the same kind of thing — but they are not.",
-        "20 ÷ 5 = 4 pence per bag. Always check: unit rate × quantity = total. 4 × 5 = 20 ✓. If your answer times 5 does not give 20 pence, go back."
+        "Sharing equally means division: 20 \u00f7 5. Subtraction (20 \u2212 5) would only make sense if pence and bags were the same kind of thing \u2014 but they are not.",
+        "20 \u00f7 5 = 4 pence per bag. Always check: unit rate \u00d7 quantity = total. 4 \u00d7 5 = 20 \u2713. If your answer times 5 does not give 20 pence, go back."
       ],
-      "world_feedback": "William marks '4 pence per bag' in his provisioning log and moves to the next stall. The first merchant watches him go: 'Clever lad. Most just look at the two numbers and take away the smaller.' William does not look back — he already knows which stall wins.",
+      "world_feedback": "William marks '4 pence per bag' in his provisioning log and moves to the next stall. The first merchant watches him go: 'Clever lad. Most just look at the two numbers and take away the smaller.' William does not look back \u2014 he already knows which stall wins.",
       "transfer_question": "A chandler sells rope: 8 metres for 32 pence. Find the price per metre.",
-      "explanation": "Unit rate means 'per one unit' — it requires dividing the measured total by the count to rescale to a single-unit basis. The subtraction error (20 − 5 = 15) treats pence and bags as the same kind of quantity, confusing an additive comparison with a multiplicative rate. The check (unit rate × quantity = total) reinforces that unit rate is a multiplicative, not additive, relationship.",
+      "explanation": "Unit rate means 'per one unit' \u2014 it requires dividing the measured total by the count to rescale to a single-unit basis. The subtraction error (20 \u2212 5 = 15) treats pence and bags as the same kind of quantity, confusing an additive comparison with a multiplicative rate. The check (unit rate \u00d7 quantity = total) reinforces that unit rate is a multiplicative, not additive, relationship.",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -228,18 +252,23 @@
       "level": 3,
       "format": "multiple_choice",
       "examTag": "ACT_linear_functions",
-      "storyContext": "William reads a carter's pricing board: £5 base hire plus £3 per mile. He must write the equation before his father signs the contract.",
-      "narrative_need": "The contract locks in a formula for a twelve-mile journey. If William swaps the rate and base fee, the bill will be wrong — and the carter has a reputation for holding clients to the letter of any signed calculation.",
+      "storyContext": "William reads a carter's pricing board: \u00a35 base hire plus \u00a33 per mile. He must write the equation before his father signs the contract.",
+      "narrative_need": "The contract locks in a formula for a twelve-mile journey. If William swaps the rate and base fee, the bill will be wrong \u2014 and the carter has a reputation for holding clients to the letter of any signed calculation.",
       "student_action": "Match 'base hire' to the y-intercept (c) and 'rate per mile' to the gradient (m). Write T = 3m + 5, not T = 5m + 3. The coefficient of m is the rate; the constant is the flat fee.",
-      "question": "A carter's pricing board reads:\n\n- Base hire fee: £5\n- Rate: £3 per mile\n\nWilliam writes an equation for the total cost T (in £) for a journey of m miles. Which equation is correct?",
-      "choices": ["T = 3m + 5", "T = 5m + 3", "T = 3m", "T = 8m"],
+      "question": "A carter's pricing board reads:\n\n- Base hire fee: \u00a35\n- Rate: \u00a33 per mile\n\nWilliam writes an equation for the total cost T (in \u00a3) for a journey of m miles. Which equation is correct?",
+      "choices": [
+        "T = 3m + 5",
+        "T = 5m + 3",
+        "T = 3m",
+        "T = 8m"
+      ],
       "correctIndex": 0,
-      "correct_reasoning": "The rate (£3 per mile) multiplies the variable m — it is the gradient. The base hire (£5) does not depend on distance — it is the y-intercept. So T = 3m + 5. Verify: at m = 4 miles, T = 3 × 4 + 5 = 12 + 5 = £17. At m = 0 miles, T = £5 (the base fee alone, as expected).",
+      "correct_reasoning": "The rate (\u00a33 per mile) multiplies the variable m \u2014 it is the gradient. The base hire (\u00a35) does not depend on distance \u2014 it is the y-intercept. So T = 3m + 5. Verify: at m = 4 miles, T = 3 \u00d7 4 + 5 = 12 + 5 = \u00a317. At m = 0 miles, T = \u00a35 (the base fee alone, as expected).",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
           "error_type": "wrong_formula",
-          "student_thinking": "Student writes T = 5m + 3, swapping the gradient and y-intercept. They confuse which number multiplies m — placing the flat fee as the rate and the rate as the constant. This is the canonical swap misconception for y = mx + c.",
+          "student_thinking": "Student writes T = 5m + 3, swapping the gradient and y-intercept. They confuse which number multiplies m \u2014 placing the flat fee as the rate and the rate as the constant. This is the canonical swap misconception for y = mx + c.",
           "misconception_id": "mis_linear_equations__believes_ymxc_m_yintercept"
         },
         {
@@ -251,18 +280,18 @@
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student adds the two given numbers (3 + 5 = 8) and uses the sum as a single rate: T = 8m. They have no model for separating a flat fee from a per-unit rate — both numbers collapse into one coefficient.",
+          "student_thinking": "Student adds the two given numbers (3 + 5 = 8) and uses the sum as a single rate: T = 8m. They have no model for separating a flat fee from a per-unit rate \u2014 both numbers collapse into one coefficient.",
           "misconception_id": null
         }
       ],
       "hints": [
-        "In T = mx + c, the gradient m is the amount added for each extra unit of x. Which number on the board changes with distance — the rate or the base fee?",
-        "The rate (£3 per mile) changes with every extra mile — it multiplies m. The base hire (£5) is fixed regardless of distance — it does not multiply anything. So m = 3 and c = 5.",
-        "T = 3m + 5. Check at m = 0: T = 5 (just the base hire, as expected). Check at m = 4: T = 12 + 5 = £17. If you wrote T = 5m + 3, check what happens at m = 0: T = 3, not 5 — that tells you the roles are swapped."
+        "In T = mx + c, the gradient m is the amount added for each extra unit of x. Which number on the board changes with distance \u2014 the rate or the base fee?",
+        "The rate (\u00a33 per mile) changes with every extra mile \u2014 it multiplies m. The base hire (\u00a35) is fixed regardless of distance \u2014 it does not multiply anything. So m = 3 and c = 5.",
+        "T = 3m + 5. Check at m = 0: T = 5 (just the base hire, as expected). Check at m = 4: T = 12 + 5 = \u00a317. If you wrote T = 5m + 3, check what happens at m = 0: T = 3, not 5 \u2014 that tells you the roles are swapped."
       ],
       "world_feedback": "William reads back the formula aloud and the carter initials it without argument. His father raises an eyebrow: 'Most apprentices get the two numbers the wrong way round. You didn't.' William does not mention how close he came to writing it the other way.",
-      "transfer_question": "A ferryman charges a £2 boarding fee plus £4 per nautical mile. Write the equation for the total fare F for n nautical miles.",
-      "explanation": "In y = mx + c, m is the rate of change (the amount added per unit increase in x) and c is the value when x = 0 (the fixed starting amount). Swapping them (T = 5m + 3) produces an equation where the flat fee mysteriously grows with distance and the per-mile rate becomes a fixed constant — it fails both a zero-check (T at m=0 should be £5, not £3) and a slope-check (every extra mile should cost £3, not £5).",
+      "transfer_question": "A ferryman charges a \u00a32 boarding fee plus \u00a34 per nautical mile. Write the equation for the total fare F for n nautical miles.",
+      "explanation": "In y = mx + c, m is the rate of change (the amount added per unit increase in x) and c is the value when x = 0 (the fixed starting amount). Swapping them (T = 5m + 3) produces an equation where the flat fee mysteriously grows with distance and the per-mile rate becomes a fixed constant \u2014 it fails both a zero-check (T at m=0 should be \u00a35, not \u00a33) and a slope-check (every extra mile should cost \u00a33, not \u00a35).",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -296,12 +325,17 @@
       "format": "multiple_choice",
       "examTag": "ACT_linear_functions",
       "storyContext": "The chandlery master writes a pricing formula on a slate: T = 3x + 5. William finds an old ledger and wants to confirm one entry matches the formula.",
-      "narrative_need": "The master will test William at dawn by naming a week-and-total pair from the old ledger. William must know how to check any entry against the formula — not just recall familiar numbers from it.",
+      "narrative_need": "The master will test William at dawn by naming a week-and-total pair from the old ledger. William must know how to check any entry against the formula \u2014 not just recall familiar numbers from it.",
       "student_action": "Substitute the x-value into T = 3x + 5 and compare the result to the given T. If 3x + 5 equals the ledger total, the entry lies on the line. Do not try to read coordinates off the formula itself.",
-      "question": "The chandlery master posts the pricing formula: T = 3x + 5, where x = weeks stored and T = total cost in £.\n\nWhich ledger entry (x weeks, £T) lies exactly on this pricing line?",
-      "choices": ["(4, 17)", "(3, 5)", "(2, 6)", "(1, 3)"],
+      "question": "The chandlery master posts the pricing formula: T = 3x + 5, where x = weeks stored and T = total cost in \u00a3.\n\nWhich ledger entry (x weeks, \u00a3T) lies exactly on this pricing line?",
+      "choices": [
+        "(4, 17)",
+        "(3, 5)",
+        "(2, 6)",
+        "(1, 3)"
+      ],
       "correctIndex": 0,
-      "correct_reasoning": "Substitute each x into T = 3x + 5 and check: (4, 17): 3 × 4 + 5 = 12 + 5 = 17 ✓. (3, 5): 3 × 3 + 5 = 14 ≠ 5 ✗. (2, 6): 3 × 2 + 5 = 11 ≠ 6 ✗. (1, 3): 3 × 1 + 5 = 8 ≠ 3 ✗. Only (4, 17) satisfies the equation.",
+      "correct_reasoning": "Substitute each x into T = 3x + 5 and check: (4, 17): 3 \u00d7 4 + 5 = 12 + 5 = 17 \u2713. (3, 5): 3 \u00d7 3 + 5 = 14 \u2260 5 \u2717. (2, 6): 3 \u00d7 2 + 5 = 11 \u2260 6 \u2717. (1, 3): 3 \u00d7 1 + 5 = 8 \u2260 3 \u2717. Only (4, 17) satisfies the equation.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -312,24 +346,24 @@
         {
           "choice_index": 2,
           "error_type": "omission",
-          "student_thinking": "Student computes 3 × 2 = 6 — using only the gradient term and ignoring the + 5 — then accepts (2, 6) as correct. They see the equation as T = 3x rather than T = 3x + 5, treating the y-intercept as optional.",
+          "student_thinking": "Student computes 3 \u00d7 2 = 6 \u2014 using only the gradient term and ignoring the + 5 \u2014 then accepts (2, 6) as correct. They see the equation as T = 3x rather than T = 3x + 5, treating the y-intercept as optional.",
           "misconception_id": null
         },
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student reasons 'the gradient is 3, so at x = 1 the total must be 3' — treating the gradient value as the output at the first integer x-value. They confuse the slope with the y-value at x = 1.",
+          "student_thinking": "Student reasons 'the gradient is 3, so at x = 1 the total must be 3' \u2014 treating the gradient value as the output at the first integer x-value. They confuse the slope with the y-value at x = 1.",
           "misconception_id": "mis_linear_equations__believes_coefficient_x_represents_gradient"
         }
       ],
       "hints": [
         "To check if a point (x, T) is on the line T = 3x + 5, substitute the x-value and compute 3x + 5. If the result matches the T-value, the point is on the line.",
-        "Try (4, 17): compute 3 × 4 + 5. Does it equal 17? Try (3, 5): compute 3 × 3 + 5. Does it equal 5?",
-        "3 × 4 + 5 = 12 + 5 = 17. Yes — (4, 17) is on the line. For every other option, you can verify by substituting: 3 × 3 + 5 = 14 ≠ 5, 3 × 2 + 5 = 11 ≠ 6, 3 × 1 + 5 = 8 ≠ 3."
+        "Try (4, 17): compute 3 \u00d7 4 + 5. Does it equal 17? Try (3, 5): compute 3 \u00d7 3 + 5. Does it equal 5?",
+        "3 \u00d7 4 + 5 = 12 + 5 = 17. Yes \u2014 (4, 17) is on the line. For every other option, you can verify by substituting: 3 \u00d7 3 + 5 = 14 \u2260 5, 3 \u00d7 2 + 5 = 11 \u2260 6, 3 \u00d7 1 + 5 = 8 \u2260 3."
       ],
-      "world_feedback": "William works through each entry at his desk, substituting one at a time. When the master arrives at dawn, William points to (4, 17) without hesitation. The master checks his own slate and replaces the candle without a word — which, William has learned, is as close to praise as the old man gets.",
-      "transfer_question": "A porter's charges follow C = 4d + 2, where d = days and C = total cost in £. Does the entry (3, 14) lie on this pricing line? Show your substitution.",
-      "explanation": "Verifying that a coordinate pair lies on a line requires substituting the x-value into the equation and checking whether the result equals the stated y-value. Reading numbers directly from the equation — matching 5 in the formula to a T = 5 in the options — is a pattern-matching error that bypasses the substitution step. Every claimed point on a line must be tested; no amount of number-spotting can replace substitution.",
+      "world_feedback": "William works through each entry at his desk, substituting one at a time. When the master arrives at dawn, William points to (4, 17) without hesitation. The master checks his own slate and replaces the candle without a word \u2014 which, William has learned, is as close to praise as the old man gets.",
+      "transfer_question": "A porter's charges follow C = 4d + 2, where d = days and C = total cost in \u00a3. Does the entry (3, 14) lie on this pricing line? Show your substitution.",
+      "explanation": "Verifying that a coordinate pair lies on a line requires substituting the x-value into the equation and checking whether the result equals the stated y-value. Reading numbers directly from the equation \u2014 matching 5 in the formula to a T = 5 in the options \u2014 is a pattern-matching error that bypasses the substitution step. Every claimed point on a line must be tested; no amount of number-spotting can replace substitution.",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -363,40 +397,45 @@
       "format": "multiple_choice",
       "examTag": null,
       "storyContext": "Simon must relabel a grain sack: the morning log uses twelfths but the original measure is in quarters. He needs the same amount in a new label.",
-      "narrative_need": "The afternoon keeper reads only twelfths on the feeding chart. If Simon writes 3/12 instead of 9/12, the keeper will deliver one-third of the correct feed — too little for the animals before the evening check.",
-      "student_action": "Multiply both numerator and denominator of 3/4 by the same factor. To reach denominator 12, multiply both parts by 3: 3 × 3 = 9 on top, 4 × 3 = 12 on the bottom. The multiplier must be applied to both.",
+      "narrative_need": "The afternoon keeper reads only twelfths on the feeding chart. If Simon writes 3/12 instead of 9/12, the keeper will deliver one-third of the correct feed \u2014 too little for the animals before the evening check.",
+      "student_action": "Multiply both numerator and denominator of 3/4 by the same factor. To reach denominator 12, multiply both parts by 3: 3 \u00d7 3 = 9 on top, 4 \u00d7 3 = 12 on the bottom. The multiplier must be applied to both.",
       "question": "The morning log records that 3/4 of a full sack of grain was delivered. Simon must relabel this entry in twelfths for the afternoon feeding chart. What fraction with denominator 12 is equivalent to 3/4?",
-      "choices": ["9/12", "3/12", "6/12", "4/12"],
+      "choices": [
+        "9/12",
+        "3/12",
+        "6/12",
+        "4/12"
+      ],
       "correctIndex": 0,
-      "correct_reasoning": "To convert 3/4 to an equivalent fraction with denominator 12: 4 × 3 = 12, so multiply top and bottom by 3. Numerator: 3 × 3 = 9. The equivalent fraction is 9/12. Verify: 9 ÷ 12 = 0.75 and 3 ÷ 4 = 0.75 ✓. Both fractions represent the same portion of the sack.",
+      "correct_reasoning": "To convert 3/4 to an equivalent fraction with denominator 12: 4 \u00d7 3 = 12, so multiply top and bottom by 3. Numerator: 3 \u00d7 3 = 9. The equivalent fraction is 9/12. Verify: 9 \u00f7 12 = 0.75 and 3 \u00f7 4 = 0.75 \u2713. Both fractions represent the same portion of the sack.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
           "error_type": "omission",
-          "student_thinking": "Student sees that 4 × 3 = 12 and changes the denominator to 12, but leaves the numerator as 3. They apply the multiplier only to the denominator, forgetting that both parts must be scaled by the same factor to preserve the fraction's value.",
+          "student_thinking": "Student sees that 4 \u00d7 3 = 12 and changes the denominator to 12, but leaves the numerator as 3. They apply the multiplier only to the denominator, forgetting that both parts must be scaled by the same factor to preserve the fraction's value.",
           "misconception_id": "mis_fractions_decimals__forgets_change_numerators_finding_equivalent"
         },
         {
           "choice_index": 2,
           "error_type": "arithmetic",
-          "student_thinking": "Student scales the denominator by 3 (4 → 12) but scales the numerator by a different factor — here by 2 (3 → 6). They apply inconsistent multipliers to numerator and denominator, producing a fraction that is not equivalent to 3/4.",
+          "student_thinking": "Student scales the denominator by 3 (4 \u2192 12) but scales the numerator by a different factor \u2014 here by 2 (3 \u2192 6). They apply inconsistent multipliers to numerator and denominator, producing a fraction that is not equivalent to 3/4.",
           "misconception_id": null
         },
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student adds 1 to the numerator (3 + 1 = 4) while multiplying the denominator by 3 (4 × 3 = 12). They confuse additive and multiplicative scaling — adjusting the numerator additively instead of multiplicatively.",
+          "student_thinking": "Student adds 1 to the numerator (3 + 1 = 4) while multiplying the denominator by 3 (4 \u00d7 3 = 12). They confuse additive and multiplicative scaling \u2014 adjusting the numerator additively instead of multiplicatively.",
           "misconception_id": null
         }
       ],
       "hints": [
-        "To go from denominator 4 to denominator 12, you multiply by 3 (since 4 × 3 = 12). Whatever you do to the bottom, you must do to the top to keep the fraction equal.",
-        "Multiply the numerator by the same 3: 3 × 3 = 9. So 3/4 = 9/12. Think of it as scaling: if you cut each quarter into three equal pieces, each piece is a twelfth — and you still have nine of them.",
-        "Check: 3/12 = 1/4, not 3/4. 6/12 = 1/2, not 3/4. 9/12 = 3/4 ✓. Only 9/12 passes the equivalence test."
+        "To go from denominator 4 to denominator 12, you multiply by 3 (since 4 \u00d7 3 = 12). Whatever you do to the bottom, you must do to the top to keep the fraction equal.",
+        "Multiply the numerator by the same 3: 3 \u00d7 3 = 9. So 3/4 = 9/12. Think of it as scaling: if you cut each quarter into three equal pieces, each piece is a twelfth \u2014 and you still have nine of them.",
+        "Check: 3/12 = 1/4, not 3/4. 6/12 = 1/2, not 3/4. 9/12 = 3/4 \u2713. Only 9/12 passes the equivalence test."
       ],
       "world_feedback": "Simon writes 9/12 on the new label and holds the two fractions side by side: 3/4 and 9/12. 'Same sack. Different label.' The afternoon keeper files it without question, and the animals get every morsel they were owed.",
       "transfer_question": "The evening log uses sixths. Write an equivalent fraction with denominator 6 for 2/3 of the water ration.",
-      "explanation": "Equivalent fractions are created by multiplying numerator and denominator by the same nonzero factor. Multiplying only the denominator (leaving the numerator unchanged) produces a smaller fraction: 3/12 = 1/4, not 3/4. The multiplier must be applied uniformly to both parts — fractions are ratios, and ratios only stay equal when both terms scale together.",
+      "explanation": "Equivalent fractions are created by multiplying numerator and denominator by the same nonzero factor. Multiplying only the denominator (leaving the numerator unchanged) produces a smaller fraction: 3/12 = 1/4, not 3/4. The multiplier must be applied uniformly to both parts \u2014 fractions are ratios, and ratios only stay equal when both terms scale together.",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -429,13 +468,18 @@
       "level": 3,
       "format": "multiple_choice",
       "examTag": null,
-      "storyContext": "Simon must combine two morning rations — a quarter-sack of oats and a third-sack of barley — into one total for the logbook. The denominators are different and a wrong total changes the daily record.",
-      "narrative_need": "The head keeper cross-checks the logbook against the grain store. If Simon writes 2/7 (adding tops and bottoms), the keeper will find the numbers don't match the physical sacks — and Simon will have to explain why his arithmetic looks like it came from a broken rule.",
+      "storyContext": "Simon must combine two morning rations \u2014 a quarter-sack of oats and a third-sack of barley \u2014 into one total for the logbook. The denominators are different and a wrong total changes the daily record.",
+      "narrative_need": "The head keeper cross-checks the logbook against the grain store. If Simon writes 2/7 (adding tops and bottoms), the keeper will find the numbers don't match the physical sacks \u2014 and Simon will have to explain why his arithmetic looks like it came from a broken rule.",
       "student_action": "Find a common denominator (12) before adding. Convert 1/4 to 3/12 and 1/3 to 4/12, then add the numerators: 3 + 4 = 7, giving 7/12. The denominators do not add together.",
       "question": "Simon combines 1/4 sack of oats and 1/3 sack of barley for the morning feeding. What fraction of a full sack does this total?",
-      "choices": ["7/12", "2/7", "2/12", "5/12"],
+      "choices": [
+        "7/12",
+        "2/7",
+        "2/12",
+        "5/12"
+      ],
       "correctIndex": 0,
-      "correct_reasoning": "Step 1 — find the lowest common denominator of 4 and 3: LCM = 12. Step 2 — convert each fraction: 1/4 = 3/12 (multiply top and bottom by 3); 1/3 = 4/12 (multiply top and bottom by 4). Step 3 — add the numerators: 3 + 4 = 7, keeping the common denominator 12. Total = 7/12. Verify: 7/12 ≈ 0.583, and 1/4 + 1/3 = 0.25 + 0.333 = 0.583 ✓.",
+      "correct_reasoning": "Step 1 \u2014 find the lowest common denominator of 4 and 3: LCM = 12. Step 2 \u2014 convert each fraction: 1/4 = 3/12 (multiply top and bottom by 3); 1/3 = 4/12 (multiply top and bottom by 4). Step 3 \u2014 add the numerators: 3 + 4 = 7, keeping the common denominator 12. Total = 7/12. Verify: 7/12 \u2248 0.583, and 1/4 + 1/3 = 0.25 + 0.333 = 0.583 \u2713.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -458,12 +502,12 @@
       ],
       "hints": [
         "You cannot add fractions until they share a common denominator. Find the smallest number that both 4 and 3 divide into evenly.",
-        "LCM of 4 and 3 is 12. Convert 1/4: multiply top and bottom by 3 → 3/12. Convert 1/3: multiply top and bottom by 4 → 4/12. Now both fractions have denominator 12.",
-        "3/12 + 4/12 = (3 + 4)/12 = 7/12. The denominator stays as 12 — it is NOT added. Adding denominators (4 + 3 = 7) would give 2/7, which is less than 1/4 alone. A total cannot be smaller than one of its parts."
+        "LCM of 4 and 3 is 12. Convert 1/4: multiply top and bottom by 3 \u2192 3/12. Convert 1/3: multiply top and bottom by 4 \u2192 4/12. Now both fractions have denominator 12.",
+        "3/12 + 4/12 = (3 + 4)/12 = 7/12. The denominator stays as 12 \u2014 it is NOT added. Adding denominators (4 + 3 = 7) would give 2/7, which is less than 1/4 alone. A total cannot be smaller than one of its parts."
       ],
       "world_feedback": "Simon writes 7/12 in the morning column. The head keeper runs a finger down the column, checks the store, and nods once. 'This one adds up.' Simon notices she does not say that about every entry in the book.",
       "transfer_question": "A second batch combines 1/6 sack of seeds with 1/4 sack of nuts. What fraction of a full sack is this total?",
-      "explanation": "Adding fractions requires a common denominator because the denominator names the size of the pieces — you cannot combine thirds with quarters directly, any more than you can add centimetres to inches without converting. The 'add tops and bottoms' error (2/7) produces a number smaller than either original fraction, which is a clear sanity-check failure: a total of two positive amounts must be larger than either part.",
+      "explanation": "Adding fractions requires a common denominator because the denominator names the size of the pieces \u2014 you cannot combine thirds with quarters directly, any more than you can add centimetres to inches without converting. The 'add tops and bottoms' error (2/7) produces a number smaller than either original fraction, which is a clear sanity-check failure: a total of two positive amounts must be larger than either part.",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -492,45 +536,50 @@
       "conceptId": "ratios_proportions",
       "ingredient_id": "ratios_proportions__proportion_setup",
       "misconception_id": "mis_ratios_proportions__confuses_additive_and_multiplicative_relationships",
-      "misconception_label": "treats a multiplicative rate relationship as additive — adds the difference in quantity to the original price instead of scaling",
+      "misconception_label": "treats a multiplicative rate relationship as additive \u2014 adds the difference in quantity to the original price instead of scaling",
       "level": 3,
       "format": "multiple_choice",
       "examTag": "ACT_ratios",
       "storyContext": "William needs 7 grams of saffron. The only merchant quotes 15 pence for 3 grams. William must set up a proportion to find the right price before he hands over any coin.",
       "narrative_need": "The merchant is watching William calculate. If William hands over 19 pence (additive thinking), he either overpays or the merchant refuses the transaction. A wrong price for the ship's spice supply compounds across every ingredient on the list.",
-      "student_action": "Set up the proportion 3/15 = 7/x. Cross-multiply: 3x = 15 × 7 = 105. Divide: x = 105 ÷ 3 = 35 pence. Alternatively, find the unit rate: 15 ÷ 3 = 5 pence/gram, then 7 × 5 = 35 pence.",
+      "student_action": "Set up the proportion 3/15 = 7/x. Cross-multiply: 3x = 15 \u00d7 7 = 105. Divide: x = 105 \u00f7 3 = 35 pence. Alternatively, find the unit rate: 15 \u00f7 3 = 5 pence/gram, then 7 \u00d7 5 = 35 pence.",
       "question": "A saffron merchant charges 15 pence for 3 grams. William needs 7 grams. How much will he pay at the same rate?",
-      "choices": ["35 pence", "19 pence", "5 pence", "105 pence"],
+      "choices": [
+        "35 pence",
+        "19 pence",
+        "5 pence",
+        "105 pence"
+      ],
       "correctIndex": 0,
-      "correct_reasoning": "Method 1 (unit rate): 15 ÷ 3 = 5 pence per gram. 7 × 5 = 35 pence. Method 2 (proportion): 3/15 = 7/x → 3x = 105 → x = 35. Check: the price scales with the amount (proportional), so doubling the grams would double the price. 7 grams is more than double 3 grams, so 35 > 30 ✓.",
+      "correct_reasoning": "Method 1 (unit rate): 15 \u00f7 3 = 5 pence per gram. 7 \u00d7 5 = 35 pence. Method 2 (proportion): 3/15 = 7/x \u2192 3x = 105 \u2192 x = 35. Check: the price scales with the amount (proportional), so doubling the grams would double the price. 7 grams is more than double 3 grams, so 35 > 30 \u2713.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
           "error_type": "wrong_formula",
-          "student_thinking": "Student adds the extra grams to the original price: William needs 4 more grams than 3 (since 7 − 3 = 4), so the price must be 15 + 4 = 19 pence. They treat the relationship as additive — adding the same number of pence as extra grams — rather than multiplicative.",
+          "student_thinking": "Student adds the extra grams to the original price: William needs 4 more grams than 3 (since 7 \u2212 3 = 4), so the price must be 15 + 4 = 19 pence. They treat the relationship as additive \u2014 adding the same number of pence as extra grams \u2014 rather than multiplicative.",
           "misconception_id": "mis_ratios_proportions__confuses_additive_and_multiplicative_relationships"
         },
         {
           "choice_index": 2,
           "error_type": "partial_answer",
-          "student_thinking": "Student correctly finds the unit rate (15 ÷ 3 = 5 pence per gram) but reports the unit rate as the final answer instead of multiplying by 7. They stop one step early, confusing the rate with the total cost.",
+          "student_thinking": "Student correctly finds the unit rate (15 \u00f7 3 = 5 pence per gram) but reports the unit rate as the final answer instead of multiplying by 7. They stop one step early, confusing the rate with the total cost.",
           "misconception_id": null
         },
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student multiplies both the gram count and the price: 7 × 15 = 105 pence, without dividing by the original 3 grams. They scale the price by the full new quantity rather than by the ratio of new to old quantity.",
+          "student_thinking": "Student multiplies both the gram count and the price: 7 \u00d7 15 = 105 pence, without dividing by the original 3 grams. They scale the price by the full new quantity rather than by the ratio of new to old quantity.",
           "misconception_id": null
         }
       ],
       "hints": [
-        "The relationship between grams and pence is multiplicative, not additive. Buying 4 more grams does not mean paying 4 more pence — you need to scale by how many times as many grams you are buying.",
-        "Method 1: find the price per one gram first. 15 ÷ 3 = 5 pence per gram. Now multiply by 7 grams: 7 × 5 = 35 pence.",
-        "Method 2: write a proportion. 3 grams costs 15 pence, so 7 grams costs x pence: 3/15 = 7/x. Cross-multiply: 3x = 7 × 15 = 105. Divide: x = 35 pence."
+        "The relationship between grams and pence is multiplicative, not additive. Buying 4 more grams does not mean paying 4 more pence \u2014 you need to scale by how many times as many grams you are buying.",
+        "Method 1: find the price per one gram first. 15 \u00f7 3 = 5 pence per gram. Now multiply by 7 grams: 7 \u00d7 5 = 35 pence.",
+        "Method 2: write a proportion. 3 grams costs 15 pence, so 7 grams costs x pence: 3/15 = 7/x. Cross-multiply: 3x = 7 \u00d7 15 = 105. Divide: x = 35 pence."
       ],
       "world_feedback": "William counts out 35 pence and the merchant weighs 7 grams precisely. As William pockets the saffron, the merchant's assistant leans over: 'He's the first this week who didn't just add a few coins and wonder why the scales were wrong.' William files that away as useful.",
       "transfer_question": "A chandler sells 4 metres of rope for 28 pence. At the same rate, how much does 11 metres cost?",
-      "explanation": "Proportional relationships are multiplicative: if you buy k times as many units, you pay k times as much. Adding the extra quantity directly to the price (15 + 4 = 19) treats the relationship as though each extra gram adds exactly one extra penny — a unit-rate assumption that only works when the price per gram happens to be 1. The proportion equation 3/15 = 7/x makes the multiplicative structure explicit: both ratios must be equal, which forces x to scale with 7/3, not 7 − 3.",
+      "explanation": "Proportional relationships are multiplicative: if you buy k times as many units, you pay k times as much. Adding the extra quantity directly to the price (15 + 4 = 19) treats the relationship as though each extra gram adds exactly one extra penny \u2014 a unit-rate assumption that only works when the price per gram happens to be 1. The proportion equation 3/15 = 7/x makes the multiplicative structure explicit: both ratios must be equal, which forces x to scale with 7/3, not 7 \u2212 3.",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -563,41 +612,46 @@
       "level": 3,
       "format": "multiple_choice",
       "examTag": "ACT_ratios",
-      "storyContext": "Simon records the resident otter's training swims. The keeper asks how far the otter will travel in a longer session — Simon must set up and solve a proportion to file the forecast.",
-      "narrative_need": "The keeper uses the forecast to plan the otter's food supplement before the extended session. A forecast of 36 metres instead of 9 metres means four times too much supplement — which makes the otter sick and delays the training programme.",
+      "storyContext": "Simon records the resident otter's training swims. The keeper asks how far the otter will travel in a longer session \u2014 Simon must set up and solve a proportion to file the forecast.",
+      "narrative_need": "The keeper uses the forecast to plan the otter's food supplement before the extended session. A forecast of 36 metres instead of 9 metres means four times too much supplement \u2014 which makes the otter sick and delays the training programme.",
       "student_action": "Set up 3/4 = d/12. Cross-multiply to get 4d = 36. Then divide both sides by 4: d = 9. Cross-multiplying is step one; isolating the unknown by dividing is step two. Both steps are required.",
       "question": "The sanctuary's otter swims 3 metres in 4 minutes. Assuming a steady rate, how far does it swim in 12 minutes?",
-      "choices": ["9 metres", "15 metres", "36 metres", "4 metres"],
+      "choices": [
+        "9 metres",
+        "15 metres",
+        "36 metres",
+        "4 metres"
+      ],
       "correctIndex": 0,
-      "correct_reasoning": "Set up the proportion: 3/4 = d/12. Cross-multiply: 4d = 3 × 12 = 36. Divide both sides by 4: d = 36 ÷ 4 = 9 metres. Check: the otter travels 3 times as far in 3 times the time (12 ÷ 4 = 3, so d = 3 × 3 = 9 ✓).",
+      "correct_reasoning": "Set up the proportion: 3/4 = d/12. Cross-multiply: 4d = 3 \u00d7 12 = 36. Divide both sides by 4: d = 36 \u00f7 4 = 9 metres. Check: the otter travels 3 times as far in 3 times the time (12 \u00f7 4 = 3, so d = 3 \u00d7 3 = 9 \u2713).",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
           "error_type": "wrong_formula",
-          "student_thinking": "Student adds the two given values: 3 + 12 = 15, reporting 15 metres. They treat the problem as additive — combining the known distance and the new time rather than scaling the distance by the time ratio.",
+          "student_thinking": "Student adds the two given values: 3 + 12 = 15, reporting 15 metres. They treat the problem as additive \u2014 combining the known distance and the new time rather than scaling the distance by the time ratio.",
           "misconception_id": null
         },
         {
           "choice_index": 2,
           "error_type": "partial_answer",
-          "student_thinking": "Student correctly cross-multiplies to get 3 × 12 = 36, then stops and reports 36 as the answer. They complete the cross-multiplication step but do not divide by 4 to isolate d — they equate the cross-product with the answer rather than with 4d.",
+          "student_thinking": "Student correctly cross-multiplies to get 3 \u00d7 12 = 36, then stops and reports 36 as the answer. They complete the cross-multiplication step but do not divide by 4 to isolate d \u2014 they equate the cross-product with the answer rather than with 4d.",
           "misconception_id": "mis_ratios_proportions__unable_equate_division_and_multiplication"
         },
         {
           "choice_index": 3,
           "error_type": "wrong_formula",
-          "student_thinking": "Student sees 12 ÷ 3 = 4 (finding how many times the time has increased) and reports 4 as the distance — treating the scale factor as the answer rather than applying it. They find the multiplier but multiply the wrong thing by it.",
+          "student_thinking": "Student sees 12 \u00f7 3 = 4 (finding how many times the time has increased) and reports 4 as the distance \u2014 treating the scale factor as the answer rather than applying it. They find the multiplier but multiply the wrong thing by it.",
           "misconception_id": null
         }
       ],
       "hints": [
-        "Set up a proportion: the ratio of distance to time must stay the same. So 3/4 = d/12. Cross-multiplying gives you an equation — but that equation still needs to be solved for d.",
-        "Cross-multiplying 3/4 = d/12 gives 4 × d = 3 × 12 = 36. This tells you 4d = 36, NOT d = 36. You still need one more step.",
-        "4d = 36 → d = 36 ÷ 4 = 9 metres. Check: 12 minutes is 3 times 4 minutes, so the otter should swim 3 times as far: 3 × 3 = 9 metres ✓."
+        "Set up a proportion: the ratio of distance to time must stay the same. So 3/4 = d/12. Cross-multiplying gives you an equation \u2014 but that equation still needs to be solved for d.",
+        "Cross-multiplying 3/4 = d/12 gives 4 \u00d7 d = 3 \u00d7 12 = 36. This tells you 4d = 36, NOT d = 36. You still need one more step.",
+        "4d = 36 \u2192 d = 36 \u00f7 4 = 9 metres. Check: 12 minutes is 3 times 4 minutes, so the otter should swim 3 times as far: 3 \u00d7 3 = 9 metres \u2713."
       ],
       "world_feedback": "Simon writes 9 metres in the forecast log and the keeper measures out the correct supplement. The otter surfaces after exactly 12 minutes and glides to the feeding platform. Simon marks the actual reading: 9 metres, exactly. He double-checks his proportion in the margin and decides he quite likes the feeling of being right.",
       "transfer_question": "A heron catches 5 fish in 8 minutes. At the same rate, how many fish does it catch in 24 minutes?",
-      "explanation": "Cross-multiplication rewrites the proportion a/b = c/d as ad = bc, which puts both unknowns on one side. But the resulting equation still needs to be solved: if 4d = 36, then d = 9, not 36. Students who report the cross-product as the final answer have completed the algebraic setup but treated the setup as the solution — they have the right equation but skipped the division step that isolates the unknown.",
+      "explanation": "Cross-multiplication rewrites the proportion a/b = c/d as ad = bc, which puts both unknowns on one side. But the resulting equation still needs to be solved: if 4d = 36, then d = 9, not 36. Students who report the cross-product as the final answer have completed the algebraic setup but treated the setup as the solution \u2014 they have the right equation but skipped the division step that isolates the unknown.",
       "pedagogy_score": {
         "math_integrity": 10,
         "diagnostic_power": 9,
@@ -611,6 +665,286 @@
       "gate_passed": "A",
       "tone_flags": [],
       "persona_simulation": {
+        "fast_guesser": "fail",
+        "misconception_student_hit_primary": true,
+        "fast_guesser_correct": false
+      },
+      "queue_id": null
+    },
+    {
+      "id": "cell_algebraic_manipulation_a4b2c1",
+      "schema_version": "scs-v1.1",
+      "generator_version": "fable5-sprint2",
+      "title": "The Study Group Trap",
+      "conceptId": "algebraic_manipulation",
+      "ingredient_id": "algebraic_manipulation__like_terms",
+      "misconception_id": "mis_algebraic_manipulation__does_not_understand_like_terms",
+      "misconception_label": "combines unlike terms by adding both coefficients and exponents: 5p + 2p\u00b2 = 7p\u00b3",
+      "level": 2,
+      "format": "multiple_choice",
+      "examTag": "ACT_algebra",
+      "storyContext": "Maya's study group has 8 minutes left on the quiz timer. The card reads: simplify 5p + 2p\u00b2 if possible.",
+      "distractor_taxonomy": [
+        {
+          "distractor_label": "7p\u00b3",
+          "misconception_id": "mis_algebraic_manipulation__does_not_understand_like_terms",
+          "narrative_signal": "Student adds coefficients (5+2=7) AND adds exponents (1+2=3), treating both operations the same way \u2014 reveals they believe combining terms always means adding all visible numbers."
+        },
+        {
+          "distractor_label": "7p",
+          "misconception_id": null,
+          "narrative_signal": "Student adds coefficients (5+2=7) but ignores the square, treating p\u00b2 as if it were p \u2014 reveals they read the exponent but discard it under time pressure."
+        },
+        {
+          "distractor_label": "10p\u00b2",
+          "misconception_id": null,
+          "narrative_signal": "Student multiplies the coefficients (5\u00d72=10) and takes the higher power \u2014 reveals they reach for multiplication when unsure how to add."
+        }
+      ],
+      "question": "Maya's study group is simplifying expressions for a quiz. The problem card says:\n\n**Simplify 5p + 2p\u00b2, if possible. If it cannot be simplified, write the expression as is.**\n\nMaya has one minute left. What should she write?",
+      "choices": [
+        "7p\u00b3",
+        "7p",
+        "5p + 2p\u00b2",
+        "10p\u00b2"
+      ],
+      "correctIndex": 2,
+      "correct_reasoning": "5p and 2p\u00b2 are UNLIKE terms: 5p contains p to the first power, while 2p\u00b2 contains p to the second power. Like terms must share the same variable AND the same exponent. Since these do not, the expression is already in its simplest form: 5p + 2p\u00b2. No combining is possible. The distractor 7p\u00b3 comes from adding coefficients (5+2=7) AND adding exponents (1+2=3) \u2014 a double error that mistakes the rules of addition for the rules of multiplication (where you DO add exponents, but only for same-base multiplication, not addition).",
+      "hints": [
+        "Can you combine apples and oranges into one fruit? Like terms are the same idea \u2014 they must have the same variable AND the same power before you can add them.",
+        "5p has p to the first power. 2p\u00b2 has p to the second power. Are those the same power? If not, you cannot combine them.",
+        "The answer is 5p + 2p\u00b2. These are unlike terms and already fully simplified. Adding exponents is a rule for multiplication (x\u00b2 \u00d7 x\u00b3 = x\u2075), not for addition."
+      ],
+      "world_feedback": "You combined the coefficients \u2014 good instinct. But p and p\u00b2 are different shapes of p. Adding exponents belongs to multiplication, not addition. These two terms have to stay separate.",
+      "transfer_question": "A classmate writes 3x\u00b2 + 4x\u00b3 = 7x\u2075. Identify the error and write the correct simplified form.",
+      "explanation": "Like terms require the same variable AND the same exponent. 5p (exponent 1) and 2p\u00b2 (exponent 2) are unlike terms \u2014 combining them by adding coefficients and exponents (7p\u00b3) confuses the addition rule with the multiplication rule. The exponent-addition rule applies to multiplying same-base terms: x^a \u00d7 x^b = x^(a+b). It never applies to adding unlike terms.",
+      "pedagogy_score": {
+        "mathematical_accuracy": 10,
+        "narrative_clarity": 9,
+        "misconception_precision": 10,
+        "emotional_safety": 9,
+        "actionability": 9,
+        "age_appropriateness": 9,
+        "engagement_potential": 8,
+        "average": 9.1,
+        "math_integrity": 10,
+        "rationale": "The 7p\u00b3 distractor is the exact canonical like-terms error (adds both coefficients and exponents), cleanly distinguished from two secondary distractors that cover related but different errors. Math is exact. The study-group timer scenario adds urgency without blame."
+      },
+      "persona_simulation": "A 16-year-old who understands exponent rules for multiplication but hasn't formed a clear mental model for why addition works differently \u2014 likely to pick 7p\u00b3 when rushed because 'I combined things, that should be right.'",
+      "gate_status": "approved",
+      "gate_passed": "A",
+      "tone_flags": [],
+      "persona_simulation_test": {
+        "fast_guesser": "fail",
+        "misconception_student_hit_primary": true,
+        "fast_guesser_correct": false
+      },
+      "queue_id": null
+    },
+    {
+      "id": "cell_quadratic_equations_f7e3d2",
+      "schema_version": "scs-v1.1",
+      "generator_version": "fable5-sprint2",
+      "title": "The Bleacher Launch",
+      "conceptId": "quadratic_equations",
+      "ingredient_id": "quadratics__factoring_method",
+      "misconception_id": "mis_quadratic__zero_product_add_error",
+      "misconception_label": "factors (x\u22122)(x\u22123)=0 correctly but adds the constants to get x=5 instead of setting each factor to zero",
+      "level": 2,
+      "format": "multiple_choice",
+      "examTag": "ACT_quadratics",
+      "storyContext": "After gym class, Maya's group models a foam ball toss from the bleachers: h = t\u00b2 \u2212 5t + 6 meters above the floor. When does it land?",
+      "distractor_taxonomy": [
+        {
+          "distractor_label": "t = 5 seconds",
+          "misconception_id": "mis_quadratic__zero_product_add_error",
+          "narrative_signal": "Student factors correctly to (t\u22122)(t\u22123)=0 but then adds the two constants: t = 2+3 = 5. Reveals they see the zero on the right and think 'zero means the pieces sum to zero' rather than 'each piece can independently equal zero.'"
+        },
+        {
+          "distractor_label": "t = 6 seconds",
+          "misconception_id": null,
+          "narrative_signal": "Student multiplies the constants: t = 2\u00d73 = 6. Reveals they associate factoring with multiplication but cannot connect the factored form to solutions."
+        },
+        {
+          "distractor_label": "t = \u22122 seconds",
+          "misconception_id": null,
+          "narrative_signal": "Student sets up x + 2 = 0 and x + 3 = 0 (wrong signs), getting t = \u22122 and t = \u22123. Reveals a sign error when reading from factored form, but the zero product property logic is present."
+        }
+      ],
+      "question": "After gym class, Maya's group launches a foam ball off the bleachers. Its height above the floor is:\n\nh = t\u00b2 \u2212 5t + 6\n\nwhere t is seconds after launch. Find a moment when the ball is at floor level (h = 0).",
+      "choices": [
+        "t = 2 seconds",
+        "t = 5 seconds",
+        "t = 6 seconds",
+        "t = \u22122 seconds"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "Set h = 0: t\u00b2 \u2212 5t + 6 = 0. Factor: find two numbers that multiply to +6 and add to \u22125. Those are \u22122 and \u22123. So (t \u2212 2)(t \u2212 3) = 0. Zero product property: if a product equals zero, at least one factor equals zero. Factor 1: t \u2212 2 = 0 \u2192 t = 2. Factor 2: t \u2212 3 = 0 \u2192 t = 3. Both are valid \u2014 the ball is at ground level at t = 2 s and again at t = 3 s (it bounces). The first landing is t = 2. Verify: (2)\u00b2 \u2212 5(2) + 6 = 4 \u2212 10 + 6 = 0 \u2713. The distractor t = 5 adds 2 + 3 instead of treating each factor independently.",
+      "hints": [
+        "Set h = 0 and factor: t\u00b2 \u2212 5t + 6 = 0. You need two numbers that multiply to 6 and add to \u22125.",
+        "The factored form is (t \u2212 2)(t \u2212 3) = 0. Now use the zero product property: if two things multiply to zero, at least one of them must BE zero.",
+        "Set each factor to zero separately: t \u2212 2 = 0 gives t = 2; t \u2212 3 = 0 gives t = 3. Do NOT add 2 and 3 \u2014 that would mean the factors sum to zero, which is a different condition."
+      ],
+      "world_feedback": "You factored it \u2014 that's the hard part done. But zero product means each factor can be zero on its own, not that they add to zero. Try setting t \u2212 2 = 0, then t \u2212 3 = 0 as two separate questions.",
+      "transfer_question": "A ball's height follows h = t\u00b2 \u2212 7t + 10. Using the zero product property, find both moments when h = 0.",
+      "explanation": "The zero product property states that if AB = 0, then A = 0 OR B = 0 (or both). It does not say A + B = 0. Students who add the constants from (t\u22122)(t\u22123) = 0 to get t = 5 are applying an additive interpretation to a multiplicative condition. The check t = 5: (5)\u00b2 \u2212 5(5) + 6 = 25 \u2212 25 + 6 = 6 \u2260 0, immediately revealing the error.",
+      "pedagogy_score": {
+        "mathematical_accuracy": 10,
+        "narrative_clarity": 9,
+        "misconception_precision": 10,
+        "emotional_safety": 9,
+        "actionability": 9,
+        "age_appropriateness": 9,
+        "engagement_potential": 9,
+        "average": 9.3,
+        "math_integrity": 10,
+        "rationale": "The core misconception (adding factors instead of zero product) is cleanly isolated as the primary distractor. The gym-class scenario is age-appropriate and stakes-free. The verify step (plug t=5 back in and get 6\u22600) is explicitly included so students can self-diagnose."
+      },
+      "persona_simulation": "A 16-year-old who knows how to factor quadratics but has learned the zero product property as a procedure without internalizing why: they remember 'set things equal to zero' but interpret that as 'the parts sum to zero.'",
+      "gate_status": "approved",
+      "gate_passed": "A",
+      "tone_flags": [],
+      "persona_simulation_test": {
+        "fast_guesser": "fail",
+        "misconception_student_hit_primary": true,
+        "fast_guesser_correct": false
+      },
+      "queue_id": null
+    },
+    {
+      "id": "cell_systems_linear_b5a9e1",
+      "schema_version": "scs-v1.1",
+      "generator_version": "fable5-sprint2",
+      "title": "The Incomplete Multiply",
+      "conceptId": "systems_of_linear_equations",
+      "ingredient_id": "systems__elimination_method",
+      "misconception_id": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_you",
+      "misconception_label": "when multiplying an equation to match coefficients, multiplies only the variable term and leaves the other terms unchanged",
+      "level": 3,
+      "format": "multiple_choice",
+      "examTag": "ACT_systems",
+      "storyContext": "One question left on Maya's math test: solve x + 2y = 7 and 2x + 3y = 11 for y. The room is quiet. She reaches for elimination.",
+      "distractor_taxonomy": [
+        {
+          "distractor_label": "y = 4",
+          "misconception_id": "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_you",
+          "narrative_signal": "Student multiplies eq1 by 2 but only applies it to the x-term: 2x + 2y = 7 (y and 7 unchanged). Subtracting from eq2 gives y = 4. Reveals they treat the multiplication as applying only to the target variable, not to the whole balanced equation."
+        },
+        {
+          "distractor_label": "y = 7",
+          "misconception_id": null,
+          "narrative_signal": "Student reads y directly from eq1's constant, conflating the equation's constant with the unknown's value. Reveals no engagement with the elimination process."
+        },
+        {
+          "distractor_label": "y = 2",
+          "misconception_id": null,
+          "narrative_signal": "Student reverses x and y, reporting x = 3, y = 2 \u2014 or makes a substitution arithmetic error. Reveals confusion about which variable they solved for."
+        }
+      ],
+      "question": "Maya's math test has one system remaining:\n\n  x + 2y = 7\n  2x + 3y = 11\n\nUsing elimination, find the value of y.",
+      "choices": [
+        "y = 3",
+        "y = 4",
+        "y = 7",
+        "y = 2"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "Goal: eliminate x. Multiply the entire first equation by 2: 2(x + 2y) = 2(7) \u2192 2x + 4y = 14. Now subtract from equation 2: (2x + 3y) \u2212 (2x + 4y) = 11 \u2212 14 \u2192 \u2212y = \u22123 \u2192 y = 3. Back-substitute: x + 2(3) = 7 \u2192 x = 1. Verify: 2(1) + 3(3) = 2 + 9 = 11 \u2713. The distractor y = 4 arises when the student multiplies only the x-term of eq1 by 2, leaving the rest unchanged: 2x + 2y = 7 (wrong). Subtracting: y = 4, x = \u22121. But \u22121 + 2(4) = 7 \u2713 ... 2(\u22121) + 3(4) = 10 \u2260 11 \u2717. The error is caught by back-substitution into eq2.",
+      "hints": [
+        "To eliminate x, you need both equations to have the same x-coefficient. Multiply the ENTIRE first equation by 2 \u2014 that means every term, including 2y and the constant 7.",
+        "Correct multiplication of eq1 by 2: 2x + 4y = 14 (not 2x + 2y = 7). Now subtract this from eq2 to cancel the 2x terms.",
+        "(2x + 3y) \u2212 (2x + 4y) = 11 \u2212 14 \u2192 \u2212y = \u22123 \u2192 y = 3. Check: x = 7 \u2212 2(3) = 1; then 2(1) + 3(3) = 11 \u2713."
+      ],
+      "world_feedback": "You set up the multiplication \u2014 that's the right move. When you multiply an equation by a number, every single term changes: the x-term, the y-term, and the constant. Try multiplying the whole first equation by 2.",
+      "transfer_question": "Solve the system 3x + y = 10 and x + 2y = 5 by elimination. What is x? Show the full multiplication step for each term.",
+      "explanation": "Multiplying an equation by a scalar is valid because equality is preserved only when the same operation is applied to EVERY term on BOTH sides. Multiplying only the variable term being targeted (the x-term in eq1) violates the balance of the equation, producing a corrupted version that no longer represents the original relationship. The back-substitution check into equation 2 catches this: y = 4 leads to x = \u22121, and \u22121 + 2(4) = 7 passes eq1 (coincidentally, because the corrupted eq was derived from eq1) but fails eq2.",
+      "pedagogy_score": {
+        "mathematical_accuracy": 10,
+        "narrative_clarity": 9,
+        "misconception_precision": 10,
+        "emotional_safety": 9,
+        "actionability": 9,
+        "age_appropriateness": 9,
+        "engagement_potential": 8,
+        "average": 9.1,
+        "math_integrity": 10,
+        "rationale": "The distractor y=4 arises directly from the targeted failure mode: multiplying only the variable term. The back-substitution check is explicit in the correct reasoning, teaching the verification habit. Test-taking scenario is age-appropriate and universally relatable."
+      },
+      "persona_simulation": "A 16-year-old who understands the goal of elimination (match coefficients, cancel) but applies the multiplication narrowly \u2014 thinking 'I need 2x so I multiply x by 2' rather than 'I multiply the whole equation by 2.'",
+      "gate_status": "approved",
+      "gate_passed": "A",
+      "tone_flags": [],
+      "persona_simulation_test": {
+        "fast_guesser": "fail",
+        "misconception_student_hit_primary": true,
+        "fast_guesser_correct": false
+      },
+      "queue_id": null
+    },
+    {
+      "id": "cell_exponent_rules_c8d4f6",
+      "schema_version": "scs-v1.1",
+      "generator_version": "fable5-sprint2",
+      "title": "The Algorithm Check",
+      "conceptId": "exponent_rules",
+      "ingredient_id": "exponent_rules__product_rule",
+      "misconception_id": "mis_exponent_rules__multiplies_exponents_product_rule",
+      "misconception_label": "when multiplying same-base powers, multiplies the exponents instead of adding: n\u00b2 \u00d7 n\u00b3 = n\u2076",
+      "level": 2,
+      "format": "multiple_choice",
+      "examTag": "ACT_algebra",
+      "storyContext": "Maya's CS group is debating whether their search algorithm runs in O(n\u2075) time. It comes down to simplifying n\u00b2 \u00d7 n\u00b3.",
+      "distractor_taxonomy": [
+        {
+          "distractor_label": "n\u2076",
+          "misconception_id": "mis_exponent_rules__multiplies_exponents_product_rule",
+          "narrative_signal": "Student multiplies the exponents (2 \u00d7 3 = 6), reaching for the 'multiplication means multiply' pattern. Reveals they confuse the product rule (add exponents) with the power rule (multiply exponents), which applies to (n\u00b2)\u00b3, not n\u00b2 \u00d7 n\u00b3."
+        },
+        {
+          "distractor_label": "2n\u2075",
+          "misconception_id": null,
+          "narrative_signal": "Student correctly adds exponents but adds a coefficient of 2, treating the two base n's as additive terms. Reveals partial understanding of the product rule mixed with the addition-rule schema."
+        },
+        {
+          "distractor_label": "n",
+          "misconception_id": null,
+          "narrative_signal": "Student subtracts exponents (3 \u2212 2 = 1), confusing the product rule with the quotient rule (n\u00b3 \u00f7 n\u00b2 = n\u00b9). Reveals a schema mix-up between multiplication and division operations."
+        }
+      ],
+      "question": "Maya's CS group is simplifying an expression for their algorithm's runtime analysis:\n\n**Simplify n\u00b2 \u00d7 n\u00b3**\n\nWhich expression is equivalent?",
+      "choices": [
+        "n\u2075",
+        "n\u2076",
+        "2n\u2075",
+        "n"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "n\u00b2 \u00d7 n\u00b3 = (n \u00d7 n) \u00d7 (n \u00d7 n \u00d7 n) = n \u00d7 n \u00d7 n \u00d7 n \u00d7 n = n\u2075. The exponents ADD because multiplication of same-base terms means combining groups: 2 groups of n (from n\u00b2) combined with 3 groups of n (from n\u00b3) gives 5 groups of n in total. Product rule: n^a \u00d7 n^b = n^(a+b), so n\u00b2 \u00d7 n\u00b3 = n^(2+3) = n\u2075. The distractor n\u2076 comes from MULTIPLYING the exponents (2 \u00d7 3 = 6). That rule applies only to a POWER of a power: (n\u00b2)\u00b3 = n^(2\u00d73) = n\u2076, meaning n\u00b2 multiplied by itself 3 times. n\u00b2 \u00d7 n\u00b3 is a different operation.",
+      "hints": [
+        "Expand it out: n\u00b2 means n \u00d7 n. n\u00b3 means n \u00d7 n \u00d7 n. When you multiply them together, how many n's do you have in total?",
+        "n\u00b2 \u00d7 n\u00b3 = (n \u00d7 n) \u00d7 (n \u00d7 n \u00d7 n). Count the n's: 2 + 3 = 5 n's total. So the answer is n\u2075.",
+        "Product rule: n^a \u00d7 n^b = n^(a+b). You ADD the exponents. Multiplying exponents (2 \u00d7 3 = 6) is the POWER rule for (n\u00b2)\u00b3 \u2014 a different operation. Make sure you know which situation you're in."
+      ],
+      "world_feedback": "You reached for multiplication between the exponents \u2014 makes sense since the operation is multiplication. But n\u00b2 \u00d7 n\u00b3 means n\u00b7n \u00d7 n\u00b7n\u00b7n, which is five n's together. When bases match and you're multiplying, add the exponents.",
+      "transfer_question": "A program has two nested loops: the outer loop runs x\u00b3 times and the inner runs x\u2074 times per outer iteration. Write the total number of iterations as a single power of x.",
+      "explanation": "The product rule for exponents states n^a \u00d7 n^b = n^(a+b) because multiplying same-base powers means combining groups of the base: 2 n's from n\u00b2 and 3 n's from n\u00b3 produce 5 n's together. The confusion with n\u2076 comes from the power rule: (n^a)^b = n^(a\u00d7b), which applies when a power is raised to another power \u2014 a structurally different situation. The expand-and-count method (writing out each n explicitly) makes the addition reason visible and provides a self-verification strategy that works without memorizing which rule applies.",
+      "pedagogy_score": {
+        "mathematical_accuracy": 10,
+        "narrative_clarity": 9,
+        "misconception_precision": 10,
+        "emotional_safety": 9,
+        "actionability": 10,
+        "age_appropriateness": 9,
+        "engagement_potential": 9,
+        "average": 9.4,
+        "math_integrity": 10,
+        "rationale": "The misconception (multiply exponents for product rule) is the most common exponent error and cleanly contrasted with the power rule. The distractor taxonomy covers three distinct conceptual errors. The expand-and-count hint gives students a reliable self-repair strategy."
+      },
+      "persona_simulation": "A 16-year-old who has memorized 'do something with the exponents when multiplying' but has not separated the product rule (add) from the power rule (multiply) \u2014 defaults to multiplication because the operation is multiplication.",
+      "gate_status": "approved",
+      "gate_passed": "A",
+      "tone_flags": [],
+      "persona_simulation_test": {
         "fast_guesser": "fail",
         "misconception_student_hit_primary": true,
         "fast_guesser_correct": false
