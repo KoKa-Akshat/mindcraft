@@ -28,14 +28,15 @@
   inset: 0;
   z-index: 1;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 14px;
-  padding: clamp(14px, 2.6vw, 34px);
+  gap: clamp(8px, 1.35dvh, 14px);
+  padding: clamp(10px, 2vw, 26px);
   color: var(--login-ink);
   font-family: "Nunito Sans", "DM Sans", system-ui, sans-serif;
   background: #060c09;
@@ -58,7 +59,7 @@
   position: relative;
   z-index: 2;
   width: min(1240px, 100%);
-  min-height: min(760px, calc(100vh - 104px));
+  min-height: min(740px, calc(100dvh - 124px));
   overflow: hidden;
   border: 1px solid rgba(196, 245, 71, 0.10);
   border-radius: clamp(28px, 4vw, 48px);
@@ -75,7 +76,7 @@
 .layout {
   position: relative;
   z-index: 1;
-  min-height: min(760px, calc(100vh - 104px));
+  min-height: min(740px, calc(100dvh - 124px));
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(390px, 480px);
   gap: 0;
@@ -666,6 +667,27 @@
   text-align: center;
 }
 
+.fullscreenBtn {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: fit-content;
+  margin: 12px auto 0;
+  border: 0;
+  background: transparent;
+  color: rgba(20, 58, 46, 0.58);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 1000;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fullscreenBtn:hover {
+  color: var(--login-leaf);
+}
+
 .emailNote {
   margin: -3px 0 14px;
   padding: 10px 12px;
@@ -764,12 +786,12 @@
   }
 
   .shell {
-    min-height: calc(100vh - 32px);
+    min-height: calc(100dvh - 32px);
     overflow: hidden;
   }
 
   .layout {
-    min-height: calc(100vh - 32px);
+    min-height: calc(100dvh - 32px);
     grid-template-columns: 1fr;
     gap: 0;
   }
@@ -783,6 +805,7 @@
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 32px);
+    min-height: calc(100dvh - 32px);
     order: -1;
     background: transparent;
     box-shadow: none;
@@ -801,12 +824,13 @@
   }
 
   .shell {
-    min-height: 0;
-    padding: 28px 42px;
+    min-height: min(680px, calc(100dvh - 112px));
+    padding: 0;
   }
 
   .layout {
-    gap: clamp(28px, 4vw, 58px);
+    min-height: min(680px, calc(100dvh - 112px));
+    gap: 0;
     grid-template-columns: minmax(0, 1fr) minmax(380px, 470px);
   }
 
@@ -869,7 +893,7 @@
   }
 
   .card {
-    padding: 26px 32px;
+    padding: 22px 30px;
   }
 
   .formHeader {
@@ -915,6 +939,16 @@
 
   .bottomLink {
     margin-top: 14px;
+  }
+
+  .pageTrust {
+    font-size: 0.78rem;
+  }
+
+  .socialLinks a {
+    width: 34px;
+    height: 34px;
+    border-radius: 13px;
   }
 }
 

@@ -28,6 +28,18 @@ function armAdminGrant()      { sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, 
 function consumeAdminGrant()  { const v = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'; sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY); return v }
 function clearAdminGrant()    { sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY) }
 
+function requestFullscreenBestEffort() {
+  const root = document.documentElement as HTMLElement & {
+    webkitRequestFullscreen?: () => Promise<void> | void
+  }
+  try {
+    const request = root.requestFullscreen ?? root.webkitRequestFullscreen
+    void request?.call(root)
+  } catch {
+    // Fullscreen is browser-gated; layout still adapts when unavailable.
+  }
+}
+
 function safeReturnPath(raw: string | null) {
   if (!raw || !raw.startsWith('/') || raw.startsWith('//') || raw.startsWith('/login')) return null
   return raw
@@ -172,6 +184,7 @@ export default function Login() {
   }
 
   async function handleGoogle() {
+    requestFullscreenBestEffort()
     setError('')
     setLoading(true)
     try {
@@ -297,6 +310,9 @@ export default function Login() {
                     <p className={s.authHint}>
                       Use this for any Gmail or account you originally created with Google.
                     </p>
+                    <button className={s.fullscreenBtn} onClick={requestFullscreenBestEffort} type="button">
+                      Full screen
+                    </button>
 
                     {/* SECONDARY: email toggle */}
                     {emailMode && (
