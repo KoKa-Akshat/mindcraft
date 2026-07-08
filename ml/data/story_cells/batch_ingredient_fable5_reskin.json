@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "pipeline": "fable5_manual",
+    "generator_version": "scs-v1.1",
+    "generated_at": "2026-07-08T00:00:00Z",
+    "note": "Narrative-compression reskins of the 3 slot-1 cells in batch_llm_002.json, per STORY_CELL_NARRATIVE_RULES.md. Overlay format (Spec V2 section 4 shape): only narrative fields are rewritten; the math spine (question/choices/correctIndex/hints/distractor_taxonomy) is untouched and stays in the base cell. Waterfowl's world_feedback object is normalized to a string here (rules section 5). Seeds the Cursor voice-reskin layer, which is not built yet."
+  },
+  "reskins": [
+    {
+      "reskin_of": "cell_linear_equations_f8e2c7",
+      "base_batch": "batch_llm_002.json",
+      "storyContext": "The logbook: the watch 30s slow at day 20, 90s slow at day 60. The astronomer asks William what the drift means.",
+      "world_feedback": "1.5 seconds more each day — now the drift can be subtracted out, day by day. A steady error is a correctable error.",
+      "presentation": {
+        "default": "story",
+        "minimal": {
+          "storyContext": "Interpret the drift rate: what does the slope mean?",
+          "world_feedback": "(90−30)/(60−20) = 1.5 seconds more per day — a rate, with units, not a bare number."
+        }
+      },
+      "note": "Base storyContext ~600 chars (scene + dialogue + moral). Compressed to 112. The astronomer's verdict moved from preamble to feedback. The base question stem already restates both data points, so minimal.storyContext carries no numbers."
+    },
+    {
+      "reskin_of": "cell_fractions_decimals_093f8c",
+      "base_batch": "batch_llm_002.json",
+      "storyContext": "The pond pole sits three rungs down the tenths ladder. Simon must log the depth as a decimal the night keeper can read.",
+      "world_feedback": "0.3 — the 10 names the size of each rung; only the count of 3 gets written. One relationship, one place, one number.",
+      "presentation": {
+        "default": "story",
+        "minimal": {
+          "storyContext": "Write three-tenths of a meter as a decimal.",
+          "world_feedback": "0.3. The denominator 10 is the place, not a digit to write."
+        }
+      },
+      "note": "Also fixes the world_feedback {correct, incorrect} object to a single string (rules section 5). Base storyContext compressed from ~200 to 119 chars."
+    },
+    {
+      "reskin_of": "cell_ratios_proportions_0847d6",
+      "base_batch": "batch_llm_002.json",
+      "storyContext": "Thales' 6-cubit staff casts a 2-cubit shadow. The pyramid's shadow runs 90 cubits. The priests wait for its height.",
+      "world_feedback": "270 cubits — height is 3 times shadow for the staff, so 3 times shadow for the pyramid. The relationship did the measuring.",
+      "presentation": {
+        "default": "story",
+        "minimal": {
+          "storyContext": "Height is 3x shadow. Shadow is 90. Find the height.",
+          "world_feedback": "3 × 90 = 270. Ratios scale by multiplying, not by adding a difference."
+        }
+      },
+      "note": "Base storyContext ~370 chars compressed to 115. The priests' reaction stays in feedback where it lands after the work."
+    }
+  ]
+}

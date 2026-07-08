@@ -1,0 +1,203 @@
+{
+  "_meta": {
+    "pipeline": "story_cell_studio",
+    "generated_at": "2026-07-08T06:16:26.191419+00:00",
+    "total": 3,
+    "no_llm": false,
+    "concepts_requested": "linear_equations,fractions_decimals,ratios_proportions"
+  },
+  "cells": [
+    {
+      "title": "The Steady Drift",
+      "world": "market_world",
+      "primitive": "trade_price_bargain",
+      "conceptId": "linear_equations",
+      "level": 2,
+      "format": "multiple_choice",
+      "storyContext": "In Kingston harbor, young William Harrison sits with the ship's astronomer. They have been checking the watch against the stars each day since leaving England. The astronomer opens his logbook and shows William the tally of error: after 20 days the watch was 30 seconds slow; after 60 days it was 90 seconds slow. 'This,' the astronomer says, tapping the numbers, 'is either your father's triumph or his ruin. Tell me what these numbers mean, William — not the arithmetic, but the meaning.'",
+      "narrative_need": "William must convince the astronomer that the watch is trustworthy. A trustworthy watch is not one that never errs, but one whose error grows by the same predictable amount each day — so it can be corrected. He must state what the rate of drift actually MEANS for the voyage, not just compute a number.",
+      "student_action": "William interprets the rate of change (slope) of the watch's error over time, giving it units and meaning rather than a bare number.",
+      "question": "The watch's error grows steadily: 30 seconds slow at 20 days, 90 seconds slow at 60 days. The astronomer asks William to explain what the drift rate means for correcting the ship's position. Which statement correctly interprets the slope?",
+      "choices": [
+        "The watch loses 1.5 seconds more for every additional day at sea.",
+        "The drift rate is 1.5.",
+        "The watch is 1.5 seconds slow in total.",
+        "The watch loses 40 seconds more for every additional day at sea."
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "The change in error is 90 − 30 = 60 seconds over a change of 60 − 20 = 40 days, giving 60/40 = 1.5 seconds per day. Interpreting the slope means attaching units and meaning: for every ONE additional day at sea, the watch loses 1.5 more seconds. This lets the crew subtract a predictable amount and recover the true time — the whole point of a steadily-erring clock.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "slope_stated_as_bare_number",
+          "student_thinking": "The student computes 60/40 = 1.5 correctly but reports it as a naked value with no units and no 'per day, per second' meaning — the exact target misconception of not interpreting the gradient."
+        },
+        {
+          "choice_index": 2,
+          "error_type": "slope_confused_with_a_value",
+          "student_thinking": "The student treats the rate 1.5 as if it were a single total error reading rather than a rate of change, confusing the slope with a y-value on the line."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "used_difference_without_dividing",
+          "student_thinking": "The student computes the rise (90 − 30 = 60) or a related raw difference and calls 40 (or 60) the per-day rate, forgetting to divide the change in error by the change in days."
+        }
+      ],
+      "hints": [
+        "Slope is a rate: how much does the error CHANGE when the days CHANGE? Find the change in seconds and the change in days separately.",
+        "Error changed from 30 to 90 seconds (that's 60 seconds) while days changed from 20 to 60 (that's 40 days). Divide: 60 ÷ 40.",
+        "A number alone doesn't help the crew. Say it as a sentence: 'For every ONE more day, the watch loses ___ more seconds.' That sentence is what makes the error correctable."
+      ],
+      "world_feedback": "The astronomer nods slowly. 'Yes — 1.5 seconds gained in error for each day. Now I can subtract it, day by day, and pull the true time back out of the drift. Your father did not build a perfect clock, William. He built a clock that lies the same way every day. And a steady lie can be undone.'",
+      "transfer_question": "A merchant's debt grows from £30 at week 2 to £90 at week 6 under a fixed weekly charge. Interpret the slope in words, with units, as it applies to the merchant's account.",
+      "pedagogy_score": {
+        "math_integrity": 10,
+        "diagnostic_power": 9,
+        "cognitive_load": 8,
+        "agency": 8,
+        "emotional_safety": 9,
+        "representation_options": 5,
+        "transfer": 9
+      },
+      "explanation": "The slope here is the watch's drift rate: (90 − 30) seconds ÷ (60 − 20) days = 1.5 seconds per day. The mathematical work is only half the answer — the situation demands INTERPRETATION. A bare '1.5' tells the crew nothing, but 'the watch loses 1.5 more seconds each additional day' is exactly the sentence that lets them correct their clock and find their longitude. This is why the concept lives inside the story: Harrison's entire genius was that a steady, interpretable error is useful, while an uninterpreted number is dead weight.",
+      "examTag": "ACT_linear_functions",
+      "id": "cell_linear_equations_f8e2c7",
+      "misconception_id": "mis_functions_basics__does_not_interpret_sloping_gradient",
+      "misconception_label": "does not interpret sloping gradient",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "partial",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "title": "The Waterfowl Pond's Sinking Rung",
+      "world": "creature_sanctuary",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "fractions_decimals",
+      "level": 2,
+      "question": "At the sanctuary's waterfowl pond, keeper Simon uses Stevin's new descending ladder to record water levels. The pond fills from a spring, and a marked pole shows the level dropping into the small: below the '1 whole meter' line hang tenths, then hundredths. This morning the water sits exactly 3 rungs down on the tenths ladder — three parts of the ten equal steps between the whole-meter marks. Before the ducks arrive, Simon must write this depth as a decimal so the night keeper reads it correctly. What should he write for three-tenths of a meter?",
+      "choices": [
+        "0.3 meters",
+        "0.30... wait, 3.10 meters",
+        "10.3 meters",
+        "0.13 meters"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "Three-tenths means the whole is divided into 10 equal steps and we have 3 of them. On Stevin's ladder, the tenths rung is the first place right of the ones, so 3 tenths sits in that single place: 0.3. The 3 (parts we have) and the 10 (size of the whole) are not two separate numbers — 10 defines the size of each step, and 3 counts the steps.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "denominator_placed_as_separate_value",
+          "student_thinking": "The student sees '3' and '10' as two numbers to record separately, jamming both into the notation as 3.10 instead of understanding 10 only names the step-size, not a quantity to write."
+        },
+        {
+          "choice_index": 2,
+          "error_type": "numerator_denominator_swapped_and_split",
+          "student_thinking": "The student treats numerator and denominator as unrelated numbers and simply writes both around a decimal point (10.3), losing the meaning that 3 is the count and 10 is the whole."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "digits_concatenated",
+          "student_thinking": "The student pushes both the 1 (from 10) and the 3 into decimal places as 0.13, mixing the digits of the denominator with the numerator instead of seeing a single ratio."
+        }
+      ],
+      "hints": [
+        "The '10' does not get written down — it tells you how many equal steps fit between the whole-meter marks. That's the size of one rung.",
+        "You only need to record how many rungs down the water sits: three. Which single place right of the ones counts tenths?",
+        "Three-tenths is 3 parts of ONE divided whole, not the two numbers 3 and 10 side by side. It lands in the first decimal place: 0.3."
+      ],
+      "world_feedback": {
+        "correct": "Simon marks 0.3 on the slate. The night keeper reads it at a glance, tops the spring gate perfectly, and the ducks paddle at just the right depth by dawn.",
+        "incorrect": "The night keeper misreads the muddled number, cranks the spring gate wrong, and the pond nearly spills over the reed banks — the tenths rung is one place, not two numbers."
+      },
+      "transfer_question": "If the water later drops to 7 rungs down on the tenths ladder, how should Simon write that depth as a decimal?",
+      "pedagogy_score": {
+        "math_integrity": 9,
+        "diagnostic_power": 9,
+        "cognitive_load": 6,
+        "agency": 6,
+        "emotional_safety": 7,
+        "representation_options": 6,
+        "transfer": 8
+      },
+      "explanation": "A fraction like three-tenths is a single ratio: the denominator (10) states into how many equal parts the whole is cut, and the numerator (3) counts how many of those parts we hold. Stevin's decimal ladder makes this visible — the tenths place IS the 'divided by ten' step, so you only ever write the count (3) in that place: 0.3. Writing both 3 and 10 as separate digits treats a single relationship as two unrelated numbers.",
+      "storyContext": "Simon Stevin's 1585 decimal ladder, reimagined at a creature sanctuary where a water-level pole descends rung by rung into tenths and hundredths to keep the waterfowl pond at the correct depth.",
+      "format": "scenario_decision",
+      "narrative_need": "The night keeper must read one unambiguous number to set the spring gate correctly, so Simon needs the depth written as a proper decimal before the ducks arrive.",
+      "student_action": "Choose the correct decimal notation Simon should write on the slate for three-tenths of a meter.",
+      "examTag": "ACT_fractions_decimals",
+      "id": "cell_fractions_decimals_093f8c",
+      "misconception_id": "mis_fractions_decimals__mixes_up_numerator_and_denominator",
+      "misconception_label": "mixes up numerator and denominator",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "partial",
+        "misconception_student": "partial"
+      }
+    },
+    {
+      "title": "Thales and the Shadow of the Pyramid",
+      "world": "market_world",
+      "primitive": "fill_spill_overflow",
+      "conceptId": "ratios_proportions",
+      "level": 2,
+      "format": "multiple_choice",
+      "storyContext": "Thales plants his walking staff upright in the sand beside the Great Pyramid. The staff stands 6 cubits tall, and at this moment its shadow stretches 2 cubits across the sand. The priests lean in, curious. Thales explains: at this same instant, the pyramid's shadow reaches 90 cubits from its base out onto the sand. Whatever comparison the staff holds with its own shadow, the pyramid must hold with its shadow too.",
+      "narrative_need": "Thales must convert the pyramid's measurable shadow into its unmeasurable height using the proportion that the staff reveals.",
+      "student_action": "Use the staff's height-to-shadow relationship to find the pyramid's height from its shadow.",
+      "question": "The staff is 6 cubits tall and casts a 2-cubit shadow, so height is 3 times the shadow. The pyramid casts a 90-cubit shadow. How tall is the pyramid?",
+      "choices": [
+        "270 cubits",
+        "92 cubits",
+        "30 cubits",
+        "180 cubits"
+      ],
+      "correctIndex": 0,
+      "correct_reasoning": "The staff's height (6) compared to its shadow (2) gives the ratio 6:2, which simplifies to 3:1 — the height is 3 times the shadow. Since both shadows are cast at the same instant, the pyramid holds the same comparison. Its height is 3 times its 90-cubit shadow: 3 × 90 = 270 cubits.",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "additive_ratio_misconception",
+          "student_thinking": "Sees 6 and 2 and thinks the ratio means 'height is 4 more than shadow' (6 = 2 + 4), then adds 4 to the pyramid's shadow: 90 + 2 = 92, or applies the '+4' difference additively rather than multiplicatively."
+        },
+        {
+          "choice_index": 2,
+          "error_type": "inverted_ratio",
+          "student_thinking": "Divides the shadow by 3 instead of multiplying, treating shadow as 3 times the height rather than height as 3 times the shadow: 90 ÷ 3 = 30."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "wrong_scale_factor",
+          "student_thinking": "Uses the staff height of 6 directly as the multiplier instead of the ratio 3: 90 × 2 = 180, confusing the shadow length with the scaling factor."
+        }
+      ],
+      "hints": [
+        "First find how the staff compares to its own shadow. 6 cubits tall, 2 cubits of shadow — how many times bigger is the height than the shadow?",
+        "A ratio is not about how much MORE one is than the other — it's about how many TIMES bigger. 6 is 3 times 2, not 4 more than 2 in the way that matters here.",
+        "Whatever multiplier turns the staff's shadow into its height (×3) must turn the pyramid's shadow into its height too. Multiply 90 by that same 3."
+      ],
+      "world_feedback": "The priests stop smiling. Thales has spoken a height no rope ever touched — 270 cubits — read entirely from a shadow on the sand. The relationship, not the ladder, measured the pyramid.",
+      "transfer_question": "A merchant's cart is 4 cubits tall and casts a 1-cubit shadow at midday. Nearby, a palm tree casts a 7-cubit shadow. Using the same instant's shadow relationship, how tall is the palm tree?",
+      "pedagogy_score": {
+        "math_integrity": 10,
+        "diagnostic_power": 9,
+        "cognitive_load": 8,
+        "agency": 6,
+        "emotional_safety": 9,
+        "representation_options": 5,
+        "transfer": 9
+      },
+      "explanation": "The ratio 6:2 means the height is 3 times the shadow (multiplicative), NOT 4 units more (additive). Applying the same multiplicative relationship, the pyramid's height = 3 × 90 = 270 cubits. This is the core insight of similar triangles and proportional reasoning: comparisons scale by multiplication, so the same ratio applies at any size at the same instant.",
+      "examTag": "ACT_proportions",
+      "id": "cell_ratios_proportions_0847d6",
+      "misconception_id": "mis_ratios_proportions__thinks_ratios_are_written_1total",
+      "misconception_label": "thinks ratios are written 1total",
+      "persona_simulation": {
+        "fast_guesser": "pass",
+        "visual_learner": "partial",
+        "misconception_student": "partial"
+      }
+    }
+  ]
+}
