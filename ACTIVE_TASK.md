@@ -4,6 +4,46 @@
 
 ---
 
+## CURRENT SPRINT — 2026-07-08 (start here)
+
+### Cursor — Product lane (`app/**` ONLY)
+**Spec:** `agent_work/product/STORY_INTRO_RENDER_SPEC.md`
+
+Add the `storyIntro` rich narrative scene block. Three files to touch:
+1. `app/src/lib/questionBank.ts` — add `storyIntro?: string` to `Question` interface
+2. QuestionPage CSS module — add `.storyIntroBlock` class (spec has the exact CSS)
+3. The component that renders `storyContext` — prepend the storyIntro block above it
+   (`grep -rn "storyContext" app/src/` to find it)
+4. Add real storyIntro to 5+ story cells following tone rules in the spec
+
+Verify: `npm run build` passes. Commit, push to main.
+
+**Do NOT touch:** `ml/**`, `homework/**`, `webhook/**`, `index.html`
+
+---
+
+### Codex — Engine lane (`ml/**` ONLY)
+**Primary spec:** `agent_work/engine/STORY_CELL_SCALE_PLAN.md` (read Sections B + D)
+
+**Task 1 first:** Write `ml/mindcraft_graph/world_feedback.py` (spec Section D)
+- Exports: `WORLD_FEEDBACK_SYSTEM_PROMPT`, `build_world_feedback_user_prompt(...)`, `generate_world_feedback(...)`, `cache_key(...)`
+- After writing, update `ml/scripts/world_feedback_generator.py` to import from this module
+  (replace the duplicated inline versions)
+
+**Task 2 after Task 1:** Write `ml/scripts/generate_story_cells.py` (spec Section B)
+- DNA cells in → math verified → Katha-narrated → Gate A scored → output JSON
+- Uses `ml/generation/llm_client.py` for all LLM calls
+- Math integrity auto-verify: re-solve, discard on disagreement
+- Dry-run must pass: `python3 ml/scripts/generate_story_cells.py --dry-run`
+
+Commit after each task. Push to main.
+
+**Do NOT touch:** `app/**`, `serve.py`, deployed endpoints
+
+---
+
+---
+
 ## In progress RIGHT NOW
 
 | Task | Agent | Files touched | Status |

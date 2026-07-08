@@ -34,6 +34,9 @@ split (Engine = `ml/**`, `webhook/**`, `data/**`, `worlds/**`; Product =
 | [product/PAPER_STANDARDIZATION_PLAN.md](product/PAPER_STANDARDIZATION_PLAN.md) | Product | Open |
 | [engine/EEDI_LATEX_REINGEST_PLAN.md](engine/EEDI_LATEX_REINGEST_PLAN.md) | Engine | Shipped |
 | [cross-cutting/TIER3_MISCONCEPTION_GAPS_PLAN.md](cross-cutting/TIER3_MISCONCEPTION_GAPS_PLAN.md) | Engine (E1, F1) + Product (P1, P2) | Open — implements EXTENSION_RECOMMEND.md |
+| [engine/DATA_ENRICHMENT_PLAN.md](engine/DATA_ENRICHMENT_PLAN.md) | Engine (`ml/scripts/`, `ml/data/`) | Open — ASSISTments calibration, STAAR/Regents/CK-12 sources, YouTube + Math SE misconception mining |
+| [cross-cutting/STORY_PERSONALIZATION_PLAN.md](cross-cutting/STORY_PERSONALIZATION_PLAN.md) | Engine (story_worlds JSON) + Product (storyWorldId pref UI) | Open — 18-world taxonomy + minimal user pref hook |
+| [engine/STORY_CELL_SCALE_PLAN.md](engine/STORY_CELL_SCALE_PLAN.md) | Engine (`ml/scripts/`, `ml/data/story_cells/`) | Open — bulk cell generator, priority 15 concepts, world_feedback shared module |
 
 Update the Status column as work lands — don't let this drift like a stale
 changelog; if a spec is fully done and superseded, note that instead of
