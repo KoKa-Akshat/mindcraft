@@ -50,6 +50,11 @@ ml/data/khan/
 ml/data/.story_cache.json
 ml/data/.world_feedback_cache.json
 
+# generate_story_cells.py output — ungated until human narrative review
+ml/data/story_cells/batch_generated_*.json
+ml/data/story_cells/generate_report_*.json
+ml/data/story_cells/discarded_*.json
+
 # Repo-root large/binary files — store in Drive, not git
 data/*.zip
 data/SchemasV2/

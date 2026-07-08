@@ -18,11 +18,13 @@ Add the `storyIntro` rich narrative scene block. Three files to touch:
 
 Verify: `npm run build` passes. Commit, push to main.
 
-✅ Done (Fable 5) — `storyIntro?: string` added to `Question`; storyContext only actually
+✅ Done (Fable 5 + Cursor) — `storyIntro?: string` added to `Question`; storyContext only actually
 renders in `GradeOnboard.tsx` (spec's assumed `book/QuestionPage.tsx` doesn't exist), so the
 italic `.storyIntroBlock` was added to `GradeOnboard.module.css` and rendered above the
 existing `storyContext` line there; 6 storyCells.json cells (fractions_decimals ×2,
-linear_equations ×2, ratios_proportions ×2) got real storyIntro content. `npm run build` green.
+linear_equations ×2, ratios_proportions ×2) got real storyIntro content. **Cursor follow-up:**
+same blocks wired into `Practice.tsx` session UI (journal paper theme via `.matteShell` /
+`.paperScan` overrides). `npm run build` green.
 
 **Do NOT touch:** `ml/**`, `homework/**`, `webhook/**`, `index.html`
 
@@ -36,11 +38,22 @@ linear_equations ×2, ratios_proportions ×2) got real storyIntro content. `npm 
 - After writing, update `ml/scripts/world_feedback_generator.py` to import from this module
   (replace the duplicated inline versions)
 
+✅ Done (Claude Code, 2026-07-08) — `ml/mindcraft_graph/world_feedback.py` created (also exports
+`load_cache`/`save_cache`/`build_ontology_index`); `world_feedback_generator.py` refactored to
+import from it, dry-run output unchanged (`total=138 filled=121 cached=0 no_misconception=17 errors=0`).
+
 **Task 2 after Task 1:** Write `ml/scripts/generate_story_cells.py` (spec Section B)
 - DNA cells in → math verified → Katha-narrated → Gate A scored → output JSON
 - Uses `ml/generation/llm_client.py` for all LLM calls
 - Math integrity auto-verify: re-solve, discard on disagreement
 - Dry-run must pass: `python3 ml/scripts/generate_story_cells.py --dry-run`
+
+✅ Done (Claude Code, 2026-07-08) — 4-step pipeline (math spine → independent re-solve verify →
+Katha narrative → 7-dim pedagogy score/gate) built; per-distractor `world_feedback` generated via
+the shared module from Task 1. `--dry-run`, `--limit`, `--concept`, `--dna-file`, `--no-llm` all
+wired; live run needs `LLM_PROVIDER=groq` (no GROQ key in this sandbox, so only dry-run + a
+graceful-failure smoke test were exercised here — verified error handling drops cleanly with no
+crash when the LLM is unreachable).
 
 Commit after each task. Push to main.
 
@@ -62,6 +75,11 @@ Commit after each task. Push to main.
 | Founder portrait expansion polish | Codex | `index.html`, `ACTIVE_TASK.md` | ✅ Done |
 | Diagnostic placeholder cleanup + landing profiles | Codex | `app/src/data/storyCells.json`, `app/src/lib/questionBank.ts`, `app/src/components/QuestionFigure.tsx`, `app/src/pages/GradeOnboard.module.css`, `index.html`, `img/ab-founder.jpeg`, `img/mindcraftmascot.jpg`, `ACTIVE_TASK.md` | ✅ Done |
 | Landing mascot/map/founder flip polish | Codex | `index.html`, `ACTIVE_TASK.md` | ✅ Done |
+| Diagnostic ACT probe step | Codex | `app/src/pages/Diagnostic.tsx`, `app/src/data/actDiagnostic.json`, `app/src/pages/Diagnostic.module.css`, `ACTIVE_TASK.md` | ✅ Done |
+
+**Codex diagnostic probe summary (2026-07-08):** ✅ Done — added the `probe` step between goals and confidence with four real ACT cluster anchors rendered through `MathText`.
+Files changed: `Diagnostic.tsx`, `actDiagnostic.json`, `Diagnostic.module.css`, `ACTIVE_TASK.md`.
+Verification: `npm run build` passed from `~/Developer/mindcraft/app`.
 
 **Codex landing polish summary (2026-07-08):** ✅ Done — mascot is cropped instead of squished, CTA copy is punchier, map labels are shorter, and founder cards flip as full rectangles.
 Files changed: `index.html`, `ACTIVE_TASK.md`.
