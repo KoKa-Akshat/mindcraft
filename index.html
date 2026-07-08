@@ -205,14 +205,21 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .founder-card{position:relative;display:grid;grid-template-columns:190px 1fr;gap:28px;align-items:center;padding:clamp(26px,4vw,42px);background:#fffdf7;overflow:hidden}
 .founder-card:nth-child(2){background:#eef7f1}
 .founder-card:before{content:"";position:absolute;inset:auto -18% -42% 42%;height:72%;border-radius:999px;background:radial-gradient(circle,rgba(196,245,71,.28),transparent 68%);pointer-events:none}
-.founder-photo{position:relative;z-index:1;aspect-ratio:4/5;border-radius:34px;background:linear-gradient(135deg,#143a2e,#247a4d 55%,#c4f547);display:grid;place-items:center;box-shadow:0 24px 60px rgba(20,58,46,.16);overflow:hidden}
+.founder-photo{position:relative;z-index:1;aspect-ratio:4/5;border:0;border-radius:34px;background:linear-gradient(135deg,#143a2e,#247a4d 55%,#c4f547);display:grid;place-items:center;box-shadow:0 24px 60px rgba(20,58,46,.16);overflow:hidden;cursor:pointer}
 .founder-photo:before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,253,247,.46);border-radius:26px}
 .founder-photo:after{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 70% 18%,rgba(255,253,247,.26),transparent 32%),linear-gradient(135deg,transparent,rgba(255,253,247,.12));transform:rotate(-12deg)}
+.founder-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.founder-photo img:not([src=""])+span{opacity:0}
 .founder-photo span{position:relative;z-index:1;color:#fffdf7;font-family:"Fredoka",system-ui,sans-serif;font-size:58px;font-weight:700;letter-spacing:-.06em}
 .founder-copy{position:relative;z-index:1}
 .founder-copy small{display:block;margin-bottom:12px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.16em}
 .founder-copy h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(32px,4vw,50px);line-height:.95;letter-spacing:-.045em}
 .founder-copy p{margin-top:14px;font-size:15px;line-height:1.65}
+.founder-story{position:relative;z-index:1;grid-column:1/-1;margin-top:-8px;padding:26px clamp(22px,3vw,34px);border:1px solid rgba(36,122,77,.16);border-radius:26px;background:rgba(255,253,247,.82);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.founder-story[hidden]{display:none}
+.founder-story p{max-width:780px;margin:0;font-size:16px;line-height:1.72;color:rgba(20,58,46,.82)}
+.founder-story p+p{margin-top:14px}
+.founder-open{margin-top:16px;color:var(--leaf);font-size:10px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase}
 .founder-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .founder-tags span{padding:8px 10px;border:1px solid rgba(36,122,77,.16);border-radius:999px;background:#e4f7dc;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}
 .photo{position:relative;min-height:520px;border-radius:46px;overflow:hidden;box-shadow:var(--shadow);transform-style:preserve-3d}
@@ -361,6 +368,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <a href="#map">Map</a>
       <a href="#system">System</a>
       <a href="#about">About</a>
+      <a href="blog.html">Blog</a>
       <a href="#intake">Apply</a>
       <a href="#try-app">Try it</a>
       <a class="join" href="#intake">Join</a>
@@ -377,7 +385,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <div class="hero-copy reveal">
             <p class="label">The moment it clicks</p>
             <h1><span>You were never</span><span>bad at math.</span></h1>
-            <p class="lead">You were waiting for a better story. MindCraft finds exactly where the thinking broke. Then rebuilds from there, with a tutor who already knows the map.</p>
+            <p class="lead">MindCraft finds where the thinking broke, maps the route back, and gives your tutor the story before session one.</p>
             <div class="hero-actions">
               <a class="btn primary" href="#intake">Request a seat</a>
               <a class="btn soft" href="#system">See how it works</a>
@@ -386,7 +394,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <div class="stats reveal stagger">
             <div class="stat"><strong>42</strong><span>Concepts mapped</span></div>
             <div class="stat"><strong>1,718</strong><span>Practice questions</span></div>
-            <div class="stat stat-limited"><strong>Limited</strong><span>Seats available</span></div>
+            <div class="stat stat-limited"><strong>Limited</strong><span>Seats open</span></div>
           </div>
         </div>
         <div class="hero-art reveal" aria-hidden="true" id="heroArt">
@@ -438,8 +446,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <text x="552" y="337" text-anchor="middle" font-size="12" fill="#7a806f">rates</text>
             <text x="552" y="355" text-anchor="middle" font-size="12" fill="#7a806f">change</text>
 
-            <text x="484" y="314" font-size="17" fill="#c1121f" opacity=".82" transform="rotate(-7,484,314)">← the gap</text>
-            <text x="78" y="444" font-family="Source Serif 4,serif" font-size="24" font-style="italic" fill="rgba(29,58,138,.40)" transform="rotate(-4,78,444)">42 concepts · your map</text>
+            <path d="M474 306 C502 314 528 326 548 340" stroke="#c1121f" stroke-width="3" stroke-linecap="round" opacity=".78"/>
+            <path d="M536 337 L548 340 L539 349" stroke="#c1121f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".78"/>
+            <circle cx="552" cy="342" r="39" fill="none" stroke="#c1121f" stroke-width="2" stroke-dasharray="5 8" opacity=".7"/>
+            <circle cx="552" cy="342" r="4.5" fill="#c1121f" opacity=".92"/>
             <text x="548" y="96" font-family="Caveat,cursive" font-size="42" fill="rgba(36,122,77,.30)" transform="rotate(10,548,96)">=</text>
             <text x="120" y="316" font-family="Caveat,cursive" font-size="70" fill="rgba(36,122,77,.22)" transform="rotate(-18,120,316)">+</text>
             <text x="452" y="470" font-family="Caveat,cursive" font-size="86" fill="rgba(36,122,77,.18)" transform="rotate(6,452,470)">?</text>
@@ -597,27 +607,41 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <p class="label">About us</p>
             <h2>Built by tutors who know the feeling.</h2>
           </div>
-          <p>MindCraft is personal because the work is personal. We are building the map we wish every student had: one that sees the real gap, respects the learner, and turns practice into confidence.</p>
+          <p>MindCraft is the map we wish every student had: precise, kind, and built for the moment confidence comes back.</p>
         </div>
         <div class="founder-grid reveal">
           <article class="founder-card">
-            <div class="founder-photo" aria-label="Akshat Koirala"><span>AK</span></div>
+            <button class="founder-photo founder-trigger" type="button" aria-label="Open Akshat Koirala story" aria-expanded="false">
+              <img src="img/akshat-koirala.jpg" alt="" onerror="this.remove()">
+              <span>AK</span>
+            </button>
             <div class="founder-copy">
               <small>Founder · Math learning</small>
               <h3>Akshat Koirala</h3>
-              <p>Akshat is a Mathematics and Economics double major at Macalester College. He has tutored math for more than eight years, from Nepal to South Africa to the United States, and has served students as a Macalester statistics preceptor, peer tutor, and long-time mentor.</p>
-              <p>His work is driven by a simple belief: students are rarely missing ability; they are missing the right starting point. Akshat brings olympiad-level math experience, including SAMF Olympiad gold recognition, and has been recognized as a Best Career Guide mentor.</p>
+              <p>Mathematics and Economics at Macalester. Eight years tutoring across Nepal, South Africa, and the United States.</p>
+              <div class="founder-open">Click portrait for the story</div>
               <div class="founder-tags"><span>Math tutor</span><span>Statistics preceptor</span><span>Best Career Guide</span></div>
+            </div>
+            <div class="founder-story" hidden>
+              <p>Akshat has spent years sitting beside students at the exact moment math turns from shame into sense. At Macalester, he has worked as a statistics preceptor and peer tutor; before that, he taught across countries, classrooms, and learning styles, building the instinct to hear where a student is actually stuck.</p>
+              <p>MindCraft carries that instinct into software. Akshat brings olympiad-level discipline, SAMF Olympiad gold recognition, and Best Career Guide mentor experience, but his real obsession is simpler: find the true starting point, make the next step visible, and help students feel powerful again.</p>
             </div>
           </article>
           <article class="founder-card">
-            <div class="founder-photo" aria-label="Blake Kell"><span>BK</span></div>
+            <button class="founder-photo founder-trigger" type="button" aria-label="Open Blake Kell story" aria-expanded="false">
+              <img src="img/blake-kell.jpg" alt="" onerror="this.remove()">
+              <span>BK</span>
+            </button>
             <div class="founder-copy">
               <small>Founder · Product + data</small>
               <h3>Blake Kell</h3>
-              <p>Blake is a Data Science major and Mathematics minor who cares deeply about building learning tools that feel clear, human, and usable. He brings the technical craft behind MindCraft's data systems and the product sense behind its calm, student-first interface.</p>
-              <p>His motivation is personal too: learning with ADHD and neurodivergence should not mean being treated as broken. Blake is building experiences that make focus easier, feedback kinder, and progress visible for every kind of learner.</p>
+              <p>Data Science major, Mathematics minor, and the product mind behind MindCraft's calm learning experience.</p>
+              <div class="founder-open">Click portrait for the story</div>
               <div class="founder-tags"><span>Data science</span><span>UI craft</span><span>Neurodivergent learning</span></div>
+            </div>
+            <div class="founder-story" hidden>
+              <p>Blake builds the parts of MindCraft that make complexity feel light: the data flow, the interface, the small moments that tell a student, "you are not lost, you are here." His work sits between code, design, and care.</p>
+              <p>His mission is personal. Learning with ADHD and neurodivergence should not mean being treated like the problem. Blake is building tools where focus feels possible, feedback feels human, and progress is visible before confidence disappears.</p>
             </div>
           </article>
         </div>
@@ -739,7 +763,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   <footer>
     <div><strong>Mind<span>Craft</span></strong><p>They were never bad at math. They were waiting for a better story.</p></div>
     <div class="footer-nav">
-      <div class="footer-links"><a href="mailto:joinmindcraft@gmail.com">Email</a><a href="tel:+17633405616">Call</a><a href="#top">Top</a></div>
+      <div class="footer-links"><a href="mailto:joinmindcraft@gmail.com">Email</a><a href="tel:+17633405616">Call</a><a href="blog.html">Blog</a><a href="#top">Top</a></div>
       <div class="footer-social" aria-label="MindCraft social links">
         <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -812,6 +836,17 @@ const navIo = new IntersectionObserver((entries) => {
   })
 }, { rootMargin:"-38% 0px -52% 0px", threshold:0 })
 document.querySelectorAll("[data-nav]").forEach((el) => navIo.observe(el))
+
+document.querySelectorAll(".founder-trigger").forEach((button) => {
+  button.addEventListener("click", () => {
+    const card = button.closest(".founder-card")
+    const story = card?.querySelector(".founder-story")
+    if (!card || !story) return
+    const isOpen = card.classList.toggle("story-open")
+    button.setAttribute("aria-expanded", String(isOpen))
+    story.hidden = !isOpen
+  })
+})
 
 const progress = document.getElementById("scrollProgress")
 const heroArt = document.getElementById("heroArt")

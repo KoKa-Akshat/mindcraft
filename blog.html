@@ -8,12 +8,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#fbf4e7;--paper:#fffdf7;--forest:#064d36;--green:#4eb543;--burgundy:#4b001d;--ink:#343434;--muted:#756a6a;--line:rgba(75,0,29,.16)}
+:root{--cream:#fbf4e7;--paper:#fffdf7;--forest:#064d36;--green:#4eb543;--gold:#d3a900;--burgundy:#4b001d;--ink:#343434;--muted:#756a6a;--line:rgba(75,0,29,.16)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:linear-gradient(rgba(251,244,231,.88),rgba(251,244,231,.94)),url("img/background.jpg") right top/720px auto no-repeat,var(--cream)}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:320px 320px;opacity:.34}
 nav{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,70px);border-bottom:1px solid var(--line);background:rgba(251,244,231,.84);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}
-.logo{font-size:25px;font-weight:950;color:var(--forest);text-decoration:none;letter-spacing:-.05em}.logo span{color:var(--green)}
+.logo{font-size:25px;font-weight:950;color:var(--forest);text-decoration:none;letter-spacing:-.05em}.logo span{color:var(--gold)}
 .navLinks{display:flex;align-items:center;gap:clamp(18px,3vw,38px)}.navLinks a{color:var(--forest);font-size:13px;font-weight:900;letter-spacing:.1em;text-decoration:none;text-transform:uppercase}.loginPill{padding:12px 22px;border-radius:999px;color:#fff!important;background:var(--green);box-shadow:0 5px 0 #318a2c}
 main{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto;padding:clamp(54px,8vw,108px) 24px clamp(70px,8vw,110px)}
 .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:clamp(38px,7vw,100px);align-items:end;margin-bottom:clamp(40px,7vw,74px)}
@@ -38,15 +38,16 @@ p{font-size:15px;line-height:1.72;color:rgba(52,52,52,.66);font-weight:650;flex:
 <nav>
   <a href="index.html" class="logo">Mind<span>Craft</span></a>
   <div class="navLinks">
-    <a href="index.html#proof">Reviews</a>
-    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#system">System</a>
+    <a href="index.html#intake">Apply</a>
     <a class="loginPill" href="https://mindcraft-93858.web.app/login">Log in</a>
   </div>
 </nav>
 <main>
   <section class="hero">
-    <div><div class="eyebrow">MindCraft Notes</div><h1>Notes from the studio.</h1></div>
-    <p class="sub">Teaching reflections, product updates, and the learning systems behind calmer math confidence.</p>
+    <div><div class="eyebrow">MindCraft Notes</div><h1>Field notes.</h1></div>
+    <p class="sub">What we are learning while building calmer, sharper math support.</p>
   </section>
   <section class="grid" id="articles"></section>
   <div class="footerLink"><a href="index.html">Back to MindCraft home →</a></div>
