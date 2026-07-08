@@ -218,7 +218,7 @@
   }
 
   window.MC_onProjectsOpen = function () {
-    window.location.href = APP_BASE + '/onboard?entry=1'
+    show()
   }
   window.MC_onProjectsClose = function () { hide() }
 
