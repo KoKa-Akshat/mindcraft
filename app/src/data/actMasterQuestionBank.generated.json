@@ -18,7 +18,8 @@
       "1. CONSTANT-DIFFERENCE TRAP (→C. 37): student treats the sequence as arithmetic, reuses the LAST difference (8) rather than continuing the pattern, getting 29+8=37. This is the most common wrong answe"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
   },
   {
     "id": "act_math_t01_q02",
@@ -39,7 +40,8 @@
       "1. DECIMAL-HOUR MISREAD (→K. 1 hr 20 min): student computes 6÷5=1.2 hours, then reads \"0.2 hours\" as \"20 minutes\" instead of 0.2×60=12 minutes. This is the most seductive wrong answer. 2. WRONG CONVER"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t01_q03",
@@ -60,7 +62,8 @@
       "1. SIGN ERROR ON SUBTRACTION (common off-path): student moves −17 to get +17 on wrong side and ends up with 5x=−20 → x=−4 (not a choice, reveals the error). 2. COMBINING BEFORE MOVING: student adds 3+"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t01_q04",
@@ -81,7 +84,8 @@
       "1. WRONG NEXT INTEGER: student finds k=9 correctly but then guesses k's factors as {1,2,9} or {1,4,9} (forgetting 9=3², so its middle factor is 3 not 2), getting 1+2+9=12 or 1+4+9=14 (→G). 2. SKIPS TO"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t01_q05",
@@ -102,7 +106,8 @@
       "1. UNWEIGHTED AVERAGE (→C. $2,600): student averages the TWO rates: ($3,200+$2,000)÷2 = $2,600, ignoring that 10 months were at $3,200 and only 2 at $2,000. This is the most dangerous wrong answer. 2."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t01_q06",
@@ -123,7 +128,8 @@
       "1. DISTRIBUTION FAILURE (→G. 13): student writes 4n−7 = 11n−7 (multiplies n by 11 but forgets to multiply −7 by 11), getting 4n=11n → n=0 or −7n=0 → n=0. Or: 4n = 11n → −7n = 0 → n=0. Not a choice but"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t01_q07",
@@ -148,7 +154,8 @@
       "1. OPEN/CLOSED REVERSAL (→C): student reads the closed circle at −5 as open and the open circle at 5 as closed, writing −5 < x ≤ 5 instead of −5 ≤ x < 5. Most common error — students confuse which end"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t01_q08",
@@ -169,7 +176,8 @@
       "1. WRONG CORRESPONDENCE (→H. x+3 or K. x+5): pairs 2 with 6 instead of 3 with 6, computing ratio=3, getting x=6, y=3x → y=18 → none of the choices; student then guesses or makes a further error. 2. FI"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle."
   },
   {
     "id": "act_math_t01_q09",
@@ -190,7 +198,8 @@
       "1. ALGEBRAIC EQUIVALENCE ATTEMPT: student tries to factor (n−3)² = n²−6n+9 and looks for which choice FOIL-expands to the same thing. None of the choices expand to n²−6n+9, so the student gets stuck. "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t01_q10",
@@ -211,7 +220,8 @@
       "1. ANSWER THE WRONG QUESTION (→F. 150 ft): student correctly computes the SIDE length (150 ft) but reports it as the diagonal. Most common error. 2. WRONG MULTIPLIER (→K. 260 ft): student uses √3 inst"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t01_q11",
@@ -231,7 +241,8 @@
       "1. SIGN ERROR IN NUMERATOR (→B. +2): computes (3−(−3)) = 6 in the numerator (subtracts y values in wrong order), getting +6/3 = +2. This happens when student uses (y₁−y₂) for numerator but (x₂−x₁) for"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t01_q12",
@@ -252,7 +263,8 @@
       "1. FORGET TO DIVIDE BY SOD SIZE (→J. 1,600 or K. 2,000): student correctly adds the areas but then picks a nearby \"big\" answer without dividing by 4. 2. ADD DIMENSIONS INSTEAD OF MULTIPLY (→F. 1,000 o"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t01_q13",
@@ -273,7 +285,8 @@
       "1. COS INSTEAD OF SEC (→C. 4/√5 = 2√5/5): student computes cos(n)=adj/hyp=4/(2√5)=2/√5 = 2√5/5, then rationalizes to 4/√5 — gets the RECIPROCAL. 2. WRONG SIDE AS \"ADJACENT\" (→B. 2/√5): uses the OPPOSI"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t01_q14",
@@ -294,7 +307,8 @@
       "1. MULTIPLY INSTEAD OF DIVIDE (→K. (2+3r)p): student correctly isolates pq=2+3r but then MULTIPLIES by p instead of dividing, getting (2+3r)p. 2. WRONG SIGN ON 3r (→J. (2−3r)/p): when moving −3r to th"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t01_q15",
@@ -315,7 +329,8 @@
       "1. SIGN ERROR ON (−5)² (→inflated answer): student writes 4(−5²)=4(−25)=−100 instead of 4(−5)²=4(25)=100, getting f(−5)=−100−25−5=−130 → 8/(−130)≠1/15. The most dangerous error: squaring vs negating. "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t02_q01",
@@ -336,7 +351,8 @@
       "Student may rely only on parity, forget to list all factor pairs, confuse “could NOT” with “could,” or stop after seeing several possible sums."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t02_q02",
@@ -357,7 +373,8 @@
       "Student may assume all nearby angle pairs are supplementary or use parallel-line rules on the wrong angle pair."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
   },
   {
     "id": "act_math_t02_q03",
@@ -378,7 +395,8 @@
       "Student may not connect satisfy/equation language to roots, or subtract in the wrong order."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t02_q04",
@@ -399,7 +417,8 @@
       "Student may stop at 3×9=27 because those are the visible sides, forgetting volume implies a third dimension."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t02_q05",
@@ -420,7 +439,8 @@
       "Student may graph roughly, solve only one equation, or forget that intersection is the ordered-pair solution to the system."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t02_q06",
@@ -441,7 +461,8 @@
       "Student may pull out z even though the middle term lacks z, or forget the middle term becomes -5."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart."
   },
   {
     "id": "act_math_t02_q07",
@@ -458,7 +479,8 @@
       "Student may use diameter as radius, compute full circle area, or fail to connect square side length to circle diameter."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t02_q08",
@@ -479,7 +501,8 @@
       "Student may write 0.25m+50 and charge all minutes instead of only additional minutes, or ignore m>1000."
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t02_q09",
@@ -500,7 +523,8 @@
       "Student may find y-intercept instead of x-intercept, or forget x-intercept means y=0."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t02_q10",
@@ -521,7 +545,8 @@
       "Student may guess visually or fail to check every pair in the choices."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t02_q11",
@@ -542,7 +567,8 @@
       "Student may confuse percent with count or use the wrong pie slice."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t02_q12",
@@ -563,7 +589,8 @@
       "Student may mistranslate “one-third as much,” reverse variables, or solve only one condition."
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t02_q13",
@@ -584,7 +611,8 @@
       "Student may only solve the positive case or choose the inside interval."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t02_q14",
@@ -602,7 +630,8 @@
       "Student may use midpoint, add coordinates, or forget to square both coordinate differences."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t02_q15",
@@ -622,7 +651,8 @@
       "Student may over-connect to advanced log properties, confuse base with answer, or answer x when the prompt asks √x."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Merchiston Castle, Scotland, 1614. John slides his great table across the desk. To undo a power, ask what exponent got you there."
   },
   {
     "id": "act_math_t03_q01",
@@ -643,7 +673,8 @@
       "1. SIGN-DROP TRAP (B, –4): students who move 3p to the left instead of pr get p(q-r) – 3p = -12 → 7p-3p=-12 → 4p=-12... actually a more common slip is writing pq+12=3p+pr as pq-pr=3p+12 (sign error on"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t03_q02",
@@ -664,7 +695,8 @@
       "1. LAST-TERM-ONLY TRAP: a student who finds only the 30th day's push-up count (30+29*3=117) and mistakes that single day's total for the requested CUMULATIVE total picks a much smaller range (F, fewer"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
   },
   {
     "id": "act_math_t03_q03",
@@ -685,7 +717,8 @@
       "1. TRIANGLE-SUM TRAP (C, 60): using 180° instead of 360° as the total (treating the shape as a triangle, or forgetting one of the four angles) gives 2x+x+x=180-ish errors that land near 60. 2. MISCOUN"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
   },
   {
     "id": "act_math_t03_q04",
@@ -702,7 +735,8 @@
       "1. UNIT-CONFUSION TRAP (F, 1/2; G, 3/4): students who try to solve 6s²=10k and s³=k as two separate equations without substituting (e.g. averaging the two coefficients 6 and 10) land on plausible-look"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t03_q06",
@@ -723,7 +757,8 @@
       "1. AVERAGE-ONE-COORDINATE-ONLY TRAP (F, (3,k)): a student who averages the x-values correctly (getting 3, then forgetting to divide — actually landing on the SUM not the average) but leaves the y-coor"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t03_q07",
@@ -744,7 +779,8 @@
       "1. WRONG-PAIR TRAP (B, 'a and c are inversely proportional'): students cross-multiply correctly to ad=bc but then misassign which letters are 'paired' — picking the two letters that appear in the orig"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t03_q08",
@@ -765,7 +801,8 @@
       "1. RADIUS-AS-CIRCUMFERENCE TRAP (K, 10π): using the radius (10) directly as if it were the circumference, then taking 10% of '2π×10' incorrectly as half that, or confusing radius with diameter along t"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t03_q09",
@@ -786,7 +823,8 @@
       "1. SIGN-ON-i²-TRAP (C, 16–4i): forgetting to square the 'i' along with the 2, treating (2i)² as 2i instead of 4i² — and then not even applying i²=-1, leaving a linear i term in an answer that should b"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
   },
   {
     "id": "act_math_t03_q10",
@@ -807,7 +845,8 @@
       "1. SIGN-OF-LEADING-COEFFICIENT TRAP (H, J): picking a downward-opening graph because the large negative constant (–2,000) 'feels' like it should pull the whole graph down/flip it — but the SIGN that c"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t03_q11",
@@ -828,7 +867,8 @@
       "1. SUBTRACT-15%-OF-TOTAL TRAP (B, $29.91): computing 35.19 – 0.15(35.19) instead of dividing by 1.15 — this incorrectly treats the tip as 15% of the FINAL total rather than 15% of the ORIGINAL meal pr"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t03_q12",
@@ -845,7 +885,8 @@
       "1. FLIP-THE-FRACTION TRAP (F, 8/7): confusing cos a with the reciprocal of sin a (as if they were related like sin/cosecant) instead of using the Pythagorean identity at all. 2. FORGOT-TO-SQUARE-THE-D"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t03_q13",
@@ -866,7 +907,8 @@
       "1. SQRT-ONLY TRAP (A, x≥3): applying only the square-root restriction (x–3≥0) and forgetting that x=3 also makes the DENOMINATOR zero, which is independently forbidden — x=3 must be excluded for two s"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t03_q14",
@@ -887,7 +929,8 @@
       "1. SAME-VARIABLE-FOR-BOTH-TIMES TRAP: forgetting that 'two minutes ago' means SUBTRACTING 2 from current wait time (not adding), and 'three minutes from now' means ADDING 3 — sign confusion on the tim"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t03_q15",
@@ -908,7 +951,8 @@
       "1. RADIUS-RATIO-AS-AREA-RATIO TRAP (B, 4:05 or C, 5:04): assuming the ratio of radii (1:2, small:large) carries over directly to an area ratio without squaring it — area scales with the SQUARE of the "
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t04_q01",
@@ -929,7 +973,8 @@
       "1. SAME-SLOPE TRAP (F, G): picking a line with slope ±3 (parallel to, or reciprocal of, the original) rather than –1/3. 2. SIGN-OF-RECIPROCAL TRAP (J): getting the reciprocal magnitude right (1/3) but"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t04_q03",
@@ -950,7 +995,8 @@
       "1. WRONG-TRIG-RATIO TRAP (G, 7√3/4): using sin(30°)=1/2 instead of sin(60°)=√3/2 — picking the wrong angle in the 30-60-90 triangle (confusing which angle the leg is adjacent/opposite to). 2. NO-√3 TR"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t04_q04",
@@ -971,7 +1017,8 @@
       "1. MEAN-NOT-MEDIAN TRAP: computing a weighted average of all values instead of finding the middle value — means and medians are only equal in symmetric distributions, not in a skewed bar chart. 2. WRO"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t04_q05",
@@ -992,7 +1039,8 @@
       "1. MIDDLE-REGION TRAP (F, –1<x<2): selecting the interval BETWEEN the roots instead of OUTSIDE them — this error comes from solving (x–2)(x+1) > 0 as if it were an equality and guessing the interior i"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t04_q06",
@@ -1013,7 +1061,8 @@
       "1. AREA-FOR-ARC TRAP: computing the circle's area (16π or a quarter thereof = 4π) instead of the circumference — area and arc length both involve π but use r² vs r respectively. 2. DIAMETER-FOR-CIRCUM"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t04_q07",
@@ -1034,7 +1083,8 @@
       "1. SIGN-OF-r TRAP (G, 8 or H, 10): computing a/(b-1) = 2(1-b)/(b-1) and forgetting the factor of –1 that converts (1-b)/(b-1) = –1, leaving r=+2 instead of –2, then getting (+2)+(+4)+(+8)=14 or some v"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t04_q08",
@@ -1055,7 +1105,8 @@
       "1. WRONG-DIAGONAL TRAP: using the wrong pair of vertices as the diagonal (choosing adjacent vertices instead of opposite vertices) — a parallelogram's diagonals connect OPPOSITE corners, not adjacent "
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t04_q09",
@@ -1076,7 +1127,8 @@
       "1. WRONG-PERSON TRAP: solving for Hiroshi's speed (15 mph) when the question asks for Akemi's (10 mph) — the answer for the wrong person is almost always among the choices. 2. SPEED-DIFFERENCE-AS-ANSW"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
   },
   {
     "id": "act_math_t04_q10",
@@ -1093,7 +1145,8 @@
       "1. CAP-ADDED TRAP: choosing a graph that flattens again above some high income level, adding an upper cap that isn't stated in the problem — students who've seen tax-cap rules elsewhere import that fe"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t04_q11",
@@ -1114,7 +1167,8 @@
       "1. COEFFICIENT-AS-PERIOD TRAP (E, amplitude=5, period=2): confusing the coefficient inside the argument (1/2 multiplying x) with the period directly — the period is 2π/(coefficient), not the coefficie"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t04_q12",
@@ -1135,7 +1189,8 @@
       "1. SIGN-OF-SUM TRAP: computing sum of roots as +3k instead of –3k — forgetting that Vieta's sum of roots is NEGATIVE of the coefficient of x, not the coefficient itself. 2. WRONG-EXPONENT TRAP: multip"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Persia, an observatory, 1074. Omar sketches the curve in the margin. Many terms, one expression — read what it does."
   },
   {
     "id": "act_math_t04_q13",
@@ -1156,7 +1211,8 @@
       "1. NO-LEADING-ZERO TRAP: forgetting that 4-digit (or 5-digit) codes can't start with 0, which reduces the first-position count by 1 (from 5 to 4 even choices or from 10 to 9 total). 2. WRONG-MULTIPLIC"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, a tavern, 1560. Cardano taps the table. Before you wager, you need the true odds."
   },
   {
     "id": "act_math_t04_q14",
@@ -1177,7 +1233,8 @@
       "1. GCF-INSTEAD-OF-LCM TRAP: computing the GCF (greatest common factor) instead of the LCM — e.g., GCF(9,27)=9 while LCM(9,27)=27. Students who confuse 'least common' and 'greatest common' pick a small"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t04_q15",
@@ -1198,7 +1255,8 @@
       "1. WRONG-FUNCTION-EVALUATION TRAP (F, 20): confusing f(x)=x² with f(x)=x (summing 1+2+3+4=10 and doubling or miscounting). 2. EXPONENT-CONFUSION TRAP (G, 24 or J, 36): off-by-one in the range (summing"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t05_q01",
@@ -1219,7 +1277,8 @@
       "1. WRONG-RATE TRAP (B, $325): computing $225÷25=9 but then adding $225+$100=$325 instead of multiplying. 2. PROPORTIONAL-SCALING TRAP (C, $350): guessing 'a bit more' without careful computation. 3. F"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
   },
   {
     "id": "act_math_t05_q02",
@@ -1240,7 +1299,8 @@
       "1. CONSTANT-DIFFERENCE TRAP (G, 38): noticing a roughly constant jump of ~7 and adding 7 blindly (31+7=38) instead of tracking how the differences themselves are growing. 2. CONSTANT-SECOND-DIFFERENCE"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
   },
   {
     "id": "act_math_t05_q03",
@@ -1261,7 +1321,8 @@
       "1. y³-SIGN TRAP (D, 52): computing –y³ = –(–8) = +8 correctly but then adding 52 from an arithmetic slip in –36+72=38 instead of 36. 2. DROPPING-NEGATIVE TRAP (C, 50): forgetting that y=–2 makes y³=–8"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t05_q04",
@@ -1282,7 +1343,8 @@
       "1. LAST-TERM-AS-TOTAL TRAP (F, 300): multiplying the first day's count by 10 (30×10=300), ignoring the daily increase. 2. ADDING-ONLY-INCREASE TRAP (G, 340): computing 30×10=300 then adding only the s"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
   },
   {
     "id": "act_math_t05_q05",
@@ -1303,7 +1365,8 @@
       "1. FULL-CIRCLE TRAP (E, 16π): giving the total area of the circle without applying the fractional sector. 2. HALF-CIRCLE TRAP (B, 6π): using 1/2 instead of 3/4 as the fraction. 3. AREA-FORMULA TRAP (C"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t05_q06",
@@ -1324,7 +1387,8 @@
       "1. MEDIAN-NOT-MEAN TRAP (H, 178): identifying the middle score (178) rather than computing the mean — confuses median and mean in a 3-item set where they differ. 2. ARITHMETIC-SLIP TRAP (F, 176 or J, "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t05_q08",
@@ -1345,7 +1409,8 @@
       "1. SIGN-FLIP TRAP (F, x<2): dividing both sides by 11 at an intermediate step but misapplying the 'flip inequality when dividing by negative' rule to a POSITIVE divisor, incorrectly flipping the sign."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t05_q09",
@@ -1366,7 +1431,8 @@
       "1. GCF-NOT-FACTOR-COUNT TRAP (C, 3): giving the number of prime factors of the GCF (2 primes: 2 and 7) instead of the number of positive integer divisors of the GCF. 2. LISTING-WRONG-SET TRAP (B, 2): "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t05_q10",
@@ -1387,7 +1453,8 @@
       "1. FLIPPED-FRACTION TRAP (F, 2): computing (x₂–x₁)/(y₂–y₁) = 14/(–7) = –2... wait that gives –2 not +2. Actually F=2 could come from (10+4)/(–6+1)=14/(–5) (using wrong subtraction order for y). 2. SIG"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t05_q11",
@@ -1408,7 +1475,8 @@
       "1. NOT-FACTORING TRAP (A or B): trying to FOIL the expression without spotting the hidden 3x+5y factor first — produces a degree-2 polynomial, not one of the linear answer choices. 2. WRONG-FACTOR-VAL"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t05_q12",
@@ -1429,7 +1497,8 @@
       "1. NEGATIVE-ROOT TRAP: finding both roots (7 and –2) but picking –2 from confusion about which constraint 'x>0' eliminates. 2. FACTORING-ERROR TRAP (H, 5): mis-factoring as (x–5)(x+... ) without check"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t05_q14",
@@ -1450,7 +1519,8 @@
       "1. FORGOT-√3 TRAP (F, 27): computing (1/2)(9)·6=27 without the √3 factor from the height formula — treating the base as 6 instead of 6√3. 2. DOUBLE-HEIGHT TRAP (G, 54): computing area as 9×6=54 (forge"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t05_q15",
@@ -1471,7 +1541,8 @@
       "1. SUPPLEMENT OF 100: student takes 180−100=80, ignoring x (→E if answer was written as 100−x or similar). 2. ADDS ALL THREE ANGLES: computes 100+x+(third)=180 and solves for the interior angle instea"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
   },
   {
     "id": "act_math_t06_q01",
@@ -1492,7 +1563,8 @@
       "1. PROPORTION-SKIP TRAP (F, 400): guessing 22/15 × 300 without computing n first (22/15×300=440... actually that equals 440 here too — so F=400 is not from that route). F=400 comes from 20% of 2000, m"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t06_q02",
@@ -1511,7 +1583,8 @@
       "1. SAME-SLOPE TRAP (C, y=3x+5): using slope +3 (parallel to a slope-1/3 line's reciprocal, not its negative reciprocal). 2. WRONG-INTERCEPT TRAP (D, y=–3x+5): getting slope=–3 correct but computing b="
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t06_q03",
@@ -1532,7 +1605,8 @@
       "1. SUM-NOT-PRODUCT TRAP (various): finding m=10 and m=0.25 but computing their SUM (10.25) instead of PRODUCT — the question asks for the product, not the sum. 2. ONE-CASE-ONLY TRAP (H, 3.2 or J, 3.75"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t06_q04",
@@ -1549,7 +1623,8 @@
       "1. SUBTRACTS INSTEAD OF ADDS: student computes (x₂−x₁)/2 instead of (x₁+x₂)/2, flipping the sign of the x-coordinate. 2. FORGETS TO DIVIDE BY 2: adds the coordinates but skips the division, getting a "
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t06_q05",
@@ -1570,7 +1645,8 @@
       "1. EVALUATES AT WRONG INPUT: computes f(−1)/g(4) (swaps the inputs). 2. ADDS INSTEAD OF DIVIDES: computes f(4)+g(−1) rather than the ratio. 3. ARITHMETIC ERROR IN SUBSTITUTION: makes a sign error when"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t06_q07",
@@ -1591,7 +1667,8 @@
       "1. DIRECT-PROPORTION CONFUSION (G, 4): computing w proportionally instead of inversely (as v halved from 14 to 7 in some distorted reading, w halved too → from 14 to... 4 is not half of 14, so this li"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t06_q08",
@@ -1612,7 +1689,8 @@
       "1. RATIO-VALUE-AS-ANSWER TRAP (A, 3): reading '1:4:5' and guessing the answer is the ratio value 1 or a nearby small number without using the 6-more-boys constraint. 2. TOTAL-COUNT TRAP (E, 12): compu"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t06_q09",
@@ -1629,7 +1707,8 @@
       "1. USES PERPENDICULAR SLOPE: student uses slope 8/5 (negative reciprocal) instead of −5/8 — confuses parallel with perpendicular. 2. COPIES THE ORIGINAL Y-INTERCEPT: writes y = −(5/8)x + 3, forgetting"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t06_q10",
@@ -1650,7 +1729,8 @@
       "1. WHITE-INSTEAD-OF-NOT-WHITE TRAP: computing P(white)=12/36=1/3 instead of its complement — answering what was NOT asked. 2. WRONG-DENOMINATOR TRAP: using 7+17=24 as the denominator (only non-white s"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, a tavern, 1560. Cardano taps the table. Before you wager, you need the true odds."
   },
   {
     "id": "act_math_t06_q12",
@@ -1671,7 +1751,8 @@
       "1. WRONG-FACTORING TRAP (A, 12q): factoring out p²q³ instead of p³q⁴ and getting 12q from a coefficient error. 2. MIXED-VARIABLE TRAP (C, 12p+20q): not factoring out any common term and trying to subs"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t06_q13",
@@ -1692,7 +1773,8 @@
       "1. AREA-INSTEAD-OF-PERIMETER TRAP: substituting 67,500 (the area) directly into the time equation without first computing the perimeter — gets 67,500÷10=6,750 seconds, not an answer choice. 2. ONE-SID"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t06_q14",
@@ -1713,7 +1795,8 @@
       "1. FORGOT-SUBTRACT-200 TRAP (C, 0.1x+30): writing 30+0.1x without subtracting the first 200 minutes — charges $0.10 for ALL minutes, not just the excess beyond 200. 2. BASE-CHARGE-LOST TRAP (no clear "
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
   },
   {
     "id": "act_math_t06_q15",
@@ -1734,7 +1817,8 @@
       "1. TOTAL-DIVIDED-BY-RATE TRAP (K, 1200): computing $100÷$0.10=1,000 minutes, forgetting that the $10 base must be subtracted first. 2. ONLY-BASE-CHARGE TRAP (F, 700): computing ($100–$30)÷$0.10=700 mi"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
   },
   {
     "id": "act_math_t07_q02",
@@ -1755,7 +1839,8 @@
       "1. SUBTRACT-9%-OF-TOTAL TRAP (F, $536): computing 588.60 - 0.09(588.60) = 588.60 - 52.97 = $535.63 ≈ $536 — applying 9% of the FINAL amount rather than dividing by 1.09. 2. ROUNDING TRAP (H, $542 or J"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t07_q03",
@@ -1776,7 +1861,8 @@
       "1. Y-INTERCEPT TRAP (A, (0,4)): swapping x and y intercepts — (0,4) is the point where x=0 (y-intercept), not the x-intercept. 2. SIGN-ERROR TRAP (D, (–4,0)): solving 2x=–8 by forgetting to move –8 to"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t07_q07",
@@ -1797,7 +1883,8 @@
       "1. OPPOSITE-VS-ADJACENT TRAP (A, 12): using sin instead of cos for the horizontal distance, computing 25×sin(n)=20 (the height, not the base). 2. HEIGHT-AS-BASE CONFUSION: correctly finding the height"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t07_q08",
@@ -1818,7 +1905,8 @@
       "1. FORGETS ½: computes (18x)(4x)=72x²=144, getting x²=2, x=√2. 2. ADDS SIDES WITHOUT AVERAGING: treats trapezoid as rectangle with side sum instead of average. 3. TAKES NEGATIVE ROOT: gets x=±2 and fa"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t07_q09",
@@ -1839,7 +1927,8 @@
       "1. EQUAL-DISTRIBUTION TRAP (C, 4 or D, 5): assuming the remaining days must each be exactly 8 hours, which over-constrains the problem — they only need to be between 4 and 8. 2. AVERAGE-TRAP: computin"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
   },
   {
     "id": "act_math_t07_q10",
@@ -1856,7 +1945,8 @@
       "1. SIMPLIFICATION ERROR: leaves answer as (10+2√5)/10 without simplifying to 1+√5/5. 2. WRONG DISCRIMINANT: computes b²−4ac as 100−4(5)(4)=100−80=20 correctly but then errors in √20 (writes 2√5 but ge"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t07_q11",
@@ -1877,7 +1967,8 @@
       "1. TRANSLATION-ERROR TRAP: writing 3+40n=2(17+n) (swapping operation order) instead of 3n+40=2(n+17), getting a different value of n. 2. SIGN-ERROR TRAP (B, -72): correctly finding n=-6 but computing "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t07_q12",
@@ -1898,7 +1989,8 @@
       "1. SOLVE-WRONG-UNKNOWN TRAP (K, 15): finding y=15 and reporting it instead of x+y. 2. ELIMINATION-SIGN TRAP: multiplying equation (2) by -4 to eliminate y but mis-applying the sign on the constant ter"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t07_q13",
@@ -1919,7 +2011,8 @@
       "1. DEGREE-NOT-RADIAN TRAP: leaving the answer as 72 (degrees) rather than converting to radians. 2. WRONG-PERCENT TRAP (C, 2π/9): computing 20% of 180 = 36 degrees → 36π/180=π/5 (not 2π/5). 3. INVERSI"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t07_q14",
@@ -1940,7 +2033,8 @@
       "1. HALF-AREA TRAP (G, 40.5): computing 81/2=40.5, assuming the inner square is always half the outer — this is only true if vertices are at midpoints (distance 4.5 from each corner, giving 45° rotatio"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t07_q15",
@@ -1961,7 +2055,8 @@
       "1. RIGHT-MEANS-+1 TRAP (D, x²+11x+3): replacing x with (x+1) instead of (x-1) for a rightward shift (adding 1 shifts LEFT, subtracting 1 shifts RIGHT). 2. ONLY-HORIZONTAL TRAP (C, x²+10x-6): applying "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t08_q01",
@@ -1982,7 +2077,8 @@
       "1. SETS EXPONENTS EQUAL: student tries to equate the exponent expressions and solve for a as if there's a unique algebraic answer — works only if a≠0,1, but then a depends on the variable. 2. TRIES a="
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t08_q02",
@@ -2003,7 +2099,8 @@
       "1. ALL-36 TRAP (B or D): computing 36⁶ = ~2.18×10⁹ (treating all positions as unrestricted 36 choices each), overshooting to between 10⁹ and 10¹⁰. 2. FORGET-MIDDLE TRAP: computing only 26×10=260 for j"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, a tavern, 1560. Cardano taps the table. Before you wager, you need the true odds."
   },
   {
     "id": "act_math_t08_q03",
@@ -2024,7 +2121,8 @@
       "1. r-NOT-r² TRAP (G, 7π): using r=7 directly as r² in the area formula, getting π(7)=7π instead of π(49)=49π — confusing the radius with the radius squared. 2. SIDE-TO-RADIUS TRAP (H, 25π): extracting"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t08_q04",
@@ -2045,7 +2143,8 @@
       "1. CSC TRAP (D, cos x csc x): mis-applying sec as csc (confusing reciprocals), getting cos(x)/sin(x)=cot(x) or cos(x)·(1/sin(x)). 2. COT TRAP (B, cot x): computing cos(x)/sin(x) instead of sin(x)/cos("
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t08_q05",
@@ -2066,7 +2165,8 @@
       "1. DIAMETER-FOR-RADIUS TRAP: using d=3h as the radius instead of r=3h/2, getting V=π(3h)²h=9πh³=231.5 → h³≈8.2 → h≈2 (F). 2. AREA-NOT-VOLUME TRAP: applying πr²=231.5 as if it were surface area not vol"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t08_q06",
@@ -2087,7 +2187,8 @@
       "1. PERCENT INCREASE INSTEAD OF NEW PERCENT: student computes how much Victoria's share INCREASED, not her new absolute percentage. 2. FORGETS TOTAL CHANGES: doubles Victoria but keeps denominator = ol"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t08_q09",
@@ -2104,7 +2205,8 @@
       "1. USES REGULAR HEXAGON FORMULA: uses 2s for the diagonal, getting 2. 2. FORGETS THE CORNER EXTENSIONS: computes only the inner rectangle width s=1, missing the two diagonal corners. 3. SQUARE ROOT ER"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t08_q10",
@@ -2121,7 +2223,8 @@
       "1. ADDS INSTEAD OF CROSS-MULTIPLYING: computes a+a = b+c → 2a = b+c → a = (b+c)/2, the arithmetic mean instead of the geometric mean. 2. WRONG CROSS-MULTIPLY: gets ac = ab → c = b (loses a). 3. MISSES"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t08_q11",
@@ -2142,7 +2245,8 @@
       "1. ADDS SPEEDS INSTEAD OF USING D=RT: averages the two speeds as (r₁+r₂)/2, which only works for equal times, not equal distances. 2. UNIT ERROR: mixes mph and minutes without converting. 3. WRONG VAR"
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
   },
   {
     "id": "act_math_t08_q12",
@@ -2163,7 +2267,8 @@
       "1. USES f(−x): reflects about y-axis (x=0) instead of x=3. 2. USES f(x−6): shifts by 6 rather than reflecting. 3. USES f(3−x): reflects about x=3/2 instead of x=3."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t08_q13",
@@ -2181,7 +2286,8 @@
       "1. SOLVES FOR n ONLY: stops at n=8 without taking √n, choosing F. 3 (or some value close to 8 itself). 2. WRONG EXPONENTIAL CONVERSION: writes 2^(1/3)=n instead of n^(1/3)=2, getting n=∛2. 3. SIMPLIFI"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Merchiston Castle, Scotland, 1614. John slides his great table across the desk. To undo a power, ask what exponent got you there."
   },
   {
     "id": "act_math_t08_q14",
@@ -2202,7 +2308,8 @@
       "1. SIGN TRAP (B, –45): computing 4-49=-45 by subtracting instead of adding (forgetting the i²=-1 sign flip: (7i)²=-49, so -(7i)²=+49). 2. FORGOT-b²-SIGN TRAP (A, 45): computing 4+49-8=45 from a FOIL e"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
   },
   {
     "id": "act_math_t08_q15",
@@ -2219,7 +2326,8 @@
       "1. CONFUSES SLOPE DIRECTION: interprets a flat region as increasing or decreasing instead of constant. 2. MISREADS TIME AXIS: reverses the direction of reading the graph. 3. OVER-GENERALIZES: selects "
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t09_q01",
@@ -2240,7 +2348,8 @@
       "1. SOLVE-FOR-WRONG-VARIABLE TRAP (B, $0.75): finding c=$0.75 and reporting it instead of p. 2. WRONG-SUBTRACT TRAP: subtracting (2)-(1) but making a sign error on the constant, getting c=0.75 but p=1."
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t09_q02",
@@ -2261,7 +2370,8 @@
       "1. LCM-CONFUSION TRAP (K, 10): computing the GCF incorrectly as if taking the LARGER power of each shared prime, or confusing GCF with LCM. 2. PARTIAL-FACTOR TRAP (F, 2): identifying only one factor o"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t09_q03",
@@ -2282,7 +2392,8 @@
       "1. ADDITIVE-TRAP (E, 21): adding 1 to 24-3=21 without understanding that adding a child means DIVIDING the SAME total among more people — the change is multiplicative, not additive. 2. DIRECT-PROPORTI"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t09_q04",
@@ -2303,7 +2414,8 @@
       "1. FULL-SQUARE TRAP (K, 25): giving the area of the full square instead of the triangular shaded half. 2. SIDE-AS-AREA TRAP (F, 10): computing perimeter÷4 to get side=5 but then treating the side leng"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t09_q05",
@@ -2324,7 +2436,8 @@
       "1. PERCENTAGE-ERROR TRAP (A, 7 or B, 8): computing 25% of 36 incorrectly as 7 or 8 (perhaps computing 20% of 36=7.2 or misreading 25% as 1/4 of 35). 2. DOUBLE-COUNT TRAP: subtracting both beef and chi"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t09_q06",
@@ -2345,7 +2458,8 @@
       "1. SIGN-OF-vw TRAP (G, –92): computing 3vw = 3(–1)(4)=–12 correctly but then w²–3vw = 16–(–12) and mis-applying the double negative: treating 16–(–12) as 16–12=4 instead of 16+12=28. 2. WRONG-SIGN-ON-"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t09_q07",
@@ -2366,7 +2480,8 @@
       "1. LENGTH-TRAP (B, 2 minutes; D, 4 minutes): computing time for the LENGTH (4w takes 4 min) or half the length. 2. HALF-PERIMETER TRAP (C, 3 minutes): dividing 10 minutes by 2 sides (5 min each) then "
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
   },
   {
     "id": "act_math_t09_q08",
@@ -2385,7 +2500,8 @@
       "1. INVERTS THE FRACTION: computes rise/run as 9/2 ÷ 6 = 3/4, then picks the reciprocal without the negative. 2. MISREADS X-INTERCEPT: reads x-intercept as 3 or 4 instead of 4.5, getting slope = −2 or "
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t09_q09",
@@ -2406,7 +2522,8 @@
       "1. PRODUCT-NOT-SUM TRAP (A, 4; B, 7): multiplying the roots (8×5=40) or computing 8-5=3 instead of 8+5=13. 2. ONE-CASE TRAP (B, 7 or answer=8): solving only one case and guessing the sum is just that "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t09_q10",
@@ -2427,7 +2544,8 @@
       "1. AVERAGE-OF-THREE TRAP (G, 85): computing 274/3≈91.3, then subtracting from 90 to get ~5, or computing average of first three (91.3) and guessing 4th is lower. 2. SUM-ARITHMETIC TRAP (F, 84 or H+1=8"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t09_q11",
@@ -2444,7 +2562,8 @@
       "1. FLIPS INEQUALITY: divides by a negative without flipping, or flips when dividing by a positive. 2. WRONG BOUND: computes 3/2 correctly but writes p ≥ 3/2 (C) — direction error. 3. WRONG ARITHMETIC:"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t09_q13",
@@ -2465,7 +2584,8 @@
       "1. ADD-NOT-SUBTRACT TRAP (D, 18): computing (6+3)²+(5+7)²=9²+12² correctly if signs are right, but making an error on |–5–7|=|–12|=12 by computing |-5+7|=2, giving sqrt(81+4)≈9. 2. NO-SQUARE-ROOT TRAP"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t09_q14",
@@ -2486,7 +2606,8 @@
       "1. G-FACTOR TRAP: thinking 2xy² is NOT a factor because it looks 'complex' — but all three terms divide cleanly by 2xy². 2. F-LOOKS-LIKE-GCF TRAP: noticing both 4x² and 12x³ share 2x² but forgetting t"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Persia, an observatory, 1074. Omar sketches the curve in the margin. Many terms, one expression — read what it does."
   },
   {
     "id": "act_math_t09_q15",
@@ -2507,7 +2628,8 @@
       "1. PART-TO-WHOLE TRAP (C, 1 to 12): computing 9/126 ≈ 1/14 and writing it as 1:12 from a rounding error, or comparing recipients to the TOTAL (126) instead of to non-recipients (117). 2. ARITHMETIC TR"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t10_q01",
@@ -2528,7 +2650,8 @@
       "1. USES OPPOSITE ANGLES: thinks consecutive angles are EQUAL (like opposite angles), getting 130° — not an answer choice. 2. SUBTRACTS FROM 90°: student thinks the angle must be complementary, computi"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
   },
   {
     "id": "act_math_t10_q02",
@@ -2549,7 +2672,8 @@
       "1. SUM-NOT-PRODUCT TRAP (A, 35; B, –40): computing x+y=10+(–12)=–2 (not listed) or x–y=22 then guessing. More likely A or B come from arithmetic slips in substitution. 2. WRONG-y TRAP (D, 100): comput"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t10_q04",
@@ -2570,7 +2694,8 @@
       "1. DIRECT-PERCENT TRAP (C, 75): computing 75% of 75 (using 75 instead of p=30 as the base). 2. TWO-STAGE CONFUSION: computing 75% of 250=187.5 (treating the second percent as applying to 250, not p). "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t10_q05",
@@ -2590,7 +2715,8 @@
       "1. COEFFICIENT-AS-SLOPE TRAP (H, 9): reading the coefficient of x (9) directly as the slope instead of dividing by 3 first. 2. NEGATIVE-SLOPE TRAP (G, –3): computing y=–3x+10/9 from dividing by –9 (wr"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t10_q06",
@@ -2607,7 +2733,8 @@
       "1. SUBTRACTS COORDINATES: (9−6)/2 = 3/2 for x (lucky, same answer), but (8−1)/2 = 7/2 ≠ 9/2 for y — systematic error. 2. FORGETS NEGATIVE: (−6+9)/2 computed as (6+9)/2 = 15/2. 3. WRONG ORDER: gives (9"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t10_q07",
@@ -2624,7 +2751,8 @@
       "1. WRITES INTERSECTION (AND) INSTEAD OF UNION (OR): writes 5/4<n<7/4 (the \"between\" region), which is the solution to |4n−6| < 1, not > 1. 2. WRONG INEQUALITY DIRECTION IN CASE 2: writes 4n−6 > −1 → 4"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t10_q08",
@@ -2641,7 +2769,8 @@
       "1. USES WRONG RATIO: computes cos θ = 5/√29 instead of sin θ = 2/√29. 2. FAILS TO RATIONALIZE: leaves answer as 2/√29 — doesn't match any choice in rationalized form. 3. USES LEGS AS HYPOTENUSE: compu"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t10_q09",
@@ -2662,7 +2791,8 @@
       "1. SQRT-SKIP TRAP (H, 54π): using r²=9 directly as r in the volume formula: (4/3)π(9)=12π × ... wait (4/3)(9)=12, giving 12π. That doesn't match H. More likely H=54π from r=3, volume=(4/3)π(27)=36π..."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t10_q10",
@@ -2679,7 +2809,8 @@
       "1. EXTRANEOUS ROOT: student finds two solutions but selects the negative or the one that fails the original check. 2. SQUARES INCORRECTLY: squares only one term instead of the entire side. 3. ARITHMET"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t10_q11",
@@ -2700,7 +2831,8 @@
       "1. NON-FACTOR TRAP (H, 22; J, 36): assuming numbers like 7 or 11 are factors of 75 without checking (75=3×5², so only powers of 3 and 5 can appear). 2. FACTOR-PAIR CONFUSION: correctly listing factors"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t10_q12",
@@ -2721,7 +2853,8 @@
       "1. READS WRONG SEGMENTS: adds different pair (e.g., Currer+Ellis=43%). 2. COMPUTES THE REMAINDER: subtracts from 100% instead of adding target pair. 3. MISREADS PIE CHART VALUES: reads Zach as a diffe"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t10_q14",
@@ -2742,7 +2875,8 @@
       "1. PRODUCT-NOT-SUM TRAP (D, –0.75): computing product of roots (c/a=–1/4=–0.25) instead of sum, or using –b/a with the wrong sign: –3/4=–0.75. 2. SOLVE-BY-QUADRATIC-FORMULA TRAP: actually solving for "
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t11_q01",
@@ -2763,7 +2897,8 @@
       "1. FINDS k OR n BUT NOT BOTH: computes k=3 or n=6 but does not multiply them together — picks an answer that matches one coordinate. 2. WRONG y-INTERCEPT: reads the graph instead of computing from the"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t11_q02",
@@ -2784,7 +2919,8 @@
       "1. SOLVES FOR a OR r INDIVIDUALLY BUT DOESN'T ADD: finds a=36 and r=60 but reports one of these instead of their sum. 2. WRONG EQUATION SETUP: swaps coefficients (e.g., 2a+5r=300 instead of 5a+2r=300)"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t11_q03",
@@ -2804,7 +2940,8 @@
       "1. USES SAME SLOPE (PARALLEL): writes y = (1/2)x, confusing parallel with perpendicular. 2. FORGETS TO PASS THROUGH ORIGIN: adds an extra y-intercept term. 3. NEGATIVE RECIPROCAL ERROR: uses slope 2 ("
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t11_q04",
@@ -2825,7 +2962,8 @@
       "1. USES 93 AS TOTAL: treats the average as the total, computing 2x = 93−(94+85+90) = 93−269 < 0 (nonsensical). 2. WRONG SUM OF LAST THREE: adds only two of the three remaining exams. 3. DIVIDES INSTEA"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t11_q05",
@@ -2846,7 +2984,8 @@
       "1. DOESN'T CROSS-MULTIPLY: tries to isolate x without clearing the fraction, getting tangled in the denominator. 2. ARITHMETIC ERROR AFTER CANCEL: notes that 3y cancels but then makes an arithmetic er"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t11_q06",
@@ -2867,7 +3006,8 @@
       "1. CONFUSES PERIOD WITH AMPLITUDE: picks amplitude (0.5) as the period. 2. READS HALF-PERIOD: measures from a peak to the next trough (= half-period = 2π). 3. COUNTS AXIS MARKS INCORRECTLY: misreads t"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t11_q07",
@@ -2888,7 +3028,8 @@
       "1. REPORTS PEAK-TO-TROUGH: computes 0.5−(−0.5) = 1, choosing B. 2. REPORTS THE PERIOD: sees the sinusoidal and names 2π or 4π instead. 3. REPORTS A NEGATIVE: says amplitude = −0.5 (amplitude is always"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t11_q08",
@@ -2907,7 +3048,8 @@
       "1. THINKS ISOSCELES BUT NOT SQUARE: notices BD=BE (tangent lengths equal) and OD=OE (radii) but doesn't recognize all four angles are 90°. 2. IGNORES THE RIGHT ANGLE AT B: overlooks the small square s"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t11_q09",
@@ -2928,7 +3070,8 @@
       "1. WRONG SHIFT DIRECTION: uses f(x+3) (shift left) instead of f(x−3) (shift right). 2. REFLECTS BEFORE SHIFTING: computes −f(x)−3, which shifts the reflected function vertically instead of horizontall"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t11_q10",
@@ -2949,7 +3092,8 @@
       "1. DOESN'T DETERMINE SIGN OF b: concludes a<0, c>0 but doesn't analyze the vertex position to determine b>0. 2. CONFUSES DIRECTION: thinks downward opening means a>0. 3. DOESN'T USE VERTEX POSITION: i"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t11_q11",
@@ -2970,7 +3114,8 @@
       "1. USES ≥ INSTEAD OF >: includes x = ±3, but at those points the denominator = 0 (undefined). Gives E instead of D. 2. REVERSES INEQUALITY: thinks x²−9 > 0 means x < 3 (takes the complement). 3. IGNOR"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t11_q12",
@@ -2991,7 +3136,8 @@
       "1. TRIES TO LIST THE SEQUENCE: attempts to write out terms until 65, which is tedious and error-prone. 2. WRONG PATTERN: sees +2,+1 pattern but misidentifies what's skipped. 3. ARITHMETIC ERROR IN MOD"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t11_q13",
@@ -3008,7 +3154,8 @@
       "1. WRONG TOTAL: counts 91 instead of 90 (e.g., starts from 9 or includes 100). 2. WRONG COUNT OF MULTIPLES: counts 19 instead of 18 (off-by-one on the multiples). 3. DOESN'T SIMPLIFY: leaves answer as"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, a tavern, 1560. Cardano taps the table. Before you wager, you need the true odds."
   },
   {
     "id": "act_math_t11_q14",
@@ -3029,7 +3176,8 @@
       "1. USES WRONG HEIGHT: measures from vertex C to one of the base endpoints instead of to the LINE containing the base. 2. FORGETS THE ½: computes 3×7=21, choosing J. 3. USES ALL COORDINATES IN DISTANCE"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t11_q15",
@@ -3050,7 +3198,8 @@
       "1. CHECKS ONLY ONE CASE: verifies Case 1 (x=y) and doesn't realize the 40° could repeat. 2. DOESN'T CHECK ALL CHOICES: eliminates A(x=y) and D(x=70) as obviously possible, but doesn't verify B careful"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
   },
   {
     "id": "act_math_t12_q01",
@@ -3071,7 +3220,8 @@
       "1. SIGN ERROR ON i²: Forgetting i²=−1 gives −12 instead of +12; answer becomes 3+8i instead of 27+8i. 2. FOIL INCOMPLETE: Only multiplying outer terms, missing cross-products."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
   },
   {
     "id": "act_math_t12_q02",
@@ -3092,7 +3242,8 @@
       "1. FORGETTING OM⊥KL THEOREM: Not forming the right triangle, so Pythagorean theorem isn't applied. 2. TREATING KL AS DIAMETER: Setting r=6 and getting area=36π."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t12_q03",
@@ -3109,7 +3260,8 @@
       "1. WRONG DIRECTION FOR WITHDRAWAL: Choosing a graph with the withdrawal shown as a deposit (bar in same direction but different height). 2. NON-UNIFORM DEPOSITS: Choosing a graph with varying bar heig"
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t12_q04",
@@ -3130,7 +3282,8 @@
       "1. FORGETTING INITIAL BALANCE: Only computing deposits minus withdrawal, getting $1,250. 2. WRONG DEPOSIT COUNT: Using 7 or 9 deposits instead of 8."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t12_q05",
@@ -3151,7 +3304,8 @@
       "1. ADDITIVE PERCENTAGES: Computing (P − 30 + 5) instead of multiplying by 0.70 then 1.05. 2. TAX ON ORIGINAL PRICE: Applying 5% to P before discount instead of after."
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t12_q06",
@@ -3172,7 +3326,8 @@
       "1. WRONG RECIPROCAL IDENTITIES: Confusing csc/sec or misidentifying which is reciprocal of sin vs cos. 2. PREMATURE CANCELLATION: Canceling terms before properly forming the fraction."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t12_q07",
@@ -3189,7 +3344,8 @@
       "1. CORNER TRIANGLE COUNTING ERROR: Subtracting three equal triangles instead of recognizing the bottom region is a trapezoid. 2. EXPANDING (x+y)² INCORRECTLY: Getting x²+y² instead of x²+2xy+y²."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t12_q08",
@@ -3210,7 +3366,8 @@
       "1. INVERTING A RATIO: Using h/g=5/2 instead of g/h=2/5, giving f/h=5/8. 2. ADDING RATIOS: 1/4+2/5=13/20 (wrong — ratios chain by multiplication not addition)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t12_q10",
@@ -3231,7 +3388,8 @@
       "1. FORGETTING 1/3: Using V_pyramid=Bh (prism formula), giving ratio 1:2. 2. MISREADING HEIGHT: Using same height h for cylinder instead of 2h."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t12_q11",
@@ -3248,7 +3406,8 @@
       "1. TAKING NEGATIVE ROOT: Choosing -1-√(1+2k) which gives a negative value. 2. ARITHMETIC ERROR: Not simplifying (-2±2√(1+2k))/2 by dividing both terms by 2."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t12_q12",
@@ -3268,7 +3427,8 @@
       "1. NOT FACTORING: Trying algebra without recognizing perfect square and difference of squares. 2. WRONG CANCELLATION: Canceling (a-b) instead of (a+b)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t12_q13",
@@ -3299,7 +3459,8 @@
       "1. CONFUSING DOMAIN AND RANGE: Thinking range refers to inputs. 2. SIGN TRAP: Thinking |x+4| has minimum at x=+4 rather than x=-4."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t12_q15",
@@ -3320,7 +3481,8 @@
       "1. WRONG ARC COUNT: Using 2 or 4 arcs from A to B, giving wrong radius and area. 2. CONFUSING ARC LENGTH WITH CIRCUMFERENCE: Setting 6π=2πr directly, treating arc as full circle."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
   },
   {
     "id": "act_math_t13_q01",
@@ -3341,7 +3503,8 @@
       "1. ADDING INSTEAD OF PROPORTIONING: Computing 24+18=42 or 6+18=24 and making incorrect comparisons. 2. INVERTED RATIO: Setting 6/24=h/18 → h=4.5, getting the reciprocal."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t13_q02",
@@ -3362,7 +3525,8 @@
       "1. FORGETTING ONE-TIME FEE: Setting 100=14n → n≈7.14, rounding to 7. 2. DIVIDING TOTAL BY MONTHLY: 100/14≈7.14, ignoring the $16 setup fee."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t13_q03",
@@ -3383,7 +3547,8 @@
       "1. SIGN ERROR ON y²: Computing (-6)²=-36 instead of +36. 2. FACTORING SHORTCUT ERROR: Factoring y²-4=(y+2)(y-2) and canceling (y-2) to get y+2=-6+2=-4 directly (works here, but risky if y=2)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t13_q04",
@@ -3404,7 +3569,8 @@
       "1. USING WRONG PRICE: Computing extra using the ≤15 price instead of the >15 price ($10.25). 2. WRONG STUDENT COUNT: Using 15 instead of 18."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t13_q05",
@@ -3422,7 +3588,8 @@
       "1. USING FULL ROSTER: P(Itzhak)=1/16, forgetting the soloists are excluded. 2. PROBABILITY OF ANY NON-SOLOIST: Computing 12/16=3/4 instead of the probability specifically for Itzhak."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, a tavern, 1560. Cardano taps the table. Before you wager, you need the true odds."
   },
   {
     "id": "act_math_t13_q06",
@@ -3443,7 +3610,8 @@
       "1. ONLY ONE PAIR OF SIDES: Computing 17+8=25 and forgetting to multiply by 2. 2. COMPUTING AREA: 17×8=136 instead of perimeter."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t13_q07",
@@ -3464,7 +3632,8 @@
       "1. ROUNDING DOWN: 1840/12=153.33 → taking 153 (insufficient: 153×12=$1,836<$1,840). 2. NOT SUBTRACTING ONLINE REVENUE: Using $4,000/$12≈334 without accounting for online sales."
     ],
     "examTag": "ACT",
-    "format": "word_problem"
+    "format": "word_problem",
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t13_q08",
@@ -3485,7 +3654,8 @@
       "1. INVERTING THE PROPORTION: Setting q/9=6/10 → q=5.4. 2. ADDING INSTEAD OF CROSS-MULTIPLYING: 9+10=19, 6+?... meaningless."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t13_q09",
@@ -3505,7 +3675,8 @@
       "1. SIGN ERROR IN DISTRIBUTION: Writing -9×(-13)=-117 instead of +117. 2. INCOMPLETE ISOLATION: Stopping at -9y=-101 without dividing by -9."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t13_q10",
@@ -3526,7 +3697,8 @@
       "1. NOT USING SUPPLEMENTARY ANGLES: Taking ∠GHK=120° instead of 60°. 2. FORGETTING ISOSCELES: Not using GK=FG to find the base angles of triangle FGK."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
   },
   {
     "id": "act_math_t13_q11",
@@ -3547,7 +3719,8 @@
       "1. SIGN ERROR ON x²: Computing 7(-3)²=7(-9)=-63 instead of +63. 2. SIGN ERROR ON MIDDLE TERM: -9(-3)=-27 instead of +27."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t13_q12",
@@ -3568,7 +3741,8 @@
       "1. USING GCF INSTEAD OF LCM: GCF(25,16,40)=1 (since gcd(25,16)=1). 2. MULTIPLYING ALL: 25×16×40=16,000 (that's K, but overkill — not minimal). 3. PARTIAL LCM: LCM(16,40)=80 but then forgetting to also"
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t13_q13",
@@ -3589,7 +3763,8 @@
       "1. MULTIPLY BY 3: (n/3)×3=n (not 3n — only gets back to original, not the target). 2. DIVIDE BY 9: (n/3)/9=n/27 (wrong direction)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t13_q14",
@@ -3610,7 +3785,8 @@
       "1. WRONG AREA FORMULA: Using area=a² instead of a²/2. 2. COMPUTING AREA INSTEAD OF PERIMETER: Stopping at a=4 without counting boundary edges."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t13_q15",
@@ -3631,7 +3807,8 @@
       "1. WRONG DIRECTION: Concluding ∠X<38° instead of >38° (confusing which angle shrinks when the other grows). 2. COMPUTING COMPLEMENT WRONG: 90-52=38 is a lower bound for X, not the exact value."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
   },
   {
     "id": "act_math_t14_q01",
@@ -3652,7 +3829,8 @@
       "1. NOT TESTING ALL THREE: Stopping after finding one that works without verifying others fail. 2. ARITHMETIC ERROR: Computing 4³=64 and 4²=16 correctly (common to confuse these)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t14_q02",
@@ -3673,7 +3851,8 @@
       "1. CONFUSING SLOPE: Choosing y=-2x+6 (less steep, x-intercept at 3, doesn't match graph). 2. MISSING y-INTERCEPT: Choosing y=-5x (passes through origin, not 6)."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t14_q03",
@@ -3694,7 +3873,8 @@
       "1. WRONG DIRECTION OF SUBTRACTION: Writing x-6 instead of 6-x. 2. MISREADING '15 MORE THAN': Writing product = 15 - x/2 (reversing which is bigger)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t14_q04",
@@ -3715,7 +3895,8 @@
       "1. SWAPPING RATES: Putting 155 with X and 120 with Y (choice B). 2. MULTIPLYING THROUGH: (18,000+120)d=(14,500+155)d — wrong algebraic form (choice C)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t14_q05",
@@ -3736,7 +3917,8 @@
       "1. USING WRONG FORMULA: Adding legs (7+24=31) instead of using Pythagorean theorem. 2. ARITHMETIC ERROR: 7²=49, 24²=576, not 49+576=600."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t14_q06",
@@ -3757,7 +3939,8 @@
       "1. SIGN ERROR: -2(4y-4)→-8y-8 instead of -8y+8. 2. WRONG DISTRIBUTION: Only distributing to first term: 9y+3-8y-4=y-1."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t14_q07",
@@ -3778,7 +3961,8 @@
       "1. SOLVING FOR a: Finding a=18 instead of b. 2. ADDITION INSTEAD OF SUBTRACTION: Adding gives 2a=36→a=18 (correct for a but not what's asked)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
   },
   {
     "id": "act_math_t14_q08",
@@ -3799,7 +3983,8 @@
       "1. WRONG EXPANSION: (2x+4)²=4x²+16 (forgetting the middle term 16x). 2. SIGN ERROR: Computing a+b+c instead of a+b-c."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t14_q09",
@@ -3820,7 +4005,8 @@
       "1. USING FULL RECTANGLE: Treating it as 30×11=330 without subtracting the missing piece. 2. WRONG CUT DIMENSIONS: Using wrong width or height for the missing piece."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t14_q10",
@@ -3841,7 +4027,8 @@
       "1. CHOOSING g(x) INSTEAD OF h(x): g(x) is not linear (check: g(-3)=4, g(-2)=2 — not uniform slope). 2. FORGETTING INTERCEPT: Assuming h(0)=0 (only true if a=0)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t14_q11",
@@ -3860,7 +4047,8 @@
       "1. NOT DIVIDING BY 10: Reading coefficient of x as 16 (choice K.16). 2. TAKING COEFFICIENT OF x AS SLOPE DIRECTLY: From 10y-16x=13, reading slope as -16 (choice F.-16)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t14_q12",
@@ -3881,7 +4069,8 @@
       "1. COMPUTING PRODUCT: Product of roots = c/a = -24 (choice A). 2. FINDING ROOTS INDIVIDUALLY: Factor (x+8)(x-3)=0 → x=-8,3 → sum=-8+3=-5 (correct but slower)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad draws the square. Find the side that makes it whole."
   },
   {
     "id": "act_math_t14_q13",
@@ -3902,7 +4091,8 @@
       "1. APPLYING RATIO INVERTED: 24×(6/5)=28.8 (using larger:smaller instead of smaller:larger). 2. SCALING INDIVIDUAL SIDES WRONG: Scaling only one side by 5/6."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t14_q14",
@@ -3923,7 +4113,8 @@
       "1. NOT SORTING FIRST: Taking median from unsorted list, picking a wrong middle value. 2. AVERAGING: Computing mean = (-9+3-7+2+5+1+0-8-7)/9 = -20/9 ≈ -2.2°C (not an option, and not the median)."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t14_q15",
@@ -3944,7 +4135,8 @@
       "1. NOT SUBSTITUTING: Trying to solve directly without letting u=√p. 2. TAKING NEGATIVE ROOT: u=(-8-80)/6=-14.67 (invalid since u=√p≥0)."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t15_q01",
@@ -3965,7 +4157,8 @@
       "1. SQUARING WRONG: Using v=9 without squaring: 120=(1/2)(9)m → m=80/3≈26.7. 2. FORGETTING 1/2: Setting 120=m(81) → m=120/81≈1.48."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t15_q02",
@@ -3986,7 +4179,8 @@
       "1. WRONG EXPONENT ADDITION: Adding exponents incorrectly: x³×x→x³ instead of x⁴. 2. FORGETTING z: Getting 2x⁴y³ instead of 2x⁴y³z."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "At sea, bound for Jamaica, 1761. William stares at the balance. One unknown. Find what makes both sides equal."
   },
   {
     "id": "act_math_t15_q03",
@@ -4003,7 +4197,8 @@
       "1. READING WRONG BAR: Reading the 0-star or 2-star bar instead of 1-star. 2. WRONG DENOMINATOR: Using the number of stars (5 or 6) instead of total critics (30)."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t15_q04",
@@ -4024,7 +4219,8 @@
       "1. USING WRONG FRACTION: (1/30)×360=12° (using 1 star value instead of 4 critics). 2. USING DEGREES NOT FRACTION: Setting angle=4° directly."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t15_q05",
@@ -4045,7 +4241,8 @@
       "1. WRONG HISTOGRAM COUNTS: Misreading bar heights, getting different weighted sum. 2. UNWEIGHTED AVERAGE: Computing (0+1+2+3+4+5)/6=2.5 instead of weighted mean."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Scutari hospital, Crimea, 1854. Florence sets down her pen. What does the data actually say?."
   },
   {
     "id": "act_math_t15_q07",
@@ -4065,7 +4262,8 @@
       "1. USING COS INSTEAD OF SIN: Mixing up which side is opposite vs adjacent. 2. MULTIPLYING: Getting 10×sin(35°) (the opposite if hyp=10, but here opposite=10)."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   },
   {
     "id": "act_math_t15_q08",
@@ -4085,7 +4283,8 @@
       "1. WRONG MIDPOINT FORMULA: Using (y2-y1)/2 instead of (y1+y2)/2, getting (3-(-2))/2=5/2. 2. USING x-COORDINATE: Giving -5/2 instead of y=1/2."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Paris, a fever dream, 1637. Descartes watches a fly on the ceiling. Two numbers are enough to name any point."
   },
   {
     "id": "act_math_t15_q09",
@@ -4106,7 +4305,8 @@
       "1. FORGETTING UNIT CONVERSION: Getting √29≈5.4 nautical miles (not multiplying by 5). 2. ADDING COORDINATES: (7+4)+(2+6)=19 instead of distance formula."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Paris, a fever dream, 1637. Descartes watches a fly on the ceiling. Two numbers are enough to name any point."
   },
   {
     "id": "act_math_t15_q10",
@@ -4127,7 +4327,8 @@
       "1. CHOOSING H: H is also false (√2+(-√2)=0), but the more prominent counterexample for products makes K the intended answer. 2. NOT KNOWING COUNTEREXAMPLE: Assuming K must be true without testing."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Madras, the port office, 1913. Srinivasa sees the pattern before anyone else. Look at what these numbers share."
   },
   {
     "id": "act_math_t15_q11",
@@ -4148,7 +4349,8 @@
       "1. THINKING i^n IS ALWAYS REAL: Not knowing i^n can be complex (±i). 2. COMPUTING i^n AS n×i: Getting wrong values entirely."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
   },
   {
     "id": "act_math_t15_q12",
@@ -4169,7 +4371,8 @@
       "1. THINKING MINIMUM IS MAXIMUM: Choosing F=-4 (the vertex/minimum of the parabola). 2. WRONG DIRECTION: Not recognizing f grows as x moves away from the vertex x=-4."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
   },
   {
     "id": "act_math_t15_q13",
@@ -4190,7 +4393,8 @@
       "1. USING DIAMETER: r=V/(πh)=64π/(4π)=16 (that's r², not r). 2. FORGETTING π: Setting 64=r²(4) without proper cancellation."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
   },
   {
     "id": "act_math_t15_q14",
@@ -4211,7 +4415,8 @@
       "1. USING PERIMETER RATIO DIRECTLY: Thinking GJ:FG=3:5 without computing the difference. 2. INVERTING RATIO: Getting 1:2 instead of 2:1."
     ],
     "examTag": "ACT",
-    "format": "diagram"
+    "format": "diagram",
+    "storyContext": "Giza, foot of the pyramid, 600 BC. Thales measures the shadow against his staff. If one thing scales, so does the other."
   },
   {
     "id": "act_math_t15_q15",
@@ -4232,6 +4437,7 @@
       "1. USING COS INSTEAD OF SIN: North component of angled path = sin(angle from x-axis), not cos. 2. OMITTING THE 35m: Forgetting the final straight-north segment."
     ],
     "examTag": "ACT",
-    "format": "symbolic_expression"
+    "format": "symbolic_expression",
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
   }
 ]
