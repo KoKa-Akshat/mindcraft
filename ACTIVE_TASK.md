@@ -14,6 +14,11 @@
 | Ingredient story cells + evidence reports | Codex | `ml/scripts/pipeline/story_cell_studio.py`, `ml/scripts/enrich_questions.py`, `ml/scripts/aggregate_misconception_evidence.py`, `ml/data/story_cells/batch_ingredient_v1.json`, `ml/data/story_cells/dry_run_ingredient_v1.json`, `ml/data/enriched/eediQuestions.json`, `ml/data/enriched/openstaxMCQ.json`, `ml/data/enrich_report.json`, `ml/data/misconception_evidence_report.json`, `ml/data/.story_cell_cache.json` | ✅ Done |
 | Story Intelligence spec v2 — agent-loop human gates, diagnostic IG selection, worstWeakness tier 3, voice skins | Claude (architecture) | `STORY_INTELLIGENCE_SPEC_V2.md` (new), `CLAUDE_HANDOFF.md` (lane rows + done markers), `ACTIVE_TASK.md` | ✅ Done — design only, no code touched; implementation lanes assigned in spec §5 |
 | Founder portrait expansion polish | Codex | `index.html`, `ACTIVE_TASK.md` | ✅ Done |
+| Diagnostic placeholder cleanup + landing profiles | Codex | `app/src/data/storyCells.json`, `app/src/lib/questionBank.ts`, `app/src/components/QuestionFigure.tsx`, `app/src/pages/GradeOnboard.module.css`, `index.html`, `img/ab-founder.jpeg`, `img/mindcraftmascot.jpg`, `ACTIVE_TASK.md` | ✅ Done |
+
+**Codex diagnostic/landing summary (2026-07-08):** ✅ Done — removed stale tank placeholder cells from app data, added frontend safety filter, and stopped generic area/volume tags from drawing random XY grids.
+Files changed: `storyCells.json`, `questionBank.ts`, `QuestionFigure.tsx`, `GradeOnboard.module.css`, `index.html`, `img/ab-founder.jpeg`, `img/mindcraftmascot.jpg`, `ACTIVE_TASK.md`.
+Verification: storyCells now 12 curated / 0 tank / 0 template; no-install syntax/source checks passed; TypeScript not run because fresh clone has no `app/node_modules`.
 
 **Codex founder UI summary (2026-07-08):** ✅ Done — founder stories now open as stable desktop overlays instead of resizing the two-column grid.
 Files changed: `index.html`, `ACTIVE_TASK.md`.

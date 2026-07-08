@@ -20,12 +20,14 @@ import JournalStyleDrawer from '../components/book/JournalStyleDrawer'
 import StickerLayer from '../components/book/StickerLayer'
 import {
   loadDashboardPersonalization,
+  saveCustomStickers,
   saveDashboardStickers,
   saveDashboardTheme,
   STICKER_CAP,
+  type CustomSticker,
   type DashboardSticker,
   type DashboardTheme,
-  type StickerId,
+  type StickerSelection,
   DEFAULT_THEME,
 } from '../lib/dashboardPersonalization'
 import conceptStoriesData from '../data/conceptStories.json'
@@ -128,7 +130,8 @@ export default function Dashboard() {
   const [dashboardStickers, setDashboardStickers] = useState<DashboardSticker[]>([])
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   const [styleDrawerOpen, setStyleDrawerOpen] = useState(false)
-  const [selectedStickerId, setSelectedStickerId] = useState<StickerId | null>(null)
+  const [customStickers, setCustomStickers] = useState<CustomSticker[]>([])
+  const [selectedSticker, setSelectedSticker] = useState<StickerSelection | null>(null)
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
@@ -201,6 +204,7 @@ export default function Dashboard() {
     void loadDashboardPersonalization(uid).then(p => {
       setDashboardTheme(p.theme)
       setDashboardStickers(p.stickers)
+      setCustomStickers(p.customStickers)
       setBookmarkedQuestions(p.bookmarkedQuestions)
     })
   }, [uid])
@@ -211,13 +215,19 @@ export default function Dashboard() {
   }
 
   function handlePlaceSticker(x: number, y: number) {
-    if (!selectedStickerId || dashboardStickers.length >= STICKER_CAP) return
-    const next = [
+    if (!selectedSticker || dashboardStickers.length >= STICKER_CAP) return
+    const next: DashboardSticker[] = [
       ...dashboardStickers,
-      { stickerId: selectedStickerId, x, y, rotation: Math.round((Math.random() - 0.5) * 16) },
+      {
+        stickerId: selectedSticker.stickerId,
+        customUrl: selectedSticker.customUrl,
+        x,
+        y,
+        rotation: Math.round((Math.random() - 0.5) * 16),
+      },
     ]
     setDashboardStickers(next)
-    setSelectedStickerId(null)
+    setSelectedSticker(null)
     if (uid) void saveDashboardStickers(uid, next)
   }
 
@@ -237,8 +247,13 @@ export default function Dashboard() {
 
   function handleClearStickers() {
     setDashboardStickers([])
-    setSelectedStickerId(null)
+    setSelectedSticker(null)
     if (uid) void saveDashboardStickers(uid, [])
+  }
+
+  function handleCustomStickersChange(stickers: CustomSticker[]) {
+    setCustomStickers(stickers)
+    if (uid) void saveCustomStickers(uid, stickers)
   }
 
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
@@ -370,8 +385,7 @@ export default function Dashboard() {
   return (
     <>
     <BookShell
-      paper={dashboardTheme.paper}
-      font={dashboardTheme.font}
+      theme={dashboardTheme}
       chromeRight={
         <>
           {displayName && <span className={book.chromeUser}>{displayName}</span>}
@@ -392,7 +406,7 @@ export default function Dashboard() {
           <StickerLayer
             stickers={dashboardStickers}
             editable={styleDrawerOpen}
-            selectedStickerId={selectedStickerId}
+            selectedSticker={selectedSticker}
             onPlace={handlePlaceSticker}
             onMove={handleMoveSticker}
             onRemove={handleRemoveSticker}
@@ -711,13 +725,16 @@ export default function Dashboard() {
     />
     <JournalStyleDrawer
       open={styleDrawerOpen}
-      onClose={() => { setStyleDrawerOpen(false); setSelectedStickerId(null) }}
+      onClose={() => { setStyleDrawerOpen(false); setSelectedSticker(null) }}
+      uid={uid}
       theme={dashboardTheme}
       stickers={dashboardStickers}
-      selectedStickerId={selectedStickerId}
+      customStickers={customStickers}
+      selectedSticker={selectedSticker}
       onThemeChange={handleThemeChange}
-      onSelectSticker={setSelectedStickerId}
+      onSelectSticker={setSelectedSticker}
       onClearStickers={handleClearStickers}
+      onCustomStickersChange={handleCustomStickersChange}
     />
     </>
   )

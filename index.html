@@ -204,11 +204,12 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .about-head>div{overflow:visible}
 .about-head h2{font-size:clamp(26px,3.6vw,50px);line-height:1.1;overflow:visible;max-width:min(100%,480px)}
 .about-head p{max-width:620px}
-.founder-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:50px;border:1px solid var(--line);border-radius:42px;overflow:hidden;background:var(--line);box-shadow:var(--shadow)}
-.founder-card{position:relative;display:grid;grid-template-columns:190px 1fr;gap:28px;align-items:center;min-height:520px;padding:clamp(26px,4vw,42px);background:#fffdf7;overflow:hidden}
+.founder-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:50px;border:1px solid var(--line);border-radius:42px;overflow:hidden;background:var(--line);box-shadow:var(--shadow)}
+.founder-card{position:relative;display:grid;grid-template-columns:1fr;gap:24px;align-content:start;min-height:620px;padding:clamp(26px,3vw,38px);background:#fffdf7;overflow:hidden}
 .founder-card:nth-child(2){background:#eef7f1}
+.founder-card:nth-child(3){background:#f7fbef}
 .founder-card:before{content:"";position:absolute;inset:auto -18% -42% 42%;height:72%;border-radius:999px;background:radial-gradient(circle,rgba(196,245,71,.28),transparent 68%);pointer-events:none}
-.founder-photo{position:relative;z-index:1;aspect-ratio:4/5;border:0;border-radius:34px;background:linear-gradient(135deg,#143a2e,#247a4d 55%,#c4f547);display:grid;place-items:center;box-shadow:0 24px 60px rgba(20,58,46,.16);overflow:hidden;cursor:pointer}
+.founder-photo{position:relative;z-index:1;width:min(260px,100%);aspect-ratio:4/5;border:0;border-radius:34px;background:linear-gradient(135deg,#143a2e,#247a4d 55%,#c4f547);display:grid;place-items:center;box-shadow:0 24px 60px rgba(20,58,46,.16);overflow:hidden;cursor:pointer}
 .founder-photo:before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,253,247,.46);border-radius:26px}
 .founder-photo:after{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 70% 18%,rgba(255,253,247,.26),transparent 32%),linear-gradient(135deg,transparent,rgba(255,253,247,.12));transform:rotate(-12deg)}
 .founder-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
@@ -216,9 +217,9 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .founder-photo span{position:relative;z-index:1;color:#fffdf7;font-family:"Fredoka",system-ui,sans-serif;font-size:58px;font-weight:700;letter-spacing:-.06em}
 .founder-copy{position:relative;z-index:1}
 .founder-copy small{display:block;margin-bottom:12px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.16em}
-.founder-copy h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(32px,4vw,50px);line-height:.95;letter-spacing:-.045em}
+.founder-copy h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(30px,3.2vw,46px);line-height:.95;letter-spacing:-.045em}
 .founder-copy p{margin-top:14px;font-size:15px;line-height:1.65}
-.founder-story{position:absolute;z-index:4;left:clamp(22px,3vw,36px);right:clamp(22px,3vw,36px);bottom:clamp(22px,3vw,36px);max-height:48%;overflow:auto;padding:24px clamp(22px,3vw,34px);border:1px solid rgba(36,122,77,.18);border-radius:28px;background:rgba(255,253,247,.94);box-shadow:0 24px 70px rgba(20,58,46,.18),inset 0 1px 0 rgba(255,255,255,.8);backdrop-filter:blur(10px)}
+.founder-story{position:absolute;z-index:4;left:clamp(18px,2vw,28px);right:clamp(18px,2vw,28px);bottom:clamp(18px,2vw,28px);max-height:46%;overflow:auto;padding:22px clamp(20px,2.4vw,28px);border:1px solid rgba(36,122,77,.18);border-radius:28px;background:rgba(255,253,247,.95);box-shadow:0 24px 70px rgba(20,58,46,.18),inset 0 1px 0 rgba(255,255,255,.8);backdrop-filter:blur(10px)}
 .founder-story[hidden]{display:none}
 .founder-story p{max-width:780px;margin:0;font-size:16px;line-height:1.72;color:rgba(20,58,46,.82)}
 .founder-story p+p{margin-top:14px}
@@ -422,35 +423,35 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <circle cx="310" cy="180" r="58" fill="#fffdf7" stroke="#c4f547" stroke-width="7"/>
             <circle cx="310" cy="180" r="45" fill="none" stroke="#247a4d" stroke-width="2" opacity=".38"/>
             <circle cx="348" cy="218" r="13" fill="#c4f547" stroke="#247a4d" stroke-width="3"/>
-            <text x="310" y="170" text-anchor="middle" font-size="18" fill="#143a2e" font-weight="800">linear</text>
-            <text x="310" y="194" text-anchor="middle" font-size="18" fill="#143a2e" font-weight="800">equations</text>
+            <text x="310" y="174" text-anchor="middle" font-size="17" fill="#143a2e" font-weight="800">linear</text>
+            <text x="310" y="196" text-anchor="middle" font-size="17" fill="#143a2e" font-weight="800">equations</text>
 
             <circle cx="514" cy="164" r="48" fill="#fffdf7" stroke="#1d3a8a" stroke-width="5"/>
-            <text x="514" y="156" text-anchor="middle" font-size="16" fill="#1d3a8a" font-weight="900">functions</text>
-            <text x="514" y="179" text-anchor="middle" font-size="16" fill="#1d3a8a" font-weight="600">basics</text>
+            <text x="514" y="159" text-anchor="middle" font-size="15" fill="#1d3a8a" font-weight="900">functions</text>
+            <text x="514" y="180" text-anchor="middle" font-size="15" fill="#1d3a8a" font-weight="700">basics</text>
 
             <circle cx="100" cy="124" r="41" fill="#fffdf7" stroke="rgba(29,58,138,.34)" stroke-width="3" stroke-dasharray="7 7"/>
             <text x="100" y="116" text-anchor="middle" font-size="15" fill="#6f6a61">fractions</text>
             <text x="100" y="139" text-anchor="middle" font-size="15" fill="#6f6a61">decimals</text>
 
             <circle cx="586" cy="274" r="37" fill="#fffdf7" stroke="rgba(29,58,138,.32)" stroke-width="3" stroke-dasharray="7 7"/>
-            <text x="586" y="266" text-anchor="middle" font-size="14" fill="#6f6a61">quadratic</text>
-            <text x="586" y="287" text-anchor="middle" font-size="14" fill="#6f6a61">functions</text>
+            <text x="586" y="269" text-anchor="middle" font-size="12.5" fill="#6f6a61">quadratic</text>
+            <text x="586" y="286" text-anchor="middle" font-size="12.5" fill="#6f6a61">functions</text>
 
             <circle cx="216" cy="378" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
-            <text x="216" y="371" text-anchor="middle" font-size="13" fill="#8a8377">triangles</text>
-            <text x="216" y="391" text-anchor="middle" font-size="13" fill="#8a8377">geometry</text>
+            <text x="216" y="373" text-anchor="middle" font-size="12" fill="#8a8377">triangles</text>
+            <text x="216" y="390" text-anchor="middle" font-size="12" fill="#8a8377">geometry</text>
 
             <circle cx="426" cy="412" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
-            <text x="426" y="405" text-anchor="middle" font-size="13" fill="#8a8377">circles</text>
-            <text x="426" y="425" text-anchor="middle" font-size="13" fill="#8a8377">geometry</text>
+            <text x="426" y="407" text-anchor="middle" font-size="12" fill="#8a8377">circles</text>
+            <text x="426" y="424" text-anchor="middle" font-size="12" fill="#8a8377">geometry</text>
 
             <circle cx="552" cy="342" r="30" fill="#fffdf7" stroke="rgba(36,122,77,.34)" stroke-width="2.5" stroke-dasharray="5 7"/>
-            <text x="552" y="337" text-anchor="middle" font-size="12" fill="#7a806f">rates</text>
-            <text x="552" y="355" text-anchor="middle" font-size="12" fill="#7a806f">change</text>
+            <text x="552" y="336" text-anchor="middle" font-size="11" fill="#6f786a">rates</text>
+            <text x="552" y="352" text-anchor="middle" font-size="11" fill="#6f786a">change</text>
 
-            <circle cx="552" cy="342" r="39" fill="none" stroke="#c1121f" stroke-width="2" stroke-dasharray="5 8" opacity=".7"/>
-            <circle cx="552" cy="342" r="9" fill="#c1121f" opacity=".94"/>
+            <circle cx="552" cy="342" r="39" fill="none" stroke="#c1121f" stroke-width="2" stroke-dasharray="5 8" opacity=".55"/>
+            <circle cx="586" cy="342" r="7" fill="#fffdf7" stroke="#c1121f" stroke-width="3" opacity=".95"/>
             <text x="548" y="96" font-family="Caveat,cursive" font-size="42" fill="rgba(36,122,77,.30)" transform="rotate(10,548,96)">=</text>
             <text x="120" y="316" font-family="Caveat,cursive" font-size="70" fill="rgba(36,122,77,.22)" transform="rotate(-18,120,316)">+</text>
             <text x="452" y="470" font-family="Caveat,cursive" font-size="86" fill="rgba(36,122,77,.18)" transform="rotate(6,452,470)">?</text>
@@ -658,6 +659,23 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <p>His work is personal. Learning with ADHD or neurodivergence should not feel like being the problem. The tool should lower the noise and make progress visible.</p>
             </div>
           </article>
+          <article class="founder-card">
+            <button class="founder-photo founder-trigger" type="button" aria-label="Open Ab story" aria-expanded="false">
+              <img src="img/ab-founder.jpeg" alt="" onerror="this.remove()">
+              <span>AB</span>
+            </button>
+            <div class="founder-copy">
+              <small>Applied math · Research</small>
+              <h3>Ab</h3>
+              <p>Applied mathematics PhD at UNC. Helps turn hard ideas into clear routes students can actually follow.</p>
+              <div class="founder-open">Click portrait</div>
+              <div class="founder-tags"><span>Applied math</span><span>Research</span><span>Clarity</span></div>
+            </div>
+            <div class="founder-story" hidden>
+              <p>Ab brings the applied math lens: precise, patient, and allergic to fake understanding. He helps MindCraft keep the route honest when a concept gets deep.</p>
+              <p>The mission is simple: make difficult math feel navigable without watering it down.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -736,14 +754,13 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap">
         <div class="tryapp-card reveal">
           <figure class="tryapp-bear" aria-hidden="false">
-            <!-- TODO: replace with img/mindcraft-bear-mascot.png when user places file -->
-            <img src="img/fibonacci-bear.svg" alt="Fib, the MindCraft bear holding a little learning map" loading="lazy" width="240" height="280">
-            <figcaption>Fib has your map ready.</figcaption>
+            <img src="img/mindcraftmascot.jpg" alt="MindCraft mascot" loading="lazy" width="240" height="280">
+            <figcaption>Study better from the first step.</figcaption>
           </figure>
           <div class="tryapp-copy">
             <p class="label">Try our app</p>
-            <h2>Come see your map.</h2>
-            <p>The gap scan, the story chapters, the practice that knows exactly where you are. It is all inside. Fib the bear grew up on the golden ratio; he will walk you in.</p>
+            <h2>Math finally knows where to begin.</h2>
+            <p>The gap scan finds the break, the map names the route, and practice starts where confidence can actually return.</p>
             <div class="tryapp-actions">
               <a class="btn primary app-login-link" href="https://mindcraft-93858.web.app/login">Open MindCraft →</a>
               <span class="tryapp-note">Free to explore · works great on iPad</span>
@@ -770,7 +787,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           </div>
           <button class="btn primary" type="submit">Apply now</button>
           <p class="form-note">Opens a pre-filled email. We reply within 48 hours.</p>
-          <div class="status" id="formStatus">Opening your email with the intake details.</div>
+          <div class="status" id="formStatus">Opening your email with the intake details. Responses are sent to joinmindcraft@gmail.com.</div>
         </form>
       </div>
     </section>

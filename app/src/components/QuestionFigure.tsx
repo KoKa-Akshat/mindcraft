@@ -52,9 +52,8 @@ export function shouldRenderFigure(
   if (diagramCaption(questionText)) return true
   if (parseLinearEquation(questionText)) return true
   if (decimalMultiply(questionText)) return true
-  const geo = ['right_triangle_geometry', 'circles_geometry', 'lines_angles', 'triangles_congruence', 'coordinate_geometry', 'geometric_transformations', 'area_volume']
-  if (geo.includes(conceptId)) return true
-  if (/\b(triangle|circle|angle|graph|diagram|coordinate|grid|rectangle|square|polygon)\b/i.test(questionText)) return true
+  const visualWords = /\b(triangle|circle|angle|graph|diagram|coordinate|grid|rectangle|square|polygon|number line)\b/i
+  if (visualWords.test(questionText)) return true
   return false
 }
 
@@ -104,6 +103,18 @@ function CircleFigure({ theme }: { theme: Theme }) {
       <circle cx={60} cy={60} r={42} fill="none" stroke={theme.accent} strokeWidth={1.8} />
       <line x1={60} y1={60} x2={102} y2={60} stroke={theme.accent} strokeWidth={1.2} strokeDasharray="4 3" />
       <text x={78} y={56} fontSize={9} fill={theme.dim}>r</text>
+    </svg>
+  )
+}
+
+function AreaSketch({ theme }: { theme: Theme }) {
+  return (
+    <svg viewBox="0 0 180 112" className={s.figWide} aria-hidden>
+      <rect x={26} y={24} width={128} height={64} rx={4} fill={theme.accent} fillOpacity={0.10} stroke={theme.accent} strokeWidth={1.8} />
+      <line x1={26} y1={94} x2={154} y2={94} stroke={theme.dim} strokeOpacity={0.35} />
+      <line x1={20} y1={24} x2={20} y2={88} stroke={theme.dim} strokeOpacity={0.35} />
+      <text x={90} y={108} textAnchor="middle" fontSize={10} fill={theme.dim}>length</text>
+      <text x={10} y={60} textAnchor="middle" fontSize={10} fill={theme.dim} transform="rotate(-90 10 60)">width</text>
     </svg>
   )
 }
@@ -197,8 +208,10 @@ export default function QuestionFigure({
     body = <AngleFigure theme={theme} />
   } else if (fmt === 'coordinate_graph' || conceptId === 'coordinate_geometry' || /graph|coordinate|plotted|slope/i.test(questionText)) {
     body = <CoordGrid theme={theme} />
-  } else if (fmt === 'diagram' || caption || conceptId === 'area_volume' || /area|volume|rectangle|square/i.test(questionText)) {
-    body = <CoordGrid theme={theme} />
+  } else if (fmt === 'diagram' || caption) {
+    body = /rectangle|square|area|volume/i.test(questionText)
+      ? <AreaSketch theme={theme} />
+      : <CoordGrid theme={theme} />
   }
 
   if (!body) return null

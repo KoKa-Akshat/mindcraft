@@ -89,9 +89,27 @@ function normalizeExamTag(raw: unknown): Question['examTag'] | undefined {
   return undefined
 }
 
+export const STORY_CELL_TANK_STEM_MARKER =
+  'The tank is 3/4 full. A helper adds 1/2 tank'
+
+/** Short scene line for diagnostic/chapter UI — not the full narrative blob. */
+export function compactStoryContext(raw: unknown): string | undefined {
+  if (typeof raw !== 'string') return undefined
+  const text = raw.replace(/\s+/g, ' ').trim()
+  if (!text) return undefined
+  const firstSentence = text.match(/^.{40,220}?[.!?](?=\s|$)/)?.[0]
+  const compact = firstSentence ?? `${text.slice(0, 190).replace(/\s+\S*$/, '')}…`
+  return compact.length > 230 ? `${compact.slice(0, 227)}…` : compact
+}
+
+function isShippableStoryCellRecord(cell: Record<string, unknown>): boolean {
+  const question = String(cell.question ?? '')
+  return !cell._template_fallback && !question.includes(STORY_CELL_TANK_STEM_MARKER)
+}
+
 function loadStoryCellQuestions(existingIds: Set<string>): Question[] {
   const cells = (storyCellsData as { cells?: Record<string, unknown>[] }).cells ?? []
-  return cells.map((cell) => {
+  return cells.filter((cell) => isShippableStoryCellRecord(cell as Record<string, unknown>)).map((cell) => {
     const c = cell as Record<string, unknown>
     const choices = (c.choices as string[]) ?? []
     const correctIndex = Number(c.correctIndex ?? 0)
@@ -106,7 +124,7 @@ function loadStoryCellQuestions(existingIds: Set<string>): Question[] {
       hints: Array.isArray(c.hints) ? (c.hints as string[]).slice(0, 3) : [],
       format: normalizeBankFormat(c.format) ?? 'word_problem',
       examTag: normalizeExamTag(c.examTag),
-      storyContext: typeof c.storyContext === 'string' ? c.storyContext : undefined,
+      storyContext: compactStoryContext(c.storyContext),
       misconception_id: typeof c.misconception_id === 'string' ? c.misconception_id : undefined,
       misconception_label: typeof c.misconception_label === 'string' ? c.misconception_label : undefined,
       distractor_taxonomy: Array.isArray(c.distractor_taxonomy)

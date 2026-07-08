@@ -3,9 +3,10 @@
 
 .desk {
   min-height: 100dvh;
-  height: 100dvh;
-  max-height: 100dvh;
-  overflow: hidden;
+  height: auto;
+  max-height: none;
+  overflow-x: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
   background:
     linear-gradient(180deg, rgba(251, 248, 244, 0.82), rgba(247, 243, 238, 0.96)),
@@ -58,14 +59,15 @@
 
 .desk:has(.probeBook) {
   padding: 3px 8px 8px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .probeBook {
   width: 100%;
   flex: 1;
-  min-height: 0;
-  overflow: hidden;
+  min-height: calc(100dvh - 14px);
+  overflow: visible;
   display: flex;
   flex-direction: column;
 }
