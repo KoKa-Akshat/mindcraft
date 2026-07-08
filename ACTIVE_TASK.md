@@ -53,7 +53,8 @@ Katha narrative → 7-dim pedagogy score/gate) built; per-distractor `world_feed
 the shared module from Task 1. `--dry-run`, `--limit`, `--concept`, `--dna-file`, `--no-llm` all
 wired; live run needs `LLM_PROVIDER=groq` (no GROQ key in this sandbox, so only dry-run + a
 graceful-failure smoke test were exercised here — verified error handling drops cleanly with no
-crash when the LLM is unreachable).
+crash when the LLM is unreachable). **Cursor fix:** inlined `extract_json_object` so `--dry-run`
+works without importing `pipeline/base.py` (which pulls `requests`).
 
 Commit after each task. Push to main.
 

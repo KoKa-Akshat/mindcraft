@@ -72,14 +72,31 @@ GENERATOR_VERSION = "scs-v2.0"
 # Prevent importing the full ml package deps — call the LLM + shared modules
 # directly, same pattern as world_feedback_generator.py.
 sys.path.insert(0, str(ROOT / "ml"))
-sys.path.insert(0, str(ROOT / "ml/scripts/pipeline"))
 from generation.llm_client import complete  # noqa: E402
 from mindcraft_graph.world_feedback import (  # noqa: E402
     build_ontology_index,
     build_world_feedback_user_prompt,
     generate_world_feedback,
 )
-from base import extract_json_object  # noqa: E402
+
+
+def extract_json_object(raw: str) -> dict | None:
+    """Parse a JSON object from an LLM reply, tolerating fences/preamble."""
+    if not raw:
+        return None
+    try:
+        obj = json.loads(raw)
+        return obj if isinstance(obj, dict) else None
+    except json.JSONDecodeError:
+        pass
+    m = re.search(r"\{[\s\S]*\}", raw)
+    if m:
+        try:
+            obj = json.loads(m.group(0))
+            return obj if isinstance(obj, dict) else None
+        except json.JSONDecodeError:
+            return None
+    return None
 
 # ---------------------------------------------------------------------------
 # Story worlds — reuse the pilot protagonists only (STORY_CELL_NARRATIVE_RULES.md
@@ -607,6 +624,7 @@ def process_dna_cell(idx: int, dna: dict, ingredients: dict, concept_names: dict
         "presentation": presentation,
         "pedagogy_score": pedagogy_score,
         "gate_status": gate,
+        "gate_passed": gate,
         "tone_flags": tone_flags,
         "persona_simulation": persona_simulation,
         "queue_id": None,
