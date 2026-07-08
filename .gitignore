@@ -48,6 +48,7 @@ ml/data/openstax/
 ml/data/amc/
 ml/data/khan/
 ml/data/.story_cache.json
+ml/data/.world_feedback_cache.json
 
 # Repo-root large/binary files — store in Drive, not git
 data/*.zip
