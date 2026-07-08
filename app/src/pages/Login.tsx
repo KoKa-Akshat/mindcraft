@@ -4,6 +4,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   sendPasswordResetEmail,
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
@@ -13,7 +15,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { isTestProfileEmail, resetStudentProfile } from '../lib/testProfile'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
 import { isDiagnosticComplete } from '../lib/practiceState'
-import { worldUrl } from '../lib/siteUrls'
 import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './Login.module.css'
 
@@ -28,16 +29,13 @@ function armAdminGrant()      { sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, 
 function consumeAdminGrant()  { const v = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'; sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY); return v }
 function clearAdminGrant()    { sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY) }
 
-function requestFullscreenBestEffort() {
-  const root = document.documentElement as HTMLElement & {
-    webkitRequestFullscreen?: () => Promise<void> | void
-  }
-  try {
-    const request = root.requestFullscreen ?? root.webkitRequestFullscreen
-    void request?.call(root)
-  } catch {
-    // Fullscreen is browser-gated; layout still adapts when unavailable.
-  }
+/** iPad / touch browsers block OAuth pop-ups — redirect is reliable. */
+function preferGoogleRedirect() {
+  if (typeof window === 'undefined') return false
+  const ua = navigator.userAgent
+  const isIOS = /iPad|iPhone|iPod/.test(ua)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  return isIOS || window.matchMedia('(pointer: coarse)').matches
 }
 
 function safeReturnPath(raw: string | null) {
@@ -71,7 +69,7 @@ function friendlyError(code: string) {
     case 'auth/invalid-email':              return 'Please enter a valid email address.'
     case 'auth/too-many-requests':          return 'Too many attempts. Please wait a moment.'
     case 'auth/popup-closed-by-user':       return ''
-    case 'auth/popup-blocked':              return 'Pop-up was blocked. Allow pop-ups for this site.'
+    case 'auth/popup-blocked':              return 'Sign-in could not open. Tap Continue with Google again — we will use a full-page sign-in.'
     case 'auth/network-request-failed':     return 'Network error. Check your connection.'
     default:                                return `Sign-in failed (${code}). Please try again.`
   }
@@ -93,6 +91,24 @@ export default function Login() {
 
   useEffect(() => {
     if (sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1') setAdminFlow('armed')
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (cancelled || !result?.user) return
+        setLoading(true)
+        setError('')
+        await routeAfterLogin(result.user.uid)
+      })
+      .catch((e: { code?: string; message?: string }) => {
+        if (cancelled) return
+        const msg = friendlyError(e.code ?? e.message ?? 'unknown')
+        if (msg) setError(msg)
+        setLoading(false)
+      })
+    return () => { cancelled = true }
   }, [])
 
   async function routeAfterLogin(uid: string) {
@@ -134,7 +150,7 @@ export default function Login() {
       if (!returnTo) {
         const done = await isDiagnosticComplete(uid)
         if (!done) {
-          window.location.href = `${worldUrl()}?entry=1`
+          navigate('/onboard?entry=1', { replace: true })
           return
         }
       }
@@ -153,7 +169,7 @@ export default function Login() {
       if (!returnTo) {
         const done = await isDiagnosticComplete(uid)
         if (!done) {
-          window.location.href = `${worldUrl()}?entry=1`
+          navigate('/onboard?entry=1', { replace: true })
           return
         }
       }
@@ -184,13 +200,27 @@ export default function Login() {
   }
 
   async function handleGoogle() {
-    requestFullscreenBestEffort()
     setError('')
     setLoading(true)
     try {
+      if (preferGoogleRedirect()) {
+        await signInWithRedirect(auth, googleProvider)
+        return
+      }
       const cred = await signInWithPopup(auth, googleProvider)
       await routeAfterLogin(cred.user.uid)
     } catch (e: any) {
+      if (e?.code === 'auth/popup-blocked') {
+        try {
+          await signInWithRedirect(auth, googleProvider)
+          return
+        } catch (redirectErr: any) {
+          const msg = friendlyError(redirectErr.code ?? redirectErr.message ?? 'unknown')
+          if (msg) setError(msg)
+          setLoading(false)
+          return
+        }
+      }
       const msg = friendlyError(e.code ?? e.message ?? 'unknown')
       if (msg) setError(msg)
       setLoading(false)
@@ -310,9 +340,6 @@ export default function Login() {
                     <p className={s.authHint}>
                       Use this for any Gmail or account you originally created with Google.
                     </p>
-                    <button className={s.fullscreenBtn} onClick={requestFullscreenBestEffort} type="button">
-                      Full screen
-                    </button>
 
                     {/* SECONDARY: email toggle */}
                     {emailMode && (

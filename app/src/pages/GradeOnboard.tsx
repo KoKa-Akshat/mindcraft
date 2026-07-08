@@ -14,7 +14,6 @@ import { isDiagnosticComplete, persistDiagnosticDoneLocal } from '../lib/practic
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { recordOutcomes, type OutcomeInput } from '../lib/mlApi'
 import {
-  conceptsForGradeAndGoals,
   curriculumTrackFor,
   examForGoals,
   gradeConfidence,
@@ -40,7 +39,7 @@ import conceptStoriesRaw from '../data/conceptStories.json'
 import s from './GradeOnboard.module.css'
 import type { Question } from '../lib/questionBank'
 
-type Step = 'welcome' | 'grade' | 'goals' | 'story' | 'probe' | 'seeding'
+type Step = 'welcome' | 'grade' | 'goals' | 'probe' | 'seeding'
 
 // GOALS chips removed — users now type/record their goals freely
 
@@ -96,12 +95,12 @@ export default function GradeOnboard() {
   const [probeScratchRev, setProbeScratchRev] = useState(0)
 
   const storyData = grade ? storyExcerpt(GRADE_STORY[grade]) : null
-  const progressSteps: Step[] = ['welcome', 'grade', 'goals', 'story', 'probe', 'seeding']
+  const progressSteps: Step[] = ['welcome', 'grade', 'goals', 'probe', 'seeding']
   const progressPct = Math.round((progressSteps.indexOf(step) / (progressSteps.length - 1)) * 100)
 
   const currentQ = probeQs[probeIdx]
-  const storyItem = currentQ ? storyMod?.[currentQ.id] : undefined
-  const stemText = storyItem?.storyStem ?? currentQ?.question ?? ''
+  void storyMod  // kept for potential future use; storyItem display removed
+  const stemText = currentQ?.question ?? ''
 
   const probeTheme = useMemo(() => ({
     accent: '#1d3a8a',
@@ -313,7 +312,7 @@ export default function GradeOnboard() {
       {step === 'probe' && currentQ ? (
         <div className={s.probeBook}>
           <BookShell
-            wordmark="Jesse's kitchen"
+            wordmark="MindCraft"
             left={(
               <BookPage
                 side="left"
@@ -324,8 +323,8 @@ export default function GradeOnboard() {
                   <div className={s.guideRow}>
                     <div className={s.guideBody}>
                       <div className={s.probePanel}>
-                        {storyItem?.storyStem && (
-                          <p className={s.probeStoryLine}><MathText text={storyItem.storyStem.split(/[.!?]/)[0] + '.'} /></p>
+                        {currentQ?.storyContext && (
+                          <p className={s.probeStoryLine}><MathText text={currentQ.storyContext} /></p>
                         )}
                         <HighlightedStem
                           text={stemText}
@@ -451,11 +450,11 @@ export default function GradeOnboard() {
 
           {step === 'welcome' && (
             <div className={s.card}>
-              <p className={s.kicker}>Jesse&apos;s kitchen</p>
-              <h1 className={s.title}>Before the map opens</h1>
+              <p className={s.kicker}>MindCraft</p>
+              <h1 className={s.title}>Let&apos;s map your skills</h1>
               <p className={s.body}>
-                Jesse needs a few honest answers: your grade, what you want to feel better at,
-                and a short set of story questions on paper. No grades shown. Just your route.
+                Two quick questions — grade and goals — then a short set of math problems.
+                No scores shown. Just your personal map.
               </p>
               <button className={s.primary} onClick={() => setStep('grade')}>Start →</button>
             </div>
@@ -492,7 +491,7 @@ export default function GradeOnboard() {
                   value={voiceRecording || goalText === '[voice recorded]' ? goalText : goalText}
                   onChange={e => setGoalText(e.target.value)}
                   onKeyDown={e => {
-                    if (e.key === 'Enter' && goalText.trim()) setStep('story')
+                    if (e.key === 'Enter' && goalText.trim()) beginProbes()
                   }}
                   autoFocus
                 />
@@ -516,7 +515,7 @@ export default function GradeOnboard() {
                 <button
                   className={s.primary}
                   disabled={!goalText.trim() && !voiceRecorded}
-                  onClick={() => setStep('story')}
+                  onClick={() => beginProbes()}
                 >
                   Continue →
                 </button>
@@ -525,22 +524,6 @@ export default function GradeOnboard() {
             </div>
           )}
 
-          {step === 'story' && storyData && (
-            <div className={`${s.card} ${s.storyCard}`}>
-              <p className={s.kicker}>Step 3 · your world</p>
-              <h2 className={s.storyTitle}>{storyData.title}</h2>
-              <div className={s.storyBody}>
-                {storyData.excerpt.split('\n').map((p, i) => (
-                  <p key={i} className={`${s.storyPara} ${i === 0 ? s.storyParaFirst : ''}`}>{p}</p>
-                ))}
-              </div>
-              <p className={s.storyNote}>
-                Next: about {Math.min(10, conceptsForGradeAndGoals(grade ?? 9, goalTags).length)} short questions,
-                woven into this world. Write on the paper. No right or wrong shown yet.
-              </p>
-              <button className={s.primary} onClick={beginProbes}>Begin story questions →</button>
-            </div>
-          )}
 
         </div>
       </div>
