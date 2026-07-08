@@ -1,23 +1,33 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+/**
+ * Embedded session notes — paginated into book leaves. Clicking a note flips
+ * to a detail leaf (no vertical accordion). Swipe left/right on iPad to turn.
+ */
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../firebase'
 import { useUser } from '../App'
-import { getQuestionById } from '../lib/questionBank'
-import { groupStudentWorkLedger } from '../lib/workEvidence'
-import { useSwipeFlip } from '../hooks/useSwipeFlip'
-import type { StudentWorkEntry } from '../types'
 import PageFlipTransition from './book/PageFlipTransition'
-import QuestionWorkView from './QuestionWorkView'
+import { useSwipeFlip } from '../hooks/useSwipeFlip'
 import n from './DashboardPanels.module.css'
+
+interface Session {
+  id: string
+  subject: string
+  tutorName: string
+  date: string
+  duration: string
+  title: string
+  bullets: string[]
+}
 
 const NOTES_PER_LEAF = 3
 
 export default function DashboardNotesPanel() {
   const navigate = useNavigate()
-  const user = useUser()
+  const authUser = useUser()
   const swipeRef = useRef<HTMLDivElement>(null)
-  const [entries, setEntries] = useState<StudentWorkEntry[]>([])
+  const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [leaf, setLeaf] = useState(0)
@@ -25,50 +35,51 @@ export default function DashboardNotesPanel() {
   const [flipDir, setFlipDir] = useState<'forward' | 'back'>('forward')
 
   useEffect(() => {
-    if (!user?.uid) return
+    if (!authUser?.email) return
     const q = query(
-      collection(db, 'student_work'),
-      where('studentId', '==', user.uid),
-      orderBy('updatedAt', 'desc'),
+      collection(db, 'sessions'),
+      where('studentEmail', '==', authUser.email),
     )
     const unsub = onSnapshot(q, snap => {
-      const docs: StudentWorkEntry[] = snap.docs.map(d => {
-        const data = d.data() as Omit<StudentWorkEntry, 'id'>
-        return {
-          ...data,
+      const docs: Session[] = []
+      snap.forEach(d => {
+        const data = d.data()
+        if (!data.summary?.published) return
+        docs.push({
           id: d.id,
-          prompt: data.prompt ?? '',
-          reasoningText: data.reasoningText ?? '',
-          wasStuck: Boolean(data.wasStuck),
-        }
+          subject: data.subject ?? 'General',
+          tutorName: data.tutorName ?? 'Tutor',
+          date: data.summary.date ?? '',
+          duration: data.summary.duration ?? '',
+          title: data.summary.title ?? '(no title)',
+          bullets: data.summary.bullets ?? [],
+        })
       })
-      setEntries(docs)
+      docs.sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+      setSessions(docs)
       setLoading(false)
     }, () => setLoading(false))
     return () => unsub()
-  }, [user?.uid])
-
-  const grouped = useMemo(() => groupStudentWorkLedger(entries), [entries])
+  }, [authUser?.email])
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
-    if (!q) return grouped
-    return grouped.filter(entry => {
-      const question = entry.questionId ? getQuestionById(entry.questionId) : undefined
-      const hay = [
-        question?.question ?? '',
-        entry.prompt ?? '',
-        entry.conceptId ?? '',
-        entry.source ?? '',
-      ].join(' ').toLowerCase()
-      return hay.includes(q)
-    })
-  }, [grouped, search])
+    if (!q) return sessions
+    return sessions.filter(sess =>
+      sess.title.toLowerCase().includes(q)
+      || sess.subject.toLowerCase().includes(q)
+      || sess.tutorName.toLowerCase().includes(q)
+      || sess.bullets.some(b => b.toLowerCase().includes(q)),
+    )
+  }, [sessions, search])
 
   const leafCount = Math.max(1, Math.ceil(filtered.length / NOTES_PER_LEAF))
   const currentLeaf = Math.min(leaf, leafCount - 1)
-  const visible = filtered.slice(currentLeaf * NOTES_PER_LEAF, (currentLeaf + 1) * NOTES_PER_LEAF)
-  const detail = detailId ? filtered.find(entry => entry.id === detailId) ?? null : null
+  const visible = filtered.slice(
+    currentLeaf * NOTES_PER_LEAF,
+    (currentLeaf + 1) * NOTES_PER_LEAF,
+  )
+  const detail = detailId ? filtered.find(s => s.id === detailId) ?? null : null
 
   const turnLeaf = useCallback((next: number) => {
     if (next < 0 || next >= leafCount) return
@@ -106,7 +117,7 @@ export default function DashboardNotesPanel() {
     <div className={n.paperPanelBody} ref={swipeRef}>
       <input
         className={n.paperSearchLine}
-        placeholder="search worked questions…"
+        placeholder="search notes by keyword…"
         value={search}
         onChange={e => { setSearch(e.target.value); setLeaf(0); setDetailId(null) }}
         aria-label="Search notes"
@@ -114,14 +125,14 @@ export default function DashboardNotesPanel() {
 
       <div className={n.scrollBody}>
         {loading ? (
-          <p className={n.paperLoading}>Loading your notes…</p>
+          <p className={n.paperLoading}>Loading your sessions…</p>
         ) : filtered.length === 0 ? (
           <div className={n.empty}>
             <p className={n.paperEmptyHint}>
-              {search ? 'No worked questions match that search.' : 'No worked questions saved yet.'}
+              {search ? 'No notes match that search.' : 'No published notes yet.'}
             </p>
-            <button type="button" className={n.paperTextLink} onClick={() => navigate('/practice')}>
-              Open practice →
+            <button type="button" className={n.paperTextLink} onClick={() => navigate('/book')}>
+              Book a session →
             </button>
           </div>
         ) : (
@@ -131,34 +142,31 @@ export default function DashboardNotesPanel() {
                 <button type="button" className={n.noteDetailBack} onClick={closeDetail}>
                   ← notes
                 </button>
-                <QuestionWorkView entry={detail} />
+                <span className={n.noteMeta}>{detail.date} · {detail.tutorName}</span>
+                <h3 className={n.noteDetailTitle}>{detail.title}</h3>
+                <p className={n.noteTutor}>{detail.subject}{detail.duration ? ` · ${detail.duration}` : ''}</p>
+                <ul className={n.noteBullets}>
+                  {detail.bullets.map((b, i) => (
+                    <li key={i}>{b}</li>
+                  ))}
+                </ul>
               </article>
             ) : (
               <div className={n.notesList}>
-                {visible.map(entry => {
-                  const question = entry.questionId ? getQuestionById(entry.questionId) : undefined
-                  const title = question?.question ?? (entry.prompt || 'Worked question')
-                  return (
-                    <article key={entry.id} className={n.noteEntry}>
-                      <button
-                        type="button"
-                        className={n.noteHead}
-                        onClick={() => openDetail(entry.id)}
-                      >
-                        <span className={n.noteMeta}>
-                          {(entry.source ?? 'work')} · {new Date(entry.createdAt).toLocaleDateString()}
-                        </span>
-                        <strong className={n.noteTitle}>
-                          {title.length > 96 ? `${title.slice(0, 95)}…` : title}
-                        </strong>
-                        <span className={n.noteTutor}>
-                          {(entry.conceptId ?? 'general').replace(/_/g, ' ')}
-                        </span>
-                        <span className={n.noteTurnHint}>turn page →</span>
-                      </button>
-                    </article>
-                  )
-                })}
+                {visible.map(sess => (
+                  <article key={sess.id} className={n.noteEntry}>
+                    <button
+                      type="button"
+                      className={n.noteHead}
+                      onClick={() => openDetail(sess.id)}
+                    >
+                      <span className={n.noteMeta}>{sess.date} · {sess.tutorName}</span>
+                      <strong className={n.noteTitle}>{sess.title}</strong>
+                      <span className={n.noteTutor}>{sess.subject}{sess.duration ? ` · ${sess.duration}` : ''}</span>
+                      <span className={n.noteTurnHint}>turn page →</span>
+                    </button>
+                  </article>
+                ))}
               </div>
             )}
           </PageFlipTransition>

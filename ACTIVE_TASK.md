@@ -13,6 +13,11 @@
 | UX fixes (7 items) | Claude Code | see below | ✅ Done |
 | Ingredient story cells + evidence reports | Codex | `ml/scripts/pipeline/story_cell_studio.py`, `ml/scripts/enrich_questions.py`, `ml/scripts/aggregate_misconception_evidence.py`, `ml/data/story_cells/batch_ingredient_v1.json`, `ml/data/story_cells/dry_run_ingredient_v1.json`, `ml/data/enriched/eediQuestions.json`, `ml/data/enriched/openstaxMCQ.json`, `ml/data/enrich_report.json`, `ml/data/misconception_evidence_report.json`, `ml/data/.story_cell_cache.json` | ✅ Done |
 | Story Intelligence spec v2 — agent-loop human gates, diagnostic IG selection, worstWeakness tier 3, voice skins | Claude (architecture) | `STORY_INTELLIGENCE_SPEC_V2.md` (new), `CLAUDE_HANDOFF.md` (lane rows + done markers), `ACTIVE_TASK.md` | ✅ Done — design only, no code touched; implementation lanes assigned in spec §5 |
+| Founder portrait expansion polish | Codex | `index.html`, `ACTIVE_TASK.md` | ✅ Done |
+
+**Codex founder UI summary (2026-07-08):** ✅ Done — founder stories now open as stable desktop overlays instead of resizing the two-column grid.
+Files changed: `index.html`, `ACTIVE_TASK.md`.
+Verification: read back CSS/JS changes; no git commands run.
 
 **Codex ML summary (2026-07-08):** ✅ Done — story studio `--per-concept`, aggregate + enrich scripts, 99 ingredient cells structurally valid.
 ⚠️ **Quality gate:** deterministic fallback = same tank stem ×99 — **do not ship to app** until LLM batch completes. Use `python3 ml/scripts/merge_story_cells_for_app.py` (ships 3 LLM cells only).
@@ -55,13 +60,6 @@ Files changed — `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `
 
 ## Recently completed (this session)
 
-- ✅ Paper standardization: extracted shared `paper.css` tokens and imported them once in `main.tsx`
-- ✅ Paper standardization: reskinned Notes/session surfaces (`StudentSessions`, `SessionDetail`)
-- ✅ Paper standardization: reskinned `/practice` hub/path/picker screens while preserving session behavior
-- ✅ Paper standardization: reskinned `/knowledge-graph` as the student Map with a paper frame and dark chart field
-- ✅ Paper standardization: reskinned `/onboard` (GradeOnboard) onto paper + hand/mono typography
-- ✅ Paper standardization: reskinned `/session-work/:id` (SessionWork) scratch frame
-- ✅ Paper standardization: reskinned `/chat/:partnerId`, `/study-timer`, `/organize-notes`, `/join-classroom`
 - ✅ Concept vignettes: 40 SVGs in `ConceptVignette.tsx` (was 6)
 - ✅ Scene stamp on story pages: protagonist + setting shown on first story spread
 - ✅ Multi-source pipeline: `ml/scripts/pipeline/` with OpenStax/AMC/Khan adapters

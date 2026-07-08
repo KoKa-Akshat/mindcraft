@@ -34,7 +34,6 @@ import { markDiagnosticComplete, savePracticeDraftRemote, loadPracticeDraftsRemo
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
-import { saveQuestionWork } from '../lib/studentWork'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import { sanitizeAnswer, sanitizeProblemText, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
@@ -1250,19 +1249,6 @@ export default function Practice() {
       if (correct) setXp(x => x + LEVEL_META[level].xp)
     }
     setResults(nextResults)
-
-    if (user?.uid && concept) {
-      const q = questions[qIndex]
-      void saveQuestionWork(user.uid, {
-        questionId: q.id,
-        conceptId: toOntologyId(q.conceptId),
-        source: 'practice',
-        level: q.level,
-        formatId: questionFormat(q),
-        selectedAnswerIndex: sel,
-      })
-    }
-
     if (hideCorrectness) {
       window.setTimeout(() => advanceQuestion(nextResults), 400)
     }

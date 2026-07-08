@@ -205,7 +205,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .about-head h2{font-size:clamp(26px,3.6vw,50px);line-height:1.1;overflow:visible;max-width:min(100%,480px)}
 .about-head p{max-width:620px}
 .founder-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:50px;border:1px solid var(--line);border-radius:42px;overflow:hidden;background:var(--line);box-shadow:var(--shadow)}
-.founder-card{position:relative;display:grid;grid-template-columns:190px 1fr;gap:28px;align-items:center;padding:clamp(26px,4vw,42px);background:#fffdf7;overflow:hidden}
+.founder-card{position:relative;display:grid;grid-template-columns:190px 1fr;gap:28px;align-items:center;min-height:520px;padding:clamp(26px,4vw,42px);background:#fffdf7;overflow:hidden}
 .founder-card:nth-child(2){background:#eef7f1}
 .founder-card:before{content:"";position:absolute;inset:auto -18% -42% 42%;height:72%;border-radius:999px;background:radial-gradient(circle,rgba(196,245,71,.28),transparent 68%);pointer-events:none}
 .founder-photo{position:relative;z-index:1;aspect-ratio:4/5;border:0;border-radius:34px;background:linear-gradient(135deg,#143a2e,#247a4d 55%,#c4f547);display:grid;place-items:center;box-shadow:0 24px 60px rgba(20,58,46,.16);overflow:hidden;cursor:pointer}
@@ -218,11 +218,13 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .founder-copy small{display:block;margin-bottom:12px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.16em}
 .founder-copy h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(32px,4vw,50px);line-height:.95;letter-spacing:-.045em}
 .founder-copy p{margin-top:14px;font-size:15px;line-height:1.65}
-.founder-story{position:relative;z-index:1;grid-column:1/-1;margin-top:-8px;padding:26px clamp(22px,3vw,34px);border:1px solid rgba(36,122,77,.16);border-radius:26px;background:rgba(255,253,247,.82);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.founder-story{position:absolute;z-index:4;left:clamp(22px,3vw,36px);right:clamp(22px,3vw,36px);bottom:clamp(22px,3vw,36px);max-height:48%;overflow:auto;padding:24px clamp(22px,3vw,34px);border:1px solid rgba(36,122,77,.18);border-radius:28px;background:rgba(255,253,247,.94);box-shadow:0 24px 70px rgba(20,58,46,.18),inset 0 1px 0 rgba(255,255,255,.8);backdrop-filter:blur(10px)}
 .founder-story[hidden]{display:none}
 .founder-story p{max-width:780px;margin:0;font-size:16px;line-height:1.72;color:rgba(20,58,46,.82)}
 .founder-story p+p{margin-top:14px}
 .founder-open{margin-top:16px;color:var(--leaf);font-size:10px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase}
+.story-open .founder-photo{box-shadow:0 28px 72px rgba(20,58,46,.22),0 0 0 4px rgba(196,245,71,.28)}
+.story-open .founder-open{color:#bf8b00}
 .founder-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .founder-tags span{padding:8px 10px;border:1px solid rgba(36,122,77,.16);border-radius:999px;background:#e4f7dc;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}
 .photo{position:relative;min-height:520px;border-radius:46px;overflow:hidden;box-shadow:var(--shadow);transform-style:preserve-3d}
@@ -310,7 +312,9 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
   .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.tryapp-card,.about-head,.founder-grid,.founder-card{grid-template-columns:1fr}
+  .founder-card{min-height:auto}
   .founder-photo{width:min(260px,100%);justify-self:start}
+  .founder-story{position:relative;left:auto;right:auto;bottom:auto;grid-column:1/-1;max-height:none;margin-top:2px}
   .footer-nav{justify-items:start}
   h1{font-size:clamp(58px,18vw,74px)}
   h2{font-size:clamp(48px,16vw,84px)}
@@ -853,6 +857,14 @@ document.querySelectorAll(".founder-trigger").forEach((button) => {
     const card = button.closest(".founder-card")
     const story = card?.querySelector(".founder-story")
     if (!card || !story) return
+    document.querySelectorAll(".founder-card.story-open").forEach((openCard) => {
+      if (openCard === card) return
+      openCard.classList.remove("story-open")
+      const openStory = openCard.querySelector(".founder-story")
+      const openButton = openCard.querySelector(".founder-trigger")
+      if (openStory) openStory.hidden = true
+      if (openButton) openButton.setAttribute("aria-expanded", "false")
+    })
     const isOpen = card.classList.toggle("story-open")
     button.setAttribute("aria-expanded", String(isOpen))
     story.hidden = !isOpen
