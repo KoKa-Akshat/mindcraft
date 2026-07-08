@@ -21,7 +21,8 @@ import {
   GRADE_STORY,
   pickDiagnosticQuestions,
 } from '../lib/diagnosticQuestions'
-import { questionFormat } from '../lib/questionBank'
+import { questionFormat, resolveChoiceEvidence } from '../lib/questionBank'
+import { toOntologyId } from '../lib/conceptMap'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import MathText from '../components/MathText'
 import InteractiveWidget from '../components/InteractiveWidget'
@@ -46,7 +47,13 @@ type Step = 'welcome' | 'grade' | 'goals' | 'story' | 'probe' | 'seeding'
 type ConceptStory = { conceptId: string; conceptName: string; story: string }
 const stories = conceptStoriesRaw as Record<string, ConceptStory>
 
-interface ProbeResult { conceptId: string; correct: boolean; time: number }
+interface ProbeResult {
+  conceptId: string
+  questionId: string
+  selectedIndex: number
+  correct: boolean
+  time: number
+}
 
 function storyExcerpt(conceptId: string): { title: string; excerpt: string; story: string } {
   const entry = stories[conceptId]
@@ -163,8 +170,9 @@ export default function GradeOnboard() {
         setVoiceRecording(false)
 
         // Try SpeechRecognition transcription first
-        const SR = (window as unknown as { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition
-          || (window as unknown as { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition
+        type SRCtor = new () => { start(): void; stop(): void }
+        const w = window as unknown as { SpeechRecognition?: SRCtor; webkitSpeechRecognition?: SRCtor }
+        const SR = w.SpeechRecognition || w.webkitSpeechRecognition
         if (SR && chunks.length > 0) {
           // SpeechRecognition works on live audio, so we note voice was captured
           setVoiceRecorded(true)
@@ -195,7 +203,7 @@ export default function GradeOnboard() {
 
   function beginProbes() {
     if (!grade) return
-    const qs = pickDiagnosticQuestions(grade, goalTags, 10)
+    const qs = pickDiagnosticQuestions(grade, goalTags, 10, 2)
     setProbeQs(qs)
     setProbeIdx(0)
     setProbeResults([])
@@ -234,11 +242,25 @@ export default function GradeOnboard() {
       })
 
       if (results.length > 0) {
-        const probes: OutcomeInput[] = results.map(r => ({
-          conceptId: r.conceptId,
-          score: r.correct ? 1 : 0,
-          succeeded: r.correct,
-        }))
+        const probes: OutcomeInput[] = results.map((r, i) => {
+          const q = probeQs[i]
+          const base: OutcomeInput = {
+            conceptId: toOntologyId(r.conceptId),
+            score: r.correct ? 1 : 0,
+            succeeded: r.correct,
+            level: q?.level ?? 2,
+            questionId: r.questionId,
+            formatId: q ? questionFormat(q) : undefined,
+          }
+          if (!q) return base
+          const evidence = resolveChoiceEvidence(q, r.selectedIndex)
+          return {
+            ...base,
+            selectedChoiceIndex: evidence.selectedChoiceIndex,
+            misconceptionId: evidence.misconceptionId,
+            errorType: evidence.errorType,
+          }
+        })
         await recordOutcomes(user.uid, probes)
       }
 
@@ -261,7 +283,13 @@ export default function GradeOnboard() {
     const time = Math.round((Date.now() - qStartTime) / 1000)
     setQSubmitted(true)
 
-    const result: ProbeResult = { conceptId: currentQ.conceptId, correct, time }
+    const result: ProbeResult = {
+      conceptId: currentQ.conceptId,
+      questionId: currentQ.id,
+      selectedIndex: qSelected,
+      correct,
+      time,
+    }
     const nextResults = [...probeResults, result]
 
     if (probeIdx + 1 < probeQs.length) {
