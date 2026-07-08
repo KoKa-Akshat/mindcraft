@@ -11,9 +11,15 @@
 
 | Type | Lifecycle | Produces | Reads |
 |------|-----------|----------|-------|
+| **Brainstorm** (soundboard) | Exploratory, ends when a direction crystallizes | a *decision* → feeds a Build window | vision docs (WORLD/BRAND/GAP/FABLE5) |
 | **Build** (architect) | One-shot, dies on commit | a spec in `agent_work/{lane}/` | roadmap + canonical docs |
 | **Implementer** (Cursor/Codex) | One-shot, dies on push | code, from an existing spec | one `agent_work/` spec + the seam |
 | **Debug/ops** | Long-lived, *reseeds* | a fix + a state update | system state (CLAUDE.md + memory) |
+
+Flow: **brainstorm → decision → build → implementer.** Brainstorm and
+build can be one window when the idea is small and converges fast; hand to
+a *fresh* build window when the brainstorm was long or explored many
+discarded options, so the spec isn't born from divergent-exploration bloat.
 
 **Never mix build and debug in one window.** A build task in the debug
 window bloats it with spec-drafting turns; a debug task in a build window
@@ -24,6 +30,14 @@ and even it reseeds (see §5).
 ---
 
 ## 2. Startup rituals
+
+**Brainstorm window:** free-form, stays on **Opus** start to finish (no
+mechanical stretch to tier down — the value is the judgment). Reads the
+vision/product docs, not deployment state. **Must end by capturing the
+decision durably** — either roll straight into the build file here, or
+write the direction into CLAUDE.md `Active workstream` / `Designed, not
+built` so a later build window inherits it. A direction left only in the
+transcript dies when the window closes.
 
 **Build window:** state what to build (usually just *point*: "the X item
 in CLAUDE.md's Active workstream" or "implement `<brief>`"). It reads →
