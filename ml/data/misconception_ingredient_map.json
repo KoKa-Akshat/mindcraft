@@ -1,0 +1,1803 @@
+{
+  "_meta": {
+    "generated_at": "2026-07-08T19:07:39.311769Z",
+    "model": "all-MiniLM-L6-v2",
+    "cosine_threshold": 0.45,
+    "top_k": 3,
+    "n_misconceptions": 1749,
+    "n_with_links": 810,
+    "n_total_links": 1552,
+    "review_status": "phase1_auto_approved",
+    "note": "Phase 1 (ontology_tag, confidence 1.0) auto-approved \u2014 these are exact matches from canonical_misconception_family + diagnostic_tags in Layer 1. Phase 2 (embedding) links are in _raw.json awaiting Fable 5 audit.",
+    "n_approved_misconceptions": 197,
+    "n_approved_links": 232
+  },
+  "map": {
+    "mis_fractions_decimals__mixes_up_numerator_and_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__believes_fraction_means_dividing_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__does_not_realise_you_can": [
+      {
+        "ingredient_id": "fractions_decimals__part_whole_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__ordered_fractions_comparing_denominators_rather": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__simplifies_fraction_adding_or_subtracting": [
+      {
+        "ingredient_id": "fractions_decimals__equivalent_fractions",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__does_not_find_common_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "rational_expressions__lcd_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__adding_fractions_adds_numerators_and": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__does_not_consider_denominator_adding": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__does_not_know_how_compare": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimal_multiple_10_just": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__dividing_decimals_does_not_realize": [
+      {
+        "ingredient_id": "fractions_decimals__decimal_place_value",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_denominator": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_placing_decimal": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__converts_fraction_decimal_using_only": [
+      {
+        "ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__thinks_ratios_are_written_1total": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__thinks_difference_one_part_ratio": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__ratio_where_total_given_treats": [
+      {
+        "ingredient_id": "ratios_proportions__ratio_as_comparison",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__does_not_realise_ratio_worded": [
+      {
+        "ingredient_id": "ratios_proportions__unit_rate",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__ratio_question_where_one_side": [
+      {
+        "ingredient_id": "ratios_proportions__proportion_setup",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__converting_ratio_fractions_puts_other": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__ratio_question_where_difference_between": [
+      {
+        "ingredient_id": "ratios_proportions__cross_multiply_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "right_triangle__sohcahtoa_setup",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_order_of_operations__performs_subtraction_right_left_if": [
+      {
+        "ingredient_id": "order_of_operations__precedence_hierarchy",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "order_of_operations__left_to_right_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_order_of_operations__carries_out_operations_from_left": [
+      {
+        "ingredient_id": "order_of_operations__precedence_hierarchy",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_order_of_operations__carries_out_operations_from_right": [
+      {
+        "ingredient_id": "order_of_operations__precedence_hierarchy",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_order_of_operations__applies_bidmas_strict_order_does": [
+      {
+        "ingredient_id": "order_of_operations__left_to_right_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__thinks_inverse_subtraction_multiplication": [
+      {
+        "ingredient_id": "basic_equations__inverse_operations",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__thinks_inverse_subtraction_multiplication": [
+      {
+        "ingredient_id": "basic_equations__inverse_operations",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_inverse_operations_addition_and": [
+      {
+        "ingredient_id": "basic_equations__inverse_operations",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__does_not_realise_maintain_balance": [
+      {
+        "ingredient_id": "basic_equations__do_same_to_both_sides",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__does_not_understand_multiplying_both": [
+      {
+        "ingredient_id": "basic_equations__do_same_to_both_sides",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_understand_multiplying_both": [
+      {
+        "ingredient_id": "basic_equations__do_same_to_both_sides",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__does_not_interpret_sloping_gradient": [
+      {
+        "ingredient_id": "linear_equations__slope_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__believes_y_intercept_given_difference": [
+      {
+        "ingredient_id": "linear_equations__y_intercept_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__believes_equation_horizontal_line_form": [
+      {
+        "ingredient_id": "linear_equations__y_intercept_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__believes_equation_for_horizontal_line": [
+      {
+        "ingredient_id": "linear_equations__y_intercept_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__believes_ymxc_m_yintercept": [
+      {
+        "ingredient_id": "linear_equations__slope_intercept_form",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__believes_one_point_enough_specify": [
+      {
+        "ingredient_id": "linear_equations__two_points_determine_line",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__confuses_meaning_parallel_and_perpendicular": [
+      {
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__confuses_meaning_perpendicular_and_vertical": [
+      {
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_equations__does_not_know_meaning_perpendicular": [
+      {
+        "ingredient_id": "linear_equations__parallel_perpendicular",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__using_function_machine_confuses_input": [
+      {
+        "ingredient_id": "functions_basics__function_as_machine",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "functions_basics__function_notation_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__function_machine_confuses_first_operation": [
+      {
+        "ingredient_id": "functions_basics__function_as_machine",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "functions_basics__function_notation_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__does_not_reverse_order_operations": [
+      {
+        "ingredient_id": "functions_basics__function_composition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__reverses_order_operations_but_does": [
+      {
+        "ingredient_id": "functions_basics__function_composition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_trigonometry_basics__confuses_order_sides_trigonometric_ratio": [
+      {
+        "ingredient_id": "right_triangle__sohcahtoa_setup",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__uses_denominator_converting_from_fractions": [
+      {
+        "ingredient_id": "right_triangle__sohcahtoa_setup",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__uses_more_than_3_letters": [
+      {
+        "ingredient_id": "trig_basics__angle_as_rotation",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__student_thinks_any_two_angles": [
+      {
+        "ingredient_id": "trig_basics__angle_as_rotation",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "lines_angles__vertical_angles",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__uses_2_letters_describe_angle": [
+      {
+        "ingredient_id": "trig_basics__angle_as_rotation",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_trigonometry_basics__uses_sin_cos_required": [
+      {
+        "ingredient_id": "trig_basics__sin_as_vertical_component",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "trig_basics__cos_as_horizontal_component",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_trigonometry_basics__uses_cos_sin_required": [
+      {
+        "ingredient_id": "trig_basics__cos_as_horizontal_component",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__believes_solving_inequality_gives_single": [
+      {
+        "ingredient_id": "linear_inequalities__inequality_as_region",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__does_not_understand_inequality_notation": [
+      {
+        "ingredient_id": "linear_inequalities__inequality_as_region",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__confuses_inequality_symbols_with_equality": [
+      {
+        "ingredient_id": "linear_inequalities__inequality_as_region",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__believes_they_can_multiplydivide_through": [
+      {
+        "ingredient_id": "linear_inequalities__flip_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "linear_inequalities__absolute_value_split_greater_than",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__thinks_subtracting_negative_makes_your": [
+      {
+        "ingredient_id": "linear_inequalities__flip_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__believes_subtracting_positive_number_from": [
+      {
+        "ingredient_id": "linear_inequalities__flip_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__believes_negative_numbers_with_larger": [
+      {
+        "ingredient_id": "linear_inequalities__absolute_value_split_greater_than",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_simultaneous_equations_graphically_they": [
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_they": [
+      {
+        "ingredient_id": "systems__solution_as_intersection",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_systems_of_linear_equations__mixes_up_value_two_terms": [
+      {
+        "ingredient_id": "systems__substitution_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_simultaneous_equations_thinks_identical": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "systems__no_solution_infinite",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_systems_of_linear_equations__subtracts_simultaneous_equations_addition_required": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_systems_of_linear_equations__solving_equation_forgets_eliminate_coefficient": [
+      {
+        "ingredient_id": "systems__elimination_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__multiplying_numbers_with_different_bases": [
+      {
+        "ingredient_id": "exponent_rules__product_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__has_cubed_base_number_and": [
+      {
+        "ingredient_id": "exponent_rules__product_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "exponent_rules__power_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__has_added_powers_rather_than": [
+      {
+        "ingredient_id": "exponent_rules__product_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "exponent_rules__power_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__believes_dividing_numbers_with_same": [
+      {
+        "ingredient_id": "exponent_rules__quotient_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__makes_number_negative_asked_find": [
+      {
+        "ingredient_id": "exponent_rules__quotient_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "exponent_rules__negative_exponents",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__correctly_finds_reciprocal_number_but": [
+      {
+        "ingredient_id": "exponent_rules__quotient_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__confuses_powers_and_multiples": [
+      {
+        "ingredient_id": "exponent_rules__power_rule",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__can_not_square_root_negative": [
+      {
+        "ingredient_id": "exponent_rules__negative_exponents",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "complex_numbers__i_definition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__forgotten_anything_power_0_equals": [
+      {
+        "ingredient_id": "exponent_rules__zero_and_rational",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__believes_you_add_terms_together": [
+      {
+        "ingredient_id": "polynomials__like_terms",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "algebraic_manipulation__like_terms",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__collecting_like_terms_only_simplifies": [
+      {
+        "ingredient_id": "polynomials__like_terms",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "algebraic_manipulation__like_terms",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_know_factorise_quadratic": [
+      {
+        "ingredient_id": "polynomials__distributive_property",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "quadratics__factoring_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__does_not_know_factorise_quadratic": [
+      {
+        "ingredient_id": "polynomials__distributive_property",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "factoring_polynomials__factor_pairs",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "factoring_polynomials__ac_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__believes_they_can_fully_factorise": [
+      {
+        "ingredient_id": "factoring_polynomials__gcf_extraction",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__factorising_finds_factor_goes_into": [
+      {
+        "ingredient_id": "factoring_polynomials__gcf_extraction",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__factorising_into_single_brackets_only": [
+      {
+        "ingredient_id": "factoring_polynomials__gcf_extraction",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__believes_factorising_quadratic_they_can": [
+      {
+        "ingredient_id": "factoring_polynomials__factor_pairs",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__thinks_quadratic_without_non_variable": [
+      {
+        "ingredient_id": "factoring_polynomials__factor_pairs",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__factorising_quadratic_without_non_variable": [
+      {
+        "ingredient_id": "factoring_polynomials__ac_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__factorising_quadratic_with_nonunit_coefficient": [
+      {
+        "ingredient_id": "factoring_polynomials__ac_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__completing_square_form_x_a2": [
+      {
+        "ingredient_id": "factoring_polynomials__special_patterns",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "conics__completing_the_square",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__completing_square_believes_always_half": [
+      {
+        "ingredient_id": "factoring_polynomials__special_patterns",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_radical_expressions__simplifying_surds_leaves_square_root": [
+      {
+        "ingredient_id": "radicals__root_as_inverse",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_radical_expressions__simplifying_surds_does_not_multiply": [
+      {
+        "ingredient_id": "radicals__root_as_inverse",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_radical_expressions__simplifying_surds_does_not_square": [
+      {
+        "ingredient_id": "radicals__root_as_inverse",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__mixes_up_squaring_and_addition": [
+      {
+        "ingredient_id": "radicals__adding_radicals",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__mixes_up_squaring_and_addition": [
+      {
+        "ingredient_id": "radicals__adding_radicals",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_know_how_simplify": [
+      {
+        "ingredient_id": "radicals__rationalizing",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__believes_they_should_multiply_each": [
+      {
+        "ingredient_id": "radicals__rationalizing",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__thinks_you_can_divide_terms": [
+      {
+        "ingredient_id": "radicals__rationalizing",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__solving_simultaneous_equations_graphically_they": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__finds_y_intercept_asked_read": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__solves_for_y0_instead_given": [
+      {
+        "ingredient_id": "quadratics__solutions_as_x_intercepts",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__confuses_cubic_and_quadratic_graphs": [
+      {
+        "ingredient_id": "quadratics__vertex_from_roots",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__confuses_reciprocal_and_quadratic_graphs": [
+      {
+        "ingredient_id": "quadratics__vertex_from_roots",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_number_properties__does_not_understand_term_factor": [
+      {
+        "ingredient_id": "quadratics__factoring_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__incorrectly_factorises_quadratic": [
+      {
+        "ingredient_id": "quadratics__factoring_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__misremembers_quadratic_formula": [
+      {
+        "ingredient_id": "quadratics__quadratic_formula",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__believes_discriminant_must_be_perfect": [
+      {
+        "ingredient_id": "quadratics__discriminant_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__believes_discriminant_0_means_there": [
+      {
+        "ingredient_id": "quadratics__discriminant_meaning",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_descriptive_statistics__believes_outlier_value_data_set": [
+      {
+        "ingredient_id": "descriptive_statistics__mean_as_balance",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_descriptive_statistics__asked_for_mean_list_data": [
+      {
+        "ingredient_id": "descriptive_statistics__mean_as_balance",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "descriptive_statistics__median_as_middle",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "descriptive_statistics__mean_vs_median",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_descriptive_statistics__finding_median_from_even_dataset": [
+      {
+        "ingredient_id": "descriptive_statistics__median_as_middle",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_descriptive_statistics__finding_median_for_odd_numbered": [
+      {
+        "ingredient_id": "descriptive_statistics__median_as_middle",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_descriptive_statistics__finds_mean_instead_median": [
+      {
+        "ingredient_id": "descriptive_statistics__mean_vs_median",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_descriptive_statistics__finds_median_instead_mean": [
+      {
+        "ingredient_id": "descriptive_statistics__mean_vs_median",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_collecting_like_terms_with": [
+      {
+        "ingredient_id": "basic_probability__and_or_distinction",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_sequences_series__believes_you_multiply_constant_difference": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_sequences_series__finding_differences_between_terms_sequence": [
+      {
+        "ingredient_id": "sequences__arithmetic_identification",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_sequences_series__uses_first_term_numerical_part": [
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_sequences_series__finding_nth_term_linear_sequence": [
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_sequences_series__finding_nth_term_rule_for": [
+      {
+        "ingredient_id": "sequences__nth_term_formula",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__thinks_corresponding_angles_sum_180": [
+      {
+        "ingredient_id": "lines_angles__supplementary_complementary",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__using_180_degree_protractor_measure": [
+      {
+        "ingredient_id": "lines_angles__supplementary_complementary",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__confuses_alternate_and_opposite_angles": [
+      {
+        "ingredient_id": "lines_angles__supplementary_complementary",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "lines_angles__transversal_angles",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__does_not_know_vertically_opposite": [
+      {
+        "ingredient_id": "lines_angles__vertical_angles",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__thinks_alternate_angles_are_always": [
+      {
+        "ingredient_id": "lines_angles__vertical_angles",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__confuses_cointerior_and_alternate_angles": [
+      {
+        "ingredient_id": "lines_angles__transversal_angles",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__confuses_cointerior_and_corresponding_angles": [
+      {
+        "ingredient_id": "lines_angles__transversal_angles",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_lines_angles__thinks_only_angles_on_parallel": [
+      {
+        "ingredient_id": "lines_angles__parallel_line_angle_chasing",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__does_not_know_angles_triangle": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__forgets_subtract_sum_angles_we": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__does_not_consider_all_three": [
+      {
+        "ingredient_id": "triangles__angle_sum",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__thinks_angles_which_look_same": [
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__does_not_understand_all_angles": [
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_triangles_congruence__confuses_scalene_and_right_angle": [
+      {
+        "ingredient_id": "triangles__similarity_ratios",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__confuses_arc_and_diameter": [
+      {
+        "ingredient_id": "circles__arc_length_sector",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__confuses_circumference_and_radius": [
+      {
+        "ingredient_id": "circles__arc_length_sector",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__confuses_tangent_and_radius": [
+      {
+        "ingredient_id": "circles__tangent_properties",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__confuses_tangent_and_circumference": [
+      {
+        "ingredient_id": "circles__tangent_properties",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__confuses_tangent_and_chord": [
+      {
+        "ingredient_id": "circles__tangent_properties",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__does_not_know_term_diameter": [
+      {
+        "ingredient_id": "circles__semicircle_area_from_diameter",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__confuses_diameter_and_radius": [
+      {
+        "ingredient_id": "circles__semicircle_area_from_diameter",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__has_used_slant_height_and": [
+      {
+        "ingredient_id": "area_volume__standard_formulas",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__has_multiplied_base_slant_height": [
+      {
+        "ingredient_id": "area_volume__standard_formulas",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__doesnt_know_area_triangle_formula": [
+      {
+        "ingredient_id": "area_volume__standard_formulas",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__does_not_know_units_volume": [
+      {
+        "ingredient_id": "area_volume__volume_as_base_times_height",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__does_not_convert_measurements_have": [
+      {
+        "ingredient_id": "area_volume__volume_as_base_times_height",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__think_cross_section_prism_biggest": [
+      {
+        "ingredient_id": "area_volume__rectangular_prism_face_areas",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__thinks_cross_section_prism_can": [
+      {
+        "ingredient_id": "area_volume__rectangular_prism_face_areas",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__confuses_triangular_prism_with_pyramid": [
+      {
+        "ingredient_id": "area_volume__rectangular_prism_face_areas",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__does_not_know_units_area": [
+      {
+        "ingredient_id": "area_volume__square_side_from_area",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__thinks_diagonal_square_same_length": [
+      {
+        "ingredient_id": "area_volume__square_side_from_area",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_area_volume__cannot_identify_correct_side_lengths": [
+      {
+        "ingredient_id": "area_volume__square_side_from_area",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__describing_translation_miscounts_crossing_axis": [
+      {
+        "ingredient_id": "transformations__translation_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__mistakes_rotations_for_translations": [
+      {
+        "ingredient_id": "transformations__translation_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__describing_translation_counts_corners_squares": [
+      {
+        "ingredient_id": "transformations__translation_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__believes_reflection_always_switches_x": [
+      {
+        "ingredient_id": "transformations__reflection_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__believes_reflection_y_x_switches": [
+      {
+        "ingredient_id": "transformations__reflection_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__believes_reflection_y_x_changes": [
+      {
+        "ingredient_id": "transformations__reflection_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__believes_you_do_not_need": [
+      {
+        "ingredient_id": "transformations__rotation_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__asked_rotate_180_degrees_rotates": [
+      {
+        "ingredient_id": "transformations__rotation_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__mixes_up_clockwise_and_anticlockwise": [
+      {
+        "ingredient_id": "transformations__rotation_rules",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__thinks_you_cancel_identical_terms": [
+      {
+        "ingredient_id": "rational_expressions__factor_first",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__incorrectly_cancels_what_they_believe": [
+      {
+        "ingredient_id": "rational_expressions__factor_first",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__addingsubtracting_fractions_addssubtracts_denominators_and": [
+      {
+        "ingredient_id": "rational_expressions__lcd_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_find_common_denominator": [
+      {
+        "ingredient_id": "rational_expressions__lcd_method",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__does_not_recognise_fraction_can": [
+      {
+        "ingredient_id": "rational_expressions__excluded_values",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_functions_basics__believes_fraction_with_equal_numerator": [
+      {
+        "ingredient_id": "rational_expressions__excluded_values",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__simplifying_thinks_they_write_0": [
+      {
+        "ingredient_id": "rational_expressions__excluded_values",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__believes_you_can_square_root": [
+      {
+        "ingredient_id": "complex_numbers__i_definition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_linear_inequalities__does_not_think_square_root": [
+      {
+        "ingredient_id": "complex_numbers__i_definition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_geometric_transformations__adding_column_vectors_multiplies_rather": [
+      {
+        "ingredient_id": "vectors__vector_addition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_number_properties__does_not_correctly_apply_commutative": [
+      {
+        "ingredient_id": "matrices__multiplication_order",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_fractions_decimals__does_not_correctly_apply_commutative": [
+      {
+        "ingredient_id": "matrices__multiplication_order",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_correctly_apply_commutative": [
+      {
+        "ingredient_id": "matrices__multiplication_order",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_circles_geometry__confuses_radius_with_radius_squared": [
+      {
+        "ingredient_id": "conics__identification",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_factoring_polynomials__completing_square_believes_constant_bracket": [
+      {
+        "ingredient_id": "conics__completing_the_square",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_quadratic_equations__believes_completed_square_form_they": [
+      {
+        "ingredient_id": "conics__completing_the_square",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_basic_probability__does_not_understand_probability_1": [
+      {
+        "ingredient_id": "prob_dist__distribution_as_model",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_basic_probability__does_not_understand_probability_something": [
+      {
+        "ingredient_id": "prob_dist__distribution_as_model",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__thinks_shape_graph_does_not": [
+      {
+        "ingredient_id": "integrals__definite_integral_as_area",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "integral_apps__area_between_curves",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_ratios_proportions__believes_finding_area_under_graph": [
+      {
+        "ingredient_id": "integral_apps__area_between_curves",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_number_properties__confuses_factors_and_multiples": [
+      {
+        "ingredient_id": "number_properties__factor_definition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "number_properties__factor_count_exactly_three",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_number_properties__does_not_understand_factors_are": [
+      {
+        "ingredient_id": "number_properties__factor_definition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_number_properties__does_not_know_meaning_common": [
+      {
+        "ingredient_id": "number_properties__factor_definition",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_number_properties__does_not_think_number_can": [
+      {
+        "ingredient_id": "number_properties__prime_composite",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      },
+      {
+        "ingredient_id": "number_properties__factor_count_exactly_three",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_basic_probability__mixes_up_odd_and_even": [
+      {
+        "ingredient_id": "number_properties__parity_even_odd_product_sum",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_sequences_series__mixes_up_odd_and_even": [
+      {
+        "ingredient_id": "number_properties__parity_even_odd_product_sum",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_exponent_rules__mixes_up_odd_and_even": [
+      {
+        "ingredient_id": "number_properties__parity_even_odd_product_sum",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_measurement_units__does_not_convert_measurements_have": [
+      {
+        "ingredient_id": "measurement_units__unit_label_consistency",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_measurement_units__does_not_recognise_metres_unit": [
+      {
+        "ingredient_id": "measurement_units__linear_vs_square_units",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_measurement_units__does_not_recognise_inches_unit": [
+      {
+        "ingredient_id": "measurement_units__linear_vs_square_units",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_measurement_units__converted_hours_minutes_instead_hours": [
+      {
+        "ingredient_id": "measurement_units__compound_unit_conversion",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_measurement_units__converted_seconds_minutes_instead_seconds": [
+      {
+        "ingredient_id": "measurement_units__compound_unit_conversion",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_measurement_units__does_not_square_conversion_factor": [
+      {
+        "ingredient_id": "measurement_units__compound_unit_conversion",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__collecting_like_terms_treats_subtractions": [
+      {
+        "ingredient_id": "algebraic_manipulation__like_terms",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__changes_given_operation_substituting": [
+      {
+        "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_consider_variable_evaluating": [
+      {
+        "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__does_not_add_on_constant": [
+      {
+        "ingredient_id": "algebraic_manipulation__symbolic_substitution",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__confuses_term_with_equation": [
+      {
+        "ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__simplifies_fraction_adding_or_subtracting": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ],
+    "mis_algebraic_manipulation__subtracting_fractions_subtracts_numerators_and": [
+      {
+        "ingredient_id": "algebraic_manipulation__clearing_fractions",
+        "confidence": 1.0,
+        "method": "ontology_tag",
+        "cosine": null
+      }
+    ]
+  }
+}

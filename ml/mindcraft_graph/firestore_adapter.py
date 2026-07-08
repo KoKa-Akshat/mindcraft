@@ -153,6 +153,9 @@ def append_attempt_observations(student_id: str, observations: list[dict], now: 
             "level": int(o.get("level", 1)),
             "correct": float(o.get("correct", 0.0)),
             "questionId": o.get("question_id"),
+            "selectedChoiceIndex": o.get("selected_choice_index"),
+            "misconceptionId": o.get("misconception_id"),
+            "errorType": o.get("error_type"),
             "timestamp": now,
         })
     return len(observations)
@@ -369,6 +372,10 @@ def load_ingredient_state(student_id: str) -> IngredientStudentState:
             key: float(value)
             for key, value in data.get("style_scores", {}).items()
         },
+        misconception_counts={
+            k: int(v)
+            for k, v in data.get("misconception_counts", {}).items()
+        },
     )
 
 
@@ -406,6 +413,7 @@ def save_ingredient_state(student_id: str, state: IngredientStudentState):
             for bridge_id, confidence in state.bridge_confidence.items()
         },
         "style_scores": state.style_scores,
+        "misconception_counts": state.misconception_counts,
     }
     db.collection("ingredient_states").document(student_id).set(payload)
 

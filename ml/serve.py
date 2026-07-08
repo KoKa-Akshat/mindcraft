@@ -45,6 +45,9 @@ LEGACY_INGREDIENT_PATH = DATA_DIR / "ingredient_ontology.json"
 
 EMBEDDINGS_PATH = DATA_DIR / "concept_embeddings.npz"
 PCA_PATH = DATA_DIR / "pca_axes.npz"
+# Reviewed misconception → ingredient map (produced by enrich_ingredient_misconception_map.py,
+# audited by Fable 5). Loaded at startup; empty dict when not yet generated.
+_MIS_MAP_PATH = DATA_DIR / "misconception_ingredient_map.json"
 
 # Combination firing threshold for /recommend-ingredients. Pinned to the value
 # the harness (scripts/test_concept_paths.py) validated against so the live API
@@ -107,6 +110,16 @@ print(
     )
 )
 
+
+# Misconception → ingredient map (reviewed copy). Keyed by mis_* slug → list of
+# {ingredient_id, confidence, method, cosine}. Empty dict = not yet generated.
+if _MIS_MAP_PATH.exists():
+    _raw = json.loads(_MIS_MAP_PATH.read_text())
+    misconception_ingredient_map: dict[str, list[dict]] = _raw.get("map", {})
+    print(f"[startup] misconception_ingredient_map: {len(misconception_ingredient_map)} entries")
+else:
+    misconception_ingredient_map: dict[str, list[dict]] = {}
+    print("[startup] misconception_ingredient_map: not found — distractor evidence disabled")
 
 # Classification embeddings for the ingredient runtime. With the standardized
 # ontology these are exactly the concept embeddings — no synthesized concepts.
@@ -218,6 +231,12 @@ class OutcomeItem(BaseModel):
     # Deprecated legacy session-boolean. Used only when `score` is None so current
     # callers don't break (succeeded -> score 1.0/0.0).
     succeeded: bool | None = None
+    # Distractor evidence (Stream A). Frontend already sends these; Pydantic was
+    # silently dropping them. Now persisted to attempt_observations and used to
+    # fire ingredient-level failure events when a known misconception is triggered.
+    selected_choice_index: int | None = None
+    misconception_id: str | None = None
+    error_type: str | None = None
 
     def resolved_score(self) -> float | None:
         """Raw pass rate, falling back to the deprecated boolean."""
@@ -287,6 +306,69 @@ def _serialize_minimal_dag(dag):
         "targetIngredients": dag.target_ingredients,
         "backtrackedIngredients": dag.backtracked_ingredients,
     }
+
+
+def _build_misconception_gaps(ingredient_state) -> list[dict]:
+    """Convert misconception hit counts into severity-ranked gap entries for /recommend.
+
+    Uses the same Beta-Binomial severity model as bridge gaps: prior seeded from
+    ingredient failure_prior (4 pseudo-counts), each hit increments alpha.
+    Only emits entries for misconceptions that have at least one linked ingredient
+    in the reviewed map. Empty list when map is not loaded.
+    """
+    if not misconception_ingredient_map or not ingredient_state.misconception_counts:
+        return []
+
+    # Build ingredient → concept lookup once
+    ing_to_concept: dict[str, str] = {
+        ing.id: ing.concept_id
+        for ing in ingredient_ontology.ingredients
+    }
+
+    # Ingredient failure priors from ontology (keyed by ingredient_id)
+    _ont_data: dict[str, float] = {}
+    try:
+        import json as _json
+        _raw_ont = _json.loads(STANDARDIZED_ONTOLOGY_PATH.read_text())
+        for _c in _raw_ont.get("concepts", []):
+            for _i in _c.get("ingredients", []):
+                _ont_data[_i.get("id", "")] = float(_i.get("failure_prior", 0.5))
+    except Exception:
+        pass
+
+    gaps = []
+    for mis_id, hits in ingredient_state.misconception_counts.items():
+        if hits <= 0:
+            continue
+        links = misconception_ingredient_map.get(mis_id, [])
+        if not links:
+            continue
+
+        # Average failure_prior across linked ingredients as the Beta prior
+        ingredient_ids = [lnk["ingredient_id"] for lnk in links]
+        avg_prior = sum(_ont_data.get(iid, 0.5) for iid in ingredient_ids) / len(ingredient_ids)
+        pseudo = 4.0
+        alpha0 = avg_prior * pseudo
+        beta0 = (1.0 - avg_prior) * pseudo
+        severity = min(1.0, (alpha0 + hits) / (alpha0 + beta0 + hits))
+
+        # Concept = most common concept among linked ingredients
+        concept_votes: dict[str, int] = {}
+        for iid in ingredient_ids:
+            cid = ing_to_concept.get(iid, "")
+            if cid:
+                concept_votes[cid] = concept_votes.get(cid, 0) + 1
+        concept_id = max(concept_votes, key=concept_votes.get) if concept_votes else ""
+
+        gaps.append({
+            "misconceptionId": mis_id,
+            "hits": hits,
+            "severity": round(severity, 4),
+            "conceptId": concept_id,
+            "ingredientIds": ingredient_ids,
+        })
+
+    return sorted(gaps, key=lambda g: -g["severity"])
 
 
 def _concepts_for_card_target(target_type: str, target_id: str) -> list[str]:
@@ -459,6 +541,9 @@ async def recommend_endpoint(req: RecommendRequest, auth: AuthContext = Depends(
                 for cid, s in result.student_profile.top_weaknesses
             ],
         },
+        # B3: misconception severity gaps — parallel to bridgeGaps; each entry has
+        # enough data for worst_weakness() ranking and the practice feedback label.
+        "misconceptionGaps": _build_misconception_gaps(ingredient_state),
     }
 
     save_recommendation_result(req.student_id, response)
@@ -660,6 +745,10 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
             "level": item.level,
             "correct": 1.0 if score >= 1.0 else (0.0 if score <= 0.0 else score),
             "question_id": item.question_id,
+            # Distractor evidence — Stream A (now persisted)
+            "selected_choice_index": item.selected_choice_index,
+            "misconception_id": item.misconception_id,
+            "error_type": item.error_type,
         })
         recorded.append(item.concept_id)
 
@@ -695,6 +784,57 @@ async def record_outcomes_endpoint(req: RecordOutcomesRequest, auth: AuthContext
         append_format_interactions(req.student_id, format_records, now)
     if observations:
         append_attempt_observations(req.student_id, observations, now)
+
+    # ── Ingredient-level evidence from misconception distractors (Stream A) ──
+    # For each wrong answer that carries a misconception_id, fire a negative
+    # ingredient event on every ingredient the map links to that misconception.
+    # Deduped per (misconception, ingredient) within one request; null ids skipped.
+    misconception_items = [
+        obs for obs in observations
+        if obs.get("misconception_id") and obs.get("correct", 1.0) <= 0.0
+    ]
+    if misconception_items and misconception_ingredient_map:
+        from mindcraft_graph.firestore_adapter import (
+            load_ingredient_state,
+            save_ingredient_state,
+        )
+        from mindcraft_graph.engine.ingredient_runtime import update_ingredient_state
+        from mindcraft_graph.models.ingredient import CardTemplate, CardRepresentation
+
+        ing_state = load_ingredient_state(req.student_id)
+        fired: set[tuple[str, str]] = set()  # (misconception_id, ingredient_id)
+
+        for obs in misconception_items:
+            mis_id = obs["misconception_id"]
+            links = misconception_ingredient_map.get(mis_id, [])
+            # Increment hit counter (for B3 severity ranking in /recommend)
+            ing_state.misconception_counts[mis_id] = (
+                ing_state.misconception_counts.get(mis_id, 0) + 1
+            )
+            for link in links:
+                ing_id = link["ingredient_id"]
+                if (mis_id, ing_id) in fired:
+                    continue
+                fired.add((mis_id, ing_id))
+                # Build a synthetic card so update_ingredient_state has context
+                card = CardTemplate(
+                    id=f"mis_{mis_id}",
+                    target_type="ingredient",
+                    target_id=ing_id,
+                    representations={
+                        "algebraic": CardRepresentation(
+                            title="Misconception probe",
+                            body=f"Distractor chosen: {obs.get('error_type', 'wrong')}",
+                        )
+                    },
+                    prompt="",
+                    difficulty=0.5,
+                )
+                ing_state = update_ingredient_state(
+                    ing_state, card, student_succeeded=False
+                )
+
+        save_ingredient_state(req.student_id, ing_state)
 
     all_events = load_student_events(req.student_id)
     graph = create_personal_graph(req.student_id, ontology)

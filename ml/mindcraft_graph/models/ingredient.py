@@ -116,6 +116,10 @@ class IngredientStudentState(BaseModel):
     ingredient_mastery: dict[str, IngredientMastery] = Field(default_factory=dict)
     bridge_confidence: dict[str, BridgeConfidence] = Field(default_factory=dict)
     style_scores: dict[str, float] = Field(default_factory=dict)
+    # Hit counts per misconception_id, incremented each time the student
+    # chooses a distractor tagged with that misconception. Used by /recommend
+    # to compute misconception severity gaps (B3).
+    misconception_counts: dict[str, int] = Field(default_factory=dict)
 
 
 class IngredientOntology(BaseModel):
