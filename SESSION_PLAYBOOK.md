@@ -1,0 +1,111 @@
+# Session Playbook — how to run a window
+
+> "Window" = one chat session (Claude Code / Cursor / Codex). Read this at
+> the START of a window to pick its **type** and starting **model**. Pair
+> with `AGENTS_QUICKSTART.md` (what the project is) — this doc is *how to
+> operate the session itself*.
+
+---
+
+## 1. Window types — pick one, don't mix
+
+| Type | Lifecycle | Produces | Reads |
+|------|-----------|----------|-------|
+| **Build** (architect) | One-shot, dies on commit | a spec in `agent_work/{lane}/` | roadmap + canonical docs |
+| **Implementer** (Cursor/Codex) | One-shot, dies on push | code, from an existing spec | one `agent_work/` spec + the seam |
+| **Debug/ops** | Long-lived, *reseeds* | a fix + a state update | system state (CLAUDE.md + memory) |
+
+**Never mix build and debug in one window.** A build task in the debug
+window bloats it with spec-drafting turns; a debug task in a build window
+lacks the accumulated cross-system history that catches the real bugs.
+Build/implementer windows are disposable; only the debug window persists —
+and even it reseeds (see §5).
+
+---
+
+## 2. Startup rituals
+
+**Build window:** state what to build (usually just *point*: "the X item
+in CLAUDE.md's Active workstream" or "implement `<brief>`"). It reads →
+CLAUDE.md (architecture + the roadmap entry) → the canonical doc owning
+the area (BRAND_BOOK / AGENT_RULEBOOK / DASHBOARD_NOTEBOOK_SPEC /
+FABLE5_VISION) → ACTIVE_TASK.md (don't spec what's in flight) → existing
+`agent_work/` specs (don't duplicate). Verify a few facts against code
+(targeted greps). Write spec → label lanes → update `agent_work/README.md`
+→ commit → close.
+
+**Implementer window:** reads AGENTS_QUICKSTART + ACTIVE_TASK.md + the one
+`agent_work/` spec it's assigned. Codes in its lane, verifies, commits,
+pushes, updates ACTIVE_TASK.md, closes.
+
+**Debug/ops window:** state the symptom. Reads → CLAUDE.md `Current state`
++ `Known gotchas` + `Deployment` (the live topology) + memory + whatever
+subsystem the symptom touches. Gather facts flat, synthesize, fix or spec
+the fix. On resolution, **write the conclusion back to CLAUDE.md /
+memory** — then the transcript is disposable.
+
+**Don't hand-feed context** — point at the repo. If you're pasting a lot
+into a fresh window, that's the signal something durable isn't written
+down; fix that by writing it to the repo, not by re-pasting each session.
+
+---
+
+## 3. Model tiering (switch within any window; it keeps full context)
+
+Switching `/model` mid-window loses nothing — all history stays. It only
+changes what you pay per turn. On a long window the per-turn cost is
+dominated by re-reading context, so being on Sonnet during mechanical
+stretches saves the most precisely *because* the window is fat.
+
+**Drop to Sonnet when your next message is:** "run / check / verify /
+confirm…", "commit and push / deploy…", "grep / find / where is…", "go
+ahead / do it / yes proceed", "test whether X works." (Decision already
+made — you just need hands.)
+
+**Switch up to Opus when:** "why is / why did…", "should we / which
+approach", a result came back **different from expected**, "design / spec
+/ plan…", "does this break X elsewhere" (cross-file reasoning), or you're
+about to paste an error you don't understand yet.
+
+**Tiebreaker:** *Do I already know what a correct answer looks like?*
+Yes → confirming → Sonnet. No → finding out → Opus.
+
+**Batch same-tier work** — don't ping-pong per message. Three checks in a
+row: switch to Sonnet once, run all three, pop back up only if one turns
+up something odd.
+
+---
+
+## 4. Context hygiene — keep conclusions, drop payloads
+
+This is what lets a debug window stay long *and* cheap.
+- Never read a whole large file when `grep`/`head` answers the question.
+- Never let base64 / minified bundles / a whole multi-MB JSON into the
+  window — extract the one fact and move on.
+- Reduce big command output at the source (`wc -l`, `head`, `jq`, filter)
+  so the window gets the number, not the dump.
+- When something large is unavoidable, state its conclusion once; don't
+  re-cite the blob.
+
+A window full of conclusions runs 200 turns cheaply. A window full of raw
+dumps forces you to fragment to control cost — the thing you don't want.
+
+---
+
+## 5. The three trackers — which window reads which
+
+| Doc | Holds | Horizon |
+|-----|-------|---------|
+| **CLAUDE.md** | what's *true* (architecture, deploy topology) + what's *planned* (`Active workstream`, `Designed, not built`, backlog, `Known gotchas`) | weeks — source of truth |
+| **ACTIVE_TASK.md** | what's *happening this week* (who's on which files) | days — deleted after 2 sessions |
+| **agent_work/README.md** | which *specs* exist + build status | per-spec |
+
+Build windows read the **roadmap** (CLAUDE.md) to learn *what to build*.
+Debug windows read the **state** (CLAUDE.md + memory) to learn *what's
+true*. Both point at CLAUDE.md first — different sections.
+
+**Debug-window reseed discipline:** it holds live system state + open
+investigations *only*. When an investigation resolves, its conclusion goes
+to CLAUDE.md (`Known gotchas` / `Current state`) or memory, and you reseed
+the window fresh from that distilled state rather than carrying the whole
+transcript. Long lifecycle, not immortal.

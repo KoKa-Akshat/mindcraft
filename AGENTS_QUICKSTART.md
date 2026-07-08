@@ -47,7 +47,9 @@ AI tutoring platform. Students enter a story world, solve math problems as the p
 
 | File | Read when... |
 |------|-------------|
+| `SESSION_PLAYBOOK.md` | Start of a window — pick window type (build/implementer/debug), startup ritual, model tiering |
 | `ACTIVE_TASK.md` | Start of EVERY session — what's in flight right now |
+| `agent_work/README.md` | Picking up or writing a build spec — index of specs + status |
 | `FABLE5_VISION.md` | Touching Practice.tsx, Dashboard, PawHub, question cards |
 | `WORLD_VISION.md` | Touching stories, concept chapters, the Jarvis vision |
 | `CLAUDE.md` | Need ML architecture, Firestore rules, deployment details |
