@@ -6,11 +6,19 @@ evidence. Part 3 is Engine research direction for the generation pipeline.
 
 ---
 
-## Part 1 — Dashboard personalization + question bookmarks (Lane: **Product**, buildable now)
+## Part 1 — Dashboard personalization + question bookmarks (Lane: **Product**) — SHIPPED (a39148e5)
 
 Follow DASHBOARD_NOTEBOOK_SPEC.md (paper system) and BRAND_BOOK.md. All
 personalization persists on the student's own `users/{uid}` doc (plain
 client writes — non-privileged fields, allowed by rules).
+
+> **Scope note (2026-07-08):** this Part is the VISUAL journal skin only
+> (stickers, paper tone, hand font). Two sibling systems exist and are
+> deliberately orthogonal — narrative **voice** skins
+> (STORY_INTELLIGENCE_SPEC_V2 §4: grade+goals → tone) and **world** skins
+> (STORY_INTELLIGENCE_SPEC §3: interestTags → setting). Don't merge their
+> storage or UI; if the journal-style drawer ever grows a voice picker,
+> that's a V2-spec change, not this file's.
 
 ### 1a — Stickers
 A small curated sticker set (SVG — journal flavor: stars, paw, compass,
