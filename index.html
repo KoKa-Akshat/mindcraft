@@ -111,10 +111,10 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .hero-map-svg circle:nth-of-type(7),.hero-map-svg text:nth-of-type(11),.hero-map-svg text:nth-of-type(12){animation-delay:2.52s}
 .hero-map-svg circle:nth-of-type(8),.hero-map-svg circle:nth-of-type(9){animation-delay:2.92s}
 .hero-map-svg text:nth-of-type(13),.hero-map-svg text:nth-of-type(14){animation-delay:3.12s}
-.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:center}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(360px,.82fr) minmax(520px,1.18fr);gap:clamp(24px,4vw,56px);align-items:center}
 .hero-left{display:flex;flex-direction:column;gap:0}
-.hero-art{position:relative;width:100%;opacity:.9}
-.hero-art svg{width:100%;height:auto;display:block}
+.hero-art{position:relative;width:100%;min-height:clamp(520px,64vh,760px);opacity:.96;display:flex;align-items:center;justify-content:center}
+.hero-art svg{width:min(112%,900px);height:auto;display:block;transform:translateX(2%) scale(1.06);transform-origin:center}
 .hero-copy{max-width:none}
 .hero-copy .lead{max-width:570px;margin-top:24px;color:#4f6357}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
@@ -274,7 +274,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 @media(max-width:920px){
   .nav-links a:not(.join):not(.login){display:none}
   .hero-inner{grid-template-columns:1fr;gap:32px}
-  .hero-art{max-width:480px;margin:0 auto;opacity:.82}
+  .hero-art{max-width:520px;min-height:auto;margin:0 auto;opacity:.82}
+  .hero-art svg{width:100%;transform:none}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
   .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.tryapp-card{grid-template-columns:1fr}
@@ -365,36 +366,59 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           </div>
         </div>
         <div class="hero-art reveal" aria-hidden="true" id="heroArt">
-          <svg class="hero-map-svg" viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path pathLength="1" d="M130 90 Q200 140 240 160" stroke="rgba(29,58,138,0.22)" stroke-width="1.5" stroke-dasharray="4 5"/>
-            <path pathLength="1" d="M240 160 Q290 170 340 145" stroke="rgba(29,58,138,0.28)" stroke-width="1.5"/>
-            <path pathLength="1" d="M340 145 Q400 120 420 170" stroke="rgba(29,58,138,0.22)" stroke-width="1.5" stroke-dasharray="4 5"/>
-            <path pathLength="1" d="M240 160 Q255 230 260 280" stroke="rgba(29,58,138,0.20)" stroke-width="1.5" stroke-dasharray="3 6"/>
-            <path pathLength="1" d="M340 145 Q340 240 300 300" stroke="rgba(29,58,138,0.18)" stroke-width="1.5" stroke-dasharray="3 6"/>
-            <path pathLength="1" d="M130 90 Q155 200 180 280" stroke="rgba(29,58,138,0.15)" stroke-width="1.5" stroke-dasharray="4 5"/>
-            <circle cx="240" cy="160" r="28" fill="#f7f3ee" stroke="#c4f547" stroke-width="2.5"/>
-            <circle cx="240" cy="160" r="22" fill="none" stroke="#c4f547" stroke-width="1" opacity="0.5"/>
-            <text x="240" y="155" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1c1a17" opacity="0.7">linear</text>
-            <text x="240" y="167" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1c1a17" opacity="0.7">equations</text>
-            <circle cx="340" cy="145" r="24" fill="#f7f3ee" stroke="#1d3a8a" stroke-width="2"/>
-            <text x="340" y="140" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1d3a8a" font-weight="600">functions</text>
-            <text x="340" y="152" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#1d3a8a">basics</text>
-            <circle cx="130" cy="90" r="20" fill="#f7f3ee" stroke="rgba(29,58,138,0.3)" stroke-width="1.5" stroke-dasharray="3 4"/>
-            <text x="130" y="86" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">fractions</text>
-            <text x="130" y="98" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">decimals</text>
-            <circle cx="420" cy="170" r="20" fill="#f7f3ee" stroke="rgba(29,58,138,0.3)" stroke-width="1.5" stroke-dasharray="3 4"/>
-            <text x="420" y="166" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">quadratic</text>
-            <text x="420" y="178" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#6f6a61">functions</text>
-            <circle cx="180" cy="280" r="18" fill="#f7f3ee" stroke="rgba(29,58,138,0.2)" stroke-width="1" stroke-dasharray="2 5" opacity="0.7"/>
-            <text x="180" y="276" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">triangles</text>
-            <text x="180" y="286" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">geometry</text>
-            <circle cx="300" cy="300" r="18" fill="#f7f3ee" stroke="rgba(29,58,138,0.2)" stroke-width="1" stroke-dasharray="2 5" opacity="0.7"/>
-            <text x="300" y="296" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">circles</text>
-            <text x="300" y="306" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#a39b8e">geometry</text>
-            <text x="360" y="228" font-family="IBM Plex Mono,monospace" font-size="9" fill="#c1121f" opacity="0.7" transform="rotate(-8,360,228)">← the gap</text>
-            <circle cx="258" cy="175" r="4" fill="#c4f547"/>
-            <circle cx="258" cy="175" r="8" fill="none" stroke="#c4f547" stroke-width="1" opacity="0.4"/>
-            <text x="100" y="320" font-family="Source Serif 4,serif" font-size="11" font-style="italic" fill="rgba(29,58,138,0.35)" transform="rotate(-4,100,320)">42 concepts · your map</text>
+          <svg class="hero-map-svg" viewBox="0 0 680 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="heroMapGlow" cx="50%" cy="48%" r="58%">
+                <stop offset="0" stop-color="#fffdf7" stop-opacity=".78"/>
+                <stop offset=".55" stop-color="#e4f7dc" stop-opacity=".35"/>
+                <stop offset="1" stop-color="#fff8e9" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect x="20" y="28" width="630" height="440" rx="46" fill="url(#heroMapGlow)"/>
+            <path pathLength="1" d="M100 124 C175 88 244 107 310 180" stroke="rgba(20,58,46,.18)" stroke-width="3" stroke-dasharray="7 9"/>
+            <path pathLength="1" d="M310 180 C360 136 430 126 514 164" stroke="rgba(20,58,46,.20)" stroke-width="3"/>
+            <path pathLength="1" d="M514 164 C574 204 590 270 552 342" stroke="rgba(20,58,46,.17)" stroke-width="2.6" stroke-dasharray="7 8"/>
+            <path pathLength="1" d="M310 180 C275 248 256 314 266 402" stroke="rgba(20,58,46,.18)" stroke-width="3"/>
+            <path pathLength="1" d="M310 180 C392 247 435 317 426 412" stroke="rgba(20,58,46,.16)" stroke-width="2.7" stroke-dasharray="7 9"/>
+            <path pathLength="1" d="M100 124 C119 224 160 304 216 378" stroke="rgba(20,58,46,.15)" stroke-width="2.5" stroke-dasharray="6 8"/>
+            <path pathLength="1" d="M216 378 C300 336 382 342 552 342" stroke="rgba(29,58,138,.16)" stroke-width="2.6"/>
+            <path pathLength="1" d="M426 412 C496 398 542 360 552 342" stroke="rgba(29,58,138,.14)" stroke-width="2.5" stroke-dasharray="6 8"/>
+
+            <circle cx="310" cy="180" r="58" fill="#fffdf7" stroke="#c4f547" stroke-width="7"/>
+            <circle cx="310" cy="180" r="45" fill="none" stroke="#247a4d" stroke-width="2" opacity=".38"/>
+            <circle cx="348" cy="218" r="13" fill="#c4f547" stroke="#247a4d" stroke-width="3"/>
+            <text x="310" y="170" text-anchor="middle" font-size="18" fill="#143a2e" font-weight="800">linear</text>
+            <text x="310" y="194" text-anchor="middle" font-size="18" fill="#143a2e" font-weight="800">equations</text>
+
+            <circle cx="514" cy="164" r="48" fill="#fffdf7" stroke="#1d3a8a" stroke-width="5"/>
+            <text x="514" y="156" text-anchor="middle" font-size="16" fill="#1d3a8a" font-weight="900">functions</text>
+            <text x="514" y="179" text-anchor="middle" font-size="16" fill="#1d3a8a" font-weight="600">basics</text>
+
+            <circle cx="100" cy="124" r="41" fill="#fffdf7" stroke="rgba(29,58,138,.34)" stroke-width="3" stroke-dasharray="7 7"/>
+            <text x="100" y="116" text-anchor="middle" font-size="15" fill="#6f6a61">fractions</text>
+            <text x="100" y="139" text-anchor="middle" font-size="15" fill="#6f6a61">decimals</text>
+
+            <circle cx="586" cy="274" r="37" fill="#fffdf7" stroke="rgba(29,58,138,.32)" stroke-width="3" stroke-dasharray="7 7"/>
+            <text x="586" y="266" text-anchor="middle" font-size="14" fill="#6f6a61">quadratic</text>
+            <text x="586" y="287" text-anchor="middle" font-size="14" fill="#6f6a61">functions</text>
+
+            <circle cx="216" cy="378" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
+            <text x="216" y="371" text-anchor="middle" font-size="13" fill="#8a8377">triangles</text>
+            <text x="216" y="391" text-anchor="middle" font-size="13" fill="#8a8377">geometry</text>
+
+            <circle cx="426" cy="412" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
+            <text x="426" y="405" text-anchor="middle" font-size="13" fill="#8a8377">circles</text>
+            <text x="426" y="425" text-anchor="middle" font-size="13" fill="#8a8377">geometry</text>
+
+            <circle cx="552" cy="342" r="30" fill="#fffdf7" stroke="rgba(36,122,77,.34)" stroke-width="2.5" stroke-dasharray="5 7"/>
+            <text x="552" y="337" text-anchor="middle" font-size="12" fill="#7a806f">rates</text>
+            <text x="552" y="355" text-anchor="middle" font-size="12" fill="#7a806f">change</text>
+
+            <text x="484" y="314" font-size="17" fill="#c1121f" opacity=".82" transform="rotate(-7,484,314)">← the gap</text>
+            <text x="78" y="444" font-family="Source Serif 4,serif" font-size="24" font-style="italic" fill="rgba(29,58,138,.40)" transform="rotate(-4,78,444)">42 concepts · your map</text>
+            <text x="548" y="96" font-family="Caveat,cursive" font-size="42" fill="rgba(36,122,77,.30)" transform="rotate(10,548,96)">=</text>
+            <text x="120" y="316" font-family="Caveat,cursive" font-size="70" fill="rgba(36,122,77,.22)" transform="rotate(-18,120,316)">+</text>
+            <text x="452" y="470" font-family="Caveat,cursive" font-size="86" fill="rgba(36,122,77,.18)" transform="rotate(6,452,470)">?</text>
           </svg>
         </div>
       </div>
