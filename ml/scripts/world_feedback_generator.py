@@ -32,6 +32,15 @@ import sys
 import time
 from pathlib import Path
 
+# macOS Python ships without system certs — set SSL_CERT_FILE early,
+# before any urllib/http connections are opened, or Groq calls fail.
+try:
+    import certifi
+    os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+    os.environ.setdefault("REQUESTS_CA_BUNDLE", certifi.where())
+except ImportError:
+    pass
+
 ROOT = Path(__file__).resolve().parent.parent.parent
 QUEUE_PATH = ROOT / "ml/data/promotion_queue.json"
 ONT_PATH = ROOT / "ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json"
@@ -117,7 +126,7 @@ def run(dry_run: bool = False, force: bool = False) -> None:
                 errors += 1
 
             # Save progress every entry so a long Groq run is not lost on interrupt.
-            if not dry_run and filled % 5 == 0:
+            if not dry_run and filled % 1 == 0:
                 save_cache(cache)
                 QUEUE_PATH.write_text(json.dumps(queue, indent=2))
 
