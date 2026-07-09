@@ -8,10 +8,9 @@
  */
 import type { FormatId, Question } from './questionBank'
 import conceptFrames from '../data/questionContextFrames.json'
+import type { ContextFrame } from './storySelection'
 
-type Frame = { protagonist?: string; settingLine?: string }
-
-const FRAMES = conceptFrames as Record<string, Frame>
+const FRAMES = conceptFrames as Record<string, ContextFrame>
 
 const FLORENCE_WARDS = [
   'Scutari North', 'Scutari East', 'Scutari South', 'Scutari West',
@@ -41,7 +40,7 @@ export interface StoryDisplay {
   sceneLine?: string
 }
 
-function frameFor(conceptId: string): Frame | undefined {
+function frameFor(conceptId: string): ContextFrame | undefined {
   return FRAMES[conceptId]
 }
 

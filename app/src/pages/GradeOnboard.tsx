@@ -22,7 +22,7 @@ import {
 } from '../lib/diagnosticQuestions'
 import { questionFormat, resolveChoiceEvidence } from '../lib/questionBank'
 import { toOntologyId } from '../lib/conceptMap'
-import { fetchStoryModuleForQuestions, ensureStorySkins, type StoryModule } from '../lib/storyModule'
+import { fetchStoryModuleForQuestions, ensureStorySkins, storyBridgeLine, type StoryModule } from '../lib/storyModule'
 import MathText from '../components/MathText'
 import InteractiveWidget from '../components/InteractiveWidget'
 import ScratchPad, { exportScratchImage } from '../components/ScratchPad'
@@ -38,7 +38,6 @@ import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, type StudyPathConfig } from
 import {
   initBelief, applyProbeOutcome, type BeliefState,
 } from '../lib/adaptiveDiagnostic'
-import { storyBridgeLine } from '../lib/storyBridge'
 import { GOAL_EXTRAS } from '../lib/diagnosticQuestions'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
