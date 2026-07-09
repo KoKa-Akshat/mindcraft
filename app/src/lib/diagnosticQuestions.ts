@@ -67,7 +67,7 @@ function storyVisualScore(q: Question): number {
   return 0
 }
 
-function pickBestProbe(pool: Question[]): Question | undefined {
+export function pickBestProbe(pool: Question[]): Question | undefined {
   if (!pool.length) return undefined
   const ranked = [...pool].sort((a, b) => storyVisualScore(b) - storyVisualScore(a))
   return ranked[0]
