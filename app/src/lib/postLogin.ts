@@ -12,6 +12,7 @@ import { db } from '../firebase'
 import { isDiagnosticComplete } from './practiceState'
 import {
   clearStudentDiagnosticState,
+  isDevBypassEmail,
   isTestProfileEmail,
   purgeStudentLearningHistory,
 } from './testProfile'
@@ -60,6 +61,9 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
   if (!snap.exists() || !existingRole) {
     await ensureStudentDoc(email, currentUser?.displayName, uid)
   }
+
+  // Dev accounts skip the diagnostic gate — their learning data is preserved.
+  if (isDevBypassEmail(email)) return opts.returnTo ?? '/dashboard'
 
   // Always gate students on diagnostic — ignore ?next= when scan isn't done.
   const done = await isDiagnosticComplete(uid)

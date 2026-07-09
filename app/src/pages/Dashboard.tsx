@@ -8,6 +8,7 @@ import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
 import { usePracticePathQueue } from '../lib/practicePathQueue'
 import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal, getUserRole } from '../lib/practiceState'
+import { isDevBypassEmail } from '../lib/testProfile'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import { pawHubDisplayText, pawHubLearnSub, type CurriculumTrack } from '../lib/curriculumTrack'
@@ -305,6 +306,12 @@ export default function Dashboard() {
   useEffect(() => {
     let cancelled = false
     ;(async () => {
+      // Dev bypass — skip gate entirely, preserve learning data.
+      if (isDevBypassEmail(user?.email)) {
+        setDiagChecked(true)
+        return
+      }
+
       const diag = searchParams.get('diag')
       if (diag) {
         try {
