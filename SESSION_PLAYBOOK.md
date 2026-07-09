@@ -118,6 +118,88 @@ Build windows read the **roadmap** (CLAUDE.md) to learn *what to build*.
 Debug windows read the **state** (CLAUDE.md + memory) to learn *what's
 true*. Both point at CLAUDE.md first — different sections.
 
+---
+
+## 6. Commands you can just run — no window needed
+
+Verified against this machine/session. If a step below needs more than
+one command or judgment about *what* to run, it's flagged "not a
+one-liner" — start a debug window for those instead of memorizing a
+fragile multi-step sequence.
+
+**Git — status, commit, push:**
+```bash
+git status                              # what's dirty right now
+git pull origin main --no-rebase        # get latest before starting
+git add <files> && git commit -m "..."  # stage only what you mean to commit
+git push origin main                    # if rejected: git pull origin main --no-rebase --no-edit, resolve conflicts, retry
+git log --oneline -5                    # confirm what's on top
+```
+`git status` before *any* pull/merge — an uncommitted change (yours or an
+agent's) will block a merge. Never `git reset`/`git checkout .` on a dirty
+tree without checking `git status` first.
+
+**Deploy the frontend:** nothing to run — `git push origin main` triggers
+CI (Firebase Hosting: app + world1 + marketing). Confirm the Actions run
+went green on GitHub (`gh` CLI is not installed on this machine — check
+in the browser).
+
+**Deploy the ML engine (HF Space):**
+```bash
+cd ml && HF_ORG=joinmindcraft ./scripts/deploy_hf.sh
+```
+Pushes `ml/` to the Space; first build ~10-15 min. Cloud Run is dormant
+(GCP billing) — this is the only live deploy target for `ml/` right now.
+
+**Check the ML engine is actually up:**
+```bash
+curl https://joinmindcraft-mindcraft-ml.hf.space/health
+```
+200 + JSON = healthy. If it's asleep (>48h idle), first request takes
+~60s — retry once before assuming it's broken.
+
+**Smoke-test a server-key endpoint** (needs the current secret):
+```bash
+SECRET=$(gcloud run services describe mindcraft-ml --region us-central1 \
+  --format='value(spec.template.spec.containers[0].env)' \
+  | grep -o "ML_SERVICE_SECRET[^;}]*" | sed "s/.*value': '//;s/'.*//")
+curl -s -X POST https://joinmindcraft-mindcraft-ml.hf.space/recommend \
+  -H "X-Service-Key: $SECRET" -H 'Content-Type: application/json' \
+  -d '{"student_id":"<uid>","mode":"exam","target_concepts":[]}'
+```
+
+**Check GCP billing is still open** (this bit us once already):
+```bash
+gcloud billing projects describe mindcraft-93858
+```
+`billingEnabled: true` = fine. `false` = everything ML-adjacent is dead;
+see CLAUDE.md `Known gotchas`.
+
+**Local dev servers** (from CLAUDE.md — unchanged, listed here for
+one-stop reference):
+```bash
+# ML
+cd ml && source mindcraft/bin/activate && ML_AUTH_ENABLED=false FIRESTORE_PROJECT=mindcraft-93858 uvicorn serve:app --host 0.0.0.0 --port 8080
+# Frontend
+cd app && npm run dev        # http://localhost:5173
+```
+
+**App tests / typecheck** (run before trusting a merge or handing off):
+```bash
+cd app && npx tsc --noEmit && npx vitest run
+```
+
+**NOT a one-liner yet — needs a debug window:** Firestore/Storage rules
+deploys. `webhook/scripts/deploy-rules.ts` exists but is a Vercel HTTP
+handler (needs `FIREBASE_SERVICE_ACCOUNT` env + a running server + a
+derived secret) — not a plain CLI invocation. This session did rules
+deploys via raw Firebase Rules API calls (`gcloud auth print-access-token`
++ a Python script), which works but isn't memorizable. **TODO:** turn that
+into a real local script (`webhook/scripts/deploy-firebase-rules.sh`) so
+this becomes a genuine one-liner — worth a short build window.
+
+---
+
 **Debug-window reseed discipline:** it holds live system state + open
 investigations *only*. When an investigation resolves, its conclusion goes
 to CLAUDE.md (`Known gotchas` / `Current state`) or memory, and you reseed
