@@ -587,14 +587,6 @@ export default function Practice() {
     return found
   }
 
-  function showPracticeHome() {
-    setMode('practice')
-    setPPhase('path')
-    setSelected(null)
-    setChecked(false)
-    setHintsShown(0)
-  }
-
   useEffect(() => {
     getUserRole(user.uid).then(role => setIsAdmin(role === 'admin'))
   }, [user.uid])
@@ -1490,23 +1482,6 @@ export default function Practice() {
     sResults
       .filter(r => r.outcome === 0)
       .map(r => ({ label: r.concept_chip, conceptId: chipToConceptId(r.concept_chip) }))
-
-  function savedDraftStatus(draft: PracticeDraft) {
-    const conceptLabel = draft.concept
-      ? (PRACTICE_CONCEPTS.find(c => c.id === draft.concept)?.label ?? bridgeLabel(draft.concept))
-      : ''
-    const prefix = MISSION_LABEL[draft.missionType ?? 'gapscan']
-    if (draft.pPhase === 'session' && draft.questions.length > 0) {
-      return `${prefix} • ${conceptLabel} • Question ${Math.min(draft.qIndex + 1, draft.questions.length)} of ${draft.questions.length}`
-    }
-    if (draft.pPhase === 'level' && conceptLabel) {
-      return `${prefix} • ${conceptLabel} • Pick a level`
-    }
-    if (draft.pPhase === 'confidence') {
-      return `${prefix} • Gap scan ${Math.min(draft.confidenceStep + 1, draft.assessConceptIds.length)} of ${draft.assessConceptIds.length}`
-    }
-    return `${prefix} • ${conceptLabel || 'Ready'}`
-  }
 
   // ── Render ────────────────────────────────────────────────────────────────
 
