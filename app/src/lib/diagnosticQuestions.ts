@@ -39,6 +39,9 @@ export function conceptsForGradeAndGoals(grade: number, goals: string[]): string
 }
 
 /** Skip stems that render blank or broken after LaTeX parsing. */
+// Choices like "![label]()" are image-only with empty src — unrenderable as text.
+const IMAGE_ONLY_CHOICE = /^!\[[^\]]*\]\(\s*\)$/
+
 export function isRenderableQuestion(q: Question): boolean {
   const stripped = q.question
     .replace(/\$\$[\s\S]*?\$\$/g, ' M ')
@@ -50,6 +53,8 @@ export function isRenderableQuestion(q: Question): boolean {
   if (/^\s*if\s+what/i.test(stripped)) return false
   if ((q.choices?.length ?? 0) < 4) return false
   if (q.choices.some(c => !String(c ?? '').trim())) return false
+  // Reject if any choice is a bare image tag with no text alternative
+  if (q.choices.some(c => IMAGE_ONLY_CHOICE.test(String(c ?? '').trim()))) return false
   return true
 }
 
