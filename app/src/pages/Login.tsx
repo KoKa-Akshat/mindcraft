@@ -9,8 +9,8 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { completePostLoginNavigate, resolvePostLoginPath } from '../lib/postLogin'
+import { useSearchParams } from 'react-router-dom'
+import { completePostLoginNavigate, clearAuthHandoff, resolvePostLoginPath } from '../lib/postLogin'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
 import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './Login.module.css'
@@ -81,7 +81,6 @@ export default function Login() {
   const [loading,   setLoading]   = useState(false)
   const [adminFlow, setAdminFlow] = useState<AdminFlow>('auth')
   const [adminPw,   setAdminPw]   = useState('')
-  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
   const routedRef = useRef(false)
@@ -96,6 +95,8 @@ export default function Login() {
       await auth.authStateReady()
       const redirect = await getRedirectResult(auth).catch(() => null)
       if (cancelled || routedRef.current) return
+
+      if (!auth.currentUser) clearAuthHandoff()
 
       if (redirect?.user) {
         setLoading(true)
@@ -132,15 +133,15 @@ export default function Login() {
           await grantAdminRole()
         } catch {
           setError('Not authorized.')
-          await completePostLoginNavigate('/dashboard', navigate)
+          await completePostLoginNavigate('/dashboard')
           return
         }
-        await completePostLoginNavigate('/admin', navigate)
+        await completePostLoginNavigate('/admin')
         return
       }
 
       const dest = await resolvePostLoginPath(uid, { returnTo, grantAdmin: false })
-      await completePostLoginNavigate(dest, navigate)
+      await completePostLoginNavigate(dest)
     } catch (e: unknown) {
       routedRef.current = false
       const code = (e as { code?: string })?.code
