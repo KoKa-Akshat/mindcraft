@@ -542,6 +542,7 @@ export default function GradeOnboard() {
             <div className={s.card}>
               <p className={s.kicker}>Step 1</p>
               <h1 className={s.title}>What grade are you in?</h1>
+              <p className={s.gradeSubtitle}>We&rsquo;ll pick questions matched to your level.</p>
               <div className={s.gradeRow}>
                 {[7, 8, 9, 10, 11].map(g => (
                   <button
@@ -554,6 +555,9 @@ export default function GradeOnboard() {
                   </button>
                 ))}
               </div>
+              <p className={s.gradeNote}>
+                Grades 7–11 covered · 1,500+ questions across all levels
+              </p>
             </div>
           )}
 

@@ -191,6 +191,17 @@
 }
 
 /* --- Grade selector --- */
+.gradeSubtitle {
+  font-size: 14px;
+  color: #6b6252;
+  margin: 0 0 18px;
+}
+.gradeNote {
+  font-size: 11px;
+  color: #9e8f7e;
+  margin: 10px 0 0;
+  letter-spacing: 0.02em;
+}
 .gradeRow {
   display: flex;
   gap: 10px;

@@ -526,11 +526,16 @@ export default function Admin() {
   }
 
   async function retakeGapScan(uid: string) {
+    // Clear all diagnostic state: Firestore flags + practice drafts.
+    // Local storage (practiceState.ts keys) is cleared by the student's
+    // own browser on their next page load once diagnosticCompleted is gone.
     await updateDoc(doc(db, 'users', uid), {
       diagnosticCompleted: deleteField(),
       diagnosticCompletedAt: deleteField(),
+      practiceDrafts: deleteField(),
+      practiceDraftAt: deleteField(),
     })
-    showToast('Gap scan reset — user will be prompted on next login.')
+    showToast('Diagnostic fully reset — student will re-run gap scan on next visit.')
   }
 
   function tutorForStudent(st: AdminStudent): string | null {
