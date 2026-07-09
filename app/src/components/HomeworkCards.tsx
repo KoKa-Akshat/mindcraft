@@ -14,6 +14,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react'
+import { safeSvgHtml } from '../lib/inputGuards'
 import s from './HomeworkCards.module.css'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -111,12 +112,9 @@ export default function HomeworkCards({ session, studentId, apiBase, onComplete,
       )
     }
     if (card.visual_type === 'svg') {
-      return (
-        <div
-          className={s.visualBox}
-          dangerouslySetInnerHTML={{ __html: card.visual_data }}
-        />
-      )
+      const svg = safeSvgHtml(card.visual_data)
+      if (!svg) return null
+      return <div className={s.visualBox} dangerouslySetInnerHTML={{ __html: svg }} />
     }
     return null
   }

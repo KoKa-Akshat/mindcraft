@@ -41,7 +41,7 @@ import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
 import { buildStoryDisplay } from '../lib/storyDisplay'
 import InteractiveWidget from '../components/InteractiveWidget'
-import { sanitizeAnswer, sanitizeProblemText, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
+import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
 
@@ -266,11 +266,7 @@ function bridgeLabel(id: string) {
 }
 
 function safeQuestionSvg(question: Question) {
-  if (question.visual_type !== 'svg' || !question.visual_data) return ''
-  const svg = question.visual_data.trim()
-  if (!svg.startsWith('<svg') || !svg.endsWith('</svg>') || svg.length > 4500) return ''
-  if (/(<script|<foreignObject|javascript:|data:|on\w+=)/i.test(svg)) return ''
-  return svg
+  return safeSvgHtml(question.visual_type === 'svg' ? question.visual_data : null)
 }
 
 function practiceDraftKey(uid: string, type: MissionType) {

@@ -22,6 +22,19 @@ function cleanText(text: string): string {
   return text.replace(CONTROL_CHARS, '').replace(/\s+/g, ' ')
 }
 
+/**
+ * Sanitize an inline SVG string before injecting via dangerouslySetInnerHTML.
+ * Returns the original string only if it passes all safety checks, empty otherwise.
+ * Rejects: script tags, foreignObject, javascript:/data: URIs, inline event handlers.
+ */
+export function safeSvgHtml(svg: string | undefined | null): string {
+  if (!svg) return ''
+  const trimmed = svg.trim()
+  if (!trimmed.startsWith('<svg') || !trimmed.endsWith('</svg>') || trimmed.length > 4500) return ''
+  if (/(<script|<foreignObject|javascript:|data:|on\w+=)/i.test(trimmed)) return ''
+  return trimmed
+}
+
 /** A typed math answer: short, single-line, no markup. */
 export function sanitizeAnswer(text: string): string {
   return cleanText(text).slice(0, MAX_ANSWER_CHARS)

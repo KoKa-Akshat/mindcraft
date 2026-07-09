@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import type { Gap, ExamType } from '../pages/Prep'
 import MathText from './MathText'
+import { safeSvgHtml } from '../lib/inputGuards'
 import s from './PracticeCards.module.css'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -233,8 +234,8 @@ export default function PracticeCards({
             <p className={s.question}><MathText text={q.question} /></p>
 
             {/* Visual */}
-            {q.visual_type === 'svg' && q.visual_data && (
-              <div className={s.visual} dangerouslySetInnerHTML={{ __html: q.visual_data }} />
+            {q.visual_type === 'svg' && safeSvgHtml(q.visual_data) && (
+              <div className={s.visual} dangerouslySetInnerHTML={{ __html: safeSvgHtml(q.visual_data) }} />
             )}
 
             {/* ── Stage 1: Trap identification ────────────────────────────── */}
