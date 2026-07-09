@@ -1,0 +1,32 @@
+.wrap {
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: rgba(29, 58, 138, 0.04);
+  border: 1px solid rgba(29, 58, 138, 0.1);
+}
+
+.desmosHost {
+  width: 100%;
+  max-width: 280px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.fallback {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.fallback figure {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.caption {
+  margin: 8px 0 0;
+  font: 400 11px/1.45 "IBM Plex Mono", monospace;
+  text-align: center;
+}

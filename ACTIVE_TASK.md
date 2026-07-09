@@ -161,6 +161,7 @@ Files changed — `app/src/pages/Login.tsx`, `app/src/pages/Login.module.css`, `
 
 ## Next up (in priority order)
 
+0. **NotebookLM session notes + interactive figures** — spec: `agent_work/cross-cutting/SESSION_NOTEBOOK_ARTIFACTS_PLAN.md`. Two tracks: (A) Desmos figures for graphable questions via inferred `FigureSpec` (Product, ships alone); (B) concept-grouped "notebook" in Notes → select sources → `/synthesize-artifact` (Groq) → flashcards/figure v1 (Product + Engine). v1 cut: flashcards + figure. Start with Track A.
 1. **Wire OpenStax MCQ bank** — `ml/data/openstaxMCQ.json` ready (**221** story-wrapped MCQs, 5 concepts). Product lane: import in `questionBank.ts` like `openstaxQuestions.json`.
 2. **Story Cell Studio scale** — run `--concepts all --refresh` batch to `ml/data/story_cells/batch_all.json` (3-concept LLM pilot ✅ in `batch_llm_002.json`).
 2. **FABLE5 Area 2** — Dashboard personalization: mastery bars, top-6 weaknesses, skeleton shimmer (see `FABLE5_VISION.md §Area 2`)

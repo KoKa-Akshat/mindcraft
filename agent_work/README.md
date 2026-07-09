@@ -38,6 +38,7 @@ split (Engine = `ml/**`, `webhook/**`, `data/**`, `worlds/**`; Product =
 | [cross-cutting/STORY_PERSONALIZATION_PLAN.md](cross-cutting/STORY_PERSONALIZATION_PLAN.md) | Engine (story_worlds JSON) + Product (storyWorldId pref UI) | Open — 18-world taxonomy + minimal user pref hook |
 | [engine/STORY_CELL_SCALE_PLAN.md](engine/STORY_CELL_SCALE_PLAN.md) | Engine (`ml/scripts/`, `ml/data/story_cells/`) | Open — bulk cell generator, priority 15 concepts, world_feedback shared module |
 | [cross-cutting/ACT_DYNAMIC_DIAGNOSTIC_PLAN.md](cross-cutting/ACT_DYNAMIC_DIAGNOSTIC_PLAN.md) | Engine (`ml/scripts/build_act_diagnostic.py`, `ml/data/act/`) + Product (`diagnosticQuestions.ts`, `questionBank.ts`) | Open — revives the real-ACT-exam-data-driven diagnostic (freq-ranked concepts + curated probes), never wired to `/onboard`; converts to C5 `Question` shape |
+| [cross-cutting/SESSION_NOTEBOOK_ARTIFACTS_PLAN.md](cross-cutting/SESSION_NOTEBOOK_ARTIFACTS_PLAN.md) | Product (Track A figures, B1 notebook, B2 UI/renderers) + Engine (B2 `/synthesize-artifact` + Groq) | Open — NotebookLM-style session notes: concept-grouped notebook → select sources → generate flashcards/mindmap/slides/figure; + interactive Desmos question figures via shared `FigureSpec` renderer |
 
 Update the Status column as work lands — don't let this drift like a stale
 changelog; if a spec is fully done and superseded, note that instead of
