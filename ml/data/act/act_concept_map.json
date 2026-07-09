@@ -1,7 +1,39 @@
 {
   "source": "ACT_Question_Bank Question Intelligence sheet",
-  "ontology": "data/ontology_complete.json (37 concepts)",
+  "ontology": "data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json",
+  "ontology_version": "2.2-standardized-act-test2-q1-q7 | v2.3 act test2 q1-q15 | v2.6+combinations",
   "annotated_questions": 327,
+  "act_tested_concepts": [
+    "act_strategy",
+    "algebraic_manipulation",
+    "area_volume",
+    "basic_equations",
+    "basic_probability",
+    "circles_geometry",
+    "descriptive_statistics",
+    "exponent_rules",
+    "exponential_functions",
+    "factoring_polynomials",
+    "fractions_decimals",
+    "functions_basics",
+    "geometric_transformations",
+    "linear_equations",
+    "linear_inequalities",
+    "lines_angles",
+    "measurement_units",
+    "number_properties",
+    "order_of_operations",
+    "polynomials",
+    "quadratic_equations",
+    "radical_expressions",
+    "ratios_proportions",
+    "representation_translation",
+    "right_triangle_geometry",
+    "sequences_series",
+    "systems_of_linear_equations",
+    "triangles_congruence",
+    "trigonometry_basics"
+  ],
   "crosswalk": [
     {
       "primary_topic": "Algebraic Structure and Symbolic Manipulation",
@@ -400,18 +432,6 @@
       "act_high_priority": false
     },
     {
-      "concept_id": "complex_numbers",
-      "concept_name": "Complex Numbers",
-      "question_count": 7,
-      "act_high_priority": false
-    },
-    {
-      "concept_id": "logarithmic_functions",
-      "concept_name": "Logarithmic Functions",
-      "question_count": 7,
-      "act_high_priority": false
-    },
-    {
       "concept_id": "linear_inequalities",
       "concept_name": "Linear Inequalities",
       "question_count": 6,
@@ -426,18 +446,6 @@
     {
       "concept_id": "lines_angles",
       "concept_name": "Lines and Angles",
-      "question_count": 3,
-      "act_high_priority": false
-    },
-    {
-      "concept_id": "conic_sections",
-      "concept_name": "Conic Sections",
-      "question_count": 3,
-      "act_high_priority": false
-    },
-    {
-      "concept_id": "matrices",
-      "concept_name": "Matrices",
       "question_count": 3,
       "act_high_priority": false
     },
@@ -465,6 +473,21 @@
     "ratios_proportions",
     "right_triangle_geometry",
     "trigonometry_basics"
+  ],
+  "act_tested_without_questions": [
+    "act_strategy",
+    "algebraic_manipulation",
+    "exponent_rules",
+    "exponential_functions",
+    "factoring_polynomials",
+    "fractions_decimals",
+    "geometric_transformations",
+    "measurement_units",
+    "number_properties",
+    "order_of_operations",
+    "radical_expressions",
+    "representation_translation",
+    "systems_of_linear_equations"
   ],
   "high_priority_without_questions": [
     "fractions_decimals"
@@ -532,5 +555,10 @@
       ],
       "frequency": 0.07
     }
-  ]
+  ],
+  "bank_conversion": {
+    "converted_questions": 9,
+    "unresolved_or_missing_answer_key": 246,
+    "note": "C5 bank records require a resolvable correctIndex; records with blank or ambiguous answers stay in act_questions.json only."
+  }
 }
