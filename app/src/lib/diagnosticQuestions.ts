@@ -111,7 +111,7 @@ function actAnnotatedProbeScore(q: Question): number {
   return score
 }
 
-function pickBestProbe(pool: Question[], actTrack = false): Question | undefined {
+export function pickBestProbe(pool: Question[], actTrack = false): Question | undefined {
   if (!pool.length) return undefined
   const score = actTrack ? actAnnotatedProbeScore : storyVisualScore
   const ranked = [...pool].sort((a, b) => score(b) - score(a))

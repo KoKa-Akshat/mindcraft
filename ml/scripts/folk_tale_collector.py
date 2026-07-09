@@ -19,9 +19,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
+
+# macOS Python often lacks system certs — Groq calls fail without this.
+try:
+    import certifi
+    os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+except ImportError:
+    pass
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 ML_DIR = SCRIPT_DIR.parent

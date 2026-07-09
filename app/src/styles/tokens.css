@@ -1,0 +1,34 @@
+/* ─────────────────────────────────────────────────────────────
+   Design tokens — single source of truth for STATIC design constants
+   (font stacks, motion curves, shared shadows) that were previously
+   redeclared with the same literal value under different variable
+   names in global.css, styles/paper.css, and components/book/Book.module.css.
+
+   This file only holds values that never change at runtime. The
+   dynamic per-student `theme` object (theme.ink/theme.paper/theme.accent/
+   theme.dim) stays a JS prop — it is NOT a candidate for tokens here.
+
+   CSS custom properties on :root cascade into CSS Modules automatically,
+   so any `.module.css` file may reference `var(--tok-*)` directly.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Font stacks — re-aliased as --f-body/--font-hand/--font-script/etc.
+     across global.css, paper.css, and Book.module.css. Keep those
+     aliases (many components already depend on those names) but point
+     them at one definition. */
+  --tok-font-hand:    "Caveat", cursive;
+  --tok-font-serif:   "Source Serif 4", "DM Serif Display", Georgia, serif;
+  --tok-font-mono:    "IBM Plex Mono", monospace;
+  --tok-font-sans:    "DM Sans", sans-serif;
+  --tok-font-display: "Sora", sans-serif;
+  --tok-font-dm-mono: "DM Mono", monospace;
+
+  /* Motion — the book system's "weighted" ease, reused by components
+     outside the book shell (JarvisGuide, ConceptVignette). */
+  --tok-ease-weight: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Shared elevation shadows — identical values in paper.css
+     (--paper-shadow-*) and Book.module.css (--shadow-*). */
+  --tok-shadow-card: 0 1px 3px rgba(8, 14, 20, 0.12), 0 4px 14px rgba(8, 14, 20, 0.10);
+  --tok-shadow-tip:  0 1px 3px rgba(8, 14, 20, 0.22), 0 2px 1px -1px rgba(8, 14, 20, 0.12);
+}

@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
 import { useSearchParams } from 'react-router-dom'
-import { completePostLoginNavigate, resolvePostLoginPath } from '../lib/postLogin'
+import { completePostLoginNavigate, clearAuthHandoff, resolvePostLoginPath } from '../lib/postLogin'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
 import { WEBHOOK_BASE } from '../lib/mlApi'
 import s from './Login.module.css'
@@ -95,6 +95,8 @@ export default function Login() {
       await auth.authStateReady()
       const redirect = await getRedirectResult(auth).catch(() => null)
       if (cancelled || routedRef.current) return
+
+      if (!auth.currentUser) clearAuthHandoff()
 
       if (redirect?.user) {
         setLoading(true)

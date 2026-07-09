@@ -11,7 +11,9 @@ import { matchSkinForQuestion, type MatchContext } from './storyMatch'
 export type { MatchContext }
 
 type ConceptStory = { conceptId: string; conceptName: string; story: string }
-type ContextFrame = {
+
+/** Shape of `data/questionContextFrames.json` entries — shared with storyDisplay.ts. */
+export type ContextFrame = {
   protagonist: string
   settingLine: string
   questionBridge: string

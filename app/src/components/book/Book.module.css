@@ -37,19 +37,19 @@
 
   /* shadows */
   --shadow-book:  0 2px 4px rgba(8,14,20,0.10), 0 12px 40px rgba(8,14,20,0.30), 0 32px 80px rgba(8,14,20,0.34);
-  --shadow-card:  0 1px 3px rgba(8,14,20,0.12), 0 4px 14px rgba(8,14,20,0.10);
-  --shadow-tip:   0 1px 3px rgba(8,14,20,0.22), 0 2px 1px -1px rgba(8,14,20,0.12);
+  --shadow-card:  var(--tok-shadow-card);
+  --shadow-tip:   var(--tok-shadow-tip);
   --dur-ink:      180ms;
   --dur-wipe:     260ms;
 
   /* type */
-  --font-script:  "Caveat", cursive;
-  --font-body:    "DM Sans", sans-serif;
-  --font-katha:   "Source Serif 4", "DM Serif Display", Georgia, serif;
-  --font-stamp:   "IBM Plex Mono", monospace;
+  --font-script:  var(--tok-font-hand);
+  --font-body:    var(--tok-font-sans);
+  --font-katha:   var(--tok-font-serif);
+  --font-stamp:   var(--tok-font-mono);
 
   /* motion */
-  --ease-weight:  cubic-bezier(0.2, 0, 0, 1);
+  --ease-weight:  var(--tok-ease-weight);
 
   min-height: 100dvh;
   height: 100dvh;

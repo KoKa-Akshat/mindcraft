@@ -17,6 +17,12 @@ import time
 import urllib.error
 import urllib.request
 
+try:
+    import certifi
+    os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+except ImportError:
+    pass
+
 DEFAULT_MODELS = {
     "ollama": "llama3.1:8b",
     "groq": "llama-3.3-70b-versatile",

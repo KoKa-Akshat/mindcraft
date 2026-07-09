@@ -13,12 +13,12 @@
   --paper-rule: rgba(29, 58, 138, 0.09);
   --paper-margin-rule: rgba(193, 18, 31, 0.20);
 
-  --font-hand: "Caveat", cursive;
-  --font-mono: "IBM Plex Mono", monospace;
-  --font-serif: "Source Serif 4", "DM Serif Display", Georgia, serif;
+  --font-hand: var(--tok-font-hand);
+  --font-mono: var(--tok-font-mono);
+  --font-serif: var(--tok-font-serif);
 
-  --paper-shadow-card: 0 1px 3px rgba(8, 14, 20, 0.12), 0 4px 14px rgba(8, 14, 20, 0.10);
-  --paper-shadow-tip: 0 1px 3px rgba(8, 14, 20, 0.22), 0 2px 1px -1px rgba(8, 14, 20, 0.12);
+  --paper-shadow-card: var(--tok-shadow-card);
+  --paper-shadow-tip: var(--tok-shadow-tip);
 
   /* Aliases for pages still using the older app vars. */
   --tx: var(--paper-ink);

@@ -4,8 +4,7 @@
  */
 import type { Question } from './questionBank'
 import { getQuestions } from './questionBank'
-import { isRenderableQuestion } from './diagnosticQuestions'
-import { buildStoryDisplay } from './storyDisplay'
+import { isRenderableQuestion, pickBestProbe } from './diagnosticQuestions'
 
 export interface ProbeOutcome {
   conceptId: string
@@ -79,19 +78,10 @@ export function pickFollowUpQuestion(
   for (const lv of ([level, 1, 2] as const)) {
     const pool = getQuestions(conceptId, lv, 8, [...usedIds], 'General')
       .filter(q => isRenderableQuestion(q) && !usedIds.has(q.id))
-    const ranked = [...pool].sort((a, b) => storyVisualScore(b) - storyVisualScore(a))
-    if (ranked[0]) return ranked[0]
+    const best = pickBestProbe(pool)
+    if (best) return best
   }
   return null
-}
-
-function storyVisualScore(q: Question): number {
-  const d = buildStoryDisplay(q)
-  if (d.table) return 4
-  if (d.visual === 'polygon') return 3
-  if (d.visual === 'vignette') return 2
-  if (d.visual === 'figure') return 1
-  return 0
 }
 
 export function applyProbeOutcome(

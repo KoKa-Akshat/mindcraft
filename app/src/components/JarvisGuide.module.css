@@ -65,7 +65,7 @@
   font: 400 italic 12px/1.35 "Source Serif 4", Georgia, serif;
   color: #6f6a61;
   transform: rotate(-0.4deg);
-  animation: noteWipe 240ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation: noteWipe 240ms var(--tok-ease-weight) both;
   padding-left: 2px;
 }
 

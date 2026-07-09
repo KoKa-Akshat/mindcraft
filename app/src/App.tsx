@@ -42,6 +42,7 @@ import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
 import { fetchKnowledgeGraph } from './lib/graphCache'
 import { isTestProfileEmail, resetStudentProfile } from './lib/testProfile'
+import { clearAuthHandoff, isAuthHandoffActive } from './lib/postLogin'
 
 
 export const UserContext = createContext<User | null>(null)
@@ -100,6 +101,7 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const [authReady, setAuthReady] = useState(false)
   const [user, setUser] = useState<User | null | undefined>(undefined)
+  const [, setHandoffTick] = useState(0)
   const isQA = sessionStorage.getItem('mc-qa-mode') === '1'
 
   useEffect(() => {
@@ -113,7 +115,15 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
     void auth.authStateReady().then(() => setAuthReady(true))
     return unsub
   }, [])
+
+  // Re-render when the post-login handoff window expires so we don't spin forever.
   useEffect(() => {
+    if (!isAuthHandoffActive()) return
+    const id = window.setInterval(() => setHandoffTick(t => t + 1), 500)
+    return () => window.clearInterval(id)
+  }, [authReady, user])
+  useEffect(() => {
+    if (user) clearAuthHandoff()
     if (!user) return
     // Test profiles start fresh even when Firebase restores a persisted session
     // (reload / reopened tab), where Login's routeAfterLogin never runs. Once
@@ -151,6 +161,25 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
     )
   }
   if (!user) {
+    if (isAuthHandoffActive()) {
+      return (
+        <div style={{
+          position: 'fixed', inset: 0, background: '#000',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'flex-start', justifyContent: 'flex-end',
+          padding: '28px 32px', gap: '10px',
+        }}>
+          <div style={{
+            width: 22, height: 22,
+            border: '2px solid rgba(255,255,255,0.12)',
+            borderTopColor: 'rgba(255,255,255,0.7)',
+            borderRadius: '50%',
+            animation: 'spin 0.75s linear infinite',
+          }} />
+          <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+        </div>
+      )
+    }
     const next = encodeURIComponent(location.pathname + location.search)
     return <Navigate to={`/login?next=${next}`} replace />
   }

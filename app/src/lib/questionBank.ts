@@ -2222,9 +2222,19 @@ export function getQuestions(
   examType: Question['examTag'] | 'General' = 'General',
   format?: FormatId,
   preferStoryCells = false,
+  grade?: number,
 ): Question[] {
   const id = bankConceptId(conceptId)
-  const basePool = Q.filter(q => q.conceptId === id && q.level === level)
+  const basePool = Q.filter(q => {
+    if (q.conceptId !== id || q.level !== level) return false
+    // When a student grade is provided, filter to questions whose grade band
+    // includes that grade. Falls back to full pool if band excludes everything.
+    if (grade != null) {
+      const band = questionGradeBand(q)
+      if (band.min > grade || band.max < grade) return false
+    }
+    return true
+  })
   const formatPool = format ? basePool.filter(q => questionFormat(q) === format) : []
   const afterFormat = formatPool.length > 0 ? formatPool : basePool
   const examPool = examType === 'General' ? [] : afterFormat.filter(q => q.examTag === examType)
@@ -2363,4 +2373,48 @@ export function questionCount(conceptId: string, level: 1|2|3): number {
 export function hasFormatQuestions(conceptId: string, format: FormatId): boolean {
   const id = bankConceptId(conceptId)
   return Q.some(q => q.conceptId === id && questionFormat(q) === format)
+}
+
+// ── Grade band derivation ────────────────────────────────────────────────
+// Derived from the same GRADE_CONCEPTS sequence used by the diagnostic.
+// Concepts first introduced at grade N span (N, N+2) by default; level
+// bumps add +1/+2 per difficulty step (level 1 = base, level 3 = advanced).
+// ACT/SAT-tagged items are always grades 10–12 test-prep regardless of concept.
+
+const CONCEPT_INTRO_GRADE: Record<string, number> = (() => {
+  const order: [number, string[]][] = [
+    [7,  ['fractions_decimals','ratios_proportions','order_of_operations','number_properties',
+          'descriptive_statistics','area_volume','lines_angles','measurement_units','basic_probability']],
+    [8,  ['linear_equations','exponent_rules','right_triangle_geometry','triangles_congruence']],
+    [9,  ['linear_inequalities','systems_of_linear_equations','functions_basics','geometric_transformations']],
+    [10, ['quadratic_equations','factoring_polynomials','radical_expressions','exponential_functions','sequences_series']],
+    [11, ['circles_geometry','trigonometry_basics','coordinate_geometry']],
+    [12, ['combinatorics','matrices','complex_numbers','rational_expressions','logarithmic_functions',
+          'vectors_basics','polynomial_operations','absolute_value']],
+  ]
+  const map: Record<string, number> = {}
+  for (const [grade, concepts] of order) {
+    for (const c of concepts) if (!(c in map)) map[c] = grade
+  }
+  return map
+})()
+
+export interface GradeBand { min: number; max: number; source: string }
+
+/**
+ * Derive a grade band for a question from its conceptId + level.
+ * Does NOT require any JSON change — computed at runtime from the
+ * same GRADE_CONCEPTS source that drives the diagnostic.
+ *
+ * ACT/SAT items are pinned to 10–12 regardless of concept.
+ */
+export function questionGradeBand(q: Question): GradeBand {
+  if (q.examTag === 'ACT' || q.examTag === 'SAT') {
+    return { min: 10, max: 12, source: 'exam_tag' }
+  }
+  const baseGrade = CONCEPT_INTRO_GRADE[bankConceptId(q.conceptId)] ?? 9
+  const levelShift = (q.level ?? 1) - 1   // level 1 → +0, level 2 → +1, level 3 → +2
+  const min = Math.min(baseGrade + levelShift, 11)
+  const max = Math.min(min + 2, 12)
+  return { min, max, source: 'derived_from_concept_and_level' }
 }

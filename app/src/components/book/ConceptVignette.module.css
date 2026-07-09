@@ -11,7 +11,7 @@
 .draw {
   stroke-dasharray: 220;
   stroke-dashoffset: 220;
-  animation: vignetteDraw 2.4s cubic-bezier(0.2, 0, 0, 1) forwards,
+  animation: vignetteDraw 2.4s var(--tok-ease-weight) forwards,
              vignetteBreathe 6s ease-in-out 2.4s infinite;
 }
 
@@ -21,7 +21,7 @@
   transform-box: fill-box;
 }
 
-.bar { animation: vignetteBarRise 1.1s cubic-bezier(0.2, 0, 0, 1) both; transform-origin: bottom; transform-box: fill-box; }
+.bar { animation: vignetteBarRise 1.1s var(--tok-ease-weight) both; transform-origin: bottom; transform-box: fill-box; }
 .bar1 { animation-delay: 0.15s; }
 .bar2 { animation-delay: 0.3s; }
 .bar3 { animation-delay: 0.45s; }

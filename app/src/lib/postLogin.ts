@@ -1,10 +1,9 @@
 /**
- * Post-login routing — shared path resolution + hard navigation.
+ * Post-login routing — shared path resolution + guarded navigation.
  *
- * Uses window.location.replace (not React Router navigate) so Firebase auth
- * persistence is fully loaded before AuthGuard runs on the destination page.
- * Client-side navigate after signInWithPopup was racing AuthGuard and
- * bouncing all users back to /login.
+ * Sets a short-lived session handoff flag so AuthGuard does not treat a
+ * freshly signed-in user as logged out while Firebase persistence settles.
+ * Prefer client-side navigate (no full reload) once authStateReady resolves.
  */
 import { auth } from '../firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
@@ -12,6 +11,8 @@ import { db } from '../firebase'
 import { isDiagnosticComplete } from './practiceState'
 import {
   clearStudentDiagnosticState,
+  isDevBypassEmail,
+  isDiagResetEmail,
   isTestProfileEmail,
   purgeStudentLearningHistory,
 } from './testProfile'
@@ -19,6 +20,28 @@ import {
 export type PostLoginOpts = {
   returnTo: string | null
   grantAdmin: boolean
+}
+
+const AUTH_HANDOFF_KEY = 'mc-auth-handoff'
+const AUTH_HANDOFF_MS = 10_000
+
+/** Set while routing away from /login so AuthGuard waits instead of bouncing. */
+export function markAuthHandoff(): void {
+  try { sessionStorage.setItem(AUTH_HANDOFF_KEY, String(Date.now())) } catch { /* ignore */ }
+}
+
+export function clearAuthHandoff(): void {
+  try { sessionStorage.removeItem(AUTH_HANDOFF_KEY) } catch { /* ignore */ }
+}
+
+export function isAuthHandoffActive(): boolean {
+  try {
+    const raw = sessionStorage.getItem(AUTH_HANDOFF_KEY)
+    if (!raw) return false
+    return Date.now() - Number(raw) < AUTH_HANDOFF_MS
+  } catch {
+    return false
+  }
 }
 
 async function ensureStudentDoc(email: string | null | undefined, displayName: string | null | undefined, uid: string) {
@@ -61,6 +84,16 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
     await ensureStudentDoc(email, currentUser?.displayName, uid)
   }
 
+  // Dev accounts skip the diagnostic gate entirely.
+  if (isDevBypassEmail(email)) return opts.returnTo ?? '/dashboard'
+
+  // Diag-reset accounts re-run the gap scan on every login (diagnostic only —
+  // KG and practice history are preserved so you can compare dashboard effects).
+  if (isDiagResetEmail(email)) {
+    await clearStudentDiagnosticState(uid)
+    return '/onboard?entry=1'
+  }
+
   // Always gate students on diagnostic — ignore ?next= when scan isn't done.
   const done = await isDiagnosticComplete(uid)
   if (!done) return '/onboard?entry=1'
@@ -68,9 +101,21 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
   return opts.returnTo ?? '/dashboard'
 }
 
-/** Wait for auth persistence, then hard-navigate (full remount, no router race). */
-export async function completePostLoginNavigate(path: string): Promise<void> {
+/** Wait for auth persistence, then navigate without racing AuthGuard. */
+export async function completePostLoginNavigate(
+  path: string,
+  navigate?: (path: string, opts?: { replace?: boolean }) => void,
+): Promise<void> {
+  markAuthHandoff()
   await auth.authStateReady()
-  if (!auth.currentUser) throw new Error('auth/missing-user')
+  if (!auth.currentUser) {
+    clearAuthHandoff()
+    throw new Error('auth/missing-user')
+  }
+  await auth.currentUser.getIdToken()
+  if (navigate) {
+    navigate(path, { replace: true })
+    return
+  }
   window.location.replace(path)
 }

@@ -40,8 +40,15 @@ import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
 import { buildStoryDisplay } from '../lib/storyDisplay'
+import {
+  PRACTICE_DRAFT_VERSION,
+  practiceDraftKey,
+  legacyPracticeDraftKey,
+  MISSION_LABELS as MISSION_LABEL,
+  type PracticeMissionType,
+} from '../lib/practiceDrafts'
 import InteractiveWidget from '../components/InteractiveWidget'
-import { sanitizeAnswer, sanitizeProblemText, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
+import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
 
@@ -57,7 +64,6 @@ const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
 const MASTERY_EXIT_MIN    = 5
 const MASTERY_EXIT_ACC    = 0.8
 const MASTERY_EXIT_STREAK = 3
-const PRACTICE_DRAFT_VERSION = 2
 const PATH_SLOT_COUNT = 6
 
 type PracticePhase =
@@ -69,12 +75,7 @@ type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
 // A resumable mission is one of three kinds; each persists in its own slot so a
 // weakness AND a learn mission can be in-progress at once.
-type MissionType   = 'weakness' | 'learn' | 'gapscan'
-const MISSION_LABEL: Record<MissionType, string> = {
-  weakness: 'Weakness practice',
-  learn:    'New concept',
-  gapscan:  'Gap scan',
-}
+type MissionType   = PracticeMissionType
 
 type PracticeDraft = {
   version: number
@@ -266,20 +267,9 @@ function bridgeLabel(id: string) {
 }
 
 function safeQuestionSvg(question: Question) {
-  if (question.visual_type !== 'svg' || !question.visual_data) return ''
-  const svg = question.visual_data.trim()
-  if (!svg.startsWith('<svg') || !svg.endsWith('</svg>') || svg.length > 4500) return ''
-  if (/(<script|<foreignObject|javascript:|data:|on\w+=)/i.test(svg)) return ''
-  return svg
+  return safeSvgHtml(question.visual_type === 'svg' ? question.visual_data : null)
 }
 
-function practiceDraftKey(uid: string, type: MissionType) {
-  return `mindcraft:exam-help:${uid}:${type}`
-}
-// Pre-mission-type single-slot key — migrated into the gap-scan slot on load.
-function legacyPracticeDraftKey(uid: string) {
-  return `mindcraft:exam-help:${uid}:process-1`
-}
 const MISSION_TYPES: MissionType[] = ['weakness', 'learn', 'gapscan']
 
 function conceptsFromIds(ids: string[]) {
@@ -595,14 +585,6 @@ export default function Practice() {
       } catch { /* ignore */ }
     }
     return found
-  }
-
-  function showPracticeHome() {
-    setMode('practice')
-    setPPhase('path')
-    setSelected(null)
-    setChecked(false)
-    setHintsShown(0)
   }
 
   useEffect(() => {
@@ -1500,23 +1482,6 @@ export default function Practice() {
     sResults
       .filter(r => r.outcome === 0)
       .map(r => ({ label: r.concept_chip, conceptId: chipToConceptId(r.concept_chip) }))
-
-  function savedDraftStatus(draft: PracticeDraft) {
-    const conceptLabel = draft.concept
-      ? (PRACTICE_CONCEPTS.find(c => c.id === draft.concept)?.label ?? bridgeLabel(draft.concept))
-      : ''
-    const prefix = MISSION_LABEL[draft.missionType ?? 'gapscan']
-    if (draft.pPhase === 'session' && draft.questions.length > 0) {
-      return `${prefix} • ${conceptLabel} • Question ${Math.min(draft.qIndex + 1, draft.questions.length)} of ${draft.questions.length}`
-    }
-    if (draft.pPhase === 'level' && conceptLabel) {
-      return `${prefix} • ${conceptLabel} • Pick a level`
-    }
-    if (draft.pPhase === 'confidence') {
-      return `${prefix} • Gap scan ${Math.min(draft.confidenceStep + 1, draft.assessConceptIds.length)} of ${draft.assessConceptIds.length}`
-    }
-    return `${prefix} • ${conceptLabel || 'Ready'}`
-  }
 
   // ── Render ────────────────────────────────────────────────────────────────
 

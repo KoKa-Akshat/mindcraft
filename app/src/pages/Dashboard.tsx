@@ -411,6 +411,7 @@ export default function Dashboard() {
               <p className={s.chapterTurnStory}>{storyTeaser(turningConceptId, 140)}</p>
             </div>
           )}
+          <div className={turningConceptId ? s.pageTurnHidden : undefined}>
           <StickerLayer
             stickers={dashboardStickers}
             editable={styleDrawerOpen}
@@ -550,6 +551,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+          </div>
         </BookPage>
       }
       right={
@@ -574,6 +576,7 @@ export default function Dashboard() {
               <span className={s.chapterTurnHint}>turning page…</span>
             </div>
           )}
+          <div className={turningConceptId ? s.pageTurnHidden : undefined}>
           <PageFlipTransition viewKey={view}>
             {todayMode ? (
               <>
@@ -728,6 +731,7 @@ export default function Dashboard() {
               </div>
             ) : null}
           </PageFlipTransition>
+          </div>
         </BookPage>
       }
     />
