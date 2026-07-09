@@ -116,6 +116,11 @@ def run(dry_run: bool = False, force: bool = False) -> None:
                 print(f"  ERROR [{question['id']} choice {dt['choice_index']}]: {exc}", file=sys.stderr)
                 errors += 1
 
+            # Save progress every entry so a long Groq run is not lost on interrupt.
+            if not dry_run and filled % 5 == 0:
+                save_cache(cache)
+                QUEUE_PATH.write_text(json.dumps(queue, indent=2))
+
     if not dry_run:
         save_cache(cache)
         # Update _meta
