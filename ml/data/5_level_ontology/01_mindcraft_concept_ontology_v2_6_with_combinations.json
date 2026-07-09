@@ -190,7 +190,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.4,
+        "overall": 0.287,
         "hardest_ingredient_id": "fractions_decimals__fraction_arithmetic",
         "notes": "Students mechanically apply algorithms without understanding what a fraction represents, causing systematic errors when problems appear in non-standard form."
       },
@@ -452,7 +452,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.38,
+        "overall": 0.321,
         "hardest_ingredient_id": "ratios_proportions__cross_multiply_meaning",
         "notes": "Students cross-multiply mechanically but cannot set up proportions correctly from word problems because they confuse which quantity belongs in the numerator."
       },
@@ -671,7 +671,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.35,
+        "overall": 0.352,
         "hardest_ingredient_id": "order_of_operations__left_to_right_rule",
         "notes": "Students memorize PEMDAS as a strict left-to-right sequence, missing that multiplication and division are co-equal and must be done left to right among themselves."
       },
@@ -874,7 +874,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.38,
+        "overall": 0.286,
         "hardest_ingredient_id": "basic_equations__equals_sign_balance",
         "notes": "The equals-sign misconception — treating it as a compute command rather than a balance assertion — underlies a large proportion of algebraic errors across all subsequent topics."
       },
@@ -1120,7 +1120,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.42,
+        "overall": 0.385,
         "hardest_ingredient_id": "linear_equations__slope_meaning",
         "notes": "Students calculate slope correctly but cannot interpret it as a rate of change with units, causing systematic failures on contextual word problems."
       },
@@ -1370,7 +1370,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.46,
+        "overall": 0.293,
         "hardest_ingredient_id": "functions_basics__function_notation_meaning",
         "notes": "Students treat f(x) as f times x, producing cascading errors across every subsequent function topic."
       },
@@ -1636,7 +1636,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.38,
+        "overall": 0.315,
         "hardest_ingredient_id": "right_triangle__sohcahtoa_setup",
         "notes": "Students know SOHCAHTOA as a mnemonic but cannot correctly identify opposite and adjacent sides relative to a chosen angle, making any ratio setup fail."
       },
@@ -2607,7 +2607,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.4,
+        "overall": 0.436,
         "hardest_ingredient_id": "linear_inequalities__flip_rule",
         "notes": "Students apply equation-solving steps correctly but forget the flip rule when multiplying or dividing by a negative — a single-step rule with outsized failure rate."
       },
@@ -2843,7 +2843,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.45,
+        "overall": 0.347,
         "hardest_ingredient_id": "systems__no_solution_infinite",
         "notes": "Students can solve when a unique solution exists but break completely when the system has no solution or infinite solutions because they have no geometric intuition for what those cases mean."
       },
@@ -3056,7 +3056,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.42,
+        "overall": 0.267,
         "hardest_ingredient_id": "exponent_rules__negative_exponents",
         "notes": "Negative exponents are the single most-failed exponent topic — students either ignore the negative or move the wrong factor to the denominator."
       },
@@ -3314,7 +3314,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.38,
+        "overall": 0.299,
         "hardest_ingredient_id": "polynomials__foil_expansion",
         "notes": "Students correctly add and subtract polynomials but fail at multiplication, either forgetting to distribute every term or misapplying the distributive property."
       },
@@ -3541,7 +3541,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.5,
+        "overall": 0.335,
         "hardest_ingredient_id": "factoring_polynomials__ac_method",
         "notes": "Students can factor when the leading coefficient is 1 but fail consistently when it is not — the ac method is the most-skipped skill in the entire algebra curriculum."
       },
@@ -3757,7 +3757,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.45,
+        "overall": 0.214,
         "hardest_ingredient_id": "radicals__adding_radicals",
         "notes": "Students correctly simplify individual radicals but fail when adding them — they add the radicands the way they add like terms, not understanding that the index not the radicand determines like terms."
       },
@@ -3971,7 +3971,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.5,
+        "overall": 0.541,
         "hardest_ingredient_id": "quadratics__discriminant_meaning",
         "notes": "Students apply the quadratic formula correctly but cannot predict the nature of solutions from the discriminant, and cannot connect the algebraic solutions to the graph's x-intercepts."
       },
@@ -4228,7 +4228,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.35,
+        "overall": 0.303,
         "hardest_ingredient_id": "descriptive_statistics__mean_vs_median",
         "notes": "Students compute mean and median correctly in isolation but cannot choose which measure is more appropriate given skewed data or outliers."
       },
@@ -4462,7 +4462,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.4,
+        "overall": 0.375,
         "hardest_ingredient_id": "basic_probability__conditional_probability",
         "notes": "Students confuse P(A and B) with P(A or B) and fail to recognize when events are independent versus dependent — the conditional probability concept breaks down completely without independence intuition."
       },
@@ -5086,7 +5086,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.44,
+        "overall": 0.362,
         "hardest_ingredient_id": "sequences__geometric_series_sum",
         "notes": "Students identify sequence types correctly but cannot derive or apply the sum formula for geometric series, especially with fractional ratios."
       },
@@ -5295,7 +5295,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.32,
+        "overall": 0.236,
         "hardest_ingredient_id": "lines_angles__transversal_angles",
         "notes": "Students know individual angle relationships but cannot track which pairs are equal and which are supplementary when a transversal crosses parallel lines."
       },
@@ -5493,7 +5493,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.35,
+        "overall": 0.222,
         "hardest_ingredient_id": "triangles__similarity_ratios",
         "notes": "Students correctly identify similar triangles but set up the ratio incorrectly, matching sides from different triangles in the same ratio."
       },
@@ -5662,7 +5662,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.42,
+        "overall": 0.34,
         "hardest_ingredient_id": "circles__inscribed_angle",
         "notes": "Students confuse central angles with inscribed angles and apply the doubling relationship in the wrong direction."
       },
@@ -5855,7 +5855,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.38,
+        "overall": 0.308,
         "hardest_ingredient_id": "area_volume__composite_figures",
         "notes": "Students know individual formulas but cannot decompose composite figures into standard shapes, leading to either double-counting or missing regions."
       },
@@ -6073,7 +6073,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.38,
+        "overall": 0.391,
         "hardest_ingredient_id": "transformations__rotation_rules",
         "notes": "Students handle translations and reflections correctly but apply rotation rules incorrectly, especially confusing 90 degree clockwise and counterclockwise coordinate changes."
       },
@@ -7918,7 +7918,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.44,
+        "overall": 0.261,
         "hardest_ingredient_id": "number_properties__factor_count_exactly_three",
         "notes": "Students often know how to list factors but do not see structural shortcuts, especially that perfect squares have an odd number of factors and squares of primes have exactly three factors."
       },
@@ -8254,7 +8254,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.43,
+        "overall": 0.305,
         "hardest_ingredient_id": "measurement_units__unit_label_consistency",
         "notes": "Students often do the arithmetic but lose the units, causing wrong setup in word problems and conversion tasks."
       },
@@ -8496,7 +8496,7 @@
         ]
       },
       "population_failure_prior": {
-        "overall": 0.49,
+        "overall": 0.381,
         "hardest_ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
         "notes": "Students can often solve x-only equations but collapse when letters other than x appear because they stop seeing algebra as structure-preserving operations."
       },
