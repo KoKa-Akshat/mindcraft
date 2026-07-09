@@ -338,7 +338,6 @@ export default function ConceptChapterPage() {
   const [spreadIdx, setSpreadIdx] = useState(() => (
     hasSeenStory && firstQuestionSpread > 0 ? firstQuestionSpread : 0
   ))
-  const [flipping, setFlipping] = useState(false)
 
   // Mark the story as seen once the student reaches any question spread.
   useEffect(() => {
@@ -490,11 +489,7 @@ export default function ConceptChapterPage() {
       return
     }
     setDir(d)
-    setFlipping(true)
-    window.setTimeout(() => {
-      setSpreadIdx(i)
-      setFlipping(false)
-    }, 320)
+    setSpreadIdx(i)
   }
 
   // Touch swipe — flip pages like a real book on iPad. Ignores gestures that
@@ -873,7 +868,6 @@ export default function ConceptChapterPage() {
         left={(
           <BookPage
             side="left"
-            flipping={flipping && dir === 'f'}
             runningHead={runningHeadFor(spread.left)}
             folio={<span>page {folioNum(spreadIdx, 'left')}</span>}
           >
@@ -886,7 +880,6 @@ export default function ConceptChapterPage() {
           <BookPage
             side="right"
             ribbon={spread.left.kind === 'cover'}
-            flipping={flipping && dir === 'f'}
             runningHead={runningHeadFor(spread.right)}
             folio={<span>page {folioNum(spreadIdx, 'right')}</span>}
           >
