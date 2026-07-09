@@ -129,7 +129,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .math-buddy:before{left:31px}
 .math-buddy:after{right:31px}
 .math-buddy span{position:relative;z-index:1;margin-top:20px;color:#fff;font-family:"Fredoka",system-ui,sans-serif;font-size:42px;font-weight:700;line-height:1}
-.stats{display:flex;gap:34px;max-width:none;margin-top:36px;border:none;background:transparent;box-shadow:none}
+.stats{display:flex;flex-wrap:wrap;gap:20px 34px;max-width:none;margin-top:36px;border:none;background:transparent;box-shadow:none}
 .stat{background:transparent;padding:0;border:none;box-shadow:none;flex:0 0 auto}
 .stat strong{display:block;font-size:34px;line-height:1;color:var(--leaf);letter-spacing:-.04em;font-family:"Fredoka",system-ui,sans-serif}
 .stat span{display:block;margin-top:8px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#7a806f;position:relative;z-index:2}
@@ -261,7 +261,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .tryapp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:28px}
 .tryapp-note{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a39b8e}
 .notebook-photo{margin:18px 0 0}
-.notebook-photo img{width:100%;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
+.notebook-photo img,.notebook-photo svg{display:block;width:100%;height:auto;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
 .notebook-photo figcaption{margin-top:12px;text-align:center;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
 .graph-card{filter:drop-shadow(0 18px 30px rgba(20,58,46,.10))}
 .graph-line{stroke-dasharray:310;stroke-dashoffset:310;animation:drawGraph 2.4s var(--ease) forwards}
@@ -325,6 +325,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .board-note{display:none}
   .hero-actions .btn{width:100%}
   .photo{min-height:390px}
+}
+@media(min-width:601px) and (max-width:920px){
+  .founder-card{min-height:clamp(300px,44vw,380px)}
+  .founder-face{grid-template-columns:min(220px,36%) 1fr;grid-template-rows:none;align-items:start;gap:24px;padding:clamp(26px,3vw,34px)}
+  .founder-photo{width:100%;aspect-ratio:4/5;justify-self:stretch}
 }
 @media(max-width:560px){
   section{padding:82px 20px}
@@ -696,34 +701,34 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 
           <article class="tcard" onclick="this.classList.toggle('tcard-open')">
             <div class="tcard-front">
-              <p class="tcard-q">"She opened the homework without being asked."</p>
+              <p class="tcard-q"></p>
               <span class="tcard-more">read more +</span>
             </div>
             <div class="tcard-back">
-              <p>"She opened the homework without being asked. That was new. Three weeks in and I stopped nagging. I don't know what they did but it's working."</p>
-              <cite>Gill, parent of 9th grader</cite>
+              <p></p>
+              <cite></cite>
             </div>
           </article>
 
           <article class="tcard" onclick="this.classList.toggle('tcard-open')">
             <div class="tcard-front">
-              <p class="tcard-q">"I saw it before my tutor even finished."</p>
+              <p class="tcard-q"></p>
               <span class="tcard-more">read more +</span>
             </div>
             <div class="tcard-back">
-              <p>"I saw it before my tutor even finished the problem. I never thought I was the type of person who just gets math. Turns out I just needed the right starting point."</p>
-              <cite>Seb, 10th grade</cite>
+              <p></p>
+              <cite></cite>
             </div>
           </article>
 
           <article class="tcard" onclick="this.classList.toggle('tcard-open')">
             <div class="tcard-front">
-              <p class="tcard-q">"The tutor already knew where she was stuck."</p>
+              <p class="tcard-q"></p>
               <span class="tcard-more">read more +</span>
             </div>
             <div class="tcard-back">
-              <p>"The tutor already knew where she was stuck before the first session started. We didn't have to explain anything. They just picked up and went."</p>
-              <cite>Priya, parent of 8th grader</cite>
+              <p></p>
+              <cite></cite>
             </div>
           </article>
 
