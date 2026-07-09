@@ -22,12 +22,20 @@ export function isTestProfileEmail(email: string | null | undefined): boolean {
   return !!email && TEST_PROFILE_EMAILS.has(email.trim().toLowerCase())
 }
 
-// Dev accounts that bypass the diagnostic gate but keep their data intact.
-// No reset — learning history is preserved between sessions.
-const DEV_BYPASS_EMAILS = new Set(['akshatkoirala@gmail.com'])
+// Dev accounts that bypass the diagnostic gate with no reset at all.
+const DEV_BYPASS_EMAILS = new Set<string>([])
 
 export function isDevBypassEmail(email: string | null | undefined): boolean {
   return !!email && DEV_BYPASS_EMAILS.has(email.trim().toLowerCase())
+}
+
+// Accounts where ONLY the diagnostic state is cleared on every login so they
+// can re-run the gap scan and see how different inputs change the dashboard.
+// KG, practice history, and interactions are preserved.
+const DIAG_RESET_EMAILS = new Set(['akshatkoirala@gmail.com'])
+
+export function isDiagResetEmail(email: string | null | undefined): boolean {
+  return !!email && DIAG_RESET_EMAILS.has(email.trim().toLowerCase())
 }
 
 /** Remove per-user practice/diagnostic state from this browser. */

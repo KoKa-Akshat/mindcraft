@@ -12,6 +12,7 @@ import { isDiagnosticComplete } from './practiceState'
 import {
   clearStudentDiagnosticState,
   isDevBypassEmail,
+  isDiagResetEmail,
   isTestProfileEmail,
   purgeStudentLearningHistory,
 } from './testProfile'
@@ -83,8 +84,15 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
     await ensureStudentDoc(email, currentUser?.displayName, uid)
   }
 
-  // Dev accounts skip the diagnostic gate — their learning data is preserved.
+  // Dev accounts skip the diagnostic gate entirely.
   if (isDevBypassEmail(email)) return opts.returnTo ?? '/dashboard'
+
+  // Diag-reset accounts re-run the gap scan on every login (diagnostic only —
+  // KG and practice history are preserved so you can compare dashboard effects).
+  if (isDiagResetEmail(email)) {
+    await clearStudentDiagnosticState(uid)
+    return '/onboard?entry=1'
+  }
 
   // Always gate students on diagnostic — ignore ?next= when scan isn't done.
   const done = await isDiagnosticComplete(uid)
