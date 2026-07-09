@@ -9,7 +9,7 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { completePostLoginNavigate, resolvePostLoginPath } from '../lib/postLogin'
 import { loginBlockedForMs, recordLoginFailure, clearLoginFailures } from '../lib/inputGuards'
 import { WEBHOOK_BASE } from '../lib/mlApi'
@@ -81,6 +81,7 @@ export default function Login() {
   const [loading,   setLoading]   = useState(false)
   const [adminFlow, setAdminFlow] = useState<AdminFlow>('auth')
   const [adminPw,   setAdminPw]   = useState('')
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const returnTo = safeReturnPath(searchParams.get('next'))
   const routedRef = useRef(false)
@@ -131,15 +132,15 @@ export default function Login() {
           await grantAdminRole()
         } catch {
           setError('Not authorized.')
-          await completePostLoginNavigate('/dashboard')
+          await completePostLoginNavigate('/dashboard', navigate)
           return
         }
-        await completePostLoginNavigate('/admin')
+        await completePostLoginNavigate('/admin', navigate)
         return
       }
 
       const dest = await resolvePostLoginPath(uid, { returnTo, grantAdmin: false })
-      await completePostLoginNavigate(dest)
+      await completePostLoginNavigate(dest, navigate)
     } catch (e: unknown) {
       routedRef.current = false
       const code = (e as { code?: string })?.code
