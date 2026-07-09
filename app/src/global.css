@@ -68,9 +68,9 @@
   --red:     #FF6B6B;
 
   /* Typography */
-  --f-display: 'Sora', sans-serif;
-  --f-body:    'DM Sans', sans-serif;
-  --f-mono:    'DM Mono', monospace;
+  --f-display: var(--tok-font-display);
+  --f-body:    var(--tok-font-sans);
+  --f-mono:    var(--tok-font-dm-mono);
   --f:         var(--f-body);
 }
 
