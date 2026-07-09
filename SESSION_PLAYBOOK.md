@@ -48,6 +48,17 @@ FABLE5_VISION) → ACTIVE_TASK.md (don't spec what's in flight) → existing
 (targeted greps). Write spec → label lanes → update `agent_work/README.md`
 → commit → close.
 
+**Two-phase, not one call — retrieval first, synthesis on request.** When
+a build window is pointed at documents ("read these, then build"), its
+FIRST turn is retrieval only: read, report back what's new, what overlaps
+existing `agent_work/` specs, what's missing — no spec-writing yet. Do not
+start synthesizing (deciding open questions, drafting the build file)
+until you send an explicit go-ahead ("write the spec now" / "build it").
+This is also the natural Sonnet→Opus boundary from §3 — retrieval runs
+cheap, synthesis is the trigger to switch up — but the real reason is
+control: you may want to redirect after seeing what's in the docs, and an
+auto-synthesized spec you didn't ask for yet is wasted work either way.
+
 **Implementer window:** reads AGENTS_QUICKSTART + ACTIVE_TASK.md + the one
 `agent_work/` spec it's assigned. Codes in its lane, verifies, commits,
 pushes, updates ACTIVE_TASK.md, closes.
