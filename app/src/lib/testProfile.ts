@@ -23,6 +23,7 @@ export function isTestProfileEmail(email: string | null | undefined): boolean {
 }
 
 // Dev accounts that bypass the diagnostic gate but keep their data intact.
+// No reset — learning history is preserved between sessions.
 const DEV_BYPASS_EMAILS = new Set(['akshatkoirala@gmail.com'])
 
 export function isDevBypassEmail(email: string | null | undefined): boolean {
