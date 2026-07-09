@@ -40,6 +40,13 @@ import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
 import { buildStoryDisplay } from '../lib/storyDisplay'
+import {
+  PRACTICE_DRAFT_VERSION,
+  practiceDraftKey,
+  legacyPracticeDraftKey,
+  MISSION_LABELS as MISSION_LABEL,
+  type PracticeMissionType,
+} from '../lib/practiceDrafts'
 import InteractiveWidget from '../components/InteractiveWidget'
 import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
@@ -57,7 +64,6 @@ const MAX_SESSION    = 14   // hard cap when re-queuing wrong answers
 const MASTERY_EXIT_MIN    = 5
 const MASTERY_EXIT_ACC    = 0.8
 const MASTERY_EXIT_STREAK = 3
-const PRACTICE_DRAFT_VERSION = 2
 const PATH_SLOT_COUNT = 6
 
 type PracticePhase =
@@ -69,12 +75,7 @@ type Mode          = 'practice' | 'solver'
 type Confidence    = 'easy' | 'kinda' | 'hard'
 // A resumable mission is one of three kinds; each persists in its own slot so a
 // weakness AND a learn mission can be in-progress at once.
-type MissionType   = 'weakness' | 'learn' | 'gapscan'
-const MISSION_LABEL: Record<MissionType, string> = {
-  weakness: 'Weakness practice',
-  learn:    'New concept',
-  gapscan:  'Gap scan',
-}
+type MissionType   = PracticeMissionType
 
 type PracticeDraft = {
   version: number
@@ -269,13 +270,6 @@ function safeQuestionSvg(question: Question) {
   return safeSvgHtml(question.visual_type === 'svg' ? question.visual_data : null)
 }
 
-function practiceDraftKey(uid: string, type: MissionType) {
-  return `mindcraft:exam-help:${uid}:${type}`
-}
-// Pre-mission-type single-slot key — migrated into the gap-scan slot on load.
-function legacyPracticeDraftKey(uid: string) {
-  return `mindcraft:exam-help:${uid}:process-1`
-}
 const MISSION_TYPES: MissionType[] = ['weakness', 'learn', 'gapscan']
 
 function conceptsFromIds(ids: string[]) {

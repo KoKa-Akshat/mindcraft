@@ -26,7 +26,7 @@ export function practiceDraftKey(uid: string, type: PracticeMissionType) {
   return `mindcraft:exam-help:${uid}:${type}`
 }
 
-function legacyPracticeDraftKey(uid: string) {
+export function legacyPracticeDraftKey(uid: string) {
   return `mindcraft:exam-help:${uid}:process-1`
 }
 
