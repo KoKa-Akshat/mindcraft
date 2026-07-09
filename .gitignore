@@ -49,6 +49,7 @@ ml/data/amc/
 ml/data/khan/
 ml/data/.story_cache.json
 ml/data/.world_feedback_cache.json
+ml/data/folk_tales/.enrichment_cache.json
 
 # generate_story_cells.py output — ungated until human narrative review
 ml/data/story_cells/batch_generated_*.json

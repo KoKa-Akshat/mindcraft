@@ -1,0 +1,20 @@
+{
+  "_schema_version": "1.0",
+  "_contract": "rankQuestionsForContext scoring weights: 0.35 × concept_affinity_scores[conceptId] from matchedTale + 0.25 × jaccard(keywords, tale.keywords+tale.themes) + 0.20 × math_theme overlap count/max(len) + 0.10 × format fit (table→ledger/counting tale, diagram→spatial tale) + 0.10 × engine gap severity or tutor focus boost. Product implements this in app/src/lib/questionMatch.ts.",
+  "_math_theme_tags": [
+    "ratio",
+    "proportion",
+    "pattern",
+    "growth",
+    "geometry",
+    "measurement",
+    "probability",
+    "sequence",
+    "balance",
+    "transformation",
+    "symmetry",
+    "counting",
+    "area",
+    "number_theory"
+  ]
+}
