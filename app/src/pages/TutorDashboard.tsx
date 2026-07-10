@@ -26,6 +26,8 @@ import { useToast } from '../hooks/useToast'
 import { fmtDateTime, timeUntil } from '../utils/format'
 import type { Session, TutorStudent as Student } from '../types'
 import StudentIntelPanel from '../components/StudentIntelPanel'
+import TutorBriefingPanel from '../components/TutorBriefingPanel'
+import SessionCallCard from '../components/SessionCallCard'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import { WEBHOOK_BASE, getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
@@ -110,6 +112,12 @@ export default function TutorDashboard() {
   const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
   const [calendlyToken, setCalendlyToken] = useState('')
   const [connectingCalendly, setConnectingCalendly] = useState(false)
+  // Google Meet — the tutor's permanent personal room, used as the join-link
+  // fallback for sessions that Calendly didn't stamp with a meetingUrl.
+  const [meetUrl, setMeetUrl] = useState<string | null>(null)
+  const [meetUrlInput, setMeetUrlInput] = useState('')
+  const [savingMeetUrl, setSavingMeetUrl] = useState(false)
+  const [editingMeetUrl, setEditingMeetUrl] = useState(false)
   const [activity, setActivity] = useState<ActivityItem[]>([])
   const [flaggedQs, setFlaggedQs] = useState<FlaggedQuestion[]>([])
   const [classroom, setClassroom] = useState<{ code: string; studentIds: string[] } | null>(null)
@@ -318,6 +326,7 @@ export default function TutorDashboard() {
       const data = snap.data()
       if (data?.role !== 'tutor' && data?.role !== 'admin') navigate('/dashboard', { replace: true })
       if (data?.calendlyEmail) setCalendlyConnected(data.calendlyEmail)
+      if (typeof data?.googleMeetUrl === 'string' && data.googleMeetUrl) setMeetUrl(data.googleMeetUrl)
     })
   }, [user, navigate])
 
@@ -396,6 +405,35 @@ export default function TutorDashboard() {
       showToast(err.message ?? 'Failed to connect Calendly')
     } finally {
       setConnectingCalendly(false)
+    }
+  }
+
+  /**
+   * Save the tutor's permanent Google Meet room link. Unlike Calendly (which
+   * needs the register-calendly webhook to validate the token server-side and
+   * subscribe to booking events), this is just a URL string on the tutor's own
+   * user doc — Firestore rules allow non-privileged self-writes, so a direct
+   * update is the right pattern. NO Google OAuth / Calendar API involved.
+   */
+  async function handleSaveMeetUrl() {
+    const raw = meetUrlInput.trim()
+    if (!raw) return
+    const normalized = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
+    if (!/^https:\/\/meet\.google\.com\/[a-z0-9-]+/i.test(normalized)) {
+      showToast('That doesn’t look like a Meet link — expected meet.google.com/xxx-xxxx-xxx')
+      return
+    }
+    setSavingMeetUrl(true)
+    try {
+      await updateDoc(doc(db, 'users', user.uid), { googleMeetUrl: normalized })
+      setMeetUrl(normalized)
+      setMeetUrlInput('')
+      setEditingMeetUrl(false)
+      showToast('Meet room saved — sessions without their own link will use it')
+    } catch {
+      showToast('Could not save Meet link — try again')
+    } finally {
+      setSavingMeetUrl(false)
     }
   }
 
@@ -551,6 +589,12 @@ export default function TutorDashboard() {
     : sessions.filter(s => s.studentId === selectedStudent || studentIdByEmail[s.studentEmail] === selectedStudent)
 
   const todayLabel = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+
+  // Incoming-call overlay: the next upcoming session that has a join URL
+  // (its own meetingUrl, else the tutor's permanent Meet room). The card
+  // itself decides when to appear based on the session's time window.
+  const callSession = sessions.find(sess => sess.meetingUrl ?? meetUrl) ?? null
+  const callUrl = callSession ? (callSession.meetingUrl ?? meetUrl) : null
 
   return (
     <div className={s.shell}>
@@ -779,6 +823,15 @@ export default function TutorDashboard() {
                 )}
               </div>
 
+              {/* Pre-session briefing — the map, already drawn */}
+              {heroStudent && (
+                <TutorBriefingPanel
+                  studentId={heroStudent.id}
+                  studentName={heroStudent.name}
+                  examTrack={heroStudent.examTrack}
+                />
+              )}
+
               {/* Sessions to Review — hidden entirely when empty */}
               {reviewFiltered.length > 0 && (
                 <div className={s.card}>
@@ -820,6 +873,8 @@ export default function TutorDashboard() {
                   <div className={s.sessionList}>
                     {upcomingFiltered.slice(0, 5).map(sess => {
                       const live = now >= sess.scheduledAt - FIFTEEN_MIN && now <= sess.endAt + FIFTEEN_MIN
+                      // Session's own link (Calendly) first, tutor's permanent Meet room as fallback
+                      const joinUrl = sess.meetingUrl ?? meetUrl
                       return (
                         <div key={sess.id} className={`${s.sessionRow} ${live ? s.sessionRowLive : ''}`}>
                           <div className={s.sessionLeft}>
@@ -831,8 +886,8 @@ export default function TutorDashboard() {
                             <div className={`${s.sessionBadge} ${live ? s.badgeLive : ''}`}>
                               {live ? 'Live now' : timeUntil(sess.scheduledAt)}
                             </div>
-                            {sess.meetingUrl && (
-                              <a href={sess.meetingUrl} target="_blank" rel="noopener" className={s.joinLink}>
+                            {joinUrl && (
+                              <a href={joinUrl} target="_blank" rel="noopener" className={s.joinLink}>
                                 Join →
                               </a>
                             )}
@@ -1034,6 +1089,50 @@ export default function TutorDashboard() {
                 )}
               </div>
 
+              {/* Google Meet — permanent personal room, join-link fallback */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Google Meet</span>
+                  {meetUrl && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Saved</span>}
+                </div>
+                {meetUrl && !editingMeetUrl ? (
+                  <>
+                    <div className={s.calendlyDone}>
+                      ✓ Room saved · {meetUrl.replace(/^https:\/\//, '')}
+                    </div>
+                    <button
+                      className={s.intelToggle}
+                      onClick={() => { setEditingMeetUrl(true); setMeetUrlInput(meetUrl) }}
+                    >
+                      Change room link
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <p className={s.calendlyHint}>
+                      Paste your personal Meet room link once — any booked session without its own
+                      meeting link will use it as the join button.
+                    </p>
+                    <input
+                      className={s.tokenInput}
+                      type="text"
+                      autoComplete="off"
+                      placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                      value={meetUrlInput}
+                      onChange={e => setMeetUrlInput(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') void handleSaveMeetUrl() }}
+                    />
+                    <button className={s.btnPrimary}
+                      onClick={() => void handleSaveMeetUrl()} disabled={savingMeetUrl || !meetUrlInput.trim()}>
+                      {savingMeetUrl ? 'Saving…' : 'Save Meet room →'}
+                    </button>
+                    <p className={s.calendlyFoot}>
+                      Get it at meet.google.com → New meeting → Create a meeting for later
+                    </p>
+                  </>
+                )}
+              </div>
+
               {/* Session Notes (stub) */}
               <div className={s.card}>
                 <div className={s.cardHeader}>
@@ -1047,6 +1146,17 @@ export default function TutorDashboard() {
           </div>
         )}
       </main>
+
+      {callSession && callUrl && (
+        <SessionCallCard
+          sessionId={callSession.id}
+          meetingUrl={callUrl}
+          personName={callSession.studentName || 'Your student'}
+          subject={callSession.subject}
+          scheduledAt={callSession.scheduledAt}
+          endAt={callSession.endAt}
+        />
+      )}
 
       {toast && <div className={s.toast}>{toast}</div>}
     </div>

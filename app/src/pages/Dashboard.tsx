@@ -13,6 +13,7 @@ import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recomm
 import { pawHubDisplayText, pawHubLearnSub, type CurriculumTrack } from '../lib/curriculumTrack'
 import type { Confidence } from '../lib/bridgePractice'
 import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
+import SessionCallCard from '../components/SessionCallCard'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
 import DashboardSavedQuestionsPanel from '../components/DashboardSavedQuestionsPanel'
@@ -132,6 +133,22 @@ export default function Dashboard() {
   const [styleDrawerOpen, setStyleDrawerOpen] = useState(false)
   const [customStickers, setCustomStickers] = useState<CustomSticker[]>([])
   const [selectedSticker, setSelectedSticker] = useState<StickerSelection | null>(null)
+  // Tutor's permanent Meet room — join-link fallback when the session doc has
+  // no meetingUrl of its own. users/{uid} docs are readable by any signed-in user.
+  const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!data.tutorId) { setTutorMeetUrl(null); return }
+    let cancelled = false
+    void getDoc(doc(db, 'users', data.tutorId))
+      .then(snap => {
+        if (cancelled) return
+        const url = snap.data()?.googleMeetUrl
+        setTutorMeetUrl(typeof url === 'string' && url ? url : null)
+      })
+      .catch(() => { if (!cancelled) setTutorMeetUrl(null) })
+    return () => { cancelled = true }
+  }, [data.tutorId])
 
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
@@ -748,6 +765,16 @@ export default function Dashboard() {
       onClearStickers={handleClearStickers}
       onCustomStickersChange={handleCustomStickersChange}
     />
+    {data.nextSession?.scheduledAt && (data.nextSession.meetingUrl || tutorMeetUrl) ? (
+      <SessionCallCard
+        sessionId={data.nextSession.id ?? `next-${data.nextSession.scheduledAt}`}
+        meetingUrl={(data.nextSession.meetingUrl ?? tutorMeetUrl)!}
+        personName={data.nextSession.tutor || 'Your tutor'}
+        subject={data.nextSession.subject}
+        scheduledAt={data.nextSession.scheduledAt}
+        endAt={data.nextSession.endAt}
+      />
+    ) : null}
     </>
   )
 }

@@ -57,7 +57,7 @@ export interface Message {
 export interface StudentData {
   displayName:  string
   streak:       number
-  nextSession:  { subject: string; time: string; tutor: string; meetingUrl?: string | null; scheduledAt?: number } | null
+  nextSession:  { id?: string; subject: string; time: string; tutor: string; meetingUrl?: string | null; scheduledAt?: number; endAt?: number } | null
   lastSession:  SessionSummary | null
   homework:     HomeworkAssignment | null
   practiceCount: number
@@ -186,11 +186,13 @@ export function useStudentData(user: User | null): StudentData {
 
         if (upcoming) {
           setNextSession({
+            id:          upcoming.id,
             subject:     upcoming.subject,
             time:        new Date(upcoming.scheduledAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
             tutor:       upcoming.tutorName,
             meetingUrl:  upcoming.meetingUrl ?? null,
             scheduledAt: upcoming.scheduledAt,
+            endAt:       upcoming.endAt ?? (upcoming.scheduledAt ? upcoming.scheduledAt + 90 * 60_000 : undefined),
           })
           setTutorId(upcoming.tutorId ?? null)
           setTutorName(upcoming.tutorName ?? 'Tutor')
