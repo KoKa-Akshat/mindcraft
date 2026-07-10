@@ -102,7 +102,7 @@ export interface WorkLine {
   rule?: WorkLineRule
 }
 
-export type WorkSource = 'practice' | 'chapter' | 'session'
+export type WorkSource = 'practice' | 'chapter' | 'session' | 'homework'
 
 export interface QuestionWorkDoc {
   studentId: string
@@ -150,6 +150,35 @@ export interface StudentWorkEntry {
   selectedAnswerIndex?: number
   createdAt: number
   updatedAt?: number
+}
+
+// ─── Homework upload (PDF/photo → parsed work pages → journal) ────────────────
+
+export interface HomeworkQuestion {
+  id: string
+  number: string | null
+  text: string
+  choices: string[] | null
+  figureNote: string | null
+  ambiguous: boolean
+}
+
+export interface HomeworkSessionDoc {
+  id: string
+  studentId: string
+  title: string
+  sourceFileName: string
+  pageCount: number
+  questions: HomeworkQuestion[]
+  currentIndex: number
+  status: 'in_progress' | 'completed'
+  createdAt: number
+  updatedAt: number
+  completedAt?: number
+  summary?: {
+    date: string
+    bullets: string[]
+  }
 }
 
 // ─── Classroom ────────────────────────────────────────────────────────────────

@@ -11,7 +11,7 @@
     "api/jarvis.ts":             { "maxDuration": 60 },
     "api/agent-check-in.ts":     { "maxDuration": 15 },
     "api/transcribe-scratch.ts": { "maxDuration": 30 },
-    "api/app-actions.ts":        { "maxDuration": 15 }
+    "api/app-actions.ts":        { "maxDuration": 45 }
   },
   "rewrites": [
     { "source": "/api/create-classroom",  "destination": "/api/app-actions?action=create-classroom" },
@@ -21,7 +21,8 @@
     { "source": "/api/delete-session",    "destination": "/api/app-actions?action=delete-session" },
     { "source": "/api/publish-summary",   "destination": "/api/app-actions?action=publish-summary" },
     { "source": "/api/register-calendly", "destination": "/api/app-actions?action=register-calendly" },
-    { "source": "/api/concept-graph",     "destination": "/api/app-actions?action=concept-graph" }
+    { "source": "/api/concept-graph",     "destination": "/api/app-actions?action=concept-graph" },
+    { "source": "/api/parse-homework",    "destination": "/api/app-actions?action=parse-homework" }
   ],
   "crons": [
     {

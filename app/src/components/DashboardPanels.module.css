@@ -987,3 +987,120 @@
   background: var(--paper-recessed);
   margin-top: 2px;
 }
+
+/* ── Worksheet upload panel ──────────────────────────────────────── */
+
+.worksheetIntro {
+  margin: 0;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-pencil);
+  line-height: 1.5;
+}
+
+.worksheetDropzone {
+  border: 1.5px dashed var(--rule);
+  border-radius: 3px;
+  padding: 28px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 140ms, background 140ms;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.worksheetDropzone:hover,
+.worksheetDropzoneOver {
+  border-color: var(--ink-depth);
+  background: rgba(79, 138, 139, 0.05);
+}
+
+.worksheetDropIcon {
+  font-family: var(--font-script);
+  font-size: 26px;
+  color: var(--ink-faded);
+}
+
+.worksheetDropLabel {
+  font-family: var(--font-script);
+  font-size: 16px;
+  color: var(--ink-katha);
+}
+
+.worksheetDropFormats {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faded);
+}
+
+.worksheetStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-depth);
+}
+
+.worksheetError {
+  margin: 0;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  color: var(--accent-red, #c1121f);
+}
+
+.worksheetStartBtn {
+  align-self: flex-start;
+  background: var(--ink-depth);
+  color: var(--paper-raised);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-stamp);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 10px 18px;
+  border-radius: 2px;
+  transition: opacity 120ms;
+}
+
+.worksheetStartBtn:hover { opacity: 0.85; }
+
+.worksheetPastList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 4px;
+  border-top: 1px solid var(--rule);
+}
+
+.worksheetPastItem {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  text-align: left;
+  padding: 12px 0;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.worksheetPastTitle {
+  font-family: var(--font-script);
+  font-size: 15px;
+  color: var(--ink-katha);
+}
+
+.worksheetPastMeta {
+  font-family: var(--font-stamp);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-faded);
+}

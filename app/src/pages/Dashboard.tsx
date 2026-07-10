@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { Compass, NotebookPen, Wand2, Settings, Bookmark, Sparkles } from 'lucide-react'
+import { Compass, NotebookPen, Wand2, Settings, Bookmark, Sparkles, FileUp } from 'lucide-react'
 import { auth, db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
@@ -17,6 +17,7 @@ import SessionCallCard from '../components/SessionCallCard'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
 import DashboardSavedQuestionsPanel from '../components/DashboardSavedQuestionsPanel'
+import DashboardWorksheetPanel from '../components/DashboardWorksheetPanel'
 import JournalStyleDrawer from '../components/book/JournalStyleDrawer'
 import StickerLayer from '../components/book/StickerLayer'
 import {
@@ -156,7 +157,8 @@ export default function Dashboard() {
   const notesMode = view === 'notes'
   const homeworkMode = view === 'homework'
   const savedMode = view === 'saved'
-  const todayMode = !gpsMode && !routeMode && !notesMode && !homeworkMode && !savedMode
+  const worksheetMode = view === 'worksheet'
+  const todayMode = !gpsMode && !routeMode && !notesMode && !homeworkMode && !savedMode && !worksheetMode
 
   const conceptParam = searchParams.get('concept')
   const targetParam = searchParams.get('target')
@@ -168,6 +170,7 @@ export default function Dashboard() {
   function openNotes() { navigate('/dashboard?view=notes', { replace: true }) }
   function openHomework() { navigate('/dashboard?view=homework', { replace: true }) }
   function openSaved() { navigate('/dashboard?view=saved', { replace: true }) }
+  function openWorksheet() { navigate('/dashboard?view=worksheet', { replace: true }) }
   function closePanel() { navigate('/dashboard', { replace: true }) }
 
   function goChallenge() {
@@ -507,6 +510,13 @@ export default function Dashboard() {
             {/* contents — primary sections of the book */}
             <CoverNavSection heading="contents">
               <CoverNavItem
+                icon={<FileUp size={19} strokeWidth={1.75} />}
+                label="Homework"
+                sub="Drop a worksheet, work it here"
+                active={worksheetMode}
+                onClick={openWorksheet}
+              />
+              <CoverNavItem
                 icon={<Wand2 size={19} strokeWidth={1.75} />}
                 label="Solver"
                 sub="Paste a stuck problem, get a hint path"
@@ -580,6 +590,7 @@ export default function Dashboard() {
             <div className={s.foreedge}>
               <button className={`${s.tab} ${todayMode ? s.tabActive : ''}`} onClick={closePanel}>Plan</button>
               <button className={`${s.tab} ${s.tabMap} ${(gpsMode || routeMode) ? s.tabActive : ''}`} onClick={openGps}>Map</button>
+              <button className={`${s.tab} ${worksheetMode ? s.tabActive : ''}`} onClick={openWorksheet}>Homework</button>
               <button className={`${s.tab} ${homeworkMode ? s.tabActive : ''}`} onClick={openHomework}>Solver</button>
               <button className={`${s.tab} ${notesMode ? s.tabActive : ''}`} onClick={openNotes}>Notes</button>
               <button className={`${s.tab} ${savedMode ? s.tabActive : ''}`} onClick={openSaved}>Saved</button>
@@ -677,6 +688,16 @@ export default function Dashboard() {
                 </div>
                 <div className={s.panelContent}>
                   <DashboardNotesPanel />
+                </div>
+              </div>
+            ) : worksheetMode ? (
+              <div className={s.panelPage}>
+                <div className={s.panelPageHeader}>
+                  <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
+                  <span className={s.panelTitle}>homework</span>
+                </div>
+                <div className={s.panelContent}>
+                  <DashboardWorksheetPanel />
                 </div>
               </div>
             ) : savedMode ? (

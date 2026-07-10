@@ -19,6 +19,8 @@ interface Session {
   duration: string
   title: string
   bullets: string[]
+  /** Present for self-directed homework entries — detail view links here instead of showing bullets only. */
+  homeworkId?: string
 }
 
 const NOTES_PER_LEAF = 3
@@ -27,7 +29,8 @@ export default function DashboardNotesPanel() {
   const navigate = useNavigate()
   const authUser = useUser()
   const swipeRef = useRef<HTMLDivElement>(null)
-  const [sessions, setSessions] = useState<Session[]>([])
+  const [tutorSessions, setTutorSessions] = useState<Session[]>([])
+  const [homeworkNotes, setHomeworkNotes] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [leaf, setLeaf] = useState(0)
@@ -55,12 +58,46 @@ export default function DashboardNotesPanel() {
           bullets: data.summary.bullets ?? [],
         })
       })
-      docs.sort((a, b) => (b.date || '').localeCompare(a.date || ''))
-      setSessions(docs)
+      setTutorSessions(docs)
       setLoading(false)
     }, () => setLoading(false))
     return () => unsub()
   }, [authUser?.email])
+
+  // Self-directed homework uploads — completed worksheets read back as
+  // journal entries alongside tutor-published notes.
+  useEffect(() => {
+    if (!authUser?.uid) return
+    const q = query(
+      collection(db, 'homework_sessions'),
+      where('studentId', '==', authUser.uid),
+    )
+    const unsub = onSnapshot(q, snap => {
+      const docs: Session[] = []
+      snap.forEach(d => {
+        const data = d.data()
+        if (data.status !== 'completed' || !data.summary) return
+        docs.push({
+          id: `hw-${d.id}`,
+          homeworkId: d.id,
+          subject: 'Homework',
+          tutorName: 'your own work',
+          date: data.summary.date ?? '',
+          duration: '',
+          title: data.title ?? 'Homework',
+          bullets: data.summary.bullets ?? [],
+        })
+      })
+      setHomeworkNotes(docs)
+    }, () => {})
+    return () => unsub()
+  }, [authUser?.uid])
+
+  const sessions = useMemo(() => {
+    const merged = [...tutorSessions, ...homeworkNotes]
+    merged.sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    return merged
+  }, [tutorSessions, homeworkNotes])
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -150,6 +187,15 @@ export default function DashboardNotesPanel() {
                     <li key={i}>{b}</li>
                   ))}
                 </ul>
+                {detail.homeworkId && (
+                  <button
+                    type="button"
+                    className={n.paperTextLink}
+                    onClick={() => navigate(`/homework/${detail.homeworkId}`)}
+                  >
+                    Open this worksheet →
+                  </button>
+                )}
               </article>
             ) : (
               <div className={n.notesList}>

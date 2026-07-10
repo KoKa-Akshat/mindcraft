@@ -356,6 +356,94 @@ never blocks ScratchPad saving or practice.
 
 ---
 
+### 1.6a `/parse-homework`
+
+**Purpose:** Turn 1-4 photographed/scanned homework page images into a
+structured array of extracted questions, so a student's uploaded worksheet
+can become interactive work pages on the dashboard. Routed through the
+consolidated `app-actions.ts` router (`POST /api/parse-homework` →
+`app-actions?action=parse-homework`) rather than its own Vercel function —
+the Hobby plan's serverless function count is already at its cap. PDF pages
+are rasterized to page images client-side before this endpoint is called;
+Groq vision cannot read PDFs directly.
+
+**Reads from deterministic engine:** Nothing. Token verification only (same
+as `/transcribe-scratch`).
+
+**Input contract:**
+```json
+{
+  "pages": [{ "imageBase64": "data:image/jpeg;base64,..." }],
+  "startPage": 0
+}
+```
+Request must include `Authorization: Bearer <Firebase ID token>`. `pages`
+holds 1-4 page images (extra pages truncated silently); each image capped
+at ~1.5 MB base64 (reject larger with 413). `startPage` is optional and
+purely informational (client-side chunk offset for logging).
+
+**Output contract:**
+```json
+{
+  "questions": [
+    {
+      "number": "3",
+      "text": "Solve $2x + 5 = 13$ for $x$.",
+      "choices": ["A. 4", "B. 9"],
+      "figureNote": "a right triangle with legs 6 and 8",
+      "continuesFromPrevious": false,
+      "ambiguous": false
+    }
+  ],
+  "pageCount": 2,
+  "unavailable": false
+}
+```
+`number` is the printed question label or null if unlabeled. `text` is the
+full question (math as `$...$` LaTeX); sub-parts (a/b/c) under one number
+stay together in one `text`, never split into separate questions.
+`choices` is present only for multiple choice. `figureNote` is a short
+plain-language description of a required diagram, else null.
+`continuesFromPrevious` flags a question that picks up mid-sentence from
+the previous page/chunk (the client merges it into the prior question).
+`ambiguous` flags a split the model is not confident about, so the UI can
+warn the student instead of silently guessing wrong. `unavailable` appears
+only when every provider failed.
+
+**Model:** `claude-haiku-4-5-20251001` vision primary (env override
+`PARSE_HOMEWORK_MODEL`). If Anthropic is unavailable, fall back to Groq
+vision `meta-llama/llama-4-scout-17b-16e-instruct` behind the same response
+schema. One call per page, pages run in parallel via `Promise.all`.
+
+**Latency budget:** 20000ms per page (parallel across pages in one
+request). The UI shows a "reading your pages" state, not an in-session
+blocking spinner — this is a pre-session upload step, not a timed
+interaction.
+
+**Rules:**
+- Transcribe and split only. Never solve, answer, or annotate a question.
+- Output valid JSON only: `{ "questions": [...] }`. Parse defensively —
+  providers may wrap JSON in markdown fences.
+- Shared instructions covering a block of questions ("use the graph below
+  for questions 5-7") must be copied into every affected question's `text`.
+- Ignore headers, footers, page numbers, decorative content — never invent
+  a question for them.
+- Cap `text` at 2000 chars, `figureNote`/each choice at 300 chars, `number`
+  at 20 chars, choices array at 12 entries. Truncate silently.
+- A blank page or a page with no questions returns `"questions": []`.
+- No story, scene, or narrative wrapping of any kind — this endpoint only
+  transcribes the student's own real homework. If a future pass adds a
+  story frame around extracted questions, it must follow the same
+  situation → task → math-as-the-action → result shape as the rest of the
+  question bank (see `/question-frame` and the bank's `storyContext`
+  fields) — never decorative wallpaper bolted onto an unrelated problem.
+
+**Fallback:** `{ "questions": [], "pageCount": 0, "unavailable": true }`.
+Silent to the student's session state — the upload UI shows a plain-language
+retry prompt, never a raw error.
+
+---
+
 ### 1.7 `/world-builder` (future — do not build yet)
 
 **Purpose:** Generate a persistent game environment that evolves with the
@@ -443,6 +531,7 @@ shape. Fallbacks are not errors — they are the guaranteed floor.
 | `/hint-agent` | Fixed generic nudge text |
 | `/post-session-agent` | Fixed "Nice work. Keep going." with mastery signal `improving` |
 | `/transcribe-scratch` | Empty strings with `unavailable: true` |
+| `/parse-homework` | Empty `questions: []` with `unavailable: true` |
 
 Fallbacks must be indistinguishable from successful responses in shape. The
 frontend should not need to know whether the LLM succeeded, except when an
@@ -458,6 +547,7 @@ endpoint explicitly defines an `unavailable` enhancement flag.
 | Hint generation | `llama-3.3-70b` (Groq) | In-session, must be < 500ms |
 | Post-session | `claude-fable-5` | Reflective quality over speed |
 | Scratch transcription | `claude-haiku-4-5` vision, fallback `llama-4-scout` vision (Groq) | Small image-to-JSON task; graceful if provider credits fail |
+| Homework page parsing | `claude-haiku-4-5` vision, fallback `llama-4-scout` vision (Groq) | Page-image → structured JSON, same graceful cascade as scratch transcription |
 | World builder 🔮 | `claude-opus-4-8` | Complex world-state reasoning |
 
 Switch models by setting `LLM_PROVIDER` in env. The agent layer MUST be
@@ -474,6 +564,7 @@ provider-agnostic — no Groq-specific or Anthropic-specific code outside of
 | `/hint-agent` | 600ms | Show generic fallback hint immediately |
 | `/post-session-agent` | 3000ms | Show generic reflection |
 | `/transcribe-scratch` | 4000ms | Hide transcription pane quietly |
+| `/parse-homework` | 20000ms per page | Return `unavailable: true`; UI shows a plain-language retry prompt |
 
 Timeouts are enforced in `llm_client.py` via `httpx.AsyncClient(timeout=...)`.
 Never let a hung LLM call block a student mid-session.

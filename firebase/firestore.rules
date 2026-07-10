@@ -90,6 +90,19 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Self-directed homework upload sessions (HOMEWORK_UPLOAD feature). Same
+    // shape as student_work: a student owns and can update only their own
+    // session doc; a linked parent can read their child's.
+    match /homework_sessions/{docId} {
+      allow create, update: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+      );
+      allow delete: if false;
+    }
+
     match /chats/{chatId} {
       allow read, write: if request.auth != null && (
         chatId.split('_')[0] == request.auth.uid ||
