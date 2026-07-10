@@ -217,6 +217,8 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .founder-photo:before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,253,247,.46);border-radius:26px}
 .founder-photo:after{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 70% 18%,rgba(255,253,247,.26),transparent 32%),linear-gradient(135deg,transparent,rgba(255,253,247,.12));transform:rotate(-12deg)}
 .founder-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+/* Blake's source photo crops his head at the default center focal point — shift the visible window up. */
+.founder-card:nth-child(2) .founder-photo img{object-position:center 15%}
 .founder-photo img:not([src=""])+span{opacity:0}
 .founder-photo span{position:relative;z-index:1;color:#fffdf7;font-family:"Fredoka",system-ui,sans-serif;font-size:58px;font-weight:700;letter-spacing:-.06em}
 .founder-copy{position:relative;z-index:1}
