@@ -124,6 +124,45 @@ export function interestLine(list) {
 }
 
 /**
+ * Cell selection: pick the story cell whose math MECHANIC belongs to the
+ * visitor's interests, not just whose theme is adjacent (see
+ * agent_work/product/STORY_QUESTION_QUALITY_GUIDE.md — the Action step of
+ * situation/task/action/result must be native to the scene).
+ *
+ * Only flagship-quality cells (those with introTemplates) are eligible —
+ * they are the ones authored to weave two interests into one scene.
+ * Score = cluster fit + concept fit: an interest whose lexicon entry lists
+ * the cell's conceptId pulls that cell up, weighted by match quality, typing
+ * order, and the concept's position in the entry's list. The cluster
+ * flagship wins ties, so behavior without concept signal is unchanged.
+ */
+export function pickCell(resolved, clusterId, cluster, bank) {
+  const eligible = bank.questions.filter(q => (q.introTemplates ?? []).length > 0)
+  if (!eligible.length) {
+    return bank.questions.find(q => q.id === cluster.flagship)
+      ?? bank.questions.find(q => q.conceptId === cluster.concepts?.[0])
+      ?? bank.questions[0]
+  }
+  let best = null
+  let bestScore = -Infinity
+  for (const q of eligible) {
+    let s = 0
+    // Cluster fit dominates: the primary SCENE stays in the winning cluster
+    // (brief rule: thread the secondary interest, don't switch worlds).
+    if (q.cluster === clusterId) s += 2
+    if (q.id === cluster.flagship) s += 0.01 // stable tie-break
+    // Concept fit decides WITHIN the cluster: an entry's first-listed concept
+    // is its native mechanic (nursing → ratios/dosage), later ones fade fast.
+    resolved.forEach((r, i) => {
+      const idx = (r.entry.concepts ?? []).indexOf(q.conceptId)
+      if (idx >= 0) s += r.weight * (1 - i * 0.05) * Math.max(0.2, 1 - idx * 0.5)
+    })
+    if (s > bestScore) { bestScore = s; best = q }
+  }
+  return best
+}
+
+/**
  * The core: 2–4 interests in, one collided scene out.
  * Returns a payload shaped like the spark-experience API response.
  */
@@ -138,9 +177,7 @@ export function fuse(interests, bank) {
   const others = resolved.filter(r => r !== primary)
   const secondary = others.find(r => r.entry.cluster !== clusterId) ?? others[0] ?? primary
 
-  const cell = bank.questions.find(q => q.id === cluster.flagship)
-    ?? bank.questions.find(q => q.conceptId === cluster.concepts?.[0])
-    ?? bank.questions[0]
+  const cell = pickCell(resolved, clusterId, cluster, bank)
 
   const templates = cell.introTemplates ?? []
   const storyIntro = templates.length
@@ -163,7 +200,7 @@ export function fuse(interests, bank) {
     correctIndex: cell.correctIndex,
     worldFeedback: cell.world_feedback ?? {
       correct: 'The scene holds.',
-      incorrect: 'Pause — read what the scene was really asking.',
+      incorrect: 'Pause. Read what the scene was really asking.',
     },
     generated: false,
   }

@@ -21,6 +21,7 @@ interface BankQuestion {
   correctIndex: number
   storyIntro?: string
   storyContext?: string
+  introTemplates?: string[]
   world_feedback?: { correct: string; incorrect: string }
 }
 
@@ -102,7 +103,10 @@ function hashInterests(interests: string[]): number {
 function pickQuestion(conceptId: string, interests: string[]): BankQuestion {
   const pool = QUESTIONS.filter(q => q.conceptId === conceptId && q.choices?.length >= 2)
   const fallback = QUESTIONS.filter(q => q.choices?.length >= 2)
-  const use = pool.length ? pool : fallback
+  // Curated spark cells (the ones with introTemplates) were authored so the
+  // math mechanic is native to the scene — prefer them over raw bank items.
+  const curated = pool.filter(q => (q.introTemplates ?? []).length > 0)
+  const use = curated.length ? curated : pool.length ? pool : fallback
   const idx = hashInterests(interests) % use.length
   return use[idx] ?? use[0]
 }
@@ -134,7 +138,8 @@ RULES:
 4. storyStem: the full question re-set in the story (include the mathematical ask). 2-4 sentences.
 5. Tone: warm, serious, never "math is fun", no emojis, no shame. Write like you are genuinely excited to hand this student a reason to care, not like a corporate copywriter.
 6. NEVER use an em dash (—) anywhere in storyIntro or storyStem. Use a period, colon, or comma instead.
-7. Return ONLY JSON: {"storyIntro":"...","storyStem":"...","protagonist":"...","setting":"..."}`
+7. Every scene needs situation, task, action, result: the SITUATION is their world, the TASK is what the protagonist must settle, and the ACTION is the math itself doing a job that genuinely belongs in that world (a chef scales a recipe, a chemist mixes to a ratio, a coach converts split times). Never bolt an abstract exercise onto a themed backdrop: a chemist drawing colored capsules from a box is scenery, not chemistry. If the question's mechanic cannot be made native to their world, set the scene around a character for whom it IS native and let the visitor's interests be the stakes.
+8. Return ONLY JSON: {"storyIntro":"...","storyStem":"...","protagonist":"...","setting":"..."}`
 
   const user = JSON.stringify({
     interests,
@@ -225,8 +230,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     choices: question.choices,
     correctIndex: question.correctIndex,
     worldFeedback: question.world_feedback ?? {
-      correct: 'The scene holds — you read it correctly.',
-      incorrect: 'Pause — notice what the scene was really asking.',
+      correct: 'The scene holds. You read it correctly.',
+      incorrect: 'Pause. Notice what the scene was really asking.',
     },
     generated: !!skin,
   })

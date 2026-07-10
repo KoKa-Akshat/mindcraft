@@ -32,20 +32,20 @@ const COPY = {
   promiseB: "We'll find the math inside it.",
   inviteTitle: 'Tell us what you like.',
   inviteHint0: 'Add at least two.',
-  inviteHint1: 'One more — we need a shape to match.',
+  inviteHint1: 'One more. We need a shape to match.',
   inviteHintMore: 'Add up to four, or build your scene.',
   inviteHintMax: 'Four is plenty for a first scene.',
   buildBtn: 'Build my scene →',
   loading: 'Finding your scene…',
-  pickHint: 'Pick one — no verdict yet.',
+  pickHint: 'Pick one. No verdict yet.',
   finaleStamp: 'You just solved something real',
   finaleTitle: 'This is MindCraft',
   builtAround: list => `Built around ${list}.`,
-  bridge: "We have talented tutors — and families who've felt the click.",
+  bridge: "We have talented tutors, and families who've felt the click.",
   seeReviews: 'See reviews',
   keepExploring: 'Keep exploring',
   autoNote: 'Taking you there…',
-  skip: 'Skip intro',
+  skip: 'Skip',
   memoryChip: list => `You solved something in ${list}.`,
   placeholder: 'cooking, music, space…',
 }
@@ -60,7 +60,7 @@ const CSS = `
 #mcSpark.leaving { opacity: 0; pointer-events: none; }
 #mcSpark canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 #mcSpark .mcs-stage { position: absolute; inset: 0; display: grid; place-items: center;
-  padding: max(16px, env(safe-area-inset-top)) 20px max(16px, env(safe-area-inset-bottom));
+  padding: max(72px, calc(env(safe-area-inset-top) + 56px)) 20px max(16px, env(safe-area-inset-bottom));
   text-align: center; pointer-events: none; overflow-y: auto; }
 #mcSpark .mcs-stage.live { pointer-events: auto; }
 #mcSpark .mcs-fade { opacity: 0; transition: opacity .9s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1); }
@@ -73,7 +73,8 @@ const CSS = `
   background: rgba(255,253,247,.9); border: 1px solid rgba(20,58,46,.14); box-shadow: 0 24px 70px rgba(29,84,54,.14);
   backdrop-filter: blur(16px); transform: translateY(30px); }
 #mcSpark .mcs-fade.in.mcs-panel { transform: translateY(0); }
-#mcSpark .mcs-panel h2 { font-family: Fredoka, system-ui, sans-serif; font-size: 1.35rem; font-weight: 600; margin: 0 0 14px; }
+#mcSpark .mcs-panel h2 { font-family: Fredoka, system-ui, sans-serif; font-size: 1.35rem; font-weight: 600; margin: 0 0 6px; }
+#mcSpark .mcs-sub { margin: 0 0 14px; font-size: .88rem; color: #687468; font-weight: 600; }
 #mcSpark .mcs-field { display: flex; gap: 8px; border: 1px solid rgba(20,58,46,.14); border-radius: 18px; background: #fffdf7; padding: 5px 5px 5px 16px; }
 #mcSpark .mcs-field:focus-within { border-color: rgba(36,122,77,.35); box-shadow: 0 0 0 4px rgba(95,183,121,.12); }
 #mcSpark .mcs-field input { flex: 1; min-width: 0; border: none; background: transparent; font: inherit; font-size: 1rem; color: #143a2e; outline: none; }
@@ -82,18 +83,20 @@ const CSS = `
   display: grid; place-items: center; cursor: pointer; flex-shrink: 0; font-size: 1.1rem; }
 #mcSpark .mcs-add:hover { background: #247a4d; }
 #mcSpark .mcs-chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 28px; margin-top: 12px; }
+#mcSpark .mcs-chips:empty { display: none; }
 #mcSpark .mcs-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px;
   background: #e4f7dc; border: 1px solid rgba(36,122,77,.16); color: #247a4d; font-size: .86rem; font-weight: 700; }
 #mcSpark .mcs-chip button { border: none; background: none; color: inherit; cursor: pointer; font: inherit; padding: 2px; opacity: .55; min-width: 20px; min-height: 20px; }
 #mcSpark .mcs-chip button:hover { opacity: 1; }
 #mcSpark .mcs-hint { margin: 10px 0 0; font-size: .78rem; color: #687468; font-weight: 600; }
-#mcSpark .mcs-build { margin-top: 14px; width: 100%; min-height: 44px; border-radius: 18px; border: none; background: #143a2e;
+#mcSpark .mcs-build { margin-top: 0; width: 100%; height: 0; min-height: 0; padding: 0; overflow: hidden; border-radius: 18px; border: none; background: #143a2e;
   color: #fff; font: inherit; font-weight: 800; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
-  opacity: 0; transform: translateY(8px); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
-#mcSpark .mcs-build.show { opacity: 1; transform: translateY(0); }
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1), height .45s cubic-bezier(.16,1,.3,1), margin-top .45s cubic-bezier(.16,1,.3,1); }
+#mcSpark .mcs-build.show { margin-top: 14px; height: 44px; opacity: 1; transform: translateY(0); }
 #mcSpark .mcs-build:hover { background: #247a4d; }
 #mcSpark .mcs-pulse { font-size: .82rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #247a4d; animation: mcsPulse 1.5s ease infinite; }
-#mcSpark .mcs-paper { width: min(700px, 94vw); max-height: 86vh; overflow: auto; padding: 28px; border-radius: 32px; text-align: left;
+#mcSpark .mcs-paper { width: min(700px, 94vw); max-height: min(86vh, calc(100vh - 128px)); overflow: auto; padding: 28px; border-radius: 32px; text-align: left;
   background: linear-gradient(180deg, #fffdf7, #f8fbeb); border: 1px solid rgba(20,58,46,.14); box-shadow: 0 24px 70px rgba(29,84,54,.14);
   transform: scale(.97); }
 #mcSpark .mcs-fade.in.mcs-paper { transform: scale(1); }
@@ -124,7 +127,7 @@ const CSS = `
   letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; font-family: inherit; }
 #mcSpark .mcs-cta:hover { transform: translateY(-1px); }
 #mcSpark .mcs-note { margin-top: 16px !important; font-size: .72rem !important; font-weight: 700 !important; }
-#mcSpark .mcs-skip { position: absolute; right: 18px; bottom: 18px; z-index: 5; min-height: 40px; padding: 9px 14px;
+#mcSpark .mcs-skip { position: absolute; right: 18px; top: max(18px, env(safe-area-inset-top)); z-index: 5; min-height: 40px; padding: 9px 14px;
   border-radius: 999px; border: 1px solid rgba(20,58,46,.14); background: rgba(255,253,247,.85); color: #687468;
   font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; backdrop-filter: blur(8px); }
 @keyframes mcsPulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
@@ -259,14 +262,13 @@ export function launch() {
     return bank
   }
 
-  // ── beat 1: arrival + promise ──
+  // ── beat 1: arrival ── (brief title beat; the promise rides into the invite panel)
   function arrival() {
     setStage(`
       <div class="mcs-fade">
         <div class="mcs-logo">${COPY.title}</div>
-        <p class="mcs-tagline">${COPY.promiseA}<br/>${COPY.promiseB}</p>
       </div>`)
-    later(() => { skipBtn.hidden = false; invite() }, REDUCED ? 2400 : 3800)
+    later(() => { skipBtn.hidden = false; invite() }, REDUCED ? 900 : 1500)
   }
 
   // ── beat 2/3: invitation ──
@@ -275,6 +277,7 @@ export function launch() {
     setStage(`
       <div class="mcs-panel mcs-fade">
         <h2>${COPY.inviteTitle}</h2>
+        <p class="mcs-sub">${COPY.promiseA} ${COPY.promiseB}</p>
         <div class="mcs-field">
           <input id="mcsInp" placeholder="${COPY.placeholder}" autocomplete="off" />
           <button class="mcs-add" id="mcsAdd" type="button" aria-label="Add interest">↑</button>
@@ -305,10 +308,18 @@ export function launch() {
       if (interests.length >= 2) buildTimer = later(buildScene, 2600)
     }
     function add() {
-      const v = inp.value.trim()
-      if (!v) return
+      // Split compound input on conjunctions/separators: "chemistry and math",
+      // "art, music", "coding & gaming", "space + soccer", pasted newlines.
+      const pieces = inp.value.split(/\s+and\s+|[,;+&\n/]+/i).map(s => s.trim()).filter(Boolean)
+      if (!pieces.length) return
       if (interests.length >= 4) { hint.textContent = COPY.inviteHintMax; return }
-      interests.push(v)
+      const seen = new Set(interests.map(v => v.toLowerCase()))
+      for (const piece of pieces) {
+        if (interests.length >= 4) break // cap respected — extras dropped gracefully
+        if (seen.has(piece.toLowerCase())) continue
+        seen.add(piece.toLowerCase())
+        interests.push(piece)
+      }
       inp.value = ''
       const hue = (interests.join('').split('').reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0) >>> 0) % 360
       field.tint(hue)

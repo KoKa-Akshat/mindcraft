@@ -1140,9 +1140,9 @@
         "precision"
       ],
       "concepts": [
-        "basic_probability",
         "descriptive_statistics",
-        "measurement_units"
+        "measurement_units",
+        "basic_probability"
       ],
       "keywords": [
         "experiment",
@@ -1151,7 +1151,6 @@
         "sample"
       ],
       "aliases": [
-        "chemistry",
         "physics",
         "biology",
         "stem",
@@ -1744,7 +1743,12 @@
         "precision",
         "curiosity"
       ],
-      "concepts": [],
+      "concepts": [
+        "ratios_proportions",
+        "linear_equations",
+        "fractions_decimals",
+        "sequences_series"
+      ],
       "keywords": [
         "numbers",
         "proof",
@@ -1758,6 +1762,33 @@
         "algebra",
         "geometry",
         "calculus"
+      ]
+    },
+    "chemistry": {
+      "cluster": "discovery",
+      "scene_noun": "the chem bench",
+      "themes": [
+        "precision",
+        "transformation",
+        "evidence"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units",
+        "fractions_decimals"
+      ],
+      "keywords": [
+        "reaction",
+        "beaker",
+        "solution",
+        "dilution",
+        "element",
+        "molarity"
+      ],
+      "aliases": [
+        "chem",
+        "chemist",
+        "organic chemistry"
       ]
     }
   },
@@ -2011,7 +2042,7 @@
       "storyIntro": "Nadia's pop-up stall closes its best night of the month. The crowd is gone, the till is full, and one number decides who takes home what.",
       "storyContext": "A pop-up stall's closing count: the night's profit splits in a fixed ratio between two partners, and only the gap between their shares is known.",
       "introTemplates": [
-        "Nadia's pop-up stall lives where the market meets the marina: tonight's menu came out of the market and tonight's prices out of the marina. The crowd is gone, the till is full, and one number decides who takes home what.",
+        "Nadia's pop-up stall lives where {a_noun} meets {b_noun}: tonight's menu came out of one and tonight's prices out of the other. The crowd is gone, the till is full, and one number decides who takes home what.",
         "{A} pays Nadia's rent; {b} fills the margins of her notebook. Tonight both meet in the cash box of her market stall. A good night, a fixed split, and a partner who counts everything.",
         "Every stall on this street runs on {a_noun}, but Nadia's survives because she also respects {b_noun}. The lanterns are coming down, the profit is real, and it has to be split before they go out."
       ],
@@ -2068,8 +2099,8 @@
       "storyIntro": "Six days to the showcase. Ayo's training plan is taped to the mirror, a number for every day, climbing by the same amount, ending on the night that matters.",
       "storyContext": "A rehearsal plan taped to a studio mirror: minutes at full tempo climbing by a fixed step each day, with the showcase set for day 8.",
       "introTemplates": [
-        "Under every craft there is a count. In Ayo's rehearsal room, the metronome sets the rhythm and the timer raises the stakes and the training plan taped to the mirror climbs one steady step at a time.",
-        "Ayo is building the night and the plan on the mirror has a number for every day, rising by the same amount, and ending on the day that matters.",
+        "Under every craft there is a count. In Ayo's rehearsal room, {a_noun} sets the rhythm, {b_noun} raises the stakes, and the training plan taped to the mirror climbs one steady step at a time.",
+        "Ayo is building the night where {a_noun} and {b_noun} share one stage. The plan on the mirror has a number for every day, rising by the same amount, and ending on the day that matters.",
         "In this room, {a_noun} and {b_noun} run on the same clock. Ayo's showcase piece borrows from both, and the rehearsal ladder underneath it refuses to skip a beat."
       ],
       "world_feedback": {
@@ -2296,13 +2327,175 @@
       "storyIntro": "Launch night. The build is frozen, the stream starts soon, and the last unclosed ticket is a single line of odds.",
       "storyContext": "A launch-night patch note: a bonus drop with fixed odds per run, and the complementary line still missing.",
       "introTemplates": [
-        "Launch night. Rae's project sits where the stage meets the crowd: one built the thing, the other is why anyone will show up. The last unclosed ticket is a single line of odds.",
+        "Launch night. Rae's project sits where {a_noun} meets {b_noun}: one built the thing, the other is why anyone will show up. The last unclosed ticket is a single line of odds.",
         "Rae has shipped enough to know {a} and {b} fail the same way: one number nobody checked. Tonight the drop odds go into the patch notes stated both ways, or not at all.",
         "Ten minutes to the stream. On one monitor, {a_noun}; on the other, {b_noun}. Between them sits a probability that has to be right before anyone hits play."
       ],
       "world_feedback": {
         "correct": "Rae types 5/7 into the patch notes and the overnight test runs land right on it. The launch goes out clean: the odds hold from both sides.",
         "incorrect": "Chat catches it inside the first hour: a run either drops or it doesn't, and the two chances have to make the whole. If the drop takes 2/7, what's left of the 7? Rae patches the notes."
+      }
+    },
+    {
+      "id": "cell_spark_lab_blend_117",
+      "conceptId": "ratios_proportions",
+      "level": 1,
+      "cluster": "discovery",
+      "source_question_id": "eedi_117",
+      "title": "The Reference Shade",
+      "protagonist": "Noor",
+      "setting": "The prep bench, an hour before the demonstration",
+      "question": "The indicator blend mixes base solution and dye in the ratio 3 : 4. Noor has already measured 1200 ml of base solution. How much dye does the blend need?",
+      "choices": [
+        "1201 ml",
+        "900 ml",
+        "4800 ml",
+        "1600 ml"
+      ],
+      "correctIndex": 3,
+      "explanation": "The ratio 3 : 4 means every 3 parts of base take 4 parts of dye. 1200 ml of base is 3 parts, so one part is 400 ml, and 4 parts of dye is 1600 ml.",
+      "hints": [
+        "The 1200 ml of base solution covers the 3 in the ratio 3 : 4.",
+        "If 3 parts are 1200 ml, how much is one part?",
+        "One part is 400 ml, and the dye takes 4 parts."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "wrong_operation",
+          "student_thinking": "Adds the ratio difference of 1 to 1200 instead of scaling parts."
+        },
+        {
+          "choice_index": 1,
+          "error_type": "inverted_ratio",
+          "student_thinking": "Treats the 1200 ml as the dye and scales down by 3/4."
+        },
+        {
+          "choice_index": 2,
+          "error_type": "wrong_operation",
+          "student_thinking": "Multiplies 1200 by the ratio part 4 instead of finding one part first."
+        }
+      ],
+      "storyIntro": "An hour before the demonstration, the recipe card on the bench is the only thing Noor trusts. The blend has to match the reference shade exactly, and shade is just ratio wearing a color.",
+      "storyContext": "A lab prep bench before a public demonstration: a two-part blend mixed to exact parts, checked against a reference card.",
+      "introTemplates": [
+        "This lab makes room for {a_noun} and for {b_noun}. The demonstration blend is mixed to exact parts, and Noor is done guessing at the second pour.",
+        "Noor came to the bench through {a} and stayed sharp because of {b}. Tonight the recipe card holds one ratio, and the reference shade will tell on any shortcut.",
+        "The demonstration starts in an hour. {A} fills Noor's notebook, {b} keeps the margins honest, and the blend in front of them answers to arithmetic alone."
+      ],
+      "world_feedback": {
+        "correct": "Noor pours 1600 ml and the blend settles dead on the reference shade. The demonstration runs without a single re-mix.",
+        "incorrect": "The blend dries pale against the reference card. Three parts to four: Noor checks what one part of 1200 ml is worth before pouring again."
+      }
+    },
+    {
+      "id": "cell_spark_ridge_mean_194",
+      "conceptId": "descriptive_statistics",
+      "level": 1,
+      "cluster": "discovery",
+      "source_question_id": "eedi_194",
+      "title": "The Level Line",
+      "protagonist": "Wren",
+      "setting": "The ridge station, season report due at dawn",
+      "question": "The station log records sightings on five nights: 1, 4, 7, 9, 9. For the season report, what is the mean number of sightings per night?",
+      "choices": [
+        "7",
+        "9",
+        "30",
+        "6"
+      ],
+      "correctIndex": 3,
+      "explanation": "The mean shares the whole count evenly across the nights: 1 + 4 + 7 + 9 + 9 = 30, and 30 across 5 nights is 6 per night.",
+      "hints": [
+        "Add up all five nights first.",
+        "The total is 30, but the report wants a per-night figure.",
+        "30 shared across 5 nights."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "wrong_measure",
+          "student_thinking": "Reports the middle value of the ordered list, the median, instead of the mean."
+        },
+        {
+          "choice_index": 1,
+          "error_type": "wrong_measure",
+          "student_thinking": "Reports the most frequent value, the mode, instead of the mean."
+        },
+        {
+          "choice_index": 2,
+          "error_type": "incomplete_procedure",
+          "student_thinking": "Stops at the total and forgets to share it across the five nights."
+        }
+      ],
+      "storyIntro": "The ridge station files one report a season, and the tally sheet does not take impressions. Five nights are logged, and the report wants the level line through them.",
+      "storyContext": "A remote observation station closing out its season: five nights of logged sightings reduced to one honest per-night figure.",
+      "introTemplates": [
+        "The ridge station keeps two columns this season: {a_noun} and {b_noun}. Wren tends both, and tonight the tally sheet wants one honest number before the report ships.",
+        "Wren tracks {a} by daylight and {b} by lamplight. The season report takes neither hunches nor highlights, only the whole count shared evenly across the nights.",
+        "Up here, {a_noun} sets the route and {b_noun} fills the logbook margins. Five nights of sightings are in, and the report wants the line that runs level through all of them."
+      ],
+      "world_feedback": {
+        "correct": "Wren writes 6 per night, and the season line sits level against the tally sheet. The report ships clean.",
+        "incorrect": "The line reads off against the tally sheet. A mean is the whole count shared evenly across the nights: Wren re-runs it before the report ships."
+      }
+    },
+    {
+      "id": "cell_spark_route_units_257",
+      "conceptId": "measurement_units",
+      "level": 1,
+      "cluster": "discovery",
+      "source_question_id": "eedi_257",
+      "title": "One Distance, Two Languages",
+      "protagonist": "Idris",
+      "setting": "The route desk, night before the crossing",
+      "question": "The supply chart marks the final leg at 30 km, but the field team radios in miles. Using 3 miles for every 5 km, about how many miles is the final leg?",
+      "choices": [
+        "18",
+        "9",
+        "28",
+        "50"
+      ],
+      "correctIndex": 0,
+      "explanation": "Every 5 km is 3 miles, so 30 km is six blocks of 5 km. Six blocks of 3 miles is 18 miles.",
+      "hints": [
+        "How many blocks of 5 km fit into 30 km?",
+        "Six blocks of 5 km, and each block is 3 miles.",
+        "6 times 3 miles."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_operation",
+          "student_thinking": "Divides 30 by the mile figure instead of scaling the 3 : 5 rate."
+        },
+        {
+          "choice_index": 2,
+          "error_type": "wrong_operation",
+          "student_thinking": "Subtracts the ratio difference of 2 from 30 instead of scaling."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "inverted_rate",
+          "student_thinking": "Scales the wrong way, treating each 3 km as 5 miles."
+        }
+      ],
+      "storyIntro": "Two charts cover the same crossing, one marked in kilometres and one in miles, and at dawn both crews move on the same leg. The distance is one number written in two languages.",
+      "storyContext": "An expedition route desk the night before a crossing: one leg of the route converted between two unit systems so both crews plan to the same distance.",
+      "introTemplates": [
+        "Two charts cover the same crossing: one drawn for {a_noun}, one for {b_noun}. Idris navigates both, and tomorrow's final leg has to mean the same distance on each.",
+        "Idris learned distance twice, once through {a} and once through {b}. Tonight the final leg is one number written in two languages, and both crews move on it at dawn.",
+        "At the route desk, {a_noun} and {b_noun} keep their distances in different units. The crossing starts at first light, and Idris signs off on one converted number."
+      ],
+      "world_feedback": {
+        "correct": "Idris radios 18, and the field team's own reckoning meets it at the checkpoint. Both crews cross on the same map.",
+        "incorrect": "The two crews' figures fail to meet at the checkpoint. Every 5 km on the chart is 3 miles on the radio: Idris reworks the leg before anyone moves."
       }
     }
   ],
