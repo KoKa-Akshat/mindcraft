@@ -1,5 +1,6 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
+import { PenLine } from 'lucide-react'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionFormat } from '../lib/questionBank'
@@ -9,6 +10,7 @@ import BookmarkButton from '../components/BookmarkButton'
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { loadQuestionWork, saveQuestionWork } from '../lib/studentWork'
 import { submitWorkEvidenceIfReady } from '../lib/workEvidence'
+import { appendChapterWorkToJournal } from '../lib/chapterJournal'
 import InteractiveWidget from '../components/InteractiveWidget'
 import { buildStoryDisplay } from '../lib/storyDisplay'
 import MathText from '../components/MathText'
@@ -80,6 +82,13 @@ function lookupStory(rawId: string): CS {
     canonical.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
     canonical,
   )
+}
+
+function storyTeaser(story: string, max = 220): string {
+  if (!story || story.length <= max) return story
+  const cut = story.slice(0, max)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${(lastSpace > 80 ? cut.slice(0, lastSpace) : cut).trim()}…`
 }
 
 // ── Cluster identity ─────────────────────────────────────────────────────────
@@ -180,12 +189,18 @@ const GLYPH: Record<Cluster, React.ReactNode> = {
 }
 
 // ── Spread spec — left + right pages flip together like the dashboard book ──
-
+//
+// Question spreads used to be TWO spreads (a question page, then a separate
+// "your work" scratch page) — the disjointed two-panel flow this rebuild
+// removes. Each question is now ONE spread: the left page is a quiet scene
+// companion (recap + progress), the right page is the full combined entry —
+// story bridge, stem, widget, choices, hints, and a full-page annotation
+// surface, all on one sheet.
 type SpreadSide =
   | { kind: 'cover' }
   | { kind: 'story'; paras: string[]; isFirst?: boolean }
+  | { kind: 'context'; qIdx: number }
   | { kind: 'question'; qIdx: number }
-  | { kind: 'work'; qIdx: number }
 
 type Spread = { left: SpreadSide; right: SpreadSide }
 
@@ -213,8 +228,8 @@ function buildSpreads(text: string, qCount: number): Spread[] {
 
   for (let q = 0; q < qCount; q++) {
     spreads.push({
-      left: { kind: 'question', qIdx: q },
-      right: { kind: 'work', qIdx: q },
+      left: { kind: 'context', qIdx: q },
+      right: { kind: 'question', qIdx: q },
     })
   }
 
@@ -332,7 +347,7 @@ export default function ConceptChapterPage() {
   const [hasSeenStory] = useState(() => typeof window !== 'undefined' && !!localStorage.getItem(storySeenKey))
 
   const firstQuestionSpread = useMemo(
-    () => spreads.findIndex(sp => sp.left.kind === 'question'),
+    () => spreads.findIndex(sp => sp.left.kind === 'context'),
     [spreads],
   )
   const [spreadIdx, setSpreadIdx] = useState(() => (
@@ -342,7 +357,7 @@ export default function ConceptChapterPage() {
   // Mark the story as seen once the student reaches any question spread.
   useEffect(() => {
     const sp = spreads[spreadIdx]
-    if (sp?.left.kind === 'question' && !localStorage.getItem(storySeenKey)) {
+    if (sp?.right.kind === 'question' && !localStorage.getItem(storySeenKey)) {
       localStorage.setItem(storySeenKey, '1')
     }
   }, [spreadIdx, spreads, storySeenKey])
@@ -360,6 +375,12 @@ export default function ConceptChapterPage() {
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   const hydratedWorkRef = useRef<Set<string>>(new Set())
   const [showCalc, setShowCalc] = useState(false)
+  // Full-page "write anywhere" annotation mode — off by default so choices,
+  // hints, and the submit button stay clickable; the pencil toggle turns the
+  // entire page into a writing surface without a separate scratch page.
+  const [writeMode, setWriteMode] = useState(false)
+  useEffect(() => { setWriteMode(false) }, [spreadIdx])
+  const journaledRef = useRef<Set<string>>(new Set())
 
   // Story module — the same Groq reskin practice sessions use, so the chapter's
   // questions are told inside the chapter's story instead of dropped in raw.
@@ -384,17 +405,11 @@ export default function ConceptChapterPage() {
     void loadDashboardPersonalization(user.uid).then(p => setBookmarkedQuestions(p.bookmarkedQuestions))
   }, [user?.uid])
 
-  const spec = currentSpread?.left.kind === 'question'
-    ? { kind: 'question' as const, qIdx: currentSpread.left.qIdx }
-    : currentSpread?.right.kind === 'question'
-      ? { kind: 'question' as const, qIdx: currentSpread.right.qIdx }
-      : { kind: 'other' as const, qIdx: -1 }
+  const spec = currentSpread?.right.kind === 'question'
+    ? { kind: 'question' as const, qIdx: currentSpread.right.qIdx }
+    : { kind: 'other' as const, qIdx: -1 }
 
-  const journalQIdx = currentSpread?.left.kind === 'question'
-    ? currentSpread.left.qIdx
-    : currentSpread?.right.kind === 'work'
-      ? currentSpread.right.qIdx
-      : -1
+  const journalQIdx = currentSpread?.right.kind === 'question' ? currentSpread.right.qIdx : -1
 
   useEffect(() => {
     if (journalQIdx >= 0) setQuestionStartedAt(Date.now())
@@ -492,13 +507,33 @@ export default function ConceptChapterPage() {
     setSpreadIdx(i)
   }
 
+  // Keyboard page flipping — left/right arrows flip spreads like the dashboard
+  // book. Suppressed while writing on the page, typing anywhere, or mid-turn,
+  // so drawing a horizontal stroke or filling in a text field never fires a
+  // page turn underneath the student.
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
+      if (writeMode) return
+      const target = e.target as HTMLElement | null
+      if (target && /^(input|textarea|select)$/i.test(target.tagName)) return
+      if (target?.isContentEditable) return
+      e.preventDefault()
+      if (e.key === 'ArrowRight') goToSpread(spreadIdx + 1, 'f')
+      else goToSpread(spreadIdx - 1, 'b')
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spreadIdx, writeMode, spreads.length])
+
   // Touch swipe — flip pages like a real book on iPad. Ignores gestures that
   // start on interactive surfaces (scratch canvas, inputs, buttons) so writing
   // and tapping never accidentally turn the page.
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const onTouchStart = (e: React.TouchEvent) => {
     const target = e.target as HTMLElement
-    if (target.closest('canvas, textarea, input, button, select, a')) {
+    if (writeMode || target.closest('canvas, textarea, input, button, select, a')) {
       touchStart.current = null
       return
     }
@@ -516,7 +551,7 @@ export default function ConceptChapterPage() {
   }
 
   const isLast = spreadIdx === spreads.length - 1
-  const qSpreadCount = spreads.filter(sp => sp.left.kind === 'question').length
+  const qSpreadCount = spreads.filter(sp => sp.right.kind === 'question').length
 
   const pingContext = useMemo(() => {
     const base = { conceptName: cs.conceptName }
@@ -556,6 +591,41 @@ export default function ConceptChapterPage() {
     )
   }
 
+  // The left companion page for a question spread — a quiet scene recap and
+  // a progress spine, so the left page is never blank while the right page
+  // carries the full combined entry.
+  function renderContextPanel(qIdx: number) {
+    const frame = getFrame(conceptId)
+    return (
+      <div className={s.contextPanel}>
+        {frame && (
+          <div className={s.sceneStamp}>
+            <span className={s.sceneProtagonist} style={{ color: theme.accent }}>{frame.protagonist}</span>
+            <span className={s.sceneDivider} style={{ color: theme.dim }}>·</span>
+            <span className={s.sceneSetting} style={{ color: theme.dim }}>{frame.settingLine}</span>
+          </div>
+        )}
+        <p className={s.contextTeaser} style={{ color: theme.ink }}>
+          {storyTeaser(cs.story)}
+        </p>
+        <div className={s.contextProgress}>
+          <span className={s.contextProgressLabel} style={{ color: theme.dim }}>
+            question {qIdx + 1} of {qSpreadCount}
+          </span>
+          <div className={s.contextDots} aria-hidden>
+            {Array.from({ length: qSpreadCount }).map((_, i) => (
+              <span
+                key={i}
+                className={s.contextDot}
+                style={{ background: i <= qIdx ? theme.accent : 'rgba(0,0,0,0.14)' }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   function lockAnswer(qIdx: number) {
     const chosen = answers[qIdx]
     if (chosen === null || chosen === undefined) return
@@ -583,6 +653,22 @@ export default function ConceptChapterPage() {
       conceptId: canonicalId,
       workLines,
     })
+
+    // Work-to-journal: a worked, submitted question becomes a dated entry in
+    // Notes — same homework_sessions shape DashboardNotesPanel already reads,
+    // so no new panel or read path is needed.
+    if (!journaledRef.current.has(q.id)) {
+      journaledRef.current.add(q.id)
+      void appendChapterWorkToJournal({
+        studentId: user.uid,
+        conceptId: canonicalId,
+        conceptName: cs.conceptName,
+        questionId: q.id,
+        questionNumber: qIdx + 1,
+        correct: chosen === q.correctIndex,
+        hasWork: workLines.some(l => l.text.trim() || l.latex.trim()) || Boolean(notes[qIdx]),
+      })
+    }
   }
 
   function renderQuestionPanel(qIdx: number) {
@@ -610,190 +696,194 @@ export default function ConceptChapterPage() {
           : frame.questionBridge
       : null
 
+    const hasInk = Boolean(notes[qIdx]) || (scratchStrokes[qIdx]?.strokes?.length ?? 0) > 0
+
     return (
       <div className={s.guideRow}>
         <div className={s.guideBody}>
           <div className={s.qPanel}>
-            <header className={s.qHead}>
-              <span className={s.qKicker}>question {qNum} of {qSpreadCount}</span>
-              <BookmarkButton
-                active={bookmarkedQuestions.includes(q.id)}
-                onToggle={() => {
-                  if (!user?.uid) return
-                  void toggleBookmark(user.uid, q.id, bookmarkedQuestions).then(setBookmarkedQuestions)
-                }}
-              />
-            </header>
-            {q.storyIntro ? (
-              <div className={s.storyBridge}>
-                <p className={s.storyBridgeText} style={{ color: theme.ink, opacity: 0.72, fontSize: 13 }}>
+            <div className={s.combinedPage}>
+              <header className={s.qHead}>
+                <span className={s.qKicker}>question {qNum} of {qSpreadCount}</span>
+                <div className={s.qHeadActions}>
+                  <BookmarkButton
+                    active={bookmarkedQuestions.includes(q.id)}
+                    onToggle={() => {
+                      if (!user?.uid) return
+                      void toggleBookmark(user.uid, q.id, bookmarkedQuestions).then(setBookmarkedQuestions)
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className={`${s.writeToggle} ${writeMode ? s.writeToggleActive : ''}`}
+                    style={writeMode ? { borderColor: theme.accent, color: theme.accent } : undefined}
+                    onClick={() => setWriteMode(v => !v)}
+                    aria-pressed={writeMode}
+                  >
+                    <PenLine size={13} strokeWidth={2} />
+                    {writeMode ? 'stop writing' : 'write on this page'}
+                  </button>
+                  {hasInk && (
+                    <button
+                      type="button"
+                      className={s.writeClear}
+                      onClick={() => {
+                        setNotes(n => ({ ...n, [qIdx]: '' }))
+                        setScratchStrokes(st => { const next = { ...st }; delete next[qIdx]; return next })
+                        setScratchInk(st => { const next = { ...st }; delete next[qIdx]; return next })
+                        setDebugOutlines(false)
+                        setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
+                      }}
+                    >
+                      clear my work
+                    </button>
+                  )}
+                </div>
+              </header>
+
+              {q.storyIntro ? (
+                <p className={s.storyBridgeText} style={{ color: theme.ink, opacity: 0.72 }}>
                   {q.storyIntro}
                 </p>
-              </div>
-            ) : q.storyContext ? (
-              <div className={s.storyBridge}>
+              ) : q.storyContext ? (
                 <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{q.storyContext}</p>
-              </div>
-            ) : frame && bridge ? (
-              <div className={s.storyBridge}>
+              ) : frame && bridge ? (
                 <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
-              </div>
-            ) : null}
-            <HighlightedStem
-              text={stemText}
-              ink={theme.ink}
-              accent={theme.accent}
-              highlights={journalGuide.highlights}
-            />
-            <InteractiveWidget
-              conceptId={conceptId}
-              questionText={stemText}
-              format={questionFormat(q)}
-              theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
-            />
-            <div className={s.qChoices}>
-          {q.choices.slice(0, 4).map((c, i) => (
-            <button
-              key={i}
-              type="button"
-              className={`${s.choice} ${chosen === i ? s.choiceChosen : ''} ${isDone ? s.choiceDone : ''}`}
-              style={chosen === i ? {
-                borderColor: theme.accent,
-                background: theme.accent + '10',
-                '--choice-bg': theme.accent + '10',
-              } as React.CSSProperties : undefined}
-              onClick={() => !isDone && setAnswers(a => ({ ...a, [qIdx]: i }))}
-              disabled={isDone}
-            >
-              <span className={s.choiceLetter} style={{ color: theme.accent }}>
-                {String.fromCharCode(65 + i)}
-              </span>
-              <span className={s.choiceText}><MathText text={fmtChoice(c)} /></span>
-            </button>
-          ))}
-        </div>
-        {!isDone && allHints.length > 0 && (
-          <div className={s.hintStrip}>
-            {(hintsShownPerQ[qIdx] ?? 0) < allHints.length && (
-              <button
-                type="button"
-                className={s.hintBtn}
-                style={{ borderColor: theme.accent + '55', color: theme.accent }}
-                onClick={() => setHintsShownPerQ(h => ({ ...h, [qIdx]: (h[qIdx] ?? 0) + 1 }))}
-              >
-                need a hint?
-              </button>
-            )}
-            {allHints.slice(0, hintsShownPerQ[qIdx] ?? 0).map((hint, hi) => (
-              <div key={hi} className={s.hintBubble} style={{ borderLeftColor: theme.accent + '66', color: theme.dim }}>
-                <MathText text={hint} />
-              </div>
-            ))}
-          </div>
-        )}
-        {isDone && chosen !== null && chosen !== q.correctIndex && q.misconception_label && (
-          <div className={s.misconception}>
-            <span className={s.misconceptionLabel}>common slip</span>
-            {q.misconception_label}
-          </div>
-        )}
-        {!isDone ? (
-          <button
-            type="button"
-            className={s.submitBtn}
-            style={{ background: theme.ink, color: theme.paper }}
-            disabled={chosen === null}
-            onClick={() => lockAnswer(qIdx)}
-          >
-            {chosen === null ? 'choose an answer' : 'lock it in →'}
-          </button>
-        ) : (
-          <p className={s.qDoneNote} style={{ color: theme.dim }}>
-            {chosen === q.correctIndex ? 'noted. keep going.' : 'noted. check your work.'}
-          </p>
-        )}
-          </div>
-        </div>
-        {/* JarvisGuide intentionally omitted from the question (left) page — right side only */}
-      </div>
-    )
-  }
+              ) : null}
 
-  function renderWorkPanel(qIdx: number) {
-    return (
-      <div className={s.guideRow}>
-        <div className={s.guideBody}>
-      <div className={s.notepad}>
-        <div className={s.notepadHeader}>
-          <span className={s.notepadLabel} style={{ color: theme.dim }}>your work</span>
-          {notes[qIdx] && (
-            <button
-              type="button"
-              className={s.notepadClear}
-              onClick={() => {
-                setNotes(n => ({ ...n, [qIdx]: '' }))
-                setScratchStrokes(st => {
-                  const next = { ...st }
-                  delete next[qIdx]
-                  return next
-                })
-                setScratchInk(st => {
-                  const next = { ...st }
-                  delete next[qIdx]
-                  return next
-                })
-                setDebugOutlines(false)
-                setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
-              }}
-            >
-              clear
-            </button>
-          )}
-        </div>
-        <div className={s.notepadInner} style={{ '--line-color': theme.lineBg } as React.CSSProperties}>
-          <div className={s.notepadLines} aria-hidden />
-          <ScratchPad
-            key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
-            paperMode
-            questionId={`${conceptId}-q${qIdx}`}
-            evalLines={scratchInk[qIdx]?.workLines?.map(l => ({ bbox: l.bbox, text: l.text, latex: l.latex }))}
-            lineOverlays={(() => {
-              const lines = scratchInk[qIdx]?.workLines ?? []
-              const overlays: LineOverlay[] = lines
-                .filter(line => line.verdict === 'wrong')
-                .map(line => ({ bbox: line.bbox, kind: 'suspect' as const }))
-              if (debugOutlines) {
-                overlays.push(...lines.map(line => ({ bbox: line.bbox, kind: 'debug' as const })))
-              }
-              return overlays.length ? overlays : undefined
-            })()}
-            onChange={(_canvas, strokeData) => {
-              setScratchStrokes(st => ({ ...st, [qIdx]: strokeData }))
-              setNotes(n => ({
-                ...n,
-                [qIdx]: strokeData.strokes.length
-                  ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
-                  : '',
-              }))
-            }}
-          />
-        </div>
-        <ScratchTranscriptionPane
-          imageDataUrl={notes[qIdx] ?? ''}
-          strokeData={scratchStrokes[qIdx] ?? null}
-          resetKey={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
-          className={s.transcriptionPane}
-          onChange={state => {
-            if (state) setScratchInk(st => ({ ...st, [qIdx]: state }))
-            else setScratchInk(st => {
-              const next = { ...st }
-              delete next[qIdx]
-              return next
-            })
-          }}
-          onDebugChange={setDebugOutlines}
-        />
-      </div>
+              <div className={s.qGrid}>
+                <div className={s.qStemCol}>
+                  <HighlightedStem
+                    text={stemText}
+                    ink={theme.ink}
+                    accent={theme.accent}
+                    highlights={journalGuide.highlights}
+                  />
+                  <InteractiveWidget
+                    conceptId={conceptId}
+                    questionText={stemText}
+                    format={questionFormat(q)}
+                    theme={{ accent: theme.accent, ink: theme.ink, bg: theme.bg, dim: theme.dim }}
+                  />
+                </div>
+
+                <div className={s.qChoicesCol}>
+                  <div className={s.qChoices}>
+                    {q.choices.slice(0, 4).map((c, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        className={`${s.choice} ${chosen === i ? s.choiceChosen : ''} ${isDone ? s.choiceDone : ''}`}
+                        style={chosen === i ? {
+                          borderColor: theme.accent,
+                          background: theme.accent + '10',
+                          '--choice-bg': theme.accent + '10',
+                        } as React.CSSProperties : undefined}
+                        onClick={() => !isDone && setAnswers(a => ({ ...a, [qIdx]: i }))}
+                        disabled={isDone}
+                      >
+                        <span className={s.choiceLetter} style={{ color: theme.accent }}>
+                          {String.fromCharCode(65 + i)}
+                        </span>
+                        <span className={s.choiceText}><MathText text={fmtChoice(c)} /></span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {!isDone && allHints.length > 0 && (
+                    <div className={s.hintStrip}>
+                      {(hintsShownPerQ[qIdx] ?? 0) < allHints.length && (
+                        <button
+                          type="button"
+                          className={s.hintBtn}
+                          style={{ borderColor: theme.accent + '55', color: theme.accent }}
+                          onClick={() => setHintsShownPerQ(h => ({ ...h, [qIdx]: (h[qIdx] ?? 0) + 1 }))}
+                        >
+                          need a hint?
+                        </button>
+                      )}
+                      {allHints.slice(0, hintsShownPerQ[qIdx] ?? 0).map((hint, hi) => (
+                        <div key={hi} className={s.hintBubble} style={{ borderLeftColor: theme.accent + '66', color: theme.dim }}>
+                          <MathText text={hint} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {isDone && chosen !== null && chosen !== q.correctIndex && q.misconception_label && (
+                    <div className={s.misconception}>
+                      <span className={s.misconceptionLabel}>common slip</span>
+                      {q.misconception_label}
+                    </div>
+                  )}
+
+                  {!isDone ? (
+                    <button
+                      type="button"
+                      className={s.submitBtn}
+                      style={{ background: theme.ink, color: theme.paper }}
+                      disabled={chosen === null}
+                      onClick={() => lockAnswer(qIdx)}
+                    >
+                      {chosen === null ? 'choose an answer' : 'lock it in →'}
+                    </button>
+                  ) : (
+                    <p className={s.qDoneNote} style={{ color: theme.dim }}>
+                      {chosen === q.correctIndex ? 'noted. keep going.' : 'noted. check your work.'}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <ScratchTranscriptionPane
+                imageDataUrl={notes[qIdx] ?? ''}
+                strokeData={scratchStrokes[qIdx] ?? null}
+                resetKey={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
+                className={s.transcriptionPane}
+                onChange={state => {
+                  if (state) setScratchInk(st => ({ ...st, [qIdx]: state }))
+                  else setScratchInk(st => { const next = { ...st }; delete next[qIdx]; return next })
+                }}
+                onDebugChange={setDebugOutlines}
+              />
+
+              {/* Full-page annotation surface — write anywhere on the page,
+                  not confined to one boxed scratch area. Pointer events only
+                  engage while writeMode is on, so the rest of the page (choices,
+                  hints, submit) stays clickable the rest of the time. */}
+              <div
+                className={`${s.annotationLayer} ${writeMode ? s.annotationActive : ''}`}
+                style={{ '--line-color': theme.lineBg } as React.CSSProperties}
+              >
+                {writeMode && <div className={s.annotationHint}>tap the pencil again to stop writing</div>}
+                <ScratchPad
+                  key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
+                  paperMode
+                  questionId={`${conceptId}-q${qIdx}`}
+                  evalLines={scratchInk[qIdx]?.workLines?.map(l => ({ bbox: l.bbox, text: l.text, latex: l.latex }))}
+                  lineOverlays={(() => {
+                    const lines = scratchInk[qIdx]?.workLines ?? []
+                    const overlays: LineOverlay[] = lines
+                      .filter(line => line.verdict === 'wrong')
+                      .map(line => ({ bbox: line.bbox, kind: 'suspect' as const }))
+                    if (debugOutlines) {
+                      overlays.push(...lines.map(line => ({ bbox: line.bbox, kind: 'debug' as const })))
+                    }
+                    return overlays.length ? overlays : undefined
+                  })()}
+                  onChange={(_canvas, strokeData) => {
+                    setScratchStrokes(st => ({ ...st, [qIdx]: strokeData }))
+                    setNotes(n => ({
+                      ...n,
+                      [qIdx]: strokeData.strokes.length
+                        ? exportScratchImage(strokeData.strokes, strokeData.width, strokeData.height, 1)
+                        : '',
+                    }))
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <JarvisGuide
           insights={insightsForSide(journalGuide.insights, 'work')}
@@ -814,16 +904,16 @@ export default function ConceptChapterPage() {
       )
     }
     if (side.kind === 'story') return renderStory(side)
+    if (side.kind === 'context') return renderContextPanel(side.qIdx)
     if (side.kind === 'question') return renderQuestionPanel(side.qIdx)
-    if (side.kind === 'work') return renderWorkPanel(side.qIdx)
     return null
   }
 
   function runningHeadFor(side: SpreadSide): string | undefined {
     if (side.kind === 'cover') return undefined
     if (side.kind === 'story') return 'the story'
+    if (side.kind === 'context') return 'the scene'
     if (side.kind === 'question') return cs.conceptName
-    if (side.kind === 'work') return 'your work'
     return undefined
   }
 

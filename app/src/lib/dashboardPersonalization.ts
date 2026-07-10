@@ -22,7 +22,7 @@ export interface StickerSelection {
   customUrl?: string
 }
 
-export type PaperPreset = 'cream' | 'beige' | 'greyblue' | 'sage' | 'blush' | 'custom'
+export type PaperPreset = 'cream' | 'beige' | 'greyblue' | 'sage' | 'blush' | 'cyberpunk' | 'custom'
 export type FontPreset = 'script' | 'print' | 'mono' | 'custom'
 
 export interface DashboardTheme {
@@ -58,6 +58,7 @@ export const PAPER_LABELS: Record<Exclude<PaperPreset, 'custom'>, string> = {
   greyblue: 'Cool grey-blue',
   sage: 'Sage',
   blush: 'Blush',
+  cyberpunk: 'Night circuit',
 }
 
 export const FONT_LABELS: Record<Exclude<FontPreset, 'custom'>, string> = {
@@ -94,6 +95,17 @@ function isCuratedStickerId(id: string): id is StickerId {
   return STICKER_IDS.includes(id as StickerId)
 }
 
+const EMOJI_STICKER_PREFIX = 'emoji:'
+// A generous but bounded cap — a handful of grapheme clusters (emoji can be
+// multi-codepoint with skin-tone/ZWJ modifiers), never a smuggled string.
+const MAX_EMOJI_STICKER_CHARS = 16
+
+function isEmojiStickerIdValue(id: string): boolean {
+  if (!id.startsWith(EMOJI_STICKER_PREFIX)) return false
+  const chars = id.slice(EMOJI_STICKER_PREFIX.length)
+  return chars.length > 0 && chars.length <= MAX_EMOJI_STICKER_CHARS
+}
+
 export function cleanStickers(raw: unknown, uid?: string): DashboardSticker[] {
   if (!Array.isArray(raw)) return []
   const out: DashboardSticker[] = []
@@ -109,7 +121,7 @@ export function cleanStickers(raw: unknown, uid?: string): DashboardSticker[] {
     const customUrl = typeof s.customUrl === 'string' ? s.customUrl : undefined
     if (customUrl) {
       if (!isValidCustomStickerUrl(customUrl, uid)) continue
-    } else if (!isCuratedStickerId(s.stickerId)) {
+    } else if (!isCuratedStickerId(s.stickerId) && !isEmojiStickerIdValue(s.stickerId)) {
       continue
     }
 

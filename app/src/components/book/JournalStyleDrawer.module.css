@@ -282,3 +282,136 @@
 .hiddenFile {
   display: none;
 }
+
+.emojiRow {
+  display: flex;
+  gap: 6px;
+}
+
+.emojiInput {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 6px 10px;
+  font-size: 16px;
+  background: var(--paper-recessed);
+  color: var(--ink-system);
+}
+
+.emojiInput:focus {
+  outline: none;
+  border-color: var(--ink-depth);
+}
+
+.emojiAddBtn {
+  border: 1px solid var(--ink-depth);
+  background: transparent;
+  border-radius: 2px;
+  padding: 6px 12px;
+  font-family: var(--font-stamp);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink-depth);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.emojiAddBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── Shop ─────────────────────────────────────────────────── */
+.shopGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.shopCard {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 9px 10px 10px;
+  background: var(--paper-recessed);
+}
+
+.shopCardLocked {
+  opacity: 0.62;
+}
+
+.shopSwatchRow {
+  display: flex;
+  gap: 3px;
+}
+
+.shopSwatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.shopEmojiRow {
+  display: flex;
+  gap: 2px;
+}
+
+.shopName {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-system);
+}
+
+.shopBlurb {
+  margin: 0;
+  font-family: var(--font-katha);
+  font-style: italic;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--ink-pencil);
+}
+
+.shopLocked {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-stamp);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink-faded);
+}
+
+.shopEquipBtn {
+  align-self: flex-start;
+  border: 1px solid var(--ink-depth);
+  background: transparent;
+  border-radius: 2px;
+  padding: 4px 10px;
+  font-family: var(--font-stamp);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ink-depth);
+  cursor: pointer;
+}
+
+.shopEquipBtn:disabled {
+  color: var(--ink-faded);
+  border-color: var(--paper-edge);
+  cursor: default;
+}
+
+.shopFreeTag {
+  font-family: var(--font-stamp);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--click-ink);
+}

@@ -78,6 +78,17 @@ function isCuratedId(id: string): id is StickerId {
   return id in STICKER_VIEW
 }
 
+export const EMOJI_STICKER_PREFIX = 'emoji:'
+
+export function isEmojiStickerId(id: string): boolean {
+  return id.startsWith(EMOJI_STICKER_PREFIX)
+}
+
+/** Pull the raw emoji characters out of an `emoji:<chars>` sticker id. */
+export function emojiFromStickerId(id: string): string {
+  return id.slice(EMOJI_STICKER_PREFIX.length)
+}
+
 export function StickerGlyph({
   id,
   customUrl,
@@ -91,6 +102,13 @@ export function StickerGlyph({
     return (
       <span className={s.glyph} style={{ width: size, height: size }}>
         <img src={customUrl} alt="" className={s.customImg} draggable={false} />
+      </span>
+    )
+  }
+  if (isEmojiStickerId(id)) {
+    return (
+      <span className={s.glyph} style={{ width: size, height: size, fontSize: size * 0.86, lineHeight: 1 }}>
+        {emojiFromStickerId(id)}
       </span>
     )
   }

@@ -19,12 +19,28 @@ import {
   isValidHexColor,
   meetsContrast,
 } from '../../lib/themeUtils'
-import { StickerGlyph } from './StickerLayer'
+import { Lock } from 'lucide-react'
+import { StickerGlyph, EMOJI_STICKER_PREFIX } from './StickerLayer'
+import { SHOP_CATALOG, type ShopItem } from '../../lib/shopCatalog'
 import s from './JournalStyleDrawer.module.css'
 
 function selectionKey(sel: StickerSelection | null): string | null {
   if (!sel) return null
   return sel.customUrl ? `custom:${sel.stickerId}` : sel.stickerId
+}
+
+const RECENT_EMOJI_KEY = 'mc-recent-emoji-stickers'
+const MAX_RECENT_EMOJI = 8
+
+function loadRecentEmoji(): string[] {
+  try {
+    const raw = localStorage.getItem(RECENT_EMOJI_KEY)
+    return raw ? (JSON.parse(raw) as string[]).slice(0, MAX_RECENT_EMOJI) : []
+  } catch { return [] }
+}
+
+function saveRecentEmoji(list: string[]) {
+  try { localStorage.setItem(RECENT_EMOJI_KEY, JSON.stringify(list.slice(0, MAX_RECENT_EMOJI))) } catch { /* ignore */ }
 }
 
 export default function JournalStyleDrawer({
@@ -52,14 +68,26 @@ export default function JournalStyleDrawer({
   onClearStickers: () => void
   onCustomStickersChange: (stickers: CustomSticker[]) => void
 }) {
-  const [tab, setTab] = useState<'theme' | 'stickers'>('theme')
+  const [tab, setTab] = useState<'theme' | 'stickers' | 'shop'>('theme')
   const [advancedOpen, setAdvancedOpen] = useState(false)
   const [uploadError, setUploadError] = useState('')
   const [uploading, setUploading] = useState(false)
   const [customPaperDraft, setCustomPaperDraft] = useState(theme.customPaper ?? '#f7f3ee')
   const [customInkDraft, setCustomInkDraft] = useState(theme.customInk ?? '#232f4e')
   const [customFontDraft, setCustomFontDraft] = useState(theme.customFontFamily ?? 'Caveat')
+  const [emojiDraft, setEmojiDraft] = useState('')
+  const [recentEmoji, setRecentEmoji] = useState<string[]>(() => loadRecentEmoji())
   const fileRef = useRef<HTMLInputElement>(null)
+
+  function pickEmoji(chars: string) {
+    const trimmed = chars.trim()
+    if (!trimmed) return
+    onSelectSticker({ stickerId: `${EMOJI_STICKER_PREFIX}${trimmed}` })
+    const next = [trimmed, ...recentEmoji.filter(e => e !== trimmed)].slice(0, MAX_RECENT_EMOJI)
+    setRecentEmoji(next)
+    saveRecentEmoji(next)
+    setEmojiDraft('')
+  }
 
   if (!open) return null
 
@@ -135,6 +163,9 @@ export default function JournalStyleDrawer({
           </button>
           <button type="button" className={tab === 'stickers' ? s.tabActive : s.tab} onClick={() => setTab('stickers')}>
             stickers
+          </button>
+          <button type="button" className={tab === 'shop' ? s.tabActive : s.tab} onClick={() => setTab('shop')}>
+            shop
           </button>
         </div>
 
@@ -226,12 +257,52 @@ export default function JournalStyleDrawer({
               </div>
             )}
           </div>
-        ) : (
+        ) : tab === 'stickers' ? (
           <div className={s.section}>
             <p className={s.hint}>
               Pick a sticker, then tap the cover to place it. Drag to move; hold to remove.
               {stickers.length >= STICKER_CAP ? ' Sticker limit reached.' : ` ${stickers.length}/${STICKER_CAP} placed.`}
             </p>
+
+            <div className={s.label}>drop in an emoji</div>
+            <form
+              className={s.emojiRow}
+              onSubmit={e => { e.preventDefault(); pickEmoji(emojiDraft) }}
+            >
+              <input
+                type="text"
+                className={s.emojiInput}
+                placeholder="🌟"
+                value={emojiDraft}
+                maxLength={8}
+                onChange={e => setEmojiDraft(e.target.value)}
+                aria-label="Type or paste an emoji"
+              />
+              <button type="submit" className={s.emojiAddBtn} disabled={!emojiDraft.trim()}>
+                use it
+              </button>
+            </form>
+            {recentEmoji.length > 0 && (
+              <div className={s.stickerGrid}>
+                {recentEmoji.map(e => {
+                  const key = `${EMOJI_STICKER_PREFIX}${e}`
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      className={`${s.stickerBtn} ${selectedKey === key ? s.stickerBtnActive : ''}`}
+                      onClick={() => onSelectSticker(selectedKey === key ? null : { stickerId: key })}
+                      disabled={stickers.length >= STICKER_CAP && selectedKey !== key}
+                      title={e}
+                    >
+                      <StickerGlyph id={key} size={24} />
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+
+            <div className={s.label}>or a curated sticker</div>
             <div className={s.stickerGrid}>
               <button
                 type="button"
@@ -285,8 +356,67 @@ export default function JournalStyleDrawer({
               </button>
             )}
           </div>
+        ) : (
+          <div className={s.section}>
+            <p className={s.hint}>
+              Cover art and sticker packs for your journal. Free items equip right away —
+              locked items are coming soon.
+            </p>
+            <div className={s.shopGrid}>
+              {SHOP_CATALOG.map(item => (
+                <ShopCard
+                  key={`${item.kind}-${item.id}`}
+                  item={item}
+                  equipped={item.kind === 'cover' && theme.paper === item.id}
+                  onEquip={() => {
+                    if (item.locked) return
+                    if (item.kind === 'cover') pickPresetPaper(item.id as Exclude<PaperPreset, 'custom'>)
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         )}
       </div>
+    </div>
+  )
+}
+
+function ShopCard({
+  item,
+  equipped,
+  onEquip,
+}: {
+  item: ShopItem
+  equipped: boolean
+  onEquip: () => void
+}) {
+  return (
+    <div className={`${s.shopCard} ${item.locked ? s.shopCardLocked : ''}`}>
+      {item.kind === 'cover' ? (
+        <div className={s.shopSwatchRow}>
+          {item.swatch.map((c, i) => (
+            <span key={i} className={s.shopSwatch} style={{ background: c }} />
+          ))}
+        </div>
+      ) : (
+        <div className={s.shopEmojiRow}>
+          {item.emoji.slice(0, 4).map((id, i) => (
+            <StickerGlyph key={i} id={id} size={20} />
+          ))}
+        </div>
+      )}
+      <div className={s.shopName}>{item.name}</div>
+      <p className={s.shopBlurb}>{item.blurb}</p>
+      {item.locked ? (
+        <span className={s.shopLocked}><Lock size={11} strokeWidth={2} /> coming soon</span>
+      ) : item.kind === 'cover' ? (
+        <button type="button" className={s.shopEquipBtn} onClick={onEquip} disabled={equipped}>
+          {equipped ? 'equipped' : 'equip'}
+        </button>
+      ) : (
+        <span className={s.shopFreeTag}>included</span>
+      )}
     </div>
   )
 }

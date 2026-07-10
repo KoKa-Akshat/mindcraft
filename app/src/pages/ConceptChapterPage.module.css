@@ -366,8 +366,153 @@
 }
 .storyBridgeText {
   font: 400 italic 14px/1.5 "Source Serif 4", Georgia, serif;
-  margin: 0;
-  max-width: 48ch;
+  margin: 0 0 16px;
+  max-width: 60ch;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+/* ── Context (left) companion page for a question spread ──────────────── */
+.contextPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.contextTeaser {
+  font: 400 italic 15px/1.6 "Source Serif 4", Georgia, serif;
+  margin: 4px 0 0;
+  max-width: 40ch;
+  opacity: 0.85;
+}
+.contextProgress {
+  margin-top: auto;
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.contextProgressLabel {
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+}
+.contextDots {
+  display: flex;
+  gap: 6px;
+}
+.contextDot {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  transition: background 200ms;
+}
+
+/* ── Combined question page ──────────────────────────────────────────────
+   ONE page instead of a question panel + a separate scratch page: the
+   stem/widget sit in a left column, choices in a right column, and a
+   full-page transparent canvas overlays the whole sheet so a student can
+   write anywhere rather than in one boxed scratch area. */
+.combinedPage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.qHeadActions {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.writeToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border: 1px solid rgba(0,0,0,0.16);
+  border-radius: 999px;
+  background: transparent;
+  font: 500 10.5px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.03em;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 140ms, color 140ms, background 140ms;
+}
+.writeToggle:hover { background: rgba(0,0,0,0.04); }
+.writeToggleActive { background: rgba(29,58,138,0.06); }
+
+.writeClear {
+  border: none;
+  background: none;
+  font: 400 9px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: inherit;
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 4px 2px;
+}
+.writeClear:hover { opacity: 1; }
+
+.qGrid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+}
+
+.qStemCol {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.qChoicesCol {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.qChoicesCol .qChoices { margin-top: 0; }
+
+/* Full-page annotation overlay — always painted above the printed content
+   (position:absolute + auto z-index paints after static in-flow content
+   regardless of DOM order) but only captures input in write mode, so the
+   rest of the time clicks pass straight through to choices/buttons below. */
+.annotationLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  border-radius: 4px;
+}
+.annotationActive {
+  pointer-events: auto;
+  background: rgba(255,255,255,0.02);
+  cursor: crosshair;
+}
+.annotationHint {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  font: 400 10px/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  color: var(--theme-dim, #9a8a6a);
+  background: var(--theme-paper, #fffdf7);
+  padding: 5px 9px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.08);
+  pointer-events: none;
+  z-index: 11;
+}
+
+@media (max-width: 900px) {
+  .qGrid { grid-template-columns: 1fr; }
 }
 
 /* Question text — supports inline diagram callouts */

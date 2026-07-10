@@ -20,6 +20,7 @@ import DashboardSavedQuestionsPanel from '../components/DashboardSavedQuestionsP
 import DashboardWorksheetPanel from '../components/DashboardWorksheetPanel'
 import JournalStyleDrawer from '../components/book/JournalStyleDrawer'
 import StickerLayer from '../components/book/StickerLayer'
+import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
 import {
   loadDashboardPersonalization,
   saveCustomStickers,
@@ -134,6 +135,9 @@ export default function Dashboard() {
   const [styleDrawerOpen, setStyleDrawerOpen] = useState(false)
   const [customStickers, setCustomStickers] = useState<CustomSticker[]>([])
   const [selectedSticker, setSelectedSticker] = useState<StickerSelection | null>(null)
+  const [showCover, setShowCover] = useState(() => (
+    typeof window !== 'undefined' && window.innerWidth >= 900 && !coverAlreadySeen()
+  ))
   // Tutor's permanent Meet room — join-link fallback when the session doc has
   // no meetingUrl of its own. users/{uid} docs are readable by any signed-in user.
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
@@ -172,6 +176,38 @@ export default function Dashboard() {
   function openSaved() { navigate('/dashboard?view=saved', { replace: true }) }
   function openWorksheet() { navigate('/dashboard?view=worksheet', { replace: true }) }
   function closePanel() { navigate('/dashboard', { replace: true }) }
+
+  // Arrow-key page navigation — left/right flips between the notebook's
+  // section pages (Plan · Map · Homework · Solver · Notes · Saved), the same
+  // destinations as the fore-edge tabs. Skipped while typing, mid page-turn,
+  // drilled into a route detail, or before the cover has been opened.
+  const TAB_ORDER: Array<{ mode: string; open: () => void }> = [
+    { mode: 'today', open: closePanel },
+    { mode: 'gps', open: openGps },
+    { mode: 'worksheet', open: openWorksheet },
+    { mode: 'homework', open: openHomework },
+    { mode: 'notes', open: openNotes },
+    { mode: 'saved', open: openSaved },
+  ]
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
+      if (showCover || styleDrawerOpen || turningConceptId || routeMode) return
+      const target = e.target as HTMLElement | null
+      if (target && /^(input|textarea|select)$/i.test(target.tagName)) return
+      if (target?.isContentEditable) return
+      const currentMode = todayMode ? 'today' : view
+      const idx = TAB_ORDER.findIndex(t => t.mode === currentMode)
+      if (idx < 0) return
+      const nextIdx = e.key === 'ArrowRight' ? idx + 1 : idx - 1
+      if (nextIdx < 0 || nextIdx >= TAB_ORDER.length) return
+      e.preventDefault()
+      TAB_ORDER[nextIdx].open()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showCover, styleDrawerOpen, turningConceptId, routeMode, todayMode, view])
 
   function goChallenge() {
     if (weakness) {
@@ -399,6 +435,10 @@ export default function Dashboard() {
 
   const examLabel = pawHubDisplayText((path.exam || 'ACT').toUpperCase(), curriculumTrack)
 
+  const coverEntryLabel = path.completedOnPath > 0
+    ? `Entry ${path.completedOnPath} · pick up where you left off`
+    : 'Entry 1 · unwritten'
+
   if (!diagChecked) {
     return (
       <div className={book.shell}>
@@ -412,6 +452,12 @@ export default function Dashboard() {
 
   return (
     <>
+    {showCover && (
+      <CoverLanding
+        entryLabel={coverEntryLabel}
+        onOpen={() => setShowCover(false)}
+      />
+    )}
     <BookShell
       theme={dashboardTheme}
       chromeRight={

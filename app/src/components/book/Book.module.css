@@ -765,3 +765,39 @@
 .shell[data-font="mono"] {
   --font-script: var(--font-stamp);
 }
+
+/* ── Night circuit — cyberpunk paper preset ──────────────────
+   Still a notebook: same grain, same rules, same margin doctrine.
+   The accent family shifts to cyan/magenta/violet and the gutter
+   stitches get one restrained neon glow — the one place this skin
+   is allowed to break the "shadow, not glow" rule, because the
+   owner asked for "slightly cyberpunk but still a notebook." */
+.shell[data-paper="cyberpunk"] {
+  --paper-base:     #e2ebf1;
+  --paper-raised:   #ecf3f7;
+  --paper-recessed: #d2dee6;
+  --paper-edge:     #b6c8d4;
+  --paper-crease:   #9db0c0;
+  --rule:           rgba(6, 190, 212, 0.20);
+  --margin-rule:    rgba(214, 0, 168, 0.30);
+  --ink-depth:      #6d28d9;
+  --click:          #00e6a8;
+  --click-ink:      #067a5c;
+  --stakes:         #d6009f;
+}
+
+.shell[data-paper="cyberpunk"] .stitch {
+  background: rgba(6, 190, 212, 0.55);
+  box-shadow: 0 0 6px rgba(6, 190, 212, 0.55);
+}
+.shell[data-paper="cyberpunk"] .stitchSmall {
+  background: rgba(214, 0, 168, 0.4);
+  box-shadow: 0 0 4px rgba(214, 0, 168, 0.4);
+}
+.shell[data-paper="cyberpunk"] .ribbon {
+  background: linear-gradient(180deg, #ff2fc0 0%, var(--stakes) 60%, #9c0072 100%);
+  filter: drop-shadow(0 0 8px rgba(214, 0, 168, 0.45));
+}
+.shell[data-paper="cyberpunk"] .navItemActive::before {
+  box-shadow: 0 0 6px rgba(109, 40, 217, 0.6);
+}
