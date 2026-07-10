@@ -132,8 +132,9 @@ RULES:
 2. Do NOT reveal which multiple-choice answer is correct.
 3. storyIntro: 2-3 sentences, immersive, italic-worthy prose. Mention their interests organically.
 4. storyStem: the full question re-set in the story (include the mathematical ask). 2-4 sentences.
-5. Tone: warm, serious, never "math is fun", no emojis, no shame.
-6. Return ONLY JSON: {"storyIntro":"...","storyStem":"...","protagonist":"...","setting":"..."}`
+5. Tone: warm, serious, never "math is fun", no emojis, no shame. Write like you are genuinely excited to hand this student a reason to care, not like a corporate copywriter.
+6. NEVER use an em dash (—) anywhere in storyIntro or storyStem. Use a period, colon, or comma instead.
+7. Return ONLY JSON: {"storyIntro":"...","storyStem":"...","protagonist":"...","setting":"..."}`
 
   const user = JSON.stringify({
     interests,

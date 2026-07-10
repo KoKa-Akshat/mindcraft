@@ -93,15 +93,16 @@ function isValidItem(
   if (typeof item.storyStem !== 'string' || item.storyStem.trim().length < 20) return false
   if (item.storyStem.length > 2200) return false
   if (BANNED_MARKUP.test(item.storyStem)) return false
+  if (item.storyStem.includes('—')) return false // em dash — voice rule
   if (!numbersPreserved(original.question, item.storyStem)) return false
   if (!Array.isArray(item.socratic)
     || item.socratic.length < 1 || item.socratic.length > 3
-    || !item.socratic.every(sq => typeof sq === 'string' && sq.trim().length > 0)) return false
+    || !item.socratic.every(sq => typeof sq === 'string' && sq.trim().length > 0 && !sq.includes('—'))) return false
   if (!Array.isArray(item.steps)
     || item.steps.length < 2 || item.steps.length > 6
-    || !item.steps.every(st => typeof st === 'string' && st.trim().length > 0)) return false
+    || !item.steps.every(st => typeof st === 'string' && st.trim().length > 0 && !st.includes('—'))) return false
   if (item.misconceptionCallout !== undefined
-    && typeof item.misconceptionCallout !== 'string') return false
+    && (typeof item.misconceptionCallout !== 'string' || item.misconceptionCallout.includes('—'))) return false
   // Guidance must not leak the answer letter or the exact correct choice text.
   const correctText = original.choices[original.correctIndex] ?? ''
   const leaky = (s: string) =>
@@ -132,7 +133,8 @@ Prefer story cells / storyIntro when present — they are pre-authored immersive
 4. Each storyStem must stand alone (2-4 sentences of scene + the full mathematical ask). Do NOT reference other questions or "the previous scene" — questions can appear in any order.
 5. Use the story's actual characters, places, and stakes. If the original stem's context conflicts with the story world, translate the surface context but keep the math identical.
 6. The math must be WOVEN INTO the scene's action — a named character must need this exact equation/quantity for a concrete reason inside the story ("the ledger shows 9x − 3y = 10, and Stevin needs the slope to set the ramp"), never a scene followed by an unrelated textbook ask. If you cannot tie the exact math to the story naturally, set the scene around the character ENCOUNTERING that exact expression (a chart, a ledger, an instrument reading) — the connection must always be explicit.
-7. BAD example: "William watches planes land. If 9x - 3y = 10, what is the slope?" GOOD example: "Stevin opens the cargo ledger where today's balance reads 9x − 3y = 10 — what slope does that constraint line show for the airlift ramp?"
+7. BAD example: "William watches planes land. If 9x - 3y = 10, what is the slope?" GOOD example: "Stevin opens the cargo ledger where today's balance reads 9x − 3y = 10. What slope does that constraint line show for the airlift ramp?"
+8. Voice: warm, direct, genuinely excited to help a student who has struggled with math before. Never stilted or corporate-sounding. NEVER use an em dash (—) anywhere in any field; use a period, colon, or comma instead.
 
 GUIDANCE — derived from the signals given per question:
 • "socratic": exactly 2 short guiding questions a great tutor would ask, in story voice. Lead toward the method, never reveal the answer or the correct choice.

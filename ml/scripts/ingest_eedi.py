@@ -538,7 +538,7 @@ def build_explanation_template(question: str, choices: list[str], correct_idx: i
 
 def build_hints(construct: str) -> list[str]:
     return [
-        f"Re-read the question carefully — what is it specifically asking you to find?",
+        f"Read the question again. What is it specifically asking you to find?",
         f"Think about the key property of {construct.lower()} that applies here.",
         f"Set up the calculation step by step before combining terms.",
     ]
@@ -570,6 +570,9 @@ def try_groq_explanation(
             f"Math question ({construct}):\n{question}\n\n"
             f"Choices:\n" + "\n".join(f"{chr(65+i)}. {c}" for i, c in enumerate(choices)) +
             f"\n\nCorrect answer: {correct}{misc_note}\n\n"
+            "Voice: warm, direct, genuinely excited to help a student who has struggled "
+            "with math before. Never stilted or corporate-sounding. NEVER use an em dash "
+            "(—) anywhere in the reply; use a period, colon, or comma instead.\n\n"
             "Reply with ONLY valid JSON: "
             '{\"explanation\": \"2-3 sentence clear solution walkthrough that ends by naming the correct answer. '
             'If there is a common mistake, briefly say why it is wrong.\", '

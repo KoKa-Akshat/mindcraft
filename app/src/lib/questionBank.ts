@@ -279,7 +279,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['4','12','18','36'],
     correctIndex:1,
     explanation:'Subtract 2x: 3x − 3 = 9. Add 3: 3x = 12. (The question asks for 3x, not x!)',
-    hints:['Subtract 2x from both sides','You get 3x − 3 = 9','Add 3 — and notice the question asks for 3x directly'] },
+    hints:['Subtract 2x from both sides','You get 3x − 3 = 9','Add 3, and notice the question asks for 3x directly'] },
 
   // L3
   { id:'le-3-1', conceptId:'linear_equations', level:3,
@@ -313,7 +313,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['x = 3 only','x = −3 only','x = 3 or x = −3','x = 9'],
     correctIndex:2,
     explanation:'Add 9: x² = 9. Take square roots: x = ±3. Both solutions are valid.',
-    hints:['Add 9 to both sides','You get x² = 9 — what numbers squared give 9?','Don\'t forget the negative solution'],
+    hints:['Add 9 to both sides','You get x² = 9. What numbers squared give 9?','Don\'t forget the negative solution'],
     examTag:'SAT' },
 
   { id:'qe-1-2', conceptId:'quadratic_equations', level:1,
@@ -375,7 +375,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['$15','$20','$25','$40'],
     correctIndex:1,
     explanation:'Maximum of a downward parabola occurs at x = −b/(2a) = −80/(2×(−2)) = 80/4 = $20.',
-    hints:['This parabola opens downward — maximum is at the vertex','Vertex x-coordinate: x = −b/(2a)','Here a = −2 and b = 80'],
+    hints:['This parabola opens downward. Maximum is at the vertex','Vertex x-coordinate: x = −b/(2a)','Here a = −2 and b = 80'],
     examTag:'ACT' },
 
   { id:'qe-3-2', conceptId:'quadratic_equations', level:3,
@@ -415,7 +415,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['−8','7','10','16'],
     correctIndex:2,
     explanation:'g(−3) = (−3)² + 1 = 9 + 1 = 10. Remember: (−3)² = +9, not −9.',
-    hints:['Substitute x = −3','(−3)² is positive — squaring removes the negative','9 + 1 = ?'] },
+    hints:['Substitute x = −3','(−3)² is positive. Squaring removes the negative','9 + 1 = ?'] },
 
   { id:'fn-1-4', conceptId:'functions_basics', level:1,
     question:'Which function has a range of all real numbers y ≥ 0?',
@@ -444,7 +444,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['f shifted 3 units left','f shifted 3 units right','f stretched by 3','f shifted 3 units down'],
     correctIndex:1,
     explanation:'Replacing x with (x − 3) shifts the graph horizontally 3 units to the right.',
-    hints:['Think about how replacing x with (x − c) affects the graph','It\'s a horizontal shift — but which direction?','Replacing x with (x − 3) shifts right by 3 (counterintuitive!)'],
+    hints:['Think about how replacing x with (x − c) affects the graph','It\'s a horizontal shift. But which direction?','Replacing x with (x − 3) shifts right by 3 (counterintuitive!)'],
     examTag:'IB' },
 
   { id:'fn-2-4', conceptId:'functions_basics', level:2,
@@ -460,7 +460,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['3','5/2','7/3','5'],
     correctIndex:0,
     explanation:'First: f(3) = (3+2)/(3−1) = 5/2. Then: f(5/2) = (5/2+2)/(5/2−1) = (9/2)/(3/2) = 3.',
-    hints:['Evaluate f(3) first','f(3) = 5/2 — use this as your new input','f(5/2) = (5/2 + 2) ÷ (5/2 − 1)'],
+    hints:['Evaluate f(3) first','f(3) = 5/2. Use this as your new input','f(5/2) = (5/2 + 2) ÷ (5/2 − 1)'],
     examTag:'IB' },
 
   { id:'fn-3-2', conceptId:'functions_basics', level:3,
@@ -500,7 +500,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['x³','x⁴','x⁸','x¹²'],
     correctIndex:1,
     explanation:'Dividing same base: subtract exponents. x⁶ ÷ x² = x^(6−2) = x⁴.',
-    hints:['Same base, dividing — what do you do with the exponents?','Subtract: 6 − 2 = 4','x⁶ ÷ x² = x^?'] },
+    hints:['Same base, dividing. What do you do with the exponents?','Subtract: 6 − 2 = 4','x⁶ ÷ x² = x^?'] },
 
   { id:'ex-1-4', conceptId:'exponent_rules', level:1,
     question:'What is  5⁰?',
@@ -577,7 +577,7 @@ const RAW_QUESTIONS: Question[] = [
     question:'A fair die is rolled. What is the probability of rolling an even number?',
     choices:['1/6','1/3','1/2','2/3'],
     correctIndex:2,
-    explanation:'Even numbers on a die: {2, 4, 6} — 3 out of 6. P = 3/6 = 1/2.',
+    explanation:'Even numbers on a die: {2, 4, 6}, 3 out of 6. P = 3/6 = 1/2.',
     hints:['List all outcomes: {1, 2, 3, 4, 5, 6}','Which of those are even?','3 favorable out of 6 total'] },
 
   { id:'bp-1-3', conceptId:'basic_probability', level:1,
@@ -591,7 +591,7 @@ const RAW_QUESTIONS: Question[] = [
     question:'A spinner has 8 equal sections numbered 1–8. What is the probability of landing on a number greater than 5?',
     choices:['3/8','4/8','5/8','3/5'],
     correctIndex:0,
-    explanation:'Numbers greater than 5: {6, 7, 8} — that\'s 3 out of 8. P = 3/8.',
+    explanation:'Numbers greater than 5: {6, 7, 8}, that\'s 3 out of 8. P = 3/8.',
     hints:['List numbers greater than 5','Count them and divide by total sections','Favorable: {6, 7, 8}'] },
 
   // L2
@@ -600,7 +600,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['13/52','16/52','17/52','4/52'],
     correctIndex:1,
     explanation:'P(king) + P(heart) − P(king of hearts) = 4/52 + 13/52 − 1/52 = 16/52.',
-    hints:['Use the addition rule: P(A or B) = P(A) + P(B) − P(A and B)','P(king) = 4/52 and P(heart) = 13/52','Subtract 1/52 for the king of hearts — it was counted twice'],
+    hints:['Use the addition rule: P(A or B) = P(A) + P(B) − P(A and B)','P(king) = 4/52 and P(heart) = 13/52','Subtract 1/52 for the king of hearts. It was counted twice'],
     examTag:'SAT' },
 
   { id:'bp-2-2', conceptId:'basic_probability', level:2,
@@ -631,7 +631,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['25/64','5/14','5/16','10/28'],
     correctIndex:1,
     explanation:'P(1st red) = 5/8. Given 1st is red: P(2nd red) = 4/7. P(both red) = 5/8 × 4/7 = 20/56 = 5/14.',
-    hints:['This is sampling without replacement — the second draw depends on the first','P(first red) = 5/8','After one red is removed: 4 red remain out of 7 total'],
+    hints:['This is sampling without replacement. The second draw depends on the first','P(first red) = 5/8','After one red is removed: 4 red remain out of 7 total'],
     examTag:'IB' },
 
   { id:'bp-3-2', conceptId:'basic_probability', level:3,
@@ -807,7 +807,7 @@ const RAW_QUESTIONS: Question[] = [
     question:'How many integers n satisfy  |n − 5| < 3?',
     choices:['3','4','5','6'],
     correctIndex:2,
-    explanation:'|n−5| < 3 → −3 < n−5 < 3 → 2 < n < 8. Integers: {3, 4, 5, 6, 7} — that\'s 5 integers.',
+    explanation:'|n−5| < 3 → −3 < n−5 < 3 → 2 < n < 8. Integers: {3, 4, 5, 6, 7}, that\'s 5 integers.',
     hints:['Rewrite as a compound inequality: −3 < n−5 < 3','Add 5 to all parts: 2 < n < 8','List the integers strictly between 2 and 8'],
     examTag:'IB' },
 
@@ -818,8 +818,8 @@ const RAW_QUESTIONS: Question[] = [
     question:'Solve:  3x − 5 > 7',
     choices:['x > 4','x > 2','x < 4','x > 12'],
     correctIndex:0,
-    explanation:'Add 5: 3x > 12. Divide by 3: x > 4. (Positive divisor — no sign flip.)',
-    hints:['Add 5 to both sides','Divide both sides by 3 (positive — no flip)','3x > 12 → x > 4'] },
+    explanation:'Add 5: 3x > 12. Divide by 3: x > 4. (Positive divisor, no sign flip.)',
+    hints:['Add 5 to both sides','Divide both sides by 3 (positive, no flip)','3x > 12 → x > 4'] },
 
   { id:'li-1-2', conceptId:'linear_inequalities', level:1,
     question:'Solve:  −2x ≤ 8',
@@ -833,7 +833,7 @@ const RAW_QUESTIONS: Question[] = [
     question:'Solve:  x/3 + 1 < 4',
     choices:['x < 1','x < 9','x < 15','x < 3'],
     correctIndex:1,
-    explanation:'Subtract 1: x/3 < 3. Multiply by 3 (positive — no flip): x < 9.',
+    explanation:'Subtract 1: x/3 < 3. Multiply by 3 (positive, no flip): x < 9.',
     hints:['Subtract 1 from both sides first','Then multiply both sides by 3','x/3 < 3 → x < 9'] },
 
   { id:'li-1-4', conceptId:'linear_inequalities', level:1,
@@ -882,7 +882,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['5','6','7','8'],
     correctIndex:1,
     explanation:'Expand: 6x − 12 ≤ 2x + 14. Subtract 2x: 4x − 12 ≤ 14. Add 12: 4x ≤ 26. Divide: x ≤ 6.5. Largest integer is 6.',
-    hints:['Distribute both sides first','Collect x terms on the left: 4x ≤ 26','x ≤ 6.5 — what is the largest whole number at or below 6.5?'],
+    hints:['Distribute both sides first','Collect x terms on the left: 4x ≤ 26','x ≤ 6.5. What is the largest whole number at or below 6.5?'],
     examTag:'ACT' },
 
   { id:'li-3-3', conceptId:'linear_inequalities', level:3,
@@ -1023,7 +1023,7 @@ const RAW_QUESTIONS: Question[] = [
   // L3
   { id:'re-3-1', conceptId:'rational_expressions', level:3,
     question:'Solve:  3/(x − 2) + 1/(x + 2) = 4/(x² − 4)',
-    choices:['x = 0','x = 1','x = 2 (extraneous — no solution)','No solution'],
+    choices:['x = 0','x = 1','x = 2 (extraneous, no solution)','No solution'],
     correctIndex:0,
     explanation:'Multiply by (x−2)(x+2): 3(x+2) + (x−2) = 4 → 4x+4 = 4 → x = 0. Check: x=0 makes no denominator zero. x = 0.',
     hints:['Multiply every term by (x−2)(x+2) to clear denominators','Left side: 3(x+2) + (x−2) = 4x+4','4x+4 = 4 → x = 0; verify x=0 doesn\'t make any denominator zero'],
@@ -1034,7 +1034,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['x = 4 or x = −1','x = −1 only','x = 4 only','x = −2 or x = 4'],
     correctIndex:1,
     explanation:'A fraction = 0 when numerator = 0 AND denominator ≠ 0. Numerator: (x−4)(x+1) = 0 → x=4 or x=−1. Denominator: (x−4)(x+2) = 0 → x=4 or x=−2. x=4 is excluded. Answer: x = −1 only.',
-    hints:['A fraction equals zero when the numerator equals zero (and denominator ≠ 0)','Factor both: numerator = (x−4)(x+1), denominator = (x−4)(x+2)','x=4 makes the denominator zero — must exclude it'],
+    hints:['A fraction equals zero when the numerator equals zero (and denominator ≠ 0)','Factor both: numerator = (x−4)(x+1), denominator = (x−4)(x+2)','x=4 makes the denominator zero. Must exclude it'],
     examTag:'IB' },
 
   { id:'re-3-3', conceptId:'rational_expressions', level:3,
@@ -1632,7 +1632,7 @@ const RAW_QUESTIONS: Question[] = [
     choices:['x = 2','x = ±4','x = ±8','x = 16'],
     correctIndex:1,
     explanation:'Add 4: x² = 16. Square roots: x = ±4.',
-    hints:['Add 4 to both sides','x² = 16','Take the square root — include ±'] },
+    hints:['Add 4 to both sides','x² = 16','Take the square root. Include ±'] },
 
   { id:'qe-1-7', conceptId:'quadratic_equations', level:1,
     question:'What are the roots of (x − 3)(x + 7) = 0?',

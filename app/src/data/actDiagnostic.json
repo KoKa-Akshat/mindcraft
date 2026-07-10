@@ -15,7 +15,7 @@
   },
   "confidence_step": {
     "prompt": "How confident are you with each of these?",
-    "note": "Self-report only — no score here. Tap and move on.",
+    "note": "Self-report only. Tap and move on.",
     "scale": [
       {
         "label": "Not there yet",
@@ -161,8 +161,8 @@
   },
   "event_emission": {
     "note": "Canonical sinks (FORMAT_WEAKNESS_PLAN.md diagnostic reconciliation). Do NOT use /learning-event.",
-    "confidence_step": "POST {ML_BASE}/seed-assessment — per-concept hard|kinda|easy from scale",
-    "probe_step": "local prefill only — maps cluster probe answers to confidence seeds before /seed-assessment",
+    "confidence_step": "POST {ML_BASE}/seed-assessment: per-concept hard, kind, or easy from scale.",
+    "probe_step": "local prefill only maps cluster probe answers to confidence seeds because they have already been seeded in the seed-assessment.",
     "completion": "users/{uid}.diagnosticCompleted via markDiagnosticComplete + goals on users/{uid}.goals"
   }
 }

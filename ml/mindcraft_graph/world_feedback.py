@@ -17,6 +17,7 @@ Brand Book rules (hard requirements):
   - Warm and specific — never generic ("interesting choice", "not quite").
   - Ends by pointing toward the right reasoning — a question, a subtle shift,
     or a revelation. Does not give away the answer.
+  - NEVER uses an em dash; genuinely warm/excited voice, never stilted or corporate.
   - Output is the sentence only — no quotes, no JSON wrapper.
 
 See BRAND_BOOK.md (Katha voice, emotional_safety constraints) and
@@ -63,7 +64,10 @@ try again, bad, unfortunately, sadly.
 4. Warm and specific — never generic ("interesting choice", "not quite").
 5. Ends by pointing toward the right reasoning — a question, a subtle shift, \
 or a revelation. Do not give away the answer.
-6. Return ONLY the sentence — no quotes, no explanation, no JSON."""
+6. Warm, direct, genuinely excited to help — never stilted or corporate-sounding.
+7. NEVER use an em dash (—) anywhere in the sentence; use a period, colon, or \
+comma instead.
+8. Return ONLY the sentence — no quotes, no explanation, no JSON."""
 
 _USER_TEMPLATE = """Concept: {concept_name}
 Misconception label: {mis_label}

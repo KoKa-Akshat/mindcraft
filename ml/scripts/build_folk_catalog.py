@@ -128,6 +128,9 @@ def slugify(text: str, max_words: int = 8) -> str:
 def clean_synopsis(text: str, max_chars: int = 420) -> str:
     text = re.sub(r"\(this is an automatically generated summary\.?\)", "", text, flags=re.I)
     text = re.sub(r"\s+", " ", text).strip()
+    # Source summaries (Wikipedia etc.) sometimes carry em dashes; normalize to a
+    # period/comma so this stays a single voice decision (Brand Book: no em dashes).
+    text = text.replace(" — ", ". ").replace("—", ", ")
     if len(text) <= max_chars:
         return text
     truncated = text[:max_chars]

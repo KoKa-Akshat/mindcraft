@@ -16,19 +16,19 @@ EEDI = REPO / "app" / "src" / "data" / "eediQuestions.json"
 OPENSTAX = REPO / "app" / "src" / "data" / "openstaxMCQ.json"
 
 POLYGON_SCENE = {
-    "triangles_congruence": "Euclid traces the shape in the sand at Alexandria — equal sides, equal corners, every angle waiting to be named.",
+    "triangles_congruence": "Euclid traces the shape in the sand at Alexandria. Equal sides, equal corners, every angle waiting to be named.",
     "lines_angles": "The surveyor lays out the regular figure on the field map before the crew sets the corners.",
-    "area_volume": "The mason's template shows the regular polygon — each side matched, each corner identical.",
+    "area_volume": "The mason's template shows the regular polygon. Each side matched, each corner identical.",
 }
 
 NWSL_SCENE = (
-    "Florence spreads ten ward ledgers across her table at Scutari — "
+    "Florence spreads ten ward ledgers across her table at Scutari, "
     "each row a week's patient tally. She must read the shape of the numbers before trusting the chart."
 )
 
 
 def polygon_scene(concept_id: str, sides: int) -> str:
-    base = POLYGON_SCENE.get(concept_id, "The scholar sketches a regular polygon — every side equal, every corner matching.")
+    base = POLYGON_SCENE.get(concept_id, "The scholar sketches a regular polygon. Every side equal, every corner matching.")
     return base.replace("the shape", f"a regular {sides}-gon").replace("the regular figure", f"a regular {sides}-gon")
 
 

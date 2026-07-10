@@ -154,7 +154,7 @@ def _build_message(
     if status == "full":
         t = _question_totals(counts, cid)
         return (
-            f"OK — {cid} ({name}) [{level}]: static bank has "
+            f"OK: {cid} ({name}) [{level}]: static bank has "
             f"L1={t['L1']}, L2={t['L2']}, L3={t['L3']} questions."
         )
     if status == "partial":

@@ -36,7 +36,11 @@ if set(FORMAT_GUIDE) != set(FORMAT_IDS):
 
 SYSTEM = (
     "You write ACT math multiple-choice questions. Output STRICT JSON only, no prose. "
-    "Each question has EXACTLY 4 answer choices, exactly one correct."
+    "Each question has EXACTLY 4 answer choices, exactly one correct. "
+    "Voice for `explanation` and `hints`: warm, direct, genuinely excited to help a "
+    "student who has struggled with math before. Never stilted, never corporate-sounding. "
+    "NEVER use an em dash (—) anywhere in any string field; use a period, colon, or "
+    "comma instead."
 )
 
 

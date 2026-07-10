@@ -254,6 +254,7 @@ Generate exactly {count} UNIQUE questions. Each question must:
 • Numbers and contexts must be different across all {count} questions
 • Include a compact visual when a diagram, graph, number line, table sketch, function shape, or geometry view helps. Use visual_type "svg" and visual_data as a self-contained inline SVG. Otherwise use visual_type "none" and visual_data "".
 • SVGs must be under 4500 characters, viewBox="0 0 320 180", transparent background, no scripts, no foreignObject, no external refs. Use stroke="#C4F547", secondary stroke="#4ECDC4", text fill="#0F343A".
+• Voice for explanation/hints/microLesson/trapReasoning: warm, direct, genuinely excited to help a student who has struggled with math before. Never stilted or corporate-sounding. NEVER use an em dash (—) anywhere in any field; use a period, colon, or comma instead.
 
 Return ONLY a JSON array — no markdown fences, no preamble, no commentary:
 [
@@ -265,7 +266,7 @@ Return ONLY a JSON array — no markdown fences, no preamble, no commentary:
     "choices": ["correct or wrong option", "wrong option", "wrong option", "wrong option"],
     "correctIndex": 0,
     "explanation": "Step-by-step solution shown clearly",
-    "hints": ["Hint 1 — approach nudge only", "Hint 2 — key step shown"],
+    "hints": ["Hint 1: approach nudge only", "Hint 2: key step shown"],
     "microLesson": "Good. We found the real gap. [One Socratic sentence pointing toward what broke.]",
     "trapChoiceIndex": 2,
     "trapReasoning": "This traps students who forget to flip the inequality sign when dividing by a negative.",

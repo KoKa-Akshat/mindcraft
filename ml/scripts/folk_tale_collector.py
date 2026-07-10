@@ -82,6 +82,9 @@ Allowed concept IDs (only these, no others):
 For math_skin_score: 1.0 = tale has concrete quantities/objects that map naturally
 to math problems. 0.0 = purely abstract narrative with no numeric grounding.
 
+katha_voice_sample voice: warm, direct, genuinely excited storyteller, never stilted
+or corporate-sounding. NEVER use an em dash (—); use a period, colon, or comma instead.
+
 Return ONLY the JSON object, no prose, no markdown fences."""
 
 
@@ -142,7 +145,7 @@ def _sanitize_enrichment(raw: dict) -> dict:
         keywords = []
     keywords = [str(k) for k in keywords][:10]
 
-    voice = str(raw.get("katha_voice_sample", ""))[:80]
+    voice = str(raw.get("katha_voice_sample", "")).replace("—", ",")[:80]
 
     return {
         "math_theme_tags": tags,

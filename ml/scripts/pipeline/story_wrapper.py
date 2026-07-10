@@ -78,6 +78,10 @@ Write JSON with three fields:
 Use plain math notation everywhere (12^21, 3/4, -5) — no LaTeX commands,
 no backslashes, no dollar signs.
 
+Voice: warm, direct, genuinely excited to help a student who has struggled
+with math before. Never stilted or corporate-sounding. NEVER use an em dash
+(—) anywhere in any field; use a period, colon, or comma instead.
+
 Reply with ONLY the JSON object."""
 
     def __init__(self, client: LLMClient | None = None,
@@ -118,7 +122,7 @@ Reply with ONLY the JSON object."""
         # No frame at all (rare): a neutral, intentional-sounding line.
         story = self.stories.get(concept_id) or {}
         name = story.get("conceptName") or concept_id.replace("_", " ")
-        return (f"A new page of the field journal opens — {name}. "
+        return (f"A new page of the field journal opens: {name}. "
                 "The next entry is yours to work out.")
 
     # -- validation ----------------------------------------------------------------
@@ -127,6 +131,8 @@ Reply with ONLY the JSON object."""
     def _valid_context(text: str, answer: str | None) -> bool:
         if not text or len(text) > MAX_CONTEXT_CHARS:
             return False
+        if "—" in text:
+            return False  # em dash — voice rule, forces a regenerate/fallback
         if re.search(r'\b(solve|calculate|find the answer|choose the)\b',
                      text, re.I):
             return False  # worksheet voice
@@ -189,6 +195,12 @@ Reply with ONLY the JSON object."""
         # An explanation that never names the verified answer is suspect.
         if answer and normalize_in(explanation, answer) is False:
             explanation = ""
+        # Voice rule: an em dash anywhere means this text is discarded, same
+        # treatment as any other validation failure — caller's template
+        # fallback fills the gap instead of shipping the violation.
+        if "—" in explanation:
+            explanation = ""
+        hints = [h for h in hints if "—" not in h]
 
         result = {"storyContext": context, "explanation": explanation,
                   "hints": hints if len(hints) == 3 else []}

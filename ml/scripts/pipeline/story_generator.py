@@ -50,6 +50,9 @@ Write a 150-word story world for concept: {concept_name}
 Include: a protagonist name, a specific setting (modern/near-future preferred),
 and a recurring problem type that makes {concept_name} feel necessary.
 The setting MUST be compatible with all 3 sample questions above.
+Voice: warm, direct, genuinely excited to help a student who has struggled with
+math before. Never stilted or corporate-sounding. NEVER use an em dash (—)
+anywhere in any field; use a period, colon, or comma instead.
 Output JSON: {{"protagonist": "...", "settingLine": "...", "questionBridge": "...", "story": "...180-200 words..."}}"""
 
 # ── Quality heuristics ───────────────────────────────────────────────────────
@@ -105,6 +108,8 @@ def validate_generated(data: dict, sample_questions: list[str]) -> list[str]:
         errors.append(f"story_length:{wc}")
     if AI_VOICE_RE.search(story):
         errors.append("ai_voice")
+    if any("—" in str(data.get(key, "")) for key in ("questionBridge", "story", "settingLine")):
+        errors.append("em_dash")
     frame = {"settingLine": data.get("settingLine", ""),
              "protagonist": data.get("protagonist", "")}
     if frame_conflicts_with_questions(frame, story, sample_questions):

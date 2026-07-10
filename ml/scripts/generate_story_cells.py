@@ -222,6 +222,9 @@ Requirements:
 3. The question must be FULLY self-contained. Do not require the story context to solve it.
 4. Distractor taxonomy: for each wrong choice, name the exact misconception (student_thinking ≤ 60 chars).
    Identify which ONE wrong choice most directly reflects the target misconception listed above.
+5. Voice: warm, direct, genuinely excited to help a student who has struggled with math
+   before. Never stilted or corporate-sounding. NEVER use an em dash (—) anywhere in any
+   field; use a period, colon, or comma instead.
 
 Output JSON only (no markdown wrapper):
 {{
@@ -271,6 +274,8 @@ Katha voice rules:
   - Never: "wrong", "incorrect", "mistake", "try again"
   - Do: name what the student was trying to do + the one corrective move
 - presentation.minimal.storyContext: ≤ 60 chars, no character names, plain language
+- Warm, genuinely excited, never stilted or corporate-sounding
+- NEVER use an em dash (—) anywhere in any field; use a period, colon, or comma instead
 
 Output JSON only:
 {{
@@ -369,6 +374,8 @@ def _tone_flags(*fields: str) -> list[str]:
     for f in fields:
         if not isinstance(f, str):
             continue
+        if "—" in f:
+            flags.append("em_dash")
         low = f.lower()
         for w in BANNED_WORDS:
             if w in low:

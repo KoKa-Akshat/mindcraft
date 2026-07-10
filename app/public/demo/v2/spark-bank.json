@@ -1767,7 +1767,7 @@
       "conceptId": "fractions_decimals",
       "level": 2,
       "title": "The Waterfowl Pond's Sinking Rung",
-      "question": "At the sanctuary's waterfowl pond, keeper Simon uses Stevin's new descending ladder to record water levels. The pond fills from a spring, and a marked pole shows the level dropping into the small: below the '1 whole meter' line hang tenths, then hundredths. This morning the water sits exactly 3 rungs down on the tenths ladder — three parts of the ten equal steps between the whole-meter marks. Before the ducks arrive, Simon must write this depth as a decimal so the night keeper reads it correctly. What should he write for three-tenths of a meter?",
+      "question": "At the sanctuary's waterfowl pond, keeper Simon uses Stevin's new descending ladder to record water levels. The pond fills from a spring, and a marked pole shows the level dropping into the small: below the '1 whole meter' line hang tenths, then hundredths. This morning the water sits exactly 3 rungs down on the tenths ladder, three parts of the ten equal steps between the whole-meter marks. Before the ducks arrive, Simon must write this depth as a decimal so the night keeper reads it correctly. What should he write for three-tenths of a meter?",
       "choices": [
         "0.3 meters",
         "0.30... wait, 3.10 meters",
@@ -1779,7 +1779,7 @@
       "storyContext": "Simon Stevin's 1585 decimal ladder, reimagined at a creature sanctuary where a water-level pole descends rung by rung into tenths and hundredths to keep the waterfowl pond at the correct depth.",
       "world_feedback": {
         "correct": "Simon marks 0.3 on the slate. The night keeper reads it at a glance, tops the spring gate perfectly, and the ducks paddle at just the right depth by dawn.",
-        "incorrect": "The night keeper misreads the muddled number, cranks the spring gate wrong, and the pond nearly spills over the reed banks — the tenths rung is one place, not two numbers."
+        "incorrect": "The night keeper misreads the muddled number, cranks the spring gate wrong, and the pond nearly spills over the reed banks because the tenths rung is one place, not two numbers."
       }
     },
     {
@@ -1787,7 +1787,7 @@
       "conceptId": "fractions_decimals",
       "level": 2,
       "title": "Simon's Grain Scale",
-      "question": "Simon's measuring strip — eight equal sections, the bottom three filled in green — records how much grain has been set aside for the morning feeding. The sanctuary's digital scale only accepts decimal input. What decimal should Simon write for three-eighths?",
+      "question": "Simon's measuring strip, eight equal sections, the bottom three filled in green, records how much grain has been set aside for the morning feeding. The sanctuary's digital scale only accepts decimal input. What decimal should Simon write for three-eighths?",
       "choices": [
         "0.38",
         "0.3",
@@ -1796,7 +1796,7 @@
       ],
       "correctIndex": 2,
       "storyContext": "Simon's measuring strip shows three-eighths of the grain remaining; the sanctuary's digital scale needs a decimal entry, and a wrong number sets the night alarm at the wrong level.",
-      "world_feedback": "Simon enters 0.375 and the scale's needle settles precisely on the mark. 'Three-eighths isn't three-point-eight,' he murmurs, closing the logbook. 'It's three divided by eight — and that's a different creature entirely.' The night keeper files the reading and the animals settle quietly for the morning."
+      "world_feedback": "Simon enters 0.375 and the scale's needle settles precisely on the mark. 'Three-eighths isn't three-point-eight,' he murmurs, closing the logbook. 'It's three divided by eight, and that's a different creature entirely.' The night keeper files the reading and the animals settle quietly for the morning."
     },
     {
       "id": "cell_fractions_decimals_c9a5f7",
@@ -1828,7 +1828,7 @@
       ],
       "correctIndex": 0,
       "storyIntro": "Feeding hour is close, and Simon has two half-empty sacks and one logbook column for the total. A quarter-sack of oats sits in one bin, a third-sack of barley in the other, and the ledger only has room for a single combined fraction. Two different denominators, one line to fill before the animals go hungry. The quarters and the thirds must become one common measure.",
-      "storyContext": "Simon must combine two morning rations — a quarter-sack of oats and a third-sack of barley — into one total for the logbook. The denominators are different and a wrong total changes the daily record.",
+      "storyContext": "Simon must combine two morning rations, a quarter-sack of oats and a third-sack of barley, into one total for the logbook. The denominators are different, and a wrong total changes the daily record.",
       "world_feedback": "Simon writes 7/12 in the morning column. The head keeper runs a finger down the column, checks the store, and nods once. 'This one adds up.' Simon notices she does not say that about every entry in the book."
     },
     {
@@ -1836,7 +1836,7 @@
       "conceptId": "linear_equations",
       "level": 2,
       "title": "The Joining Fee",
-      "question": "The harbor chandlery posts its storage rates as a ledger:\n\n| Weeks stored | Running total (£) |\n|---|---|\n| 3 | 47 |\n| 7 | 83 |\n\nThe rate per week is fixed. William must find the joining fee — the amount owed before any weeks pass — to plan the voyage budget. What is the joining fee?",
+      "question": "The harbor chandlery posts its storage rates as a ledger:\n\n| Weeks stored | Running total (£) |\n|---|---|\n| 3 | 47 |\n| 7 | 83 |\n\nThe rate per week is fixed. William must find the joining fee, the amount owed before any weeks pass, to plan the voyage budget. What is the joining fee?",
       "choices": [
         "£20",
         "£47",
@@ -1846,7 +1846,7 @@
       "correctIndex": 0,
       "storyIntro": "The tide turns in the morning and William still owes the harbor chandlery a number nobody has written down: the flat joining fee charged before a single week of storage even starts. The ledger only shows two entries, weeks stored against running totals, and the per-week rate is buried somewhere inside them. His father's voyage budget cannot close until that fixed fee is pulled free of the weekly charge. Two points on a line hide the answer.",
       "storyContext": "At Kingston's harbor chandlery, 1762: William must find the joining fee buried in the merchant's ledger before his father's voyage runs over budget.",
-      "world_feedback": "William writes £20 in the margin of his father's ledger. The chandler nods slowly: 'You found the starting price. Most who come in here just copy the first number they see. Your father's clock needs a sharp mind behind it — and it seems it has one.'"
+      "world_feedback": "William writes £20 in the margin of his father's ledger. The chandler nods slowly: 'You found the starting price. Most who come in here just copy the first number they see. Your father's clock needs a sharp mind behind it, and it seems it has one.'"
     },
     {
       "id": "cell_linear_equations_a4f8c3",
@@ -1878,7 +1878,7 @@
       ],
       "correctIndex": 0,
       "storyContext": "The chandlery master writes a pricing formula on a slate: T = 3x + 5. William finds an old ledger and wants to confirm one entry matches the formula.",
-      "world_feedback": "William works through each entry at his desk, substituting one at a time. When the master arrives at dawn, William points to (4, 17) without hesitation. The master checks his own slate and replaces the candle without a word — which, William has learned, is as close to praise as the old man gets."
+      "world_feedback": "William works through each entry at his desk, substituting one at a time. When the master arrives at dawn, William points to (4, 17) without hesitation. The master checks his own slate and replaces the candle, which is as close to praise as the old man gets."
     },
     {
       "id": "cell_linear_equations_f8e2c7",
@@ -1894,8 +1894,8 @@
       ],
       "correctIndex": 0,
       "storyIntro": "Kingston harbor, 1761. William Harrison has spent forty days checking his father's timekeeper against the stars, and the astronomer wants more than the raw numbers in the logbook. Twenty days out the watch ran thirty seconds slow; by day sixty it was ninety seconds slow, a drift that either proves the clock seaworthy or sinks the family's claim on the Board of Longitude's prize. The rate hidden in those two readings will decide it.",
-      "storyContext": "In Kingston harbor, young William Harrison sits with the ship's astronomer. They have been checking the watch against the stars each day since leaving England. The astronomer opens his logbook and shows William the tally of error: after 20 days the watch was 30 seconds slow; after 60 days it was 90 seconds slow. 'This,' the astronomer says, tapping the numbers, 'is either your father's triumph or his ruin. Tell me what these numbers mean, William — not the arithmetic, but the meaning.'",
-      "world_feedback": "The astronomer nods slowly. 'Yes — 1.5 seconds gained in error for each day. Now I can subtract it, day by day, and pull the true time back out of the drift. Your father did not build a perfect clock, William. He built a clock that lies the same way every day. And a steady lie can be undone.'"
+      "storyContext": "In Kingston harbor, young William Harrison sits with the ship's astronomer. They have been checking the watch against the stars each day since leaving England. The astronomer opens his logbook and shows William the tally of error: after 20 days the watch was 30 seconds slow, after 60 days it was 90 seconds slow. 'This,' the astronomer says, tapping the numbers, 'is either your father's triumph or his ruin. Tell me what these numbers mean, William, not the arithmetic, but the meaning.'",
+      "world_feedback": "The astronomer nods slowly. Yes, 1.5 seconds gained in error for each day. Now I can subtract it day by day, and pull the true time back out of the drift. Your father did not build a perfect clock, William. He built a clock that lies the same way every day, and a steady lie can be undone."
     },
     {
       "id": "cell_ratios_proportions_0847d6",
@@ -1912,7 +1912,7 @@
       "correctIndex": 0,
       "storyIntro": "Giza, roughly 600 BC. The priests have measured the Great Pyramid for generations and never once found its height, because no rope reaches that high and no ladder is safe to climb. Thales plants his own walking staff upright in the sand at midday and waits for its shadow to fall, certain the sun treats every vertical thing the same way at the same moment. Whatever relationship the staff holds with its shadow, the pyramid must hold with its own.",
       "storyContext": "Thales plants his walking staff upright in the sand beside the Great Pyramid. The staff stands 6 cubits tall, and at this moment its shadow stretches 2 cubits across the sand. The priests lean in, curious. Thales explains: at this same instant, the pyramid's shadow reaches 90 cubits from its base out onto the sand. Whatever comparison the staff holds with its own shadow, the pyramid must hold with its shadow too.",
-      "world_feedback": "The priests stop smiling. Thales has spoken a height no rope ever touched — 270 cubits — read entirely from a shadow on the sand. The relationship, not the ladder, measured the pyramid."
+      "world_feedback": "The priests stop smiling. Thales has spoken a height no rope ever touched. 270 cubits, read entirely from a shadow on the sand, was the measurement that revealed the pyramid's true relationship."
     },
     {
       "id": "cell_ratios_proportions_9d2e47",
@@ -1928,8 +1928,8 @@
       ],
       "correctIndex": 1,
       "storyIntro": "With the ship's watch trial still weeks from finished, William has coin to spend and a father's instructions to spend it wisely. Two spice stalls sit side by side at Kingston harbor, each posting a different bag count at a different price, and no total anywhere in sight. He needs one number that means the same thing at both stalls before he hands over a single coin. Whichever price per bag is smaller wins his business.",
-      "storyContext": "William scans Kingston harbor's spice stalls to find the best pepper price. A merchant posts a notice board — but the price per bag only emerges if you divide correctly, not subtract.",
-      "world_feedback": "William marks '4 pence per bag' in his provisioning log and moves to the next stall. The first merchant watches him go: 'Clever lad. Most just look at the two numbers and take away the smaller.' William does not look back — he already knows which stall wins."
+      "storyContext": "William scans Kingston harbor's spice stalls to find the best pepper price. A merchant posts a notice board, but the price per bag only emerges if you divide correctly, not subtract.",
+      "world_feedback": "William marks '4 pence per bag' in his provisioning log and moves to the next stall. The first merchant watches him go: 'Clever lad. Most just look at the two numbers and take away the smaller.' William does not look back, he already knows which stall wins."
     },
     {
       "id": "cell_ratios_proportions_e6c2a9",
@@ -1960,7 +1960,7 @@
         "4 metres"
       ],
       "correctIndex": 0,
-      "storyContext": "Simon records the resident otter's training swims. The keeper asks how far the otter will travel in a longer session — Simon must set up and solve a proportion to file the forecast.",
+      "storyContext": "Simon records the resident otter's training swims. The keeper asks how far the otter will travel in a longer session. Simon must set up and solve a proportion to file the forecast.",
       "world_feedback": "Simon writes 9 metres in the forecast log and the keeper measures out the correct supplement. The otter surfaces after exactly 12 minutes and glides to the feeding platform. Simon marks the actual reading: 9 metres, exactly. He double-checks his proportion in the margin and decides he quite likes the feeling of being right."
     },
     {
@@ -1980,10 +1980,10 @@
         "$162"
       ],
       "correctIndex": 2,
-      "explanation": "The ratio 9:5 cuts the profit into 9 + 5 = 14 equal parts, and Nadia's lead over her partner is 9 − 5 = 4 of those parts. Those 4 parts are the $72 gap, so one part is $18 — and the whole night is 14 × $18 = $252. The $72 is the difference between the shares, not either share itself.",
+      "explanation": "The ratio 9:5 cuts the profit into 9 + 5 = 14 equal parts, and Nadia's lead over her partner is 9 - 5 = 4 of those parts. Those 4 parts are the $72 gap, so one part is $18, and the whole night is 14 × $18 = $252. The $72 is the difference between the shares, not either share itself.",
       "hints": [
         "The 9:5 split cuts the profit into 14 equal parts. How many of those parts make up Nadia's lead over her partner?",
-        "$72 is the difference between the two shares — that's 4 parts. What is one part worth?",
+        "$72 is the difference between the two shares, that's 4 parts. What is one part worth?",
         "One part is $18. The whole profit is all 14 parts."
       ],
       "examTag": "GCSE",
@@ -2000,7 +2000,7 @@
         {
           "choice_index": 1,
           "error_type": "wrong_formula",
-          "student_thinking": "Scales the wrong quantity — treats $72 as one part and multiplies by too many parts."
+          "student_thinking": "Scales the wrong quantity, treating $72 as one part and multiplying by too many parts."
         },
         {
           "choice_index": 3,
@@ -2011,13 +2011,13 @@
       "storyIntro": "Nadia's pop-up stall closes its best night of the month. The crowd is gone, the till is full, and one number decides who takes home what.",
       "storyContext": "A pop-up stall's closing count: the night's profit splits in a fixed ratio between two partners, and only the gap between their shares is known.",
       "introTemplates": [
-        "Nadia's pop-up stall lives where {a_noun} meets {b_noun} — tonight's menu came out of one and tonight's prices out of the other. The crowd is gone, the till is full, and one number decides who takes home what.",
-        "{A} pays Nadia's rent; {b} fills the margins of her notebook. Tonight both meet in the cash box of her market stall — a good night, a fixed split, and a partner who counts everything.",
+        "Nadia's pop-up stall lives where the market meets the marina: tonight's menu came out of the market and tonight's prices out of the marina. The crowd is gone, the till is full, and one number decides who takes home what.",
+        "{A} pays Nadia's rent; {b} fills the margins of her notebook. Tonight both meet in the cash box of her market stall. A good night, a fixed split, and a partner who counts everything.",
         "Every stall on this street runs on {a_noun}, but Nadia's survives because she also respects {b_noun}. The lanterns are coming down, the profit is real, and it has to be split before they go out."
       ],
       "world_feedback": {
         "correct": "Nadia counts out the split and her partner's tally lands on the same number: $252 for the night. The stall books next weekend's pitch on the spot.",
-        "incorrect": "The split comes out lopsided and her partner recounts the till. The $72 is the gap between the two shares — four parts of fourteen, not the whole story. The cash box stays open another hour."
+        "incorrect": "The split comes out lopsided and her partner recounts the till. The $72 is the gap between the two shares: four parts of fourteen, not the whole story. The cash box stays open another hour."
       }
     },
     {
@@ -2037,10 +2037,10 @@
         "56"
       ],
       "correctIndex": 0,
-      "explanation": "From day 1 to day 4 is 3 equal steps, and the minutes climb from 7 to 25 — a rise of 18 over 3 steps, so each day adds 6. Day 8 is 7 steps past day 1: 7 + 7 × 6 = 49. The ladder grows by adding the same step each day, not by multiplying — day 8 is not double day 4.",
+      "explanation": "From day 1 to day 4 is 3 equal steps, and the minutes climb from 7 to 25: a rise of 18 over 3 steps, so each day adds 6. Day 8 is 7 steps past day 1: 7 + 7 × 6 = 49. The ladder grows by adding the same step each day, not by multiplying. Day 8 is not double day 4.",
       "hints": [
         "Day 1 to day 4 is three equal steps. How much did the minutes rise in total across those three steps?",
-        "The rise is 18 minutes over 3 steps — so each day adds how much?",
+        "The rise is 18 minutes over 3 steps, so each day adds 6 minutes.",
         "Each day adds 6. Day 8 is seven steps past day 1: start at 7 and climb seven times."
       ],
       "examTag": "GCSE",
@@ -2051,7 +2051,7 @@
         {
           "choice_index": 1,
           "error_type": "wrong_formula",
-          "student_thinking": "Treats the sequence as multiplicative — doubling the day number to double the term.",
+          "student_thinking": "Treats the sequence as multiplicative, doubling the day number to double the term.",
           "misconception_id": "mis_sequences_series__believes_there_multiplicative_relationship_between"
         },
         {
@@ -2065,16 +2065,16 @@
           "student_thinking": "Climbs one step too far past the target day."
         }
       ],
-      "storyIntro": "Six days to the showcase. Ayo's training plan is taped to the mirror — a number for every day, climbing by the same amount, ending on the night that matters.",
+      "storyIntro": "Six days to the showcase. Ayo's training plan is taped to the mirror, a number for every day, climbing by the same amount, ending on the night that matters.",
       "storyContext": "A rehearsal plan taped to a studio mirror: minutes at full tempo climbing by a fixed step each day, with the showcase set for day 8.",
       "introTemplates": [
-        "Under every craft there is a count. In Ayo's rehearsal room, {a_noun} sets the rhythm and {b_noun} raises the stakes — and the training plan taped to the mirror climbs one steady step at a time.",
-        "Ayo is building the night {a} and {b} share one stage. The plan on the mirror has a number for every day — rising by the same amount, ending on the day that matters.",
+        "Under every craft there is a count. In Ayo's rehearsal room, the metronome sets the rhythm and the timer raises the stakes and the training plan taped to the mirror climbs one steady step at a time.",
+        "Ayo is building the night and the plan on the mirror has a number for every day, rising by the same amount, and ending on the day that matters.",
         "In this room, {a_noun} and {b_noun} run on the same clock. Ayo's showcase piece borrows from both, and the rehearsal ladder underneath it refuses to skip a beat."
       ],
       "world_feedback": {
-        "correct": "Day 8 reads 49 minutes — exactly where the ladder lands. Ayo tapes the sheet back on the mirror; the routine runs full-length on showcase night.",
-        "incorrect": "The plan drifts off the sheet — the ladder climbs by the same step every day, and doubling the day doesn't double the minutes. Walk it again: 7 on day 1, and what step reaches 25 by day 4?"
+        "correct": "Day 8 reads 49 minutes. Exactly where the ladder lands. Ayo tapes the sheet back on the mirror: the routine runs full-length on showcase night.",
+        "incorrect": "The plan drifts off the sheet. The ladder climbs by the same step every day, and doubling the day doesn't double the minutes. Walk it again: 7 on day 1, and what step reaches 25 by day 4?"
       }
     },
     {
@@ -2094,10 +2094,10 @@
         "12 minutes"
       ],
       "correctIndex": 1,
-      "explanation": "3 hours and 16 minutes is 3 × 60 + 16 = 196 minutes — an hour is 60 minutes, not 100. Tori's 214 minutes minus Hannah's 196 minutes leaves an 18-minute gap between the vans.",
+      "explanation": "3 hours and 16 minutes is 3 × 60 + 16 = 196 minutes. An hour is 60 minutes, not 100. Tori's 214 minutes minus Hannah's 196 minutes leaves an 18-minute gap between the vans.",
       "hints": [
         "Put both journeys in the same unit first. How many minutes is 3 hours and 16 minutes?",
-        "An hour is 60 minutes — 3 hours is 180, plus the 16.",
+        "An hour is 60 minutes. 3 hours is 180, plus 16.",
         "196 minutes against 214 minutes. The difference is what's left between them."
       ],
       "examTag": "GCSE",
@@ -2122,16 +2122,16 @@
           "student_thinking": "Subtraction slip around the hour boundary."
         }
       ],
-      "storyIntro": "Tournament morning. Two vans, one kickoff, and a schedule with no slack in it — the coach wants one honest number before anyone boards.",
+      "storyIntro": "Tournament morning. Two vans, one kickoff, and a schedule with no slack in it, because the coach wants one honest number before anyone boards.",
       "storyContext": "An away-day schedule: two travel times in mismatched units, and a warm-up plan that starts the minute the first van parks.",
       "introTemplates": [
         "Game day runs on splits. Coach Rivera's squad lives where {a_noun} meets {b_noun}, and this morning both come down to two clocks that refuse to agree.",
         "{A} taught this squad how to move; {b} taught it how to plan. The tournament is in one city, the team is in two vans, and the coach wants one honest number before anyone boards.",
-        "The locker-room board says it plainly: {a_noun}, {b_noun}, and a schedule with no slack in it. Two travel times, one difference — and warm-up starts the minute the first van parks."
+        "The locker-room board says it plainly: {a_noun}, {b_noun}, and a schedule with no slack in it. Two travel times, one difference, and warm-up starts the minute the first van parks."
       ],
       "world_feedback": {
-        "correct": "18 minutes. Coach Rivera chalks it on the board and slides warm-up without wasting a second — the squad that measures right warms up right.",
-        "incorrect": "The warm-up plan collapses on the spot — an hour is 60 minutes, not 100, and the real gap hides inside that conversion. Rivera reads the two clocks again before the vans load."
+        "correct": "18 minutes. Coach Rivera chalks it on the board and slides warm-up without wasting a second, because the squad that measures right warms up right.",
+        "incorrect": "The warm-up plan collapses on the spot: an hour is 60 minutes, not 100, and the real gap hides inside that conversion. Rivera reads the two clocks again before the vans load."
       }
     },
     {
@@ -2151,10 +2151,10 @@
         "64 cm"
       ],
       "correctIndex": 2,
-      "explanation": "A square's area is side × side, so the side is the number that multiplies by itself to make 64 — that's 8 cm, since 8 × 8 = 64. Halving 64 gives 32, but that answers a different question: half the area is not the square root.",
+      "explanation": "A square's area is side × side, so the side is the number that multiplies by itself to make 64, that's 8 cm, since 8 × 8 = 64. Halving 64 gives 32, but that answers a different question: half the area is not the square root.",
       "hints": [
         "Area of a square is side × side. Which length, times itself, makes 64?",
-        "Halving 64 is not the same as square-rooting it — 32 × 32 is far more than 64.",
+        "Halving 64 is not the same as square-rooting it: 32 × 32 is far more than 64.",
         "8 × 8 = 64. The side is 8 cm."
       ],
       "examTag": "GCSE",
@@ -2171,7 +2171,7 @@
         {
           "choice_index": 1,
           "error_type": "arithmetic",
-          "student_thinking": "Divides by 4 — treats the four sides as splitting the area."
+          "student_thinking": "Divides by 4, treating the four sides as splitting the area."
         },
         {
           "choice_index": 3,
@@ -2187,8 +2187,8 @@
         "{A} gave Imani the eye; {b} gave her the deadline. The centerpiece is a square panel, the client fixed the area, and the side length is hers to find."
       ],
       "world_feedback": {
-        "correct": "The blade follows the 8 cm line and the panel drops out true. Set against the frame it fits with nothing left to sand — the commission moves forward tonight.",
-        "incorrect": "The panel comes off the bench oversized — halving 64 isn't the same as asking which length, times itself, makes 64. Imani squares the ruler and checks before the next cut."
+        "correct": "The blade follows the 8 cm line and the panel drops out true. Set against the frame it fits with nothing left to sand. Because of this precision, the commission moves forward tonight.",
+        "incorrect": "The panel comes off the bench oversized. Halving 64 isn't the same as asking which length, multiplied by itself, makes 64. Imani squares the ruler and checks before the next cut."
       }
     },
     {
@@ -2208,10 +2208,10 @@
         "4/10"
       ],
       "correctIndex": 3,
-      "explanation": "Out of 10 capsules, 3 are pink and 3 are blue, which leaves 10 − 3 − 3 = 4 green. A probability is a count out of the whole: 4 green out of 10 capsules is 4/10. On its own, 4 is just the count — the denominator is what makes it a chance.",
+      "explanation": "Out of 10 capsules, 3 are pink and 3 are blue, which leaves 10 . 3 . 3 = 4 green. A probability is a count out of the whole: 4 green out of 10 capsules is 4/10. On its own, 4 is just the count - the denominator is what makes it a chance.",
       "hints": [
         "First count the green capsules: 10 total, minus 3 pink, minus 3 blue.",
-        "Four capsules are green — but a probability is a count out of the whole box.",
+        "Four capsules are green, but a probability is a count out of the whole box.",
         "4 green out of 10 capsules: 4/10."
       ],
       "examTag": "GCSE",
@@ -2228,7 +2228,7 @@
         {
           "choice_index": 1,
           "error_type": "arithmetic",
-          "student_thinking": "Counts the pink and blue capsules — the ones that are NOT green."
+          "student_thinking": "Counts the pink and blue capsules, the ones that are not green."
         },
         {
           "choice_index": 2,
@@ -2239,13 +2239,13 @@
       "storyIntro": "Last night of the season. The sample box is packed, the draw is blind, and the final report can't say 'probably' without a number under it.",
       "storyContext": "A season-end field survey: one random draw from a box of tagged capsules, and a report that needs the odds stated straight.",
       "introTemplates": [
-        "The survey log keeps two columns this season: {a_noun} and {b_noun}. On the last night, Suri runs the final blind draw — and everything the team reports back rests on what chance actually says.",
+        "The survey log keeps two columns this season: {a_noun} and {b_noun}. On the last night, Suri runs the final blind draw, and everything the team reports back rests on what chance actually says.",
         "Suri joined the survey for {a} and stayed for {b}. Tonight it ends the way it started: one random draw from the sample box, and a report that can't say 'probably' without a number under it.",
         "Out here, {a_noun} keeps you moving and {b_noun} keeps you honest. The sample box is packed, the draw is blind, and the season's last entry wants the odds stated straight."
       ],
       "world_feedback": {
         "correct": "Suri logs 4/10, and across the season's records the draws land right on it. The report ships with a number that holds.",
-        "incorrect": "The report reads strangely on review — 4 is a count, not a chance. Out of ten capsules, what share of them are green? Suri rewrites the line before it ships."
+        "incorrect": "The report reads strangely on review: 4 is a count, not a chance. Out of ten capsules, what share of them are green, Suri rewrites the line before it ships."
       }
     },
     {
@@ -2265,9 +2265,9 @@
         "2/5"
       ],
       "correctIndex": 1,
-      "explanation": "A run either produces the drop or it doesn't, so the two probabilities must add to 1. If the drop lands with probability 2/7, the remaining 5/7 of the chances are runs with no drop. The two sides don't have to be equal — they just have to make the whole.",
+      "explanation": "A run either produces the drop or it doesn't, so the two probabilities must add to 1. If the drop lands with probability 2/7, the remaining 5/7 of the chances are runs with no drop. The two sides don't have to be equal, they just have to make the whole.",
       "hints": [
-        "Every run either drops or doesn't — together those chances make the whole: 1.",
+        "Every run either drops or doesn't drop together those chances make the whole 1.",
         "The whole is 7 sevenths. The drop takes 2 of them.",
         "1 − 2/7 = 5/7."
       ],
@@ -2296,13 +2296,13 @@
       "storyIntro": "Launch night. The build is frozen, the stream starts soon, and the last unclosed ticket is a single line of odds.",
       "storyContext": "A launch-night patch note: a bonus drop with fixed odds per run, and the complementary line still missing.",
       "introTemplates": [
-        "Launch night. Rae's project sits where {a_noun} meets {b_noun} — one built the thing, the other is why anyone will show up. The last unclosed ticket is a single line of odds.",
+        "Launch night. Rae's project sits where the stage meets the crowd: one built the thing, the other is why anyone will show up. The last unclosed ticket is a single line of odds.",
         "Rae has shipped enough to know {a} and {b} fail the same way: one number nobody checked. Tonight the drop odds go into the patch notes stated both ways, or not at all.",
         "Ten minutes to the stream. On one monitor, {a_noun}; on the other, {b_noun}. Between them sits a probability that has to be right before anyone hits play."
       ],
       "world_feedback": {
-        "correct": "Rae types 5/7 into the patch notes and the overnight test runs land right on it. The launch goes out clean — the odds hold from both sides.",
-        "incorrect": "Chat catches it inside the first hour — a run either drops or it doesn't, and the two chances have to make the whole. If the drop takes 2 sevenths, what's left of the 7? Rae patches the notes."
+        "correct": "Rae types 5/7 into the patch notes and the overnight test runs land right on it. The launch goes out clean: the odds hold from both sides.",
+        "incorrect": "Chat catches it inside the first hour: a run either drops or it doesn't, and the two chances have to make the whole. If the drop takes 2/7, what's left of the 7? Rae patches the notes."
       }
     }
   ],
@@ -2312,7 +2312,7 @@
       "title": "Anansi the Spider",
       "setting": "Forest villages of the Gold Coast",
       "protagonist": "Anansi",
-      "synopsis": "Anansi, a clever spider, trades wisdom, shares food, and outwits stronger animals. Every bargain is a count, a share, or a fair split — and the community watches whether the math of fairness holds.",
+      "synopsis": "Anansi, a clever spider, trades wisdom, shares food, and outwits stronger animals. Every bargain is a count, a share, or a fair split, and the community watches whether the math of fairness holds.",
       "themes": [
         "cleverness",
         "fairness",
@@ -2344,7 +2344,7 @@
       "title": "The Master Drummer",
       "setting": "Royal drumming academy, Kumasi",
       "protagonist": "Kwame",
-      "synopsis": "Kwame learns polyrhythms at the drumming academy. Each pattern is a living fraction — three beats against four, halves against wholes — and the master will not let him play the ceremony until the counts lock.",
+      "synopsis": "Kwame learns polyrhythms at the drumming academy. Each pattern is a living fraction: three beats against four, halves against wholes, and the master will not let him play the ceremony until the counts lock.",
       "themes": [
         "rhythm",
         "discipline",
@@ -2376,7 +2376,7 @@
       "title": "The Kente Loom",
       "setting": "Family loom yard, contemporary Kumasi",
       "protagonist": "Adjoa",
-      "synopsis": "Adjoa's family weaving business receives a palace commission. Each Kente strip encodes sequence and symmetry — one broken ratio in the pattern and the elders send the cloth back.",
+      "synopsis": "Adjoa's family weaving business receives a palace commission. Each Kente strip encodes sequence and symmetry, one broken ratio in the pattern and the elders send the cloth back.",
       "themes": [
         "craft",
         "heritage",
@@ -2408,7 +2408,7 @@
       "title": "The Wayfinder",
       "setting": "Open Pacific, traditional wayfinding voyage",
       "protagonist": "Hina",
-      "synopsis": "Hina navigates an outrigger between islands using stars, swells, and wind. Bearing and distance are not poetry — miscount the angle and the crew runs out of water.",
+      "synopsis": "Hina navigates an outrigger between islands using stars, swells, and wind. Bearing and distance are not poetry: miscount the angle and the crew runs out of water.",
       "themes": [
         "journey",
         "navigation",
@@ -2440,7 +2440,7 @@
       "title": "The Calendar Keepers",
       "setting": "Stone observatory, ~900 CE Mesoamerica",
       "protagonist": "Maya",
-      "synopsis": "Maya tends a stone observatory. The Venus alignment ceremony cannot be a day early or late — base-twenty counts and long cycles must close exactly.",
+      "synopsis": "Maya tends a stone observatory. The Venus alignment ceremony cannot be a day early or late, because base-twenty counts and long cycles must close exactly.",
       "themes": [
         "time",
         "ceremony",
@@ -2472,7 +2472,7 @@
       "title": "House of Wisdom",
       "setting": "House of Wisdom, Baghdad ~830 CE",
       "protagonist": "Riyad",
-      "synopsis": "Riyad copies manuscripts in Baghdad's great library. Completing the square is literal — al-Khwarizmi's pages settle inheritance disputes with exact areas and roots.",
+      "synopsis": "Riyad copies manuscripts in Baghdad's great library. Completing the square is literal: al-Khwarizmi's pages settle inheritance disputes with exact areas and roots.",
       "themes": [
         "knowledge",
         "inheritance",
@@ -2536,7 +2536,7 @@
       "title": "The Sulbasutras",
       "setting": "Sacrifice ground, ~800 BCE India",
       "protagonist": "Apala",
-      "synopsis": "Apala lays out a sacrifice altar with rope-stretching geometry. The fire pit must be a perfect right triangle — one skewed corner angers the priests.",
+      "synopsis": "Apala lays out a sacrifice altar with rope-stretching geometry. The fire pit must be a perfect right triangle, one skewed corner angers the priests.",
       "themes": [
         "ritual",
         "precision",
@@ -2568,7 +2568,7 @@
       "title": "Florence Nightingale's Wards",
       "setting": "Scutari hospital, Crimean War 1854",
       "protagonist": "Florence Nightingale",
-      "synopsis": "Florence records mortality in Scutari's hospital wards. The numbers on her polar diagrams are lives — pattern in the data decides which ward gets clean water first.",
+      "synopsis": "Florence records mortality in Scutari's hospital wards. The numbers on her polar diagrams are lives. Pattern in the data decides which ward gets clean water first.",
       "themes": [
         "data",
         "care",
@@ -2600,7 +2600,7 @@
       "title": "The Clever Jackal",
       "setting": "Forest court under a banyan tree",
       "protagonist": "Jackal",
-      "synopsis": "A jackal divides a kill among hungry animals. Each claims a share by rank and appetite — only careful fractions keep the peace under the banyan tree.",
+      "synopsis": "A jackal divides a kill among hungry animals. Each claims a share by rank and appetite, only careful fractions keep the peace under the banyan tree.",
       "themes": [
         "fairness",
         "politics",
@@ -2662,7 +2662,7 @@
       "title": "Coyote and the Stars",
       "setting": "High desert night, pre-contact Southwest",
       "protagonist": "Coyote",
-      "synopsis": "Coyote scatters stars across the sky. Elders say the pattern must hold so hunters can navigate — each constellation is a counted map of seasons.",
+      "synopsis": "Coyote scatters stars across the sky. Elders say the pattern must hold so hunters can navigate, each constellation is a counted map of seasons.",
       "themes": [
         "origin",
         "navigation",
@@ -2724,7 +2724,7 @@
       "title": "The Thousand Cranes",
       "setting": "Post-war Hiroshima hospital room",
       "protagonist": "Sadako",
-      "synopsis": "Sadako folds cranes wishing for healing. Each fold is symmetry and count — the legend says a thousand, and the hospital wall tracks every one.",
+      "synopsis": "Sadako folds cranes wishing for healing. Each fold is symmetry and count: the legend says a thousand, and the hospital wall tracks every one.",
       "themes": [
         "hope",
         "symmetry",
@@ -2755,7 +2755,7 @@
       "title": "The Igloo Builder",
       "setting": "Arctic tundra, winter storm approaching",
       "protagonist": "Hunter",
-      "synopsis": "A hunter spirals snow blocks into a dome. Each block's angle and overlap must close the curve before the blizzard — geometry is shelter.",
+      "synopsis": "A hunter spirals snow blocks into a dome. Each block's angle and overlap must close the curve before the blizzard, because geometry is shelter.",
       "themes": [
         "survival",
         "craft",
@@ -2817,7 +2817,7 @@
       "title": "Māori Star Compass",
       "setting": "Pacific voyage, traditional waka",
       "protagonist": "Navigator",
-      "synopsis": "A navigator reads a star compass carved in memory. Each rising point marks a latitude band — confuse two stars and the waka misses Aotearoa.",
+      "synopsis": "A navigator reads a star compass carved in memory. Each rising point marks a latitude band, confuse two stars and the waka misses Aotearoa.",
       "themes": [
         "navigation",
         "memory",
@@ -2848,7 +2848,7 @@
       "title": "The Coffee Ceremony",
       "setting": "Family home, Ethiopian highlands",
       "protagonist": "Host",
-      "synopsis": "During the jebena ceremony, hosts measure water, beans, and time in three rounds. Hospitality is arithmetic — each cup must be equal and the last round sweetest.",
+      "synopsis": "During the jebena ceremony, hosts measure water, beans, and time in three rounds. Hospitality is arithmetic: each cup must be equal, and the last round is sweetest.",
       "themes": [
         "hospitality",
         "ritual",
@@ -2879,7 +2879,7 @@
       "title": "The Frost Giant's Riddle",
       "setting": "Utgard hall, mythic Scandinavia",
       "protagonist": "Thor",
-      "synopsis": "Thor must answer a giant's riddles at Utgard. One asks how far he walked — the answer is half the remaining path each step, a halving that never quite ends.",
+      "synopsis": "Thor must answer a giant's riddles at Utgard. One asks how far he walked: the answer is half the remaining path each step, because the halving never quite ends.",
       "themes": [
         "riddle",
         "hubris",
@@ -2910,7 +2910,7 @@
       "title": "Lo Shu Magic Square",
       "setting": "Lo River bank, ancient China",
       "protagonist": "Yu the Great",
-      "synopsis": "A turtle emerges from the Lo River bearing a pattern of dots. Scholars arrange the numbers so every row and diagonal sums the same — balance is cosmic law.",
+      "synopsis": "A turtle emerges from the Lo River bearing a pattern of dots. Scholars arrange the numbers so every row and diagonal sums the same: balance is cosmic law.",
       "themes": [
         "balance",
         "omen",
@@ -2941,7 +2941,7 @@
       "title": "The Capoeira Circle",
       "setting": "Salvador roda, colonial Brazil",
       "protagonist": "Mestre",
-      "synopsis": "In the roda, two capoeiristas move to the berimbau's rhythm. Angles of entry and timing are geometry in motion — one misread beat and you're on the sand.",
+      "synopsis": "In the roda, two capoeiristas move to the berimbau's rhythm. Angles of entry and timing are geometry in motion: one misread beat and you're on the sand.",
       "themes": [
         "resistance",
         "rhythm",
@@ -2972,7 +2972,7 @@
       "title": "Brigid's Counting Cattle",
       "setting": "Highland farm, early spring",
       "protagonist": "Brigid",
-      "synopsis": "Brigid tends cattle through Imbolc. Milk yields are logged by herd and day — the abbess needs exact totals before the spring market.",
+      "synopsis": "Brigid tends cattle through Imbolc. Milk yields are logged by herd and day, the abbess needs exact totals before the spring market.",
       "themes": [
         "care",
         "spring",
@@ -3003,7 +3003,7 @@
       "title": "The Three Princes of Serendip",
       "setting": "Road to Serendip, medieval Persia",
       "protagonist": "Princes",
-      "synopsis": "Three princes infer hidden facts from clues on the road. Each deduction chains observations — probability and logic, not luck, solve the lost camel.",
+      "synopsis": "Three princes infer hidden facts from clues on the road. Each deduction chains observations: probability and logic, not luck, solve the lost camel.",
       "themes": [
         "deduction",
         "travel",
@@ -3034,7 +3034,7 @@
       "title": "The Market Vendor",
       "setting": "Open-air market, Port-au-Prince",
       "protagonist": "Vendor",
-      "synopsis": "A vendor in Port-au-Prince prices mangoes by weight and bundle. The storm knocked out power — only mental math keeps the stall honest before the rain returns.",
+      "synopsis": "A vendor in Port-au-Prince prices mangoes by weight and bundle. The storm knocked out power. Only mental math keeps the stall honest before the rain returns.",
       "themes": [
         "trade",
         "storm",
@@ -3065,7 +3065,7 @@
       "title": "The Turtle and the Hare",
       "setting": "Village river ford",
       "protagonist": "Turtle",
-      "synopsis": "A turtle bets a boastful hare on a river crossing. Steady rate beats burst speed — the turtle's constant pace graphs a line the hare cannot outrun.",
+      "synopsis": "A turtle bets a boastful hare on a river crossing. Steady rate beats burst speed, the turtle's constant pace graphs a line the hare cannot outrun.",
       "themes": [
         "patience",
         "rate",
@@ -3096,7 +3096,7 @@
       "title": "Dreamtime Star Songlines",
       "setting": "Central desert, Dreamtime tradition",
       "protagonist": "Elder",
-      "synopsis": "Elders sing songlines that map country to stars. Each verse is a counted step on the land — lose the sequence and the waterhole story vanishes.",
+      "synopsis": "Elders sing songlines that map country to stars. Each verse is a counted step on the land, lose the sequence and the waterhole story vanishes.",
       "themes": [
         "land",
         "memory",
@@ -3127,7 +3127,7 @@
       "title": "The Nested Dolls",
       "setting": "Workshop outside Moscow",
       "protagonist": "Carver",
-      "synopsis": "A carver paints matryoshka dolls that fit inside each other. Each shell is a fixed ratio smaller — one wrong circumference and the inner doll rattles loose.",
+      "synopsis": "A carver paints matryoshka dolls that fit inside each other. Each shell is a fixed ratio smaller, one wrong circumference and the inner doll rattles loose.",
       "themes": [
         "craft",
         "family",
@@ -3158,7 +3158,7 @@
       "title": "The Pulque Ferment",
       "setting": "Highland agave field",
       "protagonist": "Farmer",
-      "synopsis": "A farmer tracks agave sap fermentation by day and temperature. The ritual calendar demands the brew peak on the feast — exponential growth, not guesswork.",
+      "synopsis": "A farmer tracks agave sap fermentation by day and temperature. The ritual calendar demands the brew peak on the feast: exponential growth, not guesswork.",
       "themes": [
         "feast",
         "growth",
@@ -3189,7 +3189,7 @@
       "title": "Nasreddin Hodja's Donkey",
       "setting": "Anatolian village square",
       "protagonist": "Nasreddin Hodja",
-      "synopsis": "Hodja rides his donkey backward to teach a lesson. The village argues about distance traveled versus direction faced — vectors before anyone named them.",
+      "synopsis": "Hodja rides his donkey backward to teach a lesson. The village argues about distance traveled versus direction faced, vectors before anyone named them.",
       "themes": [
         "humor",
         "wisdom",
@@ -3220,7 +3220,7 @@
       "title": "The Rice Terraces",
       "setting": "Banaue rice terraces, Philippines",
       "protagonist": "Farmer",
-      "synopsis": "Farmers carve Banaue terraces into the mountain. Each level must hold water at the same depth — slope, area, and flow decide whether the village eats.",
+      "synopsis": "Farmers carve Banaue terraces into the mountain. Each level must hold water at the same depth, because slope, area, and flow decide whether the village eats.",
       "themes": [
         "engineering",
         "community",
@@ -3251,7 +3251,7 @@
       "title": "Odysseus and the Stars",
       "setting": "Aegean open water, mythic voyage",
       "protagonist": "Odysseus",
-      "synopsis": "Lost at sea, Odysseus steers by Pleiades and Bear. Night after night the angles change predictably — miss the pattern and Ithaca stays invisible.",
+      "synopsis": "Lost at sea, Odysseus steers by Pleiades and Bear. Night after night the angles change predictably, because miss the pattern and Ithaca stays invisible.",
       "themes": [
         "home",
         "navigation",
@@ -3282,7 +3282,7 @@
       "title": "The Tournament Draft",
       "setting": "Hotel conference LAN tournament",
       "protagonist": "Remy",
-      "synopsis": "Remy's team drafts for a LAN final. Expected value on picks and counter-picks is math — emotion drafts losers.",
+      "synopsis": "Remy's team drafts for a LAN final. Expected value on picks and counter-picks is math, emotion drafts losers.",
       "themes": [
         "strategy",
         "team",

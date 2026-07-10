@@ -12,14 +12,14 @@
       "39"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: List successive differences: 8−3=5, 14−8=6, 21−14=7, 29−21=8. Step 2: Identify the pattern — each difference increases by 1. Step 3: Next difference = 8+1 = 9. Step 4: Next term = 29+9 = 38.",
+    "explanation": "Step 1: List successive differences: 8-3=5, 14-8=6, 21-14=7, 29-21=8. Step 2: Identify the pattern, each difference increases by 1. Step 3: Next difference equals 8 plus 1, which is 9. Step 4: Next term equals 29 plus 9, which is 38.",
     "hints": [
-      "RULE: When a sequence doesn't have a constant difference, take the differences OF the differences. If those are constant, the sequence grows quadratically — and the next first-difference is one more t",
+      "When a sequence doesn't have a constant difference, take the differences of the differences. If those are constant, the sequence grows quadratically, and the next first-difference is one more than the previous.",
       "1. CONSTANT-DIFFERENCE TRAP (→C. 37): student treats the sequence as arithmetic, reuses the LAST difference (8) rather than continuing the pattern, getting 29+8=37. This is the most common wrong answe"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms. Find it before you count."
   },
   {
     "id": "act_math_t01_q02",
@@ -58,7 +58,7 @@
     "correctIndex": 3,
     "explanation": "Step 1: Gather x terms on one side: 5x+3 = 10x−17 → subtract 5x both sides → 3 = 5x−17. Step 2: Isolate x: add 17 both sides → 20 = 5x. Step 3: Divide: x = 20÷5 = 4. Step 4: Verify: 5(4)+3=23 and 10(4)−17=23. ✓",
     "hints": [
-      "RULE: Move terms by doing the OPPOSITE operation to both sides — never just \"flip the sign\" of an isolated term. If 5x+3=10x−17, subtract 5x from BOTH sides; don't just write 3=5x−17 without showing t",
+      "RULE: Move terms by doing the OPPOSITE operation to both sides. If 5x+3=10x−17, subtract 5x from both sides: you get 3=5x−17, so show the steps to solve for x.",
       "1. SIGN ERROR ON SUBTRACTION (common off-path): student moves −17 to get +17 on wrong side and ends up with 5x=−20 → x=−4 (not a choice, reveals the error). 2. COMBINING BEFORE MOVING: student adds 3+"
     ],
     "examTag": "ACT",
@@ -78,7 +78,7 @@
       "20"
     ],
     "correctIndex": 0,
-    "explanation": "Step 1: Recall why 4 has exactly 3 factors: 4=2², factors are {1, 2, 4}. Step 2: Recognize the pattern — a number has exactly 3 factors when it equals p² for a PRIME p (factors are always {1, p, p²}). Step 3: Next prime after 2 is 3. So k = 3² = 9. Step 4: Sum of factors of 9 = 1+3+9 = 13.",
+    "explanation": "Step 1: Recall why 4 has exactly 3 factors: 4=2², factors are {1, 2, 4}. Step 2: Recognize the pattern, a number has exactly 3 factors when it equals p² for a prime p (factors are always {1, p, p²}). Step 3: Next prime after 2 is 3, so k = 3² = 9. Step 4: Sum of factors of 9 = 1 + 3 + 9 = 13.",
     "hints": [
       "KEY INSIGHT: A number has EXACTLY 3 factors if and only if it is the square of a prime. The 3 factors are always {1, p, p²}. After 4=2², the next is 9=3² with factors {1,3,9}, sum=13.",
       "1. WRONG NEXT INTEGER: student finds k=9 correctly but then guesses k's factors as {1,2,9} or {1,4,9} (forgetting 9=3², so its middle factor is 3 not 2), getting 1+2+9=12 or 1+4+9=14 (→G). 2. SKIPS TO"
@@ -148,14 +148,14 @@
       ""
     ],
     "correctIndex": 1,
-    "explanation": "Step 1: Identify the left endpoint — closed (filled) circle at −5 → x can EQUAL −5 → use ≤. Step 2: Identify the right endpoint — open (hollow) circle at 5 → x cannot EQUAL 5 → use <. Step 3: The shaded region is BETWEEN −5 and 5 (not outside). Step 4: Combine: −5 ≤ x < 5.",
+    "explanation": "Step 1: Identify the left endpoint, a closed circle at −5, x can be equal to −5, use ≤. Step 2: Identify the right endpoint, an open circle at 5, x cannot equal 5, use <. Step 3: The shaded region is between −5 and 5, not outside. Step 4: Combine: −5 ≤ x < 5.",
     "hints": [
       "MNEMONIC: OPEN circle → OPEN (strict) inequality sign (< or >). CLOSED (filled) circle → CLOSED inequality sign (≤ or ≥). Read LEFT endpoint first (−5 closed → ≤), then RIGHT endpoint (5 open → <).",
-      "1. OPEN/CLOSED REVERSAL (→C): student reads the closed circle at −5 as open and the open circle at 5 as closed, writing −5 < x ≤ 5 instead of −5 ≤ x < 5. Most common error — students confuse which end"
+      "1. OPEN/CLOSED REVERSAL (→C): student reads the closed circle at −5 as open and the open circle at 5 as closed, writing −5 < x ≤ 5 instead of −5 ≤ x < 5. Most common error: students confuse which end."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t01_q08",
@@ -177,7 +177,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same: every side, every angle."
   },
   {
     "id": "act_math_t01_q09",
@@ -192,7 +192,7 @@
       "( n + 2)( n – 10)"
     ],
     "correctIndex": 1,
-    "explanation": "Step 1: Substitute n=11: (11−3)² = 8² = 64. Step 2: This is a \"value equivalence\" question — we need which EXPRESSION equals 64 at n=11. Step 3: Test each choice at n=11:\n   A: (11+6)(11−6) = 17×5 = 85 ✗\n   B: (11+5)(11−7) = 16×4 = 64 ✓\n   C: (11+4)(11−8) = 15×3 = 45 ✗\n   D: (11+3)(11−9) = 14×2 = 28 ✗\n   E: (11+2)(11−10) = 13×1 = 13 ✗. Step 4: Answer is B. Note: B is NOT algebraically equal to (n−3)² for all n — only at n=11.",
+    "explanation": "Step 1: Substitute n=11: (11−3)² = 8² = 64. Step 2: This is a \"value equivalence\" question, we need which expression equals 64 at n=11. Step 3: Test each choice at n=11: \n   A: (11+6)(11−6) = 17×5 = 85, no\n   B: (11+5)(11−7) = 16×4 = 64, yes\n   C: (11+4)(11−8) = 15×3 = 45, no\n   D: (11+3)(11−9) = 14×2 = 28, no\n   E: (11+2)(11−10) = 13×1 = 13, no. Step 4: The answer is B. Note: B is not algebraically equal to (n−3)² for all n, only at n=11.",
     "hints": [
       "SPEED TRICK: When a question gives you a SPECIFIC value to substitute, compute the target number FIRST, then test each choice at that value. Numerical substitution is almost always faster than algebra",
       "1. ALGEBRAIC EQUIVALENCE ATTEMPT: student tries to factor (n−3)² = n²−6n+9 and looks for which choice FOIL-expands to the same thing. None of the choices expand to n²−6n+9, so the student gets stuck. "
@@ -221,7 +221,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t01_q11",
@@ -259,12 +259,12 @@
     "correctIndex": 2,
     "explanation": "Step 1: Area of first section = 30 × 40 = 1,200 sq ft. Step 2: Area of second section = 60 × 80 = 4,800 sq ft. Step 3: Total area = 1,200 + 4,800 = 6,000 sq ft. Step 4: Area of each sod square = 2 × 2 = 4 sq ft. Step 5: Number of sod squares = 6,000 ÷ 4 = 1,500.",
     "hints": [
-      "TILING FORMULA: number of tiles = total area ÷ tile area. Always compute AREA (length × width) for each section first, then sum, THEN divide by the tile area. Don't add lengths/widths together — that ",
+      "TILING FORMULA: number of tiles = total area ÷ tile area. Always compute area (length × width) for each section first, then sum, then divide by the tile area. Don't add lengths/widths together because that would give you perimeter, not area.",
       "1. FORGET TO DIVIDE BY SOD SIZE (→J. 1,600 or K. 2,000): student correctly adds the areas but then picks a nearby \"big\" answer without dividing by 4. 2. ADD DIMENSIONS INSTEAD OF MULTIPLY (→F. 1,000 o"
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t01_q13",
@@ -282,11 +282,11 @@
     "explanation": "Step 1: Identify angle n and label the triangle sides relative to n. Angle n is at the bottom-left. Adjacent side (base) = 4. Opposite side (vertical) = 2. Hypotenuse = 2√5. (Verify: 4² + 2² = 16+4=20 = (2√5)² ✓.) Step 2: sec(n) = 1/cos(n) = hypotenuse ÷ adjacent. Step 3: sec(n) = 2√5 ÷ 4 = √5/2. Step 4: Check: ≈ 1.118 ≥ 1 ✓ (valid for a real angle).",
     "hints": [
       "SOHCAHTOA extension: SEC = Hypotenuse ÷ Adjacent (= 1/cos). Remember: sec is the RECIPROCAL of cosine. ALWAYS label H, A, O relative to the given angle BEFORE writing any formula.",
-      "1. COS INSTEAD OF SEC (→C. 4/√5 = 2√5/5): student computes cos(n)=adj/hyp=4/(2√5)=2/√5 = 2√5/5, then rationalizes to 4/√5 — gets the RECIPROCAL. 2. WRONG SIDE AS \"ADJACENT\" (→B. 2/√5): uses the OPPOSI"
+      "1. COS INSTEAD OF SEC (→C. 4/√5 = 2√5/5): student computes cos(n)=adj/hyp=4/(2√5)=2/√5 = 2√5/5, then rationalizes to 4/√5 because they get the reciprocal. 2. WRONG SIDE AS \"ADJACENT\" (→B. 2/√5): uses the opposite side."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t01_q14",
@@ -303,7 +303,7 @@
     "correctIndex": 2,
     "explanation": "Step 1: Isolate the pq term: pq − 3r = 2 → add 3r to both sides → pq = 2 + 3r. Step 2: Isolate q: divide both sides by p → q = (2 + 3r) / p. Step 3: Verify: substituting back: p × [(2+3r)/p] − 3r = (2+3r) − 3r = 2 ✓.",
     "hints": [
-      "LITERAL EQUATION RULE: treat the variable you are SOLVING FOR as if it were a single unknown number. pq=2+3r → q=(2+3r)/p. The p \"comes off\" q by dividing — exactly as you would if the equation were 3",
+      "LITERAL EQUATION RULE: treat the variable you are SOLVING FOR as if it were a single unknown number. pq=2+3r: q=(2+3r)/p. The p \"comes off\" q by dividing, exactly as you would if the equation were 3",
       "1. MULTIPLY INSTEAD OF DIVIDE (→K. (2+3r)p): student correctly isolates pq=2+3r but then MULTIPLIES by p instead of dividing, getting (2+3r)p. 2. WRONG SIGN ON 3r (→J. (2−3r)/p): when moving −3r to th"
     ],
     "examTag": "ACT",
@@ -325,12 +325,12 @@
     "correctIndex": 2,
     "explanation": "Step 1: Evaluate g(6): g(x)=2x−4 → g(6)=2(6)−4=12−4=8. Step 2: Evaluate f(−5): f(x)=4x²−5x−5 → f(−5)=4(−5)²−5(−5)−5. Step 3: Compute each term: 4(25)=100; −5(−5)=+25; −5 stays −5. Step 4: f(−5) = 100+25−5 = 120. Step 5: g(6)/f(−5) = 8/120 = 1/15.",
     "hints": [
-      "NEGATIVE INPUT RULE: (−5)² = +25 (squaring makes it positive). NEVER write −5² on its own when you mean (−5)² — those are different: −5² = −(5²) = −25, but (−5)² = +25. Always use parentheses around n",
+      "Squaring a negative number like (−5)² gives you a positive result, +25, because the negative sign gets squared and turns positive.",
       "1. SIGN ERROR ON (−5)² (→inflated answer): student writes 4(−5²)=4(−25)=−100 instead of 4(−5)²=4(25)=100, getting f(−5)=−100−25−5=−130 → 8/(−130)≠1/15. The most dangerous error: squaring vs negating. "
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t02_q01",
@@ -374,7 +374,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out."
   },
   {
     "id": "act_math_t02_q03",
@@ -418,7 +418,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t02_q05",
@@ -440,7 +440,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t02_q06",
@@ -462,7 +462,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart."
+    "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors. Take it apart."
   },
   {
     "id": "act_math_t02_q07",
@@ -480,7 +480,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t02_q08",
@@ -502,7 +502,7 @@
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t02_q09",
@@ -590,7 +590,7 @@
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t02_q13",
@@ -612,7 +612,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t02_q14",
@@ -696,7 +696,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms. Find it before you count."
   },
   {
     "id": "act_math_t03_q03",
@@ -713,12 +713,12 @@
     "correctIndex": 3,
     "explanation": "Step 1: The quadrilateral's four interior angles are 2x°, x° (top-right), 90° (bottom-left, marked right angle), and x° (bottom-right). Step 2: All quadrilateral interior angles sum to 360°. Step 3: 2x + x + 90 + x = 360 → 4x + 90 = 360 → 4x = 270 → x = 67.5.",
     "hints": [
-      "RULE: Every simple (non-self-intersecting) quadrilateral's interior angles sum to 360°, always — write the full sum equation before solving for an unknown angle.",
+      "RULE: Every simple (non-self-intersecting) quadrilateral's interior angles sum to 360°, always write the full sum equation before solving for an unknown angle.",
       "1. TRIANGLE-SUM TRAP (C, 60): using 180° instead of 360° as the total (treating the shape as a triangle, or forgetting one of the four angles) gives 2x+x+x=180-ish errors that land near 60. 2. MISCOUN"
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out."
   },
   {
     "id": "act_math_t03_q04",
@@ -731,12 +731,12 @@
     "correctIndex": 2,
     "explanation": "Step 1: Let the cube's side length be s. Volume = s³ = k. Surface area = 6s² = 10k. Step 2: Substitute k = s³ into the surface area equation: 6s² = 10s³. Step 3: Divide both sides by s² (s≠0): 6 = 10s → s = 6/10 = 3/5.",
     "hints": [
-      "RULE: When two geometric formulas (volume, surface area) share an unknown like k, substitute one into the other immediately — don't try to compare the bare coefficients.",
+      "When two geometric formulas (volume, surface area) share an unknown like k, substitute one into the other immediately, don't try to compare the bare coefficients.",
       "1. UNIT-CONFUSION TRAP (F, 1/2; G, 3/4): students who try to solve 6s²=10k and s³=k as two separate equations without substituting (e.g. averaging the two coefficients 6 and 10) land on plausible-look"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t03_q06",
@@ -754,7 +754,7 @@
     "explanation": "Step 1: A = (–3, 0), B = (6, k), and N is the midpoint of segment AB. Step 2: Apply the midpoint formula: N = ((x_A+x_B)/2, (y_A+y_B)/2). Step 3: x-coordinate: (–3+6)/2 = 3/2. y-coordinate: (0+k)/2 = k/2. Step 4: N = (3/2, k/2).",
     "hints": [
       "RULE: The midpoint formula averages BOTH coordinates independently and identically: N=((x1+x2)/2, (y1+y2)/2). Never average one coordinate and just copy the other.",
-      "1. AVERAGE-ONE-COORDINATE-ONLY TRAP (F, (3,k)): a student who averages the x-values correctly (getting 3, then forgetting to divide — actually landing on the SUM not the average) but leaves the y-coor"
+      "A student who averages the x-values correctly (getting 3, then forgetting to divide, actually landing on the sum not the average) but leaves the y-coordinate unchanged at k."
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -773,10 +773,10 @@
       "c and d are inversely proportional."
     ],
     "correctIndex": 2,
-    "explanation": "Step 1: a/b – c/d = 0 means a/b = c/d. Step 2: Cross-multiply: ad = bc. Step 3: Since bc = 7 (a constant), ad = 7 also — a constant product. Step 4: When the PRODUCT of two variables (a and d) is a fixed constant, those two variables are, by definition, inversely proportional.",
+    "explanation": "Step 1: a/b – c/d = 0 means a/b = c/d. Step 2: Cross-multiply: ad = bc. Step 3: Since bc equals 7, a constant, ad equals 7 also, a constant product. Step 4: When the product of two variables (a and d) is a fixed constant, those two variables are, by definition, inversely proportional.",
     "hints": [
       "RULE: Two quantities are DIRECTLY proportional if their RATIO is constant (X/Y=k). They are INVERSELY proportional if their PRODUCT is constant (X·Y=k).",
-      "1. WRONG-PAIR TRAP (B, 'a and c are inversely proportional'): students cross-multiply correctly to ad=bc but then misassign which letters are 'paired' — picking the two letters that appear in the orig"
+      "1. WRONG-PAIR TRAP (B, 'a and c are inversely proportional'): students cross-multiply correctly to ad=bc but then misassign which letters are paired, picking the two letters that appear in the original equation."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -797,12 +797,12 @@
     "correctIndex": 1,
     "explanation": "Step 1: The shaded sector's area is 10% of the whole circle's area, so its central angle is also 10% of 360° → 36°. Step 2: Arc length = (angle/360°) × circumference = (36/360) × 2π(10) = 0.1 × 20π = 2π.",
     "hints": [
-      "RULE: For a circular sector, area-fraction = angle-fraction = arc-length-fraction — all three are the SAME fraction of the whole circle. Find the angle fraction first, then apply it to whichever quant",
+      "For a circular sector, area-fraction = angle-fraction = arc-length-fraction: all three are the same fraction of the whole circle. Find the angle fraction first, then apply it to whichever quantity you need.",
       "1. RADIUS-AS-CIRCUMFERENCE TRAP (K, 10π): using the radius (10) directly as if it were the circumference, then taking 10% of '2π×10' incorrectly as half that, or confusing radius with diameter along t"
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t03_q09",
@@ -819,12 +819,12 @@
     "correctIndex": 1,
     "explanation": "Step 1: (4+2i)(4–2i) is a product of conjugates, matching the pattern (a+b)(a–b)=a²–b². Step 2: Here a=4, b=2i, so the product = 4² – (2i)² = 16 – 4i². Step 3: Since i²=–1, 4i² = –4, so 16 – (–4) = 16+4 = 20.",
     "hints": [
-      "RULE: (a+bi)(a–bi) = a² + b² always (a real number) — this is the complex-number version of difference of squares, since i²=–1 flips the sign of the b² term back to positive.",
-      "1. SIGN-ON-i²-TRAP (C, 16–4i): forgetting to square the 'i' along with the 2, treating (2i)² as 2i instead of 4i² — and then not even applying i²=-1, leaving a linear i term in an answer that should b"
+      "RULE: (a+bi)(a·bi) = a² + b² always (a real number) because i² = –1 flips the sign of the b² term back to positive.",
+      "1. SIGN-ON-i²-TRAP (C, 16:4i): forgetting to square the 'i' along with the 2, treating (2i)² as 2i instead of 4i², and then not even applying i²=-1, leaving a linear i term in an answer that should be 4i² = -16."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway. They still hold."
   },
   {
     "id": "act_math_t03_q10",
@@ -839,10 +839,10 @@
       "closed oval/ellipse (not a function)"
     ],
     "correctIndex": 1,
-    "explanation": "Step 1: y=175x²–33x–2,000 has a positive leading coefficient (175>0), so the parabola MUST open upward — this alone eliminates any downward-opening or closed-curve choices. Step 2: The vertex x-coordinate is –b/(2a) = 33/350 ≈ 0.094, i.e. just barely to the RIGHT of the y-axis (a tiny shift, since the linear coefficient is small relative to the quadratic one). Step 3: Among the upward-opening choices, pick the one whose vertex sits almost exactly on the y-axis but very slightly right of it.",
+    "explanation": "Step 1: y=175x²–33x–2,000 has a positive leading coefficient (175>0), so the parabola MUST open upward: this alone eliminates any downward-opening or closed-curve choices. Step 2: The vertex x-coordinate is –b/(2a) = 33/350 ≈ 0.094, i.e. just barely to the right of the y-axis (a tiny shift, since the linear coefficient is small relative to the quadratic one). Step 3: Among the upward-opening choices, pick the one whose vertex sits almost exactly on the y-axis but very slightly to the right of it.",
     "hints": [
-      "RULE: For y=ax²+bx+c, the sign of a alone determines whether the parabola opens up (a>0) or down (a<0) — check that first, before anything about the vertex position or intercepts.",
-      "1. SIGN-OF-LEADING-COEFFICIENT TRAP (H, J): picking a downward-opening graph because the large negative constant (–2,000) 'feels' like it should pull the whole graph down/flip it — but the SIGN that c"
+      "RULE: For y=ax²+bx+c, the sign of a alone determines whether the parabola opens up (a>0) or down (a<0), check that first, before anything about the vertex position or intercepts.",
+      "1. SIGN-OF-LEADING-COEFFICIENT TRAP (H, J): picking a downward-opening graph because the large negative constant (–2,000) feels like it should pull the whole graph down and flip it, but the sign that c"
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -863,8 +863,8 @@
     "correctIndex": 3,
     "explanation": "Step 1: Let the meal cost (before tip) be m. A 15% tip means the total paid is m + 0.15m = 1.15m. Step 2: 1.15m = 35.19. Step 3: m = 35.19 / 1.15 = 30.60.",
     "hints": [
-      "RULE: To UNDO a percent increase, divide by (1+rate) — do not subtract rate% of the final total. 'Final = original × (1+rate)' must be solved for original by dividing, not subtracting.",
-      "1. SUBTRACT-15%-OF-TOTAL TRAP (B, $29.91): computing 35.19 – 0.15(35.19) instead of dividing by 1.15 — this incorrectly treats the tip as 15% of the FINAL total rather than 15% of the ORIGINAL meal pr"
+      "RULE: To undo a percent increase, divide by 1 plus the rate: do not subtract the rate percent of the final total. Final equals original times 1 plus the rate; to solve for original, divide, not subtract.",
+      "You're computing 35.19 – 0.15(35.19) instead of dividing by 1.15: this incorrectly treats the tip as 15% of the FINAL total rather than 15% of the ORIGINAL meal price."
     ],
     "examTag": "ACT",
     "format": "word_problem",
@@ -881,12 +881,12 @@
     "correctIndex": 2,
     "explanation": "Step 1: Use the Pythagorean identity: sin²a + cos²a = 1. Step 2: cos²a = 1 – sin²a = 1 – (7/8)² = 1 – 49/64 = 15/64. Step 3: cos a = √(15/64) = √15/8.",
     "hints": [
-      "RULE: sin²a + cos²a = 1 for any angle a. Given one of sin a or cos a, square it, subtract from 1, and take the square root to find the other — no other relationship is needed.",
+      "RULE: sin²a + cos²a = 1 for any angle a. Given one of sin a or cos a, square it, subtract from 1, and take the square root to find the other. No other relationship is needed.",
       "1. FLIP-THE-FRACTION TRAP (F, 8/7): confusing cos a with the reciprocal of sin a (as if they were related like sin/cosecant) instead of using the Pythagorean identity at all. 2. FORGOT-TO-SQUARE-THE-D"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t03_q13",
@@ -903,12 +903,12 @@
     "correctIndex": 1,
     "explanation": "Step 1: f(x) = √(x–3) / (x–3) has TWO domain restrictions: the expression under the square root must be non-negative (x–3≥0), AND the denominator cannot be zero (x–3≠0). Step 2: Combine: x–3≥0 AND x–3≠0 means x–3>0, i.e. x>3.",
     "hints": [
-      "RULE: When a function combines a square root AND a denominator over the SAME expression, find the domain restriction for each piece separately, then intersect them — don't stop after checking just one",
-      "1. SQRT-ONLY TRAP (A, x≥3): applying only the square-root restriction (x–3≥0) and forgetting that x=3 also makes the DENOMINATOR zero, which is independently forbidden — x=3 must be excluded for two s"
+      "When a function combines a square root and a denominator over the same expression, find the domain restriction for each piece separately, then intersect them: don't stop after checking just one.",
+      "1. SQRT-ONLY TRAP (A, x≥3): applying only the square-root restriction (x≥0) and forgetting that x=3 also makes the DENOMINATOR zero, which is independently forbidden: x=3 must be excluded for two separate reasons."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t03_q14",
@@ -926,11 +926,11 @@
     "explanation": "Step 1: Let A = Andrea's current wait time (minutes, as of 11:30) and Z = Zach's. Step 2: 'Two minutes ago, Andrea had waited half as long as Zach': A–2 = (1/2)(Z–2). Step 3: 'Three minutes from now, Andrea will have waited 2/3 as long as Zach': A+3 = (2/3)(Z+3). Step 4: From the first equation, Z = 2A–2. Substitute into the second: A+3 = (2/3)(2A–2+3) = (2/3)(2A+1) → 3A+9 = 4A+2 → A = 7. Step 5: Andrea has waited 7 minutes as of 11:30, so she arrived at 11:23.",
     "hints": [
       "RULE: 'X minutes ago' means subtract X from the current value; 'X minutes from now' means add X. Translate each time-shift phrase into its own small expression before building the full equation.",
-      "1. SAME-VARIABLE-FOR-BOTH-TIMES TRAP: forgetting that 'two minutes ago' means SUBTRACTING 2 from current wait time (not adding), and 'three minutes from now' means ADDING 3 — sign confusion on the tim"
+      "1. SAME-VARIABLE-FOR-BOTH-TIMES TRAP: forgetting that 'two minutes ago' means subtracting 2 from the current wait time (not adding), and 'three minutes from now' means adding 3, because sign confusion on the time"
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t03_q15",
@@ -945,14 +945,14 @@
       "π :4"
     ],
     "correctIndex": 0,
-    "explanation": "Step 1: The two identical shaded circles sit side by side inside the large circle, each tangent to the other and internally tangent to the large circle — so the two small circles' combined width (2 diameters) spans the large circle's diameter. Step 2: If the large circle has radius R, each small circle has diameter R, i.e. radius R/2. Step 3: Each small circle's area = π(R/2)² = πR²/4; two of them total πR²/2. Step 4: Large circle's area = πR². Non-shaded area = πR² – πR²/2 = πR²/2. Step 5: Shaded : non-shaded = πR²/2 : πR²/2 = 1:1.",
+    "explanation": "Step 1: The two identical shaded circles sit side by side inside the large circle, each tangent to the other and internally tangent to the large circle, so the two small circles' combined width (2 diameters) spans the large circle's diameter. Step 2: If the large circle has radius R, each small circle has diameter R, i.e. radius R/2. Step 3: Each small circle's area = π(R/2)² = πR²/4; two of them total πR²/2. Step 4: Large circle's area = πR². Non-shaded area = πR² – πR²/2 = πR²/2. Step 5: Shaded to non-shaded ratio is πR²/2 : πR²/2 = 1:1.",
     "hints": [
-      "RULE: When circle areas are compared, always reduce to a ratio of (radius)² — linear size ratios must be SQUARED to become area ratios. And remember: shaded + non-shaded areas must add up to the whole",
-      "1. RADIUS-RATIO-AS-AREA-RATIO TRAP (B, 4:05 or C, 5:04): assuming the ratio of radii (1:2, small:large) carries over directly to an area ratio without squaring it — area scales with the SQUARE of the "
+      "When comparing circle areas, reduce to a ratio of (radius)²: linear size ratios must be squared to become area ratios. And remember: shaded plus non-shaded areas must add up to the whole.",
+      "1. RADIUS-RATIO-AS-AREA-RATIO TRAP (B, 4:05 or C, 5:04): assuming the ratio of radii (1:2, small:large) carries over directly to an area ratio without squaring it, area scales with the square of the radius."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t04_q01",
@@ -989,14 +989,14 @@
       "21"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: A trapezoid with two parallel bases is given. One non-parallel leg makes a 30° angle with the base. Step 2: Use the 30-60-90 ratio to find the height: if the angled leg has length 7, height = 7·sin(60°) = 7·(√3/2) = 7√3/2. Step 3: The trapezoid area formula is A = ½(b1+b2)×h — but if the question asks just for the HEIGHT (which equals the altitude), the answer is 7√3/2. Alternatively, if the top base collapses to 0 making a triangle: A = ½ · base · height, but the direct ACT question here targets the height value or a related measurement = 7√3/2.",
+    "explanation": "Step 1: A trapezoid with two parallel bases is given. One non-parallel leg makes a 30° angle with the base. Step 2: Use the 30-60-90 ratio to find the height: if the angled leg has length 7, height = 7·sin(60°) = 7·(√3/2) = 7√3/2. Step 3: The trapezoid area formula is A = ½(b1+b2)×h. But if the question asks for just the height, the answer is 7√3/2. Alternatively, if the top base collapses to 0 making a triangle, A = ½ · base · height, but the direct ACT question targets the height value or a related measurement which is 7√3/2.",
     "hints": [
-      "RULE: In a 30-60-90 triangle with hypotenuse h, the side opposite the 60° angle is h·(√3/2) — this is the LONGER leg. The side opposite 30° is h/2. Always label which angle your height is 'across from",
-      "1. WRONG-TRIG-RATIO TRAP (G, 7√3/4): using sin(30°)=1/2 instead of sin(60°)=√3/2 — picking the wrong angle in the 30-60-90 triangle (confusing which angle the leg is adjacent/opposite to). 2. NO-√3 TR"
+      "In a 30-60-90 triangle with hypotenuse h, the side opposite the 60° angle is h·(√3/2) because this is the LONGER leg, and the side opposite 30° is h/2.",
+      "1. WRONG-TRIG-RATIO TRAP (G, 7√3/4): using sin(30°)=1/2 instead of sin(60°)=√3/2, picking the wrong angle in the 30-60-90 triangle because you're confusing which angle the leg is adjacent to or opposite. 2. NO-√3 TR"
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t04_q04",
@@ -1011,10 +1011,10 @@
       "12"
     ],
     "correctIndex": 2,
-    "explanation": "Step 1: Read off the frequency counts from the bar chart for each value/category. Step 2: Find the total count n, then the median is the value at position (n+1)/2 when data is sorted. Step 3: Accumulate frequencies from the lowest value until the middle position is reached — the median falls at 10.5 (midpoint between the two middle values in an even-n dataset).",
+    "explanation": "Step 1: Read off the frequency counts from the bar chart for each value/category. Step 2: Find the total count n, then the median is the value at position (n+1)/2 when data is sorted. Step 3: Accumulate frequencies from the lowest value until the middle position is reached, the median falls at 10.5 (midpoint between the two middle values in an even-n dataset).",
     "hints": [
-      "RULE: To find the median from a bar chart, imagine unrolling it into a sorted list of individual values (one per frequency count), then find the literal middle of that list — not the middle of the x-a",
-      "1. MEAN-NOT-MEDIAN TRAP: computing a weighted average of all values instead of finding the middle value — means and medians are only equal in symmetric distributions, not in a skewed bar chart. 2. WRO"
+      "To find the median from a bar chart, imagine unrolling it into a sorted list of individual values (one per frequency count), then find the literal middle of that list, not the middle of the x-axis.",
+      "Computing a weighted average of all values instead of finding the middle value: means and medians are only equal in symmetric distributions, not in a skewed bar chart."
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -1036,11 +1036,11 @@
     "explanation": "Step 1: The given expression (x²–x–2) > 0 (or equivalent quadratic > 0). Step 2: Factor: (x–2)(x+1) > 0. Step 3: The product is positive when BOTH factors are positive (x>2) OR BOTH are negative (x<–1). Step 4: Intersection with both simultaneously positive: x>2; simultaneously negative: x<–1. Combined: x<–1 or x>2.",
     "hints": [
       "RULE: For (x–a)(x–b)>0, the product is positive OUTSIDE the roots (x<min(a,b) or x>max(a,b)). For <0, it's positive BETWEEN the roots. Always verify with a test point.",
-      "1. MIDDLE-REGION TRAP (F, –1<x<2): selecting the interval BETWEEN the roots instead of OUTSIDE them — this error comes from solving (x–2)(x+1) > 0 as if it were an equality and guessing the interior i"
+      "1. MIDDLE-REGION TRAP (F, -1<x<2): selecting the interval between the roots instead of outside them, this error comes from solving (x–2)(x+1) > 0 as if it were an equality and guessing the interior is incorrect."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t04_q06",
@@ -1058,11 +1058,11 @@
     "explanation": "Step 1: A circle with radius 4 has full circumference = 2π(4) = 8π. Step 2: A quarter of that circle's arc = 8π/4 = 2π.",
     "hints": [
       "RULE: Arc length = (angle/360°) × circumference = (angle/360°) × 2πr. A quarter arc is (90/360)×2πr = πr/2. Circumference uses r (to the first power); area uses r².",
-      "1. AREA-FOR-ARC TRAP: computing the circle's area (16π or a quarter thereof = 4π) instead of the circumference — area and arc length both involve π but use r² vs r respectively. 2. DIAMETER-FOR-CIRCUM"
+      "1. AREA-FOR-ARC TRAP: computing the circle's area (16π or a quarter thereof = 4π) instead of the circumference, because area and arc length both involve π but use r² vs r respectively. 2. DIAMETER-FOR-CIRCUMFERENCE TRAP: using the diameter instead of the radius for circumference calculations, so remember to divide by 2."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t04_q07",
@@ -1079,7 +1079,7 @@
     "correctIndex": 0,
     "explanation": "Step 1: Let r = a/(b–1). Solve for r using a+2b=2: a = 2–2b = 2(1–b) = –2(b–1). Step 2: r = a/(b–1) = –2(b–1)/(b–1) = –2 (for b≠1). Step 3: The expression is r + r² + r³ with r=–2: (–2) + (–2)² + (–2)³ = –2 + 4 + (–8) = –6.",
     "hints": [
-      "RULE: When a constraint gives you a linear relation between two variables, isolate one variable and substitute immediately before evaluating any expression containing the other — don't try to work wit",
+      "When a constraint gives you a linear relation between two variables, isolate one variable and substitute immediately before evaluating any expression containing the other, don't try to work with both variables separately.",
       "1. SIGN-OF-r TRAP (G, 8 or H, 10): computing a/(b-1) = 2(1-b)/(b-1) and forgetting the factor of –1 that converts (1-b)/(b-1) = –1, leaving r=+2 instead of –2, then getting (+2)+(+4)+(+8)=14 or some v"
     ],
     "examTag": "ACT",
@@ -1099,10 +1099,10 @@
       "(–5, 7)"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: In a parallelogram, the diagonals bisect each other — their midpoints coincide. Step 2: If vertices A, B, C, D are the parallelogram and we know three of them plus one diagonal, find the midpoint of the KNOWN diagonal and set it equal to the midpoint of the UNKNOWN diagonal. Step 3: Let the unknown vertex be (x,y). Midpoint equations: (x+known_x)/2 = midpoint_x and (y+known_y)/2 = midpoint_y. Solve: x=–3, y=6.",
+    "explanation": "Step 1: In a parallelogram, the diagonals bisect each other, their midpoints coincide. Step 2: If vertices A, B, C, D are the parallelogram and we know three of them plus one diagonal, find the midpoint of the known diagonal and set it equal to the midpoint of the unknown diagonal. Step 3: Let the unknown vertex be (x,y). Midpoint equations: (x+known_x)/2 = midpoint_x and (y+known_y)/2 = midpoint_y. Solve: x=–3, y=6.",
     "hints": [
-      "RULE: In a parallelogram, the diagonals bisect each other — their midpoints are the same point. To find a missing vertex, set the midpoints of both diagonals equal and solve the resulting two linear e",
-      "1. WRONG-DIAGONAL TRAP: using the wrong pair of vertices as the diagonal (choosing adjacent vertices instead of opposite vertices) — a parallelogram's diagonals connect OPPOSITE corners, not adjacent "
+      "In a parallelogram, the diagonals bisect each other: their midpoints are the same point. To find a missing vertex, set the midpoints of both diagonals equal and solve the resulting two linear equations.",
+      "1. WRONG-DIAGONAL TRAP: using the wrong pair of vertices as the diagonal, a parallelogram's diagonals connect opposite corners, not adjacent ones."
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -1121,14 +1121,14 @@
       "7.5 miles per hour"
     ],
     "correctIndex": 1,
-    "explanation": "Step 1: Let Hiroshi's speed be r (mph) and Akemi's be (r–5). They travel the same total distance in the same time T. Step 2: distance = rate × time. Hiroshi: d = r·T; Akemi: d = (r–5)·T — wait, if same distance and same time, same speed, which can't be. Re-read: if they travel for the SAME time and end up a different total distance, or if they're going to the same destination but Akemi takes longer. Most likely setup: they drive the SAME distance d but Akemi takes longer. Hiroshi time: d/r; Akemi time: d/(r–5). The time difference is given (e.g., Akemi takes 1 hour longer for a 50-mile trip). ",
+    "explanation": "Step 1: Let Hiroshi's speed be r (mph) and Akemi's be r. They travel the same total distance in the same time T. Step 2: distance = rate × time. Hiroshi: d = r·T; Akemi: d = r·T, wait, if same distance and same time, same speed, which can't be. Re-read: if they travel for the same time and end up a different total distance, or if they're going to the same destination but Akemi takes longer. Most likely setup: they drive the same distance d but Akemi takes longer. Hiroshi time: d/r; Akemi time: d/(r-5). The time difference is given (e.g., Akemi takes 1 hour longer for a 50-mile trip).",
     "hints": [
       "RULE: In a two-person rate problem, solve for BOTH unknowns from the start, then re-read which person the question actually asks about before writing the final answer.",
-      "1. WRONG-PERSON TRAP: solving for Hiroshi's speed (15 mph) when the question asks for Akemi's (10 mph) — the answer for the wrong person is almost always among the choices. 2. SPEED-DIFFERENCE-AS-ANSW"
+      "1. WRONG-PERSON TRAP: solving for Hiroshi's speed (15 mph) when the question asks for Akemi's: the answer for the wrong person is often among the choices."
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely. The measurement must be exact."
   },
   {
     "id": "act_math_t04_q10",
@@ -1139,14 +1139,14 @@
       "E."
     ],
     "correctIndex": 1,
-    "explanation": "Step 1: The tax rule has two pieces: (1) income ≤ $10,000 → $0 tax; (2) income > $10,000 → 15% tax on the amount ABOVE $10,000. Step 2: The graph is FLAT at zero for income from $0 to $10,000, then rises linearly for income above $10,000 (slope = 0.15). Step 3: There is no stated maximum (no cap or upper plateau) — the tax keeps increasing linearly for any income above $10,000. Step 4: The correct graph is flat at y=0 until x=$10,000, then a line going up-right with slope 0.15, with no second flat segment.",
+    "explanation": "Step 1: The tax rule has two pieces: (1) income ≤ $10,000 → $0 tax; (2) income > $10,000 → 15% tax on the amount above $10,000. \nStep 2: The graph is flat at zero for income from $0 to $10,000, then rises linearly for income above $10,000 with a slope of 0.15. \nStep 3: There is no stated maximum - the tax keeps increasing linearly for any income above $10,000. \nStep 4: The correct graph is flat at y=0 until x=$10,000, then a line going up-right with a slope of 0.15, with no second flat segment.",
     "hints": [
-      "RULE: A piecewise function graph changes slope (or level) at each boundary value — read the problem one region at a time and find two points per region, then sketch.",
-      "1. CAP-ADDED TRAP: choosing a graph that flattens again above some high income level, adding an upper cap that isn't stated in the problem — students who've seen tax-cap rules elsewhere import that fe"
+      "RULE: A piecewise function graph changes slope or level at each boundary value. Read the problem one region at a time, find two points per region, and then sketch.",
+      "1. CAP-ADDED TRAP: choosing a graph that flattens again above some high income level, adding an upper cap that isn't stated in the problem, students who've seen tax-cap rules elsewhere import that fact."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t04_q11",
@@ -1164,11 +1164,11 @@
     "explanation": "Step 1: The function is y = A·sin(Bx + C) + D. For y = 5·sin(x/2) (if that is the given form): A=5 so amplitude=5. B=1/2 so period = 2π/B = 2π/(1/2) = 4π. Step 2: Amplitude = |A| = 5; Period = 2π/|B| = 4π.",
     "hints": [
       "RULE: For y = A·sin(Bx + C) + D, amplitude = |A| and period = 2π/|B|. Bigger B → shorter (faster) period. Smaller B → longer (slower) period. Never use B directly as the period.",
-      "1. COEFFICIENT-AS-PERIOD TRAP (E, amplitude=5, period=2): confusing the coefficient inside the argument (1/2 multiplying x) with the period directly — the period is 2π/(coefficient), not the coefficie"
+      "1. COEFFICIENT-AS-PERIOD TRAP (E, amplitude=5, period=2): confusing the coefficient inside the argument (1/2 multiplying x) with the period directly, the period is 2π divided by the coefficient, not the coefficient itself."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t04_q12",
@@ -1183,14 +1183,14 @@
       "–6 k 3"
     ],
     "correctIndex": 4,
-    "explanation": "Step 1: By Vieta's formulas for a quadratic x²+bx+c=0 with roots r₁ and r₂: r₁+r₂ = –b and r₁·r₂ = c. Step 2: The quadratic is x²+3kx+2k³=0, so sum of roots = –3k and product of roots = 2k³. Step 3: The expression (r₁+r₂)·(r₁·r₂) = (–3k)(2k³) = –6k⁴. Hmm — if the answer is –6k³, the exponent on k is 3 not 4. Let me re-check: likely the quadratic is x²+3kx+2k²=0 (product=2k²), so (–3k)(2k²) = –6k³. Either way, the strategy is identical: read off Vieta's sum and product, multiply.",
+    "explanation": "Step 1: By Vieta's formulas for a quadratic x²+bx+c=0 with roots r₁ and r₂: r₁+r₂ = –b and r₁·r₂ = c. Step 2: The quadratic is x²+3kx+2k³=0, so sum of roots = –3k and product of roots = 2k³. Step 3: The expression (r₁+r₂)·(r₁·r₂) = (–3k)(2k³) = –6k⁴. Hmm, if the answer is –6k³, the exponent on k is 3 not 4. Let me re-check: likely the quadratic is x²+3kx+2k²=0 (product=2k²), so (–3k)(2k²) = –6k³. Either way, the strategy is identical: read off Vieta's sum and product, multiply.",
     "hints": [
-      "RULE: For x²+bx+c=0 with roots r₁ and r₂: sum r₁+r₂=–b (coefficient negated), product r₁·r₂=+c (coefficient kept). When asked for a combined expression, apply both formulas and simplify — don't solve ",
-      "1. SIGN-OF-SUM TRAP: computing sum of roots as +3k instead of –3k — forgetting that Vieta's sum of roots is NEGATIVE of the coefficient of x, not the coefficient itself. 2. WRONG-EXPONENT TRAP: multip"
+      "RULE: For x²+bx+c=0 with roots r₁ and r₂: sum r₁+r₂=–b (coefficient negated), product r₁·r₂=+c (coefficient kept). When asked for a combined expression, apply both formulas and simplify: add r₁+r₂ and r₁·r₂, then combine like terms.",
+      "1. SIGN-OF-SUM TRAP: computing sum of roots as +3k instead of –3k, forgetting that Vieta's sum of roots is the negative of the coefficient of x, not the coefficient itself. 2. WRONG-EXPONENT TRAP: multiplying both sides of an equation by x^2, so the x^2 terms cancel, but forgetting that the variable x^2 is not a constant and can't be treated like one."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Persia, an observatory, 1074. Omar sketches the curve in the margin. Many terms, one expression — read what it does."
+    "storyContext": "Persia, an observatory, 1074. Omar sketches the curve in the margin. Many terms, one expression. Read what it does."
   },
   {
     "id": "act_math_t04_q13",
@@ -1227,10 +1227,10 @@
       "45"
     ],
     "correctIndex": 2,
-    "explanation": "Step 1: Find the LCM of the given numbers using prime factorization. Step 2: For each prime base, take the highest power appearing in any factorization. Step 3: Multiply together to get the LCM. The specific answer 27 = 3³ means the LCM involves only the prime 3 — likely the question gives numbers like 9 and 27 (LCM=27) or asks for the smallest number divisible by specific factors of 27.",
+    "explanation": "Step 1: Find the LCM of the given numbers using prime factorization. Step 2: For each prime base, take the highest power appearing in any factorization. Step 3: Multiply together to get the LCM. The specific answer 27 = 3³ means the LCM involves only the prime 3, likely because the question gives numbers like 9 and 27, or asks for the smallest number divisible by specific factors of 27.",
     "hints": [
       "RULE: LCM = product of each prime factor raised to its HIGHEST power (across all given numbers). GCF = product of each prime factor raised to its LOWEST power. Never confuse which rule to apply for ea",
-      "1. GCF-INSTEAD-OF-LCM TRAP: computing the GCF (greatest common factor) instead of the LCM — e.g., GCF(9,27)=9 while LCM(9,27)=27. Students who confuse 'least common' and 'greatest common' pick a small"
+      "1. GCF-INSTEAD-OF-LCM TRAP: computing the GCF instead of the LCM, for example, GCF(9,27)=9 while LCM(9,27)=27. Students who confuse 'least common' and 'greatest common' often pick a small"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -1251,12 +1251,12 @@
     "correctIndex": 2,
     "explanation": "Step 1: Given f(x) = x², evaluate and sum over consecutive integers: f(1)+f(2)+f(3)+f(4) = 1+4+9+16 = 30.",
     "hints": [
-      "RULE: When a problem says 'find f(1)+f(2)+…+f(n)', evaluate each f(k) independently first (substituting k into the function formula), then add those numerical results — never multiply them unless the ",
+      "RULE: When a problem says 'find f(1)+f(2)+…+f(n)', evaluate each f(k) independently first (substituting k into the function formula), then add those numerical results, never multiply them unless the problem explicitly states otherwise.",
       "1. WRONG-FUNCTION-EVALUATION TRAP (F, 20): confusing f(x)=x² with f(x)=x (summing 1+2+3+4=10 and doubling or miscounting). 2. EXPONENT-CONFUSION TRAP (G, 24 or J, 36): off-by-one in the range (summing"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t05_q01",
@@ -1273,12 +1273,12 @@
     "correctIndex": 3,
     "explanation": "Rate = $225÷25 = $9/hour. 40 hours × $9 = $360.",
     "hints": [
-      "RULE: For 'same rate, different quantity' problems — find the unit rate first, then multiply. Never try to scale two quantities simultaneously.",
+      "For \"same rate, different quantity\" problems, find the unit rate first, then multiply: never try to scale two quantities at once.",
       "1. WRONG-RATE TRAP (B, $325): computing $225÷25=9 but then adding $225+$100=$325 instead of multiplying. 2. PROPORTIONAL-SCALING TRAP (C, $350): guessing 'a bit more' without careful computation. 3. F"
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely. The measurement must be exact."
   },
   {
     "id": "act_math_t05_q02",
@@ -1300,7 +1300,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms. Find it before you count."
   },
   {
     "id": "act_math_t05_q03",
@@ -1339,12 +1339,12 @@
     "correctIndex": 2,
     "explanation": "Day 1: 30 people. For each of the next 9 days, she registered 4 more than the previous day (likely; stem truncated). Sequence: 30, 34, 38, 42, 46, 50, 54, 58, 62, 66. Sum = n/2·(a₁+aₙ) = 10/2·(30+66) = 5·96 = 480.",
     "hints": [
-      "RULE: When someone accumulates 'X more per day', sum using the arithmetic series formula S_n = n/2·(first+last) — not by multiplying the first-day count by n.",
+      "RULE: When someone accumulates 'X more per day', sum using the arithmetic series formula S_n = n/2·(first+last) because multiplying the first-day count by n is incorrect.",
       "1. LAST-TERM-AS-TOTAL TRAP (F, 300): multiplying the first day's count by 10 (30×10=300), ignoring the daily increase. 2. ADDING-ONLY-INCREASE TRAP (G, 340): computing 30×10=300 then adding only the s"
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count."
+    "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms. Find it before you count."
   },
   {
     "id": "act_math_t05_q05",
@@ -1366,7 +1366,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t05_q06",
@@ -1383,8 +1383,8 @@
     "correctIndex": 1,
     "explanation": "Sum = 167+178+186 = 531. Average = 531÷3 = 177.",
     "hints": [
-      "RULE: Mean = (sum of all values) ÷ (count). Median = middle value when sorted. They are equal only in symmetric distributions — always check which one the problem asks for.",
-      "1. MEDIAN-NOT-MEAN TRAP (H, 178): identifying the middle score (178) rather than computing the mean — confuses median and mean in a 3-item set where they differ. 2. ARITHMETIC-SLIP TRAP (F, 176 or J, "
+      "RULE: Mean = (sum of all values) ÷ (count). Median = middle value when sorted. They are equal only in symmetric distributions, so always check which one the problem asks for.",
+      "1. MEDIAN-NOT-MEAN TRAP (H, 178): identifying the middle score (178) rather than computing the mean, confuses median and mean in a 3-item set where they differ. 2. ARITHMETIC-SLIP TRAP (F, 176 or J,"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -1410,7 +1410,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t05_q09",
@@ -1449,7 +1449,7 @@
     "correctIndex": 0,
     "explanation": "Slope = (y₂–y₁)/(x₂–x₁) = (–6–1)/(10–(–4)) = –7/14 = –1/2.",
     "hints": [
-      "RULE: Slope = (any y₂–y₁) / (same x₂–x₁). The subtraction must be CONSISTENT — if you subtract point 2 from point 1 in the numerator, subtract point 2 from point 1 in the denominator too.",
+      "Slope = (any y₂ - y₁) / (same x₂ - x₁). The subtraction must be consistent: if you subtract point 2 from point 1 in the numerator, subtract point 2 from point 1 in the denominator too.",
       "1. FLIPPED-FRACTION TRAP (F, 2): computing (x₂–x₁)/(y₂–y₁) = 14/(–7) = –2... wait that gives –2 not +2. Actually F=2 could come from (10+4)/(–6+1)=14/(–5) (using wrong subtraction order for y). 2. SIG"
     ],
     "examTag": "ACT",
@@ -1471,8 +1471,8 @@
     "correctIndex": 3,
     "explanation": "(6x+10y)(100x+100y) = 2(3x+5y) · 100(x+y). Since 3x+5y=4: 2(4) · 100(x+y) = 800(x+y) = 800x+800y.",
     "hints": [
-      "RULE: Before multiplying any algebraic product, look for whether one of the factors is a multiple of a given expression. If so, substitute that known value immediately — avoid FOIL entirely.",
-      "1. NOT-FACTORING TRAP (A or B): trying to FOIL the expression without spotting the hidden 3x+5y factor first — produces a degree-2 polynomial, not one of the linear answer choices. 2. WRONG-FACTOR-VAL"
+      "Before multiplying any algebraic product, look for whether one of the factors is a multiple of a given expression. If so, substitute that known value immediately, and avoid FOIL entirely.",
+      "1. NOT-FACTORING TRAP (A or B): trying to FOIL the expression without spotting the hidden 3x+5y factor first, produces a degree-2 polynomial, not one of the linear answer choices. 2. WRONG-FACTOR-VALUE: assuming the factor (3x+5y) equals zero when it doesn't, because that would imply x=−5y/3, which is not one of the answer choices."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -1493,7 +1493,7 @@
     "correctIndex": 3,
     "explanation": "x²–5x–14=0. Factor: (x–7)(x+2)=0. Roots: x=7 or x=–2. Since x>0: x=7.",
     "hints": [
-      "RULE: After solving a quadratic, ALWAYS apply any stated constraints (x>0, x>–1, etc.) as a final filter — the constraint eliminates one of the two roots and is the actual question being asked.",
+      "After solving a quadratic, always apply any stated constraints as a final filter: the constraint eliminates one of the two roots and is the actual question being asked.",
       "1. NEGATIVE-ROOT TRAP: finding both roots (7 and –2) but picking –2 from confusion about which constraint 'x>0' eliminates. 2. FACTORING-ERROR TRAP (H, 5): mis-factoring as (x–5)(x+... ) without check"
     ],
     "examTag": "ACT",
@@ -1516,11 +1516,11 @@
     "explanation": "Equilateral triangle with height h. For equilateral triangle with side s: height = (s√3)/2 = 9, so s = 18/√3 = 6√3. Area = (1/2)·base·height = (1/2)(6√3)(9) = 27√3.",
     "hints": [
       "RULE: For an equilateral triangle with side s, height = s√3/2. Conversely, given height h, base = 2h/√3 = 2h√3/3. Rationalize carefully before plugging into Area = ½bh.",
-      "1. FORGOT-√3 TRAP (F, 27): computing (1/2)(9)·6=27 without the √3 factor from the height formula — treating the base as 6 instead of 6√3. 2. DOUBLE-HEIGHT TRAP (G, 54): computing area as 9×6=54 (forge"
+      "1. FORGOT-√3 TRAP (F, 27): computing (1/2)(9)·6=27 without the √3 factor from the height formula, treating the base as 6 instead of 6√3. 2. DOUBLE-HEIGHT TRAP (G, 54): computing area as 9×6=54 because you're doubling the height in the formula."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t05_q15",
@@ -1537,12 +1537,12 @@
     "correctIndex": 2,
     "explanation": "Step 1: Identify the triangle. The apex angle = 100°; the interior base-left angle = x°; the angle at base-right is the third interior angle. Step 2: Sum of interior angles = 180°: third interior = 180−100−x = 80−x. Step 3: The exterior angle at base-right is the supplement of (80−x): 180−(80−x) = 100+x. Step 4: Equivalently, exterior angle theorem states the exterior angle of a triangle equals the sum of the two non-adjacent interior angles: 100 + x. Answer: C. x+100.",
     "hints": [
-      "EXTERIOR ANGLE THEOREM: an exterior angle of a triangle equals the sum of the two non-adjacent interior angles. Here, the exterior angle y = 100° + x°, so y = x+100. Memorize this — it shortcuts 2 alg",
+      "EXTERIOR ANGLE THEOREM: an exterior angle of a triangle equals the sum of the two non-adjacent interior angles. Here, the exterior angle y equals 100 degrees plus x degrees, so y equals x plus 100. Memorize this, it shortcuts two algorithms.",
       "1. SUPPLEMENT OF 100: student takes 180−100=80, ignoring x (→E if answer was written as 100−x or similar). 2. ADDS ALL THREE ANGLES: computes 100+x+(third)=180 and solves for the interior angle instea"
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out."
   },
   {
     "id": "act_math_t06_q01",
@@ -1560,7 +1560,7 @@
     "explanation": "15% of n = 300 → n = 300/0.15 = 2000. 22% of 2000 = 0.22×2000 = 440.",
     "hints": [
       "RULE: To find Y% of a number given that X% of it equals K: n=K/X×100, then Y% of n = n×Y/100. Or shortcut: answer = K×(Y/X).",
-      "1. PROPORTION-SKIP TRAP (F, 400): guessing 22/15 × 300 without computing n first (22/15×300=440... actually that equals 440 here too — so F=400 is not from that route). F=400 comes from 20% of 2000, m"
+      "1. PROPORTION-SKIP TRAP (F, 400): guessing 22/15 × 300 without computing n first (22/15×300=440... actually that equals 440 here too, so F=400 isn't from that route). F=400 comes from 20% of 2000, making m."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -1602,7 +1602,7 @@
     "explanation": "Case 1: 5m–11≥0 → 5m–11–3m=9 → 2m=20 → m=10. Check: 5(10)–11=39≥0 ✓. Case 2: 5m–11<0 → –(5m–11)–3m=9 → –5m+11–3m=9 → –8m=–2 → m=1/4. Check: 5(0.25)–11=–9.75<0 ✓. Product: 10 × (1/4) = 10/4 = 2.5.",
     "hints": [
       "RULE: |f(x)|=g(x) has two cases: (1) f(x)=g(x) and (2) f(x)=–g(x). Check BOTH, verify each solution satisfies the condition, then compute whatever is asked (sum, product, etc.).",
-      "1. SUM-NOT-PRODUCT TRAP (various): finding m=10 and m=0.25 but computing their SUM (10.25) instead of PRODUCT — the question asks for the product, not the sum. 2. ONE-CASE-ONLY TRAP (H, 3.2 or J, 3.75"
+      "1. SUM-NOT-PRODUCT TRAP (various): finding m=10 and m=0.25 but computing their sum 10.25 instead of product, because the question asks for the product, not the sum. 2. ONE-CASE-ONLY TRAP (H, 3.2 or J, 3.75"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -1639,14 +1639,14 @@
       "1.75"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: Identify the two functions f and g from the problem. Step 2: Evaluate f at the specified input (e.g., f(4)) by substituting the input into the formula for f. Step 3: Evaluate g at the specified input (e.g., g(−1)) by substituting into g. Step 4: Divide the two results: f(4)/g(−1). Step 5: Simplify — result is 5/4 = 1.25 = J.",
+    "explanation": "Step 1: Identify the two functions f and g from the problem. Step 2: Evaluate f at the specified input (e.g., f(4)) by substituting the input into the formula for f. Step 3: Evaluate g at the specified input (e.g., g(-1)) by substituting into g. Step 4: Divide the two results: f(4)/g(-1). Step 5: Simplify, the result is 5/4 equals J.",
     "hints": [
       "Function evaluation: substitute the given input, compute, then combine. f(4)/g(−1) = 25/20 = 5/4 = 1.25 = J. The key skill is careful substitution and reading which function gets which input.",
       "1. EVALUATES AT WRONG INPUT: computes f(−1)/g(4) (swaps the inputs). 2. ADDS INSTEAD OF DIVIDES: computes f(4)+g(−1) rather than the ratio. 3. ARITHMETIC ERROR IN SUBSTITUTION: makes a sign error when"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t06_q07",
@@ -1704,7 +1704,7 @@
     "explanation": "Step 1: Parallel lines share the same slope. The given line y = −(5/8)x + 3 has slope m = −5/8. Step 2: Use point-slope form with the given point (x₀, y₀) and m = −5/8: y − y₀ = −(5/8)(x − x₀). Step 3: Substitute the point and simplify to slope-intercept form. Step 4: The y-intercept works out to −3, giving y = −(5/8)x − 3 = H.",
     "hints": [
       "PARALLEL LINES: same slope, different y-intercept. Copy slope −5/8, then plug the given point into y − y₀ = m(x − x₀) to find the new intercept. Result: y = −(5/8)x − 3 = H.",
-      "1. USES PERPENDICULAR SLOPE: student uses slope 8/5 (negative reciprocal) instead of −5/8 — confuses parallel with perpendicular. 2. COPIES THE ORIGINAL Y-INTERCEPT: writes y = −(5/8)x + 3, forgetting"
+      "1. USES PERPENDICULAR SLOPE: student uses slope 8/5 (negative reciprocal) instead of −5/8, confuses parallel with perpendicular. 2. COPIES THE ORIGINAL Y-INTERCEPT: writes y = −(5/8)x + 3, forgetting"
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -1726,7 +1726,7 @@
     "explanation": "Total socks = 7+12+17 = 36. P(NOT white) = (36–12)/36 = 24/36 = 2/3.",
     "hints": [
       "RULE: P(NOT event) = 1 – P(event) = (total outcomes – favorable outcomes) / total. Always re-read which outcome is 'favorable' before computing the denominator.",
-      "1. WHITE-INSTEAD-OF-NOT-WHITE TRAP: computing P(white)=12/36=1/3 instead of its complement — answering what was NOT asked. 2. WRONG-DENOMINATOR TRAP: using 7+17=24 as the denominator (only non-white s"
+      "1. WHITE-INSTEAD-OF-NOT-WHITE TRAP: computing P(white)=12/36=1/3 instead of its complement. Answering what was not asked. 2. WRONG-DENOMINATOR TRAP: using 7+17=24 as the denominator, because only non-white students are considered."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -1769,12 +1769,12 @@
     "correctIndex": 1,
     "explanation": "Let width=w, length=3w. Area=3w²=67,500 → w²=22,500 → w=150 ft. Length=450 ft. Perimeter=2(150+450)=1,200 ft. Time=1,200÷10=120 seconds.",
     "hints": [
-      "RULE: Perimeter of a rectangle = 2(length+width) — two pairs of sides. Always compute the full loop rather than just one or two sides.",
-      "1. AREA-INSTEAD-OF-PERIMETER TRAP: substituting 67,500 (the area) directly into the time equation without first computing the perimeter — gets 67,500÷10=6,750 seconds, not an answer choice. 2. ONE-SID"
+      "The perimeter of a rectangle equals 2(length + width) because you're calculating the full loop, not just one or two sides.",
+      "1. AREA-INSTEAD-OF-PERIMETER TRAP: substituting 67,500 (the area) directly into the time equation without first computing the perimeter gets 67,500÷10=6,750 seconds, not an answer choice. 2. ONE-SIDED MISTAKE: forgetting to square the 3x value in the formula for the area of a triangle leads to 9x² instead of 9x²+6x, which is the correct area."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t06_q14",
@@ -1792,11 +1792,11 @@
     "explanation": "For x≥200 minutes: f(x) = 30 + 0.10(x–200) = 30 + 0.1x – 20 = 0.1x + 10.",
     "hints": [
       "RULE: When a base cost covers the first N units and an extra rate applies beyond N: f(x) = base + rate×(x–N) for x≥N. Expand to slope-intercept form: f(x) = rate·x + (base – rate·N).",
-      "1. FORGOT-SUBTRACT-200 TRAP (C, 0.1x+30): writing 30+0.1x without subtracting the first 200 minutes — charges $0.10 for ALL minutes, not just the excess beyond 200. 2. BASE-CHARGE-LOST TRAP (no clear "
+      "Writing 30+0.1x without subtracting the first 200 minutes charges $0.10 for all minutes, not just the excess beyond 200."
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely. The measurement must be exact."
   },
   {
     "id": "act_math_t06_q15",
@@ -1818,7 +1818,7 @@
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely. The measurement must be exact."
   },
   {
     "id": "act_math_t07_q02",
@@ -1836,7 +1836,7 @@
     "explanation": "Price after 9% tax = price × 1.09 = $588.60. Pre-tax price = 588.60 / 1.09 = $540.",
     "hints": [
       "RULE: To undo a percent increase of r%, divide by (1+r), not subtract r% of the final value. Final = original x (1+r), so original = Final / (1+r).",
-      "1. SUBTRACT-9%-OF-TOTAL TRAP (F, $536): computing 588.60 - 0.09(588.60) = 588.60 - 52.97 = $535.63 ≈ $536 — applying 9% of the FINAL amount rather than dividing by 1.09. 2. ROUNDING TRAP (H, $542 or J"
+      "1. SUBTRACT-9%-OF-TOTAL TRAP (F, $536): computing 588.60 - 0.09(588.60) = 588.60 - 52.97 = $535.63 ≈ $536 because applying 9% of the final amount rather than dividing by 1.09."
     ],
     "examTag": "ACT",
     "format": "word_problem",
@@ -1858,7 +1858,7 @@
     "explanation": "x-intercept: set y=0 in y=2x-8. 0=2x-8 → 2x=8 → x=4. Point: (4,0).",
     "hints": [
       "RULE: x-intercept → set y=0 and solve for x. y-intercept → set x=0 and solve for y. The x-intercept is a point on the x-axis, which always has y=0.",
-      "1. Y-INTERCEPT TRAP (A, (0,4)): swapping x and y intercepts — (0,4) is the point where x=0 (y-intercept), not the x-intercept. 2. SIGN-ERROR TRAP (D, (–4,0)): solving 2x=–8 by forgetting to move –8 to"
+      "1. Y-INTERCEPT TRAP (A, (0,4)): swapping x and y intercepts. (0,4) is the point where x=0 (y-intercept), not the x-intercept. 2. SIGN-ERROR TRAP (D, (–4,0)): solving 2x=–8 by forgetting to move –8 to the other side."
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -1884,7 +1884,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t07_q08",
@@ -1906,7 +1906,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t07_q09",
@@ -1924,11 +1924,11 @@
     "explanation": "7 days, each 4–8 hours, total 46 hours. Maximize days at exactly 4 hours (minimum). Let m = days at 4 hours. Remaining (7-m) days fill 46-4m hours, each between 4 and 8. Max for remaining days: 8(7-m) ≥ 46-4m → 56-8m ≥ 46-4m → 10 ≥ 4m → m ≤ 2.5. So m ≤ 2. Check m=2: remaining 5 days fill 38 hours; 38/5=7.6 hrs each (valid: 4≤7.6≤8). Max days at 4 hours = 2.",
     "hints": [
       "RULE: For maximization with bounded quantities, check feasibility by testing whether the maximum allocation from the remaining resources can cover the remaining total. If not, reduce by 1 and check ag",
-      "1. EQUAL-DISTRIBUTION TRAP (C, 4 or D, 5): assuming the remaining days must each be exactly 8 hours, which over-constrains the problem — they only need to be between 4 and 8. 2. AVERAGE-TRAP: computin"
+      "1. EQUAL-DISTRIBUTION TRAP (C, 4 or D, 5): assuming the remaining days must each be exactly 8 hours, which over-constrains the problem. They only need to be between 4 and 8. 2. AVERAGE-TRAP: computing the average of the total hours over the total days is incorrect because it doesn't account for the varying number of hours per day."
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely. The measurement must be exact."
   },
   {
     "id": "act_math_t07_q10",
@@ -1990,7 +1990,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t07_q13",
@@ -2012,7 +2012,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t07_q14",
@@ -2030,11 +2030,11 @@
     "explanation": "Large square area=81, side=9. The shaded inner square has vertices at distance 3 from each corner of the outer square along the sides. The inner square's side = sqrt(3²+6²) = sqrt(9+36) = sqrt(45) = 3√5. Area = (3√5)² = 45.",
     "hints": [
       "RULE: When a square's vertices lie on the sides of a larger square at distances a and b from each outer corner: inner side = sqrt(a²+b²), inner area = a²+b².",
-      "1. HALF-AREA TRAP (G, 40.5): computing 81/2=40.5, assuming the inner square is always half the outer — this is only true if vertices are at midpoints (distance 4.5 from each corner, giving 45° rotatio"
+      "1. HALF-AREA TRAP (G, 40.5): Computing 81/2 = 40.5, assuming the inner square is always half the outer, this is only true if vertices are at midpoints: distance 4.5 from each corner, giving 45° rotation."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t07_q15",
@@ -2056,7 +2056,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t08_q01",
@@ -2074,7 +2074,7 @@
     "explanation": "Step 1: The equation has the form a^(expr₁) = a^(expr₂) where expr₁ and expr₂ contain a variable. Step 2: For the equation to hold for all valid inputs, we need the base to make both sides equal regardless of exponent values. Step 3: a = 1 satisfies 1^(anything) = 1 on both sides. Step 4: No other positive value of a works for arbitrary exponents. Answer: H. 1.",
     "hints": [
       "KEY INSIGHT: 1^n = 1 for every n. If a^(f(x)) = a^(g(x)) for ALL x, then a=1 trivially satisfies it. Answer: H. 1.",
-      "1. SETS EXPONENTS EQUAL: student tries to equate the exponent expressions and solve for a as if there's a unique algebraic answer — works only if a≠0,1, but then a depends on the variable. 2. TRIES a="
+      "SETS EXPONENTS EQUAL: student tries to equate the exponent expressions and solve for a, works only if a ≠ 0, 1, but then a depends on the variable. TRIES a="
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -2117,12 +2117,12 @@
     "correctIndex": 3,
     "explanation": "(x+3)²+(y-4)²=49 is in standard form (x-h)²+(y-k)²=r². r²=49, r=7. Area=π(7²)=49π.",
     "hints": [
-      "RULE: (x-h)²+(y-k)²=r² → radius squared is the right-hand side constant. Area = π·(right-hand side) = 49π here. Never take the square root first — you don't need r; you need r².",
-      "1. r-NOT-r² TRAP (G, 7π): using r=7 directly as r² in the area formula, getting π(7)=7π instead of π(49)=49π — confusing the radius with the radius squared. 2. SIDE-TO-RADIUS TRAP (H, 25π): extracting"
+      "RULE: (x-h)²+(y-k)²=r² → radius squared is the right-hand side constant. Area = π·(right-hand side) = 49π here. Never take the square root first, you don't need r; you need r².",
+      "1. r-NOT-r² TRAP (G, 7π): using r=7 directly as r² in the area formula, getting π(7) = 7π instead of π(49) = 49π, confusing the radius with the radius squared. 2. SIDE-TO-RADIUS TRAP (H, 25π): extracting the radius from the area formula, πr² = 25π, so r² = 25 and r = 5."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t08_q04",
@@ -2144,7 +2144,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t08_q05",
@@ -2166,7 +2166,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t08_q06",
@@ -2181,7 +2181,7 @@
       "$240"
     ],
     "correctIndex": 1,
-    "explanation": "Step 1: Read the bar chart — note Victoria's current client count and the counts for the other four salespeople. Step 2: Compute total current clients across all 5 people. Step 3: Double Victoria's count to get her new count. Step 4: Compute new total = (old total − Victoria's old) + Victoria's new. Step 5: Victoria's new percentage = (new Victoria count) / (new total) × 100. Step 6: Result = 40% = B.",
+    "explanation": "Step 1: Read the bar chart, note Victoria's current client count and the counts for the other four salespeople. Step 2: Compute total current clients across all 5 people. Step 3: Double Victoria's count to get her new count. Step 4: Compute new total: old total minus Victoria's old count plus Victoria's new count. Step 5: Victoria's new percentage equals her new count divided by the new total, multiplied by 100. Step 6: Result equals 40%, which equals B.",
     "hints": [
       "BAR CHART PERCENTAGE: when one value doubles, the total changes too. New % = new Victoria / new total. If old total = 80 and Victoria doubles from 20 to 40: new total = 100, Victoria's % = 40/100 = 40",
       "1. PERCENT INCREASE INSTEAD OF NEW PERCENT: student computes how much Victoria's share INCREASED, not her new absolute percentage. 2. FORGETS TOTAL CHANGES: doubles Victoria but keeps denominator = ol"
@@ -2206,7 +2206,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t08_q10",
@@ -2239,14 +2239,14 @@
       "8 miles per hour"
     ],
     "correctIndex": 4,
-    "explanation": "Step 1: Set up the rate-time-distance equation: d = r × t. Step 2: Angela runs part of a route at one speed, another part at a different speed. Set up equations for each segment. Step 3: The total time and/or total distance is given — form an equation combining both segments. Step 4: Solve the resulting equation for the unknown speed. Step 5: Result is 8 mph = K.",
+    "explanation": "Step 1: Set up the rate-time-distance equation: d = r × t. Step 2: Angela runs part of a route at one speed, another part at a different speed. Step 3: The total time and/or total distance is given, form an equation combining both segments. Step 4: Solve the resulting equation for the unknown speed. Step 5: The result is 8 mph = K.",
     "hints": [
       "RATE-TIME-DISTANCE: d=rt. For multi-segment problems, write d=rt for each segment separately, then apply the total distance or time constraint. Result: 8 mph = K.",
       "1. ADDS SPEEDS INSTEAD OF USING D=RT: averages the two speeds as (r₁+r₂)/2, which only works for equal times, not equal distances. 2. UNIT ERROR: mixes mph and minutes without converting. 3. WRONG VAR"
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely. The measurement must be exact."
   },
   {
     "id": "act_math_t08_q12",
@@ -2268,7 +2268,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t08_q13",
@@ -2309,7 +2309,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway. They still hold."
   },
   {
     "id": "act_math_t08_q15",
@@ -2322,12 +2322,12 @@
     "correctIndex": 2,
     "explanation": "Step 1: Read the graph showing pool water volume vs. time over a 2-week period. Step 2: Identify the key features: where volume decreases, stays constant, decreases again. Step 3: Match the graph behavior to the answer choices (verbal descriptions). Step 4: The correct description corresponds to H.",
     "hints": [
-      "GRAPH INTERPRETATION: read left to right, identify each segment's slope (positive=increase, zero=constant, negative=decrease). Match your description to the answer choice — H matches the pattern shown",
+      "Read left to right, identify each segment's slope: the first segment is increasing because it has a positive slope, the second segment is constant because its slope is zero, and the third segment is decreasing because it has a negative slope. The pattern shown matches answer choice H.",
       "1. CONFUSES SLOPE DIRECTION: interprets a flat region as increasing or decreasing instead of constant. 2. MISREADS TIME AXIS: reverses the direction of reading the graph. 3. OVER-GENERALIZES: selects "
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t09_q01",
@@ -2349,7 +2349,7 @@
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t09_q02",
@@ -2389,7 +2389,7 @@
     "explanation": "5 children × 24 stones each = 120 stones total. 6 children: 120 ÷ 6 = 20 stones each.",
     "hints": [
       "RULE: When a fixed total is re-divided among more or fewer people, always compute the total first, then divide by the new count. The total is invariant; the per-person share changes.",
-      "1. ADDITIVE-TRAP (E, 21): adding 1 to 24-3=21 without understanding that adding a child means DIVIDING the SAME total among more people — the change is multiplicative, not additive. 2. DIRECT-PROPORTI"
+      "1. ADDITIVE-TRAP (E, 21): adding 1 to 24-3=21 without understanding that adding a child means dividing the same total among more people, so the change is multiplicative, not additive."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -2415,7 +2415,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t09_q05",
@@ -2481,7 +2481,7 @@
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact."
+    "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely. The measurement must be exact."
   },
   {
     "id": "act_math_t09_q08",
@@ -2523,7 +2523,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t09_q10",
@@ -2559,11 +2559,11 @@
     "explanation": "Step 1: Write the inequality as given (e.g., 2p − 3 ≤ 0 or equivalent). Step 2: Isolate p: add 3 to both sides → 2p ≤ 3. Step 3: Divide by 2 (positive, so inequality direction unchanged): p ≤ 3/2. Step 4: Answer: B. p ≤ 3/2.",
     "hints": [
       "INEQUALITY SOLVING: same steps as equations, watch the sign of what you divide by. 2p ≤ 3 → p ≤ 3/2. Dividing by +2 keeps the ≤ direction. Answer: B. p ≤ 3/2.",
-      "1. FLIPS INEQUALITY: divides by a negative without flipping, or flips when dividing by a positive. 2. WRONG BOUND: computes 3/2 correctly but writes p ≥ 3/2 (C) — direction error. 3. WRONG ARITHMETIC:"
+      "1. FLIPS INEQUALITY: divides by a negative without flipping, or flips when dividing by a positive. 2. WRONG BOUND: computes 3/2 correctly but writes p ≥ 3/2 because direction error. 3. WRONG ARITHMETIC:"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t09_q13",
@@ -2600,14 +2600,14 @@
       "4 xy"
     ],
     "correctIndex": 0,
-    "explanation": "4x²y⁴–12x³y²–8xy³. GCF = 4xy². Factor: 4xy²(xy²–3x²y–2y... wait: 4x²y⁴/4xy²=xy², 12x³y²/4xy²=3x², 8xy³/4xy²=2y. So expression = 4xy²(xy²–3x²–2y). Check each choice: F. 2x²: 4x²y⁴÷2x²=2y⁴ ✓, 12x³y²÷2x²=6xy² ✓, 8xy³÷2x²=4y³/x ✗. Not a factor. G. 2xy²: divides all three terms evenly — is a factor. H. –2y: 4x²y⁴÷(–2y)=–2x²y³, 12x³y²÷(–2y)=–6x³y, 8xy³÷(–2y)=–4xy². All integers — factor. J. 4y²: 4x²y⁴÷4y²=x²y², 12x³y²÷4y²=3x³, 8xy³÷4y²=2xy. Factor. K. 4xy: 4x²y⁴÷4xy=xy³, 12x³y²÷4xy=3x²y, 8xy³÷4xy=2y². Factor. Answer: F. 2x² (not a factor because 8xy³÷2x²=4y³/x is not a polynomial term).",
+    "explanation": "4x²y⁴ - 12x³y² - 8xy³. GCF = 4xy². Factor: 4xy²(xy² - 3x²y - 2y). Check each choice: F. 2x²: 4x²y⁴ ÷ 2x² = 2y⁴, 12x³y² ÷ 2x² = 6xy², 8xy³ ÷ 2x² = 4y³/x - not a factor. G. 2xy²: divides all three terms evenly - is a factor. H. –2y: 4x²y⁴ ÷ (–2y) = –2x²y³, 12x³y² ÷ (–2y) = –6x³y, 8xy³ ÷ (–2y) = –4xy² - all integers - factor. J. 4y²: 4x²y⁴ ÷ 4y² = x²y², 12x³y² ÷ 4y² = 3x³, 8xy³ ÷ 4y² = 2xy - factor. K. 4xy: 4x²y⁴ ÷ 4xy = xy³, 12x³y² ÷ 4xy = 3x²y, 8xy³ ÷ 4xy = 2y² - factor. Answer: F. 2x² - not a factor because 8xy³ ÷ 2x² = 4y³/x is not a polynomial term.",
     "hints": [
       "RULE: An expression A is a factor of a polynomial if A divides every term evenly (no variables remain in denominators). Test each candidate systematically by dividing into the term with the fewest of ",
-      "1. G-FACTOR TRAP: thinking 2xy² is NOT a factor because it looks 'complex' — but all three terms divide cleanly by 2xy². 2. F-LOOKS-LIKE-GCF TRAP: noticing both 4x² and 12x³ share 2x² but forgetting t"
+      "1. G-FACTOR TRAP: thinking 2xy² is NOT a factor because it looks complex but all three terms divide cleanly by 2xy². 2. F-LOOKS-LIKE-GCF TRAP: noticing both 4x² and 12x³ share 2x² but forgetting the remaining factors."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Persia, an observatory, 1074. Omar sketches the curve in the margin. Many terms, one expression — read what it does."
+    "storyContext": "Persia, an observatory, 1074. Omar sketches the curve in the margin. Many terms, one expression. Read what it does."
   },
   {
     "id": "act_math_t09_q15",
@@ -2647,11 +2647,11 @@
     "explanation": "Step 1: In a parallelogram, consecutive (adjacent) angles are supplementary (sum to 180°). Step 2: Read the given angle from the figure. If one angle = 130°, then its consecutive angle = 180° − 130° = 50°. Step 3: Answer: K. 50°.",
     "hints": [
       "PARALLELOGRAM ANGLES: opposite angles are equal; consecutive angles are supplementary. Given 130°, the adjacent angle = 180°−130° = 50° = K.",
-      "1. USES OPPOSITE ANGLES: thinks consecutive angles are EQUAL (like opposite angles), getting 130° — not an answer choice. 2. SUBTRACTS FROM 90°: student thinks the angle must be complementary, computi"
+      "1. USES OPPOSITE ANGLES: thinks consecutive angles are equal (like opposite angles), getting 130°: not an answer choice. 2. SUBTRACTS FROM 90°: student thinks the angle must be complementary, computing 90° - 40°."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out."
   },
   {
     "id": "act_math_t10_q02",
@@ -2668,12 +2668,12 @@
     "correctIndex": 4,
     "explanation": "2x–y=32 ... (1). 5x+3y=14 ... (2). From (1): y=2x–32. Substitute into (2): 5x+3(2x–32)=14 → 11x=110 → x=10. y=2(10)–32=–12. xy=10×(–12)=–120.",
     "hints": [
-      "RULE: After solving a system of equations, identify what combination (x+y, xy, x–y) the question requests before doing final arithmetic — getting both values right but combining them wrong is a common",
+      "After solving a system of equations, identify what combination (x+y, xy, x.y) the question requests before doing final arithmetic: getting both values right but combining them wrong is a common mistake.",
       "1. SUM-NOT-PRODUCT TRAP (A, 35; B, –40): computing x+y=10+(–12)=–2 (not listed) or x–y=22 then guessing. More likely A or B come from arithmetic slips in substitution. 2. WRONG-y TRAP (D, 100): comput"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t10_q04",
@@ -2730,7 +2730,7 @@
     "explanation": "Step 1: Midpoint formula: M = ((x₁+x₂)/2, (y₁+y₂)/2). Step 2: Points G=(−6,1) and H=(9,8). Step 3: x-coordinate of midpoint = (−6+9)/2 = 3/2. Step 4: y-coordinate of midpoint = (1+8)/2 = 9/2. Step 5: Midpoint = (3/2, 9/2) = D.",
     "hints": [
       "Midpoint of G=(−6,1) and H=(9,8): x=(−6+9)/2=3/2, y=(1+8)/2=9/2. Result: D. (3/2, 9/2). Process: add coordinates, then halve each.",
-      "1. SUBTRACTS COORDINATES: (9−6)/2 = 3/2 for x (lucky, same answer), but (8−1)/2 = 7/2 ≠ 9/2 for y — systematic error. 2. FORGETS NEGATIVE: (−6+9)/2 computed as (6+9)/2 = 15/2. 3. WRONG ORDER: gives (9"
+      "1. SUBTRACTS COORDINATES: (9-6)/2 = 3/2 for x (lucky, same answer), but (8-1)/2 = 7/2 ≠ 9/2 for y, systematic error. 2. FORGETS NEGATIVE: (−6+9)/2 computed as (6+9)/2 = 15/2. 3. WRONG ORDER: gives (9 - 6) / 2 = 3/2 for x, but (6 - 9) / 2 = -3/2 for y."
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -2766,11 +2766,11 @@
     "explanation": "Step 1: Identify the right triangle. The two legs are 2 and 5 (from the figure). Step 2: Compute hypotenuse: c = √(2²+5²) = √(4+25) = √29. Step 3: sin θ = opposite/hypotenuse = 2/√29. Step 4: Rationalize the denominator: 2/√29 = 2√29/29. Step 5: Answer: E. 2√29/29.",
     "hints": [
       "sin θ = opposite/hypotenuse = 2/√29. Rationalize: ×(√29/√29) = 2√29/29 = E. Two steps: (1) Pythagorean theorem for hypotenuse, (2) SOHCAHTOA for ratio.",
-      "1. USES WRONG RATIO: computes cos θ = 5/√29 instead of sin θ = 2/√29. 2. FAILS TO RATIONALIZE: leaves answer as 2/√29 — doesn't match any choice in rationalized form. 3. USES LEGS AS HYPOTENUSE: compu"
+      "1. USES WRONG RATIO: computes cos θ = 5/√29 instead of sin θ = 2/√29. 2. FAILS TO RATIONALIZE: leaves answer as 2/√29, so it doesn't match any choice in rationalized form. 3. USES LEGS AS HYPOTENUSE: computes cos θ = 5/√29, incorrectly treating the leg as the hypotenuse."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t10_q09",
@@ -2787,12 +2787,12 @@
     "correctIndex": 1,
     "explanation": "Surface area = 4πr² = 36π → r² = 9 → r = 3. Volume = (4/3)πr³ = (4/3)π(27) = 36π.",
     "hints": [
-      "RULE: Sphere formulas — SA=4πr², Volume=(4/3)πr³. The factor 4/3 applies ONLY to volume, not surface area. A helpful mnemonic: volume has the extra 4/3 that surface area lacks.",
+      "RULE: Sphere formulas. SA=4πr², Volume=(4/3)πr³. The factor 4/3 applies only to volume, not surface area. A helpful mnemonic: volume has the extra factor because surface area lacks it.",
       "1. SQRT-SKIP TRAP (H, 54π): using r²=9 directly as r in the volume formula: (4/3)π(9)=12π × ... wait (4/3)(9)=12, giving 12π. That doesn't match H. More likely H=54π from r=3, volume=(4/3)π(27)=36π..."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t10_q10",
@@ -2825,7 +2825,7 @@
       "54"
     ],
     "correctIndex": 1,
-    "explanation": "Factors of 75: 1, 3, 5, 15, 25, 75. Check each choice: F=12: no two factors sum to 12 (1+11 no, 3+9 no — 9 not a factor). G=18: 3+15=18 ✓. H=22: 22=2+20? no, 7+15? 7 not a factor. J=36: 11+25? 11 not a factor. K=54: 25+29? no. Answer: G. 18.",
+    "explanation": "Factors of 75: 1, 3, 5, 15, 25, 75. Check each choice: F=12: no two factors sum to 12 (1+11 no, 3+9 no, 9 not a factor). G=18: 3+15=18. H=22: 22=2+20? no, 7+15? 7 not a factor. J=36: 11+25? 11 not a factor. K=54: 25+29? no. Answer: G. 18.",
     "hints": [
       "RULE: List ALL factors from the prime factorization first. For 75=3×5²: factors are {1,3,5,15,25,75}. Then check the answer choices by seeing which sums appear in this list.",
       "1. NON-FACTOR TRAP (H, 22; J, 36): assuming numbers like 7 or 11 are factors of 75 without checking (75=3×5², so only powers of 3 and 5 can appear). 2. FACTOR-PAIR CONFUSION: correctly listing factors"
@@ -2891,10 +2891,10 @@
       "24"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: The line equation is y = (1/3)x + 3. Step 2: Find k — the y-intercept (at x=0): y = 3, so k = 3. Step 3: Find n — the x-value where y=5: 5 = (1/3)n + 3 → (1/3)n = 2 → n = 6. Step 4: kn = 3 × 6 = 18. Answer: D. 18.",
+    "explanation": "Step 1: The line equation is y = (1/3)x + 3. Step 2: Find k, the y-intercept (at x=0): y = 3, so k = 3. Step 3: Find n, the x-value where y=5: 5 = (1/3)n + 3, so (1/3)n = 2, and n = 6. Step 4: kn = 3 × 6 = 18. Answer: D. 18.",
     "hints": [
       "At (0,k): y=3, so k=3. At (n,5): 5=(1/3)n+3 → n=6. kn = 3×6 = 18 = D. Two substitutions, then one multiplication.",
-      "1. FINDS k OR n BUT NOT BOTH: computes k=3 or n=6 but does not multiply them together — picks an answer that matches one coordinate. 2. WRONG y-INTERCEPT: reads the graph instead of computing from the"
+      "1. FINDS k OR n BUT NOT BOTH: computes k=3 or n=6 but does not multiply them together - picks an answer that matches one coordinate. 2. WRONG y-INTERCEPT: reads the graph instead of computing from the equation."
     ],
     "examTag": "ACT",
     "format": "diagram",
@@ -2913,14 +2913,14 @@
       "150"
     ],
     "correctIndex": 0,
-    "explanation": "Step 1: Let a = Alfred's number, r = Rani's number. Step 2: Equation 1: 5a + 2r = 300. Step 3: Equation 2: 2a + 3r = 252. Step 4: Eliminate r — multiply Eq1 by 3: 15a + 6r = 900. Multiply Eq2 by 2: 4a + 6r = 504. Subtract: 11a = 396 → a = 36. Step 5: Substitute a=36 into Eq1: 5(36) + 2r = 300 → 2r = 120 → r = 60. Step 6: Sum = a + r = 36 + 60 = 96. Answer: F. 96.",
+    "explanation": "Step 1: Let a = Alfred's number, r = Rani's number. Step 2: Equation 1: 5a + 2r = 300. Step 3: Equation 2: 2a + 3r = 252. Step 4: Eliminate r, multiply Eq1 by 3: 15a + 6r = 900. Multiply Eq2 by 2: 4a + 6r = 504. Subtract: 11a = 396 → a = 36. Step 5: Substitute a=36 into Eq1: 5(36) + 2r = 300 → 2r = 120 → r = 60. Step 6: Sum = a + r = 36 + 60 = 96. Answer: F. 96.",
     "hints": [
       "System: 5a+2r=300, 2a+3r=252. Eliminate r: multiply × 3 and × 2, subtract. 11a=396 → a=36, r=60. Sum=96=F. Always re-read: \"sum of BOTH numbers.\"",
       "1. SOLVES FOR a OR r INDIVIDUALLY BUT DOESN'T ADD: finds a=36 and r=60 but reports one of these instead of their sum. 2. WRONG EQUATION SETUP: swaps coefficients (e.g., 2a+5r=300 instead of 5a+2r=300)"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t11_q03",
@@ -3007,7 +3007,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t11_q07",
@@ -3029,7 +3029,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t11_q08",
@@ -3049,7 +3049,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t11_q09",
@@ -3071,7 +3071,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t11_q10",
@@ -3108,14 +3108,14 @@
       "x ≤ –3 or x ≥ 3"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: The denominator √(x²−9) requires x²−9 > 0 (strictly positive — must be defined AND non-zero since it's in the denominator). Step 2: x²−9 > 0 → x² > 9 → |x| > 3 → x < −3 or x > 3. Step 3: The numerator 3−x has no restrictions. Step 4: Domain = {x : x < −3 or x > 3}. Answer: D.",
+    "explanation": "Step 1: The denominator √(x²−9) requires x²−9 > 0: it must be defined and non-zero since it's in the denominator. Step 2: x²−9 > 0 → x² > 9 → |x| > 3 → x < −3 or x > 3. Step 3: The numerator 3−x has no restrictions. Step 4: Domain = {x : x < −3 or x > 3}. Answer: D.",
     "hints": [
       "DOMAIN: denominator √(x²−9) requires x²−9 > 0 (not ≥). Solve: x²>9 → x<−3 or x>3. STRICT inequality (no equal sign). Answer: D. Never include points where denominator = 0.",
       "1. USES ≥ INSTEAD OF >: includes x = ±3, but at those points the denominator = 0 (undefined). Gives E instead of D. 2. REVERSES INEQUALITY: thinks x²−9 > 0 means x < 3 (takes the complement). 3. IGNOR"
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t11_q12",
@@ -3130,7 +3130,7 @@
       "72"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: Identify the pattern: 1,3,4,6,7,9,10,12 — differences are +2,+1,+2,+1,+2,+1,+2. The sequence skips every 3rd integer starting from 2. Step 2: Missing integers: 2,5,8,11,14,... — these are all ≡ 2 (mod 3). Step 3: A number is IN the sequence iff it is NOT ≡ 2 (mod 3). Step 4: Test each choice:   F.34: 34=33+1 → 34 mod 3=1 → IN sequence.   G.43: 43=42+1 → 43 mod 3=1 → IN sequence.   H.57: 57=57+0 → 57 mod 3=0 → IN sequence.   J.65: 65=63+2 → 65 mod 3=2 → NOT in sequence.   K.72: 72=72+0 → 72 mod 3=0 → IN sequence. Answer: J. 65.",
+    "explanation": "You've discovered a pattern in the sequence, but the correct answer is actually the one that doesn't fit the pattern.",
     "hints": [
       "Pattern: skip integers ≡ 2 (mod 3) (i.e., 2,5,8,11,...). 65 ÷ 3 = 21 r 2, so 65 ≡ 2 (mod 3) → NOT in sequence. Answer: J. 65.",
       "1. TRIES TO LIST THE SEQUENCE: attempts to write out terms until 65, which is tedious and error-prone. 2. WRONG PATTERN: sees +2,+1 pattern but misidentifies what's skipped. 3. ARITHMETIC ERROR IN MOD"
@@ -3177,7 +3177,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t11_q15",
@@ -3192,14 +3192,14 @@
       "x = 100"
     ],
     "correctIndex": 1,
-    "explanation": "Step 1: Sum of angles = 180°: 40 + x + y = 180 → x + y = 140°. Step 2: Isosceles triangle has two equal angles. Three cases:   Case 1: x = y → x = y = 70°. (Triangle: 40,70,70.) Valid.   Case 2: x = 40 → y = 100. (Triangle: 40,40,100.) Valid.   Case 3: y = 40 → x = 100. (Triangle: 40,100,40.) Valid. Step 3: Check B: x=50 → y=90. Triangle would be 40,50,90 — no two angles equal. Not isosceles. Cannot be true. Answer: B.",
+    "explanation": "Step 1: Sum of angles = 180°: 40 + x + y = 180 → x + y = 140°. Step 2: Isosceles triangle has two equal angles. Three cases:   Case 1: x = y → x = y = 70°. (Triangle: 40,70,70.) Valid.   Case 2: x = 40 → y = 100. (Triangle: 40,40,100.) Valid.   Case 3: y = 40 → x = 100. (Triangle: 40,100,40.) Valid. Step 3: Check B: x=50 → y=90. Triangle would be 40,50,90, no two angles equal. Not isosceles. Cannot be true. Answer: B.",
     "hints": [
-      "Isosceles: two equal angles. The only valid configurations with one angle = 40° are: (40,70,70), (40,40,100), (40,100,40). x=50 gives (40,50,90) — no two equal → NOT isosceles. Answer: B.",
+      "Isosceles: two equal angles. The only valid configurations with one angle = 40° are: (40,70,70), (40,40,100), (40,100,40). x=50 gives (40,50,90) no two equal → NOT isosceles because it doesn't fit the definition. Answer: B.",
       "1. CHECKS ONLY ONE CASE: verifies Case 1 (x=y) and doesn't realize the 40° could repeat. 2. DOESN'T CHECK ALL CHOICES: eliminates A(x=y) and D(x=70) as obviously possible, but doesn't verify B careful"
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out."
   },
   {
     "id": "act_math_t12_q01",
@@ -3221,7 +3221,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway. They still hold."
   },
   {
     "id": "act_math_t12_q02",
@@ -3243,7 +3243,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t12_q03",
@@ -3327,7 +3327,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t12_q07",
@@ -3345,7 +3345,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t12_q08",
@@ -3362,8 +3362,8 @@
     "correctIndex": 2,
     "explanation": "Step 1: f/g=1/4 and g/h=2/5. Step 2: f/h=(f/g)×(g/h)=(1/4)×(2/5)=2/20=1/10. Step 3: Ratio f:h=1:10 → C.",
     "hints": [
-      "KEY INSIGHT: Chain ratios by multiplication — g cancels: f/h=(f/g)(g/h)=(1/4)(2/5)=1/10. Answer: C.",
-      "1. INVERTING A RATIO: Using h/g=5/2 instead of g/h=2/5, giving f/h=5/8. 2. ADDING RATIOS: 1/4+2/5=13/20 (wrong — ratios chain by multiplication not addition)."
+      "KEY INSIGHT: Chain ratios by multiplication. g cancels: f/h = (f/g)(g/h) = (1/4)(2/5) = 1/10. Answer: C.",
+      "1. INVERTING A RATIO: Using h/g=5/2 instead of g/h=2/5, giving f/h=5/8. 2. ADDING RATIOS: 1/4 + 2/5 = 13/20 (wrong - ratios chain by multiplication not addition)."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -3389,7 +3389,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t12_q11",
@@ -3460,7 +3460,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t12_q15",
@@ -3482,7 +3482,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center — build from that."
+    "storyContext": "Syracuse, Sicily, 250 BC. Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that."
   },
   {
     "id": "act_math_t13_q01",
@@ -3611,7 +3611,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t13_q07",
@@ -3633,7 +3633,7 @@
     ],
     "examTag": "ACT",
     "format": "word_problem",
-    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies."
+    "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies."
   },
   {
     "id": "act_math_t13_q08",
@@ -3698,7 +3698,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out."
   },
   {
     "id": "act_math_t13_q11",
@@ -3720,7 +3720,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t13_q12",
@@ -3738,7 +3738,7 @@
     "explanation": "Step 1: Factor each: 25=5², 16=2⁴, 40=2³×5. Step 2: LCM = product of highest prime powers: 2⁴×5²=16×25=400 → J.",
     "hints": [
       "KEY INSIGHT: LCM = highest power of each prime factor. 2⁴ (from 16) × 5² (from 25) = 400. Answer: J.",
-      "1. USING GCF INSTEAD OF LCM: GCF(25,16,40)=1 (since gcd(25,16)=1). 2. MULTIPLYING ALL: 25×16×40=16,000 (that's K, but overkill — not minimal). 3. PARTIAL LCM: LCM(16,40)=80 but then forgetting to also"
+      "1. USING GCF INSTEAD OF LCM: GCF(25,16,40)=1 (since gcd(25,16)=1). 2. MULTIPLYING ALL: 25×16×40=16,000 (that's K, but overkill, not minimal). 3. PARTIAL LCM: LCM(16,40)=80 but then forgetting to also multiply by 25."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -3760,7 +3760,7 @@
     "explanation": "Step 1: Wanted: n×3. Got: n/3. Step 2: To get from n/3 to n×3: multiply by 9: (n/3)×9=3n ✓. Step 3: Answer: Multiply by 9 → B.",
     "hints": [
       "KEY INSIGHT: Want 3n, have n/3. Ratio = 3n/(n/3)=9. So multiply by 9. Answer: B.",
-      "1. MULTIPLY BY 3: (n/3)×3=n (not 3n — only gets back to original, not the target). 2. DIVIDE BY 9: (n/3)/9=n/27 (wrong direction)."
+      "1. MULTIPLY BY 3: (n/3) × 3 = n (not 3n, only gets back to original, not the target). \n2. DIVIDE BY 9: (n/3) divided by 9 is n/27, but the correct direction is to multiply by 3/9 or 1/3."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -3786,7 +3786,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t13_q15",
@@ -3808,7 +3808,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out."
+    "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out."
   },
   {
     "id": "act_math_t14_q01",
@@ -3845,7 +3845,7 @@
       "y = -2 x + 6"
     ],
     "correctIndex": 3,
-    "explanation": "Step 1: From graph: y-intercept = 6. Step 2: Line is steep negative — x-intercept ≈ 1.2. Step 3: Slope = (0-6)/(1.2-0) = -5. Step 4: Equation: y=-5x+6 → D.",
+    "explanation": "Step 1: From graph: y-intercept = 6. Step 2: Line is steep negative, x-intercept ≈ 1.2. Step 3: Slope = (0-6)/(1.2-0) = -5. Step 4: Equation: y=-5x+6 → D.",
     "hints": [
       "KEY INSIGHT: y-intercept=6 (eliminates A,B,C); steep slope means x-intercept near 1.2 → slope=-5 → D. y=-5x+6.",
       "1. CONFUSING SLOPE: Choosing y=-2x+6 (less steep, x-intercept at 3, doesn't match graph). 2. MISSING y-INTERCEPT: Choosing y=-5x (passes through origin, not 6)."
@@ -3892,7 +3892,7 @@
     "explanation": "Step 1: Factory X total = 18,000 (current) + 120d (production at rate). Step 2: Factory Y total = 14,500 + 155d. Step 3: Set equal: 18,000+120d = 14,500+155d → A.",
     "hints": [
       "KEY INSIGHT: Total = initial + rate × days. 18,000+120d=14,500+155d when equal. Answer: A.",
-      "1. SWAPPING RATES: Putting 155 with X and 120 with Y (choice B). 2. MULTIPLYING THROUGH: (18,000+120)d=(14,500+155)d — wrong algebraic form (choice C)."
+      "1. SWAPPING RATES: Putting 155 with X and 120 with Y (choice B). 2. MULTIPLYING THROUGH: (18,000+120)d equals (14,500+155)d in algebraic form, but that's wrong (choice C)."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
@@ -3918,7 +3918,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t14_q06",
@@ -3962,7 +3962,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions — make them agree at once."
+    "storyContext": "Ancient China, counting rods, 263 AD. Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once."
   },
   {
     "id": "act_math_t14_q08",
@@ -3999,14 +3999,14 @@
       "56"
     ],
     "correctIndex": 2,
-    "explanation": "Step 1: Full bounding rectangle: 30m wide × (6+5)m tall=30×11=330 sq m. Wait — right side is 11m, left side is 6m, so height of upper-right step=11-6=5m. Step 2: Missing upper-left rectangle: (30-9)m × 5m=21×5=105. Step 3: Area = 330-105=225 sq m → H.",
+    "explanation": "Step 1: Full bounding rectangle: 30m wide × (6+5)m tall = 30 × 11 = 330 sq m. Right side is 11m, left side is 6m, so height of upper-right step is 11 - 6 = 5m. Step 2: Missing upper-left rectangle: (30 - 9)m × 5m = 21 × 5 = 105. Step 3: Area = 330 - 105 = 225 sq m → H.",
     "hints": [
       "KEY INSIGHT: L-shape area = big rectangle − missing piece = 30×11 − 21×5 = 330 − 105 = 225. Answer: H.",
       "1. USING FULL RECTANGLE: Treating it as 30×11=330 without subtracting the missing piece. 2. WRONG CUT DIMENSIONS: Using wrong width or height for the missing piece."
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t14_q10",
@@ -4024,11 +4024,11 @@
     "explanation": "Step 1: h(x) is the linear function a+bx. From table: h(-2)=3, h(-1)=6. Step 2: Slope b=(6-3)/(-1-(-2))=3. Step 3: 3=a+3(-2)=a-6 → a=9. Step 4: h(x)=9+3x → h(0)=9 → E.",
     "hints": [
       "KEY INSIGHT: h(x) is linear (constant slope=3). From h(-2)=3: 9+3(-2)=3 ✓. h(0)=9. Answer: E.",
-      "1. CHOOSING g(x) INSTEAD OF h(x): g(x) is not linear (check: g(-3)=4, g(-2)=2 — not uniform slope). 2. FORGETTING INTERCEPT: Assuming h(0)=0 (only true if a=0)."
+      "1. CHOOSING g(x) INSTEAD OF h(x): g(x) is not linear (check: g(-3)=4, g(-2)=2, not uniform slope). \n2. FORGETTING INTERCEPT: Assuming h(0)=0 (only true if a=0)."
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t14_q11",
@@ -4263,7 +4263,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   },
   {
     "id": "act_math_t15_q08",
@@ -4321,7 +4321,7 @@
       "the product of any two irrational numbers is irrational."
     ],
     "correctIndex": 4,
-    "explanation": "Step 1: Test each statement. F: sum of two rationals = rational ✓ always true. G: product of two rationals = rational ✓ always true. H: sum of two irrationals = irrational — FALSE: √2+(-√2)=0 (rational). J: product of rational and irrational may be either ✓ true. K: product of two irrationals is irrational — FALSE: √2×√2=2 (rational). Step 2: K is the most clearly stated false claim with a clean counterexample → K.",
+    "explanation": "Step 1: Test each statement. F: sum of two rationals = rational always true. G: product of two rationals = rational always true. H: sum of two irrationals = irrational FALSE: √2+(-√2)=0 (rational). J: product of rational and irrational may be either true. K: product of two irrationals is irrational FALSE: √2×√2=2 (rational). Step 2: K is the most clearly stated false claim with a clean counterexample so K.",
     "hints": [
       "KEY INSIGHT: √2×√2=2 (rational). So the product of two irrationals is NOT always irrational. K is false. Answer: K.",
       "1. CHOOSING H: H is also false (√2+(-√2)=0), but the more prominent counterexample for products makes K the intended answer. 2. NOT KNOWING COUNTEREXAMPLE: Assuming K must be true without testing."
@@ -4350,7 +4350,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway — they still hold."
+    "storyContext": "Bologna, Italy, 1572. Rafael refuses to discard the impossible number. Follow the rules anyway. They still hold."
   },
   {
     "id": "act_math_t15_q12",
@@ -4372,7 +4372,7 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out."
+    "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number and watch what comes out."
   },
   {
     "id": "act_math_t15_q13",
@@ -4394,7 +4394,7 @@
     ],
     "examTag": "ACT",
     "format": "diagram",
-    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance — measure what's inside."
+    "storyContext": "Syracuse, the public baths, 250 BC. Archimedes submerges the crown. Space and substance. Measure what's inside."
   },
   {
     "id": "act_math_t15_q14",
@@ -4438,6 +4438,6 @@
     ],
     "examTag": "ACT",
     "format": "symbolic_expression",
-    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together — use one to find the other."
+    "storyContext": "Rhodes, a hilltop observatory, 150 BC. Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other."
   }
 ]
