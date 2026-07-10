@@ -8,27 +8,18 @@ import type { FormatId } from '../lib/questionBank'
 import { inferQuestionFormat } from '../lib/questionBank'
 import type { StoryDisplay } from '../lib/storyDisplay'
 import { buildStoryDisplay } from '../lib/storyDisplay'
+import {
+  diagramCaption,
+  decimalMultiply,
+  inferFigureSpec,
+  type GeometryShape,
+} from '../lib/figureSpec'
 import s from './QuestionFigure.module.css'
 
 interface Theme {
   accent: string
   ink: string
   dim: string
-}
-
-function diagramCaption(text: string): string | null {
-  const m = text.match(/\(Diagram:\s*([^)]{8,280})\)/i)
-  return m ? m[1].trim() : null
-}
-
-function decimalMultiply(text: string): { a: number; b: number } | null {
-  const m = text.replace(/\$/g, ' ').match(/(\d+\.?\d*)\s*[×x*]\s*(\d+\.?\d*)/)
-  if (!m) return null
-  const a = parseFloat(m[1])
-  const b = parseFloat(m[2])
-  if (!Number.isFinite(a) || !Number.isFinite(b) || a > 1 || b > 1) return null
-  if (a === 0 || b === 0) return null
-  return { a, b }
 }
 
 function formatStub(conceptId: string, question: string) {
@@ -72,7 +63,6 @@ export function shouldRenderFigure(
   if (decimalMultiply(questionText)) return true
   const visualWords = /\b(triangle|circle|graph|diagram|coordinate|grid|rectangle|square|polygon|number line)\b/i
   if (visualWords.test(questionText)) return true
-  // "angle" alone is too broad — regular polygons get polygon figures instead.
   if (/\bangle\b/i.test(questionText)) return true
   return false
 }
@@ -218,6 +208,47 @@ function LineGraphMini({ m, c, vertical, label, theme }: { m: number; c: number;
   )
 }
 
+function renderGeometry(shape: GeometryShape, params: Record<string, number> | undefined, theme: Theme): ReactNode {
+  switch (shape) {
+    case 'area':
+      if (params?.a !== undefined && params?.b !== undefined) {
+        return <AreaModel a={params.a} b={params.b} theme={theme} />
+      }
+      return <AreaSketch theme={theme} />
+    case 'numberline':
+      return <NumberLine theme={theme} />
+    case 'triangle':
+      return <RightTriangle theme={theme} />
+    case 'circle':
+      return <CircleFigure theme={theme} />
+    case 'polygon':
+      return <RegularPolygonFigure sides={params?.sides ?? 6} theme={theme} />
+    case 'angle':
+      return <AngleFigure theme={theme} />
+    default:
+      return null
+  }
+}
+
+function renderCoordGridFallback(
+  conceptId: string,
+  questionText: string,
+  format: FormatId | undefined,
+  caption: string | null,
+  theme: Theme,
+): ReactNode {
+  const fmt = format ?? inferQuestionFormat(formatStub(conceptId, questionText))
+  if (fmt === 'coordinate_graph' || conceptId === 'coordinate_geometry' || /graph|coordinate|plotted|slope/i.test(questionText)) {
+    return <CoordGrid theme={theme} />
+  }
+  if (fmt === 'diagram' || caption) {
+    return /rectangle|square|area|volume/i.test(questionText)
+      ? <AreaSketch theme={theme} />
+      : <CoordGrid theme={theme} />
+  }
+  return null
+}
+
 export default function QuestionFigure({
   conceptId,
   questionText,
@@ -247,32 +278,17 @@ export default function QuestionFigure({
   if (!shouldRenderFigure(conceptId, questionText, format, plan)) return null
 
   const caption = diagramCaption(questionText)
+  const spec = inferFigureSpec(conceptId, questionText, format, plan)
   const line = parseLinearEquation(questionText)
-  const dec = decimalMultiply(questionText)
-  const fmt = format ?? inferQuestionFormat(formatStub(conceptId, questionText))
 
   let body: ReactNode = null
 
-  if (line && (fmt === 'coordinate_graph' || Math.abs(line.m) <= 25)) {
-    body = <LineGraphMini {...line} theme={theme} />
-  } else if (dec && (conceptId.includes('fraction') || conceptId.includes('decimal') || fmt === 'number_line')) {
-    body = <AreaModel a={dec.a} b={dec.b} theme={theme} />
-  } else if (fmt === 'number_line' || conceptId.includes('fraction') || conceptId.includes('decimal')) {
-    body = <NumberLine theme={theme} />
-  } else if (conceptId === 'right_triangle_geometry' || /triangle|pythag|hypotenuse/i.test(questionText)) {
-    body = <RightTriangle theme={theme} />
-  } else if (conceptId === 'circles_geometry' || /\bcircle\b|radius|diameter|circumference/i.test(questionText)) {
-    body = <CircleFigure theme={theme} />
-  } else if (plan.polygonSides) {
-    body = <RegularPolygonFigure sides={plan.polygonSides} theme={theme} />
-  } else if (conceptId === 'lines_angles' || /angle|parallel|transversal/i.test(questionText)) {
-    body = <AngleFigure theme={theme} />
-  } else if (fmt === 'coordinate_graph' || conceptId === 'coordinate_geometry' || /graph|coordinate|plotted|slope/i.test(questionText)) {
-    body = <CoordGrid theme={theme} />
-  } else if (fmt === 'diagram' || caption) {
-    body = /rectangle|square|area|volume/i.test(questionText)
-      ? <AreaSketch theme={theme} />
-      : <CoordGrid theme={theme} />
+  if (spec?.kind === 'graph') {
+    body = line ? <LineGraphMini {...line} theme={theme} /> : null
+  } else if (spec?.kind === 'geometry') {
+    body = renderGeometry(spec.shape, spec.params, theme)
+  } else {
+    body = renderCoordGridFallback(conceptId, questionText, format, caption, theme)
   }
 
   if (!body) return null

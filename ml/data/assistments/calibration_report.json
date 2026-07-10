@@ -1,0 +1,3797 @@
+{
+  "meta": {
+    "generated": "2026-07-09",
+    "script": "ml/scripts/calibrate_from_assistments.py",
+    "datasets": [
+      {
+        "key": "2009_2010",
+        "label": "ASSISTments 2009-2010 skill builder",
+        "path": "/Users/akoirala/Desktop/Business Ideas/mindcraft-site/data/assistments/skill_builder_data_corrected.csv",
+        "total_rows": 525534,
+        "rows_with_blank_skill": 78690,
+        "rows_non_binary_correct": 0,
+        "distinct_skills": 110
+      },
+      {
+        "key": "2012_2013",
+        "label": "ASSISTments 2012-2013 school data with affect predictions",
+        "path": "/Users/akoirala/Desktop/Business Ideas/mindcraft-site/data/assistments/big2012/2012-2013-data-with-predictions-4-final.csv",
+        "total_rows": 6123270,
+        "rows_with_blank_skill": 3488077,
+        "rows_non_binary_correct": 5323,
+        "distinct_skills": 196
+      }
+    ],
+    "combined_total_rows": 6648804,
+    "combined_rows_with_blank_skill": 3566767,
+    "combined_rows_non_binary_correct": 5323,
+    "combined_rows_mapped_to_concepts": 3076652,
+    "combined_rows_unmapped": 62,
+    "distinct_skills_union": 202,
+    "min_observations": 500,
+    "clamp": [
+      0.15,
+      0.85
+    ],
+    "concepts_calibrated": 25,
+    "concepts_insufficient": 0,
+    "concepts_untouched": 17
+  },
+  "concepts": [
+    {
+      "concept_id": "algebraic_manipulation",
+      "old_prior": 0.428,
+      "new_prior": 0.381,
+      "raw_error_rate": 0.3811,
+      "clamped": false,
+      "n_observations": 117020.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Distributive Property",
+          "rows": 37077,
+          "error_rate": 0.3619,
+          "weight": 37077.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 18,
+              "errors": 2,
+              "error_rate": 0.1111
+            },
+            "2012_2013": {
+              "rows": 37059,
+              "errors": 13416,
+              "error_rate": 0.362
+            }
+          }
+        },
+        {
+          "skill_name": "Simplifying Expressions positive exponents",
+          "rows": 28897,
+          "error_rate": 0.3824,
+          "weight": 14448.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 108,
+              "errors": 38,
+              "error_rate": 0.3519
+            },
+            "2012_2013": {
+              "rows": 28789,
+              "errors": 11011,
+              "error_rate": 0.3825
+            }
+          }
+        },
+        {
+          "skill_name": "Solving for a variable",
+          "rows": 26334,
+          "error_rate": 0.3708,
+          "weight": 26334.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1792,
+              "errors": 681,
+              "error_rate": 0.38
+            },
+            "2012_2013": {
+              "rows": 24542,
+              "errors": 9083,
+              "error_rate": 0.3701
+            }
+          }
+        },
+        {
+          "skill_name": "Substitution",
+          "rows": 21015,
+          "error_rate": 0.2594,
+          "weight": 10507.5,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 21015,
+              "errors": 5451,
+              "error_rate": 0.2594
+            }
+          }
+        },
+        {
+          "skill_name": "Combining Like Terms",
+          "rows": 18546,
+          "error_rate": 0.4778,
+          "weight": 18546.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 18546,
+              "errors": 8862,
+              "error_rate": 0.4778
+            }
+          }
+        },
+        {
+          "skill_name": "Algebraic Solving",
+          "rows": 3382,
+          "error_rate": 0.497,
+          "weight": 3382.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 389,
+              "errors": 246,
+              "error_rate": 0.6324
+            },
+            "2012_2013": {
+              "rows": 2993,
+              "errors": 1435,
+              "error_rate": 0.4795
+            }
+          }
+        },
+        {
+          "skill_name": "Picking Expressions From Choices",
+          "rows": 2413,
+          "error_rate": 0.3017,
+          "weight": 2413.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2413,
+              "errors": 728,
+              "error_rate": 0.3017
+            }
+          }
+        },
+        {
+          "skill_name": "Writine Expression from Diagrams",
+          "rows": 1569,
+          "error_rate": 0.4015,
+          "weight": 1569.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 1569,
+              "errors": 630,
+              "error_rate": 0.4015
+            }
+          }
+        },
+        {
+          "skill_name": "Recognizing Equivalent Expressions",
+          "rows": 821,
+          "error_rate": 0.5749,
+          "weight": 821.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 821,
+              "errors": 472,
+              "error_rate": 0.5749
+            }
+          }
+        },
+        {
+          "skill_name": "Commutative Property",
+          "rows": 758,
+          "error_rate": 0.3285,
+          "weight": 758.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 758,
+              "errors": 249,
+              "error_rate": 0.3285
+            }
+          }
+        },
+        {
+          "skill_name": "Symbolization",
+          "rows": 499,
+          "error_rate": 0.477,
+          "weight": 499.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 499,
+              "errors": 238,
+              "error_rate": 0.477
+            }
+          }
+        },
+        {
+          "skill_name": "Algebraic Simplification",
+          "rows": 355,
+          "error_rate": 0.3549,
+          "weight": 355.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 90,
+              "errors": 54,
+              "error_rate": 0.6
+            },
+            "2012_2013": {
+              "rows": 265,
+              "errors": 72,
+              "error_rate": 0.2717
+            }
+          }
+        },
+        {
+          "skill_name": "Associative Property",
+          "rows": 284,
+          "error_rate": 0.5599,
+          "weight": 284.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 284,
+              "errors": 159,
+              "error_rate": 0.5599
+            }
+          }
+        },
+        {
+          "skill_name": "Recognizing Expressions or Equations from Diagrams",
+          "rows": 26,
+          "error_rate": 0.5385,
+          "weight": 26.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 26,
+              "errors": 14,
+              "error_rate": 0.5385
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "area_volume",
+      "old_prior": 0.226,
+      "new_prior": 0.308,
+      "raw_error_rate": 0.3081,
+      "clamped": false,
+      "n_observations": 273758.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Volume Rectangular Prism",
+          "rows": 33128,
+          "error_rate": 0.1775,
+          "weight": 33128.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 19489,
+              "errors": 2357,
+              "error_rate": 0.1209
+            },
+            "2012_2013": {
+              "rows": 13639,
+              "errors": 3524,
+              "error_rate": 0.2584
+            }
+          }
+        },
+        {
+          "skill_name": "Area Triangle",
+          "rows": 32302,
+          "error_rate": 0.2477,
+          "weight": 32302.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 10839,
+              "errors": 1151,
+              "error_rate": 0.1062
+            },
+            "2012_2013": {
+              "rows": 21463,
+              "errors": 6850,
+              "error_rate": 0.3192
+            }
+          }
+        },
+        {
+          "skill_name": "Area Rectangle",
+          "rows": 27629,
+          "error_rate": 0.1627,
+          "weight": 27629.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 12934,
+              "errors": 1460,
+              "error_rate": 0.1129
+            },
+            "2012_2013": {
+              "rows": 14695,
+              "errors": 3036,
+              "error_rate": 0.2066
+            }
+          }
+        },
+        {
+          "skill_name": "Surface Area Rectangular Prism",
+          "rows": 26736,
+          "error_rate": 0.4424,
+          "weight": 26736.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1480,
+              "errors": 652,
+              "error_rate": 0.4405
+            },
+            "2012_2013": {
+              "rows": 25256,
+              "errors": 11175,
+              "error_rate": 0.4425
+            }
+          }
+        },
+        {
+          "skill_name": "Area Trapezoid",
+          "rows": 24937,
+          "error_rate": 0.397,
+          "weight": 24937.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 9288,
+              "errors": 3461,
+              "error_rate": 0.3726
+            },
+            "2012_2013": {
+              "rows": 15649,
+              "errors": 6439,
+              "error_rate": 0.4115
+            }
+          }
+        },
+        {
+          "skill_name": "Area Circle",
+          "rows": 21368,
+          "error_rate": 0.3783,
+          "weight": 10684.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1149,
+              "errors": 364,
+              "error_rate": 0.3168
+            },
+            "2012_2013": {
+              "rows": 20219,
+              "errors": 7719,
+              "error_rate": 0.3818
+            }
+          }
+        },
+        {
+          "skill_name": "Volume Cylinder",
+          "rows": 21097,
+          "error_rate": 0.4179,
+          "weight": 21097.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 13734,
+              "errors": 5719,
+              "error_rate": 0.4164
+            },
+            "2012_2013": {
+              "rows": 7363,
+              "errors": 3098,
+              "error_rate": 0.4208
+            }
+          }
+        },
+        {
+          "skill_name": "Perimeter of a Polygon",
+          "rows": 17452,
+          "error_rate": 0.2688,
+          "weight": 17452.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 671,
+              "errors": 251,
+              "error_rate": 0.3741
+            },
+            "2012_2013": {
+              "rows": 16781,
+              "errors": 4440,
+              "error_rate": 0.2646
+            }
+          }
+        },
+        {
+          "skill_name": "Area Irregular Figure",
+          "rows": 15307,
+          "error_rate": 0.4412,
+          "weight": 15307.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1760,
+              "errors": 889,
+              "error_rate": 0.5051
+            },
+            "2012_2013": {
+              "rows": 13547,
+              "errors": 5865,
+              "error_rate": 0.4329
+            }
+          }
+        },
+        {
+          "skill_name": "Area Parallelogram",
+          "rows": 14576,
+          "error_rate": 0.1612,
+          "weight": 14576.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3323,
+              "errors": 68,
+              "error_rate": 0.0205
+            },
+            "2012_2013": {
+              "rows": 11253,
+              "errors": 2282,
+              "error_rate": 0.2028
+            }
+          }
+        },
+        {
+          "skill_name": "Surface Area Cylinder",
+          "rows": 10002,
+          "error_rate": 0.5039,
+          "weight": 10002.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 491,
+              "errors": 336,
+              "error_rate": 0.6843
+            },
+            "2012_2013": {
+              "rows": 9511,
+              "errors": 4704,
+              "error_rate": 0.4946
+            }
+          }
+        },
+        {
+          "skill_name": "Volume Prism",
+          "rows": 6591,
+          "error_rate": 0.2382,
+          "weight": 6591.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 6591,
+              "errors": 1570,
+              "error_rate": 0.2382
+            }
+          }
+        },
+        {
+          "skill_name": "Nets of 3D Figures",
+          "rows": 6228,
+          "error_rate": 0.069,
+          "weight": 6228.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 280,
+              "errors": 14,
+              "error_rate": 0.05
+            },
+            "2012_2013": {
+              "rows": 5948,
+              "errors": 416,
+              "error_rate": 0.0699
+            }
+          }
+        },
+        {
+          "skill_name": "Volume Sphere",
+          "rows": 5410,
+          "error_rate": 0.4068,
+          "weight": 5410.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1706,
+              "errors": 634,
+              "error_rate": 0.3716
+            },
+            "2012_2013": {
+              "rows": 3704,
+              "errors": 1567,
+              "error_rate": 0.4231
+            }
+          }
+        },
+        {
+          "skill_name": "Volume Cone",
+          "rows": 5314,
+          "error_rate": 0.4895,
+          "weight": 5314.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 5314,
+              "errors": 2601,
+              "error_rate": 0.4895
+            }
+          }
+        },
+        {
+          "skill_name": "Volume Pyramid",
+          "rows": 3834,
+          "error_rate": 0.3552,
+          "weight": 3834.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 3834,
+              "errors": 1362,
+              "error_rate": 0.3552
+            }
+          }
+        },
+        {
+          "skill_name": "Surface Area Sphere",
+          "rows": 2813,
+          "error_rate": 0.3374,
+          "weight": 2813.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2813,
+              "errors": 949,
+              "error_rate": 0.3374
+            }
+          }
+        },
+        {
+          "skill_name": "Surface Area of Prism",
+          "rows": 2454,
+          "error_rate": 0.3231,
+          "weight": 2454.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2454,
+              "errors": 793,
+              "error_rate": 0.3231
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Classification Prism",
+          "rows": 2293,
+          "error_rate": 0.3676,
+          "weight": 2293.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2293,
+              "errors": 843,
+              "error_rate": 0.3676
+            }
+          }
+        },
+        {
+          "skill_name": "Effect of Changing Dimensions of a Shape Prportionally",
+          "rows": 2105,
+          "error_rate": 0.4622,
+          "weight": 1052.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1099,
+              "errors": 494,
+              "error_rate": 0.4495
+            },
+            "2012_2013": {
+              "rows": 1006,
+              "errors": 479,
+              "error_rate": 0.4761
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Classification Rectangular Prisms",
+          "rows": 1689,
+          "error_rate": 0.1853,
+          "weight": 1689.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 1689,
+              "errors": 313,
+              "error_rate": 0.1853
+            }
+          }
+        },
+        {
+          "skill_name": "Nets of 3D Objects",
+          "rows": 509,
+          "error_rate": 0.1041,
+          "weight": 509.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 509,
+              "errors": 53,
+              "error_rate": 0.1041
+            }
+          }
+        },
+        {
+          "skill_name": "Concept Volume",
+          "rows": 460,
+          "error_rate": 0.5261,
+          "weight": 460.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 460,
+              "errors": 242,
+              "error_rate": 0.5261
+            }
+          }
+        },
+        {
+          "skill_name": "Volume of 3D Objects",
+          "rows": 439,
+          "error_rate": 0.533,
+          "weight": 439.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 439,
+              "errors": 234,
+              "error_rate": 0.533
+            }
+          }
+        },
+        {
+          "skill_name": "Surface Area Pyramid",
+          "rows": 407,
+          "error_rate": 0.7543,
+          "weight": 407.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 407,
+              "errors": 307,
+              "error_rate": 0.7543
+            }
+          }
+        },
+        {
+          "skill_name": "Surface Area of 3D Objects",
+          "rows": 313,
+          "error_rate": 0.2939,
+          "weight": 313.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 313,
+              "errors": 92,
+              "error_rate": 0.2939
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Clasification of Pyramid",
+          "rows": 60,
+          "error_rate": 0.5667,
+          "weight": 60.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 60,
+              "errors": 34,
+              "error_rate": 0.5667
+            }
+          }
+        },
+        {
+          "skill_name": "Perimeter of an Irregular Figure",
+          "rows": 42,
+          "error_rate": 0.7143,
+          "weight": 42.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 42,
+              "errors": 30,
+              "error_rate": 0.7143
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "basic_equations",
+      "old_prior": 0.321,
+      "new_prior": 0.286,
+      "raw_error_rate": 0.2858,
+      "clamped": false,
+      "n_observations": 217611.2,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Equation Solving Two or Fewer Steps",
+          "rows": 217229,
+          "error_rate": 0.2853,
+          "weight": 217229.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 24253,
+              "errors": 7784,
+              "error_rate": 0.3209
+            },
+            "2012_2013": {
+              "rows": 192976,
+              "errors": 54199,
+              "error_rate": 0.2809
+            }
+          }
+        },
+        {
+          "skill_name": "Choose an Equation from Given Information",
+          "rows": 525,
+          "error_rate": 0.5867,
+          "weight": 262.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 89,
+              "errors": 16,
+              "error_rate": 0.1798
+            },
+            "2012_2013": {
+              "rows": 436,
+              "errors": 292,
+              "error_rate": 0.6697
+            }
+          }
+        },
+        {
+          "skill_name": "Quadratic Equation Solving",
+          "rows": 224,
+          "error_rate": 0.5625,
+          "weight": 74.7,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 224,
+              "errors": 126,
+              "error_rate": 0.5625
+            }
+          }
+        },
+        {
+          "skill_name": "Equal As Balance Concept",
+          "rows": 45,
+          "error_rate": 0.1556,
+          "weight": 45.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 45,
+              "errors": 7,
+              "error_rate": 0.1556
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "basic_probability",
+      "old_prior": 0.408,
+      "new_prior": 0.375,
+      "raw_error_rate": 0.3748,
+      "clamped": false,
+      "n_observations": 64565.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Probability of a Single Event",
+          "rows": 26962,
+          "error_rate": 0.2739,
+          "weight": 26962.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 7438,
+              "errors": 1916,
+              "error_rate": 0.2576
+            },
+            "2012_2013": {
+              "rows": 19524,
+              "errors": 5468,
+              "error_rate": 0.2801
+            }
+          }
+        },
+        {
+          "skill_name": "Probability of Two Distinct Events",
+          "rows": 23035,
+          "error_rate": 0.5228,
+          "weight": 23035.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 7963,
+              "errors": 4061,
+              "error_rate": 0.51
+            },
+            "2012_2013": {
+              "rows": 15072,
+              "errors": 7982,
+              "error_rate": 0.5296
+            }
+          }
+        },
+        {
+          "skill_name": "Counting Methods",
+          "rows": 12165,
+          "error_rate": 0.3646,
+          "weight": 12165.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 4867,
+              "errors": 2416,
+              "error_rate": 0.4964
+            },
+            "2012_2013": {
+              "rows": 7298,
+              "errors": 2019,
+              "error_rate": 0.2767
+            }
+          }
+        },
+        {
+          "skill_name": "D.4.8-understanding-concept-of-probabilities",
+          "rows": 2223,
+          "error_rate": 0.1323,
+          "weight": 2223.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 456,
+              "errors": 70,
+              "error_rate": 0.1535
+            },
+            "2012_2013": {
+              "rows": 1767,
+              "errors": 224,
+              "error_rate": 0.1268
+            }
+          }
+        },
+        {
+          "skill_name": "Tree Diagrams, Lists for Counting",
+          "rows": 180,
+          "error_rate": 0.2333,
+          "weight": 180.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 180,
+              "errors": 42,
+              "error_rate": 0.2333
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "circles_geometry",
+      "old_prior": 0.314,
+      "new_prior": 0.34,
+      "raw_error_rate": 0.3403,
+      "clamped": false,
+      "n_observations": 38332.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Circumference",
+          "rows": 23354,
+          "error_rate": 0.3318,
+          "weight": 23354.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1769,
+              "errors": 554,
+              "error_rate": 0.3132
+            },
+            "2012_2013": {
+              "rows": 21585,
+              "errors": 7194,
+              "error_rate": 0.3333
+            }
+          }
+        },
+        {
+          "skill_name": "Area Circle",
+          "rows": 21368,
+          "error_rate": 0.3783,
+          "weight": 10684.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1149,
+              "errors": 364,
+              "error_rate": 0.3168
+            },
+            "2012_2013": {
+              "rows": 20219,
+              "errors": 7719,
+              "error_rate": 0.3818
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Classification Circle",
+          "rows": 2647,
+          "error_rate": 0.2146,
+          "weight": 2647.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2647,
+              "errors": 568,
+              "error_rate": 0.2146
+            }
+          }
+        },
+        {
+          "skill_name": "Definition Pi",
+          "rows": 1166,
+          "error_rate": 0.3413,
+          "weight": 1166.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 1166,
+              "errors": 398,
+              "error_rate": 0.3413
+            }
+          }
+        },
+        {
+          "skill_name": "Circle Concept",
+          "rows": 481,
+          "error_rate": 0.5967,
+          "weight": 481.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 481,
+              "errors": 287,
+              "error_rate": 0.5967
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "descriptive_statistics",
+      "old_prior": 0.277,
+      "new_prior": 0.303,
+      "raw_error_rate": 0.3029,
+      "clamped": false,
+      "n_observations": 165361.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Median",
+          "rows": 26844,
+          "error_rate": 0.3362,
+          "weight": 26844.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5783,
+              "errors": 1987,
+              "error_rate": 0.3436
+            },
+            "2012_2013": {
+              "rows": 21061,
+              "errors": 7038,
+              "error_rate": 0.3342
+            }
+          }
+        },
+        {
+          "skill_name": "Mean",
+          "rows": 24805,
+          "error_rate": 0.3951,
+          "weight": 24805.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 2939,
+              "errors": 1392,
+              "error_rate": 0.4736
+            },
+            "2012_2013": {
+              "rows": 21866,
+              "errors": 8409,
+              "error_rate": 0.3846
+            }
+          }
+        },
+        {
+          "skill_name": "Venn Diagram",
+          "rows": 24761,
+          "error_rate": 0.2337,
+          "weight": 24761.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 18275,
+              "errors": 3602,
+              "error_rate": 0.1971
+            },
+            "2012_2013": {
+              "rows": 6486,
+              "errors": 2184,
+              "error_rate": 0.3367
+            }
+          }
+        },
+        {
+          "skill_name": "Range",
+          "rows": 18804,
+          "error_rate": 0.2349,
+          "weight": 18804.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 4034,
+              "errors": 962,
+              "error_rate": 0.2385
+            },
+            "2012_2013": {
+              "rows": 14770,
+              "errors": 3455,
+              "error_rate": 0.2339
+            }
+          }
+        },
+        {
+          "skill_name": "Histogram as Table or Graph",
+          "rows": 14351,
+          "error_rate": 0.3019,
+          "weight": 14351.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1804,
+              "errors": 522,
+              "error_rate": 0.2894
+            },
+            "2012_2013": {
+              "rows": 12547,
+              "errors": 3811,
+              "error_rate": 0.3037
+            }
+          }
+        },
+        {
+          "skill_name": "Box and Whisker",
+          "rows": 13507,
+          "error_rate": 0.3136,
+          "weight": 13507.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3957,
+              "errors": 977,
+              "error_rate": 0.2469
+            },
+            "2012_2013": {
+              "rows": 9550,
+              "errors": 3259,
+              "error_rate": 0.3413
+            }
+          }
+        },
+        {
+          "skill_name": "Scatter Plot",
+          "rows": 9868,
+          "error_rate": 0.1893,
+          "weight": 9868.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1859,
+              "errors": 243,
+              "error_rate": 0.1307
+            },
+            "2012_2013": {
+              "rows": 8009,
+              "errors": 1625,
+              "error_rate": 0.2029
+            }
+          }
+        },
+        {
+          "skill_name": "Table",
+          "rows": 7360,
+          "error_rate": 0.2644,
+          "weight": 7360.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 6834,
+              "errors": 1785,
+              "error_rate": 0.2612
+            },
+            "2012_2013": {
+              "rows": 526,
+              "errors": 161,
+              "error_rate": 0.3061
+            }
+          }
+        },
+        {
+          "skill_name": "Circle Graph",
+          "rows": 6849,
+          "error_rate": 0.4497,
+          "weight": 6849.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 6208,
+              "errors": 2960,
+              "error_rate": 0.4768
+            },
+            "2012_2013": {
+              "rows": 641,
+              "errors": 120,
+              "error_rate": 0.1872
+            }
+          }
+        },
+        {
+          "skill_name": "Making a Table from an Equation",
+          "rows": 6540,
+          "error_rate": 0.3226,
+          "weight": 6540.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 6540,
+              "errors": 2110,
+              "error_rate": 0.3226
+            }
+          }
+        },
+        {
+          "skill_name": "Stem and Leaf Plot",
+          "rows": 4788,
+          "error_rate": 0.3294,
+          "weight": 4788.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3828,
+              "errors": 1230,
+              "error_rate": 0.3213
+            },
+            "2012_2013": {
+              "rows": 960,
+              "errors": 347,
+              "error_rate": 0.3615
+            }
+          }
+        },
+        {
+          "skill_name": "Mode",
+          "rows": 3360,
+          "error_rate": 0.1464,
+          "weight": 3360.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1926,
+              "errors": 239,
+              "error_rate": 0.1241
+            },
+            "2012_2013": {
+              "rows": 1434,
+              "errors": 253,
+              "error_rate": 0.1764
+            }
+          }
+        },
+        {
+          "skill_name": "Line Plot",
+          "rows": 1896,
+          "error_rate": 0.442,
+          "weight": 1896.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 1896,
+              "errors": 838,
+              "error_rate": 0.442
+            }
+          }
+        },
+        {
+          "skill_name": "Line of Best-Fit",
+          "rows": 649,
+          "error_rate": 0.302,
+          "weight": 649.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 649,
+              "errors": 196,
+              "error_rate": 0.302
+            }
+          }
+        },
+        {
+          "skill_name": "Sampling Techniques",
+          "rows": 644,
+          "error_rate": 0.5016,
+          "weight": 644.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 644,
+              "errors": 323,
+              "error_rate": 0.5016
+            }
+          }
+        },
+        {
+          "skill_name": "Bar Graph",
+          "rows": 225,
+          "error_rate": 0.1422,
+          "weight": 225.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 225,
+              "errors": 32,
+              "error_rate": 0.1422
+            }
+          }
+        },
+        {
+          "skill_name": "Mean-Median-Mode-Range Differentiation",
+          "rows": 110,
+          "error_rate": 0.2091,
+          "weight": 110.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 110,
+              "errors": 23,
+              "error_rate": 0.2091
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "exponent_rules",
+      "old_prior": 0.193,
+      "new_prior": 0.267,
+      "raw_error_rate": 0.2665,
+      "clamped": false,
+      "n_observations": 89168.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Exponents",
+          "rows": 52082,
+          "error_rate": 0.2302,
+          "weight": 52082.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 4183,
+              "errors": 713,
+              "error_rate": 0.1705
+            },
+            "2012_2013": {
+              "rows": 47899,
+              "errors": 11274,
+              "error_rate": 0.2354
+            }
+          }
+        },
+        {
+          "skill_name": "Simplifying Expressions positive exponents",
+          "rows": 28897,
+          "error_rate": 0.3824,
+          "weight": 14448.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 108,
+              "errors": 38,
+              "error_rate": 0.3519
+            },
+            "2012_2013": {
+              "rows": 28789,
+              "errors": 11011,
+              "error_rate": 0.3825
+            }
+          }
+        },
+        {
+          "skill_name": "Scientific Notation",
+          "rows": 21972,
+          "error_rate": 0.2684,
+          "weight": 21972.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1888,
+              "errors": 453,
+              "error_rate": 0.2399
+            },
+            "2012_2013": {
+              "rows": 20084,
+              "errors": 5444,
+              "error_rate": 0.2711
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication Division by Powers of 10",
+          "rows": 666,
+          "error_rate": 0.539,
+          "weight": 666.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 666,
+              "errors": 359,
+              "error_rate": 0.539
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "factoring_polynomials",
+      "old_prior": 0.5,
+      "new_prior": 0.335,
+      "raw_error_rate": 0.3348,
+      "clamped": false,
+      "n_observations": 12666.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Polynomial Factors",
+          "rows": 22489,
+          "error_rate": 0.3488,
+          "weight": 11244.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 392,
+              "errors": 138,
+              "error_rate": 0.352
+            },
+            "2012_2013": {
+              "rows": 22097,
+              "errors": 7707,
+              "error_rate": 0.3488
+            }
+          }
+        },
+        {
+          "skill_name": "Factoring Polynomials Standard",
+          "rows": 2108,
+          "error_rate": 0.149,
+          "weight": 1054.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2108,
+              "errors": 314,
+              "error_rate": 0.149
+            }
+          }
+        },
+        {
+          "skill_name": "Factoring Trinomials",
+          "rows": 327,
+          "error_rate": 0.474,
+          "weight": 327.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 327,
+              "errors": 155,
+              "error_rate": 0.474
+            }
+          }
+        },
+        {
+          "skill_name": "Solve Quadratic Equations Using Factoring",
+          "rows": 81,
+          "error_rate": 0.1605,
+          "weight": 40.5,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 81,
+              "errors": 13,
+              "error_rate": 0.1605
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "fractions_decimals",
+      "old_prior": 0.318,
+      "new_prior": 0.287,
+      "raw_error_rate": 0.2874,
+      "clamped": false,
+      "n_observations": 597377.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Addition and Subtraction Fractions",
+          "rows": 158326,
+          "error_rate": 0.3167,
+          "weight": 158326.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 11334,
+              "errors": 3661,
+              "error_rate": 0.323
+            },
+            "2012_2013": {
+              "rows": 146992,
+              "errors": 46477,
+              "error_rate": 0.3162
+            }
+          }
+        },
+        {
+          "skill_name": "Conversion of Fraction Decimals Percents",
+          "rows": 119621,
+          "error_rate": 0.2698,
+          "weight": 59810.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 20992,
+              "errors": 7682,
+              "error_rate": 0.3659
+            },
+            "2012_2013": {
+              "rows": 98629,
+              "errors": 24591,
+              "error_rate": 0.2493
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication and Division Positive Decimals",
+          "rows": 72423,
+          "error_rate": 0.2688,
+          "weight": 72423.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1970,
+              "errors": 443,
+              "error_rate": 0.2249
+            },
+            "2012_2013": {
+              "rows": 70453,
+              "errors": 19024,
+              "error_rate": 0.27
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication Fractions",
+          "rows": 71688,
+          "error_rate": 0.3198,
+          "weight": 71688.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5547,
+              "errors": 1892,
+              "error_rate": 0.3411
+            },
+            "2012_2013": {
+              "rows": 66141,
+              "errors": 21031,
+              "error_rate": 0.318
+            }
+          }
+        },
+        {
+          "skill_name": "Division Fractions",
+          "rows": 66744,
+          "error_rate": 0.3266,
+          "weight": 66744.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 4029,
+              "errors": 1314,
+              "error_rate": 0.3261
+            },
+            "2012_2013": {
+              "rows": 62715,
+              "errors": 20485,
+              "error_rate": 0.3266
+            }
+          }
+        },
+        {
+          "skill_name": "Addition and Subtraction Positive Decimals",
+          "rows": 61151,
+          "error_rate": 0.2121,
+          "weight": 61151.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5012,
+              "errors": 2106,
+              "error_rate": 0.4202
+            },
+            "2012_2013": {
+              "rows": 56139,
+              "errors": 10865,
+              "error_rate": 0.1935
+            }
+          }
+        },
+        {
+          "skill_name": "Ordering Positive Decimals",
+          "rows": 37589,
+          "error_rate": 0.2023,
+          "weight": 37589.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 7317,
+              "errors": 1832,
+              "error_rate": 0.2504
+            },
+            "2012_2013": {
+              "rows": 30272,
+              "errors": 5771,
+              "error_rate": 0.1906
+            }
+          }
+        },
+        {
+          "skill_name": "Equivalent Fractions",
+          "rows": 31421,
+          "error_rate": 0.3251,
+          "weight": 31421.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 2948,
+              "errors": 1440,
+              "error_rate": 0.4885
+            },
+            "2012_2013": {
+              "rows": 28473,
+              "errors": 8774,
+              "error_rate": 0.3082
+            }
+          }
+        },
+        {
+          "skill_name": "Ordering Fractions",
+          "rows": 31048,
+          "error_rate": 0.2048,
+          "weight": 31048.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 8539,
+              "errors": 1776,
+              "error_rate": 0.208
+            },
+            "2012_2013": {
+              "rows": 22509,
+              "errors": 4582,
+              "error_rate": 0.2036
+            }
+          }
+        },
+        {
+          "skill_name": "Fraction Of",
+          "rows": 1979,
+          "error_rate": 0.3087,
+          "weight": 1979.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 607,
+              "errors": 103,
+              "error_rate": 0.1697
+            },
+            "2012_2013": {
+              "rows": 1372,
+              "errors": 508,
+              "error_rate": 0.3703
+            }
+          }
+        },
+        {
+          "skill_name": "Subtraction Mixed Fractions",
+          "rows": 712,
+          "error_rate": 0.5857,
+          "weight": 712.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 712,
+              "errors": 417,
+              "error_rate": 0.5857
+            }
+          }
+        },
+        {
+          "skill_name": "Division Mixed Fractions",
+          "rows": 703,
+          "error_rate": 0.8293,
+          "weight": 703.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 703,
+              "errors": 583,
+              "error_rate": 0.8293
+            }
+          }
+        },
+        {
+          "skill_name": "Division Proper Fractions",
+          "rows": 582,
+          "error_rate": 0.7199,
+          "weight": 582.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 582,
+              "errors": 419,
+              "error_rate": 0.7199
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication Mixed Fractions",
+          "rows": 582,
+          "error_rate": 0.8093,
+          "weight": 582.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 582,
+              "errors": 471,
+              "error_rate": 0.8093
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication Proper Fractions",
+          "rows": 555,
+          "error_rate": 0.3459,
+          "weight": 555.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 555,
+              "errors": 192,
+              "error_rate": 0.3459
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication Positive Decimals",
+          "rows": 555,
+          "error_rate": 0.7351,
+          "weight": 555.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 555,
+              "errors": 408,
+              "error_rate": 0.7351
+            }
+          }
+        },
+        {
+          "skill_name": "Subtraction Proper Fractions",
+          "rows": 507,
+          "error_rate": 0.5838,
+          "weight": 507.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 507,
+              "errors": 296,
+              "error_rate": 0.5838
+            }
+          }
+        },
+        {
+          "skill_name": "Addition Mixed Fractions",
+          "rows": 501,
+          "error_rate": 0.7864,
+          "weight": 501.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 501,
+              "errors": 394,
+              "error_rate": 0.7864
+            }
+          }
+        },
+        {
+          "skill_name": "Addition Proper Fractions",
+          "rows": 501,
+          "error_rate": 0.5269,
+          "weight": 501.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 501,
+              "errors": 264,
+              "error_rate": 0.5269
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "functions_basics",
+      "old_prior": 0.46,
+      "new_prior": 0.293,
+      "raw_error_rate": 0.2929,
+      "clamped": false,
+      "n_observations": 10858.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Graph Shape",
+          "rows": 7420,
+          "error_rate": 0.265,
+          "weight": 7420.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 7420,
+              "errors": 1966,
+              "error_rate": 0.265
+            }
+          }
+        },
+        {
+          "skill_name": "Composition of Function Adding",
+          "rows": 2328,
+          "error_rate": 0.3419,
+          "weight": 2328.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2328,
+              "errors": 796,
+              "error_rate": 0.3419
+            }
+          }
+        },
+        {
+          "skill_name": "Inverse Relations",
+          "rows": 1110,
+          "error_rate": 0.3766,
+          "weight": 1110.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 1110,
+              "errors": 418,
+              "error_rate": 0.3766
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "geometric_transformations",
+      "old_prior": 0.659,
+      "new_prior": 0.391,
+      "raw_error_rate": 0.3907,
+      "clamped": false,
+      "n_observations": 5127.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Reflection",
+          "rows": 2042,
+          "error_rate": 0.3673,
+          "weight": 2042.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 459,
+              "errors": 288,
+              "error_rate": 0.6275
+            },
+            "2012_2013": {
+              "rows": 1583,
+              "errors": 462,
+              "error_rate": 0.2919
+            }
+          }
+        },
+        {
+          "skill_name": "Translations",
+          "rows": 1954,
+          "error_rate": 0.2856,
+          "weight": 1954.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 464,
+              "errors": 232,
+              "error_rate": 0.5
+            },
+            "2012_2013": {
+              "rows": 1490,
+              "errors": 326,
+              "error_rate": 0.2188
+            }
+          }
+        },
+        {
+          "skill_name": "Rotations",
+          "rows": 654,
+          "error_rate": 0.6193,
+          "weight": 654.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 427,
+              "errors": 369,
+              "error_rate": 0.8642
+            },
+            "2012_2013": {
+              "rows": 227,
+              "errors": 36,
+              "error_rate": 0.1586
+            }
+          }
+        },
+        {
+          "skill_name": "Transformation",
+          "rows": 318,
+          "error_rate": 0.4686,
+          "weight": 318.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 318,
+              "errors": 149,
+              "error_rate": 0.4686
+            }
+          }
+        },
+        {
+          "skill_name": "Line Symmetry",
+          "rows": 158,
+          "error_rate": 0.8924,
+          "weight": 158.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 158,
+              "errors": 141,
+              "error_rate": 0.8924
+            }
+          }
+        },
+        {
+          "skill_name": "Rotational Symmetry",
+          "rows": 1,
+          "error_rate": 0.0,
+          "weight": 1.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 1,
+              "errors": 0,
+              "error_rate": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "linear_equations",
+      "old_prior": 0.336,
+      "new_prior": 0.385,
+      "raw_error_rate": 0.3853,
+      "clamped": false,
+      "n_observations": 230001.7,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Equation Solving More Than Two Steps",
+          "rows": 67915,
+          "error_rate": 0.3974,
+          "weight": 67915.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 8115,
+              "errors": 1961,
+              "error_rate": 0.2417
+            },
+            "2012_2013": {
+              "rows": 59800,
+              "errors": 25029,
+              "error_rate": 0.4185
+            }
+          }
+        },
+        {
+          "skill_name": "Write Linear Equation from Ordered Pairs",
+          "rows": 23295,
+          "error_rate": 0.5357,
+          "weight": 23295.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 949,
+              "errors": 428,
+              "error_rate": 0.451
+            },
+            "2012_2013": {
+              "rows": 22346,
+              "errors": 12051,
+              "error_rate": 0.5393
+            }
+          }
+        },
+        {
+          "skill_name": "Write Linear Equation from Graph",
+          "rows": 22696,
+          "error_rate": 0.4187,
+          "weight": 22696.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5398,
+              "errors": 2820,
+              "error_rate": 0.5224
+            },
+            "2012_2013": {
+              "rows": 17298,
+              "errors": 6682,
+              "error_rate": 0.3863
+            }
+          }
+        },
+        {
+          "skill_name": "Finding Slope From Equation",
+          "rows": 22330,
+          "error_rate": 0.3497,
+          "weight": 22330.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 757,
+              "errors": 109,
+              "error_rate": 0.144
+            },
+            "2012_2013": {
+              "rows": 21573,
+              "errors": 7699,
+              "error_rate": 0.3569
+            }
+          }
+        },
+        {
+          "skill_name": "Finding y-intercept from Linear Equation",
+          "rows": 21680,
+          "error_rate": 0.3136,
+          "weight": 21680.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 21680,
+              "errors": 6798,
+              "error_rate": 0.3136
+            }
+          }
+        },
+        {
+          "skill_name": "Finding Slope from Ordered Pairs",
+          "rows": 19296,
+          "error_rate": 0.3563,
+          "weight": 19296.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5,
+              "errors": 3,
+              "error_rate": 0.6
+            },
+            "2012_2013": {
+              "rows": 19291,
+              "errors": 6872,
+              "error_rate": 0.3562
+            }
+          }
+        },
+        {
+          "skill_name": "Solving Systems of Linear Equations by Graphing",
+          "rows": 17594,
+          "error_rate": 0.3598,
+          "weight": 8797.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 353,
+              "errors": 123,
+              "error_rate": 0.3484
+            },
+            "2012_2013": {
+              "rows": 17241,
+              "errors": 6208,
+              "error_rate": 0.3601
+            }
+          }
+        },
+        {
+          "skill_name": "Solving Systems of Linear Equations",
+          "rows": 17010,
+          "error_rate": 0.5034,
+          "weight": 8505.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 234,
+              "errors": 189,
+              "error_rate": 0.8077
+            },
+            "2012_2013": {
+              "rows": 16776,
+              "errors": 8374,
+              "error_rate": 0.4992
+            }
+          }
+        },
+        {
+          "skill_name": "Write Linear Equation from Slope and y-intercept",
+          "rows": 12414,
+          "error_rate": 0.2573,
+          "weight": 12414.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 12414,
+              "errors": 3194,
+              "error_rate": 0.2573
+            }
+          }
+        },
+        {
+          "skill_name": "Write Linear Equation from Situation",
+          "rows": 10712,
+          "error_rate": 0.2596,
+          "weight": 10712.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1447,
+              "errors": 258,
+              "error_rate": 0.1783
+            },
+            "2012_2013": {
+              "rows": 9265,
+              "errors": 2523,
+              "error_rate": 0.2723
+            }
+          }
+        },
+        {
+          "skill_name": "Finding Slope From Situation",
+          "rows": 8520,
+          "error_rate": 0.4437,
+          "weight": 8520.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 9,
+              "errors": 6,
+              "error_rate": 0.6667
+            },
+            "2012_2013": {
+              "rows": 8511,
+              "errors": 3774,
+              "error_rate": 0.4434
+            }
+          }
+        },
+        {
+          "skill_name": "Parallel and Perpendicular Lines",
+          "rows": 3578,
+          "error_rate": 0.2842,
+          "weight": 1789.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 3578,
+              "errors": 1017,
+              "error_rate": 0.2842
+            }
+          }
+        },
+        {
+          "skill_name": "Graphing Linear Equations",
+          "rows": 716,
+          "error_rate": 0.0209,
+          "weight": 716.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 716,
+              "errors": 15,
+              "error_rate": 0.0209
+            }
+          }
+        },
+        {
+          "skill_name": "Choose an Equation from Given Information",
+          "rows": 525,
+          "error_rate": 0.5867,
+          "weight": 262.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 89,
+              "errors": 16,
+              "error_rate": 0.1798
+            },
+            "2012_2013": {
+              "rows": 436,
+              "errors": 292,
+              "error_rate": 0.6697
+            }
+          }
+        },
+        {
+          "skill_name": "Finding Slope from Graph",
+          "rows": 489,
+          "error_rate": 0.2577,
+          "weight": 489.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 489,
+              "errors": 126,
+              "error_rate": 0.2577
+            }
+          }
+        },
+        {
+          "skill_name": "Comparing and Identifying Slope/Rate of Change",
+          "rows": 487,
+          "error_rate": 0.3203,
+          "weight": 243.5,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 487,
+              "errors": 156,
+              "error_rate": 0.3203
+            }
+          }
+        },
+        {
+          "skill_name": "Quadratic Equation Solving",
+          "rows": 224,
+          "error_rate": 0.5625,
+          "weight": 74.7,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 224,
+              "errors": 126,
+              "error_rate": 0.5625
+            }
+          }
+        },
+        {
+          "skill_name": "Intercept",
+          "rows": 89,
+          "error_rate": 0.1798,
+          "weight": 89.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 89,
+              "errors": 16,
+              "error_rate": 0.1798
+            }
+          }
+        },
+        {
+          "skill_name": "Linear Equations",
+          "rows": 89,
+          "error_rate": 0.1798,
+          "weight": 89.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 89,
+              "errors": 16,
+              "error_rate": 0.1798
+            }
+          }
+        },
+        {
+          "skill_name": "Slope",
+          "rows": 89,
+          "error_rate": 0.1798,
+          "weight": 89.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 89,
+              "errors": 16,
+              "error_rate": 0.1798
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "linear_inequalities",
+      "old_prior": 0.405,
+      "new_prior": 0.436,
+      "raw_error_rate": 0.4364,
+      "clamped": false,
+      "n_observations": 8961.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Solving Inequalities",
+          "rows": 5509,
+          "error_rate": 0.4199,
+          "weight": 5509.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1894,
+              "errors": 767,
+              "error_rate": 0.405
+            },
+            "2012_2013": {
+              "rows": 3615,
+              "errors": 1546,
+              "error_rate": 0.4277
+            }
+          }
+        },
+        {
+          "skill_name": "Picking Equation and Inequality from Choices",
+          "rows": 3291,
+          "error_rate": 0.4704,
+          "weight": 3291.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 3291,
+              "errors": 1548,
+              "error_rate": 0.4704
+            }
+          }
+        },
+        {
+          "skill_name": "Graphing Inequalities on a number line",
+          "rows": 322,
+          "error_rate": 0.3075,
+          "weight": 161.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 322,
+              "errors": 99,
+              "error_rate": 0.3075
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "lines_angles",
+      "old_prior": 0.361,
+      "new_prior": 0.236,
+      "raw_error_rate": 0.2365,
+      "clamped": false,
+      "n_observations": 112729.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Complementary and Supplementary Angles",
+          "rows": 28202,
+          "error_rate": 0.197,
+          "weight": 28202.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1526,
+              "errors": 475,
+              "error_rate": 0.3113
+            },
+            "2012_2013": {
+              "rows": 26676,
+              "errors": 5080,
+              "error_rate": 0.1904
+            }
+          }
+        },
+        {
+          "skill_name": "Interior Angles Figures with More than 3 Sides",
+          "rows": 18274,
+          "error_rate": 0.3779,
+          "weight": 18274.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1002,
+              "errors": 402,
+              "error_rate": 0.4012
+            },
+            "2012_2013": {
+              "rows": 17272,
+              "errors": 6503,
+              "error_rate": 0.3765
+            }
+          }
+        },
+        {
+          "skill_name": "Interior Angles Triangle",
+          "rows": 14865,
+          "error_rate": 0.2868,
+          "weight": 7432.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 748,
+              "errors": 268,
+              "error_rate": 0.3583
+            },
+            "2012_2013": {
+              "rows": 14117,
+              "errors": 3996,
+              "error_rate": 0.2831
+            }
+          }
+        },
+        {
+          "skill_name": "Angles - Obtuse, Acute, and Right",
+          "rows": 11565,
+          "error_rate": 0.1264,
+          "weight": 11565.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 11565,
+              "errors": 1462,
+              "error_rate": 0.1264
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Classification Quadrilaterals",
+          "rows": 11336,
+          "error_rate": 0.1079,
+          "weight": 11336.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 11336,
+              "errors": 1223,
+              "error_rate": 0.1079
+            }
+          }
+        },
+        {
+          "skill_name": "Point Plotting",
+          "rows": 10927,
+          "error_rate": 0.1945,
+          "weight": 10927.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 10927,
+              "errors": 2125,
+              "error_rate": 0.1945
+            }
+          }
+        },
+        {
+          "skill_name": "Angles on Parallel Lines Cut by a Transversal",
+          "rows": 7585,
+          "error_rate": 0.1938,
+          "weight": 7585.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1107,
+              "errors": 152,
+              "error_rate": 0.1373
+            },
+            "2012_2013": {
+              "rows": 6478,
+              "errors": 1318,
+              "error_rate": 0.2035
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Classification Polygons with 5 or more sides",
+          "rows": 6040,
+          "error_rate": 0.2359,
+          "weight": 6040.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 6040,
+              "errors": 1425,
+              "error_rate": 0.2359
+            }
+          }
+        },
+        {
+          "skill_name": "Interpreting Coordinate Graphs",
+          "rows": 3690,
+          "error_rate": 0.3564,
+          "weight": 3690.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 33,
+              "errors": 16,
+              "error_rate": 0.4848
+            },
+            "2012_2013": {
+              "rows": 3657,
+              "errors": 1299,
+              "error_rate": 0.3552
+            }
+          }
+        },
+        {
+          "skill_name": "Angles - Obtuse. Acute. and Right",
+          "rows": 3590,
+          "error_rate": 0.4401,
+          "weight": 3590.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3590,
+              "errors": 1580,
+              "error_rate": 0.4401
+            }
+          }
+        },
+        {
+          "skill_name": "Parallel and Perpendicular Lines",
+          "rows": 3578,
+          "error_rate": 0.2842,
+          "weight": 1789.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 3578,
+              "errors": 1017,
+              "error_rate": 0.2842
+            }
+          }
+        },
+        {
+          "skill_name": "X-Y Graph Reading",
+          "rows": 1777,
+          "error_rate": 0.435,
+          "weight": 1777.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 1777,
+              "errors": 773,
+              "error_rate": 0.435
+            }
+          }
+        },
+        {
+          "skill_name": "Midpoint",
+          "rows": 522,
+          "error_rate": 0.3563,
+          "weight": 522.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 32,
+              "errors": 11,
+              "error_rate": 0.3438
+            },
+            "2012_2013": {
+              "rows": 490,
+              "errors": 175,
+              "error_rate": 0.3571
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "measurement_units",
+      "old_prior": 0.46,
+      "new_prior": 0.305,
+      "raw_error_rate": 0.3047,
+      "clamped": false,
+      "n_observations": 18408.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Unit Conversion Within a System",
+          "rows": 20953,
+          "error_rate": 0.2879,
+          "weight": 10476.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1477,
+              "errors": 679,
+              "error_rate": 0.4597
+            },
+            "2012_2013": {
+              "rows": 19476,
+              "errors": 5354,
+              "error_rate": 0.2749
+            }
+          }
+        },
+        {
+          "skill_name": "Unit Conversion Standard to Metric",
+          "rows": 6973,
+          "error_rate": 0.3263,
+          "weight": 6973.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 6973,
+              "errors": 2275,
+              "error_rate": 0.3263
+            }
+          }
+        },
+        {
+          "skill_name": "English and Metric Terminology",
+          "rows": 815,
+          "error_rate": 0.3301,
+          "weight": 815.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 815,
+              "errors": 269,
+              "error_rate": 0.3301
+            }
+          }
+        },
+        {
+          "skill_name": "Elapsed Time",
+          "rows": 89,
+          "error_rate": 0.2809,
+          "weight": 89.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 89,
+              "errors": 25,
+              "error_rate": 0.2809
+            }
+          }
+        },
+        {
+          "skill_name": "Reading a Ruler or Scale",
+          "rows": 55,
+          "error_rate": 0.4364,
+          "weight": 55.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5,
+              "errors": 5,
+              "error_rate": 1.0
+            },
+            "2012_2013": {
+              "rows": 50,
+              "errors": 19,
+              "error_rate": 0.38
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "number_properties",
+      "old_prior": 0.283,
+      "new_prior": 0.261,
+      "raw_error_rate": 0.2612,
+      "clamped": false,
+      "n_observations": 531769.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Addition and Subtraction Integers",
+          "rows": 173956,
+          "error_rate": 0.2827,
+          "weight": 173956.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 22895,
+              "errors": 7149,
+              "error_rate": 0.3123
+            },
+            "2012_2013": {
+              "rows": 151061,
+              "errors": 42036,
+              "error_rate": 0.2783
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication and Division Integers",
+          "rows": 97450,
+          "error_rate": 0.1668,
+          "weight": 97450.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 13159,
+              "errors": 3441,
+              "error_rate": 0.2615
+            },
+            "2012_2013": {
+              "rows": 84291,
+              "errors": 12810,
+              "error_rate": 0.152
+            }
+          }
+        },
+        {
+          "skill_name": "Divisibility Rules",
+          "rows": 48194,
+          "error_rate": 0.354,
+          "weight": 48194.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 2813,
+              "errors": 1036,
+              "error_rate": 0.3683
+            },
+            "2012_2013": {
+              "rows": 45381,
+              "errors": 16027,
+              "error_rate": 0.3532
+            }
+          }
+        },
+        {
+          "skill_name": "Rounding",
+          "rows": 35963,
+          "error_rate": 0.2753,
+          "weight": 35963.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 993,
+              "errors": 279,
+              "error_rate": 0.281
+            },
+            "2012_2013": {
+              "rows": 34970,
+              "errors": 9621,
+              "error_rate": 0.2751
+            }
+          }
+        },
+        {
+          "skill_name": "Least Common Multiple",
+          "rows": 33685,
+          "error_rate": 0.3285,
+          "weight": 33685.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3256,
+              "errors": 1139,
+              "error_rate": 0.3498
+            },
+            "2012_2013": {
+              "rows": 30429,
+              "errors": 9927,
+              "error_rate": 0.3262
+            }
+          }
+        },
+        {
+          "skill_name": "Ordering Integers",
+          "rows": 23604,
+          "error_rate": 0.1361,
+          "weight": 23604.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3532,
+              "errors": 750,
+              "error_rate": 0.2123
+            },
+            "2012_2013": {
+              "rows": 20072,
+              "errors": 2463,
+              "error_rate": 0.1227
+            }
+          }
+        },
+        {
+          "skill_name": "Absolute Value",
+          "rows": 20921,
+          "error_rate": 0.2684,
+          "weight": 20921.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 7430,
+              "errors": 1810,
+              "error_rate": 0.2436
+            },
+            "2012_2013": {
+              "rows": 13491,
+              "errors": 3806,
+              "error_rate": 0.2821
+            }
+          }
+        },
+        {
+          "skill_name": "Greatest Common Factor",
+          "rows": 18464,
+          "error_rate": 0.2488,
+          "weight": 18464.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5639,
+              "errors": 696,
+              "error_rate": 0.1234
+            },
+            "2012_2013": {
+              "rows": 12825,
+              "errors": 3898,
+              "error_rate": 0.3039
+            }
+          }
+        },
+        {
+          "skill_name": "Prime Number",
+          "rows": 14413,
+          "error_rate": 0.2408,
+          "weight": 14413.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 646,
+              "errors": 145,
+              "error_rate": 0.2245
+            },
+            "2012_2013": {
+              "rows": 13767,
+              "errors": 3326,
+              "error_rate": 0.2416
+            }
+          }
+        },
+        {
+          "skill_name": "Subtraction Whole Numbers",
+          "rows": 13537,
+          "error_rate": 0.2775,
+          "weight": 13537.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 7700,
+              "errors": 2752,
+              "error_rate": 0.3574
+            },
+            "2012_2013": {
+              "rows": 5837,
+              "errors": 1004,
+              "error_rate": 0.172
+            }
+          }
+        },
+        {
+          "skill_name": "Addition Whole Numbers",
+          "rows": 11578,
+          "error_rate": 0.19,
+          "weight": 11578.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 4737,
+              "errors": 1146,
+              "error_rate": 0.2419
+            },
+            "2012_2013": {
+              "rows": 6841,
+              "errors": 1054,
+              "error_rate": 0.1541
+            }
+          }
+        },
+        {
+          "skill_name": "Number Line",
+          "rows": 8426,
+          "error_rate": 0.3477,
+          "weight": 8426.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1895,
+              "errors": 768,
+              "error_rate": 0.4053
+            },
+            "2012_2013": {
+              "rows": 6531,
+              "errors": 2162,
+              "error_rate": 0.331
+            }
+          }
+        },
+        {
+          "skill_name": "Prime Factor",
+          "rows": 5972,
+          "error_rate": 0.2813,
+          "weight": 5972.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 5972,
+              "errors": 1680,
+              "error_rate": 0.2813
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplication Whole Numbers",
+          "rows": 5938,
+          "error_rate": 0.2969,
+          "weight": 5938.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 110,
+              "errors": 62,
+              "error_rate": 0.5636
+            },
+            "2012_2013": {
+              "rows": 5828,
+              "errors": 1701,
+              "error_rate": 0.2919
+            }
+          }
+        },
+        {
+          "skill_name": "Estimation",
+          "rows": 4487,
+          "error_rate": 0.3089,
+          "weight": 4487.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1609,
+              "errors": 340,
+              "error_rate": 0.2113
+            },
+            "2012_2013": {
+              "rows": 2878,
+              "errors": 1046,
+              "error_rate": 0.3634
+            }
+          }
+        },
+        {
+          "skill_name": "Division Whole Numbers",
+          "rows": 4112,
+          "error_rate": 0.3465,
+          "weight": 4112.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 4112,
+              "errors": 1425,
+              "error_rate": 0.3465
+            }
+          }
+        },
+        {
+          "skill_name": "Ordering Real Numbers",
+          "rows": 3975,
+          "error_rate": 0.3537,
+          "weight": 3975.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1525,
+              "errors": 497,
+              "error_rate": 0.3259
+            },
+            "2012_2013": {
+              "rows": 2450,
+              "errors": 909,
+              "error_rate": 0.371
+            }
+          }
+        },
+        {
+          "skill_name": "Computation with Real Numbers",
+          "rows": 3080,
+          "error_rate": 0.3529,
+          "weight": 3080.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 42,
+              "errors": 34,
+              "error_rate": 0.8095
+            },
+            "2012_2013": {
+              "rows": 3038,
+              "errors": 1053,
+              "error_rate": 0.3466
+            }
+          }
+        },
+        {
+          "skill_name": "Expanded, Standard and Word Notation",
+          "rows": 2985,
+          "error_rate": 0.2204,
+          "weight": 2985.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2985,
+              "errors": 658,
+              "error_rate": 0.2204
+            }
+          }
+        },
+        {
+          "skill_name": "Common Multiple",
+          "rows": 378,
+          "error_rate": 0.2884,
+          "weight": 378.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 378,
+              "errors": 109,
+              "error_rate": 0.2884
+            }
+          }
+        },
+        {
+          "skill_name": "Graphing Inequalities on a number line",
+          "rows": 322,
+          "error_rate": 0.3075,
+          "weight": 161.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 322,
+              "errors": 99,
+              "error_rate": 0.3075
+            }
+          }
+        },
+        {
+          "skill_name": "Ordering Whole Numbers",
+          "rows": 259,
+          "error_rate": 0.1236,
+          "weight": 259.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 259,
+              "errors": 32,
+              "error_rate": 0.1236
+            }
+          }
+        },
+        {
+          "skill_name": "Common Factor",
+          "rows": 141,
+          "error_rate": 0.3546,
+          "weight": 141.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 141,
+              "errors": 50,
+              "error_rate": 0.3546
+            }
+          }
+        },
+        {
+          "skill_name": "Odd and Even Number",
+          "rows": 76,
+          "error_rate": 0.1711,
+          "weight": 76.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 76,
+              "errors": 13,
+              "error_rate": 0.1711
+            }
+          }
+        },
+        {
+          "skill_name": "Properties of Numbers",
+          "rows": 14,
+          "error_rate": 0.4286,
+          "weight": 14.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 14,
+              "errors": 6,
+              "error_rate": 0.4286
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "order_of_operations",
+      "old_prior": 0.413,
+      "new_prior": 0.352,
+      "raw_error_rate": 0.3515,
+      "clamped": false,
+      "n_observations": 110785.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Order of Operations All",
+          "rows": 71968,
+          "error_rate": 0.3777,
+          "weight": 71968.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 4659,
+              "errors": 1889,
+              "error_rate": 0.4055
+            },
+            "2012_2013": {
+              "rows": 67309,
+              "errors": 25291,
+              "error_rate": 0.3757
+            }
+          }
+        },
+        {
+          "skill_name": "Order of Operations +,-,/,* () positive reals",
+          "rows": 35700,
+          "error_rate": 0.2925,
+          "weight": 35700.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 35700,
+              "errors": 10443,
+              "error_rate": 0.2925
+            }
+          }
+        },
+        {
+          "skill_name": "Order of Operations +.-./.* () positive reals",
+          "rows": 3072,
+          "error_rate": 0.4242,
+          "weight": 3072.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3072,
+              "errors": 1303,
+              "error_rate": 0.4242
+            }
+          }
+        },
+        {
+          "skill_name": "Calculation with + - * /",
+          "rows": 45,
+          "error_rate": 0.3778,
+          "weight": 45.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 45,
+              "errors": 17,
+              "error_rate": 0.3778
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "polynomials",
+      "old_prior": 0.364,
+      "new_prior": 0.299,
+      "raw_error_rate": 0.2987,
+      "clamped": false,
+      "n_observations": 23684.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Polynomial Factors",
+          "rows": 22489,
+          "error_rate": 0.3488,
+          "weight": 11244.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 392,
+              "errors": 138,
+              "error_rate": 0.352
+            },
+            "2012_2013": {
+              "rows": 22097,
+              "errors": 7707,
+              "error_rate": 0.3488
+            }
+          }
+        },
+        {
+          "skill_name": "Multiplying non Monomial Polynomials",
+          "rows": 6858,
+          "error_rate": 0.2826,
+          "weight": 6858.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 6858,
+              "errors": 1938,
+              "error_rate": 0.2826
+            }
+          }
+        },
+        {
+          "skill_name": "Parts of a Polyomial, Terms, Coefficient, Monomial, Exponent, Variable",
+          "rows": 3136,
+          "error_rate": 0.1751,
+          "weight": 3136.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 3136,
+              "errors": 549,
+              "error_rate": 0.1751
+            }
+          }
+        },
+        {
+          "skill_name": "Factoring Polynomials Standard",
+          "rows": 2108,
+          "error_rate": 0.149,
+          "weight": 1054.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 2108,
+              "errors": 314,
+              "error_rate": 0.149
+            }
+          }
+        },
+        {
+          "skill_name": "Parts of a Polyomial. Terms. Coefficient. Monomial. Exponent. Variable",
+          "rows": 1392,
+          "error_rate": 0.3657,
+          "weight": 1392.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1392,
+              "errors": 509,
+              "error_rate": 0.3657
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "quadratic_equations",
+      "old_prior": 0.5,
+      "new_prior": 0.541,
+      "raw_error_rate": 0.5412,
+      "clamped": false,
+      "n_observations": 2309.7,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Quadratic Formula to Solve Quadratic Equation",
+          "rows": 2135,
+          "error_rate": 0.5489,
+          "weight": 2135.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 32,
+              "errors": 28,
+              "error_rate": 0.875
+            },
+            "2012_2013": {
+              "rows": 2103,
+              "errors": 1144,
+              "error_rate": 0.544
+            }
+          }
+        },
+        {
+          "skill_name": "Quadratic Equation Solving",
+          "rows": 224,
+          "error_rate": 0.5625,
+          "weight": 74.7,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 224,
+              "errors": 126,
+              "error_rate": 0.5625
+            }
+          }
+        },
+        {
+          "skill_name": "Recognize Quadratic Pattern",
+          "rows": 119,
+          "error_rate": 0.4958,
+          "weight": 59.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 113,
+              "errors": 53,
+              "error_rate": 0.469
+            },
+            "2012_2013": {
+              "rows": 6,
+              "errors": 6,
+              "error_rate": 1.0
+            }
+          }
+        },
+        {
+          "skill_name": "Solve Quadratic Equations Using Factoring",
+          "rows": 81,
+          "error_rate": 0.1605,
+          "weight": 40.5,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 81,
+              "errors": 13,
+              "error_rate": 0.1605
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "radical_expressions",
+      "old_prior": 0.225,
+      "new_prior": 0.214,
+      "raw_error_rate": 0.2141,
+      "clamped": false,
+      "n_observations": 30788.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Square Root",
+          "rows": 30400,
+          "error_rate": 0.2128,
+          "weight": 30400.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5685,
+              "errors": 1281,
+              "error_rate": 0.2253
+            },
+            "2012_2013": {
+              "rows": 24715,
+              "errors": 5187,
+              "error_rate": 0.2099
+            }
+          }
+        },
+        {
+          "skill_name": "Square Roots",
+          "rows": 388,
+          "error_rate": 0.3222,
+          "weight": 388.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 388,
+              "errors": 125,
+              "error_rate": 0.3222
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "ratios_proportions",
+      "old_prior": 0.354,
+      "new_prior": 0.321,
+      "raw_error_rate": 0.3208,
+      "clamped": false,
+      "n_observations": 283151.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Conversion of Fraction Decimals Percents",
+          "rows": 119621,
+          "error_rate": 0.2698,
+          "weight": 59810.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 20992,
+              "errors": 7682,
+              "error_rate": 0.3659
+            },
+            "2012_2013": {
+              "rows": 98629,
+              "errors": 24591,
+              "error_rate": 0.2493
+            }
+          }
+        },
+        {
+          "skill_name": "Proportion",
+          "rows": 68055,
+          "error_rate": 0.289,
+          "weight": 68055.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 9054,
+              "errors": 3249,
+              "error_rate": 0.3588
+            },
+            "2012_2013": {
+              "rows": 59001,
+              "errors": 16420,
+              "error_rate": 0.2783
+            }
+          }
+        },
+        {
+          "skill_name": "Percent Of",
+          "rows": 47560,
+          "error_rate": 0.298,
+          "weight": 47560.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 22931,
+              "errors": 6616,
+              "error_rate": 0.2885
+            },
+            "2012_2013": {
+              "rows": 24629,
+              "errors": 7559,
+              "error_rate": 0.3069
+            }
+          }
+        },
+        {
+          "skill_name": "Finding Percents",
+          "rows": 34403,
+          "error_rate": 0.4238,
+          "weight": 34403.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 7694,
+              "errors": 3553,
+              "error_rate": 0.4618
+            },
+            "2012_2013": {
+              "rows": 26709,
+              "errors": 11027,
+              "error_rate": 0.4129
+            }
+          }
+        },
+        {
+          "skill_name": "Unit Rate",
+          "rows": 27950,
+          "error_rate": 0.329,
+          "weight": 27950.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 3315,
+              "errors": 1787,
+              "error_rate": 0.5391
+            },
+            "2012_2013": {
+              "rows": 24635,
+              "errors": 7409,
+              "error_rate": 0.3008
+            }
+          }
+        },
+        {
+          "skill_name": "Calculations with Similar Figures",
+          "rows": 20746,
+          "error_rate": 0.3216,
+          "weight": 20746.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 5574,
+              "errors": 1749,
+              "error_rate": 0.3138
+            },
+            "2012_2013": {
+              "rows": 15172,
+              "errors": 4923,
+              "error_rate": 0.3245
+            }
+          }
+        },
+        {
+          "skill_name": "Scale Factor",
+          "rows": 9919,
+          "error_rate": 0.3386,
+          "weight": 9919.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 288,
+              "errors": 100,
+              "error_rate": 0.3472
+            },
+            "2012_2013": {
+              "rows": 9631,
+              "errors": 3259,
+              "error_rate": 0.3384
+            }
+          }
+        },
+        {
+          "skill_name": "Percent Increase or Decrease",
+          "rows": 9003,
+          "error_rate": 0.5018,
+          "weight": 9003.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 9003,
+              "errors": 4518,
+              "error_rate": 0.5018
+            }
+          }
+        },
+        {
+          "skill_name": "Rate",
+          "rows": 2151,
+          "error_rate": 0.3896,
+          "weight": 2151.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 91,
+              "errors": 57,
+              "error_rate": 0.6264
+            },
+            "2012_2013": {
+              "rows": 2060,
+              "errors": 781,
+              "error_rate": 0.3791
+            }
+          }
+        },
+        {
+          "skill_name": "Effect of Changing Dimensions of a Shape Prportionally",
+          "rows": 2105,
+          "error_rate": 0.4622,
+          "weight": 1052.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1099,
+              "errors": 494,
+              "error_rate": 0.4495
+            },
+            "2012_2013": {
+              "rows": 1006,
+              "errors": 479,
+              "error_rate": 0.4761
+            }
+          }
+        },
+        {
+          "skill_name": "Percent Discount",
+          "rows": 1066,
+          "error_rate": 0.5469,
+          "weight": 1066.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 47,
+              "errors": 36,
+              "error_rate": 0.766
+            },
+            "2012_2013": {
+              "rows": 1019,
+              "errors": 547,
+              "error_rate": 0.5368
+            }
+          }
+        },
+        {
+          "skill_name": "Percents",
+          "rows": 780,
+          "error_rate": 0.5577,
+          "weight": 780.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 117,
+              "errors": 78,
+              "error_rate": 0.6667
+            },
+            "2012_2013": {
+              "rows": 663,
+              "errors": 357,
+              "error_rate": 0.5385
+            }
+          }
+        },
+        {
+          "skill_name": "Comparing and Identifying Slope/Rate of Change",
+          "rows": 487,
+          "error_rate": 0.3203,
+          "weight": 243.5,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 487,
+              "errors": 156,
+              "error_rate": 0.3203
+            }
+          }
+        },
+        {
+          "skill_name": "Finding Ratios",
+          "rows": 385,
+          "error_rate": 0.2494,
+          "weight": 385.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 385,
+              "errors": 96,
+              "error_rate": 0.2494
+            }
+          }
+        },
+        {
+          "skill_name": "Similar Figures",
+          "rows": 27,
+          "error_rate": 0.2963,
+          "weight": 27.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 27,
+              "errors": 8,
+              "error_rate": 0.2963
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "right_triangle_geometry",
+      "old_prior": 0.372,
+      "new_prior": 0.315,
+      "raw_error_rate": 0.3151,
+      "clamped": false,
+      "n_observations": 41757.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Pythagorean Theorem",
+          "rows": 38270,
+          "error_rate": 0.3173,
+          "weight": 38270.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 6611,
+              "errors": 2461,
+              "error_rate": 0.3723
+            },
+            "2012_2013": {
+              "rows": 31659,
+              "errors": 9682,
+              "error_rate": 0.3058
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Classification Triangles",
+          "rows": 5130,
+          "error_rate": 0.2499,
+          "weight": 2565.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 5130,
+              "errors": 1282,
+              "error_rate": 0.2499
+            }
+          }
+        },
+        {
+          "skill_name": "Distance Formula",
+          "rows": 922,
+          "error_rate": 0.4067,
+          "weight": 922.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 922,
+              "errors": 375,
+              "error_rate": 0.4067
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "sequences_series",
+      "old_prior": 0.397,
+      "new_prior": 0.362,
+      "raw_error_rate": 0.3617,
+      "clamped": false,
+      "n_observations": 36090.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Pattern Finding",
+          "rows": 27915,
+          "error_rate": 0.4035,
+          "weight": 27915.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 7343,
+              "errors": 2937,
+              "error_rate": 0.4
+            },
+            "2012_2013": {
+              "rows": 20572,
+              "errors": 8327,
+              "error_rate": 0.4048
+            }
+          }
+        },
+        {
+          "skill_name": "Recognize Linear Pattern",
+          "rows": 8116,
+          "error_rate": 0.2167,
+          "weight": 8116.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 280,
+              "errors": 83,
+              "error_rate": 0.2964
+            },
+            "2012_2013": {
+              "rows": 7836,
+              "errors": 1676,
+              "error_rate": 0.2139
+            }
+          }
+        },
+        {
+          "skill_name": "Recognize Quadratic Pattern",
+          "rows": 119,
+          "error_rate": 0.4958,
+          "weight": 59.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 113,
+              "errors": 53,
+              "error_rate": 0.469
+            },
+            "2012_2013": {
+              "rows": 6,
+              "errors": 6,
+              "error_rate": 1.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "systems_of_linear_equations",
+      "old_prior": 0.48,
+      "new_prior": 0.347,
+      "raw_error_rate": 0.3467,
+      "clamped": false,
+      "n_observations": 38546.0,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Substitution",
+          "rows": 21015,
+          "error_rate": 0.2594,
+          "weight": 10507.5,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 21015,
+              "errors": 5451,
+              "error_rate": 0.2594
+            }
+          }
+        },
+        {
+          "skill_name": "Unit Conversion Within a System",
+          "rows": 20953,
+          "error_rate": 0.2879,
+          "weight": 10476.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 1477,
+              "errors": 679,
+              "error_rate": 0.4597
+            },
+            "2012_2013": {
+              "rows": 19476,
+              "errors": 5354,
+              "error_rate": 0.2749
+            }
+          }
+        },
+        {
+          "skill_name": "Solving Systems of Linear Equations by Graphing",
+          "rows": 17594,
+          "error_rate": 0.3598,
+          "weight": 8797.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 353,
+              "errors": 123,
+              "error_rate": 0.3484
+            },
+            "2012_2013": {
+              "rows": 17241,
+              "errors": 6208,
+              "error_rate": 0.3601
+            }
+          }
+        },
+        {
+          "skill_name": "Solving Systems of Linear Equations",
+          "rows": 17010,
+          "error_rate": 0.5034,
+          "weight": 8505.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 234,
+              "errors": 189,
+              "error_rate": 0.8077
+            },
+            "2012_2013": {
+              "rows": 16776,
+              "errors": 8374,
+              "error_rate": 0.4992
+            }
+          }
+        },
+        {
+          "skill_name": "Solving System of Equation",
+          "rows": 260,
+          "error_rate": 0.6769,
+          "weight": 260.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 260,
+              "errors": 176,
+              "error_rate": 0.6769
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concept_id": "triangles_congruence",
+      "old_prior": 0.204,
+      "new_prior": 0.222,
+      "raw_error_rate": 0.2222,
+      "clamped": false,
+      "n_observations": 15825.5,
+      "applied": true,
+      "reason": "calibrated",
+      "mapped_skills": [
+        {
+          "skill_name": "Interior Angles Triangle",
+          "rows": 14865,
+          "error_rate": 0.2868,
+          "weight": 7432.5,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 748,
+              "errors": 268,
+              "error_rate": 0.3583
+            },
+            "2012_2013": {
+              "rows": 14117,
+              "errors": 3996,
+              "error_rate": 0.2831
+            }
+          }
+        },
+        {
+          "skill_name": "Congruence",
+          "rows": 5828,
+          "error_rate": 0.1277,
+          "weight": 5828.0,
+          "by_dataset": {
+            "2009_2010": {
+              "rows": 587,
+              "errors": 62,
+              "error_rate": 0.1056
+            },
+            "2012_2013": {
+              "rows": 5241,
+              "errors": 682,
+              "error_rate": 0.1301
+            }
+          }
+        },
+        {
+          "skill_name": "Properties and Classification Triangles",
+          "rows": 5130,
+          "error_rate": 0.2499,
+          "weight": 2565.0,
+          "by_dataset": {
+            "2012_2013": {
+              "rows": 5130,
+              "errors": 1282,
+              "error_rate": 0.2499
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "untouched_concept_ids": [
+    "act_strategy",
+    "applications_of_derivatives",
+    "applications_of_integrals",
+    "complex_numbers",
+    "conic_sections",
+    "derivatives",
+    "exponential_functions",
+    "inferential_statistics",
+    "integrals",
+    "limits_continuity",
+    "logarithmic_functions",
+    "matrices",
+    "probability_distributions",
+    "rational_expressions",
+    "representation_translation",
+    "trigonometry_basics",
+    "vectors"
+  ],
+  "unmapped_skills": [
+    {
+      "skill_name": "Geometric Definitions",
+      "rows": 57
+    },
+    {
+      "skill_name": "Combinatorics",
+      "rows": 4
+    },
+    {
+      "skill_name": "Co-ordinate Points",
+      "rows": 1
+    }
+  ]
+}

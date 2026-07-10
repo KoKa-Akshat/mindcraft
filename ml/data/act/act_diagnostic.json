@@ -78,6 +78,46 @@
         "concept_id": "functions_basics",
         "name": "Basics of Functions",
         "act_high_priority": true
+      },
+      {
+        "concept_id": "basic_probability",
+        "name": "Basic Probability",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "trigonometry_basics",
+        "name": "Trigonometry Basics",
+        "act_high_priority": true
+      },
+      {
+        "concept_id": "sequences_series",
+        "name": "Sequences and Series",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "linear_inequalities",
+        "name": "Linear Inequalities",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "basic_equations",
+        "name": "Basic One-Variable Equations",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "lines_angles",
+        "name": "Lines and Angles",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "triangles_congruence",
+        "name": "Triangles and Congruence",
+        "act_high_priority": false
+      },
+      {
+        "concept_id": "right_triangle_geometry",
+        "name": "Right Triangle Geometry",
+        "act_high_priority": true
       }
     ]
   },
@@ -100,21 +140,6 @@
         "encouragement_hint": "Students may think they must expand every expression; may confuse (n\u22123)^2 with n^2\u22129; may not realize answer choices can be tested directly."
       },
       {
-        "question_id": "act_t1_q2_8b90a0",
-        "concept_id": "ratios_proportions",
-        "stem": "Beth got a job painting dorm rooms at her college. At top speed, she could paint 5 identical rooms during one 6-hour shift. How long did she take to paint each room?",
-        "choices": {
-          "A": "50 minutes",
-          "B": "1 hour and 10 minutes",
-          "C": "1 hour and 12 minutes",
-          "D": "1 hour and 15 minutes",
-          "E": "1 hour and 20 minutes"
-        },
-        "correct_answer": "6/5 hours or 1.2 hours",
-        "skill_gap_if_wrong": "Weakness in unit rate direction; not tracking units; proportional reasoning with multiple quantities.",
-        "encouragement_hint": "Student may invert the ratio and compute 5/6 hour; may confuse rooms per hour with hours per room; may miss later unit conversion if answer choices use minutes/seconds."
-      },
-      {
         "question_id": "act_t1_q10_b1f9aa",
         "concept_id": "area_volume",
         "stem": "A square field has an area of 22,500 square feet. To the nearest foot, what is the diagonal distance across the field?",
@@ -128,6 +153,21 @@
         "correct_answer": "212 feet",
         "skill_gap_if_wrong": "Weakness in square properties; area-to-side inversion; Pythagorean theorem; concept mapping from quadrilaterals to triangles.",
         "encouragement_hint": "Students may give the side length instead of the diagonal; may forget to take the square root of area; may not connect square diagonal to right-triangle hypotenuse."
+      },
+      {
+        "question_id": "act_t1_q12_5f03f8",
+        "concept_id": "area_volume",
+        "stem": "Andrea wants to fill in two sections of her backyard with sod that must be purchased in 2-x-2-foot squares. If the two sections measure 30 x 40 feet and 60 x 80 feet, how many squares of sod does she need to buy?",
+        "choices": {
+          "A": "1,000",
+          "B": "1,250",
+          "C": "1,500",
+          "D": "1,600",
+          "E": "2,000"
+        },
+        "correct_answer": "1,500",
+        "skill_gap_if_wrong": "Weakness in area formulas; unit-square reasoning; multi-step word problem organization; visual diagram use.",
+        "encouragement_hint": "Students may forget the second section; may divide by 2 instead of 4; may confuse side length of sod square with area; may compute perimeter."
       },
       {
         "question_id": "act_t1_q3_9594c8",
@@ -145,6 +185,21 @@
         "encouragement_hint": "Student may combine unlike terms incorrectly; may make sign mistakes moving terms; may panic if coefficients are fractions even though the process is identical."
       },
       {
+        "question_id": "act_t1_q6_820404",
+        "concept_id": "linear_equations",
+        "stem": "When you multiply a number by 4 and then subtract 7, the result is the same as if you first subtracted 7 from the same number and then multiplied by 11. What is the number?",
+        "choices": {
+          "A": "10",
+          "B": "13",
+          "C": "19",
+          "D": "23",
+          "E": "31"
+        },
+        "correct_answer": "10",
+        "skill_gap_if_wrong": "Weakness in verbal translation; parentheses/distributive property; equation setup; interpreting 'same as' as equals.",
+        "encouragement_hint": "Student may write 11x\u22127 instead of 11(x\u22127); may think it is a two-equation system when it is actually one equation from two equivalent expressions; may struggle to define the unknown."
+      },
+      {
         "question_id": "act_t1_q5_361216",
         "concept_id": "descriptive_statistics",
         "stem": "William earned $3,200 per month as a teacher for the ten months from September to June. Then he took a job as a barista at a local caf\u00e9, where he earned $2,000 per month during July and August. What was his average monthly pay for the 12 months?",
@@ -158,46 +213,77 @@
         "correct_answer": "$3,000",
         "skill_gap_if_wrong": "Weakness in recognizing mean from word problems; weighted average; unit consistency; translating text into math.",
         "encouragement_hint": "Student may average the two monthly pay rates directly instead of weighting by number of months; may introduce unnecessary variables; may fail to see it is a mean problem because it is embedded in words."
+      },
+      {
+        "question_id": "act_t1_q1_57a805",
+        "concept_id": "sequences_series",
+        "stem": "Which of the following numbers completes the sequence 3, 8, 14, 21, 29, ___?",
+        "choices": {
+          "A": "35",
+          "B": "36",
+          "C": "37",
+          "D": "38",
+          "E": "39"
+        },
+        "correct_answer": "38",
+        "skill_gap_if_wrong": "Weakness in checking first differences; overgeneralizing sequence labels; not distinguishing sequence vs series.",
+        "encouragement_hint": "Student may assume every sequence question is arithmetic and look for one constant difference. Student may try to connect it to arithmetic/geometric series even though no summation is involved."
+      },
+      {
+        "question_id": "act_t1_q7_1ae232",
+        "concept_id": "linear_inequalities",
+        "stem": "Which of the following inequalities is represented by the following number line?",
+        "choices": {
+          "A": "\u20135 < x < 5",
+          "B": "\u20135 \u2264 x < 5",
+          "C": "\u20135 < x \u2264 5",
+          "D": "| x | < 5",
+          "E": "5 \u2264 | x |"
+        },
+        "correct_answer": "\u22125 \u2264 x < 5",
+        "skill_gap_if_wrong": "Weakness in number line reading; endpoint inclusion/exclusion; compound inequality notation; interval notation translation.",
+        "encouragement_hint": "Students may reverse inequality direction, confuse open vs closed circles, treat the interval as absolute value, or forget that compound inequalities need both bounds."
       }
     ]
   },
   "event_emission": {
-    "endpoint": "POST {ML_BASE}/learning-event",
+    "endpoints": {
+      "seed": "POST {ML_BASE}/seed-assessment",
+      "outcomes": "POST {ML_BASE}/record-outcomes"
+    },
     "confidence_report": {
       "subject_id": "math",
       "concept_id": "<concept_id>",
-      "event_type": "confidence_report",
-      "outcome": null,
       "source": "diagnostic",
       "metadata": {
         "confidence": "<0..1 from scale>",
         "step": "confidence"
       },
-      "note": "outcome left null so self-report does not pollute mastery; confidence stored in metadata as a prior."
+      "note": "Seeded as diagnostic context; self-report should not be recorded as correctness evidence."
     },
     "probe_answer": {
       "subject_id": "math",
       "concept_id": "<concept_id>",
-      "event_type": "answer_submitted",
       "outcome": "<1.0 if correct else 0.0>",
       "duration_ms": "<time on question>",
       "source": "diagnostic",
       "metadata": {
         "question_id": "<id>",
-        "selected": "<choice>",
+        "selectedChoiceIndex": "<choice index>",
+        "misconceptionId": "<optional C5 misconception_id>",
+        "errorType": "<optional distractor taxonomy error_type>",
         "step": "probe"
       }
     },
     "diagnostic_complete": {
       "subject_id": "math",
       "concept_id": "diagnostic",
-      "event_type": "diagnostic_complete",
       "source": "diagnostic",
       "metadata": {
         "concepts_seen": "<int>",
         "goals": "<text>"
       },
-      "note": "marks first-login diagnostic done; engine can now serve /learning-world/math and /recommend."
+      "note": "marks first-login diagnostic done; engine can now serve recommendations."
     }
   }
 }

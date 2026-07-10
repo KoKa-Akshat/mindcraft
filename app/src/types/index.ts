@@ -133,6 +133,7 @@ export interface StudentWorkEntry {
   sessionId?: string
   studentId: string
   prompt: string
+  recallTag?: string
   questionId?: string
   conceptId?: string
   source?: WorkSource

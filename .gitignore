@@ -59,6 +59,7 @@ ml/data/story_cells/discarded_*.json
 # Repo-root large/binary files — store in Drive, not git
 data/*.zip
 data/SchemasV2/
+data/assistments/
 img/Vid.mp4
 *.mp4
 tmp-*.png

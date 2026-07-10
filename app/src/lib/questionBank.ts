@@ -1,5 +1,6 @@
 import generatedQuestionsData from '../data/generatedQuestions.json'
 import actMasterBankData from '../data/actMasterQuestionBank.generated.json'
+import actQuestionsBankData from '../data/actQuestionsBank.json'
 import eediQuestionsData from '../data/eediQuestions.json'
 import openstaxQuestionsData from '../data/openstaxQuestions.json'
 import openstaxMcqData from '../data/openstaxMCQ.json'
@@ -2073,6 +2074,9 @@ const GENERATED_QUESTIONS = (generatedQuestionsData as Question[]).filter(q => !
 const ACT_MASTER = (actMasterBankData as Question[])
   .filter(q => !STATIC_IDS.has(q.id))
   .filter(hasValidKey)
+const ACT_ANNOTATED = (actQuestionsBankData as Question[])
+  .filter(q => !STATIC_IDS.has(q.id))
+  .filter(hasValidKey)
 const EEDI_QUESTIONS = (eediQuestionsData as Question[])
   .filter(q => !STATIC_IDS.has(q.id))
   .filter(isUsable)
@@ -2090,6 +2094,7 @@ const MERGED_IDS = new Set([
   ...STATIC_IDS,
   ...GENERATED_QUESTIONS.map(q => q.id),
   ...ACT_MASTER.map(q => q.id),
+  ...ACT_ANNOTATED.map(q => q.id),
   ...EEDI_QUESTIONS.map(q => q.id),
   ...OPENSTAX_QUESTIONS.map(q => q.id),
   ...OPENSTAX_MCQ_QUESTIONS.map(q => q.id),
@@ -2100,6 +2105,7 @@ const Q: Question[] = tagQuestionFormats([
   ...RAW_QUESTIONS,
   ...GENERATED_QUESTIONS,
   ...ACT_MASTER,
+  ...ACT_ANNOTATED,
   ...EEDI_QUESTIONS,
   ...OPENSTAX_QUESTIONS,
   ...OPENSTAX_MCQ_QUESTIONS,

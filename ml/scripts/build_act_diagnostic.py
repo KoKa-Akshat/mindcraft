@@ -8,11 +8,12 @@ Output : ml/data/act/
                                   ranked "main concepts" for the diagnostic
            act_diagnostic.json    the minimally-invasive diagnostic spec
                                   (concept confidence checks + probe questions)
+           act_questions.bank.json frontend-ready C5/questionBank records
 
 This does NOT need the embedding model. It reconciles the co-founder's human
 topic taxonomy (primary_topic / concept_path / skill_gap_if_wrong) with the
-engine ontology (data/ontology_complete.json) so diagnostic events can be
-emitted with concept_ids the engine already understands.
+standardized Layer-1 ontology so diagnostic events can be emitted with
+canonical concept_ids the engine already understands.
 
 Usage:
   python scripts/build_act_diagnostic.py \
@@ -27,11 +28,20 @@ import json
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
-
-import openpyxl
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-ONTOLOGY_PATH = ROOT / "data" / "ontology_complete.json"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from mindcraft_graph.loaders.complete_ontology_loader import load_complete_ontology
+
+ONTOLOGY_PATH = (
+    ROOT
+    / "data"
+    / "5_level_ontology"
+    / "01_mindcraft_concept_ontology_v2_6_with_combinations.json"
+)
 OUTPUT_DIR = ROOT / "data" / "act"
 
 # Sentinel concept_id for topics with no ontology home yet (number theory /
@@ -106,6 +116,15 @@ def qid(test_number: str, question_number: str, stem: str) -> str:
 
 
 def load_questions(xlsx_path: Path) -> list[dict]:
+    try:
+        import openpyxl
+    except ImportError as exc:
+        raise SystemExit(
+            "openpyxl is required to read the ACT spreadsheet. "
+            "Install it in this environment or use --from-json to rebuild "
+            "derived outputs from an existing act_questions.json."
+        ) from exc
+
     wb = openpyxl.load_workbook(xlsx_path, read_only=True, data_only=True)
     ws = wb["Question Intelligence"]
     rows = list(ws.iter_rows(values_only=True))
@@ -117,10 +136,31 @@ def load_questions(xlsx_path: Path) -> list[dict]:
     ]
 
 
-TOP_CONCEPTS = 8           # confidence step stays minimally invasive
-PROBES_PER_CONCEPT = 1     # one tracked probe question per concept
+TOP_CONCEPTS = 20          # covers the ACT-bank concepts with local coverage
+PROBES_PER_CONCEPT = 2     # use a second probe when the bank supports it
 ACT_CHOICE_ORDER = "ABCDEFGHJK"
 DISPLAY_LABELS = "ABCDE"
+
+
+def _slug(text: str, *, max_len: int = 48) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "_", text.lower()).strip("_")
+    return slug[:max_len].strip("_") or "unspecified"
+
+
+def _choice_match_key(text: str) -> str:
+    value = text.strip().lower()
+    value = value.replace("−", "-").replace("–", "-").replace("—", "-")
+    value = re.sub(r"^[a-e][\).:]\s*", "", value)
+    value = value.replace("$", "")
+    value = re.sub(r"\s+", "", value)
+    return re.sub(r"[,\.]", "", value)
+
+
+def _normalized_choice_items(choices: dict) -> list[tuple[str, str]]:
+    return sorted(
+        ((label, text) for label, text in choices.items() if text),
+        key=lambda kv: ACT_CHOICE_ORDER.index(kv[0]) if kv[0] in ACT_CHOICE_ORDER else 99,
+    )[:5]
 
 
 def _is_usable_probe(q: dict) -> bool:
@@ -147,16 +187,95 @@ def _is_usable_probe(q: dict) -> bool:
             return False
         if len(v) <= 2 and not any(c.isdigit() for c in v):
             return False
-    return True
+    return resolve_correct_index(ans, _choices_list(choices)) is not None
 
 
 def _normalize_choices(choices: dict) -> dict:
     """ACT uses A–E on early items and F–K later — always show A–E to students."""
-    ordered = sorted(
-        choices.items(),
-        key=lambda kv: ACT_CHOICE_ORDER.index(kv[0]) if kv[0] in ACT_CHOICE_ORDER else 99,
-    )
+    ordered = _normalized_choice_items(choices)
     return {DISPLAY_LABELS[i]: text for i, (_, text) in enumerate(ordered[:5])}
+
+
+def _choices_list(choices: dict) -> list[str]:
+    return [text for _, text in _normalized_choice_items(choices)]
+
+
+def resolve_correct_index(answer: str, choices: list[str]) -> int | None:
+    """Resolve a source answer that may be a label (A/F) or answer text."""
+    ans = (answer or "").strip()
+    if not ans:
+        return None
+
+    upper = ans.upper()
+    if len(upper) == 1 and upper in DISPLAY_LABELS:
+        idx = DISPLAY_LABELS.index(upper)
+        return idx if idx < len(choices) else None
+    if len(upper) == 1 and upper in ACT_CHOICE_ORDER:
+        idx = ACT_CHOICE_ORDER.index(upper)
+        return idx if idx < len(choices) else None
+
+    answer_key = _choice_match_key(ans)
+    if not answer_key:
+        return None
+    for idx, choice in enumerate(choices):
+        if _choice_match_key(choice) == answer_key:
+            return idx
+    for idx, choice in enumerate(choices):
+        choice_key = _choice_match_key(choice)
+        if answer_key in choice_key or choice_key in answer_key:
+            return idx
+    return None
+
+
+def _misconception_id(q: dict) -> str | None:
+    source = (q.get("skill_gap_if_wrong") or q.get("misconception_risks") or "").strip()
+    if not source:
+        return None
+    concept = _slug(q.get("concept_id") or "act")
+    digest = hashlib.sha256(source.encode("utf-8")).hexdigest()[:8]
+    return f"mis_{concept}__{_slug(source)}_{digest}"
+
+
+def convert_to_bank_question(q: dict) -> dict | None:
+    choices = _choices_list(q.get("choices") or {})
+    correct_index = resolve_correct_index(q.get("correct_answer") or "", choices)
+    if len(choices) < 4 or correct_index is None or q.get("concept_id") == GAP:
+        return None
+
+    skill_gap = (q.get("skill_gap_if_wrong") or "").strip()
+    risks = (q.get("misconception_risks") or "").strip()
+    misconception_id = _misconception_id(q)
+    explanation = skill_gap or risks or "Review the underlying concept and compare each choice carefully."
+    hints = [
+        "Identify what the question is asking before choosing a method.",
+        risks or skill_gap or "Eliminate choices that do not satisfy the given conditions.",
+        "Check the selected answer back against the original problem.",
+    ]
+    item = {
+        "id": q["id"],
+        "conceptId": q["concept_id"],
+        "level": 2,
+        "question": q.get("stem") or q.get("summary") or "",
+        "choices": choices,
+        "correctIndex": correct_index,
+        "explanation": explanation,
+        "hints": hints,
+        "examTag": "ACT",
+        "format": "word_problem",
+    }
+    if misconception_id:
+        item["misconception_id"] = misconception_id
+        item["misconception_label"] = skill_gap[:120] or risks[:120]
+        item["distractor_taxonomy"] = [
+            {
+                "choice_index": idx,
+                "error_type": "act_skill_gap",
+                "misconception_id": misconception_id,
+            }
+            for idx in range(len(choices))
+            if idx != correct_index
+        ]
+    return item
 
 
 def _pick_probe(questions: list[dict], concept_id: str, used_ids: set[str]) -> dict | None:
@@ -187,8 +306,8 @@ def build_diagnostic(questions, main_concepts, concept_name) -> dict:
     """The minimally-invasive first-login diagnostic the kitchen world drives.
 
     Step 1 goals -> Step 2 concept confidence -> Step 3 a few tracked probes.
-    Each answer/confidence becomes a POST /learning-event so the engine starts
-    building the student's knowledge graph from the very first session.
+    The frontend seeds diagnostic context and records probe outcomes through
+    the live /seed-assessment and /record-outcomes endpoints.
     """
     top = main_concepts[:TOP_CONCEPTS]
 
@@ -242,47 +361,53 @@ def build_diagnostic(questions, main_concepts, concept_name) -> dict:
             "questions": probes,
         },
         "event_emission": {
-            "endpoint": "POST {ML_BASE}/learning-event",
+            "endpoints": {
+                "seed": "POST {ML_BASE}/seed-assessment",
+                "outcomes": "POST {ML_BASE}/record-outcomes",
+            },
             "confidence_report": {
                 "subject_id": "math",
                 "concept_id": "<concept_id>",
-                "event_type": "confidence_report",
-                "outcome": None,
                 "source": "diagnostic",
                 "metadata": {"confidence": "<0..1 from scale>", "step": "confidence"},
-                "note": "outcome left null so self-report does not pollute mastery; "
-                        "confidence stored in metadata as a prior.",
+                "note": "Seeded as diagnostic context; self-report should not be "
+                        "recorded as correctness evidence.",
             },
             "probe_answer": {
                 "subject_id": "math",
                 "concept_id": "<concept_id>",
-                "event_type": "answer_submitted",
                 "outcome": "<1.0 if correct else 0.0>",
                 "duration_ms": "<time on question>",
                 "source": "diagnostic",
-                "metadata": {"question_id": "<id>", "selected": "<choice>", "step": "probe"},
+                "metadata": {
+                    "question_id": "<id>",
+                    "selectedChoiceIndex": "<choice index>",
+                    "misconceptionId": "<optional C5 misconception_id>",
+                    "errorType": "<optional distractor taxonomy error_type>",
+                    "step": "probe",
+                },
             },
             "diagnostic_complete": {
                 "subject_id": "math",
                 "concept_id": "diagnostic",
-                "event_type": "diagnostic_complete",
                 "source": "diagnostic",
                 "metadata": {"concepts_seen": "<int>", "goals": "<text>"},
-                "note": "marks first-login diagnostic done; engine can now serve "
-                        "/learning-world/math and /recommend.",
+                "note": "marks first-login diagnostic done; engine can now serve recommendations.",
             },
         },
     }
 
 
-def build(xlsx_path: Path) -> None:
-    ontology = json.loads(ONTOLOGY_PATH.read_text())
-    concept_name = {c["id"]: c.get("name", c["id"]) for c in ontology["concepts"]}
-    overlay = ontology.get("act_prep_overlay", {})
-    high_priority = set(overlay.get("high_priority_concepts", []))
+def _load_ontology() -> tuple[dict, dict[str, str], set[str], set[str]]:
+    ontology, _ = load_complete_ontology(ONTOLOGY_PATH)
+    raw_ontology = json.loads(ONTOLOGY_PATH.read_text())
+    concept_name = {c.id: c.name for c in ontology.concepts}
+    tested = set(ontology.act_tested_concept_ids())
+    high_priority = set(ontology.high_priority_concepts)
+    return raw_ontology, concept_name, tested, high_priority
 
-    raw = load_questions(xlsx_path)
 
+def parse_rows(raw: list[dict]) -> tuple[list[dict], Counter, Counter, Counter]:
     questions: list[dict] = []
     unmapped_topics: Counter = Counter()
     concept_counts: Counter = Counter()
@@ -328,6 +453,24 @@ def build(xlsx_path: Path) -> None:
             "match_quality": quality,
         })
 
+    return questions, unmapped_topics, concept_counts, gap_topics
+
+
+def build_outputs(
+    questions: list[dict],
+    unmapped_topics: Counter,
+    concept_counts: Counter,
+    gap_topics: Counter,
+    *,
+    write_questions: bool,
+) -> None:
+    raw_ontology, concept_name, tested_concepts, high_priority = _load_ontology()
+    scoped_counts = Counter({
+        concept_id: count
+        for concept_id, count in concept_counts.items()
+        if concept_id in tested_concepts
+    })
+
     # ---- concept_map: crosswalk + ranked main concepts ----
     crosswalk = []
     seen = set()
@@ -342,45 +485,67 @@ def build(xlsx_path: Path) -> None:
         seen.add(concept_id)
 
     main_concepts = []
-    for concept_id, count in concept_counts.most_common():
+    for concept_id, count in scoped_counts.most_common():
         main_concepts.append({
             "concept_id": concept_id,
             "concept_name": concept_name.get(concept_id, concept_id),
             "question_count": count,
             "act_high_priority": concept_id in high_priority,
         })
-    # high-priority ACT concepts with no bank questions yet (coverage holes)
+    # ACT-tested concepts with no bank questions yet (coverage holes)
+    missing_tested = [c for c in tested_concepts if c not in concept_counts]
     missing_priority = [c for c in high_priority if c not in concept_counts]
+    bank_questions = [item for q in questions if (item := convert_to_bank_question(q))]
+    unresolved_answer_count = sum(
+        1
+        for q in questions
+        if q.get("concept_id") != GAP
+        and len(_choices_list(q.get("choices") or {})) >= 4
+        and resolve_correct_index(q.get("correct_answer") or "", _choices_list(q.get("choices") or {})) is None
+    )
 
     concept_map = {
         "source": "ACT_Question_Bank Question Intelligence sheet",
-        "ontology": "data/ontology_complete.json (37 concepts)",
+        "ontology": str(ONTOLOGY_PATH.relative_to(ROOT)),
+        "ontology_version": raw_ontology.get("meta", {}).get("version"),
         "annotated_questions": len(questions),
+        "act_tested_concepts": sorted(tested_concepts),
         "crosswalk": crosswalk,
         "main_concepts": main_concepts,
         "act_high_priority_concepts": sorted(high_priority),
+        "act_tested_without_questions": sorted(missing_tested),
         "high_priority_without_questions": sorted(missing_priority),
         "ontology_gaps": {
             "note": "topics with no matching ontology concept; co-founder may add one",
             "topics": dict(gap_topics),
         },
         "unmapped_topics": dict(unmapped_topics),
-        "act_question_patterns": overlay.get("question_patterns", []),
+        "act_question_patterns": raw_ontology.get("act_prep_overlay", {}).get("question_patterns", []),
+        "bank_conversion": {
+            "converted_questions": len(bank_questions),
+            "unresolved_or_missing_answer_key": unresolved_answer_count,
+            "note": "C5 bank records require a resolvable correctIndex; records with blank or ambiguous answers stay in act_questions.json only.",
+        },
     }
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    (OUTPUT_DIR / "act_questions.json").write_text(json.dumps(questions, indent=2))
+    if write_questions:
+        (OUTPUT_DIR / "act_questions.json").write_text(json.dumps(questions, indent=2))
     (OUTPUT_DIR / "act_concept_map.json").write_text(json.dumps(concept_map, indent=2))
+    (OUTPUT_DIR / "act_questions.bank.json").write_text(json.dumps(bank_questions, indent=2))
 
     diagnostic = build_diagnostic(questions, main_concepts, concept_name)
     (OUTPUT_DIR / "act_diagnostic.json").write_text(json.dumps(diagnostic, indent=2))
 
     # ---- report ----
     print(f"Annotated questions processed : {len(questions)}")
-    print(f"Distinct ontology concepts hit: {len(concept_counts)} / 37")
+    print(f"Distinct ontology concepts hit: {len(concept_counts)} / {len(concept_name)}")
+    print(f"ACT-tested concepts hit       : {len(scoped_counts)} / {len(tested_concepts)}")
     print(f"ACT high-priority covered     : {len(high_priority) - len(missing_priority)} / {len(high_priority)}")
     if missing_priority:
         print(f"  high-priority w/o questions : {sorted(missing_priority)}")
+    if missing_tested:
+        print(f"  ACT-tested w/o questions    : {sorted(missing_tested)}")
     if gap_topics:
         gap_total = sum(gap_topics.values())
         print(f"Ontology gaps (no concept)    : {gap_total} questions -> {dict(gap_topics)}")
@@ -388,7 +553,44 @@ def build(xlsx_path: Path) -> None:
         print(f"UNMAPPED topics (fix crosswalk): {dict(unmapped_topics)}")
     print(f"Diagnostic concepts (top {TOP_CONCEPTS}) : {[c['concept_id'] for c in main_concepts[:TOP_CONCEPTS]]}")
     print(f"Probe questions selected      : {len(diagnostic['probe_step']['questions'])}")
-    print(f"\nWrote {OUTPUT_DIR}/ act_questions.json, act_concept_map.json, act_diagnostic.json")
+    print(f"C5 bank questions converted   : {len(bank_questions)}")
+    print(f"Unresolved/missing answer keys : {unresolved_answer_count}")
+    print(f"\nWrote {OUTPUT_DIR}/ act_questions.json, act_concept_map.json, act_diagnostic.json, act_questions.bank.json")
+
+
+def build(xlsx_path: Path) -> None:
+    raw = load_questions(xlsx_path)
+    questions, unmapped_topics, concept_counts, gap_topics = parse_rows(raw)
+    build_outputs(
+        questions,
+        unmapped_topics,
+        concept_counts,
+        gap_topics,
+        write_questions=True,
+    )
+
+
+def build_from_json(questions_path: Path) -> None:
+    questions = json.loads(questions_path.read_text())
+    unmapped_topics: Counter = Counter()
+    concept_counts: Counter = Counter()
+    gap_topics: Counter = Counter()
+    for q in questions:
+        concept_id = q.get("concept_id")
+        topic = q.get("primary_topic") or ""
+        if concept_id == GAP:
+            gap_topics[topic] += 1
+        elif concept_id:
+            concept_counts[concept_id] += 1
+        if q.get("match_quality") == "unmapped":
+            unmapped_topics[topic] += 1
+    build_outputs(
+        questions,
+        unmapped_topics,
+        concept_counts,
+        gap_topics,
+        write_questions=True,
+    )
 
 
 def main() -> int:
@@ -398,7 +600,17 @@ def main() -> int:
         type=Path,
         default=Path.home() / "Desktop" / "ACT_Question_Bank (1).xlsx",
     )
+    parser.add_argument(
+        "--from-json",
+        type=Path,
+        help="Rebuild derived outputs from an existing act_questions.json intermediate.",
+    )
     args = parser.parse_args()
+    if args.from_json:
+        if not args.from_json.exists():
+            raise SystemExit(f"questions json not found: {args.from_json}")
+        build_from_json(args.from_json)
+        return 0
     if not args.xlsx.exists():
         raise SystemExit(f"xlsx not found: {args.xlsx}")
     build(args.xlsx)

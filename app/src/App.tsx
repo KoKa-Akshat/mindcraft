@@ -31,6 +31,7 @@ import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
 import ConceptChapterPage from './pages/ConceptChapterPage'
 import GradeOnboard    from './pages/GradeOnboard'
+import FirstSpark      from './pages/FirstSpark'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
@@ -205,6 +206,7 @@ export default function App() {
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
+        <Route path="/spark" element={<FirstSpark />} />
         <Route path="/book"  element={<Book />} />
         <Route path="/qa"    element={<AuthGuard><QAEntry /></AuthGuard>} />
         <Route path="/dashboard-projected" element={<Navigate to="/dashboard" replace />} />

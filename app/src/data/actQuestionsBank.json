@@ -1,0 +1,410 @@
+[
+  {
+    "id": "act_t1_q1_57a805",
+    "conceptId": "sequences_series",
+    "level": 2,
+    "question": "Which of the following numbers completes the sequence 3, 8, 14, 21, 29, ___?",
+    "choices": [
+      "35",
+      "36",
+      "37",
+      "38",
+      "39"
+    ],
+    "correctIndex": 3,
+    "explanation": "Weakness in checking first differences; overgeneralizing sequence labels; not distinguishing sequence vs series.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Student may assume every sequence question is arithmetic and look for one constant difference. Student may try to connect it to arithmetic/geometric series even though no summation is involved.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_sequences_series__weakness_in_checking_first_differences_overgener_c68b6cf3",
+    "misconception_label": "Weakness in checking first differences; overgeneralizing sequence labels; not distinguishing sequence vs series.",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_sequences_series__weakness_in_checking_first_differences_overgener_c68b6cf3"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_sequences_series__weakness_in_checking_first_differences_overgener_c68b6cf3"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_sequences_series__weakness_in_checking_first_differences_overgener_c68b6cf3"
+      },
+      {
+        "choice_index": 4,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_sequences_series__weakness_in_checking_first_differences_overgener_c68b6cf3"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q3_9594c8",
+    "conceptId": "linear_equations",
+    "level": 2,
+    "question": "If 5 x + 3 = 10 x \u2013 17, what is the value of x ?",
+    "choices": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctIndex": 3,
+    "explanation": "Weakness in like terms; inverse operations; equation balance; fraction operations when coefficients are non-integers.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Student may combine unlike terms incorrectly; may make sign mistakes moving terms; may panic if coefficients are fractions even though the process is identical.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_linear_equations__weakness_in_like_terms_inverse_operations_equati_11ffcef5",
+    "misconception_label": "Weakness in like terms; inverse operations; equation balance; fraction operations when coefficients are non-integers.",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_like_terms_inverse_operations_equati_11ffcef5"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_like_terms_inverse_operations_equati_11ffcef5"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_like_terms_inverse_operations_equati_11ffcef5"
+      },
+      {
+        "choice_index": 4,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_like_terms_inverse_operations_equati_11ffcef5"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q5_361216",
+    "conceptId": "descriptive_statistics",
+    "level": 2,
+    "question": "William earned $3,200 per month as a teacher for the ten months from September to June. Then he took a job as a barista at a local caf\u00e9, where he earned $2,000 per month during July and August. What was his average monthly pay for the 12 months?",
+    "choices": [
+      "$2,400",
+      "$2,500",
+      "$2,600",
+      "$2,800",
+      "$3,000"
+    ],
+    "correctIndex": 4,
+    "explanation": "Weakness in recognizing mean from word problems; weighted average; unit consistency; translating text into math.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Student may average the two monthly pay rates directly instead of weighting by number of months; may introduce unnecessary variables; may fail to see it is a mean problem because it is embedded in words.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_descriptive_statistics__weakness_in_recognizing_mean_from_word_problems_b7633cd1",
+    "misconception_label": "Weakness in recognizing mean from word problems; weighted average; unit consistency; translating text into math.",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_descriptive_statistics__weakness_in_recognizing_mean_from_word_problems_b7633cd1"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_descriptive_statistics__weakness_in_recognizing_mean_from_word_problems_b7633cd1"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_descriptive_statistics__weakness_in_recognizing_mean_from_word_problems_b7633cd1"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_descriptive_statistics__weakness_in_recognizing_mean_from_word_problems_b7633cd1"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q6_820404",
+    "conceptId": "linear_equations",
+    "level": 2,
+    "question": "When you multiply a number by 4 and then subtract 7, the result is the same as if you first subtracted 7 from the same number and then multiplied by 11. What is the number?",
+    "choices": [
+      "10",
+      "13",
+      "19",
+      "23",
+      "31"
+    ],
+    "correctIndex": 0,
+    "explanation": "Weakness in verbal translation; parentheses/distributive property; equation setup; interpreting 'same as' as equals.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Student may write 11x\u22127 instead of 11(x\u22127); may think it is a two-equation system when it is actually one equation from two equivalent expressions; may struggle to define the unknown.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_linear_equations__weakness_in_verbal_translation_parentheses_distr_10d9088c",
+    "misconception_label": "Weakness in verbal translation; parentheses/distributive property; equation setup; interpreting 'same as' as equals.",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 1,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_verbal_translation_parentheses_distr_10d9088c"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_verbal_translation_parentheses_distr_10d9088c"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_verbal_translation_parentheses_distr_10d9088c"
+      },
+      {
+        "choice_index": 4,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_verbal_translation_parentheses_distr_10d9088c"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q7_1ae232",
+    "conceptId": "linear_inequalities",
+    "level": 2,
+    "question": "Which of the following inequalities is represented by the following number line?",
+    "choices": [
+      "\u20135 < x < 5",
+      "\u20135 \u2264 x < 5",
+      "\u20135 < x \u2264 5",
+      "| x | < 5",
+      "5 \u2264 | x |"
+    ],
+    "correctIndex": 1,
+    "explanation": "Weakness in number line reading; endpoint inclusion/exclusion; compound inequality notation; interval notation translation.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Students may reverse inequality direction, confuse open vs closed circles, treat the interval as absolute value, or forget that compound inequalities need both bounds.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_linear_inequalities__weakness_in_number_line_reading_endpoint_inclusi_e343f427",
+    "misconception_label": "Weakness in number line reading; endpoint inclusion/exclusion; compound inequality notation; interval notation translati",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_inequalities__weakness_in_number_line_reading_endpoint_inclusi_e343f427"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_inequalities__weakness_in_number_line_reading_endpoint_inclusi_e343f427"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_inequalities__weakness_in_number_line_reading_endpoint_inclusi_e343f427"
+      },
+      {
+        "choice_index": 4,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_inequalities__weakness_in_number_line_reading_endpoint_inclusi_e343f427"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q9_40f35e",
+    "conceptId": "polynomials",
+    "level": 2,
+    "question": "Which of the following is equal to ( n \u2013 3) 2 if n = 11?",
+    "choices": [
+      "( n + 6)( n \u2013 6)",
+      "( n + 5)( n \u2013 7)",
+      "( n + 4)( n \u2013 8)",
+      "( n + 3)( n \u2013 9)",
+      "( n + 2)( n \u2013 10)"
+    ],
+    "correctIndex": 1,
+    "explanation": "Weakness in substitution; exponent meaning; evaluating expressions; recognizing equivalent value vs algebraic identity.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Students may think they must expand every expression; may confuse (n\u22123)^2 with n^2\u22129; may not realize answer choices can be tested directly.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_polynomials__weakness_in_substitution_exponent_meaning_evalua_643208d0",
+    "misconception_label": "Weakness in substitution; exponent meaning; evaluating expressions; recognizing equivalent value vs algebraic identity.",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_polynomials__weakness_in_substitution_exponent_meaning_evalua_643208d0"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_polynomials__weakness_in_substitution_exponent_meaning_evalua_643208d0"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_polynomials__weakness_in_substitution_exponent_meaning_evalua_643208d0"
+      },
+      {
+        "choice_index": 4,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_polynomials__weakness_in_substitution_exponent_meaning_evalua_643208d0"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q10_b1f9aa",
+    "conceptId": "area_volume",
+    "level": 2,
+    "question": "A square field has an area of 22,500 square feet. To the nearest foot, what is the diagonal distance across the field?",
+    "choices": [
+      "150 feet",
+      "178 feet",
+      "191 feet",
+      "212 feet",
+      "260 feet"
+    ],
+    "correctIndex": 3,
+    "explanation": "Weakness in square properties; area-to-side inversion; Pythagorean theorem; concept mapping from quadrilaterals to triangles.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Students may give the side length instead of the diagonal; may forget to take the square root of area; may not connect square diagonal to right-triangle hypotenuse.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_area_volume__weakness_in_square_properties_area_to_side_inver_789a982e",
+    "misconception_label": "Weakness in square properties; area-to-side inversion; Pythagorean theorem; concept mapping from quadrilaterals to trian",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_square_properties_area_to_side_inver_789a982e"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_square_properties_area_to_side_inver_789a982e"
+      },
+      {
+        "choice_index": 2,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_square_properties_area_to_side_inver_789a982e"
+      },
+      {
+        "choice_index": 4,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_square_properties_area_to_side_inver_789a982e"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q11_eb8124",
+    "conceptId": "linear_equations",
+    "level": 2,
+    "question": "What is the slope of a line on a standard xy- plane that passes through the point (1, 3) and (4, \u20133)?",
+    "choices": [
+      "\u20131",
+      "2",
+      "\u20132",
+      "E."
+    ],
+    "correctIndex": 2,
+    "explanation": "Weakness in slope formula; coordinate subtraction; sign discipline; visual interpretation of rise/run.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Students may reverse x and y changes; may subtract points in inconsistent order; may miss the negative sign; may confuse slope with intercept.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_linear_equations__weakness_in_slope_formula_coordinate_subtraction_6d644770",
+    "misconception_label": "Weakness in slope formula; coordinate subtraction; sign discipline; visual interpretation of rise/run.",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_slope_formula_coordinate_subtraction_6d644770"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_slope_formula_coordinate_subtraction_6d644770"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_linear_equations__weakness_in_slope_formula_coordinate_subtraction_6d644770"
+      }
+    ]
+  },
+  {
+    "id": "act_t1_q12_5f03f8",
+    "conceptId": "area_volume",
+    "level": 2,
+    "question": "Andrea wants to fill in two sections of her backyard with sod that must be purchased in 2-x-2-foot squares. If the two sections measure 30 x 40 feet and 60 x 80 feet, how many squares of sod does she need to buy?",
+    "choices": [
+      "1,000",
+      "1,250",
+      "1,500",
+      "1,600",
+      "2,000"
+    ],
+    "correctIndex": 2,
+    "explanation": "Weakness in area formulas; unit-square reasoning; multi-step word problem organization; visual diagram use.",
+    "hints": [
+      "Identify what the question is asking before choosing a method.",
+      "Students may forget the second section; may divide by 2 instead of 4; may confuse side length of sod square with area; may compute perimeter.",
+      "Check the selected answer back against the original problem."
+    ],
+    "examTag": "ACT",
+    "format": "word_problem",
+    "misconception_id": "mis_area_volume__weakness_in_area_formulas_unit_square_reasoning_d4801e8d",
+    "misconception_label": "Weakness in area formulas; unit-square reasoning; multi-step word problem organization; visual diagram use.",
+    "distractor_taxonomy": [
+      {
+        "choice_index": 0,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_area_formulas_unit_square_reasoning_d4801e8d"
+      },
+      {
+        "choice_index": 1,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_area_formulas_unit_square_reasoning_d4801e8d"
+      },
+      {
+        "choice_index": 3,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_area_formulas_unit_square_reasoning_d4801e8d"
+      },
+      {
+        "choice_index": 4,
+        "error_type": "act_skill_gap",
+        "misconception_id": "mis_area_volume__weakness_in_area_formulas_unit_square_reasoning_d4801e8d"
+      }
+    ]
+  }
+]

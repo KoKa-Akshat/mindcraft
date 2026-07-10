@@ -2,6 +2,7 @@ import { getQuestions, shuffle, questionFormat, inferQuestionFormat, isStoryCell
 import { buildStoryDisplay } from './storyDisplay'
 import type { CurriculumTrack } from './curriculumTrack'
 import type { Confidence } from './bridgePractice'
+import actOntologyCoverage from '../data/actOntologyCoverage.json'
 
 const G7 = [
   'fractions_decimals', 'ratios_proportions', 'order_of_operations', 'number_properties',
@@ -29,7 +30,42 @@ export const GOAL_EXTRAS: Record<string, string[]> = {
   get_unstuck: ['systems_of_linear_equations', 'factoring_polynomials', 'sequences_series'],
 }
 
+/** ACT-tested concepts ranked by ontology actFrequency (already shipped in app data). */
+const ACT_RANKED_CONCEPTS: string[] = (() => {
+  const tiers = actOntologyCoverage.levelTiers as {
+    foundational: { conceptIds: string[] }
+    core: { conceptIds: string[] }
+    cross_cutting: { conceptIds: string[] }
+  }
+  const byConceptId = actOntologyCoverage.byConceptId as Record<
+    string,
+    { actFrequency?: number }
+  >
+  const actTested = [
+    ...tiers.foundational.conceptIds,
+    ...tiers.core.conceptIds,
+    ...tiers.cross_cutting.conceptIds,
+  ]
+  return [...new Set(actTested)].sort((a, b) => {
+    const fa = byConceptId[a]?.actFrequency ?? 0
+    const fb = byConceptId[b]?.actFrequency ?? 0
+    return fb - fa
+  })
+})()
+
+export function isActTrack(goalTags: string[]): boolean {
+  return examForGoals(goalTags) === 'ACT'
+}
+
+/** Frequency-ranked ACT scope — only for explicit act_prep goal (not grade ≥ 11 alone). */
+export function conceptsForActTrack(): string[] {
+  return [...ACT_RANKED_CONCEPTS]
+}
+
 export function conceptsForGradeAndGoals(grade: number, goals: string[]): string[] {
+  if (isActTrack(goals)) {
+    return conceptsForActTrack()
+  }
   const base = [...(GRADE_CONCEPTS[grade] ?? G9)]
   const extras = new Set(base)
   for (const goal of goals) {
@@ -67,9 +103,18 @@ function storyVisualScore(q: Question): number {
   return 0
 }
 
-export function pickBestProbe(pool: Question[]): Question | undefined {
+function actAnnotatedProbeScore(q: Question): number {
+  let score = storyVisualScore(q)
+  if (q.misconception_id) score += 10
+  if (q.distractor_taxonomy?.length) score += 4
+  if (q.id.startsWith('act_t') || q.id.startsWith('act_ann_')) score += 2
+  return score
+}
+
+export function pickBestProbe(pool: Question[], actTrack = false): Question | undefined {
   if (!pool.length) return undefined
-  const ranked = [...pool].sort((a, b) => storyVisualScore(b) - storyVisualScore(a))
+  const score = actTrack ? actAnnotatedProbeScore : storyVisualScore
+  const ranked = [...pool].sort((a, b) => score(b) - score(a))
   return ranked[0]
 }
 
@@ -79,8 +124,14 @@ function levelsForGrade(grade: number): (1 | 2)[] {
   return [1, 2]
 }
 
-function poolForConcept(conceptId: string, levels: (1 | 2)[], perLevel = 6): Question[] {
-  return shuffle(levels.flatMap(l => getQuestions(conceptId, l, perLevel, [], 'General')))
+function poolForConcept(
+  conceptId: string,
+  levels: (1 | 2)[],
+  perLevel = 6,
+  actTrack = false,
+): Question[] {
+  const examType = actTrack ? 'ACT' : 'General'
+  return shuffle(levels.flatMap(l => getQuestions(conceptId, l, perLevel, [], examType)))
 }
 
 /** Spread ~10 playable probes across the student's grade scope.
@@ -91,6 +142,7 @@ export function pickDiagnosticQuestions(
   target = 10,
   storyCellSlots = 0,
 ): Question[] {
+  const actTrack = isActTrack(goalTags)
   const concepts = shuffle(conceptsForGradeAndGoals(grade, goalTags))
   const levels = levelsForGrade(grade)
   const picked: Question[] = []
@@ -109,10 +161,10 @@ export function pickDiagnosticQuestions(
 
   for (const conceptId of concepts) {
     if (picked.length >= target) break
-    const pool = poolForConcept(conceptId, levels).filter(
+    const pool = poolForConcept(conceptId, levels, 6, actTrack).filter(
       q => isRenderableQuestion(q) && !usedIds.has(q.id) && !isStoryCellQuestion(q),
     )
-    const best = pickBestProbe(pool)
+    const best = pickBestProbe(pool, actTrack)
     if (best) {
       picked.push(best)
       usedIds.add(best.id)
@@ -122,7 +174,7 @@ export function pickDiagnosticQuestions(
   if (picked.length < Math.min(target, 6)) {
     for (const conceptId of concepts) {
       if (picked.length >= target) break
-      const pool = poolForConcept(conceptId, levels, 10).filter(
+      const pool = poolForConcept(conceptId, levels, 10, actTrack).filter(
         q => isRenderableQuestion(q) && !usedIds.has(q.id),
       )
       for (const q of pool) {
