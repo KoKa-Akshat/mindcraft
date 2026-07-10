@@ -50,15 +50,23 @@ ALLOWED_TAGS = [
 ]
 
 ALLOWED_CONCEPTS = [
+    # NOTE: must stay a subset of the real 42 canonical concept_ids in
+    # ml/data/5_level_ontology/01_mindcraft_concept_ontology_v2_6_with_combinations.json
+    # (the canonical_id_contract join key — see CLAUDE.md). Fixed 2026-07: this
+    # list had drifted to include invented IDs that don't exist in Layer 1
+    # ("probability", "coordinate_geometry", "polynomial_operations",
+    # "absolute_value", "combinatorics", "vectors_basics", "data_interpretation")
+    # which would have produced concept_affinity keys nothing else in the engine
+    # could join against. Mapped to real equivalents / dropped where none exist.
     "fractions_decimals", "ratios_proportions", "linear_equations", "quadratic_equations",
-    "geometric_transformations", "area_volume", "probability", "sequences_series",
+    "geometric_transformations", "area_volume", "basic_probability", "sequences_series",
     "descriptive_statistics", "right_triangle_geometry", "triangles_congruence",
-    "circles_geometry", "lines_angles", "coordinate_geometry", "functions_basics",
+    "circles_geometry", "lines_angles", "functions_basics",
     "algebraic_manipulation", "exponent_rules", "factoring_polynomials",
-    "number_properties", "basic_probability", "linear_inequalities",
-    "systems_of_linear_equations", "polynomial_operations", "absolute_value",
+    "number_properties", "linear_inequalities", "measurement_units",
+    "systems_of_linear_equations", "polynomials",
     "complex_numbers", "rational_expressions", "logarithmic_functions", "matrices",
-    "combinatorics", "trigonometry_basics", "vectors_basics", "data_interpretation",
+    "trigonometry_basics", "vectors",
 ]
 
 SYSTEM_PROMPT = f"""You are a math curriculum designer tagging folk tales for adaptive math tutoring.

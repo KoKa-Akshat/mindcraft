@@ -1,5 +1,498 @@
 [
   {
+    "id": "newar_kathmandu_valley_lake",
+    "title": "Manjushri Drains the Lake of Kathmandu",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Manjushri+Kathmandu+valley+lake+legend",
+    "synopsis": "Long ago the Kathmandu Valley was a vast lake, and at its center floated a lotus of pure light where a self-arisen flame burned. The bodhisattva Manjushri traveled from China to see it, and cut a single gorge through the valley's southern hills with his sword so the water could drain away, leaving behind fertile land where the lotus hill became the stupa of Swayambhunath.",
+    "characters": [
+      {
+        "name": "Manjushri",
+        "role": "bodhisattva who drains the lake"
+      },
+      {
+        "name": "the self-arisen flame",
+        "role": "sacred lotus of light"
+      }
+    ],
+    "setting": "The primordial lake that once filled the Kathmandu Valley",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_kasthamandap_one_tree",
+    "title": "The House Built From a Single Tree",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Kasthamandap+Kathmandu+one+tree+temple+legend",
+    "synopsis": "In the twelfth century, builders in Kathmandu's central square set out to raise a great pavilion for travelers and needed enough timber for its three tiered roofs. According to the story they felled one single enormous sal tree and shaped every beam, pillar, and rafter of the whole hall from it without using a second trunk or a single nail, and the city itself is said to take its name, Kathmandu, from this Kasthamandap, the House of Wood.",
+    "characters": [
+      {
+        "name": "the master builders",
+        "role": "carpenters who raise the pavilion"
+      }
+    ],
+    "setting": "Kathmandu's Durbar Square, at the crossing of two old trade roads",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_kumari_living_goddess",
+    "title": "The Living Goddess of Kathmandu",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Kumari+living+goddess+Kathmandu+selection",
+    "synopsis": "When a Kumari, a living child goddess, is needed for the temple in Kathmandu, priests search the city's Newar Shakya families for a girl who shows exactly thirty-two specific signs of perfection, from the shape of her eyelashes to the sound of her voice. She must also spend a night alone in a dark room surrounded by ritually presented buffalo heads without showing fear, and only the girl who passes every one of the thirty-two tests takes her seat on the temple's lion throne.",
+    "characters": [
+      {
+        "name": "the Kumari",
+        "role": "living child goddess"
+      },
+      {
+        "name": "the temple priests",
+        "role": "examiners of the thirty-two signs"
+      }
+    ],
+    "setting": "The Kumari Ghar temple-house on Kathmandu's Durbar Square",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_rato_machindranath_chariot",
+    "title": "The Chariot of Rato Machindranath",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Rato+Machindranath+chariot+festival+Patan",
+    "synopsis": "Each spring the city of Patan builds an enormous wooden chariot from scratch to carry the rain god Rato Machindranath through the streets, stacking a tower of poles and wheels so tall it can catch on temple eaves if the builders misjudge its height even slightly. Hundreds of people haul the chariot by long ropes through narrow lanes over several weeks, and if it tips or stalls partway, elders read the delay as a sign that the coming rains themselves are still being decided.",
+    "characters": [
+      {
+        "name": "Rato Machindranath",
+        "role": "rain god carried through the city"
+      },
+      {
+        "name": "the chariot builders",
+        "role": "carpenters who rebuild the tower every year"
+      }
+    ],
+    "setting": "The old city lanes of Patan during the chariot's weeks-long procession",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_nyatapola_temple_guardians",
+    "title": "The Five-Story Temple and Its Ten Guardians",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Nyatapola+temple+Bhaktapur+five+story+guardians",
+    "synopsis": "The five-story pagoda of Nyatapola in Bhaktapur rises above the city on a stepped plinth guarded by ten stone figures set in pairs on the stairway, and each pair below is said to be ten times as strong as the pair above it. Two famous wrestlers guard the bottom step, then elephants ten times their strength, then lions stronger still, then griffins, and finally the goddess Baghini at the very top, so that whoever wants to reach the temple's summit has to pass a stairway that gets more powerful the higher it goes even as the guardians themselves get smaller.",
+    "characters": [
+      {
+        "name": "the paired stone guardians",
+        "role": "wrestlers, elephants, lions, griffins, and a goddess"
+      }
+    ],
+    "setting": "The stepped stone plinth of Nyatapola temple in Bhaktapur's Taumadhi square",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_changu_narayan_garuda",
+    "title": "Garuda's Watch at Changu Narayan",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Changu+Narayan+temple+Garuda+Vishnu+legend",
+    "synopsis": "On a hilltop above the Kathmandu Valley stands Changu Narayan, said to be the valley's oldest temple, where the god Vishnu is honored alongside his great bird-mount Garuda kneeling in stone before the shrine. Farmers from the villages below still time certain planting days to the temple's festival calendar, treating Garuda's watchful posture as a yearly reminder that the harvest depends on keeping careful accounts, not just good luck.",
+    "characters": [
+      {
+        "name": "Vishnu",
+        "role": "god honored at the hilltop shrine"
+      },
+      {
+        "name": "Garuda",
+        "role": "his kneeling bird-mount"
+      }
+    ],
+    "setting": "A hilltop temple above the Kathmandu Valley, among terraced fields",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_indra_jatra_captured_god",
+    "title": "Indra Jatra: The God Who Fell to Earth",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Indra+Jatra+festival+Kathmandu+captured+god+legend",
+    "synopsis": "The rain god Indra once came down to earth disguised as an ordinary farmer to steal parijat flowers from a Kathmandu garden for his mother, and was caught and bound by the valley's people before they realized who he was. His mother descended searching for him, and in exchange for his release she promised to send morning dew each winter to nourish the crops, so the city now holds the Indra Jatra festival every year, displaying his image publicly so he is never mistaken for a common thief again.",
+    "characters": [
+      {
+        "name": "Indra",
+        "role": "rain god disguised as a flower thief"
+      },
+      {
+        "name": "Indra's mother",
+        "role": "searches the valley for her missing son"
+      }
+    ],
+    "setting": "A flower garden in the Kathmandu Valley, and the streets during the Indra Jatra procession",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "kirat_yalambar_kurukshetra_vow",
+    "title": "King Yalambar's Silent Vow",
+    "culture": "Kirat",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Kirat+king+Yalambar+Mahabharata+Kurukshetra+legend",
+    "synopsis": "As the story is told among the Kirat people of Nepal, King Yalambar traveled to witness the great battle of Kurukshetra from the Mahabharata and privately vowed to fight for whichever side turned out to be weaker, so the outcome would be decided by courage rather than numbers. Krishna, wanting to keep the battle's balance intact, tested the king by asking him to sacrifice his own head, and Yalambar agreed without hesitation, watching the entire eighteen-day war unfold through his own severed head propped up on a hill overlooking the field.",
+    "characters": [
+      {
+        "name": "King Yalambar",
+        "role": "Kirat king who vows to aid the weaker side"
+      },
+      {
+        "name": "Krishna",
+        "role": "tests the king's resolve"
+      }
+    ],
+    "setting": "A hilltop overlooking the battlefield of Kurukshetra",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "gorkha_unification_baise_chaubise",
+    "title": "Prithvi Narayan Shah and the Many Small Kingdoms",
+    "culture": "Gorkhali",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Prithvi+Narayan+Shah+Gorkha+unification+Baise+Chaubise+kingdoms",
+    "synopsis": "Before Nepal was one country, the hills west of the Kathmandu Valley were divided into two loose leagues of small kingdoms, remembered as the Baise, the twenty-two, and the Chaubise, the twenty-four, each ruled by its own small raja. Starting from the little hill kingdom of Gorkha, King Prithvi Narayan Shah spent decades absorbing these kingdoms one by one, along with the Kathmandu Valley itself, into a single unified territory, and the counts in the old kingdoms' names are the exact tally historians still use to describe how fragmented the hills were before him.",
+    "characters": [
+      {
+        "name": "Prithvi Narayan Shah",
+        "role": "king of Gorkha who unifies the hill kingdoms"
+      },
+      {
+        "name": "the Baise and Chaubise rajas",
+        "role": "the twenty-two and twenty-four smaller kings"
+      }
+    ],
+    "setting": "The hill kingdoms west of the Kathmandu Valley in the eighteenth century",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_arniko_architect_china",
+    "title": "Arniko Carries the Pagoda East",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Arniko+Newar+architect+Kublai+Khan+white+stupa+Beijing",
+    "synopsis": "In the thirteenth century, a young Newar architect named Arniko led a team of craftsmen from the Kathmandu Valley to Tibet and then on to the Yuan court in China, where Kublai Khan asked him to repair a damaged stupa. Arniko instead proposed and built an entirely new one, the great White Stupa of Beijing, translating the valley's tiered pagoda proportions, each story a careful fraction narrower than the one below it, into a structure that still stands in China eight centuries later.",
+    "characters": [
+      {
+        "name": "Arniko",
+        "role": "Newar architect and craftsman"
+      },
+      {
+        "name": "Kublai Khan",
+        "role": "Yuan emperor who commissions the stupa"
+      }
+    ],
+    "setting": "The Yuan imperial court in thirteenth-century Beijing, after a long journey from the Kathmandu Valley",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "mustang_kali_gandaki_salt_caravan",
+    "title": "The Salt Caravans of the Kali Gandaki Gorge",
+    "culture": "Thakali",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Kali+Gandaki+salt+caravan+Mustang+Tibet+trade+legend",
+    "synopsis": "For centuries, Thakali traders drove long yak caravans up the Kali Gandaki gorge, the deepest in the world, carrying grain and rice north into Mustang and Tibet and bringing back blocks of salt in exchange. Every trader kept a careful private ratio in his head, how many measures of grain a single block of salt was worth that season, because the exchange rate shifted with the harvest and a caravan leader who miscounted a single trade could lose the season's entire profit on the walk home.",
+    "characters": [
+      {
+        "name": "the Thakali caravan leaders",
+        "role": "traders who set the grain-for-salt exchange rate"
+      }
+    ],
+    "setting": "The Kali Gandaki gorge, the ancient salt route between Mustang and the Tibetan plateau",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "sherpa_tenzing_everest_summit",
+    "title": "Tenzing Norgay's Long Climb to the Summit",
+    "culture": "Sherpa",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Tenzing+Norgay+Everest+1953+summit+expedition",
+    "synopsis": "Tenzing Norgay grew up in the Khumbu region beneath Everest and spent years learning the mountain's moods before the 1953 expedition, when he and Edmund Hillary pushed past camp after camp, each one set a measured number of feet higher and a day's climb apart, toward the summit. On the morning of May 29, after weeks of planning exactly how much oxygen, rope, and food each stage of the ascent would need, the two men became the first climbers confirmed to stand on the true summit of the world's highest peak.",
+    "characters": [
+      {
+        "name": "Tenzing Norgay",
+        "role": "Sherpa mountaineer"
+      },
+      {
+        "name": "Edmund Hillary",
+        "role": "climbing partner"
+      }
+    ],
+    "setting": "The camps and ridgelines of Everest's southern route through the Khumbu region",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "himalaya_yeti_footprint",
+    "title": "The Footprints in the Snow",
+    "culture": "Sherpa",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Yeti+footprint+Himalaya+legend+Sherpa",
+    "synopsis": "High-altitude herders in the Himalaya have long told of the yeti, a shaggy creature that leaves a trail of oversized footprints in fresh snow near the highest passes, and travelers who find a print will often lay their own boot inside it to compare the size before deciding whether to press on or turn back. Some of the most famous reported prints stretched nearly twice the length of an ordinary boot, and expedition parties still debate what animal, or combination of animals walking in a single trail, could have left a track that size.",
+    "characters": [
+      {
+        "name": "the yeti",
+        "role": "creature known only by its tracks"
+      },
+      {
+        "name": "the herders and climbers",
+        "role": "measure the footprints against their own"
+      }
+    ],
+    "setting": "A high mountain pass in the Himalaya after a fresh snowfall",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "himalaya_terraced_hillside_fields",
+    "title": "The Terraces That Climb the Mountain",
+    "culture": "Pahadi (hill communities)",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Himalaya+terrace+farming+hillside+legend",
+    "synopsis": "In the middle hills of Nepal, where almost no ground is naturally flat, farming families cut their steep slopes into long stepped terraces, each one a narrow shelf of level soil held in place by a stone wall built to exactly the height the slope demands. A family passes down not just the land but the precise layout of the walls from parent to child, because a terrace built one hand's width too shallow floods in the monsoon, while one built too deep wastes ground that could have grown another row of rice.",
+    "characters": [
+      {
+        "name": "the hill farming families",
+        "role": "build and maintain the stepped terraces"
+      }
+    ],
+    "setting": "The steep middle hills of Nepal during the monsoon planting season",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "tharu_maghi_new_year_fishing",
+    "title": "The Tharu New Year and the Fish of the Rapti",
+    "culture": "Tharu",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Tharu+Maghi+festival+Terai+fishing+legend",
+    "synopsis": "In the Terai lowlands along Nepal's southern border, the Tharu people mark their new year, Maghi, by gathering whole villages to fish the shrinking winter channels of rivers like the Rapti using wide communal nets pulled by dozens of hands at once. Whatever is caught in a single sweep of the net is divided among every household that helped pull it, counted out share by share on the riverbank before anyone carries a single fish home.",
+    "characters": [
+      {
+        "name": "the Tharu villagers",
+        "role": "pull the communal net together"
+      }
+    ],
+    "setting": "The shrinking winter channels of the Rapti river during the Maghi festival",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_gai_jatra_cow_festival",
+    "title": "The Cow Festival for the Grieving",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Gai+Jatra+cow+festival+Kathmandu+origin+legend",
+    "synopsis": "After King Pratap Malla's young son died, the grieving queen was told that every family in Kathmandu who had lost someone that year would walk a cow, or a child dressed as one, through the city on a single set day, so she could see she was not alone in her sorrow. The king, hoping to lighten the procession's grief, encouraged comedians and satirists to march alongside the cows making the crowd laugh, and Kathmandu still holds Gai Jatra every year, counting a hard year by the line of cows that walks through it.",
+    "characters": [
+      {
+        "name": "the grieving queen",
+        "role": "asks to see other mourning families"
+      },
+      {
+        "name": "King Pratap Malla",
+        "role": "orders the yearly procession"
+      }
+    ],
+    "setting": "The streets of Kathmandu during the Gai Jatra procession",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "newar_nepal_sambat_shankhadhar",
+    "title": "Shankhadhar's Gift of a New Era",
+    "culture": "Newar",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Nepal+Sambat+calendar+Shankhadhar+Sakhwa+legend",
+    "synopsis": "According to Newar tradition, a merchant named Shankhadhar Sakhwa discovered a field of buried treasure and used the entire fortune to pay off every debt owed by the ordinary people of the Kathmandu Valley in a single day, leaving no household still counting what it owed another. To mark a valley finally starting clean, the year of that debt-clearing became year one of the Nepal Sambat calendar, a count the Newar community still keeps running alongside every other calendar in use today.",
+    "characters": [
+      {
+        "name": "Shankhadhar Sakhwa",
+        "role": "merchant who clears the valley's debts"
+      }
+    ],
+    "setting": "The Kathmandu Valley at the founding of the Nepal Sambat era",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "mithila_janakpur_sita_swayamvara",
+    "title": "Sita and the Bow of Janakpur",
+    "culture": "Maithil",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Janakpur+Sita+swayamvara+bow+Ramayana+legend",
+    "synopsis": "In Janakpur, in the Nepali Terai, King Janaka raised his daughter Sita and set a single condition for any suitor who wished to marry her, that he must string and bend an enormous bow that no ordinary man could even lift. When the young prince Rama arrived and drew the bow so forcefully that it snapped in two, the marriage was settled on the spot, and Maithil women in Janakpur still paint the walls of their homes with the same precise geometric symmetry, mirrored borders and repeating patterns, that the old wedding songs describe from that day.",
+    "characters": [
+      {
+        "name": "Sita",
+        "role": "princess of Janakpur"
+      },
+      {
+        "name": "Rama",
+        "role": "suitor who breaks the bow"
+      },
+      {
+        "name": "King Janaka",
+        "role": "sets the marriage condition"
+      }
+    ],
+    "setting": "The royal court of Janakpur in the Nepali Terai",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "muktinath_108_water_spouts",
+    "title": "The Hundred and Eight Springs of Muktinath",
+    "culture": "Thakali / Tibetan Buddhist",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Muktinath+temple+108+water+spouts+pilgrimage",
+    "synopsis": "At the pilgrimage site of Muktinath high in the Mustang region, cold mountain spring water is channeled through exactly one hundred and eight bull-shaped brass spouts arranged in a curved wall, and pilgrims are expected to pass beneath every single one before their visit is considered complete. Counting the spouts correctly matters as much as the cold itself, since stopping short of a hundred and eight, even by one, is said to leave the pilgrimage unfinished.",
+    "characters": [
+      {
+        "name": "the pilgrims",
+        "role": "pass beneath all one hundred and eight spouts"
+      }
+    ],
+    "setting": "The stone wall of a hundred and eight water spouts at Muktinath",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "mustang_lo_manthang_walled_city",
+    "title": "The Walled City of Lo Manthang",
+    "culture": "Loba (Mustang)",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Lo+Manthang+Mustang+walled+city+kingdom+legend",
+    "synopsis": "High in the rain-shadow desert of Upper Mustang sits Lo Manthang, a walled city built centuries ago in a near-perfect rectangle, its four corners deliberately squared off so a single watchman standing at the center could see clean sightlines down every street to each gate. The kingdom stayed so remote behind its own walls and mountain passes that outside travelers were barred from entering at all until the late twentieth century, long after the rest of Nepal had opened to the world.",
+    "characters": [
+      {
+        "name": "the kings of Lo",
+        "role": "rule from within the walled city"
+      }
+    ],
+    "setting": "The walled city of Lo Manthang in the high desert of Upper Mustang",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "limbu_ubhauli_udhauli_cycle",
+    "title": "Ubhauli and Udhauli: The Two Journeys of the Year",
+    "culture": "Limbu / Rai (Kirat)",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Limbu+Rai+Ubhauli+Udhauli+Sakela+festival+cycle",
+    "synopsis": "The Limbu and Rai communities of eastern Nepal mark two great turning points each year with the Sakela festival, Ubhauli in spring when families and even the earth's nourishing spirits are believed to move upward toward the cooler high hills, and Udhauli in autumn when the same movement reverses back down to the warmer lowlands. Dancers trace the pattern with their own footwork, spiraling outward from the center for Ubhauli and back inward for Udhauli, so the dance itself repeats the same yearly cycle the farming calendar depends on.",
+    "characters": [
+      {
+        "name": "the Sakela dancers",
+        "role": "trace the seasonal cycle in their footwork"
+      }
+    ],
+    "setting": "Village dance grounds in the eastern hills of Nepal, at each turn of the farming year",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "tamang_mani_wall_prayer_wheels",
+    "title": "The Mani Wall and the Turning Wheels",
+    "culture": "Tamang",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Tamang+mani+wall+prayer+wheel+counting+mantra+legend",
+    "synopsis": "Along the high trails of Tamang villages in the Nepal Himalaya, long mani walls are built from stones carved with the same sacred mantra, and travelers keep to the left as they pass so as not to walk against the accumulated blessing. Elders count each turn of a handheld prayer wheel and each bead of a mala necklace as one full repetition of the mantra, and a full circuit of prayers is only considered complete once a practitioner has counted all one hundred and eight beads without losing track.",
+    "characters": [
+      {
+        "name": "the Tamang elders",
+        "role": "count mantra repetitions on the mala"
+      }
+    ],
+    "setting": "A mani wall along a high mountain trail in Tamang country",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
+    "id": "dolpo_beyul_hidden_valley",
+    "title": "The Hidden Valley Sealed by Guru Rinpoche",
+    "culture": "Dolpo (Tibetan Buddhist)",
+    "region": "South Asia (Himalaya)",
+    "source_url": "https://www.gutenberg.org/ebooks/search/?query=Dolpo+Beyul+hidden+valley+Guru+Rinpoche+treasure+legend",
+    "synopsis": "In the remote Dolpo region near Shey Phoksundo, the turquoise lake is said to guard the entrance to a beyul, a hidden valley sealed centuries ago by the teacher Guru Rinpoche, who left behind a fixed number of hidden treasures, termas, to be found only when the world outside needed their teachings most. Villagers describe the valley's entrance as opening only to a traveler who arrives having correctly followed every one of a set sequence of directional signs, since a single wrong turn among the ridgelines leads back out rather than in.",
+    "characters": [
+      {
+        "name": "Guru Rinpoche",
+        "role": "seals the hidden valley and its treasures"
+      },
+      {
+        "name": "the Dolpo villagers",
+        "role": "keep the sequence of directions to find it"
+      }
+    ],
+    "setting": "The turquoise waters of Shey Phoksundo and the hidden valley said to lie beyond it",
+    "math_theme_tags": [],
+    "concept_affinity_scores": {},
+    "math_skin_score": null,
+    "enriched": false
+  },
+  {
     "id": "anansi_spider_wisdom",
     "title": "Anansi and the Wisdom Pot",
     "culture": "Akan / Ashanti",
