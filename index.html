@@ -395,12 +395,13 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <h1><span>You were never</span><span>bad at math.</span></h1>
             <p class="lead">MindCraft finds where the thinking broke, maps the route back, and gives your tutor the story before session one.</p>
             <div class="hero-actions">
-              <a class="btn primary" href="#intake">Request a seat</a>
+              <button class="btn primary" id="seeYourMathBtn" type="button">See your math</button>
+              <a class="btn soft" href="#intake">Request a seat</a>
               <a class="btn soft" href="#system">See how it works</a>
             </div>
           </div>
           <div class="stats reveal stagger">
-            <div class="stat"><strong>9M+</strong><span>Learning moments analyzed</span></div>
+            <div class="stat"><strong>6.5M+</strong><span>Learning moments analyzed</span></div>
             <div class="stat"><strong>1,500+</strong><span>Practice questions</span></div>
             <div class="stat"><strong>293</strong><span>Misconception patterns</span></div>
             <div class="stat"><strong>42</strong><span>Concept stories</span></div>
@@ -693,7 +694,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       </div>
     </section>
 
-    <section class="proof" data-nav="cream">
+    <section class="proof" id="proof" data-nav="cream">
       <div class="wrap reveal">
         <p class="label">From families</p>
         <h2>In their words.</h2>
@@ -972,6 +973,28 @@ form?.addEventListener("submit", (event) => {
   status?.classList.add("show")
   location.href = "mailto:joinmindcraft@gmail.com?subject=" + encodeURIComponent("MindCraft intake") + "&body=" + encodeURIComponent(lines.join("\n"))
 })
+
+// First Spark overlay (Option A) — dynamically imported, never blocks first
+// paint or SEO. Auto-launches once per session (sessionStorage.mc_spark_seen);
+// the hero CTA can always relaunch it manually.
+;(function () {
+  function bootSpark(auto) {
+    import("./spark/spark.js").then((mod) => {
+      if (auto) mod.autoLaunch()
+      else mod.launch()
+    }).catch(() => {})
+  }
+  var seeBtn = document.getElementById("seeYourMathBtn")
+  if (seeBtn) seeBtn.addEventListener("click", function () { bootSpark(false) })
+
+  var alreadySeen = true
+  try { alreadySeen = !!sessionStorage.getItem("mc_spark_seen") } catch { alreadySeen = true }
+  if (!alreadySeen) {
+    var start = function () { setTimeout(function () { bootSpark(true) }, 700) }
+    if (document.readyState === "complete") start()
+    else addEventListener("load", start)
+  }
+})()
 </script>
 </body>
 </html>

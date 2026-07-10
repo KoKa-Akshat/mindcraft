@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MindCraft — First Spark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #143a2e;
+      --leaf: #247a4d;
+      --leaf-2: #5fb779;
+      --sprout: #b9e86f;
+      --gold: #d3a900;
+      --cream: #fff8e9;
+      --paper: #fffdf7;
+      --mint: #e4f7dc;
+      --sand: #f5efd9;
+      --muted: #687468;
+      --line: rgba(20, 58, 46, 0.14);
+      --shadow: 0 24px 70px rgba(29, 84, 54, 0.14);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: "Nunito Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 78% 16%, rgba(185,232,111,.42), transparent 28%),
+                  radial-gradient(circle at 14% 82%, rgba(220,238,246,.65), transparent 22%),
+                  linear-gradient(135deg, var(--cream) 0%, #f4f2dc 48%, var(--mint) 100%);
+    }
+    #bg { position: fixed; inset: 0; z-index: 0; }
+    .stage {
+      position: fixed; inset: 0; z-index: 2;
+      display: grid; place-items: center;
+      padding: max(16px, env(safe-area-inset-top)) 20px max(16px, env(safe-area-inset-bottom));
+      pointer-events: none;
+      text-align: center;
+    }
+    .stage.on { pointer-events: auto; }
+
+    .logo {
+      font-family: Fredoka, system-ui, sans-serif;
+      font-size: clamp(3.4rem, 13vw, 7.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: rise 1.3s var(--ease) forwards;
+    }
+    .logo em { font-style: normal; color: var(--gold); }
+    .tagline {
+      max-width: 520px;
+      margin-top: 8px;
+      font-size: clamp(1.2rem, 3.5vw, 1.85rem);
+      font-weight: 600;
+      color: var(--muted);
+      opacity: 0;
+      animation: rise 1s 0.3s var(--ease) forwards;
+    }
+
+    .panel {
+      width: min(480px, 94vw);
+      padding: 22px 22px 18px;
+      border-radius: 28px;
+      background: rgba(255, 253, 247, 0.88);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      text-align: left;
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 1s var(--ease), transform 1.1s var(--ease);
+    }
+    .panel.show { opacity: 1; transform: translateY(0); }
+    .panel h2 {
+      font-family: Fredoka, system-ui, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+    .field {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      padding: 6px 6px 6px 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field:focus-within {
+      border-color: rgba(36, 122, 77, 0.35);
+      box-shadow: 0 0 0 4px rgba(95, 183, 121, 0.12);
+    }
+    .field input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font: inherit;
+      font-size: 1rem;
+      color: var(--ink);
+      outline: none;
+      min-width: 0;
+    }
+    .field input::placeholder { color: #9aa89a; }
+    .enter {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: none;
+      background: var(--ink);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), background 0.2s;
+      flex-shrink: 0;
+    }
+    .enter:hover { transform: translateY(-1px); background: var(--leaf); }
+    .enter svg { width: 18px; height: 18px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 28px; margin-top: 12px; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--mint);
+      border: 1px solid rgba(36, 122, 77, 0.16);
+      color: var(--leaf);
+      font-size: 0.86rem;
+      font-weight: 700;
+      animation: pop 0.4s var(--ease);
+    }
+    .chip button {
+      border: none; background: none; color: inherit; cursor: pointer;
+      font: inherit; font-size: 0.8rem; line-height: 1; padding: 2px;
+      opacity: 0.55;
+    }
+    .chip button:hover { opacity: 1; }
+    .hint { margin-top: 10px; font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+    .build-btn {
+      margin-top: 14px;
+      width: 100%;
+      min-height: 44px;
+      border-radius: 18px;
+      border: none;
+      background: var(--ink);
+      color: #fff;
+      font: inherit;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), background 0.2s;
+    }
+    .build-btn.show { opacity: 1; transform: translateY(0); }
+    .build-btn:hover { background: var(--leaf); }
+
+    .pulse {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      animation: pulse 1.5s ease infinite;
+    }
+
+    .paper {
+      width: min(700px, 94vw);
+      max-height: 86vh;
+      overflow: auto;
+      padding: 28px;
+      border-radius: 32px;
+      background: linear-gradient(180deg, var(--paper), #f8fbeb);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      text-align: left;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.9s var(--ease), transform 1s var(--ease);
+    }
+    .paper.show { opacity: 1; transform: scale(1); }
+    .stamp {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--leaf);
+      margin-bottom: 12px;
+    }
+    .intro {
+      font-size: 1.12rem;
+      line-height: 1.55;
+      color: var(--ink);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .stem { font-size: 1.02rem; line-height: 1.6; color: #2d4a3e; margin: 16px 0; padding-top: 14px; border-top: 1px solid var(--line); }
+    .choice {
+      display: block; width: 100%; text-align: left;
+      min-height: 44px;
+      padding: 14px 16px; margin-bottom: 8px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font: inherit; font-size: 0.96rem;
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+    .choice:hover:not(:disabled) {
+      border-color: rgba(36, 122, 77, 0.4);
+      box-shadow: 0 0 0 4px rgba(95, 183, 121, 0.1);
+      transform: translateX(3px);
+    }
+    .choice.picked { border-color: var(--leaf-2); box-shadow: 0 0 0 4px rgba(95, 183, 121, 0.15); }
+    .choice:disabled { opacity: 0.85; cursor: default; }
+    .fb {
+      display: none; margin-top: 14px; padding: 14px 16px;
+      border-radius: 16px; background: var(--mint);
+      border-left: 3px solid var(--leaf-2);
+      line-height: 1.5; font-weight: 600;
+    }
+    .fb.show { display: block; animation: rise 0.5s var(--ease); }
+
+    .finale {
+      width: min(520px, 94vw);
+      padding: 36px 28px;
+      border-radius: 32px;
+      background: rgba(255, 253, 247, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s var(--ease);
+    }
+    .finale.show { opacity: 1; transform: translateY(0); }
+    .finale h2 { font-family: Fredoka, system-ui, sans-serif; font-size: 2.2rem; margin: 8px 0 12px; }
+    .finale p { color: var(--muted); line-height: 1.5; margin-bottom: 0; font-weight: 600; }
+    .finale .bridge {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .finale .bridge.show { opacity: 1; transform: translateY(0); }
+    .bridge p { margin-bottom: 18px; font-size: 1.02rem; color: var(--ink); }
+    .bridge-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .cta-soft {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.2s var(--ease);
+    }
+    .cta-soft:hover { transform: translateY(-1px); }
+    .auto-note {
+      margin-top: 16px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .exit-veil {
+      position: fixed; inset: 0; z-index: 20;
+      background: linear-gradient(135deg, var(--cream) 0%, var(--mint) 100%);
+      opacity: 0; pointer-events: none;
+      transition: opacity 1.4s var(--ease);
+    }
+    .exit-veil.on { opacity: 1; pointer-events: auto; }
+    .skip {
+      position: fixed; right: 18px; bottom: 18px; z-index: 5;
+      padding: 9px 13px; border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,253,247,0.8);
+      color: var(--muted);
+      font-size: 0.75rem; font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+    @keyframes pop { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+    @keyframes pulse { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .logo, .tagline { animation-duration: 0.01s; }
+      .panel, .paper, .finale, .bridge, .build-btn { transition-duration: 0.25s; transform: none !important; }
+      .pulse { animation: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <div class="exit-veil" id="exitVeil" aria-hidden="true"></div>
+  <div class="stage" id="stage"></div>
+  <button class="skip" id="skip" hidden>Skip intro</button>
+
+  <script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+  <script type="module">
+    import * as THREE from 'three'
+    import { fuse, interestLine } from './spark-engine.mjs'
+
+    const API = 'https://mindcraft-webhook.vercel.app/api/spark-experience'
+    const MARKETING = 'https://mindcraft-marketing-site.web.app'
+    const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches
+    const stage = document.getElementById('stage')
+    const skip = document.getElementById('skip')
+    const exitVeil = document.getElementById('exitVeil')
+    const canvas = document.getElementById('bg')
+    let interests = []
+    let bank = null
+    let gather = 0
+    let hueBase = 0.32
+
+    // ── Three.js orbs ─────────────────────────────────────────────
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100)
+    camera.position.z = 14
+    const group = new THREE.Group()
+    scene.add(group)
+
+    const orbs = []
+    // Soft multi-stop palette — landing page hues, airy + warm
+    const ORB_HUES = [128, 98, 145, 42, 195, 168, 115, 78] // leaf, mint, grape, gold, sky, seafoam…
+
+    function orbColor(i, shift = 0) {
+      const hue = (ORB_HUES[i % ORB_HUES.length] + shift * 40) % 360
+      const sat = 0.52 + (i % 3) * 0.08
+      const lit = 0.58 + (i % 4) * 0.06
+      return new THREE.Color().setHSL(hue / 360, sat, lit)
+    }
+
+    function makeOrbTexture(hue) {
+      const c = document.createElement('canvas')
+      c.width = c.height = 128
+      const g = c.getContext('2d')
+      const cx = 64, cy = 64
+      const grd = g.createRadialGradient(cx, cy, 0, cx, cy, 64)
+      const col = `hsla(${hue}, 72%, 72%,`
+      grd.addColorStop(0, col + '0.95)')
+      grd.addColorStop(0.2, col + '0.55)')
+      grd.addColorStop(0.45, col + '0.22)')
+      grd.addColorStop(0.7, col + '0.08)')
+      grd.addColorStop(1, 'rgba(255,255,255,0)')
+      g.fillStyle = grd
+      g.fillRect(0, 0, 128, 128)
+      return new THREE.CanvasTexture(c)
+    }
+
+    function seedOrbs(n) {
+      while (group.children.length) group.remove(group.children[0])
+      orbs.length = 0
+      for (let i = 0; i < n; i++) {
+        const r = 0.18 + Math.pow(Math.random(), 1.65) * 1.05
+        const hue = (ORB_HUES[i % ORB_HUES.length] + hueBase * 60) % 360
+        const mat = new THREE.SpriteMaterial({
+          map: makeOrbTexture(hue),
+          color: orbColor(i, hueBase),
+          transparent: true,
+          opacity: 0.38 + Math.random() * 0.28,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        })
+        const sp = new THREE.Sprite(mat)
+        const scale = r * 2.6
+        sp.scale.set(scale, scale, 1)
+        sp.position.set((Math.random() - 0.5) * 18, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 4)
+        group.add(sp)
+        orbs.push({
+          sp, r, hue,
+          vx: (Math.random() - 0.5) * 0.008,
+          vy: (Math.random() - 0.5) * 0.007,
+          phase: Math.random() * Math.PI * 2,
+        })
+      }
+    }
+    seedOrbs(innerWidth < 640 ? 28 : 48)
+
+    const mouse = { x: 0, y: 0 }
+    if (!REDUCED) {
+      addEventListener('pointermove', e => {
+        mouse.x = (e.clientX / innerWidth - 0.5) * 2
+        mouse.y = (e.clientY / innerHeight - 0.5) * 2
+      })
+    }
+
+    function resize() {
+      const w = innerWidth, h = innerHeight
+      renderer.setSize(w, h)
+      camera.aspect = w / h
+      camera.updateProjectionMatrix()
+      if (REDUCED) renderer.render(scene, camera)
+    }
+    resize()
+    addEventListener('resize', resize)
+
+    const clock = new THREE.Clock()
+    function animate() {
+      const t = clock.getElapsedTime()
+      group.rotation.y = mouse.x * 0.08
+      group.rotation.x = mouse.y * 0.05
+      for (const o of orbs) {
+        let x = o.sp.position.x + Math.sin(t * 0.45 + o.phase) * 0.02 + o.vx * t * 0.4
+        let y = o.sp.position.y + Math.cos(t * 0.38 + o.phase) * 0.018 + o.vy * t * 0.35
+        if (gather > 0) {
+          x += (0 - x) * gather * 0.04
+          y += (0 - y) * gather * 0.04
+        }
+        o.sp.position.x = x
+        o.sp.position.y = y
+      }
+      renderer.render(scene, camera)
+      requestAnimationFrame(animate)
+    }
+    if (REDUCED) {
+      renderer.render(scene, camera) // static field, crossfade-only variant
+    } else {
+      animate()
+    }
+
+    // ── Bank + deterministic fusion (spark-engine.mjs) ────────────
+    async function loadBank() {
+      if (bank) return bank
+      const res = await fetch('./spark-bank.json')
+      bank = await res.json()
+      return bank
+    }
+
+    function setStage(html, on = false) {
+      stage.innerHTML = html
+      stage.classList.toggle('on', on)
+    }
+
+    function arrival() {
+      skip.hidden = false
+      setStage(`<div><div class="logo">Mind<em>Craft</em></div><p class="tagline">Be good at your craft.<br/>We'll find the math inside it.</p></div>`)
+      setTimeout(() => {
+        setStage('')
+        invite()
+      }, 3800)
+    }
+
+    let buildTimer = null
+    function renderChips() {
+      document.getElementById('chips').innerHTML = interests
+        .map((v, i) => `<span class="chip">${v}<button type="button" data-i="${i}" aria-label="Remove ${v}">×</button></span>`)
+        .join('')
+      document.querySelectorAll('.chip button').forEach(x => {
+        x.onclick = () => {
+          interests.splice(Number(x.dataset.i), 1)
+          renderChips()
+          syncInvite()
+        }
+      })
+    }
+
+    function syncInvite() {
+      const hint = document.getElementById('hint')
+      const build = document.getElementById('build')
+      if (buildTimer) { clearTimeout(buildTimer); buildTimer = null }
+      if (interests.length === 0) hint.textContent = 'Add at least two.'
+      else if (interests.length === 1) hint.textContent = 'One more — we need a shape to match.'
+      else if (interests.length < 4) hint.textContent = 'Add up to four, or build your scene.'
+      else hint.textContent = 'Four is plenty for a first scene.'
+      build.classList.toggle('show', interests.length >= 2)
+      if (interests.length >= 2) buildTimer = setTimeout(buildScene, 2600)
+    }
+
+    function invite() {
+      skip.hidden = true
+      gather = 0.25
+      setStage(`
+        <div class="panel" id="panel">
+          <h2>Tell us what you like.</h2>
+          <div class="field">
+            <input id="inp" placeholder="cooking, music, space…" autocomplete="off" />
+            <button class="enter" id="enter" type="button" aria-label="Add interest">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 19V5"/><path d="m7 10 5-5 5 5"/></svg>
+            </button>
+          </div>
+          <div class="chips" id="chips"></div>
+          <p class="hint" id="hint">Add at least two.</p>
+          <button class="build-btn" id="build" type="button">Build my scene →</button>
+        </div>`, true)
+      requestAnimationFrame(() => document.getElementById('panel').classList.add('show'))
+      const inp = document.getElementById('inp')
+      const add = () => {
+        const v = inp.value.trim()
+        if (!v) return
+        if (interests.length >= 4) {
+          document.getElementById('hint').textContent = 'Four is plenty for a first scene.'
+          return
+        }
+        interests.push(v)
+        inp.value = ''
+        hueBase += 0.09
+        // Warm nearby orbs toward latest interest
+        const interestHue = (interests.join('').split('').reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0) >>> 0) % 360
+        for (const o of orbs) {
+          const near = Math.abs(o.hue - interestHue) < 45 || Math.abs(o.hue - interestHue) > 315
+          if (near) {
+            o.sp.material.color.setHSL(interestHue / 360, 0.62, 0.62)
+            o.sp.material.opacity = Math.min(0.85, o.sp.material.opacity + 0.12)
+          }
+        }
+        renderChips()
+        syncInvite()
+        if (REDUCED) renderer.render(scene, camera)
+      }
+      document.getElementById('enter').onclick = add
+      document.getElementById('build').onclick = () => { if (interests.length >= 2) buildScene() }
+      inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); add() } }
+      inp.focus()
+    }
+
+    async function buildScene() {
+      if (stage.dataset.building === '1') return
+      stage.dataset.building = '1'
+      if (buildTimer) { clearTimeout(buildTimer); buildTimer = null }
+      gather = 1
+      setStage('<p class="pulse">Finding your scene…</p>')
+      const started = Date.now()
+
+      // Groq skin is an enhancement — race it against a 3.5s budget, fall
+      // back to the deterministic offline weave (spark-engine.mjs).
+      let apiPayload = null
+      try {
+        const ctrl = new AbortController()
+        const timer = setTimeout(() => ctrl.abort(), 3500)
+        const res = await fetch(API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ interests }),
+          signal: ctrl.signal,
+        })
+        clearTimeout(timer)
+        if (res.ok) apiPayload = await res.json()
+      } catch { /* offline weave below */ }
+
+      const data = await loadBank()
+      const payload = apiPayload?.generated ? apiPayload : fuse(interests, data)
+
+      // hold the beat — drama needs a breath even when matching is instant
+      const wait = Math.max(0, 1200 - (Date.now() - started))
+      setTimeout(() => showQuestion(payload), wait)
+    }
+
+    function showQuestion(p) {
+      gather = 0.35
+      setStage(`
+        <div class="paper" id="paper">
+          <p class="stamp">${p.protagonist} · ${p.setting}</p>
+          <p class="intro">${p.storyIntro}</p>
+          <p class="stem">${p.storyStem}</p>
+          ${p.choices.map((c, i) => `<button class="choice" data-i="${i}">${c}</button>`).join('')}
+          <p class="hint" id="pickHint">Pick one — no verdict yet.</p>
+          <p class="fb" id="fb"></p>
+        </div>`, true)
+      requestAnimationFrame(() => document.getElementById('paper').classList.add('show'))
+      const fb = document.getElementById('fb')
+      document.querySelectorAll('.choice').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('.choice').forEach(b => b.disabled = true)
+          btn.classList.add('picked')
+          document.getElementById('pickHint')?.remove()
+          // C4: record the choice, never render a verdict — the world responds.
+          const ok = Number(btn.dataset.i) === p.correctIndex
+          fb.textContent = ok ? p.worldFeedback.correct : p.worldFeedback.incorrect
+          fb.classList.add('show')
+          sessionStorage.setItem('mc_spark_v2', JSON.stringify({
+            interests,
+            questionId: p.questionId,
+            conceptId: p.conceptId,
+            selectedIndex: Number(btn.dataset.i),
+          }))
+          setTimeout(finale, 2600)
+        }
+      })
+    }
+
+    function goToSite(path = '') {
+      exitVeil.classList.add('on')
+      gather = 0
+      setTimeout(() => {
+        window.location.href = `${MARKETING}${path}`
+      }, 1200)
+    }
+
+    function finale() {
+      gather = 0.15
+      const built = interestLine(interests)
+      setStage(`
+        <div class="finale" id="fin">
+          <p class="stamp">You just solved something real</p>
+          <h2>This is MindCraft</h2>
+          <p>Built around ${built}.</p>
+          <div class="bridge" id="bridge">
+            <p>We have talented tutors — and families who've felt the click.</p>
+            <div class="bridge-actions">
+              <a class="cta-soft" href="${MARKETING}" id="exploreBtn">Explore MindCraft</a>
+              <a class="cta-soft" href="${MARKETING}#proof" id="reviewsBtn">See reviews</a>
+            </div>
+            <p class="auto-note" id="autoNote">Taking you there…</p>
+          </div>
+        </div>`, true)
+      requestAnimationFrame(() => document.getElementById('fin').classList.add('show'))
+
+      setTimeout(() => {
+        document.getElementById('bridge')?.classList.add('show')
+      }, 2200)
+
+      let redirected = false
+      const redirect = () => {
+        if (redirected) return
+        redirected = true
+        sessionStorage.setItem('mc_spark_seen', '1')
+        goToSite()
+      }
+
+      document.getElementById('exploreBtn')?.addEventListener('click', e => {
+        e.preventDefault()
+        redirect()
+      })
+      document.getElementById('reviewsBtn')?.addEventListener('click', e => {
+        e.preventDefault()
+        redirected = true
+        sessionStorage.setItem('mc_spark_seen', '1')
+        goToSite('#proof')
+      })
+
+      setTimeout(redirect, 5500)
+    }
+
+    skip.onclick = invite
+    loadBank().then(arrival)
+  </script>
+</body>
+</html>

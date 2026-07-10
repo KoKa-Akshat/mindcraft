@@ -1,0 +1,40 @@
+.field {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fieldActive {
+  opacity: 1;
+}
+
+.fieldGather .bubble {
+  filter: blur(0px);
+}
+
+.bubble {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform;
+  transition: background 0.6s ease, box-shadow 0.6s ease;
+}
+
+.layer0 {
+  background: rgba(196, 245, 71, 0.07);
+  filter: blur(6px);
+}
+
+.layer1 {
+  background: rgba(95, 183, 121, 0.12);
+  filter: blur(2px);
+}
+
+.layer2 {
+  background: rgba(255, 255, 255, 0.05);
+  filter: blur(0px);
+}

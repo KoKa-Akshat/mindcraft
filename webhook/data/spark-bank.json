@@ -1,0 +1,3312 @@
+{
+  "_meta": {
+    "canonical": "app/public/demo/v2/spark-bank.json",
+    "synced_copies": [
+      "spark/spark-bank.json",
+      "webhook/data/spark-bank.json"
+    ],
+    "sync_via": "node app/scripts/syncSparkAssets.mjs",
+    "note": "First Spark bank: questions (incl. 6 flagship multi-hobby story cells with introTemplates), folk tales, interest lexicon, hobby clusters. Flagship math is FROZEN from real Eedi bank questions (source_question_id). Lexicon schema follows mathSkinTop.json conventions (themes/concepts/keywords) plus cluster/scene_noun/aliases.",
+    "counts": {
+      "questions": 18,
+      "tales": 32,
+      "lexicon": 68,
+      "clusters": 6
+    }
+  },
+  "clusters": {
+    "food_trade": {
+      "label": "Food & trade",
+      "flagship": "cell_spark_food_stall_467",
+      "concepts": [
+        "ratios_proportions",
+        "fractions_decimals",
+        "linear_equations"
+      ]
+    },
+    "rhythm_pattern": {
+      "label": "Rhythm & pattern",
+      "flagship": "cell_spark_rhythm_ladder_41",
+      "concepts": [
+        "fractions_decimals",
+        "sequences_series",
+        "ratios_proportions"
+      ]
+    },
+    "motion_competition": {
+      "label": "Motion & competition",
+      "flagship": "cell_spark_motion_splits_13",
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units",
+        "linear_equations"
+      ]
+    },
+    "build_design": {
+      "label": "Build & design",
+      "flagship": "cell_spark_build_square_489",
+      "concepts": [
+        "area_volume",
+        "geometric_transformations",
+        "ratios_proportions",
+        "right_triangle_geometry"
+      ]
+    },
+    "discovery": {
+      "label": "Discovery",
+      "flagship": "cell_spark_discovery_draw_235",
+      "concepts": [
+        "basic_probability",
+        "measurement_units",
+        "functions_basics",
+        "descriptive_statistics"
+      ]
+    },
+    "digital": {
+      "label": "Digital",
+      "flagship": "cell_spark_digital_odds_350",
+      "concepts": [
+        "basic_probability",
+        "linear_equations",
+        "ratios_proportions"
+      ]
+    }
+  },
+  "default_cluster": "discovery",
+  "lexicon": {
+    "cooking": {
+      "cluster": "food_trade",
+      "scene_noun": "the kitchen",
+      "themes": [
+        "trade",
+        "community",
+        "craft"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "fractions_decimals"
+      ],
+      "keywords": [
+        "recipe",
+        "portion",
+        "kitchen",
+        "flavor",
+        "share"
+      ],
+      "aliases": [
+        "cook",
+        "chef",
+        "culinary",
+        "food"
+      ]
+    },
+    "baking": {
+      "cluster": "food_trade",
+      "scene_noun": "the oven line",
+      "themes": [
+        "craft",
+        "precision",
+        "trade"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "dough",
+        "oven",
+        "measure",
+        "batch"
+      ],
+      "aliases": [
+        "bake",
+        "baker",
+        "pastry",
+        "bread",
+        "desserts"
+      ]
+    },
+    "economics": {
+      "cluster": "food_trade",
+      "scene_noun": "the ledger",
+      "themes": [
+        "trade",
+        "fairness",
+        "data"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "linear_equations",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "market",
+        "margin",
+        "supply",
+        "demand",
+        "price"
+      ],
+      "aliases": [
+        "econ",
+        "economy"
+      ]
+    },
+    "finance": {
+      "cluster": "food_trade",
+      "scene_noun": "the balance sheet",
+      "themes": [
+        "trade",
+        "data",
+        "precision"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "linear_equations",
+        "exponential_functions"
+      ],
+      "keywords": [
+        "interest",
+        "budget",
+        "invest",
+        "stock"
+      ],
+      "aliases": [
+        "investing",
+        "stocks",
+        "stock market",
+        "trading",
+        "crypto"
+      ]
+    },
+    "business": {
+      "cluster": "food_trade",
+      "scene_noun": "the storefront",
+      "themes": [
+        "trade",
+        "strategy",
+        "community"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "linear_equations"
+      ],
+      "keywords": [
+        "startup",
+        "profit",
+        "customer",
+        "sell"
+      ],
+      "aliases": [
+        "entrepreneurship",
+        "startup",
+        "startups",
+        "marketing"
+      ]
+    },
+    "money": {
+      "cluster": "food_trade",
+      "scene_noun": "the cash box",
+      "themes": [
+        "trade",
+        "fairness"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "ratios_proportions",
+        "linear_equations"
+      ],
+      "keywords": [
+        "budget",
+        "cost",
+        "percent",
+        "save"
+      ],
+      "aliases": [
+        "cash",
+        "budgeting",
+        "saving"
+      ]
+    },
+    "coffee": {
+      "cluster": "food_trade",
+      "scene_noun": "the café counter",
+      "themes": [
+        "trade",
+        "ritual",
+        "community"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units"
+      ],
+      "keywords": [
+        "brew",
+        "pour",
+        "cup",
+        "roast"
+      ],
+      "aliases": [
+        "cafe",
+        "barista",
+        "tea",
+        "boba"
+      ]
+    },
+    "family": {
+      "cluster": "food_trade",
+      "scene_noun": "the family table",
+      "themes": [
+        "community",
+        "care",
+        "generosity"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "home",
+        "meal",
+        "share",
+        "gather"
+      ],
+      "aliases": [
+        "siblings",
+        "parents",
+        "cousins"
+      ]
+    },
+    "church": {
+      "cluster": "food_trade",
+      "scene_noun": "the potluck table",
+      "themes": [
+        "community",
+        "ritual",
+        "generosity"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "gather",
+        "share",
+        "serve",
+        "faith"
+      ],
+      "aliases": [
+        "faith",
+        "youth group",
+        "mosque",
+        "temple"
+      ]
+    },
+    "volunteering": {
+      "cluster": "food_trade",
+      "scene_noun": "the donation table",
+      "themes": [
+        "community",
+        "care",
+        "fairness"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "drive",
+        "serve",
+        "collect",
+        "organize"
+      ],
+      "aliases": [
+        "volunteer",
+        "service",
+        "charity"
+      ]
+    },
+    "music": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the studio",
+      "themes": [
+        "rhythm",
+        "pattern",
+        "discipline"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "sequences_series",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "beat",
+        "tempo",
+        "song",
+        "count"
+      ],
+      "aliases": [
+        "songs",
+        "musician",
+        "producer",
+        "music production",
+        "piano",
+        "violin"
+      ]
+    },
+    "dance": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the dance floor",
+      "themes": [
+        "rhythm",
+        "pattern",
+        "discipline"
+      ],
+      "concepts": [
+        "sequences_series",
+        "ratios_proportions",
+        "geometric_transformations"
+      ],
+      "keywords": [
+        "choreography",
+        "step",
+        "count",
+        "routine"
+      ],
+      "aliases": [
+        "dancing",
+        "ballet",
+        "hip hop",
+        "choreography"
+      ]
+    },
+    "singing": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the mic",
+      "themes": [
+        "rhythm",
+        "expression",
+        "discipline"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "sequences_series"
+      ],
+      "keywords": [
+        "voice",
+        "melody",
+        "harmony",
+        "chorus"
+      ],
+      "aliases": [
+        "sing",
+        "singer",
+        "vocals",
+        "choir"
+      ]
+    },
+    "dj": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the decks",
+      "themes": [
+        "rhythm",
+        "pattern",
+        "strategy"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "fractions_decimals"
+      ],
+      "keywords": [
+        "mix",
+        "bpm",
+        "transition",
+        "set"
+      ],
+      "aliases": [
+        "djing",
+        "mixing",
+        "edm",
+        "beats"
+      ]
+    },
+    "drums": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the drum kit",
+      "themes": [
+        "rhythm",
+        "pattern",
+        "discipline"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "sequences_series"
+      ],
+      "keywords": [
+        "beat",
+        "pulse",
+        "sticks",
+        "polyrhythm"
+      ],
+      "aliases": [
+        "drumming",
+        "drummer",
+        "percussion"
+      ]
+    },
+    "kpop": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the choreography room",
+      "themes": [
+        "rhythm",
+        "pattern",
+        "community"
+      ],
+      "concepts": [
+        "sequences_series",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "idol",
+        "dance",
+        "formation",
+        "comeback"
+      ],
+      "aliases": [
+        "k-pop",
+        "k pop",
+        "bts",
+        "blackpink"
+      ]
+    },
+    "guitar": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the fretboard",
+      "themes": [
+        "rhythm",
+        "pattern",
+        "craft"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "sequences_series"
+      ],
+      "keywords": [
+        "chord",
+        "strum",
+        "riff",
+        "scale"
+      ],
+      "aliases": [
+        "bass",
+        "ukulele"
+      ]
+    },
+    "band": {
+      "cluster": "rhythm_pattern",
+      "scene_noun": "the band room",
+      "themes": [
+        "rhythm",
+        "community",
+        "discipline"
+      ],
+      "concepts": [
+        "fractions_decimals",
+        "sequences_series"
+      ],
+      "keywords": [
+        "ensemble",
+        "rehearsal",
+        "section",
+        "march"
+      ],
+      "aliases": [
+        "marching band",
+        "orchestra"
+      ]
+    },
+    "basketball": {
+      "cluster": "motion_competition",
+      "scene_noun": "the court",
+      "themes": [
+        "competition",
+        "teamwork",
+        "pattern"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "score",
+        "hoop",
+        "dribble",
+        "stats"
+      ],
+      "aliases": [
+        "hoops",
+        "nba",
+        "ball"
+      ]
+    },
+    "soccer": {
+      "cluster": "motion_competition",
+      "scene_noun": "the pitch",
+      "themes": [
+        "competition",
+        "teamwork",
+        "journey"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units"
+      ],
+      "keywords": [
+        "goal",
+        "pass",
+        "match",
+        "league"
+      ],
+      "aliases": [
+        "futbol",
+        "fifa",
+        "premier league"
+      ]
+    },
+    "football": {
+      "cluster": "motion_competition",
+      "scene_noun": "the field",
+      "themes": [
+        "competition",
+        "teamwork",
+        "strategy"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "yards",
+        "touchdown",
+        "playbook"
+      ],
+      "aliases": [
+        "nfl",
+        "american football"
+      ]
+    },
+    "track": {
+      "cluster": "motion_competition",
+      "scene_noun": "the track",
+      "themes": [
+        "competition",
+        "discipline",
+        "precision"
+      ],
+      "concepts": [
+        "measurement_units",
+        "ratios_proportions",
+        "linear_equations"
+      ],
+      "keywords": [
+        "splits",
+        "sprint",
+        "lap",
+        "meet"
+      ],
+      "aliases": [
+        "track and field",
+        "sprinting"
+      ]
+    },
+    "running": {
+      "cluster": "motion_competition",
+      "scene_noun": "the start line",
+      "themes": [
+        "discipline",
+        "journey",
+        "precision"
+      ],
+      "concepts": [
+        "measurement_units",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "pace",
+        "mile",
+        "marathon",
+        "split"
+      ],
+      "aliases": [
+        "jogging",
+        "marathon",
+        "cross country"
+      ]
+    },
+    "climbing": {
+      "cluster": "motion_competition",
+      "scene_noun": "the wall",
+      "themes": [
+        "challenge",
+        "precision",
+        "courage"
+      ],
+      "concepts": [
+        "measurement_units",
+        "right_triangle_geometry",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "grade",
+        "route",
+        "grip",
+        "belay"
+      ],
+      "aliases": [
+        "rock climbing",
+        "bouldering"
+      ]
+    },
+    "swimming": {
+      "cluster": "motion_competition",
+      "scene_noun": "the pool",
+      "themes": [
+        "discipline",
+        "precision",
+        "competition"
+      ],
+      "concepts": [
+        "measurement_units",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "lap",
+        "stroke",
+        "meet",
+        "splits"
+      ],
+      "aliases": [
+        "swim",
+        "swim team"
+      ]
+    },
+    "volleyball": {
+      "cluster": "motion_competition",
+      "scene_noun": "the net",
+      "themes": [
+        "competition",
+        "teamwork",
+        "pattern"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units"
+      ],
+      "keywords": [
+        "serve",
+        "spike",
+        "set",
+        "rotation"
+      ],
+      "aliases": []
+    },
+    "cricket": {
+      "cluster": "motion_competition",
+      "scene_noun": "the crease",
+      "themes": [
+        "competition",
+        "strategy",
+        "precision"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "descriptive_statistics",
+        "measurement_units"
+      ],
+      "keywords": [
+        "over",
+        "wicket",
+        "innings",
+        "average"
+      ],
+      "aliases": []
+    },
+    "tennis": {
+      "cluster": "motion_competition",
+      "scene_noun": "the baseline",
+      "themes": [
+        "competition",
+        "precision",
+        "discipline"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "serve",
+        "rally",
+        "set",
+        "match"
+      ],
+      "aliases": [
+        "badminton",
+        "pickleball"
+      ]
+    },
+    "baseball": {
+      "cluster": "motion_competition",
+      "scene_noun": "the diamond",
+      "themes": [
+        "competition",
+        "pattern",
+        "data"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "batting",
+        "average",
+        "inning",
+        "pitch"
+      ],
+      "aliases": [
+        "softball",
+        "mlb"
+      ]
+    },
+    "skateboarding": {
+      "cluster": "motion_competition",
+      "scene_noun": "the skate park",
+      "themes": [
+        "challenge",
+        "craft",
+        "courage"
+      ],
+      "concepts": [
+        "measurement_units",
+        "right_triangle_geometry"
+      ],
+      "keywords": [
+        "trick",
+        "ramp",
+        "ollie",
+        "line"
+      ],
+      "aliases": [
+        "skating",
+        "skate",
+        "bmx"
+      ]
+    },
+    "martial arts": {
+      "cluster": "motion_competition",
+      "scene_noun": "the mat",
+      "themes": [
+        "discipline",
+        "precision",
+        "courage"
+      ],
+      "concepts": [
+        "measurement_units",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "belt",
+        "form",
+        "spar",
+        "stance"
+      ],
+      "aliases": [
+        "karate",
+        "judo",
+        "taekwondo",
+        "boxing",
+        "wrestling",
+        "mma"
+      ]
+    },
+    "gym": {
+      "cluster": "motion_competition",
+      "scene_noun": "the weight room",
+      "themes": [
+        "discipline",
+        "growth",
+        "precision"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "linear_equations",
+        "measurement_units"
+      ],
+      "keywords": [
+        "reps",
+        "sets",
+        "lift",
+        "progress"
+      ],
+      "aliases": [
+        "working out",
+        "lifting",
+        "fitness",
+        "workout"
+      ]
+    },
+    "fashion": {
+      "cluster": "build_design",
+      "scene_noun": "the pattern table",
+      "themes": [
+        "design",
+        "craft",
+        "expression"
+      ],
+      "concepts": [
+        "geometric_transformations",
+        "ratios_proportions",
+        "area_volume"
+      ],
+      "keywords": [
+        "fabric",
+        "fit",
+        "seam",
+        "silhouette"
+      ],
+      "aliases": [
+        "style",
+        "clothes",
+        "streetwear",
+        "thrifting"
+      ]
+    },
+    "sewing": {
+      "cluster": "build_design",
+      "scene_noun": "the sewing table",
+      "themes": [
+        "craft",
+        "precision",
+        "care"
+      ],
+      "concepts": [
+        "measurement_units",
+        "ratios_proportions",
+        "area_volume"
+      ],
+      "keywords": [
+        "stitch",
+        "hem",
+        "thread",
+        "pattern"
+      ],
+      "aliases": [
+        "knitting",
+        "crochet",
+        "embroidery",
+        "quilting"
+      ]
+    },
+    "architecture": {
+      "cluster": "build_design",
+      "scene_noun": "the blueprint table",
+      "themes": [
+        "design",
+        "precision",
+        "scale"
+      ],
+      "concepts": [
+        "area_volume",
+        "right_triangle_geometry",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "blueprint",
+        "structure",
+        "facade",
+        "plan"
+      ],
+      "aliases": [
+        "buildings",
+        "building"
+      ]
+    },
+    "cars": {
+      "cluster": "build_design",
+      "scene_noun": "the garage",
+      "themes": [
+        "craft",
+        "precision",
+        "speed"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units",
+        "linear_equations"
+      ],
+      "keywords": [
+        "engine",
+        "torque",
+        "gear",
+        "tune"
+      ],
+      "aliases": [
+        "car",
+        "mechanics",
+        "f1",
+        "formula 1",
+        "motorcycles",
+        "racing"
+      ]
+    },
+    "woodworking": {
+      "cluster": "build_design",
+      "scene_noun": "the workbench",
+      "themes": [
+        "craft",
+        "precision",
+        "patience"
+      ],
+      "concepts": [
+        "area_volume",
+        "measurement_units",
+        "right_triangle_geometry"
+      ],
+      "keywords": [
+        "saw",
+        "grain",
+        "joint",
+        "cut"
+      ],
+      "aliases": [
+        "carpentry",
+        "diy",
+        "making"
+      ]
+    },
+    "engineering": {
+      "cluster": "build_design",
+      "scene_noun": "the drafting table",
+      "themes": [
+        "design",
+        "precision",
+        "systems"
+      ],
+      "concepts": [
+        "linear_equations",
+        "area_volume",
+        "right_triangle_geometry"
+      ],
+      "keywords": [
+        "load",
+        "tolerance",
+        "spec",
+        "prototype"
+      ],
+      "aliases": [
+        "engineer"
+      ]
+    },
+    "art": {
+      "cluster": "build_design",
+      "scene_noun": "the canvas",
+      "themes": [
+        "expression",
+        "pattern",
+        "design"
+      ],
+      "concepts": [
+        "geometric_transformations",
+        "ratios_proportions",
+        "area_volume"
+      ],
+      "keywords": [
+        "color",
+        "line",
+        "composition",
+        "shape"
+      ],
+      "aliases": [
+        "painting",
+        "drawing",
+        "sketching",
+        "illustration"
+      ]
+    },
+    "design": {
+      "cluster": "build_design",
+      "scene_noun": "the mood board",
+      "themes": [
+        "design",
+        "expression",
+        "craft"
+      ],
+      "concepts": [
+        "geometric_transformations",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "layout",
+        "grid",
+        "palette",
+        "type"
+      ],
+      "aliases": [
+        "graphic design",
+        "ui",
+        "interior design"
+      ]
+    },
+    "legos": {
+      "cluster": "build_design",
+      "scene_noun": "the build table",
+      "themes": [
+        "craft",
+        "pattern",
+        "play"
+      ],
+      "concepts": [
+        "area_volume",
+        "ratios_proportions",
+        "sequences_series"
+      ],
+      "keywords": [
+        "bricks",
+        "build",
+        "set",
+        "instructions"
+      ],
+      "aliases": [
+        "lego",
+        "model kits"
+      ]
+    },
+    "pottery": {
+      "cluster": "build_design",
+      "scene_noun": "the wheel",
+      "themes": [
+        "craft",
+        "patience",
+        "form"
+      ],
+      "concepts": [
+        "area_volume",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "clay",
+        "glaze",
+        "kiln",
+        "throw"
+      ],
+      "aliases": [
+        "ceramics",
+        "sculpting"
+      ]
+    },
+    "space": {
+      "cluster": "discovery",
+      "scene_noun": "the observatory",
+      "themes": [
+        "journey",
+        "discovery",
+        "scale"
+      ],
+      "concepts": [
+        "measurement_units",
+        "basic_probability",
+        "functions_basics"
+      ],
+      "keywords": [
+        "orbit",
+        "launch",
+        "star",
+        "rocket"
+      ],
+      "aliases": [
+        "astronomy",
+        "nasa",
+        "rockets",
+        "stars",
+        "astrophysics"
+      ]
+    },
+    "science": {
+      "cluster": "discovery",
+      "scene_noun": "the lab",
+      "themes": [
+        "discovery",
+        "evidence",
+        "precision"
+      ],
+      "concepts": [
+        "basic_probability",
+        "descriptive_statistics",
+        "measurement_units"
+      ],
+      "keywords": [
+        "experiment",
+        "data",
+        "hypothesis",
+        "sample"
+      ],
+      "aliases": [
+        "chemistry",
+        "physics",
+        "biology",
+        "stem",
+        "psychology"
+      ]
+    },
+    "nature": {
+      "cluster": "discovery",
+      "scene_noun": "the trail",
+      "themes": [
+        "observation",
+        "patience",
+        "balance"
+      ],
+      "concepts": [
+        "basic_probability",
+        "descriptive_statistics",
+        "measurement_units"
+      ],
+      "keywords": [
+        "forest",
+        "river",
+        "season",
+        "wild"
+      ],
+      "aliases": [
+        "outdoors",
+        "environment",
+        "ecology",
+        "climate"
+      ]
+    },
+    "travel": {
+      "cluster": "discovery",
+      "scene_noun": "the departures board",
+      "themes": [
+        "journey",
+        "navigation",
+        "discovery"
+      ],
+      "concepts": [
+        "measurement_units",
+        "ratios_proportions",
+        "basic_probability"
+      ],
+      "keywords": [
+        "map",
+        "route",
+        "city",
+        "mile"
+      ],
+      "aliases": [
+        "traveling",
+        "travelling",
+        "flying",
+        "geography",
+        "languages"
+      ]
+    },
+    "hiking": {
+      "cluster": "discovery",
+      "scene_noun": "the trailhead",
+      "themes": [
+        "journey",
+        "endurance",
+        "observation"
+      ],
+      "concepts": [
+        "measurement_units",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "summit",
+        "pack",
+        "elevation",
+        "miles"
+      ],
+      "aliases": [
+        "camping",
+        "backpacking"
+      ]
+    },
+    "gardening": {
+      "cluster": "discovery",
+      "scene_noun": "the greenhouse",
+      "themes": [
+        "growth",
+        "patience",
+        "care"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units",
+        "sequences_series"
+      ],
+      "keywords": [
+        "seed",
+        "soil",
+        "bloom",
+        "harvest"
+      ],
+      "aliases": [
+        "plants",
+        "garden",
+        "farming"
+      ]
+    },
+    "animals": {
+      "cluster": "discovery",
+      "scene_noun": "the sanctuary",
+      "themes": [
+        "care",
+        "observation",
+        "community"
+      ],
+      "concepts": [
+        "basic_probability",
+        "ratios_proportions",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "herd",
+        "feed",
+        "track",
+        "species"
+      ],
+      "aliases": [
+        "dogs",
+        "cats",
+        "horses",
+        "birds",
+        "wildlife"
+      ]
+    },
+    "pets": {
+      "cluster": "discovery",
+      "scene_noun": "the vet clinic",
+      "themes": [
+        "care",
+        "responsibility",
+        "observation"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units"
+      ],
+      "keywords": [
+        "feed",
+        "dose",
+        "weigh",
+        "checkup"
+      ],
+      "aliases": [
+        "my dog",
+        "my cat",
+        "pet"
+      ]
+    },
+    "fishing": {
+      "cluster": "discovery",
+      "scene_noun": "the riverbank",
+      "themes": [
+        "patience",
+        "observation",
+        "chance"
+      ],
+      "concepts": [
+        "basic_probability",
+        "measurement_units"
+      ],
+      "keywords": [
+        "cast",
+        "catch",
+        "tide",
+        "line"
+      ],
+      "aliases": [
+        "fish"
+      ]
+    },
+    "nursing": {
+      "cluster": "discovery",
+      "scene_noun": "the ward",
+      "themes": [
+        "care",
+        "precision",
+        "evidence"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "measurement_units",
+        "basic_probability"
+      ],
+      "keywords": [
+        "dose",
+        "chart",
+        "shift",
+        "vitals"
+      ],
+      "aliases": [
+        "nurse"
+      ]
+    },
+    "medicine": {
+      "cluster": "discovery",
+      "scene_noun": "the clinic",
+      "themes": [
+        "care",
+        "evidence",
+        "precision"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "basic_probability",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "diagnosis",
+        "dose",
+        "trial",
+        "patient"
+      ],
+      "aliases": [
+        "doctor",
+        "premed",
+        "healthcare",
+        "med school"
+      ]
+    },
+    "law": {
+      "cluster": "discovery",
+      "scene_noun": "the case file",
+      "themes": [
+        "justice",
+        "evidence",
+        "argument"
+      ],
+      "concepts": [
+        "basic_probability",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "verdict",
+        "precedent",
+        "clause",
+        "proof"
+      ],
+      "aliases": [
+        "lawyer",
+        "debate",
+        "mock trial"
+      ]
+    },
+    "politics": {
+      "cluster": "discovery",
+      "scene_noun": "the polling desk",
+      "themes": [
+        "fairness",
+        "argument",
+        "data"
+      ],
+      "concepts": [
+        "descriptive_statistics",
+        "basic_probability",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "vote",
+        "poll",
+        "campaign",
+        "policy"
+      ],
+      "aliases": [
+        "government",
+        "elections",
+        "activism"
+      ]
+    },
+    "books": {
+      "cluster": "discovery",
+      "scene_noun": "the archive",
+      "themes": [
+        "story",
+        "memory",
+        "curiosity"
+      ],
+      "concepts": [
+        "sequences_series",
+        "basic_probability",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "chapter",
+        "shelf",
+        "plot",
+        "page"
+      ],
+      "aliases": [
+        "reading",
+        "writing",
+        "poetry",
+        "novels",
+        "literature"
+      ]
+    },
+    "history": {
+      "cluster": "discovery",
+      "scene_noun": "the museum hall",
+      "themes": [
+        "memory",
+        "evidence",
+        "story"
+      ],
+      "concepts": [
+        "sequences_series",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "era",
+        "artifact",
+        "timeline",
+        "empire"
+      ],
+      "aliases": [
+        "museums",
+        "archaeology"
+      ]
+    },
+    "weather": {
+      "cluster": "discovery",
+      "scene_noun": "the forecast desk",
+      "themes": [
+        "observation",
+        "chance",
+        "data"
+      ],
+      "concepts": [
+        "basic_probability",
+        "descriptive_statistics"
+      ],
+      "keywords": [
+        "storm",
+        "front",
+        "forecast",
+        "radar"
+      ],
+      "aliases": [
+        "meteorology",
+        "storms"
+      ]
+    },
+    "gaming": {
+      "cluster": "digital",
+      "scene_noun": "the server room",
+      "themes": [
+        "strategy",
+        "cleverness",
+        "pattern"
+      ],
+      "concepts": [
+        "basic_probability",
+        "linear_equations",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "level",
+        "odds",
+        "loot",
+        "speedrun"
+      ],
+      "aliases": [
+        "video games",
+        "videogames",
+        "games",
+        "esports",
+        "minecraft",
+        "fortnite",
+        "roblox",
+        "valorant"
+      ]
+    },
+    "coding": {
+      "cluster": "digital",
+      "scene_noun": "the terminal",
+      "themes": [
+        "systems",
+        "logic",
+        "craft"
+      ],
+      "concepts": [
+        "linear_equations",
+        "functions_basics",
+        "basic_probability"
+      ],
+      "keywords": [
+        "bug",
+        "loop",
+        "function",
+        "deploy"
+      ],
+      "aliases": [
+        "programming",
+        "code",
+        "software",
+        "web development",
+        "hacking"
+      ]
+    },
+    "film": {
+      "cluster": "digital",
+      "scene_noun": "the edit bay",
+      "themes": [
+        "story",
+        "craft",
+        "rhythm"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "fractions_decimals",
+        "sequences_series"
+      ],
+      "keywords": [
+        "frame",
+        "cut",
+        "scene",
+        "score"
+      ],
+      "aliases": [
+        "movies",
+        "filmmaking",
+        "cinema",
+        "editing",
+        "video editing"
+      ]
+    },
+    "photography": {
+      "cluster": "digital",
+      "scene_noun": "the darkroom",
+      "themes": [
+        "observation",
+        "light",
+        "composition"
+      ],
+      "concepts": [
+        "ratios_proportions",
+        "fractions_decimals",
+        "geometric_transformations"
+      ],
+      "keywords": [
+        "exposure",
+        "aperture",
+        "frame",
+        "shot"
+      ],
+      "aliases": [
+        "photos",
+        "camera"
+      ]
+    },
+    "anime": {
+      "cluster": "digital",
+      "scene_noun": "the storyboard",
+      "themes": [
+        "story",
+        "pattern",
+        "expression"
+      ],
+      "concepts": [
+        "sequences_series",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "episode",
+        "arc",
+        "panel",
+        "season"
+      ],
+      "aliases": [
+        "manga",
+        "comics",
+        "cartoons"
+      ]
+    },
+    "streaming": {
+      "cluster": "digital",
+      "scene_noun": "the stream deck",
+      "themes": [
+        "community",
+        "performance",
+        "data"
+      ],
+      "concepts": [
+        "descriptive_statistics",
+        "basic_probability",
+        "ratios_proportions"
+      ],
+      "keywords": [
+        "chat",
+        "viewers",
+        "clip",
+        "live"
+      ],
+      "aliases": [
+        "youtube",
+        "twitch",
+        "content creation",
+        "tiktok",
+        "social media"
+      ]
+    },
+    "chess": {
+      "cluster": "digital",
+      "scene_noun": "the tournament board",
+      "themes": [
+        "strategy",
+        "patience",
+        "pattern"
+      ],
+      "concepts": [
+        "basic_probability",
+        "sequences_series"
+      ],
+      "keywords": [
+        "opening",
+        "endgame",
+        "rating",
+        "move"
+      ],
+      "aliases": [
+        "puzzles",
+        "strategy games",
+        "board games"
+      ]
+    },
+    "robotics": {
+      "cluster": "digital",
+      "scene_noun": "the robotics bench",
+      "themes": [
+        "systems",
+        "craft",
+        "precision"
+      ],
+      "concepts": [
+        "linear_equations",
+        "functions_basics",
+        "measurement_units"
+      ],
+      "keywords": [
+        "sensor",
+        "motor",
+        "build",
+        "program"
+      ],
+      "aliases": [
+        "robots",
+        "arduino",
+        "3d printing"
+      ]
+    },
+    "ai": {
+      "cluster": "digital",
+      "scene_noun": "the model lab",
+      "themes": [
+        "systems",
+        "data",
+        "discovery"
+      ],
+      "concepts": [
+        "basic_probability",
+        "descriptive_statistics",
+        "functions_basics"
+      ],
+      "keywords": [
+        "model",
+        "train",
+        "data",
+        "predict"
+      ],
+      "aliases": [
+        "artificial intelligence",
+        "machine learning",
+        "tech"
+      ]
+    },
+    "math": {
+      "cluster": null,
+      "scene_noun": "the chalkboard",
+      "themes": [
+        "pattern",
+        "precision",
+        "curiosity"
+      ],
+      "concepts": [],
+      "keywords": [
+        "numbers",
+        "proof",
+        "puzzle",
+        "equation"
+      ],
+      "aliases": [
+        "maths",
+        "mathematics",
+        "numbers",
+        "algebra",
+        "geometry",
+        "calculus"
+      ]
+    }
+  },
+  "questions": [
+    {
+      "id": "cell_fractions_decimals_093f8c",
+      "conceptId": "fractions_decimals",
+      "level": 2,
+      "title": "The Waterfowl Pond's Sinking Rung",
+      "question": "At the sanctuary's waterfowl pond, keeper Simon uses Stevin's new descending ladder to record water levels. The pond fills from a spring, and a marked pole shows the level dropping into the small: below the '1 whole meter' line hang tenths, then hundredths. This morning the water sits exactly 3 rungs down on the tenths ladder — three parts of the ten equal steps between the whole-meter marks. Before the ducks arrive, Simon must write this depth as a decimal so the night keeper reads it correctly. What should he write for three-tenths of a meter?",
+      "choices": [
+        "0.3 meters",
+        "0.30... wait, 3.10 meters",
+        "10.3 meters",
+        "0.13 meters"
+      ],
+      "correctIndex": 0,
+      "storyIntro": "The sanctuary gates open in an hour, and the spring valve needs setting before the first visitors arrive. Simon crouches at the marked pole sunk into the waterfowl pond, watching the morning level settle rung by rung into the tenths below the meter line. One wrong digit on the slate and the night keeper floods the reed banks by dawn. The ladder only asks for one number: the one written where the water actually sits.",
+      "storyContext": "Simon Stevin's 1585 decimal ladder, reimagined at a creature sanctuary where a water-level pole descends rung by rung into tenths and hundredths to keep the waterfowl pond at the correct depth.",
+      "world_feedback": {
+        "correct": "Simon marks 0.3 on the slate. The night keeper reads it at a glance, tops the spring gate perfectly, and the ducks paddle at just the right depth by dawn.",
+        "incorrect": "The night keeper misreads the muddled number, cranks the spring gate wrong, and the pond nearly spills over the reed banks — the tenths rung is one place, not two numbers."
+      }
+    },
+    {
+      "id": "cell_fractions_decimals_3e8a15",
+      "conceptId": "fractions_decimals",
+      "level": 2,
+      "title": "Simon's Grain Scale",
+      "question": "Simon's measuring strip — eight equal sections, the bottom three filled in green — records how much grain has been set aside for the morning feeding. The sanctuary's digital scale only accepts decimal input. What decimal should Simon write for three-eighths?",
+      "choices": [
+        "0.38",
+        "0.3",
+        "0.375",
+        "3.8"
+      ],
+      "correctIndex": 2,
+      "storyContext": "Simon's measuring strip shows three-eighths of the grain remaining; the sanctuary's digital scale needs a decimal entry, and a wrong number sets the night alarm at the wrong level.",
+      "world_feedback": "Simon enters 0.375 and the scale's needle settles precisely on the mark. 'Three-eighths isn't three-point-eight,' he murmurs, closing the logbook. 'It's three divided by eight — and that's a different creature entirely.' The night keeper files the reading and the animals settle quietly for the morning."
+    },
+    {
+      "id": "cell_fractions_decimals_c9a5f7",
+      "conceptId": "fractions_decimals",
+      "level": 2,
+      "title": "The Fullest Sack",
+      "question": "The morning log records that 3/4 of a full sack of grain was delivered. Simon must relabel this entry in twelfths for the afternoon feeding chart. What fraction with denominator 12 is equivalent to 3/4?",
+      "choices": [
+        "9/12",
+        "3/12",
+        "6/12",
+        "4/12"
+      ],
+      "correctIndex": 0,
+      "storyContext": "Simon must relabel a grain sack: the morning log uses twelfths but the original measure is in quarters. He needs the same amount in a new label.",
+      "world_feedback": "Simon writes 9/12 on the new label and holds the two fractions side by side: 3/4 and 9/12. 'Same sack. Different label.' The afternoon keeper files it without question, and the animals get every morsel they were owed."
+    },
+    {
+      "id": "cell_fractions_decimals_d1b3e8",
+      "conceptId": "fractions_decimals",
+      "level": 3,
+      "title": "The Morning Measure",
+      "question": "Simon combines 1/4 sack of oats and 1/3 sack of barley for the morning feeding. What fraction of a full sack does this total?",
+      "choices": [
+        "7/12",
+        "2/7",
+        "2/12",
+        "5/12"
+      ],
+      "correctIndex": 0,
+      "storyIntro": "Feeding hour is close, and Simon has two half-empty sacks and one logbook column for the total. A quarter-sack of oats sits in one bin, a third-sack of barley in the other, and the ledger only has room for a single combined fraction. Two different denominators, one line to fill before the animals go hungry. The quarters and the thirds must become one common measure.",
+      "storyContext": "Simon must combine two morning rations — a quarter-sack of oats and a third-sack of barley — into one total for the logbook. The denominators are different and a wrong total changes the daily record.",
+      "world_feedback": "Simon writes 7/12 in the morning column. The head keeper runs a finger down the column, checks the store, and nods once. 'This one adds up.' Simon notices she does not say that about every entry in the book."
+    },
+    {
+      "id": "cell_linear_equations_7c4f2b",
+      "conceptId": "linear_equations",
+      "level": 2,
+      "title": "The Joining Fee",
+      "question": "The harbor chandlery posts its storage rates as a ledger:\n\n| Weeks stored | Running total (£) |\n|---|---|\n| 3 | 47 |\n| 7 | 83 |\n\nThe rate per week is fixed. William must find the joining fee — the amount owed before any weeks pass — to plan the voyage budget. What is the joining fee?",
+      "choices": [
+        "£20",
+        "£47",
+        "£36",
+        "£9"
+      ],
+      "correctIndex": 0,
+      "storyIntro": "The tide turns in the morning and William still owes the harbor chandlery a number nobody has written down: the flat joining fee charged before a single week of storage even starts. The ledger only shows two entries, weeks stored against running totals, and the per-week rate is buried somewhere inside them. His father's voyage budget cannot close until that fixed fee is pulled free of the weekly charge. Two points on a line hide the answer.",
+      "storyContext": "At Kingston's harbor chandlery, 1762: William must find the joining fee buried in the merchant's ledger before his father's voyage runs over budget.",
+      "world_feedback": "William writes £20 in the margin of his father's ledger. The chandler nods slowly: 'You found the starting price. Most who come in here just copy the first number they see. Your father's clock needs a sharp mind behind it — and it seems it has one.'"
+    },
+    {
+      "id": "cell_linear_equations_a4f8c3",
+      "conceptId": "linear_equations",
+      "level": 3,
+      "title": "The Carter's Price",
+      "question": "A carter's pricing board reads:\n\n- Base hire fee: £5\n- Rate: £3 per mile\n\nWilliam writes an equation for the total cost T (in £) for a journey of m miles. Which equation is correct?",
+      "choices": [
+        "T = 3m + 5",
+        "T = 5m + 3",
+        "T = 3m",
+        "T = 8m"
+      ],
+      "correctIndex": 0,
+      "storyContext": "William reads a carter's pricing board: £5 base hire plus £3 per mile. He must write the equation before his father signs the contract.",
+      "world_feedback": "William reads back the formula aloud and the carter initials it without argument. His father raises an eyebrow: 'Most apprentices get the two numbers the wrong way round. You didn't.' William does not mention how close he came to writing it the other way."
+    },
+    {
+      "id": "cell_linear_equations_b7e2d1",
+      "conceptId": "linear_equations",
+      "level": 3,
+      "title": "The Apprentice's Slate",
+      "question": "The chandlery master posts the pricing formula: T = 3x + 5, where x = weeks stored and T = total cost in £.\n\nWhich ledger entry (x weeks, £T) lies exactly on this pricing line?",
+      "choices": [
+        "(4, 17)",
+        "(3, 5)",
+        "(2, 6)",
+        "(1, 3)"
+      ],
+      "correctIndex": 0,
+      "storyContext": "The chandlery master writes a pricing formula on a slate: T = 3x + 5. William finds an old ledger and wants to confirm one entry matches the formula.",
+      "world_feedback": "William works through each entry at his desk, substituting one at a time. When the master arrives at dawn, William points to (4, 17) without hesitation. The master checks his own slate and replaces the candle without a word — which, William has learned, is as close to praise as the old man gets."
+    },
+    {
+      "id": "cell_linear_equations_f8e2c7",
+      "conceptId": "linear_equations",
+      "level": 2,
+      "title": "The Steady Drift",
+      "question": "The watch's error grows steadily: 30 seconds slow at 20 days, 90 seconds slow at 60 days. The astronomer asks William to explain what the drift rate means for correcting the ship's position. Which statement correctly interprets the slope?",
+      "choices": [
+        "The watch loses 1.5 seconds more for every additional day at sea.",
+        "The drift rate is 1.5.",
+        "The watch is 1.5 seconds slow in total.",
+        "The watch loses 40 seconds more for every additional day at sea."
+      ],
+      "correctIndex": 0,
+      "storyIntro": "Kingston harbor, 1761. William Harrison has spent forty days checking his father's timekeeper against the stars, and the astronomer wants more than the raw numbers in the logbook. Twenty days out the watch ran thirty seconds slow; by day sixty it was ninety seconds slow, a drift that either proves the clock seaworthy or sinks the family's claim on the Board of Longitude's prize. The rate hidden in those two readings will decide it.",
+      "storyContext": "In Kingston harbor, young William Harrison sits with the ship's astronomer. They have been checking the watch against the stars each day since leaving England. The astronomer opens his logbook and shows William the tally of error: after 20 days the watch was 30 seconds slow; after 60 days it was 90 seconds slow. 'This,' the astronomer says, tapping the numbers, 'is either your father's triumph or his ruin. Tell me what these numbers mean, William — not the arithmetic, but the meaning.'",
+      "world_feedback": "The astronomer nods slowly. 'Yes — 1.5 seconds gained in error for each day. Now I can subtract it, day by day, and pull the true time back out of the drift. Your father did not build a perfect clock, William. He built a clock that lies the same way every day. And a steady lie can be undone.'"
+    },
+    {
+      "id": "cell_ratios_proportions_0847d6",
+      "conceptId": "ratios_proportions",
+      "level": 2,
+      "title": "Thales and the Shadow of the Pyramid",
+      "question": "The staff is 6 cubits tall and casts a 2-cubit shadow, so height is 3 times the shadow. The pyramid casts a 90-cubit shadow. How tall is the pyramid?",
+      "choices": [
+        "270 cubits",
+        "92 cubits",
+        "30 cubits",
+        "180 cubits"
+      ],
+      "correctIndex": 0,
+      "storyIntro": "Giza, roughly 600 BC. The priests have measured the Great Pyramid for generations and never once found its height, because no rope reaches that high and no ladder is safe to climb. Thales plants his own walking staff upright in the sand at midday and waits for its shadow to fall, certain the sun treats every vertical thing the same way at the same moment. Whatever relationship the staff holds with its shadow, the pyramid must hold with its own.",
+      "storyContext": "Thales plants his walking staff upright in the sand beside the Great Pyramid. The staff stands 6 cubits tall, and at this moment its shadow stretches 2 cubits across the sand. The priests lean in, curious. Thales explains: at this same instant, the pyramid's shadow reaches 90 cubits from its base out onto the sand. Whatever comparison the staff holds with its own shadow, the pyramid must hold with its shadow too.",
+      "world_feedback": "The priests stop smiling. Thales has spoken a height no rope ever touched — 270 cubits — read entirely from a shadow on the sand. The relationship, not the ladder, measured the pyramid."
+    },
+    {
+      "id": "cell_ratios_proportions_9d2e47",
+      "conceptId": "ratios_proportions",
+      "level": 2,
+      "title": "The Spice Merchant's Table",
+      "question": "A spice merchant at Kingston harbor posts this notice:\n\n| Pepper | Price |\n|---|---|\n| 5 bags | 20 pence |\n\nWilliam must find the price per bag to compare with the merchant next door. What is the price per bag?",
+      "choices": [
+        "15 pence per bag",
+        "4 pence per bag",
+        "0.25 pence per bag",
+        "100 pence per bag"
+      ],
+      "correctIndex": 1,
+      "storyIntro": "With the ship's watch trial still weeks from finished, William has coin to spend and a father's instructions to spend it wisely. Two spice stalls sit side by side at Kingston harbor, each posting a different bag count at a different price, and no total anywhere in sight. He needs one number that means the same thing at both stalls before he hands over a single coin. Whichever price per bag is smaller wins his business.",
+      "storyContext": "William scans Kingston harbor's spice stalls to find the best pepper price. A merchant posts a notice board — but the price per bag only emerges if you divide correctly, not subtract.",
+      "world_feedback": "William marks '4 pence per bag' in his provisioning log and moves to the next stall. The first merchant watches him go: 'Clever lad. Most just look at the two numbers and take away the smaller.' William does not look back — he already knows which stall wins."
+    },
+    {
+      "id": "cell_ratios_proportions_e6c2a9",
+      "conceptId": "ratios_proportions",
+      "level": 3,
+      "title": "The Merchant's Blend",
+      "question": "A saffron merchant charges 15 pence for 3 grams. William needs 7 grams. How much will he pay at the same rate?",
+      "choices": [
+        "35 pence",
+        "19 pence",
+        "5 pence",
+        "105 pence"
+      ],
+      "correctIndex": 0,
+      "storyContext": "William needs 7 grams of saffron. The only merchant quotes 15 pence for 3 grams. William must set up a proportion to find the right price before he hands over any coin.",
+      "world_feedback": "William counts out 35 pence and the merchant weighs 7 grams precisely. As William pockets the saffron, the merchant's assistant leans over: 'He's the first this week who didn't just add a few coins and wonder why the scales were wrong.' William files that away as useful."
+    },
+    {
+      "id": "cell_ratios_proportions_f4d7b2",
+      "conceptId": "ratios_proportions",
+      "level": 3,
+      "title": "The Otter's Portion",
+      "question": "The sanctuary's otter swims 3 metres in 4 minutes. Assuming a steady rate, how far does it swim in 12 minutes?",
+      "choices": [
+        "9 metres",
+        "15 metres",
+        "36 metres",
+        "4 metres"
+      ],
+      "correctIndex": 0,
+      "storyContext": "Simon records the resident otter's training swims. The keeper asks how far the otter will travel in a longer session — Simon must set up and solve a proportion to file the forecast.",
+      "world_feedback": "Simon writes 9 metres in the forecast log and the keeper measures out the correct supplement. The otter surfaces after exactly 12 minutes and glides to the feeding platform. Simon marks the actual reading: 9 metres, exactly. He double-checks his proportion in the margin and decides he quite likes the feeling of being right."
+    },
+    {
+      "id": "cell_spark_food_stall_467",
+      "conceptId": "ratios_proportions",
+      "level": 1,
+      "cluster": "food_trade",
+      "source_question_id": "eedi_467",
+      "title": "The Night-Market Split",
+      "protagonist": "Nadia",
+      "setting": "Night-market pop-up stall",
+      "question": "Nadia and her business partner split tonight's profit in the ratio 9:5, with Nadia taking the larger share. Nadia gets $72 more than her partner. How much profit did the stall make altogether?",
+      "choices": [
+        "$112",
+        "$432",
+        "$252",
+        "$162"
+      ],
+      "correctIndex": 2,
+      "explanation": "The ratio 9:5 cuts the profit into 9 + 5 = 14 equal parts, and Nadia's lead over her partner is 9 − 5 = 4 of those parts. Those 4 parts are the $72 gap, so one part is $18 — and the whole night is 14 × $18 = $252. The $72 is the difference between the shares, not either share itself.",
+      "hints": [
+        "The 9:5 split cuts the profit into 14 equal parts. How many of those parts make up Nadia's lead over her partner?",
+        "$72 is the difference between the two shares — that's 4 parts. What is one part worth?",
+        "One part is $18. The whole profit is all 14 parts."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_ratios_proportions__ratio_question_where_difference_between",
+      "misconception_label": "In ratio question where the difference between the sides is given, uses that as the total for one side instead",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "unit_confusion",
+          "student_thinking": "Uses the $72 difference as if it were one side's total instead of the gap between shares.",
+          "misconception_id": "mis_ratios_proportions__ratio_question_where_difference_between"
+        },
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "Scales the wrong quantity — treats $72 as one part and multiplies by too many parts."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "arithmetic",
+          "student_thinking": "Arithmetic slip while combining the parts."
+        }
+      ],
+      "storyIntro": "Nadia's pop-up stall closes its best night of the month. The crowd is gone, the till is full, and one number decides who takes home what.",
+      "storyContext": "A pop-up stall's closing count: the night's profit splits in a fixed ratio between two partners, and only the gap between their shares is known.",
+      "introTemplates": [
+        "Nadia's pop-up stall lives where {a_noun} meets {b_noun} — tonight's menu came out of one and tonight's prices out of the other. The crowd is gone, the till is full, and one number decides who takes home what.",
+        "{A} pays Nadia's rent; {b} fills the margins of her notebook. Tonight both meet in the cash box of her market stall — a good night, a fixed split, and a partner who counts everything.",
+        "Every stall on this street runs on {a_noun}, but Nadia's survives because she also respects {b_noun}. The lanterns are coming down, the profit is real, and it has to be split before they go out."
+      ],
+      "world_feedback": {
+        "correct": "Nadia counts out the split and her partner's tally lands on the same number: $252 for the night. The stall books next weekend's pitch on the spot.",
+        "incorrect": "The split comes out lopsided and her partner recounts the till. The $72 is the gap between the two shares — four parts of fourteen, not the whole story. The cash box stays open another hour."
+      }
+    },
+    {
+      "id": "cell_spark_rhythm_ladder_41",
+      "conceptId": "sequences_series",
+      "level": 2,
+      "cluster": "rhythm_pattern",
+      "source_question_id": "eedi_41",
+      "title": "The Rehearsal Ladder",
+      "protagonist": "Ayo",
+      "setting": "The rehearsal room, six days out",
+      "question": "Ayo's rehearsal ladder climbs by the same amount each day. Day 1 holds 7 minutes of the new routine at full tempo; day 4 holds 25 minutes. The showcase lands on day 8. If the pattern holds, how many minutes does day 8 hold?",
+      "choices": [
+        "49",
+        "50",
+        "42",
+        "56"
+      ],
+      "correctIndex": 0,
+      "explanation": "From day 1 to day 4 is 3 equal steps, and the minutes climb from 7 to 25 — a rise of 18 over 3 steps, so each day adds 6. Day 8 is 7 steps past day 1: 7 + 7 × 6 = 49. The ladder grows by adding the same step each day, not by multiplying — day 8 is not double day 4.",
+      "hints": [
+        "Day 1 to day 4 is three equal steps. How much did the minutes rise in total across those three steps?",
+        "The rise is 18 minutes over 3 steps — so each day adds how much?",
+        "Each day adds 6. Day 8 is seven steps past day 1: start at 7 and climb seven times."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_sequences_series__believes_there_multiplicative_relationship_between",
+      "misconception_label": "Believes there is a multiplicative relationship between values of terms in a linear sequence",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 1,
+          "error_type": "wrong_formula",
+          "student_thinking": "Treats the sequence as multiplicative — doubling the day number to double the term.",
+          "misconception_id": "mis_sequences_series__believes_there_multiplicative_relationship_between"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "Finds the right step but climbs one step short."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "Climbs one step too far past the target day."
+        }
+      ],
+      "storyIntro": "Six days to the showcase. Ayo's training plan is taped to the mirror — a number for every day, climbing by the same amount, ending on the night that matters.",
+      "storyContext": "A rehearsal plan taped to a studio mirror: minutes at full tempo climbing by a fixed step each day, with the showcase set for day 8.",
+      "introTemplates": [
+        "Under every craft there is a count. In Ayo's rehearsal room, {a_noun} sets the rhythm and {b_noun} raises the stakes — and the training plan taped to the mirror climbs one steady step at a time.",
+        "Ayo is building the night {a} and {b} share one stage. The plan on the mirror has a number for every day — rising by the same amount, ending on the day that matters.",
+        "In this room, {a_noun} and {b_noun} run on the same clock. Ayo's showcase piece borrows from both, and the rehearsal ladder underneath it refuses to skip a beat."
+      ],
+      "world_feedback": {
+        "correct": "Day 8 reads 49 minutes — exactly where the ladder lands. Ayo tapes the sheet back on the mirror; the routine runs full-length on showcase night.",
+        "incorrect": "The plan drifts off the sheet — the ladder climbs by the same step every day, and doubling the day doesn't double the minutes. Walk it again: 7 on day 1, and what step reaches 25 by day 4?"
+      }
+    },
+    {
+      "id": "cell_spark_motion_splits_13",
+      "conceptId": "measurement_units",
+      "level": 1,
+      "cluster": "motion_competition",
+      "source_question_id": "eedi_13",
+      "title": "The Away-Day Split",
+      "protagonist": "Coach Rivera",
+      "setting": "Tournament morning, two vans",
+      "question": "Tournament morning: two vans, one kickoff. Hannah's van reaches the ground in 3 hours and 16 minutes. Tori's van takes 214 minutes. What is the difference between the two journeys in minutes?",
+      "choices": [
+        "196 minutes",
+        "18 minutes",
+        "102 minutes",
+        "12 minutes"
+      ],
+      "correctIndex": 1,
+      "explanation": "3 hours and 16 minutes is 3 × 60 + 16 = 196 minutes — an hour is 60 minutes, not 100. Tori's 214 minutes minus Hannah's 196 minutes leaves an 18-minute gap between the vans.",
+      "hints": [
+        "Put both journeys in the same unit first. How many minutes is 3 hours and 16 minutes?",
+        "An hour is 60 minutes — 3 hours is 180, plus the 16.",
+        "196 minutes against 214 minutes. The difference is what's left between them."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_measurement_units__answers_if_there_are_100",
+      "misconception_label": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "wrong_formula",
+          "student_thinking": "Converts as if an hour were 100 minutes, then reports the converted time instead of the difference.",
+          "misconception_id": "mis_measurement_units__answers_if_there_are_100"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "Uses 100-minute hours: 316 − 214 = 102."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "Subtraction slip around the hour boundary."
+        }
+      ],
+      "storyIntro": "Tournament morning. Two vans, one kickoff, and a schedule with no slack in it — the coach wants one honest number before anyone boards.",
+      "storyContext": "An away-day schedule: two travel times in mismatched units, and a warm-up plan that starts the minute the first van parks.",
+      "introTemplates": [
+        "Game day runs on splits. Coach Rivera's squad lives where {a_noun} meets {b_noun}, and this morning both come down to two clocks that refuse to agree.",
+        "{A} taught this squad how to move; {b} taught it how to plan. The tournament is in one city, the team is in two vans, and the coach wants one honest number before anyone boards.",
+        "The locker-room board says it plainly: {a_noun}, {b_noun}, and a schedule with no slack in it. Two travel times, one difference — and warm-up starts the minute the first van parks."
+      ],
+      "world_feedback": {
+        "correct": "18 minutes. Coach Rivera chalks it on the board and slides warm-up without wasting a second — the squad that measures right warms up right.",
+        "incorrect": "The warm-up plan collapses on the spot — an hour is 60 minutes, not 100, and the real gap hides inside that conversion. Rivera reads the two clocks again before the vans load."
+      }
+    },
+    {
+      "id": "cell_spark_build_square_489",
+      "conceptId": "area_volume",
+      "level": 1,
+      "cluster": "build_design",
+      "source_question_id": "eedi_489",
+      "title": "The One-Cut Square",
+      "protagonist": "Imani",
+      "setting": "The workshop, commission week",
+      "question": "The commission calls for a perfect square panel with an area of 64 cm², and the material only allows one cut. What must the side length of the square be?",
+      "choices": [
+        "32 cm",
+        "16 cm",
+        "8 cm",
+        "64 cm"
+      ],
+      "correctIndex": 2,
+      "explanation": "A square's area is side × side, so the side is the number that multiplies by itself to make 64 — that's 8 cm, since 8 × 8 = 64. Halving 64 gives 32, but that answers a different question: half the area is not the square root.",
+      "hints": [
+        "Area of a square is side × side. Which length, times itself, makes 64?",
+        "Halving 64 is not the same as square-rooting it — 32 × 32 is far more than 64.",
+        "8 × 8 = 64. The side is 8 cm."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_area_volume__confuses_square_rooting_and_halving",
+      "misconception_label": "Confuses square rooting and halving the number",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "wrong_formula",
+          "student_thinking": "Halves 64 instead of square-rooting it.",
+          "misconception_id": "mis_area_volume__confuses_square_rooting_and_halving"
+        },
+        {
+          "choice_index": 1,
+          "error_type": "arithmetic",
+          "student_thinking": "Divides by 4 — treats the four sides as splitting the area."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "Reports the area itself as the length."
+        }
+      ],
+      "storyIntro": "Commission week. The material is expensive, the blade cuts once, and the whole design hangs on a single square.",
+      "storyContext": "A workshop commission: one square panel with its area fixed by the client, one pass of the blade, and no spare material.",
+      "introTemplates": [
+        "Imani's workshop takes the commissions where {a_noun} and {b_noun} overlap, and this week's client wants both in one piece. The material is expensive, the blade cuts once, and the whole design hangs on a single square.",
+        "Around {a_noun}, a bad measurement is wasted material; around {b_noun}, it's a broken promise. Imani sets the ruler against the panel and the workshop goes quiet.",
+        "{A} gave Imani the eye; {b} gave her the deadline. The centerpiece is a square panel, the client fixed the area, and the side length is hers to find."
+      ],
+      "world_feedback": {
+        "correct": "The blade follows the 8 cm line and the panel drops out true. Set against the frame it fits with nothing left to sand — the commission moves forward tonight.",
+        "incorrect": "The panel comes off the bench oversized — halving 64 isn't the same as asking which length, times itself, makes 64. Imani squares the ruler and checks before the next cut."
+      }
+    },
+    {
+      "id": "cell_spark_discovery_draw_235",
+      "conceptId": "basic_probability",
+      "level": 1,
+      "cluster": "discovery",
+      "source_question_id": "eedi_235",
+      "title": "The Last Blind Draw",
+      "protagonist": "Suri",
+      "setting": "The field survey, last night of the season",
+      "question": "The survey's sample box holds 10 tagged capsules: 3 are pink, 3 are blue, and the rest are green. One capsule is drawn at random for tonight's reading. What is the probability the draw comes up green?",
+      "choices": [
+        "4",
+        "6/10",
+        "1/3",
+        "4/10"
+      ],
+      "correctIndex": 3,
+      "explanation": "Out of 10 capsules, 3 are pink and 3 are blue, which leaves 10 − 3 − 3 = 4 green. A probability is a count out of the whole: 4 green out of 10 capsules is 4/10. On its own, 4 is just the count — the denominator is what makes it a chance.",
+      "hints": [
+        "First count the green capsules: 10 total, minus 3 pink, minus 3 blue.",
+        "Four capsules are green — but a probability is a count out of the whole box.",
+        "4 green out of 10 capsules: 4/10."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_basic_probability__forgets_denominator_probability",
+      "misconception_label": "Forgets the denominator in probability",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "wrong_formula",
+          "student_thinking": "Reports the raw count of green capsules and forgets the denominator.",
+          "misconception_id": "mis_basic_probability__forgets_denominator_probability"
+        },
+        {
+          "choice_index": 1,
+          "error_type": "arithmetic",
+          "student_thinking": "Counts the pink and blue capsules — the ones that are NOT green."
+        },
+        {
+          "choice_index": 2,
+          "error_type": "sign_error",
+          "student_thinking": "Builds the fraction from the three color groups instead of the ten capsules."
+        }
+      ],
+      "storyIntro": "Last night of the season. The sample box is packed, the draw is blind, and the final report can't say 'probably' without a number under it.",
+      "storyContext": "A season-end field survey: one random draw from a box of tagged capsules, and a report that needs the odds stated straight.",
+      "introTemplates": [
+        "The survey log keeps two columns this season: {a_noun} and {b_noun}. On the last night, Suri runs the final blind draw — and everything the team reports back rests on what chance actually says.",
+        "Suri joined the survey for {a} and stayed for {b}. Tonight it ends the way it started: one random draw from the sample box, and a report that can't say 'probably' without a number under it.",
+        "Out here, {a_noun} keeps you moving and {b_noun} keeps you honest. The sample box is packed, the draw is blind, and the season's last entry wants the odds stated straight."
+      ],
+      "world_feedback": {
+        "correct": "Suri logs 4/10, and across the season's records the draws land right on it. The report ships with a number that holds.",
+        "incorrect": "The report reads strangely on review — 4 is a count, not a chance. Out of ten capsules, what share of them are green? Suri rewrites the line before it ships."
+      }
+    },
+    {
+      "id": "cell_spark_digital_odds_350",
+      "conceptId": "basic_probability",
+      "level": 1,
+      "cluster": "digital",
+      "source_question_id": "eedi_350",
+      "title": "The Drop Odds",
+      "protagonist": "Rae",
+      "setting": "The studio desk, launch night",
+      "question": "Rae's build gives the bonus drop a probability of 2/7 on each run. Before the patch notes go out, one line is missing: what is the probability that a run produces no drop?",
+      "choices": [
+        "2/7",
+        "5/7",
+        "5",
+        "2/5"
+      ],
+      "correctIndex": 1,
+      "explanation": "A run either produces the drop or it doesn't, so the two probabilities must add to 1. If the drop lands with probability 2/7, the remaining 5/7 of the chances are runs with no drop. The two sides don't have to be equal — they just have to make the whole.",
+      "hints": [
+        "Every run either drops or doesn't — together those chances make the whole: 1.",
+        "The whole is 7 sevenths. The drop takes 2 of them.",
+        "1 − 2/7 = 5/7."
+      ],
+      "examTag": "GCSE",
+      "format": "word_problem",
+      "misconception_id": "mis_basic_probability__thinks_probabilities_event_occurring_or",
+      "misconception_label": "Thinks that probabilities of an event occurring or not occurring must be equal",
+      "distractor_taxonomy": [
+        {
+          "choice_index": 0,
+          "error_type": "wrong_formula",
+          "student_thinking": "Assumes happening and not happening must carry the same probability.",
+          "misconception_id": "mis_basic_probability__thinks_probabilities_event_occurring_or"
+        },
+        {
+          "choice_index": 2,
+          "error_type": "arithmetic",
+          "student_thinking": "Reports the leftover count of sevenths without the denominator."
+        },
+        {
+          "choice_index": 3,
+          "error_type": "sign_error",
+          "student_thinking": "Rebuilds the fraction from the two counts instead of subtracting from the whole."
+        }
+      ],
+      "storyIntro": "Launch night. The build is frozen, the stream starts soon, and the last unclosed ticket is a single line of odds.",
+      "storyContext": "A launch-night patch note: a bonus drop with fixed odds per run, and the complementary line still missing.",
+      "introTemplates": [
+        "Launch night. Rae's project sits where {a_noun} meets {b_noun} — one built the thing, the other is why anyone will show up. The last unclosed ticket is a single line of odds.",
+        "Rae has shipped enough to know {a} and {b} fail the same way: one number nobody checked. Tonight the drop odds go into the patch notes stated both ways, or not at all.",
+        "Ten minutes to the stream. On one monitor, {a_noun}; on the other, {b_noun}. Between them sits a probability that has to be right before anyone hits play."
+      ],
+      "world_feedback": {
+        "correct": "Rae types 5/7 into the patch notes and the overnight test runs land right on it. The launch goes out clean — the odds hold from both sides.",
+        "incorrect": "Chat catches it inside the first hour — a run either drops or it doesn't, and the two chances have to make the whole. If the drop takes 2 sevenths, what's left of the 7? Rae patches the notes."
+      }
+    }
+  ],
+  "tales": [
+    {
+      "id": "folk_anansi_stories",
+      "title": "Anansi the Spider",
+      "setting": "Forest villages of the Gold Coast",
+      "protagonist": "Anansi",
+      "synopsis": "Anansi, a clever spider, trades wisdom, shares food, and outwits stronger animals. Every bargain is a count, a share, or a fair split — and the community watches whether the math of fairness holds.",
+      "themes": [
+        "cleverness",
+        "fairness",
+        "community",
+        "trade"
+      ],
+      "keywords": [
+        "spider",
+        "share",
+        "food",
+        "clever",
+        "trade",
+        "count"
+      ],
+      "concept_affinity": [
+        "ratios_proportions",
+        "fractions_decimals",
+        "basic_probability",
+        "order_of_operations"
+      ],
+      "concept_affinity_scores": {
+        "ratios_proportions": 0.88,
+        "fractions_decimals": 0.75,
+        "basic_probability": 0.55
+      }
+    },
+    {
+      "id": "folk_west_african_drummer",
+      "title": "The Master Drummer",
+      "setting": "Royal drumming academy, Kumasi",
+      "protagonist": "Kwame",
+      "synopsis": "Kwame learns polyrhythms at the drumming academy. Each pattern is a living fraction — three beats against four, halves against wholes — and the master will not let him play the ceremony until the counts lock.",
+      "themes": [
+        "rhythm",
+        "discipline",
+        "pattern",
+        "mentorship"
+      ],
+      "keywords": [
+        "drum",
+        "rhythm",
+        "fraction",
+        "pattern",
+        "beat",
+        "count"
+      ],
+      "concept_affinity": [
+        "fractions_decimals",
+        "ratios_proportions",
+        "order_of_operations",
+        "sequences_series"
+      ],
+      "concept_affinity_scores": {
+        "fractions_decimals": 0.9,
+        "ratios_proportions": 0.85,
+        "sequences_series": 0.6
+      }
+    },
+    {
+      "id": "folk_kente_weaver",
+      "title": "The Kente Loom",
+      "setting": "Family loom yard, contemporary Kumasi",
+      "protagonist": "Adjoa",
+      "synopsis": "Adjoa's family weaving business receives a palace commission. Each Kente strip encodes sequence and symmetry — one broken ratio in the pattern and the elders send the cloth back.",
+      "themes": [
+        "craft",
+        "heritage",
+        "symmetry",
+        "sequence"
+      ],
+      "keywords": [
+        "weave",
+        "loom",
+        "pattern",
+        "sequence",
+        "symmetry",
+        "cloth"
+      ],
+      "concept_affinity": [
+        "sequences_series",
+        "geometric_transformations",
+        "ratios_proportions",
+        "number_properties"
+      ],
+      "concept_affinity_scores": {
+        "sequences_series": 0.88,
+        "geometric_transformations": 0.72,
+        "ratios_proportions": 0.7
+      }
+    },
+    {
+      "id": "folk_polynesian_wayfinder",
+      "title": "The Wayfinder",
+      "setting": "Open Pacific, traditional wayfinding voyage",
+      "protagonist": "Hina",
+      "synopsis": "Hina navigates an outrigger between islands using stars, swells, and wind. Bearing and distance are not poetry — miscount the angle and the crew runs out of water.",
+      "themes": [
+        "journey",
+        "navigation",
+        "survival",
+        "observation"
+      ],
+      "keywords": [
+        "canoe",
+        "star",
+        "navigation",
+        "angle",
+        "distance",
+        "ocean"
+      ],
+      "concept_affinity": [
+        "right_triangle_geometry",
+        "trigonometry_basics",
+        "measurement_units",
+        "coordinate_geometry"
+      ],
+      "concept_affinity_scores": {
+        "right_triangle_geometry": 0.9,
+        "trigonometry_basics": 0.8,
+        "measurement_units": 0.65
+      }
+    },
+    {
+      "id": "folk_maya_calendar",
+      "title": "The Calendar Keepers",
+      "setting": "Stone observatory, ~900 CE Mesoamerica",
+      "protagonist": "Maya",
+      "synopsis": "Maya tends a stone observatory. The Venus alignment ceremony cannot be a day early or late — base-twenty counts and long cycles must close exactly.",
+      "themes": [
+        "time",
+        "ceremony",
+        "cycles",
+        "precision"
+      ],
+      "keywords": [
+        "calendar",
+        "venus",
+        "cycle",
+        "count",
+        "observatory",
+        "ceremony"
+      ],
+      "concept_affinity": [
+        "sequences_series",
+        "number_properties",
+        "basic_probability",
+        "exponent_rules"
+      ],
+      "concept_affinity_scores": {
+        "sequences_series": 0.85,
+        "number_properties": 0.8,
+        "exponent_rules": 0.5
+      }
+    },
+    {
+      "id": "folk_house_of_wisdom",
+      "title": "House of Wisdom",
+      "setting": "House of Wisdom, Baghdad ~830 CE",
+      "protagonist": "Riyad",
+      "synopsis": "Riyad copies manuscripts in Baghdad's great library. Completing the square is literal — al-Khwarizmi's pages settle inheritance disputes with exact areas and roots.",
+      "themes": [
+        "knowledge",
+        "inheritance",
+        "algebra",
+        "justice"
+      ],
+      "keywords": [
+        "library",
+        "square",
+        "inheritance",
+        "algebra",
+        "manuscript",
+        "court"
+      ],
+      "concept_affinity": [
+        "quadratic_equations",
+        "factoring_polynomials",
+        "algebraic_manipulation",
+        "area_volume"
+      ],
+      "concept_affinity_scores": {
+        "quadratic_equations": 0.92,
+        "factoring_polynomials": 0.75,
+        "algebraic_manipulation": 0.7
+      }
+    },
+    {
+      "id": "folk_fibonacci_merchant",
+      "title": "The Merchant of Pisa",
+      "setting": "Trading house, Pisa 1202",
+      "protagonist": "Leonardo",
+      "synopsis": "Leonardo keeps ledgers on the Pisa waterfront. Arabic numerals and unit ratios decide which cargo clears customs before the tide turns.",
+      "themes": [
+        "trade",
+        "ledger",
+        "conversion",
+        "speed"
+      ],
+      "keywords": [
+        "merchant",
+        "ledger",
+        "trade",
+        "ratio",
+        "harbor",
+        "count"
+      ],
+      "concept_affinity": [
+        "ratios_proportions",
+        "fractions_decimals",
+        "sequences_series",
+        "measurement_units"
+      ],
+      "concept_affinity_scores": {
+        "ratios_proportions": 0.9,
+        "fractions_decimals": 0.85,
+        "sequences_series": 0.6
+      }
+    },
+    {
+      "id": "folk_vedic_architect",
+      "title": "The Sulbasutras",
+      "setting": "Sacrifice ground, ~800 BCE India",
+      "protagonist": "Apala",
+      "synopsis": "Apala lays out a sacrifice altar with rope-stretching geometry. The fire pit must be a perfect right triangle — one skewed corner angers the priests.",
+      "themes": [
+        "ritual",
+        "precision",
+        "geometry",
+        "tradition"
+      ],
+      "keywords": [
+        "altar",
+        "rope",
+        "triangle",
+        "ritual",
+        "construction",
+        "geometry"
+      ],
+      "concept_affinity": [
+        "right_triangle_geometry",
+        "area_volume",
+        "triangles_congruence",
+        "ratios_proportions"
+      ],
+      "concept_affinity_scores": {
+        "right_triangle_geometry": 0.95,
+        "area_volume": 0.7,
+        "triangles_congruence": 0.65
+      }
+    },
+    {
+      "id": "folk_florence_wards",
+      "title": "Florence Nightingale's Wards",
+      "setting": "Scutari hospital, Crimean War 1854",
+      "protagonist": "Florence Nightingale",
+      "synopsis": "Florence records mortality in Scutari's hospital wards. The numbers on her polar diagrams are lives — pattern in the data decides which ward gets clean water first.",
+      "themes": [
+        "data",
+        "care",
+        "reform",
+        "evidence"
+      ],
+      "keywords": [
+        "hospital",
+        "ledger",
+        "data",
+        "mortality",
+        "table",
+        "statistics"
+      ],
+      "concept_affinity": [
+        "descriptive_statistics",
+        "basic_probability",
+        "ratios_proportions",
+        "data_interpretation"
+      ],
+      "concept_affinity_scores": {
+        "descriptive_statistics": 0.95,
+        "basic_probability": 0.6,
+        "data_interpretation": 0.75
+      }
+    },
+    {
+      "id": "folk_panchatantra_clever_jackal",
+      "title": "The Clever Jackal",
+      "setting": "Forest court under a banyan tree",
+      "protagonist": "Jackal",
+      "synopsis": "A jackal divides a kill among hungry animals. Each claims a share by rank and appetite — only careful fractions keep the peace under the banyan tree.",
+      "themes": [
+        "fairness",
+        "politics",
+        "hunger",
+        "cleverness"
+      ],
+      "keywords": [
+        "share",
+        "divide",
+        "animal",
+        "forest",
+        "fair",
+        "portion"
+      ],
+      "concept_affinity": [
+        "fractions_decimals",
+        "ratios_proportions",
+        "basic_probability",
+        "order_of_operations"
+      ],
+      "concept_affinity_scores": {
+        "fractions_decimals": 0.88,
+        "ratios_proportions": 0.8
+      }
+    },
+    {
+      "id": "folk_arabian_nights_merchant",
+      "title": "The Merchant and the Genie",
+      "setting": "Desert caravan route, medieval Islamic world",
+      "protagonist": "Merchant",
+      "synopsis": "A merchant dates his debts and travel days across desert routes. One wrong sum on the ledger and the caravan leaves without him.",
+      "themes": [
+        "debt",
+        "journey",
+        "time",
+        "luck"
+      ],
+      "keywords": [
+        "merchant",
+        "desert",
+        "debt",
+        "caravan",
+        "days",
+        "route"
+      ],
+      "concept_affinity": [
+        "linear_equations",
+        "ratios_proportions",
+        "measurement_units",
+        "systems_of_linear_equations"
+      ],
+      "concept_affinity_scores": {
+        "linear_equations": 0.8,
+        "ratios_proportions": 0.7
+      }
+    },
+    {
+      "id": "folk_coyote_trickster",
+      "title": "Coyote and the Stars",
+      "setting": "High desert night, pre-contact Southwest",
+      "protagonist": "Coyote",
+      "synopsis": "Coyote scatters stars across the sky. Elders say the pattern must hold so hunters can navigate — each constellation is a counted map of seasons.",
+      "themes": [
+        "origin",
+        "navigation",
+        "season",
+        "balance"
+      ],
+      "keywords": [
+        "star",
+        "sky",
+        "pattern",
+        "hunt",
+        "season",
+        "night"
+      ],
+      "concept_affinity": [
+        "geometric_transformations",
+        "sequences_series",
+        "number_properties",
+        "basic_probability"
+      ],
+      "concept_affinity_scores": {
+        "sequences_series": 0.7,
+        "geometric_transformations": 0.65
+      }
+    },
+    {
+      "id": "folk_sundarbans_tiger",
+      "title": "The Boatman's Tide",
+      "setting": "Sundarbans mangrove channels",
+      "protagonist": "Boatman",
+      "synopsis": "A boatman times the tide through mangrove channels. Miss the slack water by twenty minutes and the tiger marsh closes the only route home.",
+      "themes": [
+        "time",
+        "danger",
+        "nature",
+        "patience"
+      ],
+      "keywords": [
+        "tide",
+        "boat",
+        "channel",
+        "time",
+        "water",
+        "journey"
+      ],
+      "concept_affinity": [
+        "linear_equations",
+        "measurement_units",
+        "ratios_proportions",
+        "functions_basics"
+      ],
+      "concept_affinity_scores": {
+        "linear_equations": 0.75,
+        "functions_basics": 0.6
+      }
+    },
+    {
+      "id": "folk_japanese_origami_crane",
+      "title": "The Thousand Cranes",
+      "setting": "Post-war Hiroshima hospital room",
+      "protagonist": "Sadako",
+      "synopsis": "Sadako folds cranes wishing for healing. Each fold is symmetry and count — the legend says a thousand, and the hospital wall tracks every one.",
+      "themes": [
+        "hope",
+        "symmetry",
+        "persistence",
+        "memory"
+      ],
+      "keywords": [
+        "crane",
+        "fold",
+        "symmetry",
+        "count",
+        "paper",
+        "hope"
+      ],
+      "concept_affinity": [
+        "geometric_transformations",
+        "sequences_series",
+        "number_properties",
+        "area_volume"
+      ],
+      "concept_affinity_scores": {
+        "geometric_transformations": 0.8,
+        "sequences_series": 0.7
+      }
+    },
+    {
+      "id": "folk_inuit_igloo",
+      "title": "The Igloo Builder",
+      "setting": "Arctic tundra, winter storm approaching",
+      "protagonist": "Hunter",
+      "synopsis": "A hunter spirals snow blocks into a dome. Each block's angle and overlap must close the curve before the blizzard — geometry is shelter.",
+      "themes": [
+        "survival",
+        "craft",
+        "spiral",
+        "cold"
+      ],
+      "keywords": [
+        "snow",
+        "dome",
+        "spiral",
+        "block",
+        "shelter",
+        "angle"
+      ],
+      "concept_affinity": [
+        "area_volume",
+        "geometric_transformations",
+        "right_triangle_geometry",
+        "measurement_units"
+      ],
+      "concept_affinity_scores": {
+        "area_volume": 0.85,
+        "geometric_transformations": 0.75
+      }
+    },
+    {
+      "id": "folk_irish_giant_causeway",
+      "title": "Fionn and the Causeway",
+      "setting": "North Atlantic coast, mythic Ireland",
+      "protagonist": "Fionn mac Cumhaill",
+      "synopsis": "Fionn builds a stone path across the sea to face a rival giant. Each basalt column must match height and spacing or the path sinks before he crosses.",
+      "themes": [
+        "rivalry",
+        "construction",
+        "scale",
+        "courage"
+      ],
+      "keywords": [
+        "giant",
+        "stone",
+        "path",
+        "sea",
+        "column",
+        "build"
+      ],
+      "concept_affinity": [
+        "sequences_series",
+        "area_volume",
+        "ratios_proportions",
+        "geometric_transformations"
+      ],
+      "concept_affinity_scores": {
+        "sequences_series": 0.7,
+        "ratios_proportions": 0.6
+      }
+    },
+    {
+      "id": "folk_maori_star_compass",
+      "title": "Māori Star Compass",
+      "setting": "Pacific voyage, traditional waka",
+      "protagonist": "Navigator",
+      "synopsis": "A navigator reads a star compass carved in memory. Each rising point marks a latitude band — confuse two stars and the waka misses Aotearoa.",
+      "themes": [
+        "navigation",
+        "memory",
+        "stars",
+        "ancestry"
+      ],
+      "keywords": [
+        "star",
+        "compass",
+        "canoe",
+        "latitude",
+        "navigation",
+        "ocean"
+      ],
+      "concept_affinity": [
+        "coordinate_geometry",
+        "trigonometry_basics",
+        "right_triangle_geometry",
+        "measurement_units"
+      ],
+      "concept_affinity_scores": {
+        "coordinate_geometry": 0.85,
+        "trigonometry_basics": 0.75
+      }
+    },
+    {
+      "id": "folk_ethiopian_coffee_ceremony",
+      "title": "The Coffee Ceremony",
+      "setting": "Family home, Ethiopian highlands",
+      "protagonist": "Host",
+      "synopsis": "During the jebena ceremony, hosts measure water, beans, and time in three rounds. Hospitality is arithmetic — each cup must be equal and the last round sweetest.",
+      "themes": [
+        "hospitality",
+        "ritual",
+        "patience",
+        "community"
+      ],
+      "keywords": [
+        "coffee",
+        "ceremony",
+        "pour",
+        "share",
+        "cup",
+        "ritual"
+      ],
+      "concept_affinity": [
+        "ratios_proportions",
+        "measurement_units",
+        "sequences_series",
+        "fractions_decimals"
+      ],
+      "concept_affinity_scores": {
+        "ratios_proportions": 0.82,
+        "fractions_decimals": 0.7
+      }
+    },
+    {
+      "id": "folk_nordic_rime_giant",
+      "title": "The Frost Giant's Riddle",
+      "setting": "Utgard hall, mythic Scandinavia",
+      "protagonist": "Thor",
+      "synopsis": "Thor must answer a giant's riddles at Utgard. One asks how far he walked — the answer is half the remaining path each step, a halving that never quite ends.",
+      "themes": [
+        "riddle",
+        "hubris",
+        "limit",
+        "journey"
+      ],
+      "keywords": [
+        "riddle",
+        "giant",
+        "half",
+        "step",
+        "path",
+        "logic"
+      ],
+      "concept_affinity": [
+        "sequences_series",
+        "exponential_functions",
+        "basic_probability",
+        "number_properties"
+      ],
+      "concept_affinity_scores": {
+        "sequences_series": 0.8,
+        "exponential_functions": 0.65
+      }
+    },
+    {
+      "id": "folk_chinese_lo_shu_square",
+      "title": "Lo Shu Magic Square",
+      "setting": "Lo River bank, ancient China",
+      "protagonist": "Yu the Great",
+      "synopsis": "A turtle emerges from the Lo River bearing a pattern of dots. Scholars arrange the numbers so every row and diagonal sums the same — balance is cosmic law.",
+      "themes": [
+        "balance",
+        "omen",
+        "pattern",
+        "order"
+      ],
+      "keywords": [
+        "square",
+        "sum",
+        "pattern",
+        "river",
+        "balance",
+        "dots"
+      ],
+      "concept_affinity": [
+        "number_properties",
+        "systems_of_linear_equations",
+        "order_of_operations",
+        "matrices"
+      ],
+      "concept_affinity_scores": {
+        "number_properties": 0.85,
+        "systems_of_linear_equations": 0.6
+      }
+    },
+    {
+      "id": "folk_brazilian_capoeira_circle",
+      "title": "The Capoeira Circle",
+      "setting": "Salvador roda, colonial Brazil",
+      "protagonist": "Mestre",
+      "synopsis": "In the roda, two capoeiristas move to the berimbau's rhythm. Angles of entry and timing are geometry in motion — one misread beat and you're on the sand.",
+      "themes": [
+        "resistance",
+        "rhythm",
+        "circle",
+        "freedom"
+      ],
+      "keywords": [
+        "circle",
+        "dance",
+        "rhythm",
+        "angle",
+        "movement",
+        "beat"
+      ],
+      "concept_affinity": [
+        "geometric_transformations",
+        "trigonometry_basics",
+        "ratios_proportions",
+        "functions_basics"
+      ],
+      "concept_affinity_scores": {
+        "geometric_transformations": 0.78,
+        "trigonometry_basics": 0.55
+      }
+    },
+    {
+      "id": "folk_scottish_bridget_cattle",
+      "title": "Brigid's Counting Cattle",
+      "setting": "Highland farm, early spring",
+      "protagonist": "Brigid",
+      "synopsis": "Brigid tends cattle through Imbolc. Milk yields are logged by herd and day — the abbess needs exact totals before the spring market.",
+      "themes": [
+        "care",
+        "spring",
+        "record",
+        "generosity"
+      ],
+      "keywords": [
+        "cattle",
+        "milk",
+        "count",
+        "farm",
+        "spring",
+        "record"
+      ],
+      "concept_affinity": [
+        "descriptive_statistics",
+        "ratios_proportions",
+        "linear_equations",
+        "measurement_units"
+      ],
+      "concept_affinity_scores": {
+        "descriptive_statistics": 0.8,
+        "ratios_proportions": 0.65
+      }
+    },
+    {
+      "id": "folk_persian_three_princes",
+      "title": "The Three Princes of Serendip",
+      "setting": "Road to Serendip, medieval Persia",
+      "protagonist": "Princes",
+      "synopsis": "Three princes infer hidden facts from clues on the road. Each deduction chains observations — probability and logic, not luck, solve the lost camel.",
+      "themes": [
+        "deduction",
+        "travel",
+        "clue",
+        "wit"
+      ],
+      "keywords": [
+        "clue",
+        "deduce",
+        "camel",
+        "road",
+        "logic",
+        "observe"
+      ],
+      "concept_affinity": [
+        "basic_probability",
+        "algebraic_manipulation",
+        "data_interpretation",
+        "systems_of_linear_equations"
+      ],
+      "concept_affinity_scores": {
+        "basic_probability": 0.85,
+        "data_interpretation": 0.7
+      }
+    },
+    {
+      "id": "folk_haitian_market_vendor",
+      "title": "The Market Vendor",
+      "setting": "Open-air market, Port-au-Prince",
+      "protagonist": "Vendor",
+      "synopsis": "A vendor in Port-au-Prince prices mangoes by weight and bundle. The storm knocked out power — only mental math keeps the stall honest before the rain returns.",
+      "themes": [
+        "trade",
+        "storm",
+        "honesty",
+        "speed"
+      ],
+      "keywords": [
+        "market",
+        "price",
+        "weight",
+        "mango",
+        "trade",
+        "storm"
+      ],
+      "concept_affinity": [
+        "fractions_decimals",
+        "ratios_proportions",
+        "linear_equations",
+        "measurement_units"
+      ],
+      "concept_affinity_scores": {
+        "fractions_decimals": 0.8,
+        "ratios_proportions": 0.75
+      }
+    },
+    {
+      "id": "folk_korean_turtle_race",
+      "title": "The Turtle and the Hare",
+      "setting": "Village river ford",
+      "protagonist": "Turtle",
+      "synopsis": "A turtle bets a boastful hare on a river crossing. Steady rate beats burst speed — the turtle's constant pace graphs a line the hare cannot outrun.",
+      "themes": [
+        "patience",
+        "rate",
+        "humility",
+        "race"
+      ],
+      "keywords": [
+        "race",
+        "turtle",
+        "speed",
+        "steady",
+        "river",
+        "pace"
+      ],
+      "concept_affinity": [
+        "linear_equations",
+        "functions_basics",
+        "ratios_proportions",
+        "measurement_units"
+      ],
+      "concept_affinity_scores": {
+        "linear_equations": 0.88,
+        "functions_basics": 0.75
+      }
+    },
+    {
+      "id": "folk_aboriginal_dreamtime_stars",
+      "title": "Dreamtime Star Songlines",
+      "setting": "Central desert, Dreamtime tradition",
+      "protagonist": "Elder",
+      "synopsis": "Elders sing songlines that map country to stars. Each verse is a counted step on the land — lose the sequence and the waterhole story vanishes.",
+      "themes": [
+        "land",
+        "memory",
+        "song",
+        "ancestry"
+      ],
+      "keywords": [
+        "song",
+        "star",
+        "land",
+        "path",
+        "sequence",
+        "map"
+      ],
+      "concept_affinity": [
+        "sequences_series",
+        "coordinate_geometry",
+        "number_properties",
+        "geometric_transformations"
+      ],
+      "concept_affinity_scores": {
+        "sequences_series": 0.82,
+        "coordinate_geometry": 0.6
+      }
+    },
+    {
+      "id": "folk_russian_babushka_dolls",
+      "title": "The Nested Dolls",
+      "setting": "Workshop outside Moscow",
+      "protagonist": "Carver",
+      "synopsis": "A carver paints matryoshka dolls that fit inside each other. Each shell is a fixed ratio smaller — one wrong circumference and the inner doll rattles loose.",
+      "themes": [
+        "craft",
+        "family",
+        "nesting",
+        "precision"
+      ],
+      "keywords": [
+        "doll",
+        "nest",
+        "ratio",
+        "craft",
+        "fit",
+        "scale"
+      ],
+      "concept_affinity": [
+        "ratios_proportions",
+        "geometric_transformations",
+        "area_volume",
+        "sequences_series"
+      ],
+      "concept_affinity_scores": {
+        "ratios_proportions": 0.85,
+        "area_volume": 0.7
+      }
+    },
+    {
+      "id": "folk_mesoamerican_pulque",
+      "title": "The Pulque Ferment",
+      "setting": "Highland agave field",
+      "protagonist": "Farmer",
+      "synopsis": "A farmer tracks agave sap fermentation by day and temperature. The ritual calendar demands the brew peak on the feast — exponential growth, not guesswork.",
+      "themes": [
+        "feast",
+        "growth",
+        "patience",
+        "ritual"
+      ],
+      "keywords": [
+        "ferment",
+        "agave",
+        "growth",
+        "feast",
+        "time",
+        "curve"
+      ],
+      "concept_affinity": [
+        "exponential_functions",
+        "functions_basics",
+        "ratios_proportions",
+        "measurement_units"
+      ],
+      "concept_affinity_scores": {
+        "exponential_functions": 0.9,
+        "functions_basics": 0.7
+      }
+    },
+    {
+      "id": "folk_turkish_hodja_riddle",
+      "title": "Nasreddin Hodja's Donkey",
+      "setting": "Anatolian village square",
+      "protagonist": "Nasreddin Hodja",
+      "synopsis": "Hodja rides his donkey backward to teach a lesson. The village argues about distance traveled versus direction faced — vectors before anyone named them.",
+      "themes": [
+        "humor",
+        "wisdom",
+        "direction",
+        "paradox"
+      ],
+      "keywords": [
+        "donkey",
+        "direction",
+        "village",
+        "riddle",
+        "distance",
+        "ride"
+      ],
+      "concept_affinity": [
+        "vectors",
+        "coordinate_geometry",
+        "algebraic_manipulation",
+        "geometric_transformations"
+      ],
+      "concept_affinity_scores": {
+        "vectors": 0.8,
+        "coordinate_geometry": 0.65
+      }
+    },
+    {
+      "id": "folk_filipino_rice_terrace",
+      "title": "The Rice Terraces",
+      "setting": "Banaue rice terraces, Philippines",
+      "protagonist": "Farmer",
+      "synopsis": "Farmers carve Banaue terraces into the mountain. Each level must hold water at the same depth — slope, area, and flow decide whether the village eats.",
+      "themes": [
+        "engineering",
+        "community",
+        "water",
+        "generations"
+      ],
+      "keywords": [
+        "rice",
+        "terrace",
+        "water",
+        "slope",
+        "mountain",
+        "level"
+      ],
+      "concept_affinity": [
+        "area_volume",
+        "linear_equations",
+        "right_triangle_geometry",
+        "ratios_proportions"
+      ],
+      "concept_affinity_scores": {
+        "area_volume": 0.88,
+        "linear_equations": 0.7
+      }
+    },
+    {
+      "id": "folk_greek_odyssey_navigation",
+      "title": "Odysseus and the Stars",
+      "setting": "Aegean open water, mythic voyage",
+      "protagonist": "Odysseus",
+      "synopsis": "Lost at sea, Odysseus steers by Pleiades and Bear. Night after night the angles change predictably — miss the pattern and Ithaca stays invisible.",
+      "themes": [
+        "home",
+        "navigation",
+        "patience",
+        "cunning"
+      ],
+      "keywords": [
+        "ship",
+        "star",
+        "navigation",
+        "sea",
+        "angle",
+        "home"
+      ],
+      "concept_affinity": [
+        "trigonometry_basics",
+        "right_triangle_geometry",
+        "coordinate_geometry",
+        "sequences_series"
+      ],
+      "concept_affinity_scores": {
+        "trigonometry_basics": 0.82,
+        "right_triangle_geometry": 0.75
+      }
+    },
+    {
+      "id": "folk_esports_draft",
+      "title": "The Tournament Draft",
+      "setting": "Hotel conference LAN tournament",
+      "protagonist": "Remy",
+      "synopsis": "Remy's team drafts for a LAN final. Expected value on picks and counter-picks is math — emotion drafts losers.",
+      "themes": [
+        "strategy",
+        "team",
+        "pressure",
+        "data"
+      ],
+      "keywords": [
+        "game",
+        "draft",
+        "probability",
+        "team",
+        "tournament",
+        "strategy"
+      ],
+      "concept_affinity": [
+        "basic_probability",
+        "descriptive_statistics",
+        "systems_of_linear_equations",
+        "data_interpretation"
+      ],
+      "concept_affinity_scores": {
+        "basic_probability": 0.9,
+        "descriptive_statistics": 0.75
+      }
+    }
+  ]
+}

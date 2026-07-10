@@ -5,7 +5,12 @@ import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey:            "AIzaSyBetzXAekac3zTdzgJ3vGxqKCQAXc3tcsU",
-  authDomain:        "mindcraft-93858.firebaseapp.com",
+  // Same-origin as Firebase Hosting (not the default .firebaseapp.com) so the
+  // OAuth redirect handshake never crosses a third-party domain — Safari ITP
+  // was wiping the pending-redirect state mid-flow on iPad, bouncing sign-in
+  // back to /login. Firebase Hosting auto-proxies /__/auth/* for this domain
+  // since it's the same project's Hosting site; no console/DNS change needed.
+  authDomain:        "mindcraft-93858.web.app",
   projectId:         "mindcraft-93858",
   storageBucket:     "mindcraft-93858.firebasestorage.app",
   messagingSenderId: "1024068467805",

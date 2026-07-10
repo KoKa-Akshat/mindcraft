@@ -1,0 +1,237 @@
+.page {
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #060c09;
+  color: #fff8e9;
+  font-family: "Nunito Sans", "DM Sans", system-ui, sans-serif;
+}
+
+.glow {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 42%,
+    rgba(196, 245, 71, 0.07) 0%,
+    rgba(196, 245, 71, 0.02) 35%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.titleCard,
+.manifesto,
+.matching,
+.reveal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.brandTitle {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.5rem, 12vw, 7rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: #fff8e9;
+  animation: titleCycle 4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 1;
+}
+
+.manifesto {
+  flex-direction: column;
+  padding: 24px;
+  text-align: center;
+}
+
+.manifestoLine {
+  margin: 0;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1.35;
+  color: rgba(255, 248, 233, 0.92);
+  animation: lineCycle 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.manifestoLine2::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  margin: 14px auto 0;
+  background: #c4f547;
+  animation: underlineDraw 0.6s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.matchingText {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 248, 233, 0.8);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.reveal {
+  pointer-events: auto;
+  padding: 24px;
+}
+
+.revealCard {
+  width: min(560px, 100%);
+  text-align: center;
+  padding: clamp(28px, 5vw, 40px);
+  border-radius: 20px;
+  background: rgba(8, 18, 14, 0.82);
+  border: 1px solid rgba(196, 245, 71, 0.2);
+  backdrop-filter: blur(16px);
+  animation: revealIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.revealEyebrow {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(196, 245, 71, 0.8);
+}
+
+.revealTitle {
+  margin: 0 0 12px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 400;
+}
+
+.revealSub {
+  margin: 0 0 24px;
+  line-height: 1.55;
+  color: rgba(255, 248, 233, 0.72);
+}
+
+.revealActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.primaryBtn,
+.ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.primaryBtn {
+  background: #c4f547;
+  color: #08120e;
+}
+
+.ghostBtn {
+  border: 1px solid rgba(255, 248, 233, 0.25);
+  color: #fff8e9;
+}
+
+.primaryBtn:hover,
+.ghostBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.revealMem {
+  margin: 20px 0 0;
+  font-size: 0.82rem;
+  color: rgba(255, 248, 233, 0.45);
+}
+
+.skip {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 6;
+  border: 1px solid rgba(255, 248, 233, 0.2);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 248, 233, 0.7);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.pageReveal .field {
+  animation: bubbleExplode 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fadeIn {
+  animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes titleCycle {
+  0% { opacity: 0; transform: translateY(12px); }
+  18% { opacity: 1; transform: translateY(0); }
+  72% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0.15; transform: translateY(-8px); }
+}
+
+@keyframes lineCycle {
+  0% { opacity: 0; transform: translateY(10px); }
+  12% { opacity: 1; transform: translateY(0); }
+  88% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes underlineDraw {
+  to { width: min(280px, 70vw); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@keyframes revealIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bubbleExplode {
+  to {
+    opacity: 0.3;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brandTitle,
+  .manifestoLine,
+  .revealCard,
+  .fadeIn {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
