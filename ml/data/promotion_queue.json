@@ -7,7 +7,10 @@
     "n_questions": 46,
     "n_ready": 0,
     "n_needs_world_feedback": 46,
-    "note": "After Fable 5 fills world_feedback on distractor entries: run with --merge to apply to eediQuestions.json. world_feedback rules: ≤200 chars, names the cognitive error through what the student was trying to do, never says 'wrong'."
+    "note": "After Fable 5 fills world_feedback on distractor entries: run with --merge to apply to eediQuestions.json. world_feedback rules: \u2264200 chars, names the cognitive error through what the student was trying to do, never says 'wrong'.",
+    "world_feedback_generated": true,
+    "world_feedback_filled": 27,
+    "world_feedback_cached": 2
   },
   "questions": [
     {
@@ -24,7 +27,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is ![The correct completion of the figure given in the question. ](). A common mistake here: Translates rather than reflects across a line of symmetry.  Double-check each step in complete a symmetric figure with respect to a specific line of symmetry to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of complete a symmetric figure with respect to a specific line of symmetry that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -32,7 +35,7 @@
       "format": "diagram",
       "misconception_id": "mis_geometric_transformations__translates_rather_than_reflects_across",
       "misconception_label": "Translates rather than reflects across a line of symmetry",
-      "storyContext": "The Alhambra, Granada, 1936. Maurits studies the tiles. Slide it, flip it, turn it — and ask what stays the same.",
+      "storyContext": "The Alhambra, Granada, 1936. Maurits studies the tiles. Slide it, flip it, turn it \u2014 and ask what stays the same.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -40,7 +43,10 @@
           "distractor_label": "Translates rather than reflects across a line of symmetry",
           "error_type": "misconception",
           "student_thinking": "Translates rather than reflects across a line of symmetry",
-          "world_feedback": null
+          "world_feedback": "You attempted to shift the shape, but did you flip it across the line of symmetry for perfect reflection?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -48,7 +54,10 @@
           "distractor_label": "Fails to reflect across mirror line",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You were attempting to create symmetry, but were you adding or subtracting the same distance from the mirror line for all vertices?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -56,7 +65,7 @@
           "distractor_label": "Fails to reflect across mirror line",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You were attempting to create symmetry, but were you adding or subtracting the same distance from the mirror line for all vertices?"
         }
       ],
       "_promotion": {
@@ -87,7 +96,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is Neither is correct. A common mistake here: Fails to reflect across mirror line.  Double-check each step in reflect an object or a point in a horizontal line with the line of reflection drawn, where the line of reflection lies on the edge or outside the object to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of reflect an object or a point in a horizontal line with the line of reflection drawn, where the line of reflection lies on the edge or outside the object that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -95,7 +104,7 @@
       "format": "coordinate_graph",
       "misconception_id": "mis_geometric_transformations__fails_reflect_across_mirror_line",
       "misconception_label": "Fails to reflect across mirror line",
-      "storyContext": "The Alhambra, Granada, 1936. Maurits studies the tiles. Slide it, flip it, turn it — and ask what stays the same.",
+      "storyContext": "The Alhambra, Granada, 1936. Maurits studies the tiles. Slide it, flip it, turn it \u2014 and ask what stays the same.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -103,7 +112,10 @@
           "distractor_label": "Fails to reflect across mirror line",
           "error_type": "misconception",
           "student_thinking": "Fails to reflect across mirror line",
-          "world_feedback": null
+          "world_feedback": "You were attempting to identify a reflection, but did you consider flipping all vertices across the mirror line?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 1,
@@ -111,7 +123,10 @@
           "distractor_label": "Fails to reflect across mirror line",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You were aiming to adjust the position, but did you translate all vertices across the mirror line equally?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -119,7 +134,10 @@
           "distractor_label": "Fails to reflect across mirror line",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You were aiming to match the object's shape, but did you flip all its vertices across the line?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -150,7 +168,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is 0. A common mistake here: Rounds up instead of down.  Double-check each step in round integers to the nearest 1000 to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of round integers to the nearest 1000 that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -166,7 +184,10 @@
           "distractor_label": "Rounds up instead of down",
           "error_type": "misconception",
           "student_thinking": "Rounds up instead of down",
-          "world_feedback": null
+          "world_feedback": "You rounded up to the nearest thousand, but does 326 have the same relationship to 1000 as 999 does to 1000?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 1,
@@ -182,7 +203,10 @@
           "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You're aiming to simplify, but are you considering the closest thousand to 326, or just its rough size?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -212,7 +236,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 5050. A common mistake here: Rounds to the wrong degree of accuracy (rounds too much).  Double-check each step in round integers to the nearest 10 to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of round integers to the nearest 10 that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -228,7 +252,10 @@
           "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
           "error_type": "misconception",
           "student_thinking": "Rounds to the wrong degree of accuracy (rounds too much)",
-          "world_feedback": null
+          "world_feedback": "You rounded to the nearest hundred, but does rounding to the nearest ten require a smaller step, like looking at the last digit?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -244,7 +271,10 @@
           "distractor_label": "Believes that rounding must change the number",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You were close to rounding, but did you consider the actual multiples of 10 near 5050, what's the closest one?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -266,15 +296,15 @@
       "level": 1,
       "question": "Which of the following pairs of function machines are correct?",
       "choices": [
-        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
-        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
-        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
-        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()"
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"\u2715 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"\u2715 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"\u2715 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"\u2715 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"\u2715 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"\u2715 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()",
+        "![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"\u2715 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"\u2715 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.]()"
       ],
       "correctIndex": 1,
-      "explanation": "The correct answer is ![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"✕ 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"✕ 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.](). A common mistake here: Does not follow the arrows through a function machine, changes the order of the operations asked.  Double-check each step in for a given algebraic input, find the output of a function machine to avoid this error.",
+      "explanation": "The correct answer is ![2 function machines both with 4 rectangles in a row and joined by arrows pointing from left to right. The first function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"\u2715 2\" written inside the next rectangle, \"+ 3\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"3 + 2p\" written inside it. The second function machine has \"p\" written inside the first rectangle on the left and \"input\" written above it; it has \"+ 3\" written inside the next rectangle, \"\u2715 2\" written inside the next rectangle and the final rectangle on the right has \"output\" written above it and \"2(3 + p)\" written inside it.](). A common mistake here: Does not follow the arrows through a function machine, changes the order of the operations asked.  Double-check each step in for a given algebraic input, find the output of a function machine to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of for a given algebraic input, find the output of a function machine that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -282,7 +312,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_functions_basics__does_not_follow_arrows_through",
       "misconception_label": "Does not follow the arrows through a function machine, changes the order of the operati...",
-      "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number — watch what comes out.",
+      "storyContext": "St. Petersburg, 1734. Euler scrawls f(x). Feed it a number \u2014 watch what comes out.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -290,7 +320,10 @@
           "distractor_label": "Does not follow the arrows through a function machine, changes the order of the operations asked.",
           "error_type": "misconception",
           "student_thinking": "Does not follow the arrows through a function machine, changes the order of the operati...",
-          "world_feedback": null
+          "world_feedback": "You're aiming to match the function machines, but are you following the arrows in the correct order to ensure each input maps to only one output?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -298,7 +331,10 @@
           "distractor_label": "Does not follow the arrows through a function machine, changes the order of the operations asked.",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You're focusing on arithmetic operations, but are you following the arrows through each function machine in the correct order to ensure each input maps to only one output?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -306,7 +342,10 @@
           "distractor_label": "Does not follow the arrows through a function machine, changes the order of the operations asked.",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You're swapping the operation order, what if you follow the arrows step by step?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -337,7 +376,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is \\(p=\\sqrt{10}\\) or \\(p=-\\sqrt{10}\\). A common mistake here: Believes the inverse of square rooting is halving.  Double-check each step in solve quadratic equations using balancing to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of solve quadratic equations using balancing that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -353,7 +392,10 @@
           "distractor_label": "Believes the inverse of square rooting is halving",
           "error_type": "misconception",
           "student_thinking": "Believes the inverse of square rooting is halving",
-          "world_feedback": null
+          "world_feedback": "You're attempting to reverse the square, but does halving the result of isolating the constant truly undo the squaring operation?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -361,7 +403,10 @@
           "distractor_label": "Does not reverse the order of operations when solving an equation",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You're applying arithmetic skills, but are you considering the proper order of operations to isolate p in the equation, what step comes first?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -369,7 +414,10 @@
           "distractor_label": "When solving an equation, uses the same operation rather than the inverse.",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You're aiming to isolate p, but are you using the correct inverse operations to unravel the equation, considering the signs and constants involved?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -400,7 +448,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 400000. A common mistake here: Rounds up instead of down.  Double-check each step in round numbers greater than 1 to one significant figure to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of round numbers greater than 1 to one significant figure that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -416,7 +464,10 @@
           "distractor_label": "Rounds up instead of down",
           "error_type": "misconception",
           "student_thinking": "Rounds up instead of down",
-          "world_feedback": null
+          "world_feedback": "You rounded up to a nearby large number, but does the original number's digit after the significant figure deserve rounding up or down?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -424,7 +475,10 @@
           "distractor_label": "Rounded to nearest 100 instead of 1sf",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You aimed to simplify the number, but did you round to the nearest hundred instead of focusing on the first significant figure, what would happen if you reconsider the digits after the hundreds place?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -462,7 +516,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 600. A common mistake here: Rounds to the wrong degree of accuracy (rounds too much).  Double-check each step in round integers to the nearest other integer value (e.g. 20, 50 etc) to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of round integers to the nearest other integer value (e.g. 20, 50 etc) that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -478,7 +532,10 @@
           "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
           "error_type": "misconception",
           "student_thinking": "Rounds to the wrong degree of accuracy (rounds too much)",
-          "world_feedback": null
+          "world_feedback": "You aimed to simplify, but did you round to the nearest ten or hundred first to get closer to the right fifty?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -486,7 +543,10 @@
           "distractor_label": "Rounds to the wrong degree of accuracy (rounds too little)",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You aimed to simplify, but did you round to the nearest fifty or just the nearest ten, what's the halfway point to 50?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -494,7 +554,10 @@
           "distractor_label": "Rounds up instead of down",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You aimed to round, but did you consider what's halfway between 600 and 650?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -525,7 +588,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is \\(4(n+5)=17\\). A common mistake here: Carries out operations from left to right regardless of priority order.  Double-check each step in form expressions from situations described in words to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of form expressions from situations described in words that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -541,7 +604,10 @@
           "distractor_label": "Carries out operations from left to right regardless of priority order",
           "error_type": "misconception",
           "student_thinking": "Carries out operations from left to right regardless of priority order",
-          "world_feedback": null
+          "world_feedback": "You applied operations in order, but does the equation reflect adding five first, then multiplying the result by four, or just multiplying five by four?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 1,
@@ -549,7 +615,10 @@
           "distractor_label": "Does not include brackets when attempting to multiply an expression",
           "error_type": "misconception",
           "student_thinking": "Alternative error: wrong formula",
-          "world_feedback": null
+          "world_feedback": "You're aiming to translate the operations into an equation, but are you applying them in the correct order, considering multiplication before addition?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -587,7 +656,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is \\(\\frac{n-6}{3}=21\\). A common mistake here: Carries out operations from left to right regardless of priority order.  Double-check each step in form expressions from situations described in words to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of form expressions from situations described in words that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -603,7 +672,10 @@
           "distractor_label": "Carries out operations from left to right regardless of priority order",
           "error_type": "misconception",
           "student_thinking": "Carries out operations from left to right regardless of priority order",
-          "world_feedback": null
+          "world_feedback": "You're applying operations in order, but does the math follow the story's sequence of taking away six and then dividing the result?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -611,7 +683,10 @@
           "distractor_label": "Thinks that a number in front of a bracket means divide",
           "error_type": "misconception",
           "student_thinking": "Alternative error: wrong formula",
-          "world_feedback": null
+          "world_feedback": "You're attempting to represent the division step, but does the equation reflect taking away six and then dividing by three, or is it the other way around, what operation should come first?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -619,7 +694,10 @@
           "distractor_label": "Believes that the order of a worded calculation should be changed to follow BIDMAS",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You attempted to apply operations in a specific order, but does the original story suggest dividing first, then subtracting?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -650,7 +728,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is To get the next term you add the previous two terms together. A common mistake here: Uses only the first two terms of a sequence to work out a term-to-term rule.  Double-check each step in describe a term-to-term sequence to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of describe a term-to-term sequence that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -658,7 +736,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_sequences_series__uses_only_first_two_terms",
       "misconception_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
-      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms \u2014 find it before you count.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -666,7 +744,10 @@
           "distractor_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
           "error_type": "misconception",
           "student_thinking": "Uses only the first two terms of a sequence to work out a term-to-term rule",
-          "world_feedback": null
+          "world_feedback": "You're looking for a pattern in differences, but are the gaps between terms really constant, or is something else at play?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -674,7 +755,10 @@
           "distractor_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You're looking for a pattern, but does doubling and adding fit all terms, or just the first two, and what about the jumps between terms?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -682,7 +766,10 @@
           "distractor_label": "Uses only the first two terms of a sequence to work out a term-to-term rule",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You're looking for a pattern, but are you mixing multiplication and addition, considering the jumps between terms instead of their factors?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -713,7 +800,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is Only Katie. A common mistake here: Does not recognise that a linear sequence must increase or decrease by same amount.  Double-check each step in generate a descending integer linear sequence from the nth term rule to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of generate a descending integer linear sequence from the nth term rule that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -721,7 +808,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
       "misconception_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
-      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms \u2014 find it before you count.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -729,7 +816,10 @@
           "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
           "error_type": "misconception",
           "student_thinking": "Does not recognise that a linear sequence must increase or decrease by same amount",
-          "world_feedback": null
+          "world_feedback": "You were looking for a constant difference, but does the formula produce equal increments between terms?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -737,7 +827,10 @@
           "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You're looking for a pattern, but are you considering if the differences between terms are constant in both sequences?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -745,7 +838,10 @@
           "distractor_label": "Believes linear sequences cannot include fractions",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You were close to identifying a non-linear pattern, but what if one of them actually does produce a linear sequence, even with fractions involved?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -776,7 +872,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is Only Tom. A common mistake here: Does not recognise that a linear sequence must increase or decrease by same amount.  Double-check each step in recognise an arithmetic sequence to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of recognise an arithmetic sequence that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -784,7 +880,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_sequences_series__does_not_recognise_linear_sequence",
       "misconception_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
-      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms \u2014 find it before you count.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -792,7 +888,10 @@
           "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
           "error_type": "misconception",
           "student_thinking": "Does not recognise that a linear sequence must increase or decrease by same amount",
-          "world_feedback": null
+          "world_feedback": "You're looking for a consistent pattern, but are you considering the difference between each term, or just the overall growth of the sequence?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -800,7 +899,7 @@
           "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You're looking for a pattern, but are you considering if the differences between terms are constant in both sequences?"
         },
         {
           "choice_index": 3,
@@ -808,7 +907,10 @@
           "distractor_label": "Does not recognise that a linear sequence must increase or decrease by same amount",
           "error_type": "misconception",
           "student_thinking": "Alternative error: sign error",
-          "world_feedback": null
+          "world_feedback": "You're looking for a consistent pattern, but are you focusing on additions or multiplications to identify the sequence type, and which one does that imply?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         }
       ],
       "_promotion": {
@@ -839,7 +941,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is ![Rectangle](). A common mistake here: Does not know how to find order of rotational symmetry.  Double-check each step in identify the order of rotational symmetry of a shape to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of identify the order of rotational symmetry of a shape that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -847,7 +949,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_triangles_congruence__does_not_know_how_find",
       "misconception_label": "Does not know how to find order of rotational symmetry",
-      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle.",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same \u2014 every side, every angle.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -855,7 +957,10 @@
           "distractor_label": "Does not know how to find order of rotational symmetry",
           "error_type": "misconception",
           "student_thinking": "Does not know how to find order of rotational symmetry",
-          "world_feedback": null
+          "world_feedback": "You're looking for a shape with two-fold symmetry, but does a square's angles also repeat in less than 180 degrees?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 2,
@@ -863,7 +968,10 @@
           "distractor_label": "Does not know how to find order of rotational symmetry",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You're looking for a shape with two-fold symmetry, but does a trapezium's angles support that rotation?",
+          "_promotion": {
+            "world_feedback_source": "groq_generated"
+          }
         },
         {
           "choice_index": 3,
@@ -902,7 +1010,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is ![Square](). A common mistake here: Thinks rectangles have rotational symmetry or order 4.  Double-check each step in identify the order of rotational symmetry of a shape to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of identify the order of rotational symmetry of a shape that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -910,7 +1018,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_triangles_congruence__thinks_rectangles_have_rotational_symmetry",
       "misconception_label": "Thinks rectangles have rotational symmetry or order 4",
-      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle.",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same \u2014 every side, every angle.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -926,7 +1034,7 @@
           "distractor_label": "Does not know how to find order of rotational symmetry",
           "error_type": "misconception",
           "student_thinking": "Alternative error: arithmetic",
-          "world_feedback": null
+          "world_feedback": "You're looking for a shape with two-fold symmetry, but does a trapezium's angles support that rotation?"
         },
         {
           "choice_index": 3,
@@ -965,7 +1073,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is 18 minutes. A common mistake here: Answers as if there are 100 minutes in an hour when changing from hours to minutes.  Double-check each step in convert from hours to minutes to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of convert from hours to minutes that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -973,7 +1081,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_measurement_units__answers_if_there_are_100",
       "misconception_label": "Answers as if there are 100 minutes in an hour when changing from hours to minutes",
-      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact.",
+      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely \u2014 the measurement must be exact.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1027,7 +1135,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 180. A common mistake here: Thinks there are 30 minutes in a hour.  Double-check each step in convert from hours to minutes to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of convert from hours to minutes that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1035,7 +1143,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_measurement_units__thinks_there_are_30_minutes",
       "misconception_label": "Thinks there are 30 minutes in a hour",
-      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact.",
+      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely \u2014 the measurement must be exact.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -1090,7 +1198,7 @@
       "correctIndex": 2,
       "explanation": "The correct answer is 1.5. A common mistake here: Thinks there are 10 minutes in an hour.  Double-check each step in change minutes into decimals of hours (e.g. 90 minutes = 1.5 hours) to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of change minutes into decimals of hours (e.g. 90 minutes = 1.5 hours) that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1098,7 +1206,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_measurement_units__thinks_there_are_10_minutes",
       "misconception_label": "Thinks there are 10 minutes in an hour",
-      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely — the measurement must be exact.",
+      "storyContext": "Paris, the Revolution, 1793. Antoine weighs everything twice. Convert precisely \u2014 the measurement must be exact.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1149,17 +1257,17 @@
         "Does not factorise"
       ],
       "correctIndex": 1,
-      "explanation": "The correct answer is \\((p+4)(p-4)\\). A common mistake here: Factorises difference of two squares with the same sign in both brackets.  Double-check each step in factorise a quadratic expression in the form x² - c to avoid this error.",
+      "explanation": "The correct answer is \\((p+4)(p-4)\\). A common mistake here: Factorises difference of two squares with the same sign in both brackets.  Double-check each step in factorise a quadratic expression in the form x\u00b2 - c to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
-        "Think about the key property of factorise a quadratic expression in the form x² - c that applies here.",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
+        "Think about the key property of factorise a quadratic expression in the form x\u00b2 - c that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
       "examTag": "GCSE",
       "format": "symbolic_expression",
       "misconception_id": "mis_algebraic_manipulation__factorises_difference_two_squares_with",
       "misconception_label": "Factorises difference of two squares with the same sign in both brackets",
-      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols \u2014 keep both sides in balance.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1214,7 +1322,7 @@
       "correctIndex": 2,
       "explanation": "The correct answer is \\(t-1\\). A common mistake here: Thinks you can divide terms by different factors when simplifying an algebraic fraction.  Double-check each step in simplify an algebraic fraction by factorising both the numerator and denominator to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of simplify an algebraic fraction by factorising both the numerator and denominator that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1222,7 +1330,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_algebraic_manipulation__thinks_you_can_divide_terms",
       "misconception_label": "Thinks you can divide terms by different factors when simplifying an algebraic fraction",
-      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols \u2014 keep both sides in balance.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1274,17 +1382,17 @@
         "Does not factorise"
       ],
       "correctIndex": 2,
-      "explanation": "The correct answer is \\((p-10)(p+10)\\). A common mistake here: Does not recognise difference of two squares.  Double-check each step in factorise a quadratic expression in the form x² - c to avoid this error.",
+      "explanation": "The correct answer is \\((p-10)(p+10)\\). A common mistake here: Does not recognise difference of two squares.  Double-check each step in factorise a quadratic expression in the form x\u00b2 - c to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
-        "Think about the key property of factorise a quadratic expression in the form x² - c that applies here.",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
+        "Think about the key property of factorise a quadratic expression in the form x\u00b2 - c that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
       "examTag": "GCSE",
       "format": "symbolic_expression",
       "misconception_id": "mis_algebraic_manipulation__does_not_recognise_difference_two",
       "misconception_label": "Does not recognise difference of two squares",
-      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols \u2014 keep both sides in balance.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1339,7 +1447,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is \\(a \\times a \\times b\\). A common mistake here: Mixes up squaring and multiplying by 2 or doubling.  Double-check each step in describe the meaning algebraic terms with powers to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of describe the meaning algebraic terms with powers that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1347,7 +1455,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_algebraic_manipulation__mixes_up_squaring_and_multiplying",
       "misconception_label": "Mixes up squaring and multiplying by 2 or doubling",
-      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols — keep both sides in balance.",
+      "storyContext": "Baghdad, House of Wisdom, 820 AD. Muhammad calls it al-jabr, the restoring. Rearrange the symbols \u2014 keep both sides in balance.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1402,7 +1510,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is Neither is correct. A common mistake here: Believes division is commutative .  Double-check each step in understand the non-commutativity of division to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of understand the non-commutativity of division that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1464,7 +1572,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is Miran is incorrect because division is not commutative. A common mistake here: Believes division is commutative .  Double-check each step in understand the non-commutativity of division to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of understand the non-commutativity of division that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1527,7 +1635,7 @@
       "correctIndex": 2,
       "explanation": "The correct answer is Never true. A common mistake here: Believes division is commutative .  Double-check each step in understand the non-commutativity of division to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of understand the non-commutativity of division that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1589,7 +1697,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is >. A common mistake here: Mixes up greater than and less than symbols.  Double-check each step in carry out, interpret and represent subtraction using the part-whole model to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of carry out, interpret and represent subtraction using the part-whole model that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1597,7 +1705,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_order_of_operations__mixes_up_greater_than_and",
       "misconception_label": "Mixes up greater than and less than symbols",
-      "storyContext": "London, a lamplit study, 1843. Ada taps the punch cards. Do the steps in the right order — the machine forgives nothing.",
+      "storyContext": "London, a lamplit study, 1843. Ada taps the punch cards. Do the steps in the right order \u2014 the machine forgives nothing.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -1652,7 +1760,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 9. A common mistake here: When asked for the next term in the sequence adds one to the last term given, despite the sequence not going up in ones.  Double-check each step in continue linear sequences expressed as patterns by drawing the next pattern to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of continue linear sequences expressed as patterns by drawing the next pattern that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1660,7 +1768,7 @@
       "format": "diagram",
       "misconception_id": "mis_sequences_series__asked_for_next_term_sequence",
       "misconception_label": "When asked for the next term in the sequence adds one to the last term given, despite t...",
-      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms \u2014 find it before you count.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -1715,7 +1823,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is ![This pattern is made up of 11 squares as a 5 (width) by 2 (height) rectangle and then an extra square on top of the top left square of the rectangle.](). A common mistake here: Does not notice all changes in a sequence of visual patterns.  Double-check each step in continue linear sequences expressed as patterns by drawing the next pattern to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of continue linear sequences expressed as patterns by drawing the next pattern that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1723,7 +1831,7 @@
       "format": "diagram",
       "misconception_id": "mis_sequences_series__does_not_notice_all_changes",
       "misconception_label": "Does not notice all changes in a sequence of visual patterns",
-      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms — find it before you count.",
+      "storyContext": "Brunswick, a schoolroom, 1787. Carl reaches for his slate. There is a pattern in the terms \u2014 find it before you count.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1778,7 +1886,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 58.3. A common mistake here: Rounds down instead of up.  Double-check each step in round numbers to one decimal place to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of round numbers to one decimal place that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1841,7 +1949,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 20.153. A common mistake here: Rounds to the wrong degree of accuracy (rounds too much).  Double-check each step in round numbers to three or more decimal places to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of round numbers to three or more decimal places that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -1902,17 +2010,17 @@
         "\\((x+7)\\)"
       ],
       "correctIndex": 3,
-      "explanation": "The correct answer is \\((x+7)\\). A common mistake here: When factorising into double brackets, finds the sum of two values which give the non variable term in the expression rather than the product.  Double-check each step in factorise a quadratic expression in the form x² + bx + c to avoid this error.",
+      "explanation": "The correct answer is \\((x+7)\\). A common mistake here: When factorising into double brackets, finds the sum of two values which give the non variable term in the expression rather than the product.  Double-check each step in factorise a quadratic expression in the form x\u00b2 + bx + c to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
-        "Think about the key property of factorise a quadratic expression in the form x² + bx + c that applies here.",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
+        "Think about the key property of factorise a quadratic expression in the form x\u00b2 + bx + c that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
       "examTag": "GCSE",
       "format": "diagram",
       "misconception_id": "mis_factoring_polynomials__factorising_into_double_brackets_finds",
       "misconception_label": "When factorising into double brackets, finds the sum of two values which give the non v...",
-      "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart.",
+      "storyContext": "France, the royal court, 1591. Fran\u00e7ois treats every expression as a cipher. It was built from factors \u2014 take it apart.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -1966,7 +2074,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is \\(18 \\mathrm{~m}\\). A common mistake here: Divides total amount by each side of the ratio instead of dividing by the sum of the parts.  Double-check each step in divide a quantity into two parts for a given a ratio, where each part is an integer to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of divide a quantity into two parts for a given a ratio, where each part is an integer that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2029,7 +2137,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is 72. A common mistake here: In ratio question where the difference between the sides is given, uses that as the total for one side instead.  Double-check each step in given information about the relationship between two parts (e.g. one part is worth 5 more than another), work out other parts to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of given information about the relationship between two parts (e.g. one part is worth 5 more than another), work out other parts that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2091,7 +2199,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is \\(1600 \\ \\mathrm{ml}\\). A common mistake here: Thinks a difference of one part in a ratio means the quantities will differ by one unit.  Double-check each step in given information about one part, work out other parts to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of given information about one part, work out other parts that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2154,7 +2262,7 @@
       "correctIndex": 2,
       "explanation": "The correct answer is \\(p(p-99)\\). A common mistake here: When factorising a quadratic without a non variable term, tries to double bracket factorise.  Double-check each step in factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2162,7 +2270,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
       "misconception_label": "When factorising a quadratic without a non variable term, tries to double bracket facto...",
-      "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart.",
+      "storyContext": "France, the royal court, 1591. Fran\u00e7ois treats every expression as a cipher. It was built from factors \u2014 take it apart.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -2216,7 +2324,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is \\(p(p-5)\\). A common mistake here: When factorising a quadratic without a non variable term, tries to double bracket factorise.  Double-check each step in factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of factorise a single bracket containing a non-linear expression by taking out a single algebraic common factor (e.g. a) that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2224,7 +2332,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_factoring_polynomials__factorising_quadratic_without_non_variable",
       "misconception_label": "When factorising a quadratic without a non variable term, tries to double bracket facto...",
-      "storyContext": "France, the royal court, 1591. François treats every expression as a cipher. It was built from factors — take it apart.",
+      "storyContext": "France, the royal court, 1591. Fran\u00e7ois treats every expression as a cipher. It was built from factors \u2014 take it apart.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -2278,7 +2386,7 @@
       "correctIndex": 2,
       "explanation": "The correct answer is 0.2. A common mistake here: Believes that a fraction means dividing the denominator by the numerator.  Double-check each step in convert fractions less than 1 to terminating decimals of 1 decimal place to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of convert fractions less than 1 to terminating decimals of 1 decimal place that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2286,7 +2394,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_fractions_decimals__believes_fraction_means_dividing_denominator",
       "misconception_label": "Believes that a fraction means dividing the denominator by the numerator",
-      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts \u2014 every tenth counts.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -2341,7 +2449,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is 0.15. A common mistake here: Converts a fraction to a decimal by using only the numerator after the decimal point.  Double-check each step in convert fractions less than 1 to terminating decimals of 2 decimal places to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of convert fractions less than 1 to terminating decimals of 2 decimal places that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2349,7 +2457,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_only",
       "misconception_label": "Converts a fraction to a decimal by using only the numerator after the decimal point",
-      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts \u2014 every tenth counts.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -2403,7 +2511,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is None of these.. A common mistake here: Converts a fraction to a decimal by using the denominator after the decimal point.  Double-check each step in convert fractions less than 1 to terminating decimals of 1 decimal place to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of convert fractions less than 1 to terminating decimals of 1 decimal place that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2411,7 +2519,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_fractions_decimals__converts_fraction_decimal_using_denominator",
       "misconception_label": "Converts a fraction to a decimal by using the denominator after the decimal point",
-      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts \u2014 every tenth counts.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -2466,7 +2574,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is \\(2 \\leq n\\). A common mistake here: Believes the sides of an inequality can be switched without changing the direction of the sign.  Double-check each step in solve linear inequalities in one variable that require three or more steps where the variable appears on one side of the equation  to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of solve linear inequalities in one variable that require three or more steps where the variable appears on one side of the equation  that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2474,7 +2582,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_linear_inequalities__believes_sides_inequality_can_be",
       "misconception_label": "Believes the sides of an inequality can be switched without changing the direction of t...",
-      "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number — it's a range. Find where the limit lies.",
+      "storyContext": "West Berlin, the airfields, 1948. William weighs the manifest. The answer isn't one number \u2014 it's a range. Find where the limit lies.",
       "distractor_taxonomy": [
         {
           "choice_index": 1,
@@ -2529,7 +2637,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is 3.92. A common mistake here: When adding decimals, just adds the digits and ignores place value.  Double-check each step in add decimals with the same number of decimals places to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of add decimals with the same number of decimals places that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2537,7 +2645,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_fractions_decimals__adding_decimals_just_adds_digits",
       "misconception_label": "When adding decimals, just adds the digits and ignores place value",
-      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts — every tenth counts.",
+      "storyContext": "Antwerp, the Low Countries, 1585. Simon slides the ledger toward you. Break the whole into parts \u2014 every tenth counts.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -2592,7 +2700,7 @@
       "correctIndex": 1,
       "explanation": "The correct answer is 2 x. A common mistake here: Does not realise that two letters together, or a number and letter together, are multiplying.  Double-check each step in calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2600,7 +2708,7 @@
       "format": "diagram",
       "misconception_id": "mis_right_triangle_geometry__does_not_realise_two_letters",
       "misconception_label": "Does not realise that two letters together, or a number and letter together, are multip...",
-      "storyContext": "The Nile floodplain, ancient Egypt. Ahmes pulls the knotted rope taut. Two sides fix the third — the right angle keeps its promise.",
+      "storyContext": "The Nile floodplain, ancient Egypt. Ahmes pulls the knotted rope taut. Two sides fix the third \u2014 the right angle keeps its promise.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -2654,7 +2762,7 @@
       "correctIndex": 2,
       "explanation": "The correct answer is \\(x+4\\). A common mistake here: Does not know how to find missing lengths in a composite shape.  Double-check each step in calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of calculate missing lengths of shapes by geometrical inference, where the lengths involve algebraic expressions that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2662,7 +2770,7 @@
       "format": "diagram",
       "misconception_id": "mis_right_triangle_geometry__does_not_know_how_find",
       "misconception_label": "Does not know how to find missing lengths in a composite shape",
-      "storyContext": "The Nile floodplain, ancient Egypt. Ahmes pulls the knotted rope taut. Two sides fix the third — the right angle keeps its promise.",
+      "storyContext": "The Nile floodplain, ancient Egypt. Ahmes pulls the knotted rope taut. Two sides fix the third \u2014 the right angle keeps its promise.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -2717,7 +2825,7 @@
       "correctIndex": 0,
       "explanation": "The correct answer is \\(2(y+3)=43\\). A common mistake here: Does not understand bar modelling in algebra.  Double-check each step in write a formula to describe a situation to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of write a formula to describe a situation that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2778,17 +2886,17 @@
         "![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 40 and 30 (inner scale) and halfway between 140 and 150 (outer scale).]()"
       ],
       "correctIndex": 3,
-      "explanation": "The correct answer is ![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 40 and 30 (inner scale) and halfway between 140 and 150 (outer scale).](). A common mistake here: Reads the wrong scale on the protractor when measuring obtuse angles.  Double-check each step in use a protractor to measure angles between 270° and 360° to avoid this error.",
+      "explanation": "The correct answer is ![A 180 degree protractor (straight edge at the bottom) with 2 red lines and a blue sector marking out a reflex angle. The angle is between the red line that is at 0 (inner scale) and 180 (outer scale) on the right of the protractor, clockwise around to the red line that is half way between 40 and 30 (inner scale) and halfway between 140 and 150 (outer scale).](). A common mistake here: Reads the wrong scale on the protractor when measuring obtuse angles.  Double-check each step in use a protractor to measure angles between 270\u00b0 and 360\u00b0 to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
-        "Think about the key property of use a protractor to measure angles between 270° and 360° that applies here.",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
+        "Think about the key property of use a protractor to measure angles between 270\u00b0 and 360\u00b0 that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
       "examTag": "GCSE",
       "format": "symbolic_expression",
       "misconception_id": "mis_lines_angles__reads_wrong_scale_on_protractor",
       "misconception_label": "Reads the wrong scale on the protractor when measuring obtuse angles",
-      "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another — reason it out.",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid draws crossing lines in the sand. Every angle here is related to another \u2014 reason it out.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,
@@ -2842,7 +2950,7 @@
       "correctIndex": 3,
       "explanation": "The correct answer is ![Square](). A common mistake here: Does not know the meaning of the word regular .  Double-check each step in understand the terms equilateral and regular, and recognise the notation for regular polygons to avoid this error.",
       "hints": [
-        "Re-read the question carefully — what is it specifically asking you to find?",
+        "Re-read the question carefully \u2014 what is it specifically asking you to find?",
         "Think about the key property of understand the terms equilateral and regular, and recognise the notation for regular polygons that applies here.",
         "Set up the calculation step by step before combining terms."
       ],
@@ -2850,7 +2958,7 @@
       "format": "symbolic_expression",
       "misconception_id": "mis_triangles_congruence__does_not_know_meaning_word",
       "misconception_label": "Does not know the meaning of the word regular",
-      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same — every side, every angle.",
+      "storyContext": "Alexandria, the great Library, 300 BC. Euclid lays the triangles side by side. Show they are the same \u2014 every side, every angle.",
       "distractor_taxonomy": [
         {
           "choice_index": 0,

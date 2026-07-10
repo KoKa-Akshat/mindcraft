@@ -663,6 +663,16 @@
   color: var(--ink-katha);
 }
 
+/* Hide underlying spread content while the chapter-turn animation plays */
+.pageTurnHidden {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .chapterTurnVignette {
   width: 88px;
   height: 58px;

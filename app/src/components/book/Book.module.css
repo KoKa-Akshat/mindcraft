@@ -280,6 +280,9 @@
   animation: pageFlip 560ms var(--ease-weight) both;
   pointer-events: none;
   z-index: 8;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 @keyframes pageFlip {
