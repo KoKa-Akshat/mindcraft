@@ -1,0 +1,319 @@
+/* HomeworkSession — work pages for an uploaded homework PDF/photo, on paper */
+
+.shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(251, 248, 244, 0.82), rgba(247, 243, 238, 0.96)),
+    radial-gradient(circle at 1px 1px, var(--paper-rule) 1px, transparent 0);
+  background-size: auto, 18px 18px;
+  color: var(--paper-ink);
+  font-family: var(--font-serif);
+}
+
+.nav {
+  height: 62px;
+  background: var(--paper-sheet);
+  border-bottom: 1px solid var(--paper-edge);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 48px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.logo {
+  font: 700 20px/1 var(--font-hand);
+  color: var(--paper-ink-katha);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.logo span { color: var(--paper-accent-blue); }
+
+.back {
+  font: 600 11px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--paper-ink-dim);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 2px;
+  border: 1.5px solid var(--paper-edge);
+  transition: border-color 120ms, color 120ms, background 120ms;
+}
+
+.back:hover {
+  border-color: var(--paper-accent-blue);
+  color: var(--paper-accent-blue);
+  background: rgba(29, 58, 138, 0.04);
+}
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 86px 24px 60px;
+}
+
+.loadWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--paper-bg);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--paper-edge);
+  border-top-color: var(--paper-accent-blue);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.progress {
+  font: 600 10px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--paper-ink-faded);
+  margin-bottom: 12px;
+}
+
+.card {
+  background: var(--paper-sheet);
+  border-radius: 2px;
+  padding: 22px;
+  border: 1px solid var(--paper-edge);
+  box-shadow: var(--paper-shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.questionHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.questionNumber {
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--paper-ink-dim);
+  border: 1px solid var(--paper-edge);
+  border-radius: 2px;
+  padding: 4px 8px;
+}
+
+.ambiguousBadge {
+  font: 600 11px/1.4 var(--font-mono);
+  color: var(--paper-accent-red);
+}
+
+.questionBox {
+  background: var(--paper-sheet-recessed);
+  border-radius: 2px;
+  border-left: 2px solid var(--paper-margin-rule);
+  padding: 14px 16px;
+  font: 600 15px/1.5 var(--font-serif);
+  color: var(--paper-ink-katha);
+}
+
+.choiceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.choiceItem {
+  font: 500 13px/1.5 var(--font-serif);
+  color: var(--paper-ink);
+  padding: 8px 12px;
+  background: var(--paper-sheet-recessed);
+  border-radius: 2px;
+}
+
+.figureNote {
+  margin: 0;
+  font: 500 13px/1.5 var(--font-serif);
+  font-style: italic;
+  color: var(--paper-ink-dim);
+}
+
+.toolRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hintBtn {
+  font: 600 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  padding: 10px 14px;
+  border-radius: 2px;
+  border: 1.5px solid var(--paper-edge);
+  background: var(--paper-sheet);
+  color: var(--paper-ink-dim);
+  cursor: pointer;
+  transition: border-color 140ms, color 140ms;
+}
+
+.hintBtn:hover {
+  border-color: var(--paper-accent-blue);
+  color: var(--paper-accent-blue);
+}
+
+.tutorAsk {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.tutorLink {
+  font: 600 11px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--paper-ink-dim);
+  text-decoration: none;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--paper-edge);
+  transition: color 140ms, border-color 140ms;
+}
+
+.tutorLink:hover {
+  color: var(--paper-accent-blue);
+  border-color: var(--paper-accent-blue);
+}
+
+.hintPane {
+  background: var(--paper-sheet-recessed);
+  border-radius: 2px;
+  border: 1px solid var(--paper-edge);
+  padding: 14px 16px;
+}
+
+.hintLoading {
+  margin: 0;
+  font: 500 12px/1.4 var(--font-mono);
+  color: var(--paper-ink-faded);
+}
+
+.hintEmpty {
+  margin: 0;
+  font: 500 13px/1.5 var(--font-serif);
+  font-style: italic;
+  color: var(--paper-ink-dim);
+}
+
+.hintCards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hintCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hintCardTitle {
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--paper-ink-katha);
+}
+
+.hintCardBody {
+  font: 500 13px/1.5 var(--font-serif);
+  color: var(--paper-ink);
+}
+
+.navRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.prevBtn {
+  font: 600 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  background: none;
+  border: none;
+  color: var(--paper-ink-faded);
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.prevBtn:hover:not(:disabled) { color: var(--paper-ink-dim); }
+.prevBtn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.submitBtn {
+  font: 600 13px/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  background: var(--paper-ink);
+  color: var(--paper-sheet);
+  border: none;
+  border-radius: 2px;
+  padding: 14px 24px;
+  cursor: pointer;
+  transition: background 140ms, transform 120ms;
+  display: inline-block;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--paper-ink-katha);
+  transform: translateY(-1px);
+}
+
+.doneCard {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.doneIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: var(--paper-accent-blue);
+}
+
+.doneTitle {
+  font: 700 22px/1.1 var(--font-hand);
+  color: var(--paper-ink-katha);
+  margin: 0 0 8px;
+}
+
+.doneSub {
+  font: 500 13px/1.55 var(--font-serif);
+  color: var(--paper-ink-dim);
+  margin: 0 0 24px;
+}
+
+.doneActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.doneSecondary {
+  font: 600 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--paper-ink-faded);
+}
+
+.doneSecondary:hover { color: var(--paper-ink-dim); }
