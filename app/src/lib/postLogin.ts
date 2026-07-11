@@ -23,7 +23,16 @@ export type PostLoginOpts = {
 }
 
 const AUTH_HANDOFF_KEY = 'mc-auth-handoff'
-const AUTH_HANDOFF_MS = 10_000
+// Widened from 10s: on iPad/Safari (and Mac trackpad devices, which trigger
+// the same forced signInWithRedirect path), the redirect round-trip through
+// accounts.google.com back to this origin can genuinely take longer than 10s
+// to rehydrate auth.currentUser, and AuthGuard was bouncing back to /login
+// before that finished. This alone won't fix a hard case where Safari ITP
+// wiped the pending-redirect state entirely (nothing arrives, ever, no matter
+// how long we wait) -- only a same-origin authDomain fixes that, which needs
+// the .web.app callback URL manually added to the OAuth client in Google
+// Cloud Console first. This is the safe, no-downside half of the fix.
+const AUTH_HANDOFF_MS = 25_000
 
 /** Set while routing away from /login so AuthGuard waits instead of bouncing. */
 export function markAuthHandoff(): void {
