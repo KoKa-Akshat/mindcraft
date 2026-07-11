@@ -1,12 +1,17 @@
 /**
- * api/spark-experience.ts
+ * lib/handlers/spark-experience.ts
+ *
+ * POST /api/spark-experience (routed through app-actions.ts — see vercel.json
+ * rewrite; Vercel Hobby plan is capped at 12 serverless functions, and this
+ * used to be its own function, which is what silently broke every deploy
+ * since it pushed the count to 13 -- moved here to free that slot back up.)
  *
  * First Spark — interest → matched bank question → Groq story skin.
  * POST { interests: string[] } → personalized scene + question payload.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { setCors } from '../lib/cors'
-import bankData from '../data/spark-bank.json'
+import { setCors } from '../cors'
+import bankData from '../../data/spark-bank.json'
 
 const GROQ_MODEL = 'meta-llama/llama-3.3-70b-versatile'
 const MAX_INTERESTS = 6

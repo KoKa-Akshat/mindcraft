@@ -22,7 +22,8 @@
     { "source": "/api/publish-summary",   "destination": "/api/app-actions?action=publish-summary" },
     { "source": "/api/register-calendly", "destination": "/api/app-actions?action=register-calendly" },
     { "source": "/api/concept-graph",     "destination": "/api/app-actions?action=concept-graph" },
-    { "source": "/api/parse-homework",    "destination": "/api/app-actions?action=parse-homework" }
+    { "source": "/api/parse-homework",    "destination": "/api/app-actions?action=parse-homework" },
+    { "source": "/api/spark-experience",  "destination": "/api/app-actions?action=spark-experience" }
   ],
   "crons": [
     {
