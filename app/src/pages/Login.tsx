@@ -26,6 +26,29 @@ function armAdminGrant()      { sessionStorage.setItem(ADMIN_GRANT_PENDING_KEY, 
 function consumeAdminGrant()  { const v = sessionStorage.getItem(ADMIN_GRANT_PENDING_KEY) === '1'; sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY); return v }
 function clearAdminGrant()    { sessionStorage.removeItem(ADMIN_GRANT_PENDING_KEY) }
 
+// Marks that we just sent the browser off to accounts.google.com via
+// signInWithRedirect, so when Login.tsx next mounts (either the real
+// redirect-back, or AuthGuard bouncing an unauthenticated user back here) we
+// can tell "never even tried" apart from "tried and it silently didn't come
+// back" — the latter is the iPad/Safari ITP failure mode, where the visitor
+// otherwise just sees a dead end with no explanation.
+const REDIRECT_ATTEMPTED_KEY = 'mc_redirect_attempted'
+function markRedirectAttempted(): void {
+  try { sessionStorage.setItem(REDIRECT_ATTEMPTED_KEY, String(Date.now())) } catch { /* ignore */ }
+}
+function consumeFailedRedirectAttempt(): boolean {
+  try {
+    const raw = sessionStorage.getItem(REDIRECT_ATTEMPTED_KEY)
+    if (!raw) return false
+    sessionStorage.removeItem(REDIRECT_ATTEMPTED_KEY)
+    // Only treat it as a real (rather than stale/leftover) attempt if it was
+    // recent — a stray key from days ago shouldn't trigger the fallback copy.
+    return Date.now() - Number(raw) < 5 * 60_000
+  } catch {
+    return false
+  }
+}
+
 /** iPad / iPhone only — redirect is required there; desktop popup is more reliable. */
 function preferGoogleRedirect() {
   if (typeof window === 'undefined') return false
@@ -109,6 +132,17 @@ export default function Login() {
       if (auth.currentUser) {
         setLoading(true)
         await routeAfterLogin(auth.currentUser.uid)
+        return
+      }
+
+      // We sent them to Google and nothing came back — no redirect result, no
+      // restored session. On iPad/Safari this usually means ITP wiped the
+      // pending sign-in mid-flight rather than it just being slow. Instead of
+      // a silent dead end, say so and open the password path, which doesn't
+      // depend on this redirect round-trip at all.
+      if (consumeFailedRedirectAttempt()) {
+        setEmailMode(true)
+        setError("Sign-in didn't finish on this device. This can happen in Safari on iPad — try again, or sign in with your email and password below.")
       }
     })().catch((e: { code?: string; message?: string }) => {
       if (cancelled) return
@@ -178,6 +212,7 @@ export default function Login() {
     setLoading(true)
     try {
       if (preferGoogleRedirect()) {
+        markRedirectAttempted()
         await signInWithRedirect(auth, googleProvider)
         return
       }
@@ -186,6 +221,7 @@ export default function Login() {
     } catch (e: any) {
       if (e?.code === 'auth/popup-blocked') {
         try {
+          markRedirectAttempted()
           await signInWithRedirect(auth, googleProvider)
           return
         } catch (redirectErr: any) {

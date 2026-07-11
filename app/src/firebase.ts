@@ -5,17 +5,20 @@ import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey:            "AIzaSyBetzXAekac3zTdzgJ3vGxqKCQAXc3tcsU",
-  // REVERTED 2026-07-10: switching this to the .web.app domain broke Google
-  // Sign-In for everyone (Error 400: redirect_uri_mismatch) — the assumption
-  // that Firebase auto-registers the .web.app callback URL with the
-  // underlying Google OAuth client's authorized redirect URIs was wrong; that
-  // registration is a manual step in Google Cloud Console that was never
-  // done. Back to the default that Google's OAuth client actually has
-  // whitelisted. The iPad Safari ITP redirect-loop issue this was meant to
-  // fix is real but narrower than a total outage — revisit only after
-  // manually adding https://mindcraft-93858.web.app/__/auth/handler to the
-  // OAuth client's authorized redirect URIs in Google Cloud Console first.
-  authDomain:        "mindcraft-93858.firebaseapp.com",
+  // Same-origin as Firebase Hosting so the OAuth redirect handshake never
+  // crosses a third-party domain -- fixes the iPad Safari ITP redirect loop
+  // (sign-in bouncing back to /login). This was tried once before and
+  // reverted because it broke Google Sign-In for EVERYONE (Error 400:
+  // redirect_uri_mismatch) -- that happened because the .web.app callback
+  // URL was never registered with the underlying Google OAuth client's
+  // authorized redirect URIs. Confirmed this time, before flipping it back:
+  // (1) https://mindcraft-93858.web.app/__/auth/handler is now manually added
+  // to the OAuth client's authorized redirect URIs in Google Cloud Console
+  // (2026-07-10), alongside the existing .firebaseapp.com one -- both work
+  // now, neither was removed; (2) verified via curl that Firebase Hosting
+  // actually serves /__/auth/handler and /__/auth/iframe with 200 on the
+  // .web.app domain, matching the .firebaseapp.com baseline.
+  authDomain:        "mindcraft-93858.web.app",
   projectId:         "mindcraft-93858",
   storageBucket:     "mindcraft-93858.firebasestorage.app",
   messagingSenderId: "1024068467805",
