@@ -16,13 +16,12 @@ import { buildStoryDisplay } from '../lib/storyDisplay'
 import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
 import type { ScratchStrokeData } from '../types'
-import ScratchTranscriptionPane, { type ScratchInkState } from '../components/ScratchTranscriptionPane'
+import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
 import HighlightedStem from '../components/HighlightedStem'
-import JarvisGuide from '../components/JarvisGuide'
 import { useJournalGuide } from '../hooks/useJournalGuide'
-import { insightsForSide } from '../lib/journalGuide'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
+import ConceptVignette from '../components/book/ConceptVignette'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import PageFlipTransition from '../components/book/PageFlipTransition'
@@ -85,7 +84,7 @@ function lookupStory(rawId: string): CS {
   )
 }
 
-function storyTeaser(story: string, max = 220): string {
+function storyTeaser(story: string, max = 90): string {
   if (!story || story.length <= max) return story
   const cut = story.slice(0, max)
   const lastSpace = cut.lastIndexOf(' ')
@@ -383,7 +382,7 @@ export default function ConceptChapterPage() {
   // Full-page "write anywhere" annotation mode — off by default so choices,
   // hints, and the submit button stay clickable; the pencil toggle turns the
   // entire page into a writing surface without a separate scratch page.
-  const [writeMode, setWriteMode] = useState(false)
+  const [writeMode, setWriteMode] = useState(true)
   useEffect(() => { setWriteMode(false) }, [spreadIdx])
   const journaledRef = useRef<Set<string>>(new Set())
 
@@ -578,12 +577,13 @@ export default function ConceptChapterPage() {
         {frame && (
           <div className={s.sceneStamp}>
             <span className={s.sceneProtagonist} style={{ color: theme.accent }}>{frame.protagonist}</span>
-            <span className={s.sceneDivider} style={{ color: theme.dim }}>·</span>
-            <span className={s.sceneSetting} style={{ color: theme.dim }}>{frame.settingLine}</span>
           </div>
         )}
+        <div className={s.storyArt} aria-hidden>
+          <ConceptVignette id={canonicalId} />
+        </div>
         <div className={s.storyBody}>
-          {side.paras.map((p, i) => (
+          {side.paras.slice(0, 2).map((p, i) => (
             <p key={i} className={`${s.storyPara} ${side.isFirst && i === 0 ? s.firstPara : ''}`}>
               {side.isFirst && i === 0 && p.length > 0 && (
                 <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
@@ -596,26 +596,24 @@ export default function ConceptChapterPage() {
     )
   }
 
-  // The left companion page for a question spread — a quiet scene recap and
-  // a progress spine, so the left page is never blank while the right page
-  // carries the full combined entry.
   function renderContextPanel(qIdx: number) {
     const frame = getFrame(conceptId)
     return (
       <div className={s.contextPanel}>
+        <div className={s.storyArt} aria-hidden>
+          <ConceptVignette id={canonicalId} />
+        </div>
         {frame && (
           <div className={s.sceneStamp}>
             <span className={s.sceneProtagonist} style={{ color: theme.accent }}>{frame.protagonist}</span>
-            <span className={s.sceneDivider} style={{ color: theme.dim }}>·</span>
-            <span className={s.sceneSetting} style={{ color: theme.dim }}>{frame.settingLine}</span>
           </div>
         )}
         <p className={s.contextTeaser} style={{ color: theme.ink }}>
-          {storyTeaser(cs.story)}
+          {storyTeaser(cs.story, 110)}
         </p>
         <div className={s.contextProgress}>
           <span className={s.contextProgressLabel} style={{ color: theme.dim }}>
-            question {qIdx + 1} of {qSpreadCount}
+            {qIdx + 1} / {qSpreadCount}
           </span>
           <div className={s.contextDots} aria-hidden>
             {Array.from({ length: qSpreadCount }).map((_, i) => (
@@ -701,7 +699,6 @@ export default function ConceptChapterPage() {
     const qNum = qIdx + 1
     const chosen = answers[qIdx] ?? null
     const isDone = submitted[qIdx] ?? false
-    const frame = getFrame(conceptId)
     const storyItem = storyMod?.[q.id]
     const useStoryStem = Boolean(storyItem) && (
       storyAppliedRef.current.has(q.id) || (chosen === null && !isDone)
@@ -710,15 +707,7 @@ export default function ConceptChapterPage() {
     const storyDisplay = buildStoryDisplay(q)
     const stemText = useStoryStem ? storyItem!.storyStem : storyDisplay.stem
     const socraticHints = useStoryStem ? (storyItem!.socratic ?? []) : []
-    const allHints = [...socraticHints, ...(q.hints ?? [])]
-    const txt = q.question.toLowerCase()
-    const bridge = frame && !useStoryStem
-      ? (txt.includes('die') || txt.includes('dice') || txt.includes('roll')) && frame.diceFrame
-        ? frame.diceFrame
-        : (txt.includes('spinner') || txt.includes('spin')) && frame.spinnerFrame
-          ? frame.spinnerFrame
-          : frame.questionBridge
-      : null
+    const allHints = [...socraticHints, ...(q.hints ?? [])].slice(0, 2)
 
     const hasInk = Boolean(notes[qIdx]) || (scratchStrokes[qIdx]?.strokes?.length ?? 0) > 0
 
@@ -728,7 +717,7 @@ export default function ConceptChapterPage() {
           <div className={s.qPanel}>
             <div className={s.combinedPage}>
               <header className={s.qHead}>
-                <span className={s.qKicker}>question {qNum} of {qSpreadCount}</span>
+                <span className={s.qKicker}>{qNum} / {qSpreadCount}</span>
                 <div className={s.qHeadActions}>
                   <BookmarkButton
                     active={bookmarkedQuestions.includes(q.id)}
@@ -743,9 +732,10 @@ export default function ConceptChapterPage() {
                     style={writeMode ? { borderColor: theme.accent, color: theme.accent } : undefined}
                     onClick={() => setWriteMode(v => !v)}
                     aria-pressed={writeMode}
+                    aria-label={writeMode ? 'Lock page for tapping answers' : 'Write with pencil'}
+                    title={writeMode ? 'Tap answers' : 'Write'}
                   >
-                    <PenLine size={13} strokeWidth={2} />
-                    {writeMode ? 'stop writing' : 'write on this page'}
+                    <PenLine size={15} strokeWidth={2} />
                   </button>
                   {hasInk && (
                     <button
@@ -759,21 +749,11 @@ export default function ConceptChapterPage() {
                         setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
                       }}
                     >
-                      clear my work
+                      clear
                     </button>
                   )}
                 </div>
               </header>
-
-              {q.storyIntro ? (
-                <p className={s.storyBridgeText} style={{ color: theme.ink, opacity: 0.72 }}>
-                  {q.storyIntro}
-                </p>
-              ) : q.storyContext ? (
-                <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{q.storyContext}</p>
-              ) : frame && bridge ? (
-                <p className={s.storyBridgeText} style={{ color: theme.accent + 'cc' }}>{bridge}</p>
-              ) : null}
 
               <div className={s.qGrid}>
                 <div className={s.qStemCol}>
@@ -830,7 +810,7 @@ export default function ConceptChapterPage() {
                           style={{ borderColor: theme.accent + '55', color: theme.accent }}
                           onClick={() => setHintsShownPerQ(h => ({ ...h, [qIdx]: (h[qIdx] ?? 0) + 1 }))}
                         >
-                          need a hint?
+                          hint?
                         </button>
                       )}
                       {allHints.slice(0, hintsShownPerQ[qIdx] ?? 0).map((hint, hi) => (
@@ -856,37 +836,20 @@ export default function ConceptChapterPage() {
                       disabled={chosen === null}
                       onClick={() => lockAnswer(qIdx)}
                     >
-                      {chosen === null ? 'choose an answer' : 'lock it in →'}
+                      {chosen === null ? 'Pick one' : 'Lock in →'}
                     </button>
                   ) : (
                     <p className={s.qDoneNote} style={{ color: theme.dim }}>
-                      {chosen === q.correctIndex ? 'noted. keep going.' : 'noted. check your work.'}
+                      {chosen === q.correctIndex ? 'Nice.' : 'Try the next one.'}
                     </p>
                   )}
                 </div>
               </div>
 
-              <ScratchTranscriptionPane
-                imageDataUrl={notes[qIdx] ?? ''}
-                strokeData={scratchStrokes[qIdx] ?? null}
-                resetKey={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
-                className={s.transcriptionPane}
-                onChange={state => {
-                  if (state) setScratchInk(st => ({ ...st, [qIdx]: state }))
-                  else setScratchInk(st => { const next = { ...st }; delete next[qIdx]; return next })
-                }}
-                onDebugChange={setDebugOutlines}
-              />
-
-              {/* Full-page annotation surface — write anywhere on the page,
-                  not confined to one boxed scratch area. Pointer events only
-                  engage while writeMode is on, so the rest of the page (choices,
-                  hints, submit) stays clickable the rest of the time. */}
               <div
                 className={`${s.annotationLayer} ${writeMode ? s.annotationActive : ''}`}
                 style={{ '--line-color': theme.lineBg } as React.CSSProperties}
               >
-                {writeMode && <div className={s.annotationHint}>tap the pencil again to stop writing</div>}
                 <ScratchPad
                   key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
                   paperMode
@@ -916,11 +879,6 @@ export default function ConceptChapterPage() {
             </div>
           </div>
         </div>
-        <JarvisGuide
-          insights={insightsForSide(journalGuide.insights, 'work')}
-          thinking={journalGuide.thinking}
-          side="work"
-        />
       </div>
     )
   }

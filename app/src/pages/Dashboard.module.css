@@ -145,6 +145,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 0;
 }
 
 .parentEmailBox {
@@ -680,5 +681,141 @@
   width: 88px;
   height: 58px;
   opacity: 0.88;
+}
+
+/* ── ACT table of contents (left page) ─────────────────────── */
+.actTocHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+.actTocKicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(58, 47, 85, 0.45);
+}
+.actTocTitle {
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 36px;
+  font-weight: 700;
+  color: #2a2430;
+  line-height: 1;
+}
+.actTocScroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+.actTocSectionTitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(58, 47, 85, 0.4);
+  margin-bottom: 6px;
+}
+.actTocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.actTocItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  padding: 7px 8px;
+  cursor: pointer;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2a2430;
+  line-height: 1.15;
+  transition: background 120ms, transform 120ms;
+}
+.actTocItem:hover {
+  background: rgba(125, 255, 179, 0.22);
+  transform: translateX(3px);
+}
+.actTocSpark {
+  background: linear-gradient(90deg, rgba(255, 229, 102, 0.55), transparent);
+}
+.actTocStar {
+  color: #c45c00;
+  font-size: 14px;
+}
+.adminQuietLink {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(58, 47, 85, 0.35);
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+/* Right-page home: spark + tools */
+.sparkCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  border: 2.5px solid #3a2f55;
+  border-radius: 16px 20px 14px 18px;
+  padding: 14px 16px;
+  background: linear-gradient(145deg, #fff8c8, #ffe566);
+  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.sparkCard:hover { transform: scale(1.02); }
+.sparkEyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: #c45c00;
+}
+.sparkName {
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2a2430;
+  line-height: 1.1;
+}
+.sparkGo {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: #1f6b45;
+  margin-top: 4px;
+}
+.dashTools {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
 }
 

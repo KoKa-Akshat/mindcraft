@@ -304,7 +304,7 @@ function drawStrokes(
   }
   ctx.fillStyle = '#1a2234'
   for (const pts of strokes) {
-    const outline = getStroke(pts, { size: 3, thinning: 0.6, smoothing: 0.5 })
+    const outline = getStroke(pts, { size: 2.6, thinning: 0.55, smoothing: 0.72, streamline: 0.55 })
     if (outline.length) ctx.fill(new Path2D(pathFromStroke(outline)))
   }
 }

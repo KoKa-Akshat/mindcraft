@@ -1,13 +1,16 @@
 /**
- * Embedded session notes — paginated into book leaves. Clicking a note flips
- * to a detail leaf (no vertical accordion). Swipe left/right on iPad to turn.
+ * Embedded session notes — paginated into book leaves. Saved bookmarks
+ * sit at the top with a highlight strip (Saved tab removed from dashboard).
  */
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../firebase'
 import { useUser } from '../App'
+import { getQuestionById } from '../lib/questionBank'
+import { toggleBookmark } from '../lib/dashboardPersonalization'
 import PageFlipTransition from './book/PageFlipTransition'
+import BookmarkButton from './BookmarkButton'
 import { useSwipeFlip } from '../hooks/useSwipeFlip'
 import n from './DashboardPanels.module.css'
 
@@ -19,13 +22,20 @@ interface Session {
   duration: string
   title: string
   bullets: string[]
-  /** Present for self-directed homework entries — detail view links here instead of showing bullets only. */
   homeworkId?: string
 }
 
 const NOTES_PER_LEAF = 3
 
-export default function DashboardNotesPanel() {
+export default function DashboardNotesPanel({
+  uid = '',
+  bookmarkedIds = [],
+  onBookmarksChange,
+}: {
+  uid?: string
+  bookmarkedIds?: string[]
+  onBookmarksChange?: (ids: string[]) => void
+}) {
   const navigate = useNavigate()
   const authUser = useUser()
   const swipeRef = useRef<HTMLDivElement>(null)
@@ -36,6 +46,13 @@ export default function DashboardNotesPanel() {
   const [leaf, setLeaf] = useState(0)
   const [detailId, setDetailId] = useState<string | null>(null)
   const [flipDir, setFlipDir] = useState<'forward' | 'back'>('forward')
+
+  const savedItems = useMemo(
+    () => bookmarkedIds
+      .map(id => ({ id, q: getQuestionById(id) }))
+      .filter((item): item is { id: string; q: NonNullable<ReturnType<typeof getQuestionById>> } => !!item.q),
+    [bookmarkedIds],
+  )
 
   useEffect(() => {
     if (!authUser?.email) return
@@ -64,8 +81,6 @@ export default function DashboardNotesPanel() {
     return () => unsub()
   }, [authUser?.email])
 
-  // Self-directed homework uploads — completed worksheets read back as
-  // journal entries alongside tutor-published notes.
   useEffect(() => {
     if (!authUser?.uid) return
     const q = query(
@@ -81,7 +96,7 @@ export default function DashboardNotesPanel() {
           id: `hw-${d.id}`,
           homeworkId: d.id,
           subject: 'Homework',
-          tutorName: 'your own work',
+          tutorName: 'you',
           date: data.summary.date ?? '',
           duration: '',
           title: data.title ?? 'Homework',
@@ -150,11 +165,46 @@ export default function DashboardNotesPanel() {
 
   const viewKey = detailId ? `detail-${detailId}` : `leaf-${currentLeaf}-${search}`
 
+  async function handleUnbookmark(questionId: string) {
+    if (!uid || !onBookmarksChange) return
+    const next = await toggleBookmark(uid, questionId, bookmarkedIds)
+    onBookmarksChange(next)
+  }
+
   return (
     <div className={n.paperPanelBody} ref={swipeRef}>
+      {savedItems.length > 0 && (
+        <section className={n.savedStrip} aria-label="Saved questions">
+          <div className={n.savedStripHead}>
+            <span className={n.savedStripStar}>★</span>
+            <span className={n.savedStripTitle}>Saved</span>
+            <span className={n.savedStripCount}>{savedItems.length}</span>
+          </div>
+          <ul className={n.savedList}>
+            {savedItems.slice(0, 6).map(({ id, q }) => (
+              <li key={id} className={n.savedRow}>
+                <button
+                  type="button"
+                  className={n.savedOpen}
+                  onClick={() => navigate('/practice', {
+                    state: { conceptId: q.conceptId, missionType: 'learn' },
+                  })}
+                >
+                  {q.question.slice(0, 72)}{q.question.length > 72 ? '…' : ''}
+                </button>
+                <BookmarkButton
+                  active
+                  onToggle={() => { void handleUnbookmark(id) }}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <input
         className={n.paperSearchLine}
-        placeholder="search notes by keyword…"
+        placeholder="Search…"
         value={search}
         onChange={e => { setSearch(e.target.value); setLeaf(0); setDetailId(null) }}
         aria-label="Search notes"
@@ -162,26 +212,22 @@ export default function DashboardNotesPanel() {
 
       <div className={n.scrollBody}>
         {loading ? (
-          <p className={n.paperLoading}>Loading your sessions…</p>
+          <p className={n.paperLoading}>Loading…</p>
         ) : filtered.length === 0 ? (
           <div className={n.empty}>
             <p className={n.paperEmptyHint}>
-              {search ? 'No notes match that search.' : 'No published notes yet.'}
+              {search ? 'Nothing matches.' : 'No notes yet.'}
             </p>
-            <button type="button" className={n.paperTextLink} onClick={() => navigate('/book')}>
-              Book a session →
-            </button>
           </div>
         ) : (
           <PageFlipTransition viewKey={viewKey} direction={flipDir}>
             {detail ? (
               <article className={n.noteDetailLeaf}>
                 <button type="button" className={n.noteDetailBack} onClick={closeDetail}>
-                  ← notes
+                  ← back
                 </button>
-                <span className={n.noteMeta}>{detail.date} · {detail.tutorName}</span>
+                <span className={n.noteMeta}>{detail.date}</span>
                 <h3 className={n.noteDetailTitle}>{detail.title}</h3>
-                <p className={n.noteTutor}>{detail.subject}{detail.duration ? ` · ${detail.duration}` : ''}</p>
                 <ul className={n.noteBullets}>
                   {detail.bullets.map((b, i) => (
                     <li key={i}>{b}</li>
@@ -193,7 +239,7 @@ export default function DashboardNotesPanel() {
                     className={n.paperTextLink}
                     onClick={() => navigate(`/homework/${detail.homeworkId}`)}
                   >
-                    Open this worksheet →
+                    Open worksheet →
                   </button>
                 )}
               </article>
@@ -206,10 +252,9 @@ export default function DashboardNotesPanel() {
                       className={n.noteHead}
                       onClick={() => openDetail(sess.id)}
                     >
-                      <span className={n.noteMeta}>{sess.date} · {sess.tutorName}</span>
+                      <span className={n.noteMeta}>{sess.date}</span>
                       <strong className={n.noteTitle}>{sess.title}</strong>
-                      <span className={n.noteTutor}>{sess.subject}{sess.duration ? ` · ${sess.duration}` : ''}</span>
-                      <span className={n.noteTurnHint}>turn page →</span>
+                      <span className={n.noteTurnHint}>→</span>
                     </button>
                   </article>
                 ))}
@@ -228,7 +273,7 @@ export default function DashboardNotesPanel() {
             >
               ← older
             </button>
-            <span className={n.leafNavCount}>leaf {currentLeaf + 1} of {leafCount}</span>
+            <span className={n.leafNavCount}>{currentLeaf + 1} / {leafCount}</span>
             <button
               type="button"
               className={n.leafNavBtn}
@@ -239,10 +284,6 @@ export default function DashboardNotesPanel() {
             </button>
           </div>
         )}
-
-        <button type="button" className={n.paperTextLink} onClick={() => navigate('/sessions')}>
-          Open full notes →
-        </button>
       </div>
     </div>
   )

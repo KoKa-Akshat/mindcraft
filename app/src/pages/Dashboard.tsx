@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { Compass, NotebookPen, Wand2, Settings, Bookmark, Sparkles, FileUp } from 'lucide-react'
+import { Compass, NotebookPen, Wand2, Settings, Sparkles, FileUp } from 'lucide-react'
 import { auth, db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
@@ -10,17 +10,17 @@ import { usePracticePathQueue } from '../lib/practicePathQueue'
 import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal, getUserRole } from '../lib/practiceState'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
-import { pawHubDisplayText, pawHubLearnSub, type CurriculumTrack } from '../lib/curriculumTrack'
+import { pawHubDisplayText, type CurriculumTrack } from '../lib/curriculumTrack'
 import type { Confidence } from '../lib/bridgePractice'
-import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import SessionCallCard from '../components/SessionCallCard'
 import DashboardRoutePanel from '../components/DashboardRoutePanel'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
-import DashboardSavedQuestionsPanel from '../components/DashboardSavedQuestionsPanel'
 import DashboardWorksheetPanel from '../components/DashboardWorksheetPanel'
+import ActTrailMap from '../components/ActTrailMap'
 import JournalStyleDrawer from '../components/book/JournalStyleDrawer'
 import StickerLayer from '../components/book/StickerLayer'
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
+import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
 import {
   loadDashboardPersonalization,
   saveCustomStickers,
@@ -37,49 +37,13 @@ import conceptStoriesData from '../data/conceptStories.json'
 import ConceptVignette from '../components/book/ConceptVignette'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
-import CoverNavItem, { CoverNavSection } from '../components/book/CoverNavItem'
-import StudyPlanList, { type StudyPlanItem } from '../components/book/StudyPlanList'
+import CoverNavItem from '../components/book/CoverNavItem'
 import PageFlipTransition from '../components/book/PageFlipTransition'
 import book from '../components/book/Book.module.css'
 import s from './Dashboard.module.css'
 
 /** Max characters accepted by the inline problem-solver pad. */
 const SOLVER_MAX_CHARS = 1200
-
-// Concept discovery cards — supplementary ACT concepts to explore.
-// Each card gets an animated ConceptVignette drawing keyed by its id.
-const EXPLORE_CARDS = [
-  {
-    id: 'quadratic_equations',
-    label: 'Quadratics',
-    bg: 'linear-gradient(135deg, #1e2a4a 0%, #2f4370 55%, #22304f 100%)',
-  },
-  {
-    id: 'trigonometry_basics',
-    label: 'Trig',
-    bg: 'linear-gradient(135deg, #3d1f24 0%, #6b3540 55%, #452328 100%)',
-  },
-  {
-    id: 'descriptive_statistics',
-    label: 'Statistics',
-    bg: 'linear-gradient(135deg, #402d1a 0%, #6b4a26 55%, #47331d 100%)',
-  },
-  {
-    id: 'linear_equations',
-    label: 'Coord. Plane',
-    bg: 'linear-gradient(135deg, #3b2440 0%, #5c3a63 55%, #402a47 100%)',
-  },
-  {
-    id: 'logarithmic_functions',
-    label: 'Logarithms',
-    bg: 'linear-gradient(135deg, #14383a 0%, #226266 55%, #17403f 100%)',
-  },
-  {
-    id: 'basic_probability',
-    label: 'Probability',
-    bg: 'linear-gradient(135deg, #1f3a2a 0%, #356247 55%, #24402f 100%)',
-  },
-] as const
 
 const STORIES = conceptStoriesData as Record<string, { conceptName: string; story: string }>
 
@@ -121,7 +85,8 @@ export default function Dashboard() {
   const [diagChecked, setDiagChecked] = useState(false)
   const [plotConceptId, setPlotConceptId] = useState<string | null>(null)
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
-  const [learn, setLearn] = useState<NextConcept | null>(null)
+  const [learn, setLearn] = useState<NextConcept | null>(null) // kept for hub fetch shape; unused in ACT TOC UI
+  void learn
   const [curriculumTrack, setCurriculumTrack] = useState<CurriculumTrack | null>(null)
   const [recLoading, setRecLoading] = useState(true)
   const [solverText, setSolverText] = useState('')
@@ -141,6 +106,12 @@ export default function Dashboard() {
   // Tutor's permanent Meet room — join-link fallback when the session doc has
   // no meetingUrl of its own. users/{uid} docs are readable by any signed-in user.
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
+  // Hidden action-math zone portal. Always present (a small, quiet corner
+  // affordance) but glows when the student's own onboarding goals mention
+  // game/adventure/fantasy/action -- a real signal read from Firestore, not
+  // invented. Restored 2026-07-21 after a concurrent commit on this same
+  // checkout dropped the portal wiring (see ACTIVE_TASK.md).
+  const [manjushreeGlow, setManjushreeGlow] = useState(false)
 
   useEffect(() => {
     if (!data.tutorId) { setTutorMeetUrl(null); return }
@@ -158,11 +129,11 @@ export default function Dashboard() {
   const view = searchParams.get('view') ?? 'today'
   const gpsMode = view === 'gps'
   const routeMode = view === 'route'
-  const notesMode = view === 'notes'
   const homeworkMode = view === 'homework'
-  const savedMode = view === 'saved'
   const worksheetMode = view === 'worksheet'
-  const todayMode = !gpsMode && !routeMode && !notesMode && !homeworkMode && !savedMode && !worksheetMode
+  // Saved bookmarks live inside Notes now — old ?view=saved redirects there.
+  const notesMode = view === 'notes' || view === 'saved'
+  const todayMode = !gpsMode && !routeMode && !notesMode && !homeworkMode && !worksheetMode
 
   const conceptParam = searchParams.get('concept')
   const targetParam = searchParams.get('target')
@@ -173,7 +144,6 @@ export default function Dashboard() {
   }
   function openNotes() { navigate('/dashboard?view=notes', { replace: true }) }
   function openHomework() { navigate('/dashboard?view=homework', { replace: true }) }
-  function openSaved() { navigate('/dashboard?view=saved', { replace: true }) }
   function openWorksheet() { navigate('/dashboard?view=worksheet', { replace: true }) }
   function closePanel() { navigate('/dashboard', { replace: true }) }
 
@@ -187,7 +157,6 @@ export default function Dashboard() {
     { mode: 'worksheet', open: openWorksheet },
     { mode: 'homework', open: openHomework },
     { mode: 'notes', open: openNotes },
-    { mode: 'saved', open: openSaved },
   ]
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -220,14 +189,6 @@ export default function Dashboard() {
           misconceptionId: weakness.misconceptionId,
         },
       })
-    } else {
-      navigate('/practice')
-    }
-  }
-
-  function goExplore() {
-    if (learn) {
-      openChapter(learn.conceptId)
     } else {
       openGps()
     }
@@ -328,6 +289,19 @@ export default function Dashboard() {
   }, [uid])
 
   useEffect(() => {
+    if (!uid) return
+    let cancelled = false
+    void getDoc(doc(db, 'users', uid)).then(snap => {
+      if (cancelled) return
+      const goals = snap.data()?.goals as { tags?: string[]; text?: string } | undefined
+      const haystack = [...(goals?.tags ?? []), goals?.text ?? ''].join(' ').toLowerCase()
+      const keywords = ['game', 'adventure', 'fantasy', 'action']
+      setManjushreeGlow(keywords.some(k => haystack.includes(k)))
+    }).catch(() => { if (!cancelled) setManjushreeGlow(false) })
+    return () => { cancelled = true }
+  }, [uid])
+
+  useEffect(() => {
     if (!gpsMode) { setPlotConceptId(null); return }
     setPlotConceptId(conceptParam ?? null)
   }, [gpsMode, conceptParam])
@@ -414,26 +388,9 @@ export default function Dashboard() {
   }, [user.uid, navigate, searchParams])
 
   const weaknessLabel = weakness ? pawHubDisplayText(weakness.label, curriculumTrack) : null
-  const learnLabel    = learn    ? pawHubDisplayText(learn.label, curriculumTrack)    : null
-  const learnSub      = pawHubLearnSub(curriculumTrack)
   const displayName   = data.displayName ?? user?.email?.split('@')[0] ?? ''
-  const routeConcepts = path.pathConcepts.slice(0, 7)
   const flagColor     = getFlagColor()
-
-  // Filter explore cards to exclude concepts already in the route
-  const routeIds = new Set(path.pathConcepts.map(c => c.id))
-  const visibleExploreCards = EXPLORE_CARDS.filter(c => !routeIds.has(c.id))
-
-  // pathConcepts is already the *unmastered* queue — mastered concepts are
-  // filtered out upstream and counted in completedOnPath, so rows here are
-  // only ever active or upcoming (the progress inkline tells the done story).
-  const planItems: StudyPlanItem[] = routeConcepts.map(c => ({
-    id: c.id,
-    label: pawHubDisplayText(c.label, curriculumTrack),
-    state: c.id === path.activeConceptId ? 'active' : 'upcoming',
-  }))
-
-  const examLabel = pawHubDisplayText((path.exam || 'ACT').toUpperCase(), curriculumTrack)
+  const sparkId = weakness?.conceptId ?? null
 
   const coverEntryLabel = path.completedOnPath > 0
     ? `Entry ${path.completedOnPath} · pick up where you left off`
@@ -452,6 +409,24 @@ export default function Dashboard() {
 
   return (
     <>
+    {/* Hidden portal to the Manjushree action-math zone. Quiet by default;
+        glows only when the student's own stated goals suggest they'd like
+        it (see the effect above). "found between the pages" -- a small
+        corner tab, not a banner. */}
+    <button
+      type="button"
+      onClick={() => navigate('/manjushree')}
+      title="?"
+      aria-label="A quiet corner of the notebook"
+      style={{
+        position: 'fixed', right: 14, bottom: 14, zIndex: 40,
+        width: 30, height: 30, borderRadius: '50%', border: 'none',
+        cursor: 'pointer', padding: 0,
+        background: manjushreeGlow ? 'radial-gradient(circle, #ffe07a, #d3a900)' : 'rgba(23,48,31,0.08)',
+        boxShadow: manjushreeGlow ? '0 0 14px rgba(211,169,0,0.7)' : 'none',
+        transition: 'box-shadow .4s ease, background .4s ease',
+      }}
+    />
     {showCover && (
       <CoverLanding
         entryLabel={coverEntryLabel}
@@ -508,121 +483,44 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* today's plan */}
+          {/* ACT table of contents — left page */}
           <div className={s.todayPlan}>
-            {/* The gap */}
-            <button
-              type="button"
-              className={`${s.entryBlock} ${s.gapBlock}`}
-              onClick={goChallenge}
-            >
-              <div className={s.marginFlag} aria-hidden="true" />
-              <div className={s.entryLabelDisplay}>The gap</div>
-              <div className={`${s.entryConceptName} ${recLoading ? s.entryConceptLoading : ''}`}>
-                {weaknessLabel ?? (recLoading ? 'reading your graph…' : 'no gap found')}
-              </div>
-              <p className={s.entryDraft}>
-                {weakness
-                  ? 'The margin says this is the one.'
-                  : recLoading
-                    ? 'Scanning your knowledge graph.'
-                    : 'Start your gap scan to find your weakest point.'}
-              </p>
-              <div className={s.entryCta}>▸ open a session</div>
-            </button>
-
-            <div className={s.rulesDivider} />
-
-            {/* New territory */}
-            <button
-              type="button"
-              className={s.entryBlock}
-              onClick={goExplore}
-            >
-              <div className={s.entryLabelDisplay}>New territory</div>
-              <div className={`${s.entryConceptName} ${recLoading ? s.entryConceptLoading : ''}`}>
-                {learnLabel ?? (recLoading ? 'plotting your route…' : learnSub ?? 'explore your map')}
-              </div>
-              <p className={s.entryDraft}>
-                {learn
-                  ? 'Unwritten. First lines are the easiest.'
-                  : recLoading
-                    ? 'Calculating your next concept.'
-                    : 'Pick any concept from your map to start.'}
-              </p>
-              <div className={s.entryCta}>▸ begin at level 1</div>
-            </button>
-
-            {/* contents — primary sections of the book */}
-            <CoverNavSection heading="contents">
-              <CoverNavItem
-                icon={<FileUp size={19} strokeWidth={1.75} />}
-                label="Homework"
-                sub="Drop a worksheet, work it here"
-                active={worksheetMode}
-                onClick={openWorksheet}
-              />
-              <CoverNavItem
-                icon={<Wand2 size={19} strokeWidth={1.75} />}
-                label="Solver"
-                sub="Paste a stuck problem, get a hint path"
-                active={homeworkMode}
-                onClick={openHomework}
-              />
-              <CoverNavItem
-                icon={<NotebookPen size={19} strokeWidth={1.75} />}
-                label="Notes"
-                sub="Everything your tutor wrote down"
-                active={notesMode}
-                onClick={openNotes}
-              />
-              <CoverNavItem
-                icon={<Bookmark size={19} strokeWidth={1.75} />}
-                label="Saved"
-                sub={`${bookmarkedQuestions.length} bookmarked for later`}
-                active={savedMode}
-                onClick={openSaved}
-              />
-              <CoverNavItem
-                icon={<Compass size={19} strokeWidth={1.75} />}
-                label="Map"
-                sub="Your whole knowledge world, plotted"
-                active={gpsMode || routeMode}
-                onClick={openGps}
-              />
-              {isAdmin && (
-                <CoverNavItem
-                  icon={<Settings size={19} strokeWidth={1.75} />}
-                  label="Admin Panel"
-                  sub="Internal ops and testing tools"
-                  active={false}
-                  onClick={() => navigate('/admin')}
-                />
-              )}
-            </CoverNavSection>
-
-            <div className={s.parentEmailBox}>
-              <label className={s.parentEmailLabel} htmlFor="parent-email">parent email</label>
-              <div className={s.parentEmailRow}>
-                <input
-                  id="parent-email"
-                  className={s.parentEmailInput}
-                  type="email"
-                  placeholder="parent@email.com"
-                  value={parentEmail}
-                  onChange={e => setParentEmail(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') void saveParentEmail() }}
-                />
-                <button
-                  type="button"
-                  className={s.parentEmailBtn}
-                  onClick={() => void saveParentEmail()}
-                  aria-label="Save parent email"
-                >
-                  {parentEmailSaved ? 'ok' : 'save'}
-                </button>
-              </div>
+            <div className={s.actTocHead}>
+              <span className={s.actTocKicker}>ACT Math</span>
+              <h2 className={s.actTocTitle}>Contents</h2>
             </div>
+
+            <div className={s.actTocScroll}>
+              {ACT_TOC_SECTIONS.map(section => (
+                <div key={section.id} className={s.actTocSection}>
+                  <div className={s.actTocSectionTitle}>{section.title}</div>
+                  <ul className={s.actTocList}>
+                    {section.conceptIds.map(id => {
+                      const isSpark = id === sparkId
+                      return (
+                        <li key={id}>
+                          <button
+                            type="button"
+                            className={`${s.actTocItem} ${isSpark ? s.actTocSpark : ''}`}
+                            onClick={() => openChapter(id)}
+                            disabled={Boolean(turningConceptId)}
+                          >
+                            {isSpark && <span className={s.actTocStar} aria-hidden>★</span>}
+                            <span>{actConceptLabel(id)}</span>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {isAdmin && (
+              <button type="button" className={s.adminQuietLink} onClick={() => navigate('/admin')}>
+                admin
+              </button>
+            )}
           </div>
           </div>
         </BookPage>
@@ -634,12 +532,11 @@ export default function Dashboard() {
           flipping={Boolean(turningConceptId)}
           overlay={
             <div className={s.foreedge}>
-              <button className={`${s.tab} ${todayMode ? s.tabActive : ''}`} onClick={closePanel}>Plan</button>
+              <button className={`${s.tab} ${todayMode ? s.tabActive : ''}`} onClick={closePanel}>Home</button>
               <button className={`${s.tab} ${s.tabMap} ${(gpsMode || routeMode) ? s.tabActive : ''}`} onClick={openGps}>Map</button>
               <button className={`${s.tab} ${worksheetMode ? s.tabActive : ''}`} onClick={openWorksheet}>Homework</button>
               <button className={`${s.tab} ${homeworkMode ? s.tabActive : ''}`} onClick={openHomework}>Solver</button>
               <button className={`${s.tab} ${notesMode ? s.tabActive : ''}`} onClick={openNotes}>Notes</button>
-              <button className={`${s.tab} ${savedMode ? s.tabActive : ''}`} onClick={openSaved}>Saved</button>
             </div>
           }
         >
@@ -654,125 +551,120 @@ export default function Dashboard() {
           <PageFlipTransition viewKey={view}>
             {todayMode ? (
               <>
-                <div className={book.runningHead}>the study plan</div>
+                <div className={book.runningHead}>ACT notebook</div>
 
-                {path.loading ? (
-                  <p className={s.planLoadingNote}>Loading your path…</p>
-                ) : planItems.length > 0 ? (
-                  <StudyPlanList
-                    title="Your route"
-                    examLabel={examLabel}
-                    items={planItems}
-                    progressPct={path.progressPct}
-                    completedCount={path.completedOnPath}
-                    disabled={Boolean(turningConceptId)}
-                    onSelect={item => openChapter(item.id)}
-                    moreCount={Math.max(0, path.pathQueue.length - routeConcepts.length - path.completedOnPath)}
-                    onMore={openGps}
-                  />
+                {weakness ? (
+                  <button type="button" className={s.sparkCard} onClick={goChallenge}>
+                    <span className={s.sparkEyebrow}>today’s spark ★</span>
+                    <span className={s.sparkName}>{weaknessLabel}</span>
+                    <span className={s.sparkGo}>play →</span>
+                  </button>
                 ) : (
-                  <span className={s.planLoadingNote}>
-                    Complete your gap scan to build your route.
-                  </span>
+                  <button type="button" className={s.sparkCard} onClick={openGps}>
+                    <span className={s.sparkEyebrow}>pick a topic</span>
+                    <span className={s.sparkName}>Your ACT map is ready</span>
+                    <span className={s.sparkGo}>open map →</span>
+                  </button>
                 )}
 
-                {/* Explore concept cards */}
-                {visibleExploreCards.length > 0 && (
-                  <>
-                    <div className={s.exploreSectionLabel}>explore more →</div>
-                    <div className={s.exploreGrid}>
-                      {visibleExploreCards.slice(0, 6).map(card => (
-                        <button
-                          key={card.id}
-                          type="button"
-                          className={s.exploreCard}
-                          onClick={() => openChapter(card.id)}
-                          disabled={Boolean(turningConceptId)}
-                          title={`Explore ${card.label}`}
-                        >
-                          <div className={s.exploreCardBg} style={{ background: card.bg }} />
-                          <ConceptVignette id={card.id} />
-                          <span className={s.exploreCardLabel}>{card.label}</span>
-                          <span className={s.exploreCardArrow}>explore →</span>
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
+                <div className={s.dashTools}>
+                  <CoverNavItem
+                    icon={<FileUp size={19} strokeWidth={1.75} />}
+                    label="Homework"
+                    sub="Drop a worksheet"
+                    active={worksheetMode}
+                    onClick={openWorksheet}
+                  />
+                  <CoverNavItem
+                    icon={<Wand2 size={19} strokeWidth={1.75} />}
+                    label="Solver"
+                    sub="Stuck on a problem?"
+                    active={homeworkMode}
+                    onClick={openHomework}
+                  />
+                  <CoverNavItem
+                    icon={<NotebookPen size={19} strokeWidth={1.75} />}
+                    label="Notes"
+                    sub={bookmarkedQuestions.length ? `${bookmarkedQuestions.length} saved ★` : 'Tutor + saved'}
+                    active={notesMode}
+                    onClick={openNotes}
+                  />
+                  <CoverNavItem
+                    icon={<Compass size={19} strokeWidth={1.75} />}
+                    label="Map"
+                    sub="All ACT topics"
+                    active={gpsMode || routeMode}
+                    onClick={openGps}
+                  />
+                </div>
 
-                <div className={book.folio}>
-                  <span>
-                    {path.completedOnPath > 0
-                      ? `${path.completedOnPath} concept${path.completedOnPath !== 1 ? 's' : ''} completed`
-                      : 'entry 1 · unwritten'}
-                  </span>
-                  <span>p. 2</span>
+                <div className={s.parentEmailBox}>
+                  <label className={s.parentEmailLabel} htmlFor="parent-email">parent email</label>
+                  <div className={s.parentEmailRow}>
+                    <input
+                      id="parent-email"
+                      className={s.parentEmailInput}
+                      type="email"
+                      placeholder="parent@email.com"
+                      value={parentEmail}
+                      onChange={e => setParentEmail(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') void saveParentEmail() }}
+                    />
+                    <button
+                      type="button"
+                      className={s.parentEmailBtn}
+                      onClick={() => void saveParentEmail()}
+                      aria-label="Save parent email"
+                    >
+                      {parentEmailSaved ? 'ok' : 'save'}
+                    </button>
+                  </div>
                 </div>
               </>
             ) : routeMode && targetParam ? (
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
-                  <button className={s.panelBackBtn} onClick={() => navigate(conceptParam
-                    ? `/dashboard?view=gps&concept=${encodeURIComponent(conceptParam)}`
-                    : '/dashboard?view=gps')}>← back</button>
+                  <button className={s.panelBackBtn} onClick={closePanel}>← home</button>
                   <span className={s.panelTitle}>route</span>
                 </div>
                 <div className={s.panelContent}>
-                  <DashboardRoutePanel
-                    targetId={targetParam}
-                    onBack={() => navigate(conceptParam
-                      ? `/dashboard?view=gps&concept=${encodeURIComponent(conceptParam)}`
-                      : '/dashboard?view=gps')}
-                  />
+                  <DashboardRoutePanel targetId={targetParam} onBack={closePanel} />
                 </div>
               </div>
             ) : notesMode ? (
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
-                  <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
+                  <button className={s.panelBackBtn} onClick={closePanel}>← home</button>
                   <span className={s.panelTitle}>notes</span>
                 </div>
                 <div className={s.panelContent}>
-                  <DashboardNotesPanel />
-                </div>
-              </div>
-            ) : worksheetMode ? (
-              <div className={s.panelPage}>
-                <div className={s.panelPageHeader}>
-                  <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>homework</span>
-                </div>
-                <div className={s.panelContent}>
-                  <DashboardWorksheetPanel />
-                </div>
-              </div>
-            ) : savedMode ? (
-              <div className={s.panelPage}>
-                <div className={s.panelPageHeader}>
-                  <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>saved</span>
-                </div>
-                <div className={s.panelContent}>
-                  <DashboardSavedQuestionsPanel
+                  <DashboardNotesPanel
                     uid={uid}
                     bookmarkedIds={bookmarkedQuestions}
                     onBookmarksChange={setBookmarkedQuestions}
                   />
                 </div>
               </div>
+            ) : worksheetMode ? (
+              <div className={s.panelPage}>
+                <div className={s.panelPageHeader}>
+                  <button className={s.panelBackBtn} onClick={closePanel}>← home</button>
+                  <span className={s.panelTitle}>homework</span>
+                </div>
+                <div className={s.panelContent}>
+                  <DashboardWorksheetPanel />
+                </div>
+              </div>
             ) : homeworkMode ? (
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
-                  <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
+                  <button className={s.panelBackBtn} onClick={closePanel}>← home</button>
                   <span className={s.panelTitle}>solver</span>
                 </div>
                 <div className={s.solverBody}>
-                  <p className={s.solverHint}>
-                    Paste a stuck problem. Craft builds step-by-step hint cards.
-                  </p>
                   <textarea
                     className={s.solverInput}
-                    placeholder="e.g. Solve 2x + 5 = 13…"
+                    placeholder="Paste a problem…"
                     value={solverText}
                     rows={8}
                     maxLength={SOLVER_MAX_CHARS}
@@ -787,30 +679,18 @@ export default function Dashboard() {
                     disabled={!solverText.trim()}
                     onClick={launchSolver}
                   >
-                    Build hint path →
-                  </button>
-                  <button
-                    type="button"
-                    className={s.solverFullLink}
-                    onClick={() => navigate('/practice', { state: { homeworkHelp: true } })}
-                  >
-                    Open full problem solver →
+                    Get hints →
                   </button>
                 </div>
               </div>
             ) : gpsMode ? (
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
-                  <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>your map</span>
+                  <button className={s.panelBackBtn} onClick={closePanel}>← home</button>
+                  <span className={s.panelTitle}>ACT map</span>
                 </div>
                 <div className={`${s.panelContent} ${s.mapInset}`}>
-                  <ConstellationGpsExplorer
-                    embedded
-                    onBack={closePanel}
-                    autoPlotConceptId={plotConceptId}
-                    onStartRoute={openRoute}
-                  />
+                  <ActTrailMap sparkId={sparkId} onOpenLesson={openChapter} />
                 </div>
               </div>
             ) : null}

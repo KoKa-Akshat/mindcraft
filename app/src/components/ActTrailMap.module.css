@@ -1,0 +1,170 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  min-height: 0;
+}
+
+.search {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid rgba(58, 47, 85, 0.18);
+  background: transparent;
+  padding: 8px 2px 10px;
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: #2a2430;
+  outline: none;
+}
+.search::placeholder { color: rgba(58, 47, 85, 0.35); }
+.search:focus { border-bottom-color: #7dffb3; }
+
+.trail {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+}
+
+.island {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.islandTitle {
+  margin: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(58, 47, 85, 0.45);
+}
+
+.stickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sticker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 10px 14px;
+  border: 2.5px solid #3a2f55;
+  border-radius: 16px 20px 14px 18px;
+  background: linear-gradient(145deg, #fffdf8, #fff1e0);
+  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.14);
+  cursor: pointer;
+  transform: rotate(-0.4deg);
+  transition: transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 140ms;
+  text-align: left;
+  font: inherit;
+}
+.sticker:nth-child(3n) {
+  transform: rotate(0.6deg);
+  background: linear-gradient(145deg, #f6fff8, #e4ffe8);
+}
+.sticker:nth-child(3n+1) {
+  background: linear-gradient(145deg, #fff7fc, #ffe6f3);
+}
+.sticker:nth-child(3n+2) {
+  background: linear-gradient(145deg, #f5f3ff, #ebe6ff);
+}
+.sticker:hover {
+  transform: scale(1.06) rotate(0deg);
+  box-shadow:
+    0 0 0 3px rgba(125, 255, 179, 0.4),
+    4px 7px 0 rgba(58, 47, 85, 0.14);
+}
+.stickerFocus {
+  box-shadow:
+    0 0 0 3px rgba(201, 182, 255, 0.55),
+    3px 5px 0 rgba(58, 47, 85, 0.18);
+}
+.stickerSpark {
+  background: linear-gradient(145deg, #fff8c8, #ffe566) !important;
+}
+
+.sparkBadge {
+  color: #c45c00;
+  font-size: 14px;
+}
+
+.stickerLabel {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2a2430;
+  line-height: 1.15;
+}
+
+.dock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  padding-top: 10px;
+  border-top: 1.5px dashed rgba(58, 47, 85, 0.18);
+}
+
+.dockCopy {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dockName {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2a2430;
+}
+.dockHint {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #c45c00;
+}
+
+.dockGo {
+  border: 2.5px solid #3a2f55;
+  border-radius: 14px 16px 12px 18px;
+  background: linear-gradient(145deg, #7dffb3, #5fe89a);
+  color: #1f6b45;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 8px 16px;
+  cursor: pointer;
+  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+}
+.dockGo:hover { transform: scale(1.04); }
+
+.dockGhost {
+  background: none;
+  border: none;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: rgba(58, 47, 85, 0.55);
+  cursor: pointer;
+  padding: 4px 0;
+}
+.dockGhost:hover { color: #3a2f55; }
+
+.emptyHint {
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: rgba(58, 47, 85, 0.45);
+}

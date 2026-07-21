@@ -38,6 +38,62 @@
   border-bottom-color: var(--ink-depth);
 }
 
+/* Saved bookmarks highlight strip (inside Notes) */
+.savedStrip {
+  border: 2.5px solid #3a2f55;
+  border-radius: 14px 18px 12px 16px;
+  background: linear-gradient(145deg, #fff8c8, #ffe566);
+  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.14);
+  padding: 10px 12px;
+}
+.savedStripHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.savedStripStar { font-size: 14px; color: #c45c00; }
+.savedStripTitle {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2a2430;
+  flex: 1;
+}
+.savedStripCount {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(58, 47, 85, 0.55);
+}
+.savedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.savedRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.savedOpen {
+  flex: 1;
+  text-align: left;
+  background: rgba(255, 253, 248, 0.7);
+  border: 1.5px solid rgba(58, 47, 85, 0.2);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-family: var(--font-katha);
+  font-size: 13px;
+  color: #2a2430;
+  cursor: pointer;
+  line-height: 1.35;
+}
+.savedOpen:hover { background: #fffdf8; }
+
 .scrollBody {
   flex: 1;
   min-height: 0;

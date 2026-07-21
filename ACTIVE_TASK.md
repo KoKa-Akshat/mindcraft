@@ -6,7 +6,13 @@
 
 ## CURRENT SPRINT — 2026-07-21
 
-### Magical doodle notebook dashboard makeover (shipped this session)
+### ACT notebook rethink (this session)
+Left page = real ACT TOC; right = Home tools + “today’s spark” (no “gap” /
+“new territory”); Saved merged into Notes with ★ highlight; Map = sticker
+trail (`ActTrailMap`); chapter quieter (vignette art, pencil default on,
+Jarvis nag removed). Push Product-lane files only — Manjushree still local.
+
+### Magical doodle notebook dashboard makeover (prior)
 **Done:** lavender desk + spiral-ring gutter + margin star mascot (`Book.module.css` /
 `BookShell`); sticker MCQ hover swell + soft-wrong wiggle (no red buzz) + stamp/confetti
 reward (`DoodleReward`, Practice matte + Concept chapter); Map/GPS simplified — primary
