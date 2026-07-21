@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import coverHero from '../../assets/canvas/mindcraft-cover-hero.jpg'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
@@ -13,13 +14,8 @@ function markCoverSeen() {
 }
 
 /**
- * CoverLanding — the physical notebook cover a student lands on before the
- * open spread. Full-bleed Deep Field desk, a near-black cover object with
- * a lime elastic band, a red ribbon, and a column of ring-binder hooks down
- * the spine. Click anywhere, or press Enter, to open into the dashboard.
- *
- * Shown once per browser session (DASHBOARD_NOTEBOOK_SPEC.md §2.1) — skipped
- * on subsequent same-session navigations back to /dashboard.
+ * Soft pastel notebook cover — tap to open into the canvas desk.
+ * Shown once per browser session.
  */
 export default function CoverLanding({
   entryLabel,
@@ -34,7 +30,7 @@ export default function CoverLanding({
     if (closing) return
     setClosing(true)
     markCoverSeen()
-    window.setTimeout(onOpen, 520)
+    window.setTimeout(onOpen, 480)
   }
 
   useEffect(() => {
@@ -52,22 +48,16 @@ export default function CoverLanding({
         type="button"
         className={s.cover}
         onClick={open}
-        aria-label="Open your MindCraft journal"
+        aria-label="Open your MindCraft ACT notebook"
       >
-        <div className={s.spine} aria-hidden="true">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <span key={i} className={s.hook}>
-              <span className={s.hookHole} />
-            </span>
-          ))}
-        </div>
-
+        <img className={s.hero} src={coverHero} alt="" draggable={false} />
+        <div className={s.scrim} aria-hidden />
         <div className={s.coverFace}>
+          <span className={s.eyebrow}>ACT Math</span>
           <span className={s.wordmark}>MindCraft</span>
-          <span className={s.wordmarkSub}>field journal</span>
+          <span className={s.wordmarkSub}>your cozy study notebook</span>
+          <span className={s.openCue}>tap to open →</span>
         </div>
-
-        <div className={s.elastic} aria-hidden="true" />
         <div className={s.ribbon} aria-hidden="true" />
       </button>
 

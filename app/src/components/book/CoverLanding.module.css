@@ -1,8 +1,3 @@
-/* ─────────────────────────────────────────────────────────────
-   CoverLanding — the closed notebook, landing state
-   DASHBOARD_NOTEBOOK_SPEC.md §2.1 / §12.1
-   ───────────────────────────────────────────────────────────── */
-
 .desk {
   position: fixed;
   inset: 0;
@@ -11,168 +6,149 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 20px;
+  padding: 24px;
   background:
-    radial-gradient(ellipse at 50% 35%, #0c141c 0%, #080e14 70%);
-  animation: deskIn 0.4s cubic-bezier(0.2, 0, 0, 1) both;
+    radial-gradient(ellipse 80% 55% at 20% 10%, rgba(255, 190, 220, 0.55), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 80%, rgba(180, 210, 255, 0.55), transparent 50%),
+    linear-gradient(165deg, #efe6fb 0%, #e4dcf5 45%, #d9d0ef 100%);
+  animation: deskIn 0.45s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
 @keyframes deskIn {
   from { opacity: 0; }
-  to   { opacity: 1; }
+  to { opacity: 1; }
 }
 
 .deskClosing {
-  animation: deskOut 0.52s cubic-bezier(0.2, 0, 0, 1) both;
+  animation: deskOut 0.48s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
 @keyframes deskOut {
-  0%   { opacity: 1; }
-  100% { opacity: 0; }
+  to { opacity: 0; }
 }
 
 .cover {
   position: relative;
-  width: min(440px, 78vw);
-  aspect-ratio: 4 / 5.4;
-  background: #0b1119;
+  width: min(380px, 84vw);
+  aspect-ratio: 3 / 4;
   border: none;
-  border-radius: 3px;
-  cursor: pointer;
   padding: 0;
+  cursor: pointer;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff8ef;
   box-shadow:
-    0 2px 4px rgba(8,14,20,0.4),
-    0 20px 50px rgba(8,14,20,0.55),
-    0 40px 90px rgba(8,14,20,0.4);
-  transform: perspective(1400px) rotateX(4deg);
-  transition: transform 200ms ease;
-  animation: coverSettle 0.6s cubic-bezier(0.2, 0, 0, 1) both;
+    0 4px 10px rgba(80, 60, 120, 0.12),
+    0 24px 60px rgba(90, 70, 140, 0.28);
+  transform: perspective(1200px) rotateY(-4deg) rotateX(2deg);
+  transition: transform 220ms cubic-bezier(0.34, 1.2, 0.64, 1);
+  animation: coverSettle 0.65s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
 @keyframes coverSettle {
-  from { opacity: 0; transform: perspective(1400px) rotateX(4deg) translateY(16px); }
-  to   { opacity: 1; transform: perspective(1400px) rotateX(4deg) translateY(0); }
+  from { opacity: 0; transform: perspective(1200px) rotateY(-4deg) translateY(18px); }
+  to { opacity: 1; transform: perspective(1200px) rotateY(-4deg) rotateX(2deg) translateY(0); }
 }
 
-.cover:hover { transform: perspective(1400px) rotateX(4deg) translateY(-2px); }
+.cover:hover {
+  transform: perspective(1200px) rotateY(-1deg) rotateX(1deg) translateY(-4px) scale(1.02);
+}
 
 .deskClosing .cover {
-  animation: coverClose 0.5s cubic-bezier(0.2, 0, 0, 1) both;
+  animation: coverClose 0.45s ease both;
 }
 
 @keyframes coverClose {
-  0%   { opacity: 1; transform: perspective(1400px) rotateX(4deg) scale(1); }
-  100% { opacity: 0; transform: perspective(1400px) rotateX(10deg) scale(0.94) translateY(-10px); }
+  to {
+    opacity: 0;
+    transform: perspective(1200px) rotateY(8deg) scale(1.04) translateY(-12px);
+  }
 }
 
-/* ── ring-binder hooks down the spine ───────────────────────── */
-.spine {
+.hero {
   position: absolute;
-  left: -13px;
-  top: 8%;
-  bottom: 8%;
-  width: 26px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 239, 0.15) 0%,
+    rgba(42, 36, 48, 0.15) 45%,
+    rgba(42, 36, 48, 0.72) 100%
+  );
+}
+
+.coverFace {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 28px 26px 32px;
+  text-align: left;
   z-index: 2;
 }
 
-.hook {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(155deg, #cdd3d8 0%, #8b929a 42%, #4c5157 68%, #6b7178 100%);
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.5),
-    0 2px 5px rgba(0,0,0,0.35),
-    inset 0 1px 1px rgba(255,255,255,0.5);
-}
-
-.hookHole {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #080e14;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.7);
-}
-
-/* ── cover face ──────────────────────────────────────────────── */
-.coverFace {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 24px;
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 239, 0.75);
 }
 
 .wordmark {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: 'Caveat', cursive;
   font-weight: 700;
-  font-size: clamp(26px, 6vw, 38px);
-  letter-spacing: -0.02em;
-  color: #10181f;
-  text-shadow:
-    0 1px 0 rgba(255,255,255,0.05),
-    0 -1px 0 rgba(0,0,0,0.65);
+  font-size: clamp(40px, 9vw, 52px);
+  line-height: 0.95;
+  color: #fff8ef;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 .wordmarkSub {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: lowercase;
-  color: #10181f;
-  opacity: 0.85;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 15px;
+  color: rgba(255, 248, 239, 0.88);
 }
 
-/* ── elastic band ────────────────────────────────────────────── */
-.elastic {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 78%;
-  width: 8px;
-  background: #c4f547;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  z-index: 1;
+.openCue {
+  margin-top: 10px;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  color: #7dffb3;
 }
 
-/* ── ribbon peeking from the fore-edge ──────────────────────── */
 .ribbon {
   position: absolute;
-  bottom: -22px;
-  left: 34%;
-  width: 14px;
-  height: 46px;
-  background: linear-gradient(180deg, #d31527 0%, #c1121f 60%, #a30e19 100%);
+  top: -4px;
+  right: 28px;
+  width: 18px;
+  height: 54px;
+  background: linear-gradient(180deg, #ff6b9d, #e83a6e);
   clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
-  transform: rotate(3deg);
-  filter: drop-shadow(0 3px 4px rgba(8,14,20,0.35));
+  z-index: 3;
+  filter: drop-shadow(0 3px 4px rgba(58, 47, 85, 0.25));
 }
 
 .caption {
   margin: 0;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: rgba(245, 245, 245, 0.64);
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: rgba(58, 47, 85, 0.65);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .desk, .cover, .deskClosing, .deskClosing .cover { animation: none; transition: none; }
-}
-
-@media (max-width: 480px) {
-  .cover { width: min(320px, 82vw); }
-  .spine { left: -10px; width: 20px; }
-  .hook { width: 18px; height: 18px; }
-  .hookHole { width: 7px; height: 7px; }
 }

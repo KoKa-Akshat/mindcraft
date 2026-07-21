@@ -6,11 +6,12 @@
 
 ## CURRENT SPRINT — 2026-07-21
 
-### ACT notebook rethink (this session)
-Left page = real ACT TOC; right = Home tools + “today’s spark” (no “gap” /
-“new territory”); Saved merged into Notes with ★ highlight; Map = sticker
-trail (`ActTrailMap`); chapter quieter (vignette art, pencil default on,
-Jarvis nag removed). Push Product-lane files only — Manjushree still local.
+### Canvas ACT notebook (this session)
+Replaced two-page book scroll with **one big canvas desk**: pretty cover →
+short intro → horizontal contents + wizard mascot; Map = emoji constellation;
+Work = PDF homework or paste-solver; weekly practice paper scaffold
+(`weeklyPracticePaper.ts`) mixes weakness + learn. Story art plates for
+fractions/quadratics/probability. Manjushree still local / uncommitted.
 
 ### Magical doodle notebook dashboard makeover (prior)
 **Done:** lavender desk + spiral-ring gutter + margin star mascot (`Book.module.css` /
@@ -83,9 +84,15 @@ progress ring that was invisible against its own button's active-state color.
    then open `http://localhost:5199/manjushree-dev` (no auth needed) or
    `?q=mjz_q01` to pin the legend quadratic. Signed-in path: Dashboard → the hidden portal
    button → `/manjushree`.
-2. If he's happy: commit (Product lane files only: `app/src/manjushree/**`,
-   `app/src/App.tsx`, `app/src/pages/Dashboard.tsx`, `app/src/pages/Dashboard.module.css`,
-   `agent_work/manjushree-zone/**`) and push to `main` — CI auto-deploys.
+2. If he's happy: commit (Product lane files: `app/src/manjushree/**`, `app/src/App.tsx`,
+   `agent_work/manjushree-zone/**`) and push to `main` — CI auto-deploys. Note: the
+   Dashboard.tsx/Dashboard.module.css portal snippet already landed in commit `69bbf4c4`
+   (a concurrent dashboard-redesign session on this same checkout swept it up while
+   committing its own unrelated work) — verify it's still there (`grep manjushreeGlow
+   app/src/pages/Dashboard.tsx`) rather than assuming it needs re-adding. **App.tsx got
+   fully overwritten by that same concurrent session at least once this pass and had to
+   be re-applied** — before shipping, re-confirm `grep manjushree app/src/App.tsx` still
+   shows the lazy import + both routes, in case it happened again after this session ended.
 3. If not: describe exactly what's still wrong and start a new focused pass — the 2D
    scene/math/state underneath is solid and tested, only iterate on what's actually broken.
 4. Optional, not blocking: Firestore `events` create rule (telemetry currently soft-fails

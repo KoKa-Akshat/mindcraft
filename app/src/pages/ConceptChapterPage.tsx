@@ -22,6 +22,7 @@ import HighlightedStem from '../components/HighlightedStem'
 import { useJournalGuide } from '../hooks/useJournalGuide'
 import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import ConceptVignette from '../components/book/ConceptVignette'
+import { storyArtFor } from '../lib/storyArt'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import PageFlipTransition from '../components/book/PageFlipTransition'
@@ -580,7 +581,11 @@ export default function ConceptChapterPage() {
           </div>
         )}
         <div className={s.storyArt} aria-hidden>
-          <ConceptVignette id={canonicalId} />
+          {storyArtFor(canonicalId) ? (
+            <img className={s.storyArtImg} src={storyArtFor(canonicalId)!} alt="" />
+          ) : (
+            <ConceptVignette id={canonicalId} />
+          )}
         </div>
         <div className={s.storyBody}>
           {side.paras.slice(0, 2).map((p, i) => (
@@ -601,7 +606,11 @@ export default function ConceptChapterPage() {
     return (
       <div className={s.contextPanel}>
         <div className={s.storyArt} aria-hidden>
-          <ConceptVignette id={canonicalId} />
+          {storyArtFor(canonicalId) ? (
+            <img className={s.storyArtImg} src={storyArtFor(canonicalId)!} alt="" />
+          ) : (
+            <ConceptVignette id={canonicalId} />
+          )}
         </div>
         {frame && (
           <div className={s.sceneStamp}>
