@@ -5,38 +5,42 @@
    ───────────────────────────────────────────────────────────── */
 
 .shell {
-  /* world / chrome */
-  --cover:        #080e14;
-  --cover-object: #0b1119;
-  --chalk:        #f5f5f5;
-  --chalk-dim:    rgba(245, 245, 245, 0.64);
+  /* Magical doodle notebook — soft desk, cream pages, pastel highlighters */
+  --cover:        #2a2438;
+  --cover-object: #352e48;
+  --chalk:        #f7efe8;
+  --chalk-dim:    rgba(247, 239, 232, 0.7);
 
   /* paper tones */
-  --paper-base:     #f7f3ee;
-  --paper-raised:   #fbf8f4;
-  --paper-recessed: #f1eadf;
-  --paper-edge:     #e2d8ca;
-  --paper-crease:   #d4c8b6;
+  --paper-base:     #fff8ef;
+  --paper-raised:   #fffdf8;
+  --paper-recessed: #f3ebe0;
+  --paper-edge:     #e8dcc8;
+  --paper-crease:   #d9cbb4;
 
   /* rules & margins */
-  --rule:         rgba(29, 58, 138, 0.09);
-  --margin-rule:  rgba(193, 18, 31, 0.20);
+  --rule:         rgba(120, 140, 220, 0.16);
+  --margin-rule:  rgba(255, 120, 160, 0.35);
   --margin-width: 64px;
 
   /* inks */
-  --ink-system:  #1c1a17;
-  --ink-katha:   #232f4e;
-  --ink-pencil:  #6f6a61;
-  --ink-depth:   #1d3a8a;
-  --ink-faded:   #a39b8e;
+  --ink-system:  #2a2430;
+  --ink-katha:   #3a2f55;
+  --ink-pencil:  #7a6f7e;
+  --ink-depth:   #6b5cff;
+  --ink-faded:   #b0a4b4;
 
-  /* brand */
-  --click:     #c4f547;
-  --click-ink: #5a7a10;
-  --stakes:    #c1121f;
+  /* doodle highlighters */
+  --click:     #7dffb3;
+  --click-ink: #1f6b45;
+  --stakes:    #ff6b9d;
+  --doodle-mint:  #7dffb3;
+  --doodle-peach: #ffb38a;
+  --doodle-pink:  #ff8ec8;
+  --doodle-lilac: #c9b6ff;
 
   /* shadows */
-  --shadow-book:  0 2px 4px rgba(8,14,20,0.10), 0 12px 40px rgba(8,14,20,0.30), 0 32px 80px rgba(8,14,20,0.34);
+  --shadow-book:  0 4px 8px rgba(80, 60, 120, 0.12), 0 18px 48px rgba(90, 70, 140, 0.22), 0 40px 90px rgba(70, 50, 120, 0.18);
   --shadow-card:  var(--tok-shadow-card);
   --shadow-tip:   var(--tok-shadow-tip);
   --dur-ink:      180ms;
@@ -57,9 +61,10 @@
   overflow: hidden;
   box-sizing: border-box;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(29,58,138,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 80%, rgba(193,18,31,0.04) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 35%, #0c141c 0%, #080e14 70%);
+    radial-gradient(ellipse 80% 60% at 20% 15%, rgba(255, 182, 220, 0.45) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 80%, rgba(180, 210, 255, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255, 230, 200, 0.35) 0%, transparent 60%),
+    linear-gradient(165deg, #e8dff8 0%, #d8cff0 45%, #cfc4ea 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,7 +95,7 @@
   font-family: var(--font-script);
   font-size: 22px;
   font-weight: 700;
-  color: rgba(251,248,244,0.72);
+  color: #3a2f55;
 }
 
 .chromeRight { display: flex; align-items: center; gap: 18px; }
@@ -98,7 +103,7 @@
 .chromeUser {
   font-family: var(--font-stamp);
   font-size: 11px;
-  color: var(--chalk-dim);
+  color: rgba(58, 47, 85, 0.65);
   letter-spacing: 0.03em;
 }
 
@@ -108,12 +113,12 @@
   cursor: pointer;
   font-family: var(--font-body);
   font-size: 12px;
-  color: var(--chalk-dim);
+  color: rgba(58, 47, 85, 0.55);
   padding: 0;
-  opacity: 0.45;
+  opacity: 0.85;
   transition: opacity 150ms;
 }
-.chromeBtn:hover { opacity: 0.85; }
+.chromeBtn:hover { opacity: 1; color: #3a2f55; }
 
 /* ── the open book ───────────────────────────────────────── */
 .book {
@@ -234,32 +239,85 @@
   padding: 28px 36px 22px calc(var(--margin-width) + 18px);
 }
 
-/* ── binding gutter ──────────────────────────────────────── */
+/* ── spiral ring gutter (kinetic stationery) ─────────────── */
 .gutter {
   background: linear-gradient(90deg,
-    rgba(8,14,20,0) 0%, rgba(8,14,20,0.14) 42%,
-    rgba(8,14,20,0.26) 50%,
-    rgba(8,14,20,0.14) 58%, rgba(8,14,20,0) 100%);
+    transparent 0%,
+    rgba(58, 47, 85, 0.04) 35%,
+    rgba(58, 47, 85, 0.1) 50%,
+    rgba(58, 47, 85, 0.04) 65%,
+    transparent 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 56px 0;
+  padding: 48px 0;
   position: relative;
+  z-index: 2;
 }
 
 .gutter::before {
   content: '';
   position: absolute;
-  top: 0; bottom: 0; left: 50%;
-  width: 1px;
+  top: 8%;
+  bottom: 8%;
+  left: 50%;
+  width: 10px;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent 0%,
-    rgba(29,58,138,0.15) 10%, rgba(29,58,138,0.15) 90%, transparent 100%);
+  border-radius: 999px;
+  background: linear-gradient(180deg,
+    rgba(180, 170, 210, 0.35),
+    rgba(140, 130, 175, 0.55),
+    rgba(180, 170, 210, 0.35));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
-.stitch      { width: 4px; height: 12px; background: rgba(29,58,138,0.28); border-radius: 2px; flex-shrink: 0; }
-.stitchSmall { width: 2px; height: 6px;  background: rgba(29,58,138,0.14); border-radius: 1px; flex-shrink: 0; }
+.stitch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f4f0ff, #c4b8e0 55%, #8a7ab0 100%);
+  border: 2px solid #3a2f55;
+  box-shadow:
+    0 2px 0 rgba(58, 47, 85, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.stitchSmall {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #efeafc, #b8aed4 60%, #7e6fa8);
+  border: 1.5px solid rgba(58, 47, 85, 0.75);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.mascot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: #ffe566;
+  background: radial-gradient(circle at 35% 30%, #fff8c8, #ffd24a);
+  border: 2px solid #3a2f55;
+  box-shadow: 0 2px 0 rgba(58, 47, 85, 0.2);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  animation: mascotBob 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px rgba(255, 226, 102, 0.55));
+}
+
+@keyframes mascotBob {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-5px) rotate(4deg); }
+}
 
 /* ── bookmark ribbon (right page, top) ───────────────────── */
 .ribbon {

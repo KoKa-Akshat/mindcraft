@@ -347,7 +347,7 @@
   display: block;
 }
 
-/* ── explore concept cards ────────────────────────────────── */
+/* ── explore concept cards — sticker tiles ────────────────── */
 .exploreSectionLabel {
   font-family: var(--font-stamp);
   font-size: 10px;
@@ -361,33 +361,36 @@
 .exploreGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
 .exploreCard {
   position: relative;
-  height: 84px;
-  border-radius: 4px;
+  height: 92px;
+  border-radius: 14px 18px 12px 16px;
   cursor: pointer;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 8px 10px;
-  border: none;
+  padding: 10px 12px;
+  border: 2.5px solid #3a2f55;
   background: none;
   text-align: left;
-  transition: transform 150ms var(--ease-weight), box-shadow 150ms var(--ease-weight);
+  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+  transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms;
 }
 
 .exploreCard:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card);
+  transform: scale(1.05) rotate(-0.5deg);
+  box-shadow:
+    0 0 0 3px rgba(125, 255, 179, 0.35),
+    4px 8px 0 rgba(58, 47, 85, 0.14);
 }
 
 .exploreCard:focus-visible {
-  outline: 2px solid rgba(255,255,255,0.6);
+  outline: 2px solid #7dffb3;
   outline-offset: 2px;
 }
 
@@ -678,3 +681,4 @@
   height: 58px;
   opacity: 0.88;
 }
+

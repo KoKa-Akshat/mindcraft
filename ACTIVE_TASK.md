@@ -4,7 +4,108 @@
 
 ---
 
-## CURRENT SPRINT — 2026-07-08 (start here)
+## CURRENT SPRINT — 2026-07-21
+
+### Magical doodle notebook dashboard makeover (shipped this session)
+**Done:** lavender desk + spiral-ring gutter + margin star mascot (`Book.module.css` /
+`BookShell`); sticker MCQ hover swell + soft-wrong wiggle (no red buzz) + stamp/confetti
+reward (`DoodleReward`, Practice matte + Concept chapter); Map/GPS simplified — primary
+CTA opens `/concept/:id` notebook lesson (same BookShell as dashboard); explore tiles
+stickerized; learn CTA opens chapter not raw practice.
+**Do not include Manjushree** in this commit — still awaiting playthrough sign-off below.
+
+### Manjushree hidden action-math zone
+
+**Read first:** `agent_work/manjushree-zone/HANDOFF_FOR_CLAUDE.md`, then
+`MANJUSHREE_ZONE_REPORT.md` and `MANJUSHREE_ASSET_MANIFEST.md`'s 2026-07-21 2D-pivot
+section (at the top of that file). Spec: `ORIGINAL_SPEC.md`. Full pivot reasoning + all
+new lessons from this pass: `LESSONS.md` (durable lessons 19-27 + the pivot explainer at
+the top).
+
+**Status: rebuilt from Three.js 3D to a 2D layered-illustration scene (agent
+`ab4994a97e2c6dc7f`), independently re-verified, NOT yet committed. The only remaining
+gate is Akshat's own playthrough/sign-off — do not commit or push until that happens.**
+
+**What changed in this pass**: the entire 3D presentation layer (`engine/ZoneEngine.ts`,
+`world.ts`, `overlay.ts`, `postfx.ts`, the old `ManjushreeZone.tsx`'s Three.js mounting)
+was archived (not deleted) to `app/src/manjushree/_archive-3d/` — see that directory's own
+`README.md` for how to restore it if ever needed. `math/quadratics.ts` (untouched),
+`math/content.ts` and `state.ts` (both adapted, not rewritten), and `telemetry.ts`
+(untouched) were kept — they had zero rendering imports, so the entire visual swap cost
+them almost nothing. `math/mapping.ts` was rewritten (same "one shared function" principle,
+now targeting SVG percent-space instead of Three.js world units). The zone is now a plain
+DOM/CSS layered scene matching the house style of `spark/spark.js` and
+`components/book/**`, with one dedicated SVG component (`ParabolaOverlay.tsx`) for the one
+thing that deserves genuine math-driven drawing: the parabola curve itself.
+
+**Gameplay simplified** per the owner's own description: arrival (establishing
+illustration) → villager dialogue (a real short exchange, not a text dump) → travel
+transition → Wisdom Sight reveal → roots ("sword power", first charge) → axis-of-symmetry
++ vertex height as two rune-stone sub-steps inside ONE "cleave power" encounter (dropped
+axis as its own separately-gated phase, per the brief — the math/misconception checks
+underneath are unchanged) → hold-to-strike → a 5-6s cut cinematic (crack-line SVG reveal +
+two CSS `clip-path` image halves separating + an unclipped turquoise water layer
+underneath) → result / learning summary (same content/structure as before, restyled).
+
+**Three real Higgsfield-generated 2D illustrations** (all in `app/src/manjushree/assets2d/`,
+full prompts/costs in the asset manifest): the valley/hill background (reused across
+arrival, hill, and cinematic beats via CSS framing/clip-path, no second image needed), the
+villager sprite, and the sword/charge icon. 4 of 5 available credits spent, 1 left
+unspent as reserve.
+
+**Re-verified after the full rebuild (by Claude, not just trusting agent output):**
+`tsc --noEmit` clean, `vitest run` **85 passed + 1 pre-existing skip (86 total)** — up
+from 82 total before this pass (3 new mapping tests + 3 new vertex-height-candidate tests,
+zero regressions), `npm run build` green — the Manjushree chunk is now **~44KB JS / ~17KB
+CSS** (was ~622KB with the Three.js engine). A full scripted Playwright playthrough
+(`/manjushree-dev?q=mjz_q01`) drove the entire loop end to end (both a wrong-answer trap
+path and a correct path at every gated step) and captured 24 screenshots into
+`agent_work/manjushree-zone/screenshots/2d_pivot_2026-07-21/` — reviewed all of them
+personally and found + fixed 4 real bugs this way (not just eyeballed): a duplicated
+villager sprite behind the dialogue panel, a duplicated travel-line toast, the parabola
+curve plunging off-screen outside the roots (needed the same `Math.max(0, ...)` clamp the
+old 3D ridge mesh used), and the cinematic "water flowing through the gap" being invisible
+(the water layer was clipped to the same shape as what was moving over it, so it could
+never show in a NEW gap — fixed by making it a static full-bleed layer underneath instead).
+Also fixed a stroke-dasharray/`pathLength` SVG animation technique that rendered as broken
+fragments under non-uniform `preserveAspectRatio="none"` scaling (both the curve reveal and
+the crack-line reveal used it) by switching to a plain opacity fade, and a strike-charge
+progress ring that was invisible against its own button's active-state color.
+
+**Next (in order):**
+1. **Akshat plays it himself.** `cd app && npx vite --host 0.0.0.0 --port 5199 --strictPort`
+   then open `http://localhost:5199/manjushree-dev` (no auth needed) or
+   `?q=mjz_q01` to pin the legend quadratic. Signed-in path: Dashboard → the hidden portal
+   button → `/manjushree`.
+2. If he's happy: commit (Product lane files only: `app/src/manjushree/**`,
+   `app/src/App.tsx`, `app/src/pages/Dashboard.tsx`, `app/src/pages/Dashboard.module.css`,
+   `agent_work/manjushree-zone/**`) and push to `main` — CI auto-deploys.
+3. If not: describe exactly what's still wrong and start a new focused pass — the 2D
+   scene/math/state underneath is solid and tested, only iterate on what's actually broken.
+4. Optional, not blocking: Firestore `events` create rule (telemetry currently soft-fails
+   on writes with no matching rule — unchanged gap from before this pass, see
+   `MANJUSHREE_ZONE_REPORT.md`).
+5. Read `agent_work/manjushree-zone/NEXT_RUN.md`'s "bigger vision" section before starting
+   any follow-up work here — this chapter is explicitly a proof-of-concept for a much
+   larger per-question story-world pattern Akshat wants eventually, and he was explicit
+   about NOT forking attention across multiple chapters/questions until this one has "a
+   decent run."
+
+**Everything else in this repo is already committed and pushed to `main`** as of commit
+`d8fbcbe3` — this Manjushree work is the only uncommitted thing in the working tree.
+
+**Why this matters beyond this one chapter**: Akshat revealed the actual long-term goal —
+every question, on its own page, should eventually become an embedded 2D story-world with
+space to write, paying off on completion with a narrative tied to the concept solved
+("you saved a city"). Manjushree Zone is the deliberate first proof-of-concept for that
+reusable pattern; other questions/concepts follow only after this one has "a decent run"
+(his explicit sequencing — don't fork attention across many at once). Full writeup:
+`agent_work/manjushree-zone/NEXT_RUN.md` (new section at the bottom, "The bigger vision
+this is a proof-of-concept for").
+
+---
+
+## Previous sprint — 2026-07-08
 
 ### Cursor — Product lane (`app/**` ONLY)
 **Spec:** `agent_work/product/STORY_INTRO_RENDER_SPEC.md`

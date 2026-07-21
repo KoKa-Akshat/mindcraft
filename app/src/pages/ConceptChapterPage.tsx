@@ -26,6 +26,7 @@ import { fetchStoryModule, type StoryModule } from '../lib/storyModule'
 import BookShell from '../components/book/BookShell'
 import BookPage from '../components/book/BookPage'
 import PageFlipTransition from '../components/book/PageFlipTransition'
+import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -364,6 +365,10 @@ export default function ConceptChapterPage() {
   const [dir, setDir] = useState<'f' | 'b'>('f')
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({})
+  /** Soft-wrong: eliminated sticker indices per question (retry without penalty). */
+  const [eliminated, setEliminated] = useState<Record<number, number[]>>({})
+  const [wiggleChoice, setWiggleChoice] = useState<{ qIdx: number; i: number } | null>(null)
+  const [rewardPhrase, setRewardPhrase] = useState<string | null>(null)
   const [notes, setNotes] = useState<Record<number, string>>({})
   const [scratchStrokes, setScratchStrokes] = useState<Record<number, ScratchStrokeData>>({})
   const [scratchInk, setScratchInk] = useState<Record<number, ScratchInkState>>({})
@@ -629,9 +634,28 @@ export default function ConceptChapterPage() {
   function lockAnswer(qIdx: number) {
     const chosen = answers[qIdx]
     if (chosen === null || chosen === undefined) return
+    const q = questions[qIdx]
+    if (!q) return
+
+    // Soft wrong: wiggle + dim the sticker, keep trying — no red buzz, no lock.
+    if (chosen !== q.correctIndex) {
+      setEliminated(e => ({
+        ...e,
+        [qIdx]: [...new Set([...(e[qIdx] ?? []), chosen])],
+      }))
+      setWiggleChoice({ qIdx, i: chosen })
+      window.setTimeout(() => setWiggleChoice(null), 520)
+      setAnswers(a => {
+        const next = { ...a }
+        delete next[qIdx]
+        return next
+      })
+      return
+    }
+
+    setRewardPhrase(pickDoodleStamp(qIdx + chosen))
     setSubmitted(d => ({ ...d, [qIdx]: true }))
 
-    const q = questions[qIdx]
     if (!user?.uid || !q?.id) return
 
     const workLines = scratchInk[qIdx]?.workLines ?? []
@@ -768,26 +792,33 @@ export default function ConceptChapterPage() {
                 </div>
 
                 <div className={s.qChoicesCol}>
-                  <div className={s.qChoices}>
-                    {q.choices.slice(0, 4).map((c, i) => (
+                  <div className={`${s.qChoices} ${s.stickerChoices}`}>
+                    {q.choices.slice(0, 4).map((c, i) => {
+                      const out = (eliminated[qIdx] ?? []).includes(i)
+                      const wiggling = wiggleChoice?.qIdx === qIdx && wiggleChoice.i === i
+                      return (
                       <button
                         key={i}
                         type="button"
-                        className={`${s.choice} ${chosen === i ? s.choiceChosen : ''} ${isDone ? s.choiceDone : ''}`}
-                        style={chosen === i ? {
-                          borderColor: theme.accent,
-                          background: theme.accent + '10',
-                          '--choice-bg': theme.accent + '10',
-                        } as React.CSSProperties : undefined}
-                        onClick={() => !isDone && setAnswers(a => ({ ...a, [qIdx]: i }))}
-                        disabled={isDone}
+                        className={[
+                          s.choice,
+                          s.stickerChoice,
+                          chosen === i ? s.choiceChosen : '',
+                          isDone && chosen === i ? s.choiceCorrect : '',
+                          out ? s.choiceSoftWrong : '',
+                          wiggling ? s.choiceWiggle : '',
+                          isDone ? s.choiceDone : '',
+                        ].filter(Boolean).join(' ')}
+                        onClick={() => !isDone && !out && setAnswers(a => ({ ...a, [qIdx]: i }))}
+                        disabled={isDone || out}
                       >
-                        <span className={s.choiceLetter} style={{ color: theme.accent }}>
+                        <span className={s.choiceLetter}>
                           {String.fromCharCode(65 + i)}
                         </span>
                         <span className={s.choiceText}><MathText text={fmtChoice(c)} /></span>
                       </button>
-                    ))}
+                      )
+                    })}
                   </div>
 
                   {!isDone && allHints.length > 0 && (
@@ -930,6 +961,7 @@ export default function ConceptChapterPage() {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
+      <DoodleReward phrase={rewardPhrase} onDone={() => setRewardPhrase(null)} />
       <BookShell
         wordmark={cs.conceptName}
         chromeLeft={(

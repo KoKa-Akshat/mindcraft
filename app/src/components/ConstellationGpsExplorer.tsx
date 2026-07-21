@@ -647,10 +647,10 @@ export default function ConstellationGpsExplorer({
           <div className={c.legend}>
             <div className={c.legendItems}>
               {([
-                ['#00875a', 'Stable'],
-                ['#4361ee', 'Repairing'],
-                ['#d63e3e', 'Open Gap'],
-                ['#9aabb6', 'Unexplored'],
+                ['#00875a', 'Got it'],
+                ['#4361ee', 'Working on it'],
+                ['#d63e3e', 'Needs love'],
+                ['#9aabb6', 'Not started'],
               ] as const).map(([color, label]) => (
                 <span key={label} className={c.legendItem}>
                   <span className={c.legendDot} style={{ background: color }} />
@@ -675,7 +675,6 @@ export default function ConstellationGpsExplorer({
               const node = panel.node
               const kind = statusKind(node.status)
               const masteryPct = Math.round(node.mastery * 100)
-              const mom = node.strengthScore
               const content = getConceptContent(node.id)
               return (
                 <div className={c.panelDetail}>
@@ -684,7 +683,7 @@ export default function ConstellationGpsExplorer({
                   <div className={c.detailStatus}>
                     <span className={c.statusDot} style={{ background: KIND_COLOR[kind] }} />
                     <span className={c.statusLabel} style={{ color: KIND_COLOR[kind] }}>
-                      {KIND_LABEL[kind].toUpperCase()}
+                      {KIND_LABEL[kind]}
                     </span>
                   </div>
 
@@ -694,7 +693,7 @@ export default function ConstellationGpsExplorer({
                   )}
 
                   <div className={c.metric}>
-                    <span className={c.metricLabel}>ROUTE STRENGTH</span>
+                    <span className={c.metricLabel}>how solid</span>
                     <div className={c.metricBarRow}>
                       <div className={c.metricBar}>
                         <div className={c.metricBarFill}
@@ -704,62 +703,26 @@ export default function ConstellationGpsExplorer({
                     </div>
                   </div>
 
-                  <div className={c.metric}>
-                    <span className={c.metricLabel}>MOMENTUM</span>
-                    <span className={c.momentumVal}
-                      style={{ color: mom < 0 ? '#d63e3e' : mom > 0 ? '#00875a' : '#9aabb6' }}
-                    >
-                      {mom > 0 ? '+' : ''}{mom.toFixed(2)}
-                    </span>
-                  </div>
-
-                  <div className={c.detailMeta}>
-                    <span>{node.eventCount} INTERACTION{node.eventCount !== 1 ? 'S' : ''}</span>
-                    {node.level && <><span className={c.metaDot} /><span>{node.level.toUpperCase()}</span></>}
-                  </div>
-
-                  {node.tags?.length > 0 && (
-                    <div className={c.section}>
-                      <div className={c.sectionLabel}>Topic tags</div>
-                      <div className={c.tagList}>
-                        {node.tags.slice(0, 10).map(t => (
-                          <span key={t} className={c.tag}>{t.replace(/_/g, ' ')}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {node.ingredients?.length > 0 && (
-                    <div className={c.section}>
-                      <div className={c.sectionLabel}>
-                        {kind !== 'stable'
-                          ? `Repair ingredients (${node.ingredients.length})`
-                          : `Ingredients (${node.ingredients.length})`}
-                      </div>
-                      {kind !== 'stable' && (
-                        <p className={c.sectionHint}>
-                          Tap one ingredient to practice the smallest repairable piece
-                        </p>
-                      )}
-                      <div className={c.ingredientList}>
-                        {node.ingredients.slice(0, 4).map(ing => (
-                          <div key={ing.id} className={c.ingredientCard}>
-                            <div className={c.ingredientName}>{ing.name}</div>
-                            <div className={c.ingredientDesc}>{ing.description}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  <p className={c.sectionHint}>
+                    Tap Open lesson to work this topic in your notebook — same cozy pages as the dashboard.
+                  </p>
 
                   <div className={c.detailActions}>
-                    <button className={c.btnPrimary} onClick={() => plotRoute(node.id)}>
-                      Plot route →
+                    <button
+                      className={c.btnPrimary}
+                      onClick={() => navigate(`/concept/${encodeURIComponent(node.id)}`, {
+                        state: { fromGps: true, fromDashboard: true },
+                      })}
+                    >
+                      Open lesson →
+                    </button>
+                    <button className={c.btnGhost} onClick={() => plotRoute(node.id)}>
+                      See path
                     </button>
                     <button className={c.btnGhost}
                       onClick={() => navigate('/practice', { state: { conceptId: node.id, missionType: 'learn' } })}
                     >
-                      Start practice
+                      Quick practice
                     </button>
                   </div>
                 </div>
@@ -885,11 +848,14 @@ export default function ConstellationGpsExplorer({
 
                     <button className={c.btnPrimary}
                       onClick={() => {
-                        if (onStartRoute) onStartRoute(panel.targetId)
-                        else navigate(`/dashboard?view=route&target=${encodeURIComponent(panel.targetId)}`)
+                        const firstId = panel.steps[0]?.id ?? panel.targetId
+                        if (onStartRoute) onStartRoute(firstId)
+                        else navigate(`/concept/${encodeURIComponent(firstId)}`, {
+                          state: { fromGps: true, fromDashboard: true },
+                        })
                       }}
                     >
-                      Start with {panel.steps[0] ? mlIdToLabel(panel.steps[0].id) : 'step 1'} →
+                      Open {panel.steps[0] ? mlIdToLabel(panel.steps[0].id) : 'first lesson'} →
                     </button>
                   </>
                 )}

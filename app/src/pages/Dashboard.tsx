@@ -169,7 +169,7 @@ export default function Dashboard() {
 
   function openGps() { navigate('/dashboard?view=gps', { replace: true }) }
   function openRoute(targetId: string) {
-    navigate(`/dashboard?view=route&target=${encodeURIComponent(targetId)}`, { replace: true })
+    openChapter(targetId)
   }
   function openNotes() { navigate('/dashboard?view=notes', { replace: true }) }
   function openHomework() { navigate('/dashboard?view=homework', { replace: true }) }
@@ -227,9 +227,9 @@ export default function Dashboard() {
 
   function goExplore() {
     if (learn) {
-      navigate('/practice', { state: { conceptId: learn.conceptId, missionType: 'learn' } })
+      openChapter(learn.conceptId)
     } else {
-      navigate('/practice')
+      openGps()
     }
   }
 
@@ -802,7 +802,7 @@ export default function Dashboard() {
               <div className={s.panelPage}>
                 <div className={s.panelPageHeader}>
                   <button className={s.panelBackBtn} onClick={closePanel}>← today</button>
-                  <span className={s.panelTitle}>map</span>
+                  <span className={s.panelTitle}>your map</span>
                 </div>
                 <div className={`${s.panelContent} ${s.mapInset}`}>
                   <ConstellationGpsExplorer

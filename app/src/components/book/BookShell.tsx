@@ -55,6 +55,7 @@ export default function BookShell({
           <div className={s.stitch} />
           <div className={s.stitchSmall} />
           <div className={s.stitch} />
+          <div className={s.mascot} title="margin buddy">★</div>
           <div className={s.stitchSmall} />
           <div className={s.stitch} />
           <div className={s.stitchSmall} />

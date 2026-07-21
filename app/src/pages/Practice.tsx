@@ -2,6 +2,7 @@ import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { useUser } from '../App'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import MathText from '../components/MathText'
+import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward'
 import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
 import PingTutor from '../components/PingTutor'
@@ -367,6 +368,10 @@ export default function Practice() {
   const [typedAnswer, setTypedAnswer] = useState('')
   const [showCalc,   setShowCalc]   = useState(false)
   const [checked,    setChecked]    = useState(false)
+  /** Soft-wrong stickers eliminated on this question (retry without penalty). */
+  const [eliminatedChoices, setEliminatedChoices] = useState<number[]>([])
+  const [wiggleChoice, setWiggleChoice] = useState<number | null>(null)
+  const [rewardPhrase, setRewardPhrase] = useState<string | null>(null)
   const [hintsShown, setHintsShown] = useState(0)
   const [results,      setResults]      = useState<boolean[]>([])
   const [selectedIndices, setSelectedIndices] = useState<number[]>([])
@@ -1279,6 +1284,9 @@ export default function Practice() {
       setShowCalc(false)
       setChecked(false)
       setHintsShown(0)
+      setEliminatedChoices([])
+      setWiggleChoice(null)
+      setRewardPhrase(null)
       return
     }
 
@@ -1321,6 +1329,9 @@ export default function Practice() {
       setShowCalc(false)
       setChecked(false)
       setHintsShown(0)
+      setEliminatedChoices([])
+      setWiggleChoice(null)
+      setRewardPhrase(null)
     }
   }
 
@@ -1335,11 +1346,25 @@ export default function Practice() {
     }
     if (sel === null) return
     const correct = sel === questions[qIndex].correctIndex
+
+    // Soft wrong (neurodivergent-safe): wiggle + dim, try again — no red buzz, no lock-in.
+    if (!correct && !hideCorrectness) {
+      setEliminatedChoices(prev => (prev.includes(sel!) ? prev : [...prev, sel!]))
+      setWiggleChoice(sel)
+      window.setTimeout(() => setWiggleChoice(null), 520)
+      setSelected(null)
+      setTypedAnswer('')
+      return
+    }
+
     const nextResults = [...results, correct]
     const nextIndices = [...selectedIndices, sel]
     if (!hideCorrectness) {
       setChecked(true)
-      if (correct) setXp(x => x + LEVEL_META[level].xp)
+      if (correct) {
+        setXp(x => x + LEVEL_META[level].xp)
+        setRewardPhrase(pickDoodleStamp(qIndex + sel))
+      }
     }
     setResults(nextResults)
     setSelectedIndices(nextIndices)
@@ -1494,6 +1519,7 @@ export default function Practice() {
 
   return (
     <div className={`${s.shell}${isPathView ? ` ${s.pathShell}` : ''}${isMatteFlow ? ` ${s.matteShell}` : ''}${isPaperScan ? ` ${s.paperScan}` : ''}`}>
+      <DoodleReward phrase={rewardPhrase} onDone={() => setRewardPhrase(null)} />
       <Sidebar />
 
       <main className={`${s.page}${isPathView ? ` ${s.pathPage}` : ''}${isLessonPage ? ` ${s.lessonPage}` : ''}${mode === 'solver' ? ` ${s.solverPage}` : ''}`}>
@@ -2193,6 +2219,7 @@ export default function Practice() {
                       )}
                       <div className={s.choices}>
                         {currentQ.choices.map((choice, i) => {
+                          const softOut = eliminatedChoices.includes(i)
                           let cls = s.choice
                           if (checked && !hideCorrectness) {
                             if (i === currentQ.correctIndex) cls = s.choiceCorrect
@@ -2200,12 +2227,18 @@ export default function Practice() {
                           } else if (i === selected) {
                             cls = s.choiceSelected
                           }
+                          if (softOut) cls = `${cls} ${s.choiceSoftWrong}`
+                          if (wiggleChoice === i) cls = `${cls} ${s.choiceWiggle}`
                           return (
-                            <button key={i} className={cls} onClick={() => !checked && setSelected(i)} disabled={checked}>
+                            <button
+                              key={i}
+                              className={cls}
+                              onClick={() => !checked && !softOut && setSelected(i)}
+                              disabled={checked || softOut}
+                            >
                               <span className={s.choiceLetter}>{String.fromCharCode(65 + i)}</span>
                               <span className={s.choiceText}><MathText text={choice} /></span>
                               {!hideCorrectness && checked && i === currentQ.correctIndex && <span className={s.choiceTick}>✓</span>}
-                              {!hideCorrectness && checked && i === selected && i !== currentQ.correctIndex && <span className={s.choiceCross}>✗</span>}
                             </button>
                           )
                         })}
