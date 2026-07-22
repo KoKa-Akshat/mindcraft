@@ -217,7 +217,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .founder-photo:before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,253,247,.46);border-radius:26px}
 .founder-photo:after{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 70% 18%,rgba(255,253,247,.26),transparent 32%),linear-gradient(135deg,transparent,rgba(255,253,247,.12));transform:rotate(-12deg)}
 .founder-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
-/* Blake's source photo crops his head at the default center focal point — shift the visible window up. */
+/* Blake's source photo crops his head at the default center focal point, shift the visible window up. */
 .founder-card:nth-child(2) .founder-photo img{object-position:center 15%}
 .founder-photo img:not([src=""])+span{opacity:0}
 .founder-photo span{position:relative;z-index:1;color:#fffdf7;font-family:"Fredoka",system-ui,sans-serif;font-size:58px;font-weight:700;letter-spacing:-.06em}
@@ -518,7 +518,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="system-copy reveal">
           <p class="label">The learning map</p>
           <h2>Find where it broke.</h2>
-          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map shows tutor and student exactly where to start and why this problem kept happening.</p>
+          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map shows tutor and student exactly where to start.</p>
         </div>
         <div class="board reveal" data-tilt>
           <article class="board-card card-a">
@@ -747,7 +747,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="reveal">
           <p class="label">Limited enrollment</p>
           <h2>A few seats remain.</h2>
-          <p style="color:rgba(255,255,255,0.82);max-width:520px;font-size:18px;line-height:1.6;margin-top:12px;">We keep cohorts small so the map stays personal. Each student gets a tutor who has read their story before the first session starts.</p>
+          <p style="color:rgba(255,255,255,0.82);max-width:520px;font-size:18px;line-height:1.6;margin-top:12px;">We keep cohorts small so the map stays personal. Tutors read the story before session one.</p>
         </div>
         <div class="price-grid reveal">
           <div class="includes">
@@ -776,7 +776,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <div class="tryapp-copy">
             <p class="label">Try our app</p>
             <h2>The students who get ahead know where to start.</h2>
-            <p>MindCraft finds the exact break, builds the route, and turns practice into the unfair advantage every parent wants for their kid.</p>
+            <p>MindCraft finds the break, builds the route, and turns practice into the edge every parent wants for their kid.</p>
             <div class="tryapp-actions">
               <a class="btn primary app-login-link" href="https://mindcraft-93858.web.app/login">Open MindCraft →</a>
               <span class="tryapp-note">Free to explore · built for sharp students</span>
@@ -976,7 +976,7 @@ form?.addEventListener("submit", (event) => {
   location.href = "mailto:joinmindcraft@gmail.com?subject=" + encodeURIComponent("MindCraft intake") + "&body=" + encodeURIComponent(lines.join("\n"))
 })
 
-// First Spark overlay (Option A) — dynamically imported, never blocks first
+// First Spark overlay (Option A), dynamically imported, never blocks first
 // paint or SEO. Auto-launches once per session (sessionStorage.mc_spark_seen);
 // the hero CTA can always relaunch it manually.
 ;(function () {

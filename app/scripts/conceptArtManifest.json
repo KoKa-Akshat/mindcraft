@@ -1,0 +1,18 @@
+{
+  "generations": [
+    {
+      "conceptId": "fractions_decimals",
+      "protagonist": "Simon Stevin",
+      "setting": "Antwerp, the Low Countries, 1585",
+      "prompt": "Storybook illustration of Simon Stevin, in Antwerp, the Low Countries, 1585, depicting the moment when In 1585, in the war-torn Low Countries, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic, the scene should visually evoke the math concept \"Fractions and Decimals\" through props and setting, not text or symbols, warm painterly storybook illustration style, soft cel-shaded rendering with clean confident linework, gentle golden-hour lighting, rich warm color palette of amber, cream, and deep blue, cozy academic notebook atmosphere, illustrated like a premium educational storybook app, inviting and studious mood, clean readable composition, single character as the focal point, no text or letters in the image, no watermark, no UI elements",
+      "model": "seedream_v5_lite",
+      "aspect": "1:1",
+      "quality": "high",
+      "sourceUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3GnodVXKJ9JQAPFjRlYIx6WEtrl/hf_20260721_231840_c1ffd92b-9660-473d-adde-979964c0851c.png",
+      "outputPath": "src/assets/canvas/generated/story-fractions_decimals.jpg",
+      "creditsCost": 1,
+      "generatedAt": "2026-07-21T23:18:40.236Z",
+      "note": "First run of generateConceptArt.mjs. CLI response shape (result_url at top level of the returned array's single job object) was not recognized by the script's URL-extraction on this run (fixed in the same commit for future runs) — this entry was completed manually from the already-generated sourceUrl, no extra credit spent."
+    }
+  ]
+}

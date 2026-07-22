@@ -51,11 +51,9 @@ export const ACT_TOC_SECTIONS: ActTocSection[] = [
     title: 'Data & chance',
     conceptIds: CORE.filter(id => /stat|probabil/.test(id)),
   },
-  {
-    id: 'testcraft',
-    title: 'Test craft',
-    conceptIds: tiers.cross_cutting.conceptIds,
-  },
+  // Note: Layer-1 cross_cutting (act_strategy, representation_translation)
+  // have no playable bank questions yet — omit from the student TOC so we
+  // don't ship empty truncated chips with nowhere to go.
 ]
 
 export function actConceptLabel(conceptId: string): string {

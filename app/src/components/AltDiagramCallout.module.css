@@ -1,0 +1,30 @@
+.box {
+  display: block;
+  margin: 10px 0;
+  padding: 8px 10px 8px 12px;
+  border-left: 2px solid;
+  border-radius: 0 3px 3px 0;
+  background: rgba(29, 58, 138, 0.04);
+}
+
+.icon {
+  margin-right: 6px;
+  opacity: 0.55;
+}
+
+.caption {
+  font: 400 12px/1.45 "IBM Plex Mono", monospace;
+  color: #6f6a61;
+}
+
+.figureWrap {
+  display: block;
+  padding: 4px 2px 2px;
+}
+
+.figure {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}

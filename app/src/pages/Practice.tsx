@@ -41,6 +41,9 @@ import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
 import { buildStoryDisplay } from '../lib/storyDisplay'
+import { selectStoryForConcept } from '../lib/storySelection'
+import { storyArtFor } from '../lib/storyArt'
+import framesRaw from '../data/questionContextFrames.json'
 import {
   PRACTICE_DRAFT_VERSION,
   practiceDraftKey,
@@ -52,6 +55,19 @@ import InteractiveWidget from '../components/InteractiveWidget'
 import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
+
+const CONTEXT_FRAMES = framesRaw as Record<string, { questionBridge?: string; settingLine?: string }>
+
+/** Local story wrap when Groq story-module is slow/offline — never bare textbook. */
+function framedLocalStem(q: Question): string {
+  const display = buildStoryDisplay(q)
+  const story = selectStoryForConcept(q.conceptId)
+  if (!story) return display.stem
+  const frame = CONTEXT_FRAMES[story.conceptId]
+  const setting = story.settingLine || frame?.settingLine || ''
+  const bridge = frame?.questionBridge || `${story.protagonist} sets this on the desk.`
+  return [setting ? `✦ ${setting}` : '', bridge, display.stem].filter(Boolean).join('\n\n')
+}
 
 const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
 const SLACK_INVITE = 'https://join.slack.com/t/mindcraftnetwork/shared_invite/zt-3vnl9tmvm-sTq8wFPky0LcOGWcK_COHg'
@@ -1473,10 +1489,20 @@ export default function Practice() {
     ? (storyItem ? [...storyItem.socratic, ...currentQ.hints] : currentQ.hints).slice(0, 3)
     : []
 
+  const localStory = useMemo(
+    () => (currentQ ? selectStoryForConcept(currentQ.conceptId) : null),
+    [currentQ],
+  )
+
   const sessionStem = useMemo(() => {
     if (!currentQ) return ''
-    return storyItem?.storyStem ?? buildStoryDisplay(currentQ).stem
+    return storyItem?.storyStem ?? framedLocalStem(currentQ)
   }, [currentQ, storyItem])
+
+  const sessionArt = useMemo(() => {
+    if (!currentQ) return null
+    return storyArtFor(toOntologyId(currentQ.conceptId))
+  }, [currentQ])
 
   const wrongChoiceEvidence = checked && selected !== null && currentQ && selected !== currentQ.correctIndex
     ? resolveChoiceEvidence(currentQ, selected)
@@ -2169,8 +2195,10 @@ export default function Practice() {
                     <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
                       <div className={s.questionBannerTop}>
                         <div>
-                          {storyItem ? (
-                            <span className={s.examTagLight}>Story · {sessionLabel}</span>
+                          {storyItem || localStory ? (
+                            <span className={s.examTagLight}>
+                              Story · {localStory?.protagonist ?? sessionLabel}
+                            </span>
                           ) : currentQ.examTag ? (
                             <span className={s.examTagLight}>{currentQ.examTag} Style</span>
                           ) : null}
@@ -2198,7 +2226,10 @@ export default function Practice() {
                       {currentQ.storyIntro && (
                         <p className={s.storyIntroBlock}>{currentQ.storyIntro}</p>
                       )}
-                      {currentQ.storyContext && !storyItem && (
+                      {!storyItem && !currentQ.storyIntro && localStory?.settingLine && (
+                        <p className={s.storyIntroBlock}>{localStory.settingLine}</p>
+                      )}
+                      {currentQ.storyContext && !storyItem && !localStory && (
                         <p className={s.storyContextLine}><MathText text={currentQ.storyContext} /></p>
                       )}
                       <p className={s.questionText}><MathText text={sessionStem} /></p>
@@ -2209,14 +2240,18 @@ export default function Practice() {
                           className={s.questionVisual}
                           dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
                         />
-                      ) : (
+                      ) : sessionArt ? (
+                        <div className={s.storyArtFrame}>
+                          <img className={s.storyArtImg} src={sessionArt} alt="" draggable={false} />
+                        </div>
+                      ) : questionFormat(currentQ) === 'coordinate_graph' || questionFormat(currentQ) === 'diagram' ? (
                         <InteractiveWidget
                           conceptId={currentQ.conceptId}
                           questionText={sessionStem}
                           format={questionFormat(currentQ)}
                           theme={{ accent: '#1d3a8a', ink: '#1a1a1a', bg: '#ffffff', dim: 'rgba(26,26,26,0.45)' }}
                         />
-                      )}
+                      ) : null}
                       <div className={s.choices}>
                         {currentQ.choices.map((choice, i) => {
                           const softOut = eliminatedChoices.includes(i)

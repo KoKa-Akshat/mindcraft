@@ -248,31 +248,50 @@ function buildFolkPayload(tale: FolkTaleEntry, ctx: MatchContext): MatchedSkin {
 }
 
 /**
- * Full match pipeline: folk tale → concept story → question context.
- * Used by enrichQuestionsWithStories before Groq skinning.
+ * Full match pipeline: concept story (locked) → folk tale → question context.
+ *
+ * Concept-lock takes priority over folk-tale rotation. Every concept that has
+ * a chapter identity (data/conceptStories.json + questionContextFrames.json —
+ * a fixed protagonist/setting, e.g. Simon Stevin for fractions_decimals) must
+ * show that SAME protagonist in Practice, not a different, unrelated folk
+ * tale (e.g. Kwame). Two reasons this was chosen over keeping folk-tale
+ * rotation as primary:
+ *   1. The art is concept-keyed, not tale-keyed (storyArtFor(conceptId)) — a
+ *      folk-tale skin under concept-locked art produced a real world/art
+ *      mismatch (a Kwame story stem next to a Simon Stevin ledger photo).
+ *      Generating separate art per folk tale per concept isn't scoped.
+ *   2. Practice's own local/offline fallback (framedLocalStem in
+ *      Practice.tsx) already renders the concept-locked story immediately,
+ *      before the Groq story-module response lands. Folk-tale-first here
+ *      meant the story could visibly SWAP protagonists mid-session once Groq
+ *      responded — worse than just being generic.
+ * Folk-tale matching still fires for the handful of concepts with no locked
+ * story (not in conceptStories.json) and stays wired for Spark
+ * (sparkMatch.ts calls matchFolkTale directly — a separate, goal-driven
+ * flow outside the chapter/practice concept-lock system).
  */
 export function matchSkinForQuestion(
   q: Question,
   ctx: MatchContext = {},
 ): MatchedSkin {
-  const folk = matchFolkTale(q, ctx)
-  if (folk) {
-    const payload = buildFolkPayload(folk.tale, ctx)
-    payload.score = folk.score
-    return payload
-  }
-
   const concept = selectStoryForConcept(q.conceptId)
   if (concept) {
     const tone = ctx.goalTags?.length ? goalToneHint(ctx.goalTags) : ''
     return {
       source: 'concept_story',
-      score: 0.5,
+      score: 1,
       conceptStory: concept.story + (tone ? `\n[Student tone: ${tone}]` : ''),
       protagonist: concept.protagonist,
       setting: concept.settingLine,
       conceptName: concept.conceptName,
     }
+  }
+
+  const folk = matchFolkTale(q, ctx)
+  if (folk) {
+    const payload = buildFolkPayload(folk.tale, ctx)
+    payload.score = folk.score
+    return payload
   }
 
   const fallback = q.storyIntro ?? q.storyContext ?? q.question

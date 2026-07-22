@@ -300,86 +300,88 @@ export default function Dashboard() {
         </header>
 
         <main className={s.canvasStage}>
-          {view === 'home' && (
-            <div className={s.homeCanvas}>
-              <div className={s.homeTop}>
-                <div>
-                  <p className={s.homeEyebrow}>ACT Math</p>
-                  <h1 className={s.homeTitle}>Contents</h1>
+          <div key={view} className={s.stagePane}>
+            {view === 'home' && (
+              <div className={s.homeCanvas}>
+                <div className={s.homeTop}>
+                  <div>
+                    <p className={s.homeEyebrow}>ACT Math</p>
+                    <h1 className={s.homeTitle}>Contents</h1>
+                  </div>
+                  <WizardMascot line={wizardLine} />
                 </div>
-                <WizardMascot line={wizardLine} />
-              </div>
 
-              {weakness && (
-                <button type="button" className={s.sparkBanner} onClick={goChallenge}>
-                  <span className={s.sparkEmoji}>{topicEmoji(weakness.conceptId)}</span>
-                  <span className={s.sparkText}>
-                    <span className={s.sparkEyebrow}>today’s spark</span>
-                    <span className={s.sparkName}>{weaknessLabel}</span>
-                  </span>
-                  <span className={s.sparkGo}>play →</span>
-                </button>
-              )}
-
-              <div className={s.horizontalToc}>
-                {ACT_TOC_SECTIONS.map(section => (
-                  <section key={section.id} className={s.tocLane}>
-                    <h2 className={s.tocLaneTitle}>{section.title}</h2>
-                    <div className={s.tocChips}>
-                      {section.conceptIds.map(id => (
-                        <button
-                          key={id}
-                          type="button"
-                          className={`${s.tocChip} ${id === sparkId ? s.tocChipSpark : ''}`}
-                          onClick={() => openChapter(id)}
-                        >
-                          <span className={s.tocChipEmoji}>{topicEmoji(id)}</span>
-                          <span>{actConceptLabel(id)}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-
-              <div className={s.homeActions}>
-                <button type="button" className={s.toolPill} onClick={openWork}>Work</button>
-                <button type="button" className={s.toolPill} onClick={openMap}>Map</button>
-                <button type="button" className={s.toolPill} onClick={openNotes}>Notes</button>
-                {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
-                  <button type="button" className={s.paperPill} onClick={playWeeklyPaper}>
-                    This week’s paper →
+                {weakness && (
+                  <button type="button" className={s.sparkBanner} onClick={goChallenge}>
+                    <span className={s.sparkEmoji}>{topicEmoji(weakness.conceptId)}</span>
+                    <span className={s.sparkText}>
+                      <span className={s.sparkEyebrow}>today’s spark</span>
+                      <span className={s.sparkName}>{weaknessLabel}</span>
+                    </span>
+                    <span className={s.sparkGo}>play →</span>
                   </button>
                 )}
-                {isAdmin && (
-                  <button type="button" className={s.adminQuietLink} onClick={() => navigate('/admin')}>admin</button>
-                )}
+
+                <div className={s.horizontalToc}>
+                  {ACT_TOC_SECTIONS.map(section => (
+                    <section key={section.id} className={s.tocLane}>
+                      <h2 className={s.tocLaneTitle}>{section.title}</h2>
+                      <div className={s.tocChips}>
+                        {section.conceptIds.map(id => (
+                          <button
+                            key={id}
+                            type="button"
+                            className={`${s.tocChip} ${id === sparkId ? s.tocChipSpark : ''}`}
+                            onClick={() => openChapter(id)}
+                          >
+                            <span className={s.tocChipEmoji}>{topicEmoji(id)}</span>
+                            <span>{actConceptLabel(id)}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+
+                <div className={s.homeActions}>
+                  <button type="button" className={s.toolPill} onClick={openWork}>Work</button>
+                  <button type="button" className={s.toolPill} onClick={openMap}>Map</button>
+                  <button type="button" className={s.toolPill} onClick={openNotes}>Notes</button>
+                  {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
+                    <button type="button" className={s.paperPill} onClick={playWeeklyPaper}>
+                      This week’s paper →
+                    </button>
+                  )}
+                  {isAdmin && (
+                    <button type="button" className={s.adminQuietLink} onClick={() => navigate('/admin')}>admin</button>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {view === 'map' && (
-            <ActEmojiMap sparkId={sparkId} onOpenLesson={openChapter} />
-          )}
+            {view === 'map' && (
+              <ActEmojiMap sparkId={sparkId} onOpenLesson={openChapter} />
+            )}
 
-          {view === 'work' && (
-            <WorkStudio
-              solverText={solverText}
-              onSolverText={setSolverText}
-              onSolve={launchSolver}
-            />
-          )}
-
-          {view === 'notes' && (
-            <div className={s.notesCanvas}>
-              <h2 className={s.homeTitle}>Notes</h2>
-              <DashboardNotesPanel
-                uid={uid}
-                bookmarkedIds={bookmarkedQuestions}
-                onBookmarksChange={setBookmarkedQuestions}
+            {view === 'work' && (
+              <WorkStudio
+                solverText={solverText}
+                onSolverText={setSolverText}
+                onSolve={launchSolver}
               />
-            </div>
-          )}
+            )}
+
+            {view === 'notes' && (
+              <div className={s.notesCanvas}>
+                <h2 className={s.homeTitle}>Notes</h2>
+                <DashboardNotesPanel
+                  uid={uid}
+                  bookmarkedIds={bookmarkedQuestions}
+                  onBookmarksChange={setBookmarkedQuestions}
+                />
+              </div>
+            )}
+          </div>
         </main>
       </div>
 

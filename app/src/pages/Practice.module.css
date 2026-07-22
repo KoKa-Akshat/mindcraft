@@ -5277,3 +5277,75 @@
     background-size: auto, 16px 16px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   IMMERSIVE CANVAS SESSION — almost full-screen, light, story-first
+══════════════════════════════════════════════════════════════════════════════ */
+
+.matteShell .sessionWrap {
+  width: 100%;
+  max-width: none;
+  align-items: stretch;
+  padding: 4px 2vw 40px;
+}
+
+.matteShell .sessionCenter {
+  width: min(1080px, 96vw);
+  max-width: none;
+  margin: 0 auto;
+  gap: 14px;
+}
+
+.matteShell .questionCard {
+  border-radius: 22px !important;
+  box-shadow:
+    0 8px 28px rgba(90, 70, 140, 0.1),
+    0 2px 8px rgba(58, 47, 85, 0.05) !important;
+}
+
+.matteShell .questionBanner {
+  padding: 32px 36px 28px !important;
+  background: #f7f3ec !important;
+  border-bottom: 1px solid rgba(102, 92, 78, 0.1) !important;
+}
+
+.matteShell .questionText {
+  font-size: clamp(20px, 2.4vw, 26px) !important;
+  line-height: 1.45 !important;
+}
+
+.matteShell .choice {
+  border: 1.5px solid rgba(58, 47, 85, 0.14) !important;
+  box-shadow: 0 3px 10px rgba(58, 47, 85, 0.06) !important;
+  border-radius: 16px !important;
+  min-height: 56px;
+}
+
+.matteShell .choiceLetter {
+  border: 1.5px solid rgba(58, 47, 85, 0.2) !important;
+  box-shadow: none !important;
+}
+
+.storyArtFrame {
+  width: 100%;
+  max-height: 300px;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 0 0 18px;
+  box-shadow: 0 6px 20px rgba(58, 47, 85, 0.1);
+}
+
+.storyArtImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.matteShell .storyIntroBlock {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: rgba(58, 47, 85, 0.72);
+  margin: 0 0 10px;
+}

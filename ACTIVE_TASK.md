@@ -13,6 +13,230 @@ Work = PDF homework or paste-solver; weekly practice paper scaffold
 (`weeklyPracticePaper.ts`) mixes weakness + learn. Story art plates for
 fractions/quadratics/probability. Manjushree still local / uncommitted.
 
+**2026-07-21 follow-up pass (concept-accurate art + Practice concept-lock):**
+
+- **Done:** built a real, rerunnable concept-art pipeline
+  (`app/scripts/generateConceptArt.mjs`, Higgsfield `seedream_v5_lite`).
+  `storyArt.ts` now auto-discovers anything dropped in
+  `app/src/assets/canvas/generated/story-{conceptId}.jpg` via
+  `import.meta.glob` — **no code edit needed to register new concept art**,
+  future runs are truly rerunnable. Spent the account's only 1 remaining
+  Higgsfield credit on `fractions_decimals` (Simon Stevin / Antwerp 1585
+  ledger scene) — exactly the "pizza ≠ Stevin ledger" example Akshat flagged.
+  **1 of 27 ACT-tested concepts now has real concept-accurate art; the other
+  26 are still on the old shared/theme-fallback photos, blocked purely on
+  Higgsfield credits** (run `node app/scripts/generateConceptArt.mjs --list`
+  to see priority order by `actFrequency`, then
+  `node app/scripts/generateConceptArt.mjs --top N` once credits are topped
+  up — each concept costs 1 credit at `seedream_v5_lite` quality `high`).
+  Manifest of every generation (prompt, cost, source URL, protagonist) is at
+  `app/scripts/conceptArtManifest.json`, append-only, never double-spends on
+  an already-generated concept.
+- **Done: Practice concept-lock decision (item 2 in the brief) — resolved as
+  (a), concept-lock wins.** `storyMatch.ts#matchSkinForQuestion` now checks
+  `selectStoryForConcept` (the SAME locked protagonist/setting
+  `ConceptChapterPage.tsx` uses) **before** folk-tale matching, only falling
+  back to a folk tale for the handful of concepts with no locked story.
+  Reasoning: art is concept-keyed, not tale-keyed, so a folk-tale skin (e.g.
+  Kwame) under concept-locked art (e.g. a Simon Stevin photo) was a real
+  world/art mismatch; and Practice's own local/offline fallback
+  (`framedLocalStem` in `Practice.tsx`) already rendered the concept-locked
+  story immediately, so folk-tale-first meant the protagonist could visibly
+  swap mid-session once Groq's story-module response landed. Traded away:
+  folk-tale variety for the ~40 concepts that already have a locked story
+  identity (folk tales still fire for spark/`FirstSpark.tsx`, untouched, and
+  for any concept with no `conceptStories.json` entry). Verified via the
+  chapter's own embedded question panels (same `storyArtFor()` +
+  `selectStoryForConcept()` code path Practice.tsx uses) —
+  see screenshot below.
+- **Verification (all real, this session, after reverting every temp
+  screenshot aid):** `npx tsc --noEmit` clean. `npx vitest run` → **85
+  passed, 1 skipped (86 total)** — identical to the pre-change baseline, zero
+  regressions. `npm run build` green (`story-fractions_decimals-*.jpg` now in
+  the bundle at 149.30 kB, same ballpark as the existing story plates; the
+  pre-existing 5.3 MB main-chunk size warning is unchanged, not introduced by
+  this pass). Screenshots (cover → intro → desk Home/Map/Work/Notes →
+  fractions_decimals chapter with the new art → chapter's embedded practice
+  question panel with the same art) at
+  `agent_work/canvas-notebook/screenshots/` — captured via a temporary,
+  env-gated (`VITE_SCREENSHOT_MODE`) auth shim in `App.tsx` + `Dashboard.tsx`
+  (no test Firebase account was available), **fully reverted** before this
+  entry was written; `grep SCREENSHOT app/src/App.tsx app/src/pages/Dashboard.tsx`
+  returns nothing.
+- **Open / next steps:**
+  1. Top up Higgsfield credits, then run
+     `node app/scripts/generateConceptArt.mjs --top 26` (or fewer, budget
+     permitting) to cover the rest of the 27 ACT-tested concepts, highest
+     `actFrequency` first (`linear_equations` 0.18, `algebraic_manipulation`
+     0.16, `basic_equations` 0.14, `functions_basics` 0.13… see
+     `node app/scripts/generateConceptArt.mjs --list` for the full order).
+  2. Could not screenshot the standalone `/practice` route with a real,
+     data-driven question loaded — it requires router `state` from an actual
+     PawHub/dashboard launch (weakness/learn recommendation data), which
+     needs a real authenticated session; the auth shim only faked the React
+     user context, not a real Firebase ID token, so Firestore reads
+     (recommendations, diagnostic status) all 403'd. Verified the same code
+     path is wired in by reading `Practice.tsx` (`storyArtFor`,
+     `selectStoryForConcept`, `matchSkinForQuestion`) instead — a real login
+     is the only way to close this out visually.
+  3. `mc-diagnostic.js` overlay retarget (pre-existing open item, untouched
+     this pass — see "Known gotchas" in `CLAUDE.md`).
+
+**2026-07-21 second follow-up pass (Fable 5 — marketing trim, dashboard
+polish, 26 hand-authored SVG plates, alt-text bug fix):** four pieces of
+direction from Akshat, all done.
+
+- **1. Marketing copy trim.** Read `BRAND_BOOK.md` sections 8 + 11 first, then
+  read all 5 files named in the brief. `review-questions.html` (20,625 lines)
+  and `architecture.html` (1,474 lines) turned out to be internal dev tools
+  (a QA question-bank dump and an engineering system-architecture diagram),
+  not marketing prose — left untouched, no user-facing copy to trim there.
+  `index.html` was already fairly tight from a prior redesign pass (short
+  fragment-style copy); trimmed 3 remaining 2-sentence paragraphs (system
+  section, pricing section, tryapp section) down to one clean sentence each,
+  no claims/numbers touched. `article.html` had the real wordiness: two blog
+  posts with repetitive, passive-voice prose (e.g. the mission post's opening
+  line was said almost verbatim in both the excerpt AND the first body
+  paragraph). Rewrote both posts' body copy — verbs first, cut repeated
+  ideas, cut passive constructions ("all of the information discussed will
+  be documented and organized" → "everything discussed gets documented").
+  `blog.html`'s duplicate excerpt synced to match. **Also removed every em
+  dash found in all 3 files** (both in copy and in code comments, for full
+  compliance) — `article.html` had 6, `index.html` had 2 (pre-existing, in
+  CSS/JS comments). Diff: touched lines went from 508 words to 342 words
+  (33% shorter) in `article.html`; `git diff --stat` shows
+  `article.html 26 changed, index.html 10 changed, blog.html 2 changed`. No
+  facts/stats/claims altered anywhere — confirmed via `git diff`, every
+  change is either a cut or a rephrase of existing content.
+- **2. Dashboard polish pass.** Structural layout untouched (cover → intro →
+  desk → chapters stays exactly as the prior pass shipped it), pure visual
+  craft. Root cause found for a real bug, not just aesthetics: the Notes
+  panel (`DashboardNotesPanel` via `DashboardPanels.module.css`) depends on
+  CSS custom properties (`--rule`, `--ink-katha`, `--paper-raised`, `--font-
+  katha`, etc.) that only exist inside the OLD `BookShell` (`.shell` in
+  `components/book/Book.module.css`) — which no longer wraps the Notes view
+  in the new canvas-desk layout, so those `var()` calls were silently
+  resolving to nothing. Screenshots confirmed the effect: the search input
+  had no visible border and "No notes yet." was nearly invisible. Fixed by
+  defining the same variable names on `.canvasStage` (Dashboard.module.css),
+  tuned to the canvas desk's own palette rather than the book's. Beyond that
+  fix: introduced a shared design-token scale (`--desk-radius-sm/md/lg`,
+  `--desk-shadow-soft/raised/stage/sticker(-hover)`, `--desk-border-sticker`,
+  `--desk-ease(-bounce)`) on both `.canvasDesk` (Dashboard.module.css) and
+  `.chapterDesk` (ConceptChapterPage.module.css) — same names, same values —
+  so the dashboard desk and the chapter canvas draw from one vocabulary
+  instead of two independently-tuned ones (this was the concrete form of the
+  "several UIs stapled together" complaint: chip/button corner radii and
+  shadow depths differed between files with no shared reference). Applied to
+  `ActEmojiMap.module.css` and `WorkStudio.module.css` too (defensive
+  fallback values included so nothing breaks if a component ever renders
+  outside `.canvasDesk`). Added hover/active micro-interactions
+  (translateY + shadow growth on chips/pills/buttons, consistent
+  ~160ms cubic-bezier bounce) that were entirely missing before — buttons had
+  no hover feedback at all. Real before/after screenshots (not just
+  asserted) at `agent_work/canvas-notebook/screenshots/before_*.png` vs
+  `after_*.png` (Home, Map, Work, Notes — Notes is the clearest diff, text
+  went from unreadable to legible).
+- **3. 26 hand-authored SVG concept illustrations** (`app/scripts/
+  generateConceptArtSvg.mjs`, sibling to the Higgsfield pipeline, NOT an
+  image-generation model — genuinely hand-composed SVG markup). Covers all
+  26 of the 27 ACT-tested concepts still on fallback art (`fractions_decimals`
+  already had the real Simon Stevin photo from the prior pass; left that file
+  alone). Zero skipped. **Style decision** (documented in the script's own
+  header comment too): sampled the actual rendered colors out of
+  `story-fractions_decimals.jpg` (warm cream walls, Stevin's navy coat,
+  golden wheat-bowl light) and built the palette from that instead of
+  guessing — warm parchment background, warm ink-brown linework (not flat
+  black), navy `#1d3a8a` as the one signature accent per figure (this is
+  ALSO literally MindCraft's own brand "Depth" color, `BRAND_BOOK.md`
+  section 9 — a deliberate double-bridge, not a coincidence), warm gold for
+  props. Reasoning for why this doesn't clash with the one photoreal plate:
+  a real notebook where one page got a full watercolor treatment and the
+  rest are pen-and-wash sketches reads as normal, not inconsistent — same
+  palette family, different rendering weight. Every scene = one shared
+  "cloaked scholar" figure archetype (recolored/reposed per protagonist,
+  mirroring how `generateConceptArt.mjs` reuses one fixed `STYLE_FORMULA`
+  string across every photoreal generation) + hand-drawn setting props for
+  that concept's locked `questionContextFrames.json` protagonist/setting +
+  ONE bespoke hand-drawn math metaphor per concept invented specifically for
+  that concept (rope-stretched 3-4-5 triangle for right-triangle geometry,
+  a balance scale for basic equations, the doubling-grains chessboard for
+  exponent rules, Hippasus going overboard for radical expressions, the
+  Alhambra tessellation for geometric transformations, etc. — genuine
+  per-concept craft, not a template swap). Wired into `storyArt.ts` via a
+  second `import.meta.glob` for `story-*.svg` alongside the existing `.jpg`
+  glob, feeding the same `GENERATED` lookup map — `storyArtFor()` stays the
+  single function every caller uses, no other code changed. Bundle cost:
+  all 26 SVGs total 272KB uncompressed (most under the 4KB Vite inline
+  threshold and get base64-embedded directly in the JS, the rest emit as
+  tiny separate files, 40KB total in `dist/assets/`) — versus 149KB for the
+  ONE existing photoreal JPG plate. Verified in real chapter context (not
+  just the raw SVG file): screenshots of 5 chapters
+  (`right_triangle_geometry`, `quadratic_equations`, `circles_geometry`,
+  `basic_probability`, `linear_equations`) at
+  `agent_work/canvas-notebook/screenshots/chapter_*.png`, all showing the
+  new art in the actual polaroid-framed chapter layout next to the real
+  story text. **Noticed but out of scope to fix:** `quadratic_equations`'s
+  chapter header correctly says "Muhammad al-Khwarizmi" (matches the new
+  art) but the body paragraph below it opens with an unrelated Galileo
+  anecdote — a pre-existing `conceptStories.json` content mismatch between
+  the locked protagonist and the story's own opening sentence, same root
+  cause noted for `measurement_units` in this file already. Not something
+  this pass touched (Product-lane art wiring, not Engine-lane story data);
+  flagging for whoever owns `conceptStories.json` next.
+- **4. Alt-text-as-literal-text bug, fixed with a real diagram renderer, not
+  just reformatted text.** Root cause: `MathText.tsx`'s `replaceMarkdownImages()`
+  already converted Eedi's `![alt]()` images into `(Diagram: alt text)`, and
+  `HighlightedStem.tsx` already gave the stem's version a bordered callout
+  box — but both just showed the raw alt-text sentence verbatim inside it,
+  and answer CHOICES (rendered via plain `MathText`, no callout at all) had
+  it worse: no box, no framing, just a run-on sentence mid-button. Also
+  found: `components/QuestionFigure.tsx` (a real geometry/graph SVG
+  renderer, including a `numberline` shape) exists in the codebase but is
+  **not imported anywhere** — completely unwired dead code, a bigger finding
+  than the reported bug itself. Rather than force-fit alt-text parsing into
+  that stem-only, non-alt-text-aware system, built a purpose-built pipeline:
+  `lib/altDiagram.ts` (`parseAltDiagram()` — recognizes two real Eedi alt-text
+  families: "N dashes, dash K marked with value V, arrow pointing at dash J"
+  number lines, and "circle at value V, arrow pointing left/right" inequality
+  rays; `humanizeAltCaption()` — light cleanup fallback for anything else,
+  never invents content) + `components/AltDiagramCallout.tsx` (draws a real
+  SVG diagram for a recognized pattern, otherwise renders the cleaned text
+  in a clearly-labeled "Picture: ..." callout instead of a bare sentence).
+  Wired into BOTH `HighlightedStem.tsx` (stem) and `MathText.tsx` (choices,
+  hints, anywhere else `(Diagram: ...)` can appear) so the fix covers
+  wherever this pattern shows up, not just the one reported spot. Verified
+  against the EXACT reported bug text (`eedi_696`, `fractions_decimals`,
+  "Line with 5 dashes... First dash marked with a 1 fourth dash marked with
+  a 2. Blue arrow pointing upwards towards the third dash.") via a temporary
+  dev-only route rendered through the real running app (not a mock) — now
+  draws 5 tick marks, "1" under tick 1, "2" under tick 4, a navy arrow over
+  tick 3 — screenshot at `agent_work/canvas-notebook/screenshots/
+  altdiagram_fix_verification.png`, temp route fully removed after.
+  **Honest scope count** (`eediQuestions.json`, 1,508 records): 439 questions
+  have a `(Diagram:`/`![...]()` pattern in the STEM (many already handled
+  reasonably by the existing stem callout box; the ones matching the two
+  patterns above now get a real diagram, the rest get the improved fallback
+  caption); separately, **62 questions have it in at least one ANSWER
+  CHOICE** (242 individual choice strings total) — those were the worst case
+  (zero framing at all before this fix) and are now fixed the same way.
+  Not hand-fixed one-by-one — the rendering path is fixed for all of them at
+  once, per the brief.
+
+**Verification (all real, this session):** `npx tsc --noEmit` clean.
+`npx vitest run` → **85 passed, 1 skipped (86 total)**, unchanged from
+baseline. `npm run build` green — main JS chunk `5,399.84 kB` (was `5.3 MB`
+per the prior entry, the ~100KB delta is the 21 base64-inlined SVGs, expected
+and small). `grep manjushree app/src/App.tsx` still shows the lazy import +
+both routes. Screenshot inventory (all real, captured via a temporary
+env-gated `VITE_SCREENSHOT_MODE` auth shim in `App.tsx`/`Dashboard.tsx`,
+identical technique to the prior pass, fully reverted — `grep SCREENSHOT
+app/src/App.tsx app/src/pages/Dashboard.tsx` returns nothing) at
+`agent_work/canvas-notebook/screenshots/`: `before_*`/`after_*` (dashboard
+Home/Map/Work/Notes, both states), `chapter_*` (5 chapters with new SVG
+art), `altdiagram_fix_verification.png`. Did not touch
+`app/src/manjushree/**` or `agent_work/manjushree-zone/**`.
+
 ### Magical doodle notebook dashboard makeover (prior)
 **Done:** lavender desk + spiral-ring gutter + margin star mascot (`Book.module.css` /
 `BookShell`); sticker MCQ hover swell + soft-wrong wiggle (no red buzz) + stamp/confetti

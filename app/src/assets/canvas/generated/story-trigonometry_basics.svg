@@ -1,0 +1,49 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf3e2"/>
+      <stop offset="0.62" stop-color="#eddab3"/>
+      <stop offset="1" stop-color="#e2c793"/>
+    </linearGradient>
+    <radialGradient id="vign" cx="50%" cy="42%" r="70%">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#3a2410" stop-opacity="0.16"/>
+    </radialGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#33230f"/>
+    </marker>
+  </defs><rect x="0" y="0" width="800" height="800" fill="url(#bg)"/>
+    <circle cx="80" cy="90" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="140" cy="60" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="560" cy="70" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="640" cy="120" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="340" cy="50" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="720" cy="200" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="220" cy="140" r="2.4" fill="#33230f" opacity="0.4"/>
+    <path d="M0 600 L100 560 L220 580 L340 556 L460 584 L600 564 L800 588 L800 800 L0 800 Z" fill="#e2c793" opacity="0.5"/>
+    <!-- an astrolabe/sextant sighting a star's angle -->
+    <g transform="translate(560 470)">
+      <path d="M-70 60 A70 70 0 0 1 70 60" fill="none" stroke="#1d3a8a" stroke-width="7"/>
+      <line x1="0" y1="60" x2="0" y2="-70" stroke="#33230f" stroke-width="3" opacity="0.5"/>
+      <line x1="0" y1="60" x2="-58" y2="-30" stroke="#c99a3a" stroke-width="6" stroke-linecap="round"/>
+      <path d="M-30 60 A40 40 0 0 1 -12 26" fill="none" stroke="#33230f" stroke-width="3"/>
+      <circle cx="0" cy="60" r="8" fill="#33230f"/>
+    </g>
+    <g transform="translate(280 600) scale(0.92 0.92)">
+    <!-- robe -->
+    <path d="M-70 190 Q-90 60 -46 -30 Q0 -58 46 -30 Q90 60 70 190 Z" fill="#2c3e63" stroke="#33230f" stroke-width="5"/>
+    <path d="M-46 -30 Q0 10 46 -30" fill="none" stroke="#33230f" stroke-width="3.5" opacity="0.6"/>
+    <path d="M-20 190 L-14 40 M20 190 L14 40" stroke="#33230f" stroke-width="2.5" opacity="0.35"/>
+    <!-- arm -->
+    <path d="M40 -10 Q92 -34 132 -70" fill="none" stroke="#2c3e63" stroke-width="16" stroke-linecap="round"/>
+      <path d="M40 -10 Q92 -34 132 -70" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="136" cy="-73" r="9" fill="#e0b083" stroke="#33230f" stroke-width="3"/>
+    
+    
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#2c3e63" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="-67" cy="82" r="9" fill="#e0b083" stroke="#33230f" stroke-width="3"/>
+    <!-- head -->
+    <circle cx="0" cy="-72" r="44" fill="#e0b083" stroke="#33230f" stroke-width="5"/>
+    <path d="M-40 -84 Q0 -122 40 -84 Q42 -104 0 -116 Q-42 -104 -40 -84 Z" fill="#3a2717" stroke="#33230f" stroke-width="4"/>
+    <path d="M-16 -68 q6 -8 12 0 M8 -68 q6 -8 12 0" stroke="#33230f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M-6 -50 q6 4 12 0" stroke="#33230f" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    
+    
+    
+  </g>
+  <rect x="0" y="0" width="800" height="800" fill="url(#vign)"/></svg>

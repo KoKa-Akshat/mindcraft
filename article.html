@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft — Article</title>
+<title>MindCraft | Article</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <!-- Firebase SDK -->
@@ -162,7 +162,7 @@ const ARTICLES = [
   {
     id: 1,
     title: "Our Mission & Vision",
-    excerpt: "MindCraft was created by educators who truly care about teaching — people who live for the moment a student finally gets it. Here's what drives everything we build.",
+    excerpt: "MindCraft was created by educators who live for the moment a student finally gets it.",
     category: "Headquarters",
     date: "April 5, 2026",
     author: { name: "Akshat K.", role: "Co-Founder", initial: "A" },
@@ -171,21 +171,21 @@ const ARTICLES = [
     avClass: "av-green",
     sources: [],
     body: [
-      { t:"p", c:"MindCraft was created by educators — tutors — who truly care about teaching. The person you will be speaking with is an educator who loves taking complex concepts and breaking them down for students, finding creative ways to help students see the light bulb go off. When you work one-on-one with a quality educator, the energy is contagious and curiosity grows." },
+      { t:"p", c:"MindCraft was created by tutors who love teaching. Your tutor breaks down complex concepts, finds creative ways to make the idea click, and brings energy that makes curiosity contagious." },
       { t:"h2", c:"Teaching that creates moments" },
-      { t:"p", c:"A previous MindCraft tutor demonstrated logarithms using a story about stars — showing how the relationships found in the stars represent how numbers grow. These moments create long-lasting impressions and change how a student views a subject entirely. That is the kind of teaching we are here to build around." },
+      { t:"p", c:"A MindCraft tutor once taught logarithms through a story about stars, showing how their relationships mirror how numbers grow. Moments like that change how a student sees a subject. That's the teaching we build around." },
       { t:"h2", c:"A philosophy built from experience" },
-      { t:"p", c:"The teaching philosophy developed at MindCraft is based upon years of experience. At Nepal Bal Mandir, we worked with students both in classroom settings and after school. Through serving as a college preceptor and tutor at the MAX Center, the goal was always the same: assist students in developing clear understanding and providing confidence in being able to solve problems." },
-      { t:"quote", c:"The goal was always the same — help students develop clear understanding and real confidence in their ability to move forward." },
-      { t:"p", c:"MindCraft's mission is to take this teaching philosophy and implement it within a structured educational environment. After each tutoring session, all of the information discussed will be documented and organized. Students will be able to review previously covered material, develop their weaknesses, and continue to build upon what they have already learned. Although technology supports the process, the core of what MindCraft does is provide students with good teaching and positive interactions with educators." },
+      { t:"p", c:"MindCraft's teaching philosophy comes from years of experience: classrooms and after-school sessions at Nepal Bal Mandir, tutoring at Macalester's MAX Center. The goal was always the same: clear understanding, and the confidence to solve problems alone." },
+      { t:"quote", c:"Help students build real understanding, and the confidence to move forward." },
+      { t:"p", c:"MindCraft puts this philosophy into a real system. After each session, everything discussed gets documented, so students can review it, close their gaps, and build on what they've learned. Technology supports the process. The core is good teaching and real relationships with tutors." },
       { t:"h2", c:"What comes next" },
-      { t:"p", c:"We begin with mathematics because it shapes how students think. As we continue to develop the structure and systems for our program, we plan to expand beyond mathematics. We want to establish a system where students can confidently learn and practice with purpose and clarity in any subject area. This is just the beginning." }
+      { t:"p", c:"We start with math because it shapes how students think. As our systems mature, we'll expand beyond it. The goal is a place where students can learn any subject with purpose and clarity. This is just the beginning." }
     ]
   },
   {
     id: 2,
     title: "MindCraft was in Beta at Macalester last week",
-    excerpt: "Last week we attended a Beta.mn event at Macalester. Founders, investors, and builders shared how they think about building with technology — and it reinforced a lot of what we believe about learning.",
+    excerpt: "Founders, investors, and builders shared how they build with technology at a Beta.mn event at Macalester last week, and it reinforced what we believe about learning.",
     category: "Community",
     date: "March 28, 2026",
     author: { name: "Akshat K.", role: "Co-Founder", initial: "A" },
@@ -199,10 +199,10 @@ const ARTICLES = [
       { t:"h2", c:"What we went to do" },
       { t:"p", c:"We went in with one goal. To listen, learn, and understand how people are building with technology in a way that actually creates value." },
       { t:"h2", c:"What stood out" },
-      { t:"p", c:"What stood out was the clarity in how strong teams think. They start with real problems, build with intention, and refine quickly through feedback. There is a clear focus on systems that scale, not just one-time solutions." },
+      { t:"p", c:"What stood out was the clarity in how strong teams think: real problems first, built with intention, refined fast through feedback. The focus is on systems that scale, not one-time fixes." },
       { t:"quote", c:"The future of learning will not be defined by access alone, but by how well students are supported in understanding, retaining, and applying what they learn." },
       { t:"h2", c:"How it connects to MindCraft" },
-      { t:"p", c:"That thinking aligns closely with what we are building at MindCraft. We are designing a system where each tutoring session becomes something students can build on. Sessions lead to structured understanding, clear next steps, and a learning process that continues beyond the hour itself." },
+      { t:"p", c:"That thinking is exactly what we are building at MindCraft: a system where each session becomes something students can build on, with structured understanding and clear next steps that outlast the hour itself." },
       { t:"gallery", c:"Photos from the Beta.mn event at Macalester." },
       { t:"h2", c:"This is just the beginning" },
       { t:"p", c:"Being in that room reinforced something important. We are continuing to build with that in mind. This is just the beginning." }
@@ -297,7 +297,7 @@ function render() {
   const prev = ARTICLES[idx - 1] || null;
   const next = ARTICLES[idx + 1] || null;
 
-  document.title = `MindCraft — ${a.title}`;
+  document.title = `MindCraft | ${a.title}`;
 
   // Hero
   var heroBgStyle = a.heroImg
@@ -419,7 +419,7 @@ render();
       if (body) body.innerHTML = snap.data().bodyHTML;
     }
   }).catch(function() {
-    // Firestore not available — fall back to static content (already rendered)
+    // Firestore not available, fall back to static content (already rendered)
   });
 
   // Inject edit toggle button

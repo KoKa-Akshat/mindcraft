@@ -29,7 +29,7 @@ export default function NotebookIntro({ onContinue }: { onContinue: () => void }
             One big page. Pick a topic, write freely, get help when you’re stuck.
           </p>
           <ul className={s.steps}>
-            <li><strong>Map</strong> — cute topic stickers across your sky</li>
+            <li><strong>Map</strong> — icons across a big sky, lines between topics</li>
             <li><strong>Work</strong> — drop homework or paste a problem</li>
             <li><strong>Lessons</strong> — short stories + questions that stick</li>
           </ul>

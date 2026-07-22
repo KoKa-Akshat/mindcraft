@@ -10,6 +10,7 @@
  * renders the raw TeX string so the question is still legible.
  */
 import { useMemo } from 'react'
+import AltDiagramCallout from './AltDiagramCallout'
 import s from './MathText.module.css'
 
 // Lazy KaTeX import — avoids bundling unless math is actually present.
@@ -44,11 +45,12 @@ function renderLatex(expr: string, displayMode = false): string {
   }
 }
 
-// Split text into segments: plain text and math expressions.
+// Split text into segments: plain text, math expressions, and diagram callouts.
 type Segment =
   | { type: 'text'; content: string }
   | { type: 'inline'; expr: string }
   | { type: 'block'; expr: string }
+  | { type: 'diagram'; alt: string }
 
 /** Reject prose-with-currency mistaken for inline LaTeX (e.g. $14 ... $16). */
 function looksLikeMath(expr: string): boolean {
@@ -75,7 +77,9 @@ function replaceMarkdownImages(text: string): string {
   })
 }
 
-function parse(text: string): Segment[] {
+/** Parse LaTeX/plain-text segments within a chunk already known to contain
+ * no `(Diagram: ...)` callouts (those are split out first, see parse()). */
+function parseMath(text: string): Segment[] {
   const segments: Segment[] = []
   // Match (in priority order):
   //   $$...$$  block dollar
@@ -112,6 +116,25 @@ function parse(text: string): Segment[] {
   return segments.length > 0 ? segments : [{ type: 'text', content: text }]
 }
 
+/** Eedi ingestion rewrites unusable images into `(Diagram: alt text)` — see
+ * CLAUDE.md "Question bank" and lib/altDiagram.ts. Split those out first so
+ * they render as a real diagram or a clearly-framed caption (AltDiagramCallout)
+ * instead of a raw sentence buried mid-choice, then parse the rest for math
+ * as before. */
+function parse(text: string): Segment[] {
+  const parts = text.split(/(\(Diagram:[^)]{0,300}\))/g)
+  const segments: Segment[] = []
+  for (const part of parts) {
+    const m = part.match(/^\(Diagram: (.+)\)$/)
+    if (m) {
+      segments.push({ type: 'diagram', alt: m[1] })
+    } else if (part) {
+      segments.push(...parseMath(part))
+    }
+  }
+  return segments.length > 0 ? segments : [{ type: 'text', content: text }]
+}
+
 interface Props {
   text: string
   className?: string
@@ -132,6 +155,9 @@ export default function MathText({ text, className }: Props) {
       {segments.map((seg, i) => {
         if (seg.type === 'text') {
           return <span key={i}>{seg.content}</span>
+        }
+        if (seg.type === 'diagram') {
+          return <AltDiagramCallout key={i} alt={seg.alt} />
         }
         if (seg.type === 'inline') {
           const html = renderLatex(seg.expr, false)

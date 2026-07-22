@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf3e2"/>
+      <stop offset="0.62" stop-color="#eddab3"/>
+      <stop offset="1" stop-color="#e2c793"/>
+    </linearGradient>
+    <radialGradient id="vign" cx="50%" cy="42%" r="70%">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#3a2410" stop-opacity="0.16"/>
+    </radialGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#33230f"/>
+    </marker>
+  </defs><rect x="0" y="0" width="800" height="800" fill="url(#bg)"/>
+    <rect x="600" y="80" width="160" height="340" fill="#eddab3" stroke="#33230f" stroke-width="4" opacity="0.85"/><line x1="600" y1="193.33333333333331" x2="760" y2="193.33333333333331" stroke="#33230f" stroke-width="2.5" opacity="0.5"/><line x1="600" y1="306.66666666666663" x2="760" y2="306.66666666666663" stroke="#33230f" stroke-width="2.5" opacity="0.5"/><rect x="608" y="85" width="6" height="103.33333333333333" fill="#c99a3a" opacity="0.55"/><rect x="632" y="85" width="6" height="103.33333333333333" fill="#1d3a8a" opacity="0.55"/><rect x="656" y="85" width="6" height="103.33333333333333" fill="#c99a3a" opacity="0.55"/><rect x="680" y="85" width="6" height="103.33333333333333" fill="#1d3a8a" opacity="0.55"/><rect x="704" y="85" width="6" height="103.33333333333333" fill="#c99a3a" opacity="0.55"/><rect x="728" y="85" width="6" height="103.33333333333333" fill="#1d3a8a" opacity="0.55"/><rect x="752" y="85" width="6" height="103.33333333333333" fill="#c99a3a" opacity="0.55"/>
+    <path d="M60 410 L60 190 A100 100 0 0 1 260 190 L260 410 Z" fill="#fbf3e2" stroke="#33230f" stroke-width="4" opacity="0.9"/>
+    <line x1="160" y1="90" x2="160" y2="410" stroke="#33230f" stroke-width="2.5" opacity="0.55"/>
+    <!-- al-jabr: two unbalanced piles "restored" to balance -->
+    <g transform="translate(380 480)">
+      <path d="M-160 60 h140" stroke="#33230f" stroke-width="6"/>
+      <rect x="-150" y="0" width="40" height="60" fill="#1d3a8a" opacity="0.8"/>
+      <rect x="-100" y="20" width="40" height="40" fill="#1d3a8a" opacity="0.55"/>
+      <path d="M0 30 h60" stroke="#33230f" stroke-width="5" marker-end="url(#arrow)"/>
+      <rect x="90" y="0" width="40" height="60" fill="#1d3a8a" opacity="0.8"/>
+      <rect x="140" y="0" width="40" height="60" fill="#c99a3a" opacity="0.85"/>
+    </g>
+    <g transform="translate(260 610) scale(0.95 0.95)">
+    <!-- robe -->
+    <path d="M-70 190 Q-90 60 -46 -30 Q0 -58 46 -30 Q90 60 70 190 Z" fill="#2c5940" stroke="#33230f" stroke-width="5"/>
+    <path d="M-46 -30 Q0 10 46 -30" fill="none" stroke="#33230f" stroke-width="3.5" opacity="0.6"/>
+    <path d="M-20 190 L-14 40 M20 190 L14 40" stroke="#33230f" stroke-width="2.5" opacity="0.35"/>
+    <!-- arm -->
+    <path d="M40 -10 Q92 -34 132 -70" fill="none" stroke="#2c5940" stroke-width="16" stroke-linecap="round"/>
+      <path d="M40 -10 Q92 -34 132 -70" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="136" cy="-73" r="9" fill="#e0b083" stroke="#33230f" stroke-width="3"/>
+    
+    
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#2c5940" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="-67" cy="82" r="9" fill="#e0b083" stroke="#33230f" stroke-width="3"/>
+    <!-- head -->
+    <circle cx="0" cy="-72" r="44" fill="#e0b083" stroke="#33230f" stroke-width="5"/>
+    <path d="M-40 -84 Q0 -122 40 -84 Q42 -104 0 -116 Q-42 -104 -40 -84 Z" fill="#3a2717" stroke="#33230f" stroke-width="4"/>
+    <path d="M-16 -68 q6 -8 12 0 M8 -68 q6 -8 12 0" stroke="#33230f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M-6 -50 q6 4 12 0" stroke="#33230f" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    <path d="M-42 -92 Q0 -150 42 -92 Q30 -76 0 -78 Q-30 -76 -42 -92 Z" fill="#fbf3e2" stroke="#33230f" stroke-width="4"/>
+    
+    
+  </g>
+  <rect x="0" y="0" width="800" height="800" fill="url(#vign)"/></svg>

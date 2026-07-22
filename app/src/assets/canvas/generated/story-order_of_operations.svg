@@ -1,0 +1,54 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf3e2"/>
+      <stop offset="0.62" stop-color="#eddab3"/>
+      <stop offset="1" stop-color="#e2c793"/>
+    </linearGradient>
+    <radialGradient id="vign" cx="50%" cy="42%" r="70%">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#3a2410" stop-opacity="0.16"/>
+    </radialGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#33230f"/>
+    </marker>
+  </defs><rect x="0" y="0" width="800" height="800" fill="url(#bg)"/>
+    <path d="M70 430 L70 200 A110 110 0 0 1 290 200 L290 430 Z" fill="#fbf3e2" stroke="#33230f" stroke-width="4" opacity="0.9"/>
+    <line x1="180" y1="90" x2="180" y2="430" stroke="#33230f" stroke-width="2.5" opacity="0.55"/>
+    <line x1="70" y1="430" x2="290" y2="430" stroke="#33230f" stroke-width="4" opacity="0.4"/>
+    <rect x="430" y="560" width="300" height="14" rx="3" fill="#e2c793" stroke="#33230f" stroke-width="4"/>
+    <line x1="444" y1="574" x2="444" y2="630" stroke="#33230f" stroke-width="6"/>
+    <line x1="716" y1="574" x2="716" y2="630" stroke="#33230f" stroke-width="6"/>
+    <!-- Analytical Engine: a rack of ordered brass gears, biggest to smallest, one path -->
+    <g transform="translate(560 470)">
+      <circle r="60" fill="none" stroke="#1d3a8a" stroke-width="8"/>
+      <circle r="60" fill="none" stroke="#33230f" stroke-width="2" opacity="0.5" stroke-dasharray="6 10"/>
+      <circle cx="90" cy="34" r="34" fill="none" stroke="#c99a3a" stroke-width="7"/>
+      <circle cx="-86" cy="40" r="24" fill="none" stroke="#1d3a8a" stroke-width="6"/>
+      <circle r="8" fill="#33230f"/>
+    </g>
+    <g transform="translate(380 610) scale(0.92 0.92)">
+    <!-- robe -->
+    <path d="M-70 190 Q-90 60 -46 -30 Q0 -58 46 -30 Q90 60 70 190 Z" fill="#5a3a63" stroke="#33230f" stroke-width="5"/>
+    <path d="M-46 -30 Q0 10 46 -30" fill="none" stroke="#33230f" stroke-width="3.5" opacity="0.6"/>
+    <path d="M-20 190 L-14 40 M20 190 L14 40" stroke="#33230f" stroke-width="2.5" opacity="0.35"/>
+    <!-- arm -->
+    
+    
+    <path d="M40 10 Q86 6 108 34" fill="none" stroke="#5a3a63" stroke-width="16" stroke-linecap="round"/>
+      <path d="M40 10 Q86 6 108 34" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="112" cy="36" r="9" fill="#e0b083" stroke="#33230f" stroke-width="3"/>
+      <rect x="0" y="-8" width="46" height="16" rx="3" fill="#fbf3e2" stroke="#33230f" stroke-width="3"/>
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#5a3a63" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="-67" cy="82" r="9" fill="#e0b083" stroke="#33230f" stroke-width="3"/>
+    <!-- head -->
+    <circle cx="0" cy="-72" r="44" fill="#e0b083" stroke="#33230f" stroke-width="5"/>
+    <path d="M-40 -84 Q0 -122 40 -84 Q42 -104 0 -116 Q-42 -104 -40 -84 Z" fill="#3a2717" stroke="#33230f" stroke-width="4"/>
+    <path d="M-16 -68 q6 -8 12 0 M8 -68 q6 -8 12 0" stroke="#33230f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M-6 -50 q6 4 12 0" stroke="#33230f" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    
+    
+    <path d="M-40 -96 Q-30 -140 0 -140 Q30 -140 40 -96 Z" fill="#fbf3e2" stroke="#33230f" stroke-width="4"/>
+  </g>
+  <rect x="0" y="0" width="800" height="800" fill="url(#vign)"/></svg>

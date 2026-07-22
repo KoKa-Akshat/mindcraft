@@ -3,6 +3,7 @@
  * One lime stroke on the primary focus phrase; ask/given get pencil underlines.
  */
 import MathText from './MathText'
+import AltDiagramCallout from './AltDiagramCallout'
 import type { HighlightSpan } from '../lib/journalGuide'
 import { glossaryFor } from '../lib/mathGlossary'
 import s from './HighlightedStem.module.css'
@@ -62,12 +63,10 @@ export default function HighlightedStem({ text, ink, accent, highlights = [], cl
       {parts.map((part, i) => {
         const m = part.match(/^\(Diagram: (.+)\)$/)
         if (m) {
-          return (
-            <span key={i} className={s.diagramBox} style={{ borderLeftColor: accent }}>
-              <span className={s.diagramIcon} aria-hidden>⬡</span>
-              {m[1]}
-            </span>
-          )
+          // AltDiagramCallout draws a real diagram for recognizable alt-text
+          // patterns (e.g. number lines) instead of showing the raw
+          // accessibility description as a sentence — see lib/altDiagram.ts.
+          return <AltDiagramCallout key={i} alt={m[1]} accent={accent} />
         }
         return <span key={i}>{highlightPlainText(part, highlights, accent)}</span>
       })}

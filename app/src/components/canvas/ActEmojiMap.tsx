@@ -1,8 +1,8 @@
 /**
- * Full-canvas ACT topic map — constellation-style layout with cute emoji nodes.
+ * Full-canvas ACT topic map — spread constellation, icons only (name in dock).
  */
 import { useMemo, useState } from 'react'
-import { ACT_TOC_SECTIONS, actConceptLabel, actFrequency } from '../../lib/actToc'
+import { ACT_TOC_SECTIONS, actConceptLabel } from '../../lib/actToc'
 import { topicEmoji } from '../../lib/actTopicEmojis'
 import s from './ActEmojiMap.module.css'
 
@@ -11,34 +11,78 @@ type Props = {
   onOpenLesson: (conceptId: string) => void
 }
 
-/** Deterministic pseudo-positions so the map feels like a sky, not a list. */
-function place(id: string, index: number, total: number) {
-  let h = 0
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0
-  const ring = 0.22 + (index / Math.max(1, total - 1)) * 0.55
-  const angle = ((h % 360) * Math.PI) / 180 + index * 0.55
-  const x = 50 + Math.cos(angle) * ring * 42
-  const y = 48 + Math.sin(angle) * ring * 38
-  return {
-    left: `${Math.min(92, Math.max(8, x))}%`,
-    top: `${Math.min(88, Math.max(10, y))}%`,
+type Placed = {
+  id: string
+  section: string
+  x: number
+  y: number
+}
+
+/** Spread nodes by TOC section so edges read clearly — no pile-up in the middle. */
+function layoutNodes(): Placed[] {
+  const out: Placed[] = []
+  const sections = ACT_TOC_SECTIONS.filter(sec => sec.conceptIds.length > 0)
+  const nSec = sections.length
+
+  sections.forEach((sec, si) => {
+    const ids = sec.conceptIds
+    const colX = nSec <= 1 ? 50 : 10 + (si / (nSec - 1)) * 80
+    const count = ids.length
+    ids.forEach((id, ti) => {
+      // Zigzag within the section column so neighbors stay far apart
+      const row = Math.floor(ti / 2)
+      const side = ti % 2 === 0 ? -1 : 1
+      const rowSpan = Math.max(1, Math.ceil(count / 2) - 1)
+      const y = 14 + (rowSpan === 0 ? 0 : (row / rowSpan) * 72)
+      const x = colX + side * (6 + (ti % 3) * 2.2)
+      out.push({
+        id,
+        section: sec.title,
+        x: Math.min(94, Math.max(6, x)),
+        y: Math.min(88, Math.max(10, y)),
+      })
+    })
+  })
+  return out
+}
+
+function edgesFor(nodes: Placed[]): Array<[Placed, Placed]> {
+  const bySection = new Map<string, Placed[]>()
+  for (const n of nodes) {
+    const list = bySection.get(n.section) ?? []
+    list.push(n)
+    bySection.set(n.section, list)
   }
+  const edges: Array<[Placed, Placed]> = []
+  for (const list of bySection.values()) {
+    for (let i = 0; i < list.length - 1; i++) {
+      edges.push([list[i], list[i + 1]])
+    }
+  }
+  // Soft bridges between section hubs (first node of each)
+  const hubs = [...bySection.values()].map(list => list[0]).filter(Boolean)
+  for (let i = 0; i < hubs.length - 1; i++) {
+    edges.push([hubs[i], hubs[i + 1]])
+  }
+  return edges
 }
 
 export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
   const [focus, setFocus] = useState(sparkId ?? '')
   const [q, setQ] = useState('')
 
+  const all = useMemo(() => layoutNodes(), [])
+
   const nodes = useMemo(() => {
-    const all = ACT_TOC_SECTIONS.flatMap(sec =>
-      sec.conceptIds.map(id => ({ id, section: sec.title })),
-    ).sort((a, b) => actFrequency(b.id) - actFrequency(a.id))
     const needle = q.trim().toLowerCase()
+    if (!needle) return all
     return all.filter(n => {
-      if (!needle) return true
-      return actConceptLabel(n.id).toLowerCase().includes(needle) || n.id.includes(needle)
+      const label = actConceptLabel(n.id).toLowerCase()
+      return label.includes(needle) || n.id.includes(needle) || n.section.toLowerCase().includes(needle)
     })
-  }, [q])
+  }, [all, q])
+
+  const links = useMemo(() => edgesFor(nodes), [nodes])
 
   return (
     <div className={s.root}>
@@ -50,11 +94,24 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
           placeholder="Find a topic…"
           aria-label="Find topic"
         />
+        <p className={s.hint}>tap an icon · double-tap to open</p>
       </div>
 
       <div className={s.sky} aria-label="ACT topic map">
-        {nodes.map((n, i) => {
-          const pos = place(n.id, i, nodes.length)
+        <svg className={s.links} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
+          {links.map(([a, b]) => (
+            <line
+              key={`${a.id}-${b.id}`}
+              x1={a.x}
+              y1={a.y}
+              x2={b.x}
+              y2={b.y}
+              className={s.link}
+            />
+          ))}
+        </svg>
+
+        {nodes.map(n => {
           const isSpark = n.id === sparkId
           const isFocus = n.id === focus
           return (
@@ -66,32 +123,16 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
                 isSpark ? s.nodeSpark : '',
                 isFocus ? s.nodeFocus : '',
               ].filter(Boolean).join(' ')}
-              style={pos}
+              style={{ left: `${n.x}%`, top: `${n.y}%` }}
               onClick={() => setFocus(n.id)}
               onDoubleClick={() => onOpenLesson(n.id)}
               title={actConceptLabel(n.id)}
+              aria-label={actConceptLabel(n.id)}
             >
               <span className={s.emoji} aria-hidden>{topicEmoji(n.id)}</span>
-              <span className={s.label}>{actConceptLabel(n.id)}</span>
             </button>
           )
         })}
-        <svg className={s.links} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
-          {nodes.slice(0, 12).map((n, i) => {
-            const a = place(n.id, i, nodes.length)
-            const b = place(nodes[(i + 3) % nodes.length].id, (i + 3) % nodes.length, nodes.length)
-            return (
-              <line
-                key={n.id}
-                x1={parseFloat(a.left)}
-                y1={parseFloat(a.top)}
-                x2={parseFloat(b.left)}
-                y2={parseFloat(b.top)}
-                className={s.link}
-              />
-            )
-          })}
-        </svg>
       </div>
 
       {focus && (
