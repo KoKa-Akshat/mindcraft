@@ -28,6 +28,7 @@ import type { Session, TutorStudent as Student } from '../types'
 import StudentIntelPanel from '../components/StudentIntelPanel'
 import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
+import StudentSummaryCard from '../components/StudentSummaryCard'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import { WEBHOOK_BASE, getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
@@ -112,7 +113,7 @@ export default function TutorDashboard() {
   const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
   const [calendlyToken, setCalendlyToken] = useState('')
   const [connectingCalendly, setConnectingCalendly] = useState(false)
-  // Google Meet — the tutor's permanent personal room, used as the join-link
+  // Google Meet - the tutor's permanent personal room, used as the join-link
   // fallback for sessions that Calendly didn't stamp with a meetingUrl.
   const [meetUrl, setMeetUrl] = useState<string | null>(null)
   const [meetUrlInput, setMeetUrlInput] = useState('')
@@ -190,7 +191,7 @@ export default function TutorDashboard() {
       })
       showToast('Study path updated for student')
     } catch {
-      showToast('Could not save — try again')
+      showToast('Could not save. Try again')
     } finally {
       setSavingPath(false)
     }
@@ -241,7 +242,7 @@ export default function TutorDashboard() {
     return () => { cancelled = true }
   }, [heroStudent?.id])
 
-  // Live activity feed — realtime interactions for the hero student
+  // Live activity feed - realtime interactions for the hero student
   useEffect(() => {
     const sid = heroStudent?.id
     if (!sid) { setActivity([]); return }
@@ -268,7 +269,7 @@ export default function TutorDashboard() {
     return () => unsub()
   }, [heroStudent?.id])
 
-  // Flagged questions — students tag questions mid-practice for their tutor.
+  // Flagged questions - students tag questions mid-practice for their tutor.
   // Single-field query (tutorId only) so no composite index is needed;
   // unresolved filter + recency sort happen client-side.
   useEffect(() => {
@@ -307,7 +308,7 @@ export default function TutorDashboard() {
     }
   }
 
-  // One-time parent lookup + mailto — no extra state needed
+  // One-time parent lookup + mailto - no extra state needed
   async function emailParent(studentId: string, studentName: string) {
     try {
       const snap = await getDocs(
@@ -400,7 +401,7 @@ export default function TutorDashboard() {
       if (!res.ok) throw new Error(data.error)
       setCalendlyConnected(data.calendlyEmail)
       setCalendlyToken('')
-      showToast('Calendly connected — bookings will now flow automatically')
+      showToast('Calendly connected. Bookings will now flow automatically')
     } catch (err: any) {
       showToast(err.message ?? 'Failed to connect Calendly')
     } finally {
@@ -412,7 +413,7 @@ export default function TutorDashboard() {
    * Save the tutor's permanent Google Meet room link. Unlike Calendly (which
    * needs the register-calendly webhook to validate the token server-side and
    * subscribe to booking events), this is just a URL string on the tutor's own
-   * user doc — Firestore rules allow non-privileged self-writes, so a direct
+   * user doc - Firestore rules allow non-privileged self-writes, so a direct
    * update is the right pattern. NO Google OAuth / Calendar API involved.
    */
   async function handleSaveMeetUrl() {
@@ -420,7 +421,7 @@ export default function TutorDashboard() {
     if (!raw) return
     const normalized = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
     if (!/^https:\/\/meet\.google\.com\/[a-z0-9-]+/i.test(normalized)) {
-      showToast('That doesn’t look like a Meet link — expected meet.google.com/xxx-xxxx-xxx')
+      showToast('That doesn’t look like a Meet link, expected meet.google.com/xxx-xxxx-xxx')
       return
     }
     setSavingMeetUrl(true)
@@ -429,16 +430,16 @@ export default function TutorDashboard() {
       setMeetUrl(normalized)
       setMeetUrlInput('')
       setEditingMeetUrl(false)
-      showToast('Meet room saved — sessions without their own link will use it')
+      showToast('Meet room saved. Sessions without their own link will use it')
     } catch {
-      showToast('Could not save Meet link — try again')
+      showToast('Could not save Meet link. Try again')
     } finally {
       setSavingMeetUrl(false)
     }
   }
 
   useEffect(() => {
-    // Single query by tutorId only — no composite index needed, filter client-side
+    // Single query by tutorId only - no composite index needed, filter client-side
     const unsub = onSnapshot(
       query(collection(db, 'sessions'), where('tutorId', '==', user.uid)),
       async snap => {
@@ -690,10 +691,44 @@ export default function TutorDashboard() {
         {loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : (
+          <>
+          {students.length > 0 && (
+            <div className={s.summarySection}>
+              <div className={s.summaryHead}>
+                <span className={s.cardLabel}>Your Students</span>
+                <span className={s.cardSubName}>the 5-second read before you jump in</span>
+              </div>
+              <div className={s.summaryScroll}>
+                {students.slice(0, 8).map(st => {
+                  const name = st.displayName || st.email?.split('@')[0] || 'Student'
+                  const upcomingForStudent = sessions.find(sess =>
+                    (sess.studentId === st.id || studentIdByEmail[sess.studentEmail] === st.id)
+                    && (sess.meetingUrl ?? meetUrl),
+                  )
+                  const joinUrl = upcomingForStudent ? (upcomingForStudent.meetingUrl ?? meetUrl) : null
+                  return (
+                    <StudentSummaryCard
+                      key={st.id}
+                      studentId={st.id}
+                      studentName={name}
+                      examTrack={st.id === heroStudent?.id ? heroStudent?.examTrack : undefined}
+                      primaryAction={joinUrl
+                        ? { label: 'Start session', onClick: () => window.open(joinUrl, '_blank', 'noopener') }
+                        : { label: 'View profile', onClick: () => setSelectedStudent(st.id) }}
+                      secondaryAction={{ label: 'Email parent', onClick: () => void emailParent(st.id, name) }}
+                    />
+                  )
+                })}
+              </div>
+              {students.length > 8 && (
+                <p className={s.summaryMore}>+{students.length - 8} more in My Classroom</p>
+              )}
+            </div>
+          )}
           <div className={s.grid}>
             {/* ══════════ LEFT COLUMN ══════════ */}
             <div className={s.col}>
-              {/* Your Student — hero card */}
+              {/* Your Student - hero card */}
               <div className={`${s.card} ${s.heroCard}`}>
                 <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Your Student</span>
@@ -812,18 +847,18 @@ export default function TutorDashboard() {
                       </>
                     ) : (
                       <p className={s.heroEmpty}>
-                        {heroFirstName} hasn't practiced yet — share the dashboard link to get started
+                        {heroFirstName} hasn't practiced yet. Share the dashboard link to get started
                       </p>
                     )}
                   </>
                 ) : (
                   <p className={s.heroEmpty}>
-                    No students assigned yet — students appear here once they book a session or join with your classroom code.
+                    No students assigned yet. Students appear here once they book a session or join with your classroom code.
                   </p>
                 )}
               </div>
 
-              {/* Pre-session briefing — the map, already drawn */}
+              {/* Pre-session briefing - the map, already drawn */}
               {heroStudent && (
                 <TutorBriefingPanel
                   studentId={heroStudent.id}
@@ -832,7 +867,7 @@ export default function TutorDashboard() {
                 />
               )}
 
-              {/* Sessions to Review — hidden entirely when empty */}
+              {/* Sessions to Review - hidden entirely when empty */}
               {reviewFiltered.length > 0 && (
                 <div className={s.card}>
                   <div className={s.cardHeader}>
@@ -864,7 +899,7 @@ export default function TutorDashboard() {
                 </div>
               )}
 
-              {/* Upcoming Sessions — hidden entirely when empty */}
+              {/* Upcoming Sessions - hidden entirely when empty */}
               {upcomingFiltered.length > 0 && (
                 <div className={s.card}>
                   <div className={s.cardHeader}>
@@ -904,7 +939,7 @@ export default function TutorDashboard() {
                 </div>
               )}
 
-              {/* Session summary + recent chat — hidden when both empty */}
+              {/* Session summary + recent chat - hidden when both empty */}
               {(selectedStudentData?.lastSession || chatMessages.length > 0) && (
                 <div className={s.card}>
                   {selectedStudentData?.lastSession && (
@@ -962,7 +997,7 @@ export default function TutorDashboard() {
 
             {/* ══════════ RIGHT COLUMN ══════════ */}
             <div className={s.col}>
-              {/* Flagged questions — students tagged these mid-practice */}
+              {/* Flagged questions - students tagged these mid-practice */}
               {flaggedQs.length > 0 && (
                 <div className={s.card}>
                   <div className={s.cardHeader}>
@@ -1089,7 +1124,7 @@ export default function TutorDashboard() {
                 )}
               </div>
 
-              {/* Google Meet — permanent personal room, join-link fallback */}
+              {/* Google Meet - permanent personal room, join-link fallback */}
               <div className={s.card}>
                 <div className={s.cardHeader}>
                   <span className={s.cardLabel}>Google Meet</span>
@@ -1110,7 +1145,7 @@ export default function TutorDashboard() {
                 ) : (
                   <>
                     <p className={s.calendlyHint}>
-                      Paste your personal Meet room link once — any booked session without its own
+                      Paste your personal Meet room link once. Any booked session without its own
                       meeting link will use it as the join button.
                     </p>
                     <input
@@ -1139,11 +1174,12 @@ export default function TutorDashboard() {
                   <span className={s.cardLabel}>Notes</span>
                 </div>
                 <p className={s.emptyText}>
-                  Session notes coming soon — use Fireflies transcript in session review.
+                  Session notes coming soon. Use the Fireflies transcript in session review.
                 </p>
               </div>
             </div>
           </div>
+          </>
         )}
       </main>
 

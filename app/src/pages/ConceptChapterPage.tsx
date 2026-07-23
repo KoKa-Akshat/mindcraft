@@ -12,6 +12,9 @@ import { loadQuestionWork, saveQuestionWork } from '../lib/studentWork'
 import { submitWorkEvidenceIfReady } from '../lib/workEvidence'
 import { appendChapterWorkToJournal } from '../lib/chapterJournal'
 import { selectStoryForConcept } from '../lib/storySelection'
+import { selectSceneForQuestion } from '../lib/sceneSelection'
+import { getPastMistakeCallback, type PastMistakeCallback } from '../lib/pastMistakeCallback'
+import WizardMascot from '../components/canvas/WizardMascot'
 import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
 import type { ScratchStrokeData } from '../types'
@@ -224,16 +227,28 @@ function extractMathAsk(text: string): string {
   return (sentences[sentences.length - 1] ?? cleaned).trim()
 }
 
-/** Concept-locked stem — never mix folk Kwame into a Stevin chapter. */
+/**
+ * Concept-locked stem — never mix folk Kwame into a Stevin chapter.
+ *
+ * `conceptId` (canonical ontology id) is used to look up a scene from the
+ * concept's `scenes[]` list (see lib/sceneSelection.ts). Concepts without a
+ * scenes array (everything except the fractions_decimals pilot, for now)
+ * get `null` back and this falls through to the single locked
+ * questionContextFrames.json frame exactly as before, unchanged behavior.
+ */
 function chapterStem(
   q: Question,
   frame: ContextFrame | null,
   protagonist: string,
+  conceptId: string,
 ): string {
   const ask = extractMathAsk(q.question)
-  const bridge = frame?.questionBridge
+  const scene = selectSceneForQuestion(q, conceptId)
+  const bridge = scene?.questionBridge
+    ?? frame?.questionBridge
     ?? `${protagonist} slides the ledger toward you.`
-  const setting = frame?.settingLine ? `✦ ${frame.settingLine}` : ''
+  const settingLine = scene?.settingLine ?? frame?.settingLine ?? ''
+  const setting = settingLine ? `✦ ${settingLine}` : ''
   return [setting, bridge, ask].filter(Boolean).join('\n\n')
 }
 
@@ -393,6 +408,22 @@ export default function ConceptChapterPage() {
 
   const currentPanel = panels[panelIdx]
 
+  // Callback mechanic: resurface this student's own past struggle on THIS
+  // concept once there's real evidence they've since improved (see
+  // lib/pastMistakeCallback.ts for exactly what's recorded vs not). Fetched
+  // once per chapter open; fails soft to null so a student with no history
+  // yet, or an offline read, just sees the normal opener.
+  const [pastMistake, setPastMistake] = useState<PastMistakeCallback | null>(null)
+  useEffect(() => {
+    setPastMistake(null)
+    if (!user?.uid || !canonicalId) return
+    let cancelled = false
+    void getPastMistakeCallback(user.uid, canonicalId, cs.conceptName).then(cb => {
+      if (!cancelled) setPastMistake(cb)
+    })
+    return () => { cancelled = true }
+  }, [user?.uid, canonicalId, cs.conceptName])
+
   useEffect(() => {
     if (!user?.uid) return
     void loadDashboardPersonalization(user.uid).then(p => setBookmarkedQuestions(p.bookmarkedQuestions))
@@ -413,7 +444,7 @@ export default function ConceptChapterPage() {
     if (!activeQuestion) return ''
     const f = getFrame(conceptId)
     const story = selectStoryForConcept(canonicalId)
-    return chapterStem(activeQuestion, f, story?.protagonist ?? cs.conceptName)
+    return chapterStem(activeQuestion, f, story?.protagonist ?? cs.conceptName, canonicalId)
   }, [activeQuestion, conceptId, canonicalId, cs.conceptName])
   const transcribing = Boolean(
     journalQIdx >= 0
@@ -573,6 +604,11 @@ export default function ConceptChapterPage() {
       <div className={s.blendSheet}>
         <Polaroid salt={panelIdx} className={s.polaroidHero} />
         <div className={s.blendCopy}>
+          {pastMistake && (
+            <div className={s.pastMistakeWizard}>
+              <WizardMascot line={pastMistake.line} cheering={false} compact />
+            </div>
+          )}
           <p className={s.blendEyebrow}>ACT chapter</p>
           <h1 className={s.blendTitle}>{cs.conceptName}</h1>
           {frame && (
@@ -665,7 +701,8 @@ export default function ConceptChapterPage() {
     const chosen = answers[qIdx] ?? null
     const isDone = submitted[qIdx] ?? false
     const protagonist = localStory?.protagonist ?? frame?.protagonist ?? cs.conceptName
-    const stemText = chapterStem(q, frame, protagonist)
+    const stemText = chapterStem(q, frame, protagonist, canonicalId)
+    const scene = selectSceneForQuestion(q, canonicalId)
     const allHints = (q.hints ?? []).slice(0, 2)
     const hasInk = Boolean(notes[qIdx]) || (scratchStrokes[qIdx]?.strokes?.length ?? 0) > 0
 
@@ -822,8 +859,8 @@ export default function ConceptChapterPage() {
 
         <aside className={s.blendQuestAside}>
           <Polaroid salt={qIdx + 9} className={s.polaroidQuest} />
-          {frame?.settingLine && (
-            <p className={s.asideScene}>{frame.settingLine}</p>
+          {(scene?.settingLine ?? frame?.settingLine) && (
+            <p className={s.asideScene}>{scene?.settingLine ?? frame?.settingLine}</p>
           )}
         </aside>
       </div>

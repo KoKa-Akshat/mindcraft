@@ -9,7 +9,7 @@
  *  - Assigned tutor card + weekly digest callout
  */
 
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
@@ -20,6 +20,7 @@ import {
 import { useUser } from '../App'
 import { WEBHOOK_BASE } from '../lib/mlApi'
 import { MARKETING_BASE } from '../lib/siteUrls'
+import StudentSummaryCard from '../components/StudentSummaryCard'
 import s from './ParentDashboard.module.css'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -35,7 +36,7 @@ function conceptLabel(id: string) {
   return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
-// Test account — digest / dashboard content disabled
+// Test account - digest / dashboard content disabled
 const TEST_UID = 'gBFn9vUGIIa7tAiTTQSl8CbPSao2'
 
 // ── types ─────────────────────────────────────────────────────────────────────
@@ -66,6 +67,9 @@ export default function ParentDashboard() {
   const [tutorName,    setTutorName]    = useState<string | null>(null)
   const [tutorEmail,   setTutorEmail]   = useState<string | null>(null)
   const [isAdmin,      setIsAdmin]      = useState(false)
+
+  const reportRef = useRef<HTMLDivElement | null>(null)
+  const scrollToReport = () => reportRef.current?.scrollIntoView({ behavior: 'smooth' })
 
   // ── load parent doc ──
   useEffect(() => {
@@ -263,14 +267,32 @@ export default function ParentDashboard() {
 
         {/* ── test account ── */}
         {!loading && childId === TEST_UID && (
-          <div className={s.testBanner}>Test account — digest not available.</div>
+          <div className={s.testBanner}>Test account: digest not available.</div>
         )}
 
         {/* ── main content ── */}
         {!loading && childId && childId !== TEST_UID && (
           <>
-            {/* Hero — this week at a glance */}
-            <div className={s.hero}>
+            {/* The 5-second read - one glanceable card before the full report below */}
+            <div className={s.summarySection}>
+              <StudentSummaryCard
+                studentId={childId}
+                studentName={childName}
+                examTrack={childExam || undefined}
+                primaryAction={tutorEmail
+                  ? {
+                      label: 'Message tutor',
+                      onClick: () => window.open(
+                        `mailto:${tutorEmail}?subject=${encodeURIComponent(`About ${childName}`)}`,
+                      ),
+                    }
+                  : { label: 'View full report', onClick: scrollToReport }}
+                secondaryAction={tutorEmail ? { label: 'View full report', onClick: scrollToReport } : undefined}
+              />
+            </div>
+
+            {/* Hero - this week at a glance */}
+            <div className={s.hero} ref={reportRef}>
               <div className={s.heroTop}>
                 <h1 className={s.heroName}>This week for {childName}</h1>
                 {childExam && <span className={s.examBadge}>{childExam} track</span>}
@@ -384,7 +406,7 @@ export default function ParentDashboard() {
             {/* Weekly digest callout */}
             <div className={s.digestCallout}>
               You'll receive a weekly progress summary every Sunday. No need to check in
-              here — it comes to you.
+              here. It comes to you.
             </div>
           </>
         )}

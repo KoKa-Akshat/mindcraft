@@ -145,6 +145,7 @@
 .polaroidQuest { width: min(100%, 200px); }
 
 .blendCopy { min-width: 0; }
+.pastMistakeWizard { margin-bottom: 14px; }
 .blendEyebrow {
   margin: 0 0 4px;
   font-family: 'IBM Plex Mono', monospace;

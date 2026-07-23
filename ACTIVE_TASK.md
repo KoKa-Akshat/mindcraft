@@ -483,6 +483,269 @@ key. Flagging for whoever owns `actToc.ts`/`ActEmojiMap.tsx` next, same
 pattern as the pre-existing `quadratic_equations`/Galileo story mismatch
 already flagged in this file.
 
+### Tutor + parent visual pass: shared StudentSummaryCard (Fable 5, 2026-07-23)
+
+Akshat: "apply similar designs and what's important on tutor and parent side
+too, like a nice summary card or something, neat and clean." Brought
+`TutorDashboard.tsx`/`ParentDashboard.tsx` into the same parchment/violet
+notebook language as the student `Dashboard.module.css` (`--desk-*` scale) —
+visual pass + one new centerpiece component, not a feature rewrite.
+
+**New: `app/src/components/StudentSummaryCard.tsx` + `.module.css`** — the
+"5-second read" card, one per student. Shows exactly three things: (1) the
+student's current worst-weakness concept illustrated with the SAME
+`storyArtFor()` plate + `conceptIconUrl()` badge the student sees on their own
+dashboard, so a tutor/parent recognizes their student's actual world, not a
+generic icon; (2) one composed sentence ("Weakest at Quadratic Equations,
+around 42% mastery, last active 2d ago" + a quoted onboarding goal line when
+present) — deliberately not a raw mastery-percent dump, same spirit as
+`TutorBriefingPanel`'s engine-to-sentence composition, just trimmed to a
+single scannable line; (3) one clear next-action button (never a menu).
+Fetches only `getStudentProfile` (topWeaknesses[0] + masteryByConcept),
+one `users/{id}` doc (goal text), one `interactions` query (last-active) — no
+new backend endpoints, reuses what `TutorDashboard` already calls per-hero.
+
+**Wired in:**
+- `TutorDashboard.tsx` — new "Your Students" horizontal row (one card per
+  roster student, capped at 8 + "+N more" note) above the existing grid.
+  Primary action is "Start session" when a real join URL exists for that
+  student (own session `meetingUrl` or the tutor's saved Meet room),
+  else "View profile" (`setSelectedStudent`); secondary action reuses the
+  existing `emailParent()` helper. All existing panels kept as-is:
+  `TutorBriefingPanel`, `StudentIntelPanel`, `SessionCallCard`, Calendly,
+  Google Meet room, flagged questions, live activity, classroom code.
+- `ParentDashboard.tsx` — one `StudentSummaryCard` for the linked child,
+  now the FIRST thing shown (above the existing "This week" hero/stats/
+  strengths-gaps/tutor sections, which are unchanged and still the fuller
+  detail underneath). Primary action is "Message tutor" (mailto) when a
+  tutor is on file, else "View full report" (smooth-scrolls to the existing
+  hero section via a new ref); secondary action is "View full report" when
+  primary is the tutor mailto.
+
+**Visual pass (not a rebuild):** `TutorDashboard.module.css`'s `--td-*` scale
+and `ParentDashboard.module.css` (which gets its own new `--pd-*` scale, see
+below) were re-pointed at the same values as `Dashboard.module.css`'s
+`--desk-*` tokens — same ink/plum/gold/violet palette, same radius (12/16/22),
+same shadow formulas, Caveat for the wordmark/short name labels, IBM Plex Mono
+for uppercase eyebrow labels/buttons — rather than inventing a third design
+system. Tutor's old dark-green/lime Duolingo-style top bar is now the same
+dark ink-plum + parchment-gold as the rest of the notebook; hardcoded green
+rgb tuples (`20,58,46` / `36,122,77`) swapped to the violet ink/leaf
+equivalents throughout the file. Semantic status colors (live-activity green
+pip, strength/weakness pill green/red, draft/pending/needs-review badges,
+amber test-account banner) were deliberately LEFT alone — those signal state,
+not brand identity.
+
+**Real pre-existing bug fixed in passing:** `ParentDashboard.module.css`
+referenced `var(--navy)`, `var(--blue-dd)`, `var(--gdd)`, `var(--blue-bg)` —
+none of which are defined anywhere in `global.css`, so those declarations
+were silently invalid the whole time (text fell back to inherited/default
+color instead of the intended navy/blue). Replaced with real, locally-scoped
+`--pd-*` tokens matching the new palette. Untouched: `Admin.module.css` and
+`StudentIntelPanel.module.css` also reference `--gdd` — out of scope for this
+pass (different lane risk), flagging for whoever owns those next.
+
+**Verification (all real, this pass):** `npx tsc --noEmit` clean. `npx
+vitest run` → **85 passed, 1 skipped (86 total)** — identical to baseline,
+zero regressions. `npm run build` green, main JS chunk `5,422.48 kB` (was
+`5,417.66 kB` before this pass — the ~4.8KB delta is the one new component,
+expected and small). Screenshots at
+`agent_work/tutor-parent-summary/screenshots/`:
+`2026-07-23_summary_cards_wide.png` (all three `StudentSummaryCard` states —
+populated with goal quote, populated without goal quote, and the "hasn't
+practiced yet" empty state — plus the parent variant, all rendered via a
+temporary dev-only route `/screenshot-harness-dev` feeding the REAL component
+mock data through a temporary `__previewData` prop, since neither a tutor nor
+a parent test account with real linked data currently exists in this repo)
+and `2026-07-23_tutor_page_live.png` (the actual `/tutor` route live in a dev
+server, via a temporary `VITE_SCREENSHOT_MODE` env-gated bypass in `App.tsx`'s
+`AuthGuard` — same technique as prior passes today — confirming the full
+page reskin: dark ink-plum top bar, gold accents, parchment/violet
+background, Caveat wordmark, in real browser chrome, not just the isolated
+card). Both temporary mechanisms (the `__previewData` prop, the
+`_ScreenshotHarness.tsx` file + its dev route, and the `AuthGuard` bypass)
+were **fully reverted** — confirmed via
+`grep -rn "SCREENSHOT|ScreenshotHarness|__previewData|screenshot-harness-dev" app/src/App.tsx app/src/components/StudentSummaryCard.tsx app/src/pages/`
+returning empty, and `tsc`/`vitest`/`build` all re-run clean after the revert
+(numbers above are post-revert). `grep manjushree app/src/App.tsx` still
+shows the lazy import + both routes, checked after the revert too — App.tsx's
+net diff from before this pass is zero (temporary additions added then fully
+removed). `grep -rln "—"` across every file touched this pass
+(`StudentSummaryCard.tsx/.module.css`, `TutorDashboard.tsx/.module.css`,
+`ParentDashboard.tsx/.module.css`) → zero hits; `App.tsx` still has
+pre-existing em dashes from the (untouched, uncommitted, not-mine) Manjushree
+wiring already in the working tree before this pass — left alone
+deliberately, both because this pass's net contribution to that file is zero
+and because it's explicitly the highest-collision-risk shared file in this
+checkout.
+
+### Past-mistake wizard callback (Fable 5, 2026-07-23)
+
+New mechanic: resurface a student's OWN past, dated struggle on a concept
+once there's real evidence they've since improved, through the existing
+`WizardMascot` (its `compact` prop from today's earlier dashboard work),
+surfaced when a chapter opens (`ConceptChapterPage.tsx`'s cover panel).
+Distinct from the already-live `journalGuide.ts`/`JarvisGuide.tsx` real-time
+ink feedback (untouched, not duplicated) — this is about a LATER callback to
+a PAST moment, per `DASHBOARD_NOTEBOOK_SPEC.md`'s "you wrote 'flip the
+sign??' here on June 12" reference idea.
+
+**Honest data finding (read this before extending):** the literal quoted-
+mistake version, and even the fallback "reframe the misconceptionCallout
+text they saw" version, are NOT buildable from what's actually persisted
+today. Traced the full path: `attempt_observations`
+(`ml/mindcraft_graph/firestore_adapter.py`) is the only store holding
+per-question detail (questionId, misconceptionId, errorType,
+selectedChoiceIndex) — but `firebase/firestore.rules` grants the client no
+read rule on that collection at all, so the browser can't query it back
+(adding that rule is a security-surface change outside this feature's lane,
+Engine-owned deploy path). The story-skinned `misconceptionCallout` text a
+student actually saw lives only in `sessionStorage` (`storyModule.ts`), gone
+once the tab closes, never written to Firestore. And `student_work`'s
+`selectedAnswerIndex` field IS durable, but the one write path that could
+populate it for a WRONG choice (`ConceptChapterPage`'s soft-wrong retry flow)
+clears `answers[qIdx]` before the debounced save fires, so a wrong pick is
+never durably saved there either — only the eventual correct lock-in is.
+What IS real, durable, and client-readable: the `interactions` collection
+(rule at `firebase/firestore.rules:146`; deployed composite index
+`interactions(studentId, timestamp)` already covers the query, no new index
+needed) — one aggregated PRACTICE SESSION per doc: `{conceptId, outcome
+(signed, coin-flip-neutral at 0), source, timestamp}`. Built the callback
+from THAT: real date, real concept, real evidence of improvement, honestly
+framed as a performance callback rather than a misconception quote. Full
+reasoning in the header comment of the new file.
+
+**New: `app/src/lib/pastMistakeCallback.ts`.** `fetchConceptInteractionHistory`
+queries `interactions` (own studentId, `source === 'practice'` only — excludes
+the onboarding gap-scan self-rating and the tutor-summary parser, neither is
+an observed attempt). `selectPastMistakeCallback` (pure, no Firestore) picks
+the single most relevant past struggle: needs a real below-neutral session,
+needs at least 2 real above-neutral sessions AFTER it (the "gotten this right
+X times" evidence), and requires the LATEST session on that concept to also
+read as good — never resurfaces a struggle while the student is presently
+still struggling. Among qualifying struggles picks the MOST RECENT, not the
+oldest ever recorded. Returns null (nothing rendered, no error state) when
+there's no history yet or no qualifying evidence. Wired into
+`ConceptChapterPage.tsx`'s cover panel (`renderOpenPanel`) via one `useEffect`
++ one conditional `<WizardMascot>` render; no new mascot/UI component built.
+
+**Verification (all real, this session):** `npx tsc --noEmit` clean.
+`npx vitest run` → **109 passed, 1 skipped (110 total)** — baseline 85/1/86
+plus this session's 10 new `pastMistakeCallback.test.ts` cases plus the
+parallel story-scenes agent's 14 `sceneSelection.test.ts` cases (their work,
+not mine — confirms no collision). `npm run build` green. Real end-to-end
+screenshot (not mocked inputs): stood up the Firestore + Auth emulators
+locally (`brew install openjdk@21` — the bundled Java 17 is below the
+emulator's minimum), seeded a real test student
+(`past-mistake-test@example.com`) with 3 real `interactions` docs via
+`firebase-admin` (one struggle on May 28, two clean sessions on Jun 30 + Jul
+18), signed in through the actual `Login.tsx` email/password form via
+Playwright (Google OAuth isn't automatable headless), navigated to
+`/concept/linear_equations`, and captured the wizard bubble rendering "Linear
+Equations was rough on May 28. You've gotten it right 2 times since." live on
+the real chapter cover. All scaffolding used to do this (temporary
+`VITE_USE_EMULATORS` emulator-connect branch in `firebase.ts`, temporary
+`emulators` block in `firebase.json`, the Playwright driver script) was
+**fully reverted** — confirmed via `git diff --stat firebase.json
+app/src/firebase.ts` returning empty after the revert. `grep manjushree
+app/src/App.tsx` still shows the lazy import + both routes (I never touched
+`App.tsx`).
+
+**Gotcha for whoever screenshots this app next:** `app/.env.local` currently
+has `VITE_SCREENSHOT_MODE=1` (not mine, gitignored, presumably another
+agent's in-progress harness per `App.tsx`'s `SCREENSHOT_MODE`/
+`SCREENSHOT_USER` shim) — this silently replaces the signed-in user with a
+fake `screenshot-preview-uid` that owns no real Firestore data, which cost
+real debugging time here (Firestore reads came back empty even though the
+seed data was confirmed present via direct admin reads). Override per-process
+with `VITE_SCREENSHOT_MODE=0` when you need a REAL authenticated session
+alongside that flag being on in the shared `.env.local`.
+
+**Open / next steps:** the per-question misconception detail (the actual
+"flip the sign" granularity) is real progress waiting on either (a) a
+deliberate, reviewed Firestore rule change to let a student read their own
+`attempt_observations` docs, or (b) a durable write of the wrong
+`selectedAnswerIndex` in `ConceptChapterPage`'s soft-wrong flow (currently
+transient `eliminated` state only) — either is a real product decision, not
+a quick fix, and both cross into territory this task's brief explicitly said
+to leave alone (`ml/**`/rules security surface, or changing core answer-flow
+persistence). Flagging for a team discussion rather than guessing.
+
+### Story scenes pilot: varying scenes for fractions_decimals (Fable 5, 2026-07-23)
+
+Akshat's ask: the concept-lock system (`conceptStories.json` one `story` per
+concept, `questionContextFrames.json` one `questionBridge` per concept) fixed
+a real folk-tale-mismatch bug but means every fractions_decimals question
+gets the identical bridge sentence forever, which reads as boring on repeat
+sessions. Piloted "a short ordered list of scenes... different moments: a
+different customer, a different dispute" for exactly one concept
+(`fractions_decimals`), same locked protagonist (Simon Stevin) and art
+throughout, per the brief.
+
+**Interpretation of "numbers should make sense in context":** built as a
+situational-anchor system, not per-question numeric rewriting. Each scene is
+setting + a customer/dispute beat + a bridge sentence ending right before the
+math ask (same style as the existing locked `questionBridge`), generic enough
+that any real bank question's actual numbers can follow it without
+contradiction. NOT hand-rewriting hundreds of question wrappers with
+question-specific numbers baked in, that isn't what the architecture
+supports at bank scale. Stating this back per the brief's explicit ask, in
+case a tighter per-question binding was intended instead.
+
+**Built:**
+- `app/scripts/syncQuestionOntologyLayers.mjs` mirrors two read-only Layer
+  2/3 slices from the Engine lane (`ml/data/5_level_ontology/**`, read-only,
+  never written to) into the Product lane: `app/src/data/questionArchetypes.json`
+  (all 84 Layer 2 archetypes, verbatim) and
+  `app/src/data/questionArchetypeLinks.json` (the 342 of 450 Layer 3 seed
+  question instances that carry a real archetype link, trimmed of verbose
+  tutor-annotation prose). Concept-agnostic; re-run any time upstream Layer
+  2/3 files change.
+- `conceptStories.json`'s `fractions_decimals` entry gets an additive
+  `scenes: []` array (5 entries), `story` untouched, shape unchanged for every
+  other concept. 2 of the 5 scenes (`guild_shipment_shares`,
+  `customs_manifest_count`) are anchored to the two real Layer 2 archetypes
+  that tag `fractions_decimals` (`pie_chart_pair_sum_to_target_percent`,
+  `pie_chart_percent_of_total_count`); the other 3 are hand-authored in the
+  same protagonist/voice.
+- `app/src/lib/sceneSelection.ts` (new, generic, not fractions_decimals-
+  hardcoded): `selectSceneForQuestion(question, conceptId?)` picks a scene by
+  archetype match first (question's bank id -> Layer 3 mirror -> archetype id
+  -> tagged scene) if a real link exists, else rotates by a stable hash of
+  the question id (deterministic, no `Math.random`, never always scene 1).
+  Wired into `ConceptChapterPage.tsx`'s `chapterStem()` and
+  `Practice.tsx`'s local fallback `framedLocalStem()`, plus
+  `storyMatch.ts#matchSkinForQuestion`'s concept-lock branch (feeds the
+  Groq/story-module conceptStory context too). Concepts without a `scenes`
+  array (everything else, for now) fall through to the single legacy frame
+  unchanged.
+- **Found while testing:** only 1 of the 450 Layer 3 seed question instances
+  is actually linked to `fractions_decimals`, and even that one plus its
+  archetype sibling are filed under `descriptive_statistics` in the LIVE
+  question bank (`actMasterQuestionBank.generated.json`), not
+  `fractions_decimals`. So the archetype-match branch is real and unit-tested
+  against real linked ids, but will rarely fire for actual fractions_decimals
+  practice sessions today; rotation is what most students will see. Not a bug
+  in this pass, a bank-coverage gap worth flagging for whoever does the next
+  archetype-annotation pass.
+- Tests: `app/src/lib/sceneSelection.test.ts`, 14 new tests (archetype match,
+  rotation spread, determinism, no-scenes fallback, conceptId override).
+  Full suite: 109 passed + 1 skipped (110 total, up from 95+1 baseline).
+  `tsc --noEmit` clean, `npm run build` clean.
+- Verified live in a real dev-server browser session (temporary
+  `VITE_SCREENSHOT_MODE` AuthGuard bypass, same technique as prior passes
+  today, fully reverted, `grep SCREENSHOT app/src/App.tsx` empty after).
+  Screenshots at `agent_work/story-scenes/screenshots/`: 10 chapter-view
+  questions showing 4 of 5 scenes rotate with real, non-contradictory math
+  asks, plus a Practice-session screenshot showing the archetype-matched
+  `guild_shipment_shares` scene correctly paired with a real fraction-addition
+  question. Capture scripts kept at `agent_work/story-scenes/scripts/` for
+  reruns.
+
+**Open / next steps:** extend `scenes[]` to more concepts (additive, just
+data); consider a richer archetype-to-live-bank join once more Layer 3
+annotation lands so the archetype-match branch actually fires in production.
+
 ### Manjushree hidden action-math zone
 
 **Read first:** `agent_work/manjushree-zone/HANDOFF_FOR_CLAUDE.md`, then

@@ -8,6 +8,7 @@ import type { Question } from './questionBank'
 import { questionFormat, inferQuestionFormat, type FormatId } from './questionBank'
 import { toOntologyId } from './conceptMap'
 import { selectStoryForConcept, goalToneHint, type SelectedStory } from './storySelection'
+import { selectSceneForQuestion } from './sceneSelection'
 import mathSkinTopRaw from '../data/mathSkinTop.json'
 
 export interface FolkTaleEntry {
@@ -277,12 +278,20 @@ export function matchSkinForQuestion(
   const concept = selectStoryForConcept(q.conceptId)
   if (concept) {
     const tone = ctx.goalTags?.length ? goalToneHint(ctx.goalTags) : ''
+    // Scenes are additive: a concept MAY carry an ordered scenes[] list (the
+    // fractions_decimals pilot) layering a varying situational anchor, same
+    // protagonist/setting world, on top of the locked main story. Concepts
+    // without scenes get null back and behave exactly as before.
+    const scene = selectSceneForQuestion(q, concept.conceptId)
+    const story = scene
+      ? `${concept.story}\n\nScene: ${scene.settingLine}\n${scene.questionBridge}`
+      : concept.story
     return {
       source: 'concept_story',
       score: 1,
-      conceptStory: concept.story + (tone ? `\n[Student tone: ${tone}]` : ''),
+      conceptStory: story + (tone ? `\n[Student tone: ${tone}]` : ''),
       protagonist: concept.protagonist,
-      setting: concept.settingLine,
+      setting: scene?.settingLine ?? concept.settingLine,
       conceptName: concept.conceptName,
     }
   }

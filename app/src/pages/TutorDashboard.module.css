@@ -1,23 +1,29 @@
-/* ── Tutor dashboard — dark top bar + warm light content ─────────────────────
-   Token pattern mirrors Login.module.css (--login-*): scoped custom properties
-   on .shell so the tutor surface stays light while the global theme is dark. */
+/* ── Tutor dashboard - same parchment/violet notebook language as the
+   student Dashboard (Dashboard.module.css's `--desk-*` scale), re-declared
+   under the `--td-*` names this file already uses so the rest of the rules
+   below don't need touching  -  values match, not a new system. Top bar
+   stays a dark band (still useful chrome contrast) but recolored from
+   Duolingo green/lime to the notebook's ink-plum + parchment-gold. ─────── */
 
 .shell {
-  --td-bg:      #f4f2ec;
-  --td-bar:     #0d1f17;
-  --td-ink:     #143a2e;
-  --td-muted:   #647568;
-  --td-label:   #7a8c7d;
-  --td-line:    rgba(20, 58, 46, 0.1);
-  --td-lime:    #c4f547;
-  --td-lime-2:  #a9d63a;
-  --td-leaf:    #247a4d;
-  --td-paper:   #ffffff;
-  --td-shadow:  0 2px 20px rgba(20, 58, 46, 0.07);
-  --td-font:    'Nunito Sans', 'DM Sans', system-ui, sans-serif;
-  --td-font-head: 'Fredoka', 'Nunito Sans', sans-serif;
+  --td-bg:      #efe6fb;
+  --td-bar:     #2a2430;
+  --td-ink:     #2a2430;
+  --td-muted:   #6b5f80;
+  --td-label:   #8a7ea0;
+  --td-line:    rgba(58, 47, 85, 0.12);
+  --td-lime:    #ffe566;
+  --td-lime-2:  #f0cf3f;
+  --td-leaf:    #6b5cff;
+  --td-paper:   #fffdf8;
+  --td-shadow:  0 6px 20px rgba(90, 70, 140, 0.1);
+  --td-font:    'DM Sans', 'Nunito Sans', system-ui, sans-serif;
+  --td-font-head: 'Caveat', 'Fredoka', sans-serif;
 
-  background: var(--td-bg);
+  background:
+    radial-gradient(ellipse 80% 55% at 15% 10%, rgba(255, 190, 220, 0.25), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 80%, rgba(180, 210, 255, 0.3), transparent 50%),
+    var(--td-bg);
   min-height: 100vh;
   color: var(--td-ink);
   font-family: var(--td-font);
@@ -30,7 +36,7 @@
   z-index: 100;
   height: 60px;
   background: var(--td-bar);
-  border-bottom: 1px solid rgba(196, 245, 71, 0.12);
+  border-bottom: 1px solid rgba(255, 229, 102, 0.16);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 24px;
   gap: 16px;
@@ -38,7 +44,7 @@
 .topLeft { display: flex; align-items: center; gap: 14px; min-width: 0; }
 .logo {
   font-family: var(--td-font-head);
-  font-size: 19px; font-weight: 600;
+  font-size: 24px; font-weight: 700;
   color: #ffffff; text-decoration: none; letter-spacing: -0.3px;
   flex-shrink: 0;
 }
@@ -66,14 +72,14 @@
   font-family: var(--td-font);
   font-size: 12px; font-weight: 800;
   color: var(--td-lime);
-  background: rgba(196, 245, 71, 0.1);
-  border: 1px solid rgba(196, 245, 71, 0.3);
+  background: rgba(255, 229, 102, 0.1);
+  border: 1px solid rgba(255, 229, 102, 0.3);
   border-radius: 10px;
   padding: 6px 14px;
   cursor: pointer;
   transition: background 0.15s, transform 0.15s;
 }
-.signOutBtn:hover { background: rgba(196, 245, 71, 0.2); transform: translateY(-1px); }
+.signOutBtn:hover { background: rgba(255, 229, 102, 0.2); transform: translateY(-1px); }
 
 /* ── SIDEBAR (kept) ── */
 .sidebar {
@@ -103,9 +109,9 @@
   transition: background 0.15s, color 0.15s;
 }
 .sideItem svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-.sideItem:hover { background: rgba(36, 122, 77, 0.06); color: var(--td-leaf); }
+.sideItem:hover { background: rgba(107, 92, 255, 0.06); color: var(--td-leaf); }
 .sideActive {
-  background: rgba(196, 245, 71, 0.22) !important;
+  background: rgba(255, 229, 102, 0.22) !important;
   color: var(--td-ink) !important;
   font-weight: 900;
   box-shadow: inset 3px 0 0 var(--td-leaf);
@@ -166,7 +172,22 @@
 /* ── MAIN ── */
 .page { margin-left: 238px; padding: 84px 28px 48px; }
 
-/* ── GRID — left 60% / right 40% ── */
+/* ── YOUR STUDENTS - summary card row, the "5-second read" ── */
+.summarySection { margin-bottom: 20px; }
+.summaryHead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.summaryScroll {
+  display: flex; gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+.summaryScroll > * { flex: 0 0 340px; }
+.summaryMore {
+  margin: 8px 2px 0;
+  font-size: 12px; font-weight: 700; color: var(--td-muted);
+}
+
+/* ── GRID - left 60% / right 40% ── */
 .grid { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; align-items: start; }
 .col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 
@@ -174,13 +195,13 @@
 .loading { display: flex; align-items: center; justify-content: center; height: 300px; }
 .spinner {
   width: 32px; height: 32px;
-  border: 3px solid rgba(36, 122, 77, 0.15);
+  border: 3px solid rgba(107, 92, 255, 0.15);
   border-top-color: var(--td-leaf);
   border-radius: 50%; animation: spin 0.7s linear infinite;
 }
 .spinnerSm {
   width: 16px; height: 16px; flex-shrink: 0;
-  border: 2px solid rgba(36, 122, 77, 0.15);
+  border: 2px solid rgba(107, 92, 255, 0.15);
   border-top-color: var(--td-leaf);
   border-radius: 50%; animation: spin 0.7s linear infinite;
 }
@@ -194,10 +215,10 @@
 /* ── CARD ── */
 .card {
   background: var(--td-paper);
-  border: 1px solid rgba(20, 58, 46, 0.1);
+  border: 1px solid var(--td-line);
   border-radius: 20px;
   padding: 20px 22px;
-  box-shadow: 0 2px 20px rgba(20, 58, 46, 0.07);
+  box-shadow: var(--td-shadow);
 }
 .cardHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 8px; }
 .cardLabel {
@@ -209,7 +230,7 @@
 
 /* ── YOUR STUDENT (hero card) ── */
 .heroCard {
-  background: rgba(196, 245, 71, 0.06);
+  background: rgba(255, 229, 102, 0.06);
   border-left: 4px solid var(--td-lime);
 }
 .heroTop {
@@ -222,7 +243,7 @@
   display: flex; align-items: center; justify-content: center;
   font-family: var(--td-font-head);
   font-size: 24px; font-weight: 600;
-  box-shadow: 0 3px 12px rgba(36, 122, 77, 0.3);
+  box-shadow: 0 3px 12px rgba(107, 92, 255, 0.3);
 }
 .heroId { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .heroName {
@@ -240,8 +261,8 @@
   font-size: 11px; font-weight: 900;
   text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--td-ink);
-  background: rgba(196, 245, 71, 0.4);
-  border: 1px solid rgba(20, 58, 46, 0.15);
+  background: rgba(255, 229, 102, 0.4);
+  border: 1px solid rgba(58, 47, 85, 0.15);
   border-radius: 20px;
   padding: 5px 12px;
 }
@@ -306,7 +327,7 @@
   flex: 1;
   height: 6px;
   border-radius: 99px;
-  background: rgba(20, 58, 46, 0.1);
+  background: rgba(58, 47, 85, 0.1);
   overflow: hidden;
 }
 .barFill {
@@ -326,8 +347,8 @@
   margin: 14px 0 10px;
   padding: 12px 14px;
   border-radius: 12px;
-  background: rgba(20, 58, 46, 0.06);
-  border: 1px solid rgba(20, 58, 46, 0.1);
+  background: rgba(58, 47, 85, 0.06);
+  border: 1px solid rgba(58, 47, 85, 0.1);
 }
 .pathField {
   display: block;
@@ -342,7 +363,7 @@
   margin-top: 4px;
   padding: 8px 10px;
   border-radius: 8px;
-  border: 1px solid rgba(20, 58, 46, 0.15);
+  border: 1px solid rgba(58, 47, 85, 0.15);
   font-size: 13px;
   font-family: var(--td-font);
 }
@@ -358,7 +379,7 @@
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
 }
-.intelToggle:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(20, 58, 46, 0.25); }
+.intelToggle:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(58, 47, 85, 0.25); }
 
 .heroEmpty {
   font-size: 13.5px; font-weight: 600; color: var(--td-muted);
@@ -382,7 +403,7 @@
   padding: 14px 0; border-bottom: 1px solid var(--td-line);
 }
 .sessionRow:last-child { border-bottom: none; }
-.sessionRowLive { background: rgba(196, 245, 71, 0.12); border-radius: 12px; padding: 14px 12px; margin: 0 -12px; }
+.sessionRowLive { background: rgba(255, 229, 102, 0.12); border-radius: 12px; padding: 14px 12px; margin: 0 -12px; }
 .sessionLeft { flex: 1; min-width: 0; }
 .sessionName { font-size: 14px; font-weight: 900; color: var(--td-ink); }
 .sessionMeta { font-size: 12px; color: var(--td-leaf); font-weight: 700; margin-top: 2px; }
@@ -390,16 +411,16 @@
 .sessionRight { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
 .sessionBadge {
   font-size: 11px; font-weight: 900; padding: 3px 10px;
-  border-radius: 20px; background: rgba(20, 58, 46, 0.06); color: var(--td-muted);
+  border-radius: 20px; background: rgba(58, 47, 85, 0.06); color: var(--td-muted);
 }
-.badgeLive { background: rgba(196, 245, 71, 0.4); color: var(--td-ink); animation: pulse 2s infinite; }
+.badgeLive { background: rgba(255, 229, 102, 0.4); color: var(--td-ink); animation: pulse 2s infinite; }
 .joinLink {
   font-size: 12px; font-weight: 900; color: var(--td-leaf);
   text-decoration: none; padding: 5px 12px;
-  background: rgba(36, 122, 77, 0.1); border-radius: 8px;
+  background: rgba(107, 92, 255, 0.1); border-radius: 8px;
   transition: background 0.15s;
 }
-.joinLink:hover { background: rgba(36, 122, 77, 0.2); }
+.joinLink:hover { background: rgba(107, 92, 255, 0.2); }
 .chatLink { background: rgba(59, 130, 246, 0.1); color: #1d5aab; }
 
 /* ── REVIEW ROWS ── */
@@ -414,7 +435,7 @@
   text-decoration: none; color: inherit; transition: background 0.1s;
 }
 .reviewRow:last-child { border-bottom: none; }
-.reviewRow:hover { background: rgba(36, 122, 77, 0.05); border-radius: 10px; padding: 14px 10px; margin: 0 -10px; }
+.reviewRow:hover { background: rgba(107, 92, 255, 0.05); border-radius: 10px; padding: 14px 10px; margin: 0 -10px; }
 .reviewArrow { font-size: 14px; color: var(--td-muted); margin-top: 4px; }
 .deleteRowBtn {
   font-size: 11px; font-weight: 700; color: #c0392b;
@@ -424,12 +445,12 @@
 }
 .deleteRowBtn:hover { background: rgba(192, 57, 43, 0.18); }
 .badgeDraft   { background: rgba(78, 205, 196, 0.18) !important; color: #0e6f68 !important; }
-.badgePending { background: rgba(36, 122, 77, 0.12) !important; color: var(--td-leaf) !important; }
+.badgePending { background: rgba(107, 92, 255, 0.12) !important; color: var(--td-leaf) !important; }
 .badgeNeedsReview { background: rgba(255, 180, 0, 0.14) !important; color: #b07a00 !important; }
 
 /* ── SUMMARY + CHAT ── */
 .summaryMeta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.tag { font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; background: rgba(36, 122, 77, 0.1); color: var(--td-leaf); }
+.tag { font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; background: rgba(107, 92, 255, 0.1); color: var(--td-leaf); }
 .date { font-size: 12px; color: var(--td-muted); font-weight: 700; }
 .summaryTitle { font-size: 15px; font-weight: 900; color: var(--td-ink); margin-bottom: 10px; letter-spacing: -0.2px; }
 .bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 0 0 4px; padding: 0; }
@@ -522,9 +543,9 @@
   transition: background 0.12s, color 0.12s, border-color 0.12s;
 }
 .flagResolve:hover {
-  background: rgba(196, 245, 71, 0.18);
+  background: rgba(255, 229, 102, 0.18);
   color: var(--td-ink);
-  border-color: rgba(196, 245, 71, 0.5);
+  border-color: rgba(255, 229, 102, 0.5);
 }
 
 /* ── QUICK ACTIONS ── */
@@ -536,7 +557,7 @@
   font-size: 13px; font-weight: 800;
   color: var(--td-ink);
   text-align: left; text-decoration: none;
-  background: rgba(20, 58, 46, 0.035);
+  background: rgba(58, 47, 85, 0.035);
   border: 1px solid var(--td-line);
   border-radius: 12px;
   padding: 11px 14px;
@@ -544,8 +565,8 @@
   transition: background 0.15s, border-color 0.15s, transform 0.15s;
 }
 .actionBtn:hover {
-  background: rgba(196, 245, 71, 0.18);
-  border-color: rgba(36, 122, 77, 0.3);
+  background: rgba(255, 229, 102, 0.18);
+  border-color: rgba(107, 92, 255, 0.3);
   transform: translateY(-1px);
 }
 
@@ -569,7 +590,7 @@
   border-radius: 12px; padding: 12px 24px;
   font-size: 14px; font-weight: 900; font-family: var(--td-font);
   cursor: pointer;
-  box-shadow: 0 4px 0 var(--td-lime-2), 0 2px 12px rgba(196, 245, 71, 0.3);
+  box-shadow: 0 4px 0 var(--td-lime-2), 0 2px 12px rgba(255, 229, 102, 0.3);
   transition: all 0.15s; text-decoration: none;
 }
 .btnPrimary:not(:disabled):hover { filter: brightness(1.04); transform: translateY(-1px); }

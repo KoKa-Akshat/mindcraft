@@ -42,6 +42,7 @@ import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
 import { buildStoryDisplay } from '../lib/storyDisplay'
 import { selectStoryForConcept } from '../lib/storySelection'
+import { selectSceneForQuestion } from '../lib/sceneSelection'
 import { storyArtFor } from '../lib/storyArt'
 import framesRaw from '../data/questionContextFrames.json'
 import {
@@ -58,14 +59,22 @@ import s from './Practice.module.css'
 
 const CONTEXT_FRAMES = framesRaw as Record<string, { questionBridge?: string; settingLine?: string }>
 
-/** Local story wrap when Groq story-module is slow/offline — never bare textbook. */
+/**
+ * Local story wrap when Groq story-module is slow/offline — never bare textbook.
+ *
+ * Checks the concept's `scenes[]` list (lib/sceneSelection.ts) first, so a
+ * fractions_decimals question varies its bridge/setting across a session;
+ * concepts with no scenes array fall through to the single locked
+ * questionContextFrames.json frame exactly as before.
+ */
 function framedLocalStem(q: Question): string {
   const display = buildStoryDisplay(q)
   const story = selectStoryForConcept(q.conceptId)
   if (!story) return display.stem
+  const scene = selectSceneForQuestion(q, story.conceptId)
   const frame = CONTEXT_FRAMES[story.conceptId]
-  const setting = story.settingLine || frame?.settingLine || ''
-  const bridge = frame?.questionBridge || `${story.protagonist} sets this on the desk.`
+  const setting = scene?.settingLine || story.settingLine || frame?.settingLine || ''
+  const bridge = scene?.questionBridge || frame?.questionBridge || `${story.protagonist} sets this on the desk.`
   return [setting ? `✦ ${setting}` : '', bridge, display.stem].filter(Boolean).join('\n\n')
 }
 

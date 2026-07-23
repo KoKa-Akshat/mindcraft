@@ -3,6 +3,38 @@
     "conceptId": "fractions_decimals",
     "conceptName": "Fractions and Decimals",
     "story": "In 1585, in the war-torn Low Countries, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages among soldiers by candlelight, wrestling twelfths of guilders and seventh-parts of florins until the numbers swam. Merchants argued over interest calculations that took days and were still disputed. Stevin, who kept accounts for a prince and dug canals for cities, saw the same monster everywhere he went: the space between whole numbers, wild and unnamed.\n\nOne night he asked the question that unlocked it. Why should the neat ladder of place value, thousands, hundreds, tens, ones, simply stop at one? What if it kept descending, rung below rung, into the small?\n\nSo he let it descend. To the right of the ones he hung tenths, then tenths of tenths, then tenths of those, each place a bin exactly one-tenth the size of its neighbor. Any amount, no matter how awkward, could now be poured into these bins and written as plainly as a whole number. And a fraction, he realized, was never a strange object at all. It was simply a division waiting patiently to be finished, and when you finished it, out came the decimal.\n\nStevin printed the idea in a slim pamphlet called De Thiende, The Tenth, and promised on the title page that it would teach anyone to reckon without torment. He was not exaggerating. Sailors, surveyors, bankers, and engineers took it up within a generation. Every price tag, every stopwatch, every measurement on every instrument you have ever read is written in Stevin's descending ladder.\n\nThis is where it clicks for you. When you place 0.7 and 0.25 side by side, or turn three-fourths into 0.75, you are standing exactly where Stevin stood, naming the space between the whole numbers. It was never empty. It was waiting.",
+    "scenes": [
+      {
+        "sceneId": "soldiers_wage",
+        "archetypeId": null,
+        "settingLine": "Antwerp, Simon's counting house, first light, 1585",
+        "questionBridge": "A soldier plants three coins on the sill, certain his wage was shorted. Simon draws the ledger between you. Break the whole into parts. Every tenth counts."
+      },
+      {
+        "sceneId": "moneychangers_coins",
+        "archetypeId": null,
+        "settingLine": "Antwerp, Simon's counting house, midmorning, 1585",
+        "questionBridge": "A money changer empties a purse of small coin onto the table, insisting it cannot possibly equal what he is owed. Simon spreads the pieces flat. Name the amount by what it truly is, not by how many pieces it took."
+      },
+      {
+        "sceneId": "guild_shipment_shares",
+        "archetypeId": "pie_chart_pair_sum_to_target_percent",
+        "settingLine": "Antwerp, Simon's counting house, midday, 1585",
+        "questionBridge": "Two grain-guild partners argue over the shipment ledger, each certain their combined shares should add up to the total they were promised. Simon runs a finger down the column. Add only the parts in question, and let the rest of the page wait."
+      },
+      {
+        "sceneId": "customs_manifest_count",
+        "archetypeId": "pie_chart_percent_of_total_count",
+        "settingLine": "Antwerp, Simon's counting house, early afternoon, 1585",
+        "questionBridge": "A harbor clerk needs to know how large one partner's share really is once it is measured against the full shipment. Simon taps the ledger's total line. Turn the share into an honest count of the whole."
+      },
+      {
+        "sceneId": "weavers_remnant",
+        "archetypeId": null,
+        "settingLine": "Antwerp, Simon's counting house, dusk, 1585",
+        "questionBridge": "A weaver carries in a remnant cut from a larger bolt, and she and the cloth merchant cannot agree what part of the whole bolt it represents. Simon lays the remnant against the full length. Name the part exactly, and the price will follow."
+      }
+    ],
     "ingredientStories": {
       "fractions_decimals__part_whole_meaning": "A young clerk in Stevin's office once read three-fourths of a guilder as two separate amounts, three coins and then four, and paid a soldier nearly double. Stevin took a single coin, scored it into four equal parts, and slid three of them across the table. One cut, one count, one number, he said. A fraction is a single amount, honestly measured.",
       "fractions_decimals__equivalent_fractions": "At the money-changer's stall, Stevin watched two-thirds of a florin refuse to match anything in the till, until the changer recounted it as four-sixths and the small coins lined up perfectly. Nothing had been added and nothing lost, only the size of the pieces had changed. Scale the top and bottom by the same factor and a fraction keeps telling the same truth in new clothes.",
