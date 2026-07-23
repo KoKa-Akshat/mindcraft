@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(32 32)">
+    <!-- astrolabe sighting a star's angle -->
+    <path d="M-13 10 A13 13 0 0 1 13 10" fill="none" stroke="#1d3a8a" stroke-width="2.6"/>
+    <line x1="0" y1="10" x2="0" y2="-12" stroke="#33230f" stroke-width="1.4" opacity="0.5"/>
+    <line x1="0" y1="10" x2="-10" y2="-5" stroke="#c99a3a" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="0" cy="10" r="1.8" fill="#33230f"/>
+  </g>
+  </svg>

@@ -1,5 +1,5 @@
 /**
- * EtchedQuestion — a practice item rendered as ink on ruled paper.
+ * EtchedQuestion  -  a practice item rendered as ink on ruled paper.
  * Equations in standard form (Ax + By = C) get a small coordinate sketch.
  */
 import { useMemo } from 'react'

@@ -24,6 +24,10 @@ export async function markDiagnosticComplete(
     exam: string | null
     confidenceMap: Record<string, string>
     excludedConcepts?: string[]
+    /** C-new — time-to-exam in days, tap-picked in the diagnostic's horizon step.
+     *  Threaded to the ml `/recommend` exam-mode call so `exam_concept_budget`
+     *  can pace the roadmap (see mindcraft_graph/config.py + pathfinder.py). */
+    deadlineDays?: number | null
   },
 ): Promise<void> {
   try {
@@ -35,6 +39,7 @@ export async function markDiagnosticComplete(
           exam: data.exam ?? null,
           confidenceMap: data.confidenceMap,
           excludedConcepts: data.excludedConcepts ?? [],
+          ...(data.deadlineDays != null ? { deadlineDays: data.deadlineDays } : {}),
           completedAt: serverTimestamp(),
         },
       },
@@ -50,6 +55,7 @@ export async function loadDiagnostic(
   exam: string | null
   confidenceMap: Record<string, string>
   excludedConcepts: string[]
+  deadlineDays: number | null
 } | null> {
   try {
     const snap = await getDoc(doc(db, 'users', uid))
@@ -57,12 +63,14 @@ export async function loadDiagnostic(
       exam?: string | null
       confidenceMap?: Record<string, string>
       excludedConcepts?: string[]
+      deadlineDays?: number | null
     } | undefined
     if (!diagnostic) return null
     return {
       exam: diagnostic.exam ?? null,
       confidenceMap: diagnostic.confidenceMap ?? {},
       excludedConcepts: diagnostic.excludedConcepts ?? [],
+      deadlineDays: diagnostic.deadlineDays ?? null,
     }
   } catch {
     return null

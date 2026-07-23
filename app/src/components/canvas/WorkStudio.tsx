@@ -72,7 +72,7 @@ export default function WorkStudio({
 
   const hasText = solverText.trim().length > 0
   const tip = stage === 'reading'
-    ? 'Hang tight — I’m laying your pages on the canvas…'
+    ? 'Hang tight, I’m laying your pages on the canvas…'
     : hasText
       ? 'Nice. Hit Get hints and I’ll walk you through it.'
       : 'Drop a worksheet PDF, or paste a stuck problem below.'

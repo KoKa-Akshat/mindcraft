@@ -1,18 +1,29 @@
 .desk {
+  /* Padding here is DELIBERATELY the exact same numbers as .canvasDesk's own
+     padding (Dashboard.module.css: "padding: 4px 8px 8px")  -  not a similar
+     looking value, the same formula. .cover below fills this box at 100%,
+     so its rendered width is byte-for-byte 100vw minus the same 16px every
+     time, which is exactly how .canvasStage (the desk's content stage)
+     computes its own width. Before this fix the cover was capped at
+     min(1120px, 96vw), a hard ceiling that fell hundreds of pixels short of
+     canvasStage on any viewport wider than ~1166px (e.g. at 1440px wide:
+     cover was 1120px, canvasStage was 1424px  -  a 304px gap, ACTIVE_TASK.md
+     2026-07-22/23). Matching the padding formula instead of guessing a
+     bigger cap is what makes the two provably identical, not just "closer". */
   position: fixed;
   inset: 0;
   z-index: 200;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 24px;
+  align-items: stretch;
+  gap: 10px;
+  padding: 4px 8px 8px;
   background:
     radial-gradient(ellipse 80% 55% at 20% 10%, rgba(255, 190, 220, 0.55), transparent 55%),
     radial-gradient(ellipse 70% 50% at 90% 80%, rgba(180, 210, 255, 0.55), transparent 50%),
     linear-gradient(165deg, #efe6fb 0%, #e4dcf5 45%, #d9d0ef 100%);
   animation: deskIn 0.45s cubic-bezier(0.2, 0, 0, 1) both;
+  box-sizing: border-box;
 }
 
 @keyframes deskIn {
@@ -29,31 +40,49 @@
 }
 
 .cover {
+  /* TRUE full-bleed match, not a bigger cap. Previously this was
+     `width: min(1120px, 96vw); height: min(80dvh, 760px)`  -  a widened but
+     still hard-capped landscape card, which fixed the ASPECT RATIO to match
+     NotebookIntro/canvasStage but not the actual rendered SIZE: at any
+     viewport wider than ~1166px the 1120px ceiling fell further and further
+     behind canvasStage's true full-bleed width (100vw minus its own 16px
+     padding), so the two visibly diverged again on normal laptop/desktop
+     widths. Fix: no width/height cap at all. .cover is flex:1 inside .desk,
+     which shares .canvasDesk's exact padding  -  so .cover's box is the same
+     "100vw/100dvh minus the same gutter" formula canvasStage itself uses,
+     not a lookalike number. border-radius matches --desk-radius-lg (22px,
+     Dashboard.module.css) for the same reason: same shape token, not a
+     close guess. */
   position: relative;
-  width: min(560px, 92vw);
-  height: min(86dvh, 820px);
-  aspect-ratio: auto;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   border: none;
   padding: 0;
   cursor: pointer;
-  border-radius: 28px;
+  border-radius: 22px;
   overflow: hidden;
   background: #fff8ef;
   box-shadow:
     0 8px 20px rgba(80, 60, 120, 0.1),
     0 28px 70px rgba(90, 70, 140, 0.22);
-  transform: perspective(1400px) rotateY(-3deg) rotateX(1.5deg);
+  transform: perspective(1400px) rotateY(-1.5deg) rotateX(0.8deg);
   transition: transform 220ms cubic-bezier(0.34, 1.2, 0.64, 1);
   animation: coverSettle 0.65s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
 @keyframes coverSettle {
-  from { opacity: 0; transform: perspective(1200px) rotateY(-4deg) translateY(18px); }
-  to { opacity: 1; transform: perspective(1200px) rotateY(-4deg) rotateX(2deg) translateY(0); }
+  /* Smaller rotate angles than before (was -4deg/2deg)  -  the card is now
+     nearly edge-to-edge with the viewport (same ~8px gutter as canvasDesk),
+     so a big rotation would visibly pull a corner past that thin gutter and
+     show a gap of desk background behind it. Tuned down to keep the same
+     "settling into place" feel without breaking the full-bleed edge. */
+  from { opacity: 0; transform: perspective(1200px) rotateY(-2deg) translateY(14px); }
+  to { opacity: 1; transform: perspective(1200px) rotateY(-2deg) rotateX(1deg) translateY(0); }
 }
 
 .cover:hover {
-  transform: perspective(1200px) rotateY(-1deg) rotateX(1deg) translateY(-4px) scale(1.02);
+  transform: perspective(1200px) rotateY(-0.6deg) rotateX(0.5deg) translateY(-3px) scale(1.006);
 }
 
 .deskClosing .cover {
@@ -63,7 +92,7 @@
 @keyframes coverClose {
   to {
     opacity: 0;
-    transform: perspective(1200px) rotateY(8deg) scale(1.04) translateY(-12px);
+    transform: perspective(1200px) rotateY(4deg) scale(1.015) translateY(-10px);
   }
 }
 
@@ -144,7 +173,12 @@
 }
 
 .caption {
+  /* .desk is align-items: stretch now (cover needs the full-width flex
+     box to fill), so this block-level <p> stretches full width too  - 
+     text-align centers it back to how it read before. */
   margin: 0;
+  text-align: center;
+  flex-shrink: 0;
   font-family: 'Caveat', cursive;
   font-size: 20px;
   color: rgba(58, 47, 85, 0.65);

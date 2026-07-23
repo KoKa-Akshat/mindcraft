@@ -1,0 +1,10 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(32 32)">
+    <!-- Alhambra tessellation: one tile repeated by reflection, no gaps -->
+    <g transform="translate(-14 -14)">
+      <path d="M0 0 L14 0 L7 14 Z" fill="#c99a3a" opacity="0.8" transform=""/><path d="M14 0 L28 0 L21 14 Z" fill="#1d3a8a" opacity="0.8" transform="rotate(180 21 7)"/><path d="M0 14 L14 14 L7 28 Z" fill="#1d3a8a" opacity="0.8" transform="rotate(180 7 21)"/><path d="M14 14 L28 14 L21 28 Z" fill="#c99a3a" opacity="0.8" transform=""/>
+    </g>
+  </g>
+  </svg>

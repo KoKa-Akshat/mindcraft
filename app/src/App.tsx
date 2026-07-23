@@ -30,7 +30,6 @@ import KnowledgeGraph  from './pages/KnowledgeGraph'
 import OrganizeNotes   from './pages/OrganizeNotes'
 import Practice        from './pages/Practice'
 import ConceptChapterPage from './pages/ConceptChapterPage'
-import GradeOnboard    from './pages/GradeOnboard'
 import FirstSpark      from './pages/FirstSpark'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
@@ -225,7 +224,12 @@ export default function App() {
         <Route path="/homework/:homeworkId"    element={<AuthGuard><HomeworkSession /></AuthGuard>} />
         <Route path="/join-classroom"         element={<AuthGuard><JoinClassroom /></AuthGuard>} />
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
-        <Route path="/onboard"             element={<AuthGuard><GradeOnboard /></AuthGuard>} />
+        {/* GradeOnboard.tsx (the older, heavier "grade + ~10 probe questions"
+            flow) is retired from the live gate. Diagnostic.tsx (Jesse's
+            Kitchen: goals + time horizon + confidence taps) is now the one
+            canonical diagnostic. Route kept as a redirect, not deleted, so no
+            stale bookmark/link 404s. See ACTIVE_TASK.md 2026-07-21 entry. */}
+        <Route path="/onboard"             element={<Navigate to="/diagnostic" replace />} />
         <Route path="/knowledge-graph"     element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/knowledge-graph/:concept" element={<AuthGuard><KnowledgeGraph /></AuthGuard>} />
         <Route path="/constellation-gps-lab" element={<AuthGuard><ConstellationGpsLab /></AuthGuard>} />

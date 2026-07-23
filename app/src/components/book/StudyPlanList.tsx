@@ -8,7 +8,7 @@ export type StudyPlanItem = {
 }
 
 /**
- * StudyPlanList — the curated learning route on the right page.
+ * StudyPlanList  -  the curated learning route on the right page.
  * A dotted route spine with done / active / upcoming nodes,
  * a progress inkline, and a "now" badge on the active concept.
  */

@@ -40,6 +40,14 @@
   color: #2a2430;
 }
 
+/* Hero-bar sizing  -  shows on every dashboard view now (Home/Map/Work/Notes),
+   so it needs to sit comfortably in one shared strip alongside the nav and
+   the spark pill, not dominate a whole row the way the old standalone
+   Home-only header could afford to. */
+.compact .sprite { width: 46px; height: 46px; }
+.compact .bubble { max-width: 260px; padding: 7px 12px; border-radius: 14px 16px 16px 5px; }
+.compact .line { font-size: 16px; }
+
 @media (prefers-reduced-motion: reduce) {
   .cheer .sprite { animation: none; }
 }

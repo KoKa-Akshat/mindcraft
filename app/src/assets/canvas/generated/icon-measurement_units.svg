@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(32 32)">
+    <!-- two rulers stacked that disagree -->
+    <rect x="-18" y="-8" width="36" height="8" fill="#eddab3" stroke="#33230f" stroke-width="1.8"/>
+    <line x1="-18" y1="-8" x2="-18" y2="-2" stroke="#33230f" stroke-width="1"/><line x1="-12" y1="-8" x2="-12" y2="-4.5" stroke="#33230f" stroke-width="1"/><line x1="-6" y1="-8" x2="-6" y2="-4.5" stroke="#33230f" stroke-width="1"/><line x1="0" y1="-8" x2="0" y2="-2" stroke="#33230f" stroke-width="1"/><line x1="6" y1="-8" x2="6" y2="-4.5" stroke="#33230f" stroke-width="1"/><line x1="12" y1="-8" x2="12" y2="-4.5" stroke="#33230f" stroke-width="1"/><line x1="18" y1="-8" x2="18" y2="-2" stroke="#33230f" stroke-width="1"/>
+    <rect x="-15" y="3" width="30" height="8" fill="#e7c877" stroke="#1d3a8a" stroke-width="1.8"/>
+    <line x1="-15" y1="3" x2="-15" y2="9" stroke="#1d3a8a" stroke-width="1"/><line x1="-9" y1="3" x2="-9" y2="6.5" stroke="#1d3a8a" stroke-width="1"/><line x1="-3" y1="3" x2="-3" y2="9" stroke="#1d3a8a" stroke-width="1"/><line x1="3" y1="3" x2="3" y2="6.5" stroke="#1d3a8a" stroke-width="1"/><line x1="9" y1="3" x2="9" y2="9" stroke="#1d3a8a" stroke-width="1"/><line x1="15" y1="3" x2="15" y2="6.5" stroke="#1d3a8a" stroke-width="1"/>
+  </g>
+  </svg>

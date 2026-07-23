@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import s from './Book.module.css'
 
 /**
- * CoverNavItem — a premium chapter entry on the book's cover page.
+ * CoverNavItem  -  a premium chapter entry on the book's cover page.
  * Icon plate + script label + serif subtitle + hover/active ink bar.
  */
 export default function CoverNavItem({

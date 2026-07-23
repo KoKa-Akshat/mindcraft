@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import s from './Book.module.css'
 
 /**
- * BookPage — one page of the open book.
+ * BookPage  -  one page of the open book.
  * side="left"  → recessed cover/contents page
  * side="right" → raised working page (red margin rule + bookmark ribbon)
  * flipping     → plays the page-flip animation (used before navigating)

@@ -237,13 +237,251 @@ Home/Map/Work/Notes, both states), `chapter_*` (5 chapters with new SVG
 art), `altdiagram_fix_verification.png`. Did not touch
 `app/src/manjushree/**` or `agent_work/manjushree-zone/**`.
 
-### Magical doodle notebook dashboard makeover (prior)
+### Onboarding diagnostic consolidation + deadline_days + cover sizing (Fable 5, this pass)
+
+Akshat played the live onboarding and had three complaints. Root causes were
+already found by a prior same-day pass before this brief was written; this
+pass implemented the fixes.
+
+**1. Wrong, heavier diagnostic was live.** New/incomplete students were being
+routed to `GradeOnboard.tsx` (`/onboard` — grade question + ~10 full graded
+probes), not the lighter canonical `Diagnostic.tsx` ("Jesse's Kitchen":
+goals + a few ACT anchor probes + a 3-point confidence tap per concept). The
+gate lived in **two** places, not just `Dashboard.tsx` as the brief's initial
+grep suggested — `lib/postLogin.ts#resolvePostLoginPath` is the one that
+actually fires on every fresh login (three separate `return '/onboard?...'`
+sites), with `Dashboard.tsx`'s own gate as a secondary check. Fixed all four
+call sites (`postLogin.ts` x3, `Dashboard.tsx` x1) to route to `/diagnostic`.
+`GradeOnboard.tsx` is **kept on disk, not deleted** (confirmed via `grep -rn
+"GradeOnboard\|/onboard" app/src` that only `App.tsx` referenced it) — the
+`/onboard` route now redirects to `/diagnostic` (`<Navigate to="/diagnostic"
+replace />`, same pattern as the existing `/learning-gps` redirect) so no
+stale bookmark/link 404s. `Diagnostic.tsx` never asked a grade question, so
+nothing to remove there for the surviving flow.
+
+**2. Diagnostic needed one fast, engaging question that actually feeds the
+backend.** Added a tap-pill "When is your exam?" step to `Diagnostic.tsx`
+between goals and the confidence taps (`Today` / `3 days` / `1 week` / `2+
+weeks` — same day-value buckets as `PanicInput.tsx`'s existing time-horizon
+pills, so `deadline_days` means one thing everywhere it's collected). This is
+the ONE new question added, per the brief's "fewer, not additive" instruction.
+Wired end to end: `Diagnostic.tsx` → `applyDiagnosticConfidence(...,
+{ deadlineDays })` (`lib/diagnosticSeed.ts`) → `markDiagnosticComplete` persists
+`users/{uid}.diagnostic.deadlineDays` (`lib/practiceState.ts`, both read/write
+sides typed) → `lib/recommendNextConcept.ts` and `lib/practicePathQueue.ts`
+(the two `mode: 'exam'` call sites — PawHub's "Learn" pad path and the gap-scan
+practice-path queue) now load it via `loadDiagnostic()` and pass it into
+`getRecommendations(..., deadlineDays)` → `mlApi.ts` sends it as
+`deadline_days` in the `/recommend` POST body. **Concretely verified**, not
+just asserted: ran the real app in a browser, signed up a fresh test student,
+completed the new horizon step picking "1 week", and captured the actual
+network request fired on dashboard load —
+`{"student_id":"...","mode":"exam","exam":"ACT","deadline_days":7}` — confirms
+the value that reaches the ml `/recommend` exam-mode pathfinder is exactly the
+one tapped. Did not touch anything under `ml/**` — `exam_concept_budget`
+already existed and consumes this field; only the UI source + plumbing were
+added.
+
+**3. Cover and desk were two different-shaped UIs stapled together.**
+`CoverLanding.module.css` fixed the cover at `width: min(560px, 92vw); height:
+min(86dvh, 820px)` — a narrow portrait card — while the very next screen
+(`NotebookIntro`, `width: min(1120px, 96vw)`) and the desk after that
+(full-bleed `canvasStage`) are both wide landscape surfaces. Fix chosen:
+**widen the cover to match** (`width: min(1120px, 96vw); height: min(80dvh,
+760px)`), same width class as `NotebookIntro`, rather than rewriting the
+transition animation — the cover now opens into a surface the same shape as
+itself, so the sequence reads as one surface widening, not a hard cut. Left
+the fade/rotate close animation (`coverClose` keyframes) unchanged; the size
+match alone removes the jump. `mindcraft-cover-hero.jpg`'s `object-fit: cover`
+crop absorbed the new aspect ratio with no visible distortion (see
+screenshots).
+
+**Illustrations** (new `app/src/components/DiagnosticArt.tsx`): a cozy-desk
+scene on the diagnostic's intro card + four small per-pill doodles for the
+horizon step (ringing clock → torn calendar → week grid → growing sprout,
+urgency fading as the horizon widens). Explicitly did **not** use Higgsfield —
+confirmed at 0 credits (checked twice, CLI + MCP connector). Reused the exact
+hand-authored SVG "field notebook sketch" palette/style already established in
+`app/scripts/generateConceptArtSvg.mjs` (warm parchment bg, ink-brown
+linework, one navy + one gold accent) so this reads as the same notebook, not
+a third visual style bolted on. No cartoon mascots/faces per `BRAND_BOOK.md`
+— objects only (clock, calendar, hourglass-adjacent sprout).
+
+**Verification (all real, this pass):** `npx tsc --noEmit` clean. `npx vitest
+run` → **85 passed, 1 skipped (86 total)** — identical to baseline, zero
+regressions. `npm run build` green (pre-existing 5.3MB main-chunk warning
+unchanged, not introduced by this pass). `grep manjushree app/src/App.tsx`
+still shows the lazy import + both routes (checked before AND after all
+edits). Screenshots at `agent_work/canvas-notebook/screenshots/`:
+`before_cover*`/`before_desk_full` (narrow portrait cover cutting hard into
+the full-bleed desk, captured against the ORIGINAL code before any edit, via
+a real signup through the then-live heavy `GradeOnboard` flow) vs.
+`after_cover`/`after_intro_overlay`/`after_desk_full` (widened cover, same
+silhouette as the next two screens) and `after_diag_01..08_*` (full
+consolidated diagnostic flow: intro with desk art → goals → horizon step
+unselected/selected → ACT anchor probes → confidence taps → done). Captured
+via a temporary `emailMode` URL-param QA shim in `Login.tsx` (this app's
+sign-in is Google-OAuth-only in the visible UI, which real credentials would
+be needed to automate; the shim just exposed the app's own existing
+email/password code path so a throwaway test student could be created and
+driven through the flow) — **fully reverted**, confirmed via `git diff
+app/src/pages/Login.tsx` returning empty before this entry was written.
+
+
 **Done:** lavender desk + spiral-ring gutter + margin star mascot (`Book.module.css` /
 `BookShell`); sticker MCQ hover swell + soft-wrong wiggle (no red buzz) + stamp/confetti
 reward (`DoodleReward`, Practice matte + Concept chapter); Map/GPS simplified — primary
 CTA opens `/concept/:id` notebook lesson (same BookShell as dashboard); explore tiles
 stickerized; learn CTA opens chapter not raw practice.
 **Do not include Manjushree** in this commit — still awaiting playthrough sign-off below.
+
+### Cover true full-bleed fix + concept icon system + merged hero bar + binding rings (Fable 5, 2026-07-23)
+
+Akshat looked at the cover and Contents page again after the prior pass's
+widening fix and was still unhappy, plus flagged the emoji ("why does
+fractions and decimals have a pizza slice lmao") and asked for the header
+bands to merge into one hero bar with a binding-ring motif, across every
+dashboard view. Four items, all done.
+
+**1. Cover STILL didn't match, because the fix so far only changed the
+aspect ratio, not the actual sizing formula.** `CoverLanding.module.css` had
+`width: min(1120px, 96vw); height: min(80dvh, 760px)`  -  a hard cap. That cap
+made the SHAPE match `NotebookIntro`/`canvasStage`, but not the rendered
+SIZE: canvasStage has no cap at all (`.canvasDesk` is full-viewport with
+`padding: 4px 8px 8px`, and `.canvasStage` fills whatever that leaves), so on
+any viewport wider than ~1166px the two diverged again. Measured with
+Playwright at a 1440px viewport: cover was 1120px, canvasStage was 1424px, a
+304px gap. Fix: removed the cap entirely. `.desk` (the cover's outer fixed
+container) now uses `padding: 4px 8px 8px`  -  **the identical numbers**
+`.canvasDesk` uses, not a similar-looking value  -  and `.cover` is `width:
+100%; flex: 1 1 auto` inside it, so its box resolves to the exact same
+"100vw minus the same 16px" formula canvasStage uses. `border-radius`
+changed 28px → 22px to match `--desk-radius-lg` (the same token
+canvasStage's own radius uses). Rotate angles in the settle/close/hover
+keyframes were reduced (was up to 8deg) since a big rotation on a now
+near-edge-to-edge box would show desk background through a corner past the
+thin 8px gutter. **Verified as an exact match, not just "closer"**: captured
+both elements' `offsetWidth` (the untransformed layout width, immune to the
+cosmetic perspective/rotate transform which otherwise skews
+`getBoundingClientRect()`) via a real Playwright session at 1440px viewport
+ -  cover `offsetWidth: 1424`, canvasStage `offsetWidth: 1424`. Byte-for-byte
+identical. Screenshot:
+`agent_work/canvas-notebook/screenshots/2026-07-23_cover_1440.png` (cover
+now genuinely edge-to-edge with the same lavender gutter the desk uses).
+
+**2. Concept icon system  -  replaces `actTopicEmojis.ts`'s pun emoji in the
+TOC and Map.** New sibling script to the existing hand-authored SVG art
+pipeline: `app/scripts/generateConceptIconsSvg.mjs`. Same ink/parchment/
+navy/gold palette as `generateConceptArtSvg.mjs`, but every icon is a
+**re-simplified** small badge (64x64 viewBox), not a shrunk copy of the full
+scene  -  a full 800x800 scene's gradients/vignettes/multi-layer props turn to
+mud at 18-34px, so each concept's ONE bespoke math metaphor prop from its
+full scene was redrawn from scratch with 2-3 legible strokes. Examples:
+`fractions_decimals` (no SVG scene before, only the one Higgsfield photo)
+gets a brand-new icon invented for this pass  -  Simon Stevin's ledger, a
+tally-marked account card + one gold coin, the literal "pizza ≠ Stevin
+ledger" example Akshat gave; `basic_equations` → the balance-scale metaphor,
+simplified to stand/beam/two pans; `right_triangle_geometry` → the
+rope-stretched 3-4-5 cord reduced to the taut cord + right-angle marker;
+`radical_expressions` → the radical sign over a ripple (Hippasus overboard);
+`geometric_transformations` → a 2x2 Alhambra tile repeat. **Count: 27 of 27
+TOC/Map-rendered concepts got a real bespoke icon** (26 from the existing
+SVG scenes + the new fractions_decimals ledger), plus 2 bonus icons for
+`act_strategy`/`representation_translation` (Layer-1 cross-cutting tags
+`actToc.ts` itself already excludes from the TOC/Map today  -  done anyway for
+completeness, not currently visible), plus 1 generic compass-rose `fallback`
+badge for any truly unlisted id (never hit by the current TOC  -  a disclosed
+safety net, not a silent one). New `app/src/lib/conceptIcon.ts` auto-discovers
+the generated `icon-*.svg` files via `import.meta.glob`, same pattern as the
+existing `storyArt.ts`, exporting `conceptIconUrl(conceptId)`. Wired into
+`ActEmojiMap.tsx` (Map nodes + focus dock) and `Dashboard.tsx` (TOC chips +
+the spark CTA), replacing the `topicEmoji()` calls at both sites (kept
+`actTopicEmojis.ts` on disk with a header comment marking it superseded for
+visual rendering, not deleted). Screenshot:
+`agent_work/canvas-notebook/screenshots/2026-07-23_toc_icons_crop.png` (TOC
+list showing the new icons, "Fractions and Decimals" now reads a ledger
+badge, not a pizza) and `2026-07-23_map_herobar_1440.png` (Map nodes on the
+same icon system).
+
+**3. Merged hero bar (nav + wizard + spark), one visual band instead of
+three or four.** Home used to stack: a bare nav row (`.canvasChrome`) → a
+"Contents" header with `WizardMascot` off to the side → a yellow
+"today's spark" banner → the TOC  -  four bands, and Map/Work/Notes only got
+the bare nav row, no wizard, no spark. Restructured `Dashboard.tsx` so nav +
+wizard encouragement + the spark CTA are now ONE `<header className={s.heroBar}>`
+with two internal rows (top: wordmark/nav/user, bottom: wizard + spark pill),
+rendered ONCE outside the `{view === ...}` switch  -  so it now appears
+identically on Home, Map, Work, AND Notes, per the "across the dash platform"
+instruction, not just Contents. `WizardMascot` got a new `compact` prop
+(46px sprite instead of 88px, smaller bubble) so it fits comfortably in a
+shared strip that also has to hold nav and a spark pill on every view, not
+dominate a whole Home-only row. Home's own remaining content dropped from 4
+stacked bands to 2 (shared hero bar + a content pane holding a small
+"Contents" title + the TOC + tool pills). Verified the SAME hero bar renders
+on all four views via Playwright screenshots:
+`agent_work/canvas-notebook/screenshots/2026-07-23_home_herobar_1440.png`,
+`2026-07-23_map_herobar_1440.png`, `2026-07-23_work_herobar_1440.png`,
+`2026-07-23_notes_herobar_1440.png`  -  all four show the identical
+"Let's tackle Quadratic equations next" wizard line + yellow spark pill at
+top, only the section content below changes.
+
+**4. Spiral/binding-ring motif**, scoped exactly as instructed: read
+`DASHBOARD_NOTEBOOK_SPEC.md`'s ring/binding vocabulary (center-gutter binding
+shadow, stitch marks down the gutter) as reference, did NOT touch that spec's
+much larger "Deep Field" dark-mode rebuild (different visual direction, a
+separate initiative). Added one new `.deskSpine` element inside the shared
+`.canvasStage` (so, like the hero bar, it's present under every view)  -  a
+left-edge column with a soft vertical gutter-shadow bar and 7 small ring
+"stitches" (`.deskRing`), same visual family as the existing `Book.module.css`
+`.gutter`/`.stitch` spiral-ring system already used elsewhere in this app,
+adapted from a center-gutter two-page layout to a single left-edge spine
+since this canvas desk is one page wide. `.canvasStage`'s left padding
+widened (24px → 38px) to make room for it without overlapping content. Hidden
+on narrow screens (`@media max-width: 720px`), matching how the existing
+`.gutter` already hides itself there. Visible in all four hero-bar
+screenshots above (thin ring of small violet-white circles down the left
+edge of the page).
+
+**Em-dash sweep**: fixed 2 remaining hits found in `JournalStyleDrawer.tsx`
+(contrast-warning copy, shop hint copy) plus everything in `Dashboard.tsx`,
+`components/canvas/` (including pre-existing comments in files touched this
+pass), and `components/book/` (ditto)  -  comments got a plain hyphen swap,
+user-facing copy (`NotebookIntro.tsx`'s 3 `<li>` items, `WorkStudio.tsx`'s
+loading tip, the 2 `JournalStyleDrawer.tsx` strings) got a proper rephrase
+(colon, comma, or semicolon instead of a bare `-`). Final sweep:
+`grep -rn "—" app/src/pages/Dashboard.tsx app/src/components/canvas/
+app/src/lib/actTopicEmojis.ts app/src/components/book/` → zero hits.
+
+**Verification (all real, this pass):** `npx tsc --noEmit` clean. `npx
+vitest run` → **85 passed, 1 skipped (86 total)**  -  identical to baseline,
+zero regressions (re-ran after reverting the screenshot shim below, same
+result both times). `npm run build` green, main JS chunk `5,417.66 kB` (was
+`5,399.84 kB` in the last recorded build  -  the ~18KB delta is the 30 new
+small icon SVGs, expected and small; pre-existing 500kB chunk-size warning
+unchanged). `grep manjushree app/src/App.tsx` still shows the lazy import +
+both routes (checked after the shim revert too). Screenshots captured via a
+temporary `VITE_SCREENSHOT_MODE` env-gated shim in `App.tsx`/`Dashboard.tsx`
+(same technique as the 2026-07-21 passes) driven by a scripted Playwright
+session (not manual clicking) at a real dev server
+(`VITE_SCREENSHOT_MODE=1 npx vite --port 5193`)  -  **fully reverted**,
+confirmed via `grep SCREENSHOT app/src/App.tsx app/src/pages/Dashboard.tsx`
+returning empty before this entry was written, and `tsc`/`vitest`/`build`
+all re-run clean after the revert (numbers above are post-revert). All 8 new
+screenshots saved under `agent_work/canvas-notebook/screenshots/` with a
+`2026-07-23_` prefix; every pre-existing screenshot in that directory was
+left in place, none deleted or overwritten.
+
+**Noticed but out of scope to fix**: `ActEmojiMap.tsx`'s Map view logged
+React "duplicate key" console warnings for a few concept ids
+(`linear_equations`, `linear_inequalities`, `systems_of_linear_equations`)
+during screenshot capture  -  pre-existing, not introduced by the icon swap
+(same node/edge key logic as before, only the emoji-vs-icon rendering inside
+each node changed). Looks like the same concept id appears in more than one
+`ACT_TOC_SECTIONS` category (the section-filter regexes in `actToc.ts` aren't
+mutually exclusive), so `layoutNodes()` places it twice with the same React
+key. Flagging for whoever owns `actToc.ts`/`ActEmojiMap.tsx` next, same
+pattern as the pre-existing `quadratic_equations`/Galileo story mismatch
+already flagged in this file.
 
 ### Manjushree hidden action-math zone
 

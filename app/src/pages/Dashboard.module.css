@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────
    Dashboard-specific styles (v3)
    The book shell / pages / cover nav / study plan live in
-   components/book/Book.module.css — this file keeps only the
+   components/book/Book.module.css  -  this file keeps only the
    dateline, entry blocks, explore cards, fore-edge tabs and
    the on-paper panels (solver / notes / map).
    Design tokens are inherited from the BookShell element.
@@ -348,7 +348,7 @@
   display: block;
 }
 
-/* ── explore concept cards — sticker tiles ────────────────── */
+/* ── explore concept cards  -  sticker tiles ────────────────── */
 .exploreSectionLabel {
   font-family: var(--font-stamp);
   font-size: 10px;
@@ -821,7 +821,7 @@
 
 
 /* ── Single-canvas desk (full-bleed horizontal flipping pages) ──
-   Shared design tokens for the whole notebook system — the same scale
+   Shared design tokens for the whole notebook system  -  the same scale
    is echoed in ConceptChapterPage.module.css's .chapterDesk so the
    dashboard desk, the chapter canvas, and Practice's matte all read as
    one continuous surface instead of three separately-tuned UIs. */
@@ -854,14 +854,54 @@
   box-sizing: border-box;
 }
 
-.canvasChrome {
+/* ── merged hero bar ──────────────────────────────────────────────────────
+   Was three stacked bands on Home only (nav row -> "Contents" + wizard row
+   -> yellow spark banner) plus a bare nav-only row on Map/Work/Notes. Akshat:
+   "merge everything inside  -  logo and content and Home/Map/Work/Notes etc
+   can be in the same hero bar with the wizard saying [encouragement]...
+   across the dash platform." Now ONE .heroBar, rendered once outside the
+   view switch in Dashboard.tsx, so nav + wizard encouragement + today's
+   spark CTA appear identically on every view, not just Contents. Two internal
+   rows (top: wordmark/nav/user, bottom: wizard/spark) so it still wraps
+   cleanly on narrow screens without needing four separate visual bands. */
+.heroBar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px 12px 10px;
+}
+
+.heroTopRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  flex-shrink: 0;
-  padding: 8px 12px 10px;
 }
+
+.heroBottomRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.heroSpark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  border: var(--desk-border-sticker);
+  border-radius: var(--desk-radius-sm) 16px 12px 14px;
+  padding: 8px 14px;
+  background: linear-gradient(145deg, #fff8c8, #ffe566);
+  box-shadow: var(--desk-shadow-sticker);
+  cursor: pointer;
+  transition: transform 160ms var(--desk-ease-bounce), box-shadow 160ms var(--desk-ease-bounce);
+}
+.heroSpark:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--desk-shadow-sticker-hover); }
+.heroSpark:active { transform: translateY(0) scale(0.99); }
+.heroSparkIcon { width: 24px; height: 24px; flex-shrink: 0; }
 
 .canvasWordmark {
   font-family: 'Caveat', cursive;
@@ -917,7 +957,7 @@
 
 .canvasStage {
   /* Design tokens for anything still speaking the older BookShell
-     vocabulary (DashboardPanels.module.css / DashboardNotesPanel) — that
+     vocabulary (DashboardPanels.module.css / DashboardNotesPanel)  -  that
      shell (components/book/Book.module.css .shell) no longer wraps this
      view, so those var() calls were resolving to nothing and silently
      dropping styles (the Notes panel's search line and empty-state text
@@ -942,9 +982,54 @@
   border: none;
   border-radius: var(--desk-radius-lg);
   box-shadow: var(--desk-shadow-stage);
-  padding: 20px 24px 22px;
+  /* Extra left gutter (was 24px) makes room for .deskSpine's ring column
+     without it overlapping stage content. */
+  padding: 20px 24px 22px 38px;
   overflow: hidden;
   position: relative;
+}
+
+/* ── spiral/binding-ring spine ── a left-edge gutter with small ring
+   "stitches" down it, on every view since it lives inside the shared
+   .canvasStage (outside the per-view switch). Same visual family as the old
+   two-page BookShell's .gutter/.stitch (components/book/Book.module.css)  - 
+   spiral-ring binding down a center gutter  -  adapted to a single-page left
+   spine instead of a center gutter, since this canvas desk is one page wide,
+   not two-pages-side-by-side like the old book shell. */
+.deskSpine {
+  position: absolute;
+  left: 9px;
+  top: 16px;
+  bottom: 16px;
+  width: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+  pointer-events: none;
+}
+.deskSpine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg,
+    rgba(58, 47, 85, 0.05),
+    rgba(58, 47, 85, 0.16) 50%,
+    rgba(58, 47, 85, 0.05));
+}
+.deskRing {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fffdf8, #cfc3e8 55%, #8a7ab0 100%);
+  border: 1.5px solid rgba(58, 47, 85, 0.8);
+  box-shadow: 0 1px 0 rgba(58, 47, 85, 0.18);
+  flex-shrink: 0;
 }
 
 .stagePane {
@@ -973,11 +1058,13 @@
 }
 
 .homeTop {
+  /* Used to also hold the WizardMascot side-by-side (flex row,
+     space-between)  -  the mascot now lives in the merged .heroBar instead
+     (shared across every view), so this just stacks the small eyebrow above
+     the "Contents" title. */
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .homeEyebrow {
@@ -998,23 +1085,10 @@
   letter-spacing: -0.01em;
 }
 
-.sparkBanner {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  text-align: left;
-  border: var(--desk-border-sticker);
-  border-radius: var(--desk-radius-md) 20px 14px 18px;
-  padding: 14px 18px;
-  background: linear-gradient(145deg, #fff8c8, #ffe566);
-  box-shadow: var(--desk-shadow-sticker);
-  cursor: pointer;
-  transition: transform 160ms var(--desk-ease-bounce), box-shadow 160ms var(--desk-ease-bounce);
-}
-.sparkBanner:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--desk-shadow-sticker-hover); }
-.sparkBanner:active { transform: translateY(0) scale(0.99); }
-.sparkEmoji { font-size: 28px; }
+/* .sparkBanner (the old standalone yellow Home-only band) and its .sparkEmoji
+   are retired  -  the same CTA now lives in .heroSpark inside the merged
+   .heroBar, shared across every view. .sparkText/.sparkEyebrow/.sparkName/
+   .sparkGo below are still live, reused by .heroSpark's markup. */
 .sparkText { display: flex; flex-direction: column; flex: 1; gap: 2px; }
 .sparkEyebrow {
   font-family: 'IBM Plex Mono', monospace;
@@ -1098,7 +1172,7 @@
   background: linear-gradient(145deg, #fff8c8, #ffe566);
   border-color: rgba(196, 92, 0, 0.24);
 }
-.tocChipEmoji { font-size: 18px; }
+.tocChipEmoji { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
 
 .homeActions {
   display: flex;
@@ -1157,8 +1231,13 @@
 }
 
 @media (max-width: 720px) {
-  .canvasChrome { flex-wrap: wrap; }
+  .heroTopRow { flex-wrap: wrap; }
+  .heroBottomRow { gap: 10px; }
   .canvasWordmark { font-size: 24px; }
   .canvasDesk { padding: 2px 4px 6px; }
   .canvasStage { padding: 12px 12px 14px; border-radius: 16px; }
+  /* Ring spine is a nice-to-have flourish, not load-bearing  -  same call as
+     the old BookShell's .gutter (Book.module.css) hiding on narrow screens
+     to keep the tiny stage width for real content. */
+  .deskSpine { display: none; }
 }

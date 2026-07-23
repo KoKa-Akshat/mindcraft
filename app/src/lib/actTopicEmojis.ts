@@ -1,4 +1,13 @@
-/** Cute hand-picked emoji per ACT concept — not AI-generated icons. */
+/**
+ * Superseded for VISUAL rendering by `lib/conceptIcon.ts` (2026-07-23)  -  the
+ * TOC list and Map now render a hand-authored, concept-locked SVG badge
+ * instead of these emoji (Akshat: "why does fractions and decimals have a
+ * pizza slice lmao"  -  a generic pun, not a real depiction, next to real
+ * per-concept art everywhere else). Kept on disk only as a plain-text/alt
+ * fallback if some future caller needs a one-character label instead of an
+ * image; do not wire this back into the TOC/Map rendering path.
+ */
+/** Cute hand-picked emoji per ACT concept  -  not AI-generated icons. */
 export const ACT_TOPIC_EMOJI: Record<string, string> = {
   fractions_decimals: '🍕',
   ratios_proportions: '⚖️',

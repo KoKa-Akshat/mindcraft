@@ -143,7 +143,7 @@ async function loadPracticePathData(userId: string): Promise<PracticePathQueue> 
 
   let assessConcepts: PathConcept[] = []
   try {
-    const examRec = await getRecommendations(userId, [], 'exam', exam, excludedConcepts)
+    const examRec = await getRecommendations(userId, [], 'exam', exam, excludedConcepts, diagnostic?.deadlineDays)
     assessConcepts = conceptsFromIds(chainSteps(examRec).map(r => r.conceptId))
   } catch { /* fail soft */ }
 

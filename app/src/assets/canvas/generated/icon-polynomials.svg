@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+    <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(32 32)">
+    <!-- stacked terms, tallest degree at the back -->
+    <rect x="-16" y="-14" width="7" height="26" fill="#1d3a8a" opacity="0.85"/>
+    <rect x="-6" y="-6" width="7" height="18" fill="#c99a3a" opacity="0.85"/>
+    <rect x="4" y="0" width="7" height="12" fill="#eddab3" stroke="#33230f" stroke-width="1.4"/>
+    <line x1="-18" y1="12" x2="14" y2="12" stroke="#33230f" stroke-width="1.8"/>
+  </g>
+  </svg>

@@ -1,5 +1,5 @@
 /**
- * ConceptVignette — small animated line-art for a math concept, drawn in the
+ * ConceptVignette  -  small animated line-art for a math concept, drawn in the
  * same gentle floating style as the login page art. Pure SVG + CSS, no deps.
  * Used on the dashboard explore cards; degrades to a static drawing when the
  * user prefers reduced motion (handled in CSS).
@@ -278,7 +278,7 @@ export default function ConceptVignette({ id }: { id: string }) {
     case 'algebraic_manipulation':
     case 'rational_expressions':
       return (
-        // Balance scale — two pans in equilibrium
+        // Balance scale  -  two pans in equilibrium
         <svg className={s.vignette} viewBox="0 0 120 80" aria-hidden="true">
           <g className={s.floatSlow}>
             {/* beam */}
@@ -320,7 +320,7 @@ export default function ConceptVignette({ id }: { id: string }) {
     case 'polynomials':
     case 'polynomial_operations':
       return (
-        // Cubic curve — more interesting than a parabola
+        // Cubic curve  -  more interesting than a parabola
         <svg className={s.vignette} viewBox="0 0 120 80" aria-hidden="true">
           <CenteredAxes />
           <path

@@ -4,7 +4,7 @@ import { resolvedFontPreset, resolvedPaperPreset, themeShellStyle } from '../../
 import s from './Book.module.css'
 
 /**
- * BookShell — the desk + open-book spread.
+ * BookShell  -  the desk + open-book spread.
  * Renders chrome (wordmark / user / actions) above a two-page book
  * with a stitched binding gutter. Pages are provided as children
  * via <BookPage side="left|right">.

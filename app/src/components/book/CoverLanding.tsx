@@ -14,7 +14,7 @@ function markCoverSeen() {
 }
 
 /**
- * Soft pastel notebook cover — tap to open into the canvas desk.
+ * Soft pastel notebook cover  -  tap to open into the canvas desk.
  * Shown once per browser session.
  */
 export default function CoverLanding({

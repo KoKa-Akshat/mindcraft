@@ -229,7 +229,7 @@ export default function JournalStyleDrawer({
                 <p className={customContrastOk ? s.contrastOk : s.contrastBad}>
                   {customContrastOk
                     ? `contrast ${contrastRatio(customInkDraft, customPaperDraft).toFixed(1)}:1`
-                    : 'too low contrast to read — lighten paper or darken ink'}
+                    : 'too low contrast to read, lighten paper or darken ink'}
                 </p>
                 <button
                   type="button"
@@ -359,7 +359,7 @@ export default function JournalStyleDrawer({
         ) : (
           <div className={s.section}>
             <p className={s.hint}>
-              Cover art and sticker packs for your journal. Free items equip right away —
+              Cover art and sticker packs for your journal. Free items equip right away;
               locked items are coming soon.
             </p>
             <div className={s.shopGrid}>

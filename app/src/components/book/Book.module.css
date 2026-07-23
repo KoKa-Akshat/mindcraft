@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────────────────────
-   The Field Journal — Book system v3
+   The Field Journal  -  Book system v3
    Premium open-book shell · cover nav · study plan · page flip
    Shared by BookShell / BookPage / CoverNavItem / StudyPlanList
    ───────────────────────────────────────────────────────────── */
 
 .shell {
-  /* Magical doodle notebook — soft desk, cream pages, pastel highlighters */
+  /* Magical doodle notebook  -  soft desk, cream pages, pastel highlighters */
   --cover:        #2a2438;
   --cover-object: #352e48;
   --chalk:        #f7efe8;
@@ -187,7 +187,7 @@
   border-radius: inherit;
 }
 
-/* red margin rule — right page */
+/* red margin rule  -  right page */
 .pageRight::after {
   content: '';
   position: absolute;
@@ -750,7 +750,7 @@
   .shell { padding: 0 0 70px; }
   .chrome { padding: 14px 16px; max-width: 100%; }
 
-  /* pages stack — the book becomes a scroll of sections */
+  /* pages stack  -  the book becomes a scroll of sections */
   .book {
     grid-template-columns: 1fr;
     width: 100%;
@@ -824,10 +824,10 @@
   --font-script: var(--font-stamp);
 }
 
-/* ── Night circuit — cyberpunk paper preset ──────────────────
+/* ── Night circuit  -  cyberpunk paper preset ──────────────────
    Still a notebook: same grain, same rules, same margin doctrine.
    The accent family shifts to cyan/magenta/violet and the gutter
-   stitches get one restrained neon glow — the one place this skin
+   stitches get one restrained neon glow  -  the one place this skin
    is allowed to break the "shadow, not glow" rule, because the
    owner asked for "slightly cyberpunk but still a notebook." */
 .shell[data-paper="cyberpunk"] {

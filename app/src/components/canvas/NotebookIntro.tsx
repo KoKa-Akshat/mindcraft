@@ -29,9 +29,9 @@ export default function NotebookIntro({ onContinue }: { onContinue: () => void }
             One big page. Pick a topic, write freely, get help when you’re stuck.
           </p>
           <ul className={s.steps}>
-            <li><strong>Map</strong> — icons across a big sky, lines between topics</li>
-            <li><strong>Work</strong> — drop homework or paste a problem</li>
-            <li><strong>Lessons</strong> — short stories + questions that stick</li>
+            <li><strong>Map</strong>: icons across a big sky, lines between topics</li>
+            <li><strong>Work</strong>: drop homework or paste a problem</li>
+            <li><strong>Lessons</strong>: short stories + questions that stick</li>
           </ul>
           <div className={s.footer}>
             <WizardMascot line="I’ll cheer you on and point at what to study next ★" />

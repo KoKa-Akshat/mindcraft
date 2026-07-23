@@ -81,7 +81,7 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
     if (!snap.exists() || !existingRole) {
       await ensureStudentDoc(email, currentUser?.displayName, uid)
     }
-    return '/onboard?entry=1'
+    return '/diagnostic'
   }
 
   if (opts.grantAdmin) return '/admin'
@@ -100,12 +100,12 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
   // KG and practice history are preserved so you can compare dashboard effects).
   if (isDiagResetEmail(email)) {
     await clearStudentDiagnosticState(uid)
-    return '/onboard?entry=1'
+    return '/diagnostic'
   }
 
   // Always gate students on diagnostic — ignore ?next= when scan isn't done.
   const done = await isDiagnosticComplete(uid)
-  if (!done) return '/onboard?entry=1'
+  if (!done) return '/diagnostic'
 
   return opts.returnTo ?? '/dashboard'
 }

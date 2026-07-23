@@ -18,6 +18,7 @@ import type { Confidence } from '../lib/bridgePractice'
 import spec from '../data/actDiagnostic.json'
 import actBankData from '../data/actMasterQuestionBank.generated.json'
 import MathText from '../components/MathText'
+import { DeskArt, HorizonIcon } from '../components/DiagnosticArt'
 import s from './Diagnostic.module.css'
 
 interface ConfConcept { concept_id: string; name: string; act_high_priority: boolean }
@@ -33,7 +34,18 @@ const PROBE_ANSWERS: { value: Confidence; label: string }[] = [
 
 const EXAM = 'ACT'
 
-type Step = 'intro' | 'goals' | 'probe' | 'confidence' | 'done'
+type Step = 'intro' | 'goals' | 'horizon' | 'probe' | 'confidence' | 'done'
+
+type HorizonOption = { value: number; label: string; sublabel: string; kind: 'today' | 'days' | 'week' | 'weeks' }
+
+/** Same day-value buckets as PanicInput's time-to-exam pills (components/PanicInput.tsx)
+ *  so `deadline_days` means one consistent thing everywhere it's collected. */
+const HORIZON_OPTIONS: HorizonOption[] = [
+  { value: 1,  label: 'Today',    sublabel: 'exam is today or tomorrow', kind: 'today' },
+  { value: 3,  label: '3 days',   sublabel: 'this week',                 kind: 'days' },
+  { value: 7,  label: '1 week',   sublabel: 'next week',                 kind: 'week' },
+  { value: 30, label: '2+ weeks', sublabel: 'building from scratch',     kind: 'weeks' },
+]
 
 export default function Diagnostic() {
   const user = useUser()
@@ -47,13 +59,14 @@ export default function Diagnostic() {
   const [step, setStep] = useState<Step>('intro')
   const [goalTags, setGoalTags] = useState<string[]>([])
   const [goalText, setGoalText] = useState('')
+  const [deadlineDays, setDeadlineDays] = useState<number | null>(null)
   const [confidence, setConfidence] = useState<Record<string, Confidence>>({})
   const [probeAnswers, setProbeAnswers] = useState<Record<string, Confidence>>({})
   const [excludedIds, setExcludedIds] = useState<Set<string>>(() => new Set())
   const [saving, setSaving] = useState(false)
 
   const progress = useMemo(() => {
-    const order: Step[] = ['intro', 'goals', 'probe', 'confidence', 'done']
+    const order: Step[] = ['intro', 'goals', 'horizon', 'probe', 'confidence', 'done']
     return (order.indexOf(step) / (order.length - 1)) * 100
   }, [step])
 
@@ -129,6 +142,7 @@ export default function Diagnostic() {
         {
           diagnosticVersion: (spec as { version?: string }).version,
           excludedConcepts: [...excludedIds],
+          deadlineDays,
         },
       )
       setStep('done')
@@ -148,6 +162,7 @@ export default function Diagnostic() {
 
         {step === 'intro' && (
           <section className={s.card}>
+            <DeskArt className={s.introArt} />
             <p className={s.kicker}>Jesse's kitchen</p>
             <h1 className={s.title}>{(spec as { intro: { title: string } }).intro.title}</h1>
             <p className={s.body}>{(spec as { intro: { body: string } }).intro.body}</p>
@@ -177,11 +192,36 @@ export default function Diagnostic() {
             <button
               className={s.primary}
               disabled={!goalText.trim() && goalTags.length === 0}
-              onClick={() => setStep(probeQuestions.length > 0 ? 'probe' : 'confidence')}
+              onClick={() => setStep('horizon')}
             >Next</button>
           </section>
         )}
 
+        {step === 'horizon' && (
+          <section className={s.card}>
+            <h2 className={s.h2}>When is your exam?</h2>
+            <p className={s.note}>One tap. This paces how fast your route moves.</p>
+            <div className={s.horizonGrid}>
+              {HORIZON_OPTIONS.map(opt => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  className={`${s.horizonBtn} ${deadlineDays === opt.value ? s.horizonBtnOn : ''}`}
+                  onClick={() => setDeadlineDays(opt.value)}
+                >
+                  <HorizonIcon kind={opt.kind} className={s.horizonIcon} />
+                  <span className={s.horizonLabel}>{opt.label}</span>
+                  <span className={s.horizonSublabel}>{opt.sublabel}</span>
+                </button>
+              ))}
+            </div>
+            <button
+              className={s.primary}
+              disabled={deadlineDays === null}
+              onClick={() => setStep(probeQuestions.length > 0 ? 'probe' : 'confidence')}
+            >Next</button>
+          </section>
+        )}
 
         {step === 'probe' && (
           <section className={`${s.card} ${s.probeStage}`}>

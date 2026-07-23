@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 /**
- * PageFlipTransition — 3-D page-turn between views on a book page.
+ * PageFlipTransition  -  3-D page-turn between views on a book page.
  * The entering page sweeps from -90 → 0 deg rotateY (like unfolding toward viewer);
  * the exiting page sweeps from 0 → 90 deg (folding away). Combined they produce
  * a convincing book-page flip without needing two separate face elements.
@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion'
  * `direction` controls the turn: 'forward' turns deeper into the book,
  * 'back' returns to an earlier page.
  *
- * Requires no `overflow: hidden` ancestor — the parent's overflow is left alone;
+ * Requires no `overflow: hidden` ancestor  -  the parent's overflow is left alone;
  * rotateY at ≤90 deg keeps the element within its bounding box.
  */
 export default function PageFlipTransition({

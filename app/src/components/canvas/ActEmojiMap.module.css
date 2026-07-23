@@ -113,11 +113,12 @@
 }
 
 .emoji {
-  font-size: 34px;
-  line-height: 1;
+  width: 34px;
+  height: 34px;
   filter: drop-shadow(0 3px 6px rgba(58, 47, 85, 0.16));
   transition: filter 140ms, transform 140ms;
   user-select: none;
+  pointer-events: none;
 }
 
 .dock {
@@ -128,7 +129,7 @@
   padding: 6px 4px 0;
   flex-shrink: 0;
 }
-.dockEmoji { font-size: 26px; }
+.dockEmoji { width: 26px; height: 26px; }
 .dockName {
   font-family: 'Caveat', cursive;
   font-size: 28px;
@@ -161,6 +162,6 @@
 
 @media (max-width: 720px) {
   .sky { min-height: 52dvh; }
-  .emoji { font-size: 28px; }
+  .emoji { width: 28px; height: 28px; }
   .node { width: 44px; height: 44px; }
 }

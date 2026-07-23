@@ -171,6 +171,11 @@ export async function getRecommendations(
   mode: 'curriculum' | 'exam' | 'explore' = 'curriculum',
   exam?: string | null,
   excludedConcepts?: string[],
+  /** Time-to-exam in days (tap-picked in the diagnostic's horizon step).
+   *  Consumed server-side by `exam_concept_budget(deadline_days, chain_len)`
+   *  (mindcraft_graph/config.py + planning/pathfinder.py) to pace how
+   *  aggressive the exam-mode roadmap is. Only meaningful for `mode: 'exam'`. */
+  deadlineDays?: number | null,
 ): Promise<RecommendResult | null> {
   try {
     const res = await fetch(`${ML_BASE}/recommend`, {
@@ -182,6 +187,7 @@ export async function getRecommendations(
         mode,
         ...(exam ? { exam } : {}),
         ...(excludedConcepts?.length ? { excluded_concepts: excludedConcepts } : {}),
+        ...(deadlineDays != null ? { deadline_days: deadlineDays } : {}),
       }),
     })
     if (!res.ok) return null

@@ -1,9 +1,9 @@
 /**
- * Full-canvas ACT topic map — spread constellation, icons only (name in dock).
+ * Full-canvas ACT topic map  -  spread constellation, icons only (name in dock).
  */
 import { useMemo, useState } from 'react'
 import { ACT_TOC_SECTIONS, actConceptLabel } from '../../lib/actToc'
-import { topicEmoji } from '../../lib/actTopicEmojis'
+import { conceptIconUrl } from '../../lib/conceptIcon'
 import s from './ActEmojiMap.module.css'
 
 type Props = {
@@ -18,7 +18,7 @@ type Placed = {
   y: number
 }
 
-/** Spread nodes by TOC section so edges read clearly — no pile-up in the middle. */
+/** Spread nodes by TOC section so edges read clearly  -  no pile-up in the middle. */
 function layoutNodes(): Placed[] {
   const out: Placed[] = []
   const sections = ACT_TOC_SECTIONS.filter(sec => sec.conceptIds.length > 0)
@@ -129,7 +129,7 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
               title={actConceptLabel(n.id)}
               aria-label={actConceptLabel(n.id)}
             >
-              <span className={s.emoji} aria-hidden>{topicEmoji(n.id)}</span>
+              <img className={s.emoji} src={conceptIconUrl(n.id)} alt="" draggable={false} />
             </button>
           )
         })}
@@ -137,7 +137,7 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
 
       {focus && (
         <div className={s.dock}>
-          <span className={s.dockEmoji}>{topicEmoji(focus)}</span>
+          <img className={s.dockEmoji} src={conceptIconUrl(focus)} alt="" draggable={false} />
           <span className={s.dockName}>{actConceptLabel(focus)}</span>
           {focus === sparkId && <span className={s.dockHint}>study this next</span>}
           <button type="button" className={s.dockGo} onClick={() => onOpenLesson(focus)}>

@@ -266,7 +266,7 @@ export async function fetchPracticeHubRecommendations(
         || ((a.mastery ?? 0) - (b.mastery ?? 0)))[0]?.id ?? null
   }
 
-  const examRec = await getRecommendations(userId, [], 'exam', exam)
+  const examRec = await getRecommendations(userId, [], 'exam', exam, undefined, diagnostic?.deadlineDays)
   const actPath = chainSteps(examRec).map(s => s.conceptId)
   const learnId =
     actPath.find(id => id !== weaknessId && isZeroExposure(id, nodeMap) && hasPlayableQuestions(id))

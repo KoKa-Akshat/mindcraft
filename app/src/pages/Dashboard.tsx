@@ -18,7 +18,7 @@ import WizardMascot from '../components/canvas/WizardMascot'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
-import { topicEmoji } from '../lib/actTopicEmojis'
+import { conceptIconUrl } from '../lib/conceptIcon'
 import {
   buildWeeklyPracticePaper,
   cacheWeeklyPaper,
@@ -208,7 +208,7 @@ export default function Dashboard() {
         }
       }
       if (cancelled) return
-      if (!done) navigate('/onboard', { replace: true })
+      if (!done) navigate('/diagnostic', { replace: true })
       else {
         setDiagChecked(true)
         persistDiagnosticDoneLocal()
@@ -236,7 +236,7 @@ export default function Dashboard() {
   }, [weakness, learn, recLoading])
 
   const wizardLine = weaknessLabel
-    ? `Let’s tackle ${weaknessLabel} next — you’ve got this!`
+    ? `Let’s tackle ${weaknessLabel} next. You’ve got this!`
     : 'Pick any sticker on the map and we’ll dive in ★'
 
   function playWeeklyPaper() {
@@ -256,8 +256,10 @@ export default function Dashboard() {
   if (!diagChecked) {
     return (
       <div className={s.canvasDesk}>
-        <div className={s.canvasChrome}>
-          <span className={s.canvasWordmark}>MindCraft</span>
+        <div className={s.heroBar}>
+          <div className={s.heroTopRow}>
+            <span className={s.canvasWordmark}>MindCraft</span>
+          </div>
         </div>
         <div className={s.loading}><div className={s.spinner} /></div>
       </div>
@@ -285,42 +287,61 @@ export default function Dashboard() {
       )}
 
       <div className={s.canvasDesk}>
-        <header className={s.canvasChrome}>
-          <span className={s.canvasWordmark}>MindCraft</span>
-          <nav className={s.canvasNav} aria-label="Notebook sections">
-            <button type="button" className={view === 'home' ? s.navActive : s.navBtn} onClick={openHome}>Home</button>
-            <button type="button" className={view === 'map' ? s.navActive : s.navBtn} onClick={openMap}>Map</button>
-            <button type="button" className={view === 'work' ? s.navActive : s.navBtn} onClick={openWork}>Work</button>
-            <button type="button" className={view === 'notes' ? s.navActive : s.navBtn} onClick={openNotes}>Notes</button>
-          </nav>
-          <div className={s.canvasUser}>
-            {displayName && <span>{displayName}</span>}
-            <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>sign out</button>
+        {/* ONE hero bar (was three stacked bands: nav row, "Contents" + wizard
+           row, yellow spark banner)  -  merged per Akshat's brief so logo,
+           section nav, the wizard's encouragement, and today's spark CTA all
+           read as one cohesive strip. Rendered once, outside the view switch
+           below, so it appears identically on Home/Map/Work/Notes  -  not just
+           Contents. */}
+        <header className={s.heroBar}>
+          <div className={s.heroTopRow}>
+            <span className={s.canvasWordmark}>MindCraft</span>
+            <nav className={s.canvasNav} aria-label="Notebook sections">
+              <button type="button" className={view === 'home' ? s.navActive : s.navBtn} onClick={openHome}>Home</button>
+              <button type="button" className={view === 'map' ? s.navActive : s.navBtn} onClick={openMap}>Map</button>
+              <button type="button" className={view === 'work' ? s.navActive : s.navBtn} onClick={openWork}>Work</button>
+              <button type="button" className={view === 'notes' ? s.navActive : s.navBtn} onClick={openNotes}>Notes</button>
+            </nav>
+            <div className={s.canvasUser}>
+              {displayName && <span>{displayName}</span>}
+              <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>sign out</button>
+            </div>
+          </div>
+          <div className={s.heroBottomRow}>
+            <WizardMascot line={wizardLine} compact />
+            {weakness && (
+              <button type="button" className={s.heroSpark} onClick={goChallenge}>
+                <img className={s.heroSparkIcon} src={conceptIconUrl(weakness.conceptId)} alt="" draggable={false} />
+                <span className={s.sparkText}>
+                  <span className={s.sparkEyebrow}>today’s spark</span>
+                  <span className={s.sparkName}>{weaknessLabel}</span>
+                </span>
+                <span className={s.sparkGo}>play →</span>
+              </button>
+            )}
           </div>
         </header>
 
         <main className={s.canvasStage}>
+          {/* Spiral/binding-ring motif  -  a left-edge spine on the shared
+             stage, present under every view (Home/Map/Work/Notes) since it
+             lives outside the view switch, echoing the cover's own
+             bound-notebook look (DASHBOARD_NOTEBOOK_SPEC.md's ring/binding
+             vocabulary, scoped to this one visual detail  -  not that spec's
+             full dark "Deep Field" rebuild). */}
+          <div className={s.deskSpine} aria-hidden="true">
+            {Array.from({ length: 7 }).map((_, i) => (
+              <span key={i} className={s.deskRing} />
+            ))}
+          </div>
+
           <div key={view} className={s.stagePane}>
             {view === 'home' && (
               <div className={s.homeCanvas}>
                 <div className={s.homeTop}>
-                  <div>
-                    <p className={s.homeEyebrow}>ACT Math</p>
-                    <h1 className={s.homeTitle}>Contents</h1>
-                  </div>
-                  <WizardMascot line={wizardLine} />
+                  <p className={s.homeEyebrow}>ACT Math</p>
+                  <h1 className={s.homeTitle}>Contents</h1>
                 </div>
-
-                {weakness && (
-                  <button type="button" className={s.sparkBanner} onClick={goChallenge}>
-                    <span className={s.sparkEmoji}>{topicEmoji(weakness.conceptId)}</span>
-                    <span className={s.sparkText}>
-                      <span className={s.sparkEyebrow}>today’s spark</span>
-                      <span className={s.sparkName}>{weaknessLabel}</span>
-                    </span>
-                    <span className={s.sparkGo}>play →</span>
-                  </button>
-                )}
 
                 <div className={s.horizontalToc}>
                   {ACT_TOC_SECTIONS.map(section => (
@@ -334,7 +355,7 @@ export default function Dashboard() {
                             className={`${s.tocChip} ${id === sparkId ? s.tocChipSpark : ''}`}
                             onClick={() => openChapter(id)}
                           >
-                            <span className={s.tocChipEmoji}>{topicEmoji(id)}</span>
+                            <img className={s.tocChipEmoji} src={conceptIconUrl(id)} alt="" draggable={false} />
                             <span>{actConceptLabel(id)}</span>
                           </button>
                         ))}

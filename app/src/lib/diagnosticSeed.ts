@@ -14,7 +14,7 @@ export async function applyDiagnosticConfidence(
   exam: string,
   rawConfidence: Record<string, Confidence>,
   goals?: { tags: string[]; text: string },
-  options?: { diagnosticVersion?: string; excludedConcepts?: string[] },
+  options?: { diagnosticVersion?: string; excludedConcepts?: string[]; deadlineDays?: number | null },
 ): Promise<void> {
   const canonical: Record<string, Confidence> = {}
   for (const [id, v] of Object.entries(rawConfidence)) {
@@ -27,6 +27,7 @@ export async function applyDiagnosticConfidence(
     exam,
     confidenceMap: seeded,
     excludedConcepts: excluded,
+    deadlineDays: options?.deadlineDays,
   })
   invalidateKnowledgeGraph(uid)
   notifyPracticePathUpdated()
