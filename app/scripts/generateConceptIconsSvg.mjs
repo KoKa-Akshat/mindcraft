@@ -67,243 +67,222 @@ function badge(inner) {
   </svg>\n`
 }
 
-// ── per-concept icons  -  ONE re-simplified detail from that concept's own
-// hand-authored scene metaphor, not a scaled-down copy of the whole scene ──
+// ── per-concept icons ─────────────────────────────────────────────────────
+// Still parchment badges in the ink/navy/gold notebook palette, but each
+// glyph must read as the MATH TOPIC at ~28–34px (Akshat: keep aesthetic +
+// niche, make them more intuitive). Prefer classic textbook marks with one
+// small craft flourish over opaque historical metaphors.
 const ICONS = {
 
   fractions_decimals: () => badge(`
-    <!-- Simon Stevin's ledger: a tally-marked account card + one gold coin -->
-    <rect x="-15" y="-13" width="30" height="26" rx="2" fill="${PARCH_B}" stroke="${INK}" stroke-width="2.2"/>
-    <line x1="-10" y1="-6" x2="7" y2="-6" stroke="${INK}" stroke-width="1.6" opacity="0.6"/>
-    <line x1="-10" y1="0" x2="7" y2="0" stroke="${INK}" stroke-width="1.6" opacity="0.6"/>
-    <line x1="-10" y1="6" x2="2" y2="6" stroke="${INK}" stroke-width="1.6" opacity="0.6"/>
-    <circle cx="14" cy="10" r="7" fill="${GOLD}" stroke="${INK}" stroke-width="2"/>
-    <path d="M11 10 h6 M14 7 v6" stroke="${INK}" stroke-width="1.3" opacity="0.7"/>
+    <!-- classic fraction 3/4 with a decimal point flourish -->
+    <text x="0" y="-6" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="${NAVY}">3</text>
+    <line x1="-10" y1="1" x2="10" y2="1" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="0" y="14" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="${INK}">4</text>
+    <circle cx="14" cy="-12" r="2.2" fill="${GOLD}"/>
   `),
 
   ratios_proportions: () => badge(`
-    <!-- Thales' shadow-stick: a stick, its short shadow, the pyramid's long one, same ratio -->
-    <line x1="-16" y1="14" x2="-16" y2="-10" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>
-    <line x1="-16" y1="14" x2="-6" y2="14" stroke="${GOLD}" stroke-width="2.4" stroke-dasharray="1 4" stroke-linecap="round"/>
-    <path d="M2 14 L16 -12 L20 14 Z" fill="${PARCH_B}" stroke="${INK}" stroke-width="2"/>
-    <line x1="2" y1="14" x2="20" y2="14" stroke="${GOLD}" stroke-width="2.4" stroke-dasharray="1 4" stroke-linecap="round" opacity="0.85"/>
+    <!-- a : b ratio with a tiny balance cue -->
+    <text x="-10" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="700" fill="${NAVY}">2</text>
+    <circle cx="0" cy="-1" r="2.2" fill="${GOLD}"/>
+    <circle cx="0" cy="6" r="2.2" fill="${GOLD}"/>
+    <text x="11" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="700" fill="${INK}">5</text>
   `),
 
   order_of_operations: () => badge(`
-    <!-- Analytical Engine: two meshed gears, biggest first -->
-    <circle cx="-6" cy="2" r="13" fill="none" stroke="${NAVY}" stroke-width="3"/>
-    <circle cx="-6" cy="2" r="13" fill="none" stroke="${INK}" stroke-width="1" opacity="0.5" stroke-dasharray="2 4"/>
-    <circle cx="12" cy="-8" r="7" fill="none" stroke="${GOLD}" stroke-width="2.6"/>
-    <circle cx="-6" cy="2" r="2.4" fill="${INK}"/>
-    <circle cx="12" cy="-8" r="1.6" fill="${INK}"/>
+    <!-- nested parentheses around × ÷ -->
+    <text x="0" y="6" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="700" fill="${NAVY}">( )</text>
+    <text x="0" y="2" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-weight="700" fill="${GOLD}">×÷</text>
   `),
 
   basic_equations: () => badge(`
-    <!-- a balance scale in equilibrium -->
-    <line x1="0" y1="-15" x2="0" y2="8" stroke="${INK}" stroke-width="2.6"/>
-    <line x1="-17" y1="-11" x2="17" y2="-11" stroke="${INK}" stroke-width="2.4"/>
-    <path d="M-22 -11 Q-17 3 -12 -11 Z" fill="${NAVY}" stroke="${INK}" stroke-width="1.6"/>
-    <path d="M12 -11 Q17 3 22 -11 Z" fill="${GOLD}" stroke="${INK}" stroke-width="1.6"/>
-    <path d="M-7 8 L7 8 L4 15 L-4 15 Z" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.8"/>
+    <!-- balance scale = both sides equal -->
+    <line x1="0" y1="-14" x2="0" y2="7" stroke="${INK}" stroke-width="2.4"/>
+    <line x1="-16" y1="-10" x2="16" y2="-10" stroke="${INK}" stroke-width="2.2"/>
+    <path d="M-21 -10 Q-16 2 -11 -10 Z" fill="${NAVY}" stroke="${INK}" stroke-width="1.4"/>
+    <path d="M11 -10 Q16 2 21 -10 Z" fill="${GOLD}" stroke="${INK}" stroke-width="1.4"/>
+    <path d="M-6 7 L6 7 L3 14 L-3 14 Z" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.6"/>
+    <text x="0" y="-14" text-anchor="middle" font-family="Georgia, serif" font-size="9" font-weight="700" fill="${INK}">=</text>
   `),
 
   number_properties: () => badge(`
-    <!-- taxicab numbers: two distinct cube pairs, same sum -->
-    <rect x="-16" y="-10" width="16" height="16" fill="none" stroke="${NAVY}" stroke-width="2.4"/>
-    <rect x="-12" y="-16" width="16" height="16" fill="none" stroke="${NAVY}" stroke-width="1.6" opacity="0.55"/>
-    <rect x="6" y="2" width="10" height="10" fill="none" stroke="${GOLD}" stroke-width="2.4"/>
-    <rect x="9" y="-2" width="10" height="10" fill="none" stroke="${GOLD}" stroke-width="1.6" opacity="0.6"/>
+    <!-- ± and a prime-ish 7 — number facts at a glance -->
+    <text x="-8" y="4" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="${NAVY}">±</text>
+    <text x="10" y="6" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="${GOLD}">7</text>
   `),
 
   measurement_units: () => badge(`
-    <!-- two rulers stacked that disagree -->
-    <rect x="-18" y="-8" width="36" height="8" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.8"/>
-    ${Array.from({ length: 7 }, (_, i) => `<line x1="${-18 + i * 6}" y1="-8" x2="${-18 + i * 6}" y2="${i % 3 === 0 ? -2 : -4.5}" stroke="${INK}" stroke-width="1"/>`).join('')}
-    <rect x="-15" y="3" width="30" height="8" fill="${GOLD_LT}" stroke="${NAVY}" stroke-width="1.8"/>
-    ${Array.from({ length: 6 }, (_, i) => `<line x1="${-15 + i * 6}" y1="3" x2="${-15 + i * 6}" y2="${i % 2 === 0 ? 9 : 6.5}" stroke="${NAVY}" stroke-width="1"/>`).join('')}
+    <!-- clear ruler with tick marks -->
+    <rect x="-18" y="-6" width="36" height="12" rx="2" fill="${PARCH_B}" stroke="${INK}" stroke-width="2"/>
+    ${Array.from({ length: 7 }, (_, i) => `<line x1="${-15 + i * 5}" y1="-6" x2="${-15 + i * 5}" y2="${i % 2 === 0 ? 2 : -1}" stroke="${i === 3 ? NAVY : INK}" stroke-width="${i === 3 ? 2 : 1.3}"/>`).join('')}
+    <text x="0" y="18" text-anchor="middle" font-family="Georgia, serif" font-size="8" font-weight="700" fill="${GOLD}">cm</text>
   `),
 
   algebraic_manipulation: () => badge(`
-    <!-- al-jabr: unbalanced piles restored, an arrow between them -->
-    <rect x="-20" y="-6" width="8" height="14" fill="${NAVY}" opacity="0.85"/>
-    <rect x="-10" y="0" width="8" height="8" fill="${NAVY}" opacity="0.5"/>
-    <path d="M2 0 h8" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
-    <path d="M8 -3 L14 0 L8 3 Z" fill="${INK}"/>
-    <rect x="14" y="-6" width="8" height="14" fill="${GOLD}" opacity="0.9"/>
+    <!-- x → y rearrange -->
+    <text x="-12" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="${NAVY}">x</text>
+    <path d="M-4 0 h10" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M4 -4 L10 0 L4 4 Z" fill="${GOLD}"/>
+    <text x="16" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="${INK}">y</text>
   `),
 
   linear_equations: () => badge(`
-    <!-- H4 chronometer: two dials in sync -->
-    <circle r="15" fill="${PARCH_B}" stroke="${INK}" stroke-width="2.4"/>
-    <line x1="0" y1="0" x2="0" y2="-10" stroke="${INK}" stroke-width="1.8"/>
-    <line x1="0" y1="0" x2="7" y2="4" stroke="${INK}" stroke-width="1.5"/>
-    <circle r="1.8" fill="${GOLD}"/>
-    <circle r="15" fill="none" stroke="${NAVY}" stroke-width="1.4" stroke-dasharray="1.5 3.5"/>
+    <!-- line on axes (y = mx + b), not a clock -->
+    <path d="M-16 14 h30 M-14 14 v-28" fill="none" stroke="${INK}" stroke-width="1.7" opacity="0.55"/>
+    <line x1="-14" y1="10" x2="16" y2="-12" stroke="${NAVY}" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="4" cy="-2" r="2.4" fill="${GOLD}" stroke="${INK}" stroke-width="1"/>
   `),
 
   functions_basics: () => badge(`
-    <!-- function machine: in one side, out the other -->
-    <rect x="-11" y="-11" width="22" height="22" rx="4" fill="${PARCH_B}" stroke="${NAVY}" stroke-width="2.4"/>
-    <path d="M-22 0 h8" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="-24" cy="0" r="3.4" fill="${GOLD}" stroke="${INK}" stroke-width="1.2"/>
-    <path d="M13 0 h8" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
-    <path d="M23 -4 L29 0 L23 4 Z" fill="${GOLD}" stroke="${INK}" stroke-width="1.2"/>
-    <circle r="4" fill="${NAVY}"/>
+    <!-- f(x) with a small in→out cue -->
+    <text x="0" y="6" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="${NAVY}">f(x)</text>
+    <path d="M-18 -12 h8" stroke="${GOLD}" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M-12 -15 L-8 -12 L-12 -9 Z" fill="${GOLD}"/>
   `),
 
   right_triangle_geometry: () => badge(`
-    <!-- rope-stretchers' 3-4-5 cord, taut into a right angle -->
-    <path d="M-16 12 L14 12 L14 -14" fill="none" stroke="${GOLD}" stroke-width="2.6" stroke-linecap="round"/>
-    <path d="M-16 12 L14 -14" fill="none" stroke="${INK}" stroke-width="1.6" opacity="0.55" stroke-dasharray="2.5 2.5"/>
-    <rect x="7" y="4" width="7" height="7" fill="none" stroke="${INK}" stroke-width="1.4"/>
+    <!-- right triangle with square corner + hypotenuse -->
+    <path d="M-15 12 L13 12 L13 -12 Z" fill="none" stroke="${NAVY}" stroke-width="2.4" stroke-linejoin="round"/>
+    <rect x="6" y="5" width="7" height="7" fill="none" stroke="${GOLD}" stroke-width="1.6"/>
+    <line x1="-15" y1="12" x2="13" y2="-12" stroke="${INK}" stroke-width="1.4" opacity="0.35"/>
   `),
 
   trigonometry_basics: () => badge(`
-    <!-- astrolabe sighting a star's angle -->
-    <path d="M-13 10 A13 13 0 0 1 13 10" fill="none" stroke="${NAVY}" stroke-width="2.6"/>
-    <line x1="0" y1="10" x2="0" y2="-12" stroke="${INK}" stroke-width="1.4" opacity="0.5"/>
-    <line x1="0" y1="10" x2="-10" y2="-5" stroke="${GOLD}" stroke-width="2.4" stroke-linecap="round"/>
-    <circle cx="0" cy="10" r="1.8" fill="${INK}"/>
+    <!-- right triangle + marked angle + opposite side -->
+    <path d="M-14 12 L14 12 L14 -10 Z" fill="none" stroke="${INK}" stroke-width="2.2"/>
+    <path d="M14 12 A8 8 0 0 0 8 5" fill="none" stroke="${GOLD}" stroke-width="2"/>
+    <line x1="-14" y1="12" x2="14" y2="-10" stroke="${NAVY}" stroke-width="2" stroke-linecap="round"/>
   `),
 
   linear_inequalities: () => badge(`
-    <!-- payload boundary: shaded region strictly on one side of the line -->
-    <line x1="0" y1="-16" x2="0" y2="16" stroke="${INK}" stroke-width="2" stroke-dasharray="1 3.5"/>
-    <path d="M0 -16 L18 -16 L18 16 L0 16 Z" fill="${NAVY}" opacity="0.4"/>
-    <path d="M2 4 L10 4 L10 -2 L16 6 L10 14 L10 8 L2 8 Z" fill="${GOLD}" opacity="0.9"/>
+    <!-- number line with open circle + ray -->
+    <line x1="-18" y1="0" x2="18" y2="0" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="-4" cy="0" r="4" fill="${PARCH_A}" stroke="${NAVY}" stroke-width="2.2"/>
+    <path d="M0 0 h14" stroke="${GOLD}" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M12 -4 L18 0 L12 4 Z" fill="${GOLD}"/>
   `),
 
   systems_of_linear_equations: () => badge(`
-    <!-- counting-rod grid: the ancient elimination method -->
-    <g transform="translate(-14 -10) scale(1.05)">
-      ${[0, 1].map(r => [0, 1, 2].map(c => `<rect x="${c * 10}" y="${r * 12}" width="4" height="${8 + ((r + c) % 2) * 4}" fill="${(r + c) % 2 ? NAVY : GOLD}"/>`).join('')).join('')}
-    </g>
+    <!-- two crossing lines = one solution -->
+    <path d="M-16 14 h30 M-14 14 v-28" fill="none" stroke="${INK}" stroke-width="1.4" opacity="0.4"/>
+    <line x1="-14" y1="10" x2="14" y2="-10" stroke="${NAVY}" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="-14" y1="-8" x2="14" y2="12" stroke="${GOLD}" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="0" cy="1" r="2.8" fill="${PARCH_A}" stroke="${INK}" stroke-width="1.6"/>
   `),
 
   exponent_rules: () => badge(`
-    <!-- chessboard doubling grains: 1,2,4,8 -->
-    <g transform="translate(-14 -14)">
-      ${[0, 1, 2, 3].map(i => `<rect x="${(i % 2) * 14} " y="${Math.floor(i / 2) * 14}" width="12" height="12" fill="${(i % 2) ? PARCH_B : PARCH_A}" stroke="${INK}" stroke-width="1"/>`).join('')}
-      ${[1, 2, 4, 8].map((n, i) => `<circle cx="${(i % 2) * 14 + 6}" cy="${Math.floor(i / 2) * 14 + 6}" r="${1.4 + Math.log2(n) * 1.1}" fill="${GOLD}" opacity="0.85"/>`).join('')}
-    </g>
+    <!-- x² power notation -->
+    <text x="-2" y="8" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="700" fill="${NAVY}">x</text>
+    <text x="12" y="-4" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="700" fill="${GOLD}">2</text>
   `),
 
   polynomials: () => badge(`
-    <!-- stacked terms, tallest degree at the back -->
-    <rect x="-16" y="-14" width="7" height="26" fill="${NAVY}" opacity="0.85"/>
-    <rect x="-6" y="-6" width="7" height="18" fill="${GOLD}" opacity="0.85"/>
-    <rect x="4" y="0" width="7" height="12" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.4"/>
-    <line x1="-18" y1="12" x2="14" y2="12" stroke="${INK}" stroke-width="1.8"/>
+    <!-- descending powers as bars + xⁿ cue -->
+    <rect x="-14" y="-12" width="6" height="24" rx="1" fill="${NAVY}" opacity="0.9"/>
+    <rect x="-4" y="-4" width="6" height="16" rx="1" fill="${GOLD}" opacity="0.9"/>
+    <rect x="6" y="2" width="6" height="10" rx="1" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.3"/>
+    <line x1="-16" y1="12" x2="14" y2="12" stroke="${INK}" stroke-width="1.6"/>
   `),
 
   factoring_polynomials: () => badge(`
-    <!-- area model: (x+a)(x+b) as four panels -->
-    <rect x="-16" y="-14" width="18" height="14" fill="${NAVY}" opacity="0.85"/>
-    <rect x="2" y="-14" width="10" height="14" fill="${GOLD}" opacity="0.85"/>
-    <rect x="-16" y="0" width="18" height="8" fill="${GOLD}" opacity="0.5"/>
-    <rect x="2" y="0" width="10" height="8" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.2"/>
-    <rect x="-16" y="-14" width="28" height="22" fill="none" stroke="${INK}" stroke-width="1.8"/>
+    <!-- (x+a)(x+b) area model, four clear panels -->
+    <rect x="-15" y="-13" width="16" height="14" fill="${NAVY}" opacity="0.85"/>
+    <rect x="3" y="-13" width="10" height="14" fill="${GOLD}" opacity="0.85"/>
+    <rect x="-15" y="3" width="16" height="8" fill="${GOLD}" opacity="0.45"/>
+    <rect x="3" y="3" width="10" height="8" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.2"/>
+    <rect x="-15" y="-13" width="28" height="24" fill="none" stroke="${INK}" stroke-width="1.8"/>
   `),
 
   radical_expressions: () => badge(`
-    <!-- the radical sign, a ripple beneath it (Hippasus overboard) -->
-    <path d="M-16 -2 L-11 5 L-4 -14 L14 -14" fill="none" stroke="${NAVY}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M-14 12 q7 6 14 0 q7 -6 14 0" fill="none" stroke="${GOLD}" stroke-width="2" opacity="0.75"/>
+    <!-- clean √x -->
+    <path d="M-14 2 L-9 10 L-2 -12 L16 -12" fill="none" stroke="${NAVY}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="6" y="6" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="700" fill="${GOLD}">x</text>
   `),
 
   quadratic_equations: () => badge(`
-    <!-- the cannon's parabolic arc -->
-    <path d="M-18 12 Q0 -16 18 12" fill="none" stroke="${GOLD}" stroke-width="2.6" stroke-dasharray="1 4.5" stroke-linecap="round"/>
-    <circle cx="-18" cy="12" r="2.6" fill="${INK}"/>
-    <circle cx="18" cy="12" r="2.6" fill="${INK}" opacity="0.85"/>
+    <!-- upward parabola with vertex + roots -->
+    <path d="M-16 14 h30 M-14 14 v-28" fill="none" stroke="${INK}" stroke-width="1.4" opacity="0.4"/>
+    <path d="M-16 12 Q0 -16 16 12" fill="none" stroke="${NAVY}" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="0" cy="-10" r="2.4" fill="${GOLD}"/>
+    <circle cx="-12" cy="8" r="2" fill="${INK}"/><circle cx="12" cy="8" r="2" fill="${INK}"/>
   `),
 
   descriptive_statistics: () => badge(`
-    <!-- bell curve over a small histogram -->
+    <!-- bell curve over a histogram -->
     <path d="M-16 12 Q-16 -10 0 -12 Q16 -10 16 12" fill="none" stroke="${NAVY}" stroke-width="2.2"/>
-    <rect x="-13" y="0" width="5" height="12" fill="${GOLD}" opacity="0.8"/>
-    <rect x="-4" y="-6" width="5" height="18" fill="${NAVY}" opacity="0.7"/>
-    <rect x="5" y="2" width="5" height="10" fill="${GOLD}" opacity="0.8"/>
-    <line x1="-16" y1="12" x2="16" y2="12" stroke="${INK}" stroke-width="1.8"/>
+    <rect x="-12" y="2" width="5" height="10" fill="${GOLD}" opacity="0.85"/>
+    <rect x="-3" y="-4" width="5" height="16" fill="${NAVY}" opacity="0.75"/>
+    <rect x="6" y="4" width="5" height="8" fill="${GOLD}" opacity="0.85"/>
+    <line x1="-16" y1="12" x2="16" y2="12" stroke="${INK}" stroke-width="1.6"/>
   `),
 
   basic_probability: () => badge(`
-    <!-- two dice mid-tumble -->
-    <g transform="rotate(-10)">
-      <rect x="-14" y="-10" width="16" height="16" rx="2.5" fill="${PARCH_B}" stroke="${INK}" stroke-width="2"/>
-      <circle cx="-9" cy="-5" r="1.4" fill="${INK}"/><circle cx="-1" cy="-5" r="1.4" fill="${INK}"/>
-      <circle cx="-5" cy="2" r="1.4" fill="${INK}"/>
-    </g>
-    <g transform="translate(8 6) rotate(12)">
-      <rect x="-8" y="-8" width="16" height="16" rx="2.5" fill="${NAVY}" stroke="${INK}" stroke-width="2"/>
-      <circle cx="0" cy="0" r="1.6" fill="${GOLD_LT}"/>
-    </g>
+    <!-- single clear die (chance) -->
+    <rect x="-12" y="-12" width="24" height="24" rx="4" fill="${PARCH_B}" stroke="${INK}" stroke-width="2.2"/>
+    <circle cx="-5" cy="-5" r="2" fill="${INK}"/>
+    <circle cx="5" cy="-5" r="2" fill="${INK}"/>
+    <circle cx="0" cy="0" r="2" fill="${GOLD}"/>
+    <circle cx="-5" cy="5" r="2" fill="${INK}"/>
+    <circle cx="5" cy="5" r="2" fill="${INK}"/>
   `),
 
   exponential_functions: () => badge(`
-    <!-- the sharply upward compound-growth curve -->
-    <path d="M-16 14 h30" stroke="${INK}" stroke-width="1.6" opacity="0.5"/>
-    <path d="M-16 14 v-28" stroke="${INK}" stroke-width="1.6" opacity="0.5"/>
-    <path d="M-16 14 Q-2 10 4 -4 T16 -16" fill="none" stroke="${NAVY}" stroke-width="2.6" stroke-linecap="round"/>
-    <circle cx="16" cy="-16" r="2" fill="${GOLD}"/>
+    <!-- sharp growth curve on axes -->
+    <path d="M-16 14 h30 M-14 14 v-28" fill="none" stroke="${INK}" stroke-width="1.5" opacity="0.45"/>
+    <path d="M-14 12 Q-2 10 4 -2 T16 -16" fill="none" stroke="${NAVY}" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="16" cy="-16" r="2.4" fill="${GOLD}"/>
   `),
 
   sequences_series: () => badge(`
-    <!-- Gauss's trick: numbers paired end to end, always the same sum -->
-    <g transform="translate(-15 6)">
-      ${[0, 1, 2, 3].map(i => `<rect x="${i * 8}" y="${(3 - i) * -2}" width="6" height="${6 + i * 4}" fill="${i % 2 ? NAVY : GOLD}" opacity="0.85"/>`).join('')}
-    </g>
-    <path d="M-15 -4 Q-1 -16 17 -4" fill="none" stroke="${INK}" stroke-width="1.4" stroke-dasharray="1.5 3" opacity="0.6"/>
+    <!-- 1 · 2 · 3 · … -->
+    <text x="-12" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="${NAVY}">1</text>
+    <circle cx="-4" cy="1" r="1.4" fill="${GOLD}"/>
+    <text x="2" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="${INK}">2</text>
+    <circle cx="9" cy="1" r="1.4" fill="${GOLD}"/>
+    <text x="16" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="${NAVY}">…</text>
   `),
 
   lines_angles: () => badge(`
-    <!-- Eratosthenes: two verticals, same sun, different shadow angles -->
-    <line x1="-11" y1="14" x2="-11" y2="-10" stroke="${INK}" stroke-width="2.4"/>
-    <line x1="-11" y1="14" x2="-1" y2="12" stroke="${GOLD}" stroke-width="1.8" stroke-dasharray="1 3"/>
-    <path d="M-11 14 A8 8 0 0 1 -5 8" fill="none" stroke="${NAVY}" stroke-width="1.6"/>
-    <line x1="11" y1="14" x2="11" y2="-10" stroke="${INK}" stroke-width="2.4"/>
-    <line x1="11" y1="14" x2="11" y2="4" stroke="${GOLD}" stroke-width="1.8" stroke-dasharray="1 3"/>
+    <!-- angle mark ∠ -->
+    <line x1="-14" y1="12" x2="16" y2="12" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="-14" y1="12" x2="8" y2="-12" stroke="${NAVY}" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M-4 12 A12 12 0 0 1 0 2" fill="none" stroke="${GOLD}" stroke-width="2.2"/>
   `),
 
   triangles_congruence: () => badge(`
-    <!-- two triangles, same shape and size, one mirrored -->
+    <!-- two congruent triangles with tick marks -->
     <path d="M-16 10 L-2 10 L-9 -12 Z" fill="none" stroke="${NAVY}" stroke-width="2.2"/>
     <path d="M4 10 L18 10 L11 -12 Z" fill="none" stroke="${GOLD}" stroke-width="2.2"/>
-    <path d="M-8 3 h4" stroke="${INK}" stroke-width="1.2" opacity="0.6"/>
+    <line x1="-12" y1="4" x2="-9" y2="0" stroke="${INK}" stroke-width="1.6"/>
+    <line x1="8" y1="4" x2="11" y2="0" stroke="${INK}" stroke-width="1.6"/>
   `),
 
   circles_geometry: () => badge(`
-    <!-- Archimedes' bath overflow, pi as the circle's own ratio -->
-    <path d="M-16 10 h32 v6 h-32 Z" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.8"/>
-    <path d="M-16 10 q16 -3 32 0" fill="none" stroke="${NAVY}" stroke-width="1.6" opacity="0.7"/>
-    <circle cx="0" cy="-6" r="10" fill="none" stroke="${GOLD}" stroke-width="2.4"/>
-    <line x1="0" y1="-6" x2="10" y2="-6" stroke="${INK}" stroke-width="1.2"/>
+    <!-- circle with radius and π -->
+    <circle r="14" fill="none" stroke="${NAVY}" stroke-width="2.4"/>
+    <line x1="0" y1="0" x2="14" y2="0" stroke="${GOLD}" stroke-width="2" stroke-linecap="round"/>
+    <circle r="2" fill="${INK}"/>
+    <text x="-4" y="6" text-anchor="middle" font-family="Georgia, serif" font-size="10" font-weight="700" fill="${INK}">π</text>
   `),
 
   area_volume: () => badge(`
-    <!-- sphere snug inside a cylinder, Archimedes' favorite ratio -->
-    <rect x="-11" y="-14" width="22" height="26" fill="none" stroke="${INK}" stroke-width="2"/>
-    <ellipse cx="0" cy="-14" rx="11" ry="3.5" fill="none" stroke="${INK}" stroke-width="1.6"/>
-    <ellipse cx="0" cy="12" rx="11" ry="3.5" fill="none" stroke="${INK}" stroke-width="1.6"/>
-    <circle cx="0" cy="-1" r="10.5" fill="${NAVY}" opacity="0.55" stroke="${INK}" stroke-width="1.4"/>
+    <!-- 3D box (volume) with a face tint (area) -->
+    <path d="M-12 4 L0 -8 L14 -2 L2 10 Z" fill="${PARCH_B}" stroke="${INK}" stroke-width="1.6"/>
+    <path d="M-12 4 L-12 14 L2 20 L2 10 Z" fill="${NAVY}" opacity="0.35" stroke="${INK}" stroke-width="1.6"/>
+    <path d="M2 10 L2 20 L14 14 L14 -2 Z" fill="${GOLD}" opacity="0.45" stroke="${INK}" stroke-width="1.6"/>
   `),
 
   geometric_transformations: () => badge(`
-    <!-- Alhambra tessellation: one tile repeated by reflection, no gaps -->
-    <g transform="translate(-14 -14)">
-      ${[0, 1].map(r => [0, 1].map(c => {
-        const x = c * 14; const y = r * 14; const flip = (r + c) % 2
-        return `<path d="M${x} ${y} L${x + 14} ${y} L${x + 7} ${y + 14} Z" fill="${flip ? NAVY : GOLD}" opacity="0.8" transform="${flip ? `rotate(180 ${x + 7} ${y + 7})` : ''}"/>`
-      }).join('')).join('')}
-    </g>
+    <!-- shape + rotate arrow (move / flip / turn) -->
+    <path d="M-14 6 L-4 6 L-9 -10 Z" fill="none" stroke="${NAVY}" stroke-width="2.2"/>
+    <path d="M4 8 L16 8 L10 -8 Z" fill="none" stroke="${GOLD}" stroke-width="2.2" transform="rotate(28 10 2)"/>
+    <path d="M-2 -14 A16 16 0 0 1 14 -2" fill="none" stroke="${INK}" stroke-width="1.6" stroke-dasharray="2 2"/>
+    <path d="M12 -6 L14 -2 L10 -1 Z" fill="${INK}"/>
   `),
 
-  // ── Two Layer-1 cross-cutting tags with no locked concept story
-  // (actToc.ts excludes both from the TOC/Map today  -  "no playable bank
-  // questions yet")  -  bespoke anyway, same palette, so this isn't a silent
-  // fallback if either ever surfaces in the UI. ─────────────────────────────
   act_strategy: () => badge(`
-    <!-- test-day compass/target -->
+    <!-- test-day target -->
     <circle r="15" fill="none" stroke="${NAVY}" stroke-width="2"/>
     <circle r="9" fill="none" stroke="${INK}" stroke-width="1.4" opacity="0.6"/>
     <circle r="3" fill="${GOLD}"/>
@@ -311,16 +290,16 @@ const ICONS = {
   `),
 
   representation_translation: () => badge(`
-    <!-- two linked frames, an arrow translating between them -->
+    <!-- table ↔ graph frames -->
     <rect x="-18" y="-10" width="13" height="16" rx="2" fill="none" stroke="${NAVY}" stroke-width="2"/>
+    <line x1="-15" y1="-4" x2="-8" y2="-4" stroke="${NAVY}" stroke-width="1.2"/>
+    <line x1="-15" y1="1" x2="-8" y2="1" stroke="${NAVY}" stroke-width="1.2"/>
     <rect x="5" y="-10" width="13" height="16" rx="2" fill="none" stroke="${GOLD}" stroke-width="2"/>
-    <path d="M-4 -2 h6" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M8 4 L14 -4" stroke="${GOLD}" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M-3 -2 h5" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>
     <path d="M0 -5 L4 -2 L0 1 Z" fill="${INK}"/>
   `),
 
-  // Generic safety net  -  never hit by the current TOC (every rendered
-  // concept has a bespoke entry above), kept for any future/unlisted id
-  // instead of silently falling through to an emoji again.
   fallback: () => badge(`
     <circle r="13" fill="none" stroke="${INK}" stroke-width="1.6" opacity="0.5"/>
     <path d="M0 -13 L3 -3 L13 0 L3 3 L0 13 L-3 3 L-13 0 L-3 -3 Z" fill="${GOLD}" stroke="${INK}" stroke-width="1.4"/>

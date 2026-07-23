@@ -2,10 +2,9 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- sphere snug inside a cylinder, Archimedes' favorite ratio -->
-    <rect x="-11" y="-14" width="22" height="26" fill="none" stroke="#33230f" stroke-width="2"/>
-    <ellipse cx="0" cy="-14" rx="11" ry="3.5" fill="none" stroke="#33230f" stroke-width="1.6"/>
-    <ellipse cx="0" cy="12" rx="11" ry="3.5" fill="none" stroke="#33230f" stroke-width="1.6"/>
-    <circle cx="0" cy="-1" r="10.5" fill="#1d3a8a" opacity="0.55" stroke="#33230f" stroke-width="1.4"/>
+    <!-- 3D box (volume) with a face tint (area) -->
+    <path d="M-12 4 L0 -8 L14 -2 L2 10 Z" fill="#eddab3" stroke="#33230f" stroke-width="1.6"/>
+    <path d="M-12 4 L-12 14 L2 20 L2 10 Z" fill="#1d3a8a" opacity="0.35" stroke="#33230f" stroke-width="1.6"/>
+    <path d="M2 10 L2 20 L14 14 L14 -2 Z" fill="#c99a3a" opacity="0.45" stroke="#33230f" stroke-width="1.6"/>
   </g>
   </svg>

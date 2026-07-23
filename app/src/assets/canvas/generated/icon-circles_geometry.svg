@@ -2,10 +2,10 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- Archimedes' bath overflow, pi as the circle's own ratio -->
-    <path d="M-16 10 h32 v6 h-32 Z" fill="#eddab3" stroke="#33230f" stroke-width="1.8"/>
-    <path d="M-16 10 q16 -3 32 0" fill="none" stroke="#1d3a8a" stroke-width="1.6" opacity="0.7"/>
-    <circle cx="0" cy="-6" r="10" fill="none" stroke="#c99a3a" stroke-width="2.4"/>
-    <line x1="0" y1="-6" x2="10" y2="-6" stroke="#33230f" stroke-width="1.2"/>
+    <!-- circle with radius and π -->
+    <circle r="14" fill="none" stroke="#1d3a8a" stroke-width="2.4"/>
+    <line x1="0" y1="0" x2="14" y2="0" stroke="#c99a3a" stroke-width="2" stroke-linecap="round"/>
+    <circle r="2" fill="#33230f"/>
+    <text x="-4" y="6" text-anchor="middle" font-family="Georgia, serif" font-size="10" font-weight="700" fill="#33230f">π</text>
   </g>
   </svg>

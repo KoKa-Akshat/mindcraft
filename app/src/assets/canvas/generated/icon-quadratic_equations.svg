@@ -2,9 +2,10 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- the cannon's parabolic arc -->
-    <path d="M-18 12 Q0 -16 18 12" fill="none" stroke="#c99a3a" stroke-width="2.6" stroke-dasharray="1 4.5" stroke-linecap="round"/>
-    <circle cx="-18" cy="12" r="2.6" fill="#33230f"/>
-    <circle cx="18" cy="12" r="2.6" fill="#33230f" opacity="0.85"/>
+    <!-- upward parabola with vertex + roots -->
+    <path d="M-16 14 h30 M-14 14 v-28" fill="none" stroke="#33230f" stroke-width="1.4" opacity="0.4"/>
+    <path d="M-16 12 Q0 -16 16 12" fill="none" stroke="#1d3a8a" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="0" cy="-10" r="2.4" fill="#c99a3a"/>
+    <circle cx="-12" cy="8" r="2" fill="#33230f"/><circle cx="12" cy="8" r="2" fill="#33230f"/>
   </g>
   </svg>

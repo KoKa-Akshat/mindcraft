@@ -2,10 +2,8 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- taxicab numbers: two distinct cube pairs, same sum -->
-    <rect x="-16" y="-10" width="16" height="16" fill="none" stroke="#1d3a8a" stroke-width="2.4"/>
-    <rect x="-12" y="-16" width="16" height="16" fill="none" stroke="#1d3a8a" stroke-width="1.6" opacity="0.55"/>
-    <rect x="6" y="2" width="10" height="10" fill="none" stroke="#c99a3a" stroke-width="2.4"/>
-    <rect x="9" y="-2" width="10" height="10" fill="none" stroke="#c99a3a" stroke-width="1.6" opacity="0.6"/>
+    <!-- ± and a prime-ish 7 — number facts at a glance -->
+    <text x="-8" y="4" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#1d3a8a">±</text>
+    <text x="10" y="6" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#c99a3a">7</text>
   </g>
   </svg>

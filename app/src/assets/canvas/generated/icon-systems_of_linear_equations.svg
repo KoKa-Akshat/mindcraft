@@ -2,9 +2,10 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- counting-rod grid: the ancient elimination method -->
-    <g transform="translate(-14 -10) scale(1.05)">
-      <rect x="0" y="0" width="4" height="8" fill="#c99a3a"/><rect x="10" y="0" width="4" height="12" fill="#1d3a8a"/><rect x="20" y="0" width="4" height="8" fill="#c99a3a"/><rect x="0" y="12" width="4" height="12" fill="#1d3a8a"/><rect x="10" y="12" width="4" height="8" fill="#c99a3a"/><rect x="20" y="12" width="4" height="12" fill="#1d3a8a"/>
-    </g>
+    <!-- two crossing lines = one solution -->
+    <path d="M-16 14 h30 M-14 14 v-28" fill="none" stroke="#33230f" stroke-width="1.4" opacity="0.4"/>
+    <line x1="-14" y1="10" x2="14" y2="-10" stroke="#1d3a8a" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="-14" y1="-8" x2="14" y2="12" stroke="#c99a3a" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="0" cy="1" r="2.8" fill="#fbf3e2" stroke="#33230f" stroke-width="1.6"/>
   </g>
   </svg>

@@ -1,13 +1,24 @@
 /**
  * ACT table-of-contents data — grounded in Layer-1 act_relevance.tested
- * (shipped as actOntologyCoverage.json). Used by the dashboard left page.
+ * (shipped as actOntologyCoverage.json). Used by the dashboard Contents page.
  */
 import actOntologyCoverage from '../data/actOntologyCoverage.json'
+import { getConceptContent } from './conceptContent'
 import { mlIdToLabel } from './conceptMap'
 
+export type ActTocSectionId = 'warmups' | 'algebra' | 'geometry' | 'data'
+
 export type ActTocSection = {
-  id: string
+  id: ActTocSectionId
   title: string
+  /** One-line lane pitch under the section title. */
+  blurb: string
+  /** Soft lane wash (background). */
+  wash: string
+  /** Stronger accent for chips / marks. */
+  accent: string
+  /** Ink tint for titles in that lane. */
+  ink: string
   conceptIds: string[]
 }
 
@@ -30,11 +41,19 @@ export const ACT_TOC_SECTIONS: ActTocSection[] = [
   {
     id: 'warmups',
     title: 'Warm-ups',
+    blurb: 'The fluency you lean on when everything else gets noisy.',
+    wash: 'linear-gradient(180deg, #fff8f1 0%, #ffe8d6 100%)',
+    accent: '#e07a3a',
+    ink: '#8a3f12',
     conceptIds: tiers.foundational.conceptIds,
   },
   {
     id: 'algebra',
     title: 'Algebra',
+    blurb: 'Equations, functions, and the moves that unlock most ACT items.',
+    wash: 'linear-gradient(180deg, #f3faf5 0%, #d9f0e2 100%)',
+    accent: '#2f8f62',
+    ink: '#14553a',
     conceptIds: CORE.filter(id =>
       /linear|quadratic|polynomial|factor|radical|exponent|function|sequence|system|inequal/.test(id),
     ),
@@ -42,6 +61,10 @@ export const ACT_TOC_SECTIONS: ActTocSection[] = [
   {
     id: 'geometry',
     title: 'Geometry',
+    blurb: 'Shapes, angles, and space — draw it, then name it.',
+    wash: 'linear-gradient(180deg, #f2f7fc 0%, #d9e8f7 100%)',
+    accent: '#3a7eb8',
+    ink: '#1a4a72',
     conceptIds: CORE.filter(id =>
       /triangle|circle|angle|area|volume|trig|geometric|line/.test(id),
     ),
@@ -49,6 +72,10 @@ export const ACT_TOC_SECTIONS: ActTocSection[] = [
   {
     id: 'data',
     title: 'Data & chance',
+    blurb: 'Read the story in a table, then weigh what could happen next.',
+    wash: 'linear-gradient(180deg, #fff9ec 0%, #ffe9b8 100%)',
+    accent: '#c4921a',
+    ink: '#7a5200',
     conceptIds: CORE.filter(id => /stat|probabil/.test(id)),
   },
   // Note: Layer-1 cross_cutting (act_strategy, representation_translation)
@@ -56,8 +83,28 @@ export const ACT_TOC_SECTIONS: ActTocSection[] = [
   // don't ship empty truncated chips with nowhere to go.
 ]
 
+/** Short blurbs for concepts that lack a ConceptContent tagline. */
+const FALLBACK_BLURBS: Record<string, string> = {
+  fractions_decimals: 'Parts of a whole — switch freely between fractions and decimals.',
+  order_of_operations: 'Parentheses first, then powers, then multiply/divide, then add/subtract.',
+  basic_equations: 'Balance both sides until the unknown stands alone.',
+  radical_expressions: 'Simplify roots the way you simplify fractions — clean the inside first.',
+  exponential_functions: 'Growth and decay curves that multiply, not add.',
+  sequences_series: 'Find the pattern, then the next term — or the sum.',
+  triangles_congruence: 'Same shape and size: matching sides and angles tell the story.',
+  geometric_transformations: 'Slide, flip, and turn — the figure moves; the measures stay.',
+  fractions: 'Parts of a whole.',
+}
+
 export function actConceptLabel(conceptId: string): string {
   return byConcept[conceptId]?.name ?? mlIdToLabel(conceptId)
+}
+
+/** One short caption for Contents cards — prefers ConceptContent tagline. */
+export function actConceptBlurb(conceptId: string): string {
+  const tagline = getConceptContent(conceptId)?.tagline?.trim()
+  if (tagline) return tagline
+  return FALLBACK_BLURBS[conceptId] ?? 'Open the lesson for the story and a short drill.'
 }
 
 export function allActConceptIds(): string[] {

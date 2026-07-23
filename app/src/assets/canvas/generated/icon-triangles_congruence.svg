@@ -2,9 +2,10 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- two triangles, same shape and size, one mirrored -->
+    <!-- two congruent triangles with tick marks -->
     <path d="M-16 10 L-2 10 L-9 -12 Z" fill="none" stroke="#1d3a8a" stroke-width="2.2"/>
     <path d="M4 10 L18 10 L11 -12 Z" fill="none" stroke="#c99a3a" stroke-width="2.2"/>
-    <path d="M-8 3 h4" stroke="#33230f" stroke-width="1.2" opacity="0.6"/>
+    <line x1="-12" y1="4" x2="-9" y2="0" stroke="#33230f" stroke-width="1.6"/>
+    <line x1="8" y1="4" x2="11" y2="0" stroke="#33230f" stroke-width="1.6"/>
   </g>
   </svg>

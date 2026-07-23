@@ -9,11 +9,10 @@
  * hand-authored SVG concept art used everywhere else (chapter pages,
  * practice sessions).
  *
- * Source: `app/scripts/generateConceptIconsSvg.mjs`  -  a re-simplified (NOT a
- * scaled-down copy) 64x64 badge built from that SAME concept's one bespoke
- * math metaphor prop in `generateConceptArtSvg.mjs` (the balance scale for
- * basic_equations, the rope-stretched cord for right_triangle_geometry,
- * etc.), same ink/parchment/navy/gold palette. Drops files at
+ * Source: `app/scripts/generateConceptIconsSvg.mjs`  -  64x64 parchment badges
+ * in the ink/navy/gold notebook palette. Glyphs are textbook-readable at map
+ * size (fraction bar, y=mx+b line, √x, parabola, die…) with a light craft
+ * flourish — not opaque historical metaphors. Drops files at
  * `assets/canvas/generated/icon-{conceptId}.svg`, auto-discovered here via
  * import.meta.glob  -  same rerunnable-pipeline pattern as `storyArt.ts`'s
  * `story-*` glob, no code edit needed to register a new icon.

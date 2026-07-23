@@ -2,15 +2,12 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- two dice mid-tumble -->
-    <g transform="rotate(-10)">
-      <rect x="-14" y="-10" width="16" height="16" rx="2.5" fill="#eddab3" stroke="#33230f" stroke-width="2"/>
-      <circle cx="-9" cy="-5" r="1.4" fill="#33230f"/><circle cx="-1" cy="-5" r="1.4" fill="#33230f"/>
-      <circle cx="-5" cy="2" r="1.4" fill="#33230f"/>
-    </g>
-    <g transform="translate(8 6) rotate(12)">
-      <rect x="-8" y="-8" width="16" height="16" rx="2.5" fill="#1d3a8a" stroke="#33230f" stroke-width="2"/>
-      <circle cx="0" cy="0" r="1.6" fill="#e7c877"/>
-    </g>
+    <!-- single clear die (chance) -->
+    <rect x="-12" y="-12" width="24" height="24" rx="4" fill="#eddab3" stroke="#33230f" stroke-width="2.2"/>
+    <circle cx="-5" cy="-5" r="2" fill="#33230f"/>
+    <circle cx="5" cy="-5" r="2" fill="#33230f"/>
+    <circle cx="0" cy="0" r="2" fill="#c99a3a"/>
+    <circle cx="-5" cy="5" r="2" fill="#33230f"/>
+    <circle cx="5" cy="5" r="2" fill="#33230f"/>
   </g>
   </svg>

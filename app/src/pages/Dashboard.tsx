@@ -12,12 +12,13 @@ import { pawHubDisplayText, type CurriculumTrack } from '../lib/curriculumTrack'
 import type { Confidence } from '../lib/bridgePractice'
 import SessionCallCard from '../components/SessionCallCard'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
-import ActEmojiMap from '../components/canvas/ActEmojiMap'
+import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import WorkStudio from '../components/canvas/WorkStudio'
 import WizardMascot from '../components/canvas/WizardMascot'
+import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
-import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
+import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
 import {
   buildWeeklyPracticePaper,
@@ -341,12 +342,27 @@ export default function Dashboard() {
                 <div className={s.homeTop}>
                   <p className={s.homeEyebrow}>ACT Math</p>
                   <h1 className={s.homeTitle}>Contents</h1>
+                  <p className={s.homeLead}>Four lanes. Pick a topic — the Map keeps the messy connected graph.</p>
                 </div>
 
                 <div className={s.horizontalToc}>
                   {ACT_TOC_SECTIONS.map(section => (
-                    <section key={section.id} className={s.tocLane}>
-                      <h2 className={s.tocLaneTitle}>{section.title}</h2>
+                    <section
+                      key={section.id}
+                      className={s.tocLane}
+                      style={{
+                        background: section.wash,
+                        ['--lane-accent' as string]: section.accent,
+                        ['--lane-ink' as string]: section.ink,
+                      }}
+                    >
+                      <header className={s.tocLaneHead}>
+                        <TocSectionMark id={section.id} accent={section.accent} />
+                        <div className={s.tocLaneCopy}>
+                          <h2 className={s.tocLaneTitle}>{section.title}</h2>
+                          <p className={s.tocLaneBlurb}>{section.blurb}</p>
+                        </div>
+                      </header>
                       <div className={s.tocChips}>
                         {section.conceptIds.map(id => (
                           <button
@@ -356,7 +372,10 @@ export default function Dashboard() {
                             onClick={() => openChapter(id)}
                           >
                             <img className={s.tocChipEmoji} src={conceptIconUrl(id)} alt="" draggable={false} />
-                            <span>{actConceptLabel(id)}</span>
+                            <span className={s.tocChipCopy}>
+                              <span className={s.tocChipName}>{actConceptLabel(id)}</span>
+                              <span className={s.tocChipBlurb}>{actConceptBlurb(id)}</span>
+                            </span>
                           </button>
                         ))}
                       </div>
@@ -365,8 +384,8 @@ export default function Dashboard() {
                 </div>
 
                 <div className={s.homeActions}>
+                  <button type="button" className={s.toolPill} onClick={openMap}>Open the Map →</button>
                   <button type="button" className={s.toolPill} onClick={openWork}>Work</button>
-                  <button type="button" className={s.toolPill} onClick={openMap}>Map</button>
                   <button type="button" className={s.toolPill} onClick={openNotes}>Notes</button>
                   {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
                     <button type="button" className={s.paperPill} onClick={playWeeklyPaper}>
@@ -381,7 +400,12 @@ export default function Dashboard() {
             )}
 
             {view === 'map' && (
-              <ActEmojiMap sparkId={sparkId} onOpenLesson={openChapter} />
+              <div className={s.mapCanvas}>
+                <ConstellationGpsExplorer
+                  embedded
+                  autoPlotConceptId={searchParams.get('concept') || sparkId}
+                />
+              </div>
             )}
 
             {view === 'work' && (

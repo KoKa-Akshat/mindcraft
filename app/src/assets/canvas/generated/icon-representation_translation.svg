@@ -2,10 +2,13 @@
     <circle cx="32" cy="32" r="30" fill="#fbf3e2" stroke="#33230f" stroke-width="2.5"/>
     <circle cx="32" cy="32" r="30" fill="none" stroke="#eddab3" stroke-width="1" opacity="0.6"/>
     <g transform="translate(32 32)">
-    <!-- two linked frames, an arrow translating between them -->
+    <!-- table ↔ graph frames -->
     <rect x="-18" y="-10" width="13" height="16" rx="2" fill="none" stroke="#1d3a8a" stroke-width="2"/>
+    <line x1="-15" y1="-4" x2="-8" y2="-4" stroke="#1d3a8a" stroke-width="1.2"/>
+    <line x1="-15" y1="1" x2="-8" y2="1" stroke="#1d3a8a" stroke-width="1.2"/>
     <rect x="5" y="-10" width="13" height="16" rx="2" fill="none" stroke="#c99a3a" stroke-width="2"/>
-    <path d="M-4 -2 h6" stroke="#33230f" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M8 4 L14 -4" stroke="#c99a3a" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M-3 -2 h5" stroke="#33230f" stroke-width="1.8" stroke-linecap="round"/>
     <path d="M0 -5 L4 -2 L0 1 Z" fill="#33230f"/>
   </g>
   </svg>
