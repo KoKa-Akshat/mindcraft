@@ -400,6 +400,31 @@ export default function ScratchPad({
     return () => ro.disconnect()
   }, [redraw])
 
+  // React attaches its root-level touchstart/touchmove listeners as
+  // passive:true unconditionally (a perf trade-off React makes for every
+  // app, unrelated to whether this component even uses onTouch* props) —
+  // so calling preventDefault() from a React onTouchMove handler would
+  // silently no-op. This component draws via Pointer Events instead, but
+  // iOS still fires the underlying touch events in parallel, and iPadOS's
+  // page-pan gesture recognition keys off whether those NATIVE touch
+  // events get prevented, not just the touch-action CSS value — one iPad
+  // in the field kept panning the whole page under a drawing finger even
+  // with touch-action:none set everywhere down this tree. Registering a
+  // real non-passive listener directly on the DOM node (bypassing React's
+  // synthetic system entirely) is the fix every canvas-drawing library
+  // uses for this exact class of bug.
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const stop = (e: TouchEvent) => { e.preventDefault() }
+    canvas.addEventListener('touchstart', stop, { passive: false })
+    canvas.addEventListener('touchmove', stop, { passive: false })
+    return () => {
+      canvas.removeEventListener('touchstart', stop)
+      canvas.removeEventListener('touchmove', stop)
+    }
+  }, [])
+
   function deliverChange() {
     const canvas = canvasRef.current
     if (!canvas || !onChange) return
@@ -426,6 +451,7 @@ export default function ScratchPad({
 
   function move(e: React.PointerEvent<HTMLCanvasElement>) {
     if (!drawingRef.current) return
+    if (e.pointerType !== 'mouse') e.preventDefault()
     pointsRef.current.push([e.nativeEvent.offsetX, e.nativeEvent.offsetY, strokePressure(e)])
     redraw()
   }

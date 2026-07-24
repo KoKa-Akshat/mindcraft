@@ -5,6 +5,7 @@ import { auth } from '../firebase'
 import { useUser } from '../App'
 import { getUserRole } from '../lib/practiceState'
 import MindCraftLogo from './MindCraftLogo'
+import SoundToggle from './SoundToggle'
 import s from './Sidebar.module.css'
 
 const NAV = [
@@ -64,6 +65,7 @@ export default function Sidebar() {
             <span className={s.userName}>
               {user.displayName ? user.displayName.split(' ')[0] : user.email?.split('@')[0]}
             </span>
+            <SoundToggle className={s.signOutBtn} />
             <button
               className={s.signOutBtn}
               onClick={() => signOut(auth).then(() => navigate('/login', { replace: true }))}

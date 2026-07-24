@@ -81,6 +81,15 @@
   box-sizing: border-box;
 }
 
+html, body {
+  /* Stops iOS Safari's rubber-band/bounce chaining at the document
+     boundary. Scoped to "no bounce past the edge", not "no scrolling" —
+     pages that need to scroll (Dashboard, Practice, etc.) are unaffected;
+     this only removes the whole-viewport pan that iOS falls back to when
+     a touch drag isn't otherwise claimed by an element. */
+  overscroll-behavior: none;
+}
+
 body {
   font-family: var(--f-body);
   background: var(--bg);

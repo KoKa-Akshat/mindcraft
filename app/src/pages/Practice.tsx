@@ -3,6 +3,7 @@ import { useUser } from '../App'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import MathText from '../components/MathText'
 import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward'
+import { playChime, playTap } from '../lib/uiSound'
 import Sidebar from '../components/Sidebar'
 import AppTabBar from '../components/AppTabBar'
 import PingTutor from '../components/PingTutor'
@@ -1374,6 +1375,7 @@ export default function Practice() {
 
     // Soft wrong (neurodivergent-safe): wiggle + dim, try again — no red buzz, no lock-in.
     if (!correct && !hideCorrectness) {
+      playTap()
       setEliminatedChoices(prev => (prev.includes(sel!) ? prev : [...prev, sel!]))
       setWiggleChoice(sel)
       window.setTimeout(() => setWiggleChoice(null), 520)
@@ -1387,6 +1389,7 @@ export default function Practice() {
     if (!hideCorrectness) {
       setChecked(true)
       if (correct) {
+        playChime()
         setXp(x => x + LEVEL_META[level].xp)
         setRewardPhrase(pickDoodleStamp(qIndex + sel))
       }
@@ -1394,6 +1397,11 @@ export default function Practice() {
     setResults(nextResults)
     setSelectedIndices(nextIndices)
     if (hideCorrectness) {
+      // Diagnostic hide-correctness mode (C4): the SAME neutral tap plays
+      // whether the answer was right or wrong — a differentiated sound here
+      // would leak correctness through the audio channel exactly like a
+      // colored flash would, defeating the whole point of hiding it.
+      playTap()
       window.setTimeout(() => advanceQuestion(nextResults, nextIndices), 400)
     }
   }

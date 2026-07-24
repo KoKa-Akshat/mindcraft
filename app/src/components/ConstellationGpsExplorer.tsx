@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
 import { mlIdToLabel } from '../lib/conceptMap'
+import { conceptIconUrl } from '../lib/conceptIcon'
 import { getConceptContent } from '../lib/conceptContent'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { getRecommendations } from '../lib/mlApi'
@@ -62,6 +63,33 @@ const KIND_LABEL: Record<StatusKind, string> = {
 }
 
 function nodeColor(status: string) { return KIND_COLOR[statusKind(status)] }
+
+/**
+ * "Major connection" filter — the Map used to render every edge the graph
+ * had evidence for (732 for one real student), which reads as a hairball,
+ * not a path. Edge weights are Beta-Binomial posteriors seeded from
+ * prerequisite=20/related=8/application=5/discovered=2 pseudo-counts (see
+ * CLAUDE.md), so a LOT of edges clear a low bar on prior alone before any
+ * real practice evidence exists — that's most of the clutter.
+ *
+ * Two ways an edge earns a place on the map:
+ *  - it's a `prerequisite` edge (the actual curriculum backbone — this is
+ *    the relation type that gives the map its "shape of a path") clearing a
+ *    moderate bar, so prior-only prerequisite edges with little real
+ *    evidence still get trimmed;
+ *  - OR it's an exceptionally strong edge of ANY type — evidence strong
+ *    enough to be worth showing even if it's not formally a prerequisite.
+ * Everything else (the bulk of `related`/`application`/`discovered` edges
+ * sitting near their prior) is dropped. Tune these two numbers, not the
+ * shape of the filter, if the map still reads as too dense/sparse.
+ */
+const MAJOR_PREREQ_WEIGHT = 0.25
+const MAJOR_ANY_WEIGHT = 0.45
+
+function isMajorEdge(edge: MLEdge): boolean {
+  if (edge.relation === 'prerequisite') return edge.weight > MAJOR_PREREQ_WEIGHT
+  return edge.weight > MAJOR_ANY_WEIGHT
+}
 
 function diamondPoints(cx: number, cy: number, r: number) {
   return `${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`
@@ -512,7 +540,7 @@ export default function ConstellationGpsExplorer({
                   </text>
                 </>
               )}
-              {kgData.edges.filter(e => e.weight > 0.1).map((edge, i) => {
+              {kgData.edges.filter(isMajorEdge).map((edge, i) => {
                 const sp = positions.get(edge.from)
                 const tp = positions.get(edge.to)
                 if (!sp || !tp) return null
@@ -573,9 +601,12 @@ export default function ConstellationGpsExplorer({
                 const accent = nodeColor(node.status)
                 const dimmed = searchMatches.size > 0 && !searchMatches.has(node.id)
                 const hasData = node.eventCount > 0
+                // Bumped up from the old plain-dot radii (5-10px) — a
+                // recognizable icon needs more room than a color dot did.
                 const r = hasData
-                  ? (isSel ? 10 : isHov ? 8.5 : 7)
-                  : (isSel ? 7.5 : isHov ? 6.5 : 5)
+                  ? (isSel ? 15 : isHov ? 13 : 11)
+                  : (isSel ? 12.5 : isHov ? 11 : 9.5)
+                const clipId = `mc-node-clip-${node.id}`
 
                 const showLabel = isSel || isHov
                   || (searchMatches.size > 0 && searchMatches.has(node.id))
@@ -591,36 +622,55 @@ export default function ConstellationGpsExplorer({
                     onMouseLeave={() => setHovered(null)}
                     style={{ cursor: 'pointer' }}
                     aria-label={mlIdToLabel(node.id)}
+                    opacity={dimmed ? 0.3 : (hasData ? 1 : 0.62)}
                   >
                     {isSel && (
-                      <circle r={r + 9}
+                      <circle r={r + 11}
                         fill={accent} fillOpacity="0.12"
                         stroke={accent} strokeWidth="1.5" strokeOpacity="0.45"
                       />
                     )}
-                    <circle r={r}
-                      fill={embedded
-                        ? (dimmed ? 'rgba(29, 58, 138, 0.06)' : '#fbf8f4')
-                        : (dimmed ? 'rgba(255,255,255,0.22)' : '#ffffff')}
-                      fillOpacity={embedded
-                        ? (dimmed ? 1 : (isSel ? 1 : isHov ? 0.98 : hasData ? 0.95 : 0.7))
-                        : (dimmed ? 1 : (isSel ? 1 : isHov ? 0.96 : hasData ? 0.9 : 0.55))}
-                      stroke={isSel ? accent : (embedded ? '#c8c2b8' : 'rgba(255,255,255,0.85)')}
-                      strokeWidth={isSel ? 2.2 : 1}
-                      strokeOpacity={dimmed ? 0.3 : 1}
+                    <defs>
+                      <clipPath id={clipId}>
+                        <circle r={r} />
+                      </clipPath>
+                    </defs>
+                    {/* Icon over the node, replacing the old plain dot — a
+                        student recognizes the concept by its badge instead
+                        of having to read a label first. */}
+                    <image
+                      href={conceptIconUrl(node.id)}
+                      x={-r} y={-r} width={r * 2} height={r * 2}
+                      clipPath={`url(#${clipId})`}
+                      style={{ pointerEvents: 'none' }}
                     />
-                    {node.mastery > 0.05 && !dimmed && (
-                      <circle r={r - 2.5}
+                    {/* Invisible full-disc hit area — the status ring below
+                        is stroke-only (fill:none), so without this, only
+                        that thin ring line would register clicks and the
+                        icon's own face would be dead space. Keeps the whole
+                        visual node clickable, same as the old filled dot. */}
+                    <circle r={r} fill="black" fillOpacity="0" />
+                    {/* Status ring — the icon art is always the same
+                        parchment badge, so this ring is what still carries
+                        the got-it / working-on-it / needs-love signal. */}
+                    <circle r={r}
+                      fill="none"
+                      stroke={accent}
+                      strokeWidth={isSel ? 2.6 : isHov ? 2.2 : 1.6}
+                    />
+                    {node.mastery > 0.05 && (
+                      <circle r={r + 3.5}
                         fill="none"
                         stroke={accent} strokeWidth="1.8"
-                        strokeDasharray={`${node.mastery * 2 * Math.PI * (r - 2.5)} ${2 * Math.PI * (r - 2.5)}`}
+                        strokeOpacity="0.85"
+                        strokeDasharray={`${node.mastery * 2 * Math.PI * (r + 3.5)} ${2 * Math.PI * (r + 3.5)}`}
                         strokeLinecap="round"
                         transform="rotate(-90)"
                       />
                     )}
                     {showLabel && (
                       <text
-                        y={r + 12}
+                        y={r + 16}
                         textAnchor="middle"
                         fontSize={isSel ? 9.5 : 8.5}
                         fontWeight={isSel ? 700 : 500}

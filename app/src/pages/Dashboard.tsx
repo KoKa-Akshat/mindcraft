@@ -8,6 +8,7 @@ import { useStudentData } from '../hooks/useStudentData'
 import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLocal, getUserRole } from '../lib/practiceState'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
+import { playTap } from '../lib/uiSound'
 import { pawHubDisplayText, type CurriculumTrack } from '../lib/curriculumTrack'
 import type { Confidence } from '../lib/bridgePractice'
 import SessionCallCard from '../components/SessionCallCard'
@@ -85,6 +86,7 @@ export default function Dashboard() {
   }
 
   function openChapter(conceptId: string) {
+    playTap()
     navigate(`/concept/${encodeURIComponent(conceptId)}`, {
       state: { fromDashboard: true },
     })

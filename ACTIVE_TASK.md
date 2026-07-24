@@ -4,6 +4,136 @@
 
 ---
 
+## Click feedback (sound+confetti) / iPad write-mode fix / Map simplification (Claude, 2026-07-23)
+
+Three asks from Akshat, all shipped, none committed (left in working tree for
+review, per instructions). Did not touch `app/src/manjushree/`,
+`agent_work/manjushree-zone/`, `ml/**`, `webhook/**`, `data/**`, `worlds/**`.
+`App.tsx` was already modified on disk (Manjushree wiring, pre-existing,
+uncommitted) — left it untouched; `grep manjushree app/src/App.tsx` still
+shows all 3 references.
+
+**1. Sound + confetti feedback system.**
+`app/src/lib/uiSound.ts` — Web Audio API tone synth, no audio files, no paid
+service. Two tones: `playTap()` (soft single triangle-wave tick) and
+`playChime()` (brighter ascending two-note C5→F5). Mute persists in
+localStorage (`mc_sound_muted`) + a same-tab change event so multiple toggle
+instances stay in sync. AudioContext is constructed lazily, only inside a
+play call, which is only ever invoked from a click handler — proved via
+Playwright: 0 AudioContext constructions after full page load with zero
+clicks, exactly 1 (state `running`) after the first real click.
+`app/src/components/SoundToggle.tsx` — small speaker icon button, wired into
+`Sidebar.tsx`, `ConceptChapterPage.tsx` header, and `Diagnostic.tsx` (fixed
+top-right, since first-time students hit these sounds before ever reaching
+the Sidebar).
+Confetti: extracted the confetti-only mechanism out of
+`components/doodle/DoodleReward.tsx` into `components/doodle/ConfettiBurst.tsx`
++ `.module.css` (DoodleReward now composes it instead of owning a duplicate
+copy) so there's one confetti implementation, not two.
+Wired to 5 specific moments (not every click — Akshat was explicit about
+this): correct answer (`Practice.tsx`, `ConceptChapterPage.tsx` — chime +
+confetti via existing `DoodleReward`/`pickDoodleStamp` call sites), wrong
+answer (soft tap only, no confetti), completing a diagnostic step
+(`Diagnostic.tsx` — chime + a small `ConfettiBurst` hoisted to `.page` level
+so it survives the step swap instead of unmounting mid-animation), the
+exam-horizon pill tap (tap), and tapping through Jesse's Kitchen intro (tap).
+**Diagnostic hide-correctness mode (C4) plays the SAME neutral tap regardless
+of correct/incorrect** — a differentiated sound would leak correctness
+exactly like a colored flash would, so `Practice.tsx`'s hideCorrectness branch
+intentionally does not call `playChime()`.
+Verified via a throwaway Playwright harness (mounted the real `Diagnostic`
+under a fake `UserContext`, deleted after use, nothing committed): mute
+toggle persists to localStorage and actually suppresses `createOscillator`
+calls (0 while muted, 2 after unmuting); confetti renders 18 real DOM bit
+elements mid-animation, screenshot captured mid-burst.
+
+**2. iPad write-mode bug (`ConceptChapterPage.tsx` write-mode / `ScratchPad.tsx`).**
+Root cause was NOT a missing `touch-action: none` (that was already present
+on the canvas and its wrappers) — it was that `.annotationLayer` (the overlay
+wrapper) never set `touch-action` itself, only its `<canvas>` descendant did,
+and separately `ScratchPad.tsx`'s pointer handlers never called
+`preventDefault()` on `pointermove` (only `pointerdown`), and had no
+non-passive native listener as a backstop. React attaches ONE root-level
+listener for `touchstart`/`touchmove` as `passive:true` unconditionally for
+every app (see `react-dom/cjs/react-dom.development.js` — hardcoded for those
+two event names + `wheel`), regardless of which component uses `onTouch*` —
+so any reliance on a synthetic React touch handler's `preventDefault()`
+silently no-ops. Fix: (a) `touch-action: none` + `overscroll-behavior: none`
+added directly to `.annotationLayer`/`.annotationActive`; (b) new
+`.chapterDeskLocked` class applied to the whole `.chapterDesk` root while
+`writeMode` is on (matches the write-toggle's own aria-label, "Lock page for
+tapping answers" — the page was never actually locked before); (c)
+`ScratchPad.tsx` now registers a real non-passive `addEventListener(...,
+{passive:false})` for `touchstart`/`touchmove` directly on the canvas DOM
+node (bypassing React's synthetic system entirely) calling `preventDefault()`,
+plus `preventDefault()` added to the `pointermove` handler for parity with
+`pointerdown`; (d) `html, body { overscroll-behavior: none }` added in
+`global.css` as a global safety net against the whole-viewport rubber-band
+bounce.
+**Proof, not just code review:** built a throwaway Playwright harness
+(deleted after use) mounting the real `ScratchPad` inside the real
+`.annotationLayer`/`.annotationActive` wrapper markup. Chromium + CDP
+`Input.dispatchTouchEvent` (drives touch through the actual compositor input
+pipeline, not a JS-fabricated event — the standard technique for this exact
+class of bug) with iPad Pro viewport + `hasTouch`: dragging across the canvas
+draws real ink (1,006,080 non-white pixels) and the scrollable ancestor's
+`scrollTop` stays at 0 before and after. Additionally proved the specific
+"passive listener silently no-ops preventDefault" failure mode directly:
+dispatched a real cancelable `touchmove` at the canvas and read back
+`event.defaultPrevented` — `false` on the pre-fix code (verified via
+`git stash` of just `ScratchPad.tsx`), `true` after the fix. WebKit was
+installed (`npx playwright install webkit`) but its Playwright driver has no
+public API for a multi-step touch drag (`page.touchscreen` is tap-only, no
+CDP in WebKit) — Chromium + CDP was the most faithful drag-gesture test
+available in this environment; noting the limitation rather than skipping
+verification.
+
+**3. Map simplification (`ConstellationGpsExplorer.tsx`, `DashboardPanels.module.css`).**
+- Connections: new `isMajorEdge()` — `prerequisite`-relation edges need
+  `weight > 0.25`, any other relation needs `weight > 0.45` (edge weights are
+  Beta-Binomial posteriors seeded from prior pseudo-counts per CLAUDE.md, so a
+  lot of edges clear a low bar on prior alone before any real evidence —
+  that's most of what made 732 edges show up for one real student). Replaces
+  the old flat `edge.weight > 0.1`. Tune the two constants
+  (`MAJOR_PREREQ_WEIGHT`/`MAJOR_ANY_WEIGHT`) if the real graph still reads too
+  dense/sparse — the shape of the filter (prereq backbone + exceptionally
+  strong edges of any type) is the considered part.
+- Icon-over-node: each node now renders its real `conceptIconUrl()` badge
+  (already used on the dashboard TOC) clipped into a circle, with the old
+  plain-dot fill replaced by a colored status ring (got-it/working-on-it/
+  needs-love/unexplored) around the icon and the mastery-progress dashed ring
+  moved just outside that. Found and fixed a real click-target regression
+  while verifying: the icon has `pointer-events:none` and the status ring is
+  stroke-only (`fill:none`), so without an explicit invisible hit-area circle
+  the icon's own face would have been dead space — added one.
+- Click → side panel: this already existed structurally (a flex sibling of
+  the map inside `.mapArea`, never a modal) — the gap was visual, not
+  structural. `.panel` now uses `var(--desk-radius-md)`/
+  `var(--desk-shadow-raised)` (with literal fallbacks for the standalone
+  `/constellation-gps-lab` route, which doesn't nest under `.canvasDesk`) so
+  it reads as a raised desk card beside the map instead of a flush flat
+  strip; `.btnPrimary`'s hardcoded sticker border/shadow values swapped for
+  the equivalent `--desk-border-sticker`/`--desk-shadow-sticker(-hover)`
+  tokens (same values, now actually token-linked instead of coincidentally
+  matching).
+Verified via a throwaway Playwright harness (mounted the real
+`ConstellationGpsExplorer embedded` inside a `.canvasDesk` wrapper so
+`--desk-*` custom properties are genuinely in scope, network mocked via
+`page.route()` for `**/knowledge-graph/**` — no app source altered for this;
+deleted after use) with 10 real concept ids and 8 mock edges spanning both
+sides of the new thresholds: 3 of 8 edges rendered (matches the filter math),
+all 10 nodes show real icons, clicking a node opens the side panel with
+name/status/mastery-bar/tagline/actions. Screenshots taken of both states.
+
+**Verification run:** `npx tsc --noEmit` clean. `npx vitest run` — 109 passed,
+1 skipped, 7 files (same baseline; none of the changed files have existing
+unit tests). `npm run build` exit 0 (pre-existing >500kB chunk warning,
+unrelated to this pass — same warning exists on `main`). All temporary
+Playwright harnesses, mock `.env.local`, and scratch test scripts were
+deleted before finishing; nothing test-only was committed or left behind.
+
+---
+
 ## Onboarding/cover/Map review pass (Claude, 2026-07-23)
 
 Akshat reviewed live screenshots of onboarding, cover, notebook intro, and

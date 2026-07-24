@@ -24,6 +24,8 @@ import HighlightedStem from '../components/HighlightedStem'
 import { useJournalGuide } from '../hooks/useJournalGuide'
 import { storyArtFor, storyArtTilt } from '../lib/storyArt'
 import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward'
+import SoundToggle from '../components/SoundToggle'
+import { playChime, playTap } from '../lib/uiSound'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -638,6 +640,7 @@ export default function ConceptChapterPage() {
 
     // Soft wrong: wiggle + dim the sticker, keep trying — no red buzz, no lock.
     if (chosen !== q.correctIndex) {
+      playTap()
       setEliminated(e => ({
         ...e,
         [qIdx]: [...new Set([...(e[qIdx] ?? []), chosen])],
@@ -652,6 +655,7 @@ export default function ConceptChapterPage() {
       return
     }
 
+    playChime()
     setRewardPhrase(pickDoodleStamp(qIdx + chosen))
     setSubmitted(d => ({ ...d, [qIdx]: true }))
 
@@ -875,7 +879,7 @@ export default function ConceptChapterPage() {
 
   return (
     <div
-      className={s.chapterDesk}
+      className={`${s.chapterDesk} ${writeMode ? s.chapterDeskLocked : ''}`}
       style={{
         '--theme-bg': theme.bg,
         '--theme-paper': theme.paper,
@@ -892,6 +896,7 @@ export default function ConceptChapterPage() {
         <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
         <span className={s.canvasWordmark}>{cs.conceptName}</span>
         <div className={s.canvasChromeRight}>
+          <SoundToggle className={s.soundToggle} />
           <PingTutor context={pingContext} compact />
           <div className={s.calcWrap}>
             <button

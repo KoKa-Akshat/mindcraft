@@ -32,6 +32,20 @@
   padding: 4px 8px 6px;
 }
 
+/* Write mode ("Lock page for tapping answers", see the writeToggle button)
+   was always meant to lock the whole page, not just the scratch canvas —
+   the aria-label said so, the CSS never did. On iPad a touch that starts
+   even a hair outside the annotation overlay's exact box (rounding,
+   toolbar chrome, a stray pixel) fell through to a touch-action:auto
+   region and the browser read it as a page-pan gesture, dragging the
+   whole canvas around under the student's finger while nothing drew.
+   Locking touch-action on the desk root itself while writeMode is on
+   removes that gap entirely instead of chasing exact overlay coverage. */
+.chapterDeskLocked {
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
 .canvasChrome {
   display: flex;
   align-items: center;
@@ -340,6 +354,28 @@
 }
 .miniCalc:hover,
 .miniCalc[aria-expanded="true"] {
+  color: var(--theme-ink, #3d2f10);
+  border-color: color-mix(in srgb, var(--theme-ink, #3d2f10) 30%, transparent);
+  background: color-mix(in srgb, var(--theme-ink, #3d2f10) 5%, transparent);
+}
+
+/* Same visual language as .miniCalc — sits right next to it in the header. */
+.soundToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: transparent;
+  color: color-mix(in srgb, var(--theme-ink, #3d2f10) 62%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 14%, transparent);
+  transition: color 140ms, border-color 140ms, background 140ms;
+}
+.soundToggle svg { width: 13px; height: 13px; }
+.soundToggle:hover,
+.soundToggle[aria-pressed="true"] {
   color: var(--theme-ink, #3d2f10);
   border-color: color-mix(in srgb, var(--theme-ink, #3d2f10) 30%, transparent);
   background: color-mix(in srgb, var(--theme-ink, #3d2f10) 5%, transparent);
@@ -720,6 +756,14 @@
   background: rgba(255,255,255,0.02);
   cursor: crosshair;
   border-radius: 4px;
+  /* Belt-and-suspenders: ScratchPad's own canvas already sets
+     touch-action:none, but that only protects the canvas's own hit box.
+     Setting it here too means ANY pixel inside this overlay (padding,
+     rounding slack, toolbar chrome) also refuses to hand the gesture to
+     the browser's native pan/scroll handling on iPad. See
+     .chapterDeskLocked below for the belt-and-suspenders page-level lock. */
+  touch-action: none;
+  overscroll-behavior: none;
 }
 .annotationHint {
   position: absolute;

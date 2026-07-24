@@ -30,6 +30,9 @@ import actBankData from '../data/actMasterQuestionBank.generated.json'
 import MathText from '../components/MathText'
 import { DeskArt, HorizonIcon } from '../components/DiagnosticArt'
 import WizardMascot from '../components/canvas/WizardMascot'
+import ConfettiBurst from '../components/doodle/ConfettiBurst'
+import SoundToggle from '../components/SoundToggle'
+import { playChime, playTap } from '../lib/uiSound'
 import s from './Diagnostic.module.css'
 
 interface ConfConcept { concept_id: string; name: string; act_high_priority: boolean }
@@ -116,6 +119,7 @@ export default function Diagnostic() {
   const [deadlineDays, setDeadlineDays] = useState<number | null>(null)
   const [confidence, setConfidence] = useState<Record<string, Confidence>>({})
   const [probeAnswers, setProbeAnswers] = useState<Record<string, Confidence>>({})
+  const [confettiOn, setConfettiOn] = useState(false)
 
   const progress = useMemo(() => {
     const order: Step[] = ['intro', 'goals', 'horizon', 'probe', 'confidence', 'loading']
@@ -142,6 +146,17 @@ export default function Diagnostic() {
     [probeQuestions, probeAnswers],
   )
 
+  /** Chime + a small confetti burst for "completing a diagnostic step".
+   *  Hoisted at .page level (not inside a per-step card) because the step
+   *  switch happens in the same click/render — a step card unmounts the
+   *  instant it's replaced, so confetti anchored to it would never get to
+   *  play; anchoring to the page-level overlay lets it finish its ~900ms
+   *  arc across the transition instead of being cut off at 0ms. */
+  function celebrateStep() {
+    playChime()
+    setConfettiOn(true)
+  }
+
   function toggleGoal(tag: string) {
     setGoalTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]))
   }
@@ -155,6 +170,7 @@ export default function Diagnostic() {
   }
 
   function applyProbeAnswers() {
+    celebrateStep()
     setConfidence(prev => {
       const next = { ...prev }
       for (const item of probeQuestions) {
@@ -171,11 +187,17 @@ export default function Diagnostic() {
    * Respects prefers-reduced-motion by skipping straight to the next step. */
   function beginZoom() {
     if (zooming) return
+    playTap()
     setZooming(true)
     window.setTimeout(() => setStep('goals'), prefersReducedMotion() ? 60 : 650)
   }
 
   async function finishConfidence() {
+    // No confetti here — the loading screen's cheering wizard is already
+    // the completion celebration for the very last step, and the step
+    // switches to 'loading' in this same tick so a confetti burst would
+    // have no card left under it to visually land on.
+    playChime()
     setStep('loading')
     try {
       const minDwell = new Promise(resolve => window.setTimeout(resolve, 900))
@@ -199,6 +221,8 @@ export default function Diagnostic() {
 
   return (
     <div className={s.page}>
+      <SoundToggle className={s.soundToggle} />
+      <ConfettiBurst active={confettiOn} count={18} durationMs={800} onDone={() => setConfettiOn(false)} />
       <div className={s.bar}><div className={s.barFill} style={{ width: `${progress}%` }} /></div>
       <div className={s.shell}>
 
@@ -244,7 +268,7 @@ export default function Diagnostic() {
               <button
                 className={s.primary}
                 disabled={!goalText.trim() && goalTags.length === 0}
-                onClick={() => setStep('horizon')}
+                onClick={() => { celebrateStep(); setStep('horizon') }}
               >Next</button>
             </div>
           </section>
@@ -261,7 +285,7 @@ export default function Diagnostic() {
                     key={opt.value}
                     type="button"
                     className={`${s.horizonBtn} ${deadlineDays === opt.value ? s.horizonBtnOn : ''}`}
-                    onClick={() => setDeadlineDays(opt.value)}
+                    onClick={() => { playTap(); setDeadlineDays(opt.value) }}
                   >
                     <HorizonIcon kind={opt.kind} className={s.horizonIcon} />
                     <span className={s.horizonLabel}>{opt.label}</span>
@@ -272,7 +296,7 @@ export default function Diagnostic() {
               <button
                 className={s.primary}
                 disabled={deadlineDays === null}
-                onClick={() => setStep(probeQuestions.length > 0 ? 'probe' : 'confidence')}
+                onClick={() => { celebrateStep(); setStep(probeQuestions.length > 0 ? 'probe' : 'confidence') }}
               >Next</button>
             </div>
           </section>

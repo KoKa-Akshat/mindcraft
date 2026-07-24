@@ -1,0 +1,40 @@
+/* Shared confetti mechanism — extracted out of DoodleReward so any moment
+   that wants "a lightweight celebration" can use the same real confetti
+   instead of a second implementation. DoodleReward composes this for its
+   full stamp+confetti+mascot reward; other call sites can use it bare. */
+
+.wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.bit {
+  position: absolute;
+  top: 42%;
+  border-radius: 2px 6px 3px 5px;
+  opacity: 0;
+  animation: fountain 1.15s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.55);
+}
+
+.hue0 { background: #7dffb3; }
+.hue1 { background: #ffb38a; }
+.hue2 { background: #ff8ec8; }
+.hue3 { background: #c9b6ff; }
+.hue4 { background: #ffe566; border-radius: 50%; }
+
+@keyframes fountain {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4) rotate(0deg);
+  }
+  18% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift, 20px), 120px) scale(1) rotate(220deg);
+  }
+}
