@@ -334,5 +334,12 @@
     "questionBridge": "Isaac watches the apple fall. Don't average the whole flight, freeze one instant. That's the rate you want.",
     "diceFrame": null,
     "spinnerFrame": null
+  },
+  "limits_continuity": {
+    "protagonist": "Augustin-Louis Cauchy",
+    "settingLine": "École Polytechnique, Paris, 1821",
+    "questionBridge": "Cauchy stops the cadet from evaluating at the point itself. Close in from both sides instead. What is it heading toward?",
+    "diceFrame": null,
+    "spinnerFrame": null
   }
 }

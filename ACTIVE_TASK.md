@@ -4,6 +4,117 @@
 
 ---
 
+## GraphBox port + limits_continuity story/art gap + chapter audit (Claude, 2026-07-24)
+
+Scope strictly `app/**`. Did not touch `app/src/manjushree/`, `agent_work/manjushree-zone/`,
+`ml/**`, `webhook/**`, `data/**`, `worlds/**`. `grep manjushree app/src/App.tsx` shows all
+4 references, unchanged (App.tsx's only change is the pre-existing uncommitted manjushree
+wiring from session start — untouched by this pass, checked via `git diff` before and
+after the screenshot shim below).
+
+**Job 1+2 — live graph box, ported from the validated iPad prototype.**
+Direct TypeScript/React port of `ios-prototype/MindCraftNotes/MindCraftNotes/Models/
+PolynomialExpression.swift` + `LaTeXMath.swift` (parser) and `Views/GraphView.swift`
+(plotting) — same grammar, same LaTeX subset, same niceStep/formatTick axis-label
+algorithm, same y-range self-sampling, ported faithfully rather than re-derived.
+- New `app/src/lib/polynomialExpression.ts`: `parsePolynomial`/`evaluatePolynomial`,
+  bare-caret grammar (`x^2+5x+6`) plus LaTeX subset (braced exponents `x^{2}`, numeric
+  `\frac{a}{b}` coefficients, delimiter/spacing stripping), rejecting anything else
+  (variable-in-fraction, general LaTeX) with the same clear error messages as the Swift
+  original. One faithfully-reproduced quirk carried over: a bare `-` inside a term (e.g.
+  `x^-2` typed alone) still gets caught by the top-level +/- chunk splitter before
+  per-term parsing runs, exactly as in the Swift version — not a divergence introduced
+  by the port. 10 new vitest cases in `polynomialExpression.test.ts` (109 → 119 passed
+  across 7 → 8 files, baseline preserved).
+- New `app/src/components/GraphBox.tsx` + `.module.css`: text input (`y = ...`),
+  live SVG plot, numeric axis tick labels (niceStep 1/2/5×10^n), collapsible via a
+  header toggle (`▾`/`▸`).
+- Wired into `Practice.tsx`'s session view: `sessionColumns`/`sessionMain` (a grid
+  already defined in `Practice.module.css` but dead/unused in the JSX until now) now
+  actually wraps the question card on the left and a new `sessionAside` on the right
+  containing `ScratchPad` (existing component, not previously wired into Practice.tsx
+  at all — confirmed via grep before assuming, it was only used in ConceptChapterPage/
+  HomeworkSession/SessionWork/GradeOnboard) plus the new `GraphBox`. `GraphBox` defaults
+  open only for `GRAPHABLE_CONCEPT_IDS` (linear_equations, linear_inequalities,
+  systems_of_linear_equations, polynomials, factoring_polynomials, quadratic_equations,
+  functions_basics, function_transformations — concepts where a polynomial-in-x graph is
+  literally what's being asked about); collapsed but present elsewhere, same
+  collapsible-panel pattern as the existing `ScientificCalcToggle` on this same page.
+  Grid collapses to one column under 700px (pre-existing media query, untouched).
+- **Design correction caught by an actual screenshot, not assumed:** first pass styled
+  GraphBox against the dark-teal `--practice-bg`/`--text` tokens, which turned out to be
+  dead for real sessions — `.matteShell`/`.shell` (live for every actual practice
+  session, confirmed via `isMatteFlow`) overrides the whole canvas to a warm cream paper
+  skin (`--paper-sheet`/`--paper-ink`, `#1d3a8a` navy accent) via the "PAPER
+  STANDARDIZATION" block further down `Practice.module.css`. Re-themed GraphBox (and
+  fixed `.asideLabel`'s color under `.matteShell`) to the paper palette instead — confirmed
+  fixed via a second screenshot.
+
+**Job 3 — `limits_continuity` story/art gap, confirmed via direct audit as the only one
+of 42 concepts missing from `conceptStories.json`/`questionContextFrames.json`/generated
+art.** Wrote a full story (protagonist Augustin-Louis Cauchy, École Polytechnique, Paris,
+1821, Cours d'Analyse — grounded via web search on the actual historical rigor Cauchy
+introduced) plus all 5 `ingredientStories` (`limits__approaching_not_reaching`,
+`limits__limit_vs_value_distinction`, `limits__one_sided_limits`,
+`limits__continuity_definition`, `limits__limit_as_derivative_setup` — matched 1:1 to the
+ontology's actual ingredient list). Added the matching `questionContextFrames.json` entry.
+Added a new hand-authored SVG scene to `app/scripts/generateConceptArtSvg.mjs`
+(a curve with a removable-discontinuity hole, a magnifying glass zooming into the gap)
+and generated `story-limits_continuity.svg` via `node app/scripts/generateConceptArtSvg.mjs
+limits_continuity`. `CLUSTER_MAP` in `ConceptChapterPage.tsx` already had a correct
+`functions` entry for this concept (pre-existing, not a bug) so no change needed there.
+
+**Job 4 — audit for other stale chapters.** Systematically diffed all 42 canonical
+ontology concept ids against `conceptStories.json`, `questionContextFrames.json` (direct
++ `FRAME_ALIAS`), `storyArtFor`'s generated/hand-picked/theme-fallback coverage, and
+`CLUSTER_MAP`. Result: **limits_continuity was the only gap in all four** — now closed,
+all 42/42 covered, zero concepts falling through to the generic theme-fallback art.
+**Flagging, not fixing (out of scope for a story/art pass, pre-existing, not a
+regression):** `limits_continuity` has zero authored practice questions in any bank file
+(static/actMaster/eedi/generated), same as `derivatives`/`integrals`/
+`applications_of_derivatives`/`applications_of_integrals` — all five are non-ACT calculus
+concepts (`act_relevance.tested: false`) with real stories/art but no quest panels inside
+their chapter (`getQuestions` returns `[]` → `buildPanels` emits only the opening story
+panel). This is a content-authoring gap across all 5 advanced calculus concepts, not a
+rendering bug, and not something this pass's scope (story/frame/art parity) should
+fabricate math questions to paper over.
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` → 119 passed, 1
+skipped (8 files; baseline was 109/1/7 files, +10 new polynomial-parser tests, zero
+regressions). `npm run build` succeeded (same pre-existing >500kB chunk warning,
+unrelated). Confirmed `story-limits_continuity.svg` and the GraphBox strings/CSS classes
+appear in the production `dist/` bundle.
+
+Screenshots taken via a temporary `VITE_SCREENSHOT_MODE`-gated `AuthGuard` bypass in
+`App.tsx` (mock `UserContext` value, no real Firebase auth) plus a temporary
+`?screenshotMock=<conceptId>`-gated mock-session effect in `Practice.tsx` (sets
+`questions`/`pPhase`/`level`/`concept` directly to a hardcoded quadratic question,
+bypassing all network calls). Both applied on top of byte-for-byte backups of the
+pre-existing (already-uncommitted) `App.tsx`/`Practice.tsx`, restored from those exact
+backups afterward — confirmed via `diff` showing zero differences against the pre-shim
+backups and `grep SCREENSHOT app/src/App.tsx app/src/pages/Practice.tsx` returning empty.
+`tsc`/`vitest`/`build` all re-run clean after the revert (numbers above are post-revert).
+
+4 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+- `graphbox_practice_bare_caret.png` — Practice session, question card on the left
+  (plain, no story wrapping — confirmed still correct from the earlier pass), ScratchPad
+  + GraphBox on the right with `x^2+5x+6` plotted and real numeric axis labels.
+- `graphbox_practice_latex.png` — same session, `\frac{1}{2}x^{2}-4x+3` typed into the
+  same field, correctly parsed and replotted (shifted-down parabola, vertex near x=4).
+- `limits_continuity_chapter.png` — the new chapter rendering with its real story, the
+  "AUGUSTIN-LOUIS CAUCHY · ÉCOLE POLYTECHNIQUE, PARIS, 1821" scene stamp, and the new
+  hand-authored SVG art, no synthetic-fallback text anywhere.
+
+Files touched: `app/src/lib/polynomialExpression.ts` (new),
+`app/src/lib/polynomialExpression.test.ts` (new), `app/src/components/GraphBox.tsx` (new),
+`app/src/components/GraphBox.module.css` (new), `app/src/pages/Practice.tsx`,
+`app/src/pages/Practice.module.css`, `app/src/data/conceptStories.json`,
+`app/src/data/questionContextFrames.json`, `app/scripts/generateConceptArtSvg.mjs`,
+`app/src/assets/canvas/generated/story-limits_continuity.svg` (new). Nothing committed,
+left in the working tree for review.
+
+---
+
 ## Remove per-question narrative wrapping from practice questions (Claude, 2026-07-24)
 
 Scope strictly `app/**`. Did not touch `app/src/manjushree/`,

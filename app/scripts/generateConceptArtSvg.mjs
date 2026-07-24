@@ -774,6 +774,31 @@ const SCENES = {
     ${figure({ cx: 560, cy: 620, scale: 0.9, robe: '#3a3a3a', hat: null, arm: 'raise' })}
   `),
 
+  // ── 2026-07-24 second pass: limits_continuity was the one concept still
+  // missing a story AND art entirely (ACTIVE_TASK.md entry) — not a
+  // fallback-photo case like the batch above, a true gap. Protagonist/
+  // setting locked from the just-added questionContextFrames.json entry.
+
+  limits_continuity: () => wrap(`
+    ${windowArch(80, 100, 200, 300)}
+    <!-- a curve with a hole at one point (removable discontinuity), a magnifying
+         glass zooming into the shrinking gap on either side of it -->
+    <g transform="translate(430 560)">
+      <line x1="-170" y1="0" x2="210" y2="0" stroke="${INK}" stroke-width="3" opacity="0.4"/>
+      <line x1="0" y1="60" x2="0" y2="-260" stroke="${INK}" stroke-width="3" opacity="0.4"/>
+      <path d="M-160 40 Q-50 -160 -7 -170" fill="none" stroke="${NAVY}" stroke-width="6" stroke-linecap="round"/>
+      <path d="M7 -170 Q50 -160 160 40" fill="none" stroke="${NAVY}" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="0" cy="-174" r="9" fill="${PARCH_A}" stroke="${INK}" stroke-width="4"/>
+      <line x1="-16" y1="-174" x2="16" y2="-174" stroke="${INK}" stroke-width="2" stroke-dasharray="2 5" opacity="0.55"/>
+    </g>
+    <g transform="translate(570 370) rotate(16)">
+      <circle r="56" fill="rgba(255,255,255,0.3)" stroke="${INK}" stroke-width="7"/>
+      <circle r="56" fill="none" stroke="${GOLD}" stroke-width="3" opacity="0.7"/>
+      <line x1="40" y1="40" x2="90" y2="90" stroke="${INK}" stroke-width="11" stroke-linecap="round"/>
+    </g>
+    ${figure({ cx: 260, cy: 610, scale: 0.9, robe: NAVY, hat: null, arm: 'point' })}
+  `),
+
 }
 
 const CONCEPT_IDS = Object.keys(SCENES)

@@ -361,14 +361,36 @@
   display: inline-block;
 }
 
-/* Two-column layout */
+/* Two-column layout — question card on the left, writable canvas + live
+   graph on the right (see ACTIVE_TASK.md GraphBox entry). */
 .sessionColumns {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr 320px;
   gap: 20px;
   align-items: start;
 }
-.sessionMain { display: flex; flex-direction: column; }
+.sessionMain { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+
+.sessionAside {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.asideLabel {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  padding: 0 2px;
+}
+
+/* The paper skin (`.matteShell`/`.shell`, live for every real session — see
+   "PAPER STANDARDIZATION" below) recolors the whole canvas to warm cream, so
+   the aside label needs the same ink tone the rest of the paper uses instead
+   of the dark-theme --text-2. */
+.matteShell .asideLabel { color: #6f6a61; }
 
 /* Question card */
 .questionCard {

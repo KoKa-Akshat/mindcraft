@@ -54,6 +54,8 @@ import {
   type PracticeMissionType,
 } from '../lib/practiceDrafts'
 import InteractiveWidget from '../components/InteractiveWidget'
+import ScratchPad from '../components/ScratchPad'
+import GraphBox from '../components/GraphBox'
 import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
@@ -296,6 +298,16 @@ function bridgeLabel(id: string) {
 function safeQuestionSvg(question: Question) {
   return safeSvgHtml(question.visual_type === 'svg' ? question.visual_data : null)
 }
+
+// Concepts where a polynomial-in-x graph is directly meaningful — GraphBox's
+// parser only reads polynomial expressions (see lib/polynomialExpression.ts),
+// so it defaults open only here; every other concept still gets the panel,
+// just collapsed (same collapsible-panel pattern as ScientificCalcToggle).
+const GRAPHABLE_CONCEPT_IDS = new Set([
+  'linear_equations', 'linear_inequalities', 'systems_of_linear_equations',
+  'polynomials', 'factoring_polynomials', 'quadratic_equations',
+  'functions_basics', 'function_transformations',
+])
 
 const MISSION_TYPES: MissionType[] = ['weakness', 'learn', 'gapscan']
 
@@ -2150,6 +2162,8 @@ export default function Practice() {
             {pPhase === 'session' && currentQ && (
               <div className={s.sessionWrap}>
                 <div className={s.sessionCenter}>
+                <div className={s.sessionColumns}>
+                <div className={s.sessionMain}>
                   <div className={s.progressStrip}>
                     <button
                       type="button"
@@ -2438,6 +2452,17 @@ export default function Practice() {
                       </div>
                     )}
                   </div>
+                </div>
+
+                <aside className={s.sessionAside}>
+                  <div className={s.asideLabel}>Scratch work</div>
+                  <ScratchPad key={`practice-scratch-${currentQ.id}`} height={240} />
+                  <GraphBox
+                    key={`practice-graph-${currentQ.id}`}
+                    defaultOpen={GRAPHABLE_CONCEPT_IDS.has(currentQ.conceptId)}
+                  />
+                </aside>
+                </div>
                 </div>
               </div>
             )}

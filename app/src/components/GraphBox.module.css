@@ -1,0 +1,131 @@
+/* GraphBox — matches the warm paper session skin (`.matteShell`/`.paperScan`
+   in Practice.module.css) that actually renders for a live practice session:
+   `--paper-sheet` card, `--paper-ink` text, the navy "Depth" brand accent
+   (#1d3a8a, same one used throughout storyArt SVGs and paper.css's own rule
+   color) for the curve — not a separate dark-teal identity. */
+
+.wrap {
+  background: var(--paper-sheet, #fbf8f4);
+  border: 1px solid rgba(29, 58, 138, 0.16);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 11px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--f-body, sans-serif);
+}
+
+.header:hover { background: rgba(29, 58, 138, 0.05); }
+
+.headerTitle {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper-ink, #1c1a17);
+}
+
+.headerChevron {
+  font-size: 11px;
+  color: rgba(28, 26, 23, 0.45);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 14px 14px;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(29, 58, 138, 0.05);
+  border: 1px solid rgba(29, 58, 138, 0.16);
+  border-radius: 10px;
+  padding: 7px 10px;
+}
+
+.inputPrefix {
+  font-family: var(--tok-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(28, 26, 23, 0.55);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--paper-ink, #1c1a17);
+  font-family: var(--tok-font-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.input::placeholder { color: rgba(28, 26, 23, 0.3); }
+
+.hint {
+  margin: 0;
+  font-family: var(--f-body, sans-serif);
+  font-size: 10px;
+  line-height: 1.4;
+  color: #6f6a61;
+}
+
+.error {
+  margin: 0;
+  font-family: var(--f-body, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #7c2d12;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 300 / 186;
+  border-radius: 10px;
+  background: rgba(29, 58, 138, 0.035);
+}
+
+.axisLine {
+  stroke: rgba(28, 26, 23, 0.3);
+  stroke-width: 1;
+}
+
+.tickLine {
+  stroke: rgba(28, 26, 23, 0.4);
+  stroke-width: 1;
+}
+
+.tickLabel {
+  font-family: var(--tok-font-mono);
+  font-size: 7.5px;
+  fill: rgba(28, 26, 23, 0.55);
+}
+
+.curve {
+  fill: none;
+  stroke: #1d3a8a;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 700px) {
+  .svg { aspect-ratio: 320 / 170; }
+}
