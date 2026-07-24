@@ -2,13 +2,20 @@
   position: fixed;
   inset: 0;
   z-index: 180;
-  display: grid;
-  place-items: center;
-  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Identical formula to CoverLanding.module.css's .desk padding (and
+     Dashboard.module.css's .canvasDesk padding): "padding: 4px 8px 8px", not
+     a similar-looking value. Was `padding: 12px` + `display:grid;place-items
+     :center` with a `width:min(1120px,96vw)` capped card, which is a
+     different box than the cover's true full-bleed one. */
+  padding: 4px 8px 8px;
+  box-sizing: border-box;
   background:
-    radial-gradient(ellipse 80% 55% at 15% 15%, rgba(255, 190, 220, 0.45), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 85% 75%, rgba(180, 210, 255, 0.5), transparent 50%),
-    linear-gradient(165deg, #efe6fb, #d9d0ef);
+    radial-gradient(ellipse 80% 55% at 15% 15%, rgba(255, 210, 230, 0.28), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 75%, rgba(195, 220, 255, 0.3), transparent 50%),
+    linear-gradient(165deg, #faf6ef, #ece3f6);
   animation: fadeIn 0.4s ease both;
 }
 
@@ -18,16 +25,30 @@
 }
 
 .card {
-  width: min(1120px, 96vw);
-  max-height: min(92dvh, 900px);
+  /* Same box CoverLanding's .cover resolves to: width:100% + flex:1 1 auto
+     inside a container sharing the identical padding formula, no width/
+     height cap. Whole card is one real <button> now (single tap target),
+     so text-align/cursor/font need explicit resets from the UA button
+     stylesheet. */
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: auto;
-  border-radius: var(--desk-radius-lg, 22px);
+  border-radius: 22px;
   border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
   background: #fffdf8;
-  box-shadow: var(--desk-shadow-stage, 0 20px 56px rgba(90, 70, 140, 0.2));
+  box-shadow: 0 16px 48px rgba(90, 70, 140, 0.16);
   display: grid;
   grid-template-columns: 1.15fr 1fr;
+  transition: transform 160ms cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 160ms cubic-bezier(0.34, 1.2, 0.64, 1);
 }
+.card:hover { transform: translateY(-2px); box-shadow: 0 20px 54px rgba(90, 70, 140, 0.2); }
+.card:active { transform: translateY(0); }
 
 .banner {
   width: 100%;
@@ -89,22 +110,23 @@
 
 .go {
   align-self: flex-start;
-  border: var(--desk-border-sticker, 2px solid rgba(58, 47, 85, 0.85));
-  border-radius: var(--desk-radius-md, 16px);
+  border: 2px solid rgba(58, 47, 85, 0.85);
+  border-radius: 16px;
   background: linear-gradient(145deg, #7dffb3, #5fe89a);
   color: #1f6b45;
   font-family: 'Caveat', cursive;
   font-size: 22px;
   font-weight: 700;
   padding: 12px 20px;
-  cursor: pointer;
-  box-shadow: var(--desk-shadow-sticker, 3px 4px 0 rgba(58, 47, 85, 0.16));
-  transition: transform 160ms var(--desk-ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)), box-shadow 160ms var(--desk-ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1));
+  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
 }
-.go:hover { transform: translateY(-2px) scale(1.03); box-shadow: var(--desk-shadow-sticker-hover, 0 0 0 3px rgba(125, 255, 179, 0.35), 5px 9px 0 rgba(58, 47, 85, 0.16)); }
-.go:active { transform: translateY(0) scale(1); }
 
 @media (max-width: 800px) {
   .card { grid-template-columns: 1fr; }
   .banner { max-height: 180px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root { animation: none; }
+  .card { transition: none; }
 }

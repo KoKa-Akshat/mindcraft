@@ -1,6 +1,6 @@
 /**
- * Full-canvas ACT topic map — icon constellation with GPS-style focus panel.
- * Tap a node → highlight its route + show where you are / what to do under the map.
+ * Full-canvas ACT topic map: icon constellation with GPS-style focus panel.
+ * Tap a node to highlight its route and show where you are / what to do under the map.
  */
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -28,6 +28,12 @@ type NodeMeta = {
   mastery: number
   status: string
 }
+
+/** Real ontology-derived edge from GET /knowledge-graph (Beta-Binomial
+ * posterior weight, seeded from ontology prior strength so it is populated
+ * even for a brand-new student with zero practice events). Same shape
+ * KnowledgeGraph.tsx / ConstellationCard.tsx already consume. */
+type KgEdge = { from: string; to: string; weight: number; relation: string }
 
 type RouteStep = {
   id: string
@@ -61,14 +67,14 @@ function statusKind(status: string): StatusKind {
 }
 
 function whatToDo(kind: StatusKind, isSpark: boolean): string {
-  if (isSpark) return 'This is today’s spark — open the lesson or run a quick drill next.'
+  if (isSpark) return 'This is today’s spark, open the lesson or run a quick drill next.'
   if (kind === 'needs') return 'This gap needs repair. Walk the path below, then practice the target.'
   if (kind === 'progress') return 'You’re mid-repair here. Keep going until it feels solid.'
   if (kind === 'stable') return 'Solid so far. Open the lesson to review, or plot a stretch path.'
   return 'Untouched so far. Open the lesson for the story, then try a short drill.'
 }
 
-/** Spread nodes by TOC section so edges read clearly — no pile-up in the middle. */
+/** Spread nodes by TOC section so edges read clearly, no pile-up in the middle. */
 function layoutNodes(): Placed[] {
   const out: Placed[] = []
   const sections = ACT_TOC_SECTIONS.filter(sec => sec.conceptIds.length > 0)
@@ -95,24 +101,65 @@ function layoutNodes(): Placed[] {
   return out
 }
 
-function edgesFor(nodes: Placed[]): Array<[Placed, Placed]> {
+/** Fallback ONLY: a synthetic "same section, in list order" chain plus one
+ * hub-to-hub link per section boundary. This is NOT real prerequisite data,
+ * it is just enough of a line to look connected while the real graph is
+ * still loading (or if the ML fetch fails). Root cause of Akshat's "the Map
+ * is missing so many connections" complaint (2026-07-23): this synthetic
+ * scheme used to be the ONLY edge source the Map ever drew, full stop, never
+ * touching the real ontology graph at all. `realEdgesFor` below is the fix,
+ * see the `links` useMemo. */
+function syntheticFallbackEdges(nodes: Placed[]): Array<[Placed, Placed, string]> {
   const bySection = new Map<string, Placed[]>()
   for (const n of nodes) {
     const list = bySection.get(n.section) ?? []
     list.push(n)
     bySection.set(n.section, list)
   }
-  const edges: Array<[Placed, Placed]> = []
+  const edges: Array<[Placed, Placed, string]> = []
   for (const list of bySection.values()) {
     for (let i = 0; i < list.length - 1; i++) {
-      edges.push([list[i], list[i + 1]])
+      edges.push([list[i], list[i + 1], 'fallback'])
     }
   }
   const hubs = [...bySection.values()].map(list => list[0]).filter(Boolean)
   for (let i = 0; i < hubs.length - 1; i++) {
-    edges.push([hubs[i], hubs[i + 1]])
+    edges.push([hubs[i], hubs[i + 1], 'fallback'])
   }
   return edges
+}
+
+/** Real prerequisite/bridge edges from the ontology graph, same source and
+ * same weight threshold (0.2) KnowledgeGraph.tsx and ConstellationCard.tsx
+ * already use, restricted to node pairs actually placed on this Map. */
+function realEdgesFor(
+  nodes: Placed[],
+  kgEdges: KgEdge[],
+): Array<[Placed, Placed, string]> {
+  const byId = new Map(nodes.map(n => [n.id, n]))
+  const out: Array<[Placed, Placed, string]> = []
+  for (const e of kgEdges) {
+    if (e.weight <= 0.2) continue
+    const a = byId.get(e.from)
+    const b = byId.get(e.to)
+    if (!a || !b) continue
+    out.push([a, b, e.relation])
+  }
+  return out
+}
+
+/** Dash pattern per relation type, same visual grammar KnowledgeGraph.tsx
+ * uses (edgeStyle()) so a "prerequisite" line reads the same everywhere in
+ * the app: solid = prerequisite (the strongest, most load-bearing relation),
+ * looser dashes for the weaker related/application/discovered priors. */
+function relationDash(relation: string): string | undefined {
+  switch (relation) {
+    case 'prerequisite': return undefined
+    case 'related':      return '2.2 1.4'
+    case 'application':  return '1 1.2'
+    case 'discovered':   return '0.6 1.6'
+    default:              return undefined
+  }
 }
 
 export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
@@ -121,6 +168,7 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
   const [focus, setFocus] = useState(sparkId ?? '')
   const [q, setQ] = useState('')
   const [metaById, setMetaById] = useState<Record<string, NodeMeta>>({})
+  const [kgEdges, setKgEdges] = useState<KgEdge[] | null>(null)
   const [routeSteps, setRouteSteps] = useState<RouteStep[]>([])
   const [routeLoading, setRouteLoading] = useState(false)
 
@@ -141,6 +189,13 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
         next[n.id] = { mastery: n.mastery ?? 0, status: n.status ?? 'untouched' }
       }
       setMetaById(next)
+      // Real prerequisite/bridge edges (from mindcraft_graph's Beta-Binomial
+      // posterior over the ontology, seeded from ontology prior strength
+      // even before any practice), same field KnowledgeGraph.tsx /
+      // ConstellationCard.tsx already render. Previously never read here at
+      // all, see `syntheticFallbackEdges`'s header comment.
+      const { edges } = kg as { edges?: unknown }
+      setKgEdges(Array.isArray(edges) ? (edges as KgEdge[]) : [])
     })
     return () => { cancelled = true }
   }, [user?.uid])
@@ -215,7 +270,13 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
     })
   }, [all, q])
 
-  const links = useMemo(() => edgesFor(nodes), [nodes])
+  // Real ontology edges once loaded; synthetic chain only as a loading/error
+  // fallback so the map isn't a bare field of disconnected icons while the
+  // graph fetch is in flight. See `realEdgesFor`/`syntheticFallbackEdges`.
+  const links = useMemo(() => {
+    const real = kgEdges && kgEdges.length > 0 ? realEdgesFor(nodes, kgEdges) : []
+    return real.length > 0 ? real : syntheticFallbackEdges(nodes)
+  }, [nodes, kgEdges])
   const byId = useMemo(() => new Map(nodes.map(n => [n.id, n])), [nodes])
 
   const routeIds = useMemo(() => new Set(routeSteps.map(step => step.id)), [routeSteps])
@@ -267,7 +328,7 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
 
       <div className={s.sky} aria-label="ACT topic map">
         <svg className={s.links} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
-          {links.map(([a, b]) => {
+          {links.map(([a, b, relation]) => {
             const lit = focus
               && ((routeIds.size > 1 && routeIds.has(a.id) && routeIds.has(b.id))
                 || (routeIds.size <= 1 && (a.id === focus || b.id === focus)))
@@ -279,6 +340,7 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
                 x2={b.x}
                 y2={b.y}
                 className={lit ? s.linkLit : (focus ? s.linkDim : s.link)}
+                strokeDasharray={relationDash(relation)}
               />
             )
           })}

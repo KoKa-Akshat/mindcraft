@@ -1,197 +1,351 @@
+/**
+ * Diagnostic.module.css: "Jesse's kitchen" onboarding, desk-ified.
+ *
+ * 2026-07-23 pass: this whole flow used to run on the OLD global dark-navy
+ * theme (--bg/--surface/--accent from global.css, #102F35 + lime), totally
+ * disconnected from the parchment/violet "desk" system the cover, notebook
+ * intro, and dashboard all share. That mismatch is most of what read as
+ * "small floating box on a plain background" and "dark navy card with
+ * generic icons" in Akshat's notes. This file now speaks the SAME visual
+ * language as CoverLanding.module.css / NotebookIntro.module.css /
+ * Dashboard.module.css's .canvasDesk, hardcoded to the identical values
+ * (this page is a separate route, outside the DOM subtree that defines
+ * --desk-* as CSS custom properties, so the values are repeated here on
+ * purpose, same pattern NotebookIntro/CoverLanding already use) rather than
+ * inventing a fourth palette:
+ *   - outer frame: same pastel lavender/pink desk gradient, same
+ *     `padding: 4px 8px 8px` full-bleed formula as .canvasDesk / CoverLanding
+ *     .desk, so the page reads as one continuous surface with the desk it
+ *     opens into, not an undersized card floating on its own background.
+ *   - paper: #fffdf8 (same warm-white "page" color as canvasStage / the
+ *     cover / NotebookIntro's card)
+ *   - ink: #2a2430 / #3a2f55 (same violet-ink as the dashboard desk)
+ *   - horizon-step accent: navy #1d3a8a + gold #c99a3a, the exact constants
+ *     DiagnosticArt.tsx's HorizonIcon SVGs already use, so the icons and
+ *     their card finally match instead of good icons sitting on a clashing
+ *     dark-navy/lime card.
+ *   - CTA green: #7dffb3 / #5fe89a, the same "go" mint used by
+ *     NotebookIntro's .go button and the old cover's .openCue.
+ */
+
 .page {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  background:
+    radial-gradient(ellipse 80% 55% at 15% 10%, rgba(255, 190, 220, 0.4), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 80%, rgba(180, 210, 255, 0.45), transparent 50%),
+    linear-gradient(165deg, #efe6fb 0%, #e4dcf5 50%, #d9d0ef 100%);
+  overflow: hidden;
 }
 
 .bar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  position: relative;
+  flex-shrink: 0;
   height: 4px;
-  background: var(--surface-2);
+  background: rgba(58, 47, 85, 0.12);
 }
 .barFill {
   height: 100%;
-  background: var(--accent);
+  background: linear-gradient(90deg, #c99a3a, #e7c877);
   transition: width .35s ease;
 }
 
 .shell {
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
-  max-width: 640px;
-  padding: 80px 20px 60px;
+  /* Identical formula to CoverLanding.module.css's .desk padding and
+     Dashboard.module.css's .canvasDesk padding, not a similar-looking
+     number, so this card resolves to the same "100vw minus the same 16px"
+     box every other desk surface uses. */
+  padding: 4px 8px 8px;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
 }
 
 .card {
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 36px 32px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, .25);
+  flex: 1 1 auto;
+  min-height: 0;
+  background: #fffdf8;
+  color: #2a2430;
+  border: none;
+  border-radius: 22px; /* --desk-radius-lg */
+  box-shadow: 0 16px 48px rgba(90, 70, 140, 0.16); /* --desk-shadow-stage */
+  padding: 30px 40px 26px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
   animation: rise .35s ease;
+  box-sizing: border-box;
 }
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* Centered readable column for text-forward steps (intro/goals/horizon/
+   loading). The confidence step's 3-box grid deliberately skips this and
+   uses the full card width instead. */
+.cardInner {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+/* Intro step only: vertical centering for the illustration + copy, so it
+   reads as a settled scene rather than content pinned to the top of a big
+   full-bleed card. */
+.introCentered {
+  justify-content: center;
+  text-align: center;
+}
 
 .kicker {
   text-transform: uppercase;
   letter-spacing: .12em;
   font-size: 12px;
   font-weight: 700;
-  color: var(--accent);
+  color: #8a6a2a;
   margin: 0 0 10px;
 }
-.title { font-size: 32px; font-weight: 800; margin: 0 0 14px; }
-.h2 { font-size: 22px; font-weight: 700; margin: 0 0 18px; }
-.body { color: var(--text-2); font-size: 16px; line-height: 1.55; margin: 0 0 28px; }
-.note { color: var(--text-muted); font-size: 13px; margin: -10px 0 20px; }
+.title {
+  font-family: 'Caveat', cursive;
+  font-size: 42px;
+  font-weight: 700;
+  color: #2a2430;
+  margin: 0 0 12px;
+  line-height: 1.05;
+}
+.h2 {
+  font-family: 'Caveat', cursive;
+  font-size: 30px;
+  font-weight: 700;
+  color: #2a2430;
+  margin: 0 0 14px;
+}
+.body { color: rgba(42, 36, 48, 0.72); font-size: 16px; line-height: 1.55; margin: 0 0 24px; font-family: 'Source Serif 4', Georgia, serif; }
+.note { color: rgba(42, 36, 48, 0.5); font-size: 13px; margin: -8px 0 18px; }
 
 .primary {
   width: 100%;
-  background: var(--accent);
-  color: var(--accent-dark);
-  border: none;
-  border-radius: 12px;
+  flex-shrink: 0;
+  background: linear-gradient(145deg, #7dffb3, #5fe89a);
+  color: #1f6b45;
+  border: 2px solid rgba(58, 47, 85, 0.85);
+  border-radius: 16px;
   padding: 14px;
-  font-size: 16px;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
   font-weight: 700;
   cursor: pointer;
-  transition: transform .1s ease, opacity .2s ease;
+  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+  transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms cubic-bezier(0.34, 1.4, 0.64, 1), opacity .2s ease;
+  margin-top: auto;
 }
-.primary:hover { transform: translateY(-1px); }
-.primary:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.35), 5px 9px 0 rgba(58, 47, 85, 0.16); }
+.primary:active:not(:disabled) { transform: translateY(0); }
+.primary:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
 
 .ghost {
   width: 100%;
   margin-top: 16px;
   background: transparent;
-  color: var(--text-muted);
+  color: rgba(42, 36, 48, 0.5);
   border: none;
   font-size: 14px;
   cursor: pointer;
 }
 .ghost:disabled { opacity: .3; }
 
-/* intro illustration */
+/* ── intro step: click-to-zoom hotspot ──────────────────────────────────
+   The whole illustration is one real <button> (same accessible pattern as
+   CoverLanding's cover button: native focus + Enter/Space activation, no
+   separate flat "Start" tap required). Clicking/activating it triggers a
+   brief zoom transition centered on the open notebook in DeskArt, then
+   Diagnostic.tsx advances to the first real question once it settles. */
+.introHotspot {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 18px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 14px;
+}
 .introArt {
   display: block;
   width: 100%;
-  max-width: 340px;
   height: auto;
-  margin: 0 auto 24px;
   border-radius: 14px;
   box-shadow: 0 10px 28px rgba(51, 35, 15, 0.18);
+  transition: transform 650ms cubic-bezier(0.5, 0, 0.15, 1), opacity 650ms ease;
+  /* Origin over the open-notebook group in DeskArt's 400x260 viewBox
+     (translate(200 205)) so the zoom reads as diving INTO the notebook,
+     not just the whole illustration growing from its center. */
+  transform-origin: 50% 79%;
+}
+.introHotspot:hover .introArt { transform: scale(1.015); }
+.introZooming .introArt {
+  transform: scale(2.6);
+  opacity: 0;
+}
+.introCue {
+  display: block;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f6b45;
+  margin: -6px 0 20px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .introArt { transition: opacity 200ms ease; }
+  .introZooming .introArt { transform: none; }
 }
 
 /* time-horizon step */
 .horizonGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 22px;
 }
 .horizonBtn {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  background: var(--surface-2);
-  border: 1.5px solid var(--border);
+  background: linear-gradient(180deg, #fbf3e2, #eddab3);
+  border: 1.5px solid rgba(29, 58, 138, .16);
   border-radius: 16px;
   padding: 18px 12px 14px;
   cursor: pointer;
-  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+  transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
 }
-.horizonBtn:hover { transform: translateY(-2px); border-color: var(--accent); }
+.horizonBtn:hover { transform: translateY(-2px); border-color: rgba(29, 58, 138, .4); box-shadow: 0 8px 20px rgba(29, 58, 138, .1); }
 .horizonBtnOn {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent) inset;
+  background: linear-gradient(180deg, #fff8e8, #f7e6bd);
+  border-color: #1d3a8a;
+  box-shadow: 0 0 0 2px rgba(29, 58, 138, .28) inset;
 }
 .horizonIcon { width: 44px; height: 44px; }
-.horizonLabel { font-size: 16px; font-weight: 800; color: var(--text); }
-.horizonSublabel { font-size: 12px; color: var(--text-muted); text-align: center; }
+.horizonLabel { font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700; color: #2a2430; }
+.horizonSublabel { font-size: 12px; color: rgba(42, 36, 48, 0.55); text-align: center; }
 
 /* goals */
 .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
 .tag {
-  background: var(--surface-2);
-  color: var(--text-2);
-  border: 1px solid var(--border);
+  background: rgba(58, 47, 85, 0.06);
+  color: rgba(42, 36, 48, 0.72);
+  border: 1px solid rgba(58, 47, 85, 0.16);
   border-radius: 999px;
   padding: 10px 16px;
   font-size: 14px;
   cursor: pointer;
   transition: all .15s ease;
 }
-.tagOn { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.tagOn { background: rgba(125, 255, 179, 0.28); color: #1f6b45; border-color: #5fe89a; }
 .textarea {
   width: 100%;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
+  background: rgba(58, 47, 85, 0.04);
+  border: 1.5px solid rgba(58, 47, 85, 0.16);
   border-radius: 12px;
-  color: var(--text);
+  color: #2a2430;
   padding: 12px 14px;
   font-size: 15px;
   resize: vertical;
   margin-bottom: 24px;
   box-sizing: border-box;
+  font-family: 'Source Serif 4', Georgia, serif;
 }
-.textarea::placeholder { color: var(--text-muted); }
+.textarea::placeholder { color: rgba(42, 36, 48, 0.35); }
 
-/* confidence */
-.confList { display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
-.confRow { display: flex; flex-direction: column; gap: 8px; }
-.confName { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+/* ── confidence step: three non-scrolling boxes ─────────────────────────
+   Akshat: "three boxes separate so they dont have to scroll." Concepts
+   group by the SAME ACT_TOC_SECTIONS lane the Map/Contents already use
+   (actTocSectionForConcept, actToc.ts): algebra / geometry+data / warmups,
+   condensed so there are never more than 3 boxes regardless of how many
+   sections a given diagnostic spec's concept list touches. All three sit
+   side by side at equal height (grid row stretches to the tallest box) and
+   fit a normal laptop viewport without an inner scrollbar; Skip is gone
+   entirely (every rating just needs one tap, "Not there yet" already covers
+   "I don't know"). */
+.confHead { flex-shrink: 0; }
+.confGrid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.confBox {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: rgba(58, 47, 85, 0.03);
+  border: 1.5px solid rgba(58, 47, 85, 0.12);
+  border-radius: 16px;
+  padding: 14px 14px 10px;
+}
+.confBoxTitle {
+  flex-shrink: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2a2430;
+  margin: 0 0 10px;
+}
+.confBoxList {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  overflow: visible;
+}
+.confRow { display: flex; flex-direction: column; gap: 5px; }
+.confName {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #2a2430;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 .pill {
-  font-size: 10px;
+  font-size: 8.5px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .06em;
-  background: var(--accent-soft);
-  color: var(--accent);
-  padding: 2px 7px;
-  border-radius: 6px;
+  letter-spacing: .04em;
+  background: rgba(201, 154, 58, 0.22);
+  color: #8a6a2a;
+  padding: 1px 5px;
+  border-radius: 5px;
+  white-space: nowrap;
 }
-.scale { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 6px; }
+.scale { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
 .scaleBtn {
-  background: var(--surface-2);
-  color: var(--text-2);
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  padding: 9px 4px;
-  font-size: 12px;
+  background: rgba(58, 47, 85, 0.05);
+  color: rgba(42, 36, 48, 0.7);
+  border: 1px solid rgba(58, 47, 85, 0.16);
+  border-radius: 8px;
+  padding: 6px 3px;
+  font-size: 10.5px;
+  font-weight: 600;
   cursor: pointer;
   transition: all .12s ease;
 }
-.scaleOn { background: var(--accent); color: var(--accent-dark); border-color: var(--accent); font-weight: 700; }
-
-.skipBtn {
-  grid-column: 1 / -1;
-  justify-self: start;
-  background: transparent;
-  color: var(--text-muted);
-  border: 1px dashed var(--border);
-  border-radius: 9px;
-  padding: 8px 12px;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all .12s ease;
-}
-
-.skipBtn:hover { border-color: var(--text-muted); color: var(--text-2); }
-.skipOn {
-  background: rgba(148, 163, 184, 0.12);
-  border-color: #94a3b8;
-  border-style: solid;
-  color: #cbd5e1;
-}
+.scaleBtn:hover { border-color: rgba(58, 47, 85, 0.4); }
+.scaleOn { background: #1d3a8a; color: #fbf3e2; border-color: #1d3a8a; font-weight: 700; }
 
 /* probes */
 .stem { font-size: 20px; font-weight: 600; line-height: 1.4; margin: 0 0 22px; }
@@ -201,16 +355,16 @@
   align-items: center;
   gap: 12px;
   text-align: left;
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background: rgba(58, 47, 85, 0.05);
+  color: #2a2430;
+  border: 1px solid rgba(58, 47, 85, 0.16);
   border-radius: 12px;
   padding: 14px 16px;
   font-size: 15px;
   cursor: pointer;
   transition: all .12s ease;
 }
-.choice:hover:not(:disabled) { border-color: var(--accent); }
+.choice:hover:not(:disabled) { border-color: #1d3a8a; }
 .choice:disabled { cursor: default; }
 .choiceKey {
   display: inline-flex;
@@ -218,21 +372,21 @@
   justify-content: center;
   width: 26px; height: 26px;
   border-radius: 7px;
-  background: var(--surface);
+  background: #fffdf8;
   font-weight: 700;
   font-size: 13px;
   flex-shrink: 0;
 }
-.right { background: rgba(168, 224, 99, .18); border-color: var(--c-mastered); }
-.wrong { background: rgba(255, 107, 107, .18); border-color: var(--c-struggling); }
-.selected { border-color: var(--accent); background: var(--accent-soft); }
+.right { background: rgba(168, 224, 99, .18); border-color: #7dc95e; }
+.wrong { background: rgba(255, 107, 107, .18); border-color: #e05656; }
+.selected { border-color: #1d3a8a; background: rgba(29, 58, 138, .08); }
 .feedback {
   margin-top: 18px;
   padding: 14px 16px;
   border-radius: 12px;
   background: rgba(168, 224, 99, .14);
   border: 1px solid rgba(168, 224, 99, .45);
-  color: var(--text);
+  color: #2a2430;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.45;
@@ -242,13 +396,12 @@
 /* probe step */
 .probeStage {
   max-width: 980px;
-  background: var(--paper-base, #f7f3ee);
+  background: #fffdf8;
   border-color: rgba(29, 58, 138, .16);
-  box-shadow: 0 18px 54px rgba(29, 58, 138, .12);
 }
 
 .probeIntro {
-  color: #6f6a61;
+  color: rgba(42, 36, 48, 0.6);
   font-size: 15px;
   line-height: 1.55;
   margin: -8px 0 24px;
@@ -262,7 +415,7 @@
 }
 
 .probeCard {
-  background: #fffdf7;
+  background: #fffdf8;
   border: 1.5px solid rgba(29, 58, 138, .16);
   border-radius: 18px;
   padding: 20px;
@@ -272,7 +425,7 @@
 .probeCluster {
   font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 12px;
-  color: #6f6a61;
+  color: rgba(42, 36, 48, 0.6);
   text-transform: uppercase;
   letter-spacing: .12em;
   margin-bottom: 12px;
@@ -290,7 +443,7 @@
 
 .probeAsk {
   margin: 0 0 12px;
-  color: #6f6a61;
+  color: rgba(42, 36, 48, 0.6);
   font-size: 13px;
   font-weight: 700;
 }
@@ -302,7 +455,7 @@
 }
 
 .probeBtn {
-  background: #fffdf7;
+  background: #fffdf8;
   border: 1.5px solid rgba(29, 58, 138, .22);
   border-radius: 999px;
   color: #1c1a17;
@@ -328,7 +481,50 @@
   color: #143a2e;
 }
 
+/* ── loading transition (replaces the old "You're mapped." screen) ──────
+   Wizard mascot + one loading line, straight into the dashboard. No
+   separate "done" screen the student has to read and then tap through. */
+.loadingStage {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+}
+.loadingTitle {
+  font-family: 'Caveat', cursive;
+  font-size: 34px;
+  font-weight: 700;
+  color: #2a2430;
+  margin: 0;
+}
+.loadingBar {
+  width: 220px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(58, 47, 85, 0.12);
+  overflow: hidden;
+}
+.loadingBarFill {
+  height: 100%;
+  width: 45%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c99a3a, #e7c877);
+  animation: loadingSlide 1.1s ease-in-out infinite;
+}
+@keyframes loadingSlide {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(320%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loadingBarFill { animation: none; width: 100%; }
+}
+
 @media (max-width: 760px) {
   .probeGrid { grid-template-columns: 1fr; }
   .probeStem { min-height: auto; }
+  .confGrid { grid-template-columns: 1fr; overflow: auto; }
+  .horizonGrid { grid-template-columns: 1fr; }
 }

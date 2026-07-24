@@ -12,6 +12,17 @@ function markIntroSeen() {
   try { localStorage.setItem(INTRO_KEY, '1') } catch { /* ignore */ }
 }
 
+/**
+ * 2026-07-23: resized to the exact same full-bleed formula as
+ * CoverLanding.module.css's .desk/.cover (same padding numbers, same flex
+ * child sizing) so this overlay is byte-for-byte the same box the cover was,
+ * not a separately-tuned "close enough" width  -  see CoverLanding.module.css
+ * for why matching the padding formula (not just the aspect ratio) is what
+ * actually makes two full-bleed boxes provably identical. The whole card is
+ * now one tap target (click/Enter/Space anywhere on it continues to the
+ * dashboard); "Show me contents" is a visual cue inside it, not a second
+ * required tap.
+ */
 export default function NotebookIntro({ onContinue }: { onContinue: () => void }) {
   function go() {
     markIntroSeen()
@@ -20,7 +31,7 @@ export default function NotebookIntro({ onContinue }: { onContinue: () => void }
 
   return (
     <div className={s.root}>
-      <div className={s.card}>
+      <button type="button" className={s.card} onClick={go} aria-label="Continue to your ACT notebook">
         <img className={s.banner} src={introBanner} alt="" draggable={false} />
         <div className={s.body}>
           <p className={s.eyebrow}>Welcome in</p>
@@ -35,12 +46,10 @@ export default function NotebookIntro({ onContinue }: { onContinue: () => void }
           </ul>
           <div className={s.footer}>
             <WizardMascot line="I’ll cheer you on and point at what to study next ★" />
-            <button type="button" className={s.go} onClick={go}>
-              Show me contents →
-            </button>
+            <span className={s.go}>Show me contents →</span>
           </div>
         </div>
-      </div>
+      </button>
     </div>
   )
 }
