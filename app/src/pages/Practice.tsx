@@ -1500,11 +1500,10 @@ export default function Practice() {
   const storyItem = currentQ && qIndex >= storyFromIndexRef.current
     ? storyModule?.[currentQ.id]
     : undefined
-  // Socratic prompts from the story module lead the hint ladder; static bank
-  // hints fill the remaining slots.
-  const hintList = currentQ
-    ? (storyItem ? [...storyItem.socratic, ...currentQ.hints] : currentQ.hints).slice(0, 3)
-    : []
+  // Narrative wrapping removed (see ACTIVE_TASK.md) — plain bank hints only.
+  // storyItem.socratic is left wired on storyItem for the future wrapping
+  // agent; it is intentionally not consumed here anymore.
+  const hintList = currentQ ? currentQ.hints.slice(0, 3) : []
 
   const localStory = useMemo(
     () => (currentQ ? selectStoryForConcept(currentQ.conceptId) : null),
@@ -2212,11 +2211,9 @@ export default function Practice() {
                     <div className={s.questionBanner} style={{ background: lvBannerGradient }}>
                       <div className={s.questionBannerTop}>
                         <div>
-                          {storyItem || localStory ? (
-                            <span className={s.examTagLight}>
-                              Story · {localStory?.protagonist ?? sessionLabel}
-                            </span>
-                          ) : currentQ.examTag ? (
+                          {/* Narrative "Story · {protagonist}" badge removed (see
+                              ACTIVE_TASK.md) — plain exam-tag badge only. */}
+                          {currentQ.examTag ? (
                             <span className={s.examTagLight}>{currentQ.examTag} Style</span>
                           ) : null}
                         </div>
@@ -2240,27 +2237,23 @@ export default function Practice() {
                           />
                         </div>
                       </div>
-                      {currentQ.storyIntro && (
-                        <p className={s.storyIntroBlock}>{currentQ.storyIntro}</p>
-                      )}
-                      {!storyItem && !currentQ.storyIntro && localStory?.settingLine && (
-                        <p className={s.storyIntroBlock}>{localStory.settingLine}</p>
-                      )}
-                      {currentQ.storyContext && !storyItem && !localStory && (
-                        <p className={s.storyContextLine}><MathText text={currentQ.storyContext} /></p>
-                      )}
-                      <p className={s.questionText}><MathText text={sessionStem} /></p>
+                      {/* Narrative storyIntro / settingLine / storyContext paragraphs
+                          removed (see ACTIVE_TASK.md). currentQ.storyIntro,
+                          localStory.settingLine, and currentQ.storyContext are left
+                          wired on their source objects for the future wrapping agent;
+                          intentionally not rendered here anymore. */}
+                      <p className={s.questionText}><MathText text={currentQ.question} /></p>
                     </div>
                     <div className={s.questionBody}>
+                      {/* Illustrative sessionArt image block removed (see
+                          ACTIVE_TASK.md). sessionArt/storyArtFor stay wired above
+                          for the future wrapping agent; intentionally not rendered
+                          here anymore. */}
                       {safeQuestionSvg(currentQ) ? (
                         <div
                           className={s.questionVisual}
                           dangerouslySetInnerHTML={{ __html: safeQuestionSvg(currentQ) }}
                         />
-                      ) : sessionArt ? (
-                        <div className={s.storyArtFrame}>
-                          <img className={s.storyArtImg} src={sessionArt} alt="" draggable={false} />
-                        </div>
                       ) : questionFormat(currentQ) === 'coordinate_graph' || questionFormat(currentQ) === 'diagram' ? (
                         <InteractiveWidget
                           conceptId={currentQ.conceptId}

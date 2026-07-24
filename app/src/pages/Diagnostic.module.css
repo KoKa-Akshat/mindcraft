@@ -335,11 +335,31 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* flex-start, not center: on a short viewport (landscape iPad, see the
+     max-height query below) this box's available height can end up shorter
+     than its rows' natural content height. `center` would center that
+     overflow symmetrically, pushing the top rows UP past this box's own
+     top edge and straight into .confBoxTitle above (exactly the reported
+     "Linear Equations overlapping its own buttons" / "ACT CORE tag
+     overlapping" bug) while leaving dead space at the bottom. flex-start
+     keeps row 1 pinned under the title always; any overflow this box can't
+     fit spills downward only, where the max-height query's overflow-y:auto
+     turns it into an internal scroll instead of a collision. */
+  justify-content: flex-start;
   gap: 8px;
-  overflow: visible;
+  overflow-y: visible;
 }
-.confRow { display: flex; flex-direction: column; gap: 5px; }
+.confRow {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  /* Never let flexbox's shrink algorithm squeeze a row's own box shorter
+     than its (name + scale-button) content: that's the other half of the
+     landscape overlap bug, where a compressed row's outer box gets shorter
+     while its children stay full-size, so name and scale buttons paint on
+     top of each other and bleed into neighboring rows. */
+  flex-shrink: 0;
+}
 .confName {
   font-size: 12.5px;
   font-weight: 600;
@@ -555,4 +575,26 @@
   .probeStem { min-height: auto; }
   .confGrid { grid-template-columns: 1fr; overflow: auto; }
   .horizonGrid { grid-template-columns: 1fr; }
+}
+
+/* ── Short viewport (landscape iPad and similar) ─────────────────────────
+   The confidence step's "three non-scrolling boxes" design (see the header
+   comment above .confGrid) was built and tested tall/portrait, where every
+   box's full row list fits. Rotate to landscape (e.g. iPad Pro 11" at
+   1194x834) and the available height for .confGrid drops a lot while the
+   width stays wide, so a box with more concepts than fit (Algebra's 11-item
+   list, in the current spec) had nowhere to go: flex-start above stops it
+   colliding with its own title, but it still needs somewhere to put the
+   rows that don't fit. Giving just that one box its own internal scroll
+   (not the whole page, and not the other, shorter boxes, which stay static)
+   is the smallest fix that respects both asks: three side-by-side boxes,
+   never the whole page needing a scroll, but a real internal scroll for a
+   real height-constrained case instead of pretending the content shrinks
+   to fit. */
+@media (max-height: 900px) {
+  .confBoxList {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 4px;
+  }
 }

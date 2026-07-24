@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf3e2"/>
+      <stop offset="0.62" stop-color="#eddab3"/>
+      <stop offset="1" stop-color="#e2c793"/>
+    </linearGradient>
+    <radialGradient id="vign" cx="50%" cy="42%" r="70%">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#3a2410" stop-opacity="0.16"/>
+    </radialGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#33230f"/>
+    </marker>
+  </defs><rect x="0" y="0" width="800" height="800" fill="url(#bg)"/>
+    <circle cx="80" cy="70" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="140" cy="110" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="700" cy="90" r="2.4" fill="#33230f" opacity="0.4"/><circle cx="640" cy="150" r="2.4" fill="#33230f" opacity="0.4"/>
+    <!-- the capsule's flight path, its peak marked where the rate of change is exactly zero -->
+    <g transform="translate(240 640)">
+      <path d="M0 0 Q160 -280 320 -60 T560 20" fill="none" stroke="#1d3a8a" stroke-width="7" stroke-linecap="round"/>
+      <line x1="160" y1="-280" x2="160" y2="-240" stroke="#c99a3a" stroke-width="4" stroke-dasharray="2 8"/>
+      <circle cx="160" cy="-280" r="10" fill="#c99a3a"/>
+      <path d="M120 -300 h80" stroke="#33230f" stroke-width="3" opacity="0.5"/>
+    </g>
+    <g transform="translate(560 660) rotate(-8)">
+      <path d="M-20 0 L20 0 L14 -50 Q0 -66 -14 -50 Z" fill="#fbf3e2" stroke="#33230f" stroke-width="4"/>
+    </g>
+    <g transform="translate(340 610) scale(0.88 0.88)">
+    <!-- robe -->
+    <path d="M-70 190 Q-90 60 -46 -30 Q0 -58 46 -30 Q90 60 70 190 Z" fill="#274a63" stroke="#33230f" stroke-width="5"/>
+    <path d="M-46 -30 Q0 10 46 -30" fill="none" stroke="#33230f" stroke-width="3.5" opacity="0.6"/>
+    <path d="M-20 190 L-14 40 M20 190 L14 40" stroke="#33230f" stroke-width="2.5" opacity="0.35"/>
+    <!-- arm -->
+    
+    
+    <path d="M40 10 Q86 6 108 34" fill="none" stroke="#274a63" stroke-width="16" stroke-linecap="round"/>
+      <path d="M40 10 Q86 6 108 34" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="112" cy="36" r="9" fill="#8a5a35" stroke="#33230f" stroke-width="3"/>
+      <rect x="0" y="-14" width="30" height="22" fill="#fbf3e2" stroke="#33230f" stroke-width="3"/>
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#274a63" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-40 -10 Q-70 30 -66 78" fill="none" stroke="#33230f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="-67" cy="82" r="9" fill="#8a5a35" stroke="#33230f" stroke-width="3"/>
+    <!-- head -->
+    <circle cx="0" cy="-72" r="44" fill="#8a5a35" stroke="#33230f" stroke-width="5"/>
+    <path d="M-40 -84 Q0 -122 40 -84 Q42 -104 0 -116 Q-42 -104 -40 -84 Z" fill="#3a2717" stroke="#33230f" stroke-width="4"/>
+    <path d="M-16 -68 q6 -8 12 0 M8 -68 q6 -8 12 0" stroke="#33230f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M-6 -50 q6 4 12 0" stroke="#33230f" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    
+    
+    
+  </g>
+  <rect x="0" y="0" width="800" height="800" fill="url(#vign)"/></svg>

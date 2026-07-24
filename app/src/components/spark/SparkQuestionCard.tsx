@@ -33,21 +33,13 @@ export default function SparkQuestionCard({
     window.setTimeout(onAnswered, 2400)
   }
 
+  // Narrative header (protagonist/setting/tale stamp), storyIntro, and
+  // bridgeLine paragraphs are intentionally not rendered anymore (see
+  // ACTIVE_TASK.md). `scene` and `taleTitle` stay wired as props — untouched
+  // for the future wrapping agent — just no longer fed into this card's JSX.
   return (
     <div className={`${s.wrap} ${visible ? s.wrapVisible : ''}`}>
       <article className={s.card}>
-        <header className={s.header}>
-          <span className={s.stamp}>{scene.protagonist}</span>
-          <span className={s.dot}>·</span>
-          <span className={s.setting}>{scene.setting}</span>
-          <span className={s.tale}>{taleTitle}</span>
-        </header>
-
-        <p className={s.intro}>{scene.storyIntro}</p>
-        <p className={s.bridge}>{scene.bridgeLine}</p>
-
-        <div className={s.divider} />
-
         <div className={s.stem}>
           <MathText text={question.question} />
         </div>
@@ -68,7 +60,7 @@ export default function SparkQuestionCard({
         </div>
 
         <p className={s.hint}>
-          {selected == null ? 'Pick one — we won\'t tell you if it\'s right or wrong yet.' : 'Watch what the scene does next.'}
+          {selected == null ? 'Pick one. We won\'t tell you if it\'s right or wrong yet.' : 'Watch what happens next.'}
         </p>
 
         {feedback && (

@@ -564,6 +564,216 @@ const SCENES = {
     ${figure({ cx: 560, cy: 610, scale: 0.9, robe: '#4a2740', hat: 'cap', arm: 'point' })}
   `),
 
+  // ── 2026-07-24 batch: the 14 concepts that were silently inheriting the
+  // fractions_decimals bakery photo or an unrelated theme-fallback photo
+  // (ACTIVE_TASK.md 2026-07-24 entry). Same rig, same palette, one bespoke
+  // metaphor prop each, protagonist/setting locked from the just-corrected
+  // questionContextFrames.json entries.
+
+  derivatives: () => wrap(`
+    ${groundLine(640)}
+    <!-- Newton's orchard: one apple mid-fall, and a curve frozen at the single instant its tangent touches -->
+    <g transform="translate(220 560)">
+      <path d="M0 0 Q-10 -160 20 -260" fill="none" stroke="${INK}" stroke-width="14" stroke-linecap="round"/>
+      <circle cx="24" cy="-280" r="70" fill="${PARCH_C}" stroke="${INK}" stroke-width="4" opacity="0.85"/>
+      <circle cx="40" cy="-140" r="16" fill="${GOLD}" stroke="${INK}" stroke-width="3"/>
+      <line x1="40" y1="-124" x2="34" y2="-40" stroke="${INK}" stroke-width="2" stroke-dasharray="3 8" opacity="0.5"/>
+    </g>
+    <g transform="translate(430 620)">
+      <path d="M0 0 h320" stroke="${INK}" stroke-width="3" opacity="0.4"/>
+      <path d="M0 0 v-260" stroke="${INK}" stroke-width="3" opacity="0.4"/>
+      <path d="M10 -10 Q140 -20 220 -220" fill="none" stroke="${NAVY}" stroke-width="7" stroke-linecap="round"/>
+      <line x1="120" y1="-150" x2="260" y2="-230" stroke="${GOLD}" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="176" cy="-186" r="9" fill="${INK}"/>
+    </g>
+    ${figure({ cx: 560, cy: 610, scale: 0.9, robe: NAVY, hat: null, arm: 'point' })}
+  `),
+
+  logarithmic_functions: () => wrap(`
+    ${mountains(620, 24, PARCH_C, 0.4)}
+    <!-- Napier's castle, and the bridge from a multiply-tower to an add-tower -->
+    <g transform="translate(120 640)">
+      <rect x="-40" y="-220" width="80" height="220" fill="${PARCH_B}" stroke="${INK}" stroke-width="4"/>
+      <rect x="-52" y="-240" width="20" height="24" fill="${PARCH_C}" stroke="${INK}" stroke-width="3"/>
+      <rect x="32" y="-240" width="20" height="24" fill="${PARCH_C}" stroke="${INK}" stroke-width="3"/>
+      <rect x="-14" y="-140" width="28" height="40" fill="${PARCH_A}" stroke="${INK}" stroke-width="3"/>
+    </g>
+    <g transform="translate(430 640)">
+      <rect x="-20" y="-40" width="40" height="40" fill="${NAVY}" opacity="0.85"/>
+      <rect x="-16" y="-100" width="32" height="60" fill="${NAVY}" opacity="0.7"/>
+      <rect x="-12" y="-150" width="24" height="50" fill="${NAVY}" opacity="0.55"/>
+      <path d="M20 -150 Q160 -230 300 -110" fill="none" stroke="${GOLD}" stroke-width="6" stroke-dasharray="2 12" stroke-linecap="round"/>
+      <g transform="translate(300 -40)">
+        <rect x="-10" y="-20" width="20" height="20" fill="${INK}" opacity="0.7"/>
+        <rect x="-14" y="-50" width="28" height="30" fill="${INK}" opacity="0.55"/>
+        <rect x="-18" y="-90" width="36" height="40" fill="${INK}" opacity="0.4"/>
+      </g>
+    </g>
+    ${figure({ cx: 560, cy: 600, scale: 0.88, robe: '#3a4a63', hat: 'cap', arm: 'point' })}
+  `),
+
+  rational_expressions: () => wrap(`
+    ${mountains(600, 20, PARCH_C, 0.35)}
+    <!-- Frontinus' aqueduct: arches carrying channels of unequal width, a fraction of flow in each -->
+    <g transform="translate(160 640)">
+      ${[0, 1, 2, 3].map(i => `<path d="M${i * 140} 0 h60 v-90 a30 30 0 0 1 60 0 v90 h60" fill="none" stroke="${INK}" stroke-width="6"/>`).join('')}
+      <rect x="-10" y="-140" width="580" height="18" fill="${NAVY}" opacity="0.6"/>
+      <rect x="-10" y="-158" width="580" height="10" fill="${GOLD}" opacity="0.7"/>
+    </g>
+    ${figure({ cx: 620, cy: 610, scale: 0.9, robe: '#6b1f1f', hat: null, arm: 'hold',
+      holdProp: `<rect x="0" y="-6" width="50" height="12" fill="${PARCH_A}" stroke="${INK}" stroke-width="3"/>` })}
+  `),
+
+  complex_numbers: () => wrap(`
+    ${water(600, NAVY, 0.22)}
+    <!-- the complex plane: a point that refuses to sit on the real line alone -->
+    <g transform="translate(340 460)">
+      <line x1="-160" y1="0" x2="160" y2="0" stroke="${INK}" stroke-width="4" opacity="0.6" marker-end="url(#arrow)"/>
+      <line x1="0" y1="120" x2="0" y2="-140" stroke="${INK}" stroke-width="4" opacity="0.6" marker-end="url(#arrow)"/>
+      <circle cx="70" cy="-90" r="10" fill="${GOLD}" stroke="${INK}" stroke-width="3"/>
+      <line x1="70" y1="0" x2="70" y2="-90" stroke="${NAVY}" stroke-width="3" stroke-dasharray="3 7"/>
+      <line x1="0" y1="-90" x2="70" y2="-90" stroke="${NAVY}" stroke-width="3" stroke-dasharray="3 7"/>
+    </g>
+    ${figure({ cx: 560, cy: 610, scale: 0.9, robe: '#274a4a', hat: null, arm: 'raise' })}
+  `),
+
+  vectors: () => wrap(`
+    ${water(560, NAVY, 0.35)}
+    ${shipHull(260, 600, 260)}
+    <!-- wind and current, two arrows tip to tail, resolving into the ship's true course -->
+    <g transform="translate(560 500)">
+      <line x1="0" y1="0" x2="90" y2="-40" stroke="${GOLD}" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow)"/>
+      <line x1="90" y1="-40" x2="150" y2="30" stroke="${NAVY}" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="150" y2="30" stroke="${INK}" stroke-width="3.5" stroke-dasharray="3 8" opacity="0.6"/>
+    </g>
+    ${figure({ cx: 340, cy: 610, scale: 0.88, robe: '#1d3a4a', hat: 'peak', arm: 'point' })}
+  `),
+
+  matrices: () => wrap(`
+    ${libraryShelves(560, 100, 200, 300)}
+    ${tableProp(80, 600, 300)}
+    <!-- Cayley's grid: rows and columns of numbers that are also one single object -->
+    <g transform="translate(260 460) scale(1.6)">
+      <rect x="0" y="0" width="150" height="110" fill="none" stroke="${INK}" stroke-width="5"/>
+      <line x1="50" y1="0" x2="50" y2="110" stroke="${INK}" stroke-width="2.5" opacity="0.5"/>
+      <line x1="100" y1="0" x2="100" y2="110" stroke="${INK}" stroke-width="2.5" opacity="0.5"/>
+      <line x1="0" y1="37" x2="150" y2="37" stroke="${INK}" stroke-width="2.5" opacity="0.5"/>
+      <line x1="0" y1="74" x2="150" y2="74" stroke="${INK}" stroke-width="2.5" opacity="0.5"/>
+      ${[0, 1, 2].map(r => [0, 1, 2].map(c => `<circle cx="${c * 50 + 25}" cy="${r * 37 + 18}" r="7" fill="${(r + c) % 2 ? NAVY : GOLD}" opacity="0.8"/>`).join('')).join('')}
+    </g>
+    ${figure({ cx: 480, cy: 610, scale: 0.92, robe: '#2c2c4a', hat: null, arm: 'point' })}
+  `),
+
+  conic_sections: () => wrap(`
+    ${stars([[80, 80], [650, 70], [720, 150]])}
+    <!-- a cone sliced at different angles into circle, ellipse, and hyperbola -->
+    <g transform="translate(300 560)">
+      <path d="M0 0 L-90 40 A90 22 0 0 0 90 40 Z" fill="${PARCH_C}" stroke="${INK}" stroke-width="4" opacity="0.85"/>
+      <path d="M0 0 L-90 40" stroke="${INK}" stroke-width="4"/>
+      <path d="M0 0 L90 40" stroke="${INK}" stroke-width="4"/>
+      <ellipse cx="0" cy="-70" rx="30" ry="8" fill="none" stroke="${GOLD}" stroke-width="5"/>
+      <path d="M-60 -10 A62 16 0 0 0 60 -10" fill="none" stroke="${NAVY}" stroke-width="5"/>
+    </g>
+    <g transform="translate(540 470)">
+      <path d="M-60 60 Q0 -40 60 60" fill="none" stroke="${NAVY}" stroke-width="5"/>
+      <ellipse cx="150" cy="20" rx="46" ry="30" fill="none" stroke="${GOLD}" stroke-width="5"/>
+    </g>
+    ${figure({ cx: 560, cy: 610, scale: 0.88, robe: '#3a2f63', hat: null, arm: 'point' })}
+  `),
+
+  probability_distributions: () => wrap(`
+    ${tableProp(120, 600, 480)}
+    <!-- de Moivre's bell curve, rising out of scattered coffeehouse dice throws -->
+    <g transform="translate(360 470)">
+      <path d="M-160 130 Q-160 -30 0 -40 Q160 -30 160 130" fill="none" stroke="${NAVY}" stroke-width="6"/>
+      <rect x="-40" y="80" width="26" height="20" fill="${GOLD}" opacity="0.85" transform="rotate(-8 -27 90)"/>
+      <rect x="10" y="70" width="26" height="20" fill="${GOLD}" opacity="0.85" transform="rotate(10 23 80)"/>
+      <rect x="-80" y="100" width="24" height="18" fill="${INK}" opacity="0.4" transform="rotate(6 -68 109)"/>
+      <line x1="-160" y1="130" x2="160" y2="130" stroke="${INK}" stroke-width="4"/>
+    </g>
+    ${figure({ cx: 600, cy: 610, scale: 0.9, robe: '#5a3a2b', hat: 'bonnet', arm: 'point' })}
+  `),
+
+  applications_of_derivatives: () => wrap(`
+    ${stars([[80, 70], [140, 110], [700, 90], [640, 150]])}
+    <!-- the capsule's flight path, its peak marked where the rate of change is exactly zero -->
+    <g transform="translate(240 640)">
+      <path d="M0 0 Q160 -280 320 -60 T560 20" fill="none" stroke="${NAVY}" stroke-width="7" stroke-linecap="round"/>
+      <line x1="160" y1="-280" x2="160" y2="-240" stroke="${GOLD}" stroke-width="4" stroke-dasharray="2 8"/>
+      <circle cx="160" cy="-280" r="10" fill="${GOLD}"/>
+      <path d="M120 -300 h80" stroke="${INK}" stroke-width="3" opacity="0.5"/>
+    </g>
+    <g transform="translate(560 660) rotate(-8)">
+      <path d="M-20 0 L20 0 L14 -50 Q0 -66 -14 -50 Z" fill="${PARCH_A}" stroke="${INK}" stroke-width="4"/>
+    </g>
+    ${figure({ cx: 340, cy: 610, scale: 0.88, skin: '#8a5a35', robe: '#274a63', hat: null, arm: 'hold',
+      holdProp: `<rect x="0" y="-14" width="30" height="22" fill="${PARCH_A}" stroke="${INK}" stroke-width="3"/>` })}
+  `),
+
+  integrals: () => wrap(`
+    ${windowArch(560, 100, 200, 300)}
+    <!-- Kepler's wine barrel, sliced in imagination into a stack of thin measurable disks -->
+    <g transform="translate(280 620)">
+      <path d="M-70 0 Q-90 -110 -50 -220 Q0 -240 50 -220 Q90 -110 70 0 Q0 24 -70 0 Z" fill="${PARCH_C}" stroke="${INK}" stroke-width="5" opacity="0.9"/>
+      ${[-190, -150, -110, -70, -30].map(y => `<ellipse cx="0" cy="${y}" rx="${58 - Math.abs(y + 110) * 0.12}" ry="8" fill="none" stroke="${NAVY}" stroke-width="2.5" opacity="0.6"/>`).join('')}
+      <ellipse cx="0" cy="-220" rx="50" ry="10" fill="none" stroke="${INK}" stroke-width="4"/>
+    </g>
+    ${figure({ cx: 480, cy: 610, scale: 0.9, robe: '#1d3a4a', hat: null, arm: 'raise' })}
+  `),
+
+  applications_of_integrals: () => wrap(`
+    ${water(600, NAVY, 0.3)}
+    <!-- Froude's hull, sliced into cross-sections, each a plane shape you can measure exactly -->
+    <g transform="translate(300 560)">
+      <path d="M-160 0 Q-100 60 0 66 Q100 60 160 0 L140 -30 Q0 10 -140 -30 Z" fill="${PARCH_C}" stroke="${INK}" stroke-width="5"/>
+      ${[-100, -50, 0, 50, 100].map(x => `<line x1="${x}" y1="${-14 - Math.abs(x) * 0.05}" x2="${x}" y2="${50 - Math.abs(x) * 0.2}" stroke="${NAVY}" stroke-width="2.5" opacity="0.55"/>`).join('')}
+    </g>
+    ${figure({ cx: 560, cy: 610, scale: 0.9, robe: '#324a3a', hat: 'cap', arm: 'hold',
+      holdProp: `<rect x="0" y="-6" width="40" height="12" fill="${GOLD}" stroke="${INK}" stroke-width="3"/>` })}
+  `),
+
+  inferential_statistics: () => wrap(`
+    ${groundLine(660)}
+    <!-- the captured tank, one serial number stamped on its gearbox, the only clue that exists -->
+    <g transform="translate(300 600)">
+      <rect x="-120" y="-70" width="240" height="70" rx="10" fill="${PARCH_C}" stroke="${INK}" stroke-width="5"/>
+      <rect x="-60" y="-110" width="90" height="46" rx="6" fill="${PARCH_B}" stroke="${INK}" stroke-width="4"/>
+      <circle cx="-70" cy="4" r="30" fill="none" stroke="${INK}" stroke-width="6"/>
+      <circle cx="70" cy="4" r="30" fill="none" stroke="${INK}" stroke-width="6"/>
+      <rect x="-30" y="-38" width="70" height="16" rx="3" fill="${PARCH_A}" stroke="${GOLD}" stroke-width="3"/>
+    </g>
+    <g transform="translate(430 500) rotate(18)">
+      <circle r="34" fill="none" stroke="${NAVY}" stroke-width="6"/>
+      <line x1="24" y1="24" x2="60" y2="60" stroke="${NAVY}" stroke-width="8" stroke-linecap="round"/>
+    </g>
+    ${figure({ cx: 560, cy: 610, scale: 0.88, robe: '#3a3a3a', hat: 'cap', arm: 'point' })}
+  `),
+
+  representation_translation: () => wrap(`
+    <!-- the stove-heated room's ceiling, ruled into a grid, and one fly pinned by two numbers -->
+    <g transform="translate(300 300)">
+      <rect x="-220" y="-160" width="440" height="320" fill="${PARCH_A}" stroke="${INK}" stroke-width="4" opacity="0.9"/>
+      ${[-176, -132, -88, -44, 0, 44, 88, 132, 176].map(x => `<line x1="${x}" y1="-160" x2="${x}" y2="160" stroke="${INK}" stroke-width="1.5" opacity="0.25"/>`).join('')}
+      ${[-120, -80, -40, 0, 40, 80, 120].map(y => `<line x1="-220" y1="${y}" x2="220" y2="${y}" stroke="${INK}" stroke-width="1.5" opacity="0.25"/>`).join('')}
+      <circle cx="88" cy="-40" r="9" fill="${INK}"/>
+      <line x1="88" y1="-40" x2="88" y2="160" stroke="${GOLD}" stroke-width="3" stroke-dasharray="2 8"/>
+      <line x1="88" y1="-40" x2="-220" y2="-40" stroke="${GOLD}" stroke-width="3" stroke-dasharray="2 8"/>
+    </g>
+    ${figure({ cx: 420, cy: 640, scale: 0.9, robe: NAVY, hat: null, arm: 'raise' })}
+  `),
+
+  act_strategy: () => wrap(`
+    ${mountains(600, 30, PARCH_C, 0.45)}
+    ${sun(660, 130, 70, GOLD)}
+    <!-- scraps of torn paper thrown into the blast wind, the crude measure of a giant's power -->
+    <g transform="translate(260 560)">
+      <path d="M0 60 L-40 -260 L40 -300 L100 40 Z" fill="${PARCH_C}" stroke="${INK}" stroke-width="4" opacity="0.85"/>
+      <circle cx="30" cy="-220" r="60" fill="${GOLD_LT}" opacity="0.5"/>
+      ${[[140, -40, 8], [180, -70, 14], [220, -30, 20], [260, -90, 10]].map(([x, y, r]) => `<rect x="${x}" y="${y}" width="${r}" height="${r * 0.6}" fill="${PARCH_A}" stroke="${INK}" stroke-width="2" transform="rotate(${(x * 7) % 40 - 20} ${x} ${y})"/>`).join('')}
+    </g>
+    ${figure({ cx: 560, cy: 620, scale: 0.9, robe: '#3a3a3a', hat: null, arm: 'raise' })}
+  `),
+
 }
 
 const CONCEPT_IDS = Object.keys(SCENES)

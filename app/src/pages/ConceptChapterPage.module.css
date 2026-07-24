@@ -565,10 +565,23 @@
   max-width: 42ch;
 }
 .firstPara { font-style: italic; font-size: 17px; }
+/* .dropCap is what actually renders in .blendPara's lead paragraph
+   (ConceptChapterPage.tsx renders `<span className={s.dropCap}>`). The
+   opening beat is deliberately short (often just 1-2 lines at this
+   column's width), so a dropCap tall enough to visually justify its own
+   float needs to fit inside roughly two of THOSE lines, not be sized on
+   its own terms. At the old 72px/0.78 setting (plus an 8px right margin)
+   the float was both taller than a typical two-line opener has room for
+   AND set too far off the following text, so the paragraph ran out of
+   lines before it cleared the float and the giant letter read as its own
+   isolated block ("I" ... "n 1585..." on a line under it) rather than one
+   connected word ("In 1585..."). Sized and margined here to resolve to
+   roughly two .blendLead lines tall, with the glyph sitting close enough
+   to read as part of the same word. */
 .dropCap {
   float: left;
-  font: 700 72px/0.78 var(--tok-font-serif);
-  margin: 6px 8px 0 0;
+  font: 700 46px/0.85 var(--tok-font-serif);
+  margin: 2px 3px 0 0;
 }
 .storyFoot {
   padding: 16px 0 18px;

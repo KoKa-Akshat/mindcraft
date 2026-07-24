@@ -4,6 +4,439 @@
 
 ---
 
+## Remove per-question narrative wrapping from practice questions (Claude, 2026-07-24)
+
+Scope strictly `app/**`. Did not touch `app/src/manjushree/`,
+`agent_work/manjushree-zone/`, `ml/**`, `webhook/**`, `data/**`, `worlds/**`, or
+`ConceptChapterPage.tsx` (the concept-level story chapter — correct as-is,
+out of scope, untouched). `grep manjushree app/src/App.tsx` shows all 4
+references, unchanged.
+
+**Decision being implemented:** the per-question story dressing (setting
+line, "bridge" sentence, socratic hint, illustrative art) spliced onto
+practice-question stems is exactly the "scene followed by an unrelated
+textbook ask" anti-pattern this file warns against, and is being switched off
+until a dedicated wrapping agent (pick question algorithmically → one LLM
+call abridges into story context + image) replaces it. Underlying data/logic
+is left fully wired, just not fed into rendered JSX, so the future agent has
+everything to consume.
+
+**`app/src/pages/Practice.tsx`**
+- Hints (`hintList`): no longer prepends `storyItem.socratic`; plain
+  `currentQ.hints` only.
+- Question banner: removed the "Story · {protagonist}" badge (kept the plain
+  `examTag` badge), removed the `currentQ.storyIntro` / `localStory.settingLine`
+  / `currentQ.storyContext` paragraphs above the stem, and changed the
+  rendered stem from `sessionStem` (`storyItem?.storyStem ?? framedLocalStem(...)`)
+  to plain `currentQ.question`.
+- Removed the illustrative `sessionArt` image block from the question-visual
+  slot (SVG figure / InteractiveWidget paths untouched).
+- Left wired but now unused for rendering: `storyModule`/`prefetchStoryModule`,
+  `storyItem`, `localStory`, `sessionArt`/`storyArtFor`, `framedLocalStem`, and
+  all story imports (`selectSceneForQuestion`, `selectStoryForConcept`,
+  `buildStoryDisplay`, `conceptStoriesData`). Post-answer feedback (the
+  `storyItem.misconceptionCallout` / `storyItem.steps` "Your path through it"
+  block) was intentionally left as-is — out of the stated scope, which was the
+  pre-answer stem/badge/paragraphs/art, not the post-answer explanation UI.
+
+**`app/src/lib/storyDisplay.ts`** (investigated per the flagged caveat, not
+originally one of the 3 named files, but entangled with the above): the
+table/OpenStax reskin branches were injecting real invented narrative
+sentences (the literal "Florence Nightingale copied ten ward ledgers..."
+example) on top of a plain textbook ask line, and renaming real team names to
+fictional "Scutari Ward" labels inside the rendered data table. Fixed by
+reading what each branch actually produced (not guessing): removed the
+narrative-sentence construction in `reskinTableQuestion` /
+`reskinGenericOpenStax` (now just the plain ask line), restored real team
+names in `parseColumnarTable` instead of the `FLORENCE_WARDS` fictional
+substitution, and renamed the table header back to `Team`. Deleted the now-dead
+`isFlorenceQuestion` helper and `FLORENCE_WARDS` constant (this was ad-hoc
+narrative logic superseded by the data-driven `questionContextFrames.json` /
+`conceptStories.json` approach, not foundational plumbing the future wrapping
+agent needs). The polygon branch (`sceneLine`) and plain vignette/diagram
+branches were already pure visual/layout transforms with no invented prose —
+left untouched. This module is a shared seam (also used by
+`InteractiveFigure`, `StoryDataTable`, `QuestionFigure`, `useStoryQuestion`,
+`diagnosticQuestions.ts`, `figureSpec.ts`), so the fix applies everywhere at
+the root rather than needing per-consumer patches.
+
+**`app/src/components/spark/SparkQuestionCard.tsx`** (landing-page `/spark`
+onboarding demo, rendered from `FirstSpark.tsx`): removed the narrative header
+block (protagonist stamp · setting · tale title) and the `storyIntro`/
+`bridgeLine` paragraphs above the stem. Left `scene`/`taleTitle` props wired
+(component signature and `FirstSpark.tsx`'s call site untouched) but no longer
+rendered. Touched two hint-copy strings in the process (removing an em dash
+and the now-orphaned "watch what the scene does next" reference, since there
+is no visible scene anymore): "Pick one. We won't tell you if it's right or
+wrong yet." / "Watch what happens next." `sparkNarrative.ts`/`storyMatch.ts`/
+`sparkMatch.ts` untouched.
+
+**`app/src/pages/GradeOnboard.tsx`** (older grade+probe onboarding flow —
+note: not reachable via any live route today, `/onboard` redirects to
+`/diagnostic` per the 2026-07-21 entry below; fixed anyway since it was named
+in scope and costs nothing to keep correct): removed the rendered
+`bridgeLine`, `currentQ.storyIntro`, `storyItem.socratic[0]`, and `sceneLine`
+paragraphs above the stem. Switched the rendered stem
+(`HighlightedStem text=`) from the story-reskinned `stemText` to plain
+`currentQ.question`. Also switched `useJournalGuide`'s `questionText` input
+from `stemText` to `currentQ.question` — the Jarvis focus-highlighter finds a
+phrase by literal substring match against whatever text it's given, so once
+the rendered stem changed to plain text, the highlight input had to match it
+or highlighting would silently stop finding phrases. `stemText` itself stays
+destructured (renamed `_stemText`) since `useStoryQuestion`/`storyModule.ts`/
+`storyDisplay.ts` wiring stays in place for the future agent.
+
+**Verification (all real, this pass):** `npx tsc --noEmit` clean (exit 0).
+`npx vitest run` → 109 passed, 1 skipped (110 total, 7 files), matches
+baseline. `npm run build` succeeded (same pre-existing >500kB chunk warning,
+unrelated). `grep manjushree app/src/App.tsx` shows all 4 references, checked
+before and after the screenshot shims below.
+
+Screenshots taken via a temporary, env-gated `VITE_SCREENSHOT_MODE` auth
+bypass added to `AuthGuard` in `App.tsx` (same technique as prior passes this
+session), plus two narrowly-scoped temporary hooks used only for reaching a
+specific question deterministically without live Firestore data: a
+`VITE_SCREENSHOT_MODE`-gated `?screenshotQid=<id>` query param in `Practice.tsx`
+(calls the existing `startBookmarkedSession` path — the same code path a real
+bookmarked-question navigation already uses) and a `VITE_SCREENSHOT_MODE`-gated
+temporary route `/_screenshot-grade-onboard` in `App.tsx` mounting
+`GradeOnboard` (since it has no live route to reach it through). All three
+shims were applied on top of byte-for-byte backups of the pre-existing
+(already-uncommitted, unrelated) `App.tsx`/`Practice.tsx`, and restored from
+those exact backups afterward — confirmed via `diff` showing zero differences
+against the pre-shim backups, and a fresh `grep SCREENSHOT app/src/App.tsx
+app/src/pages/Practice.tsx` returning empty. `tsc`/`vitest`/`build` all re-run
+clean after the revert (numbers above are post-revert). For the "before"
+comparison shots, the original (pre-my-edit) `Practice.tsx`/
+`SparkQuestionCard.tsx`/`GradeOnboard.tsx` were pulled from `git show HEAD:...`
+(each file had zero uncommitted changes at session start, confirmed via `git
+status` before touching anything) and swapped onto disk temporarily, then
+swapped back to the real edited versions afterward.
+
+6 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+- `narrative_removal_practice_BEFORE.png` / `_AFTER.png` — same real question
+  (`act_math_t13_q02`, WebFilms membership-fee ACT problem): before shows the
+  "Story · William Harrison" badge, an "At sea, bound for Jamaica, 1761"
+  setting paragraph, and that same sentence re-prepended onto the stem itself;
+  after shows a plain "ACT Style" badge and the bare textbook stem.
+- `narrative_removal_firstspark_BEFORE.png` / `_AFTER.png`: before shows a
+  header stamped "KWAME · ROYAL DRUMMING ACADEMY, KUMASI / The Master
+  Drummer" with unrelated storyIntro/bridgeLine paragraphs above a stem that
+  is actually about a different character (Simon, a waterfowl pond) — a
+  concrete example of the mismatched-narrative-layer bug this pass fixes;
+  after shows just the plain stem, choices, and hint.
+- `narrative_removal_gradeonboard_BEFORE.png` / `_AFTER.png` (different
+  randomly-drawn probe question each run, `pickDiagnosticQuestions` has no
+  fixed seed — still a valid demonstration of the same pattern): before shows
+  a narrative scene paragraph ("The Nile floodplain, ancient Egypt. Ahmes
+  pulls the knotted rope taut...") glued above an unrelated diagram-based
+  ask; after shows a plain stem with the Jarvis phrase-highlighter still
+  correctly underlining a phrase in the now-plain text.
+
+Files touched: `app/src/pages/Practice.tsx`, `app/src/lib/storyDisplay.ts`,
+`app/src/components/spark/SparkQuestionCard.tsx`, `app/src/pages/GradeOnboard.tsx`.
+Nothing committed, left in the working tree for review.
+
+---
+
+## Three iPad bugs from Akshat's physical-device review (Claude, 2026-07-24)
+
+Scope was strictly `app/**`. Did not touch `app/src/manjushree/`,
+`agent_work/manjushree-zone/`, `ml/**`, `webhook/**`, `data/**`, `worlds/**`,
+or `ios-prototype/`. `App.tsx` was NOT edited (has pre-existing uncommitted
+Manjushree wiring from a concurrent session); `grep manjushree app/src/App.tsx`
+still shows all 4 references. Verified with real Playwright screenshots at
+real device dimensions (iPad Pro 11" landscape 1194x834, portrait 834x1194)
+via a temporary unrouted preview harness (`app/_preview.html` +
+`app/src/_previewMain.tsx`, mounted the real page components in a
+`MemoryRouter` with a null `UserContext` to bypass Firebase auth for
+screenshotting only); harness deleted before finishing, nothing left behind.
+
+**1. Drop-cap ("I" reads disconnected).** Confirmed and fixed in
+`ConceptChapterPage.module.css`'s `.dropCap`. Root cause: `float: left; font:
+700 72px/0.78 ...; margin: 6px 8px 0 0;` rendered a float about 62px tall,
+taller than the 2 lines of text a typical opening beat (most concepts'
+`conceptStories.json` first beat is only 80-290 characters, 1-3 lines at this
+column width) has to wrap around it, so the paragraph ran out of lines before
+clearing the float and the glyph read as an isolated block with "n 1585..."
+starting on its own line below, not beside it. Fix: `font: 700 46px/0.85
+...; margin: 2px 3px 0 0;`, sized to resolve to roughly two lines with a
+tight gap to the following letter. Verified on Fractions and Decimals (Simon
+Stevin) plus 4 others spanning the shortest and longest opening beats in the
+bank (Basics of Functions, Geometry of Circles, Logarithmic Functions, Lines
+and Angles) at 1194x834, 1440x900, and the 820px stacked/portrait breakpoint.
+Reads as one connected word ("In 1585...", "In St. Petersburg...", "Around
+240 BC...") in every case.
+
+**2. Standardize chapter visual format.** Rendered 5 concepts side by side
+across Algebra/Geometry/Data (Fractions and Decimals, Linear Equations,
+Geometry of Circles, Basic Probability, Vectors) at real iPad dimensions.
+Findings:
+- The Polaroid image frame (`.polaroid`/`.polaroidHero`, aspect-ratio 4/3,
+  object-fit cover, fixed max-widths) already renders every art source
+  (photo jpg or hand-drawn svg) at identical size/framing/rotation-style
+  within the layout. No layout-consistency bug here.
+- `conceptStories.json` story length/structure is uniform (1700-1957 chars
+  across all 41 concepts) and every concept resolves a `CLUSTER_MAP` accent;
+  no missing/malformed entries, no broken theme-color fallback.
+- The photoreal-vs-hand-drawn-SVG split IS real and IS the deliberate choice
+  from the 2026-07-21 pass: exactly 1 concept (`fractions_decimals`) has a
+  Higgsfield photo, 26 have hand-authored SVGs
+  (`generateConceptArtSvg.mjs`), confirmed intentional, not a bug. Checked
+  Higgsfield balance directly: **0 credits, free plan**, so regenerating more
+  photoreal art is not an option right now (confirmed rather than assumed).
+  Not "fixed" per the brief's own instruction not to invent unnecessary work
+  here.
+- **Two real, previously unknown inconsistencies found (not on the
+  candidate list), NOT fixed this pass, flagged for a follow-up because
+  fixing them is content-authoring work beyond a layout/CSS pass:**
+  - (a) **Protagonist/setting stamp mismatches the actual story** for
+    roughly half of all concepts. The line under the title
+    ("PROTAGONIST · SETTING, YEAR") comes from `questionContextFrames.json`,
+    which was authored separately from (and, for ~20 of ~39 concepts,
+    inconsistently with) `conceptStories.json`'s actual narrative. Confirmed
+    by direct reading, e.g. `circles_geometry` stamps "Archimedes of
+    Syracuse, Syracuse, Sicily, 250 BC" but the story is about Zu Chongzhi in
+    fifth-century China; `vectors` stamps "James Clerk Maxwell, London,
+    1865" but the story is a 1707 Royal Navy shipwreck; `basic_probability`
+    stamps Gerolamo Cardano but the story is about Antoine Gombaud;
+    `quadratic_equations` stamps al-Khwarizmi but the story is Galileo. This
+    reads as more jarring/broken than the art-style difference once a
+    student actually reads the page. Not fixed here: `questionBridge` text
+    in the same file is also protagonist-specific and used to build live
+    practice-question stems, so correcting the stamp alone without a matched
+    rewrite of the bridge line risks a second inconsistency; this needs a
+    real content pass, not a quick swap.
+  - (b) **14 concepts have no concept-specific art at all** (not in the 26
+    SVGs or the 1 photo): `derivatives`, `logarithmic_functions`,
+    `rational_expressions`, `complex_numbers`, `vectors`, `matrices`,
+    `conic_sections`, `probability_distributions`,
+    `applications_of_derivatives`, `integrals`, `applications_of_integrals`,
+    `inferential_statistics`, `representation_translation`, `act_strategy`.
+    They fall back to one of 5 generic shared stock photos
+    (`storyArt.ts`'s `ART` map / `themeFallback()` regex). 8 of the 14 hit
+    the ultimate default and show the `fractions_decimals` bakery/Simon
+    Stevin photo for completely unrelated topics, including calculus
+    concepts (derivatives, integrals) that have nothing to do with it. This
+    is a bigger, more concrete "why does this look inconsistent" driver than
+    the photoreal/SVG split. Not fixed here: filling it in means authoring
+    14 new bespoke SVG scenes (protagonist + setting + a real math metaphor
+    prop each, matching the existing 26's hand-authored pattern in
+    `generateConceptArtSvg.mjs`), real design/content work, not a rerun of
+    an existing rerunnable script.
+
+**3. Diagnostic confidence step, landscape iPad overlap.** Confirmed and
+fixed in `Diagnostic.module.css`. Reproduced at real iPad Pro 11" landscape
+(1194x834): the Algebra box's title and first row ("Linear Equations", its
+"ACT CORE" tag, and its 3 scale buttons) rendered stacked on top of each
+other. Root cause: `.confBoxList` used `justify-content: center` with
+`overflow: visible` and no scroll; the "three non-scrolling boxes" design
+(2026-07-23 pass) was tested portrait, where every box's content fits. In
+landscape, `.confGrid`'s available height drops a lot while width stays wide,
+so the tallest box (Algebra, 11 concepts in the current spec) got squeezed
+shorter than its rows' natural height by CSS Grid's row-stretch; centering
+overflowing content in a too-short box pushes the top rows up past the box's
+own top edge into the title above (not a proportional compression of every
+row, just the whole 11-row block shifting upward as one unit). Fix: (a)
+`.confBoxList` to `justify-content: flex-start` so overflow only ever spills
+downward, never into the title, (b) `.confRow { flex-shrink: 0; }` so a
+row's own box can never compress shorter than its (name + buttons) content
+regardless of available height, (c) a new `@media (max-height: 900px)` rule
+giving `.confBoxList` `overflow-y: auto` so a box with more concepts than fit
+scrolls internally instead of colliding with anything below it. Verified:
+scrollable (`scrollHeight` 604 vs `clientHeight` 547 for the Algebra box,
+confirmed by scrolling programmatically and screenshotting the previously
+hidden last row, "Sequences and Series"); no overlap at 1194x834; portrait
+834x1194 unaffected/unchanged in spirit (top-aligned instead of centered,
+no visual regression, still fits without scrolling). This is a genuine,
+scoped internal scroll for a real height-constrained case, not a reversion
+of the earlier "don't scroll the whole page" decision: the page itself and
+the other two boxes still don't scroll.
+
+**Verification:** `npx tsc --noEmit` clean (exit 0). `npx vitest run` 109
+passed / 1 skipped (110 total, 7 files), unchanged from baseline (no test
+touches these code paths). `npm run build` succeeded (pre-existing large-
+chunk warning, unrelated to this change). Files touched:
+`app/src/pages/ConceptChapterPage.module.css`,
+`app/src/pages/Diagnostic.module.css`. Nothing committed, left in the
+working tree for review.
+
+## Protagonist/stamp mismatches fixed + 14 concepts given real art (Claude, 2026-07-24)
+
+Follow-up to the two content bugs flagged (not fixed) in the entry directly
+above. Product lane only: `app/src/data/conceptStories.json`,
+`app/src/data/questionContextFrames.json`,
+`app/scripts/generateConceptArtSvg.mjs`, and 14 new files under
+`app/src/assets/canvas/generated/`. Did not touch `ml/**`, `webhook/**`,
+`data/**`, `worlds/**`, `app/src/manjushree/`, or
+`agent_work/manjushree-zone/`. `grep manjushree app/src/App.tsx` still shows
+all 4 references, untouched (App.tsx itself was only touched transiently for
+the screenshot shim below, then restored byte-for-byte, diffed against a
+pre-edit backup to confirm).
+
+**Job 1: stamp/story mismatches.** Read every one of the 41 concepts'
+`questionContextFrames.json` stamp against its `conceptStories.json` story
+body directly (not just the 4 examples already flagged) to find the full set.
+22 concepts needed a fix. For each, kept whichever side already had the
+better, real history and fixed the other side to match, per-concept judgment
+call, not a mechanical swap:
+
+- `derivatives`: had NO frame entry at all (`getFrame()` silently rendered no
+  stamp). The Newton/apple/Woolsthorpe frame text that was wrongly sitting on
+  `applications_of_derivatives` (whose own story is Katherine Johnson/John
+  Glenn, not Newton) was actually written for this concept's story, so it
+  was moved here.
+- `applications_of_derivatives`: new stamp, Katherine Johnson, NASA Langley,
+  1962 (matches the existing Glenn-orbit story; story body unchanged).
+- `linear_inequalities`: General William Tunner replaced with George Dantzig
+  (the story is about Dantzig inventing linear programming for the Berlin
+  Airlift, not Tunner).
+- `exponent_rules`: Jacob Bernoulli replaced with Archimedes of Syracuse
+  (the story is the Sand Reckoner).
+- `polynomials`: Omar Khayyam replaced with Niccolò Tartaglia (the story is
+  Tartaglia's cannonball-curve arithmetic, Venice 1537).
+- `factoring_polynomials`: François Viète replaced with Pierre de Fermat
+  (the story is Fermat's difference-of-squares factoring letters, Toulouse
+  1643).
+- `quadratic_equations`: Muhammad al-Khwarizmi replaced with Galileo Galilei
+  (the story is Galileo's cannonball-parabola experiments, Padua 1608; the
+  al-Khwarizmi frame data is legitimately used elsewhere, on
+  `algebraic_manipulation`, which was already correct and left untouched).
+- `basic_probability`: Gerolamo Cardano replaced with Blaise Pascal (the
+  story is the Gombaud/Pascal/Fermat correspondence, Paris 1654); also
+  rewrote `diceFrame`/`spinnerFrame` from Cardano-specific to Pascal-specific
+  text, since those render live in the dice/spinner practice UI.
+- `circles_geometry`: Archimedes of Syracuse replaced with Zu Chongzhi (the
+  exact mismatch flagged as the example: the story is Zu's pi calculation,
+  5th-century China).
+- `area_volume`: Archimedes of Syracuse replaced with Ahmes (the story is the
+  Rhind Papyrus, not the bath/crown anecdote).
+- `rational_expressions`: Gottfried Leibniz replaced with Sextus Julius
+  Frontinus (the story is Frontinus auditing Rome's aqueducts as
+  rate-fractions, 97 AD).
+- `vectors`: James Clerk Maxwell replaced with Josiah Willard Gibbs. The
+  1707 Scilly Isles shipwreck story never named an actual vector-concept
+  originator, so added one real paragraph naming Gibbs (Yale, 1881,
+  formalizing vector analysis for Maxwell's electromagnetism) instead of just
+  swapping a label onto an unrelated name (researched via WebSearch: Gibbs'
+  1881 Yale lecture notes, independently paralleling Heaviside).
+- `integrals`: Archimedes of Syracuse replaced with Johannes Kepler (the
+  story is Kepler's wine-barrel wedding argument, Linz 1613; the Archimedes
+  frame text was reused correctly on `exponent_rules` above).
+- `applications_of_integrals`: John Roebling/Brooklyn Bridge replaced with
+  William Froude (the story is Froude's ship-stability slicing method after
+  HMS Captain sank, not Roebling; researched via WebSearch to confirm
+  Froude/Torquay/1870 details).
+- `inferential_statistics`: Ronald Fisher replaced with Richard Ruggles. The
+  story's "statisticians" were unnamed; researched the WWII German Tank
+  Problem via WebSearch and named Richard Ruggles (Allied Economic Warfare
+  Division) in the story body itself, not just the stamp.
+- `measurement_units`: Antoine Lavoisier replaced with Arthur Stephenson.
+  Considered a full rewrite around Lavoisier's metric-system commission (he
+  is a strong real fit), but the existing NASA Mars Climate Orbiter story
+  already has 4 ingredientStories vignettes built entirely inside that same
+  modern-NASA world, and a full rewrite would have orphaned all four.
+  Instead researched (WebSearch) and named the actual, real chair of the
+  failure investigation board, Arthur Stephenson, directly in the story's
+  existing sentence. Kept the whole story and all ingredientStories intact.
+- `number_properties`: protagonist (Ramanujan) was already correct; only the
+  **setting** was wrong (`Madras, the port office, 1913`, a place and date
+  that belong to nothing in the actual story). Fixed to `Putney, London, a
+  hospital room, 1918`, matching the real taxicab-number-1729 anecdote the
+  story tells.
+- `act_strategy`: "Maya" (the brand's student archetype, per BRAND_BOOK.md
+  section 5, not a historical figure) replaced with Enrico Fermi, Trinity
+  test site, 1945 (matches the existing Fermi-estimation story; every other
+  concept in the bank stamps a real historical figure, so this one shouldn't
+  be the exception).
+- `right_triangle_geometry`: "Ahmes the rope-stretcher" (conflates the real
+  scribe Ahmes, who belongs to `area_volume`'s Rhind Papyrus, with Egypt's
+  anonymous rope-stretcher surveyors) replaced with Pythagoras of Samos, the
+  actual named figure the story credits with the discovery.
+- `lines_angles`: Euclid of Alexandria replaced with Eratosthenes (the story
+  is Eratosthenes measuring Earth's circumference via shadow angles, 240 BC;
+  Euclid never actually appears as a protagonist in any of the 41 stories,
+  so this was a stale/unused label, not a swap from a legitimate other use).
+- `triangles_congruence`: Euclid of Alexandria replaced with Villard de
+  Honnecourt (the story is Villard's 13th-century cathedral-truss sketchbook;
+  researched dates via WebSearch, roughly 1225 to 1235).
+- `exponential_functions`: John Napier replaced with Max C. Starkloff.
+  Napier's frame text was already correctly describing
+  `logarithmic_functions`'s own Napier story (a duplicate use, not a real
+  mismatch there). This story's own ingredientStories already referenced
+  "St. Louis closed its schools" without naming who ordered it, so researched
+  St. Louis's 1918 flu response via WebSearch and named health commissioner
+  Max C. Starkloff directly in the existing contrast sentence (Philadelphia's
+  parade versus St. Louis's early closure), keeping the whole story and all
+  4 ingredientStories intact.
+
+Confirmed via full re-scan after all edits: every one of the 41 concepts now
+has a frame entry whose protagonist is actually named in its own story body.
+Zero em dashes anywhere in the new/edited copy.
+
+**Job 2: art for the 14 uncovered concepts.** Added 14 new hand-authored SVG
+scenes to `app/scripts/generateConceptArtSvg.mjs`'s `SCENES` map (same
+"cloaked scholar" figure rig and warm parchment/ink palette as the existing
+26 from the 2026-07-21 pass, one bespoke math-metaphor prop per concept, no
+photoreal generation attempted; Higgsfield balance re-confirmed at 0 credits
+before starting, per this session's standing constraint):
+`derivatives` (falling apple plus a frozen tangent line), `logarithmic_functions`
+(a bridge between a multiply-tower and an add-tower), `rational_expressions`
+(aqueduct arches carrying unequal channels), `complex_numbers` (a point off
+the real axis on the complex plane), `vectors` (wind and current arrows
+resolving tip-to-tail over the wrecked ship), `matrices` (a rows-and-columns
+ledger grid), `conic_sections` (a cone sliced into circle, ellipse, and
+hyperbola), `probability_distributions` (a bell curve rising over scattered
+dice), `applications_of_derivatives` (a capsule's flight path with its
+zero-slope peak marked), `integrals` (Kepler's wine barrel sliced into
+stacked disks), `applications_of_integrals` (a hull sliced into measurable
+cross-sections), `inferential_statistics` (the captured tank's stamped
+serial number under a magnifying glass), `representation_translation`
+(Descartes' ceiling grid with the fly pinned by two coordinates),
+`act_strategy` (torn paper scraps in the Trinity blast wind). Ran the script
+for just these 14 (`node app/scripts/generateConceptArtSvg.mjs <ids...>`),
+producing `app/src/assets/canvas/generated/story-{id}.svg` for each;
+`storyArt.ts`'s existing `import.meta.glob` discovery picked them up with
+zero code changes, which was the point of that discovery pattern. Validated
+all 14 as well-formed XML (`xml.dom.minidom.parse`). All 14 previously fell
+back to a generic theme photo; 9 of them (`derivatives`,
+`rational_expressions`, `vectors`, `matrices`, `applications_of_derivatives`,
+`integrals`, `applications_of_integrals`, `representation_translation`,
+`act_strategy`) fell all the way to the fractions_decimals bakery
+specifically, not the "8 of 14" estimated in the prior pass's flag (the
+recount was exact, done by running `themeFallback()` directly rather than
+eyeballing the regex); all 14 now resolve to their own art.
+
+**Verification (all real, this pass):** `npx tsc --noEmit` clean (exit 0).
+`npx vitest run` gives 109 passed, 1 skipped (110 total, 7 files), unchanged
+from baseline. `npm run build` succeeded (same pre-existing >500kB chunk
+warning, unrelated). `grep manjushree app/src/App.tsx` shows all 4
+references, checked both before and after the screenshot shim. Screenshots
+taken via a temporary, env-gated `VITE_SCREENSHOT_MODE` auth shim added to
+`AuthGuard` in `App.tsx` (same technique as prior passes this session),
+driven by a scripted Playwright session against a real dev server
+(`VITE_SCREENSHOT_MODE=1 npx vite --port 5193`), fully reverted: the shim was
+applied on top of a byte-for-byte backup of the pre-existing
+(already-uncommitted, unrelated) App.tsx, and restored from that exact
+backup afterward, confirmed via `diff` showing zero differences and a fresh
+`grep SCREENSHOT app/src/App.tsx` returning empty. `tsc`/`vitest`/`build`
+all re-run clean after the revert (numbers above are post-revert). 10
+screenshots saved to `agent_work/product/screenshots_2026-07-24/`: 5
+`stamp_*.png` (Geometry of Circles now stamps Zu Chongzhi, Vectors now
+stamps Gibbs and shows the new shipwreck art, Basic Probability now stamps
+Pascal, ACT Strategy now stamps Fermi and shows the new Trinity art,
+Quadratic Equations now stamps Galileo) and 5 `art_*.png` (Derivatives,
+Integrals, ACT Strategy, Matrices, Representation Translation), each
+confirmed by direct visual inspection to show the corrected stamp/story
+pairing or the new concept-specific art rendering in place of the old
+bakery-photo fallback.
+
+Files touched: `app/src/data/conceptStories.json`,
+`app/src/data/questionContextFrames.json`,
+`app/scripts/generateConceptArtSvg.mjs`, plus 14 new SVGs under
+`app/src/assets/canvas/generated/story-{id}.svg`. Nothing committed, left in
+the working tree for review.
+
 ## Dashboard Home view: five fixes from Akshat's review (Claude, 2026-07-24)
 
 All five landed in `app/src/pages/Dashboard.tsx` / `Dashboard.module.css`
