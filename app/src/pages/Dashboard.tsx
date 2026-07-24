@@ -260,9 +260,7 @@ export default function Dashboard() {
     return (
       <div className={s.canvasDesk}>
         <div className={s.heroBar}>
-          <div className={s.heroTopRow}>
-            <span className={s.canvasWordmark}>MindCraft</span>
-          </div>
+          <span className={s.canvasWordmark}>Mind<span className={s.canvasWordmarkCraft}>Craft</span></span>
         </div>
         <div className={s.loading}><div className={s.spinner} /></div>
       </div>
@@ -290,27 +288,25 @@ export default function Dashboard() {
       )}
 
       <div className={s.canvasDesk}>
-        {/* ONE hero bar (was three stacked bands: nav row, "Contents" + wizard
-           row, yellow spark banner)  -  merged per Akshat's brief so logo,
-           section nav, the wizard's encouragement, and today's spark CTA all
-           read as one cohesive strip. Rendered once, outside the view switch
-           below, so it appears identically on Home/Map/Work/Notes  -  not just
-           Contents. */}
+        {/* ONE hero bar, ONE row (was three stacked bands: nav row,
+           "Contents" + wizard row, yellow spark banner)  -  merged per
+           Akshat's brief so logo, section nav, the wizard's encouragement,
+           today's spark CTA, and the username/sign-out all read as one
+           continuous strip, not two internal bands. Rendered once, outside
+           the view switch below, so it appears identically on
+           Home/Map/Work/Notes  -  not just Contents. .heroMiddle is the
+           flexible zone (wizard + spark) that absorbs width pressure; the
+           wordmark, nav, and user block hold their size. Below 720px it
+           wraps onto extra lines rather than truncating content. */}
         <header className={s.heroBar}>
-          <div className={s.heroTopRow}>
-            <span className={s.canvasWordmark}>MindCraft</span>
-            <nav className={s.canvasNav} aria-label="Notebook sections">
-              <button type="button" className={view === 'home' ? s.navActive : s.navBtn} onClick={openHome}>Home</button>
-              <button type="button" className={view === 'map' ? s.navActive : s.navBtn} onClick={openMap}>Map</button>
-              <button type="button" className={view === 'work' ? s.navActive : s.navBtn} onClick={openWork}>Work</button>
-              <button type="button" className={view === 'notes' ? s.navActive : s.navBtn} onClick={openNotes}>Notes</button>
-            </nav>
-            <div className={s.canvasUser}>
-              {displayName && <span>{displayName}</span>}
-              <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>sign out</button>
-            </div>
-          </div>
-          <div className={s.heroBottomRow}>
+          <span className={s.canvasWordmark}>Mind<span className={s.canvasWordmarkCraft}>Craft</span></span>
+          <nav className={s.canvasNav} aria-label="Notebook sections">
+            <button type="button" className={view === 'home' ? s.navActive : s.navBtn} onClick={openHome}>Home</button>
+            <button type="button" className={view === 'map' ? s.navActive : s.navBtn} onClick={openMap}>Map</button>
+            <button type="button" className={view === 'work' ? s.navActive : s.navBtn} onClick={openWork}>Work</button>
+            <button type="button" className={view === 'notes' ? s.navActive : s.navBtn} onClick={openNotes}>Notes</button>
+          </nav>
+          <div className={s.heroMiddle}>
             <WizardMascot line={wizardLine} compact />
             {weakness && (
               <button type="button" className={s.heroSpark} onClick={goChallenge}>
@@ -322,6 +318,10 @@ export default function Dashboard() {
                 <span className={s.sparkGo}>play →</span>
               </button>
             )}
+          </div>
+          <div className={s.canvasUser}>
+            {displayName && <span>{displayName}</span>}
+            <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>sign out</button>
           </div>
         </header>
 
@@ -342,9 +342,19 @@ export default function Dashboard() {
             {view === 'home' && (
               <div className={s.homeCanvas}>
                 <div className={s.homeTop}>
-                  <p className={s.homeEyebrow}>ACT Math</p>
-                  <h1 className={s.homeTitle}>Contents</h1>
-                  <p className={s.homeLead}>Four lanes. Pick a topic — the Map keeps the messy connected graph.</p>
+                  <div className={s.homeTopMain}>
+                    <h1 className={s.homeTitle}>Contents</h1>
+                    <p className={s.homeLead}>Four lanes. Pick a topic, the Map keeps the messy connected graph.</p>
+                  </div>
+                  <div className={s.homeTopActions}>
+                    {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
+                      <button type="button" className={s.paperCta} onClick={playWeeklyPaper}>
+                        <span className={s.paperCtaEyebrow}>this week’s paper</span>
+                        <span className={s.paperCtaGo}>Start →</span>
+                      </button>
+                    )}
+                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/book')}>Book a Session →</button>
+                  </div>
                 </div>
 
                 <div className={s.horizontalToc}>
@@ -385,19 +395,16 @@ export default function Dashboard() {
                   ))}
                 </div>
 
-                <div className={s.homeActions}>
-                  <button type="button" className={s.toolPill} onClick={openMap}>Open the Map →</button>
-                  <button type="button" className={s.toolPill} onClick={openWork}>Work</button>
-                  <button type="button" className={s.toolPill} onClick={openNotes}>Notes</button>
-                  {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
-                    <button type="button" className={s.paperPill} onClick={playWeeklyPaper}>
-                      This week’s paper →
-                    </button>
-                  )}
-                  {isAdmin && (
+                {/* Map/Work/Notes pills retired here  -  they duplicated the
+                   top nav (Home/Map/Work/Notes), which already covers this
+                   navigation. "This week's paper" moved up next to Contents
+                   (see .homeTopActions above). Only the admin link remains,
+                   when relevant. */}
+                {isAdmin && (
+                  <div className={s.homeActions}>
                     <button type="button" className={s.adminQuietLink} onClick={() => navigate('/admin')}>admin</button>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             )}
 

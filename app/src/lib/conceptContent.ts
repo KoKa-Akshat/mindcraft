@@ -43,7 +43,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   linear_inequalities: {
     id: 'linear_inequalities', label: 'Linear Inequalities', emoji: '↔️',
-    tagline: 'Same as equations — with one critical exception: flip the sign when multiplying or dividing by a negative.',
+    tagline: 'Same as equations, with one critical exception: flip the sign when multiplying or dividing by a negative.',
     keyRules: [
       'Flip the inequality sign when you multiply or divide by a NEGATIVE number.',
       'Compound inequalities: operate on all three parts simultaneously.',
@@ -398,7 +398,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   area_volume: {
     id: 'area_volume', label: 'Area & Volume', emoji: '▣',
-    tagline: 'Know your formulas cold — ACT provides none of them.',
+    tagline: 'Know your formulas cold. The ACT provides none of them.',
     keyRules: [
       'Rectangle: A = lw. Triangle: A = ½bh. Circle: A = πr², C = 2πr.',
       'Trapezoid: A = ½(b₁+b₂)h. Parallelogram: A = bh.',
@@ -456,7 +456,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   trigonometry_basics: {
     id: 'trigonometry_basics', label: 'Trigonometry', emoji: '📐',
-    tagline: 'SOH-CAH-TOA is your best friend — memorize it cold.',
+    tagline: 'SOH-CAH-TOA is your best friend, so memorize it cold.',
     keyRules: [
       'sin θ = opposite/hypotenuse | cos θ = adjacent/hypotenuse | tan θ = opposite/adjacent.',
       'Special triangles: 30-60-90 (sides 1:√3:2) and 45-45-90 (sides 1:1:√2).',
@@ -484,7 +484,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   lines_angles: {
     id: 'lines_angles', label: 'Lines & Angles', emoji: '∠',
-    tagline: 'Parallel lines cut by a transversal create eight angles — only two distinct measures.',
+    tagline: 'Parallel lines cut by a transversal create eight angles, but only two distinct measures.',
     keyRules: [
       'Supplementary angles: sum = 180°. Complementary angles: sum = 90°.',
       'Vertical angles are equal.',
@@ -540,7 +540,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   measurement_units: {
     id: 'measurement_units', label: 'Measurement & Units', emoji: '📏',
-    tagline: 'Unit conversion is always multiplication or division — set up the fraction so units cancel.',
+    tagline: 'Unit conversion is always multiplication or division: set up the fraction so units cancel.',
     keyRules: [
       'Conversion factor: multiply by (new unit / old unit) = 1.',
       '1 mile = 5280 ft. 1 ft = 12 in. 1 kg = 1000 g. 1 hour = 60 min = 3600 sec.',
@@ -596,7 +596,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   logarithmic_functions: {
     id: 'logarithmic_functions', label: 'Logarithms', emoji: 'log',
-    tagline: 'log_b(x) = y means b^y = x — that one conversion unlocks everything.',
+    tagline: 'log_b(x) = y means b^y = x, and that one conversion unlocks everything.',
     keyRules: [
       'log_b(x) = y ↔ b^y = x. Switch freely between log and exponential form.',
       'log(xy) = log x + log y. log(x/y) = log x − log y. log(xⁿ) = n·log x.',
@@ -652,7 +652,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   ratios_proportions: {
     id: 'ratios_proportions', label: 'Ratios & Proportions', emoji: '⚖️',
-    tagline: 'A ratio is a fraction — set up two equal fractions and cross-multiply.',
+    tagline: 'A ratio is a fraction, so set up two equal fractions and cross-multiply.',
     keyRules: [
       'Proportion: a/b = c/d → ad = bc (cross-multiply).',
       'Part-to-part ratio → convert to part-to-whole: ratio 2:3 means 2/5 and 3/5 of the total.',
@@ -680,7 +680,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   statistics_data: {
     id: 'statistics_data', label: 'Statistics & Data', emoji: '📈',
-    tagline: 'Read the graph carefully — ACT loves tricking you with scale and axis labels.',
+    tagline: 'Read the graph carefully. ACT loves tricking you with scale and axis labels.',
     keyRules: [
       'Mean = sum/count. Median = middle value (sorted). Mode = most frequent.',
       'Range = max − min. IQR = Q3 − Q1.',
@@ -708,7 +708,7 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 
   probability_statistics: {
     id: 'probability_statistics', label: 'Probability', emoji: '🎲',
-    tagline: 'Probability = favorable outcomes / total outcomes — always count carefully.',
+    tagline: 'Probability = favorable outcomes / total outcomes, so always count carefully.',
     keyRules: [
       'P(event) = (# favorable outcomes) / (# total outcomes). Always between 0 and 1.',
       'Complement: P(A) + P(not A) = 1.',

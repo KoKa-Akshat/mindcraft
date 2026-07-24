@@ -856,34 +856,30 @@
 
 /* ── merged hero bar ──────────────────────────────────────────────────────
    Was three stacked bands on Home only (nav row -> "Contents" + wizard row
-   -> yellow spark banner) plus a bare nav-only row on Map/Work/Notes. Akshat:
-   "merge everything inside  -  logo and content and Home/Map/Work/Notes etc
-   can be in the same hero bar with the wizard saying [encouragement]...
-   across the dash platform." Now ONE .heroBar, rendered once outside the
-   view switch in Dashboard.tsx, so nav + wizard encouragement + today's
-   spark CTA appear identically on every view, not just Contents. Two internal
-   rows (top: wordmark/nav/user, bottom: wizard/spark) so it still wraps
-   cleanly on narrow screens without needing four separate visual bands. */
+   -> yellow spark banner) plus a bare nav-only row on Map/Work/Notes, then
+   briefly a two-internal-row version. Akshat: put logo, nav, the wizard's
+   encouragement, today's spark CTA, and the user block in ONE continuous
+   row, not two stacked bands. Now truly one flex row, rendered once outside
+   the view switch in Dashboard.tsx, so it appears identically on every view.
+   .heroMiddle (wizard + spark) is the flexible zone that absorbs width
+   pressure with min-width: 0; the wordmark/nav/user hold their size. Below
+   720px it wraps onto extra lines (flex-wrap) rather than truncating or
+   overflowing. */
 .heroBar {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex-shrink: 0;
-  padding: 8px 12px 10px;
-}
-
-.heroTopRow {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.heroBottomRow {
-  display: flex;
-  align-items: center;
+  flex-wrap: nowrap;
   gap: 14px;
-  flex-wrap: wrap;
+  flex-shrink: 0;
+  padding: 8px 12px;
+}
+
+.heroMiddle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .heroSpark {
@@ -897,37 +893,51 @@
   background: linear-gradient(145deg, #fff8c8, #ffe566);
   box-shadow: var(--desk-shadow-sticker);
   cursor: pointer;
+  flex-shrink: 0;
   transition: transform 160ms var(--desk-ease-bounce), box-shadow 160ms var(--desk-ease-bounce);
 }
 .heroSpark:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--desk-shadow-sticker-hover); }
 .heroSpark:active { transform: translateY(0) scale(0.99); }
 .heroSparkIcon { width: 24px; height: 24px; flex-shrink: 0; }
 
+/* Two-tone wordmark to match the real brand mark (MindCraftLogo.module.css):
+   "Mind" in the same legible dark ink the rest of the hero bar's primary
+   text already uses on this light lavender background (--desk-ink, same as
+   .homeTitle/.navActive), "Craft" in the established brand green (#54b948 -
+   used as-is elsewhere across the app: HeroBar, AppTabBar, MindCraftLogo,
+   Practice; there is no --desk-* green token to reuse instead). The plain
+   white-on-dark version from MindCraftLogo would be invisible here. */
 .canvasWordmark {
   font-family: var(--tok-font-hand);
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 700;
-  color: var(--desk-ink-soft);
+  color: var(--desk-ink);
   letter-spacing: -0.01em;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.canvasWordmarkCraft {
+  color: #54b948;
 }
 
 .canvasNav {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
-  justify-content: center;
+  flex-shrink: 0;
 }
 
 .navBtn, .navActive {
   border: none;
   background: transparent;
   font-family: var(--tok-font-hand);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  padding: 7px 16px;
+  padding: 6px 13px;
   border-radius: 999px;
   cursor: pointer;
   color: rgba(58, 47, 85, 0.5);
+  white-space: nowrap;
   transition: background 160ms var(--desk-ease), color 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), transform 160ms var(--desk-ease-bounce);
 }
 .navActive {
@@ -942,6 +952,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
   font-family: var(--tok-font-mono);
   font-size: 11px;
   color: rgba(58, 47, 85, 0.55);
@@ -1058,25 +1069,84 @@
 }
 
 .homeTop {
-  /* Used to also hold the WizardMascot side-by-side (flex row,
-     space-between)  -  the mascot now lives in the merged .heroBar instead
-     (shared across every view), so this just stacks the small eyebrow above
-     the "Contents" title. */
+  /* Was a WizardMascot side-by-side row, then a plain eyebrow+title stack
+     (the mascot now lives in the merged .heroBar, shared across every
+     view). Now: title+lead on the left, "this week's paper" + "Book a
+     Session" on the right  -  the two things Akshat wants living next to
+     Contents instead of buried at the bottom of the page. */
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.homeTopMain {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
+}
+.homeTopActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
-.homeEyebrow {
-  margin: 0;
-  font-family: var(--tok-font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(58, 47, 85, 0.45);
+/* "This week's paper", relocated from the bottom .homeActions row. A small
+   two-line CTA card (eyebrow + "Start ->") rather than reusing the flat
+   .toolPill/.paperPill shape verbatim  -  a bare pill read too thin sitting
+   next to a 50px "Contents" heading. */
+.paperCta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  border: 1.5px solid rgba(31, 107, 69, 0.22);
+  border-radius: 12px 16px 12px 14px;
+  background: linear-gradient(145deg, #8dffc0, #6aefab);
+  padding: 7px 14px;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(58, 47, 85, 0.08);
+  transition: transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 140ms ease;
 }
+.paperCta:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(58, 47, 85, 0.14); }
+.paperCta:active { transform: translateY(0); }
+.paperCtaEyebrow {
+  font-family: var(--tok-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: #1a5c3c;
+}
+.paperCtaGo {
+  font-family: var(--tok-font-hand);
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a5c3c;
+}
+
+/* "Book a Session", new on this view  -  same copy/destination as
+   Sidebar.tsx's nav entry and StudentSessions.tsx's "Book a Session ->"
+   button (both -> /book). Quieter than the paper CTA (a text link, not a
+   filled card) since it's a secondary action next to Contents. */
+.bookSessionLink {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--tok-font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(58, 47, 85, 0.6);
+  padding: 8px 4px;
+  white-space: nowrap;
+  transition: color 140ms ease;
+}
+.bookSessionLink:hover { color: var(--desk-ink); }
+
 .homeTitle {
-  margin: 4px 0 0;
+  margin: 0;
   font-family: var(--tok-font-hand);
   font-size: clamp(38px, 5vw, 50px);
   font-weight: 700;
@@ -1242,33 +1312,13 @@
   min-height: 0;
 }
 
+/* Only the admin link lives here now  -  Map/Work/Notes duplicated the top
+   nav (removed) and "This week's paper" moved up next to Contents
+   (.paperCta, above). */
 .homeActions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
   align-items: center;
 }
-.toolPill, .paperPill {
-  border: 1.5px solid rgba(58, 47, 85, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 253, 248, 0.95);
-  font-family: var(--tok-font-hand);
-  font-size: 19px;
-  font-weight: 700;
-  padding: 8px 16px;
-  cursor: pointer;
-  color: var(--desk-ink);
-  box-shadow: 0 3px 12px rgba(58, 47, 85, 0.08);
-  transition: transform 140ms var(--desk-ease-bounce), background 140ms var(--desk-ease), box-shadow 140ms var(--desk-ease);
-}
-.paperPill {
-  background: linear-gradient(145deg, #8dffc0, #6aefab);
-  color: #1a5c3c;
-  border-color: rgba(31, 107, 69, 0.22);
-}
-.toolPill:hover, .paperPill:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(58, 47, 85, 0.14); }
-.toolPill:hover { background: #f5f3ff; }
-.toolPill:active, .paperPill:active { transform: translateY(0); }
 
 .notesCanvas {
   display: flex;
@@ -1299,9 +1349,13 @@
 }
 
 @media (max-width: 720px) {
-  .heroTopRow { flex-wrap: wrap; }
-  .heroBottomRow { gap: 10px; }
-  .canvasWordmark { font-size: 24px; }
+  /* One row is the desktop target; below 720px there isn't room for
+     wordmark + nav + wizard + spark + user on one line, so let the bar wrap
+     onto extra lines instead of truncating or squeezing content unreadably. */
+  .heroBar { flex-wrap: wrap; gap: 8px 14px; }
+  .heroMiddle { gap: 8px; }
+  .canvasWordmark { font-size: 22px; }
+  .homeTop { align-items: flex-start; }
   .canvasDesk { padding: 2px 4px 6px; }
   .canvasStage { padding: 12px 12px 14px; border-radius: 16px; }
   /* Ring spine is a nice-to-have flourish, not load-bearing  -  same call as

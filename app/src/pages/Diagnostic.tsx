@@ -49,7 +49,7 @@ const PROBE_ANSWERS: { value: Confidence; label: string }[] = [
 
 const EXAM = 'ACT'
 
-type Step = 'intro' | 'goals' | 'horizon' | 'probe' | 'confidence' | 'loading'
+type Step = 'intro' | 'horizon' | 'probe' | 'confidence' | 'loading'
 
 type HorizonOption = { value: number; label: string; sublabel: string; kind: 'today' | 'days' | 'week' | 'weeks' }
 
@@ -108,21 +108,18 @@ export default function Diagnostic() {
   const navigate = useNavigate()
   const concepts = (spec as { confidence_step: { concepts: ConfConcept[] } }).confidence_step.concepts
   const scale = (spec as { confidence_step: { scale: ScalePoint[] } }).confidence_step.scale
-  const presets = (spec as { goals_step: { presets: string[] } }).goals_step.presets
   const probeStep = (spec as { probe_step?: { prompt?: string; note?: string; questions?: ProbeQuestionSpec[] } }).probe_step
   const probeSpecs = probeStep?.questions ?? []
 
   const [step, setStep] = useState<Step>('intro')
   const [zooming, setZooming] = useState(false)
-  const [goalTags, setGoalTags] = useState<string[]>([])
-  const [goalText, setGoalText] = useState('')
   const [deadlineDays, setDeadlineDays] = useState<number | null>(null)
   const [confidence, setConfidence] = useState<Record<string, Confidence>>({})
   const [probeAnswers, setProbeAnswers] = useState<Record<string, Confidence>>({})
   const [confettiOn, setConfettiOn] = useState(false)
 
   const progress = useMemo(() => {
-    const order: Step[] = ['intro', 'goals', 'horizon', 'probe', 'confidence', 'loading']
+    const order: Step[] = ['intro', 'horizon', 'probe', 'confidence', 'loading']
     return (order.indexOf(step) / (order.length - 1)) * 100
   }, [step])
 
@@ -157,10 +154,6 @@ export default function Diagnostic() {
     setConfettiOn(true)
   }
 
-  function toggleGoal(tag: string) {
-    setGoalTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]))
-  }
-
   function setConf(conceptId: string, value: Confidence) {
     setConfidence(prev => ({ ...prev, [conceptId]: value }))
   }
@@ -189,7 +182,7 @@ export default function Diagnostic() {
     if (zooming) return
     playTap()
     setZooming(true)
-    window.setTimeout(() => setStep('goals'), prefersReducedMotion() ? 60 : 650)
+    window.setTimeout(() => setStep('horizon'), prefersReducedMotion() ? 60 : 650)
   }
 
   async function finishConfidence() {
@@ -206,7 +199,7 @@ export default function Diagnostic() {
           user.uid,
           EXAM,
           confidence,
-          { tags: goalTags, text: goalText.trim() },
+          { tags: [], text: '' },
           {
             diagnosticVersion: (spec as { version?: string }).version,
             deadlineDays,
@@ -241,35 +234,6 @@ export default function Diagnostic() {
                 <DeskArt className={s.introArt} />
               </button>
               <span className={s.introCue}>Tap the notebook to begin →</span>
-            </div>
-          </section>
-        )}
-
-        {step === 'goals' && (
-          <section className={s.card}>
-            <div className={s.cardInner}>
-              <h2 className={s.h2}>{(spec as { goals_step: { prompt: string } }).goals_step.prompt}</h2>
-              <div className={s.tags}>
-                {presets.map(p => (
-                  <button
-                    key={p}
-                    className={`${s.tag} ${goalTags.includes(p) ? s.tagOn : ''}`}
-                    onClick={() => toggleGoal(p)}
-                  >{p}</button>
-                ))}
-              </div>
-              <textarea
-                className={s.textarea}
-                placeholder={(spec as { goals_step: { placeholder?: string } }).goals_step.placeholder ?? 'What are you aiming for?'}
-                value={goalText}
-                onChange={e => setGoalText(e.target.value)}
-                rows={4}
-              />
-              <button
-                className={s.primary}
-                disabled={!goalText.trim() && goalTags.length === 0}
-                onClick={() => { celebrateStep(); setStep('horizon') }}
-              >Next</button>
             </div>
           </section>
         )}

@@ -4,6 +4,53 @@
 
 ---
 
+## Dashboard Home view: five fixes from Akshat's review (Claude, 2026-07-24)
+
+All five landed in `app/src/pages/Dashboard.tsx` / `Dashboard.module.css`
+(plus `app/src/lib/conceptContent.ts` for the tagline em-dash fix). Nothing
+committed, left in working tree for review. Did not touch
+`app/src/manjushree/`, `agent_work/manjushree-zone/`, `ml/**`, `webhook/**`,
+`data/**`, `worlds/**`, or `Diagnostic.tsx`/`Diagnostic.module.css` (a
+separate already-verified edit landed there this same session).
+`grep manjushree app/src/App.tsx` still shows all 4 references (App.tsx not
+touched by this pass).
+
+1. **Wordmark two-tone**: both render spots now show "Mind" in
+   `var(--desk-ink)` (#2a2430, the same dark ink `.homeTitle`/`.navActive`
+   already use for legible text on this light lavender hero bar) and
+   "Craft" in `#54b948` (the established brand green used as-is elsewhere:
+   `HeroBar.module.css`, `AppTabBar.module.css`, `MindCraftLogo.module.css`,
+   `Practice.module.css`  -  no `--desk-*` green token exists, so this
+   matches existing convention rather than inventing a new hex value).
+2. **Hero bar merged to one row**: wordmark, nav, wizard encouragement +
+   today's spark CTA, and username/sign-out are now flex siblings in a
+   single `.heroBar` row (was two internal rows, `.heroTopRow`/
+   `.heroBottomRow`, now removed). `.heroMiddle` (wizard + spark) is the
+   flexible zone that absorbs width pressure. Below 720px it wraps onto
+   extra lines rather than truncating or overflowing (verified via
+   screenshot at 640px).
+3. Removed the "ACT Math" eyebrow above "Contents" entirely. Fixed the 9
+   `tagline` fields in `conceptContent.ts` that had em dashes (rephrased
+   naturally, not a bare hyphen swap); a grep for the em dash character
+   scoped to `tagline:` lines in `conceptContent.ts` now returns zero
+   matches. `ACT_TOC_SECTIONS[].blurb` in `actToc.ts` left alone as
+   instructed (already clean).
+4. "This week's paper" moved from the bottom pill row up next to Contents
+   as a small two-line CTA card (`.paperCta`, eyebrow + "Start ->"). Added
+   "Book a Session -> " next to it, navigating to `/book`, reusing the exact
+   copy from `Sidebar.tsx`/`StudentSessions.tsx`.
+5. Removed the bottom "Open the Map", "Work", "Notes" pills (duplicated the
+   top nav). Only the admin-only link remains in `.homeActions`, rendered
+   conditionally.
+
+Verification: `npx tsc --noEmit` clean. `npx vitest run` 109 passed / 1
+skipped (110 total, 7 files)  -  unchanged from baseline, these edits don't
+touch tested code paths. `npm run build` succeeded. Real screenshots taken
+via a static harness that loads the actual `tokens.css` + real
+`Dashboard.module.css` (not reinvented values) at 1440px and 640px,
+before/after, confirming one-row hero bar, two-tone wordmark, relocated
+paper/book-session actions, and no bottom duplicate pills.
+
 ## Font consolidation: four typographic roles, app-wide (Claude, 2026-07-23)
 
 Decision was already made in a prior session (see task brief); this session
