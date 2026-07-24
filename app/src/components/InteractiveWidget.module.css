@@ -16,7 +16,7 @@
 }
 
 .widgetLabel {
-  font: 400 10px/1 "IBM Plex Mono", monospace;
+  font: 400 10px/1 var(--tok-font-mono);
   letter-spacing: 0.1em;
   text-transform: lowercase;
   align-self: flex-start;
@@ -60,12 +60,12 @@
 }
 
 .dieNum {
-  font: 700 24px/1 "IBM Plex Mono", monospace;
+  font: 700 24px/1 var(--tok-font-mono);
   letter-spacing: -0.02em;
 }
 
 .diceSum {
-  font: 400 11px/1 "IBM Plex Mono", monospace;
+  font: 400 11px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
 }
 
@@ -136,7 +136,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 4px;
-  font: 400 10px/1 "IBM Plex Mono", monospace;
+  font: 400 10px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
   max-width: 260px;
   justify-content: center;
@@ -145,14 +145,14 @@
 .rollChip {
   padding: 3px 6px;
   border-radius: 3px;
-  font: 500 10px/1 "IBM Plex Mono", monospace;
+  font: 500 10px/1 var(--tok-font-mono);
 }
 
 .rollBtn {
   padding: 9px 22px;
   border: none;
   border-radius: 3px;
-  font: 600 12px/1 "Space Grotesk", sans-serif;
+  font: 600 12px/1 var(--tok-font-sans);
   letter-spacing: -0.01em;
   cursor: pointer;
   transition: opacity 130ms, transform 100ms;

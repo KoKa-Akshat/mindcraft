@@ -60,7 +60,7 @@
 .topRow { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .idBlock { display: flex; align-items: baseline; gap: 8px; min-width: 0; flex-wrap: wrap; }
 .name {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 22px;
   font-weight: 700;
   color: var(--desk-ink-soft);
@@ -72,7 +72,7 @@
 }
 .examTag {
   flex-shrink: 0;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
@@ -85,7 +85,7 @@
 }
 .lastActive {
   flex-shrink: 0;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10.5px;
   font-weight: 600;
   color: rgba(58, 47, 85, 0.5);
@@ -94,7 +94,7 @@
 
 .signal {
   margin: 0;
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: var(--tok-font-serif);
   font-size: 14px;
   line-height: 1.45;
   color: var(--desk-ink);
@@ -102,7 +102,7 @@
 
 .goal {
   margin: 0;
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: var(--tok-font-serif);
   font-style: italic;
   font-size: 12.5px;
   line-height: 1.4;
@@ -116,7 +116,7 @@
 
 .actions { display: flex; gap: 8px; margin-top: 2px; flex-wrap: wrap; }
 .primaryBtn {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 12.5px;
   font-weight: 700;
   color: var(--desk-ink);
@@ -131,7 +131,7 @@
 .primaryBtn:active { transform: translateY(0); }
 
 .secondaryBtn {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 12px;
   font-weight: 600;
   color: var(--desk-ink-soft);

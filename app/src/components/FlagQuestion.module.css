@@ -4,7 +4,7 @@
   gap: 5px;
   padding: 4px 10px;
   border-radius: 999px;
-  font: 600 10px/1 "IBM Plex Mono", monospace;
+  font: 600 10px/1 var(--tok-font-mono);
   letter-spacing: 0.05em;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.1);

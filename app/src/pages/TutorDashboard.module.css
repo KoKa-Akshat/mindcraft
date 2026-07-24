@@ -17,8 +17,8 @@
   --td-leaf:    #6b5cff;
   --td-paper:   #fffdf8;
   --td-shadow:  0 6px 20px rgba(90, 70, 140, 0.1);
-  --td-font:    'DM Sans', 'Nunito Sans', system-ui, sans-serif;
-  --td-font-head: 'Caveat', 'Fredoka', sans-serif;
+  --td-font:    var(--tok-font-sans);
+  --td-font-head: var(--tok-font-hand);
 
   background:
     radial-gradient(ellipse 80% 55% at 15% 10%, rgba(255, 190, 220, 0.25), transparent 55%),

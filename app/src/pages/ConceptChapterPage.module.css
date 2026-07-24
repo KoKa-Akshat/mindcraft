@@ -55,7 +55,7 @@
   padding: 6px 10px 8px;
 }
 .canvasWordmark {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 26px;
   font-weight: 700;
   color: #3a2f55;
@@ -130,7 +130,7 @@
 }
 .asideScene {
   margin: 0;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   color: rgba(58, 47, 85, 0.55);
   text-align: center;
@@ -162,7 +162,7 @@
 .pastMistakeWizard { margin-bottom: 14px; }
 .blendEyebrow {
   margin: 0 0 4px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -170,7 +170,7 @@
 }
 .blendTitle {
   margin: 0 0 8px;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: clamp(36px, 5vw, 52px);
   font-weight: 700;
   color: #2a2430;
@@ -178,14 +178,14 @@
 }
 .blendStamp {
   margin: 0 0 14px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .blendPara {
   margin: 0 0 10px;
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: var(--tok-font-serif);
   font-size: clamp(15px, 1.45vw, 17px);
   line-height: 1.45;
   color: rgba(42, 36, 48, 0.86);
@@ -200,7 +200,7 @@
   padding: 8px 12px;
   border-radius: 12px;
   background: rgba(245, 243, 255, 0.85);
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: var(--tok-font-serif);
   font-size: 13.5px;
   line-height: 1.4;
   color: rgba(58, 47, 85, 0.72);
@@ -214,7 +214,7 @@
 .beatLabel {
   display: inline-block;
   margin-right: 8px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 9px;
   font-style: normal;
   letter-spacing: 0.12em;
@@ -236,7 +236,7 @@
   background: transparent;
   border: none;
   color: rgba(58, 47, 85, 0.55);
-  font: 500 12px/1 "IBM Plex Mono", monospace;
+  font: 500 12px/1 var(--tok-font-mono);
   letter-spacing: 0.05em;
   cursor: pointer;
   padding: 4px 0;
@@ -313,7 +313,7 @@
   background: transparent;
   border: none;
   color: color-mix(in srgb, var(--theme-ink, #3d2f10) 55%, transparent);
-  font: 500 11px/1 "IBM Plex Mono", monospace;
+  font: 500 11px/1 var(--tok-font-mono);
   padding: 6px 8px;
   cursor: pointer;
   letter-spacing: 0.05em;
@@ -476,7 +476,7 @@
 .coverGlyph { width: 88px; height: 88px; margin-bottom: 22px; }
 .coverGlyph svg { width: 100%; height: 100%; }
 .coverTitle {
-  font: 700 clamp(26px, 4vw, 40px)/1.08 "Space Grotesk", sans-serif;
+  font: 700 clamp(26px, 4vw, 40px)/1.08 var(--tok-font-serif);
   letter-spacing: -0.035em;
   margin: 0;
   max-width: 14ch;
@@ -521,16 +521,16 @@
   border-bottom: 1px solid rgba(0,0,0,0.07);
 }
 .sceneProtagonist {
-  font: 600 11px/1 "IBM Plex Mono", monospace;
+  font: 600 11px/1 var(--tok-font-mono);
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 .sceneDivider {
-  font: 400 11px/1 "IBM Plex Mono", monospace;
+  font: 400 11px/1 var(--tok-font-mono);
   opacity: 0.5;
 }
 .sceneSetting {
-  font: 400 11px/1 "IBM Plex Mono", monospace;
+  font: 400 11px/1 var(--tok-font-mono);
   letter-spacing: 0.04em;
   font-style: italic;
 }
@@ -559,7 +559,7 @@
   padding-right: 4px;
 }
 .storyPara {
-  font: 400 16px/30px "Source Serif 4", "Georgia", serif;
+  font: 400 16px/30px var(--tok-font-serif);
   color: var(--theme-ink, #1c1a17);
   margin: 0;
   max-width: 42ch;
@@ -567,7 +567,7 @@
 .firstPara { font-style: italic; font-size: 17px; }
 .dropCap {
   float: left;
-  font: 700 72px/0.78 "Source Serif 4", "Georgia", serif;
+  font: 700 72px/0.78 var(--tok-font-serif);
   margin: 6px 8px 0 0;
 }
 .storyFoot {
@@ -576,7 +576,7 @@
   margin-top: auto;
 }
 .storyFootLabel {
-  font: 400 11px/1 "IBM Plex Mono", monospace;
+  font: 400 11px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
 }
 
@@ -602,13 +602,13 @@
   margin-bottom: 18px;
 }
 .qKicker {
-  font: 400 10px/1 "IBM Plex Mono", monospace;
+  font: 400 10px/1 var(--tok-font-mono);
   letter-spacing: 0.1em;
   text-transform: lowercase;
   color: #9a8a6a;
 }
 .qChipSmall {
-  font: 500 10px/1 "IBM Plex Mono", monospace;
+  font: 500 10px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
 }
 
@@ -622,12 +622,12 @@
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 .storyBridgeSetting {
-  font: 400 9px/1 "IBM Plex Mono", monospace;
+  font: 400 9px/1 var(--tok-font-mono);
   letter-spacing: 0.12em;
   text-transform: lowercase;
 }
 .storyBridgeText {
-  font: 400 italic 14px/1.5 "Source Serif 4", Georgia, serif;
+  font: 400 italic 14px/1.5 var(--tok-font-serif);
   margin: 0 0 16px;
   max-width: 60ch;
   padding-bottom: 12px;
@@ -642,7 +642,7 @@
   min-height: 0;
 }
 .contextTeaser {
-  font: 400 italic 15px/1.6 "Source Serif 4", Georgia, serif;
+  font: 400 italic 15px/1.6 var(--tok-font-serif);
   margin: 4px 0 0;
   max-width: 40ch;
   opacity: 0.85;
@@ -655,7 +655,7 @@
   gap: 8px;
 }
 .contextProgressLabel {
-  font: 400 10px/1 "IBM Plex Mono", monospace;
+  font: 400 10px/1 var(--tok-font-mono);
   letter-spacing: 0.1em;
   text-transform: lowercase;
 }
@@ -697,7 +697,7 @@
   border: 1px solid rgba(0,0,0,0.16);
   border-radius: 999px;
   background: transparent;
-  font: 500 10.5px/1 "IBM Plex Mono", monospace;
+  font: 500 10.5px/1 var(--tok-font-mono);
   letter-spacing: 0.03em;
   color: inherit;
   cursor: pointer;
@@ -709,7 +709,7 @@
 .writeClear {
   border: none;
   background: none;
-  font: 400 9px/1 "IBM Plex Mono", monospace;
+  font: 400 9px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
   text-transform: lowercase;
   color: inherit;
@@ -769,7 +769,7 @@
   position: absolute;
   top: -30px;
   right: 0;
-  font: 400 10px/1 "IBM Plex Mono", monospace;
+  font: 400 10px/1 var(--tok-font-mono);
   letter-spacing: 0.04em;
   color: var(--theme-dim, #9a8a6a);
   background: var(--theme-paper, #fffdf7);
@@ -803,7 +803,7 @@
   border-radius: 3px;
   padding: 10px 13px;
   margin: 8px 0 14px;
-  font: 400 13px/1.55 "IBM Plex Mono", monospace;
+  font: 400 13px/1.55 var(--tok-font-mono);
   color: var(--theme-dim, #9a8a6a);
   max-width: 52ch;
 }
@@ -844,7 +844,7 @@
 }
 .choiceDone { opacity: 0.62; cursor: default; }
 .choiceLetter {
-  font: 600 11px/1 "IBM Plex Mono", monospace;
+  font: 600 11px/1 var(--tok-font-mono);
   flex-shrink: 0;
   margin-top: 3px;
   width: 14px;
@@ -923,7 +923,7 @@
   font-weight: 800;
 }
 .stickerChoice .choiceText {
-  font-family: 'Caveat', 'Segoe Print', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   line-height: 1.25;
   color: #2a2430;
@@ -933,7 +933,7 @@
   padding: 12px 24px;
   border: none;
   border-radius: 3px;
-  font: 600 13px/1 "Space Grotesk", sans-serif;
+  font: 600 13px/1 var(--tok-font-sans);
   letter-spacing: -0.01em;
   cursor: pointer;
   transition: opacity 140ms, transform 100ms;
@@ -942,7 +942,7 @@
 .submitBtn:disabled { opacity: 0.38; cursor: default; }
 .submitBtn:not(:disabled):hover { opacity: 0.87; transform: translateY(-1px); }
 .qDoneNote {
-  font: 400 11px/1 "IBM Plex Mono", monospace;
+  font: 400 11px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
   margin: auto 0 0;
   padding-top: 10px;
@@ -959,7 +959,7 @@
   padding: 5px 12px;
   border: 1px solid;
   border-radius: 999px;
-  font: 600 11px/1 "IBM Plex Mono", monospace;
+  font: 600 11px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
   cursor: pointer;
   background: transparent;
@@ -971,7 +971,7 @@
   margin-top: 8px;
   padding: 9px 13px;
   border-radius: 6px;
-  font: 400 13px/1.55 "Source Serif 4", Georgia, serif;
+  font: 400 13px/1.55 var(--tok-font-serif);
   font-style: italic;
   background: rgba(0,0,0,0.04);
   border-left: 3px solid;
@@ -988,14 +988,14 @@
   border-radius: 6px;
   background: rgba(193, 18, 31, 0.05);
   border-left: 3px solid rgba(193, 18, 31, 0.5);
-  font: 400 13px/1.55 "Source Serif 4", Georgia, serif;
+  font: 400 13px/1.55 var(--tok-font-serif);
   font-style: italic;
   color: inherit;
   animation: fadeSlide 0.18s ease both;
 }
 .misconceptionLabel {
   display: block;
-  font: 600 9px/1 "IBM Plex Mono", monospace;
+  font: 600 9px/1 var(--tok-font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(193, 18, 31, 0.7);
@@ -1008,7 +1008,7 @@
   display: block;
   padding-left: 14px;
   margin-bottom: 8px;
-  font: 400 italic 11px/1 "Source Serif 4", Georgia, serif;
+  font: 400 italic 11px/1 var(--tok-font-serif);
   color: rgba(0,0,0,0.28);
   animation: fadeSlide 0.3s ease both;
 }
@@ -1029,12 +1029,12 @@
   margin-bottom: 10px;
 }
 .notepadLabel {
-  font: 400 9px/1 "IBM Plex Mono", monospace;
+  font: 400 9px/1 var(--tok-font-mono);
   letter-spacing: 0.12em;
   text-transform: lowercase;
 }
 .notepadClear {
-  font: 400 9px/1 "IBM Plex Mono", monospace;
+  font: 400 9px/1 var(--tok-font-mono);
   letter-spacing: 0.08em;
   text-transform: lowercase;
   background: none;
@@ -1078,7 +1078,7 @@
   border: none;
   outline: none;
   resize: none;
-  font: 400 14px/28px "IBM Plex Mono", monospace;
+  font: 400 14px/28px var(--tok-font-mono);
   color: var(--theme-ink, #3d2f10);
   padding: 0;
   caret-color: var(--theme-accent, #8b6914);
@@ -1104,7 +1104,7 @@
   border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 10%, transparent);
   border-radius: 6px;
   padding: 10px 12px;
-  font: 600 22px/1 "IBM Plex Mono", monospace;
+  font: 600 22px/1 var(--tok-font-mono);
   color: var(--theme-ink, #3d2f10);
   text-align: right;
   letter-spacing: -0.02em;
@@ -1124,7 +1124,7 @@
   border: 1px solid color-mix(in srgb, var(--theme-ink, #3d2f10) 10%, transparent);
   border-radius: 6px;
   color: var(--theme-ink, #3d2f10);
-  font: 500 13px/1 "IBM Plex Mono", monospace;
+  font: 500 13px/1 var(--tok-font-mono);
   padding: 10px 4px;
   cursor: pointer;
   transition: background 100ms, transform 80ms;
@@ -1191,7 +1191,7 @@
   padding: 11px 22px;
   border: none;
   border-radius: 3px;
-  font: 600 13px/1 "Space Grotesk", sans-serif;
+  font: 600 13px/1 var(--tok-font-sans);
   letter-spacing: -0.01em;
   cursor: pointer;
   transition: opacity 140ms, transform 100ms;

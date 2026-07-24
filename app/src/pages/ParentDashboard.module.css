@@ -24,8 +24,8 @@
   --pd-radius-sm: 12px;
   --pd-radius-md: 16px;
   --pd-radius-lg: 22px;
-  --pd-font:      'DM Sans', 'Nunito Sans', system-ui, sans-serif;
-  --pd-font-head: 'Caveat', cursive;
+  --pd-font:      var(--tok-font-sans);
+  --pd-font-head: var(--tok-font-hand);
 
   background:
     radial-gradient(ellipse 80% 55% at 15% 10%, rgba(255, 190, 220, 0.25), transparent 55%),
@@ -57,7 +57,7 @@
 .logo span { color: var(--pd-gold-d); }
 .navRight { display: flex; align-items: center; gap: 12px; }
 .navRole {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--pd-ink-soft);
   background: rgba(255, 229, 102, 0.3); padding: 4px 10px; border-radius: 20px;
@@ -126,7 +126,7 @@
 .heroName { font-size: 26px; font-weight: 800; color: var(--pd-ink-soft); margin: 0; letter-spacing: -0.3px; }
 .examBadge {
   display: inline-block;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
   padding: 4px 12px; border-radius: 20px;
   background: rgba(255, 229, 102, 0.3); color: var(--pd-ink-soft);
@@ -144,7 +144,7 @@
 /* -- WHAT THEY'RE WORKING ON -- */
 .workSection { margin-bottom: 20px; }
 .sectionLabel {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--pd-ink-soft); margin-bottom: 10px;
 }
@@ -186,7 +186,7 @@
 }
 .cardHeader { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
 .cardLabel {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pd-ink-soft);
 }
 

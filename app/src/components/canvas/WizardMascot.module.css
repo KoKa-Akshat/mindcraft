@@ -33,7 +33,7 @@
 
 .line {
   margin: 0;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   font-weight: 600;
   line-height: 1.2;

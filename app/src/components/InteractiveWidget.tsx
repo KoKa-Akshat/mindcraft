@@ -314,7 +314,7 @@ function SpinnerWidget({ sections, labels, theme }: SpinnerConfig & { theme: The
               <g key={i}>
                 <path d={sectorPath(i)} fill={SECTOR_COLORS[i % SECTOR_COLORS.length]} stroke="#fff" strokeWidth="1" />
                 <text x={x} y={y} textAnchor="middle" dominantBaseline="middle"
-                  fontSize="13" fontWeight="700" fill="#1a2c16" fontFamily="IBM Plex Mono, monospace">
+                  fontSize="13" fontWeight="700" fill="#1a2c16" fontFamily="var(--tok-font-mono)">
                   {lbl}
                 </text>
               </g>
@@ -373,7 +373,7 @@ function CoinFlip({ theme }: { theme: ThemeProps }) {
     <div className={s.widget}>
       <div className={s.widgetLabel} style={{ color: theme.dim }}>fair coin — flip to explore</div>
       <div className={`${s.coin} ${flipping ? s.coinFlipping : ''}`} style={{ borderColor: theme.accent + '55', background: theme.accent + '10' }}>
-        <span style={{ color: theme.accent, fontSize: 28, fontWeight: 700, fontFamily: 'IBM Plex Mono' }}>
+        <span style={{ color: theme.accent, fontSize: 28, fontWeight: 700, fontFamily: 'var(--tok-font-mono)' }}>
           {flipping ? '?' : side === 'H' ? 'H' : side === 'T' ? 'T' : '?'}
         </span>
         <span style={{ color: theme.dim, fontSize: 10, marginTop: 2 }}>
@@ -426,7 +426,7 @@ function LineGraphWidget({ m, c, vertical, label, theme }: LineGraphConfig & { t
   return (
     <div className={s.widget}>
       <div className={s.widgetLabel} style={{ color: theme.dim }}>
-        the line, drawn — <span style={{ fontFamily: 'IBM Plex Mono, monospace' }}>{label}</span>
+        the line, drawn — <span style={{ fontFamily: 'var(--tok-font-mono)' }}>{label}</span>
       </div>
       <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} role="img"
         aria-label={`Graph of ${label}`} style={{ maxWidth: '100%' }}>

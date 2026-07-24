@@ -692,7 +692,7 @@
   flex-shrink: 0;
 }
 .actTocKicker {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -700,7 +700,7 @@
 }
 .actTocTitle {
   margin: 0;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 36px;
   font-weight: 700;
   color: #2a2430;
@@ -717,7 +717,7 @@
   scrollbar-width: thin;
 }
 .actTocSectionTitle {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -743,7 +743,7 @@
   border-radius: 10px;
   padding: 7px 8px;
   cursor: pointer;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   font-weight: 600;
   color: #2a2430;
@@ -765,7 +765,7 @@
   margin-top: 10px;
   background: none;
   border: none;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
   color: rgba(58, 47, 85, 0.35);
@@ -792,21 +792,21 @@
 }
 .sparkCard:hover { transform: scale(1.02); }
 .sparkEyebrow {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: lowercase;
   color: #c45c00;
 }
 .sparkName {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 28px;
   font-weight: 700;
   color: #2a2430;
   line-height: 1.1;
 }
 .sparkGo {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 18px;
   color: #1f6b45;
   margin-top: 4px;
@@ -904,7 +904,7 @@
 .heroSparkIcon { width: 24px; height: 24px; flex-shrink: 0; }
 
 .canvasWordmark {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 30px;
   font-weight: 700;
   color: var(--desk-ink-soft);
@@ -921,7 +921,7 @@
 .navBtn, .navActive {
   border: none;
   background: transparent;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   font-weight: 700;
   padding: 7px 16px;
@@ -942,7 +942,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 11px;
   color: rgba(58, 47, 85, 0.55);
 }
@@ -972,9 +972,9 @@
   --paper-raised: #fffdf8;
   --paper-recessed: #f3eefc;
   --shadow-card: 0 3px 10px rgba(58, 47, 85, 0.1);
-  --font-katha: 'Source Serif 4', Georgia, serif;
-  --font-script: 'Caveat', cursive;
-  --font-stamp: 'IBM Plex Mono', monospace;
+  --font-katha: var(--tok-font-serif);
+  --font-script: var(--tok-font-hand);
+  --font-stamp: var(--tok-font-mono);
 
   flex: 1;
   min-height: 0;
@@ -1069,7 +1069,7 @@
 
 .homeEyebrow {
   margin: 0;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1077,7 +1077,7 @@
 }
 .homeTitle {
   margin: 4px 0 0;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: clamp(38px, 5vw, 50px);
   font-weight: 700;
   color: var(--desk-ink);
@@ -1087,7 +1087,7 @@
 .homeLead {
   margin: 8px 0 0;
   max-width: 46ch;
-  font-family: 'Nunito Sans', system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 14px;
   line-height: 1.45;
   color: rgba(42, 36, 48, 0.62);
@@ -1099,19 +1099,19 @@
    .sparkGo below are still live, reused by .heroSpark's markup. */
 .sparkText { display: flex; flex-direction: column; flex: 1; gap: 2px; }
 .sparkEyebrow {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
   color: #c45c00;
 }
 .sparkName {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 26px;
   font-weight: 700;
   color: var(--desk-ink);
 }
 .sparkGo {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   font-weight: 700;
   color: #1f6b45;
@@ -1153,7 +1153,7 @@
 }
 .tocLaneTitle {
   margin: 0;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 28px;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -1162,7 +1162,7 @@
 }
 .tocLaneBlurb {
   margin: 0;
-  font-family: 'Nunito Sans', system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 12px;
   line-height: 1.35;
   color: color-mix(in srgb, var(--lane-ink) 72%, transparent);
@@ -1214,14 +1214,14 @@
   min-width: 0;
 }
 .tocChipName {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   font-weight: 700;
   line-height: 1.1;
   color: var(--desk-ink);
 }
 .tocChipBlurb {
-  font-family: 'Nunito Sans', system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 11.5px;
   line-height: 1.35;
   color: rgba(42, 36, 48, 0.58);
@@ -1252,7 +1252,7 @@
   border: 1.5px solid rgba(58, 47, 85, 0.12);
   border-radius: 999px;
   background: rgba(255, 253, 248, 0.95);
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 19px;
   font-weight: 700;
   padding: 8px 16px;

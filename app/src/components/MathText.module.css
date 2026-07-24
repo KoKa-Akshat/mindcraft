@@ -28,7 +28,7 @@
 
 /* fallback when KaTeX hasn't loaded or expression is malformed */
 .texFallback {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--tok-font-mono);
   font-size: 0.9em;
   color: var(--ink-depth, #1d3a8a);
   background: rgba(29,58,138,0.05);

@@ -18,7 +18,7 @@
 .tag {
   display: inline-block;
   margin-bottom: 8px;
-  font: 500 9px/1 "IBM Plex Mono", monospace;
+  font: 500 9px/1 var(--tok-font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(102,92,78,0.62);
@@ -36,7 +36,7 @@
 .stem {
   flex: 1;
   margin: 0;
-  font: 600 15px/1.55 "Source Serif 4", Georgia, serif;
+  font: 600 15px/1.55 var(--tok-font-serif);
   color: #1c1a17;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .graphCaption {
-  font: 500 8px/1 "IBM Plex Mono", monospace;
+  font: 500 8px/1 var(--tok-font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(102,92,78,0.45);
@@ -71,7 +71,7 @@
 }
 
 .writeHint {
-  font: 400 10px/1 "IBM Plex Mono", monospace;
+  font: 400 10px/1 var(--tok-font-mono);
   letter-spacing: 0.06em;
   color: rgba(102,92,78,0.38);
   font-style: italic;

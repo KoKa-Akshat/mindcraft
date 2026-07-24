@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900;1000&family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+/* Font loading lives in ONE place now: the Google Fonts <link> in
+   index.html (Caveat, DM Sans, Source Serif 4, IBM Plex Mono -- the four
+   typographic roles below). This file used to run a second, overlapping
+   @import (Nunito, Sora, DM Sans again, DM Mono) that only duplicated
+   what index.html already fetched -- removed 2026-07-23 font
+   consolidation pass. See styles/tokens.css for the role definitions. */
 
 /* ── Design tokens ────────────────────────────────────────────────────────── */
 :root {
@@ -68,9 +73,9 @@
   --red:     #FF6B6B;
 
   /* Typography */
-  --f-display: var(--tok-font-display);
+  --f-display: var(--tok-font-sans);
   --f-body:    var(--tok-font-sans);
-  --f-mono:    var(--tok-font-dm-mono);
+  --f-mono:    var(--tok-font-mono);
   --f:         var(--f-body);
 }
 

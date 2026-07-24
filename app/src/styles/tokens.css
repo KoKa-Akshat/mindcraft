@@ -15,13 +15,18 @@
   /* Font stacks — re-aliased as --f-body/--font-hand/--font-script/etc.
      across global.css, paper.css, and Book.module.css. Keep those
      aliases (many components already depend on those names) but point
-     them at one definition. */
+     them at one definition.
+
+     Four typographic roles, deliberately, nothing else:
+     Caveat (voice/personality), DM Sans (body/UI everywhere),
+     Source Serif 4 (story/chapter headings), IBM Plex Mono (data/labels).
+     Sora, Fredoka, Space Grotesk, plain Nunito, Nunito Sans, and DM Mono
+     were accumulated debt, not intentional choices, and have been swept
+     out of the app entirely (2026-07-23 font consolidation pass). */
   --tok-font-hand:    "Caveat", cursive;
-  --tok-font-serif:   "Source Serif 4", "DM Serif Display", Georgia, serif;
+  --tok-font-serif:   "Source Serif 4", Georgia, serif;
   --tok-font-mono:    "IBM Plex Mono", monospace;
   --tok-font-sans:    "DM Sans", sans-serif;
-  --tok-font-display: "Sora", sans-serif;
-  --tok-font-dm-mono: "DM Mono", monospace;
 
   /* Motion — the book system's "weighted" ease, reused by components
      outside the book shell (JarvisGuide, ConceptVignette). */

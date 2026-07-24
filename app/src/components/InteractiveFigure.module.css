@@ -27,6 +27,6 @@
 
 .caption {
   margin: 8px 0 0;
-  font: 400 11px/1.45 "IBM Plex Mono", monospace;
+  font: 400 11px/1.45 var(--tok-font-mono);
   text-align: center;
 }

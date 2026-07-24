@@ -1,5 +1,5 @@
 .stem {
-  font: 400 17px/1.55 "Source Serif 4", Georgia, serif;
+  font: 400 17px/1.55 var(--tok-font-serif);
   margin: 0 0 12px;
   /* Left page is read-only: no text selection or interactive cursors */
   user-select: none;
@@ -23,7 +23,7 @@
   margin: 10px 0;
   padding: 8px 10px 8px 12px;
   border-left: 2px solid;
-  font: 400 12px/1.45 "IBM Plex Mono", monospace;
+  font: 400 12px/1.45 var(--tok-font-mono);
   color: #6f6a61;
   background: rgba(29, 58, 138, 0.04);
   border-radius: 0 3px 3px 0;
@@ -48,7 +48,7 @@
   min-width: 180px;
   max-width: 260px;
   padding: 8px 10px;
-  font: 400 11px/1.45 "IBM Plex Mono", monospace;
+  font: 400 11px/1.45 var(--tok-font-mono);
   color: #1c1a17;
   background: #fbf8f3;
   border: 1px solid rgba(29, 58, 138, 0.18);

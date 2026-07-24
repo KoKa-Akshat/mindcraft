@@ -115,7 +115,7 @@
 }
 
 .probeStoryLine {
-  font: 400 italic 14px/22px "Source Serif 4", Georgia, serif;
+  font: 400 italic 14px/22px var(--tok-font-serif);
   color: #232f4e;
   margin: 0;
   max-width: 42ch;
@@ -171,7 +171,7 @@
 
 /* --- Typography --- */
 .kicker {
-  font: 400 11px/16px "IBM Plex Mono", monospace;
+  font: 400 11px/16px var(--tok-font-mono);
   color: #6f6a61;
   letter-spacing: 0.08em;
   text-transform: lowercase;
@@ -232,7 +232,7 @@
   color: #f7f3ee;
 }
 .gradeNum {
-  font: 700 32px/1 "Space Grotesk", sans-serif;
+  font: 700 32px/1 var(--tok-font-sans);
   color: #1c1a17;
   letter-spacing: -0.04em;
 }
@@ -251,7 +251,7 @@
   background: #fbf8f3;
   border: 1.5px solid #e6ddd0;
   border-radius: 2px;
-  font: 400 15px/22px "Source Serif 4", serif;
+  font: 400 15px/22px var(--tok-font-serif);
   color: #1c1a17;
   outline: none;
   transition: border-color 140ms;
@@ -292,7 +292,7 @@
 }
 
 .voiceHint {
-  font: 400 11px/16px "IBM Plex Mono", monospace;
+  font: 400 11px/16px var(--tok-font-mono);
   color: #6f6a61;
   letter-spacing: 0.04em;
   margin: 0 0 14px;
@@ -327,7 +327,7 @@
   margin-bottom: 16px;
 }
 .storyPara {
-  font: 400 15px/32px "Source Serif 4", serif;
+  font: 400 15px/32px var(--tok-font-serif);
   color: #232f4e;
   margin: 0 0 0;
   max-width: 50ch;
@@ -336,7 +336,7 @@
   font-style: italic;
 }
 .storyNote {
-  font: 400 11px/16px "IBM Plex Mono", monospace;
+  font: 400 11px/16px var(--tok-font-mono);
   color: #6f6a61;
   margin: 0 0 24px;
   letter-spacing: 0.04em;
@@ -383,7 +383,7 @@
   cursor: default;
 }
 .choiceLetter {
-  font: 500 11px/1 "IBM Plex Mono", monospace;
+  font: 500 11px/1 var(--tok-font-mono);
   color: #6f6a61;
   width: 14px;
   flex-shrink: 0;
@@ -454,7 +454,7 @@
   background: transparent;
   border: none;
   color: #6f6a61;
-  font: 400 12px/1 "IBM Plex Mono", monospace;
+  font: 400 12px/1 var(--tok-font-mono);
   cursor: pointer;
   padding: 4px 0;
   letter-spacing: 0.04em;

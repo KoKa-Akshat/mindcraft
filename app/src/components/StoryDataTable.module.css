@@ -10,7 +10,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font: 400 12px/1.4 "IBM Plex Mono", ui-monospace, monospace;
+  font: 400 12px/1.4 var(--tok-font-mono);
   color: #1c1a17;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .label {
-  font-family: "Source Serif 4", Georgia, serif;
+  font-family: var(--tok-font-serif);
   font-size: 13px;
   max-width: 11ch;
 }

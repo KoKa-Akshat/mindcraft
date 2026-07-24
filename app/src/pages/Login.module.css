@@ -38,7 +38,7 @@
   gap: clamp(8px, 1.35dvh, 14px);
   padding: clamp(10px, 2vw, 26px);
   color: var(--login-ink);
-  font-family: "Nunito Sans", "DM Sans", system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   background: #060c09;
 }
 
@@ -135,7 +135,7 @@
   margin: 26px 0 0;
   max-width: 11ch;
   color: #f0fae8;
-  font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: clamp(3.2rem, 7.4vw, 6.9rem);
   font-weight: 700;
   line-height: 0.88;
@@ -271,7 +271,7 @@
 .valueCard strong {
   display: block;
   color: #e8f5e0;
-  font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.05;
@@ -296,7 +296,7 @@
   border-radius: 999px;
   background: rgba(196, 245, 71, 0.07);
   color: #c4f547;
-  font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.15;
@@ -374,7 +374,7 @@
 .formIntro h2 {
   margin: 0;
   color: var(--login-ink);
-  font-family: "Fredoka", "Nunito Sans", system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: clamp(1.85rem, 2.5vw, 2.42rem);
   font-weight: 700;
   line-height: 0.95;

@@ -12,8 +12,8 @@
   --g:   #c4f547;
   --gd:  #a9d63a;
   --gdd: #247a4d;
-  --f:   'Nunito Sans', 'DM Sans', system-ui, sans-serif;
-  --f-head: 'Fredoka', 'Nunito Sans', sans-serif;
+  --f:   var(--tok-font-sans);
+  --f-head: var(--tok-font-sans);
 
   display: flex;
   min-height: 100vh;
@@ -34,7 +34,9 @@
   z-index: 100;
 }
 .sideLogo {
-  font-family: var(--f-head);
+  /* The "MindCraft" wordmark: hand-role, matching every other wordmark
+     instance across the app (MindCraftLogo, cover page, tutor dashboard). */
+  font-family: var(--tok-font-hand);
   font-size: 17px;
   font-weight: 600;
   color: #fffdf7;
@@ -275,13 +277,13 @@
 .chartBarToday { fill: #c4f547; stroke: rgba(20, 58, 46, 0.25); stroke-width: 1; }
 .chartBarEmpty { fill: rgba(20, 58, 46, 0.08); }
 .chartVal {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 11px;
   font-weight: 800;
   fill: #143a2e;
 }
 .chartDay {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 10px;
   font-weight: 700;
   fill: #647568;

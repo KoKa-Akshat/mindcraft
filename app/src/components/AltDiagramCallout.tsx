@@ -25,7 +25,7 @@ function DashLineFigure({ diagram, accent }: { diagram: DashLineDiagram; accent:
         <line key={i} x1={xFor(i)} y1={y - 7} x2={xFor(i)} y2={y + 7} stroke={accent} strokeOpacity={0.7} strokeWidth={1.5} />
       ))}
       {marks.map(({ index, label }) => (
-        <text key={index} x={xFor(index)} y={y + 24} textAnchor="middle" fontSize={11} fill={accent} fontFamily="IBM Plex Mono, monospace">
+        <text key={index} x={xFor(index)} y={y + 24} textAnchor="middle" fontSize={11} fill={accent} fontFamily="var(--tok-font-mono)">
           {label}
         </text>
       ))}
@@ -66,7 +66,7 @@ function InequalityRayFigure({ diagram, accent }: { diagram: InequalityRayDiagra
         </marker>
       </defs>
       <circle cx={cx} cy={y} r={6} fill={filled ? accent : '#fff'} stroke={accent} strokeWidth={2} />
-      <text x={cx} y={y - 14} textAnchor="middle" fontSize={11} fill={accent} fontFamily="IBM Plex Mono, monospace">{value}</text>
+      <text x={cx} y={y - 14} textAnchor="middle" fontSize={11} fill={accent} fontFamily="var(--tok-font-mono)">{value}</text>
     </svg>
   )
 }

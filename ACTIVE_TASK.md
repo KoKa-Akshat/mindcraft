@@ -4,6 +4,97 @@
 
 ---
 
+## Font consolidation: four typographic roles, app-wide (Claude, 2026-07-23)
+
+Decision was already made in a prior session (see task brief); this session
+implemented it. Did not touch `app/src/manjushree/`, `agent_work/manjushree-zone/`,
+`ml/**`, `webhook/**`, `data/**`, `worlds/**`. `App.tsx` had pre-existing
+uncommitted Manjushree routing (not touched by this pass);
+`grep manjushree app/src/App.tsx` still shows all 4 references. Nothing
+committed — left in working tree for review, per instructions.
+
+**The decision, unchanged:** exactly four typographic roles, everywhere —
+Caveat (`--tok-font-hand`, voice/personality/branding), DM Sans
+(`--tok-font-sans`, body/UI chrome everywhere), Source Serif 4
+(`--tok-font-serif`, story/chapter headings — dropped the `DM Serif Display`
+fallback), IBM Plex Mono (`--tok-font-mono`, data/labels/eyebrows). Cut
+entirely: Sora, Fredoka, Space Grotesk, plain Nunito, Nunito Sans, DM Mono —
+plus two more debt fonts found mid-sweep that weren't in the original
+inventory: `Fraunces` (never even imported, `pages/Book.module.css` — was
+silently falling back the whole time) and `DM Serif Display` as a standalone
+family (same file). All folded into the four roles.
+
+**What got swept:** every `font-family` (and `font:` shorthand) declaration
+across `app/src/**/*.css`/`*.module.css` plus inline `fontFamily` in `.tsx` —
+~40 files, see `git status` / `git diff --stat app/src` for the exact list.
+Where a hardcoded literal was the ONLY debt (e.g. `'Caveat', cursive` used
+directly instead of `var(--tok-font-hand)`), routed straight through. Where a
+component used a cut font as its ACTUAL rendered choice (Fredoka/Space
+Grotesk first in the stack, not just an unused fallback), picked the role by
+what the text actually is, matching how the same page already used the other
+three tokens: Login/Tutor/Admin headings and buttons -> sans (Login's own
+`.wordmark` already inherited sans pre-sweep, so kept that precedent rather
+than introducing Caveat there); "MindCraft" wordmark instances (Admin
+`.sideLogo`, `TutorDashboard.module.css` `.logo`) -> hand, matching
+`MindCraftLogo.module.css` and the cover page's wordmark; student/tutor
+names -> hand, matching the existing `StudentSummaryCard.module.css` `.name`
+precedent; `ConceptChapterPage.module.css` `.coverTitle` (was Space Grotesk,
+turned out unused in the current component tree, fixed anyway) -> serif,
+chapter-heading role. `--f-display` (the alias used 51x for what used to be
+Sora, mostly in `Practice.module.css` — far more than the "essentially
+unused" the deciding session assumed) -> redirected to sans (matches how the
+SAME file already reserves hand for its journal/story-paper-scoped areas
+only, e.g. `.matteShell`, `.paperScan`, and uses the display alias for
+general session-UI chrome outside those scopes).
+Left alone, explicitly out of scope: `lib/themeUtils.ts`
+`ALLOWED_CUSTOM_FONTS` + `JournalStyleDrawer.tsx` (a deliberate per-student
+Field Journal font-picker feature with its own `ensureGoogleFont` loader —
+not app-wide typography debt); decorative math-glyph `fontFamily` attributes
+in `ConceptPathIcon.tsx`/`ConceptVignette.tsx` SVG icon art (generic
+`system-ui`/`Georgia`/`monospace` fallbacks, not named webfonts, a separate
+illustration-glyph concern); `App.tsx`'s `ZoneLoading` component (Manjushree's
+own loading screen, tied to that out-of-scope feature even though physically
+in `App.tsx`).
+
+**Imports cleaned up + consolidated:** `global.css`'s own `@import` (used to
+duplicate-request `DM Sans` on top of `index.html`'s link, plus Sora/Nunito/DM
+Mono) removed entirely — after the sweep it needed nothing `index.html`
+wasn't already fetching. `index.html`'s link trimmed to the four families
+with real weights checked against actual usage (grepped every `font-weight`
+paired with each role, resolving alias chains like `--f-display`/`--td-font`/
+`--pd-font-head`): Caveat 400/600/700 (its real max — no 800/900 exist),
+DM Sans roman 400-900 + italic 400, Source Serif 4 roman 400-700 + italic
+400, IBM Plex Mono roman 400-700 + italic 400 (was requesting 400/500 only
+before — now covers weights already used in the CSS that just weren't
+loaded). **Before: 2 separate Google Fonts requests, 42 font-face variants,
+10,038 bytes of CSS descriptor. After: 1 request, 20 font-face variants,
+4,690 bytes** (measured via direct `curl` against the old vs. new
+`fonts.googleapis.com/css2` URLs; doesn't include the actual woff2 binaries,
+but fewer families/weights strongly correlates with fewer of those too).
+Removed the now-dead `--tok-font-display`/`--tok-font-dm-mono` tokens from
+`styles/tokens.css` (re-confirmed zero references after the sweep, not just
+before).
+
+**Verification:** `npx tsc --noEmit` clean. `npx vitest run` — 109 passed, 1
+skipped (7 files), same as baseline, including the untouched Manjushree
+quadratics suite. `npm run build` — clean, only the pre-existing unrelated
+chunk-size warning. Real Playwright screenshots (headless Chromium against
+`npm run dev`): `/login` and `/book` (both public routes) render the new calm
+DM Sans/Source Serif system correctly, zero console errors. **Could not get
+authenticated screenshots of Dashboard/Practice/Diagnostic/TutorDashboard/
+Admin/ConceptChapterPage** — all sit behind real Firebase Google OAuth, this
+sandbox has no test credentials, no Firebase emulator config, and no
+`@testing-library`/jsdom setup to mount components directly (didn't want to
+`npm install` a new dev dependency for a throwaway check). Built a
+supplementary static swatch instead (real Google Fonts URL, real weights,
+representative text pulled from each gated page's actual classes/copy) to
+confirm the four fonts + every weight/italic combo actually used load and
+render distinctly — clean, no fallback boxes. Recommend a follow-up session
+with test credentials (or a Playwright auth-state fixture) do a real visual
+pass on the gated pages specifically.
+
+---
+
 ## Click feedback (sound+confetti) / iPad write-mode fix / Map simplification (Claude, 2026-07-23)
 
 Three asks from Akshat, all shipped, none committed (left in working tree for

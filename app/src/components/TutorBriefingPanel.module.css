@@ -15,7 +15,7 @@
 
 .header { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .title {
-  font-family: var(--td-font-head, 'Fredoka', sans-serif);
+  font-family: var(--td-font-head, var(--tok-font-hand));
   font-size: 16px; font-weight: 600;
   color: var(--td-ink, #143a2e);
 }

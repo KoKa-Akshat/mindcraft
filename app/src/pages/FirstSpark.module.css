@@ -6,7 +6,7 @@
   overflow: hidden;
   background: #060c09;
   color: #fff8e9;
-  font-family: "Nunito Sans", "DM Sans", system-ui, sans-serif;
+  font-family: var(--tok-font-sans);
 }
 
 .glow {

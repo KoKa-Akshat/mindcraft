@@ -2486,7 +2486,7 @@ export default function Practice() {
                         {ringPct}%
                       </text>
                       <text x="54" y="66" textAnchor="middle" dominantBaseline="middle"
-                        fill="rgba(255,255,255,0.45)" fontSize="9" fontFamily="IBM Plex Mono,monospace"
+                        fill="rgba(255,255,255,0.45)" fontSize="9" fontFamily="var(--tok-font-mono)"
                         letterSpacing="0.08em">
                         accuracy
                       </text>

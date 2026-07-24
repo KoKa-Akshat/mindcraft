@@ -27,7 +27,7 @@
 }
 
 .badge {
-  font: 500 9px/1 "IBM Plex Mono", monospace;
+  font: 500 9px/1 var(--tok-font-mono);
   letter-spacing: 0.14em;
   text-transform: lowercase;
   color: #6f6a61;
@@ -62,7 +62,7 @@
 
 .note {
   position: relative;
-  font: 400 italic 12px/1.35 "Source Serif 4", Georgia, serif;
+  font: 400 italic 12px/1.35 var(--tok-font-serif);
   color: #6f6a61;
   transform: rotate(-0.4deg);
   animation: noteWipe 240ms var(--tok-ease-weight) both;

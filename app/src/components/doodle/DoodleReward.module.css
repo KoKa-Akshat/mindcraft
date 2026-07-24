@@ -16,7 +16,7 @@
   top: 28%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-8deg) scale(1.6);
-  font-family: 'Caveat', 'Segoe Print', cursive;
+  font-family: var(--tok-font-hand);
   font-size: clamp(42px, 7vw, 72px);
   font-weight: 700;
   letter-spacing: 0.02em;

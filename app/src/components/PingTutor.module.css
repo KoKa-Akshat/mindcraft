@@ -15,7 +15,7 @@
   gap: 8px;
   padding: 12px 18px;
   border-radius: 999px;
-  font: 600 12px/1 "IBM Plex Mono", monospace;
+  font: 600 12px/1 var(--tok-font-mono);
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: transform 140ms, box-shadow 140ms, opacity 140ms, border-color 140ms;
@@ -43,7 +43,7 @@
   gap: 5px;
   padding: 5px 10px;
   border-radius: 999px;
-  font: 600 10.5px/1 "IBM Plex Mono", monospace;
+  font: 600 10.5px/1 var(--tok-font-mono);
   letter-spacing: 0.05em;
   cursor: pointer;
   background: transparent;
@@ -75,7 +75,7 @@
 }
 
 .pingTitle {
-  font: 700 13px/1 "Space Grotesk", sans-serif;
+  font: 700 13px/1 var(--tok-font-sans);
   color: var(--theme-ink, #3d2f10);
   margin: 0 0 8px;
 }
@@ -113,7 +113,7 @@
   color: var(--theme-paper, #fff);
   border: none;
   border-radius: 6px;
-  font: 600 12px/1 "Space Grotesk", sans-serif;
+  font: 600 12px/1 var(--tok-font-sans);
   cursor: pointer;
   transition: opacity 140ms;
 }
@@ -122,7 +122,7 @@
 .pingSubmit:disabled { opacity: 0.45; cursor: default; }
 
 .pingSent {
-  font: 400 12px/1.4 "IBM Plex Mono", monospace;
+  font: 400 12px/1.4 var(--tok-font-mono);
   color: var(--theme-accent, #247a4d);
   text-align: center;
   padding: 6px 0 2px;

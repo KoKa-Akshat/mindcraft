@@ -26,7 +26,7 @@
 }
 
 .problemSummary {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 15px;
   font-weight: 500;
   color: var(--mc-cream);
@@ -41,7 +41,7 @@
 }
 
 .framingBadge {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 11px;
   font-weight: 600;
   color: var(--accent);
@@ -54,7 +54,7 @@
 }
 
 .pathsNote {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 12px;
   color: var(--text-muted);
 }
@@ -128,7 +128,7 @@
 }
 
 .conceptChip {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -166,7 +166,7 @@
 }
 
 .stepCounter {
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 11px;
   color: var(--text-muted);
   white-space: nowrap;
@@ -204,7 +204,7 @@
 /* ── Type label ─────────────────────────────────────────────────────────────── */
 
 .typeLabel {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -228,7 +228,7 @@
 /* ── Content ────────────────────────────────────────────────────────────────── */
 
 .content {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 17px;
   font-weight: 400;
   line-height: 1.65;
@@ -277,7 +277,7 @@
 }
 
 .clueNum {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -287,7 +287,7 @@
 }
 
 .clueText {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 14px;
   line-height: 1.6;
   color: rgba(251, 250, 246, 0.78);
@@ -295,7 +295,7 @@
 }
 
 .clueMax {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 13px;
   color: var(--text-muted);
   font-style: italic;
@@ -326,7 +326,7 @@
   border: none;
   border-radius: 10px;
   padding: 12px 20px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -353,7 +353,7 @@
   border: 1px solid rgba(228, 191, 106, 0.25);
   border-radius: 10px;
   padding: 12px 18px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -378,7 +378,7 @@
   border: 1px solid rgba(255, 107, 107, 0.2);
   border-radius: 10px;
   padding: 12px 18px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -404,7 +404,7 @@
   border: 1px dashed rgba(251, 250, 246, 0.14);
   border-radius: 8px;
   padding: 7px 14px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -470,7 +470,7 @@
 }
 
 .doneSub {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 15px;
   color: var(--text-muted);
   margin: 0;
@@ -505,13 +505,13 @@
 }
 
 .doneStatLabel {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 14px;
   color: rgba(251, 250, 246, 0.78);
 }
 
 .doneStatBadge {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -523,7 +523,7 @@
   border: none;
   border-radius: 12px;
   padding: 14px 28px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--tok-font-sans);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;

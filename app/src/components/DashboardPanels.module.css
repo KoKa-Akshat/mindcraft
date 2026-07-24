@@ -54,14 +54,14 @@
 }
 .savedStripStar { font-size: 14px; color: #c45c00; }
 .savedStripTitle {
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   font-weight: 700;
   color: #2a2430;
   flex: 1;
 }
 .savedStripCount {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.08em;
   color: rgba(58, 47, 85, 0.55);
@@ -830,7 +830,7 @@
   background: linear-gradient(145deg, #7dffb3, #5fe89a);
   border: var(--desk-border-sticker, 2.5px solid rgba(58, 47, 85, 0.85));
   cursor: pointer;
-  font-family: 'Caveat', cursive;
+  font-family: var(--tok-font-hand);
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.01em;

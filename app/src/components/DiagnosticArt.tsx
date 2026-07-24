@@ -108,7 +108,7 @@ export function HorizonIcon({ kind, className }: { kind: HorizonKind; className?
         <line x1="8" y1="18" x2="40" y2="18" stroke={INK} strokeWidth="2" />
         <line x1="16" y1="6" x2="16" y2="14" stroke={NAVY} strokeWidth="2.5" strokeLinecap="round" />
         <line x1="32" y1="6" x2="32" y2="14" stroke={NAVY} strokeWidth="2.5" strokeLinecap="round" />
-        <text x="24" y="33" textAnchor="middle" fontSize="14" fontWeight="700" fill={GOLD} fontFamily="IBM Plex Mono, monospace">3</text>
+        <text x="24" y="33" textAnchor="middle" fontSize="14" fontWeight="700" fill={GOLD} fontFamily="var(--tok-font-mono)">3</text>
       </svg>
     )
   }
