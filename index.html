@@ -113,10 +113,10 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .hero .btn.primary:hover{background:#d4ff6a}
 .hero .btn.soft{background:transparent;color:#fffdf7;border-color:rgba(255,253,247,.35)}
 .hero .btn.soft:hover{background:rgba(255,253,247,.08)}
-.hero-trust{display:flex;flex-wrap:wrap;gap:22px 34px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(255,253,247,.16);animation:heroIn .9s .32s var(--ease) both}
-.trust-item{display:flex;flex-direction:column;gap:4px;min-width:132px}
-.trust-item strong{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(22px,2.4vw,28px);letter-spacing:-.03em;color:#c4f547}
-.trust-item span{font-size:12.5px;font-weight:700;line-height:1.35;color:rgba(255,253,247,.68);max-width:20ch}
+.hero-trust{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 22px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(255,253,247,.16);max-width:100%;animation:heroIn .9s .32s var(--ease) both}
+.trust-item{display:flex;flex-direction:row;align-items:center;gap:12px;min-width:0}
+.trust-item strong{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(34px,4.6vw,48px);letter-spacing:-.04em;line-height:.95;color:#c4f547;flex:0 0 auto;white-space:nowrap}
+.trust-item span{font-size:12px;font-weight:700;line-height:1.3;color:rgba(255,253,247,.68);min-width:0;flex:1 1 auto}
 .hero-atlas{position:relative;min-height:560px;perspective:1200px;transform-style:preserve-3d;animation:heroIn .9s .18s var(--ease) both}
 .atlas-disc{position:absolute;left:50%;top:50%;width:min(520px,78vw);aspect-ratio:1;transform:translate(-50%,-50%) rotateX(62deg) rotateZ(-18deg);border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,253,247,.12) 0 16%,transparent 17%),radial-gradient(circle at 50% 50%,transparent 0 38%,rgba(196,245,71,.18) 39% 40%,transparent 41%),radial-gradient(circle at 50% 50%,transparent 0 57%,rgba(232,209,107,.34) 58% 59%,transparent 60%),radial-gradient(circle at 50% 50%,transparent 0 73%,rgba(255,253,247,.24) 74% 75%,transparent 76%);box-shadow:0 38px 90px rgba(4,11,9,.42),inset 0 0 54px rgba(196,245,71,.06)}
 .atlas-disc:before,.atlas-disc:after{content:"";position:absolute;inset:9%;border-radius:50%;border:1px solid rgba(255,253,247,.18)}
@@ -461,6 +461,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-brand{font-size:clamp(36px,12vw,48px);margin-bottom:18px}
   .hero h1{font-size:clamp(34px,10vw,48px);max-width:12ch}
   .hero .lead{font-size:16px;max-width:28ch}
+  .hero-trust{gap:14px 12px}
+  .trust-item{gap:8px}
+  .trust-item strong{font-size:clamp(28px,9vw,36px)}
+  .trust-item span{font-size:11px}
   .hero-actions{width:calc(100vw - 80px)!important;max-width:310px;flex-direction:column;align-self:flex-start}
   .hero-actions .btn{width:100%;min-width:0;flex:none;justify-content:center}
   .findtutor-search{grid-template-columns:1fr}
@@ -547,7 +551,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <div class="hero-trust" role="list" aria-label="Why families trust MindCraft">
             <div class="trust-item" role="listitem"><strong>1:1</strong><span>A real college tutor. Never a chatbot.</span></div>
             <div class="trust-item" role="listitem"><strong>48 hrs</strong><span>We reply to every family, ourselves.</span></div>
-            <div class="trust-item" role="listitem"><strong>Map first</strong><span>We find the gap before session one.</span></div>
+            <div class="trust-item" role="listitem"><strong>4</strong><span>Students helped</span></div>
+            <div class="trust-item" role="listitem"><strong>6.5M+</strong><span>Learning moments analyzed</span></div>
           </div>
         </div>
         <div class="hero-atlas" aria-hidden="true">
