@@ -8,14 +8,20 @@
  * y-range self-sampling so a parabola or cubic isn't clipped. The parsing
  * comes from ../lib/polynomialExpression.ts (ported from the sibling
  * PolynomialExpression.swift + LaTeXMath.swift in the same prototype).
+ *
+ * `points` prop (added for the "GraphBox always shows an unrelated default
+ * curve" bug — see lib/plottablePoints.ts): when a caller has extracted real
+ * (x, y) pairs from the question's own figure description, GraphBox plots
+ * THOSE as labeled markers and sizes its axes to fit them, instead of the
+ * generic `x^2+5x+6` default. The axis window is now dynamic on both axes
+ * (previously only the y-window auto-fit; x was a hardcoded [-10, 10]) so a
+ * point set outside that range still displays correctly.
  */
 import { useMemo, useState } from 'react'
 import { evaluatePolynomial, parsePolynomial, PolyParseError, type PolynomialExpression } from '../lib/polynomialExpression'
+import type { PlottablePoint } from '../lib/plottablePoints'
 import s from './GraphBox.module.css'
 
-const X_MIN = -10
-const X_MAX = 10
-const X_SPAN = X_MAX - X_MIN
 const RANGE_SAMPLES = 200 // matches the prototype's 0.1 step over [-10, 10]
 const CURVE_SAMPLES = 400
 
@@ -23,20 +29,43 @@ const VIEW_W = 300
 const VIEW_H = 186
 const TICK_LEN = 4
 
-interface YBounds {
+interface Bounds {
   min: number
   max: number
 }
 
-const DEFAULT_Y_BOUNDS: YBounds = { min: -10, max: 10 }
+const DEFAULT_X_BOUNDS: Bounds = { min: -10, max: 10 }
+const DEFAULT_Y_BOUNDS: Bounds = { min: -10, max: 10 }
 
-/** Samples the expression's own range so a parabola or cubic isn't clipped,
- * rather than assuming a fixed y-window. Direct port of GraphView.yRange. */
-function yRangeFor(expr: PolynomialExpression): YBounds {
+/** Fits an axis window around real points, with padding and a sane minimum
+ * span so a 1-point or axis-aligned set never degenerates to a zero-width
+ * window. */
+function boundsForPoints(points: PlottablePoint[] | undefined): { x: Bounds; y: Bounds } | null {
+  if (!points || points.length === 0) return null
+  let xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity
+  for (const p of points) {
+    xMin = Math.min(xMin, p.x)
+    xMax = Math.max(xMax, p.x)
+    yMin = Math.min(yMin, p.y)
+    yMax = Math.max(yMax, p.y)
+  }
+  const xPad = Math.max((xMax - xMin) * 0.25, 2)
+  const yPad = Math.max((yMax - yMin) * 0.25, 2)
+  return {
+    x: { min: xMin - xPad, max: xMax + xPad },
+    y: { min: yMin - yPad, max: yMax + yPad },
+  }
+}
+
+/** Samples the expression's own range over `xBounds` so a parabola or cubic
+ * isn't clipped, rather than assuming a fixed y-window. Direct port of
+ * GraphView.yRange, generalized to a caller-supplied x window. */
+function yRangeFor(expr: PolynomialExpression, xBounds: Bounds): Bounds {
   let minY = Infinity
   let maxY = -Infinity
+  const span = xBounds.max - xBounds.min
   for (let i = 0; i <= RANGE_SAMPLES; i++) {
-    const x = X_MIN + (i / RANGE_SAMPLES) * X_SPAN
+    const x = xBounds.min + (i / RANGE_SAMPLES) * span
     const y = evaluatePolynomial(expr, x)
     if (isFinite(y)) {
       minY = Math.min(minY, y)
@@ -50,10 +79,12 @@ function yRangeFor(expr: PolynomialExpression): YBounds {
 
 /** Maps math coordinates to SVG viewBox points. Both the axis ticks and the
  * plotted curve go through this one function so they can never drift out of
- * sync. Direct port of GraphView.screenPoint. */
-function screenPoint(x: number, y: number, yBounds: YBounds): { x: number; y: number } {
+ * sync. Direct port of GraphView.screenPoint, generalized to a caller-
+ * supplied x window (previously a hardcoded [-10, 10]). */
+function screenPoint(x: number, y: number, xBounds: Bounds, yBounds: Bounds): { x: number; y: number } {
+  const xSpan = xBounds.max - xBounds.min
   const ySpan = yBounds.max - yBounds.min
-  const px = ((x - X_MIN) / X_SPAN) * VIEW_W
+  const px = ((x - xBounds.min) / xSpan) * VIEW_W
   // SVG y grows downward, math y grows upward — flip it.
   const py = VIEW_H - ((y - yBounds.min) / ySpan) * VIEW_H
   return { x: px, y: py }
@@ -88,7 +119,7 @@ interface Tick {
   label: string
 }
 
-function axisTicks(bounds: YBounds | { min: number; max: number }, step: number): Tick[] {
+function axisTicks(bounds: Bounds, step: number): Tick[] {
   const ticks: Tick[] = []
   let t = Math.ceil(bounds.min / step) * step
   while (t <= bounds.max + step * 1e-9) {
@@ -98,14 +129,15 @@ function axisTicks(bounds: YBounds | { min: number; max: number }, step: number)
   return ticks
 }
 
-function curvePath(expr: PolynomialExpression, yBounds: YBounds): string {
+function curvePath(expr: PolynomialExpression, xBounds: Bounds, yBounds: Bounds): string {
   let d = ''
   let started = false
-  const step = X_SPAN / CURVE_SAMPLES
+  const span = xBounds.max - xBounds.min
+  const step = span / CURVE_SAMPLES
   for (let i = 0; i <= CURVE_SAMPLES; i++) {
-    const x = X_MIN + i * step
+    const x = xBounds.min + i * step
     const y = evaluatePolynomial(expr, x)
-    const p = screenPoint(x, y, yBounds)
+    const p = screenPoint(x, y, xBounds, yBounds)
     if (isFinite(p.y) && isFinite(p.x)) {
       d += started ? ` L${p.x.toFixed(1)},${p.y.toFixed(1)}` : `M${p.x.toFixed(1)},${p.y.toFixed(1)}`
       started = true
@@ -123,13 +155,26 @@ export interface GraphBoxProps {
    * relevant); starts collapsed but always available otherwise. Same
    * collapsible-panel pattern as ScientificCalcToggle elsewhere on this page. */
   defaultOpen?: boolean
+  /**
+   * Real (x, y) pairs extracted from the question's own figure (see
+   * `lib/plottablePoints.ts`). When present, GraphBox plots these as labeled
+   * markers and fits its axes to them instead of showing the generic default
+   * curve — the actual fix for "GraphBox shows an unrelated parabola for a
+   * two-point distance question." The `y =` input still works alongside
+   * points (e.g. checking a line through them); it just starts empty rather
+   * than pre-filled with `x^2+5x+6` so the points aren't paired with a
+   * misleading curve nobody asked for.
+   */
+  points?: PlottablePoint[]
 }
 
-export default function GraphBox({ className, initialExpression = 'x^2+5x+6', defaultOpen = true }: GraphBoxProps) {
-  const [expressionText, setExpressionText] = useState(initialExpression)
+export default function GraphBox({ className, initialExpression, defaultOpen = true, points }: GraphBoxProps) {
+  const hasPoints = !!points && points.length > 0
+  const [expressionText, setExpressionText] = useState(initialExpression ?? (hasPoints ? '' : 'x^2+5x+6'))
   const [open, setOpen] = useState(defaultOpen)
 
   const { parsed, errorMessage } = useMemo(() => {
+    if (!expressionText.trim()) return { parsed: null as PolynomialExpression | null, errorMessage: null as string | null }
     try {
       return { parsed: parsePolynomial(expressionText), errorMessage: null as string | null }
     } catch (e) {
@@ -138,28 +183,43 @@ export default function GraphBox({ className, initialExpression = 'x^2+5x+6', de
     }
   }, [expressionText])
 
-  const yBounds = useMemo(() => (parsed ? yRangeFor(parsed) : { ...DEFAULT_Y_BOUNDS }), [parsed])
+  const pointBounds = useMemo(() => boundsForPoints(points), [points])
 
-  const originScreen = useMemo(() => screenPoint(0, 0, yBounds), [yBounds])
+  const xBounds = pointBounds ? pointBounds.x : DEFAULT_X_BOUNDS
+
+  const yBounds = useMemo(() => {
+    const curveBounds = parsed ? yRangeFor(parsed, xBounds) : null
+    if (pointBounds && curveBounds) {
+      return { min: Math.min(pointBounds.y.min, curveBounds.min), max: Math.max(pointBounds.y.max, curveBounds.max) }
+    }
+    return curveBounds ?? pointBounds?.y ?? DEFAULT_Y_BOUNDS
+  }, [parsed, xBounds, pointBounds])
+
+  const originScreen = useMemo(() => screenPoint(0, 0, xBounds, yBounds), [xBounds, yBounds])
   const axisY = Math.min(Math.max(originScreen.y, 0), VIEW_H)
   const axisX = Math.min(Math.max(originScreen.x, 0), VIEW_W)
   const xLabelAbove = axisY > VIEW_H * 0.75
   const yLabelRight = axisX < VIEW_W * 0.25
 
-  const xStep = useMemo(() => niceStep(X_SPAN), [])
+  const xStep = useMemo(() => niceStep(xBounds.max - xBounds.min), [xBounds])
   const yStep = useMemo(() => niceStep(yBounds.max - yBounds.min), [yBounds])
 
-  const xTicks = useMemo(() => axisTicks({ min: X_MIN, max: X_MAX }, xStep).map(t => ({
+  const xTicks = useMemo(() => axisTicks(xBounds, xStep).map(t => ({
     ...t,
-    screen: screenPoint(t.value, 0, yBounds).x,
-  })), [xStep, yBounds])
+    screen: screenPoint(t.value, 0, xBounds, yBounds).x,
+  })), [xBounds, xStep, yBounds])
 
   const yTicks = useMemo(() => axisTicks(yBounds, yStep).map(t => ({
     ...t,
-    screen: screenPoint(0, t.value, yBounds).y,
-  })), [yBounds, yStep])
+    screen: screenPoint(0, t.value, xBounds, yBounds).y,
+  })), [xBounds, yBounds, yStep])
 
-  const path = useMemo(() => (parsed ? curvePath(parsed, yBounds) : ''), [parsed, yBounds])
+  const path = useMemo(() => (parsed ? curvePath(parsed, xBounds, yBounds) : ''), [parsed, xBounds, yBounds])
+
+  const plottedPoints = useMemo(
+    () => (points ?? []).map(p => ({ ...p, screen: screenPoint(p.x, p.y, xBounds, yBounds) })),
+    [points, xBounds, yBounds],
+  )
 
   return (
     <div className={`${s.wrap} ${className ?? ''}`}>
@@ -184,14 +244,18 @@ export default function GraphBox({ className, initialExpression = 'x^2+5x+6', de
               aria-label="Polynomial expression to graph"
             />
           </div>
-          <p className={s.hint}>Also reads LaTeX, e.g. x^{'{2}'}+5x+6 or \frac{'{1}'}{'{2}'}x-3</p>
+          <p className={s.hint}>
+            {hasPoints
+              ? 'Plotted from this question’s own figure. Also reads LaTeX if you want to try an equation.'
+              : <>Also reads LaTeX, e.g. x^{'{2}'}+5x+6 or \frac{'{1}'}{'{2}'}x-3</>}
+          </p>
           {errorMessage && <p className={s.error}>{errorMessage}</p>}
 
           <svg
             className={s.svg}
             viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
             role="img"
-            aria-label={parsed ? `Graph of y = ${expressionText}` : 'Graph, no valid expression'}
+            aria-label={parsed ? `Graph of y = ${expressionText}` : hasPoints ? 'Graph of the question’s plotted points' : 'Graph, no valid expression'}
           >
             {/* axes */}
             <line x1={0} y1={axisY} x2={VIEW_W} y2={axisY} className={s.axisLine} />
@@ -238,6 +302,21 @@ export default function GraphBox({ className, initialExpression = 'x^2+5x+6', de
             </text>
 
             {path && <path d={path} className={s.curve} />}
+
+            {/* real points from the question's own figure */}
+            {plottedPoints.map((p, i) => (
+              <g key={`pt${i}`}>
+                <circle cx={p.screen.x} cy={p.screen.y} r={3.5} className={s.point} />
+                <text
+                  x={p.screen.x}
+                  y={p.screen.y - 7}
+                  className={s.pointLabel}
+                  textAnchor="middle"
+                >
+                  ({formatTick(p.x, xStep)},{formatTick(p.y, yStep)})
+                </text>
+              </g>
+            ))}
           </svg>
         </div>
       )}

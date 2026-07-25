@@ -57,6 +57,7 @@ import InteractiveWidget from '../components/InteractiveWidget'
 import ScratchPad from '../components/ScratchPad'
 import GraphBox from '../components/GraphBox'
 import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
+import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
 import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
@@ -1503,6 +1504,11 @@ export default function Practice() {
   // ── Derived ───────────────────────────────────────────────────────────────
 
   const currentQ    = questions[qIndex]
+  // GraphBox should plot the question's OWN figure when one is parseable
+  // (real points or a stated equation), not always the generic default
+  // curve — see lib/plottablePoints.ts.
+  const graphPoints = useMemo(() => extractPlottablePoints(currentQ?.question ?? ''), [currentQ?.question])
+  const graphExpr   = useMemo(() => extractGraphableExpression(currentQ?.question ?? ''), [currentQ?.question])
   const conceptMeta = PRACTICE_CONCEPTS.find(c => c.id === concept)
   const sessionConceptId = concept ?? currentQ?.conceptId ?? ''
   const sessionLabel = hideCorrectness
@@ -2473,7 +2479,9 @@ export default function Practice() {
                 <aside className={s.sessionAside}>
                   <GraphBox
                     key={`practice-graph-${currentQ.id}`}
-                    defaultOpen={GRAPHABLE_CONCEPT_IDS.has(currentQ.conceptId)}
+                    defaultOpen={GRAPHABLE_CONCEPT_IDS.has(currentQ.conceptId) || !!graphPoints || !!graphExpr}
+                    points={graphPoints ?? undefined}
+                    initialExpression={graphExpr ?? undefined}
                   />
                   <div className={s.asideLabel}>Scratch work</div>
                   <ScratchPad key={`practice-scratch-${currentQ.id}`} height={240} fillHeight />

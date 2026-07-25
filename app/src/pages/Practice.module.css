@@ -390,6 +390,24 @@
   flex-direction: column;
   gap: 14px;
   min-height: 0;
+  /* GraphBox (when open — e.g. a graphable concept, or now a question with
+     its own real points/equation, see lib/plottablePoints.ts) has a real,
+     fixed vertical footprint (input row + hint + SVG) that competes with
+     ScratchPad for the SAME column height. At a short-but-common browser
+     viewport (~700px tall, e.g. a 13" laptop window that isn't fullscreen),
+     that footprint plus a tall question card can push ScratchPad's writable
+     area mostly or entirely below the fold with no visible cue that it's
+     there at all — reported live as "graph box with zero writing area."
+     Capping the aside to the viewport's remaining height and scrolling it
+     independently (instead of relying on the whole page's scroll position,
+     which gives no affordance that there's more below a full choices list)
+     guarantees ScratchPad is always at most one small, obviously-scrollable
+     panel away, and keeps it pinned in view via `sticky` while the question
+     column runs taller. See ACTIVE_TASK.md for the measured before/after. */
+  position: sticky;
+  top: 16px;
+  max-height: calc(100dvh - 226px);
+  overflow-y: auto;
 }
 
 .asideLabel {

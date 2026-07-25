@@ -19,6 +19,7 @@ import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
 import GraphBox from '../components/GraphBox'
 import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
+import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
 import type { ScratchStrokeData } from '../types'
 import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
@@ -780,6 +781,11 @@ export default function ConceptChapterPage() {
     void narrativeStem
     const allHints = (q.hints ?? []).slice(0, 2)
     const hasInk = Boolean(notes[qIdx]) || (scratchStrokes[qIdx]?.strokes?.length ?? 0) > 0
+    // GraphBox should plot the question's OWN figure when one is parseable
+    // (real points or a stated equation), not always the generic default
+    // curve — see lib/plottablePoints.ts.
+    const graphPoints = extractPlottablePoints(q.question)
+    const graphExpr = extractGraphableExpression(q.question)
 
     return (
       <div className={`${s.blendSheet} ${s.blendQuest}`}>
@@ -936,7 +942,9 @@ export default function ConceptChapterPage() {
               wired above for a future dedicated wrapping agent. */}
           <GraphBox
             key={`chapter-graph-${q.id}`}
-            defaultOpen={GRAPHABLE_CONCEPT_IDS.has(canonicalId)}
+            defaultOpen={GRAPHABLE_CONCEPT_IDS.has(canonicalId) || !!graphPoints || !!graphExpr}
+            points={graphPoints ?? undefined}
+            initialExpression={graphExpr ?? undefined}
           />
         </aside>
       </div>
@@ -999,15 +1007,40 @@ export default function ConceptChapterPage() {
 
       <nav className={s.spreadNav}>
         <button type="button" className={s.navArrow} onClick={() => goToPanel(panelIdx - 1, 'b')} aria-label="Previous">←</button>
+        {/* Return visits skip straight to the first quest panel (see the
+            `hasSeenStory` gate above) — the story pages are never actually
+            gone, but nothing distinguished a "story" dot from a "quest" dot
+            below, so a returning student (or anyone testing the same
+            concept twice in one browser) had no way to tell those dimmed
+            dots were the story rather than already-answered questions. This
+            reads as "the story is missing" even though it's one click away.
+            Fix: story dots get their own shape (see .dotStory) + a proper
+            label, and a quick "Story" jump-back link shows up whenever
+            you're on a quest panel with story pages behind you. */}
+        {currentPanel?.kind === 'quest' && panels.some(p => p.kind === 'open') && (
+          <button
+            type="button"
+            className={s.storyJumpBack}
+            style={{ color: theme.accent }}
+            onClick={() => goToPanel(0, 'b')}
+          >
+            ↺ Story
+          </button>
+        )}
         <div className={s.navDots}>
-          {panels.map((_, i) => (
+          {panels.map((p, i) => (
             <button
               key={i}
               type="button"
-              className={`${s.dot} ${i === panelIdx ? s.dotActive : ''} ${i < panelIdx ? s.dotPast : ''}`}
+              className={[
+                s.dot,
+                p.kind === 'open' ? s.dotStory : '',
+                i === panelIdx ? s.dotActive : '',
+                i < panelIdx ? s.dotPast : '',
+              ].filter(Boolean).join(' ')}
               style={i === panelIdx ? { background: theme.accent } : i < panelIdx ? { background: theme.accent + '55' } : undefined}
               onClick={() => goToPanel(i, i > panelIdx ? 'f' : 'b')}
-              aria-label={`Panel ${i + 1}`}
+              aria-label={p.kind === 'open' ? `Story page ${p.pageNum} of ${p.pageCount}` : `Question ${p.qIdx + 1}`}
             />
           ))}
         </div>

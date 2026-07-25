@@ -111,6 +111,56 @@ export function parseAltDiagram(alt: string): AltDiagram | null {
   return parseDashLine(alt) ?? parseInequalityRay(alt)
 }
 
+export type DiagramTextSegment = { kind: 'text'; content: string } | { kind: 'diagram'; alt: string }
+
+/**
+ * Splits `text` on `(Diagram: ...)` callouts using a balanced-parenthesis
+ * scan, not a regex. Fixes a real bug: the alt text these callouts wrap often
+ * contains its OWN parenthesized content — coordinate pairs like "(4,10)" are
+ * the most common case (see e.g. eedi_203, linear_equations: "(Diagram: Axes
+ * with not scales drawn on. Two points are marked, (4,10) and (9,2))"). A
+ * naive `\(Diagram:[^)]*\)` regex stops at the FIRST `)` it meets — here,
+ * the one closing "(4,10)" — truncating the callout mid-sentence and leaving
+ * the remainder (" and (9,2))") to fall through as plain question text, at
+ * full stem size, right after the truncated caption. That is the exact
+ * "caption bending into the question" bug. This scan tracks paren depth so
+ * it always finds the callout's REAL closing paren, however many nested
+ * pairs it contains.
+ */
+export function splitAltDiagramSegments(text: string): DiagramTextSegment[] {
+  const marker = '(Diagram:'
+  const segments: DiagramTextSegment[] = []
+  let i = 0
+  while (i < text.length) {
+    const idx = text.indexOf(marker, i)
+    if (idx === -1) {
+      segments.push({ kind: 'text', content: text.slice(i) })
+      break
+    }
+    if (idx > i) segments.push({ kind: 'text', content: text.slice(i, idx) })
+
+    let depth = 0
+    let end = -1
+    for (let j = idx; j < text.length; j++) {
+      if (text[j] === '(') depth++
+      else if (text[j] === ')') {
+        depth--
+        if (depth === 0) { end = j; break }
+      }
+    }
+    if (end === -1) {
+      // Unbalanced (shouldn't happen in real data) — bail out rather than
+      // risk an infinite loop; treat the rest as plain text.
+      segments.push({ kind: 'text', content: text.slice(idx) })
+      break
+    }
+    const alt = text.slice(idx + marker.length, end).trim()
+    segments.push({ kind: 'diagram', alt })
+    i = end + 1
+  }
+  return segments.length > 0 ? segments : [{ kind: 'text', content: text }]
+}
+
 /** Fallback for alt text we can't confidently turn into a diagram: light
  * cleanup only (whitespace, trailing punctuation) — never invent content. */
 export function humanizeAltCaption(alt: string): string {

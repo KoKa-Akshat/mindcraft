@@ -4,6 +4,7 @@
  */
 import MathText from './MathText'
 import AltDiagramCallout from './AltDiagramCallout'
+import { splitAltDiagramSegments } from '../lib/altDiagram'
 import type { HighlightSpan } from '../lib/journalGuide'
 import { glossaryFor } from '../lib/mathGlossary'
 import s from './HighlightedStem.module.css'
@@ -56,19 +57,23 @@ interface Props {
 }
 
 export default function HighlightedStem({ text, ink, accent, highlights = [], className }: Props) {
-  const parts = text.split(/(\(Diagram:[^)]{0,300}\))/g)
+  // Balanced-paren split (not a regex) — see lib/altDiagram.ts for why: the
+  // alt text a `(Diagram: ...)` callout wraps often contains its own nested
+  // parens (coordinate pairs like "(4,10)"), and a naive regex stops at the
+  // first ")" it meets, truncating the callout and leaking the remainder
+  // into the question stem at full size.
+  const parts = splitAltDiagramSegments(text)
 
   return (
     <p className={`${s.stem} ${className ?? ''}`} style={{ color: ink }}>
       {parts.map((part, i) => {
-        const m = part.match(/^\(Diagram: (.+)\)$/)
-        if (m) {
+        if (part.kind === 'diagram') {
           // AltDiagramCallout draws a real diagram for recognizable alt-text
           // patterns (e.g. number lines) instead of showing the raw
           // accessibility description as a sentence — see lib/altDiagram.ts.
-          return <AltDiagramCallout key={i} alt={m[1]} accent={accent} />
+          return <AltDiagramCallout key={i} alt={part.alt} accent={accent} />
         }
-        return <span key={i}>{highlightPlainText(part, highlights, accent)}</span>
+        return <span key={i}>{highlightPlainText(part.content, highlights, accent)}</span>
       })}
     </p>
   )

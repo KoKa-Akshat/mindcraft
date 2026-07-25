@@ -8,6 +8,7 @@
  */
 import { useMemo } from 'react'
 import { parseAltDiagram, humanizeAltCaption, type DashLineDiagram, type InequalityRayDiagram } from '../lib/altDiagram'
+import { renderNoBreakCoordinates } from '../lib/noBreakCoords'
 import s from './AltDiagramCallout.module.css'
 
 function DashLineFigure({ diagram, accent }: { diagram: DashLineDiagram; accent: string }) {
@@ -92,7 +93,7 @@ export default function AltDiagramCallout({ alt, accent = '#1d3a8a' }: { alt: st
   return (
     <span className={s.box} style={{ borderLeftColor: accent }}>
       <span className={s.icon} aria-hidden>⬡</span>
-      <span className={s.caption}>Picture: {humanizeAltCaption(alt)}</span>
+      <span className={s.caption}>Picture: {renderNoBreakCoordinates(humanizeAltCaption(alt))}</span>
     </span>
   )
 }

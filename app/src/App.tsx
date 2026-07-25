@@ -13,7 +13,7 @@
  */
 
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, lazy, Suspense } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from './firebase'
@@ -45,6 +45,41 @@ import { fetchKnowledgeGraph } from './lib/graphCache'
 import { isTestProfileEmail, resetStudentProfile } from './lib/testProfile'
 import { clearAuthHandoff, isAuthHandoffActive } from './lib/postLogin'
 
+
+// Hidden action-math zone: dynamic import() so its own chunk (a 2D layered
+// scene as of the 2026-07-21 pivot, ~44KB — was ~622KB with the earlier
+// Three.js engine) never bloats the normal dashboard bundle for the vast
+// majority of students who never open the portal. THIS WIRING HAS BEEN LOST
+// TO CONCURRENT OVERWRITES ON THIS SHARED CHECKOUT THREE TIMES IN ONE
+// SESSION (see ACTIVE_TASK.md / LESSONS.md) — if you are reading this
+// comment, it survived; if the route is missing again, restore it exactly
+// as shown here and in the two <Route> entries below.
+const ManjushreeZone = lazy(() => import('./manjushree/ManjushreeZone'))
+const StorySlideshow = lazy(() => import('./pages/StorySlideshow'))
+
+function ZoneLoading() {
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, display: 'grid', placeItems: 'center',
+      background: '#cdeee0', color: '#17301f', fontFamily: 'Nunito Sans, system-ui, sans-serif',
+      fontWeight: 700,
+    }}>
+      the valley is forming...
+    </div>
+  )
+}
+
+function StoryLoading() {
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, display: 'grid', placeItems: 'center',
+      background: '#080e14', color: '#f7f3ee', fontFamily: 'DM Sans, system-ui, sans-serif',
+      fontWeight: 700,
+    }}>
+      opening the chapter…
+    </div>
+  )
+}
 
 export const UserContext = createContext<User | null>(null)
 export const useUser = () => useContext(UserContext)!
@@ -244,6 +279,51 @@ export default function App() {
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
         <Route path="/concept/:conceptId"      element={<AuthGuard><ConceptChapterPage /></AuthGuard>} />
         <Route path="/prep"                    element={<Prep />} />
+
+        {/* Sword of Wisdom + story slideshow.
+            /manjushree + /story-loop/* stay AuthGuard-wrapped for signed-in students.
+            /try/* is the public landing-preview path (no login) — marketing panel
+            iframes these, and the kitchen handoff lands here so visitors can try
+            one full loop without an account. */}
+        <Route path="/manjushree" element={
+          <AuthGuard>
+            <Suspense fallback={<ZoneLoading />}>
+              <ManjushreeZone />
+            </Suspense>
+          </AuthGuard>
+        } />
+        <Route path="/try/manjushree" element={
+          <Suspense fallback={<ZoneLoading />}>
+            <ManjushreeZone preview />
+          </Suspense>
+        } />
+        {import.meta.env.DEV && (
+          <Route path="/manjushree-dev" element={
+            <Suspense fallback={<ZoneLoading />}>
+              <ManjushreeZone preview />
+            </Suspense>
+          } />
+        )}
+
+        <Route path="/story-loop/:conceptId" element={
+          <AuthGuard>
+            <Suspense fallback={<StoryLoading />}>
+              <StorySlideshow />
+            </Suspense>
+          </AuthGuard>
+        } />
+        <Route path="/try/story/:conceptId" element={
+          <Suspense fallback={<StoryLoading />}>
+            <StorySlideshow />
+          </Suspense>
+        } />
+        {import.meta.env.DEV && (
+          <Route path="/story-loop-dev/:conceptId" element={
+            <Suspense fallback={<StoryLoading />}>
+              <StorySlideshow />
+            </Suspense>
+          } />
+        )}
 
         {/* Root of app host → marketing site (landing lives on mindcraft-marketing-site.web.app) */}
         <Route path="/" element={<MarketingRedirect />} />

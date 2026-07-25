@@ -1209,6 +1209,22 @@
 }
 .dotActive { width: 18px; }
 .dotPast { opacity: 0.45; }
+/* Story ("open") panels get a rounded-square shape distinct from the plain
+   circular quest dots — otherwise a returning visit (which starts on the
+   first quest panel, see ConceptChapterPage.tsx's `hasSeenStory` gate) shows
+   only dimmed circles with no visual cue that some of them are the story,
+   reading as "the story is missing" when it's actually one click away. */
+.dotStory { border-radius: 2px; }
+.storyJumpBack {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+.storyJumpBack:hover { opacity: 0.75; }
 .navPrimary {
   padding: 11px 22px;
   border: none;
