@@ -71,6 +71,16 @@ describe('parseAltDiagram — shape dimensions', () => {
     expect(d).toMatchObject({ kind: 'shapedimension', shape: 'cuboid', depth: '2cm', height: '3cm', width: '★' })
   })
 
+  it('parses a cuboid described as "top measures X by Y, and the height is Z"', () => {
+    const d = parseAltDiagram('A cuboid. The top measures 4cm by 2cm, and the height is 7cm.')
+    expect(d).toEqual({ kind: 'shapedimension', shape: 'cuboid', width: '4cm', depth: '2cm', height: '7cm' })
+  })
+
+  it('parses a cuboid with "X by Y by Z" dimensions (all "by" separators)', () => {
+    const d = parseAltDiagram('A cuboid with dimensions 6cm by 3cm by 4 cm. The top face Q is marked.')
+    expect(d).toEqual({ kind: 'shapedimension', shape: 'cuboid', depth: '6cm', height: '3cm', width: '4cm' })
+  })
+
   it('parses a trapezium with two parallel sides and height', () => {
     const d = parseAltDiagram(
       'Trapezium with parallel sides of lengths 90mm and 40mm. The length of one slanted side is 6cm and the perpendicular height is 5cm.',

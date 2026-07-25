@@ -259,8 +259,15 @@ function parseShapeDimension(alt: string): ShapeDimensionDiagram | TriangleAngle
     if ([depth, height, width].filter(Boolean).length >= 2) {
       return { kind: 'shapedimension', shape, depth, height, width }
     }
-    const dims = alt.match(/dimensions?[^\d]{0,10}([\d.]+\s*(?:cm|mm|m)),?\s*([\d.]+\s*(?:cm|mm|m))\s*(?:and|by)\s*([\d.]+\s*(?:cm|mm|m))/i)
-    if (dims) return { kind: 'shapedimension', shape, depth: dims[1], height: dims[2], width: dims[3] }
+    const noSpace = (v: string) => v.replace(/\s+/g, '')
+    // "dimensions 6cm by 3cm by 4cm" / "dimensions 60mm, 7cm and 5cm" — any
+    // mix of "by"/","/"and" separators between all 3 values.
+    const dims = alt.match(/dimensions?[^\d]{0,10}([\d.]+\s*(?:cm|mm|m))(?:,|\s+by|\s+and)\s*([\d.]+\s*(?:cm|mm|m))(?:,|\s+by|\s+and)\s*([\d.]+\s*(?:cm|mm|m))/i)
+    if (dims) return { kind: 'shapedimension', shape, depth: noSpace(dims[1]), height: noSpace(dims[2]), width: noSpace(dims[3]) }
+    // "The top measures 4cm by 2cm, and the height is 7cm." — no explicit
+    // "dimensions" word, just a 2D top face plus a separate stated height.
+    const topM = alt.match(/top measures\s*([\d.]+\s*(?:cm|mm|m))\s*by\s*([\d.]+\s*(?:cm|mm|m)).*?height is\s*([\d.]+\s*(?:cm|mm|m))/i)
+    if (topM) return { kind: 'shapedimension', shape, width: noSpace(topM[1]), depth: noSpace(topM[2]), height: noSpace(topM[3]) }
     return null
   }
 
