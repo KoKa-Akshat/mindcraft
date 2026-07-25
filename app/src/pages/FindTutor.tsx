@@ -38,7 +38,7 @@
  *      you" doesn't imply an in-person visit that isn't actually offered.
  */
 
-import { useEffect, useMemo, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -50,14 +50,21 @@ import {
   useLoadScript,
   type Libraries,
 } from '@react-google-maps/api'
-import { haversineKm, formatDistanceMiles, type LatLng } from '../lib/geo'
+import {
+  formatDistanceMiles,
+  filterTutorsForSearch,
+  type LatLng,
+} from '../lib/geo'
 import s from './FindTutor.module.css'
 
 // ── Studio home base ─────────────────────────────────────────────────────────
-// 1600 Grand Ave, St Paul, MN 55105 — Macalester College's public address,
+// 1600 Grand Ave, St Paul, MN 55105. Macalester College's public address,
 // confirmed OK to publish (this is intentional, not an accidental leak).
 export const STUDIO_ADDRESS = '1600 Grand Ave, St Paul, MN 55105'
 export const STUDIO_LOCATION: LatLng = { lat: 44.9379, lng: -93.1706 }
+
+/** Everett St area, El Cerrito, CA. General neighborhood pin, not a street number. */
+export const EL_CERRITO_EVERETT: LatLng = { lat: 37.9234, lng: -122.3106 }
 
 const GOOGLE_MAPS_API_KEY = (import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string | undefined) || ''
 const MAP_LIBRARIES: Libraries = ['places']
@@ -78,13 +85,17 @@ interface Tutor {
   avatarColor: string
   available: boolean
   location: LatLng
+  /** US state code used for regional search filtering (MN, CA, …). */
+  state: string
+  regionLabel: string
   hasRealLocation: boolean
   reviews: TutorReview[]
 }
 
 const DEFAULT_TUTOR_BIO = 'Patient ACT, algebra, precalc, calculus, and stats help for students who need the first step to finally make sense.'
 
-// Public demo tutor. Keep this honest: no fake extra tutors, no fake reviews.
+// Public demo roster. Regional pins: MN (Akshat) and Bay Area CA (Abhigya).
+// Sessions stay virtual; the map routes parents to tutors available in-state.
 const DEMO_TUTORS: Tutor[] = [
   {
     id: 'akshat-koirala',
@@ -96,7 +107,24 @@ const DEMO_TUTORS: Tutor[] = [
     avatarColor: 'linear-gradient(135deg, #2D5016, #58CC02)',
     available: true,
     location: STUDIO_LOCATION,
-    hasRealLocation: false,
+    state: 'MN',
+    regionLabel: 'St Paul, MN',
+    hasRealLocation: true,
+    reviews: [],
+  },
+  {
+    id: 'abhigya-koirala',
+    displayName: 'Abhigya Koirala',
+    bio: 'Incoming applied mathematics PhD student at UNC. Bay Area based. Clear routes through hard ideas, without watering them down.',
+    subjects: ['Algebra', 'Pre-Calc', 'Calculus', 'Proofs', 'ACT Math'],
+    calendlyUrl: 'https://calendly.com/joinmindcraft/30min',
+    sessionsCompleted: 0,
+    avatarColor: 'linear-gradient(135deg, #143a2e, #247a4d)',
+    available: true,
+    location: EL_CERRITO_EVERETT,
+    state: 'CA',
+    regionLabel: 'El Cerrito, CA',
+    hasRealLocation: true,
     reviews: [],
   },
 ]
@@ -137,16 +165,168 @@ function TutorMap({ tutors, origin, selectedId, onSelect, onSearchResult }: Tuto
   })
   const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null)
   const [searchText, setSearchText] = useState('')
+  const [searchError, setSearchError] = useState('')
+  const mapRef = useRef<google.maps.Map | null>(null)
+
+  const applyResult = useCallback((loc: LatLng, label: string) => {
+    setSearchError('')
+    setSearchText(label)
+    onSearchResult(loc, label)
+    const map = mapRef.current
+    if (!map) return
+    // Zoom to the search point + nearest tutor pin only (tight, useful framing).
+    const visible = filterTutorsForSearch(tutors, loc, label)
+    const nearest = visible[0]
+    const bounds = new google.maps.LatLngBounds()
+    bounds.extend(loc)
+    if (nearest) bounds.extend(nearest.location)
+    map.fitBounds(bounds, 72)
+    google.maps.event.addListenerOnce(map, 'idle', () => {
+      const z = map.getZoom()
+      if (typeof z === 'number' && z > 12) map.setZoom(12)
+      if (typeof z === 'number' && z < 8) map.setZoom(9)
+    })
+  }, [onSearchResult, tutors])
 
   const onPlaceChanged = useCallback(() => {
     if (!autocomplete) return
     const place = autocomplete.getPlace()
     const loc = place.geometry?.location
     if (!loc) return
-    const label = place.formatted_address || place.name || 'Searched location'
-    onSearchResult({ lat: loc.lat(), lng: loc.lng() }, label)
-    setSearchText(label)
-  }, [autocomplete, onSearchResult])
+    applyResult(
+      { lat: loc.lat(), lng: loc.lng() },
+      place.formatted_address || place.name || 'Searched location',
+    )
+  }, [autocomplete, applyResult])
+
+  /** Among candidate places, pick the one closest to any tutor pin (handles ambiguous streets). */
+  const pickBestNearTutors = useCallback((candidates: { loc: LatLng; label: string }[]) => {
+    if (!candidates.length) return null
+    let best = candidates[0]
+    let bestDist = Infinity
+    for (const c of candidates) {
+      for (const t of tutors) {
+        const d = (c.loc.lat - t.location.lat) ** 2 + (c.loc.lng - t.location.lng) ** 2
+        if (d < bestDist) {
+          bestDist = d
+          best = c
+        }
+      }
+    }
+    return best
+  }, [tutors])
+
+  const runTextSearch = useCallback((raw: string) => {
+    const query = raw.trim()
+    if (!query) {
+      setSearchError('Type an address, city, or ZIP.')
+      return
+    }
+    setSearchError('')
+    const map = mapRef.current
+    const geocoder = new google.maps.Geocoder()
+    const lower = query.toLowerCase()
+    const hasHint = /\b(ca|california|mn|minnesota|ny|tx|wa|or)\b/.test(lower) || /\b\d{5}\b/.test(lower)
+    const variants = hasHint
+      ? [query]
+      : [
+          query,
+          `${query}, El Cerrito, CA`,
+          `${query}, California`,
+          `${query}, St Paul, MN`,
+          `${query}, Minnesota`,
+        ]
+
+    const finish = (candidates: { loc: LatLng; label: string }[]) => {
+      const best = pickBestNearTutors(candidates)
+      if (!best) {
+        setSearchError('Could not find that address. Try adding a city or ZIP.')
+        return
+      }
+      applyResult(best.loc, best.label)
+    }
+
+    const fromGeocode: { loc: LatLng; label: string }[] = []
+    let pending = variants.length
+    const maybeDone = () => {
+      pending -= 1
+      if (pending <= 0) finish(fromGeocode)
+    }
+
+    const collectPlaces = (results: google.maps.places.PlaceResult[] | null) => {
+      const out: { loc: LatLng; label: string }[] = []
+      for (const r of results ?? []) {
+        const loc = r.geometry?.location
+        if (!loc) continue
+        out.push({
+          loc: { lat: loc.lat(), lng: loc.lng() },
+          label: r.formatted_address || r.name || query,
+        })
+      }
+      return out
+    }
+
+    if (map && google.maps.places) {
+      const service = new google.maps.places.PlacesService(map)
+      service.textSearch({ query }, (results, status) => {
+        const placeHits = status === google.maps.places.PlacesServiceStatus.OK
+          ? collectPlaces(results)
+          : []
+        if (placeHits.length) {
+          finish(placeHits)
+          return
+        }
+        variants.forEach(attempt => {
+          geocoder.geocode(
+            { address: attempt, region: 'us', componentRestrictions: { country: 'US' } },
+            (geoResults, geoStatus) => {
+              if (geoStatus === 'OK' && geoResults?.[0]?.geometry?.location) {
+                const loc = geoResults[0].geometry.location
+                fromGeocode.push({
+                  loc: { lat: loc.lat(), lng: loc.lng() },
+                  label: geoResults[0].formatted_address || attempt,
+                })
+              }
+              maybeDone()
+            },
+          )
+        })
+      })
+      return
+    }
+
+    variants.forEach(attempt => {
+      geocoder.geocode(
+        { address: attempt, region: 'us', componentRestrictions: { country: 'US' } },
+        (geoResults, geoStatus) => {
+          if (geoStatus === 'OK' && geoResults?.[0]?.geometry?.location) {
+            const loc = geoResults[0].geometry.location
+            fromGeocode.push({
+              loc: { lat: loc.lat(), lng: loc.lng() },
+              label: geoResults[0].formatted_address || attempt,
+            })
+          }
+          maybeDone()
+        },
+      )
+    })
+  }, [applyResult, pickBestNearTutors])
+
+  // onPlaceChanged references runTextSearch before it's defined in the dep
+  // array above; keep a stable submit handler instead.
+  const onSearchSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault()
+    const place = autocomplete?.getPlace()
+    const loc = place?.geometry?.location
+    if (loc && place) {
+      applyResult(
+        { lat: loc.lat(), lng: loc.lng() },
+        place.formatted_address || place.name || searchText,
+      )
+      return
+    }
+    runTextSearch(searchText)
+  }, [autocomplete, applyResult, runTextSearch, searchText])
 
   if (loadError) {
     return (
@@ -161,13 +341,12 @@ function TutorMap({ tutors, origin, selectedId, onSelect, onSearchResult }: Tuto
     return <div className={s.mapPlaceholder}><p>Loading map…</p></div>
   }
 
-  const center = origin ?? STUDIO_LOCATION
-  const studioSelected = selectedId === 'studio'
+  const center = origin ?? tutors[0]?.location ?? STUDIO_LOCATION
   const selectedTutor = tutors.find(t => t.id === selectedId) ?? null
 
   return (
     <div className={s.mapCol}>
-      <div className={s.searchRow}>
+      <form className={s.searchRow} onSubmit={onSearchSubmit}>
         <Autocomplete onLoad={setAutocomplete} onPlaceChanged={onPlaceChanged}>
           <input
             className={s.searchInput}
@@ -177,26 +356,16 @@ function TutorMap({ tutors, origin, selectedId, onSelect, onSearchResult }: Tuto
             onChange={e => setSearchText(e.target.value)}
           />
         </Autocomplete>
-      </div>
+        <button type="submit" className={s.searchBtn}>Search</button>
+        {searchError && <p className={s.searchError}>{searchError}</p>}
+      </form>
       <GoogleMap
         mapContainerClassName={s.mapCanvas}
         center={center}
-        zoom={origin ? 11 : 13}
+        zoom={origin ? 13 : 12}
+        onLoad={map => { mapRef.current = map }}
         options={{ streetViewControl: false, mapTypeControl: false, fullscreenControl: false }}
       >
-        <MarkerF
-          position={STUDIO_LOCATION}
-          title={`MindCraft home base — ${STUDIO_ADDRESS}`}
-          icon={{
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 10,
-            fillColor: '#064d36',
-            fillOpacity: 1,
-            strokeColor: '#fffdf7',
-            strokeWeight: 2,
-          }}
-          onClick={() => onSelect('studio')}
-        />
         {origin && (
           <MarkerF
             position={origin}
@@ -215,27 +384,16 @@ function TutorMap({ tutors, origin, selectedId, onSelect, onSearchResult }: Tuto
           <MarkerF
             key={t.id}
             position={t.location}
-            title={t.displayName}
+            title={`${t.displayName} (${t.regionLabel})`}
             onClick={() => onSelect(t.id)}
           />
         ))}
-        {studioSelected && (
-          <InfoWindowF position={STUDIO_LOCATION} onCloseClick={() => onSelect(null)}>
-            <div className={s.infoWindow}>
-              <strong>MindCraft home base</strong>
-              <p>{STUDIO_ADDRESS}</p>
-              <p className={s.infoNote}>Sessions are virtual (Google Meet) — this is our studio address, not a required meeting spot.</p>
-            </div>
-          </InfoWindowF>
-        )}
         {selectedTutor && (
           <InfoWindowF position={selectedTutor.location} onCloseClick={() => onSelect(null)}>
             <div className={s.infoWindow}>
               <strong>{selectedTutor.displayName}</strong>
               <p>{selectedTutor.bio}</p>
-              {!selectedTutor.hasRealLocation && (
-                <p className={s.infoNote}>Home base: MindCraft studio (exact tutor location not set yet)</p>
-              )}
+              <p className={s.infoNote}>{selectedTutor.regionLabel}. Sessions online over Meet.</p>
               <p className={s.infoNote}>
                 {selectedTutor.reviews.length > 0
                   ? `${selectedTutor.reviews.length} review${selectedTutor.reviews.length === 1 ? '' : 's'}`
@@ -286,6 +444,10 @@ export default function FindTutor() {
           const calendlyUrl = data.calendlyUrl || (slug ? `https://calendly.com/${slug}` : '')
           const hasRealLocation =
             data.location && typeof data.location.lat === 'number' && typeof data.location.lng === 'number'
+          const location = hasRealLocation ? (data.location as LatLng) : STUDIO_LOCATION
+          const state = typeof data.state === 'string' && data.state
+            ? String(data.state).toUpperCase()
+            : (location.lng < -115 ? 'CA' : 'MN')
           const reviews: TutorReview[] = Array.isArray(data.reviews)
             ? data.reviews
                 .filter((r: any) => r && typeof r.quote === 'string' && typeof r.studentName === 'string')
@@ -300,7 +462,9 @@ export default function FindTutor() {
             sessionsCompleted: data.sessionsCompleted ?? 0,
             avatarColor: data.avatarColor ?? 'linear-gradient(135deg, #2D5016, #58CC02)',
             available: data.available ?? true,
-            location: hasRealLocation ? (data.location as LatLng) : STUDIO_LOCATION,
+            location,
+            state,
+            regionLabel: data.locationAddress || data.regionLabel || (state === 'CA' ? 'California' : 'Minnesota'),
             hasRealLocation,
             reviews,
           }
@@ -324,12 +488,10 @@ export default function FindTutor() {
       .catch(() => {})
   }, [])
 
-  const rankedTutors = useMemo(() => {
-    const base = origin ?? STUDIO_LOCATION
-    return tutors
-      .map(t => ({ ...t, distanceKm: haversineKm(base, t.location) }))
-      .sort((a, b) => a.distanceKm - b.distanceKm)
-  }, [tutors, origin])
+  const rankedTutors = useMemo(
+    () => filterTutorsForSearch(tutors, origin, originLabel),
+    [tutors, origin, originLabel],
+  )
 
   function useMyLocation() {
     if (!navigator.geolocation) {
@@ -378,8 +540,7 @@ export default function FindTutor() {
         <div className={s.taglineCard}>
           <div className={s.taglineTitle}>The right tutor changes everything.</div>
           <div className={s.taglineSub}>
-            All sessions are virtual (Google Meet) — the map shows where MindCraft is based and helps you find a
-            tutor whose schedule and subjects fit.
+            All sessions are virtual (Google Meet). Search your city: the map shows tutors available in that region.
           </div>
         </div>
       </div>
@@ -419,7 +580,19 @@ export default function FindTutor() {
               <div
                 key={tutor.id}
                 className={`${s.tutorListCard} ${selectedId === tutor.id ? s.tutorListCardActive : ''}`}
-                onClick={() => setSelectedId(tutor.id)}
+                role="link"
+                tabIndex={0}
+                onClick={() => {
+                  setSelectedId(tutor.id)
+                  if (tutor.available) loadCalendly(tutor.calendlyUrl)
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setSelectedId(tutor.id)
+                    if (tutor.available) loadCalendly(tutor.calendlyUrl)
+                  }
+                }}
               >
                 <div className={s.tutorHeader}>
                   <div className={s.avatar} style={{ background: tutor.avatarColor }}>
@@ -428,6 +601,8 @@ export default function FindTutor() {
                   <div className={s.tutorHeaderText}>
                     <div className={s.tutorName}>{tutor.displayName}</div>
                     <div className={s.tutorStat}>
+                      {tutor.regionLabel}
+                      {' · '}
                       {tutor.available
                         ? (tutor.sessionsCompleted > 0 ? `${tutor.sessionsCompleted}+ sessions` : 'Now booking')
                         : 'Unavailable right now'}
@@ -445,7 +620,7 @@ export default function FindTutor() {
                   {tutor.reviews.length > 0 ? (
                     <span className={s.reviewsCount}>{tutor.reviews.length} review{tutor.reviews.length === 1 ? '' : 's'}</span>
                   ) : (
-                    <span className={s.reviewsEmpty}>No reviews yet — be the first to book</span>
+                    <span className={s.reviewsEmpty}>No reviews yet. Be the first to book.</span>
                   )}
                 </div>
                 <button

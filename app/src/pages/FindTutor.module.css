@@ -21,9 +21,11 @@
 
 .mapLayout{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}
 .mapCol{position:sticky;top:96px;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:0 22px 56px rgba(75,0,29,.06);background:var(--paper)}
-.searchRow{padding:14px;border-bottom:1px solid var(--line);background:rgba(255,253,247,.9)}
+.searchRow{display:grid;grid-template-columns:1fr auto;gap:10px;padding:14px;border-bottom:1px solid var(--line);background:rgba(255,253,247,.9)}
 .searchInput{width:100%;min-height:48px;padding:0 16px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--ink);font-family:inherit;font-size:14px;font-weight:700;outline:none}
 .searchInput:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(78,181,67,.14)}
+.searchBtn{min-height:48px;padding:0 18px;border:0;border-radius:16px;background:var(--forest,#143a2e);color:#fffdf7;font-family:inherit;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.searchError{grid-column:1/-1;margin:0;font-size:12px;font-weight:800;color:#c1180b}
 .mapCanvas{width:100%;height:480px}
 .mapPlaceholder{display:flex;flex-direction:column;justify-content:center;gap:10px;min-height:480px;padding:clamp(28px,4vw,44px);background:linear-gradient(160deg,rgba(6,77,54,.06),rgba(75,0,29,.04));color:var(--muted);font-size:14px;font-weight:700;line-height:1.6}
 .mapPlaceholder p{margin:0}

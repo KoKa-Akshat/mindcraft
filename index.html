@@ -306,11 +306,16 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .findtutor-map-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;background:linear-gradient(160deg,#eaf5ea,#dceef6);font-weight:800;color:var(--muted)}
 .findtutor-map-fallback a{color:var(--leaf);text-decoration:underline;text-underline-offset:2px}
 .findtutor-map-caption{margin:0;text-align:center;font-family:"Caveat",cursive;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
-.findtutor-cardlet{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:24px;background:#fffdf7;box-shadow:0 16px 38px rgba(20,58,46,.08)}
-.findtutor-cardlet img{width:72px;height:72px;border-radius:22px;object-fit:cover;box-shadow:0 12px 24px rgba(20,58,46,.14)}
-.findtutor-cardlet strong{display:block;font-family:"Fredoka",system-ui,sans-serif;font-size:22px;letter-spacing:-.035em;color:var(--ink)}
-.findtutor-cardlet p{font-size:13px;line-height:1.45;margin:4px 0 0}
-.findtutor-distance{font-size:12px!important;font-weight:900!important;color:var(--leaf)!important}
+.findtutor-list{display:grid;gap:10px}
+.findtutor-cardlet{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:22px;background:#fffdf7;box-shadow:0 12px 28px rgba(20,58,46,.08);text-decoration:none;color:inherit;cursor:pointer;transition:transform .18s var(--ease),border-color .18s var(--ease),box-shadow .18s var(--ease)}
+.findtutor-cardlet:hover{transform:translateY(-2px);border-color:rgba(36,122,77,.35);box-shadow:0 16px 34px rgba(20,58,46,.14)}
+.findtutor-cardlet img{width:64px;height:64px;border-radius:18px;object-fit:cover;box-shadow:0 10px 20px rgba(20,58,46,.14)}
+.findtutor-cardlet strong{display:block;font-family:"Fredoka",system-ui,sans-serif;font-size:18px;letter-spacing:-.03em;color:var(--ink)}
+.findtutor-cardlet p{font-size:12px;line-height:1.4;margin:3px 0 0;color:var(--muted)}
+.findtutor-distance{font-size:11px!important;font-weight:900!important;color:var(--leaf)!important;margin-top:6px!important}
+.findtutor-book{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:999px;background:var(--ink);color:#fffdf7;font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;pointer-events:none}
+.findtutor-status{min-height:18px;margin:0;font-size:12px;font-weight:800;color:var(--leaf)}
+.findtutor-status.is-error{color:#c1180b}
 .notebook-photo{margin:18px 0 0}
 .notebook-photo img,.notebook-photo svg{display:block;width:100%;height:auto;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
 .notebook-photo figcaption{margin-top:12px;text-align:center;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
@@ -757,32 +762,25 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="findtutor-card reveal">
           <div class="findtutor-copy">
             <p class="label">For parents</p>
-            <h2>Book Akshat.<br>Start with the map.</h2>
+            <h2>College tutors.<br>Near you.</h2>
             <ul class="tutor-benefits">
-              <li>Type your address and see how close the home base is.</li>
-              <li>The first session starts with the student’s actual gap map.</li>
-              <li>Meet online, work calmly, leave with the next move.</li>
+              <li>Search any address. We show the nearest tutor pin.</li>
+              <li>Profile + Book sit under the map.</li>
+              <li>Sessions on Meet.</li>
             </ul>
             <div class="findtutor-actions">
-              <a class="btn primary" href="https://calendly.com/joinmindcraft/30min" target="_blank" rel="noopener">Book</a>
-              <a class="btn soft" href="https://mindcraft-93858.web.app/find-a-tutor">Full tutor page</a>
+              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Open full map →</a>
             </div>
           </div>
           <div class="findtutor-map-wrap">
             <form class="findtutor-search" id="ftSearchForm">
-              <input id="ftAddress" type="search" placeholder="Type your address, city, or ZIP" autocomplete="street-address" aria-label="Find tutors near an address">
+              <input id="ftAddress" type="search" placeholder="City, state, or street (try California)" autocomplete="street-address" aria-label="Find tutors near an address">
               <button type="submit">Search</button>
             </form>
-            <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near the studio"></div>
-            <div class="findtutor-cardlet">
-              <img src="img/akshat-koirala.jpg" alt="" width="144" height="144">
-              <div>
-                <strong>Akshat Koirala</strong>
-                <p>Founder and math tutor. Patient ACT, algebra, precalc, calculus, and stats help for students who need the first step to finally make sense.</p>
-                <p class="findtutor-distance" id="ftDistance">Search your address to see distance.</p>
-              </div>
-            </div>
-            <p class="findtutor-map-caption">click the pin, search your address, then book</p>
+            <p class="findtutor-status" id="ftStatus" aria-live="polite"></p>
+            <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near you"></div>
+            <div class="findtutor-list" id="ftTutorList"></div>
+            <p class="findtutor-map-caption">search your address, then book</p>
           </div>
         </div>
       </div>
@@ -1292,35 +1290,40 @@ demoPosterStory?.addEventListener("focusin", stopStoryAutoplay)
 demoPosterStory?.addEventListener("focusout", startStoryAutoplay)
 startStoryAutoplay()
 
-// Find a Tutor map. This is a real interactive Google Map, not a screenshot:
-// parents can type an address, the page geocodes it, recenters the map, and
-// shows the distance to MindCraft's current home base. The public marketing
-// page only shows Akshat for now; the full app page can pull registered tutor
-// accounts once onboarding/location profiles are ready.
-//
-// What this deliberately does NOT do: query Firestore for the full
-// registered-tutor roster the way FindTutor.tsx does. firestore.rules
-// requires an authenticated request to read `users` docs (including the
-// role=='tutor' query) — see firebase/firestore.rules — and this marketing
-// site never signs anyone in, so that query would always come back
-// permission-denied, exactly like it already does for a signed-out visitor
-// on /find-a-tutor itself (FindTutor.tsx's own comment covers this). Making
-// that live for anonymous marketing traffic would mean either relaxing
-// firestore.rules to allow anonymous tutor-roster reads, or standing up a
-// public webhook endpoint to serve a sanitized list server-side (Admin SDK)
-// — both are cross-lane calls (rules / webhook) that need a team decision,
-// not something to bolt on unilaterally from a marketing copy pass. So:
-// real interactive map, one real named tutor, honest "home base, not literal
-// address" labeling, and a direct Book action.
+// Find a Tutor map. Regional pins: MN (Akshat) + Bay Area CA (Abhigya, Everett St
+// area in El Cerrito). Search zooms to the address and shows in-state tutors.
 const FT_STUDIO = { lat: 44.9379, lng: -93.1706 }
 const FT_TUTORS = [
-  { name: "Akshat Koirala", bio: "Founder and math tutor. ACT, algebra, precalc, calculus, and statistics.", booking: "https://calendly.com/joinmindcraft/30min" },
+  {
+    id: "akshat",
+    name: "Akshat Koirala",
+    bio: "ACT, algebra, precalc, calculus, stats.",
+    photo: "img/akshat-koirala.jpg",
+    booking: "https://calendly.com/joinmindcraft/30min",
+    location: { lat: 44.9379, lng: -93.1706 },
+    state: "MN",
+    regionLabel: "St Paul, MN",
+  },
+  {
+    id: "abhigya",
+    name: "Abhigya Koirala",
+    bio: "Applied math PhD track. Bay Area based. Clear routes through hard ideas.",
+    photo: "img/ab-founder.jpeg",
+    booking: "https://calendly.com/joinmindcraft/30min",
+    location: { lat: 37.9234, lng: -122.3106 },
+    state: "CA",
+    regionLabel: "El Cerrito, CA",
+  },
 ]
 const FT_MAP_FALLBACK = '<div class="findtutor-map-fallback">Map unavailable right now.<br><a href="https://mindcraft-93858.web.app/find-a-tutor">Open Find a Tutor</a> to see the live map.</div>'
 let ftMap = null
 let ftGeocoder = null
+let ftPlaces = null
 let ftAddressMarker = null
 let ftAutocomplete = null
+let ftTutorMarkers = []
+let ftOrigin = null
+let ftOriginLabel = ""
 
 function ftMiles(a, b) {
   const toRad = (v) => v * Math.PI / 180
@@ -1333,22 +1336,108 @@ function ftMiles(a, b) {
   return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)))
 }
 
-function updateFtDistance(origin, label) {
-  const distanceEl = document.getElementById("ftDistance")
-  if (!distanceEl) return
-  const miles = ftMiles(origin, FT_STUDIO)
-  distanceEl.textContent = "About " + miles.toFixed(miles < 10 ? 1 : 0) + " miles from " + label + ". Sessions are online."
+function ftStateFromLabel(label) {
+  const s = String(label || "").toLowerCase()
+  if (/\bcalifornia\b|\bca\b/.test(s)) return "CA"
+  if (/\bminnesota\b|\bmn\b/.test(s)) return "MN"
+  if (/\b9[0-6]\d{3}\b/.test(s)) return "CA"
+  if (/\b5[5-6]\d{3}\b/.test(s)) return "MN"
+  return null
 }
 
-function setFtAddressMarker(position, label) {
+function ftStateFromLatLng(loc) {
+  const { lat, lng } = loc
+  if (lat >= 32.5 && lat <= 42.1 && lng >= -124.6 && lng <= -114.0) return "CA"
+  if (lat >= 43.4 && lat <= 49.5 && lng >= -97.3 && lng <= -89.4) return "MN"
+  return null
+}
+
+function ftVisibleTutors(origin, label) {
+  if (!origin) return FT_TUTORS.slice()
+  const ranked = FT_TUTORS
+    .map((t) => ({ ...t, miles: ftMiles(origin, t.location) }))
+    .sort((a, b) => a.miles - b.miles)
+  if (!ranked.length) return ranked
+  // Always show the nearest tutor pin; include others only if reasonably close.
+  const nearest = ranked[0]
+  const alsoNearby = ranked.slice(1).filter((t) => t.miles <= 250)
+  return [nearest].concat(alsoNearby)
+}
+
+function ftSetStatus(text, isError) {
+  const el = document.getElementById("ftStatus")
+  if (!el) return
+  el.textContent = text || ""
+  el.classList.toggle("is-error", !!isError)
+}
+
+function ftSyncMarkers(visible) {
+  const ids = new Set(visible.map((t) => t.id))
+  ftTutorMarkers.forEach((entry) => {
+    entry.marker.setMap(ids.has(entry.id) ? ftMap : null)
+  })
+}
+
+function ftRenderTutors(origin, label) {
+  const list = document.getElementById("ftTutorList")
+  if (!list) return
+  const ranked = ftVisibleTutors(origin, label || "")
+  if (ftMap) ftSyncMarkers(ranked)
+  list.innerHTML = ranked.map((t) => {
+    const miles = origin ? ftMiles(origin, t.location) : null
+    const dist = miles == null
+      ? t.regionLabel + ". Sessions online."
+      : t.regionLabel + ". About " + miles.toFixed(miles < 10 ? 1 : 0) + " mi away. Sessions online."
+    // Whole card opens booking (Calendly).
+    return '<a class="findtutor-cardlet" data-tutor="' + t.id + '" href="' + t.booking + '" target="_blank" rel="noopener" aria-label="Book ' + t.name + '">'
+      + '<img src="' + t.photo + '" alt="" width="128" height="128">'
+      + '<div><strong>' + t.name + '</strong><p>' + t.bio + '</p>'
+      + '<p class="findtutor-distance">' + dist + '</p></div>'
+      + '<span class="findtutor-book">Book</span>'
+      + '</a>'
+  }).join("")
+}
+
+function ftFitToSearch(position, label) {
+  if (!ftMap || !window.google?.maps) return
+  const nearest = ftVisibleTutors(position, label)[0]
+  const bounds = new google.maps.LatLngBounds()
+  bounds.extend(position)
+  if (nearest) bounds.extend(nearest.location)
+  ftMap.fitBounds(bounds, 72)
+  google.maps.event.addListenerOnce(ftMap, "idle", () => {
+    const z = ftMap.getZoom()
+    if (typeof z === "number" && z > 12) ftMap.setZoom(12)
+    if (typeof z === "number" && z < 8) ftMap.setZoom(9)
+  })
+}
+
+function ftApplySearchResult(position, label) {
+  // Always update the tutor cards, even if Google Maps failed to load.
+  ftOrigin = position
+  ftOriginLabel = label || ""
+  ftRenderTutors(position, label)
+  const visible = ftVisibleTutors(position, label)
+  const nearest = visible[0]
+  if (nearest) {
+    const miles = ftMiles(position, nearest.location)
+    ftSetStatus(
+      "Nearest tutor: " + nearest.name + " (" + nearest.regionLabel + ", "
+      + miles.toFixed(miles < 10 ? 1 : 0) + " mi). Click the card to book."
+    )
+  } else {
+    ftSetStatus("Showing nearest tutors to " + label)
+  }
+
   if (!ftMap || !window.google?.maps) return
   if (!ftAddressMarker) {
     ftAddressMarker = new google.maps.Marker({
       map: ftMap,
       title: "Your searched location",
+      zIndex: 1000,
       icon: {
         path: google.maps.SymbolPath.CIRCLE,
-        scale: 8,
+        scale: 9,
         fillColor: "#1d3a8a",
         fillOpacity: 1,
         strokeColor: "#fffdf7",
@@ -1357,38 +1446,131 @@ function setFtAddressMarker(position, label) {
     })
   }
   ftAddressMarker.setPosition(position)
-  ftMap.panTo(position)
-  ftMap.setZoom(11)
-  updateFtDistance(position, label)
+  ftFitToSearch(position, label)
 }
 
-function searchFtAddress(address, didRetry) {
-  if (!ftGeocoder || !address.trim()) return
-  const twinCitiesBounds = window.google?.maps
-    ? new google.maps.LatLngBounds(
-      { lat: 44.72, lng: -93.55 },
-      { lat: 45.12, lng: -92.86 }
-    )
-    : undefined
-  ftGeocoder.geocode({
-    address,
-    bounds: twinCitiesBounds,
-    region: "us",
-    componentRestrictions: { country: "US" },
-  }, (results, status) => {
-    if (status !== "OK" || !results?.[0]?.geometry?.location) {
-      if (!didRetry) {
-        searchFtAddress(address + ", Minnesota, USA", true)
+/** Region keywords work even when Maps geocoding is down. */
+function ftQuickMatch(query) {
+  const s = String(query || "").toLowerCase().trim()
+  if (!s) return null
+  if (/\bcalifornia\b|\bca\b|el cerrito|bay area|everett|san francisco|oakland|berkeley/.test(s)) {
+    return FT_TUTORS.find((t) => t.state === "CA") || null
+  }
+  if (/\bminnesota\b|\bmn\b|st\.?\s*paul|minneapolis|macalester|twin cities/.test(s)) {
+    return FT_TUTORS.find((t) => t.state === "MN") || null
+  }
+  return null
+}
+
+function ftPickBestNearTutors(candidates) {
+  if (!candidates.length) return null
+  let best = candidates[0]
+  let bestDist = Infinity
+  candidates.forEach((c) => {
+    FT_TUTORS.forEach((t) => {
+      const d = (c.loc.lat - t.location.lat) ** 2 + (c.loc.lng - t.location.lng) ** 2
+      if (d < bestDist) {
+        bestDist = d
+        best = c
+      }
+    })
+  })
+  return best
+}
+
+function searchFtAddress(raw) {
+  const address = (raw || "").trim()
+  if (!address) {
+    ftSetStatus("Type an address, city, or ZIP.", true)
+    return
+  }
+  ftSetStatus("Searching…")
+
+  // Fast path: "california" / "minnesota" etc. works without Google geocoding.
+  const quick = ftQuickMatch(address)
+  if (quick) {
+    ftApplySearchResult(quick.location, quick.regionLabel)
+    return
+  }
+
+  if (!ftGeocoder && !ftPlaces) {
+    ftSetStatus("Map search is limited right now. Try California or Minnesota.", true)
+    return
+  }
+
+  const lower = address.toLowerCase()
+  const hasHint = /\b(ca|california|mn|minnesota|ny|tx|wa|or)\b/.test(lower) || /\b\d{5}\b/.test(lower)
+  const variants = hasHint
+    ? [address]
+    : [
+        address,
+        address + ", El Cerrito, CA",
+        address + ", California",
+        address + ", St Paul, MN",
+        address + ", Minnesota",
+      ]
+
+  const finish = (candidates) => {
+    const best = ftPickBestNearTutors(candidates)
+    if (!best) {
+      const fallback = ftQuickMatch(address)
+      if (fallback) {
+        ftApplySearchResult(fallback.location, fallback.regionLabel)
         return
       }
-      const distanceEl = document.getElementById("ftDistance")
-      if (distanceEl) distanceEl.textContent = "Could not find that address. Try a city or ZIP code."
+      ftSetStatus("Could not find that address. Try California, Minnesota, or a ZIP.", true)
       return
     }
-    const loc = results[0].geometry.location
-    const position = { lat: loc.lat(), lng: loc.lng() }
-    setFtAddressMarker(position, results[0].formatted_address || "your address")
-  })
+    ftApplySearchResult(best.loc, best.label)
+  }
+
+  const fromGeocode = []
+  let pending = variants.length
+  const maybeDone = () => {
+    pending -= 1
+    if (pending <= 0) finish(fromGeocode)
+  }
+
+  const runGeocode = () => {
+    variants.forEach((attempt) => {
+      ftGeocoder.geocode({
+        address: attempt,
+        region: "us",
+        componentRestrictions: { country: "US" },
+      }, (results, status) => {
+        if (status === "OK" && results?.[0]?.geometry?.location) {
+          const loc = results[0].geometry.location
+          fromGeocode.push({
+            loc: { lat: loc.lat(), lng: loc.lng() },
+            label: results[0].formatted_address || attempt,
+          })
+        }
+        maybeDone()
+      })
+    })
+  }
+
+  if (ftPlaces) {
+    ftPlaces.textSearch({ query: address }, (results, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK && results?.length) {
+        const hits = results.slice(0, 8).map((r) => {
+          const loc = r.geometry?.location
+          if (!loc) return null
+          return {
+            loc: { lat: loc.lat(), lng: loc.lng() },
+            label: r.formatted_address || r.name || address,
+          }
+        }).filter(Boolean)
+        if (hits.length) {
+          finish(hits)
+          return
+        }
+      }
+      runGeocode()
+    })
+    return
+  }
+  runGeocode()
 }
 
 function initFtMap() {
@@ -1397,59 +1579,49 @@ function initFtMap() {
   mapEl.dataset.loaded = "1"
   ftMap = new google.maps.Map(mapEl, {
     center: FT_STUDIO,
-    zoom: 12,
+    zoom: 11,
     disableDefaultUI: true,
     zoomControl: true,
     styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] }],
   })
   ftGeocoder = new google.maps.Geocoder()
-  new google.maps.Marker({
-    position: FT_STUDIO,
-    map: ftMap,
-    title: "MindCraft home base",
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 9,
-      fillColor: "#143a2e",
-      fillOpacity: 1,
-      strokeColor: "#fffdf7",
-      strokeWeight: 2,
-    },
-  })
-  FT_TUTORS.forEach((t) => {
-    const marker = new google.maps.Marker({ position: FT_STUDIO, map: ftMap, title: t.name })
+  ftPlaces = new google.maps.places.PlacesService(ftMap)
+  ftTutorMarkers = FT_TUTORS.map((t) => {
+    const marker = new google.maps.Marker({
+      position: t.location,
+      map: ftMap,
+      title: t.name + " (" + t.regionLabel + ")",
+    })
     const info = new google.maps.InfoWindow({
-      content: "<div style=\"font:600 13px 'Nunito Sans',sans-serif;max-width:200px;color:#143a2e\">"
+      content: "<div style=\"font:600 13px 'Nunito Sans',sans-serif;max-width:210px;color:#143a2e\">"
         + "<strong>" + t.name + "</strong>"
         + "<p style=\"margin:6px 0 0;font-weight:500;color:#5a5a5a\">" + t.bio + "</p>"
-        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">Home base shown. Sessions are online.</p>"
+        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">" + t.regionLabel + ". Sessions online over Meet.</p>"
         + "<p style=\"margin:10px 0 0\"><a href=\"" + t.booking + "\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;padding:8px 11px;border-radius:999px;background:#143a2e;color:#fffdf7;text-decoration:none;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase\">Book</a></p>"
         + "</div>",
     })
     marker.addListener("click", () => info.open(ftMap, marker))
+    return { id: t.id, marker }
   })
+  ftRenderTutors(null, "")
+
   const searchForm = document.getElementById("ftSearchForm")
   const addressInput = document.getElementById("ftAddress")
   if (addressInput && google.maps.places?.Autocomplete) {
     ftAutocomplete = new google.maps.places.Autocomplete(addressInput, {
-      bounds: new google.maps.LatLngBounds(
-        { lat: 44.72, lng: -93.55 },
-        { lat: 45.12, lng: -92.86 }
-      ),
       componentRestrictions: { country: "us" },
       fields: ["formatted_address", "geometry", "name"],
-      strictBounds: false,
-      types: ["geocode"],
     })
     ftAutocomplete.addListener("place_changed", () => {
       const place = ftAutocomplete.getPlace()
-      const loc = place?.geometry?.location
-      if (!loc) {
-        searchFtAddress(addressInput.value || "")
+      if (place?.geometry?.location) {
+        ftApplySearchResult(
+          { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
+          place.formatted_address || place.name || "your address"
+        )
         return
       }
-      const position = { lat: loc.lat(), lng: loc.lng() }
-      setFtAddressMarker(position, place.formatted_address || place.name || "your address")
+      searchFtAddress(addressInput.value || "")
     })
   }
   searchForm?.addEventListener("submit", (event) => {
@@ -1457,20 +1629,25 @@ function initFtMap() {
     searchFtAddress(addressInput?.value || "")
   })
 }
+// Show tutors even before Maps finishes loading.
+ftRenderTutors(null, "")
+
 // Google Maps calls this global if the key/referrer restriction rejects the
-// request (e.g. this key's HTTP referrer allowlist doesn't yet include the
-// marketing domain) — fall back to an honest "map unavailable" card instead
-// of a broken gray box.
+// request. Fall back to an honest card instead of a broken gray box.
 window.gm_authFailure = function () {
   const mapEl = document.getElementById("ftMap")
   if (mapEl) mapEl.outerHTML = FT_MAP_FALLBACK
+  ftRenderTutors(ftOrigin, ftOriginLabel)
+  ftSetStatus("Map tiles are limited right now. Search still works. Click a tutor card to book.")
 }
-// Also covers ad-blockers / offline / script load failures generally, not
-// just auth — same honest fallback either way.
+// Slow networks / ad-blockers. Give Maps more time before swapping fallback.
 setTimeout(() => {
   const mapEl = document.getElementById("ftMap")
-  if (mapEl && mapEl.dataset.loaded !== "1") mapEl.outerHTML = FT_MAP_FALLBACK
-}, 6000)
+  if (mapEl && mapEl.dataset.loaded !== "1") {
+    mapEl.outerHTML = FT_MAP_FALLBACK
+    ftRenderTutors(ftOrigin, ftOriginLabel)
+  }
+}, 12000)
 
 </script>
 <!-- Find a Tutor map (see the initFtMap comment above). Same publicly-exposed
@@ -1478,6 +1655,6 @@ setTimeout(() => {
      VITE_GOOGLE_MAPS_API_KEY) — restricted by HTTP referrer + API in Google Cloud
      Console, not a secret. If this domain isn't on that key's referrer allowlist yet,
      gm_authFailure above swaps in the honest fallback card. -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsGvXcd5Eqt7qVOxOdIqiEDoJcEQT3Cjg&libraries=places&callback=initFtMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCftusRr7_Fio0sRFbSsADsm0uUH3YG2Bc&libraries=places&callback=initFtMap"></script>
 </body>
 </html>

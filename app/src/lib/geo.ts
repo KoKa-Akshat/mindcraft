@@ -36,3 +36,50 @@ export function formatDistanceMiles(km: number): string {
   if (mi < 10) return `${mi.toFixed(1)} mi away`
   return `${Math.round(mi)} mi away`
 }
+
+/** Rough US state from a search label ("El Cerrito, CA", "California", …). */
+export function usStateFromLabel(label: string): string | null {
+  const s = label.trim().toLowerCase()
+  if (!s) return null
+  if (/\bcalifornia\b|\bca\b/.test(s)) return 'CA'
+  if (/\bminnesota\b|\bmn\b/.test(s)) return 'MN'
+  // ZIP prefixes (common for our current tutor regions)
+  if (/\b9[0-6]\d{3}\b/.test(s)) return 'CA'
+  if (/\b5[5-6]\d{3}\b/.test(s)) return 'MN'
+  return null
+}
+
+/** Rough US state from lat/lng (covers CA + MN tightly enough for tutor routing). */
+export function usStateFromLatLng(loc: LatLng): string | null {
+  const { lat, lng } = loc
+  if (lat >= 32.5 && lat <= 42.1 && lng >= -124.6 && lng <= -114.0) return 'CA'
+  if (lat >= 43.4 && lat <= 49.5 && lng >= -97.3 && lng <= -89.4) return 'MN'
+  return null
+}
+
+/**
+ * Tutors nearest to the search point, closest first.
+ * With a search origin: return the nearest tutor, plus any others within
+ * `nearbyMiles` (so a CA search shows the Bay Area pin, not Minnesota).
+ * Without a search: return everyone (unsorted distances = 0).
+ */
+export function filterTutorsForSearch<T extends { location: LatLng; state?: string | null }>(
+  tutors: T[],
+  origin: LatLng | null,
+  _label = '',
+  nearbyMiles = 250,
+): (T & { distanceKm: number })[] {
+  if (!origin) {
+    return tutors.map(t => ({ ...t, distanceKm: 0 }))
+  }
+
+  const ranked = tutors
+    .map(t => ({ ...t, distanceKm: haversineKm(origin, t.location) }))
+    .sort((a, b) => a.distanceKm - b.distanceKm)
+
+  if (!ranked.length) return ranked
+
+  const nearest = ranked[0]
+  const alsoNearby = ranked.slice(1).filter(t => kmToMiles(t.distanceKm) <= nearbyMiles)
+  return [nearest, ...alsoNearby]
+}
