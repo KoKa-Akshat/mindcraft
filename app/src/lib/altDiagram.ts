@@ -86,6 +86,33 @@ export type BracketArrowsDiagram = {
   term2: string
 }
 
+export type DividedShapeDiagram = {
+  kind: 'dividedshape'
+  shape: 'bar' | 'circle'
+  total: number
+  shaded?: number
+  groups?: { count: number; label: string }[]
+}
+
+export type SpinnerDiagram = {
+  kind: 'spinner'
+  spinners: { sides: number; labels: string[] }[]
+}
+
+export type RegularPolygonDiagram = {
+  kind: 'regularpolygon'
+  sides: number
+  angleLabel?: string
+}
+
+export type ShapePairDiagram = {
+  kind: 'shapepair'
+  labelA: string
+  labelB: string
+  valueA: string
+  valueB: string
+}
+
 export type AltDiagram =
   | DashLineDiagram
   | InequalityRayDiagram
@@ -96,6 +123,10 @@ export type AltDiagram =
   | VennDiagram
   | SequencePatternDiagram
   | BracketArrowsDiagram
+  | DividedShapeDiagram
+  | SpinnerDiagram
+  | RegularPolygonDiagram
+  | ShapePairDiagram
 
 const ORDINALS: Record<string, number> = {
   first: 1, second: 2, third: 3, fourth: 4, fifth: 5, sixth: 6, seventh: 7, eighth: 8, ninth: 9, tenth: 10,
@@ -344,6 +375,101 @@ function parseSequencePattern(alt: string): SequencePatternDiagram | null {
   return null
 }
 
+/** Bar/rectangle split into equal parts with some shaded ("A rectangle split
+ * into 10 equal parts with 3 parts shaded in yellow"), or a circle divided
+ * into equal sections with labeled count-groups ("Circle divided into 5
+ * equal sections. 2 sections labelled with a blue number 1. 3 sections
+ * labelled with a red number 2."). Real eedi alt-text, area_volume /
+ * fractions_decimals / basic_probability. Requires the exact "shaded" count
+ * (bar) or 2+ labeled groups (circle) — a bare "divided into N sections"
+ * with neither (e.g. a curly-bracket sum diagram) falls through. */
+function parseDividedShape(alt: string): DividedShapeDiagram | null {
+  const totalM = alt.match(/(rectangle|bar|circle)[^.]*?(?:split|divided) into (\d+) equal (?:parts|pieces|sections)/i)
+  if (!totalM) return null
+  const shape: DividedShapeDiagram['shape'] = totalM[1].toLowerCase() === 'circle' ? 'circle' : 'bar'
+  const total = parseInt(totalM[2], 10)
+  if (!Number.isFinite(total) || total < 2 || total > 100) return null
+
+  if (shape === 'circle') {
+    const groupRe = /(\d+)\s+(?:of the sections|sections)\s+(?:are\s+)?labell?ed with a\s+\w+\s+number\s+(\w+)/gi
+    const groups = [...alt.matchAll(groupRe)].map(m => ({ count: parseInt(m[1], 10), label: m[2] }))
+    if (groups.length >= 2) return { kind: 'dividedshape', shape, total, groups }
+    return null
+  }
+
+  const shadedM = alt.match(/(\d+)(?:\s+of (?:the|these)(?: parts)?)?(?:\s+parts?|\s+pieces)?\s+(?:are\s+)?shaded/i)
+  if (!shadedM) return null
+  const shaded = parseInt(shadedM[1], 10)
+  if (!Number.isFinite(shaded) || shaded > total) return null
+  return { kind: 'dividedshape', shape, total, shaded }
+}
+
+const SPINNER_SIDE_WORDS: Record<string, number> = {
+  three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8,
+  triangular: 3, square: 4, pentagonal: 5, hexagonal: 6, heptagonal: 7, octagonal: 8,
+}
+
+/** One or more spinners, each an N-sided wheel with real labeled sections:
+ * "A four sided spinner labelled with 1, 2, 3 and 4", "A hexagonal shaped
+ * spinner with 6 equal sections labelled 1, 3, 3, 5, 5 and 5." (real eedi
+ * alt-text, basic_probability). Handles the "two spinners" case by matching
+ * every spinner mention in the text, not just the first. */
+function parseSpinner(alt: string): SpinnerDiagram | null {
+  if (!/spinner/i.test(alt)) return null
+  const spinnerRe = /(\w+)[\s-]*(?:sided|shaped)\s+spinner[^.]*?labell?ed\s+(?:with\s+)?([\d,\sand]+?)(?:\.|$)/gi
+  const spinners: { sides: number; labels: string[] }[] = []
+  let m: RegExpExecArray | null
+  while ((m = spinnerRe.exec(alt)) !== null) {
+    const sideWord = m[1].toLowerCase()
+    const sides = SPINNER_SIDE_WORDS[sideWord] ?? (/^\d+$/.test(sideWord) ? parseInt(sideWord, 10) : NaN)
+    const labels = m[2].split(/,|\band\b/).map(s => s.trim()).filter(Boolean)
+    if (Number.isFinite(sides) && sides >= 3 && labels.length >= 3) spinners.push({ sides, labels })
+  }
+  return spinners.length ? { kind: 'spinner', spinners } : null
+}
+
+const POLYGON_NAME_SIDES: Record<string, number> = {
+  triangle: 3, square: 4, pentagon: 5, hexagon: 6, heptagon: 7, octagon: 8, nonagon: 9, decagon: 10,
+}
+
+/** A regular polygon with an explicitly stated side count and (usually) one
+ * labeled interior angle: "A regular octagon (8 sided polygon). Each side is
+ * marked with a single dash to show that all sides are equal in length. One
+ * of the interior angles of the octagon is labelled with the letter 'x'."
+ * (real eedi alt-text, triangles_congruence). Only fires for a REGULAR
+ * polygon with a stated side count — "an irregular pentagon" with no
+ * measurements has nothing accurate to draw and correctly falls through.
+ * Also excludes a polygon "joined" to another shape ("a regular pentagon
+ * with a square joined along one edge") — that's a compound shape, and a
+ * bare polygon outline would misrepresent it by omitting the square entirely. */
+function parseRegularPolygon(alt: string): RegularPolygonDiagram | null {
+  if (!/\bregular\b/i.test(alt)) return null
+  if (/joined/i.test(alt)) return null
+  const sidesM = alt.match(/\((\d+)\s*sided/i)
+  const nameM = alt.match(/regular\s+(triangle|square|pentagon|hexagon|heptagon|octagon|nonagon|decagon)/i)
+  const sides = sidesM ? parseInt(sidesM[1], 10) : (nameM ? POLYGON_NAME_SIDES[nameM[1].toLowerCase()] : undefined)
+  if (!sides) return null
+  const angleM = alt.match(/labell?ed with the letter\s+['"]?(\w+)['"]?/i) ?? alt.match(/interior angles?[^.]*?labell?ed\s+(?:with\s+)?(?:the\s+letter\s+)?['"]?(\w+)['"]?/i)
+  return { kind: 'regularpolygon', sides, angleLabel: angleM ? angleM[1] : undefined }
+}
+
+/** Two labeled shapes (similar/congruent), each with one real stated
+ * measurement: "To similar star shapes labelled P and Q. They have the same
+ * side labelled for P it is 3cm and for Q it is 11cm" (real eedi alt-text,
+ * triangles_congruence). Deliberately narrow — the spelled-out-number grid
+ * variant ("Triangle A is two squares across one square up...") is NOT
+ * parsed here since reading English number words accurately is a real
+ * failure risk this module avoids per its no-guessing rule. */
+function parseShapePair(alt: string): ShapePairDiagram | null {
+  const labelsM = alt.match(/labell?ed\s+([A-Z])\s+and\s+([A-Z])\b/)
+  if (!labelsM) return null
+  const [, labelA, labelB] = labelsM
+  const valueA = grabValue(alt, `for\\s+${labelA}\\s+(?:it\\s+)?is`)
+  const valueB = grabValue(alt, `for\\s+${labelB}\\s+(?:it\\s+)?is`)
+  if (!valueA || !valueB) return null
+  return { kind: 'shapepair', labelA, labelB, valueA, valueB }
+}
+
 export function parseAltDiagram(alt: string): AltDiagram | null {
   return (
     parseDashLine(alt) ??
@@ -353,6 +479,10 @@ export function parseAltDiagram(alt: string): AltDiagram | null {
     parseVenn(alt) ??
     parseAngleDiagram(alt) ??
     parseSequencePattern(alt) ??
+    parseSpinner(alt) ??
+    parseDividedShape(alt) ??
+    parseRegularPolygon(alt) ??
+    parseShapePair(alt) ??
     parseShapeDimension(alt)
   )
 }

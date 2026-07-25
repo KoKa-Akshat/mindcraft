@@ -12,6 +12,7 @@ import {
   type DashLineDiagram, type InequalityRayDiagram, type ShapeDimensionDiagram,
   type TriangleAnglesDiagram, type FunctionMachineDiagram, type AngleDiagram,
   type VennDiagram, type SequencePatternDiagram, type BracketArrowsDiagram,
+  type DividedShapeDiagram, type SpinnerDiagram, type RegularPolygonDiagram, type ShapePairDiagram,
 } from '../lib/altDiagram'
 import { renderNoBreakCoordinates } from '../lib/noBreakCoords'
 import s from './AltDiagramCallout.module.css'
@@ -356,6 +357,151 @@ function BracketArrowsFigure({ diagram, accent }: { diagram: BracketArrowsDiagra
   )
 }
 
+function DividedShapeFigure({ diagram, accent }: { diagram: DividedShapeDiagram; accent: string }) {
+  const { shape, total, shaded, groups } = diagram
+
+  if (shape === 'bar') {
+    const barX = 20, barY = 25, barW = 220, barH = 40
+    const showSegments = total <= 12
+    return (
+      <span className={s.figureWrap}>
+        <svg viewBox="0 0 260 80" className={s.figure} role="img" aria-label={`Bar divided into ${total} parts, ${shaded ?? 0} shaded`}>
+          <rect x={barX} y={barY} width={barW} height={barH} fill="none" stroke={accent} strokeWidth={1.5} />
+          {showSegments
+            ? Array.from({ length: total }, (_, i) => (
+                <rect
+                  key={i}
+                  x={barX + (i * barW) / total}
+                  y={barY}
+                  width={barW / total}
+                  height={barH}
+                  fill={shaded != null && i < shaded ? accent : 'none'}
+                  fillOpacity={0.55}
+                  stroke={accent}
+                  strokeWidth={0.75}
+                />
+              ))
+            : shaded != null && (
+                <rect x={barX} y={barY} width={(barW * shaded) / total} height={barH} fill={accent} fillOpacity={0.55} />
+              )}
+          {shaded != null && (
+            <text x={barX + barW / 2} y={barY + barH + 18} textAnchor="middle" fill={accent} style={LABEL_FONT}>{shaded}/{total} shaded</text>
+          )}
+        </svg>
+      </span>
+    )
+  }
+
+  const cx = 130, cy = 60, r = 45
+  let angleAcc = -Math.PI / 2
+  const wedges = (groups ?? []).map(g => {
+    const span = (g.count / total) * 2 * Math.PI
+    const start = angleAcc
+    const end = angleAcc + span
+    angleAcc = end
+    return { start, end, mid: (start + end) / 2, label: g.label }
+  })
+  return (
+    <span className={s.figureWrap}>
+      <svg viewBox="0 0 260 130" className={s.figure} role="img" aria-label="Circle divided into labeled sections">
+        {wedges.map((w, i) => {
+          const p1 = { x: cx + r * Math.cos(w.start), y: cy + r * Math.sin(w.start) }
+          const p2 = { x: cx + r * Math.cos(w.end), y: cy + r * Math.sin(w.end) }
+          const large = w.end - w.start > Math.PI ? 1 : 0
+          const d = `M${cx},${cy} L${p1.x},${p1.y} A${r},${r} 0 ${large} 1 ${p2.x},${p2.y} Z`
+          return (
+            <g key={i}>
+              <path d={d} fill={accent} fillOpacity={i % 2 === 0 ? 0.45 : 0.18} stroke={accent} strokeWidth={1} />
+              <text x={cx + r * 0.6 * Math.cos(w.mid)} y={cy + r * 0.6 * Math.sin(w.mid)} textAnchor="middle" fill={accent} style={LABEL_FONT}>{w.label}</text>
+            </g>
+          )
+        })}
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke={accent} strokeWidth={1.5} />
+      </svg>
+    </span>
+  )
+}
+
+function SpinnerFigure({ diagram, accent }: { diagram: SpinnerDiagram; accent: string }) {
+  const { spinners } = diagram
+  const cellW = 260 / spinners.length
+  return (
+    <span className={s.figureWrap}>
+      <svg viewBox="0 0 260 100" className={s.figure} role="img" aria-label="Spinner">
+        {spinners.map((sp, si) => {
+          const cx = si * cellW + cellW / 2
+          const cy = 50
+          const r = Math.min(cellW, 100) / 2 - 10
+          const step = (2 * Math.PI) / sp.sides
+          let angle = -Math.PI / 2
+          return (
+            <g key={si}>
+              {sp.labels.map((label, i) => {
+                const start = angle
+                const end = angle + step
+                const mid = (start + end) / 2
+                angle = end
+                const p1 = { x: cx + r * Math.cos(start), y: cy + r * Math.sin(start) }
+                const p2 = { x: cx + r * Math.cos(end), y: cy + r * Math.sin(end) }
+                const large = step > Math.PI ? 1 : 0
+                const d = `M${cx},${cy} L${p1.x},${p1.y} A${r},${r} 0 ${large} 1 ${p2.x},${p2.y} Z`
+                return (
+                  <g key={i}>
+                    <path d={d} fill="none" stroke={accent} strokeWidth={1} />
+                    <text x={cx + r * 0.6 * Math.cos(mid)} y={cy + r * 0.6 * Math.sin(mid)} textAnchor="middle" fill={accent} style={LABEL_FONT}>{label}</text>
+                  </g>
+                )
+              })}
+              <circle cx={cx} cy={cy} r={r} fill="none" stroke={accent} strokeWidth={1.5} />
+            </g>
+          )
+        })}
+      </svg>
+    </span>
+  )
+}
+
+function RegularPolygonFigure({ diagram, accent }: { diagram: RegularPolygonDiagram; accent: string }) {
+  const { sides, angleLabel } = diagram
+  const cx = 130, cy = 75, r = 55
+  const pts = Array.from({ length: sides }, (_, i) => {
+    const angle = -Math.PI / 2 + i * ((2 * Math.PI) / sides)
+    return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) }
+  })
+  return (
+    <span className={s.figureWrap}>
+      <svg viewBox="0 0 260 150" className={s.figure} role="img" aria-label={`Regular ${sides}-sided polygon`}>
+        <polygon points={pts.map(p => `${p.x},${p.y}`).join(' ')} fill="none" stroke={accent} strokeWidth={1.5} />
+        {pts.map((p, i) => {
+          const next = pts[(i + 1) % pts.length]
+          const midX = (p.x + next.x) / 2, midY = (p.y + next.y) / 2
+          const dx = next.x - p.x, dy = next.y - p.y
+          const len = Math.hypot(dx, dy) || 1
+          const nx = (-dy / len) * 4, ny = (dx / len) * 4
+          return <line key={i} x1={midX - nx} y1={midY - ny} x2={midX + nx} y2={midY + ny} stroke={accent} strokeWidth={1.2} />
+        })}
+        {angleLabel && <text x={pts[0].x} y={pts[0].y - 8} textAnchor="middle" fill={accent} style={LABEL_FONT}>{angleLabel}</text>}
+      </svg>
+    </span>
+  )
+}
+
+function ShapePairFigure({ diagram, accent }: { diagram: ShapePairDiagram; accent: string }) {
+  const { labelA, labelB, valueA, valueB } = diagram
+  return (
+    <span className={s.figureWrap}>
+      <svg viewBox="0 0 260 100" className={s.figure} role="img" aria-label="Two similar shapes">
+        <circle cx={65} cy={55} r={32} fill="none" stroke={accent} strokeWidth={1.5} />
+        <text x={65} y={16} textAnchor="middle" fill={accent} style={LABEL_FONT}>{labelA}</text>
+        <text x={65} y={59} textAnchor="middle" fill={accent} style={LABEL_FONT}>{valueA}</text>
+        <circle cx={185} cy={55} r={45} fill="none" stroke={accent} strokeWidth={1.5} />
+        <text x={185} y={5} textAnchor="middle" fill={accent} style={LABEL_FONT}>{labelB}</text>
+        <text x={185} y={59} textAnchor="middle" fill={accent} style={LABEL_FONT}>{valueB}</text>
+      </svg>
+    </span>
+  )
+}
+
 export default function AltDiagramCallout({ alt, accent = '#1d3a8a' }: { alt: string; accent?: string }) {
   const parsed = useMemo(() => parseAltDiagram(alt), [alt])
 
@@ -380,6 +526,10 @@ export default function AltDiagramCallout({ alt, accent = '#1d3a8a' }: { alt: st
   if (parsed?.kind === 'venn') return <VennFigure diagram={parsed} accent={accent} />
   if (parsed?.kind === 'sequencepattern') return <SequencePatternFigure diagram={parsed} accent={accent} />
   if (parsed?.kind === 'bracketarrows') return <BracketArrowsFigure diagram={parsed} accent={accent} />
+  if (parsed?.kind === 'dividedshape') return <DividedShapeFigure diagram={parsed} accent={accent} />
+  if (parsed?.kind === 'spinner') return <SpinnerFigure diagram={parsed} accent={accent} />
+  if (parsed?.kind === 'regularpolygon') return <RegularPolygonFigure diagram={parsed} accent={accent} />
+  if (parsed?.kind === 'shapepair') return <ShapePairFigure diagram={parsed} accent={accent} />
 
   return (
     <span className={s.box} style={{ borderLeftColor: accent }}>

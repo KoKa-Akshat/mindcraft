@@ -153,3 +153,93 @@ describe('parseAltDiagram — sequence patterns', () => {
     expect(d).toEqual({ kind: 'sequencepattern', counts: [3, 5, 7] })
   })
 })
+
+describe('parseAltDiagram — divided shapes', () => {
+  it('parses a rectangle split into parts with some shaded (single-sentence form)', () => {
+    const d = parseAltDiagram('A rectangle split into 10 equal parts with 3 parts shaded in yellow')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 10, shaded: 3 })
+  })
+
+  it('parses a bar split into parts (two-sentence "X of the parts are shaded" form)', () => {
+    const d = parseAltDiagram('A bar split into 8 equal parts. 3 of the parts are shaded, and the total length of these 3 parts is labelled 3/4.')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 8, shaded: 3 })
+  })
+
+  it('parses a bar split into parts ("X are shaded" bare form)', () => {
+    const d = parseAltDiagram('A bar split into 7 equal pieces. 3 are shaded, and one of these is labelled with a question mark.')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 7, shaded: 3 })
+  })
+
+  it('parses a large percentage-style bar (100 parts) as a proportional fill', () => {
+    const d = parseAltDiagram('Rectangle split into 100 equal parts with 27 parts shaded in yellow')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 100, shaded: 27 })
+  })
+
+  it('parses a circle divided into labeled count-groups', () => {
+    const d = parseAltDiagram('Circle divided into 5 equal sections. 2 sections labelled with a blue number 1. 3 sections labelled with a red number 2.')
+    expect(d).toEqual({
+      kind: 'dividedshape', shape: 'circle', total: 5,
+      groups: [{ count: 2, label: '1' }, { count: 3, label: '2' }],
+    })
+  })
+
+  it('falls through a curly-bracket algebra bar diagram (too complex to templatize accurately)', () => {
+    const d = parseAltDiagram('Horizontal green bar divided into 5 equal sections. Each section is labelled with a "P". Curly bracket shows that 3 of the sections sum to 615.')
+    expect(d).toBeNull()
+  })
+
+  it('falls through a recursive halving diagram with no explicit part count', () => {
+    const d = parseAltDiagram('A rectangle split in half. One half is split in half again, and one half of that is split in half again, with one of those parts shaded.')
+    expect(d).toBeNull()
+  })
+})
+
+describe('parseAltDiagram — spinners', () => {
+  it('parses a single labeled spinner', () => {
+    const d = parseAltDiagram('A four sided spinner labelled with 1, 2, 3 and 4')
+    expect(d).toEqual({ kind: 'spinner', spinners: [{ sides: 4, labels: ['1', '2', '3', '4'] }] })
+  })
+
+  it('parses a hexagonal spinner with repeated labels', () => {
+    const d = parseAltDiagram('A hexagonal shaped spinner with 6 equal sections labelled 1, 3, 3, 5, 5 and 5.')
+    expect(d).toEqual({ kind: 'spinner', spinners: [{ sides: 6, labels: ['1', '3', '3', '5', '5', '5'] }] })
+  })
+
+  it('parses two spinners described in one alt-text', () => {
+    const d = parseAltDiagram('Two spinners. One is a four-sided spinner with 4 equal sections labelled 1, 2, 3 and 4. One is a five-sided spinner with 5 equal sections labelled 1, 2, 3, 4 and 5.')
+    expect(d).toEqual({
+      kind: 'spinner',
+      spinners: [
+        { sides: 4, labels: ['1', '2', '3', '4'] },
+        { sides: 5, labels: ['1', '2', '3', '4', '5'] },
+      ],
+    })
+  })
+})
+
+describe('parseAltDiagram — regular polygons', () => {
+  it('parses a regular octagon with a labeled interior angle', () => {
+    const d = parseAltDiagram('A regular octagon (8 sided polygon). Each side is marked with a single dash to show that all sides are equal in length. One of the interior angles of the octagon is labelled with the letter "x".')
+    expect(d).toEqual({ kind: 'regularpolygon', sides: 8, angleLabel: 'x' })
+  })
+
+  it('falls through a polygon joined to another shape (compound, not a bare polygon)', () => {
+    expect(parseAltDiagram('A regular pentagon with a square joined along one edge')).toBeNull()
+  })
+
+  it('falls through an irregular polygon with no measurements', () => {
+    expect(parseAltDiagram('Image of an irregular pentagon')).toBeNull()
+  })
+})
+
+describe('parseAltDiagram — shape pairs', () => {
+  it('parses two similarly-labeled shapes with real side lengths', () => {
+    const d = parseAltDiagram('To similar star shapes labelled P and Q. They have the same side labelled for P it is 3cm and for Q it is 11cm')
+    expect(d).toEqual({ kind: 'shapepair', labelA: 'P', labelB: 'Q', valueA: '3cm', valueB: '11cm' })
+  })
+
+  it('falls through a spelled-out-number grid comparison (avoids parsing English number words)', () => {
+    const d = parseAltDiagram('Triangle A is two squares across one square up. Triangle B is six squares across and three squares up.')
+    expect(d).toBeNull()
+  })
+})

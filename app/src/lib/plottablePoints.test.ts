@@ -59,4 +59,34 @@ describe('extractGraphableExpression', () => {
     const text = 'A quadratic curve with minimum point (1,0).'
     expect(extractGraphableExpression(text)).toBeNull()
   })
+
+  it('derives a line from stated y-intercept and x-intercept points', () => {
+    const text = 'Q. (Diagram: Graph showing straight line with y intercept (0,-2) and x intercept (4,0))'
+    expect(extractGraphableExpression(text)).toBe('0.5x-2')
+  })
+
+  it('derives a line from an origin intercept and a second point', () => {
+    const text = 'Q. (Diagram: Graph showing straight line with y intercept (0,5) and x intercept (10,0))'
+    expect(extractGraphableExpression(text)).toBe('-0.5x+5')
+  })
+
+  it('derives a horizontal line from a single stated y-axis value', () => {
+    const text = 'Q. (Diagram: A graph of a horizontal line going through 3 on the y axis.)'
+    expect(extractGraphableExpression(text)).toBe('3')
+  })
+
+  it('derives a tangent line from 3 real collinear points', () => {
+    const text = 'Q. (Diagram: The image is of a velocity-time graph. There is a straight line, a tangent. The tangent goes through (2, 31), (6, 47) and (8,55).)'
+    expect(extractGraphableExpression(text)).toBe('4x+23')
+  })
+
+  it('derives a quadratic from 2 real x-intercepts and a y-intercept', () => {
+    const text = 'Q. (Diagram: The is a parabolic graph that crosses the x axis at the points (-2,0) and (3,0) and crosses the y axis at (0, -6).)'
+    expect(extractGraphableExpression(text)).toBe('x^2-x-6')
+  })
+
+  it('does not force a line through 3 points that are not actually collinear', () => {
+    const text = 'Q. (Diagram: An x and y axis showing 3 points. (1,8), (3,3) and (7,3))'
+    expect(extractGraphableExpression(text)).toBeNull()
+  })
 })
