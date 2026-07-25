@@ -338,6 +338,77 @@ function irregularPolygon(id, kind) {
   return [id, svg(`<polygon points="176,45 300,91 277,206 137,220 78,118" fill="#f9fbf3"/>`)]
 }
 
+function axes(x = 58, y = 208, w = 310, h = 162) {
+  return `<line x1="${x}" y1="${y}" x2="${x + w}" y2="${y}"/>
+  <line x1="${x}" y1="${y}" x2="${x}" y2="${y - h}"/>`
+}
+
+function oneOff(id, kind) {
+  let body = ''
+  if (kind === 'line48') {
+    body = `<line x1="70" y1="130" x2="350" y2="130"/>
+      <circle cx="70" cy="130" r="3" fill="#111"/><circle cx="210" cy="130" r="3" fill="#111"/><circle cx="350" cy="130" r="3" fill="#111"/>
+      ${text(70, 160, 'A', 17)}${text(210, 160, 'N', 17)}${text(350, 160, 'B', 17)}${text(210, 104, '48 m', 17)}`
+  } else if (kind === 'depthCurve') {
+    body = `${axes()}<path d="M58 208 C86 110 130 72 190 64 C248 58 306 60 354 61"/>`
+  } else if (kind === 'tieredCost') {
+    body = `${axes()}${text(214, 240, 'units', 14)}${vSideLabel(26, 128, 'cost')}${text(132, 225, '100', 13)}
+      <path d="M58 208 L132 122 L354 84"/><line x1="132" y1="208" x2="132" y2="122" stroke-dasharray="4 4"/>
+      ${text(88, 100, '$0.25/unit', 13, 'start')}${text(225, 78, '$0.10/unit', 13, 'start')}`
+  } else if (kind === 'rectDiagonal') {
+    body = `<rect x="88" y="64" width="244" height="132" fill="#f9fbf3"/><line x1="88" y1="64" x2="332" y2="196" stroke="#c63b32" stroke-dasharray="7 7"/>${text(210, 226, 'ABCD', 16)}`
+  } else if (kind === 'formulaStructure') {
+    body = `${text(88, 135, '±', 36)}<path d="M128 130 H154 L170 91 H304"/><path d="M170 91 H304"/><path d="M154 130 H304"/>
+      ${placeholder(207, 118, 'triangle')}${text(248, 124, '-', 28)}`
+  } else if (kind === 'quadMin') {
+    body = `${axes()}<path d="M82 78 Q138 208 214 151 Q277 105 342 96"/>${text(214, 176, '(1,0)', 15)}<circle cx="214" cy="151" r="3" fill="#111"/>`
+  } else if (kind === 'ratioTable') {
+    body = `<rect x="70" y="76" width="280" height="108" fill="#fff"/><line x1="70" y1="112" x2="350" y2="112"/><line x1="163" y1="76" x2="163" y2="184"/><line x1="256" y1="76" x2="256" y2="184"/>
+      ${text(116, 100, 'Red', 15)}${text(210, 100, 'White', 15)}${text(303, 100, 'Total', 15)}
+      ${text(116, 148, '1200 ml', 15)}${placeholder(210, 144, 'star')}`
+  } else if (kind === 'leftArrows') {
+    body = `<path d="M338 94 H86" marker-end="url(#arrowLeft)"/><path d="M212 166 H128" marker-end="url(#arrowLeft)"/>
+      ${text(212, 72, '-24', 18)}
+      <defs><marker id="arrowLeft" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M10 0 L0 5 L10 10 Z" fill="#111" stroke="none"/></marker></defs>`
+  } else if (kind === 'percentCircles') {
+    body = `<circle cx="210" cy="62" r="32"/>${text(210, 68, '60%', 17)}
+      <circle cx="135" cy="168" r="32"/>${text(135, 174, '2/5', 17)}
+      <circle cx="285" cy="168" r="32"/>
+      <line x1="190" y1="88" x2="154" y2="142"/><line x1="230" y1="88" x2="266" y2="142"/>`
+  } else if (kind === 'boxRedLine') {
+    body = `<rect x="82" y="44" width="256" height="172" fill="#fff"/><path d="M146 72 L222 106 L126 106 Z" fill="#f9fbf3"/><line x1="82" y1="122" x2="338" y2="122" stroke="#c63b32" stroke-dasharray="7 7"/>`
+  } else if (kind === 'perpendicularLines') {
+    body = `<line x1="96" y1="184" x2="304" y2="66"/><line x1="118" y1="68" x2="280" y2="198"/><path d="M195 123 l14 -9 l9 13 l-14 9 Z"/>`
+  } else if (kind === 'trapeziumParallel') {
+    body = `<polygon points="108,178 314,178 272,78 148,78" fill="#f9fbf3"/><path d="M156 68 H264" marker-start="url(#arr)" marker-end="url(#arr)"/><path d="M120 196 H302" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#111"/></marker></defs>`
+  } else if (kind === 'rhombusABCD') {
+    body = `<polygon points="146,62 308,82 264,198 102,178" fill="#f9fbf3"/>
+      ${text(138, 52, 'A', 16)}${text(318, 78, 'B', 16)}${text(278, 218, 'C', 16)}${text(88, 188, 'D', 16)}`
+  } else if (kind === 'triangleScaleBig') {
+    body = `${triangle('72,182 150,182 105,100')}${sideLabel(103, 197, '5cm')}${sideLabel(62, 144, '4cm')}
+      ${triangle('232,190 360,190 288,58', '#eef8ee')}${sideLabel(294, 210, '15cm')}${placeholder(228, 126, 'star')}`
+  } else if (kind === 'thinkingMan') {
+    body = `<circle cx="202" cy="76" r="23"/><path d="M202 99 V154 M166 122 H238 M202 154 L176 208 M202 154 L228 208"/>
+      <circle cx="246" cy="54" r="8"/><circle cx="272" cy="38" r="18"/><text x="272" y="45" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#111" stroke="none">?</text>`
+  } else if (kind === 'workingA') {
+    body = `${text(72, 58, '4p+5=2p-9', 17, 'start')}${text(72, 104, 'Step A: 4p=2p-4', 17, 'start')}${text(72, 150, 'Step B: 2p=-4', 17, 'start')}${text(72, 196, 'Step C: p=-2', 17, 'start')}`
+  } else if (kind === 'workingB') {
+    body = `${text(92, 72, '15 = 2p - 4', 18, 'start')}${text(92, 126, 'Step 1: 11 = 2p', 18, 'start')}${text(92, 180, 'Step 2: 22 = p', 18, 'start')}`
+  } else if (kind === 'joinedPentagonSquare') {
+    body = `<polygon points="122,80 186,52 248,84 232,158 158,176" fill="#f9fbf3"/><rect x="232" y="92" width="80" height="80" fill="#eef8ee"/>`
+  } else if (kind === 'goldStarEquation') {
+    body = `${text(92, 92, '9y =', 24, 'start')}<path d="M160 88 H250" marker-end="url(#arrow)"/>${placeholder(205, 72, 'star')}${text(268, 92, 'y =', 24, 'start')}
+      <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#111" stroke="none"/></marker></defs>`
+  } else if (kind === 'parallelAngles') {
+    body = `<line x1="132" y1="42" x2="132" y2="214"/><line x1="282" y1="42" x2="282" y2="214"/>
+      <path d="M118 64 H146" marker-start="url(#arr)" marker-end="url(#arr)"/><path d="M268 64 H296" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <line x1="68" y1="178" x2="350" y2="86"/>${text(152, 112, '70', 17)}${text(304, 64, '?', 20)}
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#111"/></marker></defs>`
+  }
+  return [id, svg(body)]
+}
+
 const diagrams = [
   thermometer(),
   pictogram(),
@@ -384,6 +455,26 @@ const diagrams = [
   triangularPrism(),
   irregularPolygon('eedi_589', 'quad'),
   irregularPolygon('eedi_785', 'pentagon'),
+  oneOff('eedi_16', 'line48'),
+  oneOff('eedi_33', 'depthCurve'),
+  oneOff('eedi_40', 'tieredCost'),
+  oneOff('eedi_44', 'rectDiagonal'),
+  oneOff('eedi_65', 'formulaStructure'),
+  oneOff('eedi_93', 'quadMin'),
+  oneOff('eedi_117', 'ratioTable'),
+  oneOff('eedi_119', 'leftArrows'),
+  oneOff('eedi_135', 'percentCircles'),
+  oneOff('eedi_180', 'boxRedLine'),
+  oneOff('eedi_197', 'perpendicularLines'),
+  oneOff('eedi_280', 'trapeziumParallel'),
+  oneOff('eedi_282', 'rhombusABCD'),
+  oneOff('eedi_393', 'triangleScaleBig'),
+  oneOff('eedi_475', 'thinkingMan'),
+  oneOff('eedi_503', 'workingA'),
+  oneOff('eedi_513', 'workingB'),
+  oneOff('eedi_538', 'joinedPentagonSquare'),
+  oneOff('eedi_556', 'goldStarEquation'),
+  oneOff('eedi_569', 'parallelAngles'),
 ]
 
 fs.mkdirSync(outDir, { recursive: true })
