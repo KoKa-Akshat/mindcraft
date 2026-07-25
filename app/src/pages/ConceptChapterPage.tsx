@@ -984,12 +984,6 @@ export default function ConceptChapterPage() {
         </div>
       </header>
 
-      {currentPanel?.kind === 'quest' && !writeMode && (
-        <p className={s.writeCue} role="note">
-          Tap <strong>Write</strong> above to scribble on the page — like Notes.
-        </p>
-      )}
-
       <main
         className={`${s.canvasStage} ${slideDir === 'f' ? s.slideFwd : s.slideBack} ${writeMode ? s.canvasStageWriting : ''}`}
         key={panelIdx}
