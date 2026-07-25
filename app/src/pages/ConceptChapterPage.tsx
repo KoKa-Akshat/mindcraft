@@ -780,7 +780,6 @@ export default function ConceptChapterPage() {
     const scene = selectSceneForQuestion(q, canonicalId)
     void narrativeStem
     const allHints = (q.hints ?? []).slice(0, 2)
-    const hasInk = Boolean(notes[qIdx]) || (scratchStrokes[qIdx]?.strokes?.length ?? 0) > 0
     // GraphBox should plot the question's OWN figure when one is parseable
     // (real points or a stated equation), not always the generic default
     // curve — see lib/plottablePoints.ts.
@@ -800,32 +799,6 @@ export default function ConceptChapterPage() {
                   void toggleBookmark(user.uid, q.id, bookmarkedQuestions).then(setBookmarkedQuestions)
                 }}
               />
-              <button
-                type="button"
-                className={`${s.writeToggle} ${writeMode ? s.writeToggleActive : ''}`}
-                onClick={() => setWriteMode(v => !v)}
-                aria-pressed={writeMode}
-                aria-label={writeMode ? 'Done writing — tap answers again' : 'Write on this page'}
-                title={writeMode ? 'Done writing' : 'Write on this page'}
-              >
-                <PenLine size={15} strokeWidth={2} />
-                <span>{writeMode ? 'Done' : 'Write'}</span>
-              </button>
-              {hasInk && (
-                <button
-                  type="button"
-                  className={s.writeClear}
-                  onClick={() => {
-                    setNotes(n => ({ ...n, [qIdx]: '' }))
-                    setScratchStrokes(st => { const next = { ...st }; delete next[qIdx]; return next })
-                    setScratchInk(st => { const next = { ...st }; delete next[qIdx]; return next })
-                    setDebugOutlines(false)
-                    setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
-                  }}
-                >
-                  clear
-                </button>
-              )}
             </div>
           </header>
 
@@ -979,6 +952,18 @@ export default function ConceptChapterPage() {
         <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
         <span className={s.canvasWordmark}>{cs.conceptName}</span>
         <div className={s.canvasChromeRight}>
+          {currentPanel?.kind === 'quest' && (
+            <button
+              type="button"
+              className={`${s.writeChromeBtn} ${writeMode ? s.writeChromeBtnActive : ''}`}
+              onClick={() => setWriteMode(v => !v)}
+              aria-pressed={writeMode}
+              aria-label={writeMode ? 'Done writing — tap answers again' : 'Write on this page'}
+            >
+              <PenLine size={16} strokeWidth={2.4} />
+              <span>{writeMode ? 'Done' : 'Write'}</span>
+            </button>
+          )}
           <SoundToggle className={s.soundToggle} />
           <PingTutor context={pingContext} compact />
           <div className={s.calcWrap}>
@@ -999,12 +984,49 @@ export default function ConceptChapterPage() {
         </div>
       </header>
 
+      {currentPanel?.kind === 'quest' && !writeMode && (
+        <p className={s.writeCue} role="note">
+          Tap <strong>Write</strong> above to scribble on the page — like Notes.
+        </p>
+      )}
+
       <main
-        className={`${s.canvasStage} ${slideDir === 'f' ? s.slideFwd : s.slideBack}`}
+        className={`${s.canvasStage} ${slideDir === 'f' ? s.slideFwd : s.slideBack} ${writeMode ? s.canvasStageWriting : ''}`}
         key={panelIdx}
       >
         {renderPanel()}
       </main>
+
+      {currentPanel?.kind === 'quest' && writeMode && (
+        <div className={s.writeDock} role="status">
+          <span className={s.writeDockLabel}>Writing on the page</span>
+          <div className={s.writeDockActions}>
+            {Boolean(notes[currentPanel.qIdx] || (scratchStrokes[currentPanel.qIdx]?.strokes?.length ?? 0) > 0) && (
+              <button
+                type="button"
+                className={s.writeDockClear}
+                onClick={() => {
+                  const qIdx = currentPanel.qIdx
+                  setNotes(n => ({ ...n, [qIdx]: '' }))
+                  setScratchStrokes(st => { const next = { ...st }; delete next[qIdx]; return next })
+                  setScratchInk(st => { const next = { ...st }; delete next[qIdx]; return next })
+                  setDebugOutlines(false)
+                  setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
+                }}
+              >
+                Clear
+              </button>
+            )}
+            <button
+              type="button"
+              className={s.writeDockDone}
+              onClick={() => setWriteMode(false)}
+            >
+              Done writing
+            </button>
+          </div>
+        </div>
+      )}
 
       <nav className={s.spreadNav}>
         <button type="button" className={s.navArrow} onClick={() => goToPanel(panelIdx - 1, 'b')} aria-label="Previous">←</button>
