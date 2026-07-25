@@ -171,18 +171,37 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .click-curve{stroke-dasharray:280;animation:curveGrow 2.2s cubic-bezier(.4,0,.2,1) infinite alternate}
 @keyframes ringPulse{0%{r:9;opacity:.55}100%{r:20;opacity:0}}
 .pulse-ring{animation:ringPulse 2s ease-out infinite}
-.reviews{background:linear-gradient(180deg,#fffdf7,#eaf5ea)}
-.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
-.video-slot{border-radius:30px;overflow:hidden;border:1px solid var(--line);background:#fffdf7;box-shadow:0 20px 52px rgba(20,58,46,.10);display:flex;flex-direction:column}
-.video-thumb{position:relative;aspect-ratio:16/10;display:grid;place-items:center;background:linear-gradient(150deg,#143a2e,#247a4d 60%,#5fb779)}
-.video-slot:nth-child(2) .video-thumb{background:linear-gradient(150deg,#6b4420,#c9932f 60%,#f5d348)}
-.video-slot:nth-child(3) .video-thumb{background:linear-gradient(150deg,#20305e,#3f66c9 60%,#9cc0f5)}
-.video-thumb:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.16),transparent 46%)}
-.video-play{position:relative;z-index:1;width:58px;height:58px;border-radius:50%;border:1.5px solid rgba(255,253,247,.65);background:rgba(4,11,9,.28);display:grid;place-items:center;box-shadow:0 10px 24px rgba(4,11,9,.25)}
-.video-play:before{content:"";width:0;height:0;margin-left:4px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fffdf7}
-.video-slot-meta{padding:16px 20px 20px;display:grid;gap:5px}
-.video-slot-label{font-size:14px;font-weight:900;color:var(--ink)}
-.video-slot-note{font-family:"Caveat",cursive;font-size:17px;color:var(--leaf)}
+.journey-demo{margin-top:28px;border:1px solid var(--line);border-radius:38px;background:linear-gradient(145deg,#143a2e,#1f5c42 54%,#fffdf7 54%);box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:.9fr 1.1fr}
+.journey-left{padding:clamp(24px,4vw,42px);color:#fffdf7}
+.journey-left strong{display:block;margin-bottom:12px;color:#c4f547;font-size:11px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}
+.journey-left h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(34px,4vw,56px);line-height:.95;letter-spacing:-.045em}
+.journey-left p{margin-top:18px;color:rgba(255,253,247,.78);font-size:15px;max-width:420px}
+.journey-questions{display:grid;gap:10px;margin-top:28px}
+.journey-q{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;padding:12px;border:1px solid rgba(255,253,247,.16);border-radius:18px;background:rgba(255,253,247,.08)}
+.journey-q span:first-child{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(196,245,71,.12);color:#c4f547;font-size:12px;font-weight:1000}
+.journey-q b{font-size:13px}
+.journey-q em{font-style:normal;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.1em;color:#f7d46a}
+.journey-q.good em{color:#c4f547}
+.journey-right{padding:clamp(24px,4vw,42px);display:grid;gap:14px}
+.journey-map{position:relative;min-height:190px;border:1px solid rgba(20,58,46,.12);border-radius:28px;background:#fffdf7;overflow:hidden}
+.journey-map:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 24.8%,rgba(20,58,46,.08) 25%,transparent 25.2%),linear-gradient(180deg,transparent 49.8%,rgba(20,58,46,.08) 50%,transparent 50.2%)}
+.journey-route{position:absolute;inset:18px}
+.journey-route svg{width:100%;height:100%;overflow:visible}
+.journey-route path{stroke-dasharray:420;stroke-dashoffset:420;animation:drawGraph 2.8s var(--ease) forwards}
+.map-pill{position:absolute;padding:8px 10px;border-radius:999px;background:#fffdf7;border:1px solid rgba(20,58,46,.14);box-shadow:0 10px 22px rgba(20,58,46,.08);font-size:10px;font-weight:1000;letter-spacing:.09em;text-transform:uppercase;color:var(--ink)}
+.pill-a{left:8%;top:18%}.pill-b{left:38%;top:44%;background:#fff9dd}.pill-c{right:7%;bottom:16%;background:#ffe8e4;color:#a53325}
+.view-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.view-card{border:1px solid rgba(20,58,46,.12);border-radius:22px;background:#fffdf7;padding:16px;box-shadow:0 14px 30px rgba(20,58,46,.07)}
+.view-card small{display:block;margin-bottom:8px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.14em}
+.view-card p{font-size:13px;line-height:1.45;color:var(--ink)}
+.case-study{background:linear-gradient(180deg,#fffdf7,#eaf5ea)}
+.case-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(28px,6vw,72px);align-items:center}
+.case-copy p{margin-top:18px;max-width:470px}
+.case-timeline{display:grid;gap:12px}
+.case-step{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:start;padding:18px;border:1px solid var(--line);border-radius:26px;background:#fffdf7;box-shadow:0 16px 36px rgba(20,58,46,.08)}
+.case-step span{width:56px;height:56px;border-radius:20px;display:grid;place-items:center;background:#eaf5ea;color:var(--leaf);font-size:12px;font-weight:1000;letter-spacing:.12em}
+.case-step h3{font-size:20px;letter-spacing:-.035em}
+.case-step p{font-size:14px;margin-top:6px}
 .proof{background:linear-gradient(180deg,#fff7e8,#eaf5ea)}
 .proof-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,72px);align-items:stretch;margin-top:52px}
 .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
@@ -389,7 +408,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-art svg{width:100%;transform:none}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
-  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.video-grid,.price-grid,.intake-grid,.findtutor-card,.about-head,.founder-grid,.founder-card,.demo-wrap{grid-template-columns:1fr}
+  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.video-grid,.journey-demo,.view-grid,.case-grid,.price-grid,.intake-grid,.findtutor-card,.about-head,.founder-grid,.founder-card,.demo-wrap{grid-template-columns:1fr}
   .founder-card{min-height:560px}
   .founder-photo{width:min(260px,100%);justify-self:start}
   .footer-nav{justify-items:start}
@@ -426,6 +445,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .findtutor-search{grid-template-columns:1fr}
   .findtutor-search button{min-height:44px}
   .form-card,.price-card,.quote,.step{padding:24px}
+  .journey-demo{background:linear-gradient(180deg,#143a2e 0,#1f5c42 48%,#fffdf7 48%)}
   .signal-row{grid-template-columns:1fr}
   .photo span{display:none}
   .demo-stage,.demo-stage[data-state="story"]{aspect-ratio:4/5}
@@ -492,10 +512,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="hero-stage">
         <p class="hero-brand">Mind<span>Craft</span></p>
         <h1>You were never<br>bad at <em>math.</em></h1>
-        <p class="lead">Math usually breaks at one tiny weird step. We find it, name it, and make the next move feel obvious.</p>
+        <p class="lead">We find where understanding broke, rebuild it through stories and one-on-one tutoring, and show every step on a shared map.</p>
         <div class="hero-actions">
-          <a class="btn primary" href="#intake">Request a seat</a>
-          <a class="btn soft" href="#demo">Try one thing</a>
+          <a class="btn primary" href="#map">See how we find the gap</a>
+          <a class="btn soft" href="#intake">Request a seat</a>
         </div>
         <div class="hero-trust" role="list" aria-label="Why families trust MindCraft">
           <div class="trust-item" role="listitem"><strong>1:1</strong><span>A real college tutor. Never a chatbot.</span></div>
@@ -508,12 +528,12 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="demo" id="demo" data-nav="cream">
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
-          <p class="label">Try one thing</p>
+          <p class="label">Story Worlds</p>
           <h2 id="demoHeading">Who came up with these frivolous things?</h2>
-          <p class="demo-lead">Turns out: bookkeepers, sailors, astronomers, gamblers, and people trying very hard not to look ridiculous. Open the story first, then play the quest.</p>
+          <p class="demo-lead">Turns out: bookkeepers, sailors, astronomers, gamblers, and people trying very hard not to look ridiculous. Open the artifact, enter the story, then try the idea.</p>
           <div class="demo-toggle" role="tablist" aria-label="Choose what to try">
             <button type="button" class="demo-tab is-active" id="demoTabStory" role="tab" aria-selected="true">Story preview</button>
-            <button type="button" class="demo-tab demo-tab-secondary" id="demoTabQuest" role="tab" aria-selected="false">Quest</button>
+            <button type="button" class="demo-tab demo-tab-secondary" id="demoTabQuest" role="tab" aria-selected="false">Story world</button>
           </div>
         </div>
         <div class="demo-panel">
@@ -606,6 +626,38 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap reveal">
         <p class="label">The learning map</p>
         <h2>One map.<br>Then the click.</h2>
+        <div class="journey-demo">
+          <div class="journey-left">
+            <strong>Sample diagnostic</strong>
+            <h3>Maya keeps missing slope questions.</h3>
+            <p>Not because she is “bad at algebra.” Her answers show one earlier idea slipping: she treats the point as the intercept.</p>
+            <div class="journey-questions" aria-label="Sample diagnostic answers">
+              <div class="journey-q good"><span>01</span><b>Reads a graph correctly</b><em>solid</em></div>
+              <div class="journey-q"><span>02</span><b>Uses (3, 5) as b</b><em>fragile</em></div>
+              <div class="journey-q"><span>03</span><b>Equation form collapses</b><em>gap found</em></div>
+            </div>
+          </div>
+          <div class="journey-right">
+            <div class="journey-map" aria-label="Concept route from graph reading to equation form">
+              <div class="journey-route">
+                <svg viewBox="0 0 520 220" fill="none" aria-hidden="true">
+                  <path d="M42 56 C126 28 168 112 250 112 C334 112 354 172 474 148" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="42" cy="56" r="10" fill="#5fb779"/>
+                  <circle cx="250" cy="112" r="12" fill="#e8d16b"/>
+                  <circle cx="474" cy="148" r="13" fill="#c1180b"/>
+                </svg>
+              </div>
+              <span class="map-pill pill-a">Graph reading</span>
+              <span class="map-pill pill-b">Slope</span>
+              <span class="map-pill pill-c">Point-intercept confusion</span>
+            </div>
+            <div class="view-grid">
+              <article class="view-card"><small>Student</small><p>“I need to separate the point from the y-intercept.”</p></article>
+              <article class="view-card"><small>Tutor</small><p>Start with graph-first examples, then rebuild equation form.</p></article>
+              <article class="view-card"><small>Parent</small><p>What clicked today, what is still fragile, and what happens next.</p></article>
+            </div>
+          </div>
+        </div>
         <div class="step-grid stagger">
 
           <article class="step">
@@ -854,38 +906,17 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       </div>
     </section>
 
-    <!-- Reviews - kept honestly empty. No real reviews exist yet (same
-         honesty rule as FindTutor.tsx's "No reviews yet — be the first to
-         book" state: no fabricated stars, no invented quotes). Structurally
-         a separate section from tutor recruitment below, ready for real
-         testimonials to slot into .reviews-slot once sessions produce them. -->
-    <section class="reviews" id="reviews" data-nav="mint">
-      <div class="wrap reveal">
-        <p class="label">From families</p>
-        <h2>Reviews soon.</h2>
-        <p style="max-width:520px;margin-top:14px">Three video reviews are on the way, real families, real sessions. Here is where they will sit the moment they are ready.</p>
-        <div class="video-grid stagger" aria-label="Video reviews, coming soon">
-          <article class="video-slot">
-            <div class="video-thumb"><span class="video-play" aria-hidden="true"></span></div>
-            <div class="video-slot-meta">
-              <p class="video-slot-label">Parent review</p>
-              <p class="video-slot-note">Recording soon</p>
-            </div>
-          </article>
-          <article class="video-slot">
-            <div class="video-thumb"><span class="video-play" aria-hidden="true"></span></div>
-            <div class="video-slot-meta">
-              <p class="video-slot-label">Student review</p>
-              <p class="video-slot-note">Recording soon</p>
-            </div>
-          </article>
-          <article class="video-slot">
-            <div class="video-thumb"><span class="video-play" aria-hidden="true"></span></div>
-            <div class="video-slot-meta">
-              <p class="video-slot-label">Tutor review</p>
-              <p class="video-slot-note">Recording soon</p>
-            </div>
-          </article>
+    <section class="case-study" id="proof" data-nav="mint">
+      <div class="wrap case-grid reveal">
+        <div class="case-copy">
+          <p class="label">Product proof</p>
+          <h2>A session should leave a trail.</h2>
+          <p>No fake testimonials while we are early. The proof we can show right now is the shape of the work: answer evidence, a named misconception, and a next session that starts in the right place.</p>
+        </div>
+        <div class="case-timeline" aria-label="Sample MindCraft session trail">
+          <article class="case-step"><span>01</span><div><h3>Before</h3><p>“I know slope, but equations still feel random.”</p></div></article>
+          <article class="case-step"><span>02</span><div><h3>During</h3><p>The map finds point-intercept confusion hiding under linear equations.</p></div></article>
+          <article class="case-step"><span>03</span><div><h3>After</h3><p>The student explains why b is where the line crosses the y-axis, not just any point.</p></div></article>
         </div>
       </div>
     </section>
@@ -1164,7 +1195,7 @@ function setActiveApplyTab(key) {
 applyTabSeat?.addEventListener("click", () => setActiveApplyTab("seat"))
 applyTabTutor?.addEventListener("click", () => setActiveApplyTab("tutor"))
 
-// Landing try panel: Quest first, then Story. Try loads a live iframe of
+// Landing try panel: Story preview and Story World. Try loads a live iframe of
 // public /try/* routes (no AuthGuard). Local → Vite :5173; prod → app host.
 const demoStage = document.getElementById("demoStage")
 const demoLive = document.getElementById("demoLive")
@@ -1192,7 +1223,7 @@ const DEMO_COPY = {
     showKitchen: false,
   },
   quest: {
-    heading: "Sword of Wisdom.",
+    heading: "Enter the story world.",
     path: "/try/manjushree",
     showKitchen: true,
   },

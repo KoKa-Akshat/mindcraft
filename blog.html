@@ -39,7 +39,7 @@ p{font-size:15px;line-height:1.72;color:rgba(52,52,52,.66);font-weight:650;flex:
   <a href="index.html" class="logo">Mind<span>Craft</span></a>
   <div class="navLinks">
     <a href="index.html#about">About</a>
-    <a href="index.html#system">System</a>
+    <a href="index.html#map">Map</a>
     <a href="index.html#intake">Apply</a>
     <a class="loginPill" href="https://mindcraft-93858.web.app/login">Log in</a>
   </div>
@@ -47,15 +47,16 @@ p{font-size:15px;line-height:1.72;color:rgba(52,52,52,.66);font-weight:650;flex:
 <main>
   <section class="hero">
     <div><div class="eyebrow">MindCraft Notes</div><h1>Field notes.</h1></div>
-    <p class="sub">What we are learning while building calmer, sharper math support.</p>
+    <p class="sub">Useful notes on math memory, learning maps, and the difference between getting an answer and understanding it.</p>
   </section>
   <section class="grid" id="articles"></section>
   <div class="footerLink"><a href="index.html">Back to MindCraft home →</a></div>
 </main>
 <script>
 const articles = [
-  {id:1,title:'Our Mission & Vision',excerpt:'MindCraft was created by educators who live for the moment a student finally gets it.',category:'Headquarters',date:'Apr 5, 2026',author:'Akshat K.',accent:'#4eb543',visual:'mission'},
-  {id:2,title:'MindCraft was in Beta at Macalester last week',excerpt:'A quick reflection from a Beta.mn event at Macalester, and what it reinforced about building with technology.',category:'Community',date:'Mar 28, 2026',author:'Akshat K.',accent:'#064d36',visual:'map'}
+  {id:3,title:'Why students forget algebra even after passing it',excerpt:'Passing a unit can mean a student learned the moves for a week. It does not always mean the ideas connected strongly enough to survive the next chapter.',category:'Learning',date:'Jul 25, 2026',author:'Akshat K.',accent:'#4eb543',visual:'mission'},
+  {id:4,title:'What a learning map reveals that a test score cannot',excerpt:'A score says how much went wrong. A map shows where the first unstable idea lives, and what to rebuild next.',category:'Maps',date:'Jul 25, 2026',author:'Akshat K.',accent:'#064d36',visual:'map'},
+  {id:5,title:'Why explaining an answer is different from understanding it',excerpt:'A student can repeat a method and still be guessing. The real click is when they can explain why the move makes sense.',category:'Tutoring',date:'Jul 25, 2026',author:'Akshat K.',accent:'#4A7BF7',visual:'map'}
 ];
 function artifact(a){if(a.visual==='mission'){return `<svg class="artifact" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="52" y="30" width="98" height="122" rx="18" fill="#fffdf7" opacity=".9"/><path d="M75 62h50M75 82h36M75 102h52" stroke="#064d36" stroke-width="5" stroke-linecap="round" opacity=".42"/><path d="M101 139c22-28 49-44 83-49" stroke="${a.accent}" stroke-width="8" stroke-linecap="round"/><circle cx="184" cy="90" r="12" fill="${a.accent}"/><path d="m178 90 4 4 8-10" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`}return `<svg class="artifact" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M42 128c28-38 58-56 92-54 28 2 45-11 63-38" stroke="#fffdf7" stroke-width="12" stroke-linecap="round" opacity=".72"/><path d="M42 128c28-38 58-56 92-54 28 2 45-11 63-38" stroke="${a.accent}" stroke-width="3" stroke-dasharray="8 12" stroke-linecap="round"/><circle cx="62" cy="112" r="10" fill="#fffdf7"/><circle cx="114" cy="78" r="10" fill="#fffdf7"/><circle cx="158" cy="72" r="10" fill="#fffdf7"/><circle cx="196" cy="38" r="12" fill="${a.accent}"/></svg>`}
 document.getElementById('articles').innerHTML=articles.map(a=>`<a class="card" href="article.html?id=${a.id}"><div class="art" style="--art-image:url('img/background.jpg')">${artifact(a)}</div><div class="body"><div class="meta"><span class="cat">${a.category}</span><span class="date">${a.date}</span></div><h2>${a.title}</h2><p>${a.excerpt}</p><span class="readMore">Read note →</span><div class="author">${a.author}</div></div></a>`).join('');
