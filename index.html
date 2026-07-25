@@ -203,7 +203,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .journey-route svg{width:100%;height:100%;overflow:visible}
 .journey-route path{stroke-dasharray:420;stroke-dashoffset:420;animation:drawGraph 2.8s var(--ease) forwards}
 .map-pill{position:absolute;padding:8px 10px;border-radius:999px;background:#fffdf7;border:1px solid rgba(20,58,46,.14);box-shadow:0 10px 22px rgba(20,58,46,.08);font-size:10px;font-weight:1000;letter-spacing:.09em;text-transform:uppercase;color:var(--ink)}
-.pill-a{left:8%;top:18%}.pill-b{left:38%;top:44%;background:#fff9dd}.pill-c{right:7%;bottom:16%;background:#ffe8e4;color:#a53325}
+.pill-a{left:4%;top:6%}.pill-b{left:43%;top:24%;background:#fff9dd}.pill-c{right:4%;bottom:5%;background:#ffe8e4;color:#a53325}
 .view-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .view-card{border:1px solid rgba(20,58,46,.12);border-radius:22px;background:#fffdf7;padding:16px;box-shadow:0 14px 30px rgba(20,58,46,.07)}
 .view-card small{display:block;margin-bottom:8px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.14em}
@@ -468,15 +468,20 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .findtutor-search{grid-template-columns:1fr}
   .findtutor-search button{min-height:44px}
   .form-card,.price-card,.quote,.step{padding:24px}
-  .journey-demo{background:linear-gradient(180deg,#143a2e 0,#1f5c42 48%,#fffdf7 48%)}
+  .journey-demo{background:linear-gradient(180deg,#143a2e 0,#1f5c42 48%,#fffdf7 48%);width:100%;max-width:334px;margin-left:0;margin-right:auto}
+  .journey-left,.journey-right,.journey-map,.view-card{min-width:0}
   .signal-row{grid-template-columns:1fr}
   .photo span{display:none}
-  .demo-stage,.demo-stage[data-state="story"]{aspect-ratio:4/5}
+  .demo-copy h2{font-size:clamp(46px,14vw,58px);max-width:8.5ch}
+  .demo-wrap,.demo-copy,.demo-panel,.demo-story-copy{min-width:0}
+  .demo-copy .demo-lead{max-width:260px}
+  .demo-panel,.demo-stage{width:100%;max-width:334px;min-width:0}
+  .demo-stage,.demo-stage[data-state="story"]{aspect-ratio:4/5;min-height:auto}
   .demo-try{padding:11px 18px;font-size:14px}
   .demo-sword{width:42px}
-  .demo-story-stage{grid-template-columns:1fr}
+  .demo-story-stage{grid-template-columns:minmax(0,1fr);width:100%;max-width:100%;min-width:0;padding:14px}
   .demo-story-photo{width:120px;height:120px;margin:0 auto}
-  .demo-story-text{-webkit-line-clamp:4;height:80px}
+  .demo-story-text{-webkit-line-clamp:4;height:80px;overflow-wrap:anywhere;word-break:break-word}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
@@ -565,19 +570,76 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="demo" id="demo" data-nav="cream">
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
-          <p class="label">Play free</p>
-          <h2 id="demoHeading">Play Manjushree.</h2>
-          <p class="demo-lead">A short MindCraft game, playable right here. No account, no detour, no fake preview.</p>
+          <p class="label">Story Worlds</p>
+          <h2 id="demoHeading">Who came up with these frivolous things?</h2>
+          <p class="demo-lead">Bookkeepers, sailors, astronomers.<br>The weird stuff had a reason.</p>
           <div class="demo-actions">
-            <a class="btn primary" href="https://mindcraft-93858.web.app/try/manjushree" target="_blank" rel="noopener">Open full</a>
+            <button type="button" class="btn primary" id="storyTryBtn">Try demo</button>
           </div>
         </div>
         <div class="demo-panel">
-          <div class="demo-stage" id="demoStage">
-            <iframe class="demo-frame" id="demoFrame" title="Play Manjushree" src="https://mindcraft-93858.web.app/try/manjushree" allow="fullscreen" loading="lazy"></iframe>
-            <div class="demo-live-bar">
-              <a class="demo-open" id="demoOpenFull" href="https://mindcraft-93858.web.app/try/manjushree" target="_blank" rel="noopener">Open full</a>
+          <div class="demo-stage" id="demoStage" data-state="story">
+
+            <div class="demo-poster demo-poster-story" id="demoPosterStory">
+              <p class="demo-story-chrome">MindCraft</p>
+              <div class="demo-story-viewport" id="demoStoryViewport">
+                <div class="demo-story-stage is-active" data-slide="0">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-fractions-decimals.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Fractions and Decimals</h3>
+                    <p class="demo-story-text">In 1585, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages by candlelight, wrestling twelfths of guilders until the numbers swam.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="1">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-ratios-proportions.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Ratios and Proportions</h3>
+                    <p class="demo-story-text">Around 600 BC, a traveler named Thales stood before the Great Pyramid. Priests said its height could never be measured. He looked at his own shadow, then the pyramid's, and found the number that connected them.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="2">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-order-of-operations.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Order of Operations</h3>
+                    <p class="demo-story-text">In 1843, Ada Lovelace was writing instructions for a machine that did not exist yet. One line said add this, multiply that. Which happens first? The machine could not guess, so she wrote the rule that decided.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="3">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-linear-equations.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Linear Equations</h3>
+                    <p class="demo-story-text">In 1761, a ship carried the strangest cargo of the age: a five inch watch, guarded by a carpenter's son. If no clock can be perfect at sea, John Harrison asked, what is the next best thing?</p>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-story-dots" id="demoStoryDots">
+                <button type="button" class="is-active" data-dot="0" aria-label="Fractions and Decimals"></button>
+                <button type="button" data-dot="1" aria-label="Ratios and Proportions"></button>
+                <button type="button" data-dot="2" aria-label="Order of Operations"></button>
+                <button type="button" data-dot="3" aria-label="Linear Equations"></button>
+              </div>
             </div>
+
+            <div class="demo-live" id="demoLive" hidden>
+              <div class="demo-live-bar">
+                <a class="demo-open" id="demoOpenFull" href="#" target="_blank" rel="noopener">Open full</a>
+                <button type="button" class="demo-close" id="demoCloseBtn">Close</button>
+              </div>
+              <iframe class="demo-frame" id="demoFrame" title="Play Manjushree" allow="fullscreen"></iframe>
+            </div>
+
           </div>
         </div>
       </div>
@@ -1156,17 +1218,79 @@ function setActiveApplyTab(key) {
 applyTabSeat?.addEventListener("click", () => setActiveApplyTab("seat"))
 applyTabTutor?.addEventListener("click", () => setActiveApplyTab("tutor"))
 
-// Free Manjushree game embed. Keep this section direct: no story tabs and no
-// login-looking preview.
+// Story slideshow first, with one direct free Manjushree demo button.
+const demoStage = document.getElementById("demoStage")
+const demoLive = document.getElementById("demoLive")
 const demoFrame = document.getElementById("demoFrame")
 const demoOpenFull = document.getElementById("demoOpenFull")
+const demoCloseBtn = document.getElementById("demoCloseBtn")
+const storyTryBtn = document.getElementById("storyTryBtn")
 
 const APP_ORIGIN = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
   ? "http://127.0.0.1:5173"
   : "https://mindcraft-93858.web.app"
 const MANJUSHREE_URL = APP_ORIGIN + "/try/manjushree"
-if (demoFrame) demoFrame.src = MANJUSHREE_URL
 if (demoOpenFull) demoOpenFull.href = MANJUSHREE_URL
+
+function openDemoLive() {
+  if (demoFrame) demoFrame.src = MANJUSHREE_URL
+  if (demoOpenFull) demoOpenFull.href = MANJUSHREE_URL
+  if (demoLive) demoLive.hidden = false
+  if (demoStage) demoStage.dataset.state = "live"
+}
+
+function closeDemoLive() {
+  if (demoFrame) demoFrame.src = "about:blank"
+  if (demoLive) demoLive.hidden = true
+  if (demoStage) demoStage.dataset.state = "story"
+}
+
+storyTryBtn?.addEventListener("click", openDemoLive)
+demoCloseBtn?.addEventListener("click", closeDemoLive)
+window.addEventListener("message", (event) => {
+  if (event.origin !== APP_ORIGIN) return
+  if (event.data && event.data.type === "mc-try-close") closeDemoLive()
+})
+
+const storySlides = Array.from(document.querySelectorAll("#demoStoryViewport .demo-story-stage"))
+const storyDots = Array.from(document.querySelectorAll("#demoStoryDots button"))
+let storyIndex = 0
+let storyTimer = null
+
+function showStorySlide(index) {
+  if (!storySlides.length) return
+  storyIndex = (index + storySlides.length) % storySlides.length
+  storySlides.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
+  storyDots.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
+}
+
+function startStoryAutoplay() {
+  if (reduceMotion || storyTimer) return
+  storyTimer = setInterval(() => {
+    if (demoStage?.dataset.state !== "story") return
+    showStorySlide(storyIndex + 1)
+  }, 5200)
+}
+
+function stopStoryAutoplay() {
+  if (!storyTimer) return
+  clearInterval(storyTimer)
+  storyTimer = null
+}
+
+storyDots.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    showStorySlide(i)
+    stopStoryAutoplay()
+    startStoryAutoplay()
+  })
+})
+const demoPosterStory = document.getElementById("demoPosterStory")
+demoPosterStory?.addEventListener("pointerenter", stopStoryAutoplay)
+demoPosterStory?.addEventListener("pointerleave", startStoryAutoplay)
+demoPosterStory?.addEventListener("focusin", stopStoryAutoplay)
+demoPosterStory?.addEventListener("focusout", startStoryAutoplay)
+startStoryAutoplay()
 
 // Find a Tutor map. This is a real interactive Google Map, not a screenshot:
 // parents can type an address, the page geocodes it, recenters the map, and
@@ -1196,6 +1320,7 @@ const FT_MAP_FALLBACK = '<div class="findtutor-map-fallback">Map unavailable rig
 let ftMap = null
 let ftGeocoder = null
 let ftAddressMarker = null
+let ftAutocomplete = null
 
 function ftMiles(a, b) {
   const toRad = (v) => v * Math.PI / 180
@@ -1237,10 +1362,25 @@ function setFtAddressMarker(position, label) {
   updateFtDistance(position, label)
 }
 
-function searchFtAddress(address) {
+function searchFtAddress(address, didRetry) {
   if (!ftGeocoder || !address.trim()) return
-  ftGeocoder.geocode({ address }, (results, status) => {
+  const twinCitiesBounds = window.google?.maps
+    ? new google.maps.LatLngBounds(
+      { lat: 44.72, lng: -93.55 },
+      { lat: 45.12, lng: -92.86 }
+    )
+    : undefined
+  ftGeocoder.geocode({
+    address,
+    bounds: twinCitiesBounds,
+    region: "us",
+    componentRestrictions: { country: "US" },
+  }, (results, status) => {
     if (status !== "OK" || !results?.[0]?.geometry?.location) {
+      if (!didRetry) {
+        searchFtAddress(address + ", Minnesota, USA", true)
+        return
+      }
       const distanceEl = document.getElementById("ftDistance")
       if (distanceEl) distanceEl.textContent = "Could not find that address. Try a city or ZIP code."
       return
@@ -1290,6 +1430,28 @@ function initFtMap() {
   })
   const searchForm = document.getElementById("ftSearchForm")
   const addressInput = document.getElementById("ftAddress")
+  if (addressInput && google.maps.places?.Autocomplete) {
+    ftAutocomplete = new google.maps.places.Autocomplete(addressInput, {
+      bounds: new google.maps.LatLngBounds(
+        { lat: 44.72, lng: -93.55 },
+        { lat: 45.12, lng: -92.86 }
+      ),
+      componentRestrictions: { country: "us" },
+      fields: ["formatted_address", "geometry", "name"],
+      strictBounds: false,
+      types: ["geocode"],
+    })
+    ftAutocomplete.addListener("place_changed", () => {
+      const place = ftAutocomplete.getPlace()
+      const loc = place?.geometry?.location
+      if (!loc) {
+        searchFtAddress(addressInput.value || "")
+        return
+      }
+      const position = { lat: loc.lat(), lng: loc.lng() }
+      setFtAddressMarker(position, place.formatted_address || place.name || "your address")
+    })
+  }
   searchForm?.addEventListener("submit", (event) => {
     event.preventDefault()
     searchFtAddress(addressInput?.value || "")
@@ -1316,6 +1478,6 @@ setTimeout(() => {
      VITE_GOOGLE_MAPS_API_KEY) — restricted by HTTP referrer + API in Google Cloud
      Console, not a secret. If this domain isn't on that key's referrer allowlist yet,
      gm_authFailure above swaps in the honest fallback card. -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsGvXcd5Eqt7qVOxOdIqiEDoJcEQT3Cjg&callback=initFtMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsGvXcd5Eqt7qVOxOdIqiEDoJcEQT3Cjg&libraries=places&callback=initFtMap"></script>
 </body>
 </html>
