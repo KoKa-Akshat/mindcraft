@@ -127,17 +127,9 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .atlas-node{position:absolute;width:18px;height:18px;border-radius:50%;background:#c4f547;box-shadow:0 0 0 9px rgba(196,245,71,.10),0 12px 28px rgba(196,245,71,.26)}
 .atlas-node.gap{width:22px;height:22px;background:#c1180b;box-shadow:0 0 0 10px rgba(193,24,11,.12),0 12px 28px rgba(193,24,11,.28)}
 .atlas-node.a{left:18%;top:34%}.atlas-node.b{right:18%;top:28%}.atlas-node.c{right:24%;bottom:24%}.atlas-node.d{left:28%;bottom:18%}
-.atlas-card{position:absolute;width:190px;padding:16px;border:1px solid rgba(255,253,247,.20);border-radius:22px;background:rgba(255,253,247,.10);backdrop-filter:blur(18px);box-shadow:0 24px 70px rgba(4,11,9,.28);transform-style:preserve-3d}
-.atlas-card small{display:block;margin-bottom:8px;color:#c4f547;font-size:10px;font-weight:1000;letter-spacing:.15em;text-transform:uppercase}
-.atlas-card b{display:block;color:#fffdf7;font-size:16px;line-height:1.15}
-.atlas-card p{margin-top:8px;color:rgba(255,253,247,.64);font-size:12px;line-height:1.45}
-.atlas-card.story{left:4%;top:10%;transform:rotate(-4deg)}
-.atlas-card.gap{right:0;top:18%;transform:rotate(5deg)}
-.atlas-card.parent{right:8%;bottom:8%;transform:rotate(-3deg)}
 .atlas-fragment{position:absolute;border:1px solid rgba(232,209,107,.34);background:linear-gradient(135deg,rgba(232,209,107,.22),rgba(255,253,247,.08));box-shadow:0 18px 42px rgba(4,11,9,.24)}
 .atlas-fragment.f1{left:16%;bottom:20%;width:88px;height:54px;border-radius:18px;transform:rotate(-16deg)}
 .atlas-fragment.f2{right:22%;top:4%;width:118px;height:62px;border-radius:20px;transform:rotate(12deg)}
-.atlas-label{position:absolute;left:50%;bottom:0;transform:translateX(-50%) rotate(-1deg);font-family:"Caveat",cursive;font-size:24px;color:rgba(255,253,247,.62);white-space:nowrap}
 .hero-map-svg,.hero-art,.hero-inner,.hero-left,.hero-copy,.stats,.stat,.math-float,.math-buddy,.cool-badge,.note,.hero-glow{display:none!important}
 @keyframes heroNode{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
 @keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
@@ -367,9 +359,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 @keyframes sheen{0%{transform:translateX(-56%)}100%{transform:translateX(56%)}}
 @keyframes mapEdgeDraw{to{stroke-dashoffset:0}}
 @keyframes mapNodePlot{0%{opacity:0;transform:translateX(-28px) scale(.7)}70%{opacity:1;transform:translateX(3px) scale(1.06)}100%{opacity:1;transform:translateX(0) scale(1)}}
-.demo-wrap{display:grid;grid-template-columns:.8fr 1.35fr;gap:clamp(28px,4vw,58px);align-items:center}
+.demo-wrap{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(28px,4vw,58px);align-items:center}
 .demo-copy>p:last-of-type{margin-top:16px;max-width:420px}
 .demo-lead{margin-top:14px;max-width:400px}
+.demo-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.demo-actions .btn{min-height:48px}
 .demo-toggle{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
 .demo-tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fffdf7;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
 .demo-tab:hover{border-color:var(--leaf)}
@@ -377,7 +371,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 .demo-tab-secondary{opacity:.72}
 .demo-tab-secondary.is-active{opacity:1}
 .demo-panel{display:flex;flex-direction:column;gap:12px}
-.demo-stage{position:relative;aspect-ratio:16/11;min-height:420px;border-radius:34px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#0f2820}
+.demo-stage{position:relative;aspect-ratio:16/10;min-height:420px;border-radius:30px;overflow:hidden;border:1px solid rgba(20,58,46,.14);box-shadow:var(--shadow);background:#07110e}
 .demo-stage[data-state="story"]{aspect-ratio:16/11}
 .demo-stage[data-state="story"] .demo-poster-quest,.demo-stage[data-state="story"] .demo-live{display:none}
 .demo-stage[data-state="quest"] .demo-poster-story,.demo-stage[data-state="quest"] .demo-live{display:none}
@@ -434,8 +428,6 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero{min-height:auto;align-items:center}
   .hero-stage{grid-template-columns:1fr;gap:28px;padding-top:108px}
   .hero-atlas{order:-1;min-height:360px}
-  .atlas-card{width:168px}
-  .atlas-card.parent{display:none}
   .founder-card{min-height:560px}
   .founder-photo{width:min(260px,100%);justify-self:start}
   .footer-nav{justify-items:start}
@@ -467,9 +459,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-atlas{min-height:250px;margin:0 -12px}
   .atlas-disc{width:min(280px,84vw)}
   .atlas-core{width:74px;height:74px}
-  .atlas-card{display:none}
   .atlas-fragment{opacity:.55}
-  .atlas-label{bottom:-4px;font-size:20px}
   .hero-brand{font-size:clamp(36px,12vw,48px);margin-bottom:18px}
   .hero h1{font-size:clamp(34px,10vw,48px);max-width:12ch}
   .hero .lead{font-size:16px;max-width:28ch}
@@ -566,24 +556,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <span class="atlas-node c"></span>
             <span class="atlas-node d"></span>
           </div>
-          <article class="atlas-card story">
-            <small>Story artifact</small>
-            <b>Ledger, coins, decimal wheel</b>
-            <p>The old idea becomes something the student can touch.</p>
-          </article>
-          <article class="atlas-card gap">
-            <small>Break found</small>
-            <b>Point is not the intercept</b>
-            <p>The route stops guessing and starts exactly there.</p>
-          </article>
-          <article class="atlas-card parent">
-            <small>Shared signal</small>
-            <b>Student, tutor, parent</b>
-            <p>One map. Three views. No mystery after the session.</p>
-          </article>
           <span class="atlas-fragment f1"></span>
           <span class="atlas-fragment f2"></span>
-          <div class="atlas-label">the broken atlas reconnects</div>
         </div>
       </div>
     </section>
@@ -591,96 +565,20 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="demo" id="demo" data-nav="cream">
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
-          <p class="label">Story Worlds</p>
-          <h2 id="demoHeading">Who came up with these frivolous things?</h2>
-          <p class="demo-lead">Turns out: bookkeepers, sailors, astronomers, gamblers, and people trying very hard not to look ridiculous. Open the artifact, enter the story, then try the idea.</p>
-          <div class="demo-toggle" role="tablist" aria-label="Choose what to try">
-            <button type="button" class="demo-tab is-active" id="demoTabStory" role="tab" aria-selected="true">Story preview</button>
-            <button type="button" class="demo-tab demo-tab-secondary" id="demoTabQuest" role="tab" aria-selected="false">Story world</button>
+          <p class="label">Play free</p>
+          <h2 id="demoHeading">Play Manjushree.</h2>
+          <p class="demo-lead">A short MindCraft game, playable right here. No account, no detour, no fake preview.</p>
+          <div class="demo-actions">
+            <a class="btn primary" href="https://mindcraft-93858.web.app/try/manjushree" target="_blank" rel="noopener">Open full</a>
           </div>
         </div>
         <div class="demo-panel">
-          <div class="demo-stage" id="demoStage" data-state="story">
-
-            <div class="demo-poster demo-poster-story" id="demoPosterStory">
-              <p class="demo-story-chrome">MindCraft</p>
-              <div class="demo-story-viewport" id="demoStoryViewport">
-                <div class="demo-story-stage is-active" data-slide="0">
-                  <figure class="demo-story-photo" aria-hidden="true">
-                    <img src="img/story-fractions-decimals.jpg" alt="" loading="lazy" width="800" height="800">
-                  </figure>
-                  <div class="demo-story-copy">
-                    <p class="demo-story-eyebrow">Story slideshow</p>
-                    <h3 class="demo-story-title">Fractions and Decimals</h3>
-                    <p class="demo-story-text">In 1585, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages by candlelight, wrestling twelfths of guilders until the numbers swam.</p>
-                  </div>
-                </div>
-                <div class="demo-story-stage" data-slide="1">
-                  <figure class="demo-story-photo" aria-hidden="true">
-                    <img src="img/story-ratios-proportions.jpg" alt="" loading="lazy" width="800" height="800">
-                  </figure>
-                  <div class="demo-story-copy">
-                    <p class="demo-story-eyebrow">Story slideshow</p>
-                    <h3 class="demo-story-title">Ratios and Proportions</h3>
-                    <p class="demo-story-text">Around 600 BC, a traveler named Thales stood before the Great Pyramid. Priests said its height could never be measured. He looked at his own shadow, then the pyramid's, and found the number that connected them.</p>
-                  </div>
-                </div>
-                <div class="demo-story-stage" data-slide="2">
-                  <figure class="demo-story-photo" aria-hidden="true">
-                    <img src="img/story-order-of-operations.jpg" alt="" loading="lazy" width="800" height="800">
-                  </figure>
-                  <div class="demo-story-copy">
-                    <p class="demo-story-eyebrow">Story slideshow</p>
-                    <h3 class="demo-story-title">Order of Operations</h3>
-                    <p class="demo-story-text">In 1843, Ada Lovelace was writing instructions for a machine that did not exist yet. One line said add this, multiply that. Which happens first? The machine could not guess, so she wrote the rule that decided.</p>
-                  </div>
-                </div>
-                <div class="demo-story-stage" data-slide="3">
-                  <figure class="demo-story-photo" aria-hidden="true">
-                    <img src="img/story-linear-equations.jpg" alt="" loading="lazy" width="800" height="800">
-                  </figure>
-                  <div class="demo-story-copy">
-                    <p class="demo-story-eyebrow">Story slideshow</p>
-                    <h3 class="demo-story-title">Linear Equations</h3>
-                    <p class="demo-story-text">In 1761, a ship carried the strangest cargo of the age: a five inch watch, guarded by a carpenter's son. If no clock can be perfect at sea, John Harrison asked, what is the next best thing?</p>
-                  </div>
-                </div>
-              </div>
-              <div class="demo-story-dots" id="demoStoryDots">
-                <button type="button" class="is-active" data-dot="0" aria-label="Fractions and Decimals"></button>
-                <button type="button" data-dot="1" aria-label="Ratios and Proportions"></button>
-                <button type="button" data-dot="2" aria-label="Order of Operations"></button>
-                <button type="button" data-dot="3" aria-label="Linear Equations"></button>
-              </div>
-              <button type="button" class="demo-try" id="storyTryBtn" aria-label="Try a real MindCraft story session">Try</button>
+          <div class="demo-stage" id="demoStage">
+            <iframe class="demo-frame" id="demoFrame" title="Play Manjushree" src="https://mindcraft-93858.web.app/try/manjushree" allow="fullscreen" loading="lazy"></iframe>
+            <div class="demo-live-bar">
+              <a class="demo-open" id="demoOpenFull" href="https://mindcraft-93858.web.app/try/manjushree" target="_blank" rel="noopener">Open full</a>
             </div>
-
-            <div class="demo-poster demo-poster-quest" id="demoPosterQuest">
-              <div class="demo-loop-pan">
-                <img src="img/sword-of-wisdom-valley.jpg" alt="" aria-hidden="true" width="1280" height="853">
-              </div>
-              <svg class="demo-parabola" viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
-                <path class="demo-parabola-path" d="M36 208 C 120 40, 280 40, 364 208" fill="none" stroke="#c4f547" stroke-width="5" stroke-linecap="round"/>
-                <circle class="demo-parabola-dot" cx="36" cy="208" r="6" fill="#fffdf7" stroke="#143a2e" stroke-width="2"/>
-                <circle class="demo-parabola-dot" cx="364" cy="208" r="6" fill="#fffdf7" stroke="#143a2e" stroke-width="2"/>
-              </svg>
-              <img class="demo-sword" src="img/sword-of-wisdom-blade.png" alt="" aria-hidden="true" width="150" height="640">
-              <div class="demo-loop-scrim" aria-hidden="true"></div>
-              <button type="button" class="demo-try" id="questTryBtn" aria-label="Try the Sword of Wisdom quest">Try</button>
-            </div>
-
-            <div class="demo-live" id="demoLive" hidden>
-              <div class="demo-live-bar">
-                <a class="demo-open" id="demoOpenFull" href="#" target="_blank" rel="noopener">Open full</a>
-                <button type="button" class="demo-close" id="demoCloseBtn">Close</button>
-              </div>
-              <iframe class="demo-frame" id="demoFrame" title="MindCraft try preview" allow="fullscreen"></iframe>
-            </div>
-
           </div>
-          <p class="demo-note script" id="demoNote">
-            <a id="demoKitchenLink" href="https://mindcraft-world1.web.app/?v=sq-lock-2" target="_blank" rel="noopener" hidden>Start in Jesse’s kitchen →</a>
-          </p>
         </div>
       </div>
     </section>
@@ -1258,129 +1156,17 @@ function setActiveApplyTab(key) {
 applyTabSeat?.addEventListener("click", () => setActiveApplyTab("seat"))
 applyTabTutor?.addEventListener("click", () => setActiveApplyTab("tutor"))
 
-// Landing try panel: Story preview and Story World. Try loads a live iframe of
-// public /try/* routes (no AuthGuard). Local → Vite :5173; prod → app host.
-const demoStage = document.getElementById("demoStage")
-const demoLive = document.getElementById("demoLive")
+// Free Manjushree game embed. Keep this section direct: no story tabs and no
+// login-looking preview.
 const demoFrame = document.getElementById("demoFrame")
 const demoOpenFull = document.getElementById("demoOpenFull")
-const demoCloseBtn = document.getElementById("demoCloseBtn")
-const demoTabStory = document.getElementById("demoTabStory")
-const demoTabQuest = document.getElementById("demoTabQuest")
-const demoHeading = document.getElementById("demoHeading")
-const demoKitchenLink = document.getElementById("demoKitchenLink")
-const storyTryBtn = document.getElementById("storyTryBtn")
-const questTryBtn = document.getElementById("questTryBtn")
 
 const APP_ORIGIN = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
   ? "http://127.0.0.1:5173"
   : "https://mindcraft-93858.web.app"
-const WORLD_ORIGIN = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
-  ? "http://127.0.0.1:3001"
-  : "https://mindcraft-world1.web.app"
-
-const DEMO_COPY = {
-  story: {
-    heading: "Who came up with these frivolous things?",
-    path: "/try/story/fractions_decimals?auto=1",
-    showKitchen: false,
-  },
-  quest: {
-    heading: "Enter the story world.",
-    path: "/try/manjushree",
-    showKitchen: true,
-  },
-}
-
-let activeDemo = "story"
-
-function setActiveDemoTab(key) {
-  closeDemoLive()
-  activeDemo = key
-  const copy = DEMO_COPY[key]
-  if (demoStage) demoStage.dataset.state = key
-  demoTabStory?.classList.toggle("is-active", key === "story")
-  demoTabQuest?.classList.toggle("is-active", key === "quest")
-  demoTabStory?.setAttribute("aria-selected", String(key === "story"))
-  demoTabQuest?.setAttribute("aria-selected", String(key === "quest"))
-  if (demoHeading) demoHeading.innerHTML = copy.heading
-  if (demoKitchenLink) {
-    demoKitchenLink.hidden = !copy.showKitchen
-    demoKitchenLink.href = WORLD_ORIGIN + "/?v=sq-lock-2"
-  }
-}
-
-function openDemoLive() {
-  const copy = DEMO_COPY[activeDemo]
-  const url = APP_ORIGIN + copy.path
-  if (demoFrame) demoFrame.src = url
-  if (demoOpenFull) demoOpenFull.href = url
-  if (demoLive) demoLive.hidden = false
-  if (demoStage) demoStage.dataset.state = "live"
-}
-
-function closeDemoLive() {
-  if (demoFrame) demoFrame.src = "about:blank"
-  if (demoLive) demoLive.hidden = true
-  if (demoStage) demoStage.dataset.state = activeDemo
-}
-
-demoTabStory?.addEventListener("click", () => setActiveDemoTab("story"))
-demoTabQuest?.addEventListener("click", () => setActiveDemoTab("quest"))
-storyTryBtn?.addEventListener("click", openDemoLive)
-questTryBtn?.addEventListener("click", openDemoLive)
-demoCloseBtn?.addEventListener("click", closeDemoLive)
-window.addEventListener("message", (event) => {
-  if (event.origin !== APP_ORIGIN) return
-  if (event.data && event.data.type === "mc-try-close") closeDemoLive()
-})
-if (demoKitchenLink) demoKitchenLink.href = WORLD_ORIGIN + "/?v=sq-lock-2"
-
-// Story preview slideshow: four real chapter openings auto-advance while the
-// Story tab is the visible one. Purposeful, not decorative, it is the whole
-// point of leading with "Story preview" per the resize brief (full-display,
-// bigger than the Quest tab). Respects prefers-reduced-motion (no timer at
-// all, dots still work as a manual click-through) and pauses on hover/focus
-// so a reading parent never loses their place mid-sentence.
-const storySlides = Array.from(document.querySelectorAll("#demoStoryViewport .demo-story-stage"))
-const storyDots = Array.from(document.querySelectorAll("#demoStoryDots button"))
-let storyIndex = 0
-let storyTimer = null
-
-function showStorySlide(index) {
-  if (!storySlides.length) return
-  storyIndex = (index + storySlides.length) % storySlides.length
-  storySlides.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
-  storyDots.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
-}
-
-function startStoryAutoplay() {
-  if (reduceMotion || storyTimer) return
-  storyTimer = setInterval(() => {
-    if (demoStage?.dataset.state !== "story") return
-    showStorySlide(storyIndex + 1)
-  }, 5200)
-}
-
-function stopStoryAutoplay() {
-  if (!storyTimer) return
-  clearInterval(storyTimer)
-  storyTimer = null
-}
-
-storyDots.forEach((btn, i) => {
-  btn.addEventListener("click", () => {
-    showStorySlide(i)
-    stopStoryAutoplay()
-    startStoryAutoplay()
-  })
-})
-const demoPosterStory = document.getElementById("demoPosterStory")
-demoPosterStory?.addEventListener("pointerenter", stopStoryAutoplay)
-demoPosterStory?.addEventListener("pointerleave", startStoryAutoplay)
-demoPosterStory?.addEventListener("focusin", stopStoryAutoplay)
-demoPosterStory?.addEventListener("focusout", startStoryAutoplay)
-startStoryAutoplay()
+const MANJUSHREE_URL = APP_ORIGIN + "/try/manjushree"
+if (demoFrame) demoFrame.src = MANJUSHREE_URL
+if (demoOpenFull) demoOpenFull.href = MANJUSHREE_URL
 
 // Find a Tutor map. This is a real interactive Google Map, not a screenshot:
 // parents can type an address, the page geocodes it, recenters the map, and
