@@ -897,12 +897,12 @@ export default function KnowledgeGraph() {
                 Practice {mlIdToLabel(selected.id)}
               </button>
               {isUnexplored(selected.status) && (
-                <button className={s.bookBtn} onClick={() => navigate('/book')}>
-                  Book a Session on {mlIdToLabel(selected.id)}
+                <button className={s.bookBtn} onClick={() => navigate('/find-a-tutor')}>
+                  Find a Tutor for {mlIdToLabel(selected.id)}
                 </button>
               )}
               {isOpenGap(selected.status) && (
-                <button className={s.bookBtn} onClick={() => navigate('/book')}>
+                <button className={s.bookBtn} onClick={() => navigate('/find-a-tutor')}>
                   Repair {mlIdToLabel(selected.id)}
                 </button>
               )}

@@ -30,9 +30,49 @@ import {
   nextUnlockLabel,
 } from '../lib/weeklyPracticePaper'
 import { loadDashboardPersonalization } from '../lib/dashboardPersonalization'
+import blockPlus from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-plus.png'
+import blockFraction from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-fraction.png'
+import blockPi from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-pi.png'
+import blockX from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-x.png'
+import blockParabola from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-parabola.png'
+import blockPercent from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-percent.png'
+import blockEquals from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-equals.png'
+import blockRadical from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-radical.png'
 import s from './Dashboard.module.css'
 
 const SOLVER_MAX_CHARS = 1200
+
+/** Ambient floating MindCraft-block decorations (2026-07-25). Purely
+ * decorative — scattered across the stage's own dead corner whitespace,
+ * behind the Contents roadmap and the rest of the real UI (low z-index,
+ * pointer-events: none, small, low-opacity — see .mcBlock in the CSS
+ * module). Hand-placed positions/rotations/sizes/delays, not a random
+ * scatter, so the same "restrained handful" layout renders identically
+ * every load rather than reshuffling. */
+const MC_BLOCKS: Array<{
+  name: string
+  src: string
+  top: string
+  left: string
+  size: string
+  rotate: string
+  delay: string
+}> = [
+  // Positions bias toward the two confirmed-open zones on this canvas: the
+  // top header band (above the lane cards, roughly y 0-11%) and the thin
+  // margin past the last lane before the stage's rounded corner (y 90%+) —
+  // verified against real renders, since the lane cards themselves fill
+  // almost the full card width/height and would otherwise hide a block
+  // behind their solid backgrounds.
+  { name: 'pi',       src: blockPi,       top: '1%',  left: '18%', size: '40px', rotate: '-9deg',  delay: '0s' },
+  { name: 'x',        src: blockX,        top: '3%',  left: '70%', size: '34px', rotate: '7deg',   delay: '1.1s' },
+  { name: 'fraction', src: blockFraction, top: '2%',  left: '46%', size: '30px', rotate: '6deg',   delay: '0.6s' },
+  { name: 'parabola', src: blockParabola, top: '92%', left: '92%', size: '48px', rotate: '-5deg',  delay: '1.8s' },
+  { name: 'percent',  src: blockPercent,  top: '8%',  left: '34%', size: '28px', rotate: '10deg',  delay: '2.4s' },
+  { name: 'equals',   src: blockEquals,   top: '95%', left: '4%',  size: '34px', rotate: '-8deg',  delay: '0.3s' },
+  { name: 'plus',     src: blockPlus,     top: '5%',  left: '60%', size: '26px', rotate: '4deg',   delay: '3s' },
+  { name: 'radical',  src: blockRadical,  top: '95%', left: '48%', size: '30px', rotate: '-6deg',  delay: '2s' },
+]
 
 /** Contents roadmap dot state. Backed by the same per-concept `status`/
  * `mastery` the Knowledge Map (ConstellationGpsExplorer) reads off
@@ -281,8 +321,11 @@ export default function Dashboard() {
     return paper
   }, [weakness, learn, recLoading])
 
+  // Plain "Weekly Review" — the topic itself is already visible right next
+  // to the wizard in the "today's spark" sticker, so the line no longer
+  // needs to restate it (Akshat, 2026-07-25 dashboard polish pass).
   const wizardLine = weaknessLabel
-    ? `Let’s tackle ${weaknessLabel} next. You’ve got this!`
+    ? 'Weekly Review'
     : 'Pick any sticker on the map and we’ll dive in ★'
 
   // Locked once the student has finished this week's paper (weekKey-keyed
@@ -396,7 +439,6 @@ export default function Dashboard() {
                 <div className={s.homeTop}>
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>
-                    <p className={s.homeLead}>Four lanes. Pick a topic, the Map keeps the messy connected graph.</p>
                   </div>
                   <div className={s.homeTopActions}>
                     {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
@@ -415,7 +457,7 @@ export default function Dashboard() {
                         </button>
                       )
                     )}
-                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/book')}>Book a Session →</button>
+                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/find-a-tutor')}>Find a Tutor →</button>
                   </div>
                 </div>
 
@@ -511,6 +553,40 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+
+          {/* Ambient floating MindCraft-block decorations  -  ornamental only
+             (aria-hidden, no pointer events), scattered in the stage's own
+             dead corner whitespace behind the Contents roadmap. Same
+             position: relative stage as .deskSpine above, present on every
+             view since it lives outside the view switch. Respects
+             prefers-reduced-motion (see .mcBlock's @media query in the CSS
+             module) - the drift pauses, the blocks just sit still. */}
+          <div className={s.mcBlocks} aria-hidden="true">
+            {MC_BLOCKS.map(b => (
+              <img
+                key={b.name}
+                src={b.src}
+                alt=""
+                draggable={false}
+                className={s.mcBlock}
+                style={{
+                  '--block-top': b.top,
+                  '--block-left': b.left,
+                  '--block-size': b.size,
+                  '--block-rotate': b.rotate,
+                  '--block-delay': b.delay,
+                } as React.CSSProperties}
+              />
+            ))}
+          </div>
+
+          {/* Small second wordmark, bottom-left corner  -  a page-watermark,
+             not a nav element (the real logo/nav lives in .heroBar above).
+             Low-opacity, non-interactive, echoes the notebook's own
+             hand-drawn wordmark font at a fraction of the size. */}
+          <span className={s.pageWatermark} aria-hidden="true">
+            Mind<span className={s.pageWatermarkCraft}>Craft</span>
+          </span>
         </main>
       </div>
 

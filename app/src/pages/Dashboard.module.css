@@ -927,13 +927,15 @@
   flex-shrink: 0;
 }
 
+/* Enlarged 2026-07-25 (Akshat: "visibly bigger, not a subtle tweak") — was
+   18px/6px 13px. */
 .navBtn, .navActive {
   border: none;
   background: transparent;
   font-family: var(--tok-font-hand);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
-  padding: 6px 13px;
+  padding: 10px 22px;
   border-radius: 999px;
   cursor: pointer;
   color: rgba(58, 47, 85, 0.5);
@@ -1043,7 +1045,69 @@
   flex-shrink: 0;
 }
 
+/* ── Ambient floating MindCraft-block decorations (2026-07-25) ───────────
+   Purely ornamental, sits behind everything else on the stage (z-index: 0,
+   below .stagePane's real content) so it never competes with the actual UI.
+   Positions are hand-placed percentages of .canvasStage (see MC_BLOCKS in
+   Dashboard.tsx), not a random scatter, so the "restrained handful in dead
+   corner space" layout is stable across loads. Small + low-opacity by
+   design (max 50px, 0.16 opacity) — ambient texture, not content. */
+.mcBlocks {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.mcBlock {
+  position: absolute;
+  top: var(--block-top);
+  left: var(--block-left);
+  width: var(--block-size);
+  height: var(--block-size);
+  transform: rotate(var(--block-rotate));
+  opacity: 0.16;
+  filter: saturate(0.85);
+  animation: mcBlockFloat 7s ease-in-out infinite;
+  animation-delay: var(--block-delay);
+}
+@keyframes mcBlockFloat {
+  0%, 100% { transform: rotate(var(--block-rotate)) translateY(0); }
+  50%      { transform: rotate(var(--block-rotate)) translateY(-10px); }
+}
+/* A slow drift is fine, but never force motion on students who asked for
+   less of it — the blocks just sit still at their base rotation instead. */
+@media (prefers-reduced-motion: reduce) {
+  .mcBlock { animation: none; }
+}
+
+/* Small second wordmark, bottom-left corner of the stage  -  a page
+   watermark, distinct from the real nav wordmark in .heroBar above (that
+   one stays the primary, legible logo). Quiet, non-interactive, sits under
+   the roadmap/content (low z-index) so it never competes for attention. */
+.pageWatermark {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  z-index: 0;
+  font-family: var(--tok-font-hand);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: rgba(58, 47, 85, 0.22);
+  pointer-events: none;
+  user-select: none;
+}
+.pageWatermarkCraft {
+  color: rgba(84, 185, 72, 0.4);
+}
+
 .stagePane {
+  /* position + z-index above the ambient .mcBlocks/.pageWatermark (both
+     z-index: 0) so the real content always paints on top of the floating
+     decorations, regardless of DOM order. */
+  position: relative;
+  z-index: 1;
   height: 100%;
   min-height: 0;
   overflow: auto;
@@ -1160,23 +1224,34 @@
   color: rgba(58, 47, 85, 0.6);
 }
 
-/* "Book a Session", new on this view  -  same copy/destination as
-   Sidebar.tsx's nav entry and StudentSessions.tsx's "Book a Session ->"
-   button (both -> /book). Quieter than the paper CTA (a text link, not a
-   filled card) since it's a secondary action next to Contents. */
+/* "Find a Tutor", new on this view  -  same destination as Sidebar.tsx's
+   nav entry and StudentSessions.tsx's "Find a Tutor ->" button (all ->
+   /find-a-tutor). Was a bare text link (2026-07-24); given a pill border
+   here (2026-07-25 polish pass) so it reads as a real secondary action next
+   to Contents instead of floating text  -  same pill shape/radius as
+   .paperCtaLocked just above (border-radius: 12px 16px 12px 14px, a quiet
+   border rather than a filled card), still visually quieter than the green
+   .paperCta since this is the secondary action. */
 .bookSessionLink {
-  border: none;
-  background: none;
+  border: 1.5px solid rgba(58, 47, 85, 0.22);
+  border-radius: 12px 16px 12px 14px;
+  background: rgba(255, 253, 248, 0.5);
   cursor: pointer;
   font-family: var(--tok-font-sans);
   font-size: 13px;
   font-weight: 600;
-  color: rgba(58, 47, 85, 0.6);
-  padding: 8px 4px;
+  color: rgba(58, 47, 85, 0.7);
+  padding: 7px 14px;
   white-space: nowrap;
-  transition: color 140ms ease;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease, transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
 }
-.bookSessionLink:hover { color: var(--desk-ink); }
+.bookSessionLink:hover {
+  color: var(--desk-ink);
+  border-color: rgba(58, 47, 85, 0.4);
+  background: rgba(255, 253, 248, 0.85);
+  transform: translateY(-1px);
+}
+.bookSessionLink:active { transform: translateY(0); }
 
 .homeTitle {
   margin: 0;
@@ -1327,7 +1402,18 @@
 .tocNode:active { transform: translateY(0); }
 .tocNode[data-state='locked'] { opacity: 0.62; }
 
+/* Fixed height (2 lines' worth, not just a 2-line clamp) is load-bearing:
+   the dot below sits at whatever flow position follows this block, so a
+   1-line name and a 2-line name (e.g. "Linear Equations" vs "Systems of
+   Linear Equations" in the same Algebra lane) would otherwise push their
+   dots to different vertical heights. The connector lines are drawn off
+   each dot's own vertical center (see .tocNodeDot::before/::after below),
+   so misaligned dots across a lane made the line segments miss each other
+   entirely between short- and long-named neighbors  -  the reported "lines
+   don't connect" bug. Reserving the full 2-line height here keeps every
+   dot in a lane on the same horizontal row regardless of name length. */
 .tocNodeName {
+  height: 2.5em;
   font-family: var(--tok-font-sans);
   font-weight: 700;
   font-size: 12.5px;

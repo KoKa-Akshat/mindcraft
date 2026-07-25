@@ -4,6 +4,185 @@
 
 ---
 
+## Checkout-mixup correction, chapter art + story expansion, floating blocks, Find-a-Tutor port, dashboard polish (Fable 5, 2026-07-25)
+
+**Historical-record correction first.** A previous agent pass earlier today worked
+in the WRONG checkout, `/Users/akoirala/Desktop/Business Ideas/mindcraft-site`
+(a stale second checkout ~30+ commits behind `origin/main`), and its
+verification (tsc/vitest baselines, "no manjushree exists") was run against
+that stale code. This session confirmed `/Users/akoirala/Developer/mindcraft`
+(head `f2840e61`) is the one live checkout, confirmed `app/src/manjushree/`
+and 4 `manjushree` references in `App.tsx` genuinely exist here, and treated
+the stale checkout as read-only reference material for Job 3 below, nothing
+else. All 4 jobs below were done in THIS checkout only.
+
+### Job 1 — chapter photo art + expanded stories
+
+**Art wiring**: confirmed `storyArt.ts`'s `import.meta.glob` picked up all 42
+new `story-{conceptId}.jpg` files automatically, JPG winning over the old SVG
+doodle per its existing precedence rule — zero code changes needed, verified
+by rendering `/concept/linear_equations` and seeing the real watercolor plate
+(antique pocket watch + compass), not the old SVG.
+
+**Pagination bug found and fixed first**: `ConceptChapterPage.tsx`'s
+`buildPanels()` was, before this session, only ever showing **beat[0]** (the
+first paragraph) of a concept's `story` field in a single "open" panel — every
+later beat was computed (for the `quest` panels' `beat` prop) but never
+rendered, because today's earlier "narrative wrapping removal" pass (see
+prior entries) had already stripped the code that displayed `beat` text
+inside quest panels. Net effect: the story pagination the parent brief assumed
+existed did not actually show more than one panel of story to a student.
+Fixed by adding `storyPages()`, which groups `storyBeats()` output into 2-5
+pages by an even per-page character budget (`STORY_TARGET_PAGE_CHARS = 550`,
+merge-smallest-adjacent-pair balancing so no single page absorbs a lopsided
+pile of leftover text), and changing `buildPanels()` to emit one `open` panel
+per page (all before the quest panels, which are unchanged — no narrative
+text re-added to question stems, respecting today's earlier removal). Only
+the first page keeps the full title/protagonist-stamp/drop-cap treatment;
+later pages get a small "{concept} · continued" eyebrow + "page N of M".
+Existing dot-nav/arrow-nav/keyboard/swipe panel navigation needed zero
+changes (already generic over `panels.length`).
+
+**Story expansion**: all 42 concepts in `app/src/data/conceptStories.json`
+expanded from ~1,700-2,500 chars (4-5 paragraphs) to ~2,600-3,600 chars
+(now landing on 5 pages under the new pagination for every concept), adding
+2 new paragraphs of real historical depth per concept — verified several
+facts via WebSearch rather than assuming (Dantzig's simplex method really
+was applied to the Berlin Airlift in 1948, confirmed via Dantzig's own oral
+history; Cayley published ~250 papers during his 14 years as a lawyer, 967
+total across his life, confirmed via MacTutor; Zu Chongzhi's son Zu Geng's
+sphere-volume principle predates Cavalieri's identical idea by ~1,100 years,
+confirmed; Napier's "black spider in an ivory box" eccentricity and Escher's
+1937 introduction to Pólya's 17 wallpaper groups via his half-brother, both
+confirmed). **Also fixed a genuine factual error** in the pre-existing
+`basic_equations` story: it had conflated the Diophantus tomb-riddle puzzle
+with Fermat's actual "most famous margin note" (which is about Fermat's Last
+Theorem, a different problem in the same *Arithmetica* — confirmed via
+general knowledge of the history, corrected the sentence and added the real
+margin-note story as new content).
+
+Verification: `npx tsc --noEmit` clean, `npx vitest run` 120 passed / 1
+skipped (8 files, unchanged from baseline), `npm run build` green.
+
+### Job 2 — 8 floating MindCraft-block decorations
+
+Placed on the Dashboard (`Dashboard.tsx`/`Dashboard.module.css`), not the
+marketing hero — chosen because the Dashboard's Contents canvas is the
+higher-traffic, logged-in surface and already had an established "ambient
+decoration" convention (deskSpine ring column) to extend. Investigated
+actual rendered geometry before placing (a first attempt scattered them
+across the full canvas height and most landed hidden behind the solid-
+background lane cards, confirmed via a real DOM `getBoundingClientRect()`
+check) — repositioned to the two zones confirmed genuinely open by a real
+render: the header band above the lane cards (0-11% down the stage) and the
+thin margin past the last lane before the stage's rounded corner. Small
+(26-48px), low-opacity (0.16), hand-placed rotations, a slow float
+(`@keyframes mcBlockFloat`) that's disabled entirely under
+`prefers-reduced-motion: reduce`. `z-index: 0` behind `.stagePane`'s
+`z-index: 1` so real content always wins the stack.
+
+### Job 3 — Find-a-Tutor properly ported into this checkout
+
+Read the stale checkout's `FindTutor.tsx`/`FindTutor.module.css`/`geo.ts` for
+design/logic reference only, then re-implemented against THIS checkout's
+actual current state (its `Book.tsx`/`Book.module.css` — confirmed identical
+in shape to what the stale FindTutor header describes replacing — was the
+right base to extend, already using `var(--tok-font-sans)`/`var(--tok-font-serif)`
+tokens unlike the stale checkout's hardcoded font names).
+
+- New: `app/src/lib/geo.ts` (haversine distance; fixed a latent bug in the
+  ported version where `lat2` recomputed `a.lat + (b.lat - a.lat)` instead of
+  plainly `b.lat` — same result, clearer code), `app/src/pages/FindTutor.tsx`,
+  `app/src/pages/FindTutor.module.css`.
+- `@react-google-maps/api` installed via real `npm install --legacy-peer-deps`
+  (not hand-edited into package.json). `@types/google.maps` came along as a
+  transitive dependency; added `"google.maps"` to `tsconfig.json`'s `types`
+  array.
+- `VITE_GOOGLE_MAPS_API_KEY=` (empty placeholder) added to `.env.example`,
+  `.env.production`, and a newly-created `.env.local` (gitignored, no key
+  exists yet — page falls back to an honest "map unavailable" placeholder).
+- `App.tsx`: `/book` now redirects to the new `/find-a-tutor` route (old
+  `Book.tsx`/`Book.module.css` left in place, unreferenced, as a rollback
+  point — not deleted).
+- Renamed "Book a Session" → "Find a Tutor" everywhere it actually appears in
+  this checkout (grepped fresh): `Sidebar.tsx` nav entry,
+  `Dashboard.tsx`'s secondary link, `StudentSessions.tsx`'s empty-state
+  button, `KnowledgeGraph.tsx`'s two concept-detail buttons. Left Admin.tsx's
+  unrelated internal "Book Session" modal (a separate admin-scheduling
+  feature, `bookOpen` state, never navigates to `/book`) untouched —
+  confirmed via grep it's a different feature before leaving it alone.
+
+### Job 4 — dashboard polish, all 6 items done
+
+1. **Contents subtitle removed** — `<p className={s.homeLead}>Four lanes...</p>`
+   deleted from `Dashboard.tsx`; heading stands alone.
+2. **Nav pills enlarged** — `.navBtn`/`.navActive` in `Dashboard.module.css`
+   (this checkout's actual Home/Map/Work/Notes pills live directly in
+   `Dashboard.tsx`'s `.heroBar`, not `AppTabBar.tsx`, which is a different
+   component used elsewhere) — font-size 18px→24px, padding 6px 13px→10px 22px.
+3. **Bottom-left logo watermark** — new `.pageWatermark` span, small (13px),
+   low-opacity (0.22), corner-anchored inside `.canvasStage`, distinct from
+   the real nav wordmark in `.heroBar`.
+4. **Roadmap connector-line bug fixed** — root cause: `.tocNodeName` had no
+   fixed height, only a 2-line clamp, so a 1-line concept name (e.g. "Linear
+   Equations") and a 2-line name (e.g. "Systems of Linear Equations") in the
+   same lane pushed their dots to different vertical offsets; the connector
+   segments are drawn off each dot's own vertical center
+   (`.tocNodeDot::before/::after`), so mismatched dot heights made adjacent
+   segments miss each other entirely. Fixed with `height: 2.5em` on
+   `.tocNodeName` so every dot in a lane sits on the same row regardless of
+   name length. Confirmed fixed by screenshot (Algebra lane, 11 concepts of
+   varying name length, line now reads as one continuous path).
+5. **"Weekly Review"** — `wizardLine` in `Dashboard.tsx` simplified from
+   `` `Let's tackle ${weaknessLabel} next. You've got this!` `` to plain
+   `'Weekly Review'` (only "tackle" hit in the whole codebase, confirmed via
+   grep) — the topic is already visible in the adjacent "today's spark"
+   sticker.
+6. **Boxed "Find a Tutor" pill** — `.bookSessionLink` in `Dashboard.module.css`
+   given a pill border (`border-radius: 12px 16px 12px 14px`, matching
+   `.paperCtaLocked`'s existing shape convention) instead of being a bare
+   text link.
+
+### Verification
+
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **120 passed / 1 skipped (8 files)**.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning).
+- `grep -n manjushree app/src/App.tsx` — 4 references, untouched, checked
+  before and after every edit pass.
+
+Screenshots (`agent_work/product/screenshots_2026-07-25/`):
+`dashboard_home_desktop.png` (all 6 polish items + floating blocks visible
+at once), `find_a_tutor_desktop.png` (full page, honest map-unavailable
+placeholder + real founders + no-fake-reviews state),
+`chapter_linear_equations_page1.png` through `_page4.png` (new photo art +
+expanded story actually paginating "page N of 5" with genuinely different
+content per page).
+
+Screenshots taken via the established temporary `VITE_SCREENSHOT_MODE`-gated
+shim pattern (`AuthGuard` mock user in `App.tsx`, canned data in
+`useStudentData.ts` + three effects in `Dashboard.tsx`), dev server
+`VITE_SCREENSHOT_MODE=1 npx vite --port 5197 --strictPort`, driven by a
+local Playwright script (`app/.tmp_shot*.mjs`, deleted after; `playwright`
+itself installed with `--no-save` and fully removed afterward — confirmed
+`git diff --stat package.json package-lock.json` shows only the intentional
+`@react-google-maps/api` addition, nothing else). All shims fully reverted —
+`grep -rn SCREENSHOT_MODE app/src` returns empty, and `git diff
+app/src/hooks/useStudentData.ts` returns completely empty (that file's only
+change during the session was the shim, now fully reverted). `tsc`/`vitest`/
+`build` re-run clean after the revert (numbers above are post-revert).
+
+Not done / open: the 5 remaining concepts already flagged as uncovered by
+the question bank (combinatorics, matrices, complex_numbers,
+rational_expressions, logarithmic_functions per earlier ACT-bank notes)
+still have no static questions, unrelated to this session's story-expansion
+work which touched all 42 concepts' narrative text regardless of question
+coverage. Old `Book.tsx`/`Book.module.css` left as unreferenced rollback
+files, not deleted.
+
+---
+
+
 ## Contents "roadmap" redesign — chip grid → horizontal dot path (Fable 5, 2026-07-24)
 
 Akshat's brief verbatim: the Contents chip grid felt overloading; wanted "a

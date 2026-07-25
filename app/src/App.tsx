@@ -21,7 +21,7 @@ import Login         from './pages/Login'
 import Dashboard     from './pages/Dashboard'
 import TutorDashboard from './pages/TutorDashboard'
 import SessionDetail from './pages/SessionDetail'
-import Book          from './pages/Book'
+import FindTutor      from './pages/FindTutor'
 import Admin         from './pages/Admin'
 import Chat          from './pages/Chat'
 import StudyTimer        from './pages/StudyTimer'
@@ -207,7 +207,12 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/spark" element={<FirstSpark />} />
-        <Route path="/book"  element={<Book />} />
+        {/* Old plain list-only booking page — permanently redirects to the
+            richer Find-a-Tutor page (map + proximity search + honest
+            no-fake-reviews handling). Keep the redirect, not the old page,
+            so existing bookmarks/links to /book still work. */}
+        <Route path="/book"  element={<Navigate to="/find-a-tutor" replace />} />
+        <Route path="/find-a-tutor" element={<FindTutor />} />
         <Route path="/qa"    element={<AuthGuard><QAEntry /></AuthGuard>} />
         <Route path="/dashboard-projected" element={<Navigate to="/dashboard" replace />} />
 

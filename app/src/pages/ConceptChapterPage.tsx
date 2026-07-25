@@ -158,7 +158,7 @@ const CLUSTER_THEME = {
 
 // ── Horizontal canvas panels (story + questions blend on one sheet) ─────────
 type Panel =
-  | { kind: 'open'; paras: string[] }
+  | { kind: 'open'; paras: string[]; pageNum: number; pageCount: number }
   | { kind: 'quest'; qIdx: number; beat: string | null; beatIndex: number }
 
 /** Split concept story into short advancing beats — never reuse the same left copy. */
@@ -187,24 +187,77 @@ function storyBeats(text: string): string[] {
   return beats
 }
 
-function buildPanels(text: string, qCount: number): Panel[] {
-  const beats = storyBeats(text)
-  const panels: Panel[] = []
-  panels.push({
-    kind: 'open',
-    paras: beats.slice(0, 1).length
-      ? beats.slice(0, 1)
-      : ['Your chapter opens here — the scene is already waiting.'],
-  })
+/** Pages the reader steps through before the questions start. Picks a page
+ * count from the story's own total length first (short stories still get
+ * 2 pages, long ones cap at 5), chunks beats toward an even per-page share
+ * of that total, then merges the smallest adjacent pair repeatedly until
+ * the page count lands exactly on target — keeps every page a comparable
+ * size instead of leaving one lopsided page holding whatever didn't fit
+ * under a fixed budget. */
+const STORY_TARGET_PAGE_CHARS = 550
+const STORY_MIN_PAGES = 2
+const STORY_MAX_PAGES = 5
 
-  // One unique beat per question (after the opener). Never repeat the opener.
+function storyPages(text: string): string[][] {
+  const beats = storyBeats(text)
+  if (beats.length === 0) {
+    return [['Your chapter opens here — the scene is already waiting.']]
+  }
+  const totalLen = beats.reduce((sum, b) => sum + b.length, 0)
+  const targetPages = Math.min(
+    STORY_MAX_PAGES,
+    Math.max(STORY_MIN_PAGES, Math.round(totalLen / STORY_TARGET_PAGE_CHARS)),
+  )
+  const perPageBudget = totalLen / targetPages
+
+  const pages: string[][] = []
+  let current: string[] = []
+  let currentLen = 0
+  for (const beat of beats) {
+    if (current.length && currentLen + beat.length > perPageBudget) {
+      pages.push(current)
+      current = []
+      currentLen = 0
+    }
+    current.push(beat)
+    currentLen += beat.length
+  }
+  if (current.length) pages.push(current)
+
+  const pageLen = (p: string[]) => p.reduce((sum, b) => sum + b.length, 0)
+  while (pages.length > targetPages) {
+    let bestIdx = 0
+    let bestSum = Infinity
+    for (let i = 0; i < pages.length - 1; i++) {
+      const sum = pageLen(pages[i]) + pageLen(pages[i + 1])
+      if (sum < bestSum) {
+        bestSum = sum
+        bestIdx = i
+      }
+    }
+    pages.splice(bestIdx, 2, [...pages[bestIdx], ...pages[bestIdx + 1]])
+  }
+  return pages
+}
+
+function buildPanels(text: string, qCount: number): Panel[] {
+  const pages = storyPages(text)
+  const panels: Panel[] = pages.map((paras, i) => ({
+    kind: 'open' as const,
+    paras,
+    pageNum: i + 1,
+    pageCount: pages.length,
+  }))
+
+  // Quest panels no longer carry rendered story flavor (narrative wrapping
+  // removed from the question stem, see ACTIVE_TASK.md) — beat/beatIndex
+  // stay on the panel shape for a future dedicated wrapping agent only.
   for (let q = 0; q < qCount; q++) {
-    const beatIndex = q + 1
     panels.push({
       kind: 'quest',
       qIdx: q,
-      beat: beats[beatIndex] ?? null,
-      beatIndex,
+      beat: null,
+      beatIndex: q + 1,
     })
   }
   return panels
@@ -604,30 +657,41 @@ export default function ConceptChapterPage() {
     )
   }
 
-  function renderOpenPanel(paras: string[]) {
+  function renderOpenPanel(paras: string[], pageNum: number, pageCount: number) {
+    const isFirstPage = pageNum === 1
     return (
       <div className={s.blendSheet}>
         <Polaroid salt={panelIdx} className={s.polaroidHero} />
         <div className={s.blendCopy}>
-          {pastMistake && (
+          {isFirstPage && pastMistake && (
             <div className={s.pastMistakeWizard}>
               <WizardMascot line={pastMistake.line} cheering={false} compact />
             </div>
           )}
-          <p className={s.blendEyebrow}>ACT chapter</p>
-          <h1 className={s.blendTitle}>{cs.conceptName}</h1>
-          {frame && (
+          <p className={s.blendEyebrow}>
+            {isFirstPage ? 'ACT chapter' : `${cs.conceptName} · continued`}
+          </p>
+          {isFirstPage ? (
+            <h1 className={s.blendTitle}>{cs.conceptName}</h1>
+          ) : (
+            pageCount > 1 && (
+              <p className={s.blendStamp} style={{ color: theme.dim }}>
+                page {pageNum} of {pageCount}
+              </p>
+            )
+          )}
+          {isFirstPage && frame && (
             <p className={s.blendStamp} style={{ color: theme.accent }}>
               {frame.protagonist}
               {frame.settingLine ? ` · ${frame.settingLine}` : ''}
             </p>
           )}
           {paras.map((p, i) => (
-            <p key={i} className={`${s.blendPara} ${i === 0 ? s.blendLead : ''}`}>
-              {i === 0 && p.length > 0 && (
+            <p key={i} className={`${s.blendPara} ${isFirstPage && i === 0 ? s.blendLead : ''}`}>
+              {isFirstPage && i === 0 && p.length > 0 && (
                 <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
               )}
-              {i === 0 ? p.slice(1) : p}
+              {isFirstPage && i === 0 ? p.slice(1) : p}
             </p>
           ))}
         </div>
@@ -881,7 +945,9 @@ export default function ConceptChapterPage() {
 
   function renderPanel() {
     if (!currentPanel) return null
-    if (currentPanel.kind === 'open') return renderOpenPanel(currentPanel.paras)
+    if (currentPanel.kind === 'open') {
+      return renderOpenPanel(currentPanel.paras, currentPanel.pageNum, currentPanel.pageCount)
+    }
     return renderQuestPanel(currentPanel.qIdx, currentPanel.beat, currentPanel.beatIndex)
   }
 

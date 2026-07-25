@@ -15,6 +15,7 @@
     "generate:visual": "node scripts/generateManimScene.mjs"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.8",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "@types/katex": "^0.16.8",
