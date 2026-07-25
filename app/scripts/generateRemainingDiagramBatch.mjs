@@ -195,6 +195,34 @@ function venn(id, leftLabel, rightLabel, regions) {
   return [id, svg(body)]
 }
 
+function sideLabel(x, y, value, anchor = 'middle') {
+  return text(x, y, value, 15, anchor, '#111', 700)
+}
+
+function vSideLabel(x, y, value) {
+  return `<text x="${x}" y="${y}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111" stroke="none" transform="rotate(-90 ${x} ${y})">${esc(value)}</text>`
+}
+
+function compoundShape(id, labels, kind = 'standard') {
+  const left = 110
+  const top = 55
+  const low = 205
+  const right = 315
+  const stepX = kind === 'wideTop' ? 230 : 205
+  const stepY = kind === 'lowStep' ? 150 : 130
+  const body = `
+    <path d="M${left} ${top} H${stepX} V${stepY} H${right} V${low} H${left} Z" fill="#f9fbf3"/>
+    ${labels.top ? sideLabel((left + stepX) / 2, top - 14, labels.top) : ''}
+    ${labels.left ? vSideLabel(left - 28, (top + low) / 2, labels.left) : ''}
+    ${labels.innerV ? vSideLabel(stepX - 16, (top + stepY) / 2, labels.innerV) : ''}
+    ${labels.innerH ? sideLabel((stepX + right) / 2, stepY - 14, labels.innerH) : ''}
+    ${labels.right ? vSideLabel(right + 26, (stepY + low) / 2, labels.right) : ''}
+    ${labels.bottom ? sideLabel((left + right) / 2, low + 28, labels.bottom) : ''}
+    ${labels.star ? placeholder(left + 45, low - 14, 'star') : ''}
+  `
+  return [id, svg(body)]
+}
+
 const diagrams = [
   thermometer(),
   pictogram(),
@@ -223,6 +251,14 @@ const diagrams = [
   venn('eedi_848', 'Prime factors of 36', 'Prime factors of 90', { left: '2', intersection: '2, 3, 3', right: '5', outside: '' }),
   venn('eedi_1022', 'Owns a 4x4', 'Owns a Black Car', { left: '27', intersection: '15', right: '8', outside: '' }),
   venn('eedi_1077', 'x+5.3 is less than or equal to 0', '-(5.3+x)/2 is greater than 0', { left: 'A', intersection: 'B', right: 'C', outside: 'D' }),
+  compoundShape('eedi_102', { top: 'p cm', left: '15 cm', innerH: '7 cm', right: '7 cm', bottom: '12 cm' }),
+  compoundShape('eedi_320', { top: '10 cm', left: '7 cm', innerH: '4 cm', right: '3 cm' }, 'wideTop'),
+  compoundShape('eedi_726', { left: '15 cm', innerH: '7 cm', right: '7 cm', bottom: '12 cm' }),
+  compoundShape('eedi_871', { top: '5 m', left: '10 m', right: '6 m', bottom: '9 m' }, 'wideTop'),
+  compoundShape('eedi_1230', { top: 'p cm', left: '10 cm', innerH: '7 cm', right: '3 cm', bottom: '4 cm' }),
+  compoundShape('eedi_1521', { top: '3x+4', left: '5', innerH: 'x+4', right: '3', star: true }, 'wideTop'),
+  compoundShape('eedi_1726', { top: '3x+4', left: '5', innerH: '2x', right: '2', star: true }, 'wideTop'),
+  compoundShape('eedi_1862', { top: '12 m', left: '6 m', innerH: '8 m', right: '4 m' }, 'wideTop'),
 ]
 
 fs.mkdirSync(outDir, { recursive: true })
