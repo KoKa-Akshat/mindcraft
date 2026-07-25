@@ -29,10 +29,9 @@
  *      reads an optional `reviews` array off the tutor doc if one is ever
  *      added, and renders an honest "no reviews yet" empty state otherwise.
  *      It does NOT fabricate star ratings or named reviewers.
- *   3. Akshat Koirala and Abhigya Koirala below are real people (MindCraft's
- *      founders — same bios used on the marketing site's About section),
- *      carried over verbatim from the original Book.tsx DEMO_TUTORS. They
- *      are not fabricated profiles.
+ *   3. The public demo roster below only includes Akshat for now. More tutors
+ *      should appear when they onboard with their own address, intro, subjects,
+ *      and real reviews.
  *   4. Tutoring today is virtual (Calendly + Google Meet, see
  *      TutorDashboard.tsx) — nobody meets a tutor in person at the studio
  *      address. The map/copy below says so explicitly so "find tutors near
@@ -83,10 +82,9 @@ interface Tutor {
   reviews: TutorReview[]
 }
 
-const DEFAULT_TUTOR_BIO = 'Calm, step-by-step math support for students who want a clearer plan, stronger habits, and less panic before exams.'
+const DEFAULT_TUTOR_BIO = 'Patient ACT, algebra, precalc, calculus, and stats help for students who need the first step to finally make sense.'
 
-// Real people (MindCraft's founders), carried over from the original
-// Book.tsx. Not fabricated — see file header.
+// Public demo tutor. Keep this honest: no fake extra tutors, no fake reviews.
 const DEMO_TUTORS: Tutor[] = [
   {
     id: 'akshat-koirala',
@@ -94,22 +92,9 @@ const DEMO_TUTORS: Tutor[] = [
     bio: DEFAULT_TUTOR_BIO,
     subjects: ['ACT Math', 'AP Calculus', 'Pre-Calc', 'Statistics'],
     calendlyUrl: 'https://calendly.com/joinmindcraft/30min',
-    sessionsCompleted: 40,
+    sessionsCompleted: 0,
     avatarColor: 'linear-gradient(135deg, #2D5016, #58CC02)',
     available: true,
-    location: STUDIO_LOCATION,
-    hasRealLocation: false,
-    reviews: [],
-  },
-  {
-    id: 'abhigya-koirala',
-    displayName: 'Abhigya Koirala',
-    bio: 'Applied math depth for students who want rigorous, calm support. Booking opens soon.',
-    subjects: ['Applied Math', 'Calculus', 'Proofs', 'Advanced Problem Solving'],
-    calendlyUrl: '',
-    sessionsCompleted: 0,
-    avatarColor: 'linear-gradient(135deg, #4b001d, #e4bf6a)',
-    available: false,
     location: STUDIO_LOCATION,
     hasRealLocation: false,
     reviews: [],
@@ -288,8 +273,8 @@ export default function FindTutor() {
   useEffect(() => {
     // Same fetch the old Book.tsx always used. NOTE: firestore.rules requires
     // request.auth != null to read any `users/{id}` doc, including this
-    // tutor-role query — so a signed-OUT visitor's query fails silently
-    // (caught below) and only the two demo/founder tutors show. This is a
+    // tutor-role query, so a signed-OUT visitor's query fails silently
+    // (caught below) and only the public demo tutor shows. This is a
     // pre-existing constraint, not something new introduced here.
     getDocs(query(collection(db, 'users'), where('role', '==', 'tutor')))
       .then(snap => {
@@ -443,7 +428,9 @@ export default function FindTutor() {
                   <div className={s.tutorHeaderText}>
                     <div className={s.tutorName}>{tutor.displayName}</div>
                     <div className={s.tutorStat}>
-                      {tutor.available ? `${tutor.sessionsCompleted}+ sessions` : 'Unavailable right now'}
+                      {tutor.available
+                        ? (tutor.sessionsCompleted > 0 ? `${tutor.sessionsCompleted}+ sessions` : 'Now booking')
+                        : 'Unavailable right now'}
                       {origin && <> · {formatDistanceMiles(tutor.distanceKm)}</>}
                     </div>
                   </div>
@@ -466,7 +453,7 @@ export default function FindTutor() {
                   disabled={!tutor.available}
                   onClick={e => { e.stopPropagation(); if (tutor.available) loadCalendly(tutor.calendlyUrl) }}
                 >
-                  {tutor.available ? 'Book Free Session →' : 'Booking Opens Soon'}
+                  {tutor.available ? 'Book Free Session' : 'Booking Opens Soon'}
                 </button>
               </div>
             ))}

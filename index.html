@@ -263,12 +263,21 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .tutor-benefits{list-style:none;display:grid;gap:12px;margin:22px 0 4px}
 .tutor-benefits li{position:relative;padding-left:22px;font-size:15px;line-height:1.5;font-weight:800;color:var(--ink)}
 .tutor-benefits li:before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--leaf-2);box-shadow:0 0 0 4px rgba(95,183,121,.16)}
-.findtutor-map-wrap{display:flex;flex-direction:column;gap:10px}
+.findtutor-map-wrap{display:flex;flex-direction:column;gap:12px}
+.findtutor-search{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px;border:1px solid var(--line);border-radius:22px;background:#fffdf7;box-shadow:0 16px 34px rgba(20,58,46,.08)}
+.findtutor-search input{min-width:0;border:1px solid rgba(20,58,46,.14);border-radius:16px;background:#fffaf0;color:var(--ink);padding:13px 14px;font-size:14px;font-weight:800;outline:none}
+.findtutor-search input:focus{border-color:var(--leaf);box-shadow:0 0 0 4px rgba(36,122,77,.10)}
+.findtutor-search button{border:0;border-radius:16px;background:var(--ink);color:#fffdf7;padding:0 18px;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
 .findtutor-map,.findtutor-map-fallback{width:100%;aspect-ratio:16/11;border-radius:26px;border:6px solid #fffdf7;box-shadow:0 18px 44px rgba(20,58,46,.18)}
 .findtutor-map{overflow:hidden;background:#e4f7dc}
 .findtutor-map-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;background:linear-gradient(160deg,#eaf5ea,#dceef6);font-weight:800;color:var(--muted)}
 .findtutor-map-fallback a{color:var(--leaf);text-decoration:underline;text-underline-offset:2px}
 .findtutor-map-caption{margin:0;text-align:center;font-family:"Caveat",cursive;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
+.findtutor-cardlet{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:24px;background:#fffdf7;box-shadow:0 16px 38px rgba(20,58,46,.08)}
+.findtutor-cardlet img{width:72px;height:72px;border-radius:22px;object-fit:cover;box-shadow:0 12px 24px rgba(20,58,46,.14)}
+.findtutor-cardlet strong{display:block;font-family:"Fredoka",system-ui,sans-serif;font-size:22px;letter-spacing:-.035em;color:var(--ink)}
+.findtutor-cardlet p{font-size:13px;line-height:1.45;margin:4px 0 0}
+.findtutor-distance{font-size:12px!important;font-weight:900!important;color:var(--leaf)!important}
 .notebook-photo{margin:18px 0 0}
 .notebook-photo img,.notebook-photo svg{display:block;width:100%;height:auto;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
 .notebook-photo figcaption{margin-top:12px;text-align:center;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
@@ -327,7 +336,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 .demo-tab-secondary{opacity:.72}
 .demo-tab-secondary.is-active{opacity:1}
 .demo-panel{display:flex;flex-direction:column;gap:12px}
-.demo-stage{position:relative;aspect-ratio:16/10;border-radius:34px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#0f2820;transition:aspect-ratio .3s var(--ease)}
+.demo-stage{position:relative;aspect-ratio:16/11;min-height:420px;border-radius:34px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#0f2820}
 .demo-stage[data-state="story"]{aspect-ratio:16/11}
 .demo-stage[data-state="story"] .demo-poster-quest,.demo-stage[data-state="story"] .demo-live{display:none}
 .demo-stage[data-state="quest"] .demo-poster-story,.demo-stage[data-state="quest"] .demo-live{display:none}
@@ -414,10 +423,12 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero .lead{font-size:16px;max-width:28ch}
   .hero-actions{width:100%}
   .hero-actions .btn{flex:1;min-width:140px}
+  .findtutor-search{grid-template-columns:1fr}
+  .findtutor-search button{min-height:44px}
   .form-card,.price-card,.quote,.step{padding:24px}
   .signal-row{grid-template-columns:1fr}
   .photo span{display:none}
-  .demo-stage{aspect-ratio:4/5}
+  .demo-stage,.demo-stage[data-state="story"]{aspect-ratio:4/5}
   .demo-try{padding:11px 18px;font-size:14px}
   .demo-sword{width:42px}
   .demo-story-stage{grid-template-columns:1fr}
@@ -481,7 +492,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="hero-stage">
         <p class="hero-brand">Mind<span>Craft</span></p>
         <h1>You were never<br>bad at <em>math.</em></h1>
-        <p class="lead">Find the moment it lost you. Build the story that brings you back.</p>
+        <p class="lead">Math usually breaks at one tiny weird step. We find it, name it, and make the next move feel obvious.</p>
         <div class="hero-actions">
           <a class="btn primary" href="#intake">Request a seat</a>
           <a class="btn soft" href="#demo">Try one thing</a>
@@ -498,8 +509,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
           <p class="label">Try one thing</p>
-          <h2 id="demoHeading">Every concept starts as a story.</h2>
-          <p class="demo-lead">The same story world a student opens before a single problem appears. Four real chapters, then the quest that follows.</p>
+          <h2 id="demoHeading">Who came up with these frivolous things?</h2>
+          <p class="demo-lead">Turns out: bookkeepers, sailors, astronomers, gamblers, and people trying very hard not to look ridiculous. Open the story first, then play the quest.</p>
           <div class="demo-toggle" role="tablist" aria-label="Choose what to try">
             <button type="button" class="demo-tab is-active" id="demoTabStory" role="tab" aria-selected="true">Story preview</button>
             <button type="button" class="demo-tab demo-tab-secondary" id="demoTabQuest" role="tab" aria-selected="false">Quest</button>
@@ -593,8 +604,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 
     <section class="steps" id="map" data-nav="paper">
       <div class="wrap reveal">
-        <p class="label">How it works</p>
-        <h2>Scan. Map. Click.</h2>
+        <p class="label">The learning map</p>
+        <h2>One map.<br>Then the click.</h2>
         <div class="step-grid stagger">
 
           <article class="step">
@@ -615,7 +626,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             </div>
             <div>
               <h3>Scan</h3>
-              <p>A few answers. The break shows up.</p>
+              <p>A few answers are enough. We are looking for the exact rung that slipped.</p>
             </div>
           </article>
 
@@ -636,7 +647,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             </div>
             <div>
               <h3>Map</h3>
-              <p>The route is ready before anyone sits down.</p>
+              <p>Student, parent, and tutor see the same route: mastered, shaky, untouched.</p>
             </div>
           </article>
 
@@ -658,47 +669,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             </div>
             <div>
               <h3>Click</h3>
-              <p>They explain it back. That is the click.</p>
+              <p>The tutor starts there. Not at page one. Not with a speech. Right there.</p>
             </div>
           </article>
 
-        </div>
-      </div>
-    </section>
-
-    <section class="system" id="system" data-nav="mint">
-      <div class="wrap system-grid">
-        <div class="system-copy reveal">
-          <p class="label">The map</p>
-          <h2>One map.<br>Everyone sees it.</h2>
-        </div>
-        <div class="board reveal" data-tilt>
-          <article class="board-card card-a">
-            <strong>Current break</strong>
-            <h3>Slope to equation form</h3>
-            <p>The student uses the point as the intercept.</p>
-            <div class="graph">
-              <svg viewBox="0 0 420 90" aria-hidden="true" role="img" aria-label="Progress path with a moving dot">
-                <path d="M4 72 C68 18 116 38 162 55 S240 84 302 32 S370 18 416 42" fill="none" stroke="rgba(36,122,77,0.16)" stroke-width="8" stroke-linecap="round"/>
-                <path id="breakProgressPath" class="board-graph-line" d="M4 72 C68 18 116 38 162 55 S240 84 302 32 S370 18 416 42" fill="none" stroke="#247a4d" stroke-width="3" stroke-linecap="round"/>
-                <circle class="graph-dot" r="6" fill="#c4f547" stroke="#247a4d" stroke-width="3">
-                  <animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto">
-                    <mpath href="#breakProgressPath"/>
-                  </animateMotion>
-                </circle>
-              </svg>
-            </div>
-          </article>
-          <article class="board-card card-b">
-            <strong>Next session</strong>
-            <h3>Graph first</h3>
-            <p>Sketch, mark the point, then solve.</p>
-          </article>
-          <article class="board-card card-c">
-            <strong>Parent signal</strong>
-            <p>What clicked, what is still stuck, what comes next.</p>
-          </article>
-          <div class="board-note script">point is not b</div>
         </div>
       </div>
     </section>
@@ -708,19 +682,32 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="findtutor-card reveal">
           <div class="findtutor-copy">
             <p class="label">For parents</p>
-            <h2>College tutors.<br>Near you.</h2>
+            <h2>Book Akshat.<br>Start with the map.</h2>
             <ul class="tutor-benefits">
-              <li>Close in age. Easier to ask the real question.</li>
-              <li>Stuck on this last year, not decades ago.</li>
-              <li>Sessions on Meet. Map the gap first.</li>
+              <li>Type your address and see how close the home base is.</li>
+              <li>The first session starts with the student’s actual gap map.</li>
+              <li>Meet online, work calmly, leave with the next move.</li>
             </ul>
             <div class="findtutor-actions">
-              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Open the map →</a>
+              <a class="btn primary" href="https://calendly.com/joinmindcraft/30min" target="_blank" rel="noopener">Book</a>
+              <a class="btn soft" href="https://mindcraft-93858.web.app/find-a-tutor">Full tutor page</a>
             </div>
           </div>
           <div class="findtutor-map-wrap">
+            <form class="findtutor-search" id="ftSearchForm">
+              <input id="ftAddress" type="search" placeholder="Type your address, city, or ZIP" autocomplete="street-address" aria-label="Find tutors near an address">
+              <button type="submit">Search</button>
+            </form>
             <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near the studio"></div>
-            <p class="findtutor-map-caption">tap a pin to meet a tutor</p>
+            <div class="findtutor-cardlet">
+              <img src="img/akshat-koirala.jpg" alt="" width="144" height="144">
+              <div>
+                <strong>Akshat Koirala</strong>
+                <p>Founder and math tutor. Patient ACT, algebra, precalc, calculus, and stats help for students who need the first step to finally make sense.</p>
+                <p class="findtutor-distance" id="ftDistance">Search your address to see distance.</p>
+              </div>
+            </div>
+            <p class="findtutor-map-caption">click the pin, search your address, then book</p>
           </div>
         </div>
       </div>
@@ -954,7 +941,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 
   </main>
   <footer>
-    <div><strong>Mind<span>Craft</span></strong><p>They were never bad at math. They were waiting for a better story.</p></div>
+    <div><strong>Mind<span>Craft</span></strong><p>Math is not a personality flaw. Usually it is one missing step with a very good disguise.</p></div>
     <div class="footer-nav">
       <div class="footer-links"><a href="mailto:joinmindcraft@gmail.com">Email</a><a href="tel:+17633405616">Call</a><a href="blog.html">Blog</a><a href="#top">Top</a></div>
       <div class="footer-social" aria-label="MindCraft social links">
@@ -1200,7 +1187,7 @@ const WORLD_ORIGIN = (location.hostname === "localhost" || location.hostname ===
 
 const DEMO_COPY = {
   story: {
-    heading: "Every concept starts as a story.",
+    heading: "Who came up with these frivolous things?",
     path: "/try/story/fractions_decimals?auto=1",
     showKitchen: false,
   },
@@ -1301,12 +1288,11 @@ demoPosterStory?.addEventListener("focusin", stopStoryAutoplay)
 demoPosterStory?.addEventListener("focusout", startStoryAutoplay)
 startStoryAutoplay()
 
-// Find a Tutor map (Job 4, "find a tutor near you" panel). This is a REAL
-// interactive Google Map (Maps JavaScript API, same key already baked into
-// the app's .env.production bundle so this is not a new secret exposure),
-// not a static mockup image, showing the two real founder-tutors — see
-// FindTutor.tsx's own DEMO_TUTORS header comment: Akshat and Abhigya Koirala
-// are real people, not fabricated demo profiles, carried over verbatim here.
+// Find a Tutor map. This is a real interactive Google Map, not a screenshot:
+// parents can type an address, the page geocodes it, recenters the map, and
+// shows the distance to MindCraft's current home base. The public marketing
+// page only shows Akshat for now; the full app page can pull registered tutor
+// accounts once onboarding/location profiles are ready.
 //
 // What this deliberately does NOT do: query Firestore for the full
 // registered-tutor roster the way FindTutor.tsx does. firestore.rules
@@ -1320,33 +1306,86 @@ startStoryAutoplay()
 // public webhook endpoint to serve a sanitized list server-side (Admin SDK)
 // — both are cross-lane calls (rules / webhook) that need a team decision,
 // not something to bolt on unilaterally from a marketing copy pass. So:
-// real interactive map, real named tutors, the exact same honest "home
-// base, not their literal address" labeling FindTutor.tsx already uses,
-// plus a prominent deep link to the real /find-a-tutor page for the live,
-// authenticated, complete view — which will show real per-tutor pins the
-// moment any tutor uses the new TutorDashboard "Your Location" field (see
-// TutorDashboard.tsx / ACTIVE_TASK.md).
+// real interactive map, one real named tutor, honest "home base, not literal
+// address" labeling, and a direct Book action.
 const FT_STUDIO = { lat: 44.9379, lng: -93.1706 }
 const FT_TUTORS = [
-  { name: "Akshat Koirala", bio: "ACT Math, AP Calculus, Pre-Calc, Statistics." },
-  { name: "Abhigya Koirala", bio: "Applied math, calculus, proofs. Booking opens soon." },
+  { name: "Akshat Koirala", bio: "Founder and math tutor. ACT, algebra, precalc, calculus, and statistics.", booking: "https://calendly.com/joinmindcraft/30min" },
 ]
-const FT_MAP_FALLBACK = '<div class="findtutor-map-fallback">Map unavailable right now.<br><a href="https://mindcraft-93858.web.app/find-a-tutor">Open Find a Tutor →</a> to see the live map.</div>'
+const FT_MAP_FALLBACK = '<div class="findtutor-map-fallback">Map unavailable right now.<br><a href="https://mindcraft-93858.web.app/find-a-tutor">Open Find a Tutor</a> to see the live map.</div>'
+let ftMap = null
+let ftGeocoder = null
+let ftAddressMarker = null
+
+function ftMiles(a, b) {
+  const toRad = (v) => v * Math.PI / 180
+  const R = 3958.7613
+  const dLat = toRad(b.lat - a.lat)
+  const dLng = toRad(b.lng - a.lng)
+  const lat1 = toRad(a.lat)
+  const lat2 = toRad(b.lat)
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)))
+}
+
+function updateFtDistance(origin, label) {
+  const distanceEl = document.getElementById("ftDistance")
+  if (!distanceEl) return
+  const miles = ftMiles(origin, FT_STUDIO)
+  distanceEl.textContent = "About " + miles.toFixed(miles < 10 ? 1 : 0) + " miles from " + label + ". Sessions are online."
+}
+
+function setFtAddressMarker(position, label) {
+  if (!ftMap || !window.google?.maps) return
+  if (!ftAddressMarker) {
+    ftAddressMarker = new google.maps.Marker({
+      map: ftMap,
+      title: "Your searched location",
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8,
+        fillColor: "#1d3a8a",
+        fillOpacity: 1,
+        strokeColor: "#fffdf7",
+        strokeWeight: 2,
+      },
+    })
+  }
+  ftAddressMarker.setPosition(position)
+  ftMap.panTo(position)
+  ftMap.setZoom(11)
+  updateFtDistance(position, label)
+}
+
+function searchFtAddress(address) {
+  if (!ftGeocoder || !address.trim()) return
+  ftGeocoder.geocode({ address }, (results, status) => {
+    if (status !== "OK" || !results?.[0]?.geometry?.location) {
+      const distanceEl = document.getElementById("ftDistance")
+      if (distanceEl) distanceEl.textContent = "Could not find that address. Try a city or ZIP code."
+      return
+    }
+    const loc = results[0].geometry.location
+    const position = { lat: loc.lat(), lng: loc.lng() }
+    setFtAddressMarker(position, results[0].formatted_address || "your address")
+  })
+}
 
 function initFtMap() {
   const mapEl = document.getElementById("ftMap")
   if (!mapEl || !window.google?.maps) return
   mapEl.dataset.loaded = "1"
-  const map = new google.maps.Map(mapEl, {
+  ftMap = new google.maps.Map(mapEl, {
     center: FT_STUDIO,
     zoom: 12,
     disableDefaultUI: true,
     zoomControl: true,
     styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] }],
   })
+  ftGeocoder = new google.maps.Geocoder()
   new google.maps.Marker({
     position: FT_STUDIO,
-    map,
+    map: ftMap,
     title: "MindCraft home base",
     icon: {
       path: google.maps.SymbolPath.CIRCLE,
@@ -1358,15 +1397,22 @@ function initFtMap() {
     },
   })
   FT_TUTORS.forEach((t) => {
-    const marker = new google.maps.Marker({ position: FT_STUDIO, map, title: t.name })
+    const marker = new google.maps.Marker({ position: FT_STUDIO, map: ftMap, title: t.name })
     const info = new google.maps.InfoWindow({
       content: "<div style=\"font:600 13px 'Nunito Sans',sans-serif;max-width:200px;color:#143a2e\">"
         + "<strong>" + t.name + "</strong>"
         + "<p style=\"margin:6px 0 0;font-weight:500;color:#5a5a5a\">" + t.bio + "</p>"
-        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">Home base shown, exact tutor location not set yet. Sessions are virtual.</p>"
+        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">Home base shown. Sessions are online.</p>"
+        + "<p style=\"margin:10px 0 0\"><a href=\"" + t.booking + "\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;padding:8px 11px;border-radius:999px;background:#143a2e;color:#fffdf7;text-decoration:none;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase\">Book</a></p>"
         + "</div>",
     })
-    marker.addListener("click", () => info.open(map, marker))
+    marker.addListener("click", () => info.open(ftMap, marker))
+  })
+  const searchForm = document.getElementById("ftSearchForm")
+  const addressInput = document.getElementById("ftAddress")
+  searchForm?.addEventListener("submit", (event) => {
+    event.preventDefault()
+    searchFtAddress(addressInput?.value || "")
   })
 }
 // Google Maps calls this global if the key/referrer restriction rejects the

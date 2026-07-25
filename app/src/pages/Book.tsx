@@ -15,7 +15,7 @@ interface Tutor {
   available: boolean
 }
 
-const DEFAULT_TUTOR_BIO = 'Calm, step-by-step math support for students who want a clearer plan, stronger habits, and less panic before exams.'
+const DEFAULT_TUTOR_BIO = 'Patient ACT, algebra, precalc, calculus, and stats help for students who need the first step to finally make sense.'
 
 const DEMO_TUTORS: Tutor[] = [
   {
@@ -24,19 +24,9 @@ const DEMO_TUTORS: Tutor[] = [
     bio: DEFAULT_TUTOR_BIO,
     subjects: ['ACT Math', 'AP Calculus', 'Pre-Calc', 'Statistics'],
     calendlyUrl: 'https://calendly.com/joinmindcraft/30min',
-    sessionsCompleted: 40,
+    sessionsCompleted: 0,
     avatarColor: 'linear-gradient(135deg, #2D5016, #58CC02)',
     available: true,
-  },
-  {
-    id: 'abhigya-koirala',
-    displayName: 'Abhigya Koirala',
-    bio: 'Applied math depth for students who want rigorous, calm support. Booking opens soon.',
-    subjects: ['Applied Math', 'Calculus', 'Proofs', 'Advanced Problem Solving'],
-    calendlyUrl: '',
-    sessionsCompleted: 0,
-    avatarColor: 'linear-gradient(135deg, #4b001d, #e4bf6a)',
-    available: false,
   },
 ]
 
@@ -123,7 +113,11 @@ export default function Book() {
                 </div>
                 <div>
                   <div className={s.tutorName}>{tutor.displayName}</div>
-                  <div className={s.tutorStat}>{tutor.available ? `${tutor.sessionsCompleted}+ sessions` : 'Unavailable right now'}</div>
+                  <div className={s.tutorStat}>
+                    {tutor.available
+                      ? (tutor.sessionsCompleted > 0 ? `${tutor.sessionsCompleted}+ sessions` : 'Now booking')
+                      : 'Unavailable right now'}
+                  </div>
                 </div>
               </div>
               <p className={s.tutorBio}>{tutor.bio}</p>
@@ -137,7 +131,7 @@ export default function Book() {
                 disabled={!tutor.available}
                 onClick={() => tutor.available && loadCalendly(tutor.calendlyUrl)}
               >
-                {tutor.available ? 'Book Free Session →' : 'Booking Opens Soon'}
+                {tutor.available ? 'Book Free Session' : 'Booking Opens Soon'}
               </button>
             </div>
           ))}
