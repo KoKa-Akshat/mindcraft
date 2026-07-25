@@ -1220,24 +1220,34 @@
   color: #1f6b45;
 }
 
+/* ── Contents roadmap (2026-07-24) ──────────────────────────────────────
+   Was a horizontally-scrolled row of narrow lane "cards", each stuffed with
+   a vertically-scrolled list of chips  -  two nested scroll regions and a
+   dense wall of icon+name+blurb rows read as an overloaded grid. Replaced
+   with a single vertical stack of full-width lanes (still one lane per ACT
+   section, still carrying the section wash/accent/ink so the four subjects
+   stay visually distinct), each lane now a horizontal line of evenly-spaced
+   dots  -  one dot per concept, name above, blurb below, connecting segments
+   drawn off each dot so the line reads as one continuous path regardless of
+   how tall the name/blurb text next to it happens to be. Dot fill + color
+   are driven by the REAL per-concept status/mastery from
+   GET /knowledge-graph/{uid} (learningPathGraph.ts STATUS_COLOR  -  the same
+   values the Map page already uses), not an invented metric. */
 .horizontalToc {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  scroll-snap-type: x mandatory;
   flex: 1;
   min-height: 0;
 }
 .tocLane {
   --lane-accent: #6b5cff;
   --lane-ink: #2a2430;
-  flex: 0 0 min(320px, 86vw);
-  scroll-snap-align: start;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px 14px 14px;
+  gap: 10px;
+  padding: 16px 14px 12px;
   border: 1.5px solid color-mix(in srgb, var(--lane-accent) 28%, transparent);
   border-radius: var(--desk-radius-md);
   box-shadow: var(--desk-shadow-raised);
@@ -1270,66 +1280,137 @@
   line-height: 1.35;
   color: color-mix(in srgb, var(--lane-ink) 72%, transparent);
 }
-.tocChips {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  overflow-y: auto;
-  min-height: 0;
-  padding-right: 2px;
-}
-.tocChip {
+
+/* Horizontal-scroll track: the responsive strategy for narrow widths is a
+   dedicated scroll region PER LANE (not page-level wrapping), so a lane with
+   11 concepts (Algebra) scrolls sideways on a phone while the lane header
+   and neighboring lanes stay put and readable. */
+.tocTrack {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  text-align: left;
-  border: 1.5px solid color-mix(in srgb, var(--lane-accent) 22%, rgba(58, 47, 85, 0.1));
-  border-radius: 14px 18px 12px 16px;
-  background: rgba(255, 253, 248, 0.92);
-  padding: 10px 12px;
-  cursor: pointer;
-  color: var(--desk-ink);
-  box-shadow: 0 2px 8px rgba(58, 47, 85, 0.05);
-  transition: transform 160ms var(--desk-ease-bounce), box-shadow 160ms var(--desk-ease-bounce), border-color 160ms var(--desk-ease);
-  white-space: normal;
-  font: inherit;
+  gap: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 6px 12px;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
 }
-.tocChip:hover {
-  transform: translateX(3px) scale(1.015);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lane-accent) 28%, transparent);
-  border-color: color-mix(in srgb, var(--lane-accent) 55%, transparent);
+.tocTrack::-webkit-scrollbar { height: 6px; }
+.tocTrack::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--lane-accent) 40%, transparent);
+  border-radius: 999px;
 }
-.tocChip:active { transform: translateX(1px) scale(1); }
-.tocChipSpark {
-  background: linear-gradient(145deg, #fff8c8, #ffe566);
-  border-color: rgba(196, 92, 0, 0.28);
-}
-.tocChipEmoji {
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.tocChipCopy {
+
+.tocNode {
+  --node-w: 128px;
+  --dot-size: 26px;
+  --node-color: #8B9BA8;
+  --node-fill: 0%;
+  flex: 0 0 var(--node-w);
+  width: var(--node-w);
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 2px;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  position: relative;
+  transition: opacity 200ms var(--desk-ease), transform 160ms var(--desk-ease-bounce);
 }
-.tocChipName {
-  font-family: var(--tok-font-hand);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--desk-ink);
-}
-.tocChipBlurb {
+.tocNode:hover { transform: translateY(-2px); }
+.tocNode:active { transform: translateY(0); }
+.tocNode[data-state='locked'] { opacity: 0.62; }
+
+.tocNodeName {
   font-family: var(--tok-font-sans);
-  font-size: 11.5px;
-  line-height: 1.35;
-  color: rgba(42, 36, 48, 0.58);
+  font-weight: 700;
+  font-size: 12.5px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--lane-ink);
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* The dot itself: a conic-gradient "pie" fills clockwise by raw mastery
+   percentage (the "slowly fills" ask)  -  hollow/gray at 0%, part-colored
+   mid-mastery, and forced to a solid glowing fill once status crosses into
+   a mastered tier (the "lights up" ask, data-state='complete' below). The
+   connecting line to the previous/next dot is drawn from the dot itself
+   (not the whole column) via ::before/::after, so it always passes through
+   the dot's own vertical center no matter how tall the name/blurb text
+   above/below it is. */
+.tocNodeDot {
+  position: relative;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(var(--node-color) var(--node-fill), rgba(58, 47, 85, 0.12) 0);
+  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), inset 0 0 0 1.5px rgba(58, 47, 85, 0.16);
+  transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce), background 420ms var(--desk-ease);
+  z-index: 1;
+}
+.tocNode:hover .tocNodeDot { transform: scale(1.12); }
+
+.tocNodeDot::before,
+.tocNodeDot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  width: calc((var(--node-w) - var(--dot-size)) / 2);
+  transform: translateY(-50%);
+  background: color-mix(in srgb, var(--node-color) 50%, rgba(58, 47, 85, 0.14));
+  z-index: -1;
+}
+.tocNodeDot::before { right: 100%; }
+.tocNodeDot::after  { left: 100%; }
+.tocNode:first-child .tocNodeDot::before { visibility: hidden; }
+.tocNode:last-child  .tocNodeDot::after  { visibility: hidden; }
+
+.tocNode[data-state='complete'] .tocNodeDot {
+  background: var(--node-color);
+  box-shadow:
+    0 0 0 3px rgba(255, 253, 248, 0.95),
+    0 0 0 5px color-mix(in srgb, var(--node-color) 35%, transparent),
+    0 0 10px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNodeCheck {
+  color: #fffdf8;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+.tocNode[data-state='needs'] .tocNodeDot {
+  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), 0 0 8px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNodeSpark .tocNodeDot {
+  box-shadow:
+    0 0 0 3px rgba(255, 253, 248, 0.95),
+    0 0 0 5px rgba(255, 200, 40, 0.55),
+    0 0 12px rgba(255, 190, 20, 0.65);
+}
+.tocNodeSpark .tocNodeName { color: #a15c00; }
+
+.tocNodeBlurb {
+  font-family: var(--tok-font-sans);
+  font-size: 10.5px;
+  line-height: 1.32;
+  color: rgba(42, 36, 48, 0.58);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1395,4 +1476,14 @@
      the old BookShell's .gutter (Book.module.css) hiding on narrow screens
      to keep the tiny stage width for real content. */
   .deskSpine { display: none; }
+
+  /* Contents roadmap on phone width: each lane keeps its own horizontal
+     scroll track (built into .tocTrack at any width), just with smaller
+     dots/columns so more of the path is visible before the student has to
+     swipe, and tighter lane padding to leave more room for the track. */
+  .tocLane { padding: 12px 10px 10px; }
+  .tocLaneTitle { font-size: 24px; }
+  .tocNode { --node-w: 100px; --dot-size: 20px; }
+  .tocNodeName { font-size: 11px; }
+  .tocNodeBlurb { font-size: 9.5px; -webkit-line-clamp: 2; }
 }

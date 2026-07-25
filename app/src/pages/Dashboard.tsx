@@ -21,6 +21,8 @@ import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIn
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
+import { fetchKnowledgeGraph } from '../lib/graphCache'
+import { STATUS_COLOR } from '../lib/learningPathGraph'
 import {
   buildWeeklyPracticePaper,
   cacheWeeklyPaper,
@@ -31,6 +33,23 @@ import { loadDashboardPersonalization } from '../lib/dashboardPersonalization'
 import s from './Dashboard.module.css'
 
 const SOLVER_MAX_CHARS = 1200
+
+/** Contents roadmap dot state. Backed by the same per-concept `status`/
+ * `mastery` the Knowledge Map (ConstellationGpsExplorer) reads off
+ * GET /knowledge-graph/{uid} — same signal, same status vocabulary
+ * (learningPathGraph.ts STATUS_COLOR), so a topic that reads "mastered" here
+ * reads mastered on the Map too. Not a new/invented completion metric. */
+const TOC_MASTERED_STATUSES = new Set(['mastered', 'stable', 'comeback_built', 'ready_for_challenge'])
+const TOC_STRUGGLING_STATUSES = new Set(['struggling', 'open_gap'])
+
+type TocDotState = 'complete' | 'needs' | 'progress' | 'locked'
+
+function tocDotState(status: string): TocDotState {
+  if (TOC_MASTERED_STATUSES.has(status)) return 'complete'
+  if (TOC_STRUGGLING_STATUSES.has(status)) return 'needs'
+  if (status === 'in_progress' || status === 'repairing') return 'progress'
+  return 'locked'
+}
 
 export default function Dashboard() {
   const user = useUser()
@@ -55,6 +74,7 @@ export default function Dashboard() {
   ))
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
+  const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
 
   const rawView = searchParams.get('view') ?? 'home'
   const view = (
@@ -129,6 +149,28 @@ export default function Dashboard() {
   useEffect(() => {
     if (!uid) return
     getUserRole(uid).then(role => setIsAdmin(role === 'admin'))
+  }, [uid])
+
+  // Contents roadmap completion signal — same GET /knowledge-graph/{uid} the
+  // Map view reads (see graphCache.ts), so "lit up" here means the same
+  // per-concept mastery/status the rest of the app already shows.
+  useEffect(() => {
+    if (!uid) return
+    let cancelled = false
+    void fetchKnowledgeGraph(uid).then(kg => {
+      if (cancelled || !kg) return
+      const nodes = (kg.nodes ?? []) as Array<{ id?: unknown; mastery?: unknown; status?: unknown }>
+      const next: Record<string, { mastery: number; status: string }> = {}
+      for (const n of nodes) {
+        if (typeof n.id !== 'string') continue
+        next[n.id] = {
+          mastery: typeof n.mastery === 'number' ? n.mastery : 0,
+          status: typeof n.status === 'string' ? n.status : 'untouched',
+        }
+      }
+      setConceptProgress(next)
+    })
+    return () => { cancelled = true }
   }, [uid])
 
   useEffect(() => {
@@ -395,21 +437,34 @@ export default function Dashboard() {
                           <p className={s.tocLaneBlurb}>{section.blurb}</p>
                         </div>
                       </header>
-                      <div className={s.tocChips}>
-                        {section.conceptIds.map(id => (
-                          <button
-                            key={id}
-                            type="button"
-                            className={`${s.tocChip} ${id === sparkId ? s.tocChipSpark : ''}`}
-                            onClick={() => openChapter(id)}
-                          >
-                            <img className={s.tocChipEmoji} src={conceptIconUrl(id)} alt="" draggable={false} />
-                            <span className={s.tocChipCopy}>
-                              <span className={s.tocChipName}>{actConceptLabel(id)}</span>
-                              <span className={s.tocChipBlurb}>{actConceptBlurb(id)}</span>
-                            </span>
-                          </button>
-                        ))}
+                      <div className={s.tocTrack}>
+                        {section.conceptIds.map(id => {
+                          const progress = conceptProgress[id]
+                          const mastery = Math.max(0, Math.min(1, progress?.mastery ?? 0))
+                          const status = progress?.status ?? 'untouched'
+                          const dotState = tocDotState(status)
+                          const dotColor = STATUS_COLOR[status] ?? STATUS_COLOR.untouched
+                          return (
+                            <button
+                              key={id}
+                              type="button"
+                              className={`${s.tocNode} ${id === sparkId ? s.tocNodeSpark : ''}`}
+                              data-state={dotState}
+                              style={{
+                                ['--node-color' as string]: dotColor,
+                                ['--node-fill' as string]: `${Math.round(mastery * 100)}%`,
+                              }}
+                              title={`${actConceptLabel(id)} — ${Math.round(mastery * 100)}% mastery`}
+                              onClick={() => openChapter(id)}
+                            >
+                              <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
+                              <span className={s.tocNodeDot} aria-hidden="true">
+                                {dotState === 'complete' && <span className={s.tocNodeCheck}>✓</span>}
+                              </span>
+                              <span className={s.tocNodeBlurb}>{actConceptBlurb(id)}</span>
+                            </button>
+                          )
+                        })}
                       </div>
                     </section>
                   ))}

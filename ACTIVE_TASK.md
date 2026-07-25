@@ -4,6 +4,112 @@
 
 ---
 
+## Contents "roadmap" redesign — chip grid → horizontal dot path (Fable 5, 2026-07-24)
+
+Akshat's brief verbatim: the Contents chip grid felt overloading; wanted "a
+line... connect each segment to it and the line has dots that say topic...
+under it are our subtopics... once you complete it, it lights up or slowly
+fills... like a cool map."
+
+**What changed.** `Dashboard.tsx`/`Dashboard.module.css` Contents section
+(`ACT_TOC_SECTIONS` render). Each of the 4 lanes (Warm-ups 7, Algebra 11,
+Geometry 7, Data & chance 2 concepts — counted from `actOntologyCoverage.json`
+before deciding layout) still keeps its own header (icon/title/blurb, same
+wash/accent/ink) but the chip grid inside is now a horizontal line of evenly
+spaced dots: concept name above (was `--tok-font-hand` Caveat, now
+`--tok-font-sans` DM Sans, matching how the blurb text already read, per the
+brief's "nice fonts properly spaced" ask and the existing type convention),
+dot in the middle, `actConceptBlurb()` text below (same real per-concept
+blurb data that existed before — no invented subtopic data). Connecting line
+segments are drawn off each dot via `::before`/`::after` (not one big
+absolute line), so they always cross the dot's true vertical center
+regardless of how tall the name/blurb text next to it is.
+
+**Completion signal — real, not invented.** Dot fill/color is the same
+per-concept `status`/`mastery` the Knowledge Map already reads off
+`GET /knowledge-graph/{uid}` (`fetchKnowledgeGraph` in `graphCache.ts`), using
+the exact same status→color table the Map uses
+(`STATUS_COLOR` in `learningPathGraph.ts`) — a topic reading "mastered" here
+reads mastered on the Map too. Dot rendering:
+- `conic-gradient` fill sized by raw mastery % (0–100) → the "slowly fills" ask.
+- `mastered`/`stable`/`comeback_built`/`ready_for_challenge` → solid glowing
+  fill + white checkmark (the "lights up" ask).
+- `struggling`/`open_gap` → red glow ring (still the normal open/red status,
+  not a fake "locked" state).
+- `in_progress`/`repairing` → partial blue pie fill.
+- `untouched`/no data → hollow gray dot, whole node dimmed to 62% opacity
+  (visual-only "not started yet," concepts stay fully clickable — this is
+  not a real prerequisite gate, nothing in this app blocks a student from
+  opening any topic).
+New `Dashboard.tsx` effect fetches the KG once per uid and maps `node.id →
+{mastery, status}`; falls back to `untouched`/0 for any concept with no KG
+entry yet (new student, or KG fetch fails) — dots just render dim, no crash.
+
+**Layout / responsive strategy.** Container went from a horizontally-scrolled
+row of narrow 320px lane cards (with a second, nested vertical scroll of
+chips inside each) to a vertical stack of full-width lanes — checked
+`.stagePane` already has `overflow:auto` so a taller page just scrolls
+normally, no new outer scroll region needed. Each lane's dot track
+(`.tocTrack`) is its OWN horizontal-scroll region (`overflow-x:auto`,
+confirmed via a real DOM check: Algebra's 11-node track measures
+`scrollWidth 1420 > clientWidth 1332` at 1440px wide, i.e. it truly
+overflows and scrolls) — this is the chosen narrow-width strategy: each lane
+scrolls sideways independently rather than wrapping to multiple rows, so a
+lane header stays put while its path scrolls under it. Verified this same
+behavior holds at 390px mobile width (see screenshots below) with a shrunk
+`--node-w`/`--dot-size` inside the existing 720px media query block.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **119 passed / 1 skipped (8 files)**, matches baseline exactly.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning, unrelated).
+- `grep manjushree app/src/App.tsx` — 4 references, untouched, checked before
+  and after the screenshot shim below.
+
+Screenshots taken via a temporary, `VITE_SCREENSHOT_MODE`-gated `AuthGuard`
+bypass in `App.tsx` (mock `UserContext`, no real Firebase auth) plus the same
+two narrower bypasses used by the previous session today: `Dashboard.tsx`'s
+diagnostic-completion check short-circuited, and `useStudentData.ts`
+short-circuited to canned data with zero Firestore reads. Also added a
+temporary canned `conceptProgress` block in `Dashboard.tsx` (screenshot-mode
+only) so the "new" screenshots could show all four dot states (mastered/
+in-progress/struggling/untouched) without a live ML fetch. For the OLD
+chip-grid reference shot, `Dashboard.tsx`/`Dashboard.module.css` were
+temporarily swapped for their `git show HEAD:...` (pre-session) versions,
+screenshotted, then swapped back to the real edited versions. Dev server:
+`VITE_SCREENSHOT_MODE=1 npx vite --port 5197 --strictPort`, driven with a
+local Playwright script (`app/.tmp_shot*.mjs`, deleted after). All shims
+fully reverted from byte-for-byte pre-shim backups, confirmed via `diff`
+returning identical on all 4 touched files, and a fresh
+`grep -rn "VITE_SCREENSHOT_MODE\|SCREENSHOT_MODE" app/src/App.tsx
+app/src/pages/Dashboard.tsx app/src/hooks/useStudentData.ts` returning empty.
+`tsc`/`vitest`/`build` all re-run clean after the revert (numbers above are
+post-revert).
+
+7 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+`contents_OLD_chipgrid_desktop.png` (the dense 4-column chip wall, for the
+record), `contents_NEW_roadmap_desktop.png` (the new horizontal dot path,
+1440px), `contents_NEW_roadmap_scrolled_algebra.png` /
+`_scrolled_bottom.png` (proof the per-lane horizontal scroll and page
+vertical scroll both work — Algebra's rightmost nodes and the Data & chance
+lane are otherwise off-screen), `contents_NEW_roadmap_mobile.png` /
+`_mobile_scrolled.png` (390px width, before/after scrolling the Warm-ups
+lane sideways — confirms the responsive strategy holds on phone width).
+
+Files touched: `app/src/pages/Dashboard.tsx` (imports `fetchKnowledgeGraph` +
+`STATUS_COLOR`, `conceptProgress` state + fetch effect, `tocDotState()`
+helper, Contents JSX chip-grid → dot-track), `app/src/pages/Dashboard.module.css`
+(`.horizontalToc`/`.tocLane` reworked for vertical stacking, `.tocChips`/
+`.tocChip*` replaced with `.tocTrack`/`.tocNode`/`.tocNodeDot`/etc., mobile
+breakpoint additions in the existing 720px query).
+
+Not done / open: no animated transition when mastery changes mid-session
+(dots reflect whatever the KG fetch returned on load, not a live tween) —
+fine for now since mastery changes on a different page (Practice), not while
+sitting on Contents.
+
+---
+
 ## Wizard mascot background removal + weekly paper lock (Fable 5, 2026-07-24)
 
 **Job 1 — mascot rectangle.** Root cause confirmed by inspecting the actual
