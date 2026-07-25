@@ -289,7 +289,7 @@ export default function StorySlideshow() {
               {frame.questionBridge}
             </p>
           )}
-          <HighlightedStem text={q.question} ink={THEME.ink} accent={THEME.accent} highlights={[]} />
+          <HighlightedStem text={q.question} ink={THEME.ink} accent={THEME.accent} highlights={[]} questionId={q.id} />
           <div className={`${s.qChoices} ${s.stickerChoices}`}>
             {q.choices.slice(0, 4).map((c, i) => {
               const out = (eliminated[qIdx] ?? []).includes(i)

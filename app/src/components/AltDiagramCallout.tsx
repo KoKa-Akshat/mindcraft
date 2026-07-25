@@ -18,6 +18,20 @@ import { renderNoBreakCoordinates } from '../lib/noBreakCoords'
 import s from './AltDiagramCallout.module.css'
 
 const LABEL_FONT = { fontSize: 11, fontFamily: 'var(--tok-font-mono)' } as const
+const generatedDiagramAssets = import.meta.glob('../data/generatedDiagrams/*.{png,jpg,jpeg,webp,svg}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>
+
+function generatedDiagramFor(questionId?: string): string | null {
+  if (!questionId) return null
+  const match = Object.entries(generatedDiagramAssets).find(([path]) => {
+    const file = path.split('/').pop() ?? ''
+    return file.replace(/\.(png|jpe?g|webp|svg)$/i, '') === questionId
+  })
+  return match?.[1] ?? null
+}
 
 function DashLineFigure({ diagram, accent }: { diagram: DashLineDiagram; accent: string }) {
   const { count, marks, arrow } = diagram
@@ -502,8 +516,9 @@ function ShapePairFigure({ diagram, accent }: { diagram: ShapePairDiagram; accen
   )
 }
 
-export default function AltDiagramCallout({ alt, accent = '#1d3a8a' }: { alt: string; accent?: string }) {
+export default function AltDiagramCallout({ alt, accent = '#1d3a8a', questionId }: { alt: string; accent?: string; questionId?: string }) {
   const parsed = useMemo(() => parseAltDiagram(alt), [alt])
+  const generatedSrc = generatedDiagramFor(questionId)
 
   if (parsed?.kind === 'dashline') {
     return (
@@ -530,6 +545,14 @@ export default function AltDiagramCallout({ alt, accent = '#1d3a8a' }: { alt: st
   if (parsed?.kind === 'spinner') return <SpinnerFigure diagram={parsed} accent={accent} />
   if (parsed?.kind === 'regularpolygon') return <RegularPolygonFigure diagram={parsed} accent={accent} />
   if (parsed?.kind === 'shapepair') return <ShapePairFigure diagram={parsed} accent={accent} />
+
+  if (generatedSrc) {
+    return (
+      <span className={s.generatedWrap}>
+        <img className={s.generatedImage} src={generatedSrc} alt={humanizeAltCaption(alt)} />
+      </span>
+    )
+  }
 
   return (
     <span className={s.box} style={{ borderLeftColor: accent }}>

@@ -2278,7 +2278,7 @@ export default function Practice() {
                           localStory.settingLine, and currentQ.storyContext are left
                           wired on their source objects for the future wrapping agent;
                           intentionally not rendered here anymore. */}
-                      <p className={s.questionText}><MathText text={currentQ.question} /></p>
+                      <p className={s.questionText}><MathText text={currentQ.question} questionId={currentQ.id} /></p>
                     </div>
                     <div className={s.questionBody}>
                       {/* Illustrative sessionArt image block removed (see

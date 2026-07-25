@@ -13,15 +13,15 @@ function escapeRegExp(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function highlightPlainText(text: string, spans: HighlightSpan[], accent: string) {
-  if (!spans.length || !text.trim()) return <MathText text={text} />
+function highlightPlainText(text: string, spans: HighlightSpan[], accent: string, questionId?: string) {
+  if (!spans.length || !text.trim()) return <MathText text={text} questionId={questionId} />
 
   const focus = spans.find(h => h.kind === 'focus') ?? spans.find(h => h.kind === 'ask')
-  if (!focus?.phrase) return <MathText text={text} />
+  if (!focus?.phrase) return <MathText text={text} questionId={questionId} />
 
   const re = new RegExp(`(${escapeRegExp(focus.phrase)})`, 'i')
   const parts = text.split(re)
-  if (parts.length < 2) return <MathText text={text} />
+  if (parts.length < 2) return <MathText text={text} questionId={questionId} />
 
   const definition = glossaryFor(focus.phrase)
 
@@ -37,12 +37,12 @@ function highlightPlainText(text: string, spans: HighlightSpan[], accent: string
               title={definition}
               tabIndex={definition ? 0 : undefined}
             >
-              <MathText text={part} />
+              <MathText text={part} questionId={questionId} />
               {definition && <span className={s.glossaryTip}>{definition}</span>}
             </mark>
           )
         }
-        return part ? <MathText key={i} text={part} /> : null
+        return part ? <MathText key={i} text={part} questionId={questionId} /> : null
       })}
     </>
   )
@@ -54,9 +54,10 @@ interface Props {
   accent: string
   highlights?: HighlightSpan[]
   className?: string
+  questionId?: string
 }
 
-export default function HighlightedStem({ text, ink, accent, highlights = [], className }: Props) {
+export default function HighlightedStem({ text, ink, accent, highlights = [], className, questionId }: Props) {
   // Balanced-paren split (not a regex) — see lib/altDiagram.ts for why: the
   // alt text a `(Diagram: ...)` callout wraps often contains its own nested
   // parens (coordinate pairs like "(4,10)"), and a naive regex stops at the
@@ -71,9 +72,9 @@ export default function HighlightedStem({ text, ink, accent, highlights = [], cl
           // AltDiagramCallout draws a real diagram for recognizable alt-text
           // patterns (e.g. number lines) instead of showing the raw
           // accessibility description as a sentence — see lib/altDiagram.ts.
-          return <AltDiagramCallout key={i} alt={part.alt} accent={accent} />
+          return <AltDiagramCallout key={i} alt={part.alt} accent={accent} questionId={questionId} />
         }
-        return <span key={i}>{highlightPlainText(part.content, highlights, accent)}</span>
+        return <span key={i}>{highlightPlainText(part.content, highlights, accent, questionId)}</span>
       })}
     </p>
   )

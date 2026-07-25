@@ -139,9 +139,10 @@ function parse(text: string): Segment[] {
 interface Props {
   text: string
   className?: string
+  questionId?: string
 }
 
-export default function MathText({ text, className }: Props) {
+export default function MathText({ text, className, questionId }: Props) {
   const cleaned = useMemo(() => replaceMarkdownImages(text), [text])
   const segments = useMemo(() => parse(cleaned), [cleaned])
 
@@ -158,7 +159,7 @@ export default function MathText({ text, className }: Props) {
           return <span key={i}>{renderNoBreakCoordinates(seg.content, `mt-${i}`)}</span>
         }
         if (seg.type === 'diagram') {
-          return <AltDiagramCallout key={i} alt={seg.alt} />
+          return <AltDiagramCallout key={i} alt={seg.alt} questionId={questionId} />
         }
         if (seg.type === 'inline') {
           const html = renderLatex(seg.expr, false)

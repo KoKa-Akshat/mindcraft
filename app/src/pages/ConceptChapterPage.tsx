@@ -839,6 +839,7 @@ export default function ConceptChapterPage() {
             ink={theme.ink}
             accent={theme.accent}
             highlights={journalGuide.highlights}
+            questionId={q.id}
           />
 
           <div className={`${s.qChoices} ${s.stickerChoices}`}>

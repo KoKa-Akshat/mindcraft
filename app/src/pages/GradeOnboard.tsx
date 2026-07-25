@@ -403,6 +403,7 @@ export default function GradeOnboard() {
                           accent={probeTheme.accent}
                           highlights={journalGuide.highlights}
                           className={s.questionText}
+                          questionId={currentQ.id}
                         />
                         <InteractiveWidget
                           conceptId={currentQ.conceptId}
