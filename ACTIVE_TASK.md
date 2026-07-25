@@ -4,6 +4,141 @@
 
 ---
 
+## Marketing cinematic polish pass: story-first demo, hero trust strip, video-ready reviews (Fable 5, 2026-07-25)
+
+Product lane, `index.html` only. Design/polish pass on top of the same-day
+Cursor copy-tightening pass already on disk (that pass had reverted the demo
+panel's default tab back to Quest/"Sword of Wisdom" leading, with Story as a
+plain second tab, labels "Quest"/"Story" — see `git diff 56e88ea0 cbc26981 --
+index.html` for the exact revert). Preserved the full-bleed dark
+constellation hero exactly as-is (`.hero{background:#070f0c...}` + the
+animated map SVG) since that is the specific moment praised as "wow lovely" —
+zero changes to `.hero-bg`/`.hero-map`.
+
+**Job 1 — demo panel resize, Story Preview leads.** `#demo` tabs reordered so
+"Story preview" is first in the DOM and the default active/rendered state
+(`data-state="story"` on `#demoStage`, `activeDemo = "story"` in JS,
+`DEMO_COPY` object reordered to match); Quest ("Sword of Wisdom") is now the
+second tab, `.demo-tab-secondary` (opacity .72 at rest, full opacity when
+active) so it visually reads lighter-weight even before being clicked. The
+story stage itself got measurably bigger, not just reordered:
+`.demo-stage[data-state="story"]{aspect-ratio:16/11}` (taller than the
+16/10 base used for Quest/live), photo `clamp(140px,19vw,225px)` (was
+120-190px), title `clamp(24px,3.4vw,34px)` (was 22-30px), text box 5-line
+clamp at `clamp(13px,1.5vw,15.5px)` (was 4-line/12.5-14px), panel padding
+bumped, and the whole `.demo-wrap` grid gave the panel column more width
+(`.8fr 1.35fr`, was `.86fr 1.3fr`). Mobile keeps the smaller 4-line text
+clamp to avoid overflow in the single-column stacked layout.
+
+**Real slideshow, not a static single card** (this was the literal ask,
+"story slide on full display as slideshow"). Four real MindCraft chapter
+openings now cross-fade automatically every 5.2s: Fractions and Decimals
+(Simon Stevin, already live), Ratios and Proportions (Thales and the
+pyramid), Order of Operations (Ada Lovelace), Linear Equations (John
+Harrison's marine chronometer) — all real story text pulled from
+`app/src/data/conceptStories.json` and trimmed to a 2-3 sentence excerpt in
+the same voice as the existing card, no invented copy. Art: the 3 new slides
+use real generated chapter photos already in
+`app/src/assets/canvas/generated/story-{concept}.jpg` (the same "42 chapter
+photos" asset set), resized 800x800 and recompressed with `sips` into
+`img/story-ratios-proportions.jpg` (220KB), `img/story-order-of-operations.jpg`
+(248KB), `img/story-linear-equations.jpg` (236KB) — root `img/` because the
+marketing Hosting target's `ignore` list excludes `app/**`, same reasoning as
+the existing `img/story-fractions-decimals.jpg`. All 4 slide `<img>` tags got
+`loading="lazy"` (below the fold). Sizes are in line with other images
+already on this page (`sword-of-wisdom-valley.jpg` is 308KB,
+`akshat-koirala.jpg` is 900KB), not a new weight problem.
+
+Implementation: each slide reuses the existing `.demo-story-stage` card
+markup/CSS verbatim (pastel paper card, polaroid photo, eyebrow/title/text),
+just wrapped in a new `.demo-story-viewport` (`position:relative`) with each
+slide `position:absolute;inset:0` and an opacity crossfade
+(`.is-active{opacity:1}`), so no existing styling had to be duplicated or
+renamed. Dots converted from decorative `<span>` to real `<button>`s
+(click-to-jump, `aria-label` per concept, resets the autoplay timer).
+Autoplay pauses on pointer/focus hover over the poster, only advances while
+the story tab is actually the visible one, and **does not run at all** under
+`prefers-reduced-motion` (dots still work by hand) — verified via Playwright
+`reducedMotion:'reduce'` context: slide index genuinely never moved on its
+own over 6s, `matchMedia('(prefers-reduced-motion: reduce)').matches` true.
+The single "Try" button stays pinned outside the crossfading slides and
+always opens the one confirmed-wired live route
+(`/try/story/fractions_decimals?auto=1`) regardless of which slide is
+showing — did not invent per-concept `/try/story/...` routes for the other 3
+slides since that app-side wiring is unverified and out of this lane's scope.
+
+**No new JS animation library added.** Evaluated motion.dev/anime.js per the
+brief and made a deliberate call not to add either: the page already has a
+full hand-rolled system (IntersectionObserver reveal/stagger, scroll-progress
+bar, pointer-based `[data-tilt]`, nav auto-hide, animated SVG paths) that
+covers everything this pass needed, including the new crossfade (plain CSS
+opacity transition + ~40 lines of vanilla JS for the autoplay/dots). Adding a
+library would have meant new page weight for something the existing system
+already does. Zero new dependencies, zero new script tags.
+
+**Job 2 — hero trust strip ("parent heartstrings").** Added a `.hero-trust`
+row under the hero CTAs: `1:1 / A real college tutor. Never a chatbot.`,
+`48 hrs / We reply to every family, ourselves.`, `Map first / We find the gap
+before session one.` All three are real claims already substantiated
+elsewhere on this same page (the 48-hour reply promise in the pricing card,
+"session one starts on the map" in the pricing includes list) surfaced
+earlier and given real emotional framing, not new invented numbers. Fixes a
+real gap found while reading the page: the CSS classes `.stats`/`.stat` still
+exist from an older hero design but the hero rework that shipped earlier
+today (`display:none!important` on them) left the hero with **zero**
+numbers/stats at all, contradicting an earlier session's own changelog entry
+that claimed "stats now visually lead." This restores that promise with
+real, page-consistent facts. Respects reduced motion (`.hero-trust` added to
+the existing animation-kill selector list).
+
+**Job 3 — founders "not buried."** Added a "Team" link to the nav
+(`Preview | Tutors | Team | Apply`) pointing at `#about` — previously there
+was no direct nav path to the founder section at all.
+
+**Job 4 — reviews section made video-ready.** `#reviews` was text-only
+("Waiting on the first one" in a dashed box). Replaced with a real 3-card
+`.video-grid`: each `.video-slot` has a 16:10 gradient thumbnail (three
+different brand-palette gradients, not identical), a centered play-button
+affordance, and an honest role label + "Recording soon" note (`Parent
+review`, `Student review`, `Tutor review` — role placeholders, no invented
+names/quotes/star ratings). This is layout-ready to receive real
+`<video>`/thumbnail content the moment the 3 real videos exist; no fabricated
+testimonial content added. Removed the now-orphaned `.reviews-slot` CSS
+(only usage was the markup just replaced).
+
+**Verification, all real:** served via `python3 -m http.server` from repo
+root, driven with Playwright Chromium (already cached, `npx playwright`,
+nothing added to any `package.json`/lock — this is a static-HTML-only lane).
+Zero console errors, zero page errors, across desktop (1440px), mobile
+(390px), and a `reducedMotion:'reduce'` emulated context. Confirmed the story
+slideshow autoplay genuinely advances slides under normal motion and
+genuinely does not under reduced motion. `grep "—" index.html` → only
+pre-existing code comments, no em dashes in new visible copy. No duplicate
+`id`s introduced. `<section>`/`</section>` counts balanced (10/10).
+Screenshots in `agent_work/product/screenshots_2026-07-25/`:
+`polish_hero_desktop.png`, `polish_hero_mobile.png`,
+`polish_hero_reduced_motion.png`, `polish_demo_story_default.png` (slide 1,
+default state), `polish_demo_story_slide3.png` (dot-click to slide 3, Ada
+Lovelace), `polish_demo_quest_secondary.png` (Quest tab active, still reads
+secondary), `polish_demo_mobile.png`, `polish_reviews_video_ready.png`,
+`polish_about_founders.png`, `polish_fullpage_desktop.png` (full scroll-through,
+every section's `.reveal` walked before capture).
+
+**New image needs identified for Akshat to prompt (not generated here, per
+instructions):** none required for this pass — the 3 additional slideshow
+images were covered by existing generated chapter art
+(`app/src/assets/canvas/generated/story-*.jpg`), and the video review slots
+intentionally use CSS gradient placeholders (no art needed until real videos
+exist to thumbnail from).
+
+Files touched: `index.html` only. New image assets:
+`img/story-ratios-proportions.jpg`, `img/story-order-of-operations.jpg`,
+`img/story-linear-equations.jpg` (copied/resized from already-generated
+`app/src/assets/canvas/generated/`, not newly generated art). Did not
+commit/push — verify only, per instructions.
+
+---
+
 ## Hero bar + Weekly Review pill fix pass (Fable 5, 2026-07-25)
 
 Scope: `app/src/pages/Dashboard.tsx` + `app/src/pages/Dashboard.module.css`

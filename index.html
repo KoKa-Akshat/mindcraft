@@ -112,12 +112,16 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .hero .btn.primary:hover{background:#d4ff6a}
 .hero .btn.soft{background:transparent;color:#fffdf7;border-color:rgba(255,253,247,.35)}
 .hero .btn.soft:hover{background:rgba(255,253,247,.08)}
+.hero-trust{display:flex;flex-wrap:wrap;gap:22px 34px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(255,253,247,.16);animation:heroIn .9s .32s var(--ease) both}
+.trust-item{display:flex;flex-direction:column;gap:4px;min-width:132px}
+.trust-item strong{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(22px,2.4vw,28px);letter-spacing:-.03em;color:#c4f547}
+.trust-item span{font-size:12.5px;font-weight:700;line-height:1.35;color:rgba(255,253,247,.68);max-width:20ch}
 .hero-map-svg,.hero-art,.hero-inner,.hero-left,.hero-copy,.stats,.stat,.math-float,.math-buddy,.cool-badge,.note,.hero-glow{display:none!important}
 @keyframes heroNode{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
 @keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){
   .hero-map .pulse{animation:none!important}
-  .hero-brand,.hero h1,.hero .lead,.hero-actions{animation:none!important}
+  .hero-brand,.hero h1,.hero .lead,.hero-actions,.hero-trust{animation:none!important}
 }
 .vibe{background:#fffdf7}
 .vibe-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,82px);align-items:center}
@@ -168,9 +172,17 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 @keyframes ringPulse{0%{r:9;opacity:.55}100%{r:20;opacity:0}}
 .pulse-ring{animation:ringPulse 2s ease-out infinite}
 .reviews{background:linear-gradient(180deg,#fffdf7,#eaf5ea)}
-.reviews-slot{margin-top:40px;border:1px dashed rgba(20,58,46,.24);border-radius:34px;padding:clamp(36px,6vw,56px) 32px;text-align:center;background:rgba(255,253,247,.6)}
-.reviews-slot-note{font-family:"Caveat",cursive;font-size:24px;color:var(--leaf)}
-.reviews-slot p:first-child{font-size:15px;color:var(--muted)}
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+.video-slot{border-radius:30px;overflow:hidden;border:1px solid var(--line);background:#fffdf7;box-shadow:0 20px 52px rgba(20,58,46,.10);display:flex;flex-direction:column}
+.video-thumb{position:relative;aspect-ratio:16/10;display:grid;place-items:center;background:linear-gradient(150deg,#143a2e,#247a4d 60%,#5fb779)}
+.video-slot:nth-child(2) .video-thumb{background:linear-gradient(150deg,#6b4420,#c9932f 60%,#f5d348)}
+.video-slot:nth-child(3) .video-thumb{background:linear-gradient(150deg,#20305e,#3f66c9 60%,#9cc0f5)}
+.video-thumb:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.16),transparent 46%)}
+.video-play{position:relative;z-index:1;width:58px;height:58px;border-radius:50%;border:1.5px solid rgba(255,253,247,.65);background:rgba(4,11,9,.28);display:grid;place-items:center;box-shadow:0 10px 24px rgba(4,11,9,.25)}
+.video-play:before{content:"";width:0;height:0;margin-left:4px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fffdf7}
+.video-slot-meta{padding:16px 20px 20px;display:grid;gap:5px}
+.video-slot-label{font-size:14px;font-weight:900;color:var(--ink)}
+.video-slot-note{font-family:"Caveat",cursive;font-size:17px;color:var(--leaf)}
 .proof{background:linear-gradient(180deg,#fff7e8,#eaf5ea)}
 .proof-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,72px);align-items:stretch;margin-top:52px}
 .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
@@ -305,30 +317,38 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 @keyframes sheen{0%{transform:translateX(-56%)}100%{transform:translateX(56%)}}
 @keyframes mapEdgeDraw{to{stroke-dashoffset:0}}
 @keyframes mapNodePlot{0%{opacity:0;transform:translateX(-28px) scale(.7)}70%{opacity:1;transform:translateX(3px) scale(1.06)}100%{opacity:1;transform:translateX(0) scale(1)}}
-.demo-wrap{display:grid;grid-template-columns:.86fr 1.3fr;gap:clamp(28px,4vw,58px);align-items:center}
+.demo-wrap{display:grid;grid-template-columns:.8fr 1.35fr;gap:clamp(28px,4vw,58px);align-items:center}
 .demo-copy>p:last-of-type{margin-top:16px;max-width:420px}
+.demo-lead{margin-top:14px;max-width:400px}
 .demo-toggle{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.demo-tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fffdf7;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+.demo-tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fffdf7;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
 .demo-tab:hover{border-color:var(--leaf)}
 .demo-tab.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.demo-tab-secondary{opacity:.72}
+.demo-tab-secondary.is-active{opacity:1}
 .demo-panel{display:flex;flex-direction:column;gap:12px}
-.demo-stage{position:relative;aspect-ratio:16/10;border-radius:34px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#0f2820}
+.demo-stage{position:relative;aspect-ratio:16/10;border-radius:34px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#0f2820;transition:aspect-ratio .3s var(--ease)}
+.demo-stage[data-state="story"]{aspect-ratio:16/11}
 .demo-stage[data-state="story"] .demo-poster-quest,.demo-stage[data-state="story"] .demo-live{display:none}
 .demo-stage[data-state="quest"] .demo-poster-story,.demo-stage[data-state="quest"] .demo-live{display:none}
 .demo-stage[data-state="live"] .demo-poster-story,.demo-stage[data-state="live"] .demo-poster-quest{display:none}
 .demo-poster{position:absolute;inset:0}
 .demo-poster-story{display:flex;flex-direction:column;background:radial-gradient(ellipse 80% 55% at 15% 10%,rgba(255,190,220,.35),transparent 55%),radial-gradient(ellipse 70% 50% at 90% 80%,rgba(180,210,255,.4),transparent 50%),linear-gradient(165deg,#efe6fb 0%,#e4dcf5 50%,#d9d0ef 100%);padding:clamp(10px,2vw,16px)}
 .demo-story-chrome{display:flex;align-items:center;justify-content:center;padding:2px 0 10px;font-family:"Caveat",cursive;font-size:clamp(17px,2vw,21px);font-weight:700;color:#3a2f55}
-.demo-story-stage{flex:1;min-height:0;border-radius:20px;background:rgba(255,253,248,.96);box-shadow:0 10px 30px rgba(90,70,140,.14);padding:clamp(14px,2.6vw,22px);display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(14px,2.4vw,22px);align-items:start;overflow:hidden}
-.demo-story-photo{margin:0;width:clamp(120px,16vw,190px);height:clamp(120px,16vw,190px);padding:6px 6px 16px;background:#fffdf8;border-radius:6px 12px 9px 10px;box-shadow:0 10px 22px rgba(58,47,85,.14);transform:rotate(-3deg)}
+.demo-story-viewport{position:relative;flex:1;min-height:0}
+.demo-story-viewport .demo-story-stage{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .7s var(--ease)}
+.demo-story-viewport .demo-story-stage.is-active{opacity:1;pointer-events:auto}
+.demo-story-stage{border-radius:20px;background:rgba(255,253,248,.96);box-shadow:0 10px 30px rgba(90,70,140,.14);padding:clamp(18px,3.2vw,30px);display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(16px,2.6vw,26px);align-items:start;overflow:hidden}
+.demo-story-photo{margin:0;width:clamp(140px,19vw,225px);height:clamp(140px,19vw,225px);padding:6px 6px 16px;background:#fffdf8;border-radius:6px 12px 9px 10px;box-shadow:0 10px 22px rgba(58,47,85,.14);transform:rotate(-3deg)}
 .demo-story-photo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:4px}
 .demo-story-copy{min-width:0;padding-top:clamp(10px,3vh,28px)}
 .demo-story-eyebrow{margin:0 0 4px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(58,47,85,.42)}
-.demo-story-title{margin:0 0 8px;font-family:"Caveat",cursive;font-size:clamp(22px,3vw,30px);font-weight:700;color:#2a2430;line-height:1}
-.demo-story-text{margin:0;height:80px;font-family:"Source Serif 4",Georgia,serif;font-size:clamp(12.5px,1.4vw,14px);line-height:1.42;color:rgba(42,36,48,.86);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.demo-story-dots{display:flex;align-items:center;justify-content:center;gap:5px;padding-top:10px}
-.demo-story-dots span{display:block;width:5px;height:5px;border-radius:999px;background:rgba(58,47,85,.28)}
-.demo-story-dots span:first-child{width:14px;background:#1d3a8a}
+.demo-story-title{margin:0 0 10px;font-family:"Caveat",cursive;font-size:clamp(24px,3.4vw,34px);font-weight:700;color:#2a2430;line-height:1}
+.demo-story-text{margin:0;height:112px;font-family:"Source Serif 4",Georgia,serif;font-size:clamp(13px,1.5vw,15.5px);line-height:1.46;color:rgba(42,36,48,.86);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.demo-story-dots{display:flex;align-items:center;justify-content:center;gap:6px;padding-top:12px}
+.demo-story-dots button{display:block;width:5px;height:5px;padding:0;border:0;border-radius:999px;background:rgba(58,47,85,.28);cursor:pointer;transition:width .3s var(--ease),background .3s var(--ease)}
+.demo-story-dots button.is-active{width:16px;background:#1d3a8a}
+.demo-story-dots button:focus-visible{outline:2px solid #1d3a8a;outline-offset:3px}
 .demo-poster-quest{overflow:hidden}
 .demo-loop-pan{position:absolute;inset:-7%;animation:demoPan 22s ease-in-out infinite alternate}
 .demo-loop-pan img{width:100%;height:100%;object-fit:cover;display:block}
@@ -360,7 +380,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-art svg{width:100%;transform:none}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
-  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.findtutor-card,.about-head,.founder-grid,.founder-card,.demo-wrap{grid-template-columns:1fr}
+  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.video-grid,.price-grid,.intake-grid,.findtutor-card,.about-head,.founder-grid,.founder-card,.demo-wrap{grid-template-columns:1fr}
   .founder-card{min-height:560px}
   .founder-photo{width:min(260px,100%);justify-self:start}
   .footer-nav{justify-items:start}
@@ -402,6 +422,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .demo-sword{width:42px}
   .demo-story-stage{grid-template-columns:1fr}
   .demo-story-photo{width:120px;height:120px;margin:0 auto}
+  .demo-story-text{-webkit-line-clamp:4;height:80px}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
@@ -432,8 +453,9 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   <nav class="nav nav-green">
     <a class="brand" href="#top">Mind<span>Craft</span></a>
     <div class="nav-links">
-      <a href="#try-app">Tutors</a>
       <a href="#demo">Preview</a>
+      <a href="#try-app">Tutors</a>
+      <a href="#about">Team</a>
       <a class="join" href="#intake">Apply</a>
     </div>
     <a class="mobile-try" href="#intake">Apply</a>
@@ -464,6 +486,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <a class="btn primary" href="#intake">Request a seat</a>
           <a class="btn soft" href="#demo">Try one thing</a>
         </div>
+        <div class="hero-trust" role="list" aria-label="Why families trust MindCraft">
+          <div class="trust-item" role="listitem"><strong>1:1</strong><span>A real college tutor. Never a chatbot.</span></div>
+          <div class="trust-item" role="listitem"><strong>48 hrs</strong><span>We reply to every family, ourselves.</span></div>
+          <div class="trust-item" role="listitem"><strong>Map first</strong><span>We find the gap before session one.</span></div>
+        </div>
       </div>
     </section>
 
@@ -471,14 +498,68 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
           <p class="label">Try one thing</p>
-          <h2 id="demoHeading">Sword of Wisdom.</h2>
+          <h2 id="demoHeading">Every concept starts as a story.</h2>
+          <p class="demo-lead">The same story world a student opens before a single problem appears. Four real chapters, then the quest that follows.</p>
           <div class="demo-toggle" role="tablist" aria-label="Choose what to try">
-            <button type="button" class="demo-tab is-active" id="demoTabQuest" role="tab" aria-selected="true">Quest</button>
-            <button type="button" class="demo-tab" id="demoTabStory" role="tab" aria-selected="false">Story</button>
+            <button type="button" class="demo-tab is-active" id="demoTabStory" role="tab" aria-selected="true">Story preview</button>
+            <button type="button" class="demo-tab demo-tab-secondary" id="demoTabQuest" role="tab" aria-selected="false">Quest</button>
           </div>
         </div>
         <div class="demo-panel">
-          <div class="demo-stage" id="demoStage" data-state="quest">
+          <div class="demo-stage" id="demoStage" data-state="story">
+
+            <div class="demo-poster demo-poster-story" id="demoPosterStory">
+              <p class="demo-story-chrome">MindCraft</p>
+              <div class="demo-story-viewport" id="demoStoryViewport">
+                <div class="demo-story-stage is-active" data-slide="0">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-fractions-decimals.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Fractions and Decimals</h3>
+                    <p class="demo-story-text">In 1585, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages by candlelight, wrestling twelfths of guilders until the numbers swam.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="1">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-ratios-proportions.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Ratios and Proportions</h3>
+                    <p class="demo-story-text">Around 600 BC, a traveler named Thales stood before the Great Pyramid. Priests said its height could never be measured. He looked at his own shadow, then the pyramid's, and found the number that connected them.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="2">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-order-of-operations.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Order of Operations</h3>
+                    <p class="demo-story-text">In 1843, Ada Lovelace was writing instructions for a machine that did not exist yet. One line said add this, multiply that. Which happens first? The machine could not guess, so she wrote the rule that decided.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="3">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-linear-equations.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Linear Equations</h3>
+                    <p class="demo-story-text">In 1761, a ship carried the strangest cargo of the age: a five inch watch, guarded by a carpenter's son. If no clock can be perfect at sea, John Harrison asked, what is the next best thing?</p>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-story-dots" id="demoStoryDots">
+                <button type="button" class="is-active" data-dot="0" aria-label="Fractions and Decimals"></button>
+                <button type="button" data-dot="1" aria-label="Ratios and Proportions"></button>
+                <button type="button" data-dot="2" aria-label="Order of Operations"></button>
+                <button type="button" data-dot="3" aria-label="Linear Equations"></button>
+              </div>
+              <button type="button" class="demo-try" id="storyTryBtn" aria-label="Try a real MindCraft story session">Try</button>
+            </div>
 
             <div class="demo-poster demo-poster-quest" id="demoPosterQuest">
               <div class="demo-loop-pan">
@@ -494,22 +575,6 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <button type="button" class="demo-try" id="questTryBtn" aria-label="Try the Sword of Wisdom quest">Try</button>
             </div>
 
-            <div class="demo-poster demo-poster-story" id="demoPosterStory">
-              <p class="demo-story-chrome">MindCraft</p>
-              <div class="demo-story-stage">
-                <figure class="demo-story-photo" aria-hidden="true">
-                  <img src="img/story-fractions-decimals.jpg" alt="" width="800" height="800">
-                </figure>
-                <div class="demo-story-copy">
-                  <p class="demo-story-eyebrow">Story slideshow</p>
-                  <h3 class="demo-story-title">Fractions and Decimals</h3>
-                  <p class="demo-story-text">In 1585, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages by candlelight, wrestling twelfths of guilders until the numbers swam.</p>
-                </div>
-              </div>
-              <div class="demo-story-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-              <button type="button" class="demo-try" id="storyTryBtn" aria-label="Try the fractions slideshow">Try</button>
-            </div>
-
             <div class="demo-live" id="demoLive" hidden>
               <div class="demo-live-bar">
                 <a class="demo-open" id="demoOpenFull" href="#" target="_blank" rel="noopener">Open full</a>
@@ -520,7 +585,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 
           </div>
           <p class="demo-note script" id="demoNote">
-            <a id="demoKitchenLink" href="https://mindcraft-world1.web.app/?v=sq-lock-2" target="_blank" rel="noopener">Start in Jesse’s kitchen →</a>
+            <a id="demoKitchenLink" href="https://mindcraft-world1.web.app/?v=sq-lock-2" target="_blank" rel="noopener" hidden>Start in Jesse’s kitchen →</a>
           </p>
         </div>
       </div>
@@ -811,8 +876,29 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap reveal">
         <p class="label">From families</p>
         <h2>Reviews soon.</h2>
-        <div class="reviews-slot">
-          <p>Waiting on the first one</p>
+        <p style="max-width:520px;margin-top:14px">Three video reviews are on the way, real families, real sessions. Here is where they will sit the moment they are ready.</p>
+        <div class="video-grid stagger" aria-label="Video reviews, coming soon">
+          <article class="video-slot">
+            <div class="video-thumb"><span class="video-play" aria-hidden="true"></span></div>
+            <div class="video-slot-meta">
+              <p class="video-slot-label">Parent review</p>
+              <p class="video-slot-note">Recording soon</p>
+            </div>
+          </article>
+          <article class="video-slot">
+            <div class="video-thumb"><span class="video-play" aria-hidden="true"></span></div>
+            <div class="video-slot-meta">
+              <p class="video-slot-label">Student review</p>
+              <p class="video-slot-note">Recording soon</p>
+            </div>
+          </article>
+          <article class="video-slot">
+            <div class="video-thumb"><span class="video-play" aria-hidden="true"></span></div>
+            <div class="video-slot-meta">
+              <p class="video-slot-label">Tutor review</p>
+              <p class="video-slot-note">Recording soon</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1113,19 +1199,19 @@ const WORLD_ORIGIN = (location.hostname === "localhost" || location.hostname ===
   : "https://mindcraft-world1.web.app"
 
 const DEMO_COPY = {
+  story: {
+    heading: "Every concept starts as a story.",
+    path: "/try/story/fractions_decimals?auto=1",
+    showKitchen: false,
+  },
   quest: {
     heading: "Sword of Wisdom.",
     path: "/try/manjushree",
     showKitchen: true,
   },
-  story: {
-    heading: "Fractions &amp; Decimals.",
-    path: "/try/story/fractions_decimals?auto=1",
-    showKitchen: false,
-  },
 }
 
-let activeDemo = "quest"
+let activeDemo = "story"
 
 function setActiveDemoTab(key) {
   closeDemoLive()
@@ -1168,6 +1254,52 @@ window.addEventListener("message", (event) => {
   if (event.data && event.data.type === "mc-try-close") closeDemoLive()
 })
 if (demoKitchenLink) demoKitchenLink.href = WORLD_ORIGIN + "/?v=sq-lock-2"
+
+// Story preview slideshow: four real chapter openings auto-advance while the
+// Story tab is the visible one. Purposeful, not decorative, it is the whole
+// point of leading with "Story preview" per the resize brief (full-display,
+// bigger than the Quest tab). Respects prefers-reduced-motion (no timer at
+// all, dots still work as a manual click-through) and pauses on hover/focus
+// so a reading parent never loses their place mid-sentence.
+const storySlides = Array.from(document.querySelectorAll("#demoStoryViewport .demo-story-stage"))
+const storyDots = Array.from(document.querySelectorAll("#demoStoryDots button"))
+let storyIndex = 0
+let storyTimer = null
+
+function showStorySlide(index) {
+  if (!storySlides.length) return
+  storyIndex = (index + storySlides.length) % storySlides.length
+  storySlides.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
+  storyDots.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
+}
+
+function startStoryAutoplay() {
+  if (reduceMotion || storyTimer) return
+  storyTimer = setInterval(() => {
+    if (demoStage?.dataset.state !== "story") return
+    showStorySlide(storyIndex + 1)
+  }, 5200)
+}
+
+function stopStoryAutoplay() {
+  if (!storyTimer) return
+  clearInterval(storyTimer)
+  storyTimer = null
+}
+
+storyDots.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    showStorySlide(i)
+    stopStoryAutoplay()
+    startStoryAutoplay()
+  })
+})
+const demoPosterStory = document.getElementById("demoPosterStory")
+demoPosterStory?.addEventListener("pointerenter", stopStoryAutoplay)
+demoPosterStory?.addEventListener("pointerleave", startStoryAutoplay)
+demoPosterStory?.addEventListener("focusin", stopStoryAutoplay)
+demoPosterStory?.addEventListener("focusout", startStoryAutoplay)
+startStoryAutoplay()
 
 // Find a Tutor map (Job 4, "find a tutor near you" panel). This is a REAL
 // interactive Google Map (Maps JavaScript API, same key already baked into
