@@ -4,6 +4,129 @@
 
 ---
 
+## Sword of Wisdom landing panel + diagnostic-once/cover verification (Fable 5, 2026-07-25)
+
+Confirmed working in `/Users/akoirala/Developer/mindcraft` before every step.
+
+### Job 1 — Sword of Wisdom landing-page demo panel
+
+Read `agent_work/manjushree-zone/LANDING_PANEL_HANDOFF.md` in full first. Mid-task
+the handoff was updated live (co-founder correction relayed by the coordinator):
+the old 3D archive is retired, canonical experience is 2D Sword of Wisdom +
+post-cut slideshow only, and — critically — the fallback (deep-link, not a
+true iframe embed) is now the correct PRIMARY approach, not a last resort.
+
+**New section added to `index.html`** (`<section class="demo" id="demo">`,
+between "How it works" and "About us"): title "Sword of Wisdom", line "See
+the curve in the mountain. Cut with precision. Then keep learning with
+fractions.", one-word "Play" CTA overlaid on an ambient auto-playing loop.
+
+**The loop** is a lightweight CSS/SVG composition, not a video — no existing
+video/gif preview of the kitchen or the cut moment was found anywhere in the
+repo (checked `worlds/world2/assets`, `agent_work/manjushree-zone/*.md`).
+Built from the real 2D Sword of Wisdom art already in
+`app/src/manjushree/assets2d/` (`valley_blocks.jpg`'s twin peaks read
+naturally as "the curve in the mountain," `sword.png`), copied and
+downsized into `img/sword-of-wisdom-valley.jpg` (312KB) and
+`img/sword-of-wisdom-blade.png` (100KB) — root `img/` because the marketing
+Firebase Hosting target's `ignore` list excludes all of `app/**`, so anything
+under `app/src/manjushree` is never actually deployed to the marketing site.
+Slow Ken Burns pan (`demoPan`, 22s), a pulsing SVG parabola arc over the twin
+peaks (`demoGlow`), a floating sword accent (`demoFloat`). All animations
+disabled by the page's existing global `prefers-reduced-motion` reset (no new
+override needed, verified the base/non-animated state still looks correct).
+
+**Click "Play" swaps the same stage in place** (`data-state="loop"` →
+`"handoff"` on `#demoStage`, CSS `display:none` toggle, no DOM
+teardown/rebuild) to a handoff card, NOT a live iframe of the 3D kitchen.
+**Why, verified not assumed**: (1) the real Sword of Wisdom
+(`app/src/manjushree`) sits behind `AuthGuard` — `/manjushree-dev` is a
+`import.meta.env.DEV`-only route, does not exist in the production build, so
+there is no anonymous-safe embeddable URL for it; (2) `worlds/world2/`
+(the `world1` Firebase Hosting target, the only public un-authed 3D surface)
+had real uncommitted, in-flux WIP on disk this session (`index.html` mid-pivot
+to a narrower "Jesse's Kitchen — Side Quest" standalone page, new
+`sq-standalone.js/css`) — confirmed via `git diff`/`git status`, not iframe-safe
+to point a public marketing page at right now, and per the live handoff
+correction, embedding it is no longer the intended approach even once stable.
+Confirmed via `grep` that no `X-Frame-Options`/CSP `frame-ancestors` headers
+exist anywhere in `firebase.json` or `worlds/world2/index.html` — a true
+iframe embed would have been technically possible, this was a product
+decision (auth wall + doc correction), not a technical blocker.
+The handoff card mirrors the product's own onboarding "cover-style loading
+card" beat: eyebrow "Sword of Wisdom," "The ridge continues in the app," a
+line explaining sign-in is next, a real "Enter the ridge →" CTA (`<a href=
+"https://mindcraft-93858.web.app/manjushree">`, same tab, not a new
+tab/window) and a "← Back to preview" control that returns to the loop.
+
+Verified in a real dev-server browser session (Playwright, Chromium, no code
+shims needed — plain static HTML): initial loop state, handoff state after
+clicking Play, back-to-loop after clicking Back, all at desktop (1400px) and
+mobile (390px) widths, zero console/page errors. Screenshots in
+`agent_work/product/screenshots_2026-07-25/`: `sword_demo_loop_state.png`,
+`sword_demo_handoff_state.png`, `sword_demo_back_to_loop_state.png`,
+`sword_demo_loop_mobile.png`, `sword_demo_handoff_mobile.png`.
+
+Files touched: `index.html` only (new CSS block, new `<section>`, new bottom-
+of-file JS wiring). `app/**` untouched for this job — no React routes needed.
+
+### Job 2 — diagnostic-once + cover-page-with-name
+
+**Diagnostic gating: already correct, no fix needed.** Traced
+`Dashboard.tsx`'s gating effect → `practiceState.ts`'s `isDiagnosticComplete`.
+`markDiagnosticComplete` permanently sets `diagnosticCompleted: true` on
+`users/{uid}` (Firestore `setDoc` merge); `isDiagnosticComplete` accepts either
+that flag or the legacy `diagnosticCompletedAt` timestamp, exempts
+tutors/admins, and only Admin's explicit "retake gap scan" or the test-profile
+reset ever clears it. Verified BOTH real behaviors live with a temporary,
+`VITE_SCREENSHOT_MODE`-gated `AuthGuard` mock (`App.tsx`) + a matching
+`VITE_SCREENSHOT_DIAG_DONE` toggle in `practiceState.ts`'s
+`isDiagnosticComplete` (no Firestore round-trip needed for either path —
+permission-denied on the mock uid fails soft to `false` either way, so the
+toggle is what actually controls which branch renders): with the flag unset,
+`/dashboard` redirects straight to `/diagnostic` (Jesse's Kitchen intro); with
+it set, `/dashboard` skips the diagnostic entirely.
+
+**Real gap found and fixed: the cover did not actually show the student's own
+name.** `CoverLanding.tsx`'s name field only ever read/wrote a standalone
+`mc-student-display-name` localStorage key via a manually-typed input — fully
+disconnected from the student's real signed-in `displayName` (Firestore
+`users/{uid}.displayName`, surfaced via `useStudentData` and already shown
+elsewhere on the same dashboard header). A returning student on a fresh
+browser/tab would see a blank "What should we call you?" prompt instead of
+their real name. Fixed by threading the real name in: `Dashboard.tsx` now
+passes `accountName={displayName}` to `<CoverLanding>`; `CoverLanding.tsx`
+defaults its name state to `savedLocalOverride || accountName || ''` (a saved
+manual override still always wins) and a new effect fills in `accountName`
+if it resolves after first render (Firestore read is async) without ever
+clobbering something the student already typed. Manual editing still works,
+it just now starts correct instead of blank.
+
+Verified both flows with the same shim, screenshots in
+`agent_work/product/screenshots_2026-07-25/`:
+`fresh_signup_diagnostic_gate.png` (diagnostic incomplete → `/diagnostic`,
+"Jesse's Kitchen" intro, not the cover) and
+`returning_student_cover_with_name.png` (diagnostic complete → straight to
+`CoverLanding`, name field and the button both correctly pre-filled "Maya",
+the mock account's real display name, zero typing required).
+
+Files touched: `app/src/components/book/CoverLanding.tsx`,
+`app/src/pages/Dashboard.tsx` (one new prop). Shim fully reverted — `grep -rn
+SCREENSHOT app/src` empty, `app/src/App.tsx` restored to its pre-shim hash
+(`1bbd4522…`, verified byte-identical, all 4 `manjushree` references and both
+routes intact), `app/src/lib/practiceState.ts` restored identical to backup.
+
+### Verification (both jobs, post-revert)
+
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **120 passed / 1 skipped (8 files)**, matches baseline exactly.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning).
+- `grep -c manjushree app/src/App.tsx` — 4, unchanged; hash verified identical
+  to session start.
+- No commit/push — verify-only per instructions, git left for the driver to review.
+
+---
+
 ## Checkout-mixup correction, chapter art + story expansion, floating blocks, Find-a-Tutor port, dashboard polish (Fable 5, 2026-07-25)
 
 **Historical-record correction first.** A previous agent pass earlier today worked

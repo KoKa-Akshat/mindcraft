@@ -318,8 +318,21 @@ export default function FindTutor() {
             reviews,
           }
         })
+        // Dedupe on BOTH id and normalized display name: real Firestore tutor
+        // docs use the account's actual Firebase UID as their doc id, which
+        // never matches the demo entries' literal string ids ('akshat-koirala'
+        // etc.) — so a signed-in visitor whose query actually succeeds (see
+        // the firestore.rules note above) would see the founders duplicated,
+        // once as the hardcoded demo entry and once as their own real
+        // account. Name-based matching catches that even though id-based
+        // matching alone cannot.
+        const normalize = (name: string) => name.trim().toLowerCase()
         const demoIds = new Set(DEMO_TUTORS.map(t => t.id))
-        setTutors([...DEMO_TUTORS, ...remoteTutors.filter(t => !demoIds.has(t.id))])
+        const demoNames = new Set(DEMO_TUTORS.map(t => normalize(t.displayName)))
+        setTutors([
+          ...DEMO_TUTORS,
+          ...remoteTutors.filter(t => !demoIds.has(t.id) && !demoNames.has(normalize(t.displayName))),
+        ])
       })
       .catch(() => {})
   }, [])

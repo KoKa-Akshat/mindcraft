@@ -4,7 +4,7 @@
  * A cinematic 60–90s curtain layered ON TOP of index.html: visitor types
  * 2–4 interests, solves ONE real bank question wrapped in a scene woven
  * from those interests, then the overlay fades into the same page at
- * #proof. No SEO/perf impact: this module is dynamically imported only on
+ * #about. No SEO/perf impact: this module is dynamically imported only on
  * first visit (after window load) or via the hero "See your math" CTA.
  *
  * - Palette/typography mirror index.html tokens (cream/ink/leaf/gold/mint,
@@ -42,7 +42,7 @@ const COPY = {
   finaleTitle: 'This is MindCraft',
   builtAround: list => `Built around ${list}.`,
   bridge: "We have talented tutors, and families who've felt the click.",
-  seeReviews: 'See reviews',
+  seeReviews: 'Meet the team',
   keepExploring: 'Keep exploring',
   autoNote: 'Taking you there…',
   skip: 'Skip',
@@ -416,9 +416,9 @@ export function launch() {
         </div>
       </div>`, true)
     later(() => stage.querySelector('#mcsBridge')?.classList.add('show'), 2000)
-    stage.querySelector('#mcsReviews').onclick = () => close('#proof')
+    stage.querySelector('#mcsReviews').onclick = () => close('#about')
     stage.querySelector('#mcsExplore').onclick = () => close(null)
-    later(() => close('#proof'), 6500)
+    later(() => close('#about'), 6500)
   }
 
   let closing = false

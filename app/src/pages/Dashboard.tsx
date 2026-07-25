@@ -375,6 +375,7 @@ export default function Dashboard() {
       {showCover && (
         <CoverLanding
           entryLabel="your ACT study notebook"
+          accountName={displayName}
           onOpen={() => setShowCover(false)}
         />
       )}

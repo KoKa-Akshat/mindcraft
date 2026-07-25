@@ -39,13 +39,30 @@ function saveCoverName(name: string) {
  */
 export default function CoverLanding({
   entryLabel,
+  accountName,
   onOpen,
 }: {
   entryLabel: string
+  /** The student's real signed-in display name (Firestore users/{uid}.displayName,
+   * falling back to the Firebase Auth profile name — see useStudentData.ts).
+   * Used to greet a returning student by their actual name on first render,
+   * instead of making them re-type it every session. A locally-typed override
+   * (saved via saveCoverName) still always wins if one exists. */
+  accountName?: string
   onOpen: () => void
 }) {
   const [closing, setClosing] = useState(false)
-  const [name, setName] = useState(() => loadCoverName())
+  const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
+
+  // accountName resolves async (Firestore read in useStudentData), so it can
+  // still be empty on this component's first render. Fill it in the moment it
+  // arrives, but never clobber a name the student already typed themselves
+  // (this render or a prior session's saved override).
+  useEffect(() => {
+    if (loadCoverName()) return
+    const trimmedAccount = accountName?.trim()
+    if (trimmedAccount) setName(prev => prev || trimmedAccount)
+  }, [accountName])
 
   function open() {
     if (closing) return
