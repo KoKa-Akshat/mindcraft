@@ -56,6 +56,7 @@ import {
 import InteractiveWidget from '../components/InteractiveWidget'
 import ScratchPad from '../components/ScratchPad'
 import GraphBox from '../components/GraphBox'
+import WizardMascot from '../components/canvas/WizardMascot'
 import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
 import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
 import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
@@ -81,6 +82,23 @@ function framedLocalStem(q: Question): string {
   const setting = scene?.settingLine || story.settingLine || frame?.settingLine || ''
   const bridge = scene?.questionBridge || frame?.questionBridge || `${story.protagonist} sets this on the desk.`
   return [setting ? `✦ ${setting}` : '', bridge, display.stem].filter(Boolean).join('\n\n')
+}
+
+/** Short wizard line for soft-wrong retries (under Graph). */
+function coachLineForWrong(q: Question): string {
+  const raw = (q.hints?.[0] ?? '').trim()
+  if (raw) {
+    const cleaned = raw
+      .replace(/^KEY INSIGHT:\s*/i, '')
+      .replace(/^\d+\.\s*/, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+    const sentence = cleaned.split(/(?<=[.!?])\s+/)[0] ?? cleaned
+    if (sentence.length >= 12 && sentence.length <= 140) return sentence
+    if (cleaned.length > 12) return `${cleaned.slice(0, 120).trim()}…`
+  }
+  if (q.misconception_label?.trim()) return `Common trap: ${q.misconception_label.trim()}`
+  return 'That one’s out. Pick again — what is the question really asking?'
 }
 
 const HOMEWORK_API = import.meta.env.VITE_HOMEWORK_API_URL ?? 'http://localhost:8001'
@@ -401,6 +419,8 @@ export default function Practice() {
   /** Soft-wrong stickers eliminated on this question (retry without penalty). */
   const [eliminatedChoices, setEliminatedChoices] = useState<number[]>([])
   const [wiggleChoice, setWiggleChoice] = useState<number | null>(null)
+  /** Soft-wrong coach under Graph — wizard says what happened, then retry. */
+  const [wrongCoachLine, setWrongCoachLine] = useState<string | null>(null)
   const [rewardPhrase, setRewardPhrase] = useState<string | null>(null)
   const [hintsShown, setHintsShown] = useState(0)
   const [results,      setResults]      = useState<boolean[]>([])
@@ -1341,6 +1361,7 @@ export default function Practice() {
       setHintsShown(0)
       setEliminatedChoices([])
       setWiggleChoice(null)
+      setWrongCoachLine(null)
       setRewardPhrase(null)
       return
     }
@@ -1386,6 +1407,7 @@ export default function Practice() {
       setHintsShown(0)
       setEliminatedChoices([])
       setWiggleChoice(null)
+      setWrongCoachLine(null)
       setRewardPhrase(null)
     }
   }
@@ -1400,11 +1422,13 @@ export default function Practice() {
       }
     }
     if (sel === null) return
-    const correct = sel === questions[qIndex].correctIndex
+    const currentQ = questions[qIndex]
+    const correct = sel === currentQ.correctIndex
 
     // Soft wrong (neurodivergent-safe): wiggle + dim, try again — no red buzz, no lock-in.
     if (!correct && !hideCorrectness) {
       playTap()
+      setWrongCoachLine(coachLineForWrong(currentQ))
       setEliminatedChoices(prev => (prev.includes(sel!) ? prev : [...prev, sel!]))
       setWiggleChoice(sel)
       window.setTimeout(() => setWiggleChoice(null), 520)
@@ -1419,6 +1443,7 @@ export default function Practice() {
       setChecked(true)
       if (correct) {
         playChime()
+        setWrongCoachLine(null)
         setXp(x => x + LEVEL_META[level].xp)
         setRewardPhrase(pickDoodleStamp(qIndex + sel))
       }
@@ -2483,6 +2508,12 @@ export default function Practice() {
                     points={graphPoints ?? undefined}
                     initialExpression={graphExpr ?? undefined}
                   />
+                  {wrongCoachLine && !hideCorrectness && (
+                    <div className={s.wrongCoach} aria-live="polite">
+                      <p className={s.wrongCoachEyebrow}>What happened</p>
+                      <WizardMascot line={wrongCoachLine} cheering={false} compact />
+                    </div>
+                  )}
                   <div className={s.asideLabel}>Scratch work</div>
                   <ScratchPad key={`practice-scratch-${currentQ.id}`} height={240} fillHeight />
                 </aside>

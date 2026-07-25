@@ -461,7 +461,12 @@ export default function ConceptChapterPage() {
   // hints, and the submit button stay clickable; the pencil toggle turns the
   // entire page into a writing surface without a separate scratch page.
   const [writeMode, setWriteMode] = useState(false)
-  useEffect(() => { setWriteMode(false) }, [panelIdx])
+  /** Soft-wrong coach: wizard under Graph explains the miss, then student retries. */
+  const [wrongCoach, setWrongCoach] = useState<{ qIdx: number; line: string } | null>(null)
+  useEffect(() => {
+    setWriteMode(false)
+    setWrongCoach(null)
+  }, [panelIdx])
   const journaledRef = useRef<Set<string>>(new Set())
 
   const currentPanel = panels[panelIdx]
@@ -700,6 +705,24 @@ export default function ConceptChapterPage() {
     )
   }
 
+  function coachLineForWrong(q: Question): string {
+    const raw = (q.hints?.[0] ?? '').trim()
+    if (raw) {
+      const cleaned = raw
+        .replace(/^KEY INSIGHT:\s*/i, '')
+        .replace(/^\d+\.\s*/, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+      const sentence = cleaned.split(/(?<=[.!?])\s+/)[0] ?? cleaned
+      if (sentence.length >= 12 && sentence.length <= 140) return sentence
+      if (cleaned.length > 12) return `${cleaned.slice(0, 120).trim()}…`
+    }
+    if (q.misconception_label?.trim()) {
+      return `Common trap: ${q.misconception_label.trim()}`
+    }
+    return 'That one’s out. Pick again — what is the question really asking?'
+  }
+
   function lockAnswer(qIdx: number) {
     const chosen = answers[qIdx]
     if (chosen === null || chosen === undefined) return
@@ -709,6 +732,8 @@ export default function ConceptChapterPage() {
     // Soft wrong: wiggle + dim the sticker, keep trying — no red buzz, no lock.
     if (chosen !== q.correctIndex) {
       playTap()
+      setWriteMode(false) // exit Write so choices are tappable again
+      setWrongCoach({ qIdx, line: coachLineForWrong(q) })
       setEliminated(e => ({
         ...e,
         [qIdx]: [...new Set([...(e[qIdx] ?? []), chosen])],
@@ -724,6 +749,7 @@ export default function ConceptChapterPage() {
     }
 
     playChime()
+    setWrongCoach(null)
     setRewardPhrase(pickDoodleStamp(qIdx + chosen))
     setSubmitted(d => ({ ...d, [qIdx]: true }))
 
@@ -920,6 +946,12 @@ export default function ConceptChapterPage() {
             points={graphPoints ?? undefined}
             initialExpression={graphExpr ?? undefined}
           />
+          {wrongCoach?.qIdx === qIdx && (
+            <div className={s.wrongCoach} aria-live="polite">
+              <p className={s.wrongCoachEyebrow}>What happened</p>
+              <WizardMascot line={wrongCoach.line} cheering={false} compact />
+            </div>
+          )}
         </aside>
       </div>
     )
