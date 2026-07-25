@@ -614,7 +614,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 .qKicker {
   font: 400 10px/1 var(--tok-font-mono);
@@ -763,7 +763,14 @@
   display: none; /* keep chapter canvas static unless pencil is on */
 }
 .annotationActive {
-  display: block;
+  /* flex column (not block) so ScratchPad's own flex:1 wrap/canvasWrap
+     chain (paperMode) actually has a flex parent to grow inside — with
+     display:block here the canvas capped at its own ~320px floor and
+     pointer strokes past that point landed on the choices/buttons behind
+     it instead of the canvas, so writing only worked in the top slice of
+     the page. See ACTIVE_TASK.md. */
+  display: flex;
+  flex-direction: column;
   position: absolute;
   inset: 0;
   z-index: 5;
@@ -832,15 +839,15 @@
 .qChoices {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
-  margin-bottom: 16px;
+  gap: 6px;
+  margin-top: 8px;
+  margin-bottom: 10px;
 }
 .choice {
   display: flex;
   align-items: flex-start;
-  gap: 11px;
-  padding: 11px 6px 11px 0;
+  gap: 9px;
+  padding: 8px 6px 8px 0;
   background: transparent;
   border: none;
   border-bottom: 1px solid rgba(29, 58, 138, 0.12);
@@ -871,13 +878,13 @@
 
 /* Magical doodle stickers */
 .stickerChoices {
-  gap: 12px !important;
+  gap: 8px !important;
 }
 .stickerChoice {
   border: 1.5px solid rgba(58, 47, 85, 0.14) !important;
   border-bottom: 1.5px solid rgba(58, 47, 85, 0.14) !important;
   border-radius: 14px 18px 12px 16px !important;
-  padding: 10px 12px !important;
+  padding: 7px 11px !important;
   background:
     linear-gradient(145deg, #fffdf8 0%, #fff4e8 100%) !important;
   box-shadow: 0 3px 12px rgba(58, 47, 85, 0.08);
@@ -939,7 +946,7 @@
 }
 .stickerChoice .choiceText {
   font-family: var(--tok-font-hand);
-  font-size: 20px;
+  font-size: 17px;
   line-height: 1.25;
   color: #2a2430;
 }

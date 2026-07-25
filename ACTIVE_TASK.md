@@ -4,6 +4,230 @@
 
 ---
 
+## Wizard mascot background removal + weekly paper lock (Fable 5, 2026-07-24)
+
+**Job 1 — mascot rectangle.** Root cause confirmed by inspecting the actual
+asset (`python3 -c "from PIL import Image; ..."`): `wizard-doodle-cheer.jpg`
+is a JPEG, mode `RGB`, no alpha channel — a genuine baked-in opaque cream
+background (`~254,251,242`, sampled from all 4 corners + edge midpoints),
+not a CSS container issue. `WizardMascot.module.css`'s `.wrap`/`.bubble` have
+no background box of their own, so a CSS-only fix wasn't available; this
+needed real pixel editing. `rembg` isn't installed by default but `pip
+install rembg` succeeded — chose NOT to use it: a global ML background-removal
+model is overkill (and riskier) for a single flat, near-uniform paper color.
+Instead: connected-component flood fill from the image border (Pillow +
+`scipy.ndimage.label`, 8-connectivity, distance threshold 34 from the sampled
+background color) so only the region topologically connected to the outer
+edge gets keyed transparent — the character's own near-white regions (pants,
+shirt highlights) sit inside the black ink outline and never get touched,
+unlike a naive global chroma-key threshold (tested first: punched holes in
+~33% of the pants region because their raw color is also close to the paper
+background). Feathered the alpha with a 1.1px Gaussian blur for anti-aliased
+edges, de-fringed the boundary ring (pulled edge-pixel RGB away from the
+background color proportional to remaining transparency, killing the pale
+halo), then resized 1400×1400 → 360×360 (displayed at ≤92px CSS, retina
+headroom to spare) and re-saved with `optimize=True`. Result:
+`wizard-doodle-cheer.png`, 109.5KB — smaller than the original 244KB JPG
+despite adding an alpha channel. `WizardMascot.tsx` now imports the `.png`;
+the old `.jpg` is left in place, unreferenced, as a rollback point.
+Script: `/tmp` scratchpad (not committed, one-off).
+
+**Job 2 — weekly-locked paper.** "This week's paper" (`Dashboard.tsx`
+`.paperCta`, content built by `weeklyPracticePaper.ts`) had no lock concept
+at all — always an open "Start →" CTA whenever a paper existed. Reused the
+**existing** calendar-week cadence already anchoring the paper's own content
+cache (`weekKey()` in `weeklyPracticePaper.ts`, the same scheme as
+`isoWeek()` in `ParentDashboard.tsx` — did not invent a second date
+convention) instead of a rolling cooldown. New behavior: unlocked (green
+"Start →") for the whole week until the student actually finishes a mission
+launched from that CTA; on finish, locks (dimmed, 🔒, "Done! Unlocks in N
+days") until the next week's key rolls over.
+- **Completion signal**: `users/{uid}.weeklyPaperCompletedWeek` (the
+  `weekKey()` string of the last finished weekly-paper mission) —
+  self-writable non-privileged field, same `setDoc(..., {merge:true})`
+  fail-soft pattern as `diagnosticCompleted` (`practiceState.ts` →
+  `markWeeklyPaperComplete`). Read into `useStudentData.ts`'s `StudentData`
+  the same way `streak`/`practiceCount` already are.
+- **Wiring**: `Dashboard.tsx`'s `playWeeklyPaper()` now tags the `/practice`
+  navigation state with `weeklyPaper: true, weeklyPaperWeekKey`.
+  `Practice.tsx` threads that through to a new `weeklyPaperWeekKey` state var,
+  set only *after* `launchMissionDirect()` resolves (not before) so a stale
+  flag from a previous **abandoned** weekly-paper session can't leak onto an
+  unrelated later mission — `startSession()` and `startBookmarkedSession()`
+  both clear the flag at their own top as the single common funnel every
+  session (direct-launch, manual path-picker, bookmarked question) passes
+  through. `finishSession()` — the one real "a mission actually completed"
+  hook already in the codebase (mastery outcomes recorded, `pPhase` set to
+  `'complete'`) — writes the completion flag if the flag is set, then clears
+  it.
+- **Lock UI**: `Dashboard.module.css` `.paperCtaLocked` (same footprint as
+  `.paperCta`, muted/inert, no hover lift) + 🔒 + `nextUnlockLabel()`
+  (`weeklyPracticePaper.ts`) → "Unlocks tomorrow" / "Unlocks in N days",
+  counting to the next Monday (`daysUntilNextUnlock()`).
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` →
+119 passed, 1 skipped, 8 files (matches session baseline, zero regressions).
+`npm run build` succeeded (same pre-existing >500kB chunk warning,
+unrelated — confirmed present before this session too). `grep manjushree
+app/src/App.tsx` → all 4 references, untouched, checked before and after.
+
+Screenshots taken via a temporary, `VITE_SCREENSHOT_MODE`-gated `AuthGuard`
+bypass in `App.tsx` (mock `UserContext`, no real Firebase auth) plus two
+narrower temporary bypasses this pass specifically needed and hadn't seen
+documented before: (a) `Dashboard.tsx`'s diagnostic-completion check
+short-circuited (a fresh screenshot uid has no diagnostic on file and would
+otherwise redirect to `/diagnostic`), (b) `useStudentData.ts` short-circuited
+to return canned data with **zero** Firestore reads/writes (confirmed via
+console output that real Firestore calls for the fake uid fail with
+`Missing or insufficient permissions` anyway, since there's no real Firebase
+Auth session behind the mocked `UserContext` — so even without this shim no
+production data could have been written, but the shim also means zero
+attempted calls and a deterministic, instant render). `?screenshotPaperLocked=1`
+toggled the mocked completion field between the two CTA states. Dev server:
+`VITE_SCREENSHOT_MODE=1 npx vite --port 5193`, driven with a local
+`playwright` script (`chromium-cli` isn't installed in this environment).
+For the mascot before/after pair, `WizardMascot.tsx`'s import was swapped
+`.jpg` → screenshot → swapped back to `.png` → screenshot, same "swap to the
+other version, shoot, swap back" technique as prior sessions' before/afters.
+All three shims fully reverted from byte-for-byte pre-shim backups, confirmed
+via `diff` returning identical, and a fresh `grep -rn VITE_SCREENSHOT_MODE
+app/src/App.tsx app/src/pages/Dashboard.tsx app/src/hooks/useStudentData.ts`
+returning empty. `tsc`/`vitest`/`build` all re-run clean after the revert
+(numbers above are post-revert).
+
+4 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+`wizard_mascot_BEFORE.png`/`_AFTER.png` (visible cream rectangle around the
+sprite vs. blending into the lavender hero bar), `paper_cta_UNLOCKED.png`/
+`paper_cta_LOCKED.png` (green "Start →" vs. dimmed 🔒 "Done! Unlocks in 3
+days" — 3 days is correct for today, a Friday, counting to Monday).
+
+Files touched: `app/src/components/canvas/WizardMascot.tsx` (one-line import
+swap), `app/src/assets/canvas/wizard-doodle-cheer.png` (new asset),
+`app/src/lib/weeklyPracticePaper.ts` (`weekKey` exported,
+`daysUntilNextUnlock`/`nextUnlockLabel` added), `app/src/lib/practiceState.ts`
+(`markWeeklyPaperComplete` added), `app/src/hooks/useStudentData.ts`
+(`weeklyPaperCompletedWeek` field added), `app/src/pages/Dashboard.tsx`
+(lock check + locked-state JSX), `app/src/pages/Dashboard.module.css`
+(`.paperCtaLocked` + children), `app/src/pages/Practice.tsx`
+(`weeklyPaperWeekKey` state + wiring in the 3 places above — a concurrent
+pass on this same shared file was adding unrelated ScratchPad-fill changes
+elsewhere in the file; left fully untouched). Nothing committed, left in the
+working tree for review.
+
+---
+
+## ScratchPad doesn't fill its column + options too tall (Fable 5, 2026-07-24)
+
+**The complaint** (Akshat, after seeing today's GraphBox pass): can't write
+comfortably because the writable ScratchPad box is small and doesn't fill the
+actual visible whitespace under the graph/question, and the 4 answer options
+are too tall, eating space that should go to writing room.
+
+**Root causes found by measuring the live DOM (Playwright), not guessing:**
+
+1. **`Practice.tsx` aside column didn't stretch.** `.sessionColumns` (the
+   grid holding the question card + the GraphBox/ScratchPad aside) had
+   `align-items: start`, so the aside sized to its own small content height
+   instead of matching the taller question column — leaving the rest of the
+   grid row, and the rest of the page below it, blank. `ScratchPad` itself
+   was also always mounted with a literal `height={240}` — a hard pixel cap,
+   not a floor; it had no flexible-height mode at all in non-`paperMode` use.
+2. **`ConceptChapterPage.tsx`'s write-mode overlay silently under-filled.**
+   The full-page annotation overlay (`.annotationLayer`/`.annotationActive`,
+   toggled by the pencil "Write" button) was `display: block`. `ScratchPad`'s
+   own `paperMode` sizing (`flex:1` on its wrap/canvasWrap chain) only works
+   inside a **flex** parent — with a block parent, `flex:1` is a no-op, so
+   the canvas collapsed to its own ~320px floor and sat top-aligned inside
+   the full-height overlay. Confirmed with an actual drawn stroke: attempting
+   to draw from the top of the question card to just above the submit
+   button, the ink stopped dead at pixel 320 of a 759px-tall panel — the rest
+   of the pointer events landed on the choices/button behind the invisible
+   overlay instead of the canvas.
+
+**Fix:**
+
+- **`ScratchPad.tsx`/`.module.css`**: added a `fillHeight` prop — `height`
+  becomes a floor (`minHeight`), not a cap, and new additive `.wrapFill`/
+  `.canvasWrapFill` classes give the component its own flex-grow chain
+  without touching the 3 other unrelated call sites (`HomeworkSession.tsx`,
+  `GradeOnboard.tsx`, `SessionWork.tsx` — all still pass a fixed `height`
+  with no `fillHeight`, byte-for-byte same behavior as before).
+- **`Practice.tsx`**: `.sessionColumns` → `align-items: stretch` (aside now
+  matches the question column's height) plus `min-height: calc(100dvh -
+  210px)` on the same rule (aside-only class, so this can't leak into any
+  other Practice.tsx phase) so a short question card doesn't cap the whole
+  row short — the row now floors near the visible viewport height, and the
+  question card just sits at its natural height inside the taller row (no
+  visible seam, it has no background of its own). Reordered the aside so
+  `GraphBox` renders above `ScratchPad` (`height={240} fillHeight`), matching
+  "writing space under the graph."
+- **`ConceptChapterPage.module.css`**: `.annotationActive` → `display: flex;
+  flex-direction: column` (was `block`) so ScratchPad's existing `paperMode`
+  flex chain actually has a flex parent to grow inside. No ScratchPad prop
+  change needed here — paperMode already carried the right sizing logic,
+  it just had a broken parent.
+- **Compaction** (both files): tightened the 4 answer-option rows — Practice
+  matteShell `.choice` padding 12px 14px→8px 12px, font 20px→17px, gap
+  12px→9px, container gap 12px→8px, min-height 56px→44px (the "IMMERSIVE
+  CANVAS SESSION" override block that was actually winning the cascade);
+  base `.choice` (paperScan/diagnostic mode) padding 14px→11px 12px,
+  min-height 64px→52px. `ConceptChapterPage` `.stickerChoice` padding
+  10px 12px→7px 11px, gap 12px→8px, choiceText font 20px→17px, `.qChoices`
+  margins trimmed. Question banner/body padding trimmed similarly in
+  Practice (`questionBanner` 32/36/28→20/26/16, `questionBody`
+  20/28/16→14/24/10). All still comfortably above iOS's 44px tap-target
+  guideline (new min-heights are 44-52px, not below).
+
+**Verified with real before/after measurements** (Playwright against the dev
+server, `VITE_SCREENSHOT_MODE`-gated `AuthGuard` bypass in `App.tsx` + a
+`?screenshotMock=<conceptId>` mock-session effect in `Practice.tsx`, same
+technique as earlier passes today — both fully reverted after, confirmed via
+`diff` against pre-shim backups and `grep SCREENSHOT app/src/App.tsx
+app/src/pages/Practice.tsx` returning empty):
+
+- **Practice.tsx ScratchPad**: canvas height 240px → **819px** (measured via
+  `getBoundingClientRect()`), filling from directly under GraphBox to within
+  ~15px of the page bottom. Functional proof: a stroke drawn from near the
+  canvas top to 15px above its new bottom edge left ink pixels from device-y
+  14 to 691 of 817 (vs. before: the same box was capped at 240px so ink
+  literally couldn't reach past that row).
+- **ConceptChapterPage.tsx write-mode overlay**: canvas height 320px (fixed
+  floor, top-aligned) → **759px**, exactly matching `.blendQuestMain`'s full
+  height. Functional proof: a stroke aimed from the question header to just
+  above the submit button registered ink at device-y up to 691 of 759
+  (~91% of the panel) after the fix, vs. stopping dead at device-y 319 of
+  320 before the fix (the rest of the same mouse path landed on the
+  choices/button behind the invisible overlay, not the canvas — confirmed
+  both in the pixel scan and visually in the screenshot, where the ink line
+  visibly stops mid-page).
+- **Options**: Practice matteShell option row ≈ 76px tall (56px min-height +
+  padding/border) → ≈ 60px; ConceptChapterPage sticker option row ≈ 56px →
+  ≈ 46px. 4-option block + gaps: Practice ≈ 336px → ≈ 264px; ConceptChapterPage
+  ≈ 250px → ≈ 200px.
+
+`npx tsc --noEmit` clean. `npx vitest run` → 119 passed, 1 skipped, 8 files
+(matches session baseline exactly, zero regressions). `npm run build`
+succeeded (same pre-existing >500kB chunk warning, unrelated). `grep
+manjushree app/src/App.tsx` shows all 4 references, untouched.
+
+7 screenshots saved to `agent_work/product/screenshots_2026-07-24/` (prefix
+`scratchpad_`): `practice_BEFORE`/`_AFTER` (small boxed scratch pad + dead
+whitespace vs. full-column fill + compact options), `practice_stroke_fill_proof`
+(a drawn line running the full new height of the aside), `chapter_quest_BEFORE`/
+`_AFTER` (compact sticker options), `chapter_writemode_stroke_BEFORE`/`_AFTER`
+(the write-mode overlay stroke stopping at the old 320px floor vs. running the
+full question-card height after the fix).
+
+Files touched: `app/src/components/ScratchPad.tsx`,
+`app/src/components/ScratchPad.module.css`, `app/src/pages/Practice.tsx`
+(aside reorder + `fillHeight` prop only — a concurrent pass on this shared
+file added unrelated "weekly paper" state/logic elsewhere in the same file,
+left untouched), `app/src/pages/Practice.module.css`,
+`app/src/pages/ConceptChapterPage.module.css`. Nothing committed, left in the
+working tree for review.
+
+---
+
 ## Correction: narrative-wrapping fix targeted the wrong surface (Claude, 2026-07-24)
 
 **This is a correction to the "Remove per-question narrative wrapping" entry

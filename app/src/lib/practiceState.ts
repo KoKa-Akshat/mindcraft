@@ -77,6 +77,23 @@ export async function loadDiagnostic(
   }
 }
 
+/**
+ * users/{uid}.weeklyPaperCompletedWeek — the weekKey() (see weeklyPracticePaper.ts)
+ * of the last "This week's paper" mission the student finished. Same
+ * self-writable, non-privileged pattern as diagnosticCompleted above: the
+ * student's own browser may set it, Firestore rules only lock down
+ * role/childId/tutorId/classroomId. Fails soft like every other write here.
+ */
+export async function markWeeklyPaperComplete(uid: string, weekKey: string): Promise<void> {
+  try {
+    await setDoc(
+      doc(db, 'users', uid),
+      { weeklyPaperCompletedWeek: weekKey },
+      { merge: true },
+    )
+  } catch { /* fail soft */ }
+}
+
 export async function getUserRole(uid: string): Promise<string | null> {
   try {
     const snap = await getDoc(doc(db, 'users', uid))

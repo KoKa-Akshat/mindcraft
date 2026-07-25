@@ -367,7 +367,21 @@
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 20px;
-  align-items: start;
+  /* stretch (not start) so the aside column (GraphBox + ScratchPad) matches
+     the question column's full height — otherwise the aside stops at its
+     own small content height and leaves dead whitespace below it even
+     though the question card runs taller. See ACTIVE_TASK.md. */
+  align-items: stretch;
+  /* Floor the row near the viewport's remaining height (fixed 54px Sidebar
+     + progress-strip chrome above this grid, ~210px measured) — otherwise
+     a short question card makes the WHOLE row short too (stretch only
+     matches the two columns to each other, not to the screen), leaving the
+     rest of the visible page blank below both. The question card itself
+     just sits at its natural height inside the taller row (sessionMain has
+     no background of its own, so the extra space is invisible there); the
+     aside's ScratchPad is the one that grows to fill it (see
+     ScratchPad's fillHeight prop). */
+  min-height: calc(100dvh - 210px);
 }
 .sessionMain { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
 
@@ -375,6 +389,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-height: 0;
 }
 
 .asideLabel {
@@ -528,14 +543,14 @@
 .choices {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 .choice, .choiceSelected, .choiceCorrect, .choiceWrong {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 14px;
+  padding: 11px 12px;
   border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
@@ -546,7 +561,8 @@
   width: 100%;
   font-family: var(--f-body);
   color: #1e293b;
-  min-height: 64px;
+  min-height: 52px;
+  line-height: 1.3;
 }
 
 .choice {
@@ -4377,7 +4393,7 @@
 .matteShell .questionBanner {
   background: #f0ebe2 !important;
   border-bottom: 1px solid rgba(102,92,78,0.14);
-  padding: 28px 32px 24px;
+  padding: 20px 26px 16px;
   position: relative;
   z-index: 1;
 }
@@ -4409,15 +4425,15 @@
 
 .matteShell .questionText {
   font-family: var(--tok-font-hand);
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 600;
   color: #1c1a17;
-  line-height: 1.55;
+  line-height: 1.45;
 }
 
 /* Choices container + body above it */
 .matteShell .questionBody {
-  padding: 20px 28px 16px;
+  padding: 14px 24px 10px;
   position: relative;
   z-index: 1;
 }
@@ -4433,7 +4449,7 @@
 .matteShell .choices {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 /* Base choice — puffy doodle sticker */
@@ -4444,10 +4460,10 @@
   background: linear-gradient(145deg, #fffdf8, #fff4e8);
   border: 2.5px solid #3a2f55;
   border-radius: 14px 18px 12px 16px;
-  padding: 12px 14px;
-  gap: 12px;
+  padding: 8px 12px;
+  gap: 9px;
   font-family: var(--tok-font-hand);
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 400;
   color: #2a2430;
   transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms, filter 160ms;
@@ -5326,21 +5342,21 @@
 }
 
 .matteShell .questionBanner {
-  padding: 32px 36px 28px !important;
+  padding: 20px 26px 16px !important;
   background: #f7f3ec !important;
   border-bottom: 1px solid rgba(102, 92, 78, 0.1) !important;
 }
 
 .matteShell .questionText {
-  font-size: clamp(20px, 2.4vw, 26px) !important;
-  line-height: 1.45 !important;
+  font-size: clamp(17px, 2vw, 22px) !important;
+  line-height: 1.4 !important;
 }
 
 .matteShell .choice {
   border: 1.5px solid rgba(58, 47, 85, 0.14) !important;
   box-shadow: 0 3px 10px rgba(58, 47, 85, 0.06) !important;
   border-radius: 16px !important;
-  min-height: 56px;
+  min-height: 44px;
 }
 
 .matteShell .choiceLetter {

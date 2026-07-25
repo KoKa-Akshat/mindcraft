@@ -1127,6 +1127,39 @@
   color: #1a5c3c;
 }
 
+/* Locked variant — shown once this week's paper is done, until it unlocks
+   again next week. Same footprint as .paperCta so the header doesn't jump,
+   but muted/inert (no hover lift, no pointer cursor) with a lock icon so the
+   state reads clearly instead of just vanishing. */
+.paperCtaLocked {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid rgba(58, 47, 85, 0.14);
+  border-radius: 12px 16px 12px 14px;
+  background: rgba(58, 47, 85, 0.05);
+  padding: 7px 14px;
+  cursor: default;
+}
+.paperCtaLockIcon {
+  font-size: 15px;
+  line-height: 1;
+  filter: grayscale(1) opacity(0.7);
+}
+.paperCtaLockedText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+.paperCtaLockedText .paperCtaEyebrow { color: rgba(58, 47, 85, 0.55); }
+.paperCtaUnlockLabel {
+  font-family: var(--tok-font-hand);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(58, 47, 85, 0.6);
+}
+
 /* "Book a Session", new on this view  -  same copy/destination as
    Sidebar.tsx's nav entry and StudentSessions.tsx's "Book a Session ->"
    button (both -> /book). Quieter than the paper CTA (a text link, not a

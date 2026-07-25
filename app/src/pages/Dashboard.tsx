@@ -25,6 +25,7 @@ import {
   buildWeeklyPracticePaper,
   cacheWeeklyPaper,
   loadCachedWeeklyPaper,
+  nextUnlockLabel,
 } from '../lib/weeklyPracticePaper'
 import { loadDashboardPersonalization } from '../lib/dashboardPersonalization'
 import s from './Dashboard.module.css'
@@ -242,8 +243,15 @@ export default function Dashboard() {
     ? `Let’s tackle ${weaknessLabel} next. You’ve got this!`
     : 'Pick any sticker on the map and we’ll dive in ★'
 
+  // Locked once the student has finished this week's paper (weekKey-keyed
+  // completion flag, self-written by the student's own browser same as
+  // diagnosticCompleted — see practiceState.ts). Stays unlocked the whole
+  // week up until then; re-locks only on completion, not on a timer.
+  const paperLocked = !!weeklyPaper && data.weeklyPaperCompletedWeek === weeklyPaper.weekKey
+  const paperUnlockLabel = useMemo(() => nextUnlockLabel(), [])
+
   function playWeeklyPaper() {
-    if (!weeklyPaper?.slots[0]) {
+    if (!weeklyPaper?.slots[0] || paperLocked) {
       openMap()
       return
     }
@@ -252,6 +260,8 @@ export default function Dashboard() {
       state: {
         conceptId: first.conceptId,
         missionType: first.role === 'stretch' ? 'learn' : 'weakness',
+        weeklyPaper: true,
+        weeklyPaperWeekKey: weeklyPaper.weekKey,
       },
     })
   }
@@ -348,10 +358,20 @@ export default function Dashboard() {
                   </div>
                   <div className={s.homeTopActions}>
                     {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
-                      <button type="button" className={s.paperCta} onClick={playWeeklyPaper}>
-                        <span className={s.paperCtaEyebrow}>this week’s paper</span>
-                        <span className={s.paperCtaGo}>Start →</span>
-                      </button>
+                      paperLocked ? (
+                        <div className={s.paperCtaLocked} aria-live="off">
+                          <span className={s.paperCtaLockIcon} aria-hidden="true">🔒</span>
+                          <span className={s.paperCtaLockedText}>
+                            <span className={s.paperCtaEyebrow}>this week’s paper</span>
+                            <span className={s.paperCtaUnlockLabel}>Done! {paperUnlockLabel}</span>
+                          </span>
+                        </div>
+                      ) : (
+                        <button type="button" className={s.paperCta} onClick={playWeeklyPaper}>
+                          <span className={s.paperCtaEyebrow}>this week’s paper</span>
+                          <span className={s.paperCtaGo}>Start →</span>
+                        </button>
+                      )
                     )}
                     <button type="button" className={s.bookSessionLink} onClick={() => navigate('/book')}>Book a Session →</button>
                   </div>
