@@ -17,6 +17,8 @@ import { getPastMistakeCallback, type PastMistakeCallback } from '../lib/pastMis
 import WizardMascot from '../components/canvas/WizardMascot'
 import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
+import GraphBox from '../components/GraphBox'
+import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
 import type { ScratchStrokeData } from '../types'
 import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
@@ -442,12 +444,13 @@ export default function ConceptChapterPage() {
   }, [journalQIdx, panelIdx])
 
   const activeQuestion = journalQIdx >= 0 ? questions[journalQIdx] : null
-  const activeStem = useMemo(() => {
-    if (!activeQuestion) return ''
-    const f = getFrame(conceptId)
-    const story = selectStoryForConcept(canonicalId)
-    return chapterStem(activeQuestion, f, story?.protagonist ?? cs.conceptName, canonicalId)
-  }, [activeQuestion, conceptId, canonicalId, cs.conceptName])
+  // Narrative wrapping removed from the displayed stem (see ACTIVE_TASK.md).
+  // journalGuide highlights now key off the plain bank question, matching
+  // what actually renders in renderQuestPanel. chapterStem/getFrame/
+  // selectStoryForConcept stay wired (used by renderOpenPanel's story intro
+  // and kept computed in renderQuestPanel below) for a future dedicated
+  // wrapping agent; intentionally not consumed here anymore.
+  const activeStem = useMemo(() => activeQuestion?.question ?? '', [activeQuestion])
   const transcribing = Boolean(
     journalQIdx >= 0
     && (scratchStrokes[journalQIdx]?.strokes?.length ?? 0) > 0
@@ -705,8 +708,12 @@ export default function ConceptChapterPage() {
     const chosen = answers[qIdx] ?? null
     const isDone = submitted[qIdx] ?? false
     const protagonist = localStory?.protagonist ?? frame?.protagonist ?? cs.conceptName
-    const stemText = chapterStem(q, frame, protagonist, canonicalId)
+    // Narrative wrapping removed from the displayed stem (see ACTIVE_TASK.md).
+    // narrativeStem/scene stay wired (computed) for a future dedicated
+    // wrapping agent; intentionally not fed into the JSX below anymore.
+    const narrativeStem = chapterStem(q, frame, protagonist, canonicalId)
     const scene = selectSceneForQuestion(q, canonicalId)
+    void narrativeStem
     const allHints = (q.hints ?? []).slice(0, 2)
     const hasInk = Boolean(notes[qIdx]) || (scratchStrokes[qIdx]?.strokes?.length ?? 0) > 0
 
@@ -752,15 +759,13 @@ export default function ConceptChapterPage() {
             </div>
           </header>
 
-          {beat && (
-            <p className={s.sidePassage}>
-              <span className={s.beatLabel}>scene {beatIndex}</span>
-              {storyTeaser(beat, 280)}
-            </p>
-          )}
+          {/* Scene-beat narrative teaser removed (see ACTIVE_TASK.md). beat/
+              beatIndex/storyTeaser stay wired on the panel plumbing for a
+              future dedicated wrapping agent; intentionally not rendered
+              here anymore. */}
 
           <HighlightedStem
-            text={stemText}
+            text={q.question}
             ink={theme.ink}
             accent={theme.accent}
             highlights={journalGuide.highlights}
@@ -862,10 +867,13 @@ export default function ConceptChapterPage() {
         </div>
 
         <aside className={s.blendQuestAside}>
-          <Polaroid salt={qIdx + 9} className={s.polaroidQuest} />
-          {(scene?.settingLine ?? frame?.settingLine) && (
-            <p className={s.asideScene}>{scene?.settingLine ?? frame?.settingLine}</p>
-          )}
+          {/* Polaroid + scene-setting text removed (see ACTIVE_TASK.md).
+              GraphBox takes the top-right slot instead. Polaroid/scene stay
+              wired above for a future dedicated wrapping agent. */}
+          <GraphBox
+            key={`chapter-graph-${q.id}`}
+            defaultOpen={GRAPHABLE_CONCEPT_IDS.has(canonicalId)}
+          />
         </aside>
       </div>
     )

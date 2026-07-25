@@ -4,6 +4,105 @@
 
 ---
 
+## Correction: narrative-wrapping fix targeted the wrong surface (Claude, 2026-07-24)
+
+**This is a correction to the "Remove per-question narrative wrapping" entry
+below**, which explicitly (and wrongly) marked `ConceptChapterPage.tsx` as
+"correct as-is, out of scope, untouched." That was the mistake: the standalone
+`/practice` route (`app/src/pages/Practice.tsx`, fixed in that entry) is real
+but secondary. The surface hit for essentially every concept a student studies
+is `app/src/pages/ConceptChapterPage.tsx`'s inline "quest panels" (route
+`/concept/:conceptId`, reached from Dashboard/concept map), and it still had
+the exact anti-pattern until this pass.
+
+Scope strictly `app/**`. Did not touch `app/src/manjushree/`,
+`agent_work/manjushree-zone/`, `ml/**`, `webhook/**`, `data/**`, `worlds/**`.
+`grep manjushree app/src/App.tsx` shows all 4 references, unchanged.
+
+**`app/src/pages/ConceptChapterPage.tsx`**
+- `renderQuestPanel`'s displayed stem switched from `chapterStem(...)` (which
+  stitched `[settingLine, questionBridge, ask]` into one paragraph) to the
+  plain `q.question` bank text, passed straight to `HighlightedStem`.
+- Removed the "scene beat" narrative teaser block above the stem
+  (`s.sidePassage` / `s.beatLabel`, showing `beat`/`beatIndex` text).
+- Replaced the aside column's Polaroid image + scene-setting caption
+  (`s.blendQuestAside`) with `GraphBox` (from `app/src/components/GraphBox.tsx`,
+  built in the GraphBox-port entry below, reused as-is, not rebuilt), so the
+  live polynomial grapher now sits top-right of the question panel.
+  `ScratchPad`/the write-anywhere annotation layer was left exactly where it
+  already lived (inside the main column, toggled by the pencil button), not
+  moved into the aside.
+- `activeStem` (feeds `useJournalGuide`'s highlight extraction) switched from
+  the narrative `chapterStem(...)` result to the same plain `q.question`, so
+  the Jarvis focus-highlighter matches against what is actually rendered
+  (same reasoning as the `GradeOnboard.tsx` fix in the entry below: a
+  highlight phrase extracted from text that isn't shown will just silently
+  fail to match).
+- Left wired but no longer fed into the rendered JSX: `chapterStem`,
+  `getFrame`/`questionContextFrames.json` lookups, `selectSceneForQuestion`
+  (`scene`), `storyTeaser`, and the `beat`/`beatIndex`/`Panel` plumbing in
+  `buildPanels`/`storyBeats`, all still computed/callable for a future
+  dedicated wrapping agent, just not displayed. `frame`/`selectStoryForConcept`
+  (`localStory`) stay actively used elsewhere on the page (the opening story
+  panel's protagonist/setting stamp, `renderOpenPanel`), unaffected.
+
+**New shared file `app/src/lib/graphableConcepts.ts`**: extracted
+`GRAPHABLE_CONCEPT_IDS` (the polynomial-graphable concept set) out of
+`Practice.tsx` into its own module so both `Practice.tsx` and
+`ConceptChapterPage.tsx` import the same set instead of drifting copies.
+`Practice.tsx`'s own GraphBox wiring (`defaultOpen={GRAPHABLE_CONCEPT_IDS.has(...)}`)
+is unchanged in behavior, just re-sourced from the shared file.
+
+**CSS**: `.blendQuestAside` in `ConceptChapterPage.module.css` changed
+`align-items: center` (sized for centering a fixed-width Polaroid) to
+`align-items: stretch` so `GraphBox` fills the column's width. This is the
+only CSS change; `.chapterDesk` (page background) and `.canvasStage` (cream
+card) were not touched.
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` → 119
+passed, 1 skipped, 8 files (matches baseline, zero regressions). `npm run
+build` succeeded (same pre-existing >500kB chunk warning, unrelated). `grep
+manjushree app/src/App.tsx` shows all 4 references, checked before and after
+the screenshot shim below.
+
+Screenshots taken via a temporary, `VITE_SCREENSHOT_MODE`-gated `AuthGuard`
+bypass in `App.tsx` (mock `UserContext` value, no real Firebase auth), same
+technique as the entries below, run against `VITE_SCREENSHOT_MODE=1 npx vite
+--port 5194`. For the "before" shots, `ConceptChapterPage.tsx` and
+`ConceptChapterPage.module.css` were temporarily swapped for their `git show
+HEAD:...` (pre-session) versions on disk, screenshotted, then swapped back to
+the real edited versions. Both the `App.tsx` shim and the two temporarily
+swapped files were restored from byte-for-byte backups afterward, confirmed
+via `diff` showing zero differences against the pre-shim backups and a fresh
+`grep VITE_SCREENSHOT_MODE app/src/App.tsx` returning empty. `tsc`/`vitest`/
+`build` all re-run clean after the revert (numbers above are post-revert).
+
+4 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+- `linear_equations_BEFORE.png` / `_AFTER.png`: before shows the "SCENE 1"
+  teaser, an "At sea, bound for Jamaica, 1761" bridge line stitched onto the
+  actual x-intercept question, and a Polaroid photo in the aside; after shows
+  the plain "Solve: 7x = 35"-style stem with no narrative prefix and a live
+  GraphBox (default-open, `linear_equations` is in `GRAPHABLE_CONCEPT_IDS`)
+  top-right with a parabola plotted from the default expression.
+- `ratios_proportions_BEFORE.png` / `_AFTER.png`: a second concept, not in
+  `GRAPHABLE_CONCEPT_IDS`; before shows a "Giza, foot of the pyramid, 600 BC"
+  Thales narrative wrapped around an unrelated percentage-graph question;
+  after shows the plain question, GraphBox present but collapsed by default,
+  and the focus-highlighter still correctly underlining "a percentage" in the
+  plain stem (confirms the `activeStem` fix keeps highlighting working).
+  Note: the specific question shown differs between the before/after shot for
+  this pair (the bank's per-session shuffle picks a different question on
+  each fresh page load); the concept and the wrapping-removed pattern are the
+  same, which is what these screenshots are evidence of.
+
+Files touched: `app/src/pages/ConceptChapterPage.tsx`,
+`app/src/pages/ConceptChapterPage.module.css`,
+`app/src/lib/graphableConcepts.ts` (new), `app/src/pages/Practice.tsx`
+(GRAPHABLE_CONCEPT_IDS now imported from the new shared file, no behavior
+change). Nothing committed, left in the working tree for review.
+
+---
+
 ## GraphBox port + limits_continuity story/art gap + chapter audit (Claude, 2026-07-24)
 
 Scope strictly `app/**`. Did not touch `app/src/manjushree/`, `agent_work/manjushree-zone/`,
