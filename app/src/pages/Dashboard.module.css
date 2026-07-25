@@ -882,6 +882,18 @@
   min-width: 0;
 }
 
+/* The wizard's speech-bubble box ("Weekly Review") removed from next to the
+   mascot (Akshat, 2026-07-25 fix pass) — WizardMascot itself lives in
+   components/canvas/, outside this lane's scope, so its bubble is hidden
+   structurally instead of edited at the source: the mascot's markup is
+   always <aside><img class="sprite"/><div class="bubble">...</div></aside>,
+   so the lone <div> direct child of that <aside> IS the bubble, no class
+   name from the other module needed. Sprite stays; hiding the div also
+   collapses .wrap's own 12px gap, so today's spark now sits right up
+   against the sprite using only .heroMiddle's existing 10px gap  -  no
+   leftover dead space, no separate "tighten the gap" rule needed. */
+.heroMiddle > aside > div { display: none; }
+
 .heroSpark {
   display: flex;
   align-items: center;
@@ -1158,7 +1170,12 @@
   flex-shrink: 0;
 }
 
-/* "This week's paper", relocated from the bottom .homeActions row. A small
+/* .paperCta / .paperCtaGo are retired (Akshat, 2026-07-25 fix pass) — the
+   unlocked "this week's paper" CTA now reuses .bookSessionLink verbatim
+   (label "Weekly Review", no arrow, same pill as Find a Tutor) instead of
+   this two-line green card. Left in place, unused, as a rollback point; the
+   locked variant below (.paperCtaLocked, still live) keeps reading
+   .paperCtaEyebrow for its own "this week's paper" line. Was a small
    two-line CTA card (eyebrow + "Start ->") rather than reusing the flat
    .toolPill/.paperPill shape verbatim  -  a bare pill read too thin sitting
    next to a 50px "Contents" heading. */
@@ -1185,6 +1202,7 @@
   color: #1a5c3c;
 }
 .paperCtaGo {
+  /* Retired alongside .paperCta above  -  no longer rendered. */
   font-family: var(--tok-font-hand);
   font-size: 18px;
   font-weight: 700;
@@ -1225,13 +1243,16 @@
 }
 
 /* "Find a Tutor", new on this view  -  same destination as Sidebar.tsx's
-   nav entry and StudentSessions.tsx's "Find a Tutor ->" button (all ->
+   nav entry and StudentSessions.tsx's "Find a Tutor" button (both ->
    /find-a-tutor). Was a bare text link (2026-07-24); given a pill border
    here (2026-07-25 polish pass) so it reads as a real secondary action next
    to Contents instead of floating text  -  same pill shape/radius as
    .paperCtaLocked just above (border-radius: 12px 16px 12px 14px, a quiet
-   border rather than a filled card), still visually quieter than the green
-   .paperCta since this is the secondary action. */
+   border rather than a filled card). As of the follow-up fix pass (also
+   2026-07-25) this same class is reused verbatim for the unlocked "this
+   week's paper" CTA too (now labeled "Weekly Review") so the two sit next
+   to each other as a matched pair of pills, per Akshat's brief  -  neither
+   carries a trailing arrow. */
 .bookSessionLink {
   border: 1.5px solid rgba(58, 47, 85, 0.22);
   border-radius: 12px 16px 12px 14px;

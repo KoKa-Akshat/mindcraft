@@ -4,6 +4,119 @@
 
 ---
 
+## Hero bar + Weekly Review pill fix pass (Fable 5, 2026-07-25)
+
+Scope: `app/src/pages/Dashboard.tsx` + `app/src/pages/Dashboard.module.css`
+only, per Akshat's verbatim brief. Four small layout fixes to the merged
+hero bar and the Contents-page actions row shipped earlier today.
+
+1. **Removed the "Weekly Review" box from next to the wizard.** That box was
+   the WizardMascot's own speech bubble (`components/canvas/WizardMascot.tsx`,
+   out of this lane's scope) rendering the `wizardLine` text ("Weekly
+   Review"). Since the source component can't be touched, the bubble is
+   hidden structurally from the CSS module instead: `.heroMiddle > aside >
+   div { display: none; }` — the mascot's markup is always `<aside><img
+   class="sprite"/><div class="bubble">...</div></aside>`, so the lone
+   direct-child `<div>` of that `<aside>` IS the bubble, no dependency on
+   WizardMascot's own (hashed) class names. The sprite itself stays.
+2. **Today's spark now sits tight against the wizard.** Hiding the bubble
+   collapses its own 12px internal gap automatically, so the sprite and the
+   "today's spark" pill now sit only `.heroMiddle`'s existing 10px gap apart
+    -  no leftover dead space, no extra CSS needed to "close the gap."
+3. **"This week's paper" CTA relabeled "Weekly Review."** The unlocked-state
+   button now reuses `.bookSessionLink` (the exact "Find a Tutor" pill class)
+   verbatim instead of its old two-line green `.paperCta` card, per "just
+   like a find a tutor button... reuse that existing style, don't invent a
+   new one." `.paperCta`/`.paperCtaGo` left in the CSS file, marked retired
+   in a comment (unused, rollback point) — the **locked** state
+   (`.paperCtaLocked`, "Done! Unlocks in N days") is untouched, wasn't part
+   of this ask.
+4. **Arrow removed from all three CTAs**: "today's spark" ("play →" →
+   "play"), the new "Weekly Review" pill (already arrow-free by design), and
+   "Find a Tutor" ("Find a Tutor →" → "Find a Tutor"). Color/shape/click
+   behavior unchanged on all three.
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` →
+126 passed / 1 skipped / 9 files (baseline had drifted from the session's
+stated 120/1/8 to this by the time of my run, purely from other agents'
+concurrent unrelated work already on disk — `git status` confirmed
+`App.tsx`, `MathText.tsx`, `altDiagram.ts`, etc. were mid-edit by someone
+else, none of it touched by this pass; zero regressions from my 2-file
+diff). `npm run build` succeeded (same pre-existing >500kB chunk warning).
+`grep manjushree app/src/App.tsx` → all 4 references, untouched, checked
+before and after.
+
+**Screenshots** (`agent_work/product/screenshots_2026-07-25/
+hero_bar_fix_BEFORE.png` / `_AFTER.png`): real renders, not a mockup. Since
+`App.tsx` was explicitly off-limits this pass (and had real concurrent WIP
+on disk), the usual whole-app `VITE_SCREENSHOT_MODE` `AuthGuard` bypass
+wasn't an option here. Instead built a fully isolated, temporary preview
+harness outside the app's routing entirely: two new scratch files
+(`app/hero-preview.html`, `app/src/heroPreviewMain.tsx`) plus a scratch
+component directory, importing the REAL `WizardMascot` component, the REAL
+`conceptIconUrl`, the REAL current `Dashboard.module.css` (after) and a
+git-HEAD snapshot of the pre-edit `Dashboard.module.css` (before), each
+driving the exact hero-bar/homeTopActions JSX copied verbatim from
+`Dashboard.tsx`'s two states. Served via `vite --port 5199`, shot with
+Playwright (`chromium`, already cached locally, invoked via `npx
+playwright`, nothing added to `package.json`/lock). BEFORE shot confirms the
+bug exactly as described (boxed "Weekly Review" crowding the wizard, "Start
+→", "Find a Tutor →", "play →"); AFTER confirms all four fixes. All scratch
+files deleted post-shoot — `git status` shows only the two intended files
+modified.
+
+---
+
+## Cursor / multi-agent session handoff saved (2026-07-25)
+
+- **`CURSOR_HANDOFF.md`** (repo root) — canonical Cursor handoff: live checkout path vs stale Desktop checkout, `main`+CI deploy, lane ownership, Manjushree WIP protection, verification pattern, current focus.
+- **`.cursor/rules/session-handoff.mdc`** — `alwaysApply: true` so future sessions load the checkout + lane + Manjushree rules automatically.
+- Manjushree landing panel brief remains at `agent_work/manjushree-zone/LANDING_PANEL_HANDOFF.md`.
+- No product code changed in this save. Agents: read `CURSOR_HANDOFF.md` + top of this file before complementary work.
+
+---
+
+## Find-a-tutor benefit bullets + tabbed apply form (Fable 5, 2026-07-25)
+
+Product lane only (`index.html`). Two follow-on jobs to the marketing overhaul
+below. Did not touch `app/**`. Verified via a local static server
+(`python3 -m http.server` from repo root) plus headless Chrome: zero new
+console errors (the only 404 is the pre-existing missing `favicon.ico`,
+unrelated), both apply-form tabs render genuinely distinct copy and fields,
+tab toggle and round-trip both work. `tsc --noEmit`, `vitest run`, and
+`npm run build` all green (an overlapping copy-tightening pass and other
+in-flight work in `app/**` landed in this same checkout mid-task, changing
+line numbers and headline wording around both spots; reconciled the wording
+below against the final on-disk copy so nothing snapped back on tab switch).
+
+**Job 1, why-college-tutors bullets.** Added a 4-item `.tutor-benefits` list
+inside `.findtutor-copy` in the `#try-app` "College tutors. Near you." panel,
+between the intro paragraph and the CTA row: close in age (easier to ask the
+real question), stuck on the exact material last year not decades ago, peer
+tutoring is well studied as effective (kept as a general honest claim, no
+invented stat), less lecture more like a study partner. Small leaf-dot bullet
+style, matches existing color tokens (`--leaf-2`), no new dependencies.
+
+**Job 2, tabbed apply card.** The `#intake` section's single student form is
+now a two-tab component reusing the existing `.demo-toggle`/`.demo-tab`
+convention from the Sword of Wisdom panel (same visual language: pill tabs,
+dark "is-active" tab). Tabs: "Apply for a seat" (existing parent/student form,
+fields unchanged) and "Apply to tutor" (new form: name, email, year and major,
+availability, math background). Switching tabs swaps three things via JS
+(`setActiveApplyTab()`): the eyebrow label (`#applyLabel`: "Apply" vs
+"Teach"), the headline (`#applyHeading`: student keeps "Tell us their
+story.", tutor gets its own "Show us you get it."), and the sub-copy
+(`#applySub`), plus toggles which `<form>` is visible inside a new
+`.form-stage` wrapper (`display:none`/`block` via `.form-stage[data-state]`
+CSS, same pattern as the existing `.demo-stage[data-state]` rules). Both
+forms submit through the same pre-filled-mailto pattern as before
+(`tutorForm` submit handler mirrors the existing `intakeForm` one, subject
+"Tutor application", separate `#tutorFormStatus` confirmation message). The
+pricing section's existing seat-request button still deep-links to `#intake`
+and lands on the seat tab by default (unchanged).
+
+---
+
 ## Marketing page overhaul, 6 jobs (Fable 5, 2026-07-25)
 
 Product lane only (`index.html`, `app/src/pages/TutorDashboard.tsx`,

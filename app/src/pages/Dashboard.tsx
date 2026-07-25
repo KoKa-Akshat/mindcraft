@@ -321,9 +321,15 @@ export default function Dashboard() {
     return paper
   }, [weakness, learn, recLoading])
 
-  // Plain "Weekly Review" — the topic itself is already visible right next
-  // to the wizard in the "today's spark" sticker, so the line no longer
-  // needs to restate it (Akshat, 2026-07-25 dashboard polish pass).
+  // The wizard's own speech-bubble box (previously reading "Weekly Review")
+  // is removed from next to the mascot per Akshat's follow-up brief — the
+  // "this week's paper" CTA now carries the "Weekly Review" label itself
+  // (see .homeTopActions below), so having it twice was redundant. The
+  // WizardMascot component (components/canvas/, out of this lane) still
+  // requires a `line` string prop; it's kept computed here but its bubble
+  // is hidden purely via CSS (`.heroMiddle > aside > div` in
+  // Dashboard.module.css) so the sprite alone remains next to today's
+  // spark, with no dead empty box left behind.
   const wizardLine = weaknessLabel
     ? 'Weekly Review'
     : 'Pick any sticker on the map and we’ll dive in ★'
@@ -386,14 +392,17 @@ export default function Dashboard() {
       <div className={s.canvasDesk}>
         {/* ONE hero bar, ONE row (was three stacked bands: nav row,
            "Contents" + wizard row, yellow spark banner)  -  merged per
-           Akshat's brief so logo, section nav, the wizard's encouragement,
-           today's spark CTA, and the username/sign-out all read as one
-           continuous strip, not two internal bands. Rendered once, outside
-           the view switch below, so it appears identically on
-           Home/Map/Work/Notes  -  not just Contents. .heroMiddle is the
-           flexible zone (wizard + spark) that absorbs width pressure; the
-           wordmark, nav, and user block hold their size. Below 720px it
-           wraps onto extra lines rather than truncating content. */}
+           Akshat's brief so logo, section nav, the wizard sprite, today's
+           spark CTA, and the username/sign-out all read as one continuous
+           strip, not two internal bands. Rendered once, outside the view
+           switch below, so it appears identically on Home/Map/Work/Notes
+            -  not just Contents. .heroMiddle is the flexible zone (wizard +
+           spark) that absorbs width pressure; the wordmark, nav, and user
+           block hold their size. Below 720px it wraps onto extra lines
+           rather than truncating content. The wizard's own speech-bubble
+           box is hidden here (see .heroMiddle > aside > div in the CSS
+           module) so today's spark sits right up against the sprite instead
+           of leaving the bubble's old footprint as dead space. */}
         <header className={s.heroBar}>
           <span className={s.canvasWordmark}>Mind<span className={s.canvasWordmarkCraft}>Craft</span></span>
           <nav className={s.canvasNav} aria-label="Notebook sections">
@@ -411,7 +420,7 @@ export default function Dashboard() {
                   <span className={s.sparkEyebrow}>today’s spark</span>
                   <span className={s.sparkName}>{weaknessLabel}</span>
                 </span>
-                <span className={s.sparkGo}>play →</span>
+                <span className={s.sparkGo}>play</span>
               </button>
             )}
           </div>
@@ -452,13 +461,14 @@ export default function Dashboard() {
                           </span>
                         </div>
                       ) : (
-                        <button type="button" className={s.paperCta} onClick={playWeeklyPaper}>
-                          <span className={s.paperCtaEyebrow}>this week’s paper</span>
-                          <span className={s.paperCtaGo}>Start →</span>
-                        </button>
+                        // Reuses .bookSessionLink verbatim (Akshat: label
+                        // should read "Weekly Review" and look "just like a
+                        // find a tutor button" — same pill, no arrow, no new
+                        // CSS invented for it).
+                        <button type="button" className={s.bookSessionLink} onClick={playWeeklyPaper}>Weekly Review</button>
                       )
                     )}
-                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/find-a-tutor')}>Find a Tutor →</button>
+                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/find-a-tutor')}>Find a Tutor</button>
                   </div>
                 </div>
 
