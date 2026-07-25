@@ -463,6 +463,113 @@ function oneOff(id, kind) {
     body += `${text(90, 148, '-3', 12)}${text(330, 148, '3', 12)}${text(226, 43, '3', 12)}${text(230, 224, '-3', 12)}`
   } else if (kind === 'cardA') {
     body = `<rect x="130" y="78" width="160" height="104" rx="16" fill="#f6d2df"/>${text(210, 143, 'A', 42)}`
+  } else if (kind === 'triangleAngles') {
+    body = `${triangle('210,48 322,200 88,200')}${text(210, 82, '4x', 17)}${text(126, 184, '2x - 12', 16)}${text(280, 184, '4x + 42', 16)}`
+  } else if (kind === 'circleFiveCurves') {
+    body = `<circle cx="210" cy="130" r="84" fill="#fff"/>`
+    const pts = []
+    for (let i = 0; i < 5; i++) {
+      const a = -Math.PI / 2 + i * 2 * Math.PI / 5
+      pts.push([210 + Math.cos(a) * 84, 130 + Math.sin(a) * 84])
+    }
+    pts.forEach(([x, y], i) => {
+      const [nx, ny] = pts[(i + 2) % 5]
+      body += `<path d="M${x.toFixed(1)} ${y.toFixed(1)} Q210 130 ${nx.toFixed(1)} ${ny.toFixed(1)}" stroke="#111" fill="none"/>`
+      body += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#111"/>`
+    })
+  } else if (kind === 'purplePara') {
+    body = `<polygon points="126,74 316,74 274,194 84,194" fill="#d8c5f4"/>
+      <path d="M150 60 H286" marker-start="url(#arr)" marker-end="url(#arr)"/><path d="M112 210 H248" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#111"/></marker></defs>`
+  } else if (kind === 'leftSquaresSym') {
+    body = `<line x1="230" y1="40" x2="230" y2="220" stroke="#c63b32" stroke-dasharray="7 7"/>
+      <rect x="158" y="76" width="36" height="36" fill="#4b9cff"/><rect x="194" y="76" width="36" height="36" fill="#4caf50"/>
+      <rect x="158" y="112" width="36" height="36" fill="#f5d348"/><rect x="122" y="112" width="36" height="36" fill="#f28b82"/>`
+  } else if (kind === 'radius') {
+    body = `<circle cx="210" cy="130" r="82" fill="#f9fbf3"/><circle cx="210" cy="130" r="3" fill="#111"/><line x1="210" y1="130" x2="292" y2="130"/>`
+  } else if (kind === 'paraPQRS') {
+    body = `<polygon points="126,74 316,74 274,194 84,194" fill="#f9fbf3"/>
+      ${text(118, 64, 'P', 16)}${text(326, 72, 'Q', 16)}${text(286, 214, 'R', 16)}${text(70, 204, 'S', 16)}
+      <path d="M316 91 L285 178" marker-end="url(#arrow)"/><path d="M84 177 L116 90" marker-end="url(#arrow)"/>
+      <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="5" refY="5" orient="auto"><path d="M0 0 L9 5 L0 9 Z" fill="#111" stroke="none"/></marker></defs>`
+  } else if (kind === 'nthStarRect') {
+    body = `${text(70, 134, 'nth-term rule:', 18, 'start')}${placeholder(212, 128, 'star')}${text(250, 134, 'n', 20)}<rect x="278" y="112" width="46" height="30" fill="#8d61c8"/>`
+  } else if (kind === 'twoTrapeziums') {
+    body = `<polygon points="60,178 162,178 140,102 82,102" fill="#f9fbf3"/>${sideLabel(111, 196, '60cm')}${sideLabel(111, 94, 'y')}
+      <polygon points="228,190 382,190 344,78 266,78" fill="#eef8ee"/>${sideLabel(305, 210, '150cm')}${sideLabel(305, 70, '70cm')}`
+  } else if (kind === 'bracketBox') {
+    body = `${text(96, 139, '(x+2)', 24, 'start')}<rect x="204" y="112" width="122" height="40" fill="#fff"/>`
+  } else if (kind === 'probScale') {
+    body = `<line x1="60" y1="132" x2="360" y2="132"/>`
+    for (let i = 0; i <= 10; i++) body += `<line x1="${60 + i * 30}" y1="120" x2="${60 + i * 30}" y2="144"/>`
+    body += `${text(60, 170, '0.0', 14)}${text(210, 170, '0.5', 14)}${text(360, 170, '1.0', 14)}
+      ${text(120, 104, 'A', 16)}${text(180, 104, 'B', 16)}${text(210, 104, 'C', 16)}${text(270, 104, 'D', 16)}`
+  } else if (kind === 'baseTen') {
+    body = `<rect x="78" y="58" width="86" height="86" fill="#eef8ee"/>`
+    for (let i = 1; i < 10; i++) body += `<line x1="${78 + i * 8.6}" y1="58" x2="${78 + i * 8.6}" y2="144" stroke-width="1"/><line x1="78" y1="${58 + i * 8.6}" x2="164" y2="${58 + i * 8.6}" stroke-width="1"/>`
+    for (let r = 0; r < 4; r++) {
+      body += `<rect x="${204 + r * 34}" y="62" width="22" height="110" fill="#f9fbf3"/>`
+      for (let i = 1; i < 10; i++) body += `<line x1="${204 + r * 34}" y1="${62 + i * 11}" x2="${226 + r * 34}" y2="${62 + i * 11}" stroke-width="1"/>`
+    }
+    for (let i = 0; i < 3; i++) body += `<rect x="${204 + i * 30}" y="198" width="20" height="20" fill="#fff"/>`
+  } else if (kind === 'rectCircleRatio') {
+    for (let i = 0; i < 5; i++) body += `<rect x="${60 + i * 54}" y="76" width="38" height="28" fill="#4b9cff"/>`
+    for (let i = 0; i < 4; i++) body += `<circle cx="${84 + i * 58}" cy="168" r="17" fill="#f28b82"/>`
+  } else if (kind === 'verticalLineGrid') {
+    body = `${axes(70, 178, 280, 126)}`
+    for (let i = 0; i <= 5; i++) body += `<line x1="${70 + i * 28}" y1="172" x2="${70 + i * 28}" y2="184"/>`
+    body += `${text(70, 206, '-10', 13)}${text(210, 206, '0', 13)}<line x1="98" y1="58" x2="98" y2="178" stroke="#111" stroke-width="2.5"/>`
+  } else if (kind === 'fourBars') {
+    for (let r = 0; r < 4; r++) {
+      const y = 52 + r * 45
+      body += `<rect x="80" y="${y}" width="240" height="28" fill="#fff"/>`
+      for (let i = 0; i < 6; i++) {
+        if (r < 3 || i < 5) body += `<rect x="${80 + i * 40}" y="${y}" width="40" height="28" fill="#9fd0ff" opacity=".45" stroke="none"/>`
+        if (i > 0) body += `<line x1="${80 + i * 40}" y1="${y}" x2="${80 + i * 40}" y2="${y + 28}"/>`
+      }
+    }
+  } else if (kind === 'workingArrowPlus') {
+    body = `${text(92, 92, 'x + 7 = ...', 20, 'start')}<path d="M210 108 V150" marker-end="url(#arrow)"/>${placeholder(248, 130, 'star')}${text(92, 188, 'x = ...', 20, 'start')}
+      <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#111" stroke="none"/></marker></defs>`
+  } else if (kind === 'workingArrowMinus') {
+    body = `${text(92, 92, 'x - 7 = ...', 20, 'start')}<path d="M210 108 V150" marker-end="url(#arrow)"/>${placeholder(248, 130, 'star')}${text(92, 188, 'x = ...', 20, 'start')}
+      <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#111" stroke="none"/></marker></defs>`
+  } else if (kind === 'dotPattern') {
+    const terms = [[1, 0], [0, 1], [1, 1], [1, 2], [2, 3], [3, 5]]
+    terms.forEach(([g, r], t) => {
+      const x = 50 + t * 58
+      for (let i = 0; i < g; i++) body += `<circle cx="${x + (i % 2) * 16}" cy="${92 + Math.floor(i / 2) * 16}" r="6" fill="#4caf50"/>`
+      for (let i = 0; i < r; i++) body += `<circle cx="${x + (i % 3) * 16}" cy="${142 + Math.floor(i / 3) * 16}" r="6" fill="#c63b32"/>`
+    })
+  } else if (kind === 'nestedShade') {
+    body = `<rect x="92" y="82" width="236" height="96" fill="#fff"/><line x1="210" y1="82" x2="210" y2="178"/><line x1="210" y1="130" x2="328" y2="130"/><line x1="269" y1="130" x2="269" y2="178"/><rect x="269" y="130" width="59" height="48" fill="#9fd0ff" opacity=".5" stroke="none"/>`
+  } else if (kind === 'boxPyramidTop') {
+    body = `<rect x="84" y="170" width="78" height="40" fill="#f9fbf3"/><rect x="162" y="170" width="78" height="40" fill="#f9fbf3"/><rect x="240" y="170" width="78" height="40" fill="#f9fbf3"/>
+      <rect x="123" y="130" width="78" height="40" fill="#eef8ee"/><rect x="201" y="130" width="78" height="40" fill="#eef8ee"/><rect x="162" y="90" width="78" height="40" fill="#fff"/>
+      ${placeholder(123, 190, 'star')}${text(201, 195, '3g', 17)}${text(279, 195, '2g', 17)}${text(201, 115, '2f + 8g', 15)}`
+  } else if (kind === 'triangleScaleSmall') {
+    body = `${triangle('204,190 354,190 286,58')}${sideLabel(286, 210, '9 cm')}${sideLabel(198, 128, '7.5 cm')}
+      ${triangle('72,182 164,182 118,102', '#eef8ee')}${sideLabel(118, 200, '6 cm')}${placeholder(70, 138, 'star')}`
+  } else if (kind === 'threeLinesAngles') {
+    body = `<path d="M54 80 L360 62"/><path d="M54 132 L360 114"/><path d="M54 184 L360 166"/>
+      <path d="M90 54 H124" marker-start="url(#arr)" marker-end="url(#arr)"/><path d="M90 106 H124" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <line x1="210" y1="36" x2="184" y2="218"/>`
+    ;'abcdefghijkl'.split('').forEach((ch, i) => { body += text(226 + (i % 2) * 24, 66 + Math.floor(i / 2) * 30, ch, 13) })
+    body += `<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#111"/></marker></defs>`
+  } else if (kind === 'triangleSplit') {
+    body = `<polygon points="94,204 330,204 174,48" fill="#f9fbf3"/><line x1="144" y1="129" x2="253" y2="129"/>
+      ${sideLabel(212, 226, '15cm')}${sideLabel(205, 119, '5cm')}${text(130, 92, 'x', 16)}${text(114, 165, 'y', 16)}`
+  } else if (kind === 'triangleABC') {
+    body = `${triangle('210,48 332,202 88,202')}${text(210, 36, 'A', 16)}${text(78, 220, 'B', 16)}${text(344, 220, 'C', 16)}
+      ${sideLabel(210, 224, '8cm')}${sideLabel(296, 126, '?')}`
+  } else if (kind === 'dashedConvergeRed') {
+    body = `<line x1="70" y1="86" x2="350" y2="112" stroke-dasharray="7 7"/><line x1="70" y1="174" x2="350" y2="148" stroke-dasharray="7 7"/><line x1="190" y1="50" x2="226" y2="210" stroke="#c63b32" stroke-width="3"/>`
+  } else if (kind === 'nthFractionRect') {
+    body = `${text(62, 134, 'nth-term rule:', 18, 'start')}${text(206, 134, '1/24 n', 20, 'start')}<rect x="286" y="112" width="46" height="30" fill="#8d61c8"/>`
+  } else if (kind === 'downStarGraph') {
+    body = `${axes()}${text(214, 240, 'Time (secs)', 14)}${vSideLabel(22, 128, 'Distance (m)')}`
+    for (let i = 0; i <= 5; i++) body += `${text(58 + i * 54, 226, String(i * 2), 12)}`
+    body += `${placeholder(44, 100, 'star')}<path d="M58 100 L330 208"/>`
   }
   return [id, svg(body)]
 }
@@ -553,6 +660,35 @@ const diagrams = [
   oneOff('eedi_1060', 'equalPentagon'),
   oneOff('eedi_1075', 'quadrants'),
   oneOff('eedi_1108', 'cardA'),
+  oneOff('eedi_1130', 'triangleAngles'),
+  oneOff('eedi_1143', 'circleFiveCurves'),
+  oneOff('eedi_1208', 'distanceThree'),
+  oneOff('eedi_1212', 'purplePara'),
+  oneOff('eedi_1243', 'leftSquaresSym'),
+  oneOff('eedi_1247', 'radius'),
+  oneOff('eedi_1256', 'paraPQRS'),
+  oneOff('eedi_1258', 'nthStarRect'),
+  oneOff('eedi_1272', 'twoTrapeziums'),
+  oneOff('eedi_1282', 'bracketBox'),
+  oneOff('eedi_1344', 'probScale'),
+  oneOff('eedi_1364', 'rhombusABCD'),
+  oneOff('eedi_1367', 'baseTen'),
+  oneOff('eedi_1377', 'rectCircleRatio'),
+  oneOff('eedi_1405', 'verticalLineGrid'),
+  oneOff('eedi_1418', 'fourBars'),
+  oneOff('eedi_1427', 'workingArrowPlus'),
+  oneOff('eedi_1476', 'dotPattern'),
+  oneOff('eedi_1483', 'nestedShade'),
+  oneOff('eedi_1495', 'boxPyramidTop'),
+  oneOff('eedi_1531', 'triangleScaleSmall'),
+  oneOff('eedi_1621', 'threeLinesAngles'),
+  oneOff('eedi_1644', 'triangleSplit'),
+  oneOff('eedi_1745', 'triangleABC'),
+  oneOff('eedi_1767', 'workingArrowMinus'),
+  oneOff('eedi_1825', 'blueTickLines'),
+  oneOff('eedi_1830', 'dashedConvergeRed'),
+  oneOff('eedi_1846', 'nthFractionRect'),
+  oneOff('eedi_1850', 'downStarGraph'),
 ]
 
 fs.mkdirSync(outDir, { recursive: true })
