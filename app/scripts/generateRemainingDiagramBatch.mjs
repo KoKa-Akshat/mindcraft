@@ -405,6 +405,64 @@ function oneOff(id, kind) {
       <path d="M118 64 H146" marker-start="url(#arr)" marker-end="url(#arr)"/><path d="M268 64 H296" marker-start="url(#arr)" marker-end="url(#arr)"/>
       <line x1="68" y1="178" x2="350" y2="86"/>${text(152, 112, '70', 17)}${text(304, 64, '?', 20)}
       <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#111"/></marker></defs>`
+  } else if (kind === 'circleDiameter') {
+    body = `<circle cx="210" cy="130" r="82" fill="#f9fbf3"/><line x1="128" y1="130" x2="292" y2="130"/><circle cx="210" cy="130" r="3" fill="#111"/>`
+  } else if (kind === 'bearing') {
+    body = `<line x1="210" y1="178" x2="210" y2="54"/><text x="210" y="42" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#111" stroke="none">N</text>
+      <path d="M210 178 L118 126"/><path d="M210 86 A92 92 0 0 1 132 132"/>`
+  } else if (kind === 'para65') {
+    body = `<polygon points="126,74 316,74 274,194 84,194" fill="#f9fbf3"/>
+      ${text(112, 174, '65°', 17)}${text(294, 92, 'p', 19)}`
+  } else if (kind === 'flowchart') {
+    body = `<circle cx="66" cy="130" r="30" stroke="#3676d8" stroke-width="3"/><rect x="126" y="100" width="72" height="60" stroke="#c63b32" stroke-width="3" fill="#fff"/>
+      <rect x="226" y="100" width="82" height="60" stroke="#c63b32" stroke-width="3" fill="#fff"/><circle cx="364" cy="130" r="30" stroke="#3676d8" stroke-width="3"/>
+      ${text(66, 136, 'In', 17)}${text(162, 136, '+ 5', 17)}${text(267, 136, 'double', 15)}${text(364, 136, 'Out', 16)}
+      <path d="M98 130 H122" marker-end="url(#arrow)"/><path d="M200 130 H222" marker-end="url(#arrow)"/><path d="M310 130 H332" marker-end="url(#arrow)"/>
+      <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#111" stroke="none"/></marker></defs>`
+  } else if (kind === 'twentyGrid') {
+    body = `<rect x="80" y="82" width="260" height="104" fill="#fff"/>`
+    for (let c = 1; c < 5; c++) body += `<line x1="${80 + c * 52}" y1="82" x2="${80 + c * 52}" y2="186"/>`
+    for (let r = 1; r < 4; r++) body += `<line x1="80" y1="${82 + r * 26}" x2="340" y2="${82 + r * 26}"/>`
+  } else if (kind === 'starGraph') {
+    body = `${axes()}${text(214, 240, 'Time (seconds)', 14)}${vSideLabel(24, 128, 'Distance (meters)')}
+      <path d="M58 208 L330 64"/><circle cx="330" cy="64" r="4" fill="#111"/>${placeholder(350, 64, 'star')}${text(330, 226, '10', 14)}`
+  } else if (kind === 'symmetryChoices') {
+    body = `<polygon points="62,116 136,116 116,64 82,64" fill="#f9fbf3"/>${text(99, 146, 'A', 16)}
+      <path d="M206 65 A52 52 0 1 0 258 117 L206 117 Z" fill="#eef8ee"/>${text(232, 146, 'B', 16)}
+      <path d="M326 75 C282 94 282 168 326 187 C306 152 306 110 326 75 Z" fill="#f9fbf3"/>${text(322, 214, 'C', 16)}
+      ${text(210, 226, 'All of them', 17)}${text(210, 248, 'D', 16)}`
+  } else if (kind === 'pinkPara') {
+    body = `<polygon points="126,74 316,74 274,194 84,194" fill="#f6d2df"/>
+      <path d="M150 60 H286" marker-start="url(#arr)" marker-end="url(#arr)"/><path d="M112 210 H248" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#111"/></marker></defs>`
+  } else if (kind === 'lineRatio') {
+    body = `<line x1="70" y1="130" x2="350" y2="130"/><circle cx="70" cy="130" r="3" fill="#111"/><circle cx="163" cy="130" r="3" fill="#111"/><circle cx="350" cy="130" r="3" fill="#111"/>
+      ${text(70, 160, 'A', 17)}${text(163, 160, 'B', 17)}${text(350, 160, 'C', 17)}${text(210, 104, '10 units', 17)}`
+  } else if (kind === 'distanceThree') {
+    body = `${axes()}<path d="M58 208 L150 106 H252 L340 208"/>${text(214, 240, 'Time', 14)}${vSideLabel(28, 128, 'Distance')}`
+  } else if (kind === 'diagBox') {
+    body = `<rect x="82" y="44" width="256" height="172" fill="#fff"/><path d="M106 174 L164 184 L136 122 Z" fill="#f9fbf3"/><line x1="82" y1="216" x2="338" y2="44" stroke="#c63b32" stroke-dasharray="7 7"/>`
+  } else if (kind === 'trapStar') {
+    body = `<polygon points="116,190 304,190 262,78 148,78" fill="#f9fbf3"/>
+      ${sideLabel(205, 70, '8cm')}${placeholder(210, 207, 'star')}<line x1="318" y1="78" x2="318" y2="190" stroke-dasharray="4 4"/>${vSideLabel(344, 134, '5cm')}`
+  } else if (kind === 'blueTickLines') {
+    body = `<line x1="132" y1="58" x2="104" y2="202" stroke="#3676d8" stroke-width="4"/><line x1="294" y1="72" x2="250" y2="194" stroke="#3676d8" stroke-width="4"/>
+      <line x1="116" y1="124" x2="138" y2="128" stroke="#c63b32" stroke-width="3"/><line x1="264" y1="132" x2="286" y2="136" stroke="#c63b32" stroke-width="3"/>`
+  } else if (kind === 'boxPyramidBlank') {
+    body = `<rect x="84" y="170" width="78" height="40" fill="#f9fbf3"/><rect x="162" y="170" width="78" height="40" fill="#f9fbf3"/><rect x="240" y="170" width="78" height="40" fill="#f9fbf3"/>
+      <rect x="123" y="130" width="78" height="40" fill="#eef8ee"/><rect x="201" y="130" width="78" height="40" fill="#eef8ee"/><rect x="162" y="90" width="78" height="40" fill="#fff"/>
+      ${placeholder(123, 190, 'star')}${text(279, 195, '2g', 17)}${text(162, 155, '4f+6g', 15)}`
+  } else if (kind === 'equalPentagon') {
+    body = `<polygon points="210,48 300,116 266,220 154,220 120,116" fill="#f9fbf3"/>
+      <line x1="249" y1="75" x2="239" y2="88"/><line x1="283" y1="162" x2="268" y2="157"/><line x1="218" y1="220" x2="218" y2="204"/><line x1="137" y1="162" x2="152" y2="157"/><line x1="171" y1="75" x2="181" y2="88"/>`
+  } else if (kind === 'quadrants') {
+    body = `<line x1="70" y1="130" x2="350" y2="130"/><line x1="210" y1="30" x2="210" y2="230"/>`
+    for (let i = -3; i <= 3; i++) {
+      body += `<line x1="${210 + i * 40}" y1="124" x2="${210 + i * 40}" y2="136"/><line x1="204" y1="${130 - i * 30}" x2="216" y2="${130 - i * 30}"/>`
+    }
+    body += `${text(90, 148, '-3', 12)}${text(330, 148, '3', 12)}${text(226, 43, '3', 12)}${text(230, 224, '-3', 12)}`
+  } else if (kind === 'cardA') {
+    body = `<rect x="130" y="78" width="160" height="104" rx="16" fill="#f6d2df"/>${text(210, 143, 'A', 42)}`
   }
   return [id, svg(body)]
 }
@@ -475,6 +533,26 @@ const diagrams = [
   oneOff('eedi_538', 'joinedPentagonSquare'),
   oneOff('eedi_556', 'goldStarEquation'),
   oneOff('eedi_569', 'parallelAngles'),
+  oneOff('eedi_601', 'circleDiameter'),
+  oneOff('eedi_626', 'joinedPentagonSquare'),
+  oneOff('eedi_632', 'tieredCost'),
+  oneOff('eedi_635', 'bearing'),
+  oneOff('eedi_703', 'para65'),
+  oneOff('eedi_727', 'flowchart'),
+  oneOff('eedi_730', 'twentyGrid'),
+  oneOff('eedi_812', 'starGraph'),
+  oneOff('eedi_903', 'symmetryChoices'),
+  oneOff('eedi_914', 'circleDiameter'),
+  oneOff('eedi_946', 'pinkPara'),
+  oneOff('eedi_949', 'lineRatio'),
+  oneOff('eedi_959', 'distanceThree'),
+  oneOff('eedi_974', 'diagBox'),
+  oneOff('eedi_1006', 'trapStar'),
+  oneOff('eedi_1013', 'blueTickLines'),
+  oneOff('eedi_1026', 'boxPyramidBlank'),
+  oneOff('eedi_1060', 'equalPentagon'),
+  oneOff('eedi_1075', 'quadrants'),
+  oneOff('eedi_1108', 'cardA'),
 ]
 
 fs.mkdirSync(outDir, { recursive: true })
