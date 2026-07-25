@@ -223,6 +223,121 @@ function compoundShape(id, labels, kind = 'standard') {
   return [id, svg(body)]
 }
 
+function grid(x, y, cols, rows, cell = 18) {
+  let body = ''
+  for (let c = 0; c <= cols; c++) body += `<line x1="${x + c * cell}" y1="${y}" x2="${x + c * cell}" y2="${y + rows * cell}" stroke="#cfd8d1" stroke-width="1"/>`
+  for (let r = 0; r <= rows; r++) body += `<line x1="${x}" y1="${y + r * cell}" x2="${x + cols * cell}" y2="${y + r * cell}" stroke="#cfd8d1" stroke-width="1"/>`
+  return body
+}
+
+function triangle(points, fill = '#f9fbf3') {
+  return `<polygon points="${points}" fill="${fill}"/>`
+}
+
+function shapePairGrid(id, kind) {
+  let body = ''
+  if (kind === 'reflection') {
+    body += grid(54, 32, 16, 10)
+    body += `<line x1="54" y1="140" x2="342" y2="140" stroke="#111" stroke-width="2.5"/>`
+    body += triangle('126,68 198,104 126,104')
+    body += triangle('126,212 198,176 126,176', '#eef8ee')
+    body += text(346, 146, 'mirror line', 13, 'start', '#111', 600)
+  } else if (kind === 'congruent') {
+    body += text(105, 45, 'Tom', 15) + triangle('78,142 145,142 100,82')
+    body += `<g transform="translate(284 116) rotate(35)"><polygon points="-36,28 36,28 -12,-36" fill="#f9fbf3"/></g>`
+    body += text(285, 45, 'same size', 15)
+    body += text(105, 224, 'Katie', 15) + triangle('82,198 128,198 96,158')
+    body += triangle('248,210 334,210 274,132', '#eef8ee')
+  } else if (kind === 'enlargement') {
+    body += grid(48, 42, 17, 9)
+    body += text(95, 220, 'A', 16) + triangle('82,168 118,168 82,150')
+    body += text(265, 220, 'B', 16) + triangle('220,168 328,168 220,114', '#eef8ee')
+  } else {
+    body += text(105, 45, 'Tom', 15) + `<rect x="78" y="82" width="54" height="54" fill="#f9fbf3"/>`
+    body += `<rect x="212" y="64" width="92" height="92" fill="#eef8ee"/>`
+    body += text(286, 45, 'Katie', 15) + `<rect x="82" y="174" width="46" height="46" fill="#f9fbf3"/>`
+    body += `<rect x="228" y="158" width="78" height="78" fill="#eef8ee"/>`
+  }
+  return [id, svg(body)]
+}
+
+function coneDiagram() {
+  const body = `
+    <ellipse cx="210" cy="195" rx="72" ry="22"/>
+    <path d="M138 195 L210 45 L282 195"/>
+    <path d="M210 45 V195" stroke-dasharray="5 5"/>
+    <line x1="210" y1="195" x2="282" y2="195"/>
+    ${text(198, 123, 'h', 18, 'end')}
+    ${text(247, 215, 'r', 18)}
+  `
+  return ['eedi_1149', svg(body)]
+}
+
+function cylinderDiagram() {
+  const body = `
+    <ellipse cx="210" cy="62" rx="72" ry="24"/>
+    <path d="M138 62 V188 M282 62 V188"/>
+    <ellipse cx="210" cy="188" rx="72" ry="24"/>
+    <line x1="210" y1="188" x2="282" y2="188"/>
+    <path d="M300 74 V176" marker-end="url(#arrow)"/>
+    ${text(304, 127, '9 cm', 15, 'start')}
+    ${text(250, 210, '5 cm', 15)}
+    ${text(210, 193, 'F', 18)}
+    <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#111" stroke="none"/></marker></defs>
+  `
+  return ['eedi_1626', svg(body)]
+}
+
+function additionPyramid() {
+  const body = `
+    <rect x="93" y="167" width="78" height="42" fill="#f9fbf3"/>
+    <rect x="171" y="167" width="78" height="42" fill="#f9fbf3"/>
+    <rect x="249" y="167" width="78" height="42" fill="#f9fbf3"/>
+    <rect x="132" y="125" width="78" height="42" fill="#eef8ee"/>
+    <rect x="210" y="125" width="78" height="42" fill="#eef8ee"/>
+    ${text(132, 193, '2a', 18)}
+    ${text(210, 193, '-b', 18)}
+    ${text(288, 193, '2a-2b', 16)}
+    ${placeholder(171, 146, 'star')}
+    ${text(249, 151, '2a-3b', 16)}
+  `
+  return ['eedi_1660', svg(body)]
+}
+
+function triangularPrism() {
+  const body = `
+    <polygon points="95,168 95,76 170,168" fill="#f9fbf3"/>
+    <polygon points="220,142 220,50 295,142" fill="#eef8ee"/>
+    <line x1="95" y1="168" x2="220" y2="142"/>
+    <line x1="95" y1="76" x2="220" y2="50"/>
+    <line x1="170" y1="168" x2="295" y2="142"/>
+    <path d="M52 122 H86" marker-end="url(#arrow)"/>
+    ${text(46, 126, 'B', 16, 'end')}
+    <path d="M318 78 H282" marker-end="url(#arrow)"/>
+    ${text(324, 82, 'A', 16, 'start')}
+    <path d="M318 170 H282" marker-end="url(#arrow)"/>
+    ${text(324, 174, 'D', 16, 'start')}
+    <path d="M190 222 V184" marker-end="url(#arrow)"/>
+    ${text(190, 240, 'C', 16)}
+    <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#111" stroke="none"/></marker></defs>
+  `
+  return ['eedi_1670', svg(body)]
+}
+
+function irregularPolygon(id, kind) {
+  if (kind === 'quad') {
+    const body = `
+      <polygon points="116,62 306,82 260,206 94,176" fill="#f9fbf3"/>
+      ${text(134, 94, 's', 17)}
+      ${text(276, 108, '2s', 17)}
+      ${text(239, 182, '2s', 17)}
+      ${text(122, 160, '3s', 17)}
+    `
+    return [id, svg(body)]
+  }
+  return [id, svg(`<polygon points="176,45 300,91 277,206 137,220 78,118" fill="#f9fbf3"/>`)]
+}
+
 const diagrams = [
   thermometer(),
   pictogram(),
@@ -259,6 +374,16 @@ const diagrams = [
   compoundShape('eedi_1521', { top: '3x+4', left: '5', innerH: 'x+4', right: '3', star: true }, 'wideTop'),
   compoundShape('eedi_1726', { top: '3x+4', left: '5', innerH: '2x', right: '2', star: true }, 'wideTop'),
   compoundShape('eedi_1862', { top: '12 m', left: '6 m', innerH: '8 m', right: '4 m' }, 'wideTop'),
+  shapePairGrid('eedi_543', 'reflection'),
+  shapePairGrid('eedi_843', 'congruent'),
+  shapePairGrid('eedi_1705', 'enlargement'),
+  shapePairGrid('eedi_1867', 'similarSquares'),
+  coneDiagram(),
+  cylinderDiagram(),
+  additionPyramid(),
+  triangularPrism(),
+  irregularPolygon('eedi_589', 'quad'),
+  irregularPolygon('eedi_785', 'pentagon'),
 ]
 
 fs.mkdirSync(outDir, { recursive: true })
