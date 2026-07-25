@@ -28,7 +28,7 @@ import { ACT_TOC_SECTIONS, actTocSectionForConcept } from '../lib/actToc'
 import spec from '../data/actDiagnostic.json'
 import actBankData from '../data/actMasterQuestionBank.generated.json'
 import MathText from '../components/MathText'
-import { DeskArt, HorizonIcon } from '../components/DiagnosticArt'
+import jesseKitchenArt from '../assets/diagnostic/jesse-kitchen-intro.jpg'
 import WizardMascot from '../components/canvas/WizardMascot'
 import ConfettiBurst from '../components/doodle/ConfettiBurst'
 import SoundToggle from '../components/SoundToggle'
@@ -51,15 +51,15 @@ const EXAM = 'ACT'
 
 type Step = 'intro' | 'horizon' | 'probe' | 'confidence' | 'loading'
 
-type HorizonOption = { value: number; label: string; sublabel: string; kind: 'today' | 'days' | 'week' | 'weeks' }
+type HorizonOption = { value: number; label: string; sublabel: string }
 
 /** Same day-value buckets as PanicInput's time-to-exam pills (components/PanicInput.tsx)
  *  so `deadline_days` means one consistent thing everywhere it's collected. */
 const HORIZON_OPTIONS: HorizonOption[] = [
-  { value: 1,  label: 'Today',    sublabel: 'exam is today or tomorrow', kind: 'today' },
-  { value: 3,  label: '3 days',   sublabel: 'this week',                 kind: 'days' },
-  { value: 7,  label: '1 week',   sublabel: 'next week',                 kind: 'week' },
-  { value: 30, label: '2+ weeks', sublabel: 'building from scratch',     kind: 'weeks' },
+  { value: 1,  label: 'Today',    sublabel: 'Exam is today or tomorrow' },
+  { value: 3,  label: '3 days',   sublabel: 'This week — keep the pace tight' },
+  { value: 7,  label: '1 week',   sublabel: 'Next week — steady climb' },
+  { value: 30, label: '2+ weeks', sublabel: 'Building from scratch' },
 ]
 
 function prefersReducedMotion(): boolean {
@@ -231,18 +231,25 @@ export default function Diagnostic() {
                 onClick={beginZoom}
                 aria-label="Step into Jesse's kitchen and begin"
               >
-                <DeskArt className={s.introArt} />
+                <img
+                  src={jesseKitchenArt}
+                  alt=""
+                  className={s.introArt}
+                  width={1600}
+                  height={900}
+                />
               </button>
-              <span className={s.introCue}>Tap the notebook to begin →</span>
+              <span className={s.introCue}>Tap the desk to begin →</span>
             </div>
           </section>
         )}
 
         {step === 'horizon' && (
           <section className={s.card}>
-            <div className={s.cardInner}>
+            <div className={`${s.cardInner} ${s.horizonInner}`}>
+              <p className={s.kicker}>Your pace</p>
               <h2 className={s.h2}>When is your exam?</h2>
-              <p className={s.note}>One tap. This paces how fast your route moves.</p>
+              <p className={s.note}>One tap. This sets how fast your route moves.</p>
               <div className={s.horizonGrid}>
                 {HORIZON_OPTIONS.map(opt => (
                   <button
@@ -251,7 +258,6 @@ export default function Diagnostic() {
                     className={`${s.horizonBtn} ${deadlineDays === opt.value ? s.horizonBtnOn : ''}`}
                     onClick={() => { playTap(); setDeadlineDays(opt.value) }}
                   >
-                    <HorizonIcon kind={opt.kind} className={s.horizonIcon} />
                     <span className={s.horizonLabel}>{opt.label}</span>
                     <span className={s.horizonSublabel}>{opt.sublabel}</span>
                   </button>
@@ -261,7 +267,7 @@ export default function Diagnostic() {
                 className={s.primary}
                 disabled={deadlineDays === null}
                 onClick={() => { celebrateStep(); setStep(probeQuestions.length > 0 ? 'probe' : 'confidence') }}
-              >Next</button>
+              >Continue</button>
             </div>
           </section>
         )}

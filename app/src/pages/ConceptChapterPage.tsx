@@ -803,13 +803,13 @@ export default function ConceptChapterPage() {
               <button
                 type="button"
                 className={`${s.writeToggle} ${writeMode ? s.writeToggleActive : ''}`}
-                style={writeMode ? { borderColor: theme.accent, color: theme.accent } : undefined}
                 onClick={() => setWriteMode(v => !v)}
                 aria-pressed={writeMode}
-                aria-label={writeMode ? 'Lock page for tapping answers' : 'Write with pencil'}
-                title={writeMode ? 'Tap answers' : 'Write'}
+                aria-label={writeMode ? 'Done writing — tap answers again' : 'Write on this page'}
+                title={writeMode ? 'Done writing' : 'Write on this page'}
               >
                 <PenLine size={15} strokeWidth={2} />
+                <span>{writeMode ? 'Done' : 'Write'}</span>
               </button>
               {hasInk && (
                 <button

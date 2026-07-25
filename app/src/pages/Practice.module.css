@@ -4463,74 +4463,75 @@
   border-radius: 2px;
 }
 
-/* Choices: sticker stickers on the journal page */
+/* Choices: straight spaced stickers on the journal page */
 .matteShell .choices {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-/* Base choice — puffy doodle sticker */
+/* Base choice — clean sticker, no tilt (tilt made options collide) */
 .matteShell .choice,
 .matteShell .choiceSelected,
 .matteShell .choiceCorrect,
 .matteShell .choiceWrong {
-  background: linear-gradient(145deg, #fffdf8, #fff4e8);
-  border: 2.5px solid #3a2f55;
-  border-radius: 14px 18px 12px 16px;
-  padding: 8px 12px;
+  background: #fffdf8;
+  border: 1.5px solid rgba(20, 58, 46, 0.18);
+  border-radius: 16px;
+  padding: 12px 14px;
   gap: 9px;
-  font-family: var(--tok-font-hand);
-  font-size: 17px;
-  font-weight: 400;
-  color: #2a2430;
-  transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms, filter 160ms;
+  font-family: var(--tok-font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: #143a2e;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease;
   min-height: auto;
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
-  transform: rotate(-0.3deg);
+  box-shadow: 0 4px 14px rgba(20, 58, 46, 0.06);
+  transform: none;
 }
 
+.matteShell .choices > :nth-child(1) {
+  background: linear-gradient(180deg, #fffdf8, #fff7ea);
+}
 .matteShell .choices > :nth-child(2) {
-  transform: rotate(0.5deg);
-  background: linear-gradient(145deg, #f8fff6, #e8ffe8);
+  background: linear-gradient(180deg, #f8fff6, #eefaea);
 }
 .matteShell .choices > :nth-child(3) {
-  transform: rotate(-0.7deg);
-  background: linear-gradient(145deg, #fff8fc, #ffe8f4);
+  background: linear-gradient(180deg, #fff8fc, #faf0f6);
 }
 .matteShell .choices > :nth-child(4) {
-  transform: rotate(0.4deg);
-  background: linear-gradient(145deg, #f6f4ff, #ebe6ff);
+  background: linear-gradient(180deg, #f7f9ff, #eef2fb);
 }
 
-/* Hover — squishy swell + mint halo */
+/* Hover */
 .matteShell .choice:hover:not(:disabled) {
-  background: linear-gradient(145deg, #fffefb, #fff0d8);
-  transform: scale(1.06) rotate(0deg) !important;
+  background: #fffefb;
+  transform: translateY(-1px) !important;
   box-shadow:
-    0 0 0 4px rgba(125, 255, 179, 0.4),
-    4px 8px 0 rgba(58, 47, 85, 0.14);
-  filter: brightness(1.03);
-  border-color: #3a2f55;
+    0 0 0 3px rgba(196, 245, 71, 0.35),
+    0 10px 22px rgba(20, 58, 46, 0.1);
+  border-color: rgba(20, 58, 46, 0.35);
 }
 
-/* Selected — lilac press */
+/* Selected */
 .matteShell .choiceSelected {
-  background: linear-gradient(145deg, #f3eeff, #e8deff) !important;
+  background: linear-gradient(135deg, #f3ffe4, #fffdf8) !important;
+  border-color: #143a2e !important;
   box-shadow:
-    0 0 0 4px rgba(201, 182, 255, 0.5),
-    3px 5px 0 rgba(58, 47, 85, 0.18) !important;
-  transform: scale(1.04) !important;
+    0 0 0 3px rgba(196, 245, 71, 0.5),
+    0 10px 22px rgba(20, 58, 46, 0.1) !important;
+  transform: none !important;
 }
 
-/* Correct — mint lock */
+/* Correct */
 .matteShell .choiceCorrect {
-  background: linear-gradient(145deg, #e8fff4, #c8ffe0) !important;
+  background: linear-gradient(135deg, #e8fff4, #f4fff8) !important;
+  border-color: #1f6b45 !important;
   box-shadow:
-    0 0 0 4px rgba(125, 255, 179, 0.55),
-    3px 5px 0 rgba(31, 107, 69, 0.18) !important;
+    0 0 0 3px rgba(125, 255, 179, 0.45),
+    0 10px 22px rgba(31, 107, 69, 0.12) !important;
   cursor: default;
-  transform: scale(1.03) !important;
+  transform: none !important;
 }
 
 /* Wrong path unused for soft-retry; keep gentle if shown */
