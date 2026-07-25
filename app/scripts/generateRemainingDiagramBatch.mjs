@@ -21,6 +21,25 @@ function text(x, y, value, size = 18, anchor = 'middle', fill = '#111', weight =
   return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Arial, Helvetica, sans-serif" font-size="${size}" font-weight="${weight}" fill="${fill}" stroke="none">${esc(value)}</text>`
 }
 
+function lines(x, y, value, size = 14, anchor = 'middle', fill = '#111', weight = 600, maxChars = 18, gap = 16) {
+  const words = String(value).split(/\s+/)
+  const out = []
+  let line = ''
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word
+    if (next.length > maxChars && line) {
+      out.push(line)
+      line = word
+    } else {
+      line = next
+    }
+  }
+  if (line) out.push(line)
+  return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Arial, Helvetica, sans-serif" font-size="${size}" font-weight="${weight}" fill="${fill}" stroke="none">
+    ${out.map((l, i) => `<tspan x="${x}" dy="${i === 0 ? 0 : gap}">${esc(l)}</tspan>`).join('')}
+  </text>`
+}
+
 function smile(x, y, scale = 1) {
   return `<g transform="translate(${x} ${y}) scale(${scale})">
     <circle cx="0" cy="0" r="13" fill="none" stroke="#111" stroke-width="2"/>
@@ -161,6 +180,21 @@ function pictogram() {
   return ['eedi_168', svg(body)]
 }
 
+function venn(id, leftLabel, rightLabel, regions) {
+  const body = `
+    <rect x="25" y="25" width="370" height="210" rx="8" fill="none"/>
+    <circle cx="175" cy="132" r="76"/>
+    <circle cx="245" cy="132" r="76"/>
+    ${lines(145, 44, leftLabel, 12, 'middle', '#111', 600, 20, 14)}
+    ${lines(275, 44, rightLabel, 12, 'middle', '#111', 600, 20, 14)}
+    ${lines(125, 137, regions.left, 15, 'middle', '#111', 700, 14, 17)}
+    ${lines(210, 137, regions.intersection, 15, 'middle', '#111', 700, 13, 17)}
+    ${lines(295, 137, regions.right, 15, 'middle', '#111', 700, 14, 17)}
+    ${regions.outside ? lines(350, 212, regions.outside, 14, 'middle', '#111', 700, 16, 16) : ''}
+  `
+  return [id, svg(body)]
+}
+
 const diagrams = [
   thermometer(),
   pictogram(),
@@ -181,10 +215,18 @@ const diagrams = [
   barModel('eedi_1791'),
   fractionCircles('eedi_1055', '3/5', '1/4'),
   fractionCircles('eedi_1526', '3/5', '2/7'),
+  venn('eedi_53', 'exactly two lines of symmetry', 'rotational symmetry of order 2', { left: 'A', intersection: 'B', right: 'C', outside: 'D' }),
+  venn('eedi_276', 'Set P', 'Set Q', { left: 'crisps', intersection: 'sweets', right: 'pizza', outside: 'chocolate' }),
+  venn('eedi_736', 'exactly one line of symmetry', 'rotational symmetry of order 3', { left: 'A', intersection: 'B', right: 'C', outside: 'D' }),
+  venn('eedi_747', 'Line of symmetry at x = 3', 'y intercept is negative', { left: 'A', intersection: 'B', right: 'C', outside: 'D' }),
+  venn('eedi_823', 'Owns a 4x4', 'Owns a Black Car', { left: '27', intersection: '15', right: '8', outside: '' }),
+  venn('eedi_848', 'Prime factors of 36', 'Prime factors of 90', { left: '2', intersection: '2, 3, 3', right: '5', outside: '' }),
+  venn('eedi_1022', 'Owns a 4x4', 'Owns a Black Car', { left: '27', intersection: '15', right: '8', outside: '' }),
+  venn('eedi_1077', 'x+5.3 is less than or equal to 0', '-(5.3+x)/2 is greater than 0', { left: 'A', intersection: 'B', right: 'C', outside: 'D' }),
 ]
 
 fs.mkdirSync(outDir, { recursive: true })
 for (const [id, content] of diagrams) {
-  fs.writeFileSync(path.join(outDir, `${id}.svg`), content)
+  fs.writeFileSync(path.join(outDir, `${id}.svg`), content.replace(/[ \t]+$/gm, ''))
 }
 console.log(`Wrote ${diagrams.length} generated diagram SVGs to ${path.relative(process.cwd(), outDir)}`)
