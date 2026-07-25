@@ -15,13 +15,15 @@
  * ── DATA HONESTY — read before changing anything below ──────────────────────
  * Tutor accounts already exist in Firestore (`users` docs with `role ==
  * 'tutor'`), fetched the exact same way the old Book.tsx always did. But:
- *   1. No tutor doc has ever had a `location` field — TutorDashboard.tsx (the
- *      only tutor-facing editor) has no field to set one. So real per-tutor
- *      locations do not exist yet. Every tutor without an explicit
- *      `location` is plotted at the studio's own address (STUDIO_LOCATION)
- *      as a clearly-labeled default, NOT a claim about where that person
- *      lives — see `hasRealLocation` below. This activates automatically the
- *      moment a tutor doc sets a real `location: {lat,lng}`.
+ *   1. TutorDashboard.tsx now has a "Your Location" card (address input ->
+ *      Google Geocoding API -> `location: {lat,lng}` + `locationAddress` on
+ *      this tutor's own `users/{uid}` doc, see handleSaveLocation there). As
+ *      of this writing no real tutor has used it yet, so every tutor without
+ *      an explicit `location` is still plotted at the studio's own address
+ *      (STUDIO_LOCATION) as a clearly-labeled default, NOT a claim about
+ *      where that person lives — see `hasRealLocation` below. This activates
+ *      automatically, no code change needed here, the moment any tutor doc
+ *      sets a real `location: {lat,lng}`.
  *   2. No review/rating system exists ANYWHERE in this codebase (grepped
  *      firestore.rules, TutorDashboard, Book.tsx — nothing). This component
  *      reads an optional `reviews` array off the tutor doc if one is ever

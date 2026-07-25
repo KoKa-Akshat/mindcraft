@@ -4,6 +4,110 @@
 
 ---
 
+## Marketing page overhaul, 6 jobs (Fable 5, 2026-07-25)
+
+Product lane only (`index.html`, `app/src/pages/TutorDashboard.tsx`,
+`app/src/pages/FindTutor.tsx`). Did not touch `App.tsx` (per instructions —
+Manjushree's uncommitted routing work lives there). Verified: `tsc --noEmit`
+clean, `vitest run` 120 passed/1 skipped/8 files (matches baseline),
+`npm run build` succeeded. Did not commit/push.
+
+**Job 1 — demo panel primary/secondary swap.** The Sword of Wisdom panel
+(`#demo`) led with the game before; now it leads with an honest recreation of
+the real Fractions & Decimals story slideshow
+(`app/src/pages/StorySlideshow.tsx` visual language: dark stage, pastel
+paper card, polaroid photo, dot nav — colors/fonts pulled straight from
+`ConceptChapterPage.module.css`), using the REAL story text (Simon Stevin,
+`conceptStories.json`) and the REAL art asset the app renders
+(`app/src/assets/canvas/story-fractions.jpg`, copied to
+`img/story-fractions-decimals.jpg`). Two pill tabs ("Story preview" /
+"Experience the game") swap the stage in place; the Sword of Wisdom loop is
+now the secondary tab, same ambient CSS/SVG preview as before, gated behind
+an explicit click instead of leading. Both funnel into the same shared
+handoff card, copy/link swapped per active tab. Neither `/story-loop/...`
+nor `/manjushree` are committed/deployed yet (Manjushree's routing work is
+still uncommitted on this checkout) — same "will resolve once that ships"
+bet the previous session already made for the sword link, now applied
+consistently to both.
+
+**Found + fixed while screenshotting Job 1**: a real Chrome bug, not a
+one-off — inside a CSS grid, an `<img>` with `aspect-ratio:1/1; width:100%`
+gets its row-track auto-sizing computed off the image's NATURAL pixel size
+(800×800 for this asset) instead of the resolved percentage, ballooning the
+row to ~800px and clipping all the sibling copy text out of view (invisible,
+not just cropped). Fixed by giving the photo figure explicit fixed
+width+height instead of aspect-ratio, both at desktop and the sub-560px
+breakpoint. Worth remembering if any other in-page component reuses
+aspect-ratio images inside a grid.
+
+**Job 2 — copy pass.** Hero (`#top`): stats now visually lead (bordered strip
+above the headline, was below), headline replaced with punchy "Find the
+exact break." (was "You were never bad at math."), lead line shortened. No
+stat numbers removed, just reprioritized. System section (`#system`):
+"Find where it broke." → "Tutor and student, same map." — now leans into
+the tutor-facing angle (same diagnostic picture, no cold open) instead of
+repeating vibe section's "we find the break" idea. "Less pressure. More
+signal." left untouched as instructed.
+
+**Job 3 — moving-dot graph reuse.** The "Slope to equation form" board card's
+draw/undraw line animation replaced with the same static-faded-path +
+colored-path + `animateMotion`/`mpath` dot technique already used in the
+"Less pressure More signal" notebook photo, own path id (`breakProgressPath`,
+distinct from `vibeProgressPath`). Removed the now-dead `.graph path` rule
+and unused `@keyframes draw`.
+
+**Job 5 — signal caption.** "Built by real tutors" → "Come teach with us."
+
+**Job 4 — Find a Tutor near you map panel.** Replaced the old "finds the
+break, builds the route" `#try-app` section with a real "Find a tutor near
+you" panel: a genuine interactive Google Maps JS embed (same
+`VITE_GOOGLE_MAPS_API_KEY`, already public in the app's own production
+bundle), showing the two real founder-tutors from `FindTutor.tsx`'s
+`DEMO_TUTORS` (Akshat + Abhigya Koirala — confirmed real, not fabricated,
+same honesty rule), plus a deep link to the real `/find-a-tutor` app page.
+**Chose the real-embed-with-hardcoded-real-tutors approach, not a full live
+Firestore query, after investigating**: `firestore.rules` requires an
+authenticated request to read `users` docs (including the `role=='tutor'`
+query FindTutor.tsx uses), and this marketing site never signs anyone in —
+that query would always 403, same as it already does for a signed-out app
+visitor. Making it live for anonymous marketing traffic would need either
+relaxing `firestore.rules` for anonymous tutor-roster reads or a new public
+webhook endpoint (Admin SDK) — both cross-lane (rules/webhook), out of scope
+for a marketing-only pass. `gm_authFailure` + a load timeout both fall back
+to an honest "map unavailable, open the app" card. Confirmed via headless
+Chrome in this environment that the map genuinely renders (real Google
+tiles, real Macalester-area location) — referrer restrictions on the API key
+for the actual `mindcraft-marketing-site.web.app` domain in production still
+need a one-time check in Google Cloud Console.
+
+**Job 4 backend (the "tutor dash setup... important for later" piece) — DONE.**
+Added a "Your Location" card to `TutorDashboard.tsx` (address input →
+Google Geocoding API fetch, same Maps key → `location: {lat,lng}` +
+`locationAddress` written to that tutor's own `users/{uid}` doc via
+`handleSaveLocation()`). Not a privileged field (unlike role/childId/
+tutorId/classroomId), so this is a normal self-write under
+`firestore.rules` — no rules change needed. The moment any tutor uses this,
+they show at their real location in both `FindTutor.tsx` (already reads
+`location`/`hasRealLocation`, no code change needed there — updated its
+header comment only) and the new marketing map panel's live app deep link.
+As of this session no real tutor has used it yet, so both places still show
+the studio-default behavior — expected.
+
+**Job 6 — reviews split from tutor recruitment.** Added a new, honestly-empty
+`#reviews` section ("Reviews, coming soon." + a dashed empty-slot, matching
+`FindTutor.tsx`'s "No reviews yet — be the first to book" tone, no fabricated
+quotes/stars) as its own section, separate from the existing `#tutors`
+recruitment CTA section (that one was already its own section from an
+earlier pass — this fix adds back the missing reviews half).
+
+**Screenshots**: `agent_work/product/screenshots_2026-07-25/` — `hero-2.png`,
+`demo-2.png` / `demo-game-tab.png` / `demo-handoff.png`, `demo-mobile.png`,
+`system-2.png`, `vibe-signal.png`, `reviews-2.png` / `tutors-2.png` (now
+separate), `findtutor-2.png` / `findtutor-mobile.png` (live map genuinely
+rendered), `hero-mobile.png`.
+
+---
+
 ## Sword of Wisdom landing panel + diagnostic-once/cover verification (Fable 5, 2026-07-25)
 
 Confirmed working in `/Users/akoirala/Developer/mindcraft` before every step.

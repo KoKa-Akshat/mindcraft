@@ -129,7 +129,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .math-buddy:before{left:31px}
 .math-buddy:after{right:31px}
 .math-buddy span{position:relative;z-index:1;margin-top:20px;color:#fff;font-family:"Fredoka",system-ui,sans-serif;font-size:42px;font-weight:700;line-height:1}
-.stats{display:flex;flex-wrap:wrap;gap:20px 34px;max-width:none;margin-top:36px;border:none;background:transparent;box-shadow:none}
+.stats{display:flex;flex-wrap:wrap;gap:18px 30px;max-width:none;margin:22px 0 26px;padding:18px 0;border-top:1px solid rgba(20,58,46,.16);border-bottom:1px solid rgba(20,58,46,.16);background:transparent;box-shadow:none}
 .stat{background:transparent;padding:0;border:none;box-shadow:none;flex:0 0 auto}
 .stat strong{display:block;font-size:34px;line-height:1;color:var(--leaf);letter-spacing:-.04em;font-family:"Fredoka",system-ui,sans-serif}
 .stat span{display:block;margin-top:8px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#7a806f;position:relative;z-index:2}
@@ -161,7 +161,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .card-c{left:11%;right:9%;bottom:9%;min-height:160px}
 .graph{position:absolute;left:20px;right:20px;bottom:20px;height:82px;border-top:1px solid var(--line)}
 .graph svg{width:100%;height:100%;overflow:visible}
-.graph path{fill:none;stroke:var(--leaf);stroke-width:3;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 2.5s var(--ease) infinite alternate}
+.board-graph-line{stroke-dasharray:520;stroke-dashoffset:520;animation:drawGraph 2.4s var(--ease) forwards}
 .board-note{position:absolute;right:24px;bottom:118px;font-size:34px;transform:rotate(-5deg);color:var(--grape)}
 .steps{background:#fffdf7}
 .step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
@@ -182,6 +182,10 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .click-curve{stroke-dasharray:280;animation:curveGrow 2.2s cubic-bezier(.4,0,.2,1) infinite alternate}
 @keyframes ringPulse{0%{r:9;opacity:.55}100%{r:20;opacity:0}}
 .pulse-ring{animation:ringPulse 2s ease-out infinite}
+.reviews{background:linear-gradient(180deg,#fffdf7,#eaf5ea)}
+.reviews-slot{margin-top:40px;border:1px dashed rgba(20,58,46,.24);border-radius:34px;padding:clamp(36px,6vw,56px) 32px;text-align:center;background:rgba(255,253,247,.6)}
+.reviews-slot-note{font-family:"Caveat",cursive;font-size:24px;color:var(--leaf)}
+.reviews-slot p:first-child{font-size:15px;color:var(--muted)}
 .proof{background:linear-gradient(180deg,#fff7e8,#eaf5ea)}
 .proof-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,72px);align-items:stretch;margin-top:52px}
 .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
@@ -254,15 +258,17 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .price-card p{font-size:15px}
 .price-card .btn{margin-top:24px;width:100%}
 .tryapp{background:var(--cream)}
-.tryapp-card{display:grid;grid-template-columns:.62fr 1fr;gap:clamp(24px,5vw,64px);align-items:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:34px;padding:clamp(26px,4.5vw,54px);box-shadow:0 24px 70px rgba(29,84,54,.10)}
-.tryapp-bear{position:relative;text-align:center}
-.tryapp-bear img{width:min(320px,88%);height:320px;object-fit:cover;object-position:center 28%;border-radius:30px;box-shadow:0 18px 44px rgba(60,44,20,.18);transform:rotate(-2.5deg);transition:transform .5s var(--ease)}
-.tryapp-card:hover .tryapp-bear img{transform:rotate(0deg) scale(1.02)}
-.tryapp-bear figcaption{margin-top:14px;font-family:"Caveat",cursive;font-size:24px;color:#7a806f;transform:rotate(-1deg)}
-.tryapp-copy h2{margin-top:10px}
-.tryapp-copy>p{margin-top:18px;max-width:460px}
-.tryapp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:28px}
 .tryapp-note{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a39b8e}
+.findtutor-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,5vw,64px);align-items:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:34px;padding:clamp(26px,4.5vw,54px);box-shadow:0 24px 70px rgba(29,84,54,.10)}
+.findtutor-copy h2{margin-top:10px}
+.findtutor-copy>p{margin-top:18px;max-width:440px}
+.findtutor-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:28px}
+.findtutor-map-wrap{display:flex;flex-direction:column;gap:10px}
+.findtutor-map,.findtutor-map-fallback{width:100%;aspect-ratio:16/11;border-radius:26px;border:6px solid #fffdf7;box-shadow:0 18px 44px rgba(20,58,46,.18)}
+.findtutor-map{overflow:hidden;background:#e4f7dc}
+.findtutor-map-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;background:linear-gradient(160deg,#eaf5ea,#dceef6);font-weight:800;color:var(--muted)}
+.findtutor-map-fallback a{color:var(--leaf);text-decoration:underline;text-underline-offset:2px}
+.findtutor-map-caption{margin:0;text-align:center;font-family:"Caveat",cursive;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
 .notebook-photo{margin:18px 0 0}
 .notebook-photo img,.notebook-photo svg{display:block;width:100%;height:auto;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
 .notebook-photo figcaption{margin-top:12px;text-align:center;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
@@ -301,7 +307,6 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 .stagger.show>*:nth-child(2){transition-delay:.08s}
 .stagger.show>*:nth-child(3){transition-delay:.16s}
 .stagger.show>*:nth-child(4){transition-delay:.24s}
-@keyframes draw{to{stroke-dashoffset:0}}
 @keyframes float{to{transform:translateY(-16px) rotate(calc(var(--r) + 4deg));opacity:.85}}
 @keyframes bob{to{transform:translateY(-10px) rotate(-3deg)}}
 @keyframes loaderDrift{to{transform:scale(1.02);filter:saturate(1.02) contrast(1.02)}}
@@ -310,10 +315,35 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 @keyframes mapNodePlot{0%{opacity:0;transform:translateX(-28px) scale(.7)}70%{opacity:1;transform:translateX(3px) scale(1.06)}100%{opacity:1;transform:translateX(0) scale(1)}}
 .demo-wrap{display:grid;grid-template-columns:.86fr 1.3fr;gap:clamp(28px,4vw,58px);align-items:center}
 .demo-copy>p:last-of-type{margin-top:16px;max-width:420px}
+.demo-toggle{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.demo-tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fffdf7;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
+.demo-tab:hover{border-color:var(--leaf)}
+.demo-tab.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .demo-panel{display:flex;flex-direction:column;gap:12px}
 .demo-stage{position:relative;aspect-ratio:16/10;border-radius:34px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#0f2820}
-.demo-stage[data-state="handoff"] .demo-loop{display:none}
-.demo-stage[data-state="loop"] .demo-handoff{display:none}
+.demo-stage[data-state="story"] .demo-loop,.demo-stage[data-state="story"] .demo-handoff{display:none}
+.demo-stage[data-state="game"] .demo-story,.demo-stage[data-state="game"] .demo-handoff{display:none}
+.demo-stage[data-state="handoff"] .demo-loop,.demo-stage[data-state="handoff"] .demo-story{display:none}
+.demo-story{position:absolute;inset:0;display:flex;flex-direction:column;background:radial-gradient(ellipse 80% 55% at 15% 10%,rgba(255,190,220,.35),transparent 55%),radial-gradient(ellipse 70% 50% at 90% 80%,rgba(180,210,255,.4),transparent 50%),linear-gradient(165deg,#efe6fb 0%,#e4dcf5 50%,#d9d0ef 100%);padding:clamp(10px,2vw,16px)}
+.demo-story-chrome{display:flex;align-items:center;justify-content:center;padding:2px 0 10px;font-family:"Caveat",cursive;font-size:clamp(17px,2vw,21px);font-weight:700;color:#3a2f55}
+.demo-story-stage{flex:1;min-height:0;border-radius:20px;background:rgba(255,253,248,.96);box-shadow:0 10px 30px rgba(90,70,140,.14);padding:clamp(14px,2.6vw,22px);display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(14px,2.4vw,22px);align-items:start;overflow:hidden}
+/* Fixed width+height (not aspect-ratio+percentage) on purpose: inside a CSS
+   grid, Chrome's row auto-sizing reads an aspect-ratio image's NATURAL pixel
+   size (this photo is 800x800) as its track contribution instead of the
+   resolved percentage width, ballooning the row far past the visible stage
+   and clipping the copy column entirely. Explicit px dimensions sidestep
+   that track-sizing bug. */
+.demo-story-photo{margin:0;width:clamp(120px,16vw,190px);height:clamp(120px,16vw,190px);padding:6px 6px 16px;background:#fffdf8;border-radius:6px 12px 9px 10px;box-shadow:0 10px 22px rgba(58,47,85,.14);transform:rotate(-3deg)}
+.demo-story-photo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:4px}
+.demo-story-copy{min-width:0;padding-top:clamp(10px,3vh,28px)}
+.demo-story-eyebrow{margin:0 0 4px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(58,47,85,.42)}
+.demo-story-title{margin:0 0 8px;font-family:"Caveat",cursive;font-size:clamp(22px,3vw,30px);font-weight:700;color:#2a2430;line-height:1}
+.demo-story-text{margin:0;height:80px;font-family:"Source Serif 4",Georgia,serif;font-size:clamp(12.5px,1.4vw,14px);line-height:1.42;color:rgba(42,36,48,.86);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.demo-story-dots{display:flex;align-items:center;justify-content:center;gap:5px;padding-top:10px}
+.demo-story-dots span{display:block;width:5px;height:5px;border-radius:999px;background:rgba(58,47,85,.28)}
+.demo-story-dots span:first-child{width:14px;background:#1d3a8a}
+.demo-story .demo-cta{left:auto;top:auto;right:20px;bottom:20px;transform:none;min-width:0;padding:13px 24px;font-size:16px}
+.demo-story .demo-cta:hover{transform:scale(1.06)}
 .demo-loop{position:absolute;inset:0}
 .demo-loop-pan{position:absolute;inset:-7%;animation:demoPan 22s ease-in-out infinite alternate}
 .demo-loop-pan img{width:100%;height:100%;object-fit:cover;display:block}
@@ -346,7 +376,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-art svg{width:100%;transform:none}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
-  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.tryapp-card,.about-head,.founder-grid,.founder-card,.demo-wrap{grid-template-columns:1fr}
+  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.findtutor-card,.about-head,.founder-grid,.founder-card,.demo-wrap{grid-template-columns:1fr}
   .founder-card{min-height:560px}
   .founder-photo{width:min(260px,100%);justify-self:start}
   .footer-nav{justify-items:start}
@@ -384,6 +414,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .demo-stage{aspect-ratio:4/5}
   .demo-cta{padding:14px 26px;font-size:18px}
   .demo-sword{width:42px}
+  .demo-story-stage{grid-template-columns:1fr}
+  .demo-story-photo{width:120px;height:120px;margin:0 auto}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
@@ -428,19 +460,19 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap hero-inner">
         <div class="hero-left">
           <div class="hero-copy reveal">
-            <p class="label">The moment it clicks</p>
-            <h1><span>You were never</span><span>bad at math.</span></h1>
-            <p class="lead">MindCraft finds where the thinking broke, maps the route back, and gives your tutor the story before session one.</p>
+            <p class="label">The evidence</p>
+            <div class="stats stagger">
+              <div class="stat"><strong>6.5M+</strong><span>Learning moments analyzed</span></div>
+              <div class="stat"><strong>1,500+</strong><span>Practice questions</span></div>
+              <div class="stat"><strong>293</strong><span>Misconception patterns</span></div>
+              <div class="stat"><strong>42</strong><span>Concept stories</span></div>
+            </div>
+            <h1><span>Find the exact</span><span>break.</span></h1>
+            <p class="lead">MindCraft maps the gap, then gives your tutor the story before session one.</p>
             <div class="hero-actions">
               <a class="btn primary" href="#intake">Request a seat</a>
               <a class="btn soft" href="#system">See how it works</a>
             </div>
-          </div>
-          <div class="stats reveal stagger">
-            <div class="stat"><strong>6.5M+</strong><span>Learning moments analyzed</span></div>
-            <div class="stat"><strong>1,500+</strong><span>Practice questions</span></div>
-            <div class="stat"><strong>293</strong><span>Misconception patterns</span></div>
-            <div class="stat"><strong>42</strong><span>Concept stories</span></div>
           </div>
         </div>
         <div class="hero-art reveal" aria-hidden="true" id="heroArt">
@@ -524,7 +556,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
                 <path d="M50 50 H90 M50 62 H74" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
                 <circle cx="98" cy="38" r="9" fill="#c4f547" stroke="#247a4d" stroke-width="3"/>
               </svg>
-              <span class="signal-cap">Built by real tutors</span>
+              <span class="signal-cap">Come teach with us</span>
             </div>
           </div>
         </div>
@@ -554,15 +586,25 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap system-grid">
         <div class="system-copy reveal">
           <p class="label">The learning map</p>
-          <h2>Find where it broke.</h2>
-          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map shows tutor and student exactly where to start.</p>
+          <h2>Tutor and student, same map.</h2>
+          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. Both of you open session one already looking at the same picture.</p>
         </div>
         <div class="board reveal" data-tilt>
           <article class="board-card card-a">
             <strong>Current break</strong>
             <h3>Slope to equation form</h3>
             <p>The student uses the point as the intercept.</p>
-            <div class="graph"><svg viewBox="0 0 420 90" aria-hidden="true"><path d="M4 72 C68 18 116 38 162 55 S240 84 302 32 S370 18 416 42"/></svg></div>
+            <div class="graph">
+              <svg viewBox="0 0 420 90" aria-hidden="true" role="img" aria-label="Progress path with a moving dot">
+                <path d="M4 72 C68 18 116 38 162 55 S240 84 302 32 S370 18 416 42" fill="none" stroke="rgba(36,122,77,0.16)" stroke-width="8" stroke-linecap="round"/>
+                <path id="breakProgressPath" class="board-graph-line" d="M4 72 C68 18 116 38 162 55 S240 84 302 32 S370 18 416 42" fill="none" stroke="#247a4d" stroke-width="3" stroke-linecap="round"/>
+                <circle class="graph-dot" r="6" fill="#c4f547" stroke="#247a4d" stroke-width="3">
+                  <animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto">
+                    <mpath href="#breakProgressPath"/>
+                  </animateMotion>
+                </circle>
+              </svg>
+            </div>
           </article>
           <article class="board-card card-b">
             <strong>Next session</strong>
@@ -657,11 +699,32 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
           <p class="label">Live preview</p>
-          <h2>Sword of Wisdom</h2>
-          <p>See the curve in the mountain. Cut with precision. Then keep learning with fractions.</p>
+          <h2 id="demoHeading">Fractions &amp; Decimals</h2>
+          <p id="demoSub">A real story chapter from inside MindCraft. Read a page, answer a quick question, watch the map move.</p>
+          <div class="demo-toggle" role="tablist" aria-label="Choose a preview">
+            <button type="button" class="demo-tab is-active" id="demoTabStory" role="tab" aria-selected="true">Story preview</button>
+            <button type="button" class="demo-tab" id="demoTabGame" role="tab" aria-selected="false">Experience the game</button>
+          </div>
         </div>
         <div class="demo-panel">
-          <div class="demo-stage" id="demoStage" data-state="loop">
+          <div class="demo-stage" id="demoStage" data-state="story">
+
+            <div class="demo-story" id="demoStory">
+              <p class="demo-story-chrome">MindCraft</p>
+              <div class="demo-story-stage">
+                <figure class="demo-story-photo" aria-hidden="true">
+                  <img src="img/story-fractions-decimals.jpg" alt="" width="800" height="800">
+                </figure>
+                <div class="demo-story-copy">
+                  <p class="demo-story-eyebrow">Story card</p>
+                  <h3 class="demo-story-title">Fractions and Decimals</h3>
+                  <p class="demo-story-text">In 1585, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages by candlelight, wrestling twelfths of guilders until the numbers swam.</p>
+                </div>
+              </div>
+              <div class="demo-story-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <button type="button" class="demo-cta" id="storyPlayBtn" aria-label="Play the fractions and decimals story preview">Play</button>
+            </div>
+
             <div class="demo-loop" id="demoLoop">
               <div class="demo-loop-pan">
                 <img src="img/sword-of-wisdom-valley.jpg" alt="" aria-hidden="true" width="1280" height="853">
@@ -675,19 +738,21 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <div class="demo-loop-scrim" aria-hidden="true"></div>
               <button type="button" class="demo-cta" id="swordPlayBtn" aria-label="Play the Sword of Wisdom preview">Play</button>
             </div>
+
             <div class="demo-handoff" id="demoHandoff">
               <div class="demo-handoff-card">
-                <span class="demo-handoff-eyebrow">Sword of Wisdom</span>
-                <h3>The ridge continues in the app.</h3>
-                <p>Sign in (or make a free account, it takes a minute) to reveal the shape, swing the blade, and land in the fractions story right after.</p>
+                <span class="demo-handoff-eyebrow" id="demoHandoffEyebrow">Fractions &amp; Decimals</span>
+                <h3 id="demoHandoffTitle">The chapter continues in the app.</h3>
+                <p id="demoHandoffBody">Sign in (or make a free account, it takes a minute) to read the rest of the story and lock in the practice question.</p>
                 <div class="demo-handoff-actions">
-                  <a class="demo-handoff-cta" href="https://mindcraft-93858.web.app/manjushree">Enter the ridge →</a>
+                  <a class="demo-handoff-cta" id="demoHandoffLink" href="https://mindcraft-93858.web.app/story-loop/fractions_decimals?auto=1">Open the chapter →</a>
                   <button type="button" class="demo-back" id="demoBackBtn">← Back to preview</button>
                 </div>
               </div>
             </div>
+
           </div>
-          <p class="demo-note script">tap play, no sign-in needed to preview</p>
+          <p class="demo-note script" id="demoNote">tap play, no sign-in needed to preview</p>
         </div>
       </div>
     </section>
@@ -772,11 +837,26 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       </div>
     </section>
 
-    <!-- Was an empty, never-populated testimonial grid (three blank cards,
-         no real reviews exist yet, see FindTutor.tsx header for the same
-         honesty rule applied on the app side). Replaced with the tutor
-         recruitment CTA using the identical 3-card grid + actions markup so
-         nothing gets rebuilt, just re-labeled. -->
+    <!-- Reviews - kept honestly empty. No real reviews exist yet (same
+         honesty rule as FindTutor.tsx's "No reviews yet — be the first to
+         book" state: no fabricated stars, no invented quotes). Structurally
+         a separate section from tutor recruitment below, ready for real
+         testimonials to slot into .reviews-slot once sessions produce them. -->
+    <section class="reviews" id="reviews" data-nav="mint">
+      <div class="wrap reveal">
+        <p class="label">From families</p>
+        <h2>Reviews, coming soon.</h2>
+        <p style="max-width:560px;font-size:18px;line-height:1.55;margin-top:14px;color:rgba(52,52,52,.7);font-weight:700;">We are early. Real reviews will land here as sessions wrap, not before.</p>
+        <div class="reviews-slot">
+          <p>Waiting on the first one</p>
+          <p class="reviews-slot-note">be the first to leave one</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutor recruitment CTA - its own section, separate from reviews above
+         (see ACTIVE_TASK.md, "separate the reviews section from the tutor-
+         recruitment CTA" fix). -->
     <section class="proof" id="tutors" data-nav="cream">
       <div class="wrap reveal">
         <p class="label">Join our team</p>
@@ -850,19 +930,19 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 
     <section class="tryapp" id="try-app" data-nav="cream">
       <div class="wrap">
-        <div class="tryapp-card reveal">
-          <figure class="tryapp-bear mascot-crop" aria-hidden="false">
-            <img src="img/mindcraftmascot.jpg" alt="MindCraft mascot" loading="lazy" width="240" height="280">
-            <figcaption>Smart students start here.</figcaption>
-          </figure>
-          <div class="tryapp-copy">
-            <p class="label">Try our app</p>
-            <h2>The students who get ahead know where to start.</h2>
-            <p>MindCraft finds the break, builds the route, and turns practice into the edge every parent wants for their kid.</p>
-            <div class="tryapp-actions">
-              <a class="btn primary app-login-link" href="https://mindcraft-93858.web.app/login">Open MindCraft →</a>
-              <span class="tryapp-note">Free to explore · built for sharp students</span>
+        <div class="findtutor-card reveal">
+          <div class="findtutor-copy">
+            <p class="label">Find a tutor</p>
+            <h2>Find a tutor near you.</h2>
+            <p>Real registered tutors on a real map. Every tutor adds their own address once, and shows up here at their real spot. Sessions still run virtually over Google Meet.</p>
+            <div class="findtutor-actions">
+              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Open Find a Tutor →</a>
+              <span class="tryapp-note">Search by city · sorted by distance</span>
             </div>
+          </div>
+          <div class="findtutor-map-wrap">
+            <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near the studio"></div>
+            <p class="findtutor-map-caption">tap a pin to meet a tutor</p>
           </div>
         </div>
       </div>
@@ -1058,32 +1138,190 @@ form?.addEventListener("submit", (event) => {
   location.href = "mailto:joinmindcraft@gmail.com?subject=" + encodeURIComponent("MindCraft intake") + "&body=" + encodeURIComponent(lines.join("\n"))
 })
 
-// Sword of Wisdom demo panel: the loop is a lightweight CSS/SVG ambient
-// preview (no video asset shipped), the "Play" tap swaps this same stage
-// in place to a handoff card rather than embedding the actual math zone.
-// Reasoning: the real Sword of Wisdom (app/src/manjushree) sits behind
-// AuthGuard (no anonymous preview route exists in production — /manjushree-dev
-// is a DEV-only route, stripped from prod builds), and the older worlds/world2
-// 3D kitchen this sequence used to open through is being retired/reworked
-// (see ACTIVE_TASK.md), so it is not a safe or accurate thing to iframe from
-// the public marketing site right now. The handoff card mirrors the product's
-// own "cover-style loading card" handoff beat instead of pretending to embed
-// a page that would just show a login wall or an in-flux experience.
+// Demo panel: the actual product demo, not the game. Default/primary tab is
+// the Fractions & Decimals story slideshow (app/src/pages/StorySlideshow.tsx,
+// reached in the real app at /story-loop/:conceptId) — the real in-app
+// experience most students land in every session, so it leads. "Experience
+// the game" is a separate, secondary tab that swaps the same stage to the
+// Sword of Wisdom preview instead of leading with it (see ACTIVE_TASK.md,
+// "sword of wisdom panel" fix).
+//
+// Both tabs are lightweight CSS/SVG ambient recreations (no iframe, no video
+// asset shipped) rather than a live embed of the real page, same reasoning
+// for both: the real routes (/story-loop/:conceptId, /manjushree) sit behind
+// AuthGuard, and as of this writing are uncommitted work-in-progress on this
+// shared checkout (see App.tsx notes in ACTIVE_TASK.md) — not a safe or
+// accurate thing to iframe from the public marketing site. The story preview
+// uses the actual real story copy (Simon Stevin, fractions_decimals) and the
+// same real art asset the app renders (img/story-fractions-decimals.jpg is a
+// copy of app/src/assets/canvas/story-fractions.jpg) rather than an invented
+// mockup, so it stays honest about what the product actually looks like. The
+// "Play" tap on either tab swaps to a shared handoff card whose copy/link
+// updates to match whichever preview was open, then a "Back to preview"
+// returns to that same tab instead of losing the selection.
 const demoStage = document.getElementById("demoStage")
-const demoPlayBtn = document.getElementById("swordPlayBtn")
+const storyPlayBtn = document.getElementById("storyPlayBtn")
+const swordPlayBtn = document.getElementById("swordPlayBtn")
 const demoBackBtn = document.getElementById("demoBackBtn")
+const demoTabStory = document.getElementById("demoTabStory")
+const demoTabGame = document.getElementById("demoTabGame")
+const demoHeading = document.getElementById("demoHeading")
+const demoSub = document.getElementById("demoSub")
+const demoNote = document.getElementById("demoNote")
+const demoHandoffEyebrow = document.getElementById("demoHandoffEyebrow")
+const demoHandoffTitle = document.getElementById("demoHandoffTitle")
+const demoHandoffBody = document.getElementById("demoHandoffBody")
+const demoHandoffLink = document.getElementById("demoHandoffLink")
+
+const DEMO_COPY = {
+  story: {
+    heading: "Fractions &amp; Decimals",
+    sub: "A real story chapter from inside MindCraft. Read a page, answer a quick question, watch the map move.",
+    note: "tap play, no sign-in needed to preview",
+    handoffEyebrow: "Fractions & Decimals",
+    handoffTitle: "The chapter continues in the app.",
+    handoffBody: "Sign in (or make a free account, it takes a minute) to read the rest of the story and lock in the practice question.",
+    handoffHref: "https://mindcraft-93858.web.app/story-loop/fractions_decimals?auto=1",
+    handoffCta: "Open the chapter →",
+  },
+  game: {
+    heading: "Sword of Wisdom",
+    sub: "See the curve in the mountain. Cut with precision. Then keep learning with fractions.",
+    note: "tap play, no sign-in needed to preview",
+    handoffEyebrow: "Sword of Wisdom",
+    handoffTitle: "The ridge continues in the app.",
+    handoffBody: "Sign in (or make a free account, it takes a minute) to reveal the shape, swing the blade, and land in the fractions story right after.",
+    handoffHref: "https://mindcraft-93858.web.app/manjushree",
+    handoffCta: "Enter the ridge →",
+  },
+}
+
+let activeDemo = "story"
+
+function setActiveDemoTab(key) {
+  activeDemo = key
+  const copy = DEMO_COPY[key]
+  if (demoStage) demoStage.dataset.state = key
+  demoTabStory?.classList.toggle("is-active", key === "story")
+  demoTabGame?.classList.toggle("is-active", key === "game")
+  demoTabStory?.setAttribute("aria-selected", String(key === "story"))
+  demoTabGame?.setAttribute("aria-selected", String(key === "game"))
+  if (demoHeading) demoHeading.innerHTML = copy.heading
+  if (demoSub) demoSub.textContent = copy.sub
+  if (demoNote) demoNote.textContent = copy.note
+}
 
 function openDemoHandoff() {
+  const copy = DEMO_COPY[activeDemo]
+  if (demoHandoffEyebrow) demoHandoffEyebrow.textContent = copy.handoffEyebrow
+  if (demoHandoffTitle) demoHandoffTitle.textContent = copy.handoffTitle
+  if (demoHandoffBody) demoHandoffBody.textContent = copy.handoffBody
+  if (demoHandoffLink) {
+    demoHandoffLink.href = copy.handoffHref
+    demoHandoffLink.textContent = copy.handoffCta
+  }
   if (demoStage) demoStage.dataset.state = "handoff"
 }
 
 function closeDemoHandoff() {
-  if (demoStage) demoStage.dataset.state = "loop"
+  if (demoStage) demoStage.dataset.state = activeDemo
 }
 
-demoPlayBtn?.addEventListener("click", openDemoHandoff)
+demoTabStory?.addEventListener("click", () => setActiveDemoTab("story"))
+demoTabGame?.addEventListener("click", () => setActiveDemoTab("game"))
+storyPlayBtn?.addEventListener("click", openDemoHandoff)
+swordPlayBtn?.addEventListener("click", openDemoHandoff)
 demoBackBtn?.addEventListener("click", closeDemoHandoff)
 
+// Find a Tutor map (Job 4, "find a tutor near you" panel). This is a REAL
+// interactive Google Map (Maps JavaScript API, same key already baked into
+// the app's .env.production bundle so this is not a new secret exposure),
+// not a static mockup image, showing the two real founder-tutors — see
+// FindTutor.tsx's own DEMO_TUTORS header comment: Akshat and Abhigya Koirala
+// are real people, not fabricated demo profiles, carried over verbatim here.
+//
+// What this deliberately does NOT do: query Firestore for the full
+// registered-tutor roster the way FindTutor.tsx does. firestore.rules
+// requires an authenticated request to read `users` docs (including the
+// role=='tutor' query) — see firebase/firestore.rules — and this marketing
+// site never signs anyone in, so that query would always come back
+// permission-denied, exactly like it already does for a signed-out visitor
+// on /find-a-tutor itself (FindTutor.tsx's own comment covers this). Making
+// that live for anonymous marketing traffic would mean either relaxing
+// firestore.rules to allow anonymous tutor-roster reads, or standing up a
+// public webhook endpoint to serve a sanitized list server-side (Admin SDK)
+// — both are cross-lane calls (rules / webhook) that need a team decision,
+// not something to bolt on unilaterally from a marketing copy pass. So:
+// real interactive map, real named tutors, the exact same honest "home
+// base, not their literal address" labeling FindTutor.tsx already uses,
+// plus a prominent deep link to the real /find-a-tutor page for the live,
+// authenticated, complete view — which will show real per-tutor pins the
+// moment any tutor uses the new TutorDashboard "Your Location" field (see
+// TutorDashboard.tsx / ACTIVE_TASK.md).
+const FT_STUDIO = { lat: 44.9379, lng: -93.1706 }
+const FT_TUTORS = [
+  { name: "Akshat Koirala", bio: "ACT Math, AP Calculus, Pre-Calc, Statistics." },
+  { name: "Abhigya Koirala", bio: "Applied math, calculus, proofs. Booking opens soon." },
+]
+const FT_MAP_FALLBACK = '<div class="findtutor-map-fallback">Map unavailable right now.<br><a href="https://mindcraft-93858.web.app/find-a-tutor">Open Find a Tutor →</a> to see the live map.</div>'
+
+function initFtMap() {
+  const mapEl = document.getElementById("ftMap")
+  if (!mapEl || !window.google?.maps) return
+  mapEl.dataset.loaded = "1"
+  const map = new google.maps.Map(mapEl, {
+    center: FT_STUDIO,
+    zoom: 12,
+    disableDefaultUI: true,
+    zoomControl: true,
+    styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] }],
+  })
+  new google.maps.Marker({
+    position: FT_STUDIO,
+    map,
+    title: "MindCraft home base",
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 9,
+      fillColor: "#143a2e",
+      fillOpacity: 1,
+      strokeColor: "#fffdf7",
+      strokeWeight: 2,
+    },
+  })
+  FT_TUTORS.forEach((t) => {
+    const marker = new google.maps.Marker({ position: FT_STUDIO, map, title: t.name })
+    const info = new google.maps.InfoWindow({
+      content: "<div style=\"font:600 13px 'Nunito Sans',sans-serif;max-width:200px;color:#143a2e\">"
+        + "<strong>" + t.name + "</strong>"
+        + "<p style=\"margin:6px 0 0;font-weight:500;color:#5a5a5a\">" + t.bio + "</p>"
+        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">Home base shown, exact tutor location not set yet. Sessions are virtual.</p>"
+        + "</div>",
+    })
+    marker.addListener("click", () => info.open(map, marker))
+  })
+}
+// Google Maps calls this global if the key/referrer restriction rejects the
+// request (e.g. this key's HTTP referrer allowlist doesn't yet include the
+// marketing domain) — fall back to an honest "map unavailable" card instead
+// of a broken gray box.
+window.gm_authFailure = function () {
+  const mapEl = document.getElementById("ftMap")
+  if (mapEl) mapEl.outerHTML = FT_MAP_FALLBACK
+}
+// Also covers ad-blockers / offline / script load failures generally, not
+// just auth — same honest fallback either way.
+setTimeout(() => {
+  const mapEl = document.getElementById("ftMap")
+  if (mapEl && mapEl.dataset.loaded !== "1") mapEl.outerHTML = FT_MAP_FALLBACK
+}, 6000)
+
 </script>
+<!-- Find a Tutor map (see the initFtMap comment above). Same publicly-exposed
+     browser key already baked into the app's production bundle (app/.env.production
+     VITE_GOOGLE_MAPS_API_KEY) — restricted by HTTP referrer + API in Google Cloud
+     Console, not a secret. If this domain isn't on that key's referrer allowlist yet,
+     gm_authFailure above swaps in the honest fallback card. -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsGvXcd5Eqt7qVOxOdIqiEDoJcEQT3Cjg&callback=initFtMap"></script>
 </body>
 </html>
