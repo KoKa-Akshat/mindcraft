@@ -219,20 +219,12 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .proof{background:linear-gradient(180deg,#fff7e8,#eaf5ea)}
 .proof-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,72px);align-items:stretch;margin-top:52px}
 .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
-.tcard{background:#fffdf7;padding:32px;cursor:pointer;transition:background .18s;display:flex;flex-direction:column;gap:0}
+.tcard{background:#fffdf7;padding:32px;display:flex;flex-direction:column;gap:0}
 .tcard:nth-child(2){background:#eaf5ea}
 .tcard:nth-child(3){background:#eef4fb}
-.tcard:hover{background:#f0e8d4}
-.tcard:nth-child(2):hover{background:#d8edda}
-.tcard:nth-child(3):hover{background:#dce8f4}
-.tcard-front{display:flex;flex-direction:column;gap:14px}
-.tcard-q{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(17px,2vw,22px);line-height:1.3;letter-spacing:-.02em;margin:0}
-.tcard-more{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--leaf);align-self:flex-start;transition:opacity .18s}
-.tcard-open .tcard-more{opacity:0;pointer-events:none}
-.tcard-back{max-height:0;overflow:hidden;opacity:0;transition:max-height .38s cubic-bezier(.4,0,.2,1),opacity .24s ease}
-.tcard-open .tcard-back{max-height:320px;opacity:1}
-.tcard-back p{font-size:15px;line-height:1.65;color:var(--ink);margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
-.tcard-back cite{font-style:normal;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#756f66}
+.tcard-q{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(17px,2vw,22px);line-height:1.3;letter-spacing:-.02em;margin:0;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.tcard-body{font-size:15px;line-height:1.65;color:var(--ink);margin:18px 0 14px}
+.tcard-tag{font-style:normal;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--ink);margin-top:auto}
 .proof-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .about{background:linear-gradient(180deg,#eaf5ea,#fffdf7)}
 .about-head{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,5vw,64px);align-items:end}
@@ -297,10 +289,10 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .tutor-benefits li{position:relative;padding-left:22px;font-size:15px;line-height:1.5;font-weight:800;color:var(--ink)}
 .tutor-benefits li:before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--leaf-2);box-shadow:0 0 0 4px rgba(95,183,121,.16)}
 .findtutor-map-wrap{display:flex;flex-direction:column;gap:12px}
-.findtutor-search{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px;border:1px solid var(--line);border-radius:22px;background:#fffdf7;box-shadow:0 16px 34px rgba(20,58,46,.08)}
-.findtutor-search input{min-width:0;border:1px solid rgba(20,58,46,.14);border-radius:16px;background:#fffaf0;color:var(--ink);padding:13px 14px;font-size:14px;font-weight:800;outline:none}
-.findtutor-search input:focus{border-color:var(--leaf);box-shadow:0 0 0 4px rgba(36,122,77,.10)}
-.findtutor-search button{border:0;border-radius:16px;background:var(--ink);color:#fffdf7;padding:0 18px;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.findtutor-search{display:grid;grid-template-columns:1fr auto;gap:10px;margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+.findtutor-search input{min-width:0;border:1px solid rgba(20,58,46,.14);border-radius:16px;background:#fffdf7;color:var(--ink);padding:13px 14px;font-size:14px;font-weight:800;outline:none;box-shadow:0 12px 28px rgba(20,58,46,.08);-webkit-appearance:none;appearance:none}
+.findtutor-search input:focus{border-color:var(--leaf);box-shadow:0 0 0 4px rgba(36,122,77,.10),0 12px 28px rgba(20,58,46,.08)}
+.findtutor-search button{border:0;border-radius:16px;background:var(--ink);color:#fffdf7;padding:0 18px;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 28px rgba(20,58,46,.12)}
 .findtutor-map,.findtutor-map-fallback{width:100%;aspect-ratio:16/11;border-radius:26px;border:6px solid #fffdf7;box-shadow:0 18px 44px rgba(20,58,46,.18)}
 .findtutor-map{overflow:hidden;background:#e4f7dc}
 .findtutor-map-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;background:linear-gradient(160deg,#eaf5ea,#dceef6);font-weight:800;color:var(--muted)}
@@ -314,7 +306,8 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .findtutor-cardlet p{font-size:12px;line-height:1.4;margin:3px 0 0;color:var(--muted)}
 .findtutor-distance{font-size:11px!important;font-weight:900!important;color:var(--leaf)!important;margin-top:6px!important}
 .findtutor-book{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:999px;background:var(--ink);color:#fffdf7;font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;pointer-events:none}
-.findtutor-status{min-height:18px;margin:0;font-size:12px;font-weight:800;color:var(--leaf)}
+.findtutor-status{margin:0;font-size:12px;font-weight:800;color:var(--leaf)}
+.findtutor-status:empty{display:none}
 .findtutor-status.is-error{color:#c1180b}
 .notebook-photo{margin:18px 0 0}
 .notebook-photo img,.notebook-photo svg{display:block;width:100%;height:auto;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
@@ -950,40 +943,21 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <p class="label">Teach with us</p>
         <h2>College tutors wanted.</h2>
         <div class="testimonial-grid stagger">
-
-          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
-            <div class="tcard-front">
-              <p class="tcard-q">Set your own hours</p>
-              <span class="tcard-more">read more +</span>
-            </div>
-            <div class="tcard-back">
-              <p>Tutor around your class schedule. Mornings, evenings, weekends. You choose the load.</p>
-              <cite>Flexible</cite>
-            </div>
+          <article class="tcard">
+            <p class="tcard-q">Set your own hours</p>
+            <p class="tcard-body">Tutor around your class schedule. Mornings, evenings, weekends. You choose the load.</p>
+            <cite class="tcard-tag">Flexible</cite>
           </article>
-
-          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
-            <div class="tcard-front">
-              <p class="tcard-q">Get paid to teach</p>
-              <span class="tcard-more">read more +</span>
-            </div>
-            <div class="tcard-back">
-              <p>Competitive pay per session, booked straight through Calendly.</p>
-              <cite>Paid</cite>
-            </div>
+          <article class="tcard">
+            <p class="tcard-q">Get paid to teach</p>
+            <p class="tcard-body">Competitive pay per session, booked straight through Calendly.</p>
+            <cite class="tcard-tag">Paid</cite>
           </article>
-
-          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
-            <div class="tcard-front">
-              <p class="tcard-q">Make math click</p>
-              <span class="tcard-more">read more +</span>
-            </div>
-            <div class="tcard-back">
-              <p>Real students, real breakthroughs. The map shows you where to start.</p>
-              <cite>Impact</cite>
-            </div>
+          <article class="tcard">
+            <p class="tcard-q">Make math click</p>
+            <p class="tcard-body">Real students, real breakthroughs. The map shows you where to start.</p>
+            <cite class="tcard-tag">Impact</cite>
           </article>
-
         </div>
         <div class="proof-actions">
           <a class="btn primary" href="mailto:joinmindcraft@gmail.com?subject=Tutor%20application&amp;body=Tell%20us%20about%20your%20math%20background%2C%20availability%2C%20and%20why%20you%20want%20to%20tutor.">Apply to tutor →</a>
