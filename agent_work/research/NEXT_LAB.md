@@ -14,7 +14,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 
 | ID | Working title | Must include | Status |
 |----|---------------|--------------|--------|
-| 33 | AI tutors: trust, calibration, sycophancy | Fluent wrongness; overtrust; pedagogy wrap | **DONE** (2026-07-26) |
+| 33 | AI tutors: trust, calibration, sycophancy | Fluent wrongness; overtrust; pedagogy wrap | **DONE** (2026-07-26; Red-Teamed same day — guards≠gain; Tutor≠PWC killed) |
 | 34 | Formal causal DAG + identification | FEI RCTs; confounders | **NEXT** |
 | 35 | Competitive session audits | Khan/Duo/Brilliant/ChatGPT | queued |
 | 36 | Equity audit of story worlds | Belonging; whose history | queued |

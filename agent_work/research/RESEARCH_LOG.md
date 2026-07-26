@@ -4,6 +4,41 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-26 — Red Team tick: Part XXXIII AI tutors / trust / sycophancy
+
+**Tick type:** Red Team (UTC hour 06 → rotation)  
+**Target:** `chapters/33_ai_tutors_trust_sycophancy.md` (newest chapter)
+
+**Claims examined:**
+1. Guardrails / GPT Tutor imply a learning *gain*.
+2. Bastani GPT Tutor validates MindCraft Pedagogy Wrap Contract (PWC).
+3. Fallibility banners improve learning.
+4. Core harm / sycophancy / error-detection facts.
+
+**Evidence re-checked (web):**
+- Bastani et al. 2025 PNAS doi:10.1073/pnas.2422633122 — exam: Base −17% vs control; Tutor negative “essentially eradicated” but **no positive effect** vs control; Tutor prompt includes teacher **solutions** + mistake scripts (not ontology routing).
+- Li et al. L@S 2025 doi:10.1145/3698205.3729550 — adult STEM error detection; citation survives with scope note.
+- Nagashima et al. arXiv:2606.03822 — rule-based CTAT agent; more hints; no real errors; no learning gain.
+
+**Disposition:**
+| Claim | Status |
+|-------|--------|
+| Guards ⇒ learning gain | **KILLED** |
+| Bastani Tutor ≡ MindCraft PWC | **KILLED** (category error) |
+| “Solver = GPT Tutor” as success slogan | **WOUNDED** → anti-Base + beat-control bar |
+| Fallibility banner ⇒ learning | **WOUNDED** |
+| Unguarded GPT harms solo performance | **SURVIVES** |
+| Sycophancy (Sharma) | **SURVIVES** |
+| PWC beats ChatGPT/control on identity metrics | **SURVIVES as HYPOTHESIS** (confidence Medium → Medium-Low) |
+
+**Product implication:** Instrument transfer vs no-AI; do not market Bastani Tutor as proof of gains; AIT-3 must watch crutch (`ai_reveal_rate`).
+
+**PDF:** Regenerated after in-place chapter revision.
+
+**Next lab id:** 34 (Formal causal DAG + identification) — unchanged.
+
+---
+
 ## 2026-07-26 — Researcher tick: Part XXXIII AI tutors / trust / sycophancy
 
 **Tick type:** Researcher  
