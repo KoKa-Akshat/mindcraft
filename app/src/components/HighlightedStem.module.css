@@ -34,6 +34,11 @@
   opacity: 0.55;
 }
 
+.graphRefNote {
+  font-style: italic;
+  opacity: 0.6;
+}
+
 .glossaryTerm {
   position: relative;
   cursor: help;

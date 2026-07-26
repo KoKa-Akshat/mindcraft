@@ -12,6 +12,7 @@
 import { useMemo } from 'react'
 import AltDiagramCallout from './AltDiagramCallout'
 import { splitAltDiagramSegments } from '../lib/altDiagram'
+import { isGraphShapedAlt } from '../lib/plottablePoints'
 import { renderNoBreakCoordinates } from '../lib/noBreakCoords'
 import s from './MathText.module.css'
 
@@ -140,9 +141,17 @@ interface Props {
   text: string
   className?: string
   questionId?: string
+  /** True when a GraphBox panel elsewhere on the page is already plotting
+   * this same question's points/expression (see lib/plottablePoints.ts). A
+   * graph-shaped `(Diagram: ...)` segment then renders as a short pointer
+   * instead of a second "Picture: ..." caption or parsed figure describing
+   * the identical axes/points — the reported "picture card AND graph panel
+   * both show the same thing" bug. Non-graph diagram segments (a Venn
+   * diagram, a dimensioned shape) are unaffected. */
+  graphAlreadyShown?: boolean
 }
 
-export default function MathText({ text, className, questionId }: Props) {
+export default function MathText({ text, className, questionId, graphAlreadyShown }: Props) {
   const cleaned = useMemo(() => replaceMarkdownImages(text), [text])
   const segments = useMemo(() => parse(cleaned), [cleaned])
 
@@ -159,6 +168,9 @@ export default function MathText({ text, className, questionId }: Props) {
           return <span key={i}>{renderNoBreakCoordinates(seg.content, `mt-${i}`)}</span>
         }
         if (seg.type === 'diagram') {
+          if (graphAlreadyShown && isGraphShapedAlt(seg.alt)) {
+            return <span key={i} className={s.graphRefNote}>(see graph →)</span>
+          }
           return <AltDiagramCallout key={i} alt={seg.alt} questionId={questionId} />
         }
         if (seg.type === 'inline') {

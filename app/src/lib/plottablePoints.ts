@@ -45,6 +45,18 @@ const POINT_CONTEXT_RE = /\baxes\b|\baxis\b|\bpoints?\b|\bcoordinate grid\b|\bin
 const NOT_POINT_PLOT_RE =
   /venn diagram|function machine|number line|percentage number line|circle (?:through|goes)|depth-time|glass|cost changes|graph showing how/i
 
+/** True when a single `(Diagram: ...)` alt segment describes the same kind of
+ * "points/line/curve on axes" figure that GraphBox's point-marker or
+ * expression mode can plot — i.e. exactly the phrasing extractPlottablePoints/
+ * extractGraphableExpression key off. Callers (MathText, HighlightedStem) use
+ * this to suppress a redundant second rendering of the SAME figure as a
+ * "Picture: ..." caption or parsed inline diagram once GraphBox is already
+ * showing it — the reported bug where a coordinate-grid caption and the
+ * GraphBox panel both plot identical points for one question. */
+export function isGraphShapedAlt(alt: string): boolean {
+  return POINT_CONTEXT_RE.test(alt) && !NOT_POINT_PLOT_RE.test(alt)
+}
+
 export function extractPlottablePoints(text: string): PlottablePoint[] | null {
   const segments = splitAltDiagramSegments(text)
   const diagramAlts = segments.filter(s => s.kind === 'diagram').map(s => s.alt)

@@ -5,6 +5,7 @@
 import MathText from './MathText'
 import AltDiagramCallout from './AltDiagramCallout'
 import { splitAltDiagramSegments } from '../lib/altDiagram'
+import { isGraphShapedAlt } from '../lib/plottablePoints'
 import type { HighlightSpan } from '../lib/journalGuide'
 import { glossaryFor } from '../lib/mathGlossary'
 import s from './HighlightedStem.module.css'
@@ -55,9 +56,14 @@ interface Props {
   highlights?: HighlightSpan[]
   className?: string
   questionId?: string
+  /** See MathText's identical prop — true when a GraphBox panel elsewhere on
+   * this page already plots this question's points/expression, so a
+   * graph-shaped diagram segment renders as a short pointer instead of a
+   * second caption/figure describing the same axes. */
+  graphAlreadyShown?: boolean
 }
 
-export default function HighlightedStem({ text, ink, accent, highlights = [], className, questionId }: Props) {
+export default function HighlightedStem({ text, ink, accent, highlights = [], className, questionId, graphAlreadyShown }: Props) {
   // Balanced-paren split (not a regex) — see lib/altDiagram.ts for why: the
   // alt text a `(Diagram: ...)` callout wraps often contains its own nested
   // parens (coordinate pairs like "(4,10)"), and a naive regex stops at the
@@ -69,6 +75,9 @@ export default function HighlightedStem({ text, ink, accent, highlights = [], cl
     <p className={`${s.stem} ${className ?? ''}`} style={{ color: ink }}>
       {parts.map((part, i) => {
         if (part.kind === 'diagram') {
+          if (graphAlreadyShown && isGraphShapedAlt(part.alt)) {
+            return <span key={i} className={s.graphRefNote}>(see graph →)</span>
+          }
           // AltDiagramCallout draws a real diagram for recognizable alt-text
           // patterns (e.g. number lines) instead of showing the raw
           // accessibility description as a sentence — see lib/altDiagram.ts.

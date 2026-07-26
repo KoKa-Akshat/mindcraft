@@ -4,6 +4,132 @@
 
 ---
 
+## Question rendering + bank smoke-test fixes, QA handoff for the image-choice backlog (Claude, 2026-07-25)
+
+Product lane (`app/**`). Akshat ran a manual smoke test across Practice/chapter
+sessions and flagged 5 real bugs. All 4 code bugs fixed + verified (`tsc`,
+`vitest run` — 173 passed/1 skipped, both clean); the 5th (60 unrenderable
+"answer choice IS a picture" questions) is excluded from the live bank and
+handed off below — needs a new component, not a quick fix.
+
+**Fix 1 — redundant diagram + GraphBox panel.** Root cause: `Practice.tsx`/
+`ConceptChapterPage.tsx` already derive `graphPoints`/`graphExpr` from a
+question's `(Diagram: ...)` alt text (`lib/plottablePoints.ts`) to plot the
+REAL figure in the GraphBox aside panel — but the stem (`MathText`/
+`HighlightedStem`) still independently rendered the SAME alt text a second
+time as a parsed figure or a "Picture: ..." caption, e.g. eedi_203's line
+segment showing once as a caption AND once as the plotted graph. Added
+`lib/plottablePoints.ts:isGraphShapedAlt()` (same POINT_CONTEXT_RE /
+NOT_POINT_PLOT_RE gating the extractors already use) and a `graphAlreadyShown`
+prop on `MathText`/`HighlightedStem`: when true and the diagram segment is
+graph-shaped, render `(see graph →)` instead of the duplicate callout. Wired
+from both call sites using the same `graphPoints`/`graphExpr` they already
+compute. Non-graph diagrams (Venn, dimensioned shapes) are untouched.
+
+**Fix 2 — OCR-corrupted question text in `actMasterQuestionBank.generated.json`.**
+Audited all 206 entries for stripped-formula artifacts (empty `"is ,"` /
+`"is ."` gaps, duplicated tails). Found and fixed 4: `act_math_t10_q09`
+(sphere formulas were blank — filled in `V=(4/3)πr³`/`A=4πr²` from the
+question's own explanation field), `act_math_t11_q01` (the reported "what is
+kn?" bug — rewrote to state the line equation directly, `format: diagram` →
+`symbolic_expression` since no figure exists), `act_math_t12_q02` (missing
+chord/midpoint description, same treatment), `act_math_t15_q13` (duplicated
+"what is its radius in." tail, deduped). Removed 1 unfixable entry,
+`act_math_t02_q07` — its `choices` array had degenerated to a single garbage
+option `["K."]`; no way to safely reconstruct the real ACT answer choices
+without the source PDF, so it's gone from the bank rather than guessed at.
+**If anyone has the real Test 02 Q07 (circles_geometry, "square ABCD, shaded
+region") source, re-add it properly instead of re-deriving choices from the
+explanation text.**
+
+**Fix 3 — garbled "which signs belong in the boxes" question.** `eedi_147` and
+`eedi_839` had answer choices that were themselves unresolved
+`![A blue box containing a "greater than" symbol...]()` markdown-image
+placeholders — MathText renders those as a text caption, so the "choices"
+read as raw picture descriptions, not pickable answers. `eedi_1043` (same
+question archetype, comparing two things with inserted `<`/`>` signs) already
+does this right — choices are just the compact strings `"><" "<<" ">>" "<>"`.
+Rewrote `eedi_147`/`eedi_839`'s choices (and `eedi_839`'s duplicate
+explanation text) to match that convention; the symbol-pair → string mapping
+was mechanical (blue box, orange box → each is > or <) and `correctIndex` was
+already right for the new array order.
+
+**Fix 4 — "legacy design" / wrong CTA after finishing a chapter.**
+`ConceptChapterPage.tsx`'s last-panel nav button was labeled `"practice →"`
+and navigated to `/practice` — dropping the student into ANOTHER full
+practice session (the reported "legacy ACT-style scratch-work UI") instead of
+completing the loop. Changed to `"Go to Dashboard →"` → `navigate('/dashboard',
+{ replace: true })`, matching how `Practice.tsx`'s own `returnToPath()`
+already behaves after a practice session ends. `replace: true` so the back
+button doesn't return into the finished chapter.
+
+**Fix 5 (partial) — the 60 "answer choices are pictures" questions.** Beyond
+the 2 fixed above, audited all Eedi questions for choices containing an
+unresolved `![alt]()` — 60 remain (list below), a fundamentally different
+problem: these are Eedi's "pick the matching diagram" archetype (e.g. "which
+number line represents x>-1?", "which of these triangles has the same area as
+this rectangle?") where all 4 ANSWER OPTIONS are themselves distinct diagrams,
+not a single stem figure. There is no renderer for choice-level images today
+— only the stem gets a real/parsed figure (`lib/altDiagram.ts`). Serving these
+as literal alt-text ("Picture: A trapezium") reads as broken, not as an
+answer a student can pick. **Excluded from the live bank** via a new check in
+`lib/questionBank.ts:isUsable()` (rejects any choice matching
+`/!\[[^\]]*\]\([^)]*\)/`) rather than shipped half-working — this is
+mechanical and will auto-un-exclude any of the 60 once they're given real
+choice-level renders, no list to maintain by hand.
+
+**Handoff for Codex — 2 real follow-on workstreams, do NOT rush a fix:**
+
+1. **Choice-level diagram renderer** (the 60 excluded questions, ids: eedi_33,
+   58, 111, 147→already fixed/skip, 171, 180, 183, 212, 218, 231, 248, 278,
+   279, 355, 392, 453, 464, 501, 512, 523, 734, 771, 822, 839→already
+   fixed/skip, 870, 885, 891, 909, 963, 974, 1034, 1081, 1109, 1116, 1125,
+   1226, 1243, 1334, 1354, 1359, 1370, 1398, 1411, 1417, 1419, 1429, 1444,
+   1467, 1486, 1515, 1548, 1580, 1588, 1614, 1658, 1670, 1679, 1686, 1758,
+   1780, 1787, 1835). Needs a new `AltDiagramChoice` component (4 small SVGs
+   per question, not 1 per stem) reusing `lib/altDiagram.ts`'s existing 12
+   parsers where the choice alt-text matches (e.g. eedi_58/212/278 are all
+   the `inequalityray`/`dashline` number-line family already parsed for
+   stems — just needs wiring per-choice instead of per-stem), falling back to
+   the hand-authored SVG approach (`scripts/generateRemainingDiagramBatch.mjs`)
+   for shape/graph-sketch families the parser doesn't cover. Do the audit
+   first: group by family like the stem-diagram work did, size each bucket,
+   then decide parser-reuse vs hand-authored per bucket — don't hand-author
+   all 60 blind.
+2. **184 stem diagrams still falling back to plain "Picture: ..." text**
+   (full list with alt text: written this session to a scratch audit, not
+   committed — regenerate via the script below before starting, it's exact
+   and cheap to rerun). Breakdown: **~96 coordinate-graph-shaped** (many of
+   these actually already GET a real GraphBox plot from the same alt text
+   per Fix 1 above — check `isGraphShapedAlt()` first before spending a
+   diagram slot on them, several may need nothing further at all now that
+   the redundant caption is suppressed), ~34 shape-counting ("a group of N
+   squares and M circles" — not covered by any of the 12 `altDiagram.ts`
+   parsers, a real gap, mechanical to add), ~2 table, ~1 clock, rest
+   "other" (mixed one-offs, read each). Audit script (rerunnable, ~1s):
+   ```js
+   // run from app/ — see git blame for the exact version used 2026-07-25
+   // loads lib/altDiagram.ts's real parseAltDiagram via on-the-fly TS
+   // transpile (same pattern as scripts/exportQuestionBankForNative.mjs),
+   // scans eediQuestions.json + actMasterQuestionBank.generated.json +
+   // generatedQuestions.json for `(Diagram:` markers, and reports how many
+   // resolve via the 12 parsers vs a pre-generated asset vs neither.
+   ```
+   Recommend: extend `lib/altDiagram.ts` with a 13th family for shape-counting
+   ("A group of N squares and M circles" style) before hand-authoring more
+   individual SVGs — mechanical and reusable, same spirit as the existing 12.
+
+Files changed: `app/src/lib/plottablePoints.ts`, `app/src/components/MathText.tsx`,
+`app/src/components/MathText.module.css`, `app/src/components/HighlightedStem.tsx`,
+`app/src/components/HighlightedStem.module.css`, `app/src/pages/Practice.tsx`,
+`app/src/pages/ConceptChapterPage.tsx`, `app/src/lib/questionBank.ts`,
+`app/src/data/actMasterQuestionBank.generated.json`, `app/src/data/eediQuestions.json`.
+Verification: `npx tsc --noEmit` clean, `npx vitest run` 173 passed/1 skipped
+(no regressions), manual JSON validity check on both edited data files.
+Nothing committed — left on disk for review, per this session's standing rule.
+
+---
+
 ## Marketing cinematic polish pass: story-first demo, hero trust strip, video-ready reviews (Fable 5, 2026-07-25)
 
 Product lane, `index.html` only. Design/polish pass on top of the same-day

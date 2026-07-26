@@ -1013,42 +1013,55 @@
   color: var(--theme-ink, #3d2f10);
 }
 
-/* Choice stickers — straight, spaced, no tilt (tilt made them collide) */
+/* Choice stickers — one consistent paper card (was 4 arbitrary per-index
+   pastel backgrounds — orange/green/pink/blue regardless of state, flagged
+   in the 2026-07-25 smoke test as reading like decoration, not a state
+   signal). State now lives in the left accent edge + the letter tile only,
+   matching the tilted-block-tile direction picked from the 3-option redesign
+   review that same session. */
 .stickerChoices {
   gap: 10px !important;
 }
 .stickerChoice {
   border: 1.5px solid rgba(20, 58, 46, 0.14) !important;
-  border-bottom: 1.5px solid rgba(20, 58, 46, 0.14) !important;
-  border-radius: 16px !important;
+  border-left: 4px solid transparent !important;
+  border-radius: 14px !important;
   padding: 12px 14px !important;
   background: #fffdf8 !important;
   box-shadow: 0 4px 14px rgba(20, 58, 46, 0.06);
   transform: none;
   transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease !important;
 }
-.stickerChoice:nth-child(1) { background: linear-gradient(180deg, #fffdf8, #fff7ea) !important; }
-.stickerChoice:nth-child(2) { background: linear-gradient(180deg, #f8fff6, #eefaea) !important; }
-.stickerChoice:nth-child(3) { background: linear-gradient(180deg, #fff8fc, #faf0f6) !important; }
-.stickerChoice:nth-child(4) { background: linear-gradient(180deg, #f7f9ff, #eef2fb) !important; }
-.stickerChoice:nth-child(5) { background: linear-gradient(180deg, #fffdf8, #f4f7f2) !important; }
 .stickerChoice:hover:not(:disabled) {
   transform: translateY(-1px) !important;
   border-color: rgba(20, 58, 46, 0.32) !important;
+  border-left-color: rgba(20, 58, 46, 0.32) !important;
   box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.35), 0 10px 22px rgba(20, 58, 46, 0.1);
   background: #fffefb !important;
 }
 .stickerChoice.choiceChosen {
   transform: none !important;
   border-color: #143a2e !important;
-  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.5), 0 10px 22px rgba(20, 58, 46, 0.1) !important;
-  background: linear-gradient(135deg, #f3ffe4, #fffdf8) !important;
+  border-left-color: #3a5da8 !important;
+  box-shadow: 0 0 0 3px rgba(58, 93, 168, 0.22), 0 10px 22px rgba(20, 58, 46, 0.1) !important;
+  background: linear-gradient(135deg, #eef2fb, #fffdf8) !important;
+}
+.stickerChoice.choiceChosen .choiceLetter {
+  background: #3a5da8 !important;
+  color: #fff !important;
+  border-color: #3a5da8 !important;
 }
 .stickerChoice.choiceCorrect {
   background: linear-gradient(135deg, #e8fff4, #f4fff8) !important;
   border-color: #1f6b45 !important;
+  border-left-color: #1f6b45 !important;
   box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.45), 0 10px 22px rgba(31, 107, 69, 0.12) !important;
   opacity: 1 !important;
+}
+.stickerChoice.choiceCorrect .choiceLetter {
+  background: #1f6b45 !important;
+  color: #fff !important;
+  border-color: #1f6b45 !important;
 }
 .choiceSoftWrong {
   opacity: 0.42 !important;
@@ -1070,13 +1083,21 @@
   width: 26px;
   height: 26px;
   margin-top: 0;
-  border-radius: 50%;
+  border-radius: 8px;
   display: grid;
   place-items: center;
   background: #ffe566;
   border: 1.5px solid rgba(58, 47, 85, 0.22);
   color: #3a2f55 !important;
   font-weight: 800;
+  transform: rotate(-2deg);
+}
+.stickerChoice:nth-child(2) .choiceLetter { transform: rotate(1.5deg); }
+.stickerChoice:nth-child(3) .choiceLetter { transform: rotate(-1deg); }
+.stickerChoice:nth-child(4) .choiceLetter { transform: rotate(2deg); }
+.stickerChoice.choiceChosen .choiceLetter,
+.stickerChoice.choiceCorrect .choiceLetter {
+  transform: rotate(0deg);
 }
 .stickerChoice .choiceText {
   font-family: var(--tok-font-hand);

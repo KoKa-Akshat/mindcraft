@@ -839,6 +839,7 @@ export default function ConceptChapterPage() {
             accent={theme.accent}
             highlights={journalGuide.highlights}
             questionId={q.id}
+            graphAlreadyShown={!!graphPoints || !!graphExpr}
           />
 
           <div className={`${s.qChoices} ${s.stickerChoices}`}>
@@ -1098,9 +1099,9 @@ export default function ConceptChapterPage() {
             type="button"
             className={s.navPrimary}
             style={{ background: theme.ink, color: theme.paper }}
-            onClick={() => navigate('/practice', { state: { conceptId } })}
+            onClick={() => navigate('/dashboard', { replace: true })}
           >
-            practice →
+            Go to Dashboard →
           </button>
         ) : (
           <button type="button" className={s.navArrow} onClick={() => goToPanel(panelIdx + 1, 'f')} aria-label="Next">→</button>

@@ -2044,11 +2044,23 @@ const RAW_QUESTIONS: Question[] = [
  *  2. Fewer than 2 choices exist.
  *  3. Text references "following figure" but has no "(Diagram: ..." callout.
  *  4. Question text is < 12 chars (too short to be a real question).
+ *  5. A choice is itself an unresolved `![alt]()` markdown image — Eedi's
+ *     "pick the matching picture" question family (e.g. "which number line
+ *     represents x>-1?" with 4 diagram choices). There's no renderer for
+ *     answer-choice-level images yet (only the question STEM gets a real or
+ *     parsed figure — see lib/altDiagram.ts), so today these show the raw
+ *     alt text as if it were the answer itself ("Picture: A trapezium"),
+ *     which reads as broken, not as an answer a student can pick. Excluded
+ *     until a multi-choice image renderer exists (~60 questions, 2026-07-25
+ *     smoke test) rather than served half-working.
  */
+const MARKDOWN_IMAGE_RE = /!\[[^\]]*\]\([^)]*\)/
+
 function isUsable(q: Question): boolean {
   const choices = q.choices.filter(c => c && c.trim().length > 0)
   if (choices.length < 2) return false
   if (choices.every(c => c.trim().replace(/\.$/, '').length <= 2)) return false
+  if (q.choices.some(c => MARKDOWN_IMAGE_RE.test(c))) return false
   const text = q.question.toLowerCase()
   if (text.includes('following figure') && !q.question.includes('(Diagram:')) return false
   if (q.question.trim().length < 12) return false
