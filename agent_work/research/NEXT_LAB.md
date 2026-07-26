@@ -32,3 +32,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (41–70).
 - Any story feature without HIST experiment plan
 - Any streak KPI promoted as learning
 - Any fabricated citation
+- ~~Bastani GPT Tutor = MindCraft ontology wrap~~ (**KILLED** 2026-07-26 — see Part XXXIII)

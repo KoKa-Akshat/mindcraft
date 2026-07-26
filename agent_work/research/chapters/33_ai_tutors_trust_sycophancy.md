@@ -10,9 +10,11 @@
 
 MindCraft’s scarcity thesis says explanations get cheaper. That does **not** make tutoring free, and it does **not** make fluent AI safe as a default coach.
 
-**FACT (field RCT, high-school math):** Bastani, Bastani, Sungu, Ge, Kabakcı & Mariman (2025, *PNAS*) — nearly 1,000 students; GPT-4 access during practice raised concurrent performance (**~+48%** grades for a ChatGPT-like “GPT Base”; **~+127%** for a guarded “GPT Tutor”), but when AI was removed, **GPT Base students scored ~17% worse** than peers who never had AI. Guardrails that steered the model toward hints rather than answers largely mitigated the harm. Unfettered generative help functioned as a **crutch**.
+**FACT (field RCT, high-school math):** Bastani, Bastani, Sungu, Ge, Kabakcı & Mariman (2025, *PNAS*, doi:10.1073/pnas.2422633122) — nearly 1,000 students; GPT-4 access during practice raised concurrent performance (**~+48%** grades for a ChatGPT-like “GPT Base”; **~+127%** for a guarded “GPT Tutor”), but when AI was removed, **GPT Base students scored ~17% worse** than peers who never had AI. Unfettered generative help functioned as a **crutch**.
 
-**Product translation:** Answer delivery can inflate session grades while **destroying** the competence evidence required for identity change (Parts XXV–XXVI). A Solver that dumps full solutions is anti-mission even if users love it.
+**FACT (same study — often elided):** GPT Tutor’s negative exam effect was *largely mitigated* to **statistical indistinguishability from control** — authors note they **still do not observe a positive exam effect** vs no-AI. Guarding prevented harm relative to Base; it did **not** beat textbooks+notes on solo transfer in this design.
+
+**Product translation:** Answer delivery can inflate session grades while **destroying** the competence evidence required for identity change (Parts XXV–XXVI). A Solver that dumps full solutions is anti-mission even if users love it. “Guarded AI” is necessary, not sufficient, for identity-forming gains.
 
 ---
 
@@ -55,7 +57,7 @@ MindCraft’s scarcity thesis says explanations get cheaper. That does **not** m
 
 **FACT (classic human factors):** Lee & See (2004, *Human Factors*) — trust must be designed for **appropriate reliance**: calibration (trust matches capability), resolution (trust tracks changes in reliability), and specificity (trust attaches to the right functions). Misuse (overtrust) and disuse (undertrust after a salient error) are both failures.
 
-**FACT (math ITS classroom experiment):** Lightweight fallibility warnings change behavior — e.g., a 252-student Japan classroom study of a math pedagogical agent found that warning students the system *may make mistakes* increased hint-seeking even when the system’s actual behavior was identical across arms (arXiv:2606.03822; transparency intervention on interaction strategy, not necessarily on immediate scores).
+**FACT (math ITS classroom experiment):** Lightweight fallibility warnings change behavior — Nagashima, Hladký & Rief (arXiv:2606.03822; EC-TEL 2026 line): 252 Japanese secondary students; warning that a pedagogical agent *may make mistakes* increased hint-seeking even when system behavior was identical across arms. **Caveat (Red Team):** the agent (Maddox) was **rule-based and error-free**, not an LLM — so this is evidence that *fallibility messaging shifts help-seeking*, not that banners fix hallucinating tutors.
 
 **HYPOTHESIS:** MindCraft should optimize **calibrated reliance**, not NPS-style “students love the coach.” A student who verifies a hint against the Map/ontology is healthier than a student who rates the coach 5★ and never attempts alone.
 
@@ -75,9 +77,14 @@ Existing Constitution doctrine (generative / deterministic split; AGENT_RULEBOOK
 4. **Verify** arithmetic and symbolic claims against deterministic checkers / bank keys when available; else mark `confidence=low` and invite verification.  
 5. **Refuse sycophancy patterns:** if student asserts answer *A* and key is *B*, coach must not affirm *A*; soft-wrong may delay *shame*, never delay *correction signal* beyond the attempt boundary.
 
-**FOUNDER BELIEF:** ChatGPT-as-tutor is a competitor to copy for fluency and a failure mode to avoid for identity. Bastani et al.’s GPT Tutor vs GPT Base is the closest large-scale proof that **wrap design is the product**.
+**FOUNDER BELIEF:** ChatGPT-as-tutor is a competitor to copy for fluency and a failure mode to avoid for identity.
 
-**SPECULATION (30-year):** Models get more accurate; sycophancy and crutch incentives do not automatically disappear because human raters still prefer agreeable text. Pedagogy wrap remains a moat longer than raw model IQ.
+**RED TEAM — CLAIM KILLED (2026-07-26):** “Bastani’s GPT Tutor proves MindCraft’s ontology / Pedagogy Wrap Contract.”  
+**Why killed:** Bastani’s GPT Tutor was **not** an ontology-driven mastery graph. It was (a) a hint-not-answer system prompt plus (b) **labor-intensive, per-problem teacher solutions and common-mistake scripts** injected into the prompt to block hallucinations. That is *grounded prompt scaffolding*, not ingredient/bridge selection via a student graph. Treating PNAS as validation of MindCraft’s deterministic spine is a **category error**.  
+**What survives:** Bastani is high-confidence evidence that **ChatGPT-like Base harms solo performance** and that **some guard design can neutralize that harm to ≈ control**. Whether MindCraft’s PWC beats Base *and* beats Tutor-style prompts on `solo_transfer_pass` / identity metrics remains **HYPOTHESIS — Medium-Low until AIT-1**.  
+**Additional wound:** Students’ *perceived* learning under GPT Tutor was overly optimistic vs actual exam (Bastani et al.) — thumbs-up / “felt helpful” metrics are actively misleading.
+
+**SPECULATION (30-year):** Models get more accurate; sycophancy and crutch incentives do not automatically disappear because human raters still prefer agreeable text. Pedagogy wrap remains a moat longer than raw model IQ — but only if wrap means *structure + verification*, not marketing copy about “our GPT Tutor mode.”
 
 ---
 
@@ -102,25 +109,27 @@ Existing Constitution doctrine (generative / deterministic split; AGENT_RULEBOOK
 5. **Equity:** Students with weaker verification skill / less adult support are most harmed by fluent wrongness (Li et al. differential impact signal). “AI for all” without wrap can widen gaps.  
 6. **External tutors / ChatGPT:** Students will paste MindCraft problems into unconstrained tools. Product cannot ban the internet; it can make in-app guarded help faster than off-app cheating *and* make transfer assessments AI-off.
 
-**Confidence summary:**
+**Confidence summary (post Red Team 2026-07-26):**
 
 | Claim | Label | Confidence |
 |-------|-------|------------|
-| Unguarded GPT practice can harm later solo performance | FACT (Bastani et al. 2025) | High |
-| Sycophancy is widespread in RLHF assistants | FACT (Sharma et al.) | High |
-| Novices miss chatbot factual errors often | FACT (Li et al. 2025) | High–Medium |
-| MindCraft ontology wrap beats ChatGPT on identity metrics | HYPOTHESIS | Medium (needs AIT experiments) |
-| Fallibility UX alone fixes learning | SPECULATION / likely false | Low — behavior shifts ≠ mastery |
+| Unguarded GPT practice can harm later solo performance | FACT (Bastani et al. 2025) | High — **survives** |
+| GPT Tutor-style guards neutralize Base harm to ≈ control (not > control) | FACT (Bastani et al.) | High — **survives**; “guards ⇒ learning gain” **killed** |
+| Bastani validates MindCraft ontology / PWC | was implied FACT | **KILLED** — category error; see §XXXIII.5 |
+| Sycophancy is widespread in RLHF assistants | FACT (Sharma et al.) | High — **survives** |
+| Novices miss chatbot factual errors often | FACT (Li et al. 2025 L@S) | High–Medium — **survives**; note: *detected* errors can protect / sometimes boost learning |
+| MindCraft ontology wrap beats ChatGPT on identity metrics | HYPOTHESIS | **Medium → Medium-Low** until AIT-1 separates ontology vs teacher-key prompts |
+| Fallibility UX alone fixes learning | SPECULATION / likely false | Low — behavior shifts ≠ mastery; non-LLM agent caveat |
 
 ---
 
 ## XXXIII.8 Product implications (actionable)
 
-1. **Solver default = GPT Tutor, not GPT Base** — hints, questions, ingredient cards; full worked solution only after attempt threshold or explicit reveal with logged cost.  
-2. **Instrument crutch risk:** `ai_reveal_rate`, `solo_transfer_pass`, `retry_120s` after AI-assisted item, `disagree_accept` (student revises after coach contradiction).  
+1. **Solver default = guarded hints, not ChatGPT-Base** — hints, questions, ingredient cards; full worked solution only after attempt threshold or explicit reveal with logged cost. Do **not** ship “GPT Tutor mode” marketing that implies Bastani-level exam neutrality without per-item grounding + AI-off transfer.  
+2. **Instrument crutch risk:** `ai_reveal_rate`, `solo_transfer_pass`, `retry_120s` after AI-assisted item, `disagree_accept` (student revises after coach contradiction). Never treat coach thumbs-up as learning (Bastani perception mismatch).  
 3. **Anti-sycophancy eval suite** in CI: student-wrong / student-right / student-anxious prompts; fail build if model affirms wrong math.  
-4. **Confidence chips tied to machinery:** `ontology_checked` | `arithmetic_verified` | `llm_ungrounded` — never fake precision.  
-5. **Ban:** “Your AI tutor that always agrees with you”; streak-as-learning; Bloom 2-sigma marketing for the LLM.  
+4. **Confidence chips tied to machinery:** `ontology_checked` | `arithmetic_verified` | `llm_ungrounded` — never fake precision. Prefer bank-key / checker grounding (Bastani’s real Tutor ingredient) *plus* ontology path selection (MindCraft’s unproven delta).  
+5. **Ban:** “Your AI tutor that always agrees with you”; streak-as-learning; Bloom 2-sigma marketing for the LLM; “proven by Bastani” for the knowledge graph.  
 6. **Tutor+AI:** Human tutors see when the student was AI-crutching; coaching goal becomes restoring decisive solo steps.
 
 ---
@@ -130,12 +139,13 @@ Existing Constitution doctrine (generative / deterministic split; AGENT_RULEBOOK
 | ID | Question | Design | Primary metric | Falsifier |
 |----|----------|--------|----------------|-----------|
 | AIT-1 | Guarded Solver vs ChatGPT-like full answers | RCT, same content | `solo_transfer_pass` @ 1 week | Guarded ≤ Base on transfer |
+| AIT-1b | **Ontology+checker wrap vs Bastani-style per-item teacher keys only** | RCT / factorial | `solo_transfer_pass`, wrong-hint rate | Ontology arm ≤ teacher-key arm on transfer → PWC delta **fails** |
 | AIT-2 | Anti-sycophancy system prompt + refusal tests | Offline + online | wrong-affirmation rate | No reduction vs baseline |
 | AIT-3 | Fallibility banner vs none | A/B | hint quality seeking + transfer | Banner harms transfer without reducing crutch |
 | AIT-4 | Confidence chips (ontology_checked) vs fluent prose only | A/B | error detection on planted wrong hints | Chips ignored; detection unchanged |
 | AIT-5 | Wizard coach (Experiment A) × AI guard level | Factorial | `retry_120s`, challenge_accept | Interaction null |
 
-**Red Team standing orders for this chapter:** Do not claim MindCraft “solved hallucination.” Do not claim tutoring is free because GPT is cheap. Do not treat thumbs-up on coach messages as learning.
+**Red Team standing orders for this chapter:** Do not claim MindCraft “solved hallucination.” Do not claim tutoring is free because GPT is cheap. Do not treat thumbs-up on coach messages as learning. Do not cite Bastani as proof of the knowledge-graph / ontology spine.
 
 ---
 

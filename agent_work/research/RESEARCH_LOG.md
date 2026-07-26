@@ -4,6 +4,31 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-26 — Red Team tick: Part XXXIII Bastani ≠ ontology wrap
+
+**Tick type:** Red Team  
+**Target chapter:** `chapters/33_ai_tutors_trust_sycophancy.md`  
+**Claim examined:** Bastani et al. (2025 PNAS) GPT Tutor is large-scale proof that MindCraft’s Pedagogy Wrap Contract / ontology spine is the product.
+
+**Kill / wound / survive:**
+- **KILLED:** Equating Bastani GPT Tutor with MindCraft ontology wrap (category error). GPT Tutor = hint-not-answer prompt + **per-problem teacher solutions & common-mistake scripts**, not mastery-graph / ingredient selection.
+- **KILLED (overclaim):** “Guards ⇒ learning gain.” Bastani: Tutor exam ≈ control (harm neutralized); **no positive exam effect** vs no-AI.
+- **WOUNDED:** PWC superiority confidence **Medium → Medium-Low**; needs AIT-1b (ontology+checker vs teacher-key-only).
+- **WOUNDED:** Fallibility-banner generalization — Nagashima et al. (arXiv:2606.03822) used rule-based error-free agent, not LLM.
+- **SURVIVES:** Unguarded GPT Base harms solo performance (~17%); sycophancy (Sharma); novices miss chatbot errors (Li et al. L@S 2025); calibrated trust (Lee & See).
+
+**Evidence added / sharpened:**
+- Bastani doi:10.1073/pnas.2422633122 — Tutor construction details; perception–performance mismatch under Tutor.
+- Li et al.: *detected* errors can protect learning / sometimes outperform no-error (design opportunity for AIT-4).
+
+**Product implication:** Ship guarded Solver; do not market “proven by Bastani” for the knowledge graph. Instrument thumbs-up separately from `solo_transfer_pass`. Add AIT-1b.
+
+**Experiment spawned:** AIT-1b (ontology+checker vs Bastani-style per-item keys).
+
+**PDF:** Regenerate after chapter revision (no new manifest row).
+
+---
+
 ## 2026-07-26 — Researcher tick: Part XXXIII AI tutors / trust / sycophancy
 
 **Tick type:** Researcher  
