@@ -1,0 +1,14 @@
+# Ordered chapter files concatenated into the Constitution PDF.
+# One path per line. Lines starting with # are ignored.
+# The core OS document always comes first.
+
+MINDCRAFT_RESEARCH_CONSTITUTION_v1.md
+chapters/24_affect_anxiety_belonging.md
+chapters/25_self_efficacy_narrative_identity.md
+chapters/26_cognitive_load_mastery_tutoring.md
+chapters/27_markets_parents_competition.md
+chapters/28_history_meaning_math.md
+chapters/29_spacing_retrieval.md
+chapters/30_attribution_helplessness.md
+chapters/31_flow_challenge_skill.md
+chapters/32_parent_anxiety_transmission.md
