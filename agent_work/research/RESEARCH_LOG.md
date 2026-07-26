@@ -4,6 +4,14 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-26 — Ops fix: push-to-main + rotation bug
+
+**Process:** Overnight ticks opened **draft PRs** instead of landing on `main`. Root cause combo: (1) PR tool habit, (2) rotation `hour % 3 == 0` matched **every** `0 */3 * * *` cron fire → all Red Team, no new chapters.
+
+**Fix:** LAB_TICK_PROMPT + skill now ban PRs; require `git push origin main`; Red Team only when `hour % 6 == 0`.
+
+---
+
 ## 2026-07-26 — Red Team tick: Part XXXIII Bastani≢PWC + guards≠gain
 
 **Tick type:** Red Team (UTC hour 15 ≡ 0 mod 3)  

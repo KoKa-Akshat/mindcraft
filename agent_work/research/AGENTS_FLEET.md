@@ -57,4 +57,5 @@ Pause the automation if:
 2. Citations start looking fabricated (Red Team emergency)  
 3. Disk/PR noise from unattended commits (keep automations **no-auto-commit** unless you opt in)  
 
-**Unsupervised fleet default:** each cloud tick commits + pushes lab paths only (`agent_work/research`, `.cursor/skills/mindcraft-research-lab`) so work survives without a human watching. Never force-push. Never touch unrelated app code.
+**Unsupervised fleet default:** each cloud tick commits + **`git push origin main`** for lab paths only (`agent_work/research`, `.cursor/skills/mindcraft-research-lab`).  
+**Draft PRs = failed delivery** (that’s how progress looked stuck). Never open PRs for lab ticks. Never force-push. Never touch unrelated app code.

@@ -35,7 +35,7 @@ Every chapter must end with **so what for MindCraft commercially** — copy, fea
 4. Include: supporting evidence, contradicting evidence, confidence, product implication, experiment IDs.
 5. **No fluff.** Target 1,200–2,500 words per new chapter. Quality ≫ length.
 6. After writing: update manifest, core OS chapter table (brief), RESEARCH_LOG, NEXT_LAB checkoffs, run `python3 agent_work/research/generate_research_constitution.py`.
-7. Commit/push **only** when the invoking prompt says unsupervised/automation mode; then commit solely `agent_work/research` + `.cursor/skills/mindcraft-research-lab` (never force-push, never secrets).
+7. **Unsupervised/automation mode:** commit + **`git push origin main`** for lab paths only. **Never open a PR (especially not draft).** Never push only to `cursor/...` branches. Never force-push. Never commit secrets.
 8. Do **not** edit unrelated app code.
 
 ## Tick types (pick one)
@@ -66,10 +66,15 @@ Every chapter must end with **so what for MindCraft commercially** — copy, fea
 
 ## Rotation heuristic
 
-- If hour UTC % 3 == 0 → Red Team  
+Cron is every 3 hours at UTC hours 0,3,6,9,12,15,18,21.  
+**Bugfix:** do NOT use `hour % 3 == 0` for Red Team — that makes every cron tick Red Team.
+
+- If UTC hour % 6 == 0 → Red Team (hours 0,6,12,18)  
 - Else if RESEARCH_LOG has ≥8 researcher entries since last synthesizer → Synthesizer  
-- Else → Researcher  
+- Else → Researcher (hours 3,9,15,21)
+
+If NEXT_LAB’s first unfinished chapter was never written, prefer Researcher even on a Red Team hour.
 
 ## Done criteria
 
-Tick is done when: new or revised markdown exists, log updated, PDF regenerated (or explicit note why PDF failed), and you stopped.
+Tick is done when: new or revised markdown exists, log updated, PDF regenerated (or explicit note why PDF failed), **`research(lab):` commit is on `origin/main`** (not a draft PR), and you stopped.
