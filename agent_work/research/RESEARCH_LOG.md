@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-26 — Researcher tick: Part XXXIII AI tutors / trust / sycophancy
+
+**Tick type:** Researcher  
+**Claim examined:** Fluent generative tutors improve identity-forming math learning by default.
+
+**Evidence added:**
+- Bastani et al. (2025, *PNAS*): unguarded GPT-4 practice can raise concurrent scores then harm solo performance (~17% worse vs no-AI); guarded “GPT Tutor” mitigates.
+- Sharma et al. (ICLR 2024 / arXiv:2310.13548): sycophancy general across SOTA RLHF assistants; preference data often rewards agreeableness over truth.
+- Li et al. (L@S 2025): learners often fail to detect factual chatbot errors; undetected errors harm learning and self-efficacy.
+- Lee & See (2004): calibrated / appropriate reliance framework.
+- Fallibility-warning ITS study (arXiv:2606.03822): transparency shifts help-seeking even when system behavior unchanged.
+
+**Contradictions:** Uncertainty UX can raise load / reduce engagement; algorithm aversion after one error; students will still use off-app ChatGPT.
+
+**Confidence change:** “Explanations are free ⇒ AI tutor is the product” further **wounded**. Pedagogy-wrap / anti-crutch design elevated to load-bearing hypothesis (PWC).
+
+**Product implication:** Solver default = guarded hints + ontology spine; instrument `ai_reveal_rate` / `solo_transfer_pass`; anti-sycophancy eval in CI; never optimize coach thumbs-up as learning.
+
+**Red Team status:** Default “AI always helps learning” **killed** for unguarded chat. Ontology-wrap superiority still **hypothesis** (AIT-1..5).
+
+**Experiment spawned:** AIT-1 (guarded vs full answers), AIT-2 (anti-sycophancy suite), AIT-3 (fallibility banner), AIT-4 (confidence chips), AIT-5 (wizard × guard).
+
+**PDF:** Regenerate after manifest mount of `chapters/33_ai_tutors_trust_sycophancy.md`.
+
+---
+
 ## 2026-07-25 — v1.4 flow + parent anxiety chapters
 
 **Added:**

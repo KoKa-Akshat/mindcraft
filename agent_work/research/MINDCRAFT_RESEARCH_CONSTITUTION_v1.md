@@ -1,10 +1,10 @@
 # MindCraft Research Constitution v1
 
 **Status:** Living operating document — not a pitch deck  
-**Edition:** v1.4 (multi-chapter lab; ongoing evidence program)  
+**Edition:** v1.5 (multi-chapter lab; ongoing evidence program)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-25  
+**Last updated:** 2026-07-26  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -22,8 +22,9 @@
 | XXX | `chapters/30_attribution_helplessness.md` | Weiner attributions, helplessness, feedback language |
 | XXXI | `chapters/31_flow_challenge_skill.md` | Flow, challenge–skill, difficulty design |
 | XXXII | `chapters/32_parent_anxiety_transmission.md` | Maloney/Beilock parent anxiety pathway |
+| XXXIII | `chapters/33_ai_tutors_trust_sycophancy.md` | AI trust, fluent wrongness, sycophancy, pedagogy wrap |
 
-Queued next: see `NEXT_LAB.md` (AI trust, causal DAG, equity audit, competitive session audits).
+Queued next: see `NEXT_LAB.md` (causal DAG, competitive audits, equity audit, expectancy-value).
 
 ---
 
