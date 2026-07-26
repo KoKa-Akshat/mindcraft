@@ -4,6 +4,28 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-26 — Red Team tick: Part XXXIII AI tutors / trust / sycophancy
+
+**Tick type:** Red Team  
+**Target:** `chapters/33_ai_tutors_trust_sycophancy.md` (newest chapter)  
+**Weakest claims attacked:** (1) Bastani GPT Tutor ≡ MindCraft Pedagogy Wrap Contract; (2) guardrails ⇒ learning *gain* vs no-AI; (3) fallibility banner as learning fix; (4) “Solver = GPT Tutor” marketing.
+
+**Disposition:**
+- **KILLED:** Bastani Tutor = PWC (category error — Tutor is per-problem teacher keys + hints-not-answers *in prompt*, not ontology/mastery graph).
+- **KILLED:** “Guards produce learning gains” — Bastani Tutor ≈ control on exam (harm neutralized only; authors report no positive effect).
+- **KILLED:** Branding “we’re Bastani’s GPT Tutor” / Solver default copy that implies equivalence.
+- **KILLED / stays Low:** Fallibility banner alone fixes learning (Nagashima et al. arXiv:2606.03822 — more hints, identical non-hallucinating ITS; behavior ≠ mastery).
+- **WOUNDED:** Ontology wrap beats ChatGPT on identity → Medium–Low until AIT; Li et al. scope (adult STEM) noted.
+- **SURVIVES:** Unguarded GPT harm (Bastani); RLHF sycophancy (Sharma); pedagogical sycophancy as safety risk — **strengthened** with Kasneci & Kasneci EDUFRAMETRAP (arXiv:2605.14604) and Bo et al. Invisible Saboteurs (arXiv:2510.03667).
+
+**Confidence change:** PWC remains load-bearing **hypothesis**, not FACT. Success bar reframed: beat **no-AI transfer**, not “less bad than ChatGPT.”
+
+**Product implication:** Hint-gated + key-checked coach; CI pressure-suite (AIT-6); ban coach thumbs-up KPI and Bastani-Tutor marketing.
+
+**PDF:** Regenerate after in-place RT revision (no new chapter file).
+
+---
+
 ## 2026-07-26 — Researcher tick: Part XXXIII AI tutors / trust / sycophancy
 
 **Tick type:** Researcher  
