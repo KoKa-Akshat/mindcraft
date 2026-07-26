@@ -32,3 +32,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (41–70).
 - Any story feature without HIST experiment plan
 - Any streak KPI promoted as learning
 - Any fabricated citation
+- Any “we’re Bastani’s GPT Tutor” / guards⇒gain marketing (see XXXIII.7a)

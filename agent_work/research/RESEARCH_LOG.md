@@ -4,6 +4,38 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-26 — Red Team tick: Part XXXIII AI tutors (Bastani category error)
+
+**Tick type:** Red Team (UTC hour 09 → hour % 3 == 0)  
+**Chapter revised:** `chapters/33_ai_tutors_trust_sycophancy.md` (no new chapter; NEXT stays 34)
+
+**Claims attacked:**
+1. Bastani “GPT Tutor” ≈ MindCraft ontology / Pedagogy Wrap Contract (PWC).
+2. Guardrails ⇒ learning *gain* vs no-AI control.
+3. Fallibility banner (Nagashima) as generative-trust calibration evidence.
+4. Li et al. detection rates as directly portable to Maya HS.
+
+**Evidence used (verified, not invented):**
+- Bastani et al. 2025 PNAS doi:10.1073/pnas.2422633122 — Tutor exam ≈ control (mitigation, not gain); Tutor prompt includes teacher solutions/mistake scripts; Base ~17% worse solo; perception ≠ actual learning.
+- Nagashima et al. arXiv:2606.03822 — CTAT hard-coded fox agent; no LLM; more hints, no performance change.
+- Li et al. L@S 2025 doi:10.1145/3698205.3729550 — adult STEM online; detection rare; undetected errors harm learning/self-efficacy.
+
+**Disposition:**
+- **Killed:** Bastani Tutor ≡ MindCraft PWC (category error).
+- **Killed:** “Guards ⇒ learning gain” overclaim (Tutor neutralized harm only).
+- **Wounded:** “Solver default = GPT Tutor” branding → **guarded Solver**; Li external validity; Nagashima→AIT-3 sufficiency.
+- **Survives:** Base crutch harm; Sharma sycophancy; Lee & See calibration frame; prior kill of “AI always helps.”
+
+**Confidence change:** Ontology-wrap superiority vs ChatGPT on identity metrics **Medium → Low–Medium** until AIT-1. Success bar explicit: beat no-AI / `solo_transfer_pass`.
+
+**Product implication:** Never market “we’re Bastani’s GPT Tutor.” Prefer deterministic checkers over prompt-stuffed keys; ban coach thumbs-up / “AI helped me” as primary KPIs.
+
+**Red Team status:** two kills, three wounds, core crutch/sycophancy facts survive.  
+**Experiment spawned:** none new (AIT-1..5 retained; AIT-3 scope clarified).  
+**PDF:** Regenerated after chapter patch.
+
+---
+
 ## 2026-07-26 — Researcher tick: Part XXXIII AI tutors / trust / sycophancy
 
 **Tick type:** Researcher  

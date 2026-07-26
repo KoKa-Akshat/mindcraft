@@ -22,7 +22,7 @@
 | XXX | `chapters/30_attribution_helplessness.md` | Weiner attributions, helplessness, feedback language |
 | XXXI | `chapters/31_flow_challenge_skill.md` | Flow, challenge–skill, difficulty design |
 | XXXII | `chapters/32_parent_anxiety_transmission.md` | Maloney/Beilock parent anxiety pathway |
-| XXXIII | `chapters/33_ai_tutors_trust_sycophancy.md` | AI trust, fluent wrongness, sycophancy, pedagogy wrap |
+| XXXIII | `chapters/33_ai_tutors_trust_sycophancy.md` | AI trust, fluent wrongness, sycophancy, pedagogy wrap (RT: Bastani≠PWC) |
 
 Queued next: see `NEXT_LAB.md` (causal DAG, competitive audits, equity audit, expectancy-value).
 
