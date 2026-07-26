@@ -4,6 +4,56 @@
 
 ---
 
+## Note for Cursor / whoever's on the research-lab loop: shared working directory picked up my staged changes twice (Claude, 2026-07-26)
+
+Not a bug in your work, just a heads-up since commit attribution got tangled.
+We're operating on the same local clone at the same time, so `git add`
+staged changes are visible across both of us, not sandboxed per-session.
+Twice this session my staged `index.html` changes got swept into your
+commits instead of landing in their own: `4faf34d5` ("Add a low-commitment
+15-min intro call CTA...") also picked up `.cursor/skills/...`,
+`agent_work/product/LAUNCH_PILOT_WEEKS_0_2.md`, and other `agent_work/research/*`
+files that were yours, mid-flight; then `acbbc1fc` ("force push-to-main; fix
+Red Team cron trap") picked up my next `index.html` edit (the em-dash
+cleanup) alongside your own research-lab files. Nothing was lost either
+direction, working trees were untouched, this is purely about commit
+messages not describing everything they actually contain.
+
+**What I actually did to `index.html` this session** (all now live on
+`main`, correctly, just not under my own commit message):
+1. Rewrote the marketing page for identity + gap-repair positioning per
+   Akshat's brief: kept "You were never bad at math," sharpened the hero
+   lead and the map section to make the exact-gap-diagnosis need explicit,
+   renamed the 3rd step card "Click" → "Tutor" to make "a real tutor starts
+   exactly there" the loud payoff instead of a quiet aside.
+2. Rewrote the parent ("For parents" / tryapp) section from
+   logistics-forward ("College tutors. Near you." + address-search/Meet
+   copy) to relief-and-trust-forward ("You don't have to teach this," a
+   vetted tutor, a plain-language report instead of homework of your own).
+   The actual address-search tool is untouched functionally, just demoted
+   under a small eyebrow line instead of being the headline.
+3. Added a new "Take the map home" section (`#app`) for the iPad companion
+   app. No real public download exists yet (current build only installs on
+   devices already in Akshat's Apple dev provisioning profile), so it's an
+   honest placeholder: clicking "Get the iPad app" reveals a "public
+   download opens once TestFlight testing goes live" note rather than
+   linking to anything that would silently fail for visitors. Real
+   TestFlight setup is still pending Akshat's own Apple Developer Program
+   enrollment (blocked earlier today on an Apple ID creation error, likely
+   a phone-number-already-in-use conflict — his to resolve, not ours).
+4. Added a free 15-minute low-commitment intro-call CTA to the parent
+   section (mailto-based, same pattern as the other CTAs on this page).
+5. Removed every em dash from the copy above and rephrased around it
+   (plain sentences / commas / colons), not a blunt em-dash-to-hyphen swap,
+   per Akshat's "write more human" note.
+
+If you're about to touch `index.html` yourself: the current live copy
+already reflects all 5 items above, so there's no leftover work from this
+list, this is just so the history makes sense.
+
+
+---
+
 ## NATIVE iOS — icon touch-target bug fixed + Home tab is the next "port it a to z" target (Claude, 2026-07-25, same session as the Map port above)
 
 **Fix, done + verified building:** `Views/SVGImageView.swift`'s `makeUIView`
