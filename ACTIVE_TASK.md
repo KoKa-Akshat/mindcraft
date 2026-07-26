@@ -4,6 +4,195 @@
 
 ---
 
+## NATIVE iOS — icon touch-target bug fixed + Home tab is the next "port it a to z" target (Claude, 2026-07-25, same session as the Map port above)
+
+**Fix, done + verified building:** `Views/SVGImageView.swift`'s `makeUIView`
+claimed in its own doc comment to render a "non-interactive" WKWebView but
+never actually set `webView.isUserInteractionEnabled = false` — WKWebView
+keeps its own tap/long-press gesture recognizers by default, which intercept
+touches meant for the SwiftUI `Button` drawn around/behind it. Harmless at
+diagram size, but made the Map tab's small (20-30pt) icon nodes nearly
+untappable ("so hard to touch the icons"). Fixed with that one line, plus
+`KnowledgeMapView.swift`'s node `Button` now gets `.frame(minWidth: 44,
+minHeight: 44).contentShape(Circle())` so the tappable area meets Apple's
+44pt minimum without changing the visible icon size. Any other native screen
+using `SVGImageView` (question diagrams in `QuestionView.swift`) benefits
+from the same fix for free.
+
+**Next real port target: the Home tab.** Akshat asked for this to get the
+same "a to z from the real dashboard" treatment Map and Work just got — do
+NOT build an approximation, read `app/src/pages/Dashboard.tsx` (+ `PawHub.tsx`,
+`WizardMascot.tsx`) first the way `ConstellationGpsExplorer.tsx` was read for
+the Map port. Current native Home
+(`DashboardView.swift:homeBody`, ~line 353) is a big simplification: just a
+"Contents" title + a "Find a Tutor" button + `ContentsRoadmapView` (lane
+cards with progress dots). It is MISSING, versus the real web Dashboard:
+- The paw-shaped **PawHub** launcher itself (`components/PawHub.tsx`) — pads
+  for Practice (topWeaknesses)/Learn (exam-mode next concept)/Homework
+  Help/GPS/Notes, driven by the real `/recommend` response exactly like
+  `RouteClient.swift` (already built this session for the Map's route panel
+  — reuse it) — not a plain button row.
+- The **Weekly Review** pill and **spark** CTA (`recommendNextConcept.ts`'s
+  `worstWeakness()` — client-side signal off already-loaded
+  `graphClient.progress`, no new networking needed for this part).
+- The **wizard mascot hero bar** treatment matching `WizardMascot.tsx`
+  (native already has a wizard image bundled and used elsewhere — reuse the
+  cheer sprite, check for a wrong-answer variant per the earlier session
+  note that Cursor's version of that asset hadn't actually landed in the
+  repo yet as of this session; re-check before assuming it still hasn't).
+
+Read `Dashboard.tsx` end to end (it's long — budget for that, same as the
+919-line `ConstellationGpsExplorer.tsx` read for the Map port) before writing
+any native code, then port structure/logic first, chrome/styling second —
+same order that worked for Map and Work. Take a fresh screenshot comparison
+(iPad Home tab vs a real web Dashboard screenshot at the same viewport) as
+the acceptance check, since that's what caught the Map and Work gaps both
+times.
+
+
+---
+
+## NATIVE iOS Map tab — real port from ConstellationGpsExplorer.tsx, IN PROGRESS (Claude, 2026-07-25)
+
+**Handoff note: Akshat's weekly Claude limit is about to hit — if this session
+ends mid-task, the next agent should start here.** All native work lives at
+`ios-prototype/MindCraftNotes/` (gitignored, never committed — this doc is
+the only record of it). This is the 3rd pass at the native Map tab; the first
+two (a priority-sorted list, then a synthetic cluster-angle layout) were both
+explicitly rejected by Akshat as not matching the real dashboard ("implement
+it a to z... the entire code, not weird things"). This pass ports the REAL
+web component instead of approximating it.
+
+### What the real web Map actually is (read this before changing anything)
+
+`app/src/components/ConstellationGpsExplorer.tsx` (919 lines) — force-graph
+canvas fed by `GET /knowledge-graph/{uid}`
+(`ml/serve.py:knowledge_graph_endpoint`, ~line 1330). That endpoint returns:
+- `nodes[]`: `id, name, level, x, y` (REAL PCA-projected concept-embedding
+  coordinates, not a layout algorithm), `mastery, strengthScore, eventCount,
+  status, ingredients, tags`.
+- `edges[]`: `from, to, weight, relation` — real Beta-Binomial posterior
+  weights from the personal graph.
+- `studentPoints`: `{ mastery: {x,y,label}, strength: {x,y,label} }` — the
+  student's own embedding position (mastery-weighted centroid vs
+  strength-weighted centroid; the displacement between them is a real,
+  novel metric per CLAUDE.md's engine docs).
+- `axisLabels`: `{x,y}` real PCA axis description strings.
+
+Key ported logic (all read directly from the .tsx, not re-derived):
+- `statusKind()`/`KIND_COLOR`/`KIND_LABEL` (lines 51-65): 4-state
+  stable/progress/needs/unknown, colors `#00875a`/`#4361ee`/`#d63e3e`/
+  `#9aabb6` — a DIFFERENT, Map-specific palette from the Home tab's
+  `STATUS_COLOR` (`A8E063`/`5B9BD5`/etc). Don't conflate the two.
+- Bottom legend uses A THIRD label set for the same colors: "Got it/Working
+  on it/Needs love/Not started" (lines 700-703) vs the filter-chip/detail-
+  panel wording "Stable/Repairing/Open Gap/Unexplored" (`KIND_LABEL`). Both
+  are real, both are intentional, keep them separate.
+- `isMajorEdge()` (lines 86-92): the "hairball" fix — `prerequisite` edges
+  need weight>0.25, any other relation needs weight>0.45. Without this the
+  map renders 700+ edges for a real student.
+- Node radius/label formula (lines 604-613): icon badge + status ring +
+  mastery dasharray arc (only when mastery>0.05) + label only when
+  selected/hovered/search-matched/`eventCount>3`.
+- Click → **detail panel** (`mode:'detail'`, lines 724-780): status pill,
+  name, tagline, mastery bar, 3 buttons — **"Open lesson →"** (chapter),
+  **"See path"** (→ route panel), **"Quick practice"** (→ `/practice`
+  `missionType:'learn'`). Tapping a node must NEVER jump straight to a
+  lesson — that was Akshat's other explicit complaint on pass 2.
+  "See path"/search submit → **route panel** (`mode:'route'`, lines 782-912):
+  real `POST /recommend` (`mode:'curriculum', target_concepts:[id]`), a step
+  list with real per-step reasons, PLUS a small interactive mini-map SVG
+  (`buildGraph()` from `lib/learningPathGraph.ts` — depth-sorted nodes,
+  needs-work edges styled differently) that this native pass did NOT port
+  (see below).
+
+### What's DONE natively this pass (built + BUILD SUCCEEDED, install verified; launch pending — see blocker)
+
+- `Networking/KnowledgeGraphClient.swift` — extended (not replaced) to decode
+  the FULL real payload: `nodes[]` (all real fields above), `edges[]`,
+  `studentPoints`, `axisLabels`. The old `progress: [String:ConceptProgress]`
+  map is unchanged/still populated, so Home/Contents roadmap needed zero
+  changes.
+- `Networking/RouteClient.swift` (NEW) — real `POST /recommend` client,
+  mirrors `plotRoute()` exactly (same request body, same
+  `canonicalChain`/`recommendations[].reason` response fields). Registered in
+  pbxproj under the Networking group (not Models — first attempt put it in
+  the wrong Xcode group and the file path didn't match the group's physical
+  folder, which fails the build with "Build input file cannot be found";
+  fixed by moving the GROUP LISTING line, not the file itself).
+- `Views/KnowledgeMapView.swift` — full rewrite reading real
+  `nodes`/`edges`/`studentPoints`/`axisLabels` from `KnowledgeGraphClient`
+  (no more synthetic layout). Ported: real min-max position normalization
+  (`scalePositions` equivalent), `isMajorEdge` filter, `statusKind`/3-palette
+  distinction above, icon+ring+mastery-arc node rendering (icons from
+  `Resources/conceptIcons/`, 30 real badge SVGs copied from
+  `app/src/assets/canvas/generated/icon-*.svg` — same set the web Dashboard
+  TOC uses, folder-reference registered so new icons need no pbxproj edit),
+  student mastery/strength diamond markers + dashed connector, axis label
+  text, status+level filter chips, legend + coverage bar, tap → detail panel
+  (Open lesson / See path / Quick practice — `Quick practice` wired to
+  `DashboardView.openWork(with:)`, the existing PracticeSessionView
+  presentation path), "See path" → route panel via `RouteClient` (real step
+  list with real reasons; loading/empty states match the web's).
+- `Models/ConceptGraphLoader.swift` — the old synthetic
+  `ConceptGraphNode`/`ConceptGraphEdge`/layout code was DELETED (not left as
+  dead code) now that real data replaces it; only `ConceptIconLookup` (icon
+  badge lookup) remains in this file.
+- `DashboardView.swift`'s `.map` case updated to pass the new real params +
+  the new `onQuickPractice` callback.
+- Also this session (separate, smaller fixes, already verified working):
+  the "no GPS panel, just Start This Concept" bug on the PREVIOUS (pass-2)
+  Map version was root-caused (its `nextRoute` only ever looked at "needs
+  work" concepts and was empty for anyone without one) — moot now that the
+  route panel is real and only shows on explicit tap, but worth knowing if
+  route-panel emptiness gets reported again with a different cause.
+
+### NOT yet ported (real, sized next steps — don't re-research, just build)
+
+1. **Search bar with autocomplete** (`ConstellationGpsExplorer.tsx` lines
+   396-439, `searchForm`): "Type a concept to plot your route…" input +
+   "Plot route →" submit + a live suggestions dropdown
+   (`searchMatches`/`suggItem`). Currently native has NO search entry point
+   into the route panel — only tap-a-node → "See path". Add a `TextField` +
+   `List`/`VStack` suggestion overlay above the graph canvas, filtering
+   `nodes` by `label(for:)` substring match, calling the same
+   `loadRoute(for:)` path already built.
+2. **Route panel's mini interactive graph** (lines 816-863,
+   `buildGraph()`/`GPS_W`/`GPS_H`/`STATUS_COLOR` from
+   `app/src/lib/learningPathGraph.ts`): a small depth-sorted node/edge SVG
+   inside the route panel, distinct from the main map. Native's route panel
+   is currently a plain step list only (still real data, just less visual).
+   Port `buildGraph()`'s layout logic (read that file first — not yet done
+   this pass) into a small SwiftUI `Canvas`, reusing the icon/ring node style
+   already built for the main graph.
+3. **Hover states** — the web has `hovered`/mouse-enter dimming and
+   edge-lighting on hover; native has no cursor, so this was intentionally
+   dropped (tap/selection covers the same job on touch). Not a gap, just
+   noting it's deliberate, not missed.
+4. **Search-match dimming** (`dimmed = searchMatches.size>0 && !searchMatches.has(id)`,
+   line 602) — depends on item 1 existing first.
+
+### Known blocker at end of session
+
+Physical iPad (`DD553C3C-D821-5869-BBA2-AB501D46210E`) — build succeeded,
+`xcrun devicectl device install app` succeeded, but
+`xcrun devicectl device process launch` failed with
+`FBSOpenApplicationErrorDomain error 7 (Locked)` — the device was locked at
+that moment. **The new build IS installed on the device**, just not yet
+launched/visually verified. Next step: confirm device is unlocked
+(`xcrun devicectl list devices` should show `connected`, then just retry the
+launch command — no rebuild needed), then actually look at the Map tab
+before telling Akshat it's done. Do not claim this is visually verified
+until that launch + a real look has happened.
+
+### Also still open from the 2026-07-25 question-bank smoke-test pass (see the
+entry below this one) — the 60 excluded "answer choices are pictures"
+questions and the 184 stem-diagram fallbacks both still need the work
+described there. Nothing new to add; just don't lose track of it since it's
+a separate, still-open thread from the same session.
+
+---
+
 ## Question rendering + bank smoke-test fixes, QA handoff for the image-choice backlog (Claude, 2026-07-25)
 
 Product lane (`app/**`). Akshat ran a manual smoke test across Practice/chapter

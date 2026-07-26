@@ -281,6 +281,11 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .price-card .btn{margin-top:24px;width:100%}
 .tryapp{background:var(--cream)}
 .tryapp-note{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a39b8e}
+.app-download{background:linear-gradient(180deg,#eaf5ea,#fffdf7)}
+.app-download .wrap{max-width:640px}
+.app-download-lead{margin-top:18px;font-size:17px;line-height:1.55}
+.app-download-list{max-width:520px}
+.app-download-note{margin-top:14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a39b8e}
 .findtutor-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,5vw,64px);align-items:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:34px;padding:clamp(26px,4.5vw,54px);box-shadow:0 24px 70px rgba(29,84,54,.10)}
 .findtutor-copy h2{margin-top:10px}
 .findtutor-copy>p{margin-top:18px;max-width:440px}
@@ -289,6 +294,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .tutor-benefits li{position:relative;padding-left:22px;font-size:15px;line-height:1.5;font-weight:800;color:var(--ink)}
 .tutor-benefits li:before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--leaf-2);box-shadow:0 0 0 4px rgba(95,183,121,.16)}
 .findtutor-map-wrap{display:flex;flex-direction:column;gap:12px}
+.findtutor-map-eyebrow{margin:0;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .findtutor-search{display:grid;grid-template-columns:1fr auto;gap:10px;margin:0;padding:0;border:0;background:transparent;box-shadow:none}
 .findtutor-search input{min-width:0;border:1px solid rgba(20,58,46,.14);border-radius:16px;background:#fffdf7;color:var(--ink);padding:13px 14px;font-size:14px;font-weight:800;outline:none;box-shadow:0 12px 28px rgba(20,58,46,.08);-webkit-appearance:none;appearance:none}
 .findtutor-search input:focus{border-color:var(--leaf);box-shadow:0 0 0 4px rgba(36,122,77,.10),0 12px 28px rgba(20,58,46,.08)}
@@ -516,6 +522,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <div class="nav-links">
       <a href="#demo">Preview</a>
       <a href="#try-app">Tutors</a>
+      <a href="#app">App</a>
       <a href="#about">Team</a>
       <a class="join" href="#intake">Apply</a>
     </div>
@@ -543,16 +550,16 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="hero-copy-lock">
           <p class="hero-brand">Mind<span>Craft</span></p>
           <h1>You were never<br>bad at <em>math.</em></h1>
-          <p class="lead">We find where understanding broke, rebuild it through stories and one-on-one tutoring, and show every step on a shared map.</p>
+          <p class="lead">Somebody decided that about you, and you built a life around it. We find the exact moment math lost you, then put a real tutor there — starting at the gap, not at page one.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#map">See how we find the gap</a>
+            <a class="btn primary" href="#map">Find the exact gap</a>
             <a class="btn soft" href="#intake">Request a seat</a>
           </div>
           <div class="hero-trust" role="list" aria-label="Why families trust MindCraft">
-            <div class="trust-item" role="listitem"><strong>1:1</strong><span>A real college tutor. Never a chatbot.</span></div>
+            <div class="trust-item" role="listitem"><strong>1:1</strong><span>A real college tutor who starts at your gap. Never a chatbot.</span></div>
             <div class="trust-item" role="listitem"><strong>48 hrs</strong><span>We reply to every family, ourselves.</span></div>
             <div class="trust-item" role="listitem"><strong>4</strong><span>Students helped</span></div>
-            <div class="trust-item" role="listitem"><strong>6.5M+</strong><span>Learning moments analyzed</span></div>
+            <div class="trust-item" role="listitem"><strong>6.5M+</strong><span>Learning moments mapped</span></div>
           </div>
         </div>
         <div class="hero-atlas" aria-hidden="true">
@@ -650,8 +657,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 
     <section class="steps" id="map" data-nav="paper">
       <div class="wrap reveal">
-        <p class="label">The learning map</p>
-        <h2>One map.<br>Then the click.</h2>
+        <p class="label">The exact gap, found</p>
+        <h2>Not “bad at math.”<br>One exact gap, named.</h2>
         <div class="journey-demo">
           <div class="journey-left">
             <strong>Sample diagnostic</strong>
@@ -746,8 +753,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               </svg>
             </div>
             <div>
-              <h3>Click</h3>
-              <p>The tutor starts there. Not at page one. Not with a speech. Right there.</p>
+              <h3>Tutor</h3>
+              <p>A real college tutor opens the same map and starts exactly there. Not page one. Not a review of everything she already knows. The gap, today.</p>
             </div>
           </article>
 
@@ -760,17 +767,19 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="findtutor-card reveal">
           <div class="findtutor-copy">
             <p class="label">For parents</p>
-            <h2>College tutors.<br>Near you.</h2>
+            <h2>You don’t have to teach this.</h2>
+            <p class="findtutor-lead">A real college tutor already knows exactly where she got stuck, before the session even starts. You get the update afterward — what clicked, what’s still shaky — without sitting in, quizzing her at dinner, or relearning algebra yourself.</p>
             <ul class="tutor-benefits">
-              <li>Search any address. We show the nearest tutor pin.</li>
-              <li>Profile + Book sit under the map.</li>
-              <li>Sessions on Meet.</li>
+              <li>A vetted college tutor, not a stranger picked off a marketplace listing.</li>
+              <li>She gets the session. You get a plain-language report — not homework of your own.</li>
+              <li>No lesson plans to approve. No material to relearn. Just the trail of what’s changing.</li>
             </ul>
             <div class="findtutor-actions">
-              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Open full map →</a>
+              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">See tutors near you →</a>
             </div>
           </div>
           <div class="findtutor-map-wrap">
+            <p class="findtutor-map-eyebrow">Ready to book? Search your address.</p>
             <form class="findtutor-search" id="ftSearchForm">
               <input id="ftAddress" type="search" placeholder="City, state, or street (try California)" autocomplete="street-address" aria-label="Find tutors near an address">
               <button type="submit">Search</button>
@@ -778,9 +787,26 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <p class="findtutor-status" id="ftStatus" aria-live="polite"></p>
             <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near you"></div>
             <div class="findtutor-list" id="ftTutorList"></div>
-            <p class="findtutor-map-caption">search your address, then book</p>
+            <p class="findtutor-map-caption">search your address, then book — sessions run over video</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="app-download" id="app" data-nav="mint">
+      <div class="wrap reveal">
+        <p class="label">The companion app</p>
+        <h2>Take the map home.</h2>
+        <p class="app-download-lead">Between sessions, the map goes where she goes: the same route her tutor sees, the story chapter for whatever gap is open right now, and practice aimed at that gap — not a random worksheet.</p>
+        <ul class="tutor-benefits app-download-list">
+          <li>Every chapter frames the gap as a story first, the problem second.</li>
+          <li>The same map her tutor uses — mastered, shaky, untouched, in one place.</li>
+          <li>Currently iPad only, in private testing ahead of a full release.</li>
+        </ul>
+        <div class="findtutor-actions">
+          <button type="button" class="btn primary" id="appDownloadBtn">Get the iPad app →</button>
+        </div>
+        <p class="app-download-note" id="appDownloadNote" hidden>Public download opens once TestFlight testing goes live. Check back soon.</p>
       </div>
     </section>
 
@@ -1047,6 +1073,14 @@ const navIo = new IntersectionObserver((entries) => {
   })
 }, { rootMargin:"-38% 0px -52% 0px", threshold:0 })
 document.querySelectorAll("[data-nav]").forEach((el) => navIo.observe(el))
+
+// Placeholder for the iPad app CTA — no real public download exists yet
+// (the current build only installs on devices already registered in the
+// Apple dev provisioning profile). Swap this for the real TestFlight link
+// once external testing is live; see ACTIVE_TASK.md.
+document.getElementById("appDownloadBtn")?.addEventListener("click", () => {
+  document.getElementById("appDownloadNote")?.removeAttribute("hidden")
+})
 
 document.querySelectorAll(".founder-trigger").forEach((card) => {
   const toggleFounder = () => {
