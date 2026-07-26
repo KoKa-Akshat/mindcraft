@@ -1,6 +1,6 @@
 # Research Lab Agent Fleet
 
-Goal: grow the Constitution **day and night** with high signal-per-run.
+Goal: grow the Constitution **day and night** with high signal-per-run — so MindCraft can lock **marketing language, product, positioning, growth, direction, future, and vision** on evidence, not vibes.
 
 ## Why ticks beat “one giant agent”
 

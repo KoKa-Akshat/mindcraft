@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-26 — Red Team tick: Part XXXIII Bastani≢PWC + guards≠gain
+
+**Tick type:** Red Team (UTC hour 15 ≡ 0 mod 3)  
+**Chapter revised:** `chapters/33_ai_tutors_trust_sycophancy.md` (XXXIII.7a + confidence table)  
+**Claim examined:** “Bastani GPT Tutor proves MindCraft pedagogy wrap / ontology is the product” + “guards ⇒ learning gain.”
+
+**Killed:**
+- Bastani GPT Tutor ≡ MindCraft PWC/ontology (**category error** — Tutor = hints + teacher keys/solutions/mistakes in prompt for fixed items, not a living mastery graph).
+- Guardrails ⇒ learning *gain* vs no-AI (Bastani: Tutor exam ≈ control; **no positive effect** stated).
+
+**Wounded:**
+- Ontology wrap superiority on identity metrics → **Medium–Low** until AIT-1 (accuracy edge in Bastani partly from keys-in-prompt).
+- Direct Li→Maya generalization (adult STEM quasi-exp scope).
+
+**Survives / strengthened:**
+- Unguarded GPT harm on solo exam (Bastani FACT).
+- Perception ≠ actual learning (Bastani survey).
+- Sycophancy as educational safety risk — added Kasneci & Kasneci EDUFRAMETRAP (arXiv:2605.14604) + Bo et al. Invisible Saboteurs (arXiv:2510.03667); Nagashima et al. fallibility banner = help-seeking only.
+
+**Product implication:** Success bar = `solo_transfer_pass` ≥ no-AI; ban “we’re Bastani’s GPT Tutor”; AIT-1 becomes 3-arm; add AIT-6 bank-key verify; CI must include authority/face-saving pressure prompts.
+
+**Experiment spawned/updated:** AIT-1 (add no-AI arm), AIT-2 (EDUFRAMETRAP modes), AIT-6 (key-verify layer).
+
+**PDF:** Regenerate after RT revision of ch33.
+
+---
+
 ## 2026-07-26 — Researcher tick: Part XXXIII AI tutors / trust / sycophancy
 
 **Tick type:** Researcher  

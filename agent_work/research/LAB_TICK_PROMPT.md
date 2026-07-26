@@ -12,6 +12,8 @@ Grow the living **MindCraft Research Constitution** toward 150–300 pages of *e
 
 > How do humans become confident mathematical thinkers? (identity transformation, not answer delivery)
 
+**Commercial purpose (load-bearing):** This lab exists to find the right **marketing language, product, positioning, growth, direction, future, and vision** for MindCraft — not to produce academic pages for their own sake. Every tick must yield a usable implication for copy, roadmap, metrics, or competitive stance.
+
 ## Efficiency protocol
 
 1. Read the skill at `.cursor/skills/mindcraft-research-lab/SKILL.md` and follow it exactly.
