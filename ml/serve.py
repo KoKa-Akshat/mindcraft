@@ -11,6 +11,7 @@ from mindcraft_graph.models.concept import Ontology
 from mindcraft_graph.models.ingredient import IngredientOntology
 from mindcraft_graph.models.student_state import ConceptMastery
 from mindcraft_graph.representation import embeddings
+from mindcraft_graph.representation import classification_index as classifier_index
 from mindcraft_graph.representation.student_embeddings import (
     compute_student_embedding_from_profiles, compute_student_embedding_from_mastery
 )
@@ -56,6 +57,11 @@ LEGACY_INGREDIENT_PATH = DATA_DIR / "ingredient_ontology.json"
 
 EMBEDDINGS_PATH = DATA_DIR / "concept_embeddings.npz"
 PCA_PATH = DATA_DIR / "pca_axes.npz"
+CLASSIFICATION_INDEX_PATH = DATA_DIR / "classification_index.npz"
+LAYER2_PATH = DATA_DIR / "5_level_ontology" / "02_question_archetype_ontology_v1_6_standardized.json"
+LAYER3_PATH = DATA_DIR / "5_level_ontology" / "03_question_instance_bank_schema_and_seed_v1_6.json"
+BANK_INDEX_PATH = DATA_DIR / "bank_index.npz"
+BANK_METADATA_PATH = DATA_DIR / "bank_index_meta.json"
 # Reviewed misconception → ingredient map (produced by enrich_ingredient_misconception_map.py,
 # audited by Fable 5). Loaded at startup; empty dict when not yet generated.
 _MIS_MAP_PATH = DATA_DIR / "misconception_ingredient_map.json"
@@ -114,6 +120,46 @@ else:
     concept_embs, (pca_components, pca_mean, pca_variance) = _rebuild_concept_embeddings()
     _embedding_source = f"computed from {_ontology_source} (no cache)"
 
+
+_classification_sources = [
+    STANDARDIZED_ONTOLOGY_PATH, LAYER2_PATH, LAYER3_PATH,
+    BANK_INDEX_PATH, BANK_METADATA_PATH,
+]
+_classification_source_hash = classifier_index.compute_source_hash(_classification_sources)
+
+
+def _rebuild_classification_index():
+    classifier_model = embeddings.load_sentence_transformer()
+    index = classifier_index.build_classification_index(
+        ontology,
+        ingredient_ontology,
+        LAYER2_PATH,
+        LAYER3_PATH,
+        classifier_model,
+        source_paths=_classification_sources,
+        bank_index_path=BANK_INDEX_PATH,
+        bank_metadata_path=BANK_METADATA_PATH,
+    )
+    classifier_index.save_classification_index(index, CLASSIFICATION_INDEX_PATH)
+    return index
+
+
+if CLASSIFICATION_INDEX_PATH.exists():
+    try:
+        classification_index = classifier_index.load_classification_index(CLASSIFICATION_INDEX_PATH)
+    except (KeyError, OSError, ValueError):
+        classification_index = _rebuild_classification_index()
+        _classification_source = "rebuilt (unreadable cache)"
+    else:
+        if classifier_index.cache_matches(classification_index, _classification_source_hash):
+            _classification_source = f"{CLASSIFICATION_INDEX_PATH.name} (cache hit)"
+        else:
+            classification_index = _rebuild_classification_index()
+            _classification_source = "rebuilt (source/version changed)"
+else:
+    classification_index = _rebuild_classification_index()
+    _classification_source = "computed (no cache)"
+
 print(
     "[startup] ontology=%s | concepts=%d edges=%d | ingredients=%d bridges=%d combinations=%d | embeddings: %s"
     % (
@@ -125,6 +171,10 @@ print(
         len(ingredient_ontology.combinations),
         _embedding_source,
     )
+)
+print(
+    "[startup] classification_index=%d entries | %s"
+    % (len(classification_index.entries), _classification_source)
 )
 
 
@@ -897,6 +947,8 @@ async def recommend_ingredients_endpoint(req: IngredientRecommendRequest, auth: 
         ontology=ontology,
         max_cards=req.max_cards,
         combination_min_overlap=COMBINATION_MIN_OVERLAP,
+        classification_index=classification_index,
+        classifier_mode="bank",
     )
 
     response = {

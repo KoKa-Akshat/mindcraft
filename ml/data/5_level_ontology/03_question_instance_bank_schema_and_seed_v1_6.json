@@ -2771,13 +2771,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -2972,14 +2972,14 @@
         ],
         "primary_concept_ids": [
           "lines_angles",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "lines_angles",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "parallel_lines_or_polygon_angles"
@@ -3070,14 +3070,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -3167,13 +3167,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -3265,14 +3265,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -3454,15 +3454,15 @@
           "sector_arc_or_circle_measure"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "sector_arc_or_circle_measure"
@@ -3653,14 +3653,14 @@
         ],
         "primary_concept_ids": [
           "conic_sections",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "conic_sections",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "parabola_or_conic_graph"
@@ -3851,14 +3851,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "trig_ratio_geometry"
@@ -3952,15 +3952,15 @@
           "domain_range"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "domain_range"
@@ -4054,13 +4054,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -4154,15 +4154,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -4254,14 +4254,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -4441,14 +4441,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -4743,14 +4743,14 @@
         ],
         "primary_concept_ids": [
           "conic_sections",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "conic_sections",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_standard_form"
@@ -4844,13 +4844,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -5044,13 +5044,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -5528,13 +5528,13 @@
           "lcm_gcf_factor_reasoning"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "lcm_gcf_factor_reasoning"
@@ -5628,15 +5628,15 @@
           "function_from_pattern"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "function_from_pattern"
@@ -5730,13 +5730,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -6130,15 +6130,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -6332,13 +6332,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -6432,13 +6432,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -6532,13 +6532,13 @@
           "lcm_gcf_factor_reasoning"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "lcm_gcf_factor_reasoning"
@@ -6630,14 +6630,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -6731,13 +6731,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -6931,13 +6931,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -7031,14 +7031,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -7132,13 +7132,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -7319,14 +7319,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -7517,14 +7517,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -7716,13 +7716,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -7816,13 +7816,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -8013,14 +8013,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -8206,13 +8206,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -8306,13 +8306,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -8407,14 +8407,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -8508,13 +8508,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -8608,13 +8608,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -8709,14 +8709,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -8911,14 +8911,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -9373,14 +9373,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -9474,13 +9474,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -9770,13 +9770,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -9866,15 +9866,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -9966,14 +9966,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -10067,15 +10067,15 @@
           "function_transformation"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "function_transformation"
@@ -10169,13 +10169,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -10369,15 +10369,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -10472,14 +10472,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "trig_ratio_geometry"
@@ -10573,15 +10573,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -10960,14 +10960,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "composite_or_formula_geometry"
@@ -11057,13 +11057,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -11157,13 +11157,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -11257,13 +11257,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -11550,13 +11550,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -11750,13 +11750,13 @@
           "lcm_gcf_factor_reasoning"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "lcm_gcf_factor_reasoning"
@@ -11951,14 +11951,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "composite_or_formula_geometry"
@@ -12140,13 +12140,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -12240,13 +12240,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -12339,14 +12339,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -13200,13 +13200,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -13296,13 +13296,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -13484,14 +13484,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -13582,14 +13582,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -13679,13 +13679,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -13776,14 +13776,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "trig_ratio_geometry"
@@ -13878,14 +13878,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -14063,13 +14063,13 @@
           "lcm_gcf_factor_reasoning"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "lcm_gcf_factor_reasoning"
@@ -14547,13 +14547,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -14747,14 +14747,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -14948,13 +14948,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -15222,15 +15222,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -15324,15 +15324,15 @@
           "function_transformation"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "function_transformation"
@@ -15526,15 +15526,15 @@
           "domain_range"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "domain_range"
@@ -15825,14 +15825,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "composite_or_formula_geometry"
@@ -16114,15 +16114,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -16212,15 +16212,15 @@
           "table_or_graph_function_interpretation"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "table_or_graph_function_interpretation"
@@ -16502,13 +16502,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -16599,14 +16599,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "composite_or_formula_geometry"
@@ -16784,13 +16784,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -16885,14 +16885,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -16982,13 +16982,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -17081,13 +17081,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -17181,15 +17181,15 @@
           "domain_range"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "domain_range"
@@ -17282,13 +17282,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -17382,15 +17382,15 @@
           "sector_arc_or_circle_measure"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "sector_arc_or_circle_measure"
@@ -17684,13 +17684,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -17982,14 +17982,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -18270,13 +18270,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -18558,13 +18558,13 @@
           "lcm_gcf_factor_reasoning"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "lcm_gcf_factor_reasoning"
@@ -18759,14 +18759,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -19325,14 +19325,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -19426,13 +19426,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -19526,13 +19526,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -19727,14 +19727,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -19828,13 +19828,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -19927,14 +19927,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -20129,14 +20129,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -20319,14 +20319,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -21086,15 +21086,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -21188,13 +21188,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -21288,13 +21288,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -21576,15 +21576,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -21679,14 +21679,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -21868,15 +21868,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -22621,15 +22621,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -22996,14 +22996,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "trig_ratio_geometry"
@@ -23185,15 +23185,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -23288,14 +23288,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -23388,14 +23388,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -23490,14 +23490,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -24263,13 +24263,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -24363,13 +24363,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -24551,13 +24551,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -24651,13 +24651,13 @@
           "calendar_cycle_modular"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "calendar_cycle_modular"
@@ -24751,15 +24751,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -25040,13 +25040,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -25140,13 +25140,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -25527,14 +25527,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -25626,14 +25626,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -25728,14 +25728,14 @@
         ],
         "primary_concept_ids": [
           "conic_sections",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "conic_sections",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_standard_form"
@@ -25829,15 +25829,15 @@
           "domain_range"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "domain_range"
@@ -26206,14 +26206,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -26476,13 +26476,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -26852,13 +26852,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -27040,15 +27040,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -27143,14 +27143,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -27241,14 +27241,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "trig_ratio_geometry"
@@ -27342,13 +27342,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -27442,13 +27442,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -27639,13 +27639,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -27839,15 +27839,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -27937,13 +27937,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -28037,15 +28037,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -28138,15 +28138,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -28328,15 +28328,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -28775,15 +28775,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -28878,14 +28878,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -29254,13 +29254,13 @@
           "unit_conversion_ratio"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "unit_conversion_ratio"
@@ -29354,13 +29354,13 @@
           "symbolic_expression_from_word_rate"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_expression_from_word_rate"
@@ -29718,15 +29718,15 @@
           "domain_range"
         ],
         "primary_concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basics_of_functions",
-          "representation_translation_mathematical_modeling"
+          "functions_basics",
+          "representation_translation"
         ],
         "archetype_ids": [
           "domain_range"
@@ -30105,14 +30105,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -30206,13 +30206,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -30678,13 +30678,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -30779,14 +30779,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "sum_difference_two_variable_system"
@@ -30969,14 +30969,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -31070,13 +31070,13 @@
           "equation_solving_structure"
         ],
         "primary_concept_ids": [
-          "basic_one_variable_equations"
+          "basic_equations"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basic_one_variable_equations"
+          "basic_equations"
         ],
         "archetype_ids": [
           "equation_solving_structure"
@@ -31258,14 +31258,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -31532,14 +31532,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -31909,13 +31909,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -32103,13 +32103,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -32203,14 +32203,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -32403,13 +32403,13 @@
           "elapsed_time_or_measurement"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "elapsed_time_or_measurement"
@@ -32590,13 +32590,13 @@
           "equation_solving_structure"
         ],
         "primary_concept_ids": [
-          "basic_one_variable_equations"
+          "basic_equations"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basic_one_variable_equations"
+          "basic_equations"
         ],
         "archetype_ids": [
           "equation_solving_structure"
@@ -32774,15 +32774,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -32876,13 +32876,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -33324,13 +33324,13 @@
           "factor_product_could_not"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "factor_product_could_not"
@@ -33424,13 +33424,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -33524,14 +33524,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "point_on_line_substitution"
@@ -33798,14 +33798,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -33986,14 +33986,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -34469,13 +34469,13 @@
           "scientific_notation_product"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "scientific_notation_product"
@@ -34570,14 +34570,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -34670,15 +34670,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -34772,13 +34772,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -34873,14 +34873,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -35075,14 +35075,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -35176,13 +35176,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -35547,13 +35547,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -35647,13 +35647,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -35848,14 +35848,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -36421,13 +36421,13 @@
           "age_expression_translation"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "age_expression_translation"
@@ -36522,14 +36522,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -36706,13 +36706,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -37083,14 +37083,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "right_triangle_trig_word_model"
@@ -37183,13 +37183,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -37560,14 +37560,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -38101,14 +38101,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_slope_or_equation"
@@ -38202,13 +38202,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -38303,14 +38303,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -38405,14 +38405,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -38507,14 +38507,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "trig_ratio_geometry"
@@ -38877,14 +38877,14 @@
         ],
         "primary_concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "trigonometry_basics",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "trig_ratio_from_sides"
@@ -38979,14 +38979,14 @@
         ],
         "primary_concept_ids": [
           "lines_angles",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "lines_angles",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "adjacent_straight_angle_ratio"
@@ -39445,14 +39445,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -39547,14 +39547,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "line_quadrant_reasoning"
@@ -39648,13 +39648,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -39749,14 +39749,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -39847,15 +39847,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -39949,15 +39949,15 @@
           "circle_region_or_tangent"
         ],
         "primary_concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "geometry_circles",
-          "representation_translation_mathematical_modeling"
+          "circles_geometry",
+          "representation_translation"
         ],
         "archetype_ids": [
           "circle_region_or_tangent"
@@ -40139,13 +40139,13 @@
           "prime_product_parity"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "prime_product_parity"
@@ -40240,14 +40240,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -40341,13 +40341,13 @@
           "lcm_gcf_factor_reasoning"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "lcm_gcf_factor_reasoning"
@@ -40442,14 +40442,14 @@
         ],
         "primary_concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "linear_equations",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "midpoint_or_distance"
@@ -40632,14 +40632,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -40821,13 +40821,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -40921,13 +40921,13 @@
           "integer_factor_pair_not_possible"
         ],
         "primary_concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "number_properties_factors_divisibility"
+          "number_properties"
         ],
         "archetype_ids": [
           "integer_factor_pair_not_possible"
@@ -41022,14 +41022,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -41781,13 +41781,13 @@
           "wheel_revolutions_from_circumference"
         ],
         "primary_concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "units_measurement_dimensional_reasoning"
+          "measurement_units"
         ],
         "archetype_ids": [
           "wheel_revolutions_from_circumference"
@@ -41881,13 +41881,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -42269,13 +42269,13 @@
           "symbolic_manipulation_or_logic"
         ],
         "primary_concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "algebraic_structure_symbolic_manipulation"
+          "algebraic_manipulation"
         ],
         "archetype_ids": [
           "symbolic_manipulation_or_logic"
@@ -42455,13 +42455,13 @@
           "linear_equation_with_parentheses"
         ],
         "primary_concept_ids": [
-          "basic_one_variable_equations"
+          "basic_equations"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
-          "basic_one_variable_equations"
+          "basic_equations"
         ],
         "archetype_ids": [
           "linear_equation_with_parentheses"
@@ -42556,14 +42556,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -43122,14 +43122,14 @@
         ],
         "primary_concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "area_volume",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "direct_measure_formula"
@@ -43320,14 +43320,14 @@
         ],
         "primary_concept_ids": [
           "lines_angles",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "ingredient_ids": [],
         "misconception_ids": [],
         "remediation_policy_ids": [],
         "concept_ids": [
           "lines_angles",
-          "representation_translation_mathematical_modeling"
+          "representation_translation"
         ],
         "archetype_ids": [
           "isosceles_triangle_angle_equation"

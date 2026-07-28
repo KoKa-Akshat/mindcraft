@@ -9,6 +9,7 @@ Problem -> classify -> extract features -> select target ingredients
 from __future__ import annotations
 
 from dataclasses import dataclass
+import os
 from typing import Any
 
 import numpy as np
@@ -24,6 +25,13 @@ from mindcraft_graph.models.ingredient import (
     IngredientStudentState,
     ProblemFeatures,
 )
+from mindcraft_graph.representation.classification_index import ClassificationIndex
+
+KNN_K = int(os.getenv("KNN_K", "5"))
+MAX_CONCEPTS = 3
+EMIT_SECONDARY_CONCEPTS = False
+SECONDARY_CONCEPT_MARGIN = 0.0  # compatibility-only; bank emission is ontology-gated
+INGREDIENT_SCORE_THRESHOLD = float(os.getenv("INGREDIENT_SCORE_THRESHOLD", "0.0"))
 
 
 @dataclass
@@ -103,12 +111,33 @@ def classify_problem(
     embed_fn,
     ontology: Ontology,
     top_n: int = 3,
+    classification_index: ClassificationIndex | None = None,
+    classifier_mode: str = "concept",
+    secondary_margin: float = SECONDARY_CONCEPT_MARGIN,
+    max_concepts: int = MAX_CONCEPTS,
+    knn_k: int = KNN_K,
+    emit_secondary_concepts: bool = EMIT_SECONDARY_CONCEPTS,
 ) -> ProblemFeatures:
     """
     Classify a problem into concepts and extract coarse features.
 
     The ontology parameter is kept for future use and API symmetry.
     """
+    if classifier_mode in {"archetype", "bank"}:
+        if classification_index is None:
+            raise ValueError("classification_index is required for indexed classifier modes")
+        return _classify_problem_with_index(
+            problem_text,
+            classification_index,
+            embed_fn,
+            ontology=ontology,
+            knn_k=knn_k,
+            emit_secondary_concepts=emit_secondary_concepts,
+            max_concepts=max_concepts,
+        )
+    if classifier_mode != "concept":
+        raise ValueError(f"Unknown classifier_mode: {classifier_mode}")
+
     _ = ontology
     problem_vec = embed_fn(problem_text)
 
@@ -131,6 +160,107 @@ def classify_problem(
         primary_concept=primary,
         secondary_concepts=secondary,
         features=_extract_features(problem_text),
+        concept_scores={concept_id: score for concept_id, score in scored[:top_n]},
+        classification_mode="concept",
+    )
+
+
+def _cosine_similarity(left: np.ndarray, right: np.ndarray) -> float:
+    return float(
+        np.dot(left, right)
+        / (np.linalg.norm(left) * np.linalg.norm(right) + 1e-8)
+    )
+
+
+def _classify_problem_with_index(
+    problem_text: str,
+    index: ClassificationIndex,
+    embed_fn,
+    *,
+    ontology: Ontology,
+    knn_k: int,
+    emit_secondary_concepts: bool,
+    max_concepts: int,
+) -> ProblemFeatures:
+    """Place by weighted exemplar k-NN, then extract from an in-concept archetype."""
+    problem_vec = np.asarray(embed_fn(problem_text), dtype=np.float32)
+    scored_entries: list[tuple[float, Any]] = []
+    for entry in index.entries:
+        score = _cosine_similarity(problem_vec, entry.vector)
+        scored_entries.append((score, entry))
+    scored_entries.sort(key=lambda item: (-item[0], item[1].entry_id))
+    if not scored_entries:
+        return ProblemFeatures(
+            primary_concept="",
+            features=_extract_features(problem_text),
+            classification_mode="archetype",
+        )
+
+    concept_mass: dict[str, float] = {}
+    for score, entry in scored_entries[:max(1, knn_k)]:
+        weight = max(score, 0.0)
+        for concept_id in entry.concept_ids:
+            concept_mass[concept_id] = concept_mass.get(concept_id, 0.0) + weight
+    ranked_concepts = sorted(concept_mass, key=lambda cid: (-concept_mass[cid], cid))
+    if not ranked_concepts:
+        # All top-k cosines were negative. Preserve deterministic fallback.
+        ranked_concepts = sorted(scored_entries[0][1].concept_ids)
+        concept_mass = {concept_id: 0.0 for concept_id in ranked_concepts}
+    primary_concept = ranked_concepts[0]
+
+    # Stage 2 intentionally ignores bank entries: they vote on the concept but
+    # carry no extraction metadata. Max-over-exemplars remains appropriate here.
+    archetypes: dict[str, tuple[float, Any]] = {}
+    for score, entry in scored_entries:
+        if not entry.archetype_id or primary_concept not in entry.concept_ids:
+            continue
+        current = archetypes.get(entry.archetype_id)
+        if current is None or score > current[0]:
+            archetypes[entry.archetype_id] = (score, entry)
+    matched = sorted(archetypes.values(), key=lambda item: (-item[0], item[1].entry_id))
+    matched_entry = matched[0][1] if matched else None
+
+    selected_concepts = [primary_concept]
+    if emit_secondary_concepts and matched_entry is not None:
+        cross_cutting = {c.id for c in ontology.concepts if c.level == "cross_cutting"}
+        allowed = set(matched_entry.bridge_concept_ids) | cross_cutting
+        for concept_id in ranked_concepts[1:]:
+            if concept_id in allowed and len(selected_concepts) < max_concepts:
+                selected_concepts.append(concept_id)
+
+    required_ids: list[str] = []
+    ingredient_scores: dict[str, float] = {}
+    matched_archetype_ids: list[str] = []
+    for concept_id in selected_concepts:
+        concept_matches: dict[str, tuple[float, Any]] = {}
+        for score, entry in scored_entries:
+            if not entry.archetype_id or concept_id not in entry.concept_ids:
+                continue
+            current = concept_matches.get(entry.archetype_id)
+            if current is None or score > current[0]:
+                concept_matches[entry.archetype_id] = (score, entry)
+        if not concept_matches:
+            continue
+        own_score, own_entry = sorted(
+            concept_matches.values(), key=lambda item: (-item[0], item[1].entry_id)
+        )[0]
+        matched_archetype_ids.append(own_entry.archetype_id)
+        contribution = concept_mass.get(concept_id, 0.0) * max(own_score, 0.0)
+        for ingredient_id in own_entry.required_ingredient_ids:
+            ingredient_scores[ingredient_id] = ingredient_scores.get(ingredient_id, 0.0) + contribution
+    for ingredient_id, score in ingredient_scores.items():
+        if score >= INGREDIENT_SCORE_THRESHOLD:
+            required_ids.append(ingredient_id)
+
+    return ProblemFeatures(
+        primary_concept=selected_concepts[0],
+        secondary_concepts=selected_concepts[1:],
+        features=_extract_features(problem_text),
+        required_ingredient_ids=required_ids,
+        archetype_ids=matched_archetype_ids,
+        concept_scores={concept_id: concept_mass[concept_id] for concept_id in ranked_concepts},
+        ingredient_scores=ingredient_scores,
+        classification_mode="bank",
     )
 
 
@@ -169,10 +299,18 @@ def select_target_ingredients(
     concept_id: str,
     features: list[str],
     graph: IngredientGraph,
+    required_ingredient_ids: list[str] | None = None,
 ) -> list[str]:
     """
     Select the most relevant ingredients for the classified concept.
     """
+    if required_ingredient_ids:
+        return list(dict.fromkeys(
+            ingredient_id
+            for ingredient_id in required_ingredient_ids
+            if graph.get_ingredient(ingredient_id) is not None
+        ))
+
     ingredients = graph.get_concept_ingredients(concept_id)
     if not ingredients:
         return []

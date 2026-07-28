@@ -170,8 +170,8 @@
         "sequences_series"
       ],
       "required_ingredient_ids": [
-        "sequences_series__recursive_pattern",
-        "sequences_series__arithmetic_sequence_distinction"
+        "sequences__nth_term_formula",
+        "sequences__arithmetic_identification"
       ],
       "bridge_concept_ids": [
         "representation_translation"
@@ -524,11 +524,11 @@
         "descriptive_statistics"
       ],
       "required_ingredient_ids": [
-        "descriptive_statistics__mean_as_total_over_count",
+        "descriptive_statistics__mean_as_balance",
         "measurement_units__unit_label_consistency"
       ],
       "bridge_concept_ids": [
-        "multiplication_as_repeated_groups",
+        "measurement_units",
         "representation_translation"
       ],
       "concept_path_template": [
@@ -708,7 +708,7 @@
         "representation_translation__number_line_to_inequality"
       ],
       "bridge_concept_ids": [
-        "number_line_representation"
+        "representation_translation"
       ],
       "concept_path_template": [
         "read endpoints",
@@ -794,12 +794,12 @@
         "representation_translation"
       ],
       "required_ingredient_ids": [
-        "triangles_congruence__similarity_criteria",
+        "triangles__similarity_ratios",
         "ratios_proportions__proportion_setup",
         "representation_translation__diagram_to_ratio"
       ],
       "bridge_concept_ids": [
-        "geometry_diagram_reading"
+        "representation_translation"
       ],
       "concept_path_template": [
         "establish similarity",
@@ -976,7 +976,7 @@
         "representation_translation"
       ],
       "required_ingredient_ids": [
-        "area_volume__square_area",
+        "area_volume__square_side_from_area",
         "right_triangle__pythagorean_theorem",
         "representation_translation__implicit_structure_detection",
         "act_strategy__draw_auxiliary_diagram"
@@ -1078,7 +1078,7 @@
       ],
       "bridge_concept_ids": [
         "ratios_proportions",
-        "signed_numbers"
+        "number_properties"
       ],
       "concept_path_template": [
         "identify two points",
@@ -1166,7 +1166,7 @@
       ],
       "required_ingredient_ids": [
         "measurement_units__linear_vs_square_units",
-        "area_volume__rectangle_area",
+        "area_volume__standard_formulas",
         "measurement_units__unit_label_consistency"
       ],
       "bridge_concept_ids": [
@@ -1259,7 +1259,7 @@
       "required_ingredient_ids": [
         "right_triangle__side_naming",
         "right_triangle__sohcahtoa_setup",
-        "trig_basics__reciprocal_trig_ratios"
+        "right_triangle__sohcahtoa_setup"
       ],
       "bridge_concept_ids": [
         "representation_translation"
@@ -2108,7 +2108,7 @@
         "polynomials__greatest_common_factor_factoring",
         "polynomials__distributive_property",
         "algebraic_manipulation__equivalent_forms",
-        "exponent_rules__subtract_exponents"
+        "exponent_rules__quotient_rule"
       ],
       "bridge_concept_ids": [
         "exponent_rules",
@@ -3169,7 +3169,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "number_properties_factors_divisibility"
+        "number_properties"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -3247,11 +3247,11 @@
         "geometry_diagram"
       ],
       "primary_concept_ids": [
-        "geometry_circles"
+        "circles_geometry"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Geometry of Circles",
@@ -3349,7 +3349,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Conic Sections",
@@ -3620,7 +3620,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Area and Volume",
@@ -3811,7 +3811,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Area and Volume",
@@ -3905,11 +3905,11 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "basics_of_functions"
+        "functions_basics"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Basics of Functions",
@@ -3999,7 +3999,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "units_measurement_dimensional_reasoning"
+        "measurement_units"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -4193,11 +4193,11 @@
         "symbolic_expression"
       ],
       "primary_concept_ids": [
-        "basics_of_functions"
+        "functions_basics"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Basics of Functions",
@@ -4275,11 +4275,11 @@
         "equation"
       ],
       "primary_concept_ids": [
-        "basics_of_functions"
+        "functions_basics"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Basics of Functions",
@@ -4360,7 +4360,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "number_properties_factors_divisibility"
+        "number_properties"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -4459,7 +4459,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Linear Equations",
@@ -4654,7 +4654,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Linear Equations",
@@ -4749,7 +4749,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Conic Sections",
@@ -4832,7 +4832,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Lines and Angles",
@@ -5091,11 +5091,11 @@
         "geometry_diagram"
       ],
       "primary_concept_ids": [
-        "geometry_circles"
+        "circles_geometry"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Geometry of Circles",
@@ -5433,7 +5433,7 @@
         "symbolic_expression"
       ],
       "primary_concept_ids": [
-        "algebraic_structure_symbolic_manipulation"
+        "algebraic_manipulation"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -5530,11 +5530,11 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "basics_of_functions"
+        "functions_basics"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Basics of Functions",
@@ -5616,7 +5616,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Trigonometry Basics",
@@ -5713,7 +5713,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Lines and Angles",
@@ -5790,7 +5790,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "algebraic_structure_symbolic_manipulation"
+        "algebraic_manipulation"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -5948,7 +5948,7 @@
         "equation"
       ],
       "primary_concept_ids": [
-        "basic_one_variable_equations"
+        "basic_equations"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -6031,7 +6031,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "number_properties_factors_divisibility"
+        "number_properties"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -6109,7 +6109,7 @@
         "equation"
       ],
       "primary_concept_ids": [
-        "number_properties_factors_divisibility"
+        "number_properties"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -6271,7 +6271,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Lines and Angles",
@@ -6353,7 +6353,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Linear Equations",
@@ -6431,7 +6431,7 @@
         "equation"
       ],
       "primary_concept_ids": [
-        "basic_one_variable_equations"
+        "basic_equations"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -6676,7 +6676,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Linear Equations",
@@ -6755,7 +6755,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "number_properties_factors_divisibility"
+        "number_properties"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -6917,7 +6917,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Trigonometry Basics",
@@ -6994,7 +6994,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "algebraic_structure_symbolic_manipulation"
+        "algebraic_manipulation"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -7077,7 +7077,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Linear Equations",
@@ -7154,7 +7154,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "algebraic_structure_symbolic_manipulation"
+        "algebraic_manipulation"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -7237,7 +7237,7 @@
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [
-        "representation_translation_mathematical_modeling"
+        "representation_translation"
       ],
       "concept_path_template": [
         "Trigonometry Basics",
@@ -7314,7 +7314,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "units_measurement_dimensional_reasoning"
+        "measurement_units"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],
@@ -7473,7 +7473,7 @@
         "word_problem"
       ],
       "primary_concept_ids": [
-        "units_measurement_dimensional_reasoning"
+        "measurement_units"
       ],
       "required_ingredient_ids": [],
       "bridge_concept_ids": [],

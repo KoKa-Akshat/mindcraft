@@ -51,6 +51,7 @@ def _build_concept_ontology(data: dict[str, Any]) -> Ontology:
             typical_order=idx,
             description=c.get("population_failure_prior", {}).get("notes", c["name"]),
             tags=_extract_tags(c),
+            aliases=list(c.get("aliases", [])),
             exam_frequency=float(act.get("frequency", 0.0)),
             exam_tested=bool(act.get("tested", False)),
         ))

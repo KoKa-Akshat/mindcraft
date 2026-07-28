@@ -82,6 +82,11 @@ class ProblemFeatures(BaseModel):
     features: list[str] = Field(default_factory=list)
     known_quantities: dict[str, str | float] = Field(default_factory=dict)
     target_quantity: str = ""
+    required_ingredient_ids: list[str] = Field(default_factory=list)
+    archetype_ids: list[str] = Field(default_factory=list)
+    concept_scores: dict[str, float] = Field(default_factory=dict)
+    ingredient_scores: dict[str, float] = Field(default_factory=dict)
+    classification_mode: str = "concept"
 
 
 class IngredientMastery(BaseModel):

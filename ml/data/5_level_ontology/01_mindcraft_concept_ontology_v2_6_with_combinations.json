@@ -214,7 +214,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw a bar divided into b equal sections and shade a of them — that shaded region is the fraction",
+            "geometric": "Draw a bar divided into b equal sections and shade a of them \u2014 that shaded region is the fraction",
             "algebraic": "a/b = a divided by b; the fraction bar IS the division symbol",
             "procedural": "Count total equal parts (denominator), count shaded parts (numerator), write shaded/total"
           },
@@ -260,7 +260,7 @@
           "card_templates": {
             "geometric": "Doubling the number of sections and the shaded parts keeps the same proportion of the bar shaded",
             "algebraic": "(a times k)/(b times k) = a/b because k/k = 1, and multiplying by 1 preserves value",
-            "procedural": "To make equivalent fractions: pick a multiplier k, multiply top AND bottom by k — never add to both"
+            "procedural": "To make equivalent fractions: pick a multiplier k, multiply top AND bottom by k \u2014 never add to both"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -291,7 +291,7 @@
         {
           "id": "fractions_decimals__fraction_arithmetic",
           "label": "Addition requires common denominator",
-          "description": "Fractions can only be added or subtracted when they represent parts of the same-sized whole — they need a common denominator.",
+          "description": "Fractions can only be added or subtracted when they represent parts of the same-sized whole \u2014 they need a common denominator.",
           "comes_from": "new",
           "failure_mode": "Students add numerators and denominators separately: 1/2 + 1/3 = 2/5 instead of the correct 5/6",
           "failure_prior": 0.61,
@@ -302,7 +302,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "You cannot add thirds and halves directly — convert both to sixths first so the pieces are the same size",
+            "geometric": "You cannot add thirds and halves directly \u2014 convert both to sixths first so the pieces are the same size",
             "algebraic": "a/b + c/d = (ad + bc)/(bd); you must express both fractions over the same denominator before adding",
             "procedural": "Step 1: find LCM of denominators. Step 2: convert both fractions to that denominator. Step 3: add numerators only, keep denominator"
           },
@@ -346,7 +346,7 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "On a number line from 0 to 1: 0.7 sits at the 7th mark of 10; 0.25 sits at the 25th mark of 100 — 0.7 is farther right",
+            "geometric": "On a number line from 0 to 1: 0.7 sits at the 7th mark of 10; 0.25 sits at the 25th mark of 100 \u2014 0.7 is farther right",
             "algebraic": "0.7 = 7/10 = 70/100; 0.25 = 25/100; since 70 is greater than 25, 0.7 is greater than 0.25",
             "procedural": "To compare decimals: pad with trailing zeros to equal length (0.70 vs 0.25), then compare digit by digit left to right"
           },
@@ -390,7 +390,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "3/4 means 3 wholes shared equally among 4 people — each person gets 0.75 of a whole",
+            "geometric": "3/4 means 3 wholes shared equally among 4 people \u2014 each person gets 0.75 of a whole",
             "algebraic": "a/b = a divided by b; perform long division of numerator by denominator to get the decimal",
             "procedural": "Divide the top number by the bottom number using long division; the quotient is the decimal"
           },
@@ -476,7 +476,7 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "Draw 3 blue squares next to 1 red square — the ratio 3:1 shows a multiplicative relationship that is visible",
+            "geometric": "Draw 3 blue squares next to 1 red square \u2014 the ratio 3:1 shows a multiplicative relationship that is visible",
             "algebraic": "a:b = a/b; if a/b = 3 then a = 3b, meaning A is three times B not two more than B",
             "procedural": "Write ratio as fraction, evaluate the division, interpret: 3/1 means for every 1 of B there are 3 of A"
           },
@@ -520,7 +520,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Speed is distance per one hour — draw equal hourly intervals on a timeline to see the unit rate visually",
+            "geometric": "Speed is distance per one hour \u2014 draw equal hourly intervals on a timeline to see the unit rate visually",
             "algebraic": "Unit rate = total quantity / number of units; 150 miles / 3 hours = 50 miles per hour",
             "procedural": "Divide both quantities so the denominator becomes exactly 1; the numerator is your unit rate"
           },
@@ -597,7 +597,7 @@
         {
           "id": "ratios_proportions__cross_multiply_meaning",
           "label": "Cross multiplication derives from fraction equality",
-          "description": "If a/b = c/d then ad = bc — cross multiplication is algebraically equivalent to multiplying both sides by bd.",
+          "description": "If a/b = c/d then ad = bc \u2014 cross multiplication is algebraically equivalent to multiplying both sides by bd.",
           "comes_from": "ratios_proportions__proportion_setup",
           "failure_mode": "Students apply cross multiplication to non-proportion situations or forget it only applies when exactly two fractions are set equal",
           "failure_prior": 0.51,
@@ -656,7 +656,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "percent_ratio",
+        "proportional_reasoning"
+      ]
     },
     {
       "id": "order_of_operations",
@@ -690,7 +693,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Draw an expression tree — operations closer to the leaves must be evaluated before operations closer to the root",
+            "geometric": "Draw an expression tree \u2014 operations closer to the leaves must be evaluated before operations closer to the root",
             "algebraic": "Think of precedence as binding strength: multiplication binds 3 and 4 more tightly than addition binds 2 and the product",
             "procedural": "Circle all exponents first, then circle all multiplication and division groups, evaluate circled groups before moving to addition"
           },
@@ -734,7 +737,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Parentheses are a wall — everything inside must be fully resolved and collapsed to a single number before the wall comes down",
+            "geometric": "Parentheses are a wall \u2014 everything inside must be fully resolved and collapsed to a single number before the wall comes down",
             "algebraic": "2(3+4) = 2 times 7 = 14; the parentheses collapse to a single value before multiplication",
             "procedural": "Step 1: find innermost parentheses. Step 2: evaluate everything inside completely. Step 3: replace parentheses with that result"
           },
@@ -763,7 +766,7 @@
         {
           "id": "order_of_operations__left_to_right_rule",
           "label": "Equal-precedence operations go left to right",
-          "description": "When two operations have equal precedence — both multiplication and division, or both addition and subtraction — evaluate from left to right.",
+          "description": "When two operations have equal precedence \u2014 both multiplication and division, or both addition and subtraction \u2014 evaluate from left to right.",
           "comes_from": "order_of_operations__precedence_hierarchy",
           "failure_mode": "Students compute 12 divided by 4 times 3 as 12 divided by 12 = 1 instead of 3 times 3 = 9 because they multiply 4 and 3 first",
           "failure_prior": 0.5,
@@ -817,7 +820,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "The exponent is attached to x only — it belongs to x, not to the coefficient 2 in front of x",
+            "geometric": "The exponent is attached to x only \u2014 it belongs to x, not to the coefficient 2 in front of x",
             "algebraic": "2x squared = 2 times (x squared); the exponent applies only to x; (2x) squared = 4x squared is a completely different expression",
             "procedural": "When substituting a value: replace x with the value in parentheses, compute x squared first, then multiply by the coefficient"
           },
@@ -876,7 +879,7 @@
       "population_failure_prior": {
         "overall": 0.286,
         "hardest_ingredient_id": "basic_equations__equals_sign_balance",
-        "notes": "The equals-sign misconception — treating it as a compute command rather than a balance assertion — underlies a large proportion of algebraic errors across all subsequent topics."
+        "notes": "The equals-sign misconception \u2014 treating it as a compute command rather than a balance assertion \u2014 underlies a large proportion of algebraic errors across all subsequent topics."
       },
       "ingredients": [
         {
@@ -893,7 +896,7 @@
             "conceptual": 0.4
           },
           "card_templates": {
-            "geometric": "Imagine a balance scale — the equals sign is the fulcrum; both sides must weigh exactly the same",
+            "geometric": "Imagine a balance scale \u2014 the equals sign is the fulcrum; both sides must weigh exactly the same",
             "algebraic": "The symbol = is a statement of equality between two expressions, not an instruction to perform an operation",
             "procedural": "Before writing an equals sign, ask: are both sides genuinely equal right now? The equals sign is a claim you must verify"
           },
@@ -922,7 +925,7 @@
         {
           "id": "basic_equations__inverse_operations",
           "label": "Inverse operations undo each other",
-          "description": "Addition and subtraction are inverses of each other; multiplication and division are inverses — applying an inverse undoes the original operation.",
+          "description": "Addition and subtraction are inverses of each other; multiplication and division are inverses \u2014 applying an inverse undoes the original operation.",
           "comes_from": "new",
           "failure_mode": "Students subtract instead of dividing when undoing multiplication: solving 3x = 12 by writing x = 12 minus 3 = 9",
           "failure_prior": 0.43,
@@ -933,7 +936,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Addition moves right on a number line; subtraction moves left back to the start — they perfectly undo each other",
+            "geometric": "Addition moves right on a number line; subtraction moves left back to the start \u2014 they perfectly undo each other",
             "algebraic": "If x + 5 = 12, subtract 5 from both sides: x + 5 minus 5 = 12 minus 5, giving x = 7",
             "procedural": "Identify what operation is applied to x, then apply the exact opposite operation to both sides to undo it"
           },
@@ -1021,7 +1024,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Picture the variable trapped behind walls of operations — your goal is to demolish each wall layer by layer",
+            "geometric": "Picture the variable trapped behind walls of operations \u2014 your goal is to demolish each wall layer by layer",
             "algebraic": "The solved form is x = a number; keep applying inverse operations until that exact form is reached",
             "procedural": "Undo operations in reverse order of PEMDAS: first undo addition and subtraction, then undo multiplication and division"
           },
@@ -1061,7 +1064,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Plug your answer back into the scale — if it tips to one side, your answer is wrong",
+            "geometric": "Plug your answer back into the scale \u2014 if it tips to one side, your answer is wrong",
             "algebraic": "If x = 4 is claimed, check: does 3(4) + 2 equal 14? Both sides must evaluate to the same number",
             "procedural": "Replace every x with your answer, evaluate both sides independently, confirm they produce the same value"
           },
@@ -1102,7 +1105,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "basic_one_variable_equations"
+      ]
     },
     {
       "id": "linear_equations",
@@ -1128,7 +1133,7 @@
         {
           "id": "linear_equations__slope_meaning",
           "label": "Slope is rate of change with units",
-          "description": "Slope measures how much y changes for every 1 unit increase in x — it is a rate of change, not merely a steepness number.",
+          "description": "Slope measures how much y changes for every 1 unit increase in x \u2014 it is a rate of change, not merely a steepness number.",
           "comes_from": "ratios_proportions__unit_rate",
           "failure_mode": "Students compute slope correctly but state it as a bare number without units or meaning: slope is 3, not y increases by 3 for every 1 unit increase in x",
           "failure_prior": 0.45,
@@ -1139,9 +1144,9 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "On a graph count rise over run — for every step right, how many steps up? That ratio with its units is the slope",
+            "geometric": "On a graph count rise over run \u2014 for every step right, how many steps up? That ratio with its units is the slope",
             "algebraic": "m = delta-y / delta-x = (y2 minus y1) / (x2 minus x1); always attach units such as dollars per hour",
-            "procedural": "Pick any two points, subtract y-values, subtract x-values in same order, divide — then write the units as output-units per input-unit"
+            "procedural": "Pick any two points, subtract y-values, subtract x-values in same order, divide \u2014 then write the units as output-units per input-unit"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -1170,7 +1175,7 @@
         {
           "id": "linear_equations__y_intercept_meaning",
           "label": "Y-intercept is the value when x equals zero",
-          "description": "The y-intercept (b in y = mx + b) is the value of y when x = 0 — it represents the starting or initial value in context.",
+          "description": "The y-intercept (b in y = mx + b) is the value of y when x = 0 \u2014 it represents the starting or initial value in context.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students think b is just a vertical shift with no real-world meaning and cannot identify the y-intercept from a word problem description",
           "failure_prior": 0.4,
@@ -1183,7 +1188,7 @@
           "card_templates": {
             "geometric": "Where does the line cross the vertical axis? That crossing point's y-coordinate is the y-intercept",
             "algebraic": "Set x = 0 in any form: y = m(0) + b = b; the y-intercept is simply the output when input is zero",
-            "procedural": "Substitute x = 0 into the equation and solve for y — that y value is your y-intercept"
+            "procedural": "Substitute x = 0 into the equation and solve for y \u2014 that y value is your y-intercept"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -1267,7 +1272,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Plot two points on graph paper and place a ruler through them — there is exactly one straight line that passes through both",
+            "geometric": "Plot two points on graph paper and place a ruler through them \u2014 there is exactly one straight line that passes through both",
             "algebraic": "Calculate m = (y2 minus y1)/(x2 minus x1), then substitute into y minus y1 = m(x minus x1) and simplify",
             "procedural": "Step 1: calculate slope from two points. Step 2: substitute slope and one point into y = mx + b. Step 3: solve for b"
           },
@@ -1309,7 +1314,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw two lines crossing at 90 degrees — if one rises 2 for every 1 right, the perpendicular falls 1 for every 2 right",
+            "geometric": "Draw two lines crossing at 90 degrees \u2014 if one rises 2 for every 1 right, the perpendicular falls 1 for every 2 right",
             "algebraic": "If m1 times m2 = negative 1, lines are perpendicular; find perpendicular slope as m2 = negative 1 divided by m1",
             "procedural": "For perpendicular slope: take the original slope, flip the fraction to get its reciprocal, then change the sign"
           },
@@ -1354,7 +1359,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "analytic_geometry",
+        "coordinate_geometry"
+      ]
     },
     {
       "id": "functions_basics",
@@ -1378,7 +1386,7 @@
         {
           "id": "functions_basics__function_as_machine",
           "label": "Function assigns exactly one output per input",
-          "description": "A function is a rule that assigns exactly one output to every valid input — no input can produce two different outputs.",
+          "description": "A function is a rule that assigns exactly one output to every valid input \u2014 no input can produce two different outputs.",
           "comes_from": "new",
           "failure_mode": "Students cannot recognize when a relation is not a function because they do not check whether any input maps to multiple outputs",
           "failure_prior": 0.4,
@@ -1389,7 +1397,7 @@
             "conceptual": 0.4
           },
           "card_templates": {
-            "geometric": "Draw a machine with one input slot and one output slot — each unique input must produce exactly one output to qualify as a function",
+            "geometric": "Draw a machine with one input slot and one output slot \u2014 each unique input must produce exactly one output to qualify as a function",
             "algebraic": "f is a function if for every x in its domain, there exists exactly one y satisfying y = f(x)",
             "procedural": "Vertical line test: if any vertical line crosses the graph more than once, the relation is not a function"
           },
@@ -1421,7 +1429,7 @@
         {
           "id": "functions_basics__function_notation_meaning",
           "label": "f(x) denotes output value not f times x",
-          "description": "f(x) is notation meaning the output of function f when the input is x — it is not multiplication of f and x.",
+          "description": "f(x) is notation meaning the output of function f when the input is x \u2014 it is not multiplication of f and x.",
           "comes_from": "functions_basics__function_as_machine",
           "failure_mode": "Students compute f(3) for f(x) = 2x + 1 as f multiplied by 3 giving an undefined product instead of 2(3) + 1 = 7",
           "failure_prior": 0.48,
@@ -1476,7 +1484,7 @@
           },
           "card_templates": {
             "geometric": "On a graph: domain is all x-values where the curve has a point; range is all y-values where the curve has a point",
-            "algebraic": "For domain: find x-values causing division by zero or even root of a negative number — exclude those x-values",
+            "algebraic": "For domain: find x-values causing division by zero or even root of a negative number \u2014 exclude those x-values",
             "procedural": "For f(x) = 1/(x-2): set denominator not equal to zero, so x cannot equal 2; domain is all real numbers except x = 2"
           },
           "node_type": "ingredient",
@@ -1620,7 +1628,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "basics_of_functions",
+        "function_transformations"
+      ]
     },
     {
       "id": "right_triangle_geometry",
@@ -1655,7 +1666,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw squares on each side of a right triangle — the combined area of the two smaller squares equals the area of the largest square",
+            "geometric": "Draw squares on each side of a right triangle \u2014 the combined area of the two smaller squares equals the area of the largest square",
             "algebraic": "c squared = a squared + b squared; when solving for a leg: a squared = c squared minus b squared",
             "procedural": "Step 1: identify the hypotenuse as the side opposite the right angle. Step 2: square all known sides. Step 3: solve algebraically for the unknown"
           },
@@ -1684,7 +1695,7 @@
         {
           "id": "right_triangle__side_naming",
           "label": "Side names depend on the reference angle",
-          "description": "Opposite, adjacent, and hypotenuse are defined relative to a specific chosen angle — they change when you choose a different angle.",
+          "description": "Opposite, adjacent, and hypotenuse are defined relative to a specific chosen angle \u2014 they change when you choose a different angle.",
           "comes_from": "right_triangle__pythagorean_theorem",
           "failure_mode": "Students label opposite and adjacent once and treat those labels as fixed properties of the triangle regardless of which angle is being used",
           "failure_prior": 0.62,
@@ -1842,7 +1853,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "right_triangle"
+      ]
     },
     {
       "id": "trigonometry_basics",
@@ -1877,7 +1890,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Imagine a clock hand starting at the 3 o'clock position (positive x-axis) and rotating counterclockwise — the angle measures exactly that rotation",
+            "geometric": "Imagine a clock hand starting at the 3 o'clock position (positive x-axis) and rotating counterclockwise \u2014 the angle measures exactly that rotation",
             "algebraic": "Angles can be any real number: positive means counterclockwise, negative means clockwise, above 360 means multiple full rotations",
             "procedural": "To visualize any angle: start at the positive x-axis and rotate counterclockwise by that many degrees to find the terminal side"
           },
@@ -1921,7 +1934,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Draw a unit circle, pick a point on it, drop a perpendicular to the x-axis — the horizontal distance to the y-axis is cos(theta), the vertical height is sin(theta)",
+            "geometric": "Draw a unit circle, pick a point on it, drop a perpendicular to the x-axis \u2014 the horizontal distance to the y-axis is cos(theta), the vertical height is sin(theta)",
             "algebraic": "The unit circle equation is x squared + y squared = 1; substituting x = cos(theta) and y = sin(theta) gives the Pythagorean trig identity",
             "procedural": "To find sin and cos of any angle: locate the angle on the unit circle, read the y-coordinate for sin and the x-coordinate for cos"
           },
@@ -1950,7 +1963,7 @@
         {
           "id": "trig_basics__sin_as_vertical_component",
           "label": "sin(theta) is the vertical projection of the radius",
-          "description": "sin(theta) represents how high the endpoint of a unit radius sits above the center — it is literally a vertical distance.",
+          "description": "sin(theta) represents how high the endpoint of a unit radius sits above the center \u2014 it is literally a vertical distance.",
           "comes_from": "trig_basics__unit_circle_coordinates",
           "failure_mode": "Students know sin as opposite over hypotenuse but cannot connect it to the vertical component of a rotating vector, causing failure on circular motion problems like y = 30 + 18 sin(theta)",
           "failure_prior": 0.5,
@@ -1961,7 +1974,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Draw a radius at angle theta on the unit circle and drop a vertical line down to the x-axis — that vertical leg is exactly sin(theta)",
+            "geometric": "Draw a radius at angle theta on the unit circle and drop a vertical line down to the x-axis \u2014 that vertical leg is exactly sin(theta)",
             "algebraic": "If the rotating arm has length r and angle theta, its vertical component is r times sin(theta); for r = 1 this simplifies to sin(theta)",
             "procedural": "For any rotating arm of length r: vertical height above center = r times sin(angle of rotation)"
           },
@@ -2003,7 +2016,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Draw a radius at angle theta and drop a horizontal line to the y-axis — that horizontal segment is exactly cos(theta)",
+            "geometric": "Draw a radius at angle theta and drop a horizontal line to the y-axis \u2014 that horizontal segment is exactly cos(theta)",
             "algebraic": "If rotating arm has length r at angle theta, its horizontal component is r times cos(theta); cos gives the x-direction distance",
             "procedural": "For left-right position of a point on a rotating arm of length r: horizontal position = r times cos(angle)"
           },
@@ -2046,7 +2059,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the angle on the unit circle — the reference angle is the smallest angle from the terminal side down to the nearest x-axis",
+            "geometric": "Draw the angle on the unit circle \u2014 the reference angle is the smallest angle from the terminal side down to the nearest x-axis",
             "algebraic": "sin(150 degrees) = sin(180 minus 150) = sin(30 degrees) = 0.5; the sign adjusts based on quadrant",
             "procedural": "Step 1: find reference angle as distance to nearest x-axis. Step 2: evaluate trig at reference angle. Step 3: apply correct quadrant sign using ASTC"
           },
@@ -2127,7 +2140,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "trigonometric_identities"
+      ]
     },
     {
       "id": "limits_continuity",
@@ -2141,13 +2156,13 @@
       "population_failure_prior": {
         "overall": 0.58,
         "hardest_ingredient_id": "limits__limit_vs_value_distinction",
-        "notes": "Students conflate the limit of a function with its value at the point, making the need for limits — and therefore the entire concept of derivatives — impossible to understand."
+        "notes": "Students conflate the limit of a function with its value at the point, making the need for limits \u2014 and therefore the entire concept of derivatives \u2014 impossible to understand."
       },
       "ingredients": [
         {
           "id": "limits__approaching_not_reaching",
           "label": "Limit describes approach not arrival",
-          "description": "The limit of f(x) as x approaches a describes what f(x) gets close to — it does not require f(a) to exist.",
+          "description": "The limit of f(x) as x approaches a describes what f(x) gets close to \u2014 it does not require f(a) to exist.",
           "comes_from": "functions_basics__domain_range",
           "failure_mode": "Students evaluate limits by plugging in the limit point even when the function is undefined there, entirely missing the conceptual purpose",
           "failure_prior": 0.6,
@@ -2158,7 +2173,7 @@
             "conceptual": 0.4
           },
           "card_templates": {
-            "geometric": "Graph a function with a hole at x = 2 — the limit is the y-value both sides approach, even though no point exists at x = 2",
+            "geometric": "Graph a function with a hole at x = 2 \u2014 the limit is the y-value both sides approach, even though no point exists at x = 2",
             "algebraic": "The limit as x approaches 2 of (x squared minus 4)/(x minus 2) equals 4, even though plugging in x = 2 gives 0/0 in the original",
             "procedural": "Try direct substitution first; if you get 0/0, factor and cancel the troublesome term, then substitute into the simplified expression"
           },
@@ -2198,8 +2213,8 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "Draw a graph with a hole at x = 2 where the limit is 3, but a filled dot at (2, 5) — the limit is 3 and the function value is 5; they are independent",
-            "algebraic": "f(x) = (x squared minus 4)/(x minus 2) has no value at x = 2, but its limit as x approaches 2 equals 4 — these are completely separate facts",
+            "geometric": "Draw a graph with a hole at x = 2 where the limit is 3, but a filled dot at (2, 5) \u2014 the limit is 3 and the function value is 5; they are independent",
+            "algebraic": "f(x) = (x squared minus 4)/(x minus 2) has no value at x = 2, but its limit as x approaches 2 equals 4 \u2014 these are completely separate facts",
             "procedural": "Always compute the limit and the function value as two separate steps; then check whether they agree to determine continuity"
           },
           "node_type": "ingredient",
@@ -2278,7 +2293,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Continuous means you can draw it without lifting your pencil — any hole, jump, or vertical asymptote breaks continuity",
+            "geometric": "Continuous means you can draw it without lifting your pencil \u2014 any hole, jump, or vertical asymptote breaks continuity",
             "algebraic": "Three conditions must all hold simultaneously: f(a) exists, the limit exists, and they are equal",
             "procedural": "Check condition 1: is f(a) defined? Condition 2: does the limit exist? Condition 3: are they equal? All three must pass"
           },
@@ -2307,7 +2322,7 @@
         {
           "id": "limits__limit_as_derivative_setup",
           "label": "Derivative is a specific kind of limit",
-          "description": "The derivative f-prime(a) is the limit as h approaches zero of [f(a+h) minus f(a)] divided by h — the limit of a shrinking average slope.",
+          "description": "The derivative f-prime(a) is the limit as h approaches zero of [f(a+h) minus f(a)] divided by h \u2014 the limit of a shrinking average slope.",
           "comes_from": "limits__approaching_not_reaching",
           "failure_mode": "Students memorize derivative rules without knowing they come from this limit definition, making it impossible to understand why the rules work or derive new ones",
           "failure_prior": 0.72,
@@ -2379,7 +2394,7 @@
         {
           "id": "derivatives__derivative_as_slope",
           "label": "Derivative is a slope function not a number",
-          "description": "f-prime(x) gives the slope of the tangent line to f at every point x — it is itself a new function, not a single value.",
+          "description": "f-prime(x) gives the slope of the tangent line to f at every point x \u2014 it is itself a new function, not a single value.",
           "comes_from": "limits__limit_as_derivative_setup",
           "failure_mode": "Students compute f-prime(x) and treat the result as a single slope value rather than recognizing it is a function that gives slope at any point",
           "failure_prior": 0.48,
@@ -2390,7 +2405,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Graph f(x) = x squared; at every point draw the tangent line — f-prime(x) = 2x is the formula describing each tangent slope",
+            "geometric": "Graph f(x) = x squared; at every point draw the tangent line \u2014 f-prime(x) = 2x is the formula describing each tangent slope",
             "algebraic": "If f(x) = x squared then f-prime(x) = 2x; evaluating f-prime(3) = 6 gives the slope specifically at the point x = 3",
             "procedural": "Differentiate f(x) to produce f-prime(x); plug in a specific x-value only when you want the slope at that one particular point"
           },
@@ -2419,7 +2434,7 @@
         {
           "id": "derivatives__power_rule",
           "label": "Power rule brings exponent down and reduces it",
-          "description": "The derivative of x to the n is n times x to the (n minus 1) — bring the exponent down as coefficient, reduce exponent by 1.",
+          "description": "The derivative of x to the n is n times x to the (n minus 1) \u2014 bring the exponent down as coefficient, reduce exponent by 1.",
           "comes_from": "derivatives__derivative_as_slope",
           "failure_mode": "Students forget to reduce the exponent: writing the derivative of x cubed as 3x cubed instead of 3x squared",
           "failure_prior": 0.35,
@@ -2459,7 +2474,7 @@
         {
           "id": "derivatives__chain_rule",
           "label": "Chain rule multiplies outer and inner derivatives",
-          "description": "For f(g(x)), the derivative is f-prime(g(x)) times g-prime(x) — differentiate the outer function leaving inner intact, then multiply by inner's derivative.",
+          "description": "For f(g(x)), the derivative is f-prime(g(x)) times g-prime(x) \u2014 differentiate the outer function leaving inner intact, then multiply by inner's derivative.",
           "comes_from": "functions_basics__function_composition",
           "failure_mode": "Students differentiate only the outer function or only the inner function, forgetting to multiply by the derivative of the inner function entirely",
           "failure_prior": 0.72,
@@ -2510,8 +2525,8 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Rectangle with sides f and g both changing: total area rate = rate of f times g plus f times rate of g — that is the product rule",
-            "algebraic": "Product rule: (fg)' = f'g + fg'; this is NOT the same as f'g' — differentiation does not distribute over multiplication",
+            "geometric": "Rectangle with sides f and g both changing: total area rate = rate of f times g plus f times rate of g \u2014 that is the product rule",
+            "algebraic": "Product rule: (fg)' = f'g + fg'; this is NOT the same as f'g' \u2014 differentiation does not distribute over multiplication",
             "procedural": "Label the two functions u and v; product: u'v + uv'; quotient: (u'v minus uv') divided by v squared (low-d-high minus high-d-low over low squared)"
           },
           "node_type": "ingredient",
@@ -2539,7 +2554,7 @@
         {
           "id": "derivatives__derivative_as_rate",
           "label": "Derivative has units and real-world meaning",
-          "description": "In applied problems f-prime(x) carries units equal to output units divided by input units — it represents the rate of change in context.",
+          "description": "In applied problems f-prime(x) carries units equal to output units divided by input units \u2014 it represents the rate of change in context.",
           "comes_from": "linear_equations__slope_meaning",
           "failure_mode": "Students compute derivatives correctly but cannot interpret what f-prime(3) = 5 means in a word problem context",
           "failure_prior": 0.58,
@@ -2550,8 +2565,8 @@
             "conceptual": 0.5
           },
           "card_templates": {
-            "geometric": "If the position graph curves upward, velocity which is its derivative is positive and increasing — the tangent slope IS the speed at each moment",
-            "algebraic": "If P(t) is position in meters then P-prime(t) has units meters per second — attach output-units per input-unit to every derivative",
+            "geometric": "If the position graph curves upward, velocity which is its derivative is positive and increasing \u2014 the tangent slope IS the speed at each moment",
+            "algebraic": "If P(t) is position in meters then P-prime(t) has units meters per second \u2014 attach output-units per input-unit to every derivative",
             "procedural": "Units of f-prime(x) = units of f(x) divided by units of x; interpret as how much f changes per 1 unit increase in x at the specific point"
           },
           "node_type": "ingredient",
@@ -2609,10 +2624,10 @@
       "population_failure_prior": {
         "overall": 0.436,
         "hardest_ingredient_id": "linear_inequalities__flip_rule",
-        "notes": "Students apply equation-solving steps correctly but forget the flip rule when multiplying or dividing by a negative — a single-step rule with outsized failure rate."
+        "notes": "Students apply equation-solving steps correctly but forget the flip rule when multiplying or dividing by a negative \u2014 a single-step rule with outsized failure rate."
       },
       "learning_style_affinity": {
-        "geometric_learner": "Start by graphing on a number line — show the solution as a region not a single point",
+        "geometric_learner": "Start by graphing on a number line \u2014 show the solution as a region not a single point",
         "algebraic_learner": "Start with the parallel to equations, then introduce the one exception (the flip)",
         "procedural_learner": "Start with a checklist: solve like an equation, check the sign of what you divided by, flip if negative"
       },
@@ -2620,7 +2635,7 @@
         {
           "id": "linear_inequalities__inequality_as_region",
           "label": "Inequality solution is a range not a point",
-          "description": "Solving an inequality produces an infinite set of values — a region on the number line — not a single answer.",
+          "description": "Solving an inequality produces an infinite set of values \u2014 a region on the number line \u2014 not a single answer.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students write x = 3 instead of x greater than 3, treating the inequality as if it has one solution like an equation",
           "failure_prior": 0.39,
@@ -2631,9 +2646,9 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "Draw a number line and shade everything to the right of 3 with an open circle — that entire shaded region is the solution, not just the point 3",
-            "algebraic": "x greater than 3 means any value like 3.1, 4, 100 all satisfy the inequality — there are infinitely many solutions",
-            "procedural": "After solving, verify by plugging in two values: one inside your solution region and one outside — both results should behave correctly"
+            "geometric": "Draw a number line and shade everything to the right of 3 with an open circle \u2014 that entire shaded region is the solution, not just the point 3",
+            "algebraic": "x greater than 3 means any value like 3.1, 4, 100 all satisfy the inequality \u2014 there are infinitely many solutions",
+            "procedural": "After solving, verify by plugging in two values: one inside your solution region and one outside \u2014 both results should behave correctly"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -2676,7 +2691,7 @@
           },
           "card_templates": {
             "geometric": "On a number line 2 is to the right of 1, meaning 2 is greater. Multiply both by negative-1: negative-2 is now to the LEFT of negative-1, so the relationship flipped",
-            "algebraic": "Start with 3 greater than 1. Multiply both sides by negative-1: negative-3 vs negative-1. Now negative-3 is less than negative-1 — the direction reversed",
+            "algebraic": "Start with 3 greater than 1. Multiply both sides by negative-1: negative-3 vs negative-1. Now negative-3 is less than negative-1 \u2014 the direction reversed",
             "procedural": "At the step where you divide or multiply by a number: check its sign first. If negative, flip the inequality symbol before writing the next line"
           },
           "node_type": "ingredient",
@@ -2759,7 +2774,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Shade the number line for each inequality separately, then look for where the shading overlaps — that overlap is the solution",
+            "geometric": "Shade the number line for each inequality separately, then look for where the shading overlaps \u2014 that overlap is the solution",
             "algebraic": "Operate on all three parts simultaneously: subtract 2 from all three sides at once to isolate x in the middle",
             "procedural": "Step 1: isolate x by applying the same operation to all three parts. Step 2: read the resulting interval. Step 3: check a value inside it satisfies both original conditions"
           },
@@ -2826,7 +2841,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "absolute_value",
+        "inequalities_systems"
+      ]
     },
     {
       "id": "systems_of_linear_equations",
@@ -2856,7 +2874,7 @@
         {
           "id": "systems__solution_as_intersection",
           "label": "Solution is where both lines cross",
-          "description": "The solution to a system of two equations is the point that satisfies both simultaneously — geometrically, where the two lines intersect.",
+          "description": "The solution to a system of two equations is the point that satisfies both simultaneously \u2014 geometrically, where the two lines intersect.",
           "comes_from": "linear_equations__two_points_determine_line",
           "failure_mode": "Students find an x-value by eliminating y but then forget to substitute back to find the y-value, reporting an incomplete solution",
           "failure_prior": 0.4,
@@ -2867,9 +2885,9 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Graph both lines on the same axes — the point where they cross is the one coordinate pair that makes both equations true at once",
-            "algebraic": "A solution is a pair (x, y) that satisfies both equations simultaneously — plug it into each equation and both must balance",
-            "procedural": "After finding x, always substitute back into either original equation to find y — both coordinates are required"
+            "geometric": "Graph both lines on the same axes \u2014 the point where they cross is the one coordinate pair that makes both equations true at once",
+            "algebraic": "A solution is a pair (x, y) that satisfies both equations simultaneously \u2014 plug it into each equation and both must balance",
+            "procedural": "After finding x, always substitute back into either original equation to find y \u2014 both coordinates are required"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -2910,8 +2928,8 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Think of it as naming one variable in terms of the other — then you only have one unknown left to deal with",
-            "algebraic": "If y = 2x + 1 from equation 1, substitute (2x + 1) in place of y in equation 2 — not back into equation 1",
+            "geometric": "Think of it as naming one variable in terms of the other \u2014 then you only have one unknown left to deal with",
+            "algebraic": "If y = 2x + 1 from equation 1, substitute (2x + 1) in place of y in equation 2 \u2014 not back into equation 1",
             "procedural": "Step 1: isolate one variable in one equation. Step 2: substitute that expression into the OTHER equation. Step 3: solve. Step 4: back-substitute to find second variable"
           },
           "node_type": "ingredient",
@@ -2952,7 +2970,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Imagine two scales — adding them together combines all weights simultaneously, canceling anything that appears equally on both sides",
+            "geometric": "Imagine two scales \u2014 adding them together combines all weights simultaneously, canceling anything that appears equally on both sides",
             "algebraic": "To eliminate y: multiply equation 1 by the coefficient of y in equation 2, and equation 2 by the negative of y's coefficient in equation 1",
             "procedural": "Step 1: choose which variable to eliminate. Step 2: multiply each entire equation to make those coefficients opposites. Step 3: add equations. Step 4: solve. Step 5: back-substitute"
           },
@@ -2996,8 +3014,8 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Graph the two lines — if they are parallel they never cross (no solution); if they are the same line every point on it is a solution (infinite)",
-            "algebraic": "0 = 5 is always false — no values of x and y can make this true, confirming no intersection exists",
+            "geometric": "Graph the two lines \u2014 if they are parallel they never cross (no solution); if they are the same line every point on it is a solution (infinite)",
+            "algebraic": "0 = 5 is always false \u2014 no values of x and y can make this true, confirming no intersection exists",
             "procedural": "When elimination gives 0 = constant: if constant is nonzero, write no solution; if constant is zero, write infinite solutions and express as a line"
           },
           "node_type": "ingredient",
@@ -3039,7 +3057,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "systems_linear_equations"
+      ]
     },
     {
       "id": "exponent_rules",
@@ -3058,7 +3078,7 @@
       "population_failure_prior": {
         "overall": 0.267,
         "hardest_ingredient_id": "exponent_rules__negative_exponents",
-        "notes": "Negative exponents are the single most-failed exponent topic — students either ignore the negative or move the wrong factor to the denominator."
+        "notes": "Negative exponents are the single most-failed exponent topic \u2014 students either ignore the negative or move the wrong factor to the denominator."
       },
       "learning_style_affinity": {
         "geometric_learner": "Show the pattern by expanding: x cubed times x squared written out as individual x factors",
@@ -3080,7 +3100,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Write out x squared as x times x, and x cubed as x times x times x — combined you have five x factors, confirming x to the fifth",
+            "geometric": "Write out x squared as x times x, and x cubed as x times x times x \u2014 combined you have five x factors, confirming x to the fifth",
             "algebraic": "x to the a times x to the b = x to the (a+b); you are counting total factors of x so you add the counts",
             "procedural": "Check the bases are identical. If yes, keep the base and add the exponents. Never multiply the exponents here"
           },
@@ -3124,7 +3144,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Write x to the fifth over x squared as five x factors over two x factors — cancel two from top and bottom leaving three: x cubed",
+            "geometric": "Write x to the fifth over x squared as five x factors over two x factors \u2014 cancel two from top and bottom leaving three: x cubed",
             "algebraic": "x to the a divided by x to the b = x to the (a minus b); top exponent minus bottom exponent in that order",
             "procedural": "Identify top exponent and bottom exponent. Subtract bottom from top. Keep the same base. Never divide the exponents"
           },
@@ -3168,7 +3188,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Expand (x squared) cubed as x squared times x squared times x squared — that is three groups of two x factors = six total: x to the sixth",
+            "geometric": "Expand (x squared) cubed as x squared times x squared times x squared \u2014 that is three groups of two x factors = six total: x to the sixth",
             "algebraic": "(x to the a) to the b = x to the (a times b); you are applying the product rule b times in a row, so you multiply",
             "procedural": "When you see a power inside parentheses raised to another power: multiply the two exponents, keep the base"
           },
@@ -3201,7 +3221,7 @@
         {
           "id": "exponent_rules__negative_exponents",
           "label": "Negative exponent means reciprocal",
-          "description": "x to the negative n equals 1 divided by x to the n — a negative exponent moves the factor to the other side of the fraction bar.",
+          "description": "x to the negative n equals 1 divided by x to the n \u2014 a negative exponent moves the factor to the other side of the fraction bar.",
           "comes_from": "exponent_rules__quotient_rule",
           "failure_mode": "Students make the base negative: x to the negative-2 becomes negative x squared instead of 1 over x squared",
           "failure_prior": 0.5,
@@ -3212,7 +3232,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Show the pattern: x cubed, x squared, x to the one, x to the zero equals 1 — each step divides by x. One more step gives x to the negative-1 = 1/x",
+            "geometric": "Show the pattern: x cubed, x squared, x to the one, x to the zero equals 1 \u2014 each step divides by x. One more step gives x to the negative-1 = 1/x",
             "algebraic": "x to the negative-n = 1 over x to the n; the negative only affects position in the fraction not the sign of the number",
             "procedural": "Spot any negative exponent. Move that factor across the fraction bar. Make the exponent positive. Never change the sign of the base"
           },
@@ -3255,7 +3275,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "x to the zero = x to the (n minus n) = x to the n over x to the n = 1 for any nonzero x — show this cancellation visually",
+            "geometric": "x to the zero = x to the (n minus n) = x to the n over x to the n = 1 for any nonzero x \u2014 show this cancellation visually",
             "algebraic": "x to the (1/2) = square root of x because squaring both sides gives x to the 1 = x. Similarly x to the (p/q) = q-th root of x to the p",
             "procedural": "For x to the zero: write 1. For x to the (p/q): write as q-th root of (x to the p) then evaluate inside first, then take the root"
           },
@@ -3319,7 +3339,7 @@
         "notes": "Students correctly add and subtract polynomials but fail at multiplication, either forgetting to distribute every term or misapplying the distributive property."
       },
       "learning_style_affinity": {
-        "geometric_learner": "Use area model for polynomial multiplication — rows and columns of terms",
+        "geometric_learner": "Use area model for polynomial multiplication \u2014 rows and columns of terms",
         "algebraic_learner": "Use formal distributive property notation showing each pairing",
         "procedural_learner": "Use FOIL as a systematic checklist for binomials then generalize"
       },
@@ -3327,7 +3347,7 @@
         {
           "id": "polynomials__like_terms",
           "label": "Only like terms can be combined",
-          "description": "Like terms have identical variable parts — the same variables raised to the same powers — and can be added or subtracted by combining their coefficients.",
+          "description": "Like terms have identical variable parts \u2014 the same variables raised to the same powers \u2014 and can be added or subtracted by combining their coefficients.",
           "comes_from": "basic_equations__isolate_variable",
           "failure_mode": "Students combine unlike terms: adding 3x squared and 2x to get 5x squared or 5x instead of leaving them separate",
           "failure_prior": 0.39,
@@ -3338,7 +3358,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Think of x squared as apples and x as oranges — you can count apples together and oranges together but you cannot combine them",
+            "geometric": "Think of x squared as apples and x as oranges \u2014 you can count apples together and oranges together but you cannot combine them",
             "algebraic": "3x squared + 2x squared = 5x squared because the variable part x squared is identical; 3x squared + 2x cannot be combined",
             "procedural": "Sort terms into groups with identical variable parts. Add or subtract coefficients within each group. Leave different groups separate"
           },
@@ -3370,7 +3390,7 @@
         {
           "id": "polynomials__distributive_property",
           "label": "Every term must be multiplied by every other term",
-          "description": "When multiplying a monomial by a polynomial, the monomial multiplies each and every term inside — no term can be skipped.",
+          "description": "When multiplying a monomial by a polynomial, the monomial multiplies each and every term inside \u2014 no term can be skipped.",
           "comes_from": "order_of_operations__parentheses_override",
           "failure_mode": "Students multiply the first term only: 3(x squared + 2x + 1) becomes 3x squared + 2x + 1 instead of 3x squared + 6x + 3",
           "failure_prior": 0.46,
@@ -3381,7 +3401,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw arrows from the 3 outside to each term inside: 3 times x squared, 3 times 2x, 3 times 1 — every term gets an arrow",
+            "geometric": "Draw arrows from the 3 outside to each term inside: 3 times x squared, 3 times 2x, 3 times 1 \u2014 every term gets an arrow",
             "algebraic": "3(x squared + 2x + 1) = 3 times x squared + 3 times 2x + 3 times 1 = 3x squared + 6x + 3",
             "procedural": "Count the terms inside the parentheses. You must write that many products. Cross off each term as you multiply it"
           },
@@ -3413,7 +3433,7 @@
         {
           "id": "polynomials__foil_expansion",
           "label": "Binomial multiplication needs all four pairings",
-          "description": "Multiplying two binomials requires four products: First, Outer, Inner, Last — every term in the first binomial multiplied by every term in the second.",
+          "description": "Multiplying two binomials requires four products: First, Outer, Inner, Last \u2014 every term in the first binomial multiplied by every term in the second.",
           "comes_from": "polynomials__distributive_property",
           "failure_mode": "Students multiply only the first terms and last terms: (x+2)(x+3) becomes x squared + 6 instead of x squared + 5x + 6",
           "failure_prior": 0.6,
@@ -3424,7 +3444,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw a 2 by 2 area model: top row is x and 2, left column is x and 3 — fill in all four cells then sum them",
+            "geometric": "Draw a 2 by 2 area model: top row is x and 2, left column is x and 3 \u2014 fill in all four cells then sum them",
             "algebraic": "(x+2)(x+3) = x times x + x times 3 + 2 times x + 2 times 3 = x squared + 3x + 2x + 6 = x squared + 5x + 6",
             "procedural": "Circle the four letter pairs F-O-I-L. Write each product on its own line. Combine like terms at the end. Verify you have four terms before combining"
           },
@@ -3464,7 +3484,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Think of degree as total dimensionality — x squared y cubed lives in 5-dimensional space because the exponents sum to 5",
+            "geometric": "Think of degree as total dimensionality \u2014 x squared y cubed lives in 5-dimensional space because the exponents sum to 5",
             "algebraic": "For each term add all variable exponents together. The polynomial's degree is the largest of those sums",
             "procedural": "Go term by term: sum the exponents in each term, record the sum, then take the maximum across all terms"
           },
@@ -3505,7 +3525,7 @@
           },
           "card_templates": {
             "geometric": "Think of each term as a product of blocks; pull out only the blocks that every term has in common.",
-            "algebraic": "For 12x²y³z⁴ − 30xy² + 24x²y⁵z, the common monomial is 6xy²; divide each term by 6xy² to get the bracket.",
+            "algebraic": "For 12x\u00b2y\u00b3z\u2074 \u2212 30xy\u00b2 + 24x\u00b2y\u2075z, the common monomial is 6xy\u00b2; divide each term by 6xy\u00b2 to get the bracket.",
             "procedural": "Find GCF of coefficients, then minimum exponent of each variable across all terms. That product is the GCF monomial."
           }
         }
@@ -3524,7 +3544,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "polynomial_operations"
+      ]
     },
     {
       "id": "factoring_polynomials",
@@ -3543,10 +3565,10 @@
       "population_failure_prior": {
         "overall": 0.335,
         "hardest_ingredient_id": "factoring_polynomials__ac_method",
-        "notes": "Students can factor when the leading coefficient is 1 but fail consistently when it is not — the ac method is the most-skipped skill in the entire algebra curriculum."
+        "notes": "Students can factor when the leading coefficient is 1 but fail consistently when it is not \u2014 the ac method is the most-skipped skill in the entire algebra curriculum."
       },
       "learning_style_affinity": {
-        "geometric_learner": "Use area model in reverse — fill in the known cells and work backward to find the dimensions",
+        "geometric_learner": "Use area model in reverse \u2014 fill in the known cells and work backward to find the dimensions",
         "algebraic_learner": "Use the systematic factor pairs approach with product and sum conditions",
         "procedural_learner": "Use a decision tree: check for GCF first, then count terms, then apply the matching technique"
       },
@@ -3554,7 +3576,7 @@
         {
           "id": "factoring_polynomials__gcf_extraction",
           "label": "Always factor out GCF first",
-          "description": "Before any other factoring, identify the greatest common factor of all terms and factor it out — this simplifies every subsequent step.",
+          "description": "Before any other factoring, identify the greatest common factor of all terms and factor it out \u2014 this simplifies every subsequent step.",
           "comes_from": "polynomials__distributive_property",
           "failure_mode": "Students jump to other factoring techniques without extracting the GCF, leaving unnecessarily large numbers that make the remaining steps harder",
           "failure_prior": 0.41,
@@ -3565,7 +3587,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "The GCF is the largest tile that fits evenly into every term — remove it and see what is left in each section",
+            "geometric": "The GCF is the largest tile that fits evenly into every term \u2014 remove it and see what is left in each section",
             "algebraic": "Find the largest number and highest power that divides every term: for 6x cubed + 4x squared the GCF is 2x squared",
             "procedural": "Step 1: list all coefficients and find their GCF. Step 2: find the lowest exponent for each variable across all terms. Step 3: factor out that product. Step 4: verify by distributing back"
           },
@@ -3598,7 +3620,7 @@
         {
           "id": "factoring_polynomials__factor_pairs",
           "label": "Quadratic factoring finds two numbers with specific product and sum",
-          "description": "For x squared + bx + c, find two numbers that multiply to c and add to b — those numbers are the constants in the factored form.",
+          "description": "For x squared + bx + c, find two numbers that multiply to c and add to b \u2014 those numbers are the constants in the factored form.",
           "comes_from": "polynomials__foil_expansion",
           "failure_mode": "Students find pairs that multiply to c but ignore the sum condition, or find pairs that add to b but forget to check the product",
           "failure_prior": 0.54,
@@ -3609,7 +3631,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Reverse the FOIL area model: you know the area is x squared + 5x + 6 — what dimensions of a rectangle produce that area? Try x+2 by x+3",
+            "geometric": "Reverse the FOIL area model: you know the area is x squared + 5x + 6 \u2014 what dimensions of a rectangle produce that area? Try x+2 by x+3",
             "algebraic": "For x squared + 5x + 6: need two numbers multiplying to 6 AND adding to 5. List factor pairs of 6: (1,6) sum 7, (2,3) sum 5. Answer: (x+2)(x+3)",
             "procedural": "List all factor pairs of c systematically. For each pair check whether it sums to b. The first pair that passes both tests gives your factored form"
           },
@@ -3653,7 +3675,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Use the area model with unknown dimensions — the total area is 2x squared + 7x + 3; the four cells must sum to this; fill in what you know and deduce the rest",
+            "geometric": "Use the area model with unknown dimensions \u2014 the total area is 2x squared + 7x + 3; the four cells must sum to this; fill in what you know and deduce the rest",
             "algebraic": "For 2x squared + 7x + 3: ac = 6, need factors of 6 adding to 7: that is 1 and 6. Rewrite as 2x squared + x + 6x + 3, then factor by grouping",
             "procedural": "Step 1: compute a times c. Step 2: find factor pairs of ac summing to b. Step 3: rewrite the middle term using those two numbers. Step 4: factor by grouping. Step 5: verify"
           },
@@ -3697,7 +3719,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw a square with area a squared, remove a square with area b squared from one corner — the remaining L-shaped region has area (a+b)(a-b)",
+            "geometric": "Draw a square with area a squared, remove a square with area b squared from one corner \u2014 the remaining L-shaped region has area (a+b)(a-b)",
             "algebraic": "x squared minus 9 = x squared minus 3 squared = (x+3)(x-3); the two factors are sum and difference of the square roots",
             "procedural": "Check: are both terms perfect squares with a minus between them? If yes apply the shortcut directly rather than factoring from scratch"
           },
@@ -3759,7 +3781,7 @@
       "population_failure_prior": {
         "overall": 0.214,
         "hardest_ingredient_id": "radicals__adding_radicals",
-        "notes": "Students correctly simplify individual radicals but fail when adding them — they add the radicands the way they add like terms, not understanding that the index not the radicand determines like terms."
+        "notes": "Students correctly simplify individual radicals but fail when adding them \u2014 they add the radicands the way they add like terms, not understanding that the index not the radicand determines like terms."
       },
       "learning_style_affinity": {
         "geometric_learner": "Show radicals as side lengths of geometric figures to build intuition",
@@ -3770,7 +3792,7 @@
         {
           "id": "radicals__root_as_inverse",
           "label": "Square root undoes squaring",
-          "description": "The square root of x is the number that when squared gives x — it is the inverse operation of squaring.",
+          "description": "The square root of x is the number that when squared gives x \u2014 it is the inverse operation of squaring.",
           "comes_from": "exponent_rules__zero_and_rational",
           "failure_mode": "Students compute the square root of 25 as 12.5 (dividing by 2) instead of 5, confusing the square root with halving",
           "failure_prior": 0.35,
@@ -3781,7 +3803,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "The square root of 25 is the side length of a square with area 25 — draw the square and count: each side is 5",
+            "geometric": "The square root of 25 is the side length of a square with area 25 \u2014 draw the square and count: each side is 5",
             "algebraic": "Square root of x = x to the power 1/2; (square root of x) squared = x because the operations cancel",
             "procedural": "To find the square root of n: ask what number times itself equals n. For 36: 6 times 6 = 36, so square root of 36 = 6"
           },
@@ -3897,7 +3919,7 @@
         {
           "id": "radicals__rationalizing",
           "label": "Rationalize by multiplying by a clever form of one",
-          "description": "To eliminate a radical from a denominator, multiply numerator and denominator by the radical (or conjugate) — this produces an integer in the denominator.",
+          "description": "To eliminate a radical from a denominator, multiply numerator and denominator by the radical (or conjugate) \u2014 this produces an integer in the denominator.",
           "comes_from": "fractions_decimals__equivalent_fractions",
           "failure_mode": "Students add the radical to the denominator instead of multiplying, or only multiply the denominator and not the numerator",
           "failure_prior": 0.47,
@@ -3908,7 +3930,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "You are multiplying by 1 written cleverly — square root of 2 over square root of 2 equals 1, so the value does not change",
+            "geometric": "You are multiplying by 1 written cleverly \u2014 square root of 2 over square root of 2 equals 1, so the value does not change",
             "algebraic": "1 over square root of 2 = (1 times square root of 2) over (square root of 2 times square root of 2) = square root of 2 over 2",
             "procedural": "Step 1: identify the radical in the denominator. Step 2: multiply top and bottom by that exact radical. Step 3: simplify the denominator. Step 4: simplify the numerator"
           },
@@ -3995,9 +4017,9 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Graph y = x squared minus 5x + 6 and read where it crosses the x-axis — those crossings at x=2 and x=3 are the solutions to x squared minus 5x + 6 = 0",
+            "geometric": "Graph y = x squared minus 5x + 6 and read where it crosses the x-axis \u2014 those crossings at x=2 and x=3 are the solutions to x squared minus 5x + 6 = 0",
             "algebraic": "Setting y = 0 in y = ax squared + bx + c gives the equation whose solutions are the x-intercepts",
-            "procedural": "After solving, check reasonableness on a rough sketch — your x-values should be where a parabola with that shape would plausibly cross the x-axis"
+            "procedural": "After solving, check reasonableness on a rough sketch \u2014 your x-values should be where a parabola with that shape would plausibly cross the x-axis"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -4028,7 +4050,7 @@
         {
           "id": "quadratics__vertex_from_roots",
           "label": "Vertex x-coordinate is the average of the roots",
-          "description": "Because a parabola is symmetric, the vertex sits exactly halfway between the two roots — average the x-intercepts to find it.",
+          "description": "Because a parabola is symmetric, the vertex sits exactly halfway between the two roots \u2014 average the x-intercepts to find it.",
           "comes_from": "quadratics__solutions_as_x_intercepts",
           "failure_mode": "Students use the formula x = negative b over 2a without understanding why it works, so they cannot verify it or adapt when the formula is unfamiliar",
           "failure_prior": 0.44,
@@ -4039,7 +4061,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Graph the parabola and draw a vertical line through the vertex — it is exactly the mirror line between the two x-intercepts, so average them to find it",
+            "geometric": "Graph the parabola and draw a vertical line through the vertex \u2014 it is exactly the mirror line between the two x-intercepts, so average them to find it",
             "algebraic": "If roots are r1 and r2 then vertex x = (r1 + r2) divided by 2; this is also negative b over 2a from Vieta's formulas",
             "procedural": "Step 1: find both roots. Step 2: add them and divide by 2. Step 3: substitute that x into the original equation to find the vertex y-coordinate"
           },
@@ -4071,7 +4093,7 @@
         {
           "id": "quadratics__factoring_method",
           "label": "Factoring uses the zero product property",
-          "description": "If a product of factors equals zero then at least one factor must be zero — set each factor equal to zero and solve independently.",
+          "description": "If a product of factors equals zero then at least one factor must be zero \u2014 set each factor equal to zero and solve independently.",
           "comes_from": "factoring_polynomials__factor_pairs",
           "failure_mode": "Students factor correctly but then add the constants: (x-2)(x-3) = 0 gives x = 5 because they add 2 and 3 instead of setting each factor to zero",
           "failure_prior": 0.44,
@@ -4082,7 +4104,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "If two lengths multiply to zero area, at least one length must be zero — the same logic applies to any two factors",
+            "geometric": "If two lengths multiply to zero area, at least one length must be zero \u2014 the same logic applies to any two factors",
             "algebraic": "Zero product property: if AB = 0 then A = 0 OR B = 0; set each factor independently equal to zero and solve",
             "procedural": "Step 1: factor the quadratic completely. Step 2: write Factor-1 = 0 and Factor-2 = 0 as two separate equations. Step 3: solve each independently"
           },
@@ -4126,7 +4148,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "The formula gives x-coordinates of both intersections with the x-axis — plus gives one crossing, minus gives the other",
+            "geometric": "The formula gives x-coordinates of both intersections with the x-axis \u2014 plus gives one crossing, minus gives the other",
             "algebraic": "Identify a, b, c from ax squared + bx + c carefully with signs: for 2x squared minus 5x + 3, a=2, b=negative 5, c=3",
             "procedural": "Step 1: write a, b, c with their signs. Step 2: compute b squared minus 4ac. Step 3: take the square root. Step 4: apply plus and minus for two answers. Step 5: divide everything by 2a"
           },
@@ -4169,7 +4191,7 @@
           },
           "card_templates": {
             "geometric": "Positive discriminant: parabola cuts x-axis at two points. Zero: it just touches the x-axis at one point. Negative: it floats above or below without touching",
-            "algebraic": "The discriminant is under the square root — negative means the square root is imaginary, so no real solutions exist",
+            "algebraic": "The discriminant is under the square root \u2014 negative means the square root is imaginary, so no real solutions exist",
             "procedural": "Before fully solving any quadratic: compute b squared minus 4ac. Record its sign. Predict the number of solutions. Then solve to confirm"
           },
           "node_type": "ingredient",
@@ -4212,7 +4234,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "quadratics"
+      ]
     },
     {
       "id": "descriptive_statistics",
@@ -4241,7 +4265,7 @@
         {
           "id": "descriptive_statistics__mean_as_balance",
           "label": "Mean is the balance point of the data",
-          "description": "The mean is the sum of all values divided by the count — it is the single value that would balance the data if placed on a scale.",
+          "description": "The mean is the sum of all values divided by the count \u2014 it is the single value that would balance the data if placed on a scale.",
           "comes_from": "ratios_proportions__unit_rate",
           "failure_mode": "Students compute the mean correctly but cannot explain what it represents or why outliers pull it far from the center of most values",
           "failure_prior": 0.38,
@@ -4252,7 +4276,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Plot the data on a number line and imagine a balance point — the mean is where the fulcrum would need to be so the data balances",
+            "geometric": "Plot the data on a number line and imagine a balance point \u2014 the mean is where the fulcrum would need to be so the data balances",
             "algebraic": "Mean = sum of all values divided by number of values; one very large outlier increases the sum significantly and pulls the mean toward it",
             "procedural": "Step 1: add all values. Step 2: divide by count of values. Step 3: check whether the result falls near most of the data or is pulled by an outlier"
           },
@@ -4284,7 +4308,7 @@
         {
           "id": "descriptive_statistics__median_as_middle",
           "label": "Median is the middle value when ordered",
-          "description": "The median is the middle value when all data is arranged in order — it is not affected by extreme values at either end.",
+          "description": "The median is the middle value when all data is arranged in order \u2014 it is not affected by extreme values at either end.",
           "comes_from": "descriptive_statistics__mean_as_balance",
           "failure_mode": "Students find the median of an even-count dataset by picking one of the two middle values instead of averaging both",
           "failure_prior": 0.43,
@@ -4295,7 +4319,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Line up all values from smallest to largest — the median is the person standing exactly in the middle; with even count it is halfway between the two middle people",
+            "geometric": "Line up all values from smallest to largest \u2014 the median is the person standing exactly in the middle; with even count it is halfway between the two middle people",
             "algebraic": "For odd count: median is value at position (n+1)/2. For even count: median is average of values at positions n/2 and (n/2)+1",
             "procedural": "Step 1: sort all values from smallest to largest. Step 2: count n. Step 3: if odd, pick the middle. If even, average the two middle values"
           },
@@ -4328,7 +4352,7 @@
         {
           "id": "descriptive_statistics__mean_vs_median",
           "label": "Outliers pull the mean but not the median",
-          "description": "The mean is sensitive to extreme values while the median is resistant — choose median when data is skewed or has outliers.",
+          "description": "The mean is sensitive to extreme values while the median is resistant \u2014 choose median when data is skewed or has outliers.",
           "comes_from": "descriptive_statistics__median_as_middle",
           "failure_mode": "Students report the mean as the best measure of center in all situations, not recognizing when it is misleading due to outliers",
           "failure_prior": 0.49,
@@ -4339,7 +4363,7 @@
             "conceptual": 0.4
           },
           "card_templates": {
-            "geometric": "Histogram skewed right with one huge outlier: the mean is pulled far right while the median stays near the bulk of the data — draw both positions",
+            "geometric": "Histogram skewed right with one huge outlier: the mean is pulled far right while the median stays near the bulk of the data \u2014 draw both positions",
             "algebraic": "Dataset: 1, 2, 3, 4, 100. Mean = 110/5 = 22. Median = 3. The mean of 22 does not describe any actual value in the data well",
             "procedural": "Before reporting mean: check for outliers. If any value is dramatically different from the rest, report median instead as the more representative center"
           },
@@ -4383,7 +4407,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Dot plots: narrow cluster means small standard deviation; wide spread means large standard deviation — draw both and compare widths",
+            "geometric": "Dot plots: narrow cluster means small standard deviation; wide spread means large standard deviation \u2014 draw both and compare widths",
             "algebraic": "Standard deviation is the square root of the average squared deviation from the mean; larger values mean data points are farther from center",
             "procedural": "To compare spread between two datasets: compute range for a rough comparison; compute standard deviation for a precise comparison"
           },
@@ -4424,7 +4448,7 @@
           },
           "card_templates": {
             "geometric": "Point to the named category first, read its percent or count, then only do arithmetic after the chart value is confirmed.",
-            "algebraic": "Translate chart value into a number: category votes = category percent × total votes.",
+            "algebraic": "Translate chart value into a number: category votes = category percent \u00d7 total votes.",
             "procedural": "Circle the named category, write its percentage, convert to decimal if needed, then multiply by the total."
           }
         }
@@ -4445,7 +4469,11 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "data_interpretation",
+        "statistics_data",
+        "statistics_graphs"
+      ]
     },
     {
       "id": "basic_probability",
@@ -4464,7 +4492,7 @@
       "population_failure_prior": {
         "overall": 0.375,
         "hardest_ingredient_id": "basic_probability__conditional_probability",
-        "notes": "Students confuse P(A and B) with P(A or B) and fail to recognize when events are independent versus dependent — the conditional probability concept breaks down completely without independence intuition."
+        "notes": "Students confuse P(A and B) with P(A or B) and fail to recognize when events are independent versus dependent \u2014 the conditional probability concept breaks down completely without independence intuition."
       },
       "learning_style_affinity": {
         "geometric_learner": "Use Venn diagrams and area models to show probability as proportional area",
@@ -4486,7 +4514,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw all possible outcomes as equal-sized squares — the probability is the fraction of squares that satisfy your event",
+            "geometric": "Draw all possible outcomes as equal-sized squares \u2014 the probability is the fraction of squares that satisfy your event",
             "algebraic": "P(event) = number of favorable outcomes divided by total number of possible outcomes; both must be counted from the same sample space",
             "procedural": "Step 1: list all possible outcomes. Step 2: identify which ones satisfy the event. Step 3: divide favorable count by total count"
           },
@@ -4515,7 +4543,7 @@
         {
           "id": "basic_probability__complement_rule",
           "label": "P of not A equals one minus P of A",
-          "description": "The probability of an event not occurring equals one minus the probability that it does occur — all probabilities in a sample space sum to one.",
+          "description": "The probability of an event not occurring equals one minus the probability that it does occur \u2014 all probabilities in a sample space sum to one.",
           "comes_from": "basic_probability__probability_as_ratio",
           "failure_mode": "Students compute complement by subtracting from the favorable count rather than from 1, giving values outside the 0 to 1 range",
           "failure_prior": 0.45,
@@ -4526,9 +4554,9 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the sample space as a rectangle with area 1 — shade the event; the complement is the unshaded portion and both must add to fill the whole rectangle",
+            "geometric": "Draw the sample space as a rectangle with area 1 \u2014 shade the event; the complement is the unshaded portion and both must add to fill the whole rectangle",
             "algebraic": "P(not A) = 1 minus P(A); since P(A) + P(not A) must equal 1 (all outcomes covered exactly once)",
-            "procedural": "When direct counting is hard: compute P(A), then subtract from 1 to get P(not A) — often much easier than counting the complement directly"
+            "procedural": "When direct counting is hard: compute P(A), then subtract from 1 to get P(not A) \u2014 often much easier than counting the complement directly"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -4557,7 +4585,7 @@
           "label": "AND means intersection, OR means union",
           "description": "P(A and B) is the probability both happen simultaneously; P(A or B) is the probability at least one of them happens.",
           "comes_from": "basic_probability__complement_rule",
-          "failure_mode": "Students use the multiplication rule for OR problems and the addition rule for AND problems — they mix up which formula goes with which word",
+          "failure_mode": "Students use the multiplication rule for OR problems and the addition rule for AND problems \u2014 they mix up which formula goes with which word",
           "failure_prior": 0.46,
           "learning_vector": {
             "geometric": 0.5,
@@ -4597,7 +4625,7 @@
         {
           "id": "basic_probability__conditional_probability",
           "label": "Conditional probability updates sample space",
-          "description": "P(A given B) is the probability of A occurring knowing that B has already occurred — it restricts the sample space to only outcomes where B is true.",
+          "description": "P(A given B) is the probability of A occurring knowing that B has already occurred \u2014 it restricts the sample space to only outcomes where B is true.",
           "comes_from": "basic_probability__and_or_distinction",
           "failure_mode": "Students compute P(A given B) as P(A and B) divided by total outcomes instead of dividing by P(B), not recognizing that the sample space has shrunk",
           "failure_prior": 0.65,
@@ -4608,7 +4636,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Venn diagram: given B has happened, shade only the B circle — now what fraction of that shaded B region falls inside A? That fraction is P(A given B)",
+            "geometric": "Venn diagram: given B has happened, shade only the B circle \u2014 now what fraction of that shaded B region falls inside A? That fraction is P(A given B)",
             "algebraic": "P(A given B) = P(A and B) divided by P(B); you are zooming into B as your new universe",
             "procedural": "Step 1: restrict sample space to only outcomes where B is true. Step 2: count how many of those also satisfy A. Step 3: divide"
           },
@@ -4649,7 +4677,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "combinatorics",
+        "probability_statistics"
+      ]
     },
     {
       "id": "exponential_functions",
@@ -4670,7 +4701,7 @@
         "notes": "Students evaluate exponential functions correctly but cannot determine from the equation whether it represents growth or decay without plugging in numbers."
       },
       "learning_style_affinity": {
-        "geometric_learner": "Start with the graph — show the J-curve shape and where it starts",
+        "geometric_learner": "Start with the graph \u2014 show the J-curve shape and where it starts",
         "algebraic_learner": "Start with the base b and how values above and below 1 behave differently",
         "procedural_learner": "Build a table of values first before graphing or interpreting"
       },
@@ -4678,9 +4709,9 @@
         {
           "id": "exponential_functions__base_and_exponent",
           "label": "Variable is in the exponent not the base",
-          "description": "An exponential function has the form f(x) = a times b to the x — the variable x appears in the exponent, not in the base.",
+          "description": "An exponential function has the form f(x) = a times b to the x \u2014 the variable x appears in the exponent, not in the base.",
           "comes_from": "functions_basics__function_as_machine",
-          "failure_mode": "Students confuse exponential functions with power functions: f(x) = x squared (power) vs f(x) = 2 to the x (exponential) — the roles of base and exponent are swapped",
+          "failure_mode": "Students confuse exponential functions with power functions: f(x) = x squared (power) vs f(x) = 2 to the x (exponential) \u2014 the roles of base and exponent are swapped",
           "failure_prior": 0.4,
           "learning_vector": {
             "geometric": 0.2,
@@ -4689,8 +4720,8 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Table of values for 2 to the x: x goes 0,1,2,3 giving 1,2,4,8 — values double each step, which is a fundamentally different growth pattern than x squared",
-            "algebraic": "In 2 to the x the base 2 is fixed and x varies; in x squared the base x varies and the exponent is fixed — structurally opposite functions",
+            "geometric": "Table of values for 2 to the x: x goes 0,1,2,3 giving 1,2,4,8 \u2014 values double each step, which is a fundamentally different growth pattern than x squared",
+            "algebraic": "In 2 to the x the base 2 is fixed and x varies; in x squared the base x varies and the exponent is fixed \u2014 structurally opposite functions",
             "procedural": "Ask: where is the variable? If it is in the exponent (2 to the x) it is exponential. If it is in the base (x squared) it is a power function"
           },
           "node_type": "ingredient",
@@ -4720,7 +4751,7 @@
           "label": "Base above one grows, base between zero and one decays",
           "description": "If the base b is greater than 1, the function grows as x increases. If b is between 0 and 1, the function decays toward zero.",
           "comes_from": "exponential_functions__base_and_exponent",
-          "failure_mode": "Students cannot determine growth or decay without computing multiple values — they do not recognize the base value as the direct indicator",
+          "failure_mode": "Students cannot determine growth or decay without computing multiple values \u2014 they do not recognize the base value as the direct indicator",
           "failure_prior": 0.52,
           "learning_vector": {
             "geometric": 0.4,
@@ -4729,9 +4760,9 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Graph 2 to the x and (1/2) to the x on the same axes — one rises steeply to the right, the other falls — both have the same shape reflected",
+            "geometric": "Graph 2 to the x and (1/2) to the x on the same axes \u2014 one rises steeply to the right, the other falls \u2014 both have the same shape reflected",
             "algebraic": "If b is greater than 1: multiplying by b makes values larger each step (growth). If b is less than 1: multiplying by b makes values smaller each step (decay)",
-            "procedural": "Look at the base value only: greater than 1 means growth, between 0 and 1 means decay — no computation needed"
+            "procedural": "Look at the base value only: greater than 1 means growth, between 0 and 1 means decay \u2014 no computation needed"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -4769,8 +4800,8 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "Build the table for 3 to the x: 1, 3, 9, 27, 81 — each row multiplies by 3, not adds 3. The gaps between values grow larger and larger",
-            "algebraic": "f(x+1) divided by f(x) = b to the (x+1) divided by b to the x = b — the ratio between consecutive outputs is always the constant base",
+            "geometric": "Build the table for 3 to the x: 1, 3, 9, 27, 81 \u2014 each row multiplies by 3, not adds 3. The gaps between values grow larger and larger",
+            "algebraic": "f(x+1) divided by f(x) = b to the (x+1) divided by b to the x = b \u2014 the ratio between consecutive outputs is always the constant base",
             "procedural": "To identify exponential vs linear from a table: check ratios (divide consecutive y-values). If constant ratio then exponential. If constant difference then linear"
           },
           "node_type": "ingredient",
@@ -4798,7 +4829,7 @@
         {
           "id": "exponential_functions__initial_value",
           "label": "The coefficient a is the starting value at x equals zero",
-          "description": "In f(x) = a times b to the x, the value a is the output when x = 0 — it scales the entire function without changing its growth pattern.",
+          "description": "In f(x) = a times b to the x, the value a is the output when x = 0 \u2014 it scales the entire function without changing its growth pattern.",
           "comes_from": "linear_equations__y_intercept_meaning",
           "failure_mode": "Students confuse a and b, thinking a determines growth rate and b is just a stretch factor",
           "failure_prior": 0.45,
@@ -4809,9 +4840,9 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "On the graph of a times b to the x the y-intercept is always the point (0, a) — different values of a shift the curve up or down without changing its steepness",
+            "geometric": "On the graph of a times b to the x the y-intercept is always the point (0, a) \u2014 different values of a shift the curve up or down without changing its steepness",
             "algebraic": "f(0) = a times b to the 0 = a times 1 = a; so a is always the y-intercept regardless of b",
-            "procedural": "To identify a from a word problem: find the value at time zero or at the start — that is always a in the exponential model"
+            "procedural": "To identify a from a word problem: find the value at time zero or at the start \u2014 that is always a in the exponential model"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -4868,7 +4899,7 @@
       "population_failure_prior": {
         "overall": 0.55,
         "hardest_ingredient_id": "logarithmic_functions__log_properties_combined",
-        "notes": "Students solve single-rule log problems but fail completely when two or more log properties must be applied in sequence — exactly the tutoring scenario you described."
+        "notes": "Students solve single-rule log problems but fail completely when two or more log properties must be applied in sequence \u2014 exactly the tutoring scenario you described."
       },
       "learning_style_affinity": {
         "geometric_learner": "Start with the graph of the log as the reflection of the exponential across y=x",
@@ -4879,7 +4910,7 @@
         {
           "id": "logarithmic_functions__log_as_inverse_exp",
           "label": "Log asks what exponent produces this output",
-          "description": "log base b of x equals the exponent you must raise b to in order to get x — logarithm and exponentiation are inverse operations.",
+          "description": "log base b of x equals the exponent you must raise b to in order to get x \u2014 logarithm and exponentiation are inverse operations.",
           "comes_from": "exponential_functions__base_and_exponent",
           "failure_mode": "Students treat log base b of x as b divided by x or b times x, having no conceptual anchor for what the log operation does",
           "failure_prior": 0.6,
@@ -4890,8 +4921,8 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "log base 2 of 8 = 3 because 2 to the 3 equals 8 — plot the exponential and the log on the same axes to see they are reflections",
-            "algebraic": "log base b of x = y means exactly b to the y = x — rewrite every log problem in exponential form first",
+            "geometric": "log base 2 of 8 = 3 because 2 to the 3 equals 8 \u2014 plot the exponential and the log on the same axes to see they are reflections",
+            "algebraic": "log base b of x = y means exactly b to the y = x \u2014 rewrite every log problem in exponential form first",
             "procedural": "To evaluate log base b of x: ask what power of b gives x. Write b to the question-mark = x. Solve for the question mark"
           },
           "node_type": "ingredient",
@@ -4919,7 +4950,7 @@
         {
           "id": "logarithmic_functions__log_product_rule",
           "label": "Log of a product equals sum of logs",
-          "description": "log(A times B) = log(A) + log(B) — the log of a product splits into a sum of individual logs.",
+          "description": "log(A times B) = log(A) + log(B) \u2014 the log of a product splits into a sum of individual logs.",
           "comes_from": "logarithmic_functions__log_as_inverse_exp",
           "failure_mode": "Students apply the product rule in reverse incorrectly: writing log(A) + log(B) = log(A + B) instead of log(A times B)",
           "failure_prior": 0.55,
@@ -4930,7 +4961,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "This mirrors the exponent product rule: b to the m times b to the n = b to the (m+n) — taking the log of both sides gives exactly the product rule",
+            "geometric": "This mirrors the exponent product rule: b to the m times b to the n = b to the (m+n) \u2014 taking the log of both sides gives exactly the product rule",
             "algebraic": "log(6) = log(2 times 3) = log(2) + log(3); verify numerically: log(2) is about 0.301, log(3) is about 0.477, log(6) is about 0.778",
             "procedural": "Practice in isolation first: expand log(xy) into log(x) + log(y). Then practice in isolation: condense log(x) + log(y) into log(xy). Master each direction separately before combining"
           },
@@ -4959,7 +4990,7 @@
         {
           "id": "logarithmic_functions__log_power_rule",
           "label": "Log of a power brings the exponent in front",
-          "description": "log(A to the n) = n times log(A) — an exponent inside the log becomes a multiplier outside it.",
+          "description": "log(A to the n) = n times log(A) \u2014 an exponent inside the log becomes a multiplier outside it.",
           "comes_from": "logarithmic_functions__log_product_rule",
           "failure_mode": "Students write log(x squared) as (log x) squared, squaring the log instead of moving the exponent to the front as a coefficient",
           "failure_prior": 0.6,
@@ -4970,7 +5001,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "log(x squared) = log(x times x) = log(x) + log(x) = 2 log(x) — the product rule applied twice gives the power rule",
+            "geometric": "log(x squared) = log(x times x) = log(x) + log(x) = 2 log(x) \u2014 the product rule applied twice gives the power rule",
             "algebraic": "log(x to the n) = n times log(x); the exponent n steps outside and becomes a coefficient multiplying the whole log",
             "procedural": "Spot an exponent inside a log. Pull it to the front as a coefficient. Keep the base of the log unchanged. Practice this step alone ten times before combining with product rule"
           },
@@ -5010,7 +5041,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Show the simplification as a two-step staircase: first arrow applies product rule, second arrow applies power rule — one step at a time",
+            "geometric": "Show the simplification as a two-step staircase: first arrow applies product rule, second arrow applies power rule \u2014 one step at a time",
             "algebraic": "For log(x squared times y): first apply product rule to get log(x squared) + log(y); then apply power rule to get 2 log(x) + log(y)",
             "procedural": "Rule for complex expressions: identify the outermost operation first and apply that rule. Then identify the next outermost and apply that. Never try to apply two rules in one step"
           },
@@ -5110,7 +5141,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Arithmetic sequences look like evenly spaced steps on a staircase — each step is the same height",
+            "geometric": "Arithmetic sequences look like evenly spaced steps on a staircase \u2014 each step is the same height",
             "algebraic": "An(n) = a1 + (n minus 1)d where d is the common difference; the nth term is linear in n which makes arithmetic sequences related to linear functions",
             "procedural": "Check consecutive differences: subtract each term from the next. If all differences are equal the sequence is arithmetic and d is that difference"
           },
@@ -5153,7 +5184,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Geometric sequences look like exponential curves — slow then exploding upward (for ratio above 1) or decaying toward zero (for ratio below 1)",
+            "geometric": "Geometric sequences look like exponential curves \u2014 slow then exploding upward (for ratio above 1) or decaying toward zero (for ratio below 1)",
             "algebraic": "An(n) = a1 times r to the (n minus 1) where r is the common ratio; the nth term is exponential in n",
             "procedural": "Check consecutive ratios: divide each term by the previous term. If all ratios are equal the sequence is geometric and r is that ratio"
           },
@@ -5193,7 +5224,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "The first term needs zero steps from itself — so for the 1st term you use (1 minus 1) = 0 multiplications of d or r",
+            "geometric": "The first term needs zero steps from itself \u2014 so for the 1st term you use (1 minus 1) = 0 multiplications of d or r",
             "algebraic": "For arithmetic: a-sub-1 + (n-1)d; verify: plug in n=1 to get a-sub-1 + 0 = a-sub-1 which is correct for the first term",
             "procedural": "Identify a1, d (or r), and the target n. Substitute into the correct formula. Check by verifying a-sub-1 gives the first term listed"
           },
@@ -5239,7 +5270,7 @@
           "card_templates": {
             "geometric": "Show the telescoping derivation: S minus rS = a1 minus a1 times r to the n; the middle terms cancel leaving only first and last",
             "algebraic": "S-sub-n = a1(1 minus r to the n) divided by (1 minus r); for infinite series with r between negative-1 and 1: sum = a1 divided by (1 minus r)",
-            "procedural": "Identify a1, r, and n. Substitute into the formula. For r close to 0 or 1 compute carefully — small denominators amplify rounding errors"
+            "procedural": "Identify a1, r, and n. Substitute into the formula. For r close to 0 or 1 compute carefully \u2014 small denominators amplify rounding errors"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -5278,7 +5309,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "number_patterns",
+        "sequences_and_series"
+      ]
     },
     {
       "id": "lines_angles",
@@ -5310,7 +5344,7 @@
           "label": "Supplementary angles sum to 180, complementary to 90",
           "description": "Two angles are supplementary if they sum to 180 degrees; complementary if they sum to 90 degrees.",
           "comes_from": "basic_equations__do_same_to_both_sides",
-          "failure_mode": "Students swap supplementary and complementary — they use 90 for supplementary and 180 for complementary",
+          "failure_mode": "Students swap supplementary and complementary \u2014 they use 90 for supplementary and 180 for complementary",
           "failure_prior": 0.38,
           "learning_vector": {
             "geometric": 0.4,
@@ -5352,7 +5386,7 @@
         {
           "id": "lines_angles__vertical_angles",
           "label": "Vertical angles are equal",
-          "description": "When two lines intersect they form two pairs of vertical angles — the angles across from each other are always equal.",
+          "description": "When two lines intersect they form two pairs of vertical angles \u2014 the angles across from each other are always equal.",
           "comes_from": "lines_angles__supplementary_complementary",
           "failure_mode": "Students think adjacent angles at an intersection are equal instead of vertical (opposite) angles",
           "failure_prior": 0.38,
@@ -5363,8 +5397,8 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw two intersecting lines forming an X — label all four angles; the ones diagonally across from each other (not adjacent) are the equal vertical pair",
-            "algebraic": "Both vertical angles equal 180 degrees minus the adjacent angle — so they are equal to each other",
+            "geometric": "Draw two intersecting lines forming an X \u2014 label all four angles; the ones diagonally across from each other (not adjacent) are the equal vertical pair",
+            "algebraic": "Both vertical angles equal 180 degrees minus the adjacent angle \u2014 so they are equal to each other",
             "procedural": "At any intersection: vertical means diagonally opposite, not next to. Mark the pair that is across from each other and set them equal"
           },
           "node_type": "ingredient",
@@ -5407,7 +5441,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw two parallel lines with a transversal. Color all equal angles the same color and supplementary pairs differently — the Z-shape gives alternates, F-shape gives corresponding",
+            "geometric": "Draw two parallel lines with a transversal. Color all equal angles the same color and supplementary pairs differently \u2014 the Z-shape gives alternates, F-shape gives corresponding",
             "algebraic": "Name each angle by position. Equal pairs: set them equal. Supplementary pairs: set their sum equal to 180. Solve for the unknown",
             "procedural": "Step 1: identify the angle pair type using the shape mnemonic (Z for alternate, F for corresponding, C for co-interior). Step 2: apply the correct relationship (equal or supplementary)"
           },
@@ -5477,7 +5511,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "lines_and_angles",
+        "plane_geometry"
+      ]
     },
     {
       "id": "triangles_congruence",
@@ -5517,7 +5554,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Tear the three corners off any triangle and arrange them in a row — they always form a straight line of 180 degrees",
+            "geometric": "Tear the three corners off any triangle and arrange them in a row \u2014 they always form a straight line of 180 degrees",
             "algebraic": "A + B + C = 180; if two angles are known the third is 180 minus their sum",
             "procedural": "For any triangle: add the two known angles, subtract from 180 to find the third"
           },
@@ -5550,7 +5587,7 @@
         {
           "id": "triangles__congruence_criteria",
           "label": "Congruence is proven with minimal side and angle information",
-          "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS — specific combinations of matching sides and angles.",
+          "description": "Two triangles are congruent (identical) if they satisfy SSS, SAS, ASA, or AAS \u2014 specific combinations of matching sides and angles.",
           "comes_from": "triangles__angle_sum",
           "failure_mode": "Students try to use SSA (two sides and the non-included angle) as a congruence criterion when it is not valid except in specific cases",
           "failure_prior": 0.45,
@@ -5561,7 +5598,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "SSA is ambiguous — demonstrate by drawing two different triangles that both satisfy two sides and a non-included angle with the same measurements",
+            "geometric": "SSA is ambiguous \u2014 demonstrate by drawing two different triangles that both satisfy two sides and a non-included angle with the same measurements",
             "algebraic": "Valid criteria: SSS (three sides), SAS (two sides and included angle), ASA (two angles and included side), AAS (two angles and non-included side), HL (right triangle hypotenuse-leg)",
             "procedural": "List the given information, identify which criterion applies, verify the included vs non-included distinction for SAS vs SSA"
           },
@@ -5590,7 +5627,7 @@
         {
           "id": "triangles__similarity_ratios",
           "label": "Similar triangles have proportional corresponding sides",
-          "description": "Similar triangles have equal angles and proportional sides — corresponding sides must be matched correctly before setting up any ratio.",
+          "description": "Similar triangles have equal angles and proportional sides \u2014 corresponding sides must be matched correctly before setting up any ratio.",
           "comes_from": "ratios_proportions__proportion_setup",
           "failure_mode": "Students match sides by position in the written order rather than by corresponding angles, creating incorrect ratios",
           "failure_prior": 0.45,
@@ -5601,7 +5638,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw both triangles with corresponding angles marked with the same symbol — sides opposite the same symbol are corresponding and must go in the same position in the ratio",
+            "geometric": "Draw both triangles with corresponding angles marked with the same symbol \u2014 sides opposite the same symbol are corresponding and must go in the same position in the ratio",
             "algebraic": "Match by angle: side opposite angle A in triangle 1 over side opposite angle A in triangle 2 = side opposite B in triangle 1 over side opposite B in triangle 2",
             "procedural": "Step 1: identify and match corresponding angles between the two triangles. Step 2: identify sides opposite each matched angle. Step 3: set up ratio with matched sides in consistent positions"
           },
@@ -5646,7 +5683,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "triangles_and_congruence"
+      ]
     },
     {
       "id": "circles_geometry",
@@ -5686,7 +5725,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw a full circle and shade a sector — the arc length and sector area are the same fraction of the whole circle as the angle is of 360 degrees",
+            "geometric": "Draw a full circle and shade a sector \u2014 the arc length and sector area are the same fraction of the whole circle as the angle is of 360 degrees",
             "algebraic": "Arc length = (theta over 360) times 2 pi r; Sector area = (theta over 360) times pi r squared; both use the same fraction",
             "procedural": "Step 1: write the angle as a fraction of 360. Step 2: multiply that fraction by the full circumference for arc length, or by the full area for sector area"
           },
@@ -5729,7 +5768,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the central angle and the inscribed angle subtending the same arc — measure both and observe the inscribed is always exactly half",
+            "geometric": "Draw the central angle and the inscribed angle subtending the same arc \u2014 measure both and observe the inscribed is always exactly half",
             "algebraic": "Inscribed angle = (1/2) times central angle for the same intercepted arc",
             "procedural": "Given inscribed angle: double it to get the arc measure. Given central angle: halve it to get any inscribed angle on the same arc"
           },
@@ -5769,7 +5808,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw a circle with a radius to any point on the circumference — the tangent is the line perfectly perpendicular to that radius at that point",
+            "geometric": "Draw a circle with a radius to any point on the circumference \u2014 the tangent is the line perfectly perpendicular to that radius at that point",
             "algebraic": "If radius to point P has slope m, the tangent at P has slope negative-1/m (perpendicular slopes are negative reciprocals)",
             "procedural": "To find tangent line at a point: find the slope of the radius to that point, then take negative reciprocal as the tangent slope"
           },
@@ -5802,7 +5841,7 @@
         {
           "id": "circles__semicircle_area_from_diameter",
           "label": "Semicircle area from diameter",
-          "description": "If a diameter is known, radius is half of it; semicircle area is one half of πr².",
+          "description": "If a diameter is known, radius is half of it; semicircle area is one half of \u03c0r\u00b2.",
           "comes_from": "area_volume__standard_formulas",
           "failure_mode": "Students use the diameter as the radius or forget to divide the full circle area by two for a semicircle.",
           "failure_prior": 0.44,
@@ -5814,8 +5853,8 @@
           },
           "card_templates": {
             "geometric": "Draw the diameter across the circle and mark radius as half that length. Shade half the circle to show why the area is divided by two.",
-            "algebraic": "Area of semicircle = (1/2)π(d/2)². Diameter must be halved before squaring.",
-            "procedural": "Step 1: find diameter. Step 2: divide by 2 for radius. Step 3: compute πr². Step 4: divide by 2."
+            "algebraic": "Area of semicircle = (1/2)\u03c0(d/2)\u00b2. Diameter must be halved before squaring.",
+            "procedural": "Step 1: find diameter. Step 2: divide by 2 for radius. Step 3: compute \u03c0r\u00b2. Step 4: divide by 2."
           },
           "canonical_misconception_family": "mis_circles_geometry__does_not_know_term_diameter",
           "diagnostic_tags": [
@@ -5838,7 +5877,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "geometry_circles",
+        "geometry_of_circles"
+      ]
     },
     {
       "id": "area_volume",
@@ -5861,7 +5903,7 @@
       },
       "learning_style_affinity": {
         "geometric_learner": "Start by decomposing shapes physically before applying any formula",
-        "algebraic_learner": "Start with dimensional analysis — area has squared units, volume has cubed units",
+        "algebraic_learner": "Start with dimensional analysis \u2014 area has squared units, volume has cubed units",
         "procedural_learner": "Build a formula reference table then practice selecting the right formula systematically"
       },
       "ingredients": [
@@ -5879,7 +5921,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "For every triangle formula: draw the perpendicular height as a dashed line dropping straight down from the apex to the base line — that is always the height",
+            "geometric": "For every triangle formula: draw the perpendicular height as a dashed line dropping straight down from the apex to the base line \u2014 that is always the height",
             "algebraic": "Height in any area formula must be perpendicular to the base. Slant height is the hypotenuse of a right triangle, not the perpendicular",
             "procedural": "Before plugging into the triangle formula: verify the height is perpendicular. If given the slant, use Pythagorean theorem to find the true perpendicular height first"
           },
@@ -5912,7 +5954,7 @@
         {
           "id": "area_volume__composite_figures",
           "label": "Composite figures decompose into standard shapes",
-          "description": "Irregular figures can be broken into non-overlapping standard shapes — add their areas for total area, or subtract a removed region.",
+          "description": "Irregular figures can be broken into non-overlapping standard shapes \u2014 add their areas for total area, or subtract a removed region.",
           "comes_from": "area_volume__standard_formulas",
           "failure_mode": "Students add all shape areas including the overlapping regions, double-counting the shared section",
           "failure_prior": 0.55,
@@ -5923,7 +5965,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the decomposition lines directly on the figure — use different colors for each section. Verify no region is colored twice before calculating",
+            "geometric": "Draw the decomposition lines directly on the figure \u2014 use different colors for each section. Verify no region is colored twice before calculating",
             "algebraic": "Total area = sum of component areas (for addition) or large shape area minus removed shape area (for subtraction strategy)",
             "procedural": "Step 1: draw the split lines to separate standard shapes. Step 2: label each region. Step 3: compute each region separately. Step 4: add regions ensuring no overlap"
           },
@@ -5963,7 +6005,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Imagine stacking identical base-shaped layers upward — each layer has area A, and stacking h layers gives total volume A times h",
+            "geometric": "Imagine stacking identical base-shaped layers upward \u2014 each layer has area A, and stacking h layers gives total volume A times h",
             "algebraic": "V = A-base times h; for a cylinder A-base = pi r squared so V = pi r squared h; for a rectangular prism A-base = lw so V = lwh",
             "procedural": "Step 1: identify the base shape and compute its area. Step 2: identify the height (perpendicular to the base). Step 3: multiply area by height"
           },
@@ -6032,7 +6074,7 @@
           },
           "card_templates": {
             "geometric": "A 100 square-unit square can be seen as a 10 by 10 grid, so each side is 10 units.",
-            "algebraic": "A = s², so s = √A. If A = 100, then s = 10.",
+            "algebraic": "A = s\u00b2, so s = \u221aA. If A = 100, then s = 10.",
             "procedural": "Take the square root of the area to get one side length; do not divide the area by four."
           },
           "canonical_misconception_family": "mis_area_volume__does_not_know_units_area",
@@ -6057,7 +6099,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "area_and_volume",
+        "solid_geometry"
+      ]
     },
     {
       "id": "geometric_transformations",
@@ -6086,7 +6131,7 @@
         {
           "id": "transformations__translation_rules",
           "label": "Translation shifts every point by the same amount",
-          "description": "A translation by vector (a,b) moves every point (x,y) to (x+a, y+b) — shape and orientation are preserved.",
+          "description": "A translation by vector (a,b) moves every point (x,y) to (x+a, y+b) \u2014 shape and orientation are preserved.",
           "comes_from": "linear_equations__y_intercept_meaning",
           "failure_mode": "Students subtract instead of add for translations in the negative direction, or translate only some vertices instead of all of them",
           "failure_prior": 0.35,
@@ -6097,7 +6142,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the original shape, draw arrows of the same length and direction from every vertex — the tips of the arrows are the new vertices",
+            "geometric": "Draw the original shape, draw arrows of the same length and direction from every vertex \u2014 the tips of the arrows are the new vertices",
             "algebraic": "Translation (a,b): (x,y) maps to (x+a, y+b); positive a moves right, negative a moves left, positive b moves up, negative b moves down",
             "procedural": "Apply the same addition to every vertex x-coordinate and y-coordinate separately. Verify by checking the shape's dimensions are unchanged"
           },
@@ -6141,7 +6186,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "For reflection across x-axis: fold the paper along the x-axis — points stay the same horizontal distance from the axis, just flipped below",
+            "geometric": "For reflection across x-axis: fold the paper along the x-axis \u2014 points stay the same horizontal distance from the axis, just flipped below",
             "algebraic": "Across x-axis: (x,y) maps to (x, negative-y). Across y-axis: (x,y) maps to (negative-x, y). Across y=x: (x,y) maps to (y, x)",
             "procedural": "Identify the line of reflection. Apply the corresponding coordinate rule to every vertex independently"
           },
@@ -6185,7 +6230,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Plot point (3,1). Rotate counterclockwise 90 degrees by hand on graph paper — verify you reach (negative-1, 3), confirming the swap-and-negate rule",
+            "geometric": "Plot point (3,1). Rotate counterclockwise 90 degrees by hand on graph paper \u2014 verify you reach (negative-1, 3), confirming the swap-and-negate rule",
             "algebraic": "CCW 90: (x,y) to (negative-y, x). CW 90: (x,y) to (y, negative-x). 180 degrees: (x,y) to (negative-x, negative-y) for both directions",
             "procedural": "For CCW: new first coordinate = negative old second, new second coordinate = old first. For CW: new first = old second, new second = negative old first"
           },
@@ -6251,7 +6296,7 @@
         "notes": "Students cancel terms instead of factors when simplifying, and cannot find the LCD when denominators have variable expressions requiring factoring first."
       },
       "learning_style_affinity": {
-        "geometric_learner": "Use numeric fraction analogies — every rule mirrors the fraction rules from earlier",
+        "geometric_learner": "Use numeric fraction analogies \u2014 every rule mirrors the fraction rules from earlier",
         "algebraic_learner": "Treat variables as unknown numbers and apply fraction rules formally",
         "procedural_learner": "Factor everything first as the universal first step before any other operation"
       },
@@ -6259,7 +6304,7 @@
         {
           "id": "rational_expressions__factor_first",
           "label": "Factor numerator and denominator before canceling",
-          "description": "To simplify a rational expression, factor both top and bottom completely, then cancel common factors — never cancel individual terms.",
+          "description": "To simplify a rational expression, factor both top and bottom completely, then cancel common factors \u2014 never cancel individual terms.",
           "comes_from": "factoring_polynomials__gcf_extraction",
           "failure_mode": "Students cancel terms rather than factors: in (x squared + 2x)/(x + 2) they cancel the x squared and the 2 instead of factoring x out first",
           "failure_prior": 0.52,
@@ -6270,7 +6315,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Think of fractions: in 6/8 you cancel the common factor 2 not the individual digits 6 and 8 separately — the same rule applies to polynomial expressions",
+            "geometric": "Think of fractions: in 6/8 you cancel the common factor 2 not the individual digits 6 and 8 separately \u2014 the same rule applies to polynomial expressions",
             "algebraic": "(x squared + 2x)/(x + 2) = x(x + 2)/(x + 2) = x; the factor (x+2) cancels completely as a unit",
             "procedural": "Step 1: factor numerator completely. Step 2: factor denominator completely. Step 3: identify common factors. Step 4: cancel those factors. Step 5: note excluded values"
           },
@@ -6346,7 +6391,7 @@
         {
           "id": "rational_expressions__excluded_values",
           "label": "Values making denominator zero must be excluded",
-          "description": "Any value of x that makes a denominator equal to zero is excluded from the domain — these must be stated even after simplification.",
+          "description": "Any value of x that makes a denominator equal to zero is excluded from the domain \u2014 these must be stated even after simplification.",
           "comes_from": "functions_basics__domain_range",
           "failure_mode": "Students simplify correctly but forget to state the excluded values, not realizing cancellation hides them from the simplified form",
           "failure_prior": 0.44,
@@ -6357,8 +6402,8 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Even though (x+2)/(x+2) simplifies to 1, the original expression is undefined at x = negative-2 — the simplified form hides this fact",
-            "algebraic": "Set each factor in the original denominator equal to zero and solve — these x-values are excluded from the entire problem",
+            "geometric": "Even though (x+2)/(x+2) simplifies to 1, the original expression is undefined at x = negative-2 \u2014 the simplified form hides this fact",
+            "algebraic": "Set each factor in the original denominator equal to zero and solve \u2014 these x-values are excluded from the entire problem",
             "procedural": "Before simplifying: set each denominator factor equal to zero and record excluded values. These restrictions carry through to the final answer"
           },
           "node_type": "ingredient",
@@ -6431,7 +6476,7 @@
         {
           "id": "complex_numbers__i_definition",
           "label": "i is defined as the square root of negative-1",
-          "description": "The imaginary unit i satisfies i squared = negative-1 — it is a new number created to solve equations with no real solutions.",
+          "description": "The imaginary unit i satisfies i squared = negative-1 \u2014 it is a new number created to solve equations with no real solutions.",
           "comes_from": "radical_expressions__root_as_inverse",
           "failure_mode": "Students treat i as a variable like x, not recognizing that i squared has a specific value of negative-1 and must be simplified",
           "failure_prior": 0.39,
@@ -6588,7 +6633,7 @@
         "notes": "Students can compute dot products mechanically but cannot interpret the result geometrically or use it to determine perpendicularity."
       },
       "learning_style_affinity": {
-        "geometric_learner": "Start with arrows on a coordinate plane — magnitude is length, direction is the angle",
+        "geometric_learner": "Start with arrows on a coordinate plane \u2014 magnitude is length, direction is the angle",
         "algebraic_learner": "Start with component notation and the algebraic operations",
         "procedural_learner": "Start with the magnitude formula and component decomposition as separate skills"
       },
@@ -6607,7 +6652,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the vector as a diagonal arrow; drop a horizontal shadow and a vertical shadow — the shadows are the components, with cos for horizontal and sin for vertical",
+            "geometric": "Draw the vector as a diagonal arrow; drop a horizontal shadow and a vertical shadow \u2014 the shadows are the components, with cos for horizontal and sin for vertical",
             "algebraic": "Vector v at angle theta with magnitude r: v = (r cos theta, r sin theta); horizontal is cos, vertical is sin",
             "procedural": "Step 1: draw the right triangle under the vector. Step 2: label the horizontal leg as r cos theta. Step 3: label the vertical leg as r sin theta"
           },
@@ -6647,7 +6692,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Tip-to-tail method: place the second vector's tail at the first vector's tip — the resultant goes from the start to the final tip",
+            "geometric": "Tip-to-tail method: place the second vector's tail at the first vector's tip \u2014 the resultant goes from the start to the final tip",
             "algebraic": "(a,b) + (c,d) = (a+c, b+d); add x to x and y to y independently",
             "procedural": "Step 1: write both vectors in component form. Step 2: add x-components. Step 3: add y-components. Step 4: write the resultant as a new vector"
           },
@@ -6678,7 +6723,7 @@
         {
           "id": "vectors__dot_product_meaning",
           "label": "Dot product measures how much vectors align",
-          "description": "The dot product of two vectors equals the product of their magnitudes times the cosine of the angle between them — zero means perpendicular.",
+          "description": "The dot product of two vectors equals the product of their magnitudes times the cosine of the angle between them \u2014 zero means perpendicular.",
           "comes_from": "trig_basics__cos_as_horizontal_component",
           "failure_mode": "Students compute dot products correctly but report the scalar result as a vector, or cannot interpret a zero dot product as perpendicularity",
           "failure_prior": 0.65,
@@ -6759,7 +6804,7 @@
         {
           "id": "matrices__dimensions_and_compatibility",
           "label": "Multiplication requires inner dimensions to match",
-          "description": "Matrix A (m by n) times Matrix B (n by p) is valid only when A's column count equals B's row count — the result is m by p.",
+          "description": "Matrix A (m by n) times Matrix B (n by p) is valid only when A's column count equals B's row count \u2014 the result is m by p.",
           "comes_from": "systems__elimination_method",
           "failure_mode": "Students attempt to multiply matrices in any order without checking dimension compatibility, producing meaningless results",
           "failure_prior": 0.55,
@@ -6770,7 +6815,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Write the dimensions side by side: (m by n) times (n by p) — the inner n's must match; they disappear and outer dimensions m and p give the result size",
+            "geometric": "Write the dimensions side by side: (m by n) times (n by p) \u2014 the inner n's must match; they disappear and outer dimensions m and p give the result size",
             "algebraic": "A is 2 by 3, B is 3 by 4: inner dimensions both 3 so multiplication is valid; result is 2 by 4",
             "procedural": "Step 1: write dimensions of both matrices. Step 2: check middle numbers match. Step 3: outer numbers give result dimensions. Step 4: proceed with multiplication"
           },
@@ -6799,7 +6844,7 @@
         {
           "id": "matrices__multiplication_order",
           "label": "Matrix multiplication is not commutative",
-          "description": "A times B is generally not equal to B times A — order matters and must be preserved throughout calculations.",
+          "description": "A times B is generally not equal to B times A \u2014 order matters and must be preserved throughout calculations.",
           "comes_from": "matrices__dimensions_and_compatibility",
           "failure_mode": "Students reverse the order of matrix multiplication when it is more convenient, not realizing this gives a completely different result",
           "failure_prior": 0.48,
@@ -6810,7 +6855,7 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Rotations are non-commutative: rotating a cube 90 degrees around x then y gives a different orientation than y then x — matrix multiplication has the same property",
+            "geometric": "Rotations are non-commutative: rotating a cube 90 degrees around x then y gives a different orientation than y then x \u2014 matrix multiplication has the same property",
             "algebraic": "For most matrices: AB is not equal to BA. Even when both products exist they typically differ",
             "procedural": "Always read the problem carefully to determine which matrix goes first. Never rearrange matrix multiplication for convenience"
           },
@@ -6843,7 +6888,7 @@
         {
           "id": "matrices__row_operations",
           "label": "Row operations mirror equation system manipulations",
-          "description": "Adding a multiple of one row to another, scaling a row, or swapping rows are the same operations as equation elimination — these preserve the solution set.",
+          "description": "Adding a multiple of one row to another, scaling a row, or swapping rows are the same operations as equation elimination \u2014 these preserve the solution set.",
           "comes_from": "systems__elimination_method",
           "failure_mode": "Students apply a row operation to only one element in the row instead of all elements across the entire row",
           "failure_prior": 0.55,
@@ -6854,7 +6899,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "An augmented matrix is just the system of equations written in a compact grid — each row is one equation, each column is one variable",
+            "geometric": "An augmented matrix is just the system of equations written in a compact grid \u2014 each row is one equation, each column is one variable",
             "algebraic": "Row operation R1 becomes R1 + 2R2: every entry in row 1 gets the corresponding entry from 2 times row 2 added to it",
             "procedural": "When performing a row operation: affect every entry in the target row. Write the new row out completely before moving to the next operation"
           },
@@ -6913,7 +6958,7 @@
       "population_failure_prior": {
         "overall": 0.55,
         "hardest_ingredient_id": "conics__completing_the_square",
-        "notes": "Students can identify conics from standard form but cannot convert from general form to standard form — completing the square is the blocking skill."
+        "notes": "Students can identify conics from standard form but cannot convert from general form to standard form \u2014 completing the square is the blocking skill."
       },
       "learning_style_affinity": {
         "geometric_learner": "Start by slicing a cone physically or with animations to see how the four curves arise",
@@ -6935,7 +6980,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw all four conics side by side and connect each to its equation form — circle is perfectly symmetric, ellipse is stretched, parabola opens one direction, hyperbola splits into two curves",
+            "geometric": "Draw all four conics side by side and connect each to its equation form \u2014 circle is perfectly symmetric, ellipse is stretched, parabola opens one direction, hyperbola splits into two curves",
             "algebraic": "Count squared terms: one squared term is a parabola. Two squared terms: same coefficient gives circle; different positive coefficients give ellipse; subtracted gives hyperbola",
             "procedural": "Step 1: count squared variables. Step 2: if one, it is a parabola. Step 3: if two, check whether coefficients are equal (circle), both positive and different (ellipse), or opposite signs (hyperbola)"
           },
@@ -6977,8 +7022,8 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Completing the square geometrically: you are literally completing a square shape — the added corner piece must be accounted for on the other side of the equation",
-            "algebraic": "x squared + 6x + 9 = (x+3) squared; add 9 to both sides simultaneously — the constant you add must appear on the right side too",
+            "geometric": "Completing the square geometrically: you are literally completing a square shape \u2014 the added corner piece must be accounted for on the other side of the equation",
+            "algebraic": "x squared + 6x + 9 = (x+3) squared; add 9 to both sides simultaneously \u2014 the constant you add must appear on the right side too",
             "procedural": "Step 1: group x terms and y terms. Step 2: for each group take half the coefficient of the linear term, square it, add to BOTH sides. Step 3: write each group as a perfect square"
           },
           "node_type": "ingredient",
@@ -7010,7 +7055,7 @@
         {
           "id": "conics__circle_standard_form",
           "label": "Circle standard form shows center and radius directly",
-          "description": "(x-h) squared + (y-k) squared = r squared gives center (h,k) and radius r — the signs inside the parentheses are opposite to the center coordinates.",
+          "description": "(x-h) squared + (y-k) squared = r squared gives center (h,k) and radius r \u2014 the signs inside the parentheses are opposite to the center coordinates.",
           "comes_from": "conics__completing_the_square",
           "failure_mode": "Students read center as (negative-h, negative-k) from (x-h) and (y-k), getting the signs backwards",
           "failure_prior": 0.55,
@@ -7021,7 +7066,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Plot the center and draw the circle — verify that the point (h,k) is truly at the center by checking symmetry",
+            "geometric": "Plot the center and draw the circle \u2014 verify that the point (h,k) is truly at the center by checking symmetry",
             "algebraic": "(x-3) squared + (y+2) squared = 25; center is (3, negative-2) not (negative-3, 2); the inside expression equals zero at the center coordinates",
             "procedural": "Set each parenthetical expression equal to zero and solve for the coordinate: x-3 = 0 gives x = 3; y+2 = 0 gives y = negative-2"
           },
@@ -7091,7 +7136,7 @@
         {
           "id": "prob_dist__distribution_as_model",
           "label": "Probability distribution assigns probability to every outcome",
-          "description": "A probability distribution describes how probability is spread across all possible outcomes — all probabilities must sum to exactly 1.",
+          "description": "A probability distribution describes how probability is spread across all possible outcomes \u2014 all probabilities must sum to exactly 1.",
           "comes_from": "basic_probability__probability_as_ratio",
           "failure_mode": "Students assign probabilities that sum to more or less than 1, not recognizing this violates the fundamental requirement",
           "failure_prior": 0.37,
@@ -7102,9 +7147,9 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "Draw the area under any probability curve — the total area is always exactly 1, representing 100% of all possible outcomes",
+            "geometric": "Draw the area under any probability curve \u2014 the total area is always exactly 1, representing 100% of all possible outcomes",
             "algebraic": "Sum of all P(x) = 1 for discrete distributions; integral of f(x) dx over all x = 1 for continuous distributions",
-            "procedural": "Always verify: after assigning probabilities to all outcomes, add them up — the sum must equal exactly 1"
+            "procedural": "Always verify: after assigning probabilities to all outcomes, add them up \u2014 the sum must equal exactly 1"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -7145,7 +7190,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the bell curve with vertical lines at each standard deviation — shade symmetrically and split each band in half to handle non-symmetric ranges",
+            "geometric": "Draw the bell curve with vertical lines at each standard deviation \u2014 shade symmetrically and split each band in half to handle non-symmetric ranges",
             "algebraic": "P(mu minus sigma to mu + sigma) = 68%; by symmetry P(mu to mu + sigma) = 34%; P(mu minus 2sigma to mu) = 47.5%",
             "procedural": "Step 1: draw the bell curve. Step 2: mark mu and the relevant standard deviations. Step 3: shade the target region. Step 4: use the 68-95-99.7 splits with symmetry to compute the shaded percentage"
           },
@@ -7174,7 +7219,7 @@
         {
           "id": "prob_dist__z_score_transformation",
           "label": "Z-score standardizes any normal to the standard normal",
-          "description": "Z = (x minus mu) divided by sigma converts any normal distribution value to standard normal units — how many standard deviations above or below the mean.",
+          "description": "Z = (x minus mu) divided by sigma converts any normal distribution value to standard normal units \u2014 how many standard deviations above or below the mean.",
           "comes_from": "prob_dist__normal_empirical_rule",
           "failure_mode": "Students compute z-scores correctly but then look up the wrong tail in the z-table, finding P(Z less than z) when the problem asks for P(Z greater than z)",
           "failure_prior": 0.58,
@@ -7185,7 +7230,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the original bell curve, compute z, then draw the standard normal with the equivalent shaded region — confirm both shadings represent the same proportion",
+            "geometric": "Draw the original bell curve, compute z, then draw the standard normal with the equivalent shaded region \u2014 confirm both shadings represent the same proportion",
             "algebraic": "Z = (x minus mu) / sigma; positive z means above mean, negative z means below; the z-table gives P(Z less than z)",
             "procedural": "Step 1: compute z-score. Step 2: look up P(Z less than z) in table. Step 3: if problem asks P(Z greater than z), subtract from 1. Step 4: for between: subtract the two table values"
           },
@@ -7243,7 +7288,7 @@
         "notes": "Students find critical points but cannot classify them without the second derivative test, and confuse local and global extrema."
       },
       "learning_style_affinity": {
-        "geometric_learner": "Start with graph sketching — connect the sign of the derivative to whether the function rises or falls",
+        "geometric_learner": "Start with graph sketching \u2014 connect the sign of the derivative to whether the function rises or falls",
         "algebraic_learner": "Start with the formal critical point definition and systematic derivative-sign analysis",
         "procedural_learner": "Use the four-step optimization checklist"
       },
@@ -7251,7 +7296,7 @@
         {
           "id": "deriv_apps__critical_points",
           "label": "Critical points are where the derivative is zero or undefined",
-          "description": "A critical point of f occurs where f-prime equals zero or does not exist — these are the only candidates for local maxima and minima.",
+          "description": "A critical point of f occurs where f-prime equals zero or does not exist \u2014 these are the only candidates for local maxima and minima.",
           "comes_from": "derivatives__derivative_as_slope",
           "failure_mode": "Students set f equal to zero instead of f-prime equal to zero, finding x-intercepts instead of critical points",
           "failure_prior": 0.52,
@@ -7262,9 +7307,9 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "On a smooth curve a local max or min always has a flat tangent line (slope zero) — critical points are where the tangent is horizontal or the curve has a sharp corner",
-            "algebraic": "Set f-prime(x) = 0 and solve for x — these x-values are where the slope of the function is zero",
-            "procedural": "Step 1: differentiate f. Step 2: set f-prime = 0 and solve. Step 3: check where f-prime is undefined. Step 4: combine — all of these are critical points"
+            "geometric": "On a smooth curve a local max or min always has a flat tangent line (slope zero) \u2014 critical points are where the tangent is horizontal or the curve has a sharp corner",
+            "algebraic": "Set f-prime(x) = 0 and solve for x \u2014 these x-values are where the slope of the function is zero",
+            "procedural": "Step 1: differentiate f. Step 2: set f-prime = 0 and solve. Step 3: check where f-prime is undefined. Step 4: combine \u2014 all of these are critical points"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -7302,7 +7347,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Rising then falling through a critical point is a maximum — the graph peaks. Falling then rising is a minimum — the graph valleys",
+            "geometric": "Rising then falling through a critical point is a maximum \u2014 the graph peaks. Falling then rising is a minimum \u2014 the graph valleys",
             "algebraic": "Pick test values to the left and right of each critical point. Evaluate f-prime at those test values. Compare the signs",
             "procedural": "Step 1: list all critical points. Step 2: choose test values between and beyond them. Step 3: evaluate f-prime sign at each test value. Step 4: classify based on sign pattern"
           },
@@ -7333,7 +7378,7 @@
           "label": "Second derivative concavity classifies critical points faster",
           "description": "At a critical point: if f-double-prime is negative the function is concave down giving a local max; if positive the function is concave up giving a local min.",
           "comes_from": "deriv_apps__first_derivative_test",
-          "failure_mode": "Students confuse concave up with maximum — they think the bowl shape of concave up means it is at the top",
+          "failure_mode": "Students confuse concave up with maximum \u2014 they think the bowl shape of concave up means it is at the top",
           "failure_prior": 0.6,
           "learning_vector": {
             "geometric": 0.4,
@@ -7342,8 +7387,8 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Concave up looks like a bowl (holds water) — the minimum is at the bottom. Concave down looks like an upside-down bowl — the maximum is at the top",
-            "algebraic": "f-double-prime(c) less than 0 at critical point c means the tangent slope is decreasing — the curve is bending downward making c a local max",
+            "geometric": "Concave up looks like a bowl (holds water) \u2014 the minimum is at the bottom. Concave down looks like an upside-down bowl \u2014 the maximum is at the top",
+            "algebraic": "f-double-prime(c) less than 0 at critical point c means the tangent slope is decreasing \u2014 the curve is bending downward making c a local max",
             "procedural": "Step 1: find critical point c where f-prime = 0. Step 2: compute f-double-prime(c). Step 3: negative means max, positive means min, zero means inconclusive (use first derivative test)"
           },
           "node_type": "ingredient",
@@ -7371,7 +7416,7 @@
         {
           "id": "deriv_apps__optimization_setup",
           "label": "Optimization requires constraint and objective function",
-          "description": "Optimization problems need an objective function to maximize or minimize and a constraint equation linking the variables — use the constraint to reduce to one variable before differentiating.",
+          "description": "Optimization problems need an objective function to maximize or minimize and a constraint equation linking the variables \u2014 use the constraint to reduce to one variable before differentiating.",
           "comes_from": "systems__substitution_method",
           "failure_mode": "Students differentiate the objective function with multiple variables without first using the constraint to eliminate one variable",
           "failure_prior": 0.65,
@@ -7382,7 +7427,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "Draw the physical situation — a fence problem has a fixed perimeter (constraint) and you want maximum area (objective); sketch all possible rectangles with that perimeter",
+            "geometric": "Draw the physical situation \u2014 a fence problem has a fixed perimeter (constraint) and you want maximum area (objective); sketch all possible rectangles with that perimeter",
             "algebraic": "Two equations: objective (what to optimize) and constraint (the limitation). Solve the constraint for one variable and substitute into the objective",
             "procedural": "Step 1: write the objective function. Step 2: write the constraint. Step 3: use constraint to eliminate one variable. Step 4: differentiate the single-variable objective. Step 5: find and classify critical points"
           },
@@ -7448,7 +7493,7 @@
         {
           "id": "integrals__antiderivative_concept",
           "label": "Antiderivative reverses differentiation",
-          "description": "F(x) is an antiderivative of f(x) if F-prime(x) = f(x) — integration asks what function has this as its derivative.",
+          "description": "F(x) is an antiderivative of f(x) if F-prime(x) = f(x) \u2014 integration asks what function has this as its derivative.",
           "comes_from": "derivatives__power_rule",
           "failure_mode": "Students forget the plus-C constant of integration for indefinite integrals, losing the family of solutions",
           "failure_prior": 0.5,
@@ -7488,7 +7533,7 @@
         {
           "id": "integrals__definite_integral_as_area",
           "label": "Definite integral equals signed area under the curve",
-          "description": "The definite integral from a to b of f(x) dx equals the signed area between the curve and x-axis — positive above the x-axis, negative below.",
+          "description": "The definite integral from a to b of f(x) dx equals the signed area between the curve and x-axis \u2014 positive above the x-axis, negative below.",
           "comes_from": "limits__approaching_not_reaching",
           "failure_mode": "Students compute the definite integral without recognizing that regions below the x-axis contribute negative area, getting incorrect total areas",
           "failure_prior": 0.46,
@@ -7530,7 +7575,7 @@
         {
           "id": "integrals__fundamental_theorem",
           "label": "Fundamental Theorem evaluates definite integrals using antiderivatives",
-          "description": "The integral from a to b of f(x) dx equals F(b) minus F(a) where F is any antiderivative of f — no limit computation needed.",
+          "description": "The integral from a to b of f(x) dx equals F(b) minus F(a) where F is any antiderivative of f \u2014 no limit computation needed.",
           "comes_from": "integrals__antiderivative_concept",
           "failure_mode": "Students forget to subtract F(a) and report only F(b), missing the subtraction entirely",
           "failure_prior": 0.55,
@@ -7541,7 +7586,7 @@
             "conceptual": 0.1
           },
           "card_templates": {
-            "geometric": "The definite integral measures net accumulation from a to b — F(b) is the total accumulated up to b, F(a) is what was already there at a; the difference is what accumulated between",
+            "geometric": "The definite integral measures net accumulation from a to b \u2014 F(b) is the total accumulated up to b, F(a) is what was already there at a; the difference is what accumulated between",
             "algebraic": "Integral from a to b of f(x) dx = [F(x)] from a to b = F(b) minus F(a); the constant C cancels in the subtraction",
             "procedural": "Step 1: find any antiderivative F(x). Step 2: evaluate F at the upper limit b. Step 3: evaluate F at the lower limit a. Step 4: subtract: F(b) minus F(a)"
           },
@@ -7572,7 +7617,7 @@
           "label": "Definite integral gives a number, indefinite gives a function",
           "description": "A definite integral with limits produces a specific numerical value representing area. An indefinite integral produces a family of functions plus the constant C.",
           "comes_from": "integrals__fundamental_theorem",
-          "failure_mode": "Students add plus-C to definite integrals or omit it from indefinite integrals — they do not distinguish which type they are computing",
+          "failure_mode": "Students add plus-C to definite integrals or omit it from indefinite integrals \u2014 they do not distinguish which type they are computing",
           "failure_prior": 0.62,
           "learning_vector": {
             "geometric": 0.2,
@@ -7692,7 +7737,7 @@
           "label": "Definite integral of rate gives net change",
           "description": "The integral of a rate of change function over an interval gives the net change in the original quantity over that interval.",
           "comes_from": "derivatives__derivative_as_rate",
-          "failure_mode": "Students confuse net change with total distance traveled — for motion problems they do not recognize that negative velocity means the object moved backward",
+          "failure_mode": "Students confuse net change with total distance traveled \u2014 for motion problems they do not recognize that negative velocity means the object moved backward",
           "failure_prior": 0.6,
           "learning_vector": {
             "geometric": 0.3,
@@ -7701,7 +7746,7 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "Graph velocity vs time — the integral is the net displacement; regions above the t-axis add to position, regions below subtract from position",
+            "geometric": "Graph velocity vs time \u2014 the integral is the net displacement; regions above the t-axis add to position, regions below subtract from position",
             "algebraic": "If v(t) is velocity then integral from a to b of v(t) dt = position(b) minus position(a) = net displacement",
             "procedural": "For net change: integrate the rate function over the interval. For total distance: integrate the absolute value of the rate function over the interval"
           },
@@ -7756,7 +7801,7 @@
       "population_failure_prior": {
         "overall": 0.6,
         "hardest_ingredient_id": "inferential__p_value_interpretation",
-        "notes": "The p-value is the most universally misunderstood concept in statistics — students consistently interpret it as the probability the null hypothesis is true."
+        "notes": "The p-value is the most universally misunderstood concept in statistics \u2014 students consistently interpret it as the probability the null hypothesis is true."
       },
       "learning_style_affinity": {
         "geometric_learner": "Use sampling distributions drawn as curves with rejection regions shaded",
@@ -7767,7 +7812,7 @@
         {
           "id": "inferential__sampling_variability",
           "label": "Sample statistics vary randomly around population parameters",
-          "description": "Different random samples from the same population produce different sample means — this sampling variability is predictable and follows the Central Limit Theorem.",
+          "description": "Different random samples from the same population produce different sample means \u2014 this sampling variability is predictable and follows the Central Limit Theorem.",
           "comes_from": "descriptive_statistics__mean_as_balance",
           "failure_mode": "Students expect the sample mean to exactly equal the population mean and interpret any difference as evidence the sample is wrong",
           "failure_prior": 0.48,
@@ -7778,7 +7823,7 @@
             "conceptual": 0.4
           },
           "card_templates": {
-            "geometric": "Draw many sample means from the same population — they cluster around the true mean but vary; the distribution of those means is the sampling distribution",
+            "geometric": "Draw many sample means from the same population \u2014 they cluster around the true mean but vary; the distribution of those means is the sampling distribution",
             "algebraic": "Standard error = sigma divided by square root of n; larger samples have smaller standard errors and cluster closer to the true mean",
             "procedural": "Before any test: ask whether the sample is random and large enough for CLT to apply. Then expect the sample statistic to be close but not equal to the population parameter"
           },
@@ -7818,9 +7863,9 @@
             "conceptual": 0.2
           },
           "card_templates": {
-            "geometric": "Think of the null hypothesis as innocent until proven guilty — H-zero assumes nothing is happening; you need evidence to reject that assumption",
+            "geometric": "Think of the null hypothesis as innocent until proven guilty \u2014 H-zero assumes nothing is happening; you need evidence to reject that assumption",
             "algebraic": "H-zero: mu = claimed value. H-a: mu is greater than, less than, or not equal to the claimed value depending on what you are testing",
-            "procedural": "Step 1: identify what the researcher is trying to show — that becomes H-a. Step 2: negate it to get H-zero. Step 3: verify H-zero contains the equals sign"
+            "procedural": "Step 1: identify what the researcher is trying to show \u2014 that becomes H-a. Step 2: negate it to get H-zero. Step 3: verify H-zero contains the equals sign"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -7847,7 +7892,7 @@
         {
           "id": "inferential__p_value_interpretation",
           "label": "P-value is probability of data this extreme given null is true",
-          "description": "The p-value is the probability of observing a result as extreme as the data assuming the null hypothesis is true — it is not the probability the null is true.",
+          "description": "The p-value is the probability of observing a result as extreme as the data assuming the null hypothesis is true \u2014 it is not the probability the null is true.",
           "comes_from": "inferential__hypothesis_structure",
           "failure_mode": "Students interpret p = 0.03 as meaning there is a 3% chance the null hypothesis is true, when it actually means there is a 3% chance of getting data this extreme if the null were true",
           "failure_prior": 0.72,
@@ -7858,9 +7903,9 @@
             "conceptual": 0.3
           },
           "card_templates": {
-            "geometric": "Draw the sampling distribution under H-zero. Shade the region as extreme as your observed data — that shaded area is the p-value",
+            "geometric": "Draw the sampling distribution under H-zero. Shade the region as extreme as your observed data \u2014 that shaded area is the p-value",
             "algebraic": "p-value = P(observing data this extreme or more extreme | H-zero is true); it conditions on H-zero being true, it does not evaluate the probability of H-zero",
-            "procedural": "To interpret: small p-value means the data would be very unusual if H-zero were true — giving evidence against H-zero. Compare to alpha (0.05): if p less than alpha, reject H-zero"
+            "procedural": "To interpret: small p-value means the data would be very unusual if H-zero were true \u2014 giving evidence against H-zero. Compare to alpha (0.05): if p less than alpha, reject H-zero"
           },
           "node_type": "ingredient",
           "status": "active",
@@ -8055,8 +8100,8 @@
           ],
           "card_templates": {
             "geometric": "Each factor pair is the width and height of a rectangle with area n.",
-            "algebraic": "d·q=n, so every divisor d pairs with q=n/d.",
-            "procedural": "List pairs in order: 1×n, 2×n/2, 3×n/3, etc.; stop at sqrt(n)."
+            "algebraic": "d\u00b7q=n, so every divisor d pairs with q=n/d.",
+            "procedural": "List pairs in order: 1\u00d7n, 2\u00d7n/2, 3\u00d7n/3, etc.; stop at sqrt(n)."
           },
           "node_type": "ingredient",
           "status": "active",
@@ -8102,7 +8147,7 @@
           ],
           "card_templates": {
             "geometric": "A square array has a middle side length paired with itself.",
-            "algebraic": "If n=a², then a pairs with itself; the pair is not two different factors.",
+            "algebraic": "If n=a\u00b2, then a pairs with itself; the pair is not two different factors.",
             "procedural": "If sqrt(n) is an integer, count it once, not twice."
           },
           "node_type": "ingredient",
@@ -8130,9 +8175,9 @@
         {
           "id": "number_properties__factor_count_exactly_three",
           "label": "Exactly three factors means square of a prime",
-          "description": "A positive integer has exactly three positive factors iff it equals p² for prime p.",
+          "description": "A positive integer has exactly three positive factors iff it equals p\u00b2 for prime p.",
           "comes_from": "number_properties__perfect_square_odd_factors",
-          "failure_mode": "Students brute-force every integer and miss the structural shortcut that 4=2², 9=3², 25=5², etc.",
+          "failure_mode": "Students brute-force every integer and miss the structural shortcut that 4=2\u00b2, 9=3\u00b2, 25=5\u00b2, etc.",
           "failure_prior": 0.5,
           "learning_vector": {
             "geometric": 0.2,
@@ -8148,9 +8193,9 @@
             "factor_count_exactly_three"
           ],
           "card_templates": {
-            "geometric": "Draw a p-by-p square: its factors are 1, p, and p² when p is prime.",
-            "algebraic": "If n=p² with p prime, divisors are only p⁰, p¹, p².",
-            "procedural": "Find prime squares in order: 2²=4, 3²=9, 5²=25; each has exactly three factors."
+            "geometric": "Draw a p-by-p square: its factors are 1, p, and p\u00b2 when p is prime.",
+            "algebraic": "If n=p\u00b2 with p prime, divisors are only p\u2070, p\u00b9, p\u00b2.",
+            "procedural": "Find prime squares in order: 2\u00b2=4, 3\u00b2=9, 5\u00b2=25; each has exactly three factors."
           },
           "node_type": "ingredient",
           "status": "active",
@@ -8192,7 +8237,7 @@
           },
           "card_templates": {
             "geometric": "Use parity tiles: pairs of dots split evenly; odd numbers leave one unpaired dot. Multiplying or adding changes whether unpaired dots remain.",
-            "algebraic": "Represent even as 2k and odd as 2k+1. Then odd×odd = (2a+1)(2b+1) = 2(2ab+a+b)+1, still odd.",
+            "algebraic": "Represent even as 2k and odd as 2k+1. Then odd\u00d7odd = (2a+1)(2b+1) = 2(2ab+a+b)+1, still odd.",
             "procedural": "Before solving fully, check parity: if product is even, at least one factor is even; if both numbers were odd, product would be odd and sum would be even."
           },
           "canonical_misconception_family": "mis_basic_probability__mixes_up_odd_and_even",
@@ -8236,7 +8281,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "integer_operations",
+        "number_properties_factors_divisibility"
+      ]
     },
     {
       "id": "measurement_units",
@@ -8386,7 +8434,7 @@
           ],
           "card_templates": {
             "geometric": "A 2-by-2 square covers four 1-by-1 squares.",
-            "algebraic": "Area unit = ft²; a square with side 2 ft has area 2×2=4 ft².",
+            "algebraic": "Area unit = ft\u00b2; a square with side 2 ft has area 2\u00d72=4 ft\u00b2.",
             "procedural": "Convert every coverage problem to total area divided by area per tile."
           },
           "node_type": "ingredient",
@@ -8477,7 +8525,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "units_measurement_dimensional_reasoning"
+      ]
     },
     {
       "id": "algebraic_manipulation",
@@ -8516,7 +8566,7 @@
           "label": "Only like terms can be combined",
           "description": "Terms can be added or subtracted only when they have the same variable part and exponent structure.",
           "comes_from": "basic_equations__equals_sign_balance",
-          "failure_mode": "Students combine unlike terms such as 5x and 5x² or fail to combine 5x+2x.",
+          "failure_mode": "Students combine unlike terms such as 5x and 5x\u00b2 or fail to combine 5x+2x.",
           "failure_prior": 0.44,
           "learning_vector": {
             "geometric": 0.1,
@@ -8532,8 +8582,8 @@
             "linear_equation_like_terms"
           ],
           "card_templates": {
-            "geometric": "Group identical objects: apples with apples, x-tiles with x-tiles, x²-tiles with x²-tiles.",
-            "algebraic": "ax + bx = (a+b)x, but ax + bx² cannot combine.",
+            "geometric": "Group identical objects: apples with apples, x-tiles with x-tiles, x\u00b2-tiles with x\u00b2-tiles.",
+            "algebraic": "ax + bx = (a+b)x, but ax + bx\u00b2 cannot combine.",
             "procedural": "Circle matching variable parts, add only their coefficients."
           },
           "node_type": "ingredient",
@@ -8584,7 +8634,7 @@
           ],
           "card_templates": {
             "geometric": "Think of the variable as a placeholder box; every identical box receives the same input.",
-            "algebraic": "If n=11, then (n−3)²=(11−3)².",
+            "algebraic": "If n=11, then (n\u22123)\u00b2=(11\u22123)\u00b2.",
             "procedural": "Rewrite the full expression replacing every variable with parentheses around the input."
           },
           "node_type": "ingredient",
@@ -8618,7 +8668,7 @@
           "label": "Literal equations isolate one symbol while others act as constants",
           "description": "Solving for q in terms of p and r means isolate q while treating p and r as known quantities.",
           "comes_from": "basic_equations__isolate_variable",
-          "failure_mode": "Students freeze because multiple letters appear, or divide by the wrong symbol, or do not know what “in terms of” means.",
+          "failure_mode": "Students freeze because multiple letters appear, or divide by the wrong symbol, or do not know what \u201cin terms of\u201d means.",
           "failure_prior": 0.49,
           "learning_vector": {
             "geometric": 0.1,
@@ -8635,8 +8685,8 @@
           ],
           "card_templates": {
             "geometric": "Imagine q trapped in a box with p attached; remove other pieces while leaving q alone.",
-            "algebraic": "pq−3r=2 → pq=2+3r → q=(2+3r)/p.",
-            "procedural": "Move non-q terms away; then divide by q’s coefficient, even if that coefficient is another letter."
+            "algebraic": "pq\u22123r=2 \u2192 pq=2+3r \u2192 q=(2+3r)/p.",
+            "procedural": "Move non-q terms away; then divide by q\u2019s coefficient, even if that coefficient is another letter."
           },
           "node_type": "ingredient",
           "status": "active",
@@ -8774,7 +8824,9 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "algebraic_structure_symbolic_manipulation"
+      ]
     },
     {
       "id": "representation_translation",
@@ -8829,7 +8881,7 @@
             "verbal_process_equivalence_equation"
           ],
           "card_templates": {
-            "geometric": "Draw a process flow: input number → operation → result.",
+            "geometric": "Draw a process flow: input number \u2192 operation \u2192 result.",
             "algebraic": "Let the unknown be x, then translate each clause into an expression.",
             "procedural": "Underline the unknown, box operations, write expressions in order, then set equal if the problem says results are the same."
           },
@@ -8877,7 +8929,7 @@
           ],
           "card_templates": {
             "geometric": "Read the shaded region as all x-values that live on the highlighted number line segment.",
-            "algebraic": "Closed dot = ≤ or ≥; open dot = < or >; interval endpoints become bounds.",
+            "algebraic": "Closed dot = \u2264 or \u2265; open dot = < or >; interval endpoints become bounds.",
             "procedural": "Identify left endpoint, right endpoint, inclusion, then write lower < x < upper."
           },
           "node_type": "ingredient",
@@ -8924,7 +8976,7 @@
           ],
           "card_templates": {
             "geometric": "Mark corresponding angles/sides in the same color before setting ratios.",
-            "algebraic": "Similarity means side₁/side₂ is constant across corresponding pairs.",
+            "algebraic": "Similarity means side\u2081/side\u2082 is constant across corresponding pairs.",
             "procedural": "Write the ratio from one known pair, then use the same order for the unknown pair."
           },
           "node_type": "ingredient",
@@ -8971,7 +9023,7 @@
           ],
           "card_templates": {
             "geometric": "Count vertical change first and horizontal change second.",
-            "algebraic": "m=(y₂−y₁)/(x₂−x₁) with the same point order in numerator and denominator.",
+            "algebraic": "m=(y\u2082\u2212y\u2081)/(x\u2082\u2212x\u2081) with the same point order in numerator and denominator.",
             "procedural": "Label points, subtract y-values, subtract x-values, divide."
           },
           "node_type": "ingredient",
@@ -9059,7 +9111,10 @@
       },
       "node_type": "concept",
       "status": "active",
-      "aliases": []
+      "aliases": [
+        "representation_translation_mathematical_modeling",
+        "word_problems"
+      ]
     },
     {
       "id": "act_strategy",
@@ -9249,7 +9304,7 @@
           ],
           "question_archetype_ids": [],
           "card_templates": {
-            "geometric": "Use representation: picture → visual method, table → pattern method, choices → backsolve.",
+            "geometric": "Use representation: picture \u2192 visual method, table \u2192 pattern method, choices \u2192 backsolve.",
             "algebraic": "Choose direct algebra when the equation is short and variables are clear.",
             "procedural": "Scan: What is asked? What is given? Is there a diagram? Are choices numeric? Then choose method."
           },
@@ -9302,14 +9357,14 @@
           "from_ingredient_id": "fractions_decimals__part_whole_meaning",
           "to_ingredient_id": "ratios_proportions__ratio_as_comparison",
           "bridge_description": "A fraction captures part of a whole; a ratio generalizes this to compare any two quantities without requiring one to be a part of the other",
-          "card_hint": "Can 3:2 describe something that is not a part of a whole — like 3 boys to 2 girls in a room? How is that different from the fraction 3/5?",
+          "card_hint": "Can 3:2 describe something that is not a part of a whole \u2014 like 3 boys to 2 girls in a room? How is that different from the fraction 3/5?",
           "difficulty": 0.45
         },
         {
           "from_ingredient_id": "fractions_decimals__equivalent_fractions",
           "to_ingredient_id": "ratios_proportions__proportion_setup",
-          "bridge_description": "Two equivalent fractions are a proportion — they can be set equal to each other and cross-multiplied as a proportion",
-          "card_hint": "If 1/2 = 3/6, you can write that as a proportion and cross multiply to verify — try it and see what you get",
+          "bridge_description": "Two equivalent fractions are a proportion \u2014 they can be set equal to each other and cross-multiplied as a proportion",
+          "card_hint": "If 1/2 = 3/6, you can write that as a proportion and cross multiply to verify \u2014 try it and see what you get",
           "difficulty": 0.4
         }
       ]
@@ -9368,7 +9423,7 @@
         {
           "from_ingredient_id": "functions_basics__domain_range",
           "to_ingredient_id": "limits__approaching_not_reaching",
-          "bridge_description": "Limits address behavior near the exact points excluded from a function's domain — the holes where the function is undefined",
+          "bridge_description": "Limits address behavior near the exact points excluded from a function's domain \u2014 the holes where the function is undefined",
           "card_hint": "f(x) = (x squared minus 4)/(x minus 2) is undefined at x = 2 because x = 2 is excluded from the domain. But what value does f(x) get close to as x gets close to 2?",
           "difficulty": 0.58
         },
@@ -9395,7 +9450,7 @@
         {
           "from_ingredient_id": "limits__approaching_not_reaching",
           "to_ingredient_id": "derivatives__chain_rule",
-          "bridge_description": "The chain rule emerges naturally when taking the limit of composite function difference quotients — it is not an arbitrary rule but a consequence of limit arithmetic on nested functions",
+          "bridge_description": "The chain rule emerges naturally when taking the limit of composite function difference quotients \u2014 it is not an arbitrary rule but a consequence of limit arithmetic on nested functions",
           "card_hint": "If g changes x times faster than its input and f changes y times faster than its input, how fast does f(g(x)) change overall compared to the original input?",
           "difficulty": 0.7
         }
@@ -9408,7 +9463,7 @@
         {
           "from_ingredient_id": "trig_basics__sin_as_vertical_component",
           "to_ingredient_id": "vectors__component_decomposition",
-          "bridge_description": "A vector of magnitude r at angle theta has vertical component r times sin(theta) — this is the unit circle vertical projection directly scaled by the vector's length",
+          "bridge_description": "A vector of magnitude r at angle theta has vertical component r times sin(theta) \u2014 this is the unit circle vertical projection directly scaled by the vector's length",
           "card_hint": "A vector of length 5 points at 30 degrees above the horizontal. Its horizontal component is 5 times cos(30). What is its vertical component?",
           "difficulty": 0.5
         },
@@ -9441,7 +9496,7 @@
         {
           "from_ingredient_id": "exponential_functions__base_and_exponent",
           "to_ingredient_id": "logarithmic_functions__log_as_inverse_exp",
-          "bridge_description": "log-base-b of x answers the exact question: what exponent does b need to produce x? — it is precisely the inverse operation of raising b to a power",
+          "bridge_description": "log-base-b of x answers the exact question: what exponent does b need to produce x? \u2014 it is precisely the inverse operation of raising b to a power",
           "card_hint": "You know that 2 to the third power = 8. So log-base-2 of 8 should equal what? What question is the log asking?",
           "difficulty": 0.52
         }
@@ -9454,7 +9509,7 @@
         {
           "from_ingredient_id": "systems__elimination_method",
           "to_ingredient_id": "matrices__row_operations",
-          "bridge_description": "Matrix row operations are the elimination method formalized — each row operation corresponds exactly to adding a multiple of one equation to another equation in the system",
+          "bridge_description": "Matrix row operations are the elimination method formalized \u2014 each row operation corresponds exactly to adding a multiple of one equation to another equation in the system",
           "card_hint": "In elimination you might multiply equation 1 by 2 and then subtract it from equation 2. How would you represent that exact move as a row operation on an augmented matrix?",
           "difficulty": 0.55
         }
@@ -9535,7 +9590,7 @@
       {
         "id": "act_60_second_rule",
         "label": "60-second cap per question",
-        "description": "If you have not made meaningful progress in 60 seconds, mark and skip — return with remaining time at the end"
+        "description": "If you have not made meaningful progress in 60 seconds, mark and skip \u2014 return with remaining time at the end"
       },
       {
         "id": "act_backsolve",
@@ -9545,7 +9600,7 @@
       {
         "id": "act_no_blank",
         "label": "Never leave a blank answer",
-        "description": "ACT has no wrong-answer penalty — every blank is a guaranteed zero while every guess has a 20 percent or better chance"
+        "description": "ACT has no wrong-answer penalty \u2014 every blank is a guaranteed zero while every guess has a 20 percent or better chance"
       }
     ],
     "latest_ai_batch_summary": {
@@ -10469,7 +10524,7 @@
       "co_occurrence_only": true,
       "captured_by_comes_from_or_bridge": false,
       "example_problem": "A student's mean over 5 tests is 82. After a 6th test the mean is 84. What was the 6th score?",
-      "why_invisible_to_prereq_graph": "Back-solving from a mean reconstructs the total and isolates the unknown — fusing descriptive_statistics with a basic_equations inverse step across a concept boundary that has no prereq edge.",
+      "why_invisible_to_prereq_graph": "Back-solving from a mean reconstructs the total and isolates the unknown \u2014 fusing descriptive_statistics with a basic_equations inverse step across a concept boundary that has no prereq edge.",
       "difficulty_drivers": [
         "multi_step_chain",
         "hidden_bridge"
@@ -10579,7 +10634,7 @@
       "co_occurrence_only": true,
       "captured_by_comes_from_or_bridge": false,
       "example_problem": "Determine which answer choice equals (x+3)^2 - (x^2+9) for all x.",
-      "why_invisible_to_prereq_graph": "Rejecting distractors requires holding binomial expansion and difference-of-squares structure at once and recognizing equivalent forms — ingredients spread across polynomials, factoring_polynomials, and algebraic_manipulation with no prereq linking them.",
+      "why_invisible_to_prereq_graph": "Rejecting distractors requires holding binomial expansion and difference-of-squares structure at once and recognizing equivalent forms \u2014 ingredients spread across polynomials, factoring_polynomials, and algebraic_manipulation with no prereq linking them.",
       "difficulty_drivers": [
         "answer_choice_trap",
         "symbolic_abstraction"
@@ -10812,7 +10867,7 @@
       "co_occurrence_only": true,
       "captured_by_comes_from_or_bridge": true,
       "example_problem": "A sequence is 4, 7, 10, 13, ... Write a rule for the nth term and find the 20th term.",
-      "why_invisible_to_prereq_graph": "Going from constant difference to a closed-form rule fuses sequence reasoning, slope-as-rate, and equation writing across three concepts. NOTE: this is the Q1 combination — apply_order here keeps arithmetic_identification first and does not depend on an indexing primitive that does not exist in this registry; verify against harness Q1 expectations.",
+      "why_invisible_to_prereq_graph": "Going from constant difference to a closed-form rule fuses sequence reasoning, slope-as-rate, and equation writing across three concepts. NOTE: this is the Q1 combination \u2014 apply_order here keeps arithmetic_identification first and does not depend on an indexing primitive that does not exist in this registry; verify against harness Q1 expectations.",
       "difficulty_drivers": [
         "hidden_bridge",
         "multi_step_chain"

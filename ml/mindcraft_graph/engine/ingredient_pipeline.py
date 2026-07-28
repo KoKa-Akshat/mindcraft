@@ -23,6 +23,7 @@ from mindcraft_graph.engine.ingredient_runtime import (
 )
 from mindcraft_graph.models.concept import Ontology
 from mindcraft_graph.models.ingredient import IngredientStudentState
+from mindcraft_graph.representation.classification_index import ClassificationIndex
 
 
 def recommend_cards(
@@ -38,15 +39,29 @@ def recommend_cards(
     style_priority: list[str] | None = None,
     use_combinations: bool = True,
     combination_min_overlap: float = 0.1,
+    classification_index: ClassificationIndex | None = None,
+    classifier_mode: str = "concept",
+    secondary_margin: float = 0.0,
+    max_concepts: int = 3,
 ) -> IngredientRecommendationResult:
     """
     Full runtime pipeline: problem -> ingredient-level card recommendations.
     """
-    features = classify_problem(problem_text, concept_embeddings, embed_fn, ontology)
+    features = classify_problem(
+        problem_text,
+        concept_embeddings,
+        embed_fn,
+        ontology,
+        classification_index=classification_index,
+        classifier_mode=classifier_mode,
+        secondary_margin=secondary_margin,
+        max_concepts=max_concepts,
+    )
     target_ids = select_target_ingredients(
         features.primary_concept,
         features.features,
         graph,
+        required_ingredient_ids=features.required_ingredient_ids,
     )
 
     if not target_ids:
