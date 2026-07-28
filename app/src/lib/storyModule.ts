@@ -1,7 +1,10 @@
 /**
- * storyModule.ts — client for /api/story-module (Groq batched skin).
- * Multi-concept sessions send each question with its own concept story.
- * Incremental ensureStorySkins() covers follow-ups after adaptive reshuffle.
+ * storyModule.ts — client for /api/story-module (optional live overlay).
+ *
+ * Base themed stems are served from the offline bake
+ * (`themedStems.generated.json` via `lib/themedStems.ts`). This client remains
+ * for per-student guidance: socratic[], steps[], misconceptionCallout (C-5).
+ * Multi-concept diagnostic sessions still use fetchStoryModuleForQuestions.
  */
 import type { Question } from './questionBank'
 import { questionFormat } from './questionBank'

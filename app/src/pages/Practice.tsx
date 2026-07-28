@@ -40,6 +40,7 @@ import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practi
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
+import { getBakedThemedStem } from '../lib/themedStems'
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
 import { buildStoryDisplay } from '../lib/storyDisplay'
 import { selectStoryForConcept } from '../lib/storySelection'
@@ -1116,8 +1117,9 @@ export default function Practice() {
     await startSession(pending.conceptId, pending.lv, pending.bridge)
   }
 
-  /** Kick off the story-module agent for a question set. Fire-and-forget:
-   *  questions render plain until (and unless) the module arrives. */
+  /** Optional live overlay for socratic / steps / misconceptionCallout (C-5).
+   *  Base themed stems come from the offline bake (themedStems.generated.json);
+   *  this call never gates the stem — fire-and-forget guidance only. */
   function prefetchStoryModule(conceptId: string, qs: Question[], startIndex: number) {
     setStoryModule(null)
     storyFromIndexRef.current = startIndex
@@ -1132,7 +1134,7 @@ export default function Practice() {
     void fetchStoryModule(conceptId, entry.conceptName, entry.story, qs, ctx).then(mod => {
       if (!mod) return
       // If the student already started working the current question, only
-      // apply story stems from the next question on.
+      // apply overlay guidance from the next question on.
       storyFromIndexRef.current = Math.max(
         storyFromIndexRef.current,
         qIndexRef.current + (interactedRef.current ? 1 : 0),
@@ -1513,8 +1515,17 @@ export default function Practice() {
 
   const sessionStem = useMemo(() => {
     if (!currentQ) return ''
-    return storyItem?.storyStem ?? framedLocalStem(currentQ)
-  }, [currentQ, storyItem])
+    // C-4 serve order: baked themed stem > framedLocalStem > plain
+    // Key includes storyId so the reskin must match the active story world.
+    const story = selectStoryForConcept(currentQ.conceptId)
+    const baked = getBakedThemedStem(
+      currentQ.conceptId,
+      currentQ.id,
+      story?.conceptId ?? currentQ.conceptId,
+    )
+    if (baked) return baked
+    return framedLocalStem(currentQ)
+  }, [currentQ])
 
   const sessionArt = useMemo(() => {
     if (!currentQ) return null

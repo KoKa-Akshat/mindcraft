@@ -4,6 +4,9 @@
  * Story module agent — wraps a practice session's questions in the concept's
  * story world and attaches Socratic guidance, using Groq (Llama 3.3 70B).
  *
+ * Composer core lives in `lib/storyModuleComposer.ts` (shared with the offline
+ * bake — C-2). This handler owns CORS, Firestore cache, and response shaping.
+ *
  * THE CONTRACT (deterministic spine, LLM skin):
  *   The LLM NEVER touches the math. Choices, correctIndex, and every numeric
  *   value stay byte-identical — it only rewrites the *stem* as a scene in the
@@ -11,13 +14,7 @@
  *   explanation and misconception. Items that fail numeric validation are
  *   dropped; the client falls back to the plain question.
  *
- * Signals given to the model per question: stem, choices, the correct answer
- * text, the worked explanation ("how to solve"), existing hints, level,
- * format/vessel, and the tagged misconception.
- *
- * Caching: per-question docs in `story_module_cache` (30-day TTL) — reskins
- * are stable per question, so any student who draws the same bank question
- * reuses the same scene. Only uncached questions hit Groq, in ONE batch call.
+ * Caching: per-question docs in `story_module_cache` (30-day TTL).
  *
  * POST {
  *   conceptId, conceptName, story,
@@ -28,125 +25,24 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { ChatGroq } from '@langchain/groq'
-import { ChatPromptTemplate } from '@langchain/core/prompts'
-import { JsonOutputParser } from '@langchain/core/output_parsers'
 import { db } from '../lib/firebase'
+import {
+  cacheDocId,
+  composeStoryModuleItems,
+  isValidItem,
+  MAX_QUESTIONS,
+  type IncomingQuestion,
+  type StoryModuleItem,
+} from '../lib/storyModuleComposer'
+
+const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000
 
 const ALLOWED_ORIGINS = new Set([
   'https://mindcraft-93858.web.app',
   'http://localhost:5173',
 ])
-const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000 // 30 d — bank questions are static
-const CACHE_VERSION = 'v5' // v5: per-question conceptStory for multi-concept diagnostic
-const MAX_QUESTIONS = 12
-const MAX_STORY_CHARS = 4000
 
-export interface StoryModuleItem {
-  storyStem: string          // the question re-set inside the story world
-  socratic: string[]         // 2 guiding questions, no answers revealed
-  steps: string[]            // 2-5 step plan derived from the explanation
-  misconceptionCallout?: string // story-voiced warning about the tagged trap
-}
-
-interface IncomingQuestion {
-  id: string
-  question: string
-  choices: string[]
-  correctIndex: number
-  explanation: string
-  hints?: string[]
-  level?: number
-  format?: string
-  misconceptionLabel?: string
-  /** Per-question story world (multi-concept diagnostic). */
-  conceptId?: string
-  conceptName?: string
-  conceptStory?: string
-  protagonist?: string
-  storyContext?: string
-  storyIntro?: string
-}
-
-function cacheDocId(conceptId: string, questionId: string): string {
-  // Firestore doc ids cannot contain '/'
-  const safe = (s: string) => s.replace(/\//g, '_').slice(0, 180)
-  const cid = conceptId === 'diagnostic_mixed' ? 'mixed' : conceptId
-  return `${CACHE_VERSION}__${safe(cid)}__${safe(questionId)}`
-}
-
-/** Every digit-run in the original stem must survive into the story stem —
- *  the reskin may add narrative numbers but never lose mathematical ones. */
-function numbersPreserved(originalStem: string, storyStem: string): boolean {
-  const nums = originalStem.match(/\d+(?:\.\d+)?/g) ?? []
-  return nums.every(n => storyStem.includes(n))
-}
-
-const BANNED_MARKUP = /(<script|<svg|<iframe|javascript:|on\w+=)/i
-
-function isValidItem(
-  raw: unknown,
-  original: IncomingQuestion,
-): raw is StoryModuleItem {
-  if (!raw || typeof raw !== 'object') return false
-  const item = raw as Partial<StoryModuleItem>
-  if (typeof item.storyStem !== 'string' || item.storyStem.trim().length < 20) return false
-  if (item.storyStem.length > 2200) return false
-  if (BANNED_MARKUP.test(item.storyStem)) return false
-  if (item.storyStem.includes('—')) return false // em dash — voice rule
-  if (!numbersPreserved(original.question, item.storyStem)) return false
-  if (!Array.isArray(item.socratic)
-    || item.socratic.length < 1 || item.socratic.length > 3
-    || !item.socratic.every(sq => typeof sq === 'string' && sq.trim().length > 0 && !sq.includes('—'))) return false
-  if (!Array.isArray(item.steps)
-    || item.steps.length < 2 || item.steps.length > 6
-    || !item.steps.every(st => typeof st === 'string' && st.trim().length > 0 && !st.includes('—'))) return false
-  if (item.misconceptionCallout !== undefined
-    && (typeof item.misconceptionCallout !== 'string' || item.misconceptionCallout.includes('—'))) return false
-  // Guidance must not leak the answer letter or the exact correct choice text.
-  const correctText = original.choices[original.correctIndex] ?? ''
-  const leaky = (s: string) =>
-    correctText.length > 2 && s.toLowerCase().includes(correctText.toLowerCase())
-  if (item.socratic.some(leaky)) return false
-  return true
-}
-
-const SYSTEM_TEMPLATE = `You are MindCraft's story-module composer. A student is about to practice math. Each question may belong to a different concept with its own origin story — a real historical or folkloric narrative of why that math exists. Your job is to re-set each practice question INSIDE the best story world for THAT question and attach guidance, so the session feels like living those worlds rather than grinding a worksheet.
-
-DEFAULT STORY (when a question has no conceptStory field):
-{story}
-
-STUDENT CONTEXT (surface the world toward these — never change the math):
-• Goals: {goals_summary}
-• Tutor focus concepts: {tutor_focus}
-• Session: {session_kind}
-• Recent probes: {prior_outcomes}
-
-When goals mention a career, exam, or interest, let each protagonist's scene reflect that
-tone (e.g. ACT prep → mission briefing; music → studio) while keeping every number frozen.
-When a question includes its own "conceptStory", "protagonist", or "storyIntro", use THAT
-world for THAT question only — do not force every question into one protagonist.
-Prefer story cells / storyIntro when present — they are pre-authored immersive scenes.
-1. NEVER change, remove, or reorder any number, variable, equation, unit, or mathematical relationship in a question. Every numeric value in the original stem MUST appear verbatim in your rewrite.
-2. NEVER mention the answer choices — the app renders them unchanged. Your stem must ask for exactly the same quantity the original asks for.
-3. Keep any LaTeX (\\( \\), $ $, \\[ \\]) exactly as written.
-4. Each storyStem must stand alone (2-4 sentences of scene + the full mathematical ask). Do NOT reference other questions or "the previous scene" — questions can appear in any order.
-5. Use the story's actual characters, places, and stakes. If the original stem's context conflicts with the story world, translate the surface context but keep the math identical.
-6. The math must be WOVEN INTO the scene's action — a named character must need this exact equation/quantity for a concrete reason inside the story ("the ledger shows 9x − 3y = 10, and Stevin needs the slope to set the ramp"), never a scene followed by an unrelated textbook ask. If you cannot tie the exact math to the story naturally, set the scene around the character ENCOUNTERING that exact expression (a chart, a ledger, an instrument reading) — the connection must always be explicit.
-7. BAD example: "William watches planes land. If 9x - 3y = 10, what is the slope?" GOOD example: "Stevin opens the cargo ledger where today's balance reads 9x − 3y = 10. What slope does that constraint line show for the airlift ramp?"
-8. Voice: warm, direct, genuinely excited to help a student who has struggled with math before. Never stilted or corporate-sounding. NEVER use an em dash (—) anywhere in any field; use a period, colon, or comma instead.
-
-GUIDANCE — derived from the signals given per question:
-• "socratic": exactly 2 short guiding questions a great tutor would ask, in story voice. Lead toward the method, never reveal the answer or the correct choice.
-• "steps": 2-5 short imperative steps distilled from the worked explanation ("how to solve"). Plain language a 9th grader follows. No final numeric answer in the steps — end with "…which gives your answer."
-• "misconceptionCallout": ONLY if a misconception is tagged — one sentence, story-voiced, warning about that exact trap without shame. Omit the field otherwise.
-• Never say: wrong, failed, bad, stupid, easy. Direct and respectful, no cheerleading, no emojis.
-
-QUESTIONS (JSON — per question you get the stem, choices, correct answer, worked explanation, hints, difficulty level, format, and tagged misconception):
-{questions_json}
-
-Return ONLY a JSON object keyed by question id — no markdown fences, no commentary:
-{{"<questionId>": {{"storyStem": "...", "socratic": ["...", "..."], "steps": ["...", "..."], "misconceptionCallout": "..."}}}}`
+export type { StoryModuleItem }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const origin = String(req.headers.origin ?? '')
@@ -159,7 +55,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  // Abuse guard: reject oversized payloads before doing any work.
   const contentLength = Number(req.headers['content-length'] ?? 0)
   if (contentLength > 120_000) return res.status(413).json({ error: 'Payload too large' })
 
@@ -193,7 +88,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const items: Record<string, StoryModuleItem> = {}
 
-  // ── 1. Per-question cache lookup ────────────────────────────────────────────
   let uncached: IncomingQuestion[] = batch
   try {
     const refs = batch.map(q => db.collection('story_module_cache').doc(
@@ -217,82 +111,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const cachedCount = batch.length - uncached.length
 
-  // ── 2. One batched Groq call for the misses ────────────────────────────────
   if (uncached.length > 0) {
-    const model = new ChatGroq({
-      apiKey: process.env.GROQ_API_KEY ?? '',
-      model: 'llama-3.3-70b-versatile',
-      temperature: 0.55, // fidelity over flair — the math must survive
-      maxTokens: 6000,
+    const result = await composeStoryModuleItems({
+      conceptId,
+      conceptName,
+      story,
+      questions: uncached,
+      context: {
+        goals,
+        tutorFocusConcepts,
+        priorOutcomes,
+        sessionKind,
+      },
     })
 
-    const prompt = ChatPromptTemplate.fromMessages([['system', SYSTEM_TEMPLATE]])
-    const chain = prompt.pipe(model).pipe(new JsonOutputParser())
-
-    const questionsJson = JSON.stringify(uncached.map(q => ({
-      id: q.id,
-      conceptId: q.conceptId ?? conceptId,
-      conceptName: q.conceptName ?? conceptName,
-      conceptStory: q.conceptStory?.slice(0, 3000) ?? null,
-      protagonist: q.protagonist ?? null,
-      storyContext: q.storyContext ?? null,
-      storyIntro: q.storyIntro ?? null,
-      stem: q.question,
-      choices: q.choices,
-      correctAnswer: q.choices[q.correctIndex] ?? '',
-      howToSolve: q.explanation,
-      existingHints: q.hints ?? [],
-      difficultyLevel: q.level ?? 2,
-      format: q.format ?? 'symbolic_expression',
-      misconception: q.misconceptionLabel ?? null,
-    })))
-
-    try {
-      const goalsSummary = [
-        goals?.text?.trim(),
-        ...(goals?.tags?.length ? [`tags: ${goals.tags.join(', ')}`] : []),
-      ].filter(Boolean).join(' · ') || '(not specified)'
-
-      const tutorFocus = tutorFocusConcepts?.length
-        ? tutorFocusConcepts.join(', ')
-        : '(none)'
-
-      const priorSummary = (priorOutcomes ?? []).slice(-3).map(o =>
-        `${o.conceptId}: ${o.correct ? 'solid' : 'uncertain'}`,
-      ).join('; ') || '(first questions)'
-
-      const raw = await chain.invoke({
-        concept_name: conceptName,
-        story: story.slice(0, MAX_STORY_CHARS),
-        goals_summary: goalsSummary.slice(0, 500),
-        tutor_focus: tutorFocus.slice(0, 300),
-        session_kind: sessionKind ?? 'practice',
-        prior_outcomes: priorSummary.slice(0, 400),
-        questions_json: questionsJson,
-      }) as Record<string, unknown>
-
-      const writes: Promise<unknown>[] = []
-      for (const q of uncached) {
-        const candidate = raw?.[q.id]
-        if (isValidItem(candidate, q)) {
-          items[q.id] = candidate
-          writes.push(
-            db.collection('story_module_cache').doc(
-              cacheDocId(q.conceptId ?? conceptId, q.id),
-            ).set({
-              item: candidate,
-              conceptId: q.conceptId ?? conceptId,
-              questionId: q.id,
-              cachedAt: Date.now(),
-            }).catch(() => { /* non-fatal */ }),
-          )
-        }
-        // invalid/missing → omitted; client shows the plain question
-      }
-      await Promise.all(writes)
-    } catch {
-      // Groq failure — return whatever the cache had; client falls back
+    const writes: Promise<unknown>[] = []
+    for (const [qid, item] of Object.entries(result.items)) {
+      items[qid] = item
+      const q = uncached.find(u => u.id === qid)
+      if (!q) continue
+      writes.push(
+        db.collection('story_module_cache').doc(
+          cacheDocId(q.conceptId ?? conceptId, q.id),
+        ).set({
+          item,
+          conceptId: q.conceptId ?? conceptId,
+          questionId: q.id,
+          cachedAt: Date.now(),
+        }).catch(() => { /* non-fatal */ }),
+      )
     }
+    await Promise.all(writes)
   }
 
   return res.json({
