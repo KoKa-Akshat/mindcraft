@@ -99,104 +99,105 @@ broadcasts to all concepts in that cluster: `easy` → `easy`, `kinda` → `kind
 
 ---
 
-### 1.2 `/story-agent`
+### 1.2 `/story-module`
 
-**Purpose:** For a given concept and student profile, generate a ~200-word
-narrative story that makes the concept feel urgent and personal. Also emit a
-scene descriptor for background image generation (CSS gradient for now;
-Flux/DALL-E/Manim later).
+> **Supersedes the previously-spec'd `/story-agent` (§1.2) and
+> `/question-frame` (§1.3).** Those two were never built as separate endpoints;
+> `/story-module` unifies narrative wrap + in-question framing + guidance in
+> ONE batched call. See `STORY_LAYER_RECONCILE.md` for the migration rationale.
 
-**Reads from deterministic engine:**
-- Student's worst gap concept (from `/recommend` → first `recommendations[]` item)
-- `studentProfile.topWeaknesses` from `/recommend`
-- Concept name and `learning_style_affinity` from Layer 1
+**Purpose:** Optional **live overlay** for a practice/diagnostic session —
+Socratic guidance, step plans, and misconception callouts personalized with
+student goals / tutor focus. **Base themed stems are NOT served from this
+endpoint anymore** — they are baked offline into
+`app/src/data/themedStems.generated.json` (see `THEMED_QUESTION_BAKE_BUILD.md`)
+and read synchronously in Practice. Composer core is shared:
+`webhook/lib/storyModuleComposer.ts` (handler + `webhook/scripts/bake-themed-stems.ts`).
+
+The deterministic engine has ALREADY chosen which questions to serve; this
+endpoint only derives guidance (and historically reskinned stems). **The LLM
+never touches the math** — choices, `correctIndex`, and every numeric value
+stay byte-identical.
+
+**Reads from deterministic engine:** Nothing directly. The caller passes the
+already-selected `Question` objects plus their concept story and optional
+student context. Token verification only.
 
 **Input contract:**
 ```json
 {
-  "concept_id": "functions_basics",
-  "concept_name": "Functions",
-  "student_name": "Priya",
-  "worst_ingredient": "functions_basics__input_output_mapping",
-  "mission_type": "weakness",
-  "previous_story_ids": ["linear_equations", "absolute_value"]
+  "conceptId": "functions_basics",
+  "conceptName": "Functions",
+  "story": "<concept origin story, <=4000 chars>",
+  "questions": [
+    {
+      "id": "q_123", "question": "<stem>", "choices": ["A","B"],
+      "correctIndex": 0, "explanation": "<worked how-to-solve>",
+      "hints": [], "level": 2, "format": "symbolic_expression",
+      "misconceptionLabel": "...",
+      "conceptStory": "<per-question world, multi-concept sessions>",
+      "protagonist": "...", "storyContext": "...", "storyIntro": "..."
+    }
+  ],
+  "goals": { "tags": [], "text": "" },
+  "tutorFocusConcepts": [], "priorOutcomes": [], "sessionKind": "practice"
 }
 ```
+Max 12 questions per call. Requires `Authorization: Bearer <Firebase ID token>`.
 
 **Output contract:**
 ```json
 {
-  "story": "Asel is a game developer... [~200 words]",
-  "scene": {
-    "setting": "game studio at 2am, multiple monitors",
-    "mood": "urgent, electric",
-    "css_gradient": "linear-gradient(135deg, #0d1117 0%, #1a0a2e 50%, #0d2137 100%)",
-    "accent_color": "#7c3aed",
-    "future_prompt": "A game developer's studio at night, multiple screens showing broken game physics, warm desk lamp, purple-blue color palette"
+  "items": {
+    "q_123": {
+      "storyStem": "<the question re-set inside the story world>",
+      "socratic": ["<guiding q 1>", "<guiding q 2>"],
+      "steps": ["<step 1>", "<step 2>"],
+      "misconceptionCallout": "<story-voiced trap warning, optional>"
+    }
   },
-  "hook_line": "Her character keeps jumping at the wrong height — and she can't figure out why."
+  "cached": 8, "generated": 4
 }
 ```
 
-**Rules:**
-- Stories must involve a PERSON in a CRISIS that the target concept would solve
-- The person should feel like someone the student could actually know
-- Vary demographics, professions, and settings across concepts — no two stories
-  should feature the same profession or setting
-- Never mention the concept name directly in the story body ("functions" must
-  not appear in the Asel story — the concept is embedded in the crisis)
-- `hook_line` ≤ 20 words, present tense, stakes-first
-- `css_gradient` must be valid CSS, dark background, ≥ 2 stops
-- Stories with `mission_type: "weakness"` carry higher emotional stakes (the
-  crisis is urgent, the world needs solving) vs. `"learn"` (the person is
-  curious, exploring, discovering something new)
-- `previous_story_ids` are passed to prevent setting/profession reuse
+**Model:** Groq `llama-3.3-70b-versatile`, `temperature: 0.55` (fidelity over
+flair — the math must survive). One batched call for all cache misses.
 
-**Fallback:** Use pre-generated story from `conceptStories.json` if it exists
-for the concept. If no story exists, use generic framing ("A student is
-struggling with [concept]. Let's help them.") — boring but never null.
+**Caching:** Per-`{concept, question}` docs in Firestore `story_module_cache`
+(30-day TTL, key `{cacheVersion}__{conceptId}__{questionId}`). Reskins are
+stable per bank question, so any student who draws the same question reuses the
+same scene. Only uncached questions hit Groq.
 
----
+**Rules (enforced in code — keep them):**
+- NEVER change, remove, or reorder any number, variable, equation, unit, or
+  relationship. Every digit-run in the original stem MUST appear verbatim in
+  `storyStem`; items failing this validation are DROPPED, never served.
+- NEVER mention the answer choices or leak the correct choice text/letter in
+  `socratic` or `steps`. The app renders choices unchanged.
+- The math must be WOVEN INTO the scene's action — a named character needs this
+  exact equation/quantity for a concrete reason, never a scene followed by an
+  unrelated textbook ask (see the story-first convention in `CLAUDE.md`).
+- `socratic`: exactly 2 guiding questions, story voice, lead toward the method.
+- `steps`: 2–5 imperative steps distilled from the explanation; no final
+  numeric answer.
+- `misconceptionCallout`: only when a misconception is tagged; one sentence, no
+  shame.
+- Voice: warm, direct, no cheerleading, no emojis. NEVER an em dash (—).
+- Reject script/markup injection in any field. Cap `storyStem` ≤ 2200 chars.
 
-### 1.3 `/question-frame` (near-term)
+**Fallback:** Any item that is missing or fails validation is simply omitted
+from `items`; Practice serves **baked stem > framedLocalStem > plain** for the
+base stem regardless. On Groq failure the endpoint returns whatever the cache
+held. Never blocks the session — guidance overlay is best-effort.
 
-**Purpose:** Take a question the deterministic engine has selected and wrap it
-in a contextual stakes frame — one or two sentences that connect it to the
-student's known gap and the active story's world.
+**Offline bake (stem):** `npm run bake-themed-stems --prefix webhook`
+writes `themedStems.generated.json` keyed `{conceptId}__{questionId}`. Same
+numeric-preservation validation; drops are recorded, never checked in as
+math-mutated stems. Re-run after bank changes; `--coverage-only` flags gaps.
 
-**Reads from deterministic engine:**
-- The `Question` object (stem, choices, concept, level, format)
-- Student's active bridge gaps (`isBridgeGap`, `bridgeEvidence` from
-  `/knowledge-graph`)
-- Active session's story (passed from frontend state)
-
-**Input contract:**
-```json
-{
-  "question": { "conceptId": "functions_basics", "stem": "...", "level": 1 },
-  "active_story_world": "game studio, Asel's broken physics engine",
-  "worst_bridge": "functions_basics → quadratic_functions",
-  "student_name": "Priya"
-}
-```
-
-**Output contract:**
-```json
-{
-  "frame": "Asel's character jumps based on a formula — but she wrote it wrong. This is exactly the kind of input-output mapping that's tripping you up.",
-  "tone": "urgent"
-}
-```
-
-**Rules:**
-- Frame ≤ 40 words
-- Must reference either the active story world OR the specific gap — not just
-  generic motivation ("you can do this!")
-- Never give away the answer or hint at which choice is correct
-- `tone` ∈ `urgent | curious | reflective` — matches `mission_type`
-
-**Fallback:** No frame. Question renders without contextual wrapper. Silent,
-never an error.
+**Note — image is a SEPARATE, offline concern.** Per-question background/scene
+art is NOT generated here and NOT generated live. Concept art is produced
+offline and resolved per concept — see §5.4.
 
 ---
 
@@ -435,7 +436,7 @@ interaction.
   transcribes the student's own real homework. If a future pass adds a
   story frame around extracted questions, it must follow the same
   situation → task → math-as-the-action → result shape as the rest of the
-  question bank (see `/question-frame` and the bank's `storyContext`
+  question bank (see `/story-module` and the bank's `storyContext`
   fields) — never decorative wallpaper bolted onto an unrelated problem.
 
 **Fallback:** `{ "questions": [], "pageCount": 0, "unavailable": true }`.
@@ -462,13 +463,13 @@ is world-state change.
 - The agent never changes the quest line — only the aesthetic world wrapping it
 
 **Future integrations:**
-- **Manim**: animated math visualizations called from `/story-agent` or
-  `/question-frame` — "show me what this function looks like as x changes"
+- **Manim**: animated math visualizations called from `/story-module` — "show
+  me what this function looks like as x changes"
 - **Desmos**: interactive graph embeds generated from the question's coordinate
   data; rendered in `Question.figure` field
 - **GeoGebra**: geometry diagrams for `diagram` format questions
-- **Flux/DALL-E**: background image from `scene.future_prompt` in story agent
-  response — replaces CSS gradient once image gen is stable
+- **Flux/DALL-E/Higgsfield**: concept art via the offline pipeline in §5.4 —
+  NOT a live per-question call
 
 ---
 
@@ -526,8 +527,7 @@ shape. Fallbacks are not errors — they are the guaranteed floor.
 | Agent | Fallback |
 |-------|---------|
 | `/onboard-agent` | Heuristic cluster → concept broadcast |
-| `/story-agent` | Pre-generated story from `conceptStories.json` |
-| `/question-frame` | Empty frame (question renders without wrapper) |
+| `/story-module` | Omit the item; client renders the plain question. On Groq failure, return cache hits only |
 | `/hint-agent` | Fixed generic nudge text |
 | `/post-session-agent` | Fixed "Nice work. Keep going." with mastery signal `improving` |
 | `/transcribe-scratch` | Empty strings with `unavailable: true` |
@@ -542,8 +542,7 @@ endpoint explicitly defines an `unavailable` enhancement flag.
 | Use case | Model | Reason |
 |----------|-------|--------|
 | Onboarding agent | `llama-3.3-70b` (Groq) | JSON-heavy structured output; fast |
-| Story generation | `claude-fable-5` | Narrative quality matters most here |
-| Question framing | `llama-3.3-70b` (Groq) | Short output, latency-sensitive (in session) |
+| Story module (stem reskin + guidance) | `llama-3.3-70b` (Groq) | Batched + cached per `{concept, question}`; math frozen, so narrative fidelity is a validation guard, not a model-tier need. Don't move to `claude-fable-5` without a demonstrated quality gap |
 | Hint generation | `llama-3.3-70b` (Groq) | In-session, must be < 500ms |
 | Post-session | `claude-fable-5` | Reflective quality over speed |
 | Scratch transcription | `claude-haiku-4-5` vision, fallback `llama-4-scout` vision (Groq) | Small image-to-JSON task; graceful if provider credits fail |
@@ -559,8 +558,7 @@ provider-agnostic — no Groq-specific or Anthropic-specific code outside of
 | Agent | Max latency | What happens if exceeded |
 |-------|-------------|--------------------------|
 | `/onboard-agent` | 3000ms | Show loading screen; user waited already |
-| `/story-agent` | 4000ms | Use fallback story; log timeout |
-| `/question-frame` | 800ms | Skip frame silently; show raw question |
+| `/story-module` | 25000ms (batched, pre-session) | Serve cache hits; render plain questions for the rest. Not an in-session blocking call — skins load before the session starts |
 | `/hint-agent` | 600ms | Show generic fallback hint immediately |
 | `/post-session-agent` | 3000ms | Show generic reflection |
 | `/transcribe-scratch` | 4000ms | Hide transcription pane quietly |
@@ -600,10 +598,12 @@ Never let a hung LLM call block a student mid-session.
 
 ### 3.3 The fence in code
 
-Every agent endpoint in `ml/serve.py` follows this pattern:
+Illustrative pseudocode of the deterministic/agent fence. **Note:** the live
+agents run as Vercel webhook functions (`webhook/api/*`), not in `ml/serve.py`
+— this example predates that and is kept only to show the read-only pattern.
 
 ```python
-@app.post("/story-agent")
+@app.post("/story-agent")  # illustrative only — real endpoint is webhook /story-module
 async def story_agent_endpoint(req: StoryAgentRequest, uid: str = Depends(verify_token)):
     # 1. Read from deterministic (read-only)
     graph = await get_knowledge_graph(req.student_id)
@@ -647,7 +647,7 @@ sparse graph data — prompts must be designed to work with partial information.
 
 ### 5.1 Manim (animated math visualization)
 
-- Triggered by `/story-agent` or `/question-frame` when `format` is
+- Triggered by `/story-module` when `format` is
   `coordinate_graph` or when a concept has strong geometric representation
 - Input: a Manim scene specification (function parameters, animation steps)
 - Output: an MP4 or SVG embedded in the story card or question frame
@@ -668,13 +668,26 @@ sparse graph data — prompts must be designed to work with partial information.
 - Agent generates a GeoGebra construction spec (points, lines, constraints)
 - Frontend renders via GeoGebra embed
 
-### 5.4 Image generation (Flux / DALL-E)
+### 5.4 Concept art (offline pipeline — NOT a live per-question call)
 
-- `scene.future_prompt` from `/story-agent` is the generation prompt
-- Currently: CSS gradient from `scene.css_gradient` renders instead
-- Migration path: when image gen is stable, store generated images in Firebase
-  Storage keyed by `{concept_id}_{hash(student_profile)}`, cache aggressively
-- The CSS gradient is the graceful fallback forever — never remove it
+Art is keyed **per concept**, generated **offline**, and checked into the repo.
+It is not an agent endpoint and never runs at serve time. This is deliberate —
+see `STORY_LAYER_RECONCILE.md` for why per-concept-offline beats per-question-live.
+
+- **Pipeline:** `app/scripts/generateConceptArt.mjs` (Higgsfield) +
+  hand-authored SVGs drop plates into `assets/canvas/generated/story-{conceptId}.{jpg,svg}`.
+  `app/src/lib/storyArt.ts` auto-discovers them via `import.meta.glob` — adding
+  a concept needs no code edit, just a rerun of the script.
+- **Precedence:** generated jpg/svg > hand-picked `ART` map > theme fallback.
+  `storyArtFor()` always returns a real image — never an empty box.
+- **The image sets the WORLD (a property of the concept); `/story-module` text
+  sets the SCENE within it (per question).** Together that's a bespoke-feeling
+  question without a per-question image. Do NOT add live per-serve image gen.
+- **If a concept ever needs per-question art:** generate it offline into the
+  same glob keyed `story-{conceptId}-{questionId}.{jpg,svg}` (most-specific asset
+  wins) — still offline, still cached, still never a live call.
+- Regenerating for more concepts is a rerunnable script, gated only by
+  image-provider credits — it is not on the runtime cost/latency path.
 
 ---
 
@@ -684,10 +697,10 @@ Every LLM call logs to a `agent_calls` collection in Firestore:
 
 ```json
 {
-  "touchpoint": "/story-agent",
+  "touchpoint": "/story-module",
   "student_id": "...",
   "concept_id": "functions_basics",
-  "model": "claude-fable-5",
+  "model": "llama-3.3-70b",
   "latency_ms": 2340,
   "token_count": 487,
   "used_fallback": false,
@@ -794,10 +807,9 @@ and what support can be safely removed.*
 | Phase | Agent | Endpoint | Depends on |
 |-------|-------|----------|------------|
 | 1 | Onboarding | `/onboard-agent` | `/exam-concepts/act`, Layer 1 priors |
-| 2 | Story enrichment | `/story-agent` | `conceptStories.json`, `/recommend` |
+| 2 | Story module (stem reskin + guidance) ✅ SHIPPED | `/story-module` | concept stories, question bank |
 | 3 | Hints | `/hint-agent` | `/knowledge-graph`, ingredient tags |
-| 4 | Question framing | `/question-frame` | Bridge gaps, active story state |
 | 4a | Cognitive tagging | deterministic in frontend | `time_seconds` + correctness → `cognitive_signal` |
 | 5 | Post-session | `/post-session-agent` | `/record-outcomes` response |
 | 6 | World builder | `/world-builder` | Full graph + story history |
-| 7 | Manim/Desmos | Via story + question agents | Visual asset pipeline |
+| 7 | Manim/Desmos | Via `/story-module` | Visual asset pipeline |
