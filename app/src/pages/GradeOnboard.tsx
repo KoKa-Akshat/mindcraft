@@ -113,7 +113,9 @@ export default function GradeOnboard() {
 
   const currentQ = probeQs[probeIdx]
   const storyItem = currentQ ? storyMod?.[currentQ.id] : undefined
-  const { display: storyDisplay, stemText } = useStoryQuestion(currentQ, storyItem?.storyStem)
+  // stemText (story-reskinned) intentionally left wired but unused — the
+  // rendered stem now always uses currentQ.question (plain). See ACTIVE_TASK.md.
+  const { display: storyDisplay, stemText: _stemText } = useStoryQuestion(currentQ, storyItem?.storyStem)
   const sceneLine = currentQ && storyDisplay ? resolveStoryScene(currentQ, storyDisplay) : currentQ?.storyContext
 
   const probeTheme = useMemo(() => ({
@@ -159,7 +161,10 @@ export default function GradeOnboard() {
 
   const journalGuide = useJournalGuide({
     conceptId: currentQ?.conceptId ?? '',
-    questionText: stemText,
+    // Highlight phrases must be found in the text HighlightedStem actually
+    // renders (currentQ.question, plain) — not the story-reskinned stemText,
+    // which is left wired above for the future wrapping agent.
+    questionText: currentQ?.question ?? '',
     strokeData: probeStrokes,
     inkState: probeInk,
     transcribing: probeTranscribing,
@@ -388,28 +393,17 @@ export default function GradeOnboard() {
                   <div className={s.guideRow}>
                     <div className={s.guideBody}>
                       <div className={s.probePanel}>
-                        {bridgeLine && probeIdx > 0 && (
-                          <p className={s.probeBridgeLine} style={{ color: probeTheme.accent, opacity: 0.85, fontSize: 13 }}>
-                            <MathText text={bridgeLine} />
-                          </p>
-                        )}
-                        {currentQ?.storyIntro && (
-                          <p className={s.storyIntroBlock}>{currentQ.storyIntro}</p>
-                        )}
-                        {storyItem?.socratic?.[0] && (
-                          <p className={s.probeStoryLine} style={{ opacity: 0.72, fontSize: 13 }}>
-                            <MathText text={storyItem.socratic[0]} />
-                          </p>
-                        )}
-                        {sceneLine && (
-                          <p className={s.probeStoryLine}><MathText text={sceneLine} /></p>
-                        )}
+                        {/* Narrative bridgeLine, currentQ.storyIntro, storyItem.socratic[0],
+                            and sceneLine paragraphs are intentionally not rendered anymore
+                            (see ACTIVE_TASK.md). bridgeLine/storyItem/sceneLine stay wired
+                            above for the future wrapping agent. */}
                         <HighlightedStem
-                          text={stemText}
+                          text={currentQ.question}
                           ink={probeTheme.ink}
                           accent={probeTheme.accent}
                           highlights={journalGuide.highlights}
                           className={s.questionText}
+                          questionId={currentQ.id}
                         />
                         <InteractiveWidget
                           conceptId={currentQ.conceptId}

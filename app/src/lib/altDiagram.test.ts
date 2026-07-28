@@ -1,0 +1,255 @@
+/**
+ * splitAltDiagramSegments — regression coverage for the caption-bleed bug
+ * (eedi_203, linear_equations): the alt text a `(Diagram: ...)` callout
+ * wraps can contain its own nested parens (coordinate pairs), and a naive
+ * regex split truncates the callout at the first inner `)`.
+ */
+import { describe, expect, it } from 'vitest'
+import { splitAltDiagramSegments, parseAltDiagram } from './altDiagram'
+
+describe('splitAltDiagramSegments', () => {
+  it('keeps a diagram callout whole when its alt text has nested coordinate parens', () => {
+    const text =
+      'Mark is working out the distance between these two points. What type of triangle would help him? ' +
+      '(Diagram: Axes with not scales drawn on. Two points are marked, (4,10) and (9,2))'
+    const segments = splitAltDiagramSegments(text)
+
+    expect(segments).toHaveLength(2)
+    expect(segments[0]).toEqual({
+      kind: 'text',
+      content: 'Mark is working out the distance between these two points. What type of triangle would help him? ',
+    })
+    expect(segments[1]).toEqual({
+      kind: 'diagram',
+      alt: 'Axes with not scales drawn on. Two points are marked, (4,10) and (9,2)',
+    })
+    // The old bug: " and (9,2))" leaking out as a trailing plain-text segment.
+    expect(segments.some(s => s.kind === 'text' && s.content.includes('(9,2)'))).toBe(false)
+  })
+
+  it('handles multiple nested pairs and doubly-nested parens', () => {
+    const text = '(Diagram: A circle through (4,0), (0,-4), (-4,0) and (0,4) with center (0,0))'
+    const segments = splitAltDiagramSegments(text)
+    expect(segments).toHaveLength(1)
+    expect(segments[0]).toEqual({
+      kind: 'diagram',
+      alt: 'A circle through (4,0), (0,-4), (-4,0) and (0,4) with center (0,0)',
+    })
+  })
+
+  it('passes plain text through untouched when there is no diagram callout', () => {
+    const text = 'Solve for x: 2x + 4 = 10'
+    expect(splitAltDiagramSegments(text)).toEqual([{ kind: 'text', content: text }])
+  })
+
+  it('handles a callout followed by more prose', () => {
+    const text = '(Diagram: A dashed line from (1,1) to (2,2)) What is the slope?'
+    const segments = splitAltDiagramSegments(text)
+    expect(segments).toEqual([
+      { kind: 'diagram', alt: 'A dashed line from (1,1) to (2,2)' },
+      { kind: 'text', content: ' What is the slope?' },
+    ])
+  })
+})
+
+/**
+ * parseAltDiagram — every quote below is real eedi alt-text (see
+ * ml/data/eedi/train.csv via the ingestion pipeline, CLAUDE.md "Question
+ * bank"), not invented. Coverage against the full `format: 'diagram'` corpus
+ * (243 questions with non-empty alt text) is 42% (102/243) across all 9
+ * patterns — the rest fall through to `humanizeAltCaption` on purpose, since
+ * a wrong guess at a labeled diagram is worse than a plain caption.
+ */
+describe('parseAltDiagram — shape dimensions', () => {
+  it('parses a triangle with base and equal sides', () => {
+    const d = parseAltDiagram('A triangle, base 12m. All three sides are equal.')
+    expect(d).toMatchObject({ kind: 'shapedimension', shape: 'triangle', base: '12m' })
+  })
+
+  it('parses a cuboid with depth/height and a starred width', () => {
+    const d = parseAltDiagram('A cuboid, depth 2cm and height 3cm. The width is labelled with a star.')
+    expect(d).toMatchObject({ kind: 'shapedimension', shape: 'cuboid', depth: '2cm', height: '3cm', width: '★' })
+  })
+
+  it('parses a cuboid described as "top measures X by Y, and the height is Z"', () => {
+    const d = parseAltDiagram('A cuboid. The top measures 4cm by 2cm, and the height is 7cm.')
+    expect(d).toEqual({ kind: 'shapedimension', shape: 'cuboid', width: '4cm', depth: '2cm', height: '7cm' })
+  })
+
+  it('parses a cuboid with "X by Y by Z" dimensions (all "by" separators)', () => {
+    const d = parseAltDiagram('A cuboid with dimensions 6cm by 3cm by 4 cm. The top face Q is marked.')
+    expect(d).toEqual({ kind: 'shapedimension', shape: 'cuboid', depth: '6cm', height: '3cm', width: '4cm' })
+  })
+
+  it('parses a trapezium with two parallel sides and height', () => {
+    const d = parseAltDiagram(
+      'Trapezium with parallel sides of lengths 90mm and 40mm. The length of one slanted side is 6cm and the perpendicular height is 5cm.',
+    )
+    expect(d).toMatchObject({ kind: 'shapedimension', shape: 'trapezium', parallel1: '90mm', parallel2: '40mm', height: '5cm' })
+  })
+
+  it('parses a right-angled triangle with base/slant/perpendicular height', () => {
+    const d = parseAltDiagram('A right angled triangle with base length 11cm, slant height, 13 cm and perpendicular height 8cm.')
+    expect(d).toMatchObject({ kind: 'shapedimension', shape: 'triangle', base: '11cm', height: '8cm', slant: '13cm' })
+  })
+
+  it('parses a cube with one labeled edge', () => {
+    const d = parseAltDiagram('A cube with one edge labelled 5cm')
+    expect(d).toMatchObject({ kind: 'shapedimension', shape: 'cube', edge: '5cm' })
+  })
+
+  it('falls through a bare parallel-sides mention with no values', () => {
+    expect(parseAltDiagram('Trapezium with parallel sides labelled')).toBeNull()
+  })
+
+  it('parses an angle-only triangle with a variable third angle', () => {
+    const d = parseAltDiagram('A triangle with two labelled interior angles. One angle is 65 degrees. One angle is k degrees. The third angle has no label.')
+    expect(d).toMatchObject({ kind: 'triangleangles' })
+    expect((d as { angles: string[] }).angles).toContain('65')
+    expect((d as { angles: string[] }).angles).toContain('k')
+  })
+})
+
+describe('parseAltDiagram — function machines', () => {
+  it('parses input + two chained operations', () => {
+    const d = parseAltDiagram('A function machine showing an input of n and operations divide by 5 and add 3')
+    expect(d).toMatchObject({ kind: 'functionmachine', input: 'n' })
+    expect((d as { steps: string[] }).steps).toEqual(['divide by 5', 'add 3'])
+  })
+
+  it('falls through an all-blank function machine', () => {
+    const d = parseAltDiagram('A function machine with the input box blank. The first function box blank. The second function box has a purple star in and the output box is blank.')
+    expect(d).toBeNull()
+  })
+})
+
+describe('parseAltDiagram — bracket expansion arrows', () => {
+  it('parses two brackets with arrows pointing at specific terms', () => {
+    const d = parseAltDiagram('The two brackets are (x+5)(x-3). The arrows are pointing at the +5 in the first bracket and the -3 in the second bracket.')
+    expect(d).toEqual({ kind: 'bracketarrows', bracket1: 'x+5', bracket2: 'x-3', term1: '+5', term2: '-3' })
+  })
+})
+
+describe('parseAltDiagram — angle diagrams', () => {
+  it('parses angles around a point with two labels', () => {
+    const d = parseAltDiagram('Angles around a point, split into 2 parts. One is labelled 310 degrees and the other x.')
+    expect(d).toMatchObject({ kind: 'anglediagram', variant: 'aroundpoint' })
+  })
+
+  it('parses three angles meeting on a straight line', () => {
+    const d = parseAltDiagram('Three angles which meet to form a straight line. They are labelled 46 degrees, 115 degrees and k.')
+    expect(d).toMatchObject({ kind: 'anglediagram', variant: 'online' })
+  })
+
+  it('parses three lines crossing at a point', () => {
+    const d = parseAltDiagram('A diagram showing 3 lines crossing at a point to form 6 angles. Two angles are marked in orange, there are two unmarked angles between them on either side.')
+    expect(d).toMatchObject({ kind: 'anglediagram', variant: 'crossing6' })
+  })
+})
+
+describe('parseAltDiagram — venn diagrams', () => {
+  it('parses a two-set venn diagram', () => {
+    const d = parseAltDiagram(
+      "A Venn diagram with two sets, one labelled Square number and one labelled Odd number. Square Number without the intersection is labelled A, Odd Number without the intersection is labelled C, the intersection of the two sets is labelled B.",
+    )
+    expect(d).toMatchObject({ kind: 'venn' })
+    expect((d as { labels: string[] }).labels).toHaveLength(2)
+  })
+})
+
+describe('parseAltDiagram — sequence patterns', () => {
+  it('parses a growing square-count sequence', () => {
+    const d = parseAltDiagram('A diagram showing the first 3 patterns in a sequence. Pattern 1 contains 3 squares in this arrangement. Pattern 2 contains 5 squares in this arrangement. Pattern 3 contains 7 squares in this arrangement.')
+    expect(d).toEqual({ kind: 'sequencepattern', counts: [3, 5, 7] })
+  })
+})
+
+describe('parseAltDiagram — divided shapes', () => {
+  it('parses a rectangle split into parts with some shaded (single-sentence form)', () => {
+    const d = parseAltDiagram('A rectangle split into 10 equal parts with 3 parts shaded in yellow')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 10, shaded: 3 })
+  })
+
+  it('parses a bar split into parts (two-sentence "X of the parts are shaded" form)', () => {
+    const d = parseAltDiagram('A bar split into 8 equal parts. 3 of the parts are shaded, and the total length of these 3 parts is labelled 3/4.')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 8, shaded: 3 })
+  })
+
+  it('parses a bar split into parts ("X are shaded" bare form)', () => {
+    const d = parseAltDiagram('A bar split into 7 equal pieces. 3 are shaded, and one of these is labelled with a question mark.')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 7, shaded: 3 })
+  })
+
+  it('parses a large percentage-style bar (100 parts) as a proportional fill', () => {
+    const d = parseAltDiagram('Rectangle split into 100 equal parts with 27 parts shaded in yellow')
+    expect(d).toEqual({ kind: 'dividedshape', shape: 'bar', total: 100, shaded: 27 })
+  })
+
+  it('parses a circle divided into labeled count-groups', () => {
+    const d = parseAltDiagram('Circle divided into 5 equal sections. 2 sections labelled with a blue number 1. 3 sections labelled with a red number 2.')
+    expect(d).toEqual({
+      kind: 'dividedshape', shape: 'circle', total: 5,
+      groups: [{ count: 2, label: '1' }, { count: 3, label: '2' }],
+    })
+  })
+
+  it('falls through a curly-bracket algebra bar diagram (too complex to templatize accurately)', () => {
+    const d = parseAltDiagram('Horizontal green bar divided into 5 equal sections. Each section is labelled with a "P". Curly bracket shows that 3 of the sections sum to 615.')
+    expect(d).toBeNull()
+  })
+
+  it('falls through a recursive halving diagram with no explicit part count', () => {
+    const d = parseAltDiagram('A rectangle split in half. One half is split in half again, and one half of that is split in half again, with one of those parts shaded.')
+    expect(d).toBeNull()
+  })
+})
+
+describe('parseAltDiagram — spinners', () => {
+  it('parses a single labeled spinner', () => {
+    const d = parseAltDiagram('A four sided spinner labelled with 1, 2, 3 and 4')
+    expect(d).toEqual({ kind: 'spinner', spinners: [{ sides: 4, labels: ['1', '2', '3', '4'] }] })
+  })
+
+  it('parses a hexagonal spinner with repeated labels', () => {
+    const d = parseAltDiagram('A hexagonal shaped spinner with 6 equal sections labelled 1, 3, 3, 5, 5 and 5.')
+    expect(d).toEqual({ kind: 'spinner', spinners: [{ sides: 6, labels: ['1', '3', '3', '5', '5', '5'] }] })
+  })
+
+  it('parses two spinners described in one alt-text', () => {
+    const d = parseAltDiagram('Two spinners. One is a four-sided spinner with 4 equal sections labelled 1, 2, 3 and 4. One is a five-sided spinner with 5 equal sections labelled 1, 2, 3, 4 and 5.')
+    expect(d).toEqual({
+      kind: 'spinner',
+      spinners: [
+        { sides: 4, labels: ['1', '2', '3', '4'] },
+        { sides: 5, labels: ['1', '2', '3', '4', '5'] },
+      ],
+    })
+  })
+})
+
+describe('parseAltDiagram — regular polygons', () => {
+  it('parses a regular octagon with a labeled interior angle', () => {
+    const d = parseAltDiagram('A regular octagon (8 sided polygon). Each side is marked with a single dash to show that all sides are equal in length. One of the interior angles of the octagon is labelled with the letter "x".')
+    expect(d).toEqual({ kind: 'regularpolygon', sides: 8, angleLabel: 'x' })
+  })
+
+  it('falls through a polygon joined to another shape (compound, not a bare polygon)', () => {
+    expect(parseAltDiagram('A regular pentagon with a square joined along one edge')).toBeNull()
+  })
+
+  it('falls through an irregular polygon with no measurements', () => {
+    expect(parseAltDiagram('Image of an irregular pentagon')).toBeNull()
+  })
+})
+
+describe('parseAltDiagram — shape pairs', () => {
+  it('parses two similarly-labeled shapes with real side lengths', () => {
+    const d = parseAltDiagram('To similar star shapes labelled P and Q. They have the same side labelled for P it is 3cm and for Q it is 11cm')
+    expect(d).toEqual({ kind: 'shapepair', labelA: 'P', labelB: 'Q', valueA: '3cm', valueB: '11cm' })
+  })
+
+  it('falls through a spelled-out-number grid comparison (avoids parsing English number words)', () => {
+    const d = parseAltDiagram('Triangle A is two squares across one square up. Triangle B is six squares across and three squares up.')
+    expect(d).toBeNull()
+  })
+})

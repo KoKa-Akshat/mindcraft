@@ -340,6 +340,15 @@ interface Props {
   lineOverlays?: LineOverlay[]
   /** Transparent canvas over ruled paper — chapter pages. */
   paperMode?: boolean
+  /**
+   * Grow to fill 100% of a flex-column parent's available height instead of
+   * capping at `height` — `height` becomes a floor, not a fixed box. Needs a
+   * parent chain that actually provides definite height via flex/grid
+   * stretch (see ScratchPad.module.css .wrapFill/.canvasWrapFill); harmless
+   * no-op otherwise. Used by Practice.tsx's non-paper scratch box so writing
+   * space fills the rest of the aside column instead of a small fixed pad.
+   */
+  fillHeight?: boolean
   /** Transcribed workLines from ScratchTranscriptionPane — used for expression eval overlays. */
   evalLines?: EvalLine[]
   /** Question id used for keying localStorage scratch logs. */
@@ -351,6 +360,7 @@ export default function ScratchPad({
   height = 320,
   lineOverlays,
   paperMode = false,
+  fillHeight = false,
   evalLines,
   questionId,
 }: Props) {
@@ -521,8 +531,8 @@ export default function ScratchPad({
   }, [evalLines])
 
   return (
-    <div className={`${s.wrap} ${paperMode ? s.wrapPaper : ''}`}>
-      <div className={`${s.canvasWrap} ${paperMode ? s.canvasWrapPaper : ''}`}>
+    <div className={`${s.wrap} ${paperMode ? s.wrapPaper : ''} ${fillHeight ? s.wrapFill : ''}`}>
+      <div className={`${s.canvasWrap} ${paperMode ? s.canvasWrapPaper : ''} ${fillHeight ? s.canvasWrapFill : ''}`}>
 
         {/* Eraser + Logs toolbar (top-right corner) */}
         <div className={s.toolbar} onClick={e => e.stopPropagation()}>
@@ -578,7 +588,13 @@ export default function ScratchPad({
         <canvas
           ref={canvasRef}
           className={`${s.canvas} ${paperMode ? s.canvasPaper : ''} ${fading ? s.canvasFading : ''}`}
-          style={paperMode ? { flex: 1, minHeight: height ?? 0, height: height ? undefined : '100%' } : { height }}
+          style={
+            paperMode
+              ? { flex: 1, minHeight: height ?? 0, height: height ? undefined : '100%' }
+              : fillHeight
+                ? { flex: 1, minHeight: height ?? 0 }
+                : { height }
+          }
           onPointerDown={begin}
           onPointerMove={move}
           onPointerUp={end}

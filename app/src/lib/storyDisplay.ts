@@ -1,22 +1,22 @@
 /**
- * storyDisplay — presentation-layer story framing for bank questions.
+ * storyDisplay — presentation-layer display transforms for bank questions.
  *
  * The JSON bank often still carries textbook stems (OpenStax NWSL tables, Eedi
- * concept-level storyContext). This module rewrites what the student SEES at
- * render time: Florence ward ledgers instead of soccer tables, structured
- * tables instead of newline blobs, concept vignettes instead of random grids.
+ * concept-level storyContext). This module reformats what the student SEES at
+ * render time: structured tables instead of newline blobs, concept vignettes
+ * instead of misleading coord grids, regular-polygon figures for named
+ * shapes. Narrative sentence-injection (e.g. renaming the table's protagonist
+ * / dataset into a story scene) was removed — see ACTIVE_TASK.md. Every
+ * branch below must stay a plain VISUAL/layout transform; it must never
+ * invent narrative prose for the `stem` field. The future wrapping agent
+ * (per CLAUDE.md) is what will add story framing, from `questionContextFrames.json`
+ * + one LLM call — not this module.
  */
 import type { FormatId, Question } from './questionBank'
 import conceptFrames from '../data/questionContextFrames.json'
 import type { ContextFrame } from './storySelection'
 
 const FRAMES = conceptFrames as Record<string, ContextFrame>
-
-const FLORENCE_WARDS = [
-  'Scutari North', 'Scutari East', 'Scutari South', 'Scutari West',
-  'Balaclava Ward', 'Renkioi Ward', 'Koulali Ward', 'Sanjak Ward',
-  'Hospital Pier', 'Commissary Ward',
-]
 
 const OPENSTAX_PREFIX = /^For the following exercises,\s*use the table,?\s*/i
 
@@ -44,12 +44,6 @@ function frameFor(conceptId: string): ContextFrame | undefined {
   return FRAMES[conceptId]
 }
 
-function isFlorenceQuestion(q: Question): boolean {
-  if (q.conceptId === 'descriptive_statistics') return true
-  const p = frameFor(q.conceptId)?.protagonist ?? ''
-  return /florence/i.test(p) || /florence/i.test(q.storyContext ?? '')
-}
-
 function extractAskLine(text: string): string {
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
   for (let i = lines.length - 1; i >= 0; i--) {
@@ -67,7 +61,7 @@ export function parseColumnarTable(text: string): ParsedTable | null {
   const teamIdx = lines.findIndex(l => /^Team$/i.test(l))
   if (teamIdx < 0) return null
 
-  const headers = ['Ward', 'Points', 'W', 'L', 'T', 'GF', 'GA']
+  const headers = ['Team', 'Points', 'W', 'L', 'T', 'GF', 'GA']
   const dataStart = teamIdx + 7
   const askIdx = lines.findIndex(
     (l, i) => i >= dataStart && /^(Compute|Find|What|Determine|Calculate)\b/i.test(l),
@@ -77,9 +71,9 @@ export function parseColumnarTable(text: string): ParsedTable | null {
 
   const rows: string[][] = []
   for (let i = 0; i + 7 <= dataLines.length; i += 7) {
+    // Keep the bank's real team name (chunk[0]) — no invented row labels.
     const chunk = dataLines.slice(i, i + 7)
-    const wardName = FLORENCE_WARDS[rows.length] ?? `Ward ${rows.length + 1}`
-    rows.push([wardName, ...chunk.slice(1)])
+    rows.push(chunk)
   }
   return rows.length ? { headers, rows } : null
 }
@@ -98,19 +92,15 @@ function polygonSidesFromStem(stem: string): number | undefined {
   return undefined
 }
 
+// Plain layout transform only — no narrative sentence injection (the
+// previous "Florence Nightingale copied ten ward ledgers..." framing was
+// removed, see ACTIVE_TASK.md). The table itself (real team names, real
+// values) is the visual/layout change; the stem is just the bank's ask line.
 function reskinTableQuestion(q: Question, table: ParsedTable): StoryDisplay {
-  const ask = extractAskLine(q.question)
-    .replace(/\bpoints\b/gi, 'weekly patient counts')
-    .replace(/\bteams\b/gi, 'wards')
-    .replace(OPENSTAX_PREFIX, '')
-
-  const protagonist = frameFor(q.conceptId)?.protagonist ?? 'Florence Nightingale'
-  const stem = isFlorenceQuestion(q)
-    ? `${protagonist} copied ten ward ledgers onto her table at Scutari — each row is one week's tally. ${ask}`
-    : ask
+  const ask = extractAskLine(q.question).replace(OPENSTAX_PREFIX, '')
 
   return {
-    stem,
+    stem: ask,
     table,
     visual: 'vignette',
     vignetteId: q.conceptId,
@@ -125,9 +115,8 @@ function reskinGenericOpenStax(q: Question): StoryDisplay | null {
   if (table) return reskinTableQuestion(q, table)
 
   const ask = extractAskLine(q.question)
-  const protagonist = frameFor(q.conceptId)?.protagonist ?? 'the scholar'
   return {
-    stem: `${protagonist} sets the problem on the table. ${ask}`,
+    stem: ask,
     visual: 'vignette',
     vignetteId: q.conceptId,
   }

@@ -80,3 +80,29 @@ describe('unicode math from the static bank passes through', () => {
     expect(html).toContain('√4/√9')
   })
 })
+
+describe('diagram caption never bleeds into the question stem (eedi_203 regression)', () => {
+  it('renders the whole nested-paren alt text inside the caption box, not as trailing stem text', () => {
+    const text =
+      'Mark is working out the distance between these two points. What type of triangle would help him? ' +
+      '(Diagram: Axes with not scales drawn on. Two points are marked, (4,10) and (9,2))'
+    const html = render(text)
+    // The caption box must carry the FULL alt text, including the second pair.
+    expect(html).toContain('(9,2)')
+    expect(html).toContain('Picture:')
+    // The old bug produced a bare, unwrapped " and (9,2))" as loose stem text
+    // right after the truncated caption box closed — assert that shape is gone
+    // by requiring every "(9,2)" occurrence to sit inside a nowrap span.
+    const bleedPattern = /<\/span>\s*and \(9,2\)\)/
+    expect(html).not.toMatch(bleedPattern)
+  })
+})
+
+describe('coordinate pairs never break mid-parenthesis', () => {
+  it('wraps a coordinate pair in a non-breaking span', () => {
+    const html = render('The two points are (4,10) and (9,2).')
+    expect(html).toContain('white-space:nowrap')
+    expect(html).toContain('(4,10)')
+    expect(html).toContain('(9,2)')
+  })
+})

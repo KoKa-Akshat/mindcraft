@@ -119,6 +119,13 @@ export default function TutorDashboard() {
   const [meetUrlInput, setMeetUrlInput] = useState('')
   const [savingMeetUrl, setSavingMeetUrl] = useState(false)
   const [editingMeetUrl, setEditingMeetUrl] = useState(false)
+  // Real tutor location (FIND_A_TUTOR_MAP_PLAN groundwork) - see handleSaveLocation
+  // below for the full rationale. Geocoded once here, read by FindTutor.tsx and
+  // the marketing site's map panel the moment it exists on this doc.
+  const [locationAddress, setLocationAddress] = useState<string | null>(null)
+  const [locationInput, setLocationInput] = useState('')
+  const [savingLocation, setSavingLocation] = useState(false)
+  const [editingLocation, setEditingLocation] = useState(false)
   const [activity, setActivity] = useState<ActivityItem[]>([])
   const [flaggedQs, setFlaggedQs] = useState<FlaggedQuestion[]>([])
   const [classroom, setClassroom] = useState<{ code: string; studentIds: string[] } | null>(null)
@@ -328,6 +335,9 @@ export default function TutorDashboard() {
       if (data?.role !== 'tutor' && data?.role !== 'admin') navigate('/dashboard', { replace: true })
       if (data?.calendlyEmail) setCalendlyConnected(data.calendlyEmail)
       if (typeof data?.googleMeetUrl === 'string' && data.googleMeetUrl) setMeetUrl(data.googleMeetUrl)
+      const hasRealLocation = data?.location
+        && typeof data.location.lat === 'number' && typeof data.location.lng === 'number'
+      if (hasRealLocation && typeof data?.locationAddress === 'string') setLocationAddress(data.locationAddress)
     })
   }, [user, navigate])
 
@@ -435,6 +445,57 @@ export default function TutorDashboard() {
       showToast('Could not save Meet link. Try again')
     } finally {
       setSavingMeetUrl(false)
+    }
+  }
+
+  /**
+   * Save the tutor's real location (FindTutor.tsx "Find a tutor near you"
+   * groundwork). Until this shipped, no tutor doc ever had a `location`
+   * field, so FindTutor.tsx and the marketing site's map both plotted every
+   * tutor at the studio's default address (see FindTutor.tsx's own header
+   * comment). This is the one place that gap gets closed: geocode the
+   * tutor's own address via the Google Maps Geocoding API (same
+   * VITE_GOOGLE_MAPS_API_KEY already used for the map itself, called as a
+   * plain fetch - the Geocoding web service supports CORS, no need to load
+   * the full Maps JS SDK just for this), then write `{lat, lng}` to
+   * `users/{uid}.location` - not privileged (unlike role/childId/tutorId/
+   * classroomId), so this is a normal self-write under firestore.rules, same
+   * as googleMeetUrl above. The moment this saves, `hasRealLocation` flips to
+   * true for this tutor everywhere that field is read.
+   */
+  async function handleSaveLocation() {
+    const raw = locationInput.trim()
+    if (!raw) return
+    const key = (import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string | undefined) || ''
+    if (!key) {
+      showToast('Maps API key not configured for this environment')
+      return
+    }
+    setSavingLocation(true)
+    try {
+      const res = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(raw)}&key=${key}`
+      )
+      const data = await res.json()
+      const result = data.results?.[0]
+      if (data.status !== 'OK' || !result) {
+        showToast('Could not find that address. Try adding a city and state')
+        return
+      }
+      const { lat, lng } = result.geometry.location
+      const formatted: string = result.formatted_address || raw
+      await updateDoc(doc(db, 'users', user.uid), {
+        location: { lat, lng },
+        locationAddress: formatted,
+      })
+      setLocationAddress(formatted)
+      setLocationInput('')
+      setEditingLocation(false)
+      showToast('Location saved. Students will see you here on Find a Tutor')
+    } catch {
+      showToast('Could not save location. Try again')
+    } finally {
+      setSavingLocation(false)
     }
   }
 
@@ -1164,6 +1225,48 @@ export default function TutorDashboard() {
                     <p className={s.calendlyFoot}>
                       Get it at meet.google.com → New meeting → Create a meeting for later
                     </p>
+                  </>
+                )}
+              </div>
+
+              {/* Your Location - real address, geocoded, feeds FindTutor.tsx +
+                  the marketing site's map. See handleSaveLocation above. */}
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Your Location</span>
+                  {locationAddress && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Saved</span>}
+                </div>
+                {locationAddress && !editingLocation ? (
+                  <>
+                    <div className={s.calendlyDone}>✓ {locationAddress}</div>
+                    <p className={s.calendlyFoot}>
+                      Students searching Find a Tutor see you here instead of the studio default. Sessions still run virtually over Google Meet.
+                    </p>
+                    <button
+                      className={s.intelToggle}
+                      onClick={() => { setEditingLocation(true); setLocationInput(locationAddress) }}
+                    >
+                      Change address
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <p className={s.calendlyHint}>
+                      Add your address once so students near you find you first on Find a Tutor. This does not change how sessions run, they stay virtual.
+                    </p>
+                    <input
+                      className={s.tokenInput}
+                      type="text"
+                      autoComplete="street-address"
+                      placeholder="City, state, or full address"
+                      value={locationInput}
+                      onChange={e => setLocationInput(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') void handleSaveLocation() }}
+                    />
+                    <button className={s.btnPrimary}
+                      onClick={() => void handleSaveLocation()} disabled={savingLocation || !locationInput.trim()}>
+                      {savingLocation ? 'Saving…' : 'Save location →'}
+                    </button>
                   </>
                 )}
               </div>

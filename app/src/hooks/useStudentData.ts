@@ -64,6 +64,9 @@ export interface StudentData {
   messages:     Message[]
   tutorId:      string | null
   loading:      boolean
+  /** weekKey() (weeklyPracticePaper.ts) of the last completed "This week's
+   * paper" mission — null if never completed. Drives the paper lock state. */
+  weeklyPaperCompletedWeek: string | null
 }
 
 function firstName(user: User | null): string {
@@ -92,6 +95,7 @@ export function useStudentData(user: User | null): StudentData {
     lastSession:   null,
     homework:      null,
     practiceCount: 0,
+    weeklyPaperCompletedWeek: null,
   })
   const [nextSession, setNextSession]           = useState<StudentData['nextSession']>(null)
   const [derivedLastSession, setDerivedLast]    = useState<SessionSummary | null>(null)
@@ -144,6 +148,7 @@ export function useStudentData(user: User | null): StudentData {
         lastSession:   d.lastSession ?? null,
         homework:      d.homework   ?? null,
         practiceCount: d.practiceCount ?? 0,
+        weeklyPaperCompletedWeek: d.weeklyPaperCompletedWeek ?? null,
       })
       setLoading(false)
     }, () => setLoading(false))

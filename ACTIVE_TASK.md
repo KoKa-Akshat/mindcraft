@@ -4,6 +4,1998 @@
 
 ---
 
+## Note for Cursor / whoever's on the research-lab loop: shared working directory picked up my staged changes twice (Claude, 2026-07-26)
+
+Not a bug in your work, just a heads-up since commit attribution got tangled.
+We're operating on the same local clone at the same time, so `git add`
+staged changes are visible across both of us, not sandboxed per-session.
+Twice this session my staged `index.html` changes got swept into your
+commits instead of landing in their own: `4faf34d5` ("Add a low-commitment
+15-min intro call CTA...") also picked up `.cursor/skills/...`,
+`agent_work/product/LAUNCH_PILOT_WEEKS_0_2.md`, and other `agent_work/research/*`
+files that were yours, mid-flight; then `acbbc1fc` ("force push-to-main; fix
+Red Team cron trap") picked up my next `index.html` edit (the em-dash
+cleanup) alongside your own research-lab files. Nothing was lost either
+direction, working trees were untouched, this is purely about commit
+messages not describing everything they actually contain.
+
+**What I actually did to `index.html` this session** (all now live on
+`main`, correctly, just not under my own commit message):
+1. Rewrote the marketing page for identity + gap-repair positioning per
+   Akshat's brief: kept "You were never bad at math," sharpened the hero
+   lead and the map section to make the exact-gap-diagnosis need explicit,
+   renamed the 3rd step card "Click" → "Tutor" to make "a real tutor starts
+   exactly there" the loud payoff instead of a quiet aside.
+2. Rewrote the parent ("For parents" / tryapp) section from
+   logistics-forward ("College tutors. Near you." + address-search/Meet
+   copy) to relief-and-trust-forward ("You don't have to teach this," a
+   vetted tutor, a plain-language report instead of homework of your own).
+   The actual address-search tool is untouched functionally, just demoted
+   under a small eyebrow line instead of being the headline.
+3. Added a new "Take the map home" section (`#app`) for the iPad companion
+   app. No real public download exists yet (current build only installs on
+   devices already in Akshat's Apple dev provisioning profile), so it's an
+   honest placeholder: clicking "Get the iPad app" reveals a "public
+   download opens once TestFlight testing goes live" note rather than
+   linking to anything that would silently fail for visitors. Real
+   TestFlight setup is still pending Akshat's own Apple Developer Program
+   enrollment (blocked earlier today on an Apple ID creation error, likely
+   a phone-number-already-in-use conflict — his to resolve, not ours).
+4. Added a free 15-minute low-commitment intro-call CTA to the parent
+   section (mailto-based, same pattern as the other CTAs on this page).
+5. Removed every em dash from the copy above and rephrased around it
+   (plain sentences / commas / colons), not a blunt em-dash-to-hyphen swap,
+   per Akshat's "write more human" note.
+
+If you're about to touch `index.html` yourself: the current live copy
+already reflects all 5 items above, so there's no leftover work from this
+list, this is just so the history makes sense.
+
+
+---
+
+## NATIVE iOS — icon touch-target bug fixed + Home tab is the next "port it a to z" target (Claude, 2026-07-25, same session as the Map port above)
+
+**Fix, done + verified building:** `Views/SVGImageView.swift`'s `makeUIView`
+claimed in its own doc comment to render a "non-interactive" WKWebView but
+never actually set `webView.isUserInteractionEnabled = false` — WKWebView
+keeps its own tap/long-press gesture recognizers by default, which intercept
+touches meant for the SwiftUI `Button` drawn around/behind it. Harmless at
+diagram size, but made the Map tab's small (20-30pt) icon nodes nearly
+untappable ("so hard to touch the icons"). Fixed with that one line, plus
+`KnowledgeMapView.swift`'s node `Button` now gets `.frame(minWidth: 44,
+minHeight: 44).contentShape(Circle())` so the tappable area meets Apple's
+44pt minimum without changing the visible icon size. Any other native screen
+using `SVGImageView` (question diagrams in `QuestionView.swift`) benefits
+from the same fix for free.
+
+**Next real port target: the Home tab.** Akshat asked for this to get the
+same "a to z from the real dashboard" treatment Map and Work just got — do
+NOT build an approximation, read `app/src/pages/Dashboard.tsx` (+ `PawHub.tsx`,
+`WizardMascot.tsx`) first the way `ConstellationGpsExplorer.tsx` was read for
+the Map port. Current native Home
+(`DashboardView.swift:homeBody`, ~line 353) is a big simplification: just a
+"Contents" title + a "Find a Tutor" button + `ContentsRoadmapView` (lane
+cards with progress dots). It is MISSING, versus the real web Dashboard:
+- The paw-shaped **PawHub** launcher itself (`components/PawHub.tsx`) — pads
+  for Practice (topWeaknesses)/Learn (exam-mode next concept)/Homework
+  Help/GPS/Notes, driven by the real `/recommend` response exactly like
+  `RouteClient.swift` (already built this session for the Map's route panel
+  — reuse it) — not a plain button row.
+- The **Weekly Review** pill and **spark** CTA (`recommendNextConcept.ts`'s
+  `worstWeakness()` — client-side signal off already-loaded
+  `graphClient.progress`, no new networking needed for this part).
+- The **wizard mascot hero bar** treatment matching `WizardMascot.tsx`
+  (native already has a wizard image bundled and used elsewhere — reuse the
+  cheer sprite, check for a wrong-answer variant per the earlier session
+  note that Cursor's version of that asset hadn't actually landed in the
+  repo yet as of this session; re-check before assuming it still hasn't).
+
+Read `Dashboard.tsx` end to end (it's long — budget for that, same as the
+919-line `ConstellationGpsExplorer.tsx` read for the Map port) before writing
+any native code, then port structure/logic first, chrome/styling second —
+same order that worked for Map and Work. Take a fresh screenshot comparison
+(iPad Home tab vs a real web Dashboard screenshot at the same viewport) as
+the acceptance check, since that's what caught the Map and Work gaps both
+times.
+
+
+---
+
+## NATIVE iOS Map tab — real port from ConstellationGpsExplorer.tsx, IN PROGRESS (Claude, 2026-07-25)
+
+**Handoff note: Akshat's weekly Claude limit is about to hit — if this session
+ends mid-task, the next agent should start here.** All native work lives at
+`ios-prototype/MindCraftNotes/` (gitignored, never committed — this doc is
+the only record of it). This is the 3rd pass at the native Map tab; the first
+two (a priority-sorted list, then a synthetic cluster-angle layout) were both
+explicitly rejected by Akshat as not matching the real dashboard ("implement
+it a to z... the entire code, not weird things"). This pass ports the REAL
+web component instead of approximating it.
+
+### What the real web Map actually is (read this before changing anything)
+
+`app/src/components/ConstellationGpsExplorer.tsx` (919 lines) — force-graph
+canvas fed by `GET /knowledge-graph/{uid}`
+(`ml/serve.py:knowledge_graph_endpoint`, ~line 1330). That endpoint returns:
+- `nodes[]`: `id, name, level, x, y` (REAL PCA-projected concept-embedding
+  coordinates, not a layout algorithm), `mastery, strengthScore, eventCount,
+  status, ingredients, tags`.
+- `edges[]`: `from, to, weight, relation` — real Beta-Binomial posterior
+  weights from the personal graph.
+- `studentPoints`: `{ mastery: {x,y,label}, strength: {x,y,label} }` — the
+  student's own embedding position (mastery-weighted centroid vs
+  strength-weighted centroid; the displacement between them is a real,
+  novel metric per CLAUDE.md's engine docs).
+- `axisLabels`: `{x,y}` real PCA axis description strings.
+
+Key ported logic (all read directly from the .tsx, not re-derived):
+- `statusKind()`/`KIND_COLOR`/`KIND_LABEL` (lines 51-65): 4-state
+  stable/progress/needs/unknown, colors `#00875a`/`#4361ee`/`#d63e3e`/
+  `#9aabb6` — a DIFFERENT, Map-specific palette from the Home tab's
+  `STATUS_COLOR` (`A8E063`/`5B9BD5`/etc). Don't conflate the two.
+- Bottom legend uses A THIRD label set for the same colors: "Got it/Working
+  on it/Needs love/Not started" (lines 700-703) vs the filter-chip/detail-
+  panel wording "Stable/Repairing/Open Gap/Unexplored" (`KIND_LABEL`). Both
+  are real, both are intentional, keep them separate.
+- `isMajorEdge()` (lines 86-92): the "hairball" fix — `prerequisite` edges
+  need weight>0.25, any other relation needs weight>0.45. Without this the
+  map renders 700+ edges for a real student.
+- Node radius/label formula (lines 604-613): icon badge + status ring +
+  mastery dasharray arc (only when mastery>0.05) + label only when
+  selected/hovered/search-matched/`eventCount>3`.
+- Click → **detail panel** (`mode:'detail'`, lines 724-780): status pill,
+  name, tagline, mastery bar, 3 buttons — **"Open lesson →"** (chapter),
+  **"See path"** (→ route panel), **"Quick practice"** (→ `/practice`
+  `missionType:'learn'`). Tapping a node must NEVER jump straight to a
+  lesson — that was Akshat's other explicit complaint on pass 2.
+  "See path"/search submit → **route panel** (`mode:'route'`, lines 782-912):
+  real `POST /recommend` (`mode:'curriculum', target_concepts:[id]`), a step
+  list with real per-step reasons, PLUS a small interactive mini-map SVG
+  (`buildGraph()` from `lib/learningPathGraph.ts` — depth-sorted nodes,
+  needs-work edges styled differently) that this native pass did NOT port
+  (see below).
+
+### What's DONE natively this pass (built + BUILD SUCCEEDED, install verified; launch pending — see blocker)
+
+- `Networking/KnowledgeGraphClient.swift` — extended (not replaced) to decode
+  the FULL real payload: `nodes[]` (all real fields above), `edges[]`,
+  `studentPoints`, `axisLabels`. The old `progress: [String:ConceptProgress]`
+  map is unchanged/still populated, so Home/Contents roadmap needed zero
+  changes.
+- `Networking/RouteClient.swift` (NEW) — real `POST /recommend` client,
+  mirrors `plotRoute()` exactly (same request body, same
+  `canonicalChain`/`recommendations[].reason` response fields). Registered in
+  pbxproj under the Networking group (not Models — first attempt put it in
+  the wrong Xcode group and the file path didn't match the group's physical
+  folder, which fails the build with "Build input file cannot be found";
+  fixed by moving the GROUP LISTING line, not the file itself).
+- `Views/KnowledgeMapView.swift` — full rewrite reading real
+  `nodes`/`edges`/`studentPoints`/`axisLabels` from `KnowledgeGraphClient`
+  (no more synthetic layout). Ported: real min-max position normalization
+  (`scalePositions` equivalent), `isMajorEdge` filter, `statusKind`/3-palette
+  distinction above, icon+ring+mastery-arc node rendering (icons from
+  `Resources/conceptIcons/`, 30 real badge SVGs copied from
+  `app/src/assets/canvas/generated/icon-*.svg` — same set the web Dashboard
+  TOC uses, folder-reference registered so new icons need no pbxproj edit),
+  student mastery/strength diamond markers + dashed connector, axis label
+  text, status+level filter chips, legend + coverage bar, tap → detail panel
+  (Open lesson / See path / Quick practice — `Quick practice` wired to
+  `DashboardView.openWork(with:)`, the existing PracticeSessionView
+  presentation path), "See path" → route panel via `RouteClient` (real step
+  list with real reasons; loading/empty states match the web's).
+- `Models/ConceptGraphLoader.swift` — the old synthetic
+  `ConceptGraphNode`/`ConceptGraphEdge`/layout code was DELETED (not left as
+  dead code) now that real data replaces it; only `ConceptIconLookup` (icon
+  badge lookup) remains in this file.
+- `DashboardView.swift`'s `.map` case updated to pass the new real params +
+  the new `onQuickPractice` callback.
+- Also this session (separate, smaller fixes, already verified working):
+  the "no GPS panel, just Start This Concept" bug on the PREVIOUS (pass-2)
+  Map version was root-caused (its `nextRoute` only ever looked at "needs
+  work" concepts and was empty for anyone without one) — moot now that the
+  route panel is real and only shows on explicit tap, but worth knowing if
+  route-panel emptiness gets reported again with a different cause.
+
+### NOT yet ported (real, sized next steps — don't re-research, just build)
+
+1. **Search bar with autocomplete** (`ConstellationGpsExplorer.tsx` lines
+   396-439, `searchForm`): "Type a concept to plot your route…" input +
+   "Plot route →" submit + a live suggestions dropdown
+   (`searchMatches`/`suggItem`). Currently native has NO search entry point
+   into the route panel — only tap-a-node → "See path". Add a `TextField` +
+   `List`/`VStack` suggestion overlay above the graph canvas, filtering
+   `nodes` by `label(for:)` substring match, calling the same
+   `loadRoute(for:)` path already built.
+2. **Route panel's mini interactive graph** (lines 816-863,
+   `buildGraph()`/`GPS_W`/`GPS_H`/`STATUS_COLOR` from
+   `app/src/lib/learningPathGraph.ts`): a small depth-sorted node/edge SVG
+   inside the route panel, distinct from the main map. Native's route panel
+   is currently a plain step list only (still real data, just less visual).
+   Port `buildGraph()`'s layout logic (read that file first — not yet done
+   this pass) into a small SwiftUI `Canvas`, reusing the icon/ring node style
+   already built for the main graph.
+3. **Hover states** — the web has `hovered`/mouse-enter dimming and
+   edge-lighting on hover; native has no cursor, so this was intentionally
+   dropped (tap/selection covers the same job on touch). Not a gap, just
+   noting it's deliberate, not missed.
+4. **Search-match dimming** (`dimmed = searchMatches.size>0 && !searchMatches.has(id)`,
+   line 602) — depends on item 1 existing first.
+
+### Known blocker at end of session
+
+Physical iPad (`DD553C3C-D821-5869-BBA2-AB501D46210E`) — build succeeded,
+`xcrun devicectl device install app` succeeded, but
+`xcrun devicectl device process launch` failed with
+`FBSOpenApplicationErrorDomain error 7 (Locked)` — the device was locked at
+that moment. **The new build IS installed on the device**, just not yet
+launched/visually verified. Next step: confirm device is unlocked
+(`xcrun devicectl list devices` should show `connected`, then just retry the
+launch command — no rebuild needed), then actually look at the Map tab
+before telling Akshat it's done. Do not claim this is visually verified
+until that launch + a real look has happened.
+
+### Also still open from the 2026-07-25 question-bank smoke-test pass (see the
+entry below this one) — the 60 excluded "answer choices are pictures"
+questions and the 184 stem-diagram fallbacks both still need the work
+described there. Nothing new to add; just don't lose track of it since it's
+a separate, still-open thread from the same session.
+
+---
+
+## Question rendering + bank smoke-test fixes, QA handoff for the image-choice backlog (Claude, 2026-07-25)
+
+Product lane (`app/**`). Akshat ran a manual smoke test across Practice/chapter
+sessions and flagged 5 real bugs. All 4 code bugs fixed + verified (`tsc`,
+`vitest run` — 173 passed/1 skipped, both clean); the 5th (60 unrenderable
+"answer choice IS a picture" questions) is excluded from the live bank and
+handed off below — needs a new component, not a quick fix.
+
+**Fix 1 — redundant diagram + GraphBox panel.** Root cause: `Practice.tsx`/
+`ConceptChapterPage.tsx` already derive `graphPoints`/`graphExpr` from a
+question's `(Diagram: ...)` alt text (`lib/plottablePoints.ts`) to plot the
+REAL figure in the GraphBox aside panel — but the stem (`MathText`/
+`HighlightedStem`) still independently rendered the SAME alt text a second
+time as a parsed figure or a "Picture: ..." caption, e.g. eedi_203's line
+segment showing once as a caption AND once as the plotted graph. Added
+`lib/plottablePoints.ts:isGraphShapedAlt()` (same POINT_CONTEXT_RE /
+NOT_POINT_PLOT_RE gating the extractors already use) and a `graphAlreadyShown`
+prop on `MathText`/`HighlightedStem`: when true and the diagram segment is
+graph-shaped, render `(see graph →)` instead of the duplicate callout. Wired
+from both call sites using the same `graphPoints`/`graphExpr` they already
+compute. Non-graph diagrams (Venn, dimensioned shapes) are untouched.
+
+**Fix 2 — OCR-corrupted question text in `actMasterQuestionBank.generated.json`.**
+Audited all 206 entries for stripped-formula artifacts (empty `"is ,"` /
+`"is ."` gaps, duplicated tails). Found and fixed 4: `act_math_t10_q09`
+(sphere formulas were blank — filled in `V=(4/3)πr³`/`A=4πr²` from the
+question's own explanation field), `act_math_t11_q01` (the reported "what is
+kn?" bug — rewrote to state the line equation directly, `format: diagram` →
+`symbolic_expression` since no figure exists), `act_math_t12_q02` (missing
+chord/midpoint description, same treatment), `act_math_t15_q13` (duplicated
+"what is its radius in." tail, deduped). Removed 1 unfixable entry,
+`act_math_t02_q07` — its `choices` array had degenerated to a single garbage
+option `["K."]`; no way to safely reconstruct the real ACT answer choices
+without the source PDF, so it's gone from the bank rather than guessed at.
+**If anyone has the real Test 02 Q07 (circles_geometry, "square ABCD, shaded
+region") source, re-add it properly instead of re-deriving choices from the
+explanation text.**
+
+**Fix 3 — garbled "which signs belong in the boxes" question.** `eedi_147` and
+`eedi_839` had answer choices that were themselves unresolved
+`![A blue box containing a "greater than" symbol...]()` markdown-image
+placeholders — MathText renders those as a text caption, so the "choices"
+read as raw picture descriptions, not pickable answers. `eedi_1043` (same
+question archetype, comparing two things with inserted `<`/`>` signs) already
+does this right — choices are just the compact strings `"><" "<<" ">>" "<>"`.
+Rewrote `eedi_147`/`eedi_839`'s choices (and `eedi_839`'s duplicate
+explanation text) to match that convention; the symbol-pair → string mapping
+was mechanical (blue box, orange box → each is > or <) and `correctIndex` was
+already right for the new array order.
+
+**Fix 4 — "legacy design" / wrong CTA after finishing a chapter.**
+`ConceptChapterPage.tsx`'s last-panel nav button was labeled `"practice →"`
+and navigated to `/practice` — dropping the student into ANOTHER full
+practice session (the reported "legacy ACT-style scratch-work UI") instead of
+completing the loop. Changed to `"Go to Dashboard →"` → `navigate('/dashboard',
+{ replace: true })`, matching how `Practice.tsx`'s own `returnToPath()`
+already behaves after a practice session ends. `replace: true` so the back
+button doesn't return into the finished chapter.
+
+**Fix 5 (partial) — the 60 "answer choices are pictures" questions.** Beyond
+the 2 fixed above, audited all Eedi questions for choices containing an
+unresolved `![alt]()` — 60 remain (list below), a fundamentally different
+problem: these are Eedi's "pick the matching diagram" archetype (e.g. "which
+number line represents x>-1?", "which of these triangles has the same area as
+this rectangle?") where all 4 ANSWER OPTIONS are themselves distinct diagrams,
+not a single stem figure. There is no renderer for choice-level images today
+— only the stem gets a real/parsed figure (`lib/altDiagram.ts`). Serving these
+as literal alt-text ("Picture: A trapezium") reads as broken, not as an
+answer a student can pick. **Excluded from the live bank** via a new check in
+`lib/questionBank.ts:isUsable()` (rejects any choice matching
+`/!\[[^\]]*\]\([^)]*\)/`) rather than shipped half-working — this is
+mechanical and will auto-un-exclude any of the 60 once they're given real
+choice-level renders, no list to maintain by hand.
+
+**Handoff for Codex — 2 real follow-on workstreams, do NOT rush a fix:**
+
+1. **Choice-level diagram renderer** (the 60 excluded questions, ids: eedi_33,
+   58, 111, 147→already fixed/skip, 171, 180, 183, 212, 218, 231, 248, 278,
+   279, 355, 392, 453, 464, 501, 512, 523, 734, 771, 822, 839→already
+   fixed/skip, 870, 885, 891, 909, 963, 974, 1034, 1081, 1109, 1116, 1125,
+   1226, 1243, 1334, 1354, 1359, 1370, 1398, 1411, 1417, 1419, 1429, 1444,
+   1467, 1486, 1515, 1548, 1580, 1588, 1614, 1658, 1670, 1679, 1686, 1758,
+   1780, 1787, 1835). Needs a new `AltDiagramChoice` component (4 small SVGs
+   per question, not 1 per stem) reusing `lib/altDiagram.ts`'s existing 12
+   parsers where the choice alt-text matches (e.g. eedi_58/212/278 are all
+   the `inequalityray`/`dashline` number-line family already parsed for
+   stems — just needs wiring per-choice instead of per-stem), falling back to
+   the hand-authored SVG approach (`scripts/generateRemainingDiagramBatch.mjs`)
+   for shape/graph-sketch families the parser doesn't cover. Do the audit
+   first: group by family like the stem-diagram work did, size each bucket,
+   then decide parser-reuse vs hand-authored per bucket — don't hand-author
+   all 60 blind.
+2. **184 stem diagrams still falling back to plain "Picture: ..." text**
+   (full list with alt text: written this session to a scratch audit, not
+   committed — regenerate via the script below before starting, it's exact
+   and cheap to rerun). Breakdown: **~96 coordinate-graph-shaped** (many of
+   these actually already GET a real GraphBox plot from the same alt text
+   per Fix 1 above — check `isGraphShapedAlt()` first before spending a
+   diagram slot on them, several may need nothing further at all now that
+   the redundant caption is suppressed), ~34 shape-counting ("a group of N
+   squares and M circles" — not covered by any of the 12 `altDiagram.ts`
+   parsers, a real gap, mechanical to add), ~2 table, ~1 clock, rest
+   "other" (mixed one-offs, read each). Audit script (rerunnable, ~1s):
+   ```js
+   // run from app/ — see git blame for the exact version used 2026-07-25
+   // loads lib/altDiagram.ts's real parseAltDiagram via on-the-fly TS
+   // transpile (same pattern as scripts/exportQuestionBankForNative.mjs),
+   // scans eediQuestions.json + actMasterQuestionBank.generated.json +
+   // generatedQuestions.json for `(Diagram:` markers, and reports how many
+   // resolve via the 12 parsers vs a pre-generated asset vs neither.
+   ```
+   Recommend: extend `lib/altDiagram.ts` with a 13th family for shape-counting
+   ("A group of N squares and M circles" style) before hand-authoring more
+   individual SVGs — mechanical and reusable, same spirit as the existing 12.
+
+Files changed: `app/src/lib/plottablePoints.ts`, `app/src/components/MathText.tsx`,
+`app/src/components/MathText.module.css`, `app/src/components/HighlightedStem.tsx`,
+`app/src/components/HighlightedStem.module.css`, `app/src/pages/Practice.tsx`,
+`app/src/pages/ConceptChapterPage.tsx`, `app/src/lib/questionBank.ts`,
+`app/src/data/actMasterQuestionBank.generated.json`, `app/src/data/eediQuestions.json`.
+Verification: `npx tsc --noEmit` clean, `npx vitest run` 173 passed/1 skipped
+(no regressions), manual JSON validity check on both edited data files.
+Nothing committed — left on disk for review, per this session's standing rule.
+
+---
+
+## Marketing cinematic polish pass: story-first demo, hero trust strip, video-ready reviews (Fable 5, 2026-07-25)
+
+Product lane, `index.html` only. Design/polish pass on top of the same-day
+Cursor copy-tightening pass already on disk (that pass had reverted the demo
+panel's default tab back to Quest/"Sword of Wisdom" leading, with Story as a
+plain second tab, labels "Quest"/"Story" — see `git diff 56e88ea0 cbc26981 --
+index.html` for the exact revert). Preserved the full-bleed dark
+constellation hero exactly as-is (`.hero{background:#070f0c...}` + the
+animated map SVG) since that is the specific moment praised as "wow lovely" —
+zero changes to `.hero-bg`/`.hero-map`.
+
+**Job 1 — demo panel resize, Story Preview leads.** `#demo` tabs reordered so
+"Story preview" is first in the DOM and the default active/rendered state
+(`data-state="story"` on `#demoStage`, `activeDemo = "story"` in JS,
+`DEMO_COPY` object reordered to match); Quest ("Sword of Wisdom") is now the
+second tab, `.demo-tab-secondary` (opacity .72 at rest, full opacity when
+active) so it visually reads lighter-weight even before being clicked. The
+story stage itself got measurably bigger, not just reordered:
+`.demo-stage[data-state="story"]{aspect-ratio:16/11}` (taller than the
+16/10 base used for Quest/live), photo `clamp(140px,19vw,225px)` (was
+120-190px), title `clamp(24px,3.4vw,34px)` (was 22-30px), text box 5-line
+clamp at `clamp(13px,1.5vw,15.5px)` (was 4-line/12.5-14px), panel padding
+bumped, and the whole `.demo-wrap` grid gave the panel column more width
+(`.8fr 1.35fr`, was `.86fr 1.3fr`). Mobile keeps the smaller 4-line text
+clamp to avoid overflow in the single-column stacked layout.
+
+**Real slideshow, not a static single card** (this was the literal ask,
+"story slide on full display as slideshow"). Four real MindCraft chapter
+openings now cross-fade automatically every 5.2s: Fractions and Decimals
+(Simon Stevin, already live), Ratios and Proportions (Thales and the
+pyramid), Order of Operations (Ada Lovelace), Linear Equations (John
+Harrison's marine chronometer) — all real story text pulled from
+`app/src/data/conceptStories.json` and trimmed to a 2-3 sentence excerpt in
+the same voice as the existing card, no invented copy. Art: the 3 new slides
+use real generated chapter photos already in
+`app/src/assets/canvas/generated/story-{concept}.jpg` (the same "42 chapter
+photos" asset set), resized 800x800 and recompressed with `sips` into
+`img/story-ratios-proportions.jpg` (220KB), `img/story-order-of-operations.jpg`
+(248KB), `img/story-linear-equations.jpg` (236KB) — root `img/` because the
+marketing Hosting target's `ignore` list excludes `app/**`, same reasoning as
+the existing `img/story-fractions-decimals.jpg`. All 4 slide `<img>` tags got
+`loading="lazy"` (below the fold). Sizes are in line with other images
+already on this page (`sword-of-wisdom-valley.jpg` is 308KB,
+`akshat-koirala.jpg` is 900KB), not a new weight problem.
+
+Implementation: each slide reuses the existing `.demo-story-stage` card
+markup/CSS verbatim (pastel paper card, polaroid photo, eyebrow/title/text),
+just wrapped in a new `.demo-story-viewport` (`position:relative`) with each
+slide `position:absolute;inset:0` and an opacity crossfade
+(`.is-active{opacity:1}`), so no existing styling had to be duplicated or
+renamed. Dots converted from decorative `<span>` to real `<button>`s
+(click-to-jump, `aria-label` per concept, resets the autoplay timer).
+Autoplay pauses on pointer/focus hover over the poster, only advances while
+the story tab is actually the visible one, and **does not run at all** under
+`prefers-reduced-motion` (dots still work by hand) — verified via Playwright
+`reducedMotion:'reduce'` context: slide index genuinely never moved on its
+own over 6s, `matchMedia('(prefers-reduced-motion: reduce)').matches` true.
+The single "Try" button stays pinned outside the crossfading slides and
+always opens the one confirmed-wired live route
+(`/try/story/fractions_decimals?auto=1`) regardless of which slide is
+showing — did not invent per-concept `/try/story/...` routes for the other 3
+slides since that app-side wiring is unverified and out of this lane's scope.
+
+**No new JS animation library added.** Evaluated motion.dev/anime.js per the
+brief and made a deliberate call not to add either: the page already has a
+full hand-rolled system (IntersectionObserver reveal/stagger, scroll-progress
+bar, pointer-based `[data-tilt]`, nav auto-hide, animated SVG paths) that
+covers everything this pass needed, including the new crossfade (plain CSS
+opacity transition + ~40 lines of vanilla JS for the autoplay/dots). Adding a
+library would have meant new page weight for something the existing system
+already does. Zero new dependencies, zero new script tags.
+
+**Job 2 — hero trust strip ("parent heartstrings").** Added a `.hero-trust`
+row under the hero CTAs: `1:1 / A real college tutor. Never a chatbot.`,
+`48 hrs / We reply to every family, ourselves.`, `Map first / We find the gap
+before session one.` All three are real claims already substantiated
+elsewhere on this same page (the 48-hour reply promise in the pricing card,
+"session one starts on the map" in the pricing includes list) surfaced
+earlier and given real emotional framing, not new invented numbers. Fixes a
+real gap found while reading the page: the CSS classes `.stats`/`.stat` still
+exist from an older hero design but the hero rework that shipped earlier
+today (`display:none!important` on them) left the hero with **zero**
+numbers/stats at all, contradicting an earlier session's own changelog entry
+that claimed "stats now visually lead." This restores that promise with
+real, page-consistent facts. Respects reduced motion (`.hero-trust` added to
+the existing animation-kill selector list).
+
+**Job 3 — founders "not buried."** Added a "Team" link to the nav
+(`Preview | Tutors | Team | Apply`) pointing at `#about` — previously there
+was no direct nav path to the founder section at all.
+
+**Job 4 — reviews section made video-ready.** `#reviews` was text-only
+("Waiting on the first one" in a dashed box). Replaced with a real 3-card
+`.video-grid`: each `.video-slot` has a 16:10 gradient thumbnail (three
+different brand-palette gradients, not identical), a centered play-button
+affordance, and an honest role label + "Recording soon" note (`Parent
+review`, `Student review`, `Tutor review` — role placeholders, no invented
+names/quotes/star ratings). This is layout-ready to receive real
+`<video>`/thumbnail content the moment the 3 real videos exist; no fabricated
+testimonial content added. Removed the now-orphaned `.reviews-slot` CSS
+(only usage was the markup just replaced).
+
+**Verification, all real:** served via `python3 -m http.server` from repo
+root, driven with Playwright Chromium (already cached, `npx playwright`,
+nothing added to any `package.json`/lock — this is a static-HTML-only lane).
+Zero console errors, zero page errors, across desktop (1440px), mobile
+(390px), and a `reducedMotion:'reduce'` emulated context. Confirmed the story
+slideshow autoplay genuinely advances slides under normal motion and
+genuinely does not under reduced motion. `grep "—" index.html` → only
+pre-existing code comments, no em dashes in new visible copy. No duplicate
+`id`s introduced. `<section>`/`</section>` counts balanced (10/10).
+Screenshots in `agent_work/product/screenshots_2026-07-25/`:
+`polish_hero_desktop.png`, `polish_hero_mobile.png`,
+`polish_hero_reduced_motion.png`, `polish_demo_story_default.png` (slide 1,
+default state), `polish_demo_story_slide3.png` (dot-click to slide 3, Ada
+Lovelace), `polish_demo_quest_secondary.png` (Quest tab active, still reads
+secondary), `polish_demo_mobile.png`, `polish_reviews_video_ready.png`,
+`polish_about_founders.png`, `polish_fullpage_desktop.png` (full scroll-through,
+every section's `.reveal` walked before capture).
+
+**New image needs identified for Akshat to prompt (not generated here, per
+instructions):** none required for this pass — the 3 additional slideshow
+images were covered by existing generated chapter art
+(`app/src/assets/canvas/generated/story-*.jpg`), and the video review slots
+intentionally use CSS gradient placeholders (no art needed until real videos
+exist to thumbnail from).
+
+Files touched: `index.html` only. New image assets:
+`img/story-ratios-proportions.jpg`, `img/story-order-of-operations.jpg`,
+`img/story-linear-equations.jpg` (copied/resized from already-generated
+`app/src/assets/canvas/generated/`, not newly generated art). Did not
+commit/push — verify only, per instructions.
+
+---
+
+## Hero bar + Weekly Review pill fix pass (Fable 5, 2026-07-25)
+
+Scope: `app/src/pages/Dashboard.tsx` + `app/src/pages/Dashboard.module.css`
+only, per Akshat's verbatim brief. Four small layout fixes to the merged
+hero bar and the Contents-page actions row shipped earlier today.
+
+1. **Removed the "Weekly Review" box from next to the wizard.** That box was
+   the WizardMascot's own speech bubble (`components/canvas/WizardMascot.tsx`,
+   out of this lane's scope) rendering the `wizardLine` text ("Weekly
+   Review"). Since the source component can't be touched, the bubble is
+   hidden structurally from the CSS module instead: `.heroMiddle > aside >
+   div { display: none; }` — the mascot's markup is always `<aside><img
+   class="sprite"/><div class="bubble">...</div></aside>`, so the lone
+   direct-child `<div>` of that `<aside>` IS the bubble, no dependency on
+   WizardMascot's own (hashed) class names. The sprite itself stays.
+2. **Today's spark now sits tight against the wizard.** Hiding the bubble
+   collapses its own 12px internal gap automatically, so the sprite and the
+   "today's spark" pill now sit only `.heroMiddle`'s existing 10px gap apart
+    -  no leftover dead space, no extra CSS needed to "close the gap."
+3. **"This week's paper" CTA relabeled "Weekly Review."** The unlocked-state
+   button now reuses `.bookSessionLink` (the exact "Find a Tutor" pill class)
+   verbatim instead of its old two-line green `.paperCta` card, per "just
+   like a find a tutor button... reuse that existing style, don't invent a
+   new one." `.paperCta`/`.paperCtaGo` left in the CSS file, marked retired
+   in a comment (unused, rollback point) — the **locked** state
+   (`.paperCtaLocked`, "Done! Unlocks in N days") is untouched, wasn't part
+   of this ask.
+4. **Arrow removed from all three CTAs**: "today's spark" ("play →" →
+   "play"), the new "Weekly Review" pill (already arrow-free by design), and
+   "Find a Tutor" ("Find a Tutor →" → "Find a Tutor"). Color/shape/click
+   behavior unchanged on all three.
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` →
+126 passed / 1 skipped / 9 files (baseline had drifted from the session's
+stated 120/1/8 to this by the time of my run, purely from other agents'
+concurrent unrelated work already on disk — `git status` confirmed
+`App.tsx`, `MathText.tsx`, `altDiagram.ts`, etc. were mid-edit by someone
+else, none of it touched by this pass; zero regressions from my 2-file
+diff). `npm run build` succeeded (same pre-existing >500kB chunk warning).
+`grep manjushree app/src/App.tsx` → all 4 references, untouched, checked
+before and after.
+
+**Screenshots** (`agent_work/product/screenshots_2026-07-25/
+hero_bar_fix_BEFORE.png` / `_AFTER.png`): real renders, not a mockup. Since
+`App.tsx` was explicitly off-limits this pass (and had real concurrent WIP
+on disk), the usual whole-app `VITE_SCREENSHOT_MODE` `AuthGuard` bypass
+wasn't an option here. Instead built a fully isolated, temporary preview
+harness outside the app's routing entirely: two new scratch files
+(`app/hero-preview.html`, `app/src/heroPreviewMain.tsx`) plus a scratch
+component directory, importing the REAL `WizardMascot` component, the REAL
+`conceptIconUrl`, the REAL current `Dashboard.module.css` (after) and a
+git-HEAD snapshot of the pre-edit `Dashboard.module.css` (before), each
+driving the exact hero-bar/homeTopActions JSX copied verbatim from
+`Dashboard.tsx`'s two states. Served via `vite --port 5199`, shot with
+Playwright (`chromium`, already cached locally, invoked via `npx
+playwright`, nothing added to `package.json`/lock). BEFORE shot confirms the
+bug exactly as described (boxed "Weekly Review" crowding the wizard, "Start
+→", "Find a Tutor →", "play →"); AFTER confirms all four fixes. All scratch
+files deleted post-shoot — `git status` shows only the two intended files
+modified.
+
+---
+
+## Cursor / multi-agent session handoff saved (2026-07-25)
+
+- **`CURSOR_HANDOFF.md`** (repo root) — canonical Cursor handoff: live checkout path vs stale Desktop checkout, `main`+CI deploy, lane ownership, Manjushree WIP protection, verification pattern, current focus.
+- **`.cursor/rules/session-handoff.mdc`** — `alwaysApply: true` so future sessions load the checkout + lane + Manjushree rules automatically.
+- Manjushree landing panel brief remains at `agent_work/manjushree-zone/LANDING_PANEL_HANDOFF.md`.
+- No product code changed in this save. Agents: read `CURSOR_HANDOFF.md` + top of this file before complementary work.
+
+---
+
+## Find-a-tutor benefit bullets + tabbed apply form (Fable 5, 2026-07-25)
+
+Product lane only (`index.html`). Two follow-on jobs to the marketing overhaul
+below. Did not touch `app/**`. Verified via a local static server
+(`python3 -m http.server` from repo root) plus headless Chrome: zero new
+console errors (the only 404 is the pre-existing missing `favicon.ico`,
+unrelated), both apply-form tabs render genuinely distinct copy and fields,
+tab toggle and round-trip both work. `tsc --noEmit`, `vitest run`, and
+`npm run build` all green (an overlapping copy-tightening pass and other
+in-flight work in `app/**` landed in this same checkout mid-task, changing
+line numbers and headline wording around both spots; reconciled the wording
+below against the final on-disk copy so nothing snapped back on tab switch).
+
+**Job 1, why-college-tutors bullets.** Added a 4-item `.tutor-benefits` list
+inside `.findtutor-copy` in the `#try-app` "College tutors. Near you." panel,
+between the intro paragraph and the CTA row: close in age (easier to ask the
+real question), stuck on the exact material last year not decades ago, peer
+tutoring is well studied as effective (kept as a general honest claim, no
+invented stat), less lecture more like a study partner. Small leaf-dot bullet
+style, matches existing color tokens (`--leaf-2`), no new dependencies.
+
+**Job 2, tabbed apply card.** The `#intake` section's single student form is
+now a two-tab component reusing the existing `.demo-toggle`/`.demo-tab`
+convention from the Sword of Wisdom panel (same visual language: pill tabs,
+dark "is-active" tab). Tabs: "Apply for a seat" (existing parent/student form,
+fields unchanged) and "Apply to tutor" (new form: name, email, year and major,
+availability, math background). Switching tabs swaps three things via JS
+(`setActiveApplyTab()`): the eyebrow label (`#applyLabel`: "Apply" vs
+"Teach"), the headline (`#applyHeading`: student keeps "Tell us their
+story.", tutor gets its own "Show us you get it."), and the sub-copy
+(`#applySub`), plus toggles which `<form>` is visible inside a new
+`.form-stage` wrapper (`display:none`/`block` via `.form-stage[data-state]`
+CSS, same pattern as the existing `.demo-stage[data-state]` rules). Both
+forms submit through the same pre-filled-mailto pattern as before
+(`tutorForm` submit handler mirrors the existing `intakeForm` one, subject
+"Tutor application", separate `#tutorFormStatus` confirmation message). The
+pricing section's existing seat-request button still deep-links to `#intake`
+and lands on the seat tab by default (unchanged).
+
+---
+
+## Marketing page overhaul, 6 jobs (Fable 5, 2026-07-25)
+
+Product lane only (`index.html`, `app/src/pages/TutorDashboard.tsx`,
+`app/src/pages/FindTutor.tsx`). Did not touch `App.tsx` (per instructions —
+Manjushree's uncommitted routing work lives there). Verified: `tsc --noEmit`
+clean, `vitest run` 120 passed/1 skipped/8 files (matches baseline),
+`npm run build` succeeded. Did not commit/push.
+
+**Job 1 — demo panel primary/secondary swap.** The Sword of Wisdom panel
+(`#demo`) led with the game before; now it leads with an honest recreation of
+the real Fractions & Decimals story slideshow
+(`app/src/pages/StorySlideshow.tsx` visual language: dark stage, pastel
+paper card, polaroid photo, dot nav — colors/fonts pulled straight from
+`ConceptChapterPage.module.css`), using the REAL story text (Simon Stevin,
+`conceptStories.json`) and the REAL art asset the app renders
+(`app/src/assets/canvas/story-fractions.jpg`, copied to
+`img/story-fractions-decimals.jpg`). Two pill tabs ("Story preview" /
+"Experience the game") swap the stage in place; the Sword of Wisdom loop is
+now the secondary tab, same ambient CSS/SVG preview as before, gated behind
+an explicit click instead of leading. Both funnel into the same shared
+handoff card, copy/link swapped per active tab. Neither `/story-loop/...`
+nor `/manjushree` are committed/deployed yet (Manjushree's routing work is
+still uncommitted on this checkout) — same "will resolve once that ships"
+bet the previous session already made for the sword link, now applied
+consistently to both.
+
+**Found + fixed while screenshotting Job 1**: a real Chrome bug, not a
+one-off — inside a CSS grid, an `<img>` with `aspect-ratio:1/1; width:100%`
+gets its row-track auto-sizing computed off the image's NATURAL pixel size
+(800×800 for this asset) instead of the resolved percentage, ballooning the
+row to ~800px and clipping all the sibling copy text out of view (invisible,
+not just cropped). Fixed by giving the photo figure explicit fixed
+width+height instead of aspect-ratio, both at desktop and the sub-560px
+breakpoint. Worth remembering if any other in-page component reuses
+aspect-ratio images inside a grid.
+
+**Job 2 — copy pass.** Hero (`#top`): stats now visually lead (bordered strip
+above the headline, was below), headline replaced with punchy "Find the
+exact break." (was "You were never bad at math."), lead line shortened. No
+stat numbers removed, just reprioritized. System section (`#system`):
+"Find where it broke." → "Tutor and student, same map." — now leans into
+the tutor-facing angle (same diagnostic picture, no cold open) instead of
+repeating vibe section's "we find the break" idea. "Less pressure. More
+signal." left untouched as instructed.
+
+**Job 3 — moving-dot graph reuse.** The "Slope to equation form" board card's
+draw/undraw line animation replaced with the same static-faded-path +
+colored-path + `animateMotion`/`mpath` dot technique already used in the
+"Less pressure More signal" notebook photo, own path id (`breakProgressPath`,
+distinct from `vibeProgressPath`). Removed the now-dead `.graph path` rule
+and unused `@keyframes draw`.
+
+**Job 5 — signal caption.** "Built by real tutors" → "Come teach with us."
+
+**Job 4 — Find a Tutor near you map panel.** Replaced the old "finds the
+break, builds the route" `#try-app` section with a real "Find a tutor near
+you" panel: a genuine interactive Google Maps JS embed (same
+`VITE_GOOGLE_MAPS_API_KEY`, already public in the app's own production
+bundle), showing the two real founder-tutors from `FindTutor.tsx`'s
+`DEMO_TUTORS` (Akshat + Abhigya Koirala — confirmed real, not fabricated,
+same honesty rule), plus a deep link to the real `/find-a-tutor` app page.
+**Chose the real-embed-with-hardcoded-real-tutors approach, not a full live
+Firestore query, after investigating**: `firestore.rules` requires an
+authenticated request to read `users` docs (including the `role=='tutor'`
+query FindTutor.tsx uses), and this marketing site never signs anyone in —
+that query would always 403, same as it already does for a signed-out app
+visitor. Making it live for anonymous marketing traffic would need either
+relaxing `firestore.rules` for anonymous tutor-roster reads or a new public
+webhook endpoint (Admin SDK) — both cross-lane (rules/webhook), out of scope
+for a marketing-only pass. `gm_authFailure` + a load timeout both fall back
+to an honest "map unavailable, open the app" card. Confirmed via headless
+Chrome in this environment that the map genuinely renders (real Google
+tiles, real Macalester-area location) — referrer restrictions on the API key
+for the actual `mindcraft-marketing-site.web.app` domain in production still
+need a one-time check in Google Cloud Console.
+
+**Job 4 backend (the "tutor dash setup... important for later" piece) — DONE.**
+Added a "Your Location" card to `TutorDashboard.tsx` (address input →
+Google Geocoding API fetch, same Maps key → `location: {lat,lng}` +
+`locationAddress` written to that tutor's own `users/{uid}` doc via
+`handleSaveLocation()`). Not a privileged field (unlike role/childId/
+tutorId/classroomId), so this is a normal self-write under
+`firestore.rules` — no rules change needed. The moment any tutor uses this,
+they show at their real location in both `FindTutor.tsx` (already reads
+`location`/`hasRealLocation`, no code change needed there — updated its
+header comment only) and the new marketing map panel's live app deep link.
+As of this session no real tutor has used it yet, so both places still show
+the studio-default behavior — expected.
+
+**Job 6 — reviews split from tutor recruitment.** Added a new, honestly-empty
+`#reviews` section ("Reviews, coming soon." + a dashed empty-slot, matching
+`FindTutor.tsx`'s "No reviews yet — be the first to book" tone, no fabricated
+quotes/stars) as its own section, separate from the existing `#tutors`
+recruitment CTA section (that one was already its own section from an
+earlier pass — this fix adds back the missing reviews half).
+
+**Screenshots**: `agent_work/product/screenshots_2026-07-25/` — `hero-2.png`,
+`demo-2.png` / `demo-game-tab.png` / `demo-handoff.png`, `demo-mobile.png`,
+`system-2.png`, `vibe-signal.png`, `reviews-2.png` / `tutors-2.png` (now
+separate), `findtutor-2.png` / `findtutor-mobile.png` (live map genuinely
+rendered), `hero-mobile.png`.
+
+---
+
+## Sword of Wisdom landing panel + diagnostic-once/cover verification (Fable 5, 2026-07-25)
+
+Confirmed working in `/Users/akoirala/Developer/mindcraft` before every step.
+
+### Job 1 — Sword of Wisdom landing-page demo panel
+
+Read `agent_work/manjushree-zone/LANDING_PANEL_HANDOFF.md` in full first. Mid-task
+the handoff was updated live (co-founder correction relayed by the coordinator):
+the old 3D archive is retired, canonical experience is 2D Sword of Wisdom +
+post-cut slideshow only, and — critically — the fallback (deep-link, not a
+true iframe embed) is now the correct PRIMARY approach, not a last resort.
+
+**New section added to `index.html`** (`<section class="demo" id="demo">`,
+between "How it works" and "About us"): title "Sword of Wisdom", line "See
+the curve in the mountain. Cut with precision. Then keep learning with
+fractions.", one-word "Play" CTA overlaid on an ambient auto-playing loop.
+
+**The loop** is a lightweight CSS/SVG composition, not a video — no existing
+video/gif preview of the kitchen or the cut moment was found anywhere in the
+repo (checked `worlds/world2/assets`, `agent_work/manjushree-zone/*.md`).
+Built from the real 2D Sword of Wisdom art already in
+`app/src/manjushree/assets2d/` (`valley_blocks.jpg`'s twin peaks read
+naturally as "the curve in the mountain," `sword.png`), copied and
+downsized into `img/sword-of-wisdom-valley.jpg` (312KB) and
+`img/sword-of-wisdom-blade.png` (100KB) — root `img/` because the marketing
+Firebase Hosting target's `ignore` list excludes all of `app/**`, so anything
+under `app/src/manjushree` is never actually deployed to the marketing site.
+Slow Ken Burns pan (`demoPan`, 22s), a pulsing SVG parabola arc over the twin
+peaks (`demoGlow`), a floating sword accent (`demoFloat`). All animations
+disabled by the page's existing global `prefers-reduced-motion` reset (no new
+override needed, verified the base/non-animated state still looks correct).
+
+**Click "Play" swaps the same stage in place** (`data-state="loop"` →
+`"handoff"` on `#demoStage`, CSS `display:none` toggle, no DOM
+teardown/rebuild) to a handoff card, NOT a live iframe of the 3D kitchen.
+**Why, verified not assumed**: (1) the real Sword of Wisdom
+(`app/src/manjushree`) sits behind `AuthGuard` — `/manjushree-dev` is a
+`import.meta.env.DEV`-only route, does not exist in the production build, so
+there is no anonymous-safe embeddable URL for it; (2) `worlds/world2/`
+(the `world1` Firebase Hosting target, the only public un-authed 3D surface)
+had real uncommitted, in-flux WIP on disk this session (`index.html` mid-pivot
+to a narrower "Jesse's Kitchen — Side Quest" standalone page, new
+`sq-standalone.js/css`) — confirmed via `git diff`/`git status`, not iframe-safe
+to point a public marketing page at right now, and per the live handoff
+correction, embedding it is no longer the intended approach even once stable.
+Confirmed via `grep` that no `X-Frame-Options`/CSP `frame-ancestors` headers
+exist anywhere in `firebase.json` or `worlds/world2/index.html` — a true
+iframe embed would have been technically possible, this was a product
+decision (auth wall + doc correction), not a technical blocker.
+The handoff card mirrors the product's own onboarding "cover-style loading
+card" beat: eyebrow "Sword of Wisdom," "The ridge continues in the app," a
+line explaining sign-in is next, a real "Enter the ridge →" CTA (`<a href=
+"https://mindcraft-93858.web.app/manjushree">`, same tab, not a new
+tab/window) and a "← Back to preview" control that returns to the loop.
+
+Verified in a real dev-server browser session (Playwright, Chromium, no code
+shims needed — plain static HTML): initial loop state, handoff state after
+clicking Play, back-to-loop after clicking Back, all at desktop (1400px) and
+mobile (390px) widths, zero console/page errors. Screenshots in
+`agent_work/product/screenshots_2026-07-25/`: `sword_demo_loop_state.png`,
+`sword_demo_handoff_state.png`, `sword_demo_back_to_loop_state.png`,
+`sword_demo_loop_mobile.png`, `sword_demo_handoff_mobile.png`.
+
+Files touched: `index.html` only (new CSS block, new `<section>`, new bottom-
+of-file JS wiring). `app/**` untouched for this job — no React routes needed.
+
+### Job 2 — diagnostic-once + cover-page-with-name
+
+**Diagnostic gating: already correct, no fix needed.** Traced
+`Dashboard.tsx`'s gating effect → `practiceState.ts`'s `isDiagnosticComplete`.
+`markDiagnosticComplete` permanently sets `diagnosticCompleted: true` on
+`users/{uid}` (Firestore `setDoc` merge); `isDiagnosticComplete` accepts either
+that flag or the legacy `diagnosticCompletedAt` timestamp, exempts
+tutors/admins, and only Admin's explicit "retake gap scan" or the test-profile
+reset ever clears it. Verified BOTH real behaviors live with a temporary,
+`VITE_SCREENSHOT_MODE`-gated `AuthGuard` mock (`App.tsx`) + a matching
+`VITE_SCREENSHOT_DIAG_DONE` toggle in `practiceState.ts`'s
+`isDiagnosticComplete` (no Firestore round-trip needed for either path —
+permission-denied on the mock uid fails soft to `false` either way, so the
+toggle is what actually controls which branch renders): with the flag unset,
+`/dashboard` redirects straight to `/diagnostic` (Jesse's Kitchen intro); with
+it set, `/dashboard` skips the diagnostic entirely.
+
+**Real gap found and fixed: the cover did not actually show the student's own
+name.** `CoverLanding.tsx`'s name field only ever read/wrote a standalone
+`mc-student-display-name` localStorage key via a manually-typed input — fully
+disconnected from the student's real signed-in `displayName` (Firestore
+`users/{uid}.displayName`, surfaced via `useStudentData` and already shown
+elsewhere on the same dashboard header). A returning student on a fresh
+browser/tab would see a blank "What should we call you?" prompt instead of
+their real name. Fixed by threading the real name in: `Dashboard.tsx` now
+passes `accountName={displayName}` to `<CoverLanding>`; `CoverLanding.tsx`
+defaults its name state to `savedLocalOverride || accountName || ''` (a saved
+manual override still always wins) and a new effect fills in `accountName`
+if it resolves after first render (Firestore read is async) without ever
+clobbering something the student already typed. Manual editing still works,
+it just now starts correct instead of blank.
+
+Verified both flows with the same shim, screenshots in
+`agent_work/product/screenshots_2026-07-25/`:
+`fresh_signup_diagnostic_gate.png` (diagnostic incomplete → `/diagnostic`,
+"Jesse's Kitchen" intro, not the cover) and
+`returning_student_cover_with_name.png` (diagnostic complete → straight to
+`CoverLanding`, name field and the button both correctly pre-filled "Maya",
+the mock account's real display name, zero typing required).
+
+Files touched: `app/src/components/book/CoverLanding.tsx`,
+`app/src/pages/Dashboard.tsx` (one new prop). Shim fully reverted — `grep -rn
+SCREENSHOT app/src` empty, `app/src/App.tsx` restored to its pre-shim hash
+(`1bbd4522…`, verified byte-identical, all 4 `manjushree` references and both
+routes intact), `app/src/lib/practiceState.ts` restored identical to backup.
+
+### Verification (both jobs, post-revert)
+
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **120 passed / 1 skipped (8 files)**, matches baseline exactly.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning).
+- `grep -c manjushree app/src/App.tsx` — 4, unchanged; hash verified identical
+  to session start.
+- No commit/push — verify-only per instructions, git left for the driver to review.
+
+---
+
+## Checkout-mixup correction, chapter art + story expansion, floating blocks, Find-a-Tutor port, dashboard polish (Fable 5, 2026-07-25)
+
+**Historical-record correction first.** A previous agent pass earlier today worked
+in the WRONG checkout, `/Users/akoirala/Desktop/Business Ideas/mindcraft-site`
+(a stale second checkout ~30+ commits behind `origin/main`), and its
+verification (tsc/vitest baselines, "no manjushree exists") was run against
+that stale code. This session confirmed `/Users/akoirala/Developer/mindcraft`
+(head `f2840e61`) is the one live checkout, confirmed `app/src/manjushree/`
+and 4 `manjushree` references in `App.tsx` genuinely exist here, and treated
+the stale checkout as read-only reference material for Job 3 below, nothing
+else. All 4 jobs below were done in THIS checkout only.
+
+### Job 1 — chapter photo art + expanded stories
+
+**Art wiring**: confirmed `storyArt.ts`'s `import.meta.glob` picked up all 42
+new `story-{conceptId}.jpg` files automatically, JPG winning over the old SVG
+doodle per its existing precedence rule — zero code changes needed, verified
+by rendering `/concept/linear_equations` and seeing the real watercolor plate
+(antique pocket watch + compass), not the old SVG.
+
+**Pagination bug found and fixed first**: `ConceptChapterPage.tsx`'s
+`buildPanels()` was, before this session, only ever showing **beat[0]** (the
+first paragraph) of a concept's `story` field in a single "open" panel — every
+later beat was computed (for the `quest` panels' `beat` prop) but never
+rendered, because today's earlier "narrative wrapping removal" pass (see
+prior entries) had already stripped the code that displayed `beat` text
+inside quest panels. Net effect: the story pagination the parent brief assumed
+existed did not actually show more than one panel of story to a student.
+Fixed by adding `storyPages()`, which groups `storyBeats()` output into 2-5
+pages by an even per-page character budget (`STORY_TARGET_PAGE_CHARS = 550`,
+merge-smallest-adjacent-pair balancing so no single page absorbs a lopsided
+pile of leftover text), and changing `buildPanels()` to emit one `open` panel
+per page (all before the quest panels, which are unchanged — no narrative
+text re-added to question stems, respecting today's earlier removal). Only
+the first page keeps the full title/protagonist-stamp/drop-cap treatment;
+later pages get a small "{concept} · continued" eyebrow + "page N of M".
+Existing dot-nav/arrow-nav/keyboard/swipe panel navigation needed zero
+changes (already generic over `panels.length`).
+
+**Story expansion**: all 42 concepts in `app/src/data/conceptStories.json`
+expanded from ~1,700-2,500 chars (4-5 paragraphs) to ~2,600-3,600 chars
+(now landing on 5 pages under the new pagination for every concept), adding
+2 new paragraphs of real historical depth per concept — verified several
+facts via WebSearch rather than assuming (Dantzig's simplex method really
+was applied to the Berlin Airlift in 1948, confirmed via Dantzig's own oral
+history; Cayley published ~250 papers during his 14 years as a lawyer, 967
+total across his life, confirmed via MacTutor; Zu Chongzhi's son Zu Geng's
+sphere-volume principle predates Cavalieri's identical idea by ~1,100 years,
+confirmed; Napier's "black spider in an ivory box" eccentricity and Escher's
+1937 introduction to Pólya's 17 wallpaper groups via his half-brother, both
+confirmed). **Also fixed a genuine factual error** in the pre-existing
+`basic_equations` story: it had conflated the Diophantus tomb-riddle puzzle
+with Fermat's actual "most famous margin note" (which is about Fermat's Last
+Theorem, a different problem in the same *Arithmetica* — confirmed via
+general knowledge of the history, corrected the sentence and added the real
+margin-note story as new content).
+
+Verification: `npx tsc --noEmit` clean, `npx vitest run` 120 passed / 1
+skipped (8 files, unchanged from baseline), `npm run build` green.
+
+### Job 2 — 8 floating MindCraft-block decorations
+
+Placed on the Dashboard (`Dashboard.tsx`/`Dashboard.module.css`), not the
+marketing hero — chosen because the Dashboard's Contents canvas is the
+higher-traffic, logged-in surface and already had an established "ambient
+decoration" convention (deskSpine ring column) to extend. Investigated
+actual rendered geometry before placing (a first attempt scattered them
+across the full canvas height and most landed hidden behind the solid-
+background lane cards, confirmed via a real DOM `getBoundingClientRect()`
+check) — repositioned to the two zones confirmed genuinely open by a real
+render: the header band above the lane cards (0-11% down the stage) and the
+thin margin past the last lane before the stage's rounded corner. Small
+(26-48px), low-opacity (0.16), hand-placed rotations, a slow float
+(`@keyframes mcBlockFloat`) that's disabled entirely under
+`prefers-reduced-motion: reduce`. `z-index: 0` behind `.stagePane`'s
+`z-index: 1` so real content always wins the stack.
+
+### Job 3 — Find-a-Tutor properly ported into this checkout
+
+Read the stale checkout's `FindTutor.tsx`/`FindTutor.module.css`/`geo.ts` for
+design/logic reference only, then re-implemented against THIS checkout's
+actual current state (its `Book.tsx`/`Book.module.css` — confirmed identical
+in shape to what the stale FindTutor header describes replacing — was the
+right base to extend, already using `var(--tok-font-sans)`/`var(--tok-font-serif)`
+tokens unlike the stale checkout's hardcoded font names).
+
+- New: `app/src/lib/geo.ts` (haversine distance; fixed a latent bug in the
+  ported version where `lat2` recomputed `a.lat + (b.lat - a.lat)` instead of
+  plainly `b.lat` — same result, clearer code), `app/src/pages/FindTutor.tsx`,
+  `app/src/pages/FindTutor.module.css`.
+- `@react-google-maps/api` installed via real `npm install --legacy-peer-deps`
+  (not hand-edited into package.json). `@types/google.maps` came along as a
+  transitive dependency; added `"google.maps"` to `tsconfig.json`'s `types`
+  array.
+- `VITE_GOOGLE_MAPS_API_KEY=` (empty placeholder) added to `.env.example`,
+  `.env.production`, and a newly-created `.env.local` (gitignored, no key
+  exists yet — page falls back to an honest "map unavailable" placeholder).
+- `App.tsx`: `/book` now redirects to the new `/find-a-tutor` route (old
+  `Book.tsx`/`Book.module.css` left in place, unreferenced, as a rollback
+  point — not deleted).
+- Renamed "Book a Session" → "Find a Tutor" everywhere it actually appears in
+  this checkout (grepped fresh): `Sidebar.tsx` nav entry,
+  `Dashboard.tsx`'s secondary link, `StudentSessions.tsx`'s empty-state
+  button, `KnowledgeGraph.tsx`'s two concept-detail buttons. Left Admin.tsx's
+  unrelated internal "Book Session" modal (a separate admin-scheduling
+  feature, `bookOpen` state, never navigates to `/book`) untouched —
+  confirmed via grep it's a different feature before leaving it alone.
+
+### Job 4 — dashboard polish, all 6 items done
+
+1. **Contents subtitle removed** — `<p className={s.homeLead}>Four lanes...</p>`
+   deleted from `Dashboard.tsx`; heading stands alone.
+2. **Nav pills enlarged** — `.navBtn`/`.navActive` in `Dashboard.module.css`
+   (this checkout's actual Home/Map/Work/Notes pills live directly in
+   `Dashboard.tsx`'s `.heroBar`, not `AppTabBar.tsx`, which is a different
+   component used elsewhere) — font-size 18px→24px, padding 6px 13px→10px 22px.
+3. **Bottom-left logo watermark** — new `.pageWatermark` span, small (13px),
+   low-opacity (0.22), corner-anchored inside `.canvasStage`, distinct from
+   the real nav wordmark in `.heroBar`.
+4. **Roadmap connector-line bug fixed** — root cause: `.tocNodeName` had no
+   fixed height, only a 2-line clamp, so a 1-line concept name (e.g. "Linear
+   Equations") and a 2-line name (e.g. "Systems of Linear Equations") in the
+   same lane pushed their dots to different vertical offsets; the connector
+   segments are drawn off each dot's own vertical center
+   (`.tocNodeDot::before/::after`), so mismatched dot heights made adjacent
+   segments miss each other entirely. Fixed with `height: 2.5em` on
+   `.tocNodeName` so every dot in a lane sits on the same row regardless of
+   name length. Confirmed fixed by screenshot (Algebra lane, 11 concepts of
+   varying name length, line now reads as one continuous path).
+5. **"Weekly Review"** — `wizardLine` in `Dashboard.tsx` simplified from
+   `` `Let's tackle ${weaknessLabel} next. You've got this!` `` to plain
+   `'Weekly Review'` (only "tackle" hit in the whole codebase, confirmed via
+   grep) — the topic is already visible in the adjacent "today's spark"
+   sticker.
+6. **Boxed "Find a Tutor" pill** — `.bookSessionLink` in `Dashboard.module.css`
+   given a pill border (`border-radius: 12px 16px 12px 14px`, matching
+   `.paperCtaLocked`'s existing shape convention) instead of being a bare
+   text link.
+
+### Verification
+
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **120 passed / 1 skipped (8 files)**.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning).
+- `grep -n manjushree app/src/App.tsx` — 4 references, untouched, checked
+  before and after every edit pass.
+
+Screenshots (`agent_work/product/screenshots_2026-07-25/`):
+`dashboard_home_desktop.png` (all 6 polish items + floating blocks visible
+at once), `find_a_tutor_desktop.png` (full page, honest map-unavailable
+placeholder + real founders + no-fake-reviews state),
+`chapter_linear_equations_page1.png` through `_page4.png` (new photo art +
+expanded story actually paginating "page N of 5" with genuinely different
+content per page).
+
+Screenshots taken via the established temporary `VITE_SCREENSHOT_MODE`-gated
+shim pattern (`AuthGuard` mock user in `App.tsx`, canned data in
+`useStudentData.ts` + three effects in `Dashboard.tsx`), dev server
+`VITE_SCREENSHOT_MODE=1 npx vite --port 5197 --strictPort`, driven by a
+local Playwright script (`app/.tmp_shot*.mjs`, deleted after; `playwright`
+itself installed with `--no-save` and fully removed afterward — confirmed
+`git diff --stat package.json package-lock.json` shows only the intentional
+`@react-google-maps/api` addition, nothing else). All shims fully reverted —
+`grep -rn SCREENSHOT_MODE app/src` returns empty, and `git diff
+app/src/hooks/useStudentData.ts` returns completely empty (that file's only
+change during the session was the shim, now fully reverted). `tsc`/`vitest`/
+`build` re-run clean after the revert (numbers above are post-revert).
+
+Not done / open: the 5 remaining concepts already flagged as uncovered by
+the question bank (combinatorics, matrices, complex_numbers,
+rational_expressions, logarithmic_functions per earlier ACT-bank notes)
+still have no static questions, unrelated to this session's story-expansion
+work which touched all 42 concepts' narrative text regardless of question
+coverage. Old `Book.tsx`/`Book.module.css` left as unreferenced rollback
+files, not deleted.
+
+---
+
+
+## Contents "roadmap" redesign — chip grid → horizontal dot path (Fable 5, 2026-07-24)
+
+Akshat's brief verbatim: the Contents chip grid felt overloading; wanted "a
+line... connect each segment to it and the line has dots that say topic...
+under it are our subtopics... once you complete it, it lights up or slowly
+fills... like a cool map."
+
+**What changed.** `Dashboard.tsx`/`Dashboard.module.css` Contents section
+(`ACT_TOC_SECTIONS` render). Each of the 4 lanes (Warm-ups 7, Algebra 11,
+Geometry 7, Data & chance 2 concepts — counted from `actOntologyCoverage.json`
+before deciding layout) still keeps its own header (icon/title/blurb, same
+wash/accent/ink) but the chip grid inside is now a horizontal line of evenly
+spaced dots: concept name above (was `--tok-font-hand` Caveat, now
+`--tok-font-sans` DM Sans, matching how the blurb text already read, per the
+brief's "nice fonts properly spaced" ask and the existing type convention),
+dot in the middle, `actConceptBlurb()` text below (same real per-concept
+blurb data that existed before — no invented subtopic data). Connecting line
+segments are drawn off each dot via `::before`/`::after` (not one big
+absolute line), so they always cross the dot's true vertical center
+regardless of how tall the name/blurb text next to it is.
+
+**Completion signal — real, not invented.** Dot fill/color is the same
+per-concept `status`/`mastery` the Knowledge Map already reads off
+`GET /knowledge-graph/{uid}` (`fetchKnowledgeGraph` in `graphCache.ts`), using
+the exact same status→color table the Map uses
+(`STATUS_COLOR` in `learningPathGraph.ts`) — a topic reading "mastered" here
+reads mastered on the Map too. Dot rendering:
+- `conic-gradient` fill sized by raw mastery % (0–100) → the "slowly fills" ask.
+- `mastered`/`stable`/`comeback_built`/`ready_for_challenge` → solid glowing
+  fill + white checkmark (the "lights up" ask).
+- `struggling`/`open_gap` → red glow ring (still the normal open/red status,
+  not a fake "locked" state).
+- `in_progress`/`repairing` → partial blue pie fill.
+- `untouched`/no data → hollow gray dot, whole node dimmed to 62% opacity
+  (visual-only "not started yet," concepts stay fully clickable — this is
+  not a real prerequisite gate, nothing in this app blocks a student from
+  opening any topic).
+New `Dashboard.tsx` effect fetches the KG once per uid and maps `node.id →
+{mastery, status}`; falls back to `untouched`/0 for any concept with no KG
+entry yet (new student, or KG fetch fails) — dots just render dim, no crash.
+
+**Layout / responsive strategy.** Container went from a horizontally-scrolled
+row of narrow 320px lane cards (with a second, nested vertical scroll of
+chips inside each) to a vertical stack of full-width lanes — checked
+`.stagePane` already has `overflow:auto` so a taller page just scrolls
+normally, no new outer scroll region needed. Each lane's dot track
+(`.tocTrack`) is its OWN horizontal-scroll region (`overflow-x:auto`,
+confirmed via a real DOM check: Algebra's 11-node track measures
+`scrollWidth 1420 > clientWidth 1332` at 1440px wide, i.e. it truly
+overflows and scrolls) — this is the chosen narrow-width strategy: each lane
+scrolls sideways independently rather than wrapping to multiple rows, so a
+lane header stays put while its path scrolls under it. Verified this same
+behavior holds at 390px mobile width (see screenshots below) with a shrunk
+`--node-w`/`--dot-size` inside the existing 720px media query block.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **119 passed / 1 skipped (8 files)**, matches baseline exactly.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning, unrelated).
+- `grep manjushree app/src/App.tsx` — 4 references, untouched, checked before
+  and after the screenshot shim below.
+
+Screenshots taken via a temporary, `VITE_SCREENSHOT_MODE`-gated `AuthGuard`
+bypass in `App.tsx` (mock `UserContext`, no real Firebase auth) plus the same
+two narrower bypasses used by the previous session today: `Dashboard.tsx`'s
+diagnostic-completion check short-circuited, and `useStudentData.ts`
+short-circuited to canned data with zero Firestore reads. Also added a
+temporary canned `conceptProgress` block in `Dashboard.tsx` (screenshot-mode
+only) so the "new" screenshots could show all four dot states (mastered/
+in-progress/struggling/untouched) without a live ML fetch. For the OLD
+chip-grid reference shot, `Dashboard.tsx`/`Dashboard.module.css` were
+temporarily swapped for their `git show HEAD:...` (pre-session) versions,
+screenshotted, then swapped back to the real edited versions. Dev server:
+`VITE_SCREENSHOT_MODE=1 npx vite --port 5197 --strictPort`, driven with a
+local Playwright script (`app/.tmp_shot*.mjs`, deleted after). All shims
+fully reverted from byte-for-byte pre-shim backups, confirmed via `diff`
+returning identical on all 4 touched files, and a fresh
+`grep -rn "VITE_SCREENSHOT_MODE\|SCREENSHOT_MODE" app/src/App.tsx
+app/src/pages/Dashboard.tsx app/src/hooks/useStudentData.ts` returning empty.
+`tsc`/`vitest`/`build` all re-run clean after the revert (numbers above are
+post-revert).
+
+7 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+`contents_OLD_chipgrid_desktop.png` (the dense 4-column chip wall, for the
+record), `contents_NEW_roadmap_desktop.png` (the new horizontal dot path,
+1440px), `contents_NEW_roadmap_scrolled_algebra.png` /
+`_scrolled_bottom.png` (proof the per-lane horizontal scroll and page
+vertical scroll both work — Algebra's rightmost nodes and the Data & chance
+lane are otherwise off-screen), `contents_NEW_roadmap_mobile.png` /
+`_mobile_scrolled.png` (390px width, before/after scrolling the Warm-ups
+lane sideways — confirms the responsive strategy holds on phone width).
+
+Files touched: `app/src/pages/Dashboard.tsx` (imports `fetchKnowledgeGraph` +
+`STATUS_COLOR`, `conceptProgress` state + fetch effect, `tocDotState()`
+helper, Contents JSX chip-grid → dot-track), `app/src/pages/Dashboard.module.css`
+(`.horizontalToc`/`.tocLane` reworked for vertical stacking, `.tocChips`/
+`.tocChip*` replaced with `.tocTrack`/`.tocNode`/`.tocNodeDot`/etc., mobile
+breakpoint additions in the existing 720px query).
+
+Not done / open: no animated transition when mastery changes mid-session
+(dots reflect whatever the KG fetch returned on load, not a live tween) —
+fine for now since mastery changes on a different page (Practice), not while
+sitting on Contents.
+
+---
+
+## Wizard mascot background removal + weekly paper lock (Fable 5, 2026-07-24)
+
+**Job 1 — mascot rectangle.** Root cause confirmed by inspecting the actual
+asset (`python3 -c "from PIL import Image; ..."`): `wizard-doodle-cheer.jpg`
+is a JPEG, mode `RGB`, no alpha channel — a genuine baked-in opaque cream
+background (`~254,251,242`, sampled from all 4 corners + edge midpoints),
+not a CSS container issue. `WizardMascot.module.css`'s `.wrap`/`.bubble` have
+no background box of their own, so a CSS-only fix wasn't available; this
+needed real pixel editing. `rembg` isn't installed by default but `pip
+install rembg` succeeded — chose NOT to use it: a global ML background-removal
+model is overkill (and riskier) for a single flat, near-uniform paper color.
+Instead: connected-component flood fill from the image border (Pillow +
+`scipy.ndimage.label`, 8-connectivity, distance threshold 34 from the sampled
+background color) so only the region topologically connected to the outer
+edge gets keyed transparent — the character's own near-white regions (pants,
+shirt highlights) sit inside the black ink outline and never get touched,
+unlike a naive global chroma-key threshold (tested first: punched holes in
+~33% of the pants region because their raw color is also close to the paper
+background). Feathered the alpha with a 1.1px Gaussian blur for anti-aliased
+edges, de-fringed the boundary ring (pulled edge-pixel RGB away from the
+background color proportional to remaining transparency, killing the pale
+halo), then resized 1400×1400 → 360×360 (displayed at ≤92px CSS, retina
+headroom to spare) and re-saved with `optimize=True`. Result:
+`wizard-doodle-cheer.png`, 109.5KB — smaller than the original 244KB JPG
+despite adding an alpha channel. `WizardMascot.tsx` now imports the `.png`;
+the old `.jpg` is left in place, unreferenced, as a rollback point.
+Script: `/tmp` scratchpad (not committed, one-off).
+
+**Job 2 — weekly-locked paper.** "This week's paper" (`Dashboard.tsx`
+`.paperCta`, content built by `weeklyPracticePaper.ts`) had no lock concept
+at all — always an open "Start →" CTA whenever a paper existed. Reused the
+**existing** calendar-week cadence already anchoring the paper's own content
+cache (`weekKey()` in `weeklyPracticePaper.ts`, the same scheme as
+`isoWeek()` in `ParentDashboard.tsx` — did not invent a second date
+convention) instead of a rolling cooldown. New behavior: unlocked (green
+"Start →") for the whole week until the student actually finishes a mission
+launched from that CTA; on finish, locks (dimmed, 🔒, "Done! Unlocks in N
+days") until the next week's key rolls over.
+- **Completion signal**: `users/{uid}.weeklyPaperCompletedWeek` (the
+  `weekKey()` string of the last finished weekly-paper mission) —
+  self-writable non-privileged field, same `setDoc(..., {merge:true})`
+  fail-soft pattern as `diagnosticCompleted` (`practiceState.ts` →
+  `markWeeklyPaperComplete`). Read into `useStudentData.ts`'s `StudentData`
+  the same way `streak`/`practiceCount` already are.
+- **Wiring**: `Dashboard.tsx`'s `playWeeklyPaper()` now tags the `/practice`
+  navigation state with `weeklyPaper: true, weeklyPaperWeekKey`.
+  `Practice.tsx` threads that through to a new `weeklyPaperWeekKey` state var,
+  set only *after* `launchMissionDirect()` resolves (not before) so a stale
+  flag from a previous **abandoned** weekly-paper session can't leak onto an
+  unrelated later mission — `startSession()` and `startBookmarkedSession()`
+  both clear the flag at their own top as the single common funnel every
+  session (direct-launch, manual path-picker, bookmarked question) passes
+  through. `finishSession()` — the one real "a mission actually completed"
+  hook already in the codebase (mastery outcomes recorded, `pPhase` set to
+  `'complete'`) — writes the completion flag if the flag is set, then clears
+  it.
+- **Lock UI**: `Dashboard.module.css` `.paperCtaLocked` (same footprint as
+  `.paperCta`, muted/inert, no hover lift) + 🔒 + `nextUnlockLabel()`
+  (`weeklyPracticePaper.ts`) → "Unlocks tomorrow" / "Unlocks in N days",
+  counting to the next Monday (`daysUntilNextUnlock()`).
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` →
+119 passed, 1 skipped, 8 files (matches session baseline, zero regressions).
+`npm run build` succeeded (same pre-existing >500kB chunk warning,
+unrelated — confirmed present before this session too). `grep manjushree
+app/src/App.tsx` → all 4 references, untouched, checked before and after.
+
+Screenshots taken via a temporary, `VITE_SCREENSHOT_MODE`-gated `AuthGuard`
+bypass in `App.tsx` (mock `UserContext`, no real Firebase auth) plus two
+narrower temporary bypasses this pass specifically needed and hadn't seen
+documented before: (a) `Dashboard.tsx`'s diagnostic-completion check
+short-circuited (a fresh screenshot uid has no diagnostic on file and would
+otherwise redirect to `/diagnostic`), (b) `useStudentData.ts` short-circuited
+to return canned data with **zero** Firestore reads/writes (confirmed via
+console output that real Firestore calls for the fake uid fail with
+`Missing or insufficient permissions` anyway, since there's no real Firebase
+Auth session behind the mocked `UserContext` — so even without this shim no
+production data could have been written, but the shim also means zero
+attempted calls and a deterministic, instant render). `?screenshotPaperLocked=1`
+toggled the mocked completion field between the two CTA states. Dev server:
+`VITE_SCREENSHOT_MODE=1 npx vite --port 5193`, driven with a local
+`playwright` script (`chromium-cli` isn't installed in this environment).
+For the mascot before/after pair, `WizardMascot.tsx`'s import was swapped
+`.jpg` → screenshot → swapped back to `.png` → screenshot, same "swap to the
+other version, shoot, swap back" technique as prior sessions' before/afters.
+All three shims fully reverted from byte-for-byte pre-shim backups, confirmed
+via `diff` returning identical, and a fresh `grep -rn VITE_SCREENSHOT_MODE
+app/src/App.tsx app/src/pages/Dashboard.tsx app/src/hooks/useStudentData.ts`
+returning empty. `tsc`/`vitest`/`build` all re-run clean after the revert
+(numbers above are post-revert).
+
+4 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+`wizard_mascot_BEFORE.png`/`_AFTER.png` (visible cream rectangle around the
+sprite vs. blending into the lavender hero bar), `paper_cta_UNLOCKED.png`/
+`paper_cta_LOCKED.png` (green "Start →" vs. dimmed 🔒 "Done! Unlocks in 3
+days" — 3 days is correct for today, a Friday, counting to Monday).
+
+Files touched: `app/src/components/canvas/WizardMascot.tsx` (one-line import
+swap), `app/src/assets/canvas/wizard-doodle-cheer.png` (new asset),
+`app/src/lib/weeklyPracticePaper.ts` (`weekKey` exported,
+`daysUntilNextUnlock`/`nextUnlockLabel` added), `app/src/lib/practiceState.ts`
+(`markWeeklyPaperComplete` added), `app/src/hooks/useStudentData.ts`
+(`weeklyPaperCompletedWeek` field added), `app/src/pages/Dashboard.tsx`
+(lock check + locked-state JSX), `app/src/pages/Dashboard.module.css`
+(`.paperCtaLocked` + children), `app/src/pages/Practice.tsx`
+(`weeklyPaperWeekKey` state + wiring in the 3 places above — a concurrent
+pass on this same shared file was adding unrelated ScratchPad-fill changes
+elsewhere in the file; left fully untouched). Nothing committed, left in the
+working tree for review.
+
+---
+
+## ScratchPad doesn't fill its column + options too tall (Fable 5, 2026-07-24)
+
+**The complaint** (Akshat, after seeing today's GraphBox pass): can't write
+comfortably because the writable ScratchPad box is small and doesn't fill the
+actual visible whitespace under the graph/question, and the 4 answer options
+are too tall, eating space that should go to writing room.
+
+**Root causes found by measuring the live DOM (Playwright), not guessing:**
+
+1. **`Practice.tsx` aside column didn't stretch.** `.sessionColumns` (the
+   grid holding the question card + the GraphBox/ScratchPad aside) had
+   `align-items: start`, so the aside sized to its own small content height
+   instead of matching the taller question column — leaving the rest of the
+   grid row, and the rest of the page below it, blank. `ScratchPad` itself
+   was also always mounted with a literal `height={240}` — a hard pixel cap,
+   not a floor; it had no flexible-height mode at all in non-`paperMode` use.
+2. **`ConceptChapterPage.tsx`'s write-mode overlay silently under-filled.**
+   The full-page annotation overlay (`.annotationLayer`/`.annotationActive`,
+   toggled by the pencil "Write" button) was `display: block`. `ScratchPad`'s
+   own `paperMode` sizing (`flex:1` on its wrap/canvasWrap chain) only works
+   inside a **flex** parent — with a block parent, `flex:1` is a no-op, so
+   the canvas collapsed to its own ~320px floor and sat top-aligned inside
+   the full-height overlay. Confirmed with an actual drawn stroke: attempting
+   to draw from the top of the question card to just above the submit
+   button, the ink stopped dead at pixel 320 of a 759px-tall panel — the rest
+   of the pointer events landed on the choices/button behind the invisible
+   overlay instead of the canvas.
+
+**Fix:**
+
+- **`ScratchPad.tsx`/`.module.css`**: added a `fillHeight` prop — `height`
+  becomes a floor (`minHeight`), not a cap, and new additive `.wrapFill`/
+  `.canvasWrapFill` classes give the component its own flex-grow chain
+  without touching the 3 other unrelated call sites (`HomeworkSession.tsx`,
+  `GradeOnboard.tsx`, `SessionWork.tsx` — all still pass a fixed `height`
+  with no `fillHeight`, byte-for-byte same behavior as before).
+- **`Practice.tsx`**: `.sessionColumns` → `align-items: stretch` (aside now
+  matches the question column's height) plus `min-height: calc(100dvh -
+  210px)` on the same rule (aside-only class, so this can't leak into any
+  other Practice.tsx phase) so a short question card doesn't cap the whole
+  row short — the row now floors near the visible viewport height, and the
+  question card just sits at its natural height inside the taller row (no
+  visible seam, it has no background of its own). Reordered the aside so
+  `GraphBox` renders above `ScratchPad` (`height={240} fillHeight`), matching
+  "writing space under the graph."
+- **`ConceptChapterPage.module.css`**: `.annotationActive` → `display: flex;
+  flex-direction: column` (was `block`) so ScratchPad's existing `paperMode`
+  flex chain actually has a flex parent to grow inside. No ScratchPad prop
+  change needed here — paperMode already carried the right sizing logic,
+  it just had a broken parent.
+- **Compaction** (both files): tightened the 4 answer-option rows — Practice
+  matteShell `.choice` padding 12px 14px→8px 12px, font 20px→17px, gap
+  12px→9px, container gap 12px→8px, min-height 56px→44px (the "IMMERSIVE
+  CANVAS SESSION" override block that was actually winning the cascade);
+  base `.choice` (paperScan/diagnostic mode) padding 14px→11px 12px,
+  min-height 64px→52px. `ConceptChapterPage` `.stickerChoice` padding
+  10px 12px→7px 11px, gap 12px→8px, choiceText font 20px→17px, `.qChoices`
+  margins trimmed. Question banner/body padding trimmed similarly in
+  Practice (`questionBanner` 32/36/28→20/26/16, `questionBody`
+  20/28/16→14/24/10). All still comfortably above iOS's 44px tap-target
+  guideline (new min-heights are 44-52px, not below).
+
+**Verified with real before/after measurements** (Playwright against the dev
+server, `VITE_SCREENSHOT_MODE`-gated `AuthGuard` bypass in `App.tsx` + a
+`?screenshotMock=<conceptId>` mock-session effect in `Practice.tsx`, same
+technique as earlier passes today — both fully reverted after, confirmed via
+`diff` against pre-shim backups and `grep SCREENSHOT app/src/App.tsx
+app/src/pages/Practice.tsx` returning empty):
+
+- **Practice.tsx ScratchPad**: canvas height 240px → **819px** (measured via
+  `getBoundingClientRect()`), filling from directly under GraphBox to within
+  ~15px of the page bottom. Functional proof: a stroke drawn from near the
+  canvas top to 15px above its new bottom edge left ink pixels from device-y
+  14 to 691 of 817 (vs. before: the same box was capped at 240px so ink
+  literally couldn't reach past that row).
+- **ConceptChapterPage.tsx write-mode overlay**: canvas height 320px (fixed
+  floor, top-aligned) → **759px**, exactly matching `.blendQuestMain`'s full
+  height. Functional proof: a stroke aimed from the question header to just
+  above the submit button registered ink at device-y up to 691 of 759
+  (~91% of the panel) after the fix, vs. stopping dead at device-y 319 of
+  320 before the fix (the rest of the same mouse path landed on the
+  choices/button behind the invisible overlay, not the canvas — confirmed
+  both in the pixel scan and visually in the screenshot, where the ink line
+  visibly stops mid-page).
+- **Options**: Practice matteShell option row ≈ 76px tall (56px min-height +
+  padding/border) → ≈ 60px; ConceptChapterPage sticker option row ≈ 56px →
+  ≈ 46px. 4-option block + gaps: Practice ≈ 336px → ≈ 264px; ConceptChapterPage
+  ≈ 250px → ≈ 200px.
+
+`npx tsc --noEmit` clean. `npx vitest run` → 119 passed, 1 skipped, 8 files
+(matches session baseline exactly, zero regressions). `npm run build`
+succeeded (same pre-existing >500kB chunk warning, unrelated). `grep
+manjushree app/src/App.tsx` shows all 4 references, untouched.
+
+7 screenshots saved to `agent_work/product/screenshots_2026-07-24/` (prefix
+`scratchpad_`): `practice_BEFORE`/`_AFTER` (small boxed scratch pad + dead
+whitespace vs. full-column fill + compact options), `practice_stroke_fill_proof`
+(a drawn line running the full new height of the aside), `chapter_quest_BEFORE`/
+`_AFTER` (compact sticker options), `chapter_writemode_stroke_BEFORE`/`_AFTER`
+(the write-mode overlay stroke stopping at the old 320px floor vs. running the
+full question-card height after the fix).
+
+Files touched: `app/src/components/ScratchPad.tsx`,
+`app/src/components/ScratchPad.module.css`, `app/src/pages/Practice.tsx`
+(aside reorder + `fillHeight` prop only — a concurrent pass on this shared
+file added unrelated "weekly paper" state/logic elsewhere in the same file,
+left untouched), `app/src/pages/Practice.module.css`,
+`app/src/pages/ConceptChapterPage.module.css`. Nothing committed, left in the
+working tree for review.
+
+---
+
+## Correction: narrative-wrapping fix targeted the wrong surface (Claude, 2026-07-24)
+
+**This is a correction to the "Remove per-question narrative wrapping" entry
+below**, which explicitly (and wrongly) marked `ConceptChapterPage.tsx` as
+"correct as-is, out of scope, untouched." That was the mistake: the standalone
+`/practice` route (`app/src/pages/Practice.tsx`, fixed in that entry) is real
+but secondary. The surface hit for essentially every concept a student studies
+is `app/src/pages/ConceptChapterPage.tsx`'s inline "quest panels" (route
+`/concept/:conceptId`, reached from Dashboard/concept map), and it still had
+the exact anti-pattern until this pass.
+
+Scope strictly `app/**`. Did not touch `app/src/manjushree/`,
+`agent_work/manjushree-zone/`, `ml/**`, `webhook/**`, `data/**`, `worlds/**`.
+`grep manjushree app/src/App.tsx` shows all 4 references, unchanged.
+
+**`app/src/pages/ConceptChapterPage.tsx`**
+- `renderQuestPanel`'s displayed stem switched from `chapterStem(...)` (which
+  stitched `[settingLine, questionBridge, ask]` into one paragraph) to the
+  plain `q.question` bank text, passed straight to `HighlightedStem`.
+- Removed the "scene beat" narrative teaser block above the stem
+  (`s.sidePassage` / `s.beatLabel`, showing `beat`/`beatIndex` text).
+- Replaced the aside column's Polaroid image + scene-setting caption
+  (`s.blendQuestAside`) with `GraphBox` (from `app/src/components/GraphBox.tsx`,
+  built in the GraphBox-port entry below, reused as-is, not rebuilt), so the
+  live polynomial grapher now sits top-right of the question panel.
+  `ScratchPad`/the write-anywhere annotation layer was left exactly where it
+  already lived (inside the main column, toggled by the pencil button), not
+  moved into the aside.
+- `activeStem` (feeds `useJournalGuide`'s highlight extraction) switched from
+  the narrative `chapterStem(...)` result to the same plain `q.question`, so
+  the Jarvis focus-highlighter matches against what is actually rendered
+  (same reasoning as the `GradeOnboard.tsx` fix in the entry below: a
+  highlight phrase extracted from text that isn't shown will just silently
+  fail to match).
+- Left wired but no longer fed into the rendered JSX: `chapterStem`,
+  `getFrame`/`questionContextFrames.json` lookups, `selectSceneForQuestion`
+  (`scene`), `storyTeaser`, and the `beat`/`beatIndex`/`Panel` plumbing in
+  `buildPanels`/`storyBeats`, all still computed/callable for a future
+  dedicated wrapping agent, just not displayed. `frame`/`selectStoryForConcept`
+  (`localStory`) stay actively used elsewhere on the page (the opening story
+  panel's protagonist/setting stamp, `renderOpenPanel`), unaffected.
+
+**New shared file `app/src/lib/graphableConcepts.ts`**: extracted
+`GRAPHABLE_CONCEPT_IDS` (the polynomial-graphable concept set) out of
+`Practice.tsx` into its own module so both `Practice.tsx` and
+`ConceptChapterPage.tsx` import the same set instead of drifting copies.
+`Practice.tsx`'s own GraphBox wiring (`defaultOpen={GRAPHABLE_CONCEPT_IDS.has(...)}`)
+is unchanged in behavior, just re-sourced from the shared file.
+
+**CSS**: `.blendQuestAside` in `ConceptChapterPage.module.css` changed
+`align-items: center` (sized for centering a fixed-width Polaroid) to
+`align-items: stretch` so `GraphBox` fills the column's width. This is the
+only CSS change; `.chapterDesk` (page background) and `.canvasStage` (cream
+card) were not touched.
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` → 119
+passed, 1 skipped, 8 files (matches baseline, zero regressions). `npm run
+build` succeeded (same pre-existing >500kB chunk warning, unrelated). `grep
+manjushree app/src/App.tsx` shows all 4 references, checked before and after
+the screenshot shim below.
+
+Screenshots taken via a temporary, `VITE_SCREENSHOT_MODE`-gated `AuthGuard`
+bypass in `App.tsx` (mock `UserContext` value, no real Firebase auth), same
+technique as the entries below, run against `VITE_SCREENSHOT_MODE=1 npx vite
+--port 5194`. For the "before" shots, `ConceptChapterPage.tsx` and
+`ConceptChapterPage.module.css` were temporarily swapped for their `git show
+HEAD:...` (pre-session) versions on disk, screenshotted, then swapped back to
+the real edited versions. Both the `App.tsx` shim and the two temporarily
+swapped files were restored from byte-for-byte backups afterward, confirmed
+via `diff` showing zero differences against the pre-shim backups and a fresh
+`grep VITE_SCREENSHOT_MODE app/src/App.tsx` returning empty. `tsc`/`vitest`/
+`build` all re-run clean after the revert (numbers above are post-revert).
+
+4 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+- `linear_equations_BEFORE.png` / `_AFTER.png`: before shows the "SCENE 1"
+  teaser, an "At sea, bound for Jamaica, 1761" bridge line stitched onto the
+  actual x-intercept question, and a Polaroid photo in the aside; after shows
+  the plain "Solve: 7x = 35"-style stem with no narrative prefix and a live
+  GraphBox (default-open, `linear_equations` is in `GRAPHABLE_CONCEPT_IDS`)
+  top-right with a parabola plotted from the default expression.
+- `ratios_proportions_BEFORE.png` / `_AFTER.png`: a second concept, not in
+  `GRAPHABLE_CONCEPT_IDS`; before shows a "Giza, foot of the pyramid, 600 BC"
+  Thales narrative wrapped around an unrelated percentage-graph question;
+  after shows the plain question, GraphBox present but collapsed by default,
+  and the focus-highlighter still correctly underlining "a percentage" in the
+  plain stem (confirms the `activeStem` fix keeps highlighting working).
+  Note: the specific question shown differs between the before/after shot for
+  this pair (the bank's per-session shuffle picks a different question on
+  each fresh page load); the concept and the wrapping-removed pattern are the
+  same, which is what these screenshots are evidence of.
+
+Files touched: `app/src/pages/ConceptChapterPage.tsx`,
+`app/src/pages/ConceptChapterPage.module.css`,
+`app/src/lib/graphableConcepts.ts` (new), `app/src/pages/Practice.tsx`
+(GRAPHABLE_CONCEPT_IDS now imported from the new shared file, no behavior
+change). Nothing committed, left in the working tree for review.
+
+---
+
+## GraphBox port + limits_continuity story/art gap + chapter audit (Claude, 2026-07-24)
+
+Scope strictly `app/**`. Did not touch `app/src/manjushree/`, `agent_work/manjushree-zone/`,
+`ml/**`, `webhook/**`, `data/**`, `worlds/**`. `grep manjushree app/src/App.tsx` shows all
+4 references, unchanged (App.tsx's only change is the pre-existing uncommitted manjushree
+wiring from session start — untouched by this pass, checked via `git diff` before and
+after the screenshot shim below).
+
+**Job 1+2 — live graph box, ported from the validated iPad prototype.**
+Direct TypeScript/React port of `ios-prototype/MindCraftNotes/MindCraftNotes/Models/
+PolynomialExpression.swift` + `LaTeXMath.swift` (parser) and `Views/GraphView.swift`
+(plotting) — same grammar, same LaTeX subset, same niceStep/formatTick axis-label
+algorithm, same y-range self-sampling, ported faithfully rather than re-derived.
+- New `app/src/lib/polynomialExpression.ts`: `parsePolynomial`/`evaluatePolynomial`,
+  bare-caret grammar (`x^2+5x+6`) plus LaTeX subset (braced exponents `x^{2}`, numeric
+  `\frac{a}{b}` coefficients, delimiter/spacing stripping), rejecting anything else
+  (variable-in-fraction, general LaTeX) with the same clear error messages as the Swift
+  original. One faithfully-reproduced quirk carried over: a bare `-` inside a term (e.g.
+  `x^-2` typed alone) still gets caught by the top-level +/- chunk splitter before
+  per-term parsing runs, exactly as in the Swift version — not a divergence introduced
+  by the port. 10 new vitest cases in `polynomialExpression.test.ts` (109 → 119 passed
+  across 7 → 8 files, baseline preserved).
+- New `app/src/components/GraphBox.tsx` + `.module.css`: text input (`y = ...`),
+  live SVG plot, numeric axis tick labels (niceStep 1/2/5×10^n), collapsible via a
+  header toggle (`▾`/`▸`).
+- Wired into `Practice.tsx`'s session view: `sessionColumns`/`sessionMain` (a grid
+  already defined in `Practice.module.css` but dead/unused in the JSX until now) now
+  actually wraps the question card on the left and a new `sessionAside` on the right
+  containing `ScratchPad` (existing component, not previously wired into Practice.tsx
+  at all — confirmed via grep before assuming, it was only used in ConceptChapterPage/
+  HomeworkSession/SessionWork/GradeOnboard) plus the new `GraphBox`. `GraphBox` defaults
+  open only for `GRAPHABLE_CONCEPT_IDS` (linear_equations, linear_inequalities,
+  systems_of_linear_equations, polynomials, factoring_polynomials, quadratic_equations,
+  functions_basics, function_transformations — concepts where a polynomial-in-x graph is
+  literally what's being asked about); collapsed but present elsewhere, same
+  collapsible-panel pattern as the existing `ScientificCalcToggle` on this same page.
+  Grid collapses to one column under 700px (pre-existing media query, untouched).
+- **Design correction caught by an actual screenshot, not assumed:** first pass styled
+  GraphBox against the dark-teal `--practice-bg`/`--text` tokens, which turned out to be
+  dead for real sessions — `.matteShell`/`.shell` (live for every actual practice
+  session, confirmed via `isMatteFlow`) overrides the whole canvas to a warm cream paper
+  skin (`--paper-sheet`/`--paper-ink`, `#1d3a8a` navy accent) via the "PAPER
+  STANDARDIZATION" block further down `Practice.module.css`. Re-themed GraphBox (and
+  fixed `.asideLabel`'s color under `.matteShell`) to the paper palette instead — confirmed
+  fixed via a second screenshot.
+
+**Job 3 — `limits_continuity` story/art gap, confirmed via direct audit as the only one
+of 42 concepts missing from `conceptStories.json`/`questionContextFrames.json`/generated
+art.** Wrote a full story (protagonist Augustin-Louis Cauchy, École Polytechnique, Paris,
+1821, Cours d'Analyse — grounded via web search on the actual historical rigor Cauchy
+introduced) plus all 5 `ingredientStories` (`limits__approaching_not_reaching`,
+`limits__limit_vs_value_distinction`, `limits__one_sided_limits`,
+`limits__continuity_definition`, `limits__limit_as_derivative_setup` — matched 1:1 to the
+ontology's actual ingredient list). Added the matching `questionContextFrames.json` entry.
+Added a new hand-authored SVG scene to `app/scripts/generateConceptArtSvg.mjs`
+(a curve with a removable-discontinuity hole, a magnifying glass zooming into the gap)
+and generated `story-limits_continuity.svg` via `node app/scripts/generateConceptArtSvg.mjs
+limits_continuity`. `CLUSTER_MAP` in `ConceptChapterPage.tsx` already had a correct
+`functions` entry for this concept (pre-existing, not a bug) so no change needed there.
+
+**Job 4 — audit for other stale chapters.** Systematically diffed all 42 canonical
+ontology concept ids against `conceptStories.json`, `questionContextFrames.json` (direct
++ `FRAME_ALIAS`), `storyArtFor`'s generated/hand-picked/theme-fallback coverage, and
+`CLUSTER_MAP`. Result: **limits_continuity was the only gap in all four** — now closed,
+all 42/42 covered, zero concepts falling through to the generic theme-fallback art.
+**Flagging, not fixing (out of scope for a story/art pass, pre-existing, not a
+regression):** `limits_continuity` has zero authored practice questions in any bank file
+(static/actMaster/eedi/generated), same as `derivatives`/`integrals`/
+`applications_of_derivatives`/`applications_of_integrals` — all five are non-ACT calculus
+concepts (`act_relevance.tested: false`) with real stories/art but no quest panels inside
+their chapter (`getQuestions` returns `[]` → `buildPanels` emits only the opening story
+panel). This is a content-authoring gap across all 5 advanced calculus concepts, not a
+rendering bug, and not something this pass's scope (story/frame/art parity) should
+fabricate math questions to paper over.
+
+**Verification (all real):** `npx tsc --noEmit` clean. `npx vitest run` → 119 passed, 1
+skipped (8 files; baseline was 109/1/7 files, +10 new polynomial-parser tests, zero
+regressions). `npm run build` succeeded (same pre-existing >500kB chunk warning,
+unrelated). Confirmed `story-limits_continuity.svg` and the GraphBox strings/CSS classes
+appear in the production `dist/` bundle.
+
+Screenshots taken via a temporary `VITE_SCREENSHOT_MODE`-gated `AuthGuard` bypass in
+`App.tsx` (mock `UserContext` value, no real Firebase auth) plus a temporary
+`?screenshotMock=<conceptId>`-gated mock-session effect in `Practice.tsx` (sets
+`questions`/`pPhase`/`level`/`concept` directly to a hardcoded quadratic question,
+bypassing all network calls). Both applied on top of byte-for-byte backups of the
+pre-existing (already-uncommitted) `App.tsx`/`Practice.tsx`, restored from those exact
+backups afterward — confirmed via `diff` showing zero differences against the pre-shim
+backups and `grep SCREENSHOT app/src/App.tsx app/src/pages/Practice.tsx` returning empty.
+`tsc`/`vitest`/`build` all re-run clean after the revert (numbers above are post-revert).
+
+4 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+- `graphbox_practice_bare_caret.png` — Practice session, question card on the left
+  (plain, no story wrapping — confirmed still correct from the earlier pass), ScratchPad
+  + GraphBox on the right with `x^2+5x+6` plotted and real numeric axis labels.
+- `graphbox_practice_latex.png` — same session, `\frac{1}{2}x^{2}-4x+3` typed into the
+  same field, correctly parsed and replotted (shifted-down parabola, vertex near x=4).
+- `limits_continuity_chapter.png` — the new chapter rendering with its real story, the
+  "AUGUSTIN-LOUIS CAUCHY · ÉCOLE POLYTECHNIQUE, PARIS, 1821" scene stamp, and the new
+  hand-authored SVG art, no synthetic-fallback text anywhere.
+
+Files touched: `app/src/lib/polynomialExpression.ts` (new),
+`app/src/lib/polynomialExpression.test.ts` (new), `app/src/components/GraphBox.tsx` (new),
+`app/src/components/GraphBox.module.css` (new), `app/src/pages/Practice.tsx`,
+`app/src/pages/Practice.module.css`, `app/src/data/conceptStories.json`,
+`app/src/data/questionContextFrames.json`, `app/scripts/generateConceptArtSvg.mjs`,
+`app/src/assets/canvas/generated/story-limits_continuity.svg` (new). Nothing committed,
+left in the working tree for review.
+
+---
+
+## Remove per-question narrative wrapping from practice questions (Claude, 2026-07-24)
+
+Scope strictly `app/**`. Did not touch `app/src/manjushree/`,
+`agent_work/manjushree-zone/`, `ml/**`, `webhook/**`, `data/**`, `worlds/**`, or
+`ConceptChapterPage.tsx` (the concept-level story chapter — correct as-is,
+out of scope, untouched). `grep manjushree app/src/App.tsx` shows all 4
+references, unchanged.
+
+**Decision being implemented:** the per-question story dressing (setting
+line, "bridge" sentence, socratic hint, illustrative art) spliced onto
+practice-question stems is exactly the "scene followed by an unrelated
+textbook ask" anti-pattern this file warns against, and is being switched off
+until a dedicated wrapping agent (pick question algorithmically → one LLM
+call abridges into story context + image) replaces it. Underlying data/logic
+is left fully wired, just not fed into rendered JSX, so the future agent has
+everything to consume.
+
+**`app/src/pages/Practice.tsx`**
+- Hints (`hintList`): no longer prepends `storyItem.socratic`; plain
+  `currentQ.hints` only.
+- Question banner: removed the "Story · {protagonist}" badge (kept the plain
+  `examTag` badge), removed the `currentQ.storyIntro` / `localStory.settingLine`
+  / `currentQ.storyContext` paragraphs above the stem, and changed the
+  rendered stem from `sessionStem` (`storyItem?.storyStem ?? framedLocalStem(...)`)
+  to plain `currentQ.question`.
+- Removed the illustrative `sessionArt` image block from the question-visual
+  slot (SVG figure / InteractiveWidget paths untouched).
+- Left wired but now unused for rendering: `storyModule`/`prefetchStoryModule`,
+  `storyItem`, `localStory`, `sessionArt`/`storyArtFor`, `framedLocalStem`, and
+  all story imports (`selectSceneForQuestion`, `selectStoryForConcept`,
+  `buildStoryDisplay`, `conceptStoriesData`). Post-answer feedback (the
+  `storyItem.misconceptionCallout` / `storyItem.steps` "Your path through it"
+  block) was intentionally left as-is — out of the stated scope, which was the
+  pre-answer stem/badge/paragraphs/art, not the post-answer explanation UI.
+
+**`app/src/lib/storyDisplay.ts`** (investigated per the flagged caveat, not
+originally one of the 3 named files, but entangled with the above): the
+table/OpenStax reskin branches were injecting real invented narrative
+sentences (the literal "Florence Nightingale copied ten ward ledgers..."
+example) on top of a plain textbook ask line, and renaming real team names to
+fictional "Scutari Ward" labels inside the rendered data table. Fixed by
+reading what each branch actually produced (not guessing): removed the
+narrative-sentence construction in `reskinTableQuestion` /
+`reskinGenericOpenStax` (now just the plain ask line), restored real team
+names in `parseColumnarTable` instead of the `FLORENCE_WARDS` fictional
+substitution, and renamed the table header back to `Team`. Deleted the now-dead
+`isFlorenceQuestion` helper and `FLORENCE_WARDS` constant (this was ad-hoc
+narrative logic superseded by the data-driven `questionContextFrames.json` /
+`conceptStories.json` approach, not foundational plumbing the future wrapping
+agent needs). The polygon branch (`sceneLine`) and plain vignette/diagram
+branches were already pure visual/layout transforms with no invented prose —
+left untouched. This module is a shared seam (also used by
+`InteractiveFigure`, `StoryDataTable`, `QuestionFigure`, `useStoryQuestion`,
+`diagnosticQuestions.ts`, `figureSpec.ts`), so the fix applies everywhere at
+the root rather than needing per-consumer patches.
+
+**`app/src/components/spark/SparkQuestionCard.tsx`** (landing-page `/spark`
+onboarding demo, rendered from `FirstSpark.tsx`): removed the narrative header
+block (protagonist stamp · setting · tale title) and the `storyIntro`/
+`bridgeLine` paragraphs above the stem. Left `scene`/`taleTitle` props wired
+(component signature and `FirstSpark.tsx`'s call site untouched) but no longer
+rendered. Touched two hint-copy strings in the process (removing an em dash
+and the now-orphaned "watch what the scene does next" reference, since there
+is no visible scene anymore): "Pick one. We won't tell you if it's right or
+wrong yet." / "Watch what happens next." `sparkNarrative.ts`/`storyMatch.ts`/
+`sparkMatch.ts` untouched.
+
+**`app/src/pages/GradeOnboard.tsx`** (older grade+probe onboarding flow —
+note: not reachable via any live route today, `/onboard` redirects to
+`/diagnostic` per the 2026-07-21 entry below; fixed anyway since it was named
+in scope and costs nothing to keep correct): removed the rendered
+`bridgeLine`, `currentQ.storyIntro`, `storyItem.socratic[0]`, and `sceneLine`
+paragraphs above the stem. Switched the rendered stem
+(`HighlightedStem text=`) from the story-reskinned `stemText` to plain
+`currentQ.question`. Also switched `useJournalGuide`'s `questionText` input
+from `stemText` to `currentQ.question` — the Jarvis focus-highlighter finds a
+phrase by literal substring match against whatever text it's given, so once
+the rendered stem changed to plain text, the highlight input had to match it
+or highlighting would silently stop finding phrases. `stemText` itself stays
+destructured (renamed `_stemText`) since `useStoryQuestion`/`storyModule.ts`/
+`storyDisplay.ts` wiring stays in place for the future agent.
+
+**Verification (all real, this pass):** `npx tsc --noEmit` clean (exit 0).
+`npx vitest run` → 109 passed, 1 skipped (110 total, 7 files), matches
+baseline. `npm run build` succeeded (same pre-existing >500kB chunk warning,
+unrelated). `grep manjushree app/src/App.tsx` shows all 4 references, checked
+before and after the screenshot shims below.
+
+Screenshots taken via a temporary, env-gated `VITE_SCREENSHOT_MODE` auth
+bypass added to `AuthGuard` in `App.tsx` (same technique as prior passes this
+session), plus two narrowly-scoped temporary hooks used only for reaching a
+specific question deterministically without live Firestore data: a
+`VITE_SCREENSHOT_MODE`-gated `?screenshotQid=<id>` query param in `Practice.tsx`
+(calls the existing `startBookmarkedSession` path — the same code path a real
+bookmarked-question navigation already uses) and a `VITE_SCREENSHOT_MODE`-gated
+temporary route `/_screenshot-grade-onboard` in `App.tsx` mounting
+`GradeOnboard` (since it has no live route to reach it through). All three
+shims were applied on top of byte-for-byte backups of the pre-existing
+(already-uncommitted, unrelated) `App.tsx`/`Practice.tsx`, and restored from
+those exact backups afterward — confirmed via `diff` showing zero differences
+against the pre-shim backups, and a fresh `grep SCREENSHOT app/src/App.tsx
+app/src/pages/Practice.tsx` returning empty. `tsc`/`vitest`/`build` all re-run
+clean after the revert (numbers above are post-revert). For the "before"
+comparison shots, the original (pre-my-edit) `Practice.tsx`/
+`SparkQuestionCard.tsx`/`GradeOnboard.tsx` were pulled from `git show HEAD:...`
+(each file had zero uncommitted changes at session start, confirmed via `git
+status` before touching anything) and swapped onto disk temporarily, then
+swapped back to the real edited versions afterward.
+
+6 screenshots saved to `agent_work/product/screenshots_2026-07-24/`:
+- `narrative_removal_practice_BEFORE.png` / `_AFTER.png` — same real question
+  (`act_math_t13_q02`, WebFilms membership-fee ACT problem): before shows the
+  "Story · William Harrison" badge, an "At sea, bound for Jamaica, 1761"
+  setting paragraph, and that same sentence re-prepended onto the stem itself;
+  after shows a plain "ACT Style" badge and the bare textbook stem.
+- `narrative_removal_firstspark_BEFORE.png` / `_AFTER.png`: before shows a
+  header stamped "KWAME · ROYAL DRUMMING ACADEMY, KUMASI / The Master
+  Drummer" with unrelated storyIntro/bridgeLine paragraphs above a stem that
+  is actually about a different character (Simon, a waterfowl pond) — a
+  concrete example of the mismatched-narrative-layer bug this pass fixes;
+  after shows just the plain stem, choices, and hint.
+- `narrative_removal_gradeonboard_BEFORE.png` / `_AFTER.png` (different
+  randomly-drawn probe question each run, `pickDiagnosticQuestions` has no
+  fixed seed — still a valid demonstration of the same pattern): before shows
+  a narrative scene paragraph ("The Nile floodplain, ancient Egypt. Ahmes
+  pulls the knotted rope taut...") glued above an unrelated diagram-based
+  ask; after shows a plain stem with the Jarvis phrase-highlighter still
+  correctly underlining a phrase in the now-plain text.
+
+Files touched: `app/src/pages/Practice.tsx`, `app/src/lib/storyDisplay.ts`,
+`app/src/components/spark/SparkQuestionCard.tsx`, `app/src/pages/GradeOnboard.tsx`.
+Nothing committed, left in the working tree for review.
+
+---
+
+## Three iPad bugs from Akshat's physical-device review (Claude, 2026-07-24)
+
+Scope was strictly `app/**`. Did not touch `app/src/manjushree/`,
+`agent_work/manjushree-zone/`, `ml/**`, `webhook/**`, `data/**`, `worlds/**`,
+or `ios-prototype/`. `App.tsx` was NOT edited (has pre-existing uncommitted
+Manjushree wiring from a concurrent session); `grep manjushree app/src/App.tsx`
+still shows all 4 references. Verified with real Playwright screenshots at
+real device dimensions (iPad Pro 11" landscape 1194x834, portrait 834x1194)
+via a temporary unrouted preview harness (`app/_preview.html` +
+`app/src/_previewMain.tsx`, mounted the real page components in a
+`MemoryRouter` with a null `UserContext` to bypass Firebase auth for
+screenshotting only); harness deleted before finishing, nothing left behind.
+
+**1. Drop-cap ("I" reads disconnected).** Confirmed and fixed in
+`ConceptChapterPage.module.css`'s `.dropCap`. Root cause: `float: left; font:
+700 72px/0.78 ...; margin: 6px 8px 0 0;` rendered a float about 62px tall,
+taller than the 2 lines of text a typical opening beat (most concepts'
+`conceptStories.json` first beat is only 80-290 characters, 1-3 lines at this
+column width) has to wrap around it, so the paragraph ran out of lines before
+clearing the float and the glyph read as an isolated block with "n 1585..."
+starting on its own line below, not beside it. Fix: `font: 700 46px/0.85
+...; margin: 2px 3px 0 0;`, sized to resolve to roughly two lines with a
+tight gap to the following letter. Verified on Fractions and Decimals (Simon
+Stevin) plus 4 others spanning the shortest and longest opening beats in the
+bank (Basics of Functions, Geometry of Circles, Logarithmic Functions, Lines
+and Angles) at 1194x834, 1440x900, and the 820px stacked/portrait breakpoint.
+Reads as one connected word ("In 1585...", "In St. Petersburg...", "Around
+240 BC...") in every case.
+
+**2. Standardize chapter visual format.** Rendered 5 concepts side by side
+across Algebra/Geometry/Data (Fractions and Decimals, Linear Equations,
+Geometry of Circles, Basic Probability, Vectors) at real iPad dimensions.
+Findings:
+- The Polaroid image frame (`.polaroid`/`.polaroidHero`, aspect-ratio 4/3,
+  object-fit cover, fixed max-widths) already renders every art source
+  (photo jpg or hand-drawn svg) at identical size/framing/rotation-style
+  within the layout. No layout-consistency bug here.
+- `conceptStories.json` story length/structure is uniform (1700-1957 chars
+  across all 41 concepts) and every concept resolves a `CLUSTER_MAP` accent;
+  no missing/malformed entries, no broken theme-color fallback.
+- The photoreal-vs-hand-drawn-SVG split IS real and IS the deliberate choice
+  from the 2026-07-21 pass: exactly 1 concept (`fractions_decimals`) has a
+  Higgsfield photo, 26 have hand-authored SVGs
+  (`generateConceptArtSvg.mjs`), confirmed intentional, not a bug. Checked
+  Higgsfield balance directly: **0 credits, free plan**, so regenerating more
+  photoreal art is not an option right now (confirmed rather than assumed).
+  Not "fixed" per the brief's own instruction not to invent unnecessary work
+  here.
+- **Two real, previously unknown inconsistencies found (not on the
+  candidate list), NOT fixed this pass, flagged for a follow-up because
+  fixing them is content-authoring work beyond a layout/CSS pass:**
+  - (a) **Protagonist/setting stamp mismatches the actual story** for
+    roughly half of all concepts. The line under the title
+    ("PROTAGONIST · SETTING, YEAR") comes from `questionContextFrames.json`,
+    which was authored separately from (and, for ~20 of ~39 concepts,
+    inconsistently with) `conceptStories.json`'s actual narrative. Confirmed
+    by direct reading, e.g. `circles_geometry` stamps "Archimedes of
+    Syracuse, Syracuse, Sicily, 250 BC" but the story is about Zu Chongzhi in
+    fifth-century China; `vectors` stamps "James Clerk Maxwell, London,
+    1865" but the story is a 1707 Royal Navy shipwreck; `basic_probability`
+    stamps Gerolamo Cardano but the story is about Antoine Gombaud;
+    `quadratic_equations` stamps al-Khwarizmi but the story is Galileo. This
+    reads as more jarring/broken than the art-style difference once a
+    student actually reads the page. Not fixed here: `questionBridge` text
+    in the same file is also protagonist-specific and used to build live
+    practice-question stems, so correcting the stamp alone without a matched
+    rewrite of the bridge line risks a second inconsistency; this needs a
+    real content pass, not a quick swap.
+  - (b) **14 concepts have no concept-specific art at all** (not in the 26
+    SVGs or the 1 photo): `derivatives`, `logarithmic_functions`,
+    `rational_expressions`, `complex_numbers`, `vectors`, `matrices`,
+    `conic_sections`, `probability_distributions`,
+    `applications_of_derivatives`, `integrals`, `applications_of_integrals`,
+    `inferential_statistics`, `representation_translation`, `act_strategy`.
+    They fall back to one of 5 generic shared stock photos
+    (`storyArt.ts`'s `ART` map / `themeFallback()` regex). 8 of the 14 hit
+    the ultimate default and show the `fractions_decimals` bakery/Simon
+    Stevin photo for completely unrelated topics, including calculus
+    concepts (derivatives, integrals) that have nothing to do with it. This
+    is a bigger, more concrete "why does this look inconsistent" driver than
+    the photoreal/SVG split. Not fixed here: filling it in means authoring
+    14 new bespoke SVG scenes (protagonist + setting + a real math metaphor
+    prop each, matching the existing 26's hand-authored pattern in
+    `generateConceptArtSvg.mjs`), real design/content work, not a rerun of
+    an existing rerunnable script.
+
+**3. Diagnostic confidence step, landscape iPad overlap.** Confirmed and
+fixed in `Diagnostic.module.css`. Reproduced at real iPad Pro 11" landscape
+(1194x834): the Algebra box's title and first row ("Linear Equations", its
+"ACT CORE" tag, and its 3 scale buttons) rendered stacked on top of each
+other. Root cause: `.confBoxList` used `justify-content: center` with
+`overflow: visible` and no scroll; the "three non-scrolling boxes" design
+(2026-07-23 pass) was tested portrait, where every box's content fits. In
+landscape, `.confGrid`'s available height drops a lot while width stays wide,
+so the tallest box (Algebra, 11 concepts in the current spec) got squeezed
+shorter than its rows' natural height by CSS Grid's row-stretch; centering
+overflowing content in a too-short box pushes the top rows up past the box's
+own top edge into the title above (not a proportional compression of every
+row, just the whole 11-row block shifting upward as one unit). Fix: (a)
+`.confBoxList` to `justify-content: flex-start` so overflow only ever spills
+downward, never into the title, (b) `.confRow { flex-shrink: 0; }` so a
+row's own box can never compress shorter than its (name + buttons) content
+regardless of available height, (c) a new `@media (max-height: 900px)` rule
+giving `.confBoxList` `overflow-y: auto` so a box with more concepts than fit
+scrolls internally instead of colliding with anything below it. Verified:
+scrollable (`scrollHeight` 604 vs `clientHeight` 547 for the Algebra box,
+confirmed by scrolling programmatically and screenshotting the previously
+hidden last row, "Sequences and Series"); no overlap at 1194x834; portrait
+834x1194 unaffected/unchanged in spirit (top-aligned instead of centered,
+no visual regression, still fits without scrolling). This is a genuine,
+scoped internal scroll for a real height-constrained case, not a reversion
+of the earlier "don't scroll the whole page" decision: the page itself and
+the other two boxes still don't scroll.
+
+**Verification:** `npx tsc --noEmit` clean (exit 0). `npx vitest run` 109
+passed / 1 skipped (110 total, 7 files), unchanged from baseline (no test
+touches these code paths). `npm run build` succeeded (pre-existing large-
+chunk warning, unrelated to this change). Files touched:
+`app/src/pages/ConceptChapterPage.module.css`,
+`app/src/pages/Diagnostic.module.css`. Nothing committed, left in the
+working tree for review.
+
+## Protagonist/stamp mismatches fixed + 14 concepts given real art (Claude, 2026-07-24)
+
+Follow-up to the two content bugs flagged (not fixed) in the entry directly
+above. Product lane only: `app/src/data/conceptStories.json`,
+`app/src/data/questionContextFrames.json`,
+`app/scripts/generateConceptArtSvg.mjs`, and 14 new files under
+`app/src/assets/canvas/generated/`. Did not touch `ml/**`, `webhook/**`,
+`data/**`, `worlds/**`, `app/src/manjushree/`, or
+`agent_work/manjushree-zone/`. `grep manjushree app/src/App.tsx` still shows
+all 4 references, untouched (App.tsx itself was only touched transiently for
+the screenshot shim below, then restored byte-for-byte, diffed against a
+pre-edit backup to confirm).
+
+**Job 1: stamp/story mismatches.** Read every one of the 41 concepts'
+`questionContextFrames.json` stamp against its `conceptStories.json` story
+body directly (not just the 4 examples already flagged) to find the full set.
+22 concepts needed a fix. For each, kept whichever side already had the
+better, real history and fixed the other side to match, per-concept judgment
+call, not a mechanical swap:
+
+- `derivatives`: had NO frame entry at all (`getFrame()` silently rendered no
+  stamp). The Newton/apple/Woolsthorpe frame text that was wrongly sitting on
+  `applications_of_derivatives` (whose own story is Katherine Johnson/John
+  Glenn, not Newton) was actually written for this concept's story, so it
+  was moved here.
+- `applications_of_derivatives`: new stamp, Katherine Johnson, NASA Langley,
+  1962 (matches the existing Glenn-orbit story; story body unchanged).
+- `linear_inequalities`: General William Tunner replaced with George Dantzig
+  (the story is about Dantzig inventing linear programming for the Berlin
+  Airlift, not Tunner).
+- `exponent_rules`: Jacob Bernoulli replaced with Archimedes of Syracuse
+  (the story is the Sand Reckoner).
+- `polynomials`: Omar Khayyam replaced with Niccolò Tartaglia (the story is
+  Tartaglia's cannonball-curve arithmetic, Venice 1537).
+- `factoring_polynomials`: François Viète replaced with Pierre de Fermat
+  (the story is Fermat's difference-of-squares factoring letters, Toulouse
+  1643).
+- `quadratic_equations`: Muhammad al-Khwarizmi replaced with Galileo Galilei
+  (the story is Galileo's cannonball-parabola experiments, Padua 1608; the
+  al-Khwarizmi frame data is legitimately used elsewhere, on
+  `algebraic_manipulation`, which was already correct and left untouched).
+- `basic_probability`: Gerolamo Cardano replaced with Blaise Pascal (the
+  story is the Gombaud/Pascal/Fermat correspondence, Paris 1654); also
+  rewrote `diceFrame`/`spinnerFrame` from Cardano-specific to Pascal-specific
+  text, since those render live in the dice/spinner practice UI.
+- `circles_geometry`: Archimedes of Syracuse replaced with Zu Chongzhi (the
+  exact mismatch flagged as the example: the story is Zu's pi calculation,
+  5th-century China).
+- `area_volume`: Archimedes of Syracuse replaced with Ahmes (the story is the
+  Rhind Papyrus, not the bath/crown anecdote).
+- `rational_expressions`: Gottfried Leibniz replaced with Sextus Julius
+  Frontinus (the story is Frontinus auditing Rome's aqueducts as
+  rate-fractions, 97 AD).
+- `vectors`: James Clerk Maxwell replaced with Josiah Willard Gibbs. The
+  1707 Scilly Isles shipwreck story never named an actual vector-concept
+  originator, so added one real paragraph naming Gibbs (Yale, 1881,
+  formalizing vector analysis for Maxwell's electromagnetism) instead of just
+  swapping a label onto an unrelated name (researched via WebSearch: Gibbs'
+  1881 Yale lecture notes, independently paralleling Heaviside).
+- `integrals`: Archimedes of Syracuse replaced with Johannes Kepler (the
+  story is Kepler's wine-barrel wedding argument, Linz 1613; the Archimedes
+  frame text was reused correctly on `exponent_rules` above).
+- `applications_of_integrals`: John Roebling/Brooklyn Bridge replaced with
+  William Froude (the story is Froude's ship-stability slicing method after
+  HMS Captain sank, not Roebling; researched via WebSearch to confirm
+  Froude/Torquay/1870 details).
+- `inferential_statistics`: Ronald Fisher replaced with Richard Ruggles. The
+  story's "statisticians" were unnamed; researched the WWII German Tank
+  Problem via WebSearch and named Richard Ruggles (Allied Economic Warfare
+  Division) in the story body itself, not just the stamp.
+- `measurement_units`: Antoine Lavoisier replaced with Arthur Stephenson.
+  Considered a full rewrite around Lavoisier's metric-system commission (he
+  is a strong real fit), but the existing NASA Mars Climate Orbiter story
+  already has 4 ingredientStories vignettes built entirely inside that same
+  modern-NASA world, and a full rewrite would have orphaned all four.
+  Instead researched (WebSearch) and named the actual, real chair of the
+  failure investigation board, Arthur Stephenson, directly in the story's
+  existing sentence. Kept the whole story and all ingredientStories intact.
+- `number_properties`: protagonist (Ramanujan) was already correct; only the
+  **setting** was wrong (`Madras, the port office, 1913`, a place and date
+  that belong to nothing in the actual story). Fixed to `Putney, London, a
+  hospital room, 1918`, matching the real taxicab-number-1729 anecdote the
+  story tells.
+- `act_strategy`: "Maya" (the brand's student archetype, per BRAND_BOOK.md
+  section 5, not a historical figure) replaced with Enrico Fermi, Trinity
+  test site, 1945 (matches the existing Fermi-estimation story; every other
+  concept in the bank stamps a real historical figure, so this one shouldn't
+  be the exception).
+- `right_triangle_geometry`: "Ahmes the rope-stretcher" (conflates the real
+  scribe Ahmes, who belongs to `area_volume`'s Rhind Papyrus, with Egypt's
+  anonymous rope-stretcher surveyors) replaced with Pythagoras of Samos, the
+  actual named figure the story credits with the discovery.
+- `lines_angles`: Euclid of Alexandria replaced with Eratosthenes (the story
+  is Eratosthenes measuring Earth's circumference via shadow angles, 240 BC;
+  Euclid never actually appears as a protagonist in any of the 41 stories,
+  so this was a stale/unused label, not a swap from a legitimate other use).
+- `triangles_congruence`: Euclid of Alexandria replaced with Villard de
+  Honnecourt (the story is Villard's 13th-century cathedral-truss sketchbook;
+  researched dates via WebSearch, roughly 1225 to 1235).
+- `exponential_functions`: John Napier replaced with Max C. Starkloff.
+  Napier's frame text was already correctly describing
+  `logarithmic_functions`'s own Napier story (a duplicate use, not a real
+  mismatch there). This story's own ingredientStories already referenced
+  "St. Louis closed its schools" without naming who ordered it, so researched
+  St. Louis's 1918 flu response via WebSearch and named health commissioner
+  Max C. Starkloff directly in the existing contrast sentence (Philadelphia's
+  parade versus St. Louis's early closure), keeping the whole story and all
+  4 ingredientStories intact.
+
+Confirmed via full re-scan after all edits: every one of the 41 concepts now
+has a frame entry whose protagonist is actually named in its own story body.
+Zero em dashes anywhere in the new/edited copy.
+
+**Job 2: art for the 14 uncovered concepts.** Added 14 new hand-authored SVG
+scenes to `app/scripts/generateConceptArtSvg.mjs`'s `SCENES` map (same
+"cloaked scholar" figure rig and warm parchment/ink palette as the existing
+26 from the 2026-07-21 pass, one bespoke math-metaphor prop per concept, no
+photoreal generation attempted; Higgsfield balance re-confirmed at 0 credits
+before starting, per this session's standing constraint):
+`derivatives` (falling apple plus a frozen tangent line), `logarithmic_functions`
+(a bridge between a multiply-tower and an add-tower), `rational_expressions`
+(aqueduct arches carrying unequal channels), `complex_numbers` (a point off
+the real axis on the complex plane), `vectors` (wind and current arrows
+resolving tip-to-tail over the wrecked ship), `matrices` (a rows-and-columns
+ledger grid), `conic_sections` (a cone sliced into circle, ellipse, and
+hyperbola), `probability_distributions` (a bell curve rising over scattered
+dice), `applications_of_derivatives` (a capsule's flight path with its
+zero-slope peak marked), `integrals` (Kepler's wine barrel sliced into
+stacked disks), `applications_of_integrals` (a hull sliced into measurable
+cross-sections), `inferential_statistics` (the captured tank's stamped
+serial number under a magnifying glass), `representation_translation`
+(Descartes' ceiling grid with the fly pinned by two coordinates),
+`act_strategy` (torn paper scraps in the Trinity blast wind). Ran the script
+for just these 14 (`node app/scripts/generateConceptArtSvg.mjs <ids...>`),
+producing `app/src/assets/canvas/generated/story-{id}.svg` for each;
+`storyArt.ts`'s existing `import.meta.glob` discovery picked them up with
+zero code changes, which was the point of that discovery pattern. Validated
+all 14 as well-formed XML (`xml.dom.minidom.parse`). All 14 previously fell
+back to a generic theme photo; 9 of them (`derivatives`,
+`rational_expressions`, `vectors`, `matrices`, `applications_of_derivatives`,
+`integrals`, `applications_of_integrals`, `representation_translation`,
+`act_strategy`) fell all the way to the fractions_decimals bakery
+specifically, not the "8 of 14" estimated in the prior pass's flag (the
+recount was exact, done by running `themeFallback()` directly rather than
+eyeballing the regex); all 14 now resolve to their own art.
+
+**Verification (all real, this pass):** `npx tsc --noEmit` clean (exit 0).
+`npx vitest run` gives 109 passed, 1 skipped (110 total, 7 files), unchanged
+from baseline. `npm run build` succeeded (same pre-existing >500kB chunk
+warning, unrelated). `grep manjushree app/src/App.tsx` shows all 4
+references, checked both before and after the screenshot shim. Screenshots
+taken via a temporary, env-gated `VITE_SCREENSHOT_MODE` auth shim added to
+`AuthGuard` in `App.tsx` (same technique as prior passes this session),
+driven by a scripted Playwright session against a real dev server
+(`VITE_SCREENSHOT_MODE=1 npx vite --port 5193`), fully reverted: the shim was
+applied on top of a byte-for-byte backup of the pre-existing
+(already-uncommitted, unrelated) App.tsx, and restored from that exact
+backup afterward, confirmed via `diff` showing zero differences and a fresh
+`grep SCREENSHOT app/src/App.tsx` returning empty. `tsc`/`vitest`/`build`
+all re-run clean after the revert (numbers above are post-revert). 10
+screenshots saved to `agent_work/product/screenshots_2026-07-24/`: 5
+`stamp_*.png` (Geometry of Circles now stamps Zu Chongzhi, Vectors now
+stamps Gibbs and shows the new shipwreck art, Basic Probability now stamps
+Pascal, ACT Strategy now stamps Fermi and shows the new Trinity art,
+Quadratic Equations now stamps Galileo) and 5 `art_*.png` (Derivatives,
+Integrals, ACT Strategy, Matrices, Representation Translation), each
+confirmed by direct visual inspection to show the corrected stamp/story
+pairing or the new concept-specific art rendering in place of the old
+bakery-photo fallback.
+
+Files touched: `app/src/data/conceptStories.json`,
+`app/src/data/questionContextFrames.json`,
+`app/scripts/generateConceptArtSvg.mjs`, plus 14 new SVGs under
+`app/src/assets/canvas/generated/story-{id}.svg`. Nothing committed, left in
+the working tree for review.
+
 ## Dashboard Home view: five fixes from Akshat's review (Claude, 2026-07-24)
 
 All five landed in `app/src/pages/Dashboard.tsx` / `Dashboard.module.css`

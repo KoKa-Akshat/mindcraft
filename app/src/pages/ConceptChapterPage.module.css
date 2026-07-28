@@ -70,6 +70,110 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
+  z-index: 40;
+}
+
+/* Big, always-visible Write control in the top chrome (not buried in the sheet). */
+.writeChromeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 999px;
+  background: #c4f547;
+  color: #143a2e;
+  font: 800 12px/1 var(--tok-font-sans);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(20, 58, 46, 0.18);
+  transition: transform 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+.writeChromeBtn:hover {
+  transform: translateY(-1px);
+  background: #d4ff6a;
+  box-shadow: 0 10px 22px rgba(20, 58, 46, 0.22);
+}
+.writeChromeBtnActive {
+  background: #143a2e;
+  color: #c4f547;
+  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.45), 0 8px 18px rgba(20, 58, 46, 0.22);
+}
+
+.canvasStageWriting {
+  outline: 3px solid rgba(196, 245, 71, 0.55);
+  outline-offset: -3px;
+  box-shadow: 0 12px 40px rgba(90, 70, 140, 0.12), inset 0 0 0 1px rgba(196, 245, 71, 0.35);
+}
+
+.writeDock {
+  position: absolute;
+  left: 50%;
+  bottom: 62px;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: calc(100% - 24px);
+  padding: 10px 12px 10px 16px;
+  border-radius: 999px;
+  background: #143a2e;
+  color: #fffdf7;
+  box-shadow: 0 16px 36px rgba(7, 18, 15, 0.35);
+  pointer-events: auto;
+}
+.writeDockLabel {
+  font: 700 12px/1 var(--tok-font-sans);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #c4f547;
+  white-space: nowrap;
+}
+.writeDockActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.writeDockClear {
+  border: 1px solid rgba(255, 253, 247, 0.28);
+  background: transparent;
+  color: #fffdf7;
+  border-radius: 999px;
+  min-height: 34px;
+  padding: 0 12px;
+  font: 700 11px/1 var(--tok-font-sans);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.writeDockDone {
+  border: none;
+  background: #c4f547;
+  color: #143a2e;
+  border-radius: 999px;
+  min-height: 34px;
+  padding: 0 14px;
+  font: 800 11px/1 var(--tok-font-sans);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.writeDockDone:hover { background: #d4ff6a; }
+
+@media (max-width: 640px) {
+  .writeDock {
+    left: 8px;
+    right: 8px;
+    bottom: 58px;
+    transform: none;
+    border-radius: 18px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 }
 
 .canvasStage {
@@ -125,8 +229,36 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  align-items: center;
+  /* stretch (not center) so GraphBox fills this column's width, see
+     ACTIVE_TASK.md; this aside used to center a fixed-width Polaroid photo. */
+  align-items: stretch;
   padding-top: 8px;
+  min-height: 0;
+}
+.wrongCoach {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 4px;
+  padding: 12px 12px 10px;
+  border-radius: 18px;
+  background: linear-gradient(165deg, #f3ffe4 0%, #fffdf8 70%);
+  border: 1.5px solid rgba(20, 58, 46, 0.14);
+  box-shadow: 0 10px 24px rgba(20, 58, 46, 0.08);
+  animation: wrongCoachIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.wrongCoachEyebrow {
+  margin: 0 0 8px;
+  font: 800 10px/1 var(--tok-font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #247a4d;
+}
+@keyframes wrongCoachIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wrongCoach { animation: none; }
 }
 .asideScene {
   margin: 0;
@@ -565,10 +697,23 @@
   max-width: 42ch;
 }
 .firstPara { font-style: italic; font-size: 17px; }
+/* .dropCap is what actually renders in .blendPara's lead paragraph
+   (ConceptChapterPage.tsx renders `<span className={s.dropCap}>`). The
+   opening beat is deliberately short (often just 1-2 lines at this
+   column's width), so a dropCap tall enough to visually justify its own
+   float needs to fit inside roughly two of THOSE lines, not be sized on
+   its own terms. At the old 72px/0.78 setting (plus an 8px right margin)
+   the float was both taller than a typical two-line opener has room for
+   AND set too far off the following text, so the paragraph ran out of
+   lines before it cleared the float and the giant letter read as its own
+   isolated block ("I" ... "n 1585..." on a line under it) rather than one
+   connected word ("In 1585..."). Sized and margined here to resolve to
+   roughly two .blendLead lines tall, with the glyph sitting close enough
+   to read as part of the same word. */
 .dropCap {
   float: left;
-  font: 700 72px/0.78 var(--tok-font-serif);
-  margin: 6px 8px 0 0;
+  font: 700 46px/0.85 var(--tok-font-serif);
+  margin: 2px 3px 0 0;
 }
 .storyFoot {
   padding: 16px 0 18px;
@@ -599,7 +744,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 .qKicker {
   font: 400 10px/1 var(--tok-font-mono);
@@ -693,18 +838,25 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 11px;
-  border: 1px solid rgba(0,0,0,0.16);
+  padding: 7px 12px;
+  border: 1.5px solid rgba(20, 58, 46, 0.22);
   border-radius: 999px;
-  background: transparent;
-  font: 500 10.5px/1 var(--tok-font-mono);
-  letter-spacing: 0.03em;
-  color: inherit;
+  background: #fffdf8;
+  font: 700 11px/1 var(--tok-font-sans);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #143a2e;
   cursor: pointer;
-  transition: border-color 140ms, color 140ms, background 140ms;
+  box-shadow: 0 4px 12px rgba(20, 58, 46, 0.08);
+  transition: border-color 140ms, color 140ms, background 140ms, box-shadow 140ms;
 }
-.writeToggle:hover { background: rgba(0,0,0,0.04); }
-.writeToggleActive { background: rgba(29,58,138,0.06); }
+.writeToggle:hover { background: #f3ffe4; border-color: rgba(20, 58, 46, 0.4); }
+.writeToggleActive {
+  background: #143a2e;
+  color: #c4f547;
+  border-color: #143a2e;
+  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.35);
+}
 
 .writeClear {
   border: none;
@@ -748,7 +900,14 @@
   display: none; /* keep chapter canvas static unless pencil is on */
 }
 .annotationActive {
-  display: block;
+  /* flex column (not block) so ScratchPad's own flex:1 wrap/canvasWrap
+     chain (paperMode) actually has a flex parent to grow inside — with
+     display:block here the canvas capped at its own ~320px floor and
+     pointer strokes past that point landed on the choices/buttons behind
+     it instead of the canvas, so writing only worked in the top slice of
+     the page. See ACTIVE_TASK.md. */
+  display: flex;
+  flex-direction: column;
   position: absolute;
   inset: 0;
   z-index: 5;
@@ -817,15 +976,15 @@
 .qChoices {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
-  margin-bottom: 16px;
+  gap: 6px;
+  margin-top: 8px;
+  margin-bottom: 10px;
 }
 .choice {
   display: flex;
   align-items: flex-start;
-  gap: 11px;
-  padding: 11px 6px 11px 0;
+  gap: 9px;
+  padding: 8px 6px 8px 0;
   background: transparent;
   border: none;
   border-bottom: 1px solid rgba(29, 58, 138, 0.12);
@@ -854,45 +1013,55 @@
   color: var(--theme-ink, #3d2f10);
 }
 
-/* Magical doodle stickers */
+/* Choice stickers — one consistent paper card (was 4 arbitrary per-index
+   pastel backgrounds — orange/green/pink/blue regardless of state, flagged
+   in the 2026-07-25 smoke test as reading like decoration, not a state
+   signal). State now lives in the left accent edge + the letter tile only,
+   matching the tilted-block-tile direction picked from the 3-option redesign
+   review that same session. */
 .stickerChoices {
-  gap: 12px !important;
+  gap: 10px !important;
 }
 .stickerChoice {
-  border: 1.5px solid rgba(58, 47, 85, 0.14) !important;
-  border-bottom: 1.5px solid rgba(58, 47, 85, 0.14) !important;
-  border-radius: 14px 18px 12px 16px !important;
-  padding: 10px 12px !important;
-  background:
-    linear-gradient(145deg, #fffdf8 0%, #fff4e8 100%) !important;
-  box-shadow: 0 3px 12px rgba(58, 47, 85, 0.08);
-  transform: rotate(-0.4deg);
-  transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms, filter 160ms !important;
+  border: 1.5px solid rgba(20, 58, 46, 0.14) !important;
+  border-left: 4px solid transparent !important;
+  border-radius: 14px !important;
+  padding: 12px 14px !important;
+  background: #fffdf8 !important;
+  box-shadow: 0 4px 14px rgba(20, 58, 46, 0.06);
+  transform: none;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease !important;
 }
-.stickerChoice:nth-child(2) { transform: rotate(0.6deg); background: linear-gradient(145deg, #f8fff6, #e8ffe8) !important; }
-.stickerChoice:nth-child(3) { transform: rotate(-0.8deg); background: linear-gradient(145deg, #fff8fc, #ffe8f4) !important; }
-.stickerChoice:nth-child(4) { transform: rotate(0.5deg); background: linear-gradient(145deg, #f6f4ff, #ebe6ff) !important; }
 .stickerChoice:hover:not(:disabled) {
-  transform: scale(1.06) rotate(0deg) !important;
-  box-shadow:
-    0 0 0 4px rgba(125, 255, 179, 0.35),
-    4px 8px 0 rgba(58, 47, 85, 0.16);
-  filter: brightness(1.03);
-  background: linear-gradient(145deg, #fffefb, #fff0d8) !important;
+  transform: translateY(-1px) !important;
+  border-color: rgba(20, 58, 46, 0.32) !important;
+  border-left-color: rgba(20, 58, 46, 0.32) !important;
+  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.35), 0 10px 22px rgba(20, 58, 46, 0.1);
+  background: #fffefb !important;
 }
 .stickerChoice.choiceChosen {
-  transform: scale(1.04) !important;
-  box-shadow:
-    0 0 0 4px rgba(201, 182, 255, 0.45),
-    3px 5px 0 rgba(58, 47, 85, 0.2) !important;
-  background: linear-gradient(145deg, #f3eeff, #e8deff) !important;
+  transform: none !important;
+  border-color: #143a2e !important;
+  border-left-color: #3a5da8 !important;
+  box-shadow: 0 0 0 3px rgba(58, 93, 168, 0.22), 0 10px 22px rgba(20, 58, 46, 0.1) !important;
+  background: linear-gradient(135deg, #eef2fb, #fffdf8) !important;
+}
+.stickerChoice.choiceChosen .choiceLetter {
+  background: #3a5da8 !important;
+  color: #fff !important;
+  border-color: #3a5da8 !important;
 }
 .stickerChoice.choiceCorrect {
-  background: linear-gradient(145deg, #e8fff4, #c8ffe0) !important;
-  box-shadow:
-    0 0 0 4px rgba(125, 255, 179, 0.55),
-    3px 5px 0 rgba(31, 107, 69, 0.2) !important;
+  background: linear-gradient(135deg, #e8fff4, #f4fff8) !important;
+  border-color: #1f6b45 !important;
+  border-left-color: #1f6b45 !important;
+  box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.45), 0 10px 22px rgba(31, 107, 69, 0.12) !important;
   opacity: 1 !important;
+}
+.stickerChoice.choiceCorrect .choiceLetter {
+  background: #1f6b45 !important;
+  color: #fff !important;
+  border-color: #1f6b45 !important;
 }
 .choiceSoftWrong {
   opacity: 0.42 !important;
@@ -904,27 +1073,35 @@
   animation: softNo 0.48s ease;
 }
 @keyframes softNo {
-  0%, 100% { transform: translateX(0) rotate(0deg); }
-  20% { transform: translateX(-7px) rotate(-2deg); }
-  40% { transform: translateX(7px) rotate(2deg); }
-  60% { transform: translateX(-5px) rotate(-1deg); }
-  80% { transform: translateX(4px) rotate(1deg); }
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
 }
 .stickerChoice .choiceLetter {
   width: 26px;
   height: 26px;
   margin-top: 0;
-  border-radius: 50%;
+  border-radius: 8px;
   display: grid;
   place-items: center;
   background: #ffe566;
   border: 1.5px solid rgba(58, 47, 85, 0.22);
   color: #3a2f55 !important;
   font-weight: 800;
+  transform: rotate(-2deg);
+}
+.stickerChoice:nth-child(2) .choiceLetter { transform: rotate(1.5deg); }
+.stickerChoice:nth-child(3) .choiceLetter { transform: rotate(-1deg); }
+.stickerChoice:nth-child(4) .choiceLetter { transform: rotate(2deg); }
+.stickerChoice.choiceChosen .choiceLetter,
+.stickerChoice.choiceCorrect .choiceLetter {
+  transform: rotate(0deg);
 }
 .stickerChoice .choiceText {
   font-family: var(--tok-font-hand);
-  font-size: 20px;
+  font-size: 17px;
   line-height: 1.25;
   color: #2a2430;
 }
@@ -1187,6 +1364,22 @@
 }
 .dotActive { width: 18px; }
 .dotPast { opacity: 0.45; }
+/* Story ("open") panels get a rounded-square shape distinct from the plain
+   circular quest dots — otherwise a returning visit (which starts on the
+   first quest panel, see ConceptChapterPage.tsx's `hasSeenStory` gate) shows
+   only dimmed circles with no visual cue that some of them are the story,
+   reading as "the story is missing" when it's actually one click away. */
+.dotStory { border-radius: 2px; }
+.storyJumpBack {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+.storyJumpBack:hover { opacity: 0.75; }
 .navPrimary {
   padding: 11px 22px;
   border: none;

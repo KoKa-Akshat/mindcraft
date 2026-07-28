@@ -17,6 +17,9 @@ import { getPastMistakeCallback, type PastMistakeCallback } from '../lib/pastMis
 import WizardMascot from '../components/canvas/WizardMascot'
 import MathText from '../components/MathText'
 import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/ScratchPad'
+import GraphBox from '../components/GraphBox'
+import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
+import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
 import type { ScratchStrokeData } from '../types'
 import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
@@ -156,7 +159,7 @@ const CLUSTER_THEME = {
 
 // ── Horizontal canvas panels (story + questions blend on one sheet) ─────────
 type Panel =
-  | { kind: 'open'; paras: string[] }
+  | { kind: 'open'; paras: string[]; pageNum: number; pageCount: number }
   | { kind: 'quest'; qIdx: number; beat: string | null; beatIndex: number }
 
 /** Split concept story into short advancing beats — never reuse the same left copy. */
@@ -185,24 +188,77 @@ function storyBeats(text: string): string[] {
   return beats
 }
 
-function buildPanels(text: string, qCount: number): Panel[] {
-  const beats = storyBeats(text)
-  const panels: Panel[] = []
-  panels.push({
-    kind: 'open',
-    paras: beats.slice(0, 1).length
-      ? beats.slice(0, 1)
-      : ['Your chapter opens here — the scene is already waiting.'],
-  })
+/** Pages the reader steps through before the questions start. Picks a page
+ * count from the story's own total length first (short stories still get
+ * 2 pages, long ones cap at 5), chunks beats toward an even per-page share
+ * of that total, then merges the smallest adjacent pair repeatedly until
+ * the page count lands exactly on target — keeps every page a comparable
+ * size instead of leaving one lopsided page holding whatever didn't fit
+ * under a fixed budget. */
+const STORY_TARGET_PAGE_CHARS = 550
+const STORY_MIN_PAGES = 2
+const STORY_MAX_PAGES = 5
 
-  // One unique beat per question (after the opener). Never repeat the opener.
+function storyPages(text: string): string[][] {
+  const beats = storyBeats(text)
+  if (beats.length === 0) {
+    return [['Your chapter opens here — the scene is already waiting.']]
+  }
+  const totalLen = beats.reduce((sum, b) => sum + b.length, 0)
+  const targetPages = Math.min(
+    STORY_MAX_PAGES,
+    Math.max(STORY_MIN_PAGES, Math.round(totalLen / STORY_TARGET_PAGE_CHARS)),
+  )
+  const perPageBudget = totalLen / targetPages
+
+  const pages: string[][] = []
+  let current: string[] = []
+  let currentLen = 0
+  for (const beat of beats) {
+    if (current.length && currentLen + beat.length > perPageBudget) {
+      pages.push(current)
+      current = []
+      currentLen = 0
+    }
+    current.push(beat)
+    currentLen += beat.length
+  }
+  if (current.length) pages.push(current)
+
+  const pageLen = (p: string[]) => p.reduce((sum, b) => sum + b.length, 0)
+  while (pages.length > targetPages) {
+    let bestIdx = 0
+    let bestSum = Infinity
+    for (let i = 0; i < pages.length - 1; i++) {
+      const sum = pageLen(pages[i]) + pageLen(pages[i + 1])
+      if (sum < bestSum) {
+        bestSum = sum
+        bestIdx = i
+      }
+    }
+    pages.splice(bestIdx, 2, [...pages[bestIdx], ...pages[bestIdx + 1]])
+  }
+  return pages
+}
+
+function buildPanels(text: string, qCount: number): Panel[] {
+  const pages = storyPages(text)
+  const panels: Panel[] = pages.map((paras, i) => ({
+    kind: 'open' as const,
+    paras,
+    pageNum: i + 1,
+    pageCount: pages.length,
+  }))
+
+  // Quest panels no longer carry rendered story flavor (narrative wrapping
+  // removed from the question stem, see ACTIVE_TASK.md) — beat/beatIndex
+  // stay on the panel shape for a future dedicated wrapping agent only.
   for (let q = 0; q < qCount; q++) {
-    const beatIndex = q + 1
     panels.push({
       kind: 'quest',
       qIdx: q,
-      beat: beats[beatIndex] ?? null,
-      beatIndex,
+      beat: null,
+      beatIndex: q + 1,
     })
   }
   return panels
@@ -405,7 +461,12 @@ export default function ConceptChapterPage() {
   // hints, and the submit button stay clickable; the pencil toggle turns the
   // entire page into a writing surface without a separate scratch page.
   const [writeMode, setWriteMode] = useState(false)
-  useEffect(() => { setWriteMode(false) }, [panelIdx])
+  /** Soft-wrong coach: wizard under Graph explains the miss, then student retries. */
+  const [wrongCoach, setWrongCoach] = useState<{ qIdx: number; line: string } | null>(null)
+  useEffect(() => {
+    setWriteMode(false)
+    setWrongCoach(null)
+  }, [panelIdx])
   const journaledRef = useRef<Set<string>>(new Set())
 
   const currentPanel = panels[panelIdx]
@@ -442,12 +503,13 @@ export default function ConceptChapterPage() {
   }, [journalQIdx, panelIdx])
 
   const activeQuestion = journalQIdx >= 0 ? questions[journalQIdx] : null
-  const activeStem = useMemo(() => {
-    if (!activeQuestion) return ''
-    const f = getFrame(conceptId)
-    const story = selectStoryForConcept(canonicalId)
-    return chapterStem(activeQuestion, f, story?.protagonist ?? cs.conceptName, canonicalId)
-  }, [activeQuestion, conceptId, canonicalId, cs.conceptName])
+  // Narrative wrapping removed from the displayed stem (see ACTIVE_TASK.md).
+  // journalGuide highlights now key off the plain bank question, matching
+  // what actually renders in renderQuestPanel. chapterStem/getFrame/
+  // selectStoryForConcept stay wired (used by renderOpenPanel's story intro
+  // and kept computed in renderQuestPanel below) for a future dedicated
+  // wrapping agent; intentionally not consumed here anymore.
+  const activeStem = useMemo(() => activeQuestion?.question ?? '', [activeQuestion])
   const transcribing = Boolean(
     journalQIdx >= 0
     && (scratchStrokes[journalQIdx]?.strokes?.length ?? 0) > 0
@@ -601,35 +663,64 @@ export default function ConceptChapterPage() {
     )
   }
 
-  function renderOpenPanel(paras: string[]) {
+  function renderOpenPanel(paras: string[], pageNum: number, pageCount: number) {
+    const isFirstPage = pageNum === 1
     return (
       <div className={s.blendSheet}>
         <Polaroid salt={panelIdx} className={s.polaroidHero} />
         <div className={s.blendCopy}>
-          {pastMistake && (
+          {isFirstPage && pastMistake && (
             <div className={s.pastMistakeWizard}>
               <WizardMascot line={pastMistake.line} cheering={false} compact />
             </div>
           )}
-          <p className={s.blendEyebrow}>ACT chapter</p>
-          <h1 className={s.blendTitle}>{cs.conceptName}</h1>
-          {frame && (
+          <p className={s.blendEyebrow}>
+            {isFirstPage ? 'ACT chapter' : `${cs.conceptName} · continued`}
+          </p>
+          {isFirstPage ? (
+            <h1 className={s.blendTitle}>{cs.conceptName}</h1>
+          ) : (
+            pageCount > 1 && (
+              <p className={s.blendStamp} style={{ color: theme.dim }}>
+                page {pageNum} of {pageCount}
+              </p>
+            )
+          )}
+          {isFirstPage && frame && (
             <p className={s.blendStamp} style={{ color: theme.accent }}>
               {frame.protagonist}
               {frame.settingLine ? ` · ${frame.settingLine}` : ''}
             </p>
           )}
           {paras.map((p, i) => (
-            <p key={i} className={`${s.blendPara} ${i === 0 ? s.blendLead : ''}`}>
-              {i === 0 && p.length > 0 && (
+            <p key={i} className={`${s.blendPara} ${isFirstPage && i === 0 ? s.blendLead : ''}`}>
+              {isFirstPage && i === 0 && p.length > 0 && (
                 <span className={s.dropCap} style={{ color: theme.accent }}>{p[0]}</span>
               )}
-              {i === 0 ? p.slice(1) : p}
+              {isFirstPage && i === 0 ? p.slice(1) : p}
             </p>
           ))}
         </div>
       </div>
     )
+  }
+
+  function coachLineForWrong(q: Question): string {
+    const raw = (q.hints?.[0] ?? '').trim()
+    if (raw) {
+      const cleaned = raw
+        .replace(/^KEY INSIGHT:\s*/i, '')
+        .replace(/^\d+\.\s*/, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+      const sentence = cleaned.split(/(?<=[.!?])\s+/)[0] ?? cleaned
+      if (sentence.length >= 12 && sentence.length <= 140) return sentence
+      if (cleaned.length > 12) return `${cleaned.slice(0, 120).trim()}…`
+    }
+    if (q.misconception_label?.trim()) {
+      return `Common trap: ${q.misconception_label.trim()}`
+    }
+    return 'That one’s out. Pick again — what is the question really asking?'
   }
 
   function lockAnswer(qIdx: number) {
@@ -641,6 +732,8 @@ export default function ConceptChapterPage() {
     // Soft wrong: wiggle + dim the sticker, keep trying — no red buzz, no lock.
     if (chosen !== q.correctIndex) {
       playTap()
+      setWriteMode(false) // exit Write so choices are tappable again
+      setWrongCoach({ qIdx, line: coachLineForWrong(q) })
       setEliminated(e => ({
         ...e,
         [qIdx]: [...new Set([...(e[qIdx] ?? []), chosen])],
@@ -656,6 +749,7 @@ export default function ConceptChapterPage() {
     }
 
     playChime()
+    setWrongCoach(null)
     setRewardPhrase(pickDoodleStamp(qIdx + chosen))
     setSubmitted(d => ({ ...d, [qIdx]: true }))
 
@@ -705,10 +799,18 @@ export default function ConceptChapterPage() {
     const chosen = answers[qIdx] ?? null
     const isDone = submitted[qIdx] ?? false
     const protagonist = localStory?.protagonist ?? frame?.protagonist ?? cs.conceptName
-    const stemText = chapterStem(q, frame, protagonist, canonicalId)
+    // Narrative wrapping removed from the displayed stem (see ACTIVE_TASK.md).
+    // narrativeStem/scene stay wired (computed) for a future dedicated
+    // wrapping agent; intentionally not fed into the JSX below anymore.
+    const narrativeStem = chapterStem(q, frame, protagonist, canonicalId)
     const scene = selectSceneForQuestion(q, canonicalId)
+    void narrativeStem
     const allHints = (q.hints ?? []).slice(0, 2)
-    const hasInk = Boolean(notes[qIdx]) || (scratchStrokes[qIdx]?.strokes?.length ?? 0) > 0
+    // GraphBox should plot the question's OWN figure when one is parseable
+    // (real points or a stated equation), not always the generic default
+    // curve — see lib/plottablePoints.ts.
+    const graphPoints = extractPlottablePoints(q.question)
+    const graphExpr = extractGraphableExpression(q.question)
 
     return (
       <div className={`${s.blendSheet} ${s.blendQuest}`}>
@@ -723,47 +825,21 @@ export default function ConceptChapterPage() {
                   void toggleBookmark(user.uid, q.id, bookmarkedQuestions).then(setBookmarkedQuestions)
                 }}
               />
-              <button
-                type="button"
-                className={`${s.writeToggle} ${writeMode ? s.writeToggleActive : ''}`}
-                style={writeMode ? { borderColor: theme.accent, color: theme.accent } : undefined}
-                onClick={() => setWriteMode(v => !v)}
-                aria-pressed={writeMode}
-                aria-label={writeMode ? 'Lock page for tapping answers' : 'Write with pencil'}
-                title={writeMode ? 'Tap answers' : 'Write'}
-              >
-                <PenLine size={15} strokeWidth={2} />
-              </button>
-              {hasInk && (
-                <button
-                  type="button"
-                  className={s.writeClear}
-                  onClick={() => {
-                    setNotes(n => ({ ...n, [qIdx]: '' }))
-                    setScratchStrokes(st => { const next = { ...st }; delete next[qIdx]; return next })
-                    setScratchInk(st => { const next = { ...st }; delete next[qIdx]; return next })
-                    setDebugOutlines(false)
-                    setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
-                  }}
-                >
-                  clear
-                </button>
-              )}
             </div>
           </header>
 
-          {beat && (
-            <p className={s.sidePassage}>
-              <span className={s.beatLabel}>scene {beatIndex}</span>
-              {storyTeaser(beat, 280)}
-            </p>
-          )}
+          {/* Scene-beat narrative teaser removed (see ACTIVE_TASK.md). beat/
+              beatIndex/storyTeaser stay wired on the panel plumbing for a
+              future dedicated wrapping agent; intentionally not rendered
+              here anymore. */}
 
           <HighlightedStem
-            text={stemText}
+            text={q.question}
             ink={theme.ink}
             accent={theme.accent}
             highlights={journalGuide.highlights}
+            questionId={q.id}
+            graphAlreadyShown={!!graphPoints || !!graphExpr}
           />
 
           <div className={`${s.qChoices} ${s.stickerChoices}`}>
@@ -862,9 +938,20 @@ export default function ConceptChapterPage() {
         </div>
 
         <aside className={s.blendQuestAside}>
-          <Polaroid salt={qIdx + 9} className={s.polaroidQuest} />
-          {(scene?.settingLine ?? frame?.settingLine) && (
-            <p className={s.asideScene}>{scene?.settingLine ?? frame?.settingLine}</p>
+          {/* Polaroid + scene-setting text removed (see ACTIVE_TASK.md).
+              GraphBox takes the top-right slot instead. Polaroid/scene stay
+              wired above for a future dedicated wrapping agent. */}
+          <GraphBox
+            key={`chapter-graph-${q.id}`}
+            defaultOpen={GRAPHABLE_CONCEPT_IDS.has(canonicalId) || !!graphPoints || !!graphExpr}
+            points={graphPoints ?? undefined}
+            initialExpression={graphExpr ?? undefined}
+          />
+          {wrongCoach?.qIdx === qIdx && (
+            <div className={s.wrongCoach} aria-live="polite">
+              <p className={s.wrongCoachEyebrow}>What happened</p>
+              <WizardMascot line={wrongCoach.line} cheering={false} compact />
+            </div>
           )}
         </aside>
       </div>
@@ -873,7 +960,9 @@ export default function ConceptChapterPage() {
 
   function renderPanel() {
     if (!currentPanel) return null
-    if (currentPanel.kind === 'open') return renderOpenPanel(currentPanel.paras)
+    if (currentPanel.kind === 'open') {
+      return renderOpenPanel(currentPanel.paras, currentPanel.pageNum, currentPanel.pageCount)
+    }
     return renderQuestPanel(currentPanel.qIdx, currentPanel.beat, currentPanel.beatIndex)
   }
 
@@ -896,6 +985,18 @@ export default function ConceptChapterPage() {
         <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
         <span className={s.canvasWordmark}>{cs.conceptName}</span>
         <div className={s.canvasChromeRight}>
+          {currentPanel?.kind === 'quest' && (
+            <button
+              type="button"
+              className={`${s.writeChromeBtn} ${writeMode ? s.writeChromeBtnActive : ''}`}
+              onClick={() => setWriteMode(v => !v)}
+              aria-pressed={writeMode}
+              aria-label={writeMode ? 'Done writing — tap answers again' : 'Write on this page'}
+            >
+              <PenLine size={16} strokeWidth={2.4} />
+              <span>{writeMode ? 'Done' : 'Write'}</span>
+            </button>
+          )}
           <SoundToggle className={s.soundToggle} />
           <PingTutor context={pingContext} compact />
           <div className={s.calcWrap}>
@@ -917,23 +1018,79 @@ export default function ConceptChapterPage() {
       </header>
 
       <main
-        className={`${s.canvasStage} ${slideDir === 'f' ? s.slideFwd : s.slideBack}`}
+        className={`${s.canvasStage} ${slideDir === 'f' ? s.slideFwd : s.slideBack} ${writeMode ? s.canvasStageWriting : ''}`}
         key={panelIdx}
       >
         {renderPanel()}
       </main>
 
+      {currentPanel?.kind === 'quest' && writeMode && (
+        <div className={s.writeDock} role="status">
+          <span className={s.writeDockLabel}>Writing on the page</span>
+          <div className={s.writeDockActions}>
+            {Boolean(notes[currentPanel.qIdx] || (scratchStrokes[currentPanel.qIdx]?.strokes?.length ?? 0) > 0) && (
+              <button
+                type="button"
+                className={s.writeDockClear}
+                onClick={() => {
+                  const qIdx = currentPanel.qIdx
+                  setNotes(n => ({ ...n, [qIdx]: '' }))
+                  setScratchStrokes(st => { const next = { ...st }; delete next[qIdx]; return next })
+                  setScratchInk(st => { const next = { ...st }; delete next[qIdx]; return next })
+                  setDebugOutlines(false)
+                  setScratchRev(r => ({ ...r, [qIdx]: (r[qIdx] ?? 0) + 1 }))
+                }}
+              >
+                Clear
+              </button>
+            )}
+            <button
+              type="button"
+              className={s.writeDockDone}
+              onClick={() => setWriteMode(false)}
+            >
+              Done writing
+            </button>
+          </div>
+        </div>
+      )}
+
       <nav className={s.spreadNav}>
         <button type="button" className={s.navArrow} onClick={() => goToPanel(panelIdx - 1, 'b')} aria-label="Previous">←</button>
+        {/* Return visits skip straight to the first quest panel (see the
+            `hasSeenStory` gate above) — the story pages are never actually
+            gone, but nothing distinguished a "story" dot from a "quest" dot
+            below, so a returning student (or anyone testing the same
+            concept twice in one browser) had no way to tell those dimmed
+            dots were the story rather than already-answered questions. This
+            reads as "the story is missing" even though it's one click away.
+            Fix: story dots get their own shape (see .dotStory) + a proper
+            label, and a quick "Story" jump-back link shows up whenever
+            you're on a quest panel with story pages behind you. */}
+        {currentPanel?.kind === 'quest' && panels.some(p => p.kind === 'open') && (
+          <button
+            type="button"
+            className={s.storyJumpBack}
+            style={{ color: theme.accent }}
+            onClick={() => goToPanel(0, 'b')}
+          >
+            ↺ Story
+          </button>
+        )}
         <div className={s.navDots}>
-          {panels.map((_, i) => (
+          {panels.map((p, i) => (
             <button
               key={i}
               type="button"
-              className={`${s.dot} ${i === panelIdx ? s.dotActive : ''} ${i < panelIdx ? s.dotPast : ''}`}
+              className={[
+                s.dot,
+                p.kind === 'open' ? s.dotStory : '',
+                i === panelIdx ? s.dotActive : '',
+                i < panelIdx ? s.dotPast : '',
+              ].filter(Boolean).join(' ')}
               style={i === panelIdx ? { background: theme.accent } : i < panelIdx ? { background: theme.accent + '55' } : undefined}
               onClick={() => goToPanel(i, i > panelIdx ? 'f' : 'b')}
-              aria-label={`Panel ${i + 1}`}
+              aria-label={p.kind === 'open' ? `Story page ${p.pageNum} of ${p.pageCount}` : `Question ${p.qIdx + 1}`}
             />
           ))}
         </div>
@@ -942,9 +1099,9 @@ export default function ConceptChapterPage() {
             type="button"
             className={s.navPrimary}
             style={{ background: theme.ink, color: theme.paper }}
-            onClick={() => navigate('/practice', { state: { conceptId } })}
+            onClick={() => navigate('/dashboard', { replace: true })}
           >
-            practice →
+            Go to Dashboard →
           </button>
         ) : (
           <button type="button" className={s.navArrow} onClick={() => goToPanel(panelIdx + 1, 'f')} aria-label="Next">→</button>

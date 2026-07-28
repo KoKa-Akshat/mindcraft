@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 260" width="420" height="260" role="img">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="126,74 316,74 274,194 84,194" fill="#f6d2df"/>
+      <path d="M150 60 H286" marker-start="url(#arr)" marker-end="url(#arr)"/><path d="M112 210 H248" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#111"/></marker></defs></g>
+</svg>

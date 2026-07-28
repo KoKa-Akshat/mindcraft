@@ -882,6 +882,18 @@
   min-width: 0;
 }
 
+/* The wizard's speech-bubble box ("Weekly Review") removed from next to the
+   mascot (Akshat, 2026-07-25 fix pass) — WizardMascot itself lives in
+   components/canvas/, outside this lane's scope, so its bubble is hidden
+   structurally instead of edited at the source: the mascot's markup is
+   always <aside><img class="sprite"/><div class="bubble">...</div></aside>,
+   so the lone <div> direct child of that <aside> IS the bubble, no class
+   name from the other module needed. Sprite stays; hiding the div also
+   collapses .wrap's own 12px gap, so today's spark now sits right up
+   against the sprite using only .heroMiddle's existing 10px gap  -  no
+   leftover dead space, no separate "tighten the gap" rule needed. */
+.heroMiddle > aside > div { display: none; }
+
 .heroSpark {
   display: flex;
   align-items: center;
@@ -927,13 +939,15 @@
   flex-shrink: 0;
 }
 
+/* Enlarged 2026-07-25 (Akshat: "visibly bigger, not a subtle tweak") — was
+   18px/6px 13px. */
 .navBtn, .navActive {
   border: none;
   background: transparent;
   font-family: var(--tok-font-hand);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
-  padding: 6px 13px;
+  padding: 10px 22px;
   border-radius: 999px;
   cursor: pointer;
   color: rgba(58, 47, 85, 0.5);
@@ -1043,7 +1057,69 @@
   flex-shrink: 0;
 }
 
+/* ── Ambient floating MindCraft-block decorations (2026-07-25) ───────────
+   Purely ornamental, sits behind everything else on the stage (z-index: 0,
+   below .stagePane's real content) so it never competes with the actual UI.
+   Positions are hand-placed percentages of .canvasStage (see MC_BLOCKS in
+   Dashboard.tsx), not a random scatter, so the "restrained handful in dead
+   corner space" layout is stable across loads. Small + low-opacity by
+   design (max 50px, 0.16 opacity) — ambient texture, not content. */
+.mcBlocks {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.mcBlock {
+  position: absolute;
+  top: var(--block-top);
+  left: var(--block-left);
+  width: var(--block-size);
+  height: var(--block-size);
+  transform: rotate(var(--block-rotate));
+  opacity: 0.16;
+  filter: saturate(0.85);
+  animation: mcBlockFloat 7s ease-in-out infinite;
+  animation-delay: var(--block-delay);
+}
+@keyframes mcBlockFloat {
+  0%, 100% { transform: rotate(var(--block-rotate)) translateY(0); }
+  50%      { transform: rotate(var(--block-rotate)) translateY(-10px); }
+}
+/* A slow drift is fine, but never force motion on students who asked for
+   less of it — the blocks just sit still at their base rotation instead. */
+@media (prefers-reduced-motion: reduce) {
+  .mcBlock { animation: none; }
+}
+
+/* Small second wordmark, bottom-left corner of the stage  -  a page
+   watermark, distinct from the real nav wordmark in .heroBar above (that
+   one stays the primary, legible logo). Quiet, non-interactive, sits under
+   the roadmap/content (low z-index) so it never competes for attention. */
+.pageWatermark {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  z-index: 0;
+  font-family: var(--tok-font-hand);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: rgba(58, 47, 85, 0.22);
+  pointer-events: none;
+  user-select: none;
+}
+.pageWatermarkCraft {
+  color: rgba(84, 185, 72, 0.4);
+}
+
 .stagePane {
+  /* position + z-index above the ambient .mcBlocks/.pageWatermark (both
+     z-index: 0) so the real content always paints on top of the floating
+     decorations, regardless of DOM order. */
+  position: relative;
+  z-index: 1;
   height: 100%;
   min-height: 0;
   overflow: auto;
@@ -1094,7 +1170,12 @@
   flex-shrink: 0;
 }
 
-/* "This week's paper", relocated from the bottom .homeActions row. A small
+/* .paperCta / .paperCtaGo are retired (Akshat, 2026-07-25 fix pass) — the
+   unlocked "this week's paper" CTA now reuses .bookSessionLink verbatim
+   (label "Weekly Review", no arrow, same pill as Find a Tutor) instead of
+   this two-line green card. Left in place, unused, as a rollback point; the
+   locked variant below (.paperCtaLocked, still live) keeps reading
+   .paperCtaEyebrow for its own "this week's paper" line. Was a small
    two-line CTA card (eyebrow + "Start ->") rather than reusing the flat
    .toolPill/.paperPill shape verbatim  -  a bare pill read too thin sitting
    next to a 50px "Contents" heading. */
@@ -1121,29 +1202,77 @@
   color: #1a5c3c;
 }
 .paperCtaGo {
+  /* Retired alongside .paperCta above  -  no longer rendered. */
   font-family: var(--tok-font-hand);
   font-size: 18px;
   font-weight: 700;
   color: #1a5c3c;
 }
 
-/* "Book a Session", new on this view  -  same copy/destination as
-   Sidebar.tsx's nav entry and StudentSessions.tsx's "Book a Session ->"
-   button (both -> /book). Quieter than the paper CTA (a text link, not a
-   filled card) since it's a secondary action next to Contents. */
+/* Locked variant — shown once this week's paper is done, until it unlocks
+   again next week. Same footprint as .paperCta so the header doesn't jump,
+   but muted/inert (no hover lift, no pointer cursor) with a lock icon so the
+   state reads clearly instead of just vanishing. */
+.paperCtaLocked {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid rgba(58, 47, 85, 0.14);
+  border-radius: 12px 16px 12px 14px;
+  background: rgba(58, 47, 85, 0.05);
+  padding: 7px 14px;
+  cursor: default;
+}
+.paperCtaLockIcon {
+  font-size: 15px;
+  line-height: 1;
+  filter: grayscale(1) opacity(0.7);
+}
+.paperCtaLockedText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+.paperCtaLockedText .paperCtaEyebrow { color: rgba(58, 47, 85, 0.55); }
+.paperCtaUnlockLabel {
+  font-family: var(--tok-font-hand);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(58, 47, 85, 0.6);
+}
+
+/* "Find a Tutor", new on this view  -  same destination as Sidebar.tsx's
+   nav entry and StudentSessions.tsx's "Find a Tutor" button (both ->
+   /find-a-tutor). Was a bare text link (2026-07-24); given a pill border
+   here (2026-07-25 polish pass) so it reads as a real secondary action next
+   to Contents instead of floating text  -  same pill shape/radius as
+   .paperCtaLocked just above (border-radius: 12px 16px 12px 14px, a quiet
+   border rather than a filled card). As of the follow-up fix pass (also
+   2026-07-25) this same class is reused verbatim for the unlocked "this
+   week's paper" CTA too (now labeled "Weekly Review") so the two sit next
+   to each other as a matched pair of pills, per Akshat's brief  -  neither
+   carries a trailing arrow. */
 .bookSessionLink {
-  border: none;
-  background: none;
+  border: 1.5px solid rgba(58, 47, 85, 0.22);
+  border-radius: 12px 16px 12px 14px;
+  background: rgba(255, 253, 248, 0.5);
   cursor: pointer;
   font-family: var(--tok-font-sans);
   font-size: 13px;
   font-weight: 600;
-  color: rgba(58, 47, 85, 0.6);
-  padding: 8px 4px;
+  color: rgba(58, 47, 85, 0.7);
+  padding: 7px 14px;
   white-space: nowrap;
-  transition: color 140ms ease;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease, transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
 }
-.bookSessionLink:hover { color: var(--desk-ink); }
+.bookSessionLink:hover {
+  color: var(--desk-ink);
+  border-color: rgba(58, 47, 85, 0.4);
+  background: rgba(255, 253, 248, 0.85);
+  transform: translateY(-1px);
+}
+.bookSessionLink:active { transform: translateY(0); }
 
 .homeTitle {
   margin: 0;
@@ -1187,24 +1316,34 @@
   color: #1f6b45;
 }
 
+/* ── Contents roadmap (2026-07-24) ──────────────────────────────────────
+   Was a horizontally-scrolled row of narrow lane "cards", each stuffed with
+   a vertically-scrolled list of chips  -  two nested scroll regions and a
+   dense wall of icon+name+blurb rows read as an overloaded grid. Replaced
+   with a single vertical stack of full-width lanes (still one lane per ACT
+   section, still carrying the section wash/accent/ink so the four subjects
+   stay visually distinct), each lane now a horizontal line of evenly-spaced
+   dots  -  one dot per concept, name above, blurb below, connecting segments
+   drawn off each dot so the line reads as one continuous path regardless of
+   how tall the name/blurb text next to it happens to be. Dot fill + color
+   are driven by the REAL per-concept status/mastery from
+   GET /knowledge-graph/{uid} (learningPathGraph.ts STATUS_COLOR  -  the same
+   values the Map page already uses), not an invented metric. */
 .horizontalToc {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  scroll-snap-type: x mandatory;
   flex: 1;
   min-height: 0;
 }
 .tocLane {
   --lane-accent: #6b5cff;
   --lane-ink: #2a2430;
-  flex: 0 0 min(320px, 86vw);
-  scroll-snap-align: start;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px 14px 14px;
+  gap: 10px;
+  padding: 16px 14px 12px;
   border: 1.5px solid color-mix(in srgb, var(--lane-accent) 28%, transparent);
   border-radius: var(--desk-radius-md);
   box-shadow: var(--desk-shadow-raised);
@@ -1237,66 +1376,148 @@
   line-height: 1.35;
   color: color-mix(in srgb, var(--lane-ink) 72%, transparent);
 }
-.tocChips {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  overflow-y: auto;
-  min-height: 0;
-  padding-right: 2px;
-}
-.tocChip {
+
+/* Horizontal-scroll track: the responsive strategy for narrow widths is a
+   dedicated scroll region PER LANE (not page-level wrapping), so a lane with
+   11 concepts (Algebra) scrolls sideways on a phone while the lane header
+   and neighboring lanes stay put and readable. */
+.tocTrack {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  text-align: left;
-  border: 1.5px solid color-mix(in srgb, var(--lane-accent) 22%, rgba(58, 47, 85, 0.1));
-  border-radius: 14px 18px 12px 16px;
-  background: rgba(255, 253, 248, 0.92);
-  padding: 10px 12px;
-  cursor: pointer;
-  color: var(--desk-ink);
-  box-shadow: 0 2px 8px rgba(58, 47, 85, 0.05);
-  transition: transform 160ms var(--desk-ease-bounce), box-shadow 160ms var(--desk-ease-bounce), border-color 160ms var(--desk-ease);
-  white-space: normal;
-  font: inherit;
+  gap: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 6px 12px;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
 }
-.tocChip:hover {
-  transform: translateX(3px) scale(1.015);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lane-accent) 28%, transparent);
-  border-color: color-mix(in srgb, var(--lane-accent) 55%, transparent);
+.tocTrack::-webkit-scrollbar { height: 6px; }
+.tocTrack::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--lane-accent) 40%, transparent);
+  border-radius: 999px;
 }
-.tocChip:active { transform: translateX(1px) scale(1); }
-.tocChipSpark {
-  background: linear-gradient(145deg, #fff8c8, #ffe566);
-  border-color: rgba(196, 92, 0, 0.28);
-}
-.tocChipEmoji {
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.tocChipCopy {
+
+.tocNode {
+  --node-w: 128px;
+  --dot-size: 26px;
+  --node-color: #8B9BA8;
+  --node-fill: 0%;
+  flex: 0 0 var(--node-w);
+  width: var(--node-w);
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 2px;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  position: relative;
+  transition: opacity 200ms var(--desk-ease), transform 160ms var(--desk-ease-bounce);
 }
-.tocChipName {
-  font-family: var(--tok-font-hand);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--desk-ink);
-}
-.tocChipBlurb {
+.tocNode:hover { transform: translateY(-2px); }
+.tocNode:active { transform: translateY(0); }
+.tocNode[data-state='locked'] { opacity: 0.62; }
+
+/* Fixed height (2 lines' worth, not just a 2-line clamp) is load-bearing:
+   the dot below sits at whatever flow position follows this block, so a
+   1-line name and a 2-line name (e.g. "Linear Equations" vs "Systems of
+   Linear Equations" in the same Algebra lane) would otherwise push their
+   dots to different vertical heights. The connector lines are drawn off
+   each dot's own vertical center (see .tocNodeDot::before/::after below),
+   so misaligned dots across a lane made the line segments miss each other
+   entirely between short- and long-named neighbors  -  the reported "lines
+   don't connect" bug. Reserving the full 2-line height here keeps every
+   dot in a lane on the same horizontal row regardless of name length. */
+.tocNodeName {
+  height: 2.5em;
   font-family: var(--tok-font-sans);
-  font-size: 11.5px;
-  line-height: 1.35;
-  color: rgba(42, 36, 48, 0.58);
+  font-weight: 700;
+  font-size: 12.5px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--lane-ink);
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* The dot itself: a conic-gradient "pie" fills clockwise by raw mastery
+   percentage (the "slowly fills" ask)  -  hollow/gray at 0%, part-colored
+   mid-mastery, and forced to a solid glowing fill once status crosses into
+   a mastered tier (the "lights up" ask, data-state='complete' below). The
+   connecting line to the previous/next dot is drawn from the dot itself
+   (not the whole column) via ::before/::after, so it always passes through
+   the dot's own vertical center no matter how tall the name/blurb text
+   above/below it is. */
+.tocNodeDot {
+  position: relative;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(var(--node-color) var(--node-fill), rgba(58, 47, 85, 0.12) 0);
+  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), inset 0 0 0 1.5px rgba(58, 47, 85, 0.16);
+  transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce), background 420ms var(--desk-ease);
+  z-index: 1;
+}
+.tocNode:hover .tocNodeDot { transform: scale(1.12); }
+
+.tocNodeDot::before,
+.tocNodeDot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  width: calc((var(--node-w) - var(--dot-size)) / 2);
+  transform: translateY(-50%);
+  background: color-mix(in srgb, var(--node-color) 50%, rgba(58, 47, 85, 0.14));
+  z-index: -1;
+}
+.tocNodeDot::before { right: 100%; }
+.tocNodeDot::after  { left: 100%; }
+.tocNode:first-child .tocNodeDot::before { visibility: hidden; }
+.tocNode:last-child  .tocNodeDot::after  { visibility: hidden; }
+
+.tocNode[data-state='complete'] .tocNodeDot {
+  background: var(--node-color);
+  box-shadow:
+    0 0 0 3px rgba(255, 253, 248, 0.95),
+    0 0 0 5px color-mix(in srgb, var(--node-color) 35%, transparent),
+    0 0 10px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNodeCheck {
+  color: #fffdf8;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+.tocNode[data-state='needs'] .tocNodeDot {
+  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), 0 0 8px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNodeSpark .tocNodeDot {
+  box-shadow:
+    0 0 0 3px rgba(255, 253, 248, 0.95),
+    0 0 0 5px rgba(255, 200, 40, 0.55),
+    0 0 12px rgba(255, 190, 20, 0.65);
+}
+.tocNodeSpark .tocNodeName { color: #a15c00; }
+
+.tocNodeBlurb {
+  font-family: var(--tok-font-sans);
+  font-size: 10.5px;
+  line-height: 1.32;
+  color: rgba(42, 36, 48, 0.58);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1362,4 +1583,14 @@
      the old BookShell's .gutter (Book.module.css) hiding on narrow screens
      to keep the tiny stage width for real content. */
   .deskSpine { display: none; }
+
+  /* Contents roadmap on phone width: each lane keeps its own horizontal
+     scroll track (built into .tocTrack at any width), just with smaller
+     dots/columns so more of the path is visible before the student has to
+     swipe, and tighter lane padding to leave more room for the track. */
+  .tocLane { padding: 12px 10px 10px; }
+  .tocLaneTitle { font-size: 24px; }
+  .tocNode { --node-w: 100px; --dot-size: 20px; }
+  .tocNodeName { font-size: 11px; }
+  .tocNodeBlurb { font-size: 9.5px; -webkit-line-clamp: 2; }
 }

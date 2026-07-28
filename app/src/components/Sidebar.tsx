@@ -10,7 +10,7 @@ import s from './Sidebar.module.css'
 
 const NAV = [
   { to: '/sessions',       label: 'Notes' },
-  { to: '/book',           label: 'Book a Session' },
+  { to: '/find-a-tutor',   label: 'Find a Tutor' },
   { to: '/practice',       label: 'Practice'      },
   { to: '/join-classroom', label: 'Join Classroom' },
   { to: '/organize-notes', label: 'Organize'      },

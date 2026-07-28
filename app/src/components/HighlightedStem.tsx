@@ -4,6 +4,8 @@
  */
 import MathText from './MathText'
 import AltDiagramCallout from './AltDiagramCallout'
+import { splitAltDiagramSegments } from '../lib/altDiagram'
+import { isGraphShapedAlt } from '../lib/plottablePoints'
 import type { HighlightSpan } from '../lib/journalGuide'
 import { glossaryFor } from '../lib/mathGlossary'
 import s from './HighlightedStem.module.css'
@@ -12,15 +14,15 @@ function escapeRegExp(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function highlightPlainText(text: string, spans: HighlightSpan[], accent: string) {
-  if (!spans.length || !text.trim()) return <MathText text={text} />
+function highlightPlainText(text: string, spans: HighlightSpan[], accent: string, questionId?: string) {
+  if (!spans.length || !text.trim()) return <MathText text={text} questionId={questionId} />
 
   const focus = spans.find(h => h.kind === 'focus') ?? spans.find(h => h.kind === 'ask')
-  if (!focus?.phrase) return <MathText text={text} />
+  if (!focus?.phrase) return <MathText text={text} questionId={questionId} />
 
   const re = new RegExp(`(${escapeRegExp(focus.phrase)})`, 'i')
   const parts = text.split(re)
-  if (parts.length < 2) return <MathText text={text} />
+  if (parts.length < 2) return <MathText text={text} questionId={questionId} />
 
   const definition = glossaryFor(focus.phrase)
 
@@ -36,12 +38,12 @@ function highlightPlainText(text: string, spans: HighlightSpan[], accent: string
               title={definition}
               tabIndex={definition ? 0 : undefined}
             >
-              <MathText text={part} />
+              <MathText text={part} questionId={questionId} />
               {definition && <span className={s.glossaryTip}>{definition}</span>}
             </mark>
           )
         }
-        return part ? <MathText key={i} text={part} /> : null
+        return part ? <MathText key={i} text={part} questionId={questionId} /> : null
       })}
     </>
   )
@@ -53,22 +55,35 @@ interface Props {
   accent: string
   highlights?: HighlightSpan[]
   className?: string
+  questionId?: string
+  /** See MathText's identical prop — true when a GraphBox panel elsewhere on
+   * this page already plots this question's points/expression, so a
+   * graph-shaped diagram segment renders as a short pointer instead of a
+   * second caption/figure describing the same axes. */
+  graphAlreadyShown?: boolean
 }
 
-export default function HighlightedStem({ text, ink, accent, highlights = [], className }: Props) {
-  const parts = text.split(/(\(Diagram:[^)]{0,300}\))/g)
+export default function HighlightedStem({ text, ink, accent, highlights = [], className, questionId, graphAlreadyShown }: Props) {
+  // Balanced-paren split (not a regex) — see lib/altDiagram.ts for why: the
+  // alt text a `(Diagram: ...)` callout wraps often contains its own nested
+  // parens (coordinate pairs like "(4,10)"), and a naive regex stops at the
+  // first ")" it meets, truncating the callout and leaking the remainder
+  // into the question stem at full size.
+  const parts = splitAltDiagramSegments(text)
 
   return (
     <p className={`${s.stem} ${className ?? ''}`} style={{ color: ink }}>
       {parts.map((part, i) => {
-        const m = part.match(/^\(Diagram: (.+)\)$/)
-        if (m) {
+        if (part.kind === 'diagram') {
+          if (graphAlreadyShown && isGraphShapedAlt(part.alt)) {
+            return <span key={i} className={s.graphRefNote}>(see graph →)</span>
+          }
           // AltDiagramCallout draws a real diagram for recognizable alt-text
           // patterns (e.g. number lines) instead of showing the raw
           // accessibility description as a sentence — see lib/altDiagram.ts.
-          return <AltDiagramCallout key={i} alt={m[1]} accent={accent} />
+          return <AltDiagramCallout key={i} alt={part.alt} accent={accent} questionId={questionId} />
         }
-        return <span key={i}>{highlightPlainText(part, highlights, accent)}</span>
+        return <span key={i}>{highlightPlainText(part.content, highlights, accent, questionId)}</span>
       })}
     </p>
   )

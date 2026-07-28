@@ -21,15 +21,75 @@ import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIn
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
+import { fetchKnowledgeGraph } from '../lib/graphCache'
+import { STATUS_COLOR } from '../lib/learningPathGraph'
 import {
   buildWeeklyPracticePaper,
   cacheWeeklyPaper,
   loadCachedWeeklyPaper,
+  nextUnlockLabel,
 } from '../lib/weeklyPracticePaper'
 import { loadDashboardPersonalization } from '../lib/dashboardPersonalization'
+import blockPlus from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-plus.png'
+import blockFraction from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-fraction.png'
+import blockPi from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-pi.png'
+import blockX from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-x.png'
+import blockParabola from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-parabola.png'
+import blockPercent from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-percent.png'
+import blockEquals from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-equals.png'
+import blockRadical from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-radical.png'
 import s from './Dashboard.module.css'
 
 const SOLVER_MAX_CHARS = 1200
+
+/** Ambient floating MindCraft-block decorations (2026-07-25). Purely
+ * decorative — scattered across the stage's own dead corner whitespace,
+ * behind the Contents roadmap and the rest of the real UI (low z-index,
+ * pointer-events: none, small, low-opacity — see .mcBlock in the CSS
+ * module). Hand-placed positions/rotations/sizes/delays, not a random
+ * scatter, so the same "restrained handful" layout renders identically
+ * every load rather than reshuffling. */
+const MC_BLOCKS: Array<{
+  name: string
+  src: string
+  top: string
+  left: string
+  size: string
+  rotate: string
+  delay: string
+}> = [
+  // Positions bias toward the two confirmed-open zones on this canvas: the
+  // top header band (above the lane cards, roughly y 0-11%) and the thin
+  // margin past the last lane before the stage's rounded corner (y 90%+) —
+  // verified against real renders, since the lane cards themselves fill
+  // almost the full card width/height and would otherwise hide a block
+  // behind their solid backgrounds.
+  { name: 'pi',       src: blockPi,       top: '1%',  left: '18%', size: '40px', rotate: '-9deg',  delay: '0s' },
+  { name: 'x',        src: blockX,        top: '3%',  left: '70%', size: '34px', rotate: '7deg',   delay: '1.1s' },
+  { name: 'fraction', src: blockFraction, top: '2%',  left: '46%', size: '30px', rotate: '6deg',   delay: '0.6s' },
+  { name: 'parabola', src: blockParabola, top: '92%', left: '92%', size: '48px', rotate: '-5deg',  delay: '1.8s' },
+  { name: 'percent',  src: blockPercent,  top: '8%',  left: '34%', size: '28px', rotate: '10deg',  delay: '2.4s' },
+  { name: 'equals',   src: blockEquals,   top: '95%', left: '4%',  size: '34px', rotate: '-8deg',  delay: '0.3s' },
+  { name: 'plus',     src: blockPlus,     top: '5%',  left: '60%', size: '26px', rotate: '4deg',   delay: '3s' },
+  { name: 'radical',  src: blockRadical,  top: '95%', left: '48%', size: '30px', rotate: '-6deg',  delay: '2s' },
+]
+
+/** Contents roadmap dot state. Backed by the same per-concept `status`/
+ * `mastery` the Knowledge Map (ConstellationGpsExplorer) reads off
+ * GET /knowledge-graph/{uid} — same signal, same status vocabulary
+ * (learningPathGraph.ts STATUS_COLOR), so a topic that reads "mastered" here
+ * reads mastered on the Map too. Not a new/invented completion metric. */
+const TOC_MASTERED_STATUSES = new Set(['mastered', 'stable', 'comeback_built', 'ready_for_challenge'])
+const TOC_STRUGGLING_STATUSES = new Set(['struggling', 'open_gap'])
+
+type TocDotState = 'complete' | 'needs' | 'progress' | 'locked'
+
+function tocDotState(status: string): TocDotState {
+  if (TOC_MASTERED_STATUSES.has(status)) return 'complete'
+  if (TOC_STRUGGLING_STATUSES.has(status)) return 'needs'
+  if (status === 'in_progress' || status === 'repairing') return 'progress'
+  return 'locked'
+}
 
 export default function Dashboard() {
   const user = useUser()
@@ -54,6 +114,7 @@ export default function Dashboard() {
   ))
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
+  const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
 
   const rawView = searchParams.get('view') ?? 'home'
   const view = (
@@ -128,6 +189,28 @@ export default function Dashboard() {
   useEffect(() => {
     if (!uid) return
     getUserRole(uid).then(role => setIsAdmin(role === 'admin'))
+  }, [uid])
+
+  // Contents roadmap completion signal — same GET /knowledge-graph/{uid} the
+  // Map view reads (see graphCache.ts), so "lit up" here means the same
+  // per-concept mastery/status the rest of the app already shows.
+  useEffect(() => {
+    if (!uid) return
+    let cancelled = false
+    void fetchKnowledgeGraph(uid).then(kg => {
+      if (cancelled || !kg) return
+      const nodes = (kg.nodes ?? []) as Array<{ id?: unknown; mastery?: unknown; status?: unknown }>
+      const next: Record<string, { mastery: number; status: string }> = {}
+      for (const n of nodes) {
+        if (typeof n.id !== 'string') continue
+        next[n.id] = {
+          mastery: typeof n.mastery === 'number' ? n.mastery : 0,
+          status: typeof n.status === 'string' ? n.status : 'untouched',
+        }
+      }
+      setConceptProgress(next)
+    })
+    return () => { cancelled = true }
   }, [uid])
 
   useEffect(() => {
@@ -238,12 +321,28 @@ export default function Dashboard() {
     return paper
   }, [weakness, learn, recLoading])
 
+  // The wizard's own speech-bubble box (previously reading "Weekly Review")
+  // is removed from next to the mascot per Akshat's follow-up brief — the
+  // "this week's paper" CTA now carries the "Weekly Review" label itself
+  // (see .homeTopActions below), so having it twice was redundant. The
+  // WizardMascot component (components/canvas/, out of this lane) still
+  // requires a `line` string prop; it's kept computed here but its bubble
+  // is hidden purely via CSS (`.heroMiddle > aside > div` in
+  // Dashboard.module.css) so the sprite alone remains next to today's
+  // spark, with no dead empty box left behind.
   const wizardLine = weaknessLabel
-    ? `Let’s tackle ${weaknessLabel} next. You’ve got this!`
+    ? 'Weekly Review'
     : 'Pick any sticker on the map and we’ll dive in ★'
 
+  // Locked once the student has finished this week's paper (weekKey-keyed
+  // completion flag, self-written by the student's own browser same as
+  // diagnosticCompleted — see practiceState.ts). Stays unlocked the whole
+  // week up until then; re-locks only on completion, not on a timer.
+  const paperLocked = !!weeklyPaper && data.weeklyPaperCompletedWeek === weeklyPaper.weekKey
+  const paperUnlockLabel = useMemo(() => nextUnlockLabel(), [])
+
   function playWeeklyPaper() {
-    if (!weeklyPaper?.slots[0]) {
+    if (!weeklyPaper?.slots[0] || paperLocked) {
       openMap()
       return
     }
@@ -252,6 +351,8 @@ export default function Dashboard() {
       state: {
         conceptId: first.conceptId,
         missionType: first.role === 'stretch' ? 'learn' : 'weakness',
+        weeklyPaper: true,
+        weeklyPaperWeekKey: weeklyPaper.weekKey,
       },
     })
   }
@@ -280,6 +381,7 @@ export default function Dashboard() {
       {showCover && (
         <CoverLanding
           entryLabel="your ACT study notebook"
+          accountName={displayName}
           onOpen={() => setShowCover(false)}
         />
       )}
@@ -290,14 +392,17 @@ export default function Dashboard() {
       <div className={s.canvasDesk}>
         {/* ONE hero bar, ONE row (was three stacked bands: nav row,
            "Contents" + wizard row, yellow spark banner)  -  merged per
-           Akshat's brief so logo, section nav, the wizard's encouragement,
-           today's spark CTA, and the username/sign-out all read as one
-           continuous strip, not two internal bands. Rendered once, outside
-           the view switch below, so it appears identically on
-           Home/Map/Work/Notes  -  not just Contents. .heroMiddle is the
-           flexible zone (wizard + spark) that absorbs width pressure; the
-           wordmark, nav, and user block hold their size. Below 720px it
-           wraps onto extra lines rather than truncating content. */}
+           Akshat's brief so logo, section nav, the wizard sprite, today's
+           spark CTA, and the username/sign-out all read as one continuous
+           strip, not two internal bands. Rendered once, outside the view
+           switch below, so it appears identically on Home/Map/Work/Notes
+            -  not just Contents. .heroMiddle is the flexible zone (wizard +
+           spark) that absorbs width pressure; the wordmark, nav, and user
+           block hold their size. Below 720px it wraps onto extra lines
+           rather than truncating content. The wizard's own speech-bubble
+           box is hidden here (see .heroMiddle > aside > div in the CSS
+           module) so today's spark sits right up against the sprite instead
+           of leaving the bubble's old footprint as dead space. */}
         <header className={s.heroBar}>
           <span className={s.canvasWordmark}>Mind<span className={s.canvasWordmarkCraft}>Craft</span></span>
           <nav className={s.canvasNav} aria-label="Notebook sections">
@@ -315,7 +420,7 @@ export default function Dashboard() {
                   <span className={s.sparkEyebrow}>today’s spark</span>
                   <span className={s.sparkName}>{weaknessLabel}</span>
                 </span>
-                <span className={s.sparkGo}>play →</span>
+                <span className={s.sparkGo}>play</span>
               </button>
             )}
           </div>
@@ -344,16 +449,26 @@ export default function Dashboard() {
                 <div className={s.homeTop}>
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>
-                    <p className={s.homeLead}>Four lanes. Pick a topic, the Map keeps the messy connected graph.</p>
                   </div>
                   <div className={s.homeTopActions}>
                     {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
-                      <button type="button" className={s.paperCta} onClick={playWeeklyPaper}>
-                        <span className={s.paperCtaEyebrow}>this week’s paper</span>
-                        <span className={s.paperCtaGo}>Start →</span>
-                      </button>
+                      paperLocked ? (
+                        <div className={s.paperCtaLocked} aria-live="off">
+                          <span className={s.paperCtaLockIcon} aria-hidden="true">🔒</span>
+                          <span className={s.paperCtaLockedText}>
+                            <span className={s.paperCtaEyebrow}>this week’s paper</span>
+                            <span className={s.paperCtaUnlockLabel}>Done! {paperUnlockLabel}</span>
+                          </span>
+                        </div>
+                      ) : (
+                        // Reuses .bookSessionLink verbatim (Akshat: label
+                        // should read "Weekly Review" and look "just like a
+                        // find a tutor button" — same pill, no arrow, no new
+                        // CSS invented for it).
+                        <button type="button" className={s.bookSessionLink} onClick={playWeeklyPaper}>Weekly Review</button>
+                      )
                     )}
-                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/book')}>Book a Session →</button>
+                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/find-a-tutor')}>Find a Tutor</button>
                   </div>
                 </div>
 
@@ -375,21 +490,34 @@ export default function Dashboard() {
                           <p className={s.tocLaneBlurb}>{section.blurb}</p>
                         </div>
                       </header>
-                      <div className={s.tocChips}>
-                        {section.conceptIds.map(id => (
-                          <button
-                            key={id}
-                            type="button"
-                            className={`${s.tocChip} ${id === sparkId ? s.tocChipSpark : ''}`}
-                            onClick={() => openChapter(id)}
-                          >
-                            <img className={s.tocChipEmoji} src={conceptIconUrl(id)} alt="" draggable={false} />
-                            <span className={s.tocChipCopy}>
-                              <span className={s.tocChipName}>{actConceptLabel(id)}</span>
-                              <span className={s.tocChipBlurb}>{actConceptBlurb(id)}</span>
-                            </span>
-                          </button>
-                        ))}
+                      <div className={s.tocTrack}>
+                        {section.conceptIds.map(id => {
+                          const progress = conceptProgress[id]
+                          const mastery = Math.max(0, Math.min(1, progress?.mastery ?? 0))
+                          const status = progress?.status ?? 'untouched'
+                          const dotState = tocDotState(status)
+                          const dotColor = STATUS_COLOR[status] ?? STATUS_COLOR.untouched
+                          return (
+                            <button
+                              key={id}
+                              type="button"
+                              className={`${s.tocNode} ${id === sparkId ? s.tocNodeSpark : ''}`}
+                              data-state={dotState}
+                              style={{
+                                ['--node-color' as string]: dotColor,
+                                ['--node-fill' as string]: `${Math.round(mastery * 100)}%`,
+                              }}
+                              title={`${actConceptLabel(id)} — ${Math.round(mastery * 100)}% mastery`}
+                              onClick={() => openChapter(id)}
+                            >
+                              <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
+                              <span className={s.tocNodeDot} aria-hidden="true">
+                                {dotState === 'complete' && <span className={s.tocNodeCheck}>✓</span>}
+                              </span>
+                              <span className={s.tocNodeBlurb}>{actConceptBlurb(id)}</span>
+                            </button>
+                          )
+                        })}
                       </div>
                     </section>
                   ))}
@@ -436,6 +564,40 @@ export default function Dashboard() {
               </div>
             )}
           </div>
+
+          {/* Ambient floating MindCraft-block decorations  -  ornamental only
+             (aria-hidden, no pointer events), scattered in the stage's own
+             dead corner whitespace behind the Contents roadmap. Same
+             position: relative stage as .deskSpine above, present on every
+             view since it lives outside the view switch. Respects
+             prefers-reduced-motion (see .mcBlock's @media query in the CSS
+             module) - the drift pauses, the blocks just sit still. */}
+          <div className={s.mcBlocks} aria-hidden="true">
+            {MC_BLOCKS.map(b => (
+              <img
+                key={b.name}
+                src={b.src}
+                alt=""
+                draggable={false}
+                className={s.mcBlock}
+                style={{
+                  '--block-top': b.top,
+                  '--block-left': b.left,
+                  '--block-size': b.size,
+                  '--block-rotate': b.rotate,
+                  '--block-delay': b.delay,
+                } as React.CSSProperties}
+              />
+            ))}
+          </div>
+
+          {/* Small second wordmark, bottom-left corner  -  a page-watermark,
+             not a nav element (the real logo/nav lives in .heroBar above).
+             Low-opacity, non-interactive, echoes the notebook's own
+             hand-drawn wordmark font at a fraction of the size. */}
+          <span className={s.pageWatermark} aria-hidden="true">
+            Mind<span className={s.pageWatermarkCraft}>Craft</span>
+          </span>
         </main>
       </div>
 

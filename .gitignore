@@ -66,3 +66,9 @@ tmp-*.png
 push.sh
 showcase-qr.html
 .local/
+.scratch-pdf-venv/
+
+# Separate native iPad prototype (PencilKit/Notability-style, unrelated to
+# the web app's deploy pipeline) — contains a real (free-tier) MyScript
+# Cloud application key + HMAC key in source, do not commit.
+ios-prototype/

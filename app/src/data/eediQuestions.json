@@ -5197,13 +5197,13 @@
     "level": 1,
     "question": "Which signs belong in the boxes to make the statement correct? 0.705\\[{\\color{blue}\\square}\\]0.750\\[{\\color{orange}\\square}\\]0.570",
     "choices": [
-      "![A blue box containing a \"greater than\" symbol and an orange box containing a \"less than\" symbol]()",
-      "![A blue box containing a \"less than\" symbol and an orange box containing a \"less than\" symbol]()",
-      "![A blue box containing a \"greater than\" symbol and an orange box containing a \"greater than\" symbol]()",
-      "![A blue box containing a \"less than\" symbol and an orange box containing a \"greater than\" symbol]()"
+      "><",
+      "<<",
+      ">>",
+      "<>"
     ],
     "correctIndex": 3,
-    "explanation": "The correct answer is ![A blue box containing a \"less than\" symbol and an orange box containing a \"greater than\" symbol](). A common mistake here: Mixes up greater than and less than symbols.  Double-check each step in use inequality notation to order decimals with the same number of digits  to avoid this error.",
+    "explanation": "The correct answer is <>. A common mistake here: Mixes up greater than and less than symbols.  Double-check each step in use inequality notation to order decimals with the same number of digits  to avoid this error.",
     "hints": [
       "Read the question again. What is it specifically asking you to find?",
       "Think about the key property of use inequality notation to order decimals with the same number of digits  that applies here.",
@@ -30057,13 +30057,13 @@
     "level": 1,
     "question": "Which signs belong in the boxes to make the statement correct?\n76426\\[{\\color{blue}\\square}\\]76462\\[{\\color{orange}\\square}\\]74662",
     "choices": [
-      "![A blue box containing a \"greater than\" symbol and an orange box containing a \"less than\" symbol]()",
-      "![A blue box containing a \"less than\" symbol and an orange box containing a \"less than\" symbol]()",
-      "![A blue box containing a \"greater than\" symbol and an orange box containing a \"greater than\" symbol]()",
-      "![A blue box containing a \"less than\" symbol and an orange box containing a \"greater than\" symbol]()"
+      "><",
+      "<<",
+      ">>",
+      "<>"
     ],
     "correctIndex": 3,
-    "explanation": "The correct answer is ![A blue box containing a \"less than\" symbol and an orange box containing a \"greater than\" symbol](). A common mistake here: Mixes up greater than and less than symbols.  Double-check each step in use inequality notation to order integers with the same number of digits to avoid this error.",
+    "explanation": "The correct answer is <>. A common mistake here: Mixes up greater than and less than symbols.  Double-check each step in use inequality notation to order integers with the same number of digits to avoid this error.",
     "hints": [
       "Read the question again. What is it specifically asking you to find?",
       "Think about the key property of use inequality notation to order integers with the same number of digits that applies here.",

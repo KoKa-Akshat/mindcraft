@@ -11,6 +11,9 @@
  */
 import { useMemo } from 'react'
 import AltDiagramCallout from './AltDiagramCallout'
+import { splitAltDiagramSegments } from '../lib/altDiagram'
+import { isGraphShapedAlt } from '../lib/plottablePoints'
+import { renderNoBreakCoordinates } from '../lib/noBreakCoords'
 import s from './MathText.module.css'
 
 // Lazy KaTeX import — avoids bundling unless math is actually present.
@@ -122,14 +125,13 @@ function parseMath(text: string): Segment[] {
  * instead of a raw sentence buried mid-choice, then parse the rest for math
  * as before. */
 function parse(text: string): Segment[] {
-  const parts = text.split(/(\(Diagram:[^)]{0,300}\))/g)
+  const parts = splitAltDiagramSegments(text)
   const segments: Segment[] = []
   for (const part of parts) {
-    const m = part.match(/^\(Diagram: (.+)\)$/)
-    if (m) {
-      segments.push({ type: 'diagram', alt: m[1] })
-    } else if (part) {
-      segments.push(...parseMath(part))
+    if (part.kind === 'diagram') {
+      segments.push({ type: 'diagram', alt: part.alt })
+    } else if (part.content) {
+      segments.push(...parseMath(part.content))
     }
   }
   return segments.length > 0 ? segments : [{ type: 'text', content: text }]
@@ -138,26 +140,38 @@ function parse(text: string): Segment[] {
 interface Props {
   text: string
   className?: string
+  questionId?: string
+  /** True when a GraphBox panel elsewhere on the page is already plotting
+   * this same question's points/expression (see lib/plottablePoints.ts). A
+   * graph-shaped `(Diagram: ...)` segment then renders as a short pointer
+   * instead of a second "Picture: ..." caption or parsed figure describing
+   * the identical axes/points — the reported "picture card AND graph panel
+   * both show the same thing" bug. Non-graph diagram segments (a Venn
+   * diagram, a dimensioned shape) are unaffected. */
+  graphAlreadyShown?: boolean
 }
 
-export default function MathText({ text, className }: Props) {
+export default function MathText({ text, className, questionId, graphAlreadyShown }: Props) {
   const cleaned = useMemo(() => replaceMarkdownImages(text), [text])
   const segments = useMemo(() => parse(cleaned), [cleaned])
 
   const hasMath = segments.some(s => s.type !== 'text')
 
   if (!hasMath) {
-    return <span className={className}>{cleaned}</span>
+    return <span className={className}>{renderNoBreakCoordinates(cleaned)}</span>
   }
 
   return (
     <span className={`${s.mathText} ${className ?? ''}`}>
       {segments.map((seg, i) => {
         if (seg.type === 'text') {
-          return <span key={i}>{seg.content}</span>
+          return <span key={i}>{renderNoBreakCoordinates(seg.content, `mt-${i}`)}</span>
         }
         if (seg.type === 'diagram') {
-          return <AltDiagramCallout key={i} alt={seg.alt} />
+          if (graphAlreadyShown && isGraphShapedAlt(seg.alt)) {
+            return <span key={i} className={s.graphRefNote}>(see graph →)</span>
+          }
+          return <AltDiagramCallout key={i} alt={seg.alt} questionId={questionId} />
         }
         if (seg.type === 'inline') {
           const html = renderLatex(seg.expr, false)

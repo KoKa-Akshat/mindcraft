@@ -26,6 +26,13 @@
   color: inherit;
 }
 
+/* short pointer shown instead of a redundant diagram caption when a GraphBox
+   panel elsewhere on the page already plots this question's figure */
+.graphRefNote {
+  font-style: italic;
+  color: var(--ink-dim, #6b7280);
+}
+
 /* fallback when KaTeX hasn't loaded or expression is malformed */
 .texFallback {
   font-family: var(--tok-font-mono);

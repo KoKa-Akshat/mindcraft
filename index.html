@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft | Math tutoring that feels possible</title>
-<meta name="description" content="Friendly math tutoring with a clear learning map, calm support, and focused practice for students who want math to feel possible.">
-<meta name="theme-color" content="#fff8e9">
+<title>MindCraft | You were never bad at math</title>
+<meta name="description" content="MindCraft finds the exact moment math lost you, maps the gap, and pairs you with a college tutor nearby.">
+<meta name="theme-color" content="#0c1a14">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
-<meta property="og:title" content="MindCraft | Math tutoring that feels possible">
-<meta property="og:description" content="Real tutors, targeted practice, and a calm learning map for students who want math to finally click.">
+<meta property="og:title" content="MindCraft | You were never bad at math">
+<meta property="og:description" content="Find the gap. Hear the story. Meet a college tutor nearby.">
 <meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MindCraft | Math tutoring that feels possible">
-<meta name="twitter:description" content="Real tutors, targeted practice, and a calm learning map for students who want math to finally click.">
+<meta name="twitter:title" content="MindCraft | You were never bad at math">
+<meta name="twitter:description" content="Find the gap. Hear the story. Meet a college tutor nearby.">
 <meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-logo.png">
 <link rel="preload" as="image" href="img/mindcraft-logo.png">
 <link rel="preload" as="image" href="img/mindcraft-study-desk-20260706.jpg">
@@ -89,57 +89,61 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .btn:hover{transform:translateY(-2px)}
 .btn.primary{background:var(--ink);color:#fff;box-shadow:0 16px 32px rgba(20,58,46,.18)}
 .btn.soft{background:#fffdf7;color:var(--ink)}
-.hero{min-height:100vh;display:flex;align-items:center;background:radial-gradient(circle at 78% 16%,rgba(185,232,111,.48),transparent 26%),radial-gradient(circle at 16% 82%,rgba(220,238,246,.78),transparent 24%),linear-gradient(135deg,#fff8e9 0%,#f4f2dc 48%,#e4f7dc 100%);overflow:hidden}
-.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.9%,rgba(36,122,77,.075) 50%,transparent 50.1%),linear-gradient(180deg,transparent 63%,rgba(36,122,77,.06) 63.2%,transparent 63.4%)}
-.hero-map{display:none}
-.hero-map-svg{width:100%;height:100%}
-.hero-map-svg text{font-family:"IBM Plex Mono",monospace}
-.hero-map-svg path{stroke-dasharray:1;stroke-dashoffset:1;animation:mapEdgeDraw .9s var(--ease) forwards}
-.hero-map-svg path:nth-of-type(1){animation-delay:.18s}
-.hero-map-svg path:nth-of-type(2){animation-delay:.54s}
-.hero-map-svg path:nth-of-type(3){animation-delay:.94s}
-.hero-map-svg path:nth-of-type(4){animation-delay:1.34s}
-.hero-map-svg path:nth-of-type(5){animation-delay:1.74s}
-.hero-map-svg path:nth-of-type(6){animation-delay:2.14s}
-.hero-map-svg circle,.hero-map-svg text{transform-box:fill-box;transform-origin:center;opacity:0;animation:mapNodePlot .64s var(--ease) forwards}
-.hero-map-svg circle{filter:drop-shadow(0 10px 18px rgba(20,58,46,.08))}
-.hero-map-svg circle:nth-of-type(1),.hero-map-svg circle:nth-of-type(2),.hero-map-svg text:nth-of-type(1),.hero-map-svg text:nth-of-type(2){animation-delay:.52s}
-.hero-map-svg circle:nth-of-type(3),.hero-map-svg text:nth-of-type(3),.hero-map-svg text:nth-of-type(4){animation-delay:.92s}
-.hero-map-svg circle:nth-of-type(4),.hero-map-svg text:nth-of-type(5),.hero-map-svg text:nth-of-type(6){animation-delay:1.32s}
-.hero-map-svg circle:nth-of-type(5),.hero-map-svg text:nth-of-type(7),.hero-map-svg text:nth-of-type(8){animation-delay:1.72s}
-.hero-map-svg circle:nth-of-type(6),.hero-map-svg text:nth-of-type(9),.hero-map-svg text:nth-of-type(10){animation-delay:2.12s}
-.hero-map-svg circle:nth-of-type(7),.hero-map-svg text:nth-of-type(11),.hero-map-svg text:nth-of-type(12){animation-delay:2.52s}
-.hero-map-svg circle:nth-of-type(8),.hero-map-svg circle:nth-of-type(9){animation-delay:2.92s}
-.hero-map-svg text:nth-of-type(13),.hero-map-svg text:nth-of-type(14){animation-delay:3.12s}
-.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(360px,.82fr) minmax(520px,1.18fr);gap:clamp(24px,4vw,56px);align-items:center}
-.hero-left{display:flex;flex-direction:column;gap:0}
-.hero-art{position:relative;width:100%;min-height:clamp(520px,64vh,760px);opacity:.96;display:flex;align-items:center;justify-content:center}
-.hero-art svg{width:min(112%,900px);height:auto;display:block;transform:translateX(2%) scale(1.06);transform-origin:center}
-.hero-copy{max-width:none}
-.hero-copy .lead{max-width:570px;margin-top:24px;color:#4f6357}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.cool-badge{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:12px 16px;border-radius:999px;background:#dff5c9;border:1px solid rgba(36,122,77,.16);color:var(--leaf);font-size:18px;font-weight:1000;box-shadow:0 12px 32px rgba(36,122,77,.10)}
-.cool-badge:before{content:"";width:10px;height:10px;border-radius:999px;background:var(--sprout);box-shadow:0 0 0 5px rgba(185,232,111,.28)}
-.math-float{position:absolute;inset:0;pointer-events:none;font-family:"Caveat",cursive;font-weight:700;color:rgba(36,122,77,.36)}
-.math-float span{position:absolute;font-size:clamp(34px,5vw,76px);transform:rotate(var(--r));animation:float 6s var(--ease) infinite alternate}
-.m1{left:58%;top:19%;--r:-9deg}.m2{right:12%;top:29%;--r:8deg}.m3{left:61%;bottom:24%;--r:12deg}.m4{right:22%;bottom:12%;--r:-6deg}
-.note{position:absolute;right:8%;bottom:12%;font-size:clamp(28px,3vw,48px);transform:rotate(-4deg);z-index:2;color:var(--grape)}
-.math-buddy{position:absolute;right:18%;top:12%;z-index:2;width:104px;height:92px;border-radius:34px;background:linear-gradient(135deg,var(--leaf-2),var(--leaf));box-shadow:0 22px 60px rgba(36,122,77,.24);display:grid;place-items:center;transform:rotate(5deg);animation:bob 4s var(--ease) infinite alternate}
-.math-buddy:before,.math-buddy:after{content:"";position:absolute;top:24px;width:13px;height:13px;border-radius:999px;background:#fff}
-.math-buddy:before{left:31px}
-.math-buddy:after{right:31px}
-.math-buddy span{position:relative;z-index:1;margin-top:20px;color:#fff;font-family:"Fredoka",system-ui,sans-serif;font-size:42px;font-weight:700;line-height:1}
-.stats{display:flex;flex-wrap:wrap;gap:20px 34px;max-width:none;margin-top:36px;border:none;background:transparent;box-shadow:none}
-.stat{background:transparent;padding:0;border:none;box-shadow:none;flex:0 0 auto}
-.stat strong{display:block;font-size:34px;line-height:1;color:var(--leaf);letter-spacing:-.04em;font-family:"Fredoka",system-ui,sans-serif}
-.stat span{display:block;margin-top:8px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#7a806f;position:relative;z-index:2}
-.stat-limited strong{color:#e1306c}
+/* Full-bleed hero: readable thesis + signature atlas object */
+.hero{position:relative;min-height:clamp(700px,92svh,860px);display:flex;align-items:center;padding:0;overflow:hidden;background:#070f0c;color:#fffdf7}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 70% 55% at 72% 38%,rgba(36,122,77,.28),transparent 58%),
+  radial-gradient(ellipse 45% 40% at 18% 70%,rgba(196,245,71,.08),transparent 55%),
+  linear-gradient(160deg,#0a1612 0%,#07110e 48%,#040a08 100%)}
+.hero-map{position:absolute;inset:0;width:100%;height:100%;opacity:.34;pointer-events:none;z-index:1}
+.hero-map .edge{stroke:rgba(196,245,71,.22);stroke-width:1.2;fill:none}
+.hero-map .node{fill:#c4f547}
+.hero-map .node-dim{fill:rgba(255,253,247,.22)}
+.hero-map .node-gap{fill:#c1180b}
+.hero-map .pulse{transform-box:fill-box;transform-origin:center;animation:heroNode 3.8s var(--ease) infinite}
+.hero-stage{position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto;padding:clamp(92px,12vh,132px) clamp(20px,5vw,72px) clamp(46px,8vh,72px);display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:clamp(34px,6vw,82px)}
+.hero-copy-lock{position:relative;z-index:3;max-width:590px}
+.hero-brand{font-family:"Fredoka","Nunito Sans",system-ui,sans-serif;font-size:clamp(42px,6vw,66px);font-weight:700;letter-spacing:-.05em;line-height:.9;color:#fffdf7;margin:0 0 26px;animation:heroIn .9s var(--ease) both}
+.hero-brand span{color:#c4f547}
+.hero h1{font-size:clamp(40px,6.2vw,78px);max-width:14ch;color:#fffdf7;margin:0;animation:heroIn .9s .08s var(--ease) both}
+.hero h1 em{font-style:normal;color:#c4f547}
+.hero .lead{max-width:34ch;margin:20px 0 0;font-size:clamp(16px,1.8vw,20px);font-weight:700;line-height:1.38;color:rgba(255,253,247,.76);animation:heroIn .9s .16s var(--ease) both}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;animation:heroIn .9s .24s var(--ease) both}
+.hero .btn.primary{background:#c4f547;color:#143a2e;border-color:#c4f547;box-shadow:0 18px 40px rgba(196,245,71,.22)}
+.hero .btn.primary:hover{background:#d4ff6a}
+.hero .btn.soft{background:transparent;color:#fffdf7;border-color:rgba(255,253,247,.35)}
+.hero .btn.soft:hover{background:rgba(255,253,247,.08)}
+.hero-trust{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 22px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(255,253,247,.16);max-width:100%;animation:heroIn .9s .32s var(--ease) both}
+.trust-item{display:flex;flex-direction:row;align-items:center;gap:12px;min-width:0}
+.trust-item strong{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(34px,4.6vw,48px);letter-spacing:-.04em;line-height:.95;color:#c4f547;flex:0 0 auto;white-space:nowrap}
+.trust-item span{font-size:12px;font-weight:700;line-height:1.3;color:rgba(255,253,247,.68);min-width:0;flex:1 1 auto}
+.hero-atlas{position:relative;min-height:560px;perspective:1200px;transform-style:preserve-3d;animation:heroIn .9s .18s var(--ease) both}
+.atlas-disc{position:absolute;left:50%;top:50%;width:min(520px,78vw);aspect-ratio:1;transform:translate(-50%,-50%) rotateX(62deg) rotateZ(-18deg);border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,253,247,.12) 0 16%,transparent 17%),radial-gradient(circle at 50% 50%,transparent 0 38%,rgba(196,245,71,.18) 39% 40%,transparent 41%),radial-gradient(circle at 50% 50%,transparent 0 57%,rgba(232,209,107,.34) 58% 59%,transparent 60%),radial-gradient(circle at 50% 50%,transparent 0 73%,rgba(255,253,247,.24) 74% 75%,transparent 76%);box-shadow:0 38px 90px rgba(4,11,9,.42),inset 0 0 54px rgba(196,245,71,.06)}
+.atlas-disc:before,.atlas-disc:after{content:"";position:absolute;inset:9%;border-radius:50%;border:1px solid rgba(255,253,247,.18)}
+.atlas-disc:after{inset:24%;border-color:rgba(196,245,71,.28)}
+.atlas-core{position:absolute;left:50%;top:50%;width:118px;height:118px;border-radius:50%;transform:translate(-50%,-50%);display:grid;place-items:center;background:radial-gradient(circle at 35% 28%,#fffdf7,#c4f547 42%,#247a4d 78%);box-shadow:0 24px 70px rgba(196,245,71,.26),0 0 0 12px rgba(196,245,71,.08)}
+.atlas-core span{color:#143a2e;font-size:10px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}
+.atlas-route{position:absolute;inset:14%;transform:rotate(-10deg);border-radius:50%;border-top:4px solid rgba(196,245,71,.82);border-left:2px solid transparent;filter:drop-shadow(0 0 12px rgba(196,245,71,.28))}
+.atlas-node{position:absolute;width:18px;height:18px;border-radius:50%;background:#c4f547;box-shadow:0 0 0 9px rgba(196,245,71,.10),0 12px 28px rgba(196,245,71,.26)}
+.atlas-node.gap{width:22px;height:22px;background:#c1180b;box-shadow:0 0 0 10px rgba(193,24,11,.12),0 12px 28px rgba(193,24,11,.28)}
+.atlas-node.a{left:18%;top:34%}.atlas-node.b{right:18%;top:28%}.atlas-node.c{right:24%;bottom:24%}.atlas-node.d{left:28%;bottom:18%}
+.atlas-fragment{position:absolute;border:1px solid rgba(232,209,107,.34);background:linear-gradient(135deg,rgba(232,209,107,.22),rgba(255,253,247,.08));box-shadow:0 18px 42px rgba(4,11,9,.24)}
+.atlas-fragment.f1{left:16%;bottom:20%;width:88px;height:54px;border-radius:18px;transform:rotate(-16deg)}
+.atlas-fragment.f2{right:22%;top:4%;width:118px;height:62px;border-radius:20px;transform:rotate(12deg)}
+.hero-map-svg,.hero-art,.hero-inner,.hero-left,.hero-copy,.stats,.stat,.math-float,.math-buddy,.cool-badge,.note,.hero-glow{display:none!important}
+@keyframes heroNode{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
+@keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .hero-map .pulse{animation:none!important}
+  .hero-brand,.hero h1,.hero .lead,.hero-actions,.hero-trust{animation:none!important}
+}
 .vibe{background:#fffdf7}
 .vibe-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,82px);align-items:center}
 .vibe-copy p{max-width:580px;margin-top:24px}
 .signal-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px;max-width:560px}
-.signal{height:106px;border:1px solid rgba(36,122,77,.16);border-radius:28px;background:linear-gradient(180deg,#fffdf7,#eaf8e1);display:grid;place-items:center;box-shadow:0 18px 46px rgba(20,58,46,.08);overflow:hidden}
-.signal svg{width:78%;height:78%}
+.signal{min-height:128px;border:1px solid rgba(36,122,77,.16);border-radius:28px;background:linear-gradient(180deg,#fffdf7,#eaf8e1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px 8px;box-shadow:0 18px 46px rgba(20,58,46,.08);overflow:hidden;text-align:center}
+.signal svg{width:56%;height:56%;flex-shrink:0}
+.signal-cap{font-size:11.5px;font-weight:900;line-height:1.28;letter-spacing:-.01em;color:var(--ink)}
 .notebook{position:relative;min-height:480px;border:1px solid var(--line);border-radius:48px;background:linear-gradient(#fffdf7,#f8fbeb);box-shadow:var(--shadow);overflow:hidden;padding:30px}
 .notebook:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 42px,rgba(36,122,77,.10) 43px 44px)}
 .scribble-card{position:relative;z-index:1;margin-top:36px;padding:26px;border-radius:34px;background:#e4f7dc;border:1px solid rgba(36,122,77,.14)}
@@ -160,7 +164,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .card-c{left:11%;right:9%;bottom:9%;min-height:160px}
 .graph{position:absolute;left:20px;right:20px;bottom:20px;height:82px;border-top:1px solid var(--line)}
 .graph svg{width:100%;height:100%;overflow:visible}
-.graph path{fill:none;stroke:var(--leaf);stroke-width:3;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 2.5s var(--ease) infinite alternate}
+.board-graph-line{stroke-dasharray:520;stroke-dashoffset:520;animation:drawGraph 2.4s var(--ease) forwards}
 .board-note{position:absolute;right:24px;bottom:118px;font-size:34px;transform:rotate(-5deg);color:var(--grape)}
 .steps{background:#fffdf7}
 .step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
@@ -181,23 +185,46 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .click-curve{stroke-dasharray:280;animation:curveGrow 2.2s cubic-bezier(.4,0,.2,1) infinite alternate}
 @keyframes ringPulse{0%{r:9;opacity:.55}100%{r:20;opacity:0}}
 .pulse-ring{animation:ringPulse 2s ease-out infinite}
+.journey-demo{margin-top:28px;border:1px solid var(--line);border-radius:38px;background:linear-gradient(145deg,#143a2e,#1f5c42 54%,#fffdf7 54%);box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:.9fr 1.1fr}
+.journey-left{padding:clamp(24px,4vw,42px);color:#fffdf7}
+.journey-left strong{display:block;margin-bottom:12px;color:#c4f547;font-size:11px;font-weight:1000;letter-spacing:.18em;text-transform:uppercase}
+.journey-left h3{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(34px,4vw,56px);line-height:.95;letter-spacing:-.045em}
+.journey-left p{margin-top:18px;color:rgba(255,253,247,.78);font-size:15px;max-width:420px}
+.journey-questions{display:grid;gap:10px;margin-top:28px}
+.journey-q{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;padding:12px;border:1px solid rgba(255,253,247,.16);border-radius:18px;background:rgba(255,253,247,.08)}
+.journey-q span:first-child{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(196,245,71,.12);color:#c4f547;font-size:12px;font-weight:1000}
+.journey-q b{font-size:13px}
+.journey-q em{font-style:normal;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.1em;color:#f7d46a}
+.journey-q.good em{color:#c4f547}
+.journey-right{padding:clamp(24px,4vw,42px);display:grid;gap:14px}
+.journey-map{position:relative;min-height:190px;border:1px solid rgba(20,58,46,.12);border-radius:28px;background:#fffdf7;overflow:hidden}
+.journey-map:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 24.8%,rgba(20,58,46,.08) 25%,transparent 25.2%),linear-gradient(180deg,transparent 49.8%,rgba(20,58,46,.08) 50%,transparent 50.2%)}
+.journey-route{position:absolute;inset:18px}
+.journey-route svg{width:100%;height:100%;overflow:visible}
+.journey-route path{stroke-dasharray:420;stroke-dashoffset:420;animation:drawGraph 2.8s var(--ease) forwards}
+.map-pill{position:absolute;padding:8px 10px;border-radius:999px;background:#fffdf7;border:1px solid rgba(20,58,46,.14);box-shadow:0 10px 22px rgba(20,58,46,.08);font-size:10px;font-weight:1000;letter-spacing:.09em;text-transform:uppercase;color:var(--ink)}
+.pill-a{left:4%;top:6%}.pill-b{left:43%;top:24%;background:#fff9dd}.pill-c{right:4%;bottom:5%;background:#ffe8e4;color:#a53325}
+.view-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.view-card{border:1px solid rgba(20,58,46,.12);border-radius:22px;background:#fffdf7;padding:16px;box-shadow:0 14px 30px rgba(20,58,46,.07)}
+.view-card small{display:block;margin-bottom:8px;color:var(--leaf);font-size:10px;font-weight:1000;text-transform:uppercase;letter-spacing:.14em}
+.view-card p{font-size:13px;line-height:1.45;color:var(--ink)}
+.case-study{background:linear-gradient(180deg,#fffdf7,#eaf5ea)}
+.case-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(28px,6vw,72px);align-items:center}
+.case-copy p{margin-top:18px;max-width:470px}
+.case-timeline{display:grid;gap:12px}
+.case-step{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:start;padding:18px;border:1px solid var(--line);border-radius:26px;background:#fffdf7;box-shadow:0 16px 36px rgba(20,58,46,.08)}
+.case-step span{width:56px;height:56px;border-radius:20px;display:grid;place-items:center;background:#eaf5ea;color:var(--leaf);font-size:12px;font-weight:1000;letter-spacing:.12em}
+.case-step h3{font-size:20px;letter-spacing:-.035em}
+.case-step p{font-size:14px;margin-top:6px}
 .proof{background:linear-gradient(180deg,#fff7e8,#eaf5ea)}
 .proof-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,6vw,72px);align-items:stretch;margin-top:52px}
 .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--line);border-radius:38px;background:var(--line);overflow:hidden}
-.tcard{background:#fffdf7;padding:32px;cursor:pointer;transition:background .18s;display:flex;flex-direction:column;gap:0}
+.tcard{background:#fffdf7;padding:32px;display:flex;flex-direction:column;gap:0}
 .tcard:nth-child(2){background:#eaf5ea}
 .tcard:nth-child(3){background:#eef4fb}
-.tcard:hover{background:#f0e8d4}
-.tcard:nth-child(2):hover{background:#d8edda}
-.tcard:nth-child(3):hover{background:#dce8f4}
-.tcard-front{display:flex;flex-direction:column;gap:14px}
-.tcard-q{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(17px,2vw,22px);line-height:1.3;letter-spacing:-.02em;margin:0}
-.tcard-more{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--leaf);align-self:flex-start;transition:opacity .18s}
-.tcard-open .tcard-more{opacity:0;pointer-events:none}
-.tcard-back{max-height:0;overflow:hidden;opacity:0;transition:max-height .38s cubic-bezier(.4,0,.2,1),opacity .24s ease}
-.tcard-open .tcard-back{max-height:320px;opacity:1}
-.tcard-back p{font-size:15px;line-height:1.65;color:var(--ink);margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
-.tcard-back cite{font-style:normal;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#756f66}
+.tcard-q{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(17px,2vw,22px);line-height:1.3;letter-spacing:-.02em;margin:0;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.tcard-body{font-size:15px;line-height:1.65;color:var(--ink);margin:18px 0 14px}
+.tcard-tag{font-style:normal;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--ink);margin-top:auto}
 .proof-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .about{background:linear-gradient(180deg,#eaf5ea,#fffdf7)}
 .about-head{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,5vw,64px);align-items:end}
@@ -253,15 +280,41 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .price-card p{font-size:15px}
 .price-card .btn{margin-top:24px;width:100%}
 .tryapp{background:var(--cream)}
-.tryapp-card{display:grid;grid-template-columns:.62fr 1fr;gap:clamp(24px,5vw,64px);align-items:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:34px;padding:clamp(26px,4.5vw,54px);box-shadow:0 24px 70px rgba(29,84,54,.10)}
-.tryapp-bear{position:relative;text-align:center}
-.tryapp-bear img{width:min(320px,88%);height:320px;object-fit:cover;object-position:center 28%;border-radius:30px;box-shadow:0 18px 44px rgba(60,44,20,.18);transform:rotate(-2.5deg);transition:transform .5s var(--ease)}
-.tryapp-card:hover .tryapp-bear img{transform:rotate(0deg) scale(1.02)}
-.tryapp-bear figcaption{margin-top:14px;font-family:"Caveat",cursive;font-size:24px;color:#7a806f;transform:rotate(-1deg)}
-.tryapp-copy h2{margin-top:10px}
-.tryapp-copy>p{margin-top:18px;max-width:460px}
-.tryapp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:28px}
 .tryapp-note{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a39b8e}
+.app-download{background:linear-gradient(180deg,#eaf5ea,#fffdf7)}
+.app-download .wrap{max-width:640px}
+.app-download-lead{margin-top:18px;font-size:17px;line-height:1.55}
+.app-download-list{max-width:520px}
+.app-download-note{margin-top:14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:#a39b8e}
+.findtutor-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,5vw,64px);align-items:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:34px;padding:clamp(26px,4.5vw,54px);box-shadow:0 24px 70px rgba(29,84,54,.10)}
+.findtutor-copy h2{margin-top:10px}
+.findtutor-copy>p{margin-top:18px;max-width:440px}
+.findtutor-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:28px}
+.tutor-benefits{list-style:none;display:grid;gap:12px;margin:22px 0 4px}
+.tutor-benefits li{position:relative;padding-left:22px;font-size:15px;line-height:1.5;font-weight:800;color:var(--ink)}
+.tutor-benefits li:before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--leaf-2);box-shadow:0 0 0 4px rgba(95,183,121,.16)}
+.findtutor-map-wrap{display:flex;flex-direction:column;gap:12px}
+.findtutor-map-eyebrow{margin:0;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.findtutor-search{display:grid;grid-template-columns:1fr auto;gap:10px;margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+.findtutor-search input{min-width:0;border:1px solid rgba(20,58,46,.14);border-radius:16px;background:#fffdf7;color:var(--ink);padding:13px 14px;font-size:14px;font-weight:800;outline:none;box-shadow:0 12px 28px rgba(20,58,46,.08);-webkit-appearance:none;appearance:none}
+.findtutor-search input:focus{border-color:var(--leaf);box-shadow:0 0 0 4px rgba(36,122,77,.10),0 12px 28px rgba(20,58,46,.08)}
+.findtutor-search button{border:0;border-radius:16px;background:var(--ink);color:#fffdf7;padding:0 18px;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 28px rgba(20,58,46,.12)}
+.findtutor-map,.findtutor-map-fallback{width:100%;aspect-ratio:16/11;border-radius:26px;border:6px solid #fffdf7;box-shadow:0 18px 44px rgba(20,58,46,.18)}
+.findtutor-map{overflow:hidden;background:#e4f7dc}
+.findtutor-map-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;background:linear-gradient(160deg,#eaf5ea,#dceef6);font-weight:800;color:var(--muted)}
+.findtutor-map-fallback a{color:var(--leaf);text-decoration:underline;text-underline-offset:2px}
+.findtutor-map-caption{margin:0;text-align:center;font-family:"Caveat",cursive;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
+.findtutor-list{display:grid;gap:10px}
+.findtutor-cardlet{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:22px;background:#fffdf7;box-shadow:0 12px 28px rgba(20,58,46,.08);text-decoration:none;color:inherit;cursor:pointer;transition:transform .18s var(--ease),border-color .18s var(--ease),box-shadow .18s var(--ease)}
+.findtutor-cardlet:hover{transform:translateY(-2px);border-color:rgba(36,122,77,.35);box-shadow:0 16px 34px rgba(20,58,46,.14)}
+.findtutor-cardlet img{width:64px;height:64px;border-radius:18px;object-fit:cover;box-shadow:0 10px 20px rgba(20,58,46,.14)}
+.findtutor-cardlet strong{display:block;font-family:"Fredoka",system-ui,sans-serif;font-size:18px;letter-spacing:-.03em;color:var(--ink)}
+.findtutor-cardlet p{font-size:12px;line-height:1.4;margin:3px 0 0;color:var(--muted)}
+.findtutor-distance{font-size:11px!important;font-weight:900!important;color:var(--leaf)!important;margin-top:6px!important}
+.findtutor-book{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:999px;background:var(--ink);color:#fffdf7;font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;pointer-events:none}
+.findtutor-status{margin:0;font-size:12px;font-weight:800;color:var(--leaf)}
+.findtutor-status:empty{display:none}
+.findtutor-status.is-error{color:#c1180b}
 .notebook-photo{margin:18px 0 0}
 .notebook-photo img,.notebook-photo svg{display:block;width:100%;height:auto;border-radius:20px;box-shadow:0 18px 44px rgba(20,58,46,.22);transform:rotate(1.5deg);border:6px solid #fffdf7}
 .notebook-photo figcaption{margin-top:12px;text-align:center;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
@@ -274,6 +327,10 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .intake{background:var(--sand)}
 .intake-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(28px,6vw,80px);align-items:start}
 .intake-copy p{margin-top:20px;max-width:420px}
+.apply-toggle{margin-top:26px}
+.apply-form{display:none}
+.form-stage[data-state="seat"] #intakeForm{display:block}
+.form-stage[data-state="tutor"] #tutorForm{display:block}
 .form-card{padding:28px;border:1px solid var(--line);border-radius:44px;background:#fffdf7;box-shadow:var(--shadow)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .field{display:grid;gap:8px}
@@ -300,13 +357,70 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 .stagger.show>*:nth-child(2){transition-delay:.08s}
 .stagger.show>*:nth-child(3){transition-delay:.16s}
 .stagger.show>*:nth-child(4){transition-delay:.24s}
-@keyframes draw{to{stroke-dashoffset:0}}
 @keyframes float{to{transform:translateY(-16px) rotate(calc(var(--r) + 4deg));opacity:.85}}
 @keyframes bob{to{transform:translateY(-10px) rotate(-3deg)}}
 @keyframes loaderDrift{to{transform:scale(1.02);filter:saturate(1.02) contrast(1.02)}}
 @keyframes sheen{0%{transform:translateX(-56%)}100%{transform:translateX(56%)}}
 @keyframes mapEdgeDraw{to{stroke-dashoffset:0}}
 @keyframes mapNodePlot{0%{opacity:0;transform:translateX(-28px) scale(.7)}70%{opacity:1;transform:translateX(3px) scale(1.06)}100%{opacity:1;transform:translateX(0) scale(1)}}
+.demo-wrap{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(28px,4vw,58px);align-items:center}
+.demo-copy>p:last-of-type{margin-top:16px;max-width:420px}
+.demo-lead{margin-top:14px;max-width:400px}
+.demo-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.demo-actions .btn{min-height:48px}
+.demo-toggle{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.demo-tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fffdf7;font-size:11px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
+.demo-tab:hover{border-color:var(--leaf)}
+.demo-tab.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.demo-tab-secondary{opacity:.72}
+.demo-tab-secondary.is-active{opacity:1}
+.demo-panel{display:flex;flex-direction:column;gap:12px}
+.demo-stage{position:relative;aspect-ratio:16/10;min-height:420px;border-radius:30px;overflow:hidden;border:1px solid rgba(20,58,46,.14);box-shadow:var(--shadow);background:#07110e}
+.demo-stage[data-state="story"]{aspect-ratio:16/11}
+.demo-stage[data-state="story"] .demo-poster-quest,.demo-stage[data-state="story"] .demo-live{display:none}
+.demo-stage[data-state="quest"] .demo-poster-story,.demo-stage[data-state="quest"] .demo-live{display:none}
+.demo-stage[data-state="live"] .demo-poster-story,.demo-stage[data-state="live"] .demo-poster-quest{display:none}
+.demo-poster{position:absolute;inset:0}
+.demo-poster-story{display:flex;flex-direction:column;background:radial-gradient(ellipse 80% 55% at 15% 10%,rgba(255,190,220,.35),transparent 55%),radial-gradient(ellipse 70% 50% at 90% 80%,rgba(180,210,255,.4),transparent 50%),linear-gradient(165deg,#efe6fb 0%,#e4dcf5 50%,#d9d0ef 100%);padding:clamp(10px,2vw,16px)}
+.demo-story-chrome{display:flex;align-items:center;justify-content:center;padding:2px 0 10px;font-family:"Caveat",cursive;font-size:clamp(17px,2vw,21px);font-weight:700;color:#3a2f55}
+.demo-story-viewport{position:relative;flex:1;min-height:0}
+.demo-story-viewport .demo-story-stage{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .7s var(--ease)}
+.demo-story-viewport .demo-story-stage.is-active{opacity:1;pointer-events:auto}
+.demo-story-stage{border-radius:20px;background:rgba(255,253,248,.96);box-shadow:0 10px 30px rgba(90,70,140,.14);padding:clamp(18px,3.2vw,30px);display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(16px,2.6vw,26px);align-items:start;overflow:hidden}
+.demo-story-photo{margin:0;width:clamp(140px,19vw,225px);height:clamp(140px,19vw,225px);padding:6px 6px 16px;background:#fffdf8;border-radius:6px 12px 9px 10px;box-shadow:0 10px 22px rgba(58,47,85,.14);transform:rotate(-3deg)}
+.demo-story-photo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:4px}
+.demo-story-copy{min-width:0;padding-top:clamp(10px,3vh,28px)}
+.demo-story-eyebrow{margin:0 0 4px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(58,47,85,.42)}
+.demo-story-title{margin:0 0 10px;font-family:"Caveat",cursive;font-size:clamp(24px,3.4vw,34px);font-weight:700;color:#2a2430;line-height:1}
+.demo-story-text{margin:0;height:112px;font-family:"Source Serif 4",Georgia,serif;font-size:clamp(13px,1.5vw,15.5px);line-height:1.46;color:rgba(42,36,48,.86);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.demo-story-dots{display:flex;align-items:center;justify-content:center;gap:6px;padding-top:12px}
+.demo-story-dots button{display:block;width:5px;height:5px;padding:0;border:0;border-radius:999px;background:rgba(58,47,85,.28);cursor:pointer;transition:width .3s var(--ease),background .3s var(--ease)}
+.demo-story-dots button.is-active{width:16px;background:#1d3a8a}
+.demo-story-dots button:focus-visible{outline:2px solid #1d3a8a;outline-offset:3px}
+.demo-poster-quest{overflow:hidden}
+.demo-loop-pan{position:absolute;inset:-7%;animation:demoPan 22s ease-in-out infinite alternate}
+.demo-loop-pan img{width:100%;height:100%;object-fit:cover;display:block}
+.demo-parabola{position:absolute;inset:0;width:100%;height:100%}
+.demo-parabola-path{opacity:.4;filter:drop-shadow(0 0 10px rgba(196,245,71,.6));animation:demoGlow 3.4s ease-in-out infinite}
+.demo-parabola-dot{animation:demoGlow 3.4s ease-in-out infinite}
+.demo-sword{position:absolute;right:6%;bottom:-4%;width:56px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.4));animation:demoFloat 5s ease-in-out infinite}
+.demo-loop-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,11,9,.06),rgba(4,11,9,.46) 80%);pointer-events:none}
+.demo-try{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:0;padding:12px 22px;border-radius:999px;border:1px solid rgba(255,253,247,.75);background:rgba(4,11,9,.55);backdrop-filter:blur(6px);color:#fffdf7;font-family:"Fredoka",system-ui,sans-serif;font-size:15px;font-weight:700;letter-spacing:.02em;box-shadow:0 14px 36px rgba(4,11,9,.35);cursor:pointer;transition:transform .25s var(--ease),background .25s var(--ease);z-index:3}
+.demo-try:before{content:"▶";margin-right:8px;font-size:11px;vertical-align:1px}
+.demo-try:hover{transform:translate(-50%,-50%) scale(1.05);background:rgba(4,11,9,.72)}
+.demo-try:focus-visible{outline:3px solid rgba(196,245,71,.85);outline-offset:3px}
+.demo-poster-story .demo-try{left:auto;top:auto;right:18px;bottom:18px;transform:none;background:rgba(29,58,138,.88);border-color:transparent}
+.demo-poster-story .demo-try:hover{transform:scale(1.05);background:#1d3a8a}
+.demo-live{position:absolute;inset:0;background:#080e14}
+.demo-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#080e14}
+.demo-live-bar{position:absolute;left:10px;right:10px;bottom:10px;z-index:4;display:flex;justify-content:flex-end;gap:8px;pointer-events:none}
+.demo-close,.demo-open{pointer-events:auto;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,253,247,.28);background:rgba(4,11,9,.78);color:#fffdf7;font-size:10px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;backdrop-filter:blur(6px)}
+.demo-close:hover,.demo-open:hover{background:rgba(4,11,9,.92)}
+.demo-note{color:#7a806f;font-size:15px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.demo-note a{color:var(--ink);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+@keyframes demoPan{0%{transform:scale(1.04) translate(0,0)}100%{transform:scale(1.15) translate(-2.5%,-2%)}}
+@keyframes demoGlow{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes demoFloat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-9px) rotate(-1deg)}}
 @media(max-width:920px){
   .nav-links a:not(.join):not(.login){display:none}
   .hero-inner{grid-template-columns:1fr;gap:32px}
@@ -314,7 +428,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .hero-art svg{width:100%;transform:none}
   .math-float,.math-buddy,.note{display:none}
   .stats,.step-grid,.form-grid{grid-template-columns:1fr}
-  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.price-grid,.intake-grid,.tryapp-card,.about-head,.founder-grid,.founder-card{grid-template-columns:1fr}
+  .vibe-grid,.system-grid,.proof-layout,.testimonial-grid,.video-grid,.journey-demo,.view-grid,.case-grid,.price-grid,.intake-grid,.findtutor-card,.about-head,.founder-grid,.founder-card,.demo-wrap{grid-template-columns:1fr}
+  .hero{min-height:auto;align-items:center}
+  .hero-stage{grid-template-columns:1fr;gap:28px;padding-top:108px}
+  .hero-atlas{order:-1;min-height:360px}
   .founder-card{min-height:560px}
   .founder-photo{width:min(260px,100%);justify-self:start}
   .footer-nav{justify-items:start}
@@ -341,14 +458,38 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   .nav-links a{display:none!important}
   .nav-links{display:none}
   .mobile-try{display:inline-flex;position:absolute;right:10px;top:50%;transform:translateY(-50%);padding:9px 10px;border-radius:999px;border:1px solid var(--nav-login-border);background:var(--nav-login-bg);font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
-  .hero{align-items:flex-start;padding-top:116px}
-  .hero .wrap{width:100%}
-  h1{font-size:clamp(47px,14vw,58px);line-height:.95;letter-spacing:-.035em}
-  .hero-copy .lead{font-size:17px;max-width:310px}
-  .cool-badge{font-size:16px;width:100%;justify-content:center}
+  .hero{min-height:auto;align-items:center}
+  .hero-stage{padding:96px 20px 54px;gap:22px}
+  .hero-atlas{min-height:250px;margin:0 -12px}
+  .atlas-disc{width:min(280px,84vw)}
+  .atlas-core{width:74px;height:74px}
+  .atlas-fragment{opacity:.55}
+  .hero-brand{font-size:clamp(36px,12vw,48px);margin-bottom:18px}
+  .hero h1{font-size:clamp(34px,10vw,48px);max-width:12ch}
+  .hero .lead{font-size:16px;max-width:28ch}
+  .hero-trust{gap:14px 12px}
+  .trust-item{gap:8px}
+  .trust-item strong{font-size:clamp(28px,9vw,36px)}
+  .trust-item span{font-size:11px}
+  .hero-actions{width:calc(100vw - 80px)!important;max-width:310px;flex-direction:column;align-self:flex-start}
+  .hero-actions .btn{width:100%;min-width:0;flex:none;justify-content:center}
+  .findtutor-search{grid-template-columns:1fr}
+  .findtutor-search button{min-height:44px}
   .form-card,.price-card,.quote,.step{padding:24px}
+  .journey-demo{background:linear-gradient(180deg,#143a2e 0,#1f5c42 48%,#fffdf7 48%);width:100%;max-width:334px;margin-left:0;margin-right:auto}
+  .journey-left,.journey-right,.journey-map,.view-card{min-width:0}
   .signal-row{grid-template-columns:1fr}
   .photo span{display:none}
+  .demo-copy h2{font-size:clamp(46px,14vw,58px);max-width:8.5ch}
+  .demo-wrap,.demo-copy,.demo-panel,.demo-story-copy{min-width:0}
+  .demo-copy .demo-lead{max-width:260px}
+  .demo-panel,.demo-stage{width:100%;max-width:334px;min-width:0}
+  .demo-stage,.demo-stage[data-state="story"]{aspect-ratio:4/5;min-height:auto}
+  .demo-try{padding:11px 18px;font-size:14px}
+  .demo-sword{width:42px}
+  .demo-story-stage{grid-template-columns:minmax(0,1fr);width:100%;max-width:100%;min-width:0;padding:14px}
+  .demo-story-photo{width:120px;height:120px;margin:0 auto}
+  .demo-story-text{-webkit-line-clamp:4;height:80px;overflow-wrap:anywhere;word-break:break-word}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
@@ -376,174 +517,180 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <div class="grain"></div>
 <div class="page-shell">
-  <nav class="nav nav-hero">
+  <nav class="nav nav-green">
     <a class="brand" href="#top">Mind<span>Craft</span></a>
     <div class="nav-links">
-      <a href="blog.html">Blog</a>
-      <a href="#about">About</a>
+      <a href="#demo">Preview</a>
+      <a href="#try-app">Tutors</a>
+      <a href="#app">App</a>
+      <a href="#about">Team</a>
       <a class="join" href="#intake">Apply</a>
     </div>
     <a class="mobile-try" href="#intake">Apply</a>
   </nav>
   <main>
-    <section class="hero" id="top" data-nav="hero">
-      <div class="math-float" aria-hidden="true">
-        <span class="m1">+</span><span class="m2">=</span><span class="m3">x</span><span class="m4">?</span>
-      </div>
-      <div class="wrap hero-inner">
-        <div class="hero-left">
-          <div class="hero-copy reveal">
-            <p class="label">The moment it clicks</p>
-            <h1><span>You were never</span><span>bad at math.</span></h1>
-            <p class="lead">MindCraft finds where the thinking broke, maps the route back, and gives your tutor the story before session one.</p>
-            <div class="hero-actions">
-              <a class="btn primary" href="#intake">Request a seat</a>
-              <a class="btn soft" href="#system">See how it works</a>
-            </div>
+    <section class="hero" id="top" data-nav="green">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <svg class="hero-map" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path class="edge" d="M180 520 C260 420 340 380 420 400 C520 430 580 320 680 280 C780 240 860 300 940 220"/>
+        <path class="edge" d="M320 620 C400 560 480 540 560 560 C640 580 700 500 780 460 C860 420 920 440 1020 380"/>
+        <path class="edge" d="M480 200 C540 260 600 300 700 290 C800 280 860 340 960 360"/>
+        <circle class="node-dim" cx="180" cy="520" r="6"/>
+        <circle class="node-dim" cx="320" cy="620" r="5"/>
+        <circle class="node-dim" cx="420" cy="400" r="7"/>
+        <circle class="node" cx="560" cy="560" r="7"/>
+        <circle class="node pulse" cx="680" cy="280" r="9"/>
+        <circle class="node-gap pulse" cx="940" cy="220" r="8"/>
+        <circle class="node" cx="780" cy="460" r="6"/>
+        <circle class="node-dim" cx="1020" cy="380" r="5"/>
+        <circle class="node-dim" cx="480" cy="200" r="5"/>
+        <circle class="node" cx="960" cy="360" r="6"/>
+      </svg>
+      <div class="hero-stage">
+        <div class="hero-copy-lock">
+          <p class="hero-brand">Mind<span>Craft</span></p>
+          <h1>You were never<br>bad at <em>math.</em></h1>
+          <p class="lead">Somebody decided that about you, and you built a life around it. We find the exact moment math lost you, then put a real tutor right there. Not at page one.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#map">Find the exact gap</a>
+            <a class="btn soft" href="#intake">Request a seat</a>
           </div>
-          <div class="stats reveal stagger">
-            <div class="stat"><strong>6.5M+</strong><span>Learning moments analyzed</span></div>
-            <div class="stat"><strong>1,500+</strong><span>Practice questions</span></div>
-            <div class="stat"><strong>293</strong><span>Misconception patterns</span></div>
-            <div class="stat"><strong>42</strong><span>Concept stories</span></div>
+          <div class="hero-trust" role="list" aria-label="Why families trust MindCraft">
+            <div class="trust-item" role="listitem"><strong>1:1</strong><span>A real college tutor who starts at your gap. Never a chatbot.</span></div>
+            <div class="trust-item" role="listitem"><strong>48 hrs</strong><span>We reply to every family, ourselves.</span></div>
+            <div class="trust-item" role="listitem"><strong>4</strong><span>Students helped</span></div>
+            <div class="trust-item" role="listitem"><strong>6.5M+</strong><span>Learning moments mapped</span></div>
           </div>
         </div>
-        <div class="hero-art reveal" aria-hidden="true" id="heroArt">
-          <svg class="hero-map-svg" viewBox="0 0 680 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="heroMapGlow" cx="50%" cy="48%" r="58%">
-                <stop offset="0" stop-color="#fffdf7" stop-opacity=".78"/>
-                <stop offset=".55" stop-color="#e4f7dc" stop-opacity=".35"/>
-                <stop offset="1" stop-color="#fff8e9" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <rect x="20" y="28" width="630" height="440" rx="46" fill="url(#heroMapGlow)"/>
-            <path pathLength="1" d="M100 124 C175 88 244 107 310 180" stroke="rgba(20,58,46,.18)" stroke-width="3" stroke-dasharray="7 9"/>
-            <path pathLength="1" d="M310 180 C360 136 430 126 514 164" stroke="rgba(20,58,46,.20)" stroke-width="3"/>
-            <path pathLength="1" d="M514 164 C574 204 590 270 552 342" stroke="rgba(20,58,46,.17)" stroke-width="2.6" stroke-dasharray="7 8"/>
-            <path pathLength="1" d="M310 180 C282 244 258 316 216 378" stroke="rgba(20,58,46,.18)" stroke-width="3"/>
-            <path pathLength="1" d="M310 180 C392 247 435 317 426 412" stroke="rgba(20,58,46,.16)" stroke-width="2.7" stroke-dasharray="7 9"/>
-            <path pathLength="1" d="M100 124 C119 224 160 304 216 378" stroke="rgba(20,58,46,.15)" stroke-width="2.5" stroke-dasharray="6 8"/>
-            <path pathLength="1" d="M216 378 C300 336 382 342 552 342" stroke="rgba(29,58,138,.16)" stroke-width="2.6"/>
-            <path pathLength="1" d="M426 412 C496 398 542 360 552 342" stroke="rgba(29,58,138,.14)" stroke-width="2.5" stroke-dasharray="6 8"/>
-
-            <circle cx="310" cy="180" r="58" fill="#fffdf7" stroke="#c4f547" stroke-width="7"/>
-            <circle cx="310" cy="180" r="45" fill="none" stroke="#247a4d" stroke-width="2" opacity=".38"/>
-            <circle cx="348" cy="218" r="13" fill="#c4f547" stroke="#247a4d" stroke-width="3"/>
-            <text x="310" y="187" text-anchor="middle" font-size="20" fill="#143a2e" font-weight="900">linear</text>
-
-            <circle cx="514" cy="164" r="48" fill="#fffdf7" stroke="#1d3a8a" stroke-width="5"/>
-            <text x="514" y="171" text-anchor="middle" font-size="17" fill="#1d3a8a" font-weight="900">functions</text>
-
-            <circle cx="100" cy="124" r="41" fill="#fffdf7" stroke="rgba(29,58,138,.34)" stroke-width="3" stroke-dasharray="7 7"/>
-            <text x="100" y="131" text-anchor="middle" font-size="14" fill="#6f6a61">fractions</text>
-
-            <circle cx="586" cy="274" r="37" fill="#fffdf7" stroke="rgba(29,58,138,.32)" stroke-width="3" stroke-dasharray="7 7"/>
-            <text x="586" y="280" text-anchor="middle" font-size="12" fill="#6f6a61">quadratics</text>
-
-            <circle cx="216" cy="378" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
-            <text x="216" y="383" text-anchor="middle" font-size="11.5" fill="#8a8377">triangles</text>
-
-            <circle cx="426" cy="412" r="34" fill="#fffdf7" stroke="rgba(29,58,138,.24)" stroke-width="2.5" stroke-dasharray="6 7"/>
-            <text x="426" y="417" text-anchor="middle" font-size="11.5" fill="#8a8377">circles</text>
-
-            <circle cx="552" cy="342" r="30" fill="#fffdf7" stroke="rgba(36,122,77,.34)" stroke-width="2.5" stroke-dasharray="5 7"/>
-            <text x="552" y="347" text-anchor="middle" font-size="11.5" fill="#6f786a">rates</text>
-
-            <circle cx="552" cy="342" r="39" fill="none" stroke="#c1121f" stroke-width="2" stroke-dasharray="5 8" opacity=".55"/>
-            <circle cx="586" cy="342" r="7" fill="#fffdf7" stroke="#c1121f" stroke-width="3" opacity=".95"/>
-            <text x="548" y="96" font-family="Caveat,cursive" font-size="42" fill="rgba(36,122,77,.30)" transform="rotate(10,548,96)">=</text>
-            <text x="120" y="316" font-family="Caveat,cursive" font-size="70" fill="rgba(36,122,77,.22)" transform="rotate(-18,120,316)">+</text>
-            <text x="452" y="470" font-family="Caveat,cursive" font-size="86" fill="rgba(36,122,77,.18)" transform="rotate(6,452,470)">?</text>
-          </svg>
+        <div class="hero-atlas" aria-hidden="true">
+          <div class="atlas-disc">
+            <div class="atlas-route"></div>
+            <div class="atlas-core"><span>gap</span></div>
+            <span class="atlas-node a"></span>
+            <span class="atlas-node b gap"></span>
+            <span class="atlas-node c"></span>
+            <span class="atlas-node d"></span>
+          </div>
+          <span class="atlas-fragment f1"></span>
+          <span class="atlas-fragment f2"></span>
         </div>
       </div>
     </section>
 
-    <section class="vibe" data-nav="paper">
-      <div class="wrap vibe-grid">
-        <div class="vibe-copy reveal">
-          <p class="label">The energy</p>
-          <h2>Less pressure. More signal.</h2>
-          <p>We turn stuck into a visible next move.</p>
-          <div class="signal-row" aria-hidden="true">
-            <div class="signal">
-              <svg viewBox="0 0 140 100" fill="none">
-                <path d="M24 66 C42 36 58 34 72 56 C86 78 104 74 118 42" stroke="#c4f547" stroke-width="13" stroke-linecap="round"/>
-                <path d="M24 66 C42 36 58 34 72 56 C86 78 104 74 118 42" stroke="#247a4d" stroke-width="4" stroke-linecap="round"/>
-                <circle cx="72" cy="56" r="11" fill="#fffdf7" stroke="#c1180b" stroke-width="4"/>
-              </svg>
-            </div>
-            <div class="signal">
-              <svg viewBox="0 0 140 100" fill="none">
-                <path d="M26 70 H116" stroke="rgba(20,58,46,.16)" stroke-width="3" stroke-linecap="round"/>
-                <path d="M36 68 C52 46 66 42 82 48 C96 54 104 44 116 28" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
-                <circle cx="82" cy="48" r="10" fill="#c4f547" stroke="#247a4d" stroke-width="4"/>
-              </svg>
-            </div>
-            <div class="signal">
-              <svg viewBox="0 0 140 100" fill="none">
-                <rect x="28" y="24" width="84" height="52" rx="16" fill="#fffdf7" stroke="rgba(36,122,77,.24)" stroke-width="3"/>
-                <path d="M50 50 H90 M50 62 H74" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
-                <circle cx="98" cy="38" r="9" fill="#c4f547" stroke="#247a4d" stroke-width="3"/>
-              </svg>
-            </div>
+    <section class="demo" id="demo" data-nav="cream">
+      <div class="wrap demo-wrap reveal">
+        <div class="demo-copy">
+          <p class="label">Story Worlds</p>
+          <h2 id="demoHeading">Who came up with these frivolous things?</h2>
+          <p class="demo-lead">Bookkeepers, sailors, astronomers.<br>The weird stuff had a reason.</p>
+          <div class="demo-actions">
+            <button type="button" class="btn primary" id="storyTryBtn">Try demo</button>
           </div>
         </div>
-        <div class="notebook reveal">
-          <div class="scribble-card">
-            <b class="script">breathe, then try again</b>
-            <p>A missed problem becomes a clue. The map shows where the thinking broke.</p>
-          </div>
-          <figure class="notebook-photo" aria-hidden="true">
-            <svg viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clean progress chart">
-              <rect class="graph-card" x="18" y="18" width="324" height="184" rx="18" fill="#ffffff" stroke="rgba(20,58,46,0.10)" stroke-width="1.5"/>
-              <path d="M72 166 C106 134 126 112 154 124 C184 136 202 112 226 92 C250 72 272 78 296 54" stroke="rgba(36,122,77,0.16)" stroke-width="13" stroke-linecap="round"/>
-              <path id="vibeProgressPath" class="graph-line" d="M72 166 C106 134 126 112 154 124 C184 136 202 112 226 92 C250 72 272 78 296 54" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
-              <circle class="graph-dot" r="8" fill="#c4f547" stroke="#247a4d" stroke-width="3">
-                <animateMotion dur="3.6s" repeatCount="indefinite" rotate="auto">
-                  <mpath href="#vibeProgressPath"/>
-                </animateMotion>
-              </circle>
-            </svg>
-            <figcaption class="script">every page tells the story</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
+        <div class="demo-panel">
+          <div class="demo-stage" id="demoStage" data-state="story">
 
-    <section class="system" id="system" data-nav="mint">
-      <div class="wrap system-grid">
-        <div class="system-copy reveal">
-          <p class="label">The learning map</p>
-          <h2>Find where it broke.</h2>
-          <p>A slope mistake might be a graphing gap, a ratio gap, or a language gap. The map shows tutor and student exactly where to start.</p>
-        </div>
-        <div class="board reveal" data-tilt>
-          <article class="board-card card-a">
-            <strong>Current break</strong>
-            <h3>Slope to equation form</h3>
-            <p>The student uses the point as the intercept.</p>
-            <div class="graph"><svg viewBox="0 0 420 90" aria-hidden="true"><path d="M4 72 C68 18 116 38 162 55 S240 84 302 32 S370 18 416 42"/></svg></div>
-          </article>
-          <article class="board-card card-b">
-            <strong>Next session</strong>
-            <h3>Graph first</h3>
-            <p>Sketch, mark the point, then solve.</p>
-          </article>
-          <article class="board-card card-c">
-            <strong>Parent signal</strong>
-            <p>What clicked, what is still stuck, what comes next.</p>
-          </article>
-          <div class="board-note script">point is not b</div>
+            <div class="demo-poster demo-poster-story" id="demoPosterStory">
+              <p class="demo-story-chrome">MindCraft</p>
+              <div class="demo-story-viewport" id="demoStoryViewport">
+                <div class="demo-story-stage is-active" data-slide="0">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-fractions-decimals.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Fractions and Decimals</h3>
+                    <p class="demo-story-text">In 1585, a bookkeeper named Simon Stevin watched grown men suffer over arithmetic. Army paymasters divided wages by candlelight, wrestling twelfths of guilders until the numbers swam.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="1">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-ratios-proportions.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Ratios and Proportions</h3>
+                    <p class="demo-story-text">Around 600 BC, a traveler named Thales stood before the Great Pyramid. Priests said its height could never be measured. He looked at his own shadow, then the pyramid's, and found the number that connected them.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="2">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-order-of-operations.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Order of Operations</h3>
+                    <p class="demo-story-text">In 1843, Ada Lovelace was writing instructions for a machine that did not exist yet. One line said add this, multiply that. Which happens first? The machine could not guess, so she wrote the rule that decided.</p>
+                  </div>
+                </div>
+                <div class="demo-story-stage" data-slide="3">
+                  <figure class="demo-story-photo" aria-hidden="true">
+                    <img src="img/story-linear-equations.jpg" alt="" loading="lazy" width="800" height="800">
+                  </figure>
+                  <div class="demo-story-copy">
+                    <p class="demo-story-eyebrow">Story slideshow</p>
+                    <h3 class="demo-story-title">Linear Equations</h3>
+                    <p class="demo-story-text">In 1761, a ship carried the strangest cargo of the age: a five inch watch, guarded by a carpenter's son. If no clock can be perfect at sea, John Harrison asked, what is the next best thing?</p>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-story-dots" id="demoStoryDots">
+                <button type="button" class="is-active" data-dot="0" aria-label="Fractions and Decimals"></button>
+                <button type="button" data-dot="1" aria-label="Ratios and Proportions"></button>
+                <button type="button" data-dot="2" aria-label="Order of Operations"></button>
+                <button type="button" data-dot="3" aria-label="Linear Equations"></button>
+              </div>
+            </div>
+
+            <div class="demo-live" id="demoLive" hidden>
+              <div class="demo-live-bar">
+                <a class="demo-open" id="demoOpenFull" href="#" target="_blank" rel="noopener">Open full</a>
+                <button type="button" class="demo-close" id="demoCloseBtn">Close</button>
+              </div>
+              <iframe class="demo-frame" id="demoFrame" title="Play Manjushree" allow="fullscreen"></iframe>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>
 
     <section class="steps" id="map" data-nav="paper">
       <div class="wrap reveal">
-        <p class="label">How it works</p>
-        <h2>Find the break. Build the route.</h2>
+        <p class="label">The exact gap, found</p>
+        <h2>Not “bad at math.”<br>One exact gap, named.</h2>
+        <div class="journey-demo">
+          <div class="journey-left">
+            <strong>Sample diagnostic</strong>
+            <h3>Maya keeps missing slope questions.</h3>
+            <p>Not because she is “bad at algebra.” Her answers show one earlier idea slipping: she treats the point as the intercept.</p>
+            <div class="journey-questions" aria-label="Sample diagnostic answers">
+              <div class="journey-q good"><span>01</span><b>Reads a graph correctly</b><em>solid</em></div>
+              <div class="journey-q"><span>02</span><b>Uses (3, 5) as b</b><em>fragile</em></div>
+              <div class="journey-q"><span>03</span><b>Equation form collapses</b><em>gap found</em></div>
+            </div>
+          </div>
+          <div class="journey-right">
+            <div class="journey-map" aria-label="Concept route from graph reading to equation form">
+              <div class="journey-route">
+                <svg viewBox="0 0 520 220" fill="none" aria-hidden="true">
+                  <path d="M42 56 C126 28 168 112 250 112 C334 112 354 172 474 148" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="42" cy="56" r="10" fill="#5fb779"/>
+                  <circle cx="250" cy="112" r="12" fill="#e8d16b"/>
+                  <circle cx="474" cy="148" r="13" fill="#c1180b"/>
+                </svg>
+              </div>
+              <span class="map-pill pill-a">Graph reading</span>
+              <span class="map-pill pill-b">Slope</span>
+              <span class="map-pill pill-c">Point-intercept confusion</span>
+            </div>
+            <div class="view-grid">
+              <article class="view-card"><small>Student</small><p>“I keep getting these questions wrong, and I do not know where it goes off.”</p></article>
+              <article class="view-card"><small>Tutor</small><p>Find the first shaky step, rebuild it slowly, then try the same pattern again.</p></article>
+              <article class="view-card"><small>Parent</small><p>Today she found the step that was slipping. Next session, we make it stick.</p></article>
+            </div>
+          </div>
+        </div>
         <div class="step-grid stagger">
 
           <article class="step">
@@ -564,7 +711,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             </div>
             <div>
               <h3>Scan</h3>
-              <p>A few answers show where the pattern breaks.</p>
+              <p>A few answers are enough. We are looking for the exact rung that slipped.</p>
             </div>
           </article>
 
@@ -585,7 +732,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             </div>
             <div>
               <h3>Map</h3>
-              <p>The route is clear before the session starts.</p>
+              <p>Student, parent, and tutor see the same route: mastered, shaky, untouched.</p>
             </div>
           </article>
 
@@ -606,8 +753,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               </svg>
             </div>
             <div>
-              <h3>Return</h3>
-              <p>The student explains it back. That is when it lands.</p>
+              <h3>Tutor</h3>
+              <p>A real college tutor opens the same map and starts exactly there. Not page one. Not a review of everything she already knows. The gap, today.</p>
             </div>
           </article>
 
@@ -615,14 +762,124 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       </div>
     </section>
 
+    <section class="tryapp" id="try-app" data-nav="cream">
+      <div class="wrap">
+        <div class="findtutor-card reveal">
+          <div class="findtutor-copy">
+            <p class="label">For parents</p>
+            <h2>You don’t have to teach this.</h2>
+            <p class="findtutor-lead">A real college tutor already knows exactly where she got stuck, before the session even starts. Afterward, you get the update: what clicked, what’s still shaky. No sitting in, no quizzing her at dinner, no relearning algebra yourself.</p>
+            <ul class="tutor-benefits">
+              <li>A vetted college tutor, not a stranger picked off a marketplace listing.</li>
+              <li>She gets the session. You get a plain-language report, not homework of your own.</li>
+              <li>Not ready to commit? Book a free 15-minute call. Just you and the tutor, talking about what your kid actually needs.</li>
+            </ul>
+            <div class="findtutor-actions">
+              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">See tutors near you →</a>
+              <a class="btn soft" href="mailto:joinmindcraft@gmail.com?subject=15-minute%20intro%20call&amp;body=I%27d%20like%20to%20book%20a%20free%2015-minute%20call%20with%20a%20tutor.%0A%0AParent%20name%3A%0AChild%27s%20grade%3A%0ABest%20time%20to%20call%3A">Book a 15-min call</a>
+            </div>
+          </div>
+          <div class="findtutor-map-wrap">
+            <p class="findtutor-map-eyebrow">Ready to book? Search your address.</p>
+            <form class="findtutor-search" id="ftSearchForm">
+              <input id="ftAddress" type="search" placeholder="City, state, or street (try California)" autocomplete="street-address" aria-label="Find tutors near an address">
+              <button type="submit">Search</button>
+            </form>
+            <p class="findtutor-status" id="ftStatus" aria-live="polite"></p>
+            <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near you"></div>
+            <div class="findtutor-list" id="ftTutorList"></div>
+            <p class="findtutor-map-caption">search your address, then book. sessions run over video</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-download" id="app" data-nav="mint">
+      <div class="wrap reveal">
+        <p class="label">The companion app</p>
+        <h2>Take the map home.</h2>
+        <p class="app-download-lead">Between sessions, the map goes where she goes: the same route her tutor sees, the story chapter for whatever gap is open right now, and practice aimed at that exact gap, not a random worksheet.</p>
+        <ul class="tutor-benefits app-download-list">
+          <li>Every chapter frames the gap as a story first, the problem second.</li>
+          <li>The same map her tutor uses: mastered, shaky, untouched, all in one place.</li>
+          <li>Currently iPad only, in private testing ahead of a full release.</li>
+        </ul>
+        <div class="findtutor-actions">
+          <button type="button" class="btn primary" id="appDownloadBtn">Get the iPad app →</button>
+        </div>
+        <p class="app-download-note" id="appDownloadNote" hidden>Public download opens once TestFlight testing goes live. Check back soon.</p>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing" data-nav="green">
+      <div class="wrap">
+        <div class="reveal">
+          <p class="label">Enrollment</p>
+          <h2>A few seats left.</h2>
+        </div>
+        <div class="price-grid reveal">
+          <div class="includes">
+            <article class="include"><span>01</span><div><h3>Live 1-on-1</h3><p>Session one starts on the map.</p></div></article>
+            <article class="include"><span>02</span><div><h3>The map</h3><p>Mastered, fragile, untouched. Same for everyone.</p></div></article>
+            <article class="include"><span>03</span><div><h3>Daily practice</h3><p>Aimed at the gap, not last week’s chapter.</p></div></article>
+            <article class="include"><span>04</span><div><h3>Parent signal</h3><p>What clicked. What’s stuck. What’s next.</p></div></article>
+          </div>
+          <article class="price-card">
+            <small>MindCraft Premium</small>
+            <strong style="font-size:32px;letter-spacing:-0.02em;line-height:1.2;display:block;margin:18px 0 8px;">Tell us their story.</strong>
+            <p>We reply in 48 hours. No commitment to apply.</p>
+            <a class="btn primary" href="#intake">Request a seat</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="intake" id="intake" data-nav="sand">
+      <div class="wrap intake-grid">
+        <div class="intake-copy reveal">
+          <p class="label" id="applyLabel">Apply</p>
+          <h2 id="applyHeading">Tell us their story.</h2>
+          <div class="demo-toggle apply-toggle" role="tablist" aria-label="Choose an application type">
+            <button type="button" class="demo-tab is-active" id="applyTabSeat" role="tab" aria-selected="true">Apply for a seat</button>
+            <button type="button" class="demo-tab" id="applyTabTutor" role="tab" aria-selected="false">Apply to tutor</button>
+          </div>
+        </div>
+        <div class="form-stage reveal" id="applyStage" data-state="seat">
+          <form class="form-card apply-form" id="intakeForm">
+            <div class="form-grid">
+              <div class="field"><label for="parentName">Parent name</label><input id="parentName" name="parentName" autocomplete="name" required></div>
+              <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+              <div class="field"><label for="studentName">Student name</label><input id="studentName" name="studentName" required></div>
+              <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
+              <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Homework, confidence, ACT math, algebra, geometry, test anxiety..." required></textarea></div>
+            </div>
+            <button class="btn primary" type="submit">Apply now</button>
+            <p class="form-note">Opens a pre-filled email. We reply within 48 hours.</p>
+            <div class="status" id="formStatus">Opening your email with the intake details. Responses are sent to joinmindcraft@gmail.com.</div>
+          </form>
+          <form class="form-card apply-form" id="tutorForm">
+            <div class="form-grid">
+              <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="tutorName" autocomplete="name" required></div>
+              <div class="field"><label for="tutorEmail">Email</label><input id="tutorEmail" name="tutorEmail" type="email" autocomplete="email" required></div>
+              <div class="field"><label for="tutorYear">Year &amp; major</label><input id="tutorYear" name="tutorYear" placeholder="Sophomore, Computer Science" required></div>
+              <div class="field"><label for="tutorAvailability">Availability</label><input id="tutorAvailability" name="tutorAvailability" placeholder="Weekday evenings, weekends" required></div>
+              <div class="field full"><label for="tutorBackground">Math background</label><textarea id="tutorBackground" name="tutorBackground" placeholder="Courses you've taken, where you feel strongest, any tutoring experience..." required></textarea></div>
+            </div>
+            <button class="btn primary" type="submit">Apply to tutor</button>
+            <p class="form-note">Opens a pre-filled email. We reply within 48 hours.</p>
+            <div class="status" id="tutorFormStatus">Opening your email with your tutor application. Responses are sent to joinmindcraft@gmail.com.</div>
+          </form>
+        </div>
+      </div>
+    </section>
     <section class="about" id="about" data-nav="mint">
       <div class="wrap">
         <div class="about-head reveal">
           <div>
-            <p class="label">About us</p>
-            <h2>Built by tutors who know the feeling.</h2>
+            <p class="label">Who we are</p>
+            <h2>Tutors who know the feeling.</h2>
           </div>
-          <p>A sharper way to find the gap, then build from there.</p>
+          <p>Find the gap. Build from there.</p>
         </div>
         <div class="founder-grid reveal">
           <article class="founder-card founder-trigger" tabindex="0" role="button" aria-label="Flip Akshat Koirala profile" aria-expanded="false">
@@ -695,120 +952,54 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       </div>
     </section>
 
-    <section class="proof" id="proof" data-nav="cream">
+    <section class="case-study" id="proof" data-nav="mint">
+      <div class="wrap case-grid reveal">
+        <div class="case-copy">
+          <p class="label">Product proof</p>
+          <h2>A session should leave a trail.</h2>
+          <p>No fake testimonials while we are early. The proof we can show right now is the shape of the work: answer evidence, a named misconception, and a next session that starts in the right place.</p>
+        </div>
+        <div class="case-timeline" aria-label="Sample MindCraft session trail">
+          <article class="case-step"><span>01</span><div><h3>Before</h3><p>“I know slope, but equations still feel random.”</p></div></article>
+          <article class="case-step"><span>02</span><div><h3>During</h3><p>The map finds point-intercept confusion hiding under linear equations.</p></div></article>
+          <article class="case-step"><span>03</span><div><h3>After</h3><p>The student explains why b is where the line crosses the y-axis, not just any point.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutor recruitment CTA - its own section, separate from reviews above
+         (see ACTIVE_TASK.md, "separate the reviews section from the tutor-
+         recruitment CTA" fix). -->
+    <section class="proof" id="tutors" data-nav="cream">
       <div class="wrap reveal">
-        <p class="label">From families</p>
-        <h2>In their words.</h2>
+        <p class="label">Teach with us</p>
+        <h2>College tutors wanted.</h2>
         <div class="testimonial-grid stagger">
-
-          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
-            <div class="tcard-front">
-              <p class="tcard-q"></p>
-              <span class="tcard-more">read more +</span>
-            </div>
-            <div class="tcard-back">
-              <p></p>
-              <cite></cite>
-            </div>
+          <article class="tcard">
+            <p class="tcard-q">Set your own hours</p>
+            <p class="tcard-body">Tutor around your class schedule. Mornings, evenings, weekends. You choose the load.</p>
+            <cite class="tcard-tag">Flexible</cite>
           </article>
-
-          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
-            <div class="tcard-front">
-              <p class="tcard-q"></p>
-              <span class="tcard-more">read more +</span>
-            </div>
-            <div class="tcard-back">
-              <p></p>
-              <cite></cite>
-            </div>
+          <article class="tcard">
+            <p class="tcard-q">Get paid to teach</p>
+            <p class="tcard-body">Competitive pay per session, booked straight through Calendly.</p>
+            <cite class="tcard-tag">Paid</cite>
           </article>
-
-          <article class="tcard" onclick="this.classList.toggle('tcard-open')">
-            <div class="tcard-front">
-              <p class="tcard-q"></p>
-              <span class="tcard-more">read more +</span>
-            </div>
-            <div class="tcard-back">
-              <p></p>
-              <cite></cite>
-            </div>
+          <article class="tcard">
+            <p class="tcard-q">Make math click</p>
+            <p class="tcard-body">Real students, real breakthroughs. The map shows you where to start.</p>
+            <cite class="tcard-tag">Impact</cite>
           </article>
-
         </div>
         <div class="proof-actions">
-          <a class="btn soft" href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noopener noreferrer">Listen on Spotify</a>
+          <a class="btn primary" href="mailto:joinmindcraft@gmail.com?subject=Tutor%20application&amp;body=Tell%20us%20about%20your%20math%20background%2C%20availability%2C%20and%20why%20you%20want%20to%20tutor.">Apply to tutor →</a>
         </div>
       </div>
     </section>
 
-    <section class="pricing" id="pricing" data-nav="green">
-      <div class="wrap">
-        <div class="reveal">
-          <p class="label">Limited enrollment</p>
-          <h2>A few seats remain.</h2>
-          <p style="color:rgba(255,255,255,0.82);max-width:520px;font-size:18px;line-height:1.6;margin-top:12px;">We keep cohorts small so the map stays personal. Tutors read the story before session one.</p>
-        </div>
-        <div class="price-grid reveal">
-          <div class="includes">
-            <article class="include"><span>01</span><div><h3>Live 1-on-1 sessions</h3><p>Each session starts with the current map. No ramp-up time.</p></div></article>
-            <article class="include"><span>02</span><div><h3>The knowledge map</h3><p>Mastered, fragile, untouched. Everyone sees the same picture.</p></div></article>
-            <article class="include"><span>03</span><div><h3>Targeted daily practice</h3><p>Practice aimed at the exact gap, not the chapter you finished last week.</p></div></article>
-            <article class="include"><span>04</span><div><h3>Parent signal</h3><p>What clicked, what is still stuck, what comes next.</p></div></article>
-          </div>
-          <article class="price-card">
-            <small>MindCraft Premium</small>
-            <strong style="font-size:32px;letter-spacing:-0.02em;line-height:1.2;display:block;margin:18px 0 8px;">Tell us their story.</strong>
-            <p>We review every application and reach out within 48 hours. No commitment required to apply.</p>
-            <a class="btn primary" href="#intake">Apply for a seat</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="tryapp" id="try-app" data-nav="cream">
-      <div class="wrap">
-        <div class="tryapp-card reveal">
-          <figure class="tryapp-bear mascot-crop" aria-hidden="false">
-            <img src="img/mindcraftmascot.jpg" alt="MindCraft mascot" loading="lazy" width="240" height="280">
-            <figcaption>Smart students start here.</figcaption>
-          </figure>
-          <div class="tryapp-copy">
-            <p class="label">Try our app</p>
-            <h2>The students who get ahead know where to start.</h2>
-            <p>MindCraft finds the break, builds the route, and turns practice into the edge every parent wants for their kid.</p>
-            <div class="tryapp-actions">
-              <a class="btn primary app-login-link" href="https://mindcraft-93858.web.app/login">Open MindCraft →</a>
-              <span class="tryapp-note">Free to explore · built for sharp students</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="intake" id="intake" data-nav="sand">
-      <div class="wrap intake-grid">
-        <div class="intake-copy reveal">
-          <p class="label">Apply for a seat</p>
-          <h2>Tell us their story.</h2>
-          <p>One form. We review it, reach out within 48 hours, and find the right tutor match. No commitment to apply.</p>
-        </div>
-        <form class="form-card reveal" id="intakeForm">
-          <div class="form-grid">
-            <div class="field"><label for="parentName">Parent name</label><input id="parentName" name="parentName" autocomplete="name" required></div>
-            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-            <div class="field"><label for="studentName">Student name</label><input id="studentName" name="studentName" required></div>
-            <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
-            <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Homework, confidence, ACT math, algebra, geometry, test anxiety..." required></textarea></div>
-          </div>
-          <button class="btn primary" type="submit">Apply now</button>
-          <p class="form-note">Opens a pre-filled email. We reply within 48 hours.</p>
-          <div class="status" id="formStatus">Opening your email with the intake details. Responses are sent to joinmindcraft@gmail.com.</div>
-        </form>
-      </div>
-    </section>
   </main>
   <footer>
-    <div><strong>Mind<span>Craft</span></strong><p>They were never bad at math. They were waiting for a better story.</p></div>
+    <div><strong>Mind<span>Craft</span></strong><p>Math is not a personality flaw. Usually it is one missing step with a very good disguise.</p></div>
     <div class="footer-nav">
       <div class="footer-links"><a href="mailto:joinmindcraft@gmail.com">Email</a><a href="tel:+17633405616">Call</a><a href="blog.html">Blog</a><a href="#top">Top</a></div>
       <div class="footer-social" aria-label="MindCraft social links">
@@ -883,6 +1074,14 @@ const navIo = new IntersectionObserver((entries) => {
   })
 }, { rootMargin:"-38% 0px -52% 0px", threshold:0 })
 document.querySelectorAll("[data-nav]").forEach((el) => navIo.observe(el))
+
+// Placeholder for the iPad app CTA. No real public download exists yet
+// (the current build only installs on devices already registered in the
+// Apple dev provisioning profile). Swap this for the real TestFlight link
+// once external testing is live; see ACTIVE_TASK.md.
+document.getElementById("appDownloadBtn")?.addEventListener("click", () => {
+  document.getElementById("appDownloadNote")?.removeAttribute("hidden")
+})
 
 document.querySelectorAll(".founder-trigger").forEach((card) => {
   const toggleFounder = () => {
@@ -975,6 +1174,501 @@ form?.addEventListener("submit", (event) => {
   location.href = "mailto:joinmindcraft@gmail.com?subject=" + encodeURIComponent("MindCraft intake") + "&body=" + encodeURIComponent(lines.join("\n"))
 })
 
+const tutorForm = document.getElementById("tutorForm")
+const tutorStatus = document.getElementById("tutorFormStatus")
+tutorForm?.addEventListener("submit", (event) => {
+  event.preventDefault()
+  const data = new FormData(tutorForm)
+  const lines = [
+    "Name: " + data.get("tutorName"),
+    "Email: " + data.get("tutorEmail"),
+    "Year & major: " + data.get("tutorYear"),
+    "Availability: " + data.get("tutorAvailability"),
+    "",
+    "Math background: " + data.get("tutorBackground")
+  ]
+  tutorStatus?.classList.add("show")
+  location.href = "mailto:joinmindcraft@gmail.com?subject=" + encodeURIComponent("Tutor application") + "&body=" + encodeURIComponent(lines.join("\n"))
+})
+
+// Apply panel: same tab convention as the live-preview demo above (see
+// DEMO_COPY / setActiveDemoTab below), reused here for the pricing-section
+// intake card. Two tabs share one stage: "Apply for a seat" is the existing
+// parent/student intake form (unchanged fields), "Apply to tutor" swaps in a
+// separate tutor-application form with its own fields, and both the eyebrow
+// label and headline swap to match, so the whole card reads as one coherent
+// application rather than a generic form. Both forms submit through the same
+// pre-filled-mailto pattern as the rest of the page.
+const applyTabSeat = document.getElementById("applyTabSeat")
+const applyTabTutor = document.getElementById("applyTabTutor")
+const applyStage = document.getElementById("applyStage")
+const applyLabel = document.getElementById("applyLabel")
+const applyHeading = document.getElementById("applyHeading")
+
+const APPLY_COPY = {
+  seat: {
+    label: "Apply",
+    heading: "Tell us their story.",
+  },
+  tutor: {
+    label: "Teach",
+    heading: "Show us you get it.",
+  }
+}
+
+function setActiveApplyTab(key) {
+  applyTabSeat?.classList.toggle("is-active", key === "seat")
+  applyTabTutor?.classList.toggle("is-active", key === "tutor")
+  applyTabSeat?.setAttribute("aria-selected", String(key === "seat"))
+  applyTabTutor?.setAttribute("aria-selected", String(key === "tutor"))
+  if (applyStage) applyStage.dataset.state = key
+  const copy = APPLY_COPY[key]
+  if (!copy) return
+  if (applyLabel) applyLabel.textContent = copy.label
+  if (applyHeading) applyHeading.textContent = copy.heading
+}
+applyTabSeat?.addEventListener("click", () => setActiveApplyTab("seat"))
+applyTabTutor?.addEventListener("click", () => setActiveApplyTab("tutor"))
+
+// Story slideshow first, with one direct free Manjushree demo button.
+const demoStage = document.getElementById("demoStage")
+const demoLive = document.getElementById("demoLive")
+const demoFrame = document.getElementById("demoFrame")
+const demoOpenFull = document.getElementById("demoOpenFull")
+const demoCloseBtn = document.getElementById("demoCloseBtn")
+const storyTryBtn = document.getElementById("storyTryBtn")
+
+const APP_ORIGIN = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+  ? "http://127.0.0.1:5173"
+  : "https://mindcraft-93858.web.app"
+const MANJUSHREE_URL = APP_ORIGIN + "/try/manjushree"
+if (demoOpenFull) demoOpenFull.href = MANJUSHREE_URL
+
+function openDemoLive() {
+  if (demoFrame) demoFrame.src = MANJUSHREE_URL
+  if (demoOpenFull) demoOpenFull.href = MANJUSHREE_URL
+  if (demoLive) demoLive.hidden = false
+  if (demoStage) demoStage.dataset.state = "live"
+}
+
+function closeDemoLive() {
+  if (demoFrame) demoFrame.src = "about:blank"
+  if (demoLive) demoLive.hidden = true
+  if (demoStage) demoStage.dataset.state = "story"
+}
+
+storyTryBtn?.addEventListener("click", openDemoLive)
+demoCloseBtn?.addEventListener("click", closeDemoLive)
+window.addEventListener("message", (event) => {
+  if (event.origin !== APP_ORIGIN) return
+  if (event.data && event.data.type === "mc-try-close") closeDemoLive()
+})
+
+const storySlides = Array.from(document.querySelectorAll("#demoStoryViewport .demo-story-stage"))
+const storyDots = Array.from(document.querySelectorAll("#demoStoryDots button"))
+let storyIndex = 0
+let storyTimer = null
+
+function showStorySlide(index) {
+  if (!storySlides.length) return
+  storyIndex = (index + storySlides.length) % storySlides.length
+  storySlides.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
+  storyDots.forEach((el, i) => el.classList.toggle("is-active", i === storyIndex))
+}
+
+function startStoryAutoplay() {
+  if (reduceMotion || storyTimer) return
+  storyTimer = setInterval(() => {
+    if (demoStage?.dataset.state !== "story") return
+    showStorySlide(storyIndex + 1)
+  }, 5200)
+}
+
+function stopStoryAutoplay() {
+  if (!storyTimer) return
+  clearInterval(storyTimer)
+  storyTimer = null
+}
+
+storyDots.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    showStorySlide(i)
+    stopStoryAutoplay()
+    startStoryAutoplay()
+  })
+})
+const demoPosterStory = document.getElementById("demoPosterStory")
+demoPosterStory?.addEventListener("pointerenter", stopStoryAutoplay)
+demoPosterStory?.addEventListener("pointerleave", startStoryAutoplay)
+demoPosterStory?.addEventListener("focusin", stopStoryAutoplay)
+demoPosterStory?.addEventListener("focusout", startStoryAutoplay)
+startStoryAutoplay()
+
+// Find a Tutor map. Regional pins: MN (Akshat) + Bay Area CA (Abhigya, Everett St
+// area in El Cerrito). Search zooms to the address and shows in-state tutors.
+const FT_STUDIO = { lat: 44.9379, lng: -93.1706 }
+const FT_TUTORS = [
+  {
+    id: "akshat",
+    name: "Akshat Koirala",
+    bio: "ACT, algebra, precalc, calculus, stats.",
+    photo: "img/akshat-koirala.jpg",
+    booking: "https://calendly.com/joinmindcraft/30min",
+    location: { lat: 44.9379, lng: -93.1706 },
+    state: "MN",
+    regionLabel: "St Paul, MN",
+  },
+  {
+    id: "abhigya",
+    name: "Abhigya Koirala",
+    bio: "Applied math PhD track. Bay Area based. Clear routes through hard ideas.",
+    photo: "img/ab-founder.jpeg",
+    booking: "https://calendly.com/joinmindcraft/30min",
+    location: { lat: 37.9234, lng: -122.3106 },
+    state: "CA",
+    regionLabel: "El Cerrito, CA",
+  },
+]
+const FT_MAP_FALLBACK = '<div class="findtutor-map-fallback">Map unavailable right now.<br><a href="https://mindcraft-93858.web.app/find-a-tutor">Open Find a Tutor</a> to see the live map.</div>'
+let ftMap = null
+let ftGeocoder = null
+let ftPlaces = null
+let ftAddressMarker = null
+let ftAutocomplete = null
+let ftTutorMarkers = []
+let ftOrigin = null
+let ftOriginLabel = ""
+
+function ftMiles(a, b) {
+  const toRad = (v) => v * Math.PI / 180
+  const R = 3958.7613
+  const dLat = toRad(b.lat - a.lat)
+  const dLng = toRad(b.lng - a.lng)
+  const lat1 = toRad(a.lat)
+  const lat2 = toRad(b.lat)
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)))
+}
+
+function ftStateFromLabel(label) {
+  const s = String(label || "").toLowerCase()
+  if (/\bcalifornia\b|\bca\b/.test(s)) return "CA"
+  if (/\bminnesota\b|\bmn\b/.test(s)) return "MN"
+  if (/\b9[0-6]\d{3}\b/.test(s)) return "CA"
+  if (/\b5[5-6]\d{3}\b/.test(s)) return "MN"
+  return null
+}
+
+function ftStateFromLatLng(loc) {
+  const { lat, lng } = loc
+  if (lat >= 32.5 && lat <= 42.1 && lng >= -124.6 && lng <= -114.0) return "CA"
+  if (lat >= 43.4 && lat <= 49.5 && lng >= -97.3 && lng <= -89.4) return "MN"
+  return null
+}
+
+function ftVisibleTutors(origin, label) {
+  if (!origin) return FT_TUTORS.slice()
+  const ranked = FT_TUTORS
+    .map((t) => ({ ...t, miles: ftMiles(origin, t.location) }))
+    .sort((a, b) => a.miles - b.miles)
+  if (!ranked.length) return ranked
+  // Always show the nearest tutor pin; include others only if reasonably close.
+  const nearest = ranked[0]
+  const alsoNearby = ranked.slice(1).filter((t) => t.miles <= 250)
+  return [nearest].concat(alsoNearby)
+}
+
+function ftSetStatus(text, isError) {
+  const el = document.getElementById("ftStatus")
+  if (!el) return
+  el.textContent = text || ""
+  el.classList.toggle("is-error", !!isError)
+}
+
+function ftSyncMarkers(visible) {
+  const ids = new Set(visible.map((t) => t.id))
+  ftTutorMarkers.forEach((entry) => {
+    entry.marker.setMap(ids.has(entry.id) ? ftMap : null)
+  })
+}
+
+function ftRenderTutors(origin, label) {
+  const list = document.getElementById("ftTutorList")
+  if (!list) return
+  const ranked = ftVisibleTutors(origin, label || "")
+  if (ftMap) ftSyncMarkers(ranked)
+  list.innerHTML = ranked.map((t) => {
+    const miles = origin ? ftMiles(origin, t.location) : null
+    const dist = miles == null
+      ? t.regionLabel + ". Sessions online."
+      : t.regionLabel + ". About " + miles.toFixed(miles < 10 ? 1 : 0) + " mi away. Sessions online."
+    // Whole card opens booking (Calendly).
+    return '<a class="findtutor-cardlet" data-tutor="' + t.id + '" href="' + t.booking + '" target="_blank" rel="noopener" aria-label="Book ' + t.name + '">'
+      + '<img src="' + t.photo + '" alt="" width="128" height="128">'
+      + '<div><strong>' + t.name + '</strong><p>' + t.bio + '</p>'
+      + '<p class="findtutor-distance">' + dist + '</p></div>'
+      + '<span class="findtutor-book">Book</span>'
+      + '</a>'
+  }).join("")
+}
+
+function ftFitToSearch(position, label) {
+  if (!ftMap || !window.google?.maps) return
+  const nearest = ftVisibleTutors(position, label)[0]
+  const bounds = new google.maps.LatLngBounds()
+  bounds.extend(position)
+  if (nearest) bounds.extend(nearest.location)
+  ftMap.fitBounds(bounds, 72)
+  google.maps.event.addListenerOnce(ftMap, "idle", () => {
+    const z = ftMap.getZoom()
+    if (typeof z === "number" && z > 12) ftMap.setZoom(12)
+    if (typeof z === "number" && z < 8) ftMap.setZoom(9)
+  })
+}
+
+function ftApplySearchResult(position, label) {
+  // Always update the tutor cards, even if Google Maps failed to load.
+  ftOrigin = position
+  ftOriginLabel = label || ""
+  ftRenderTutors(position, label)
+  const visible = ftVisibleTutors(position, label)
+  const nearest = visible[0]
+  if (nearest) {
+    const miles = ftMiles(position, nearest.location)
+    ftSetStatus(
+      "Nearest tutor: " + nearest.name + " (" + nearest.regionLabel + ", "
+      + miles.toFixed(miles < 10 ? 1 : 0) + " mi). Click the card to book."
+    )
+  } else {
+    ftSetStatus("Showing nearest tutors to " + label)
+  }
+
+  if (!ftMap || !window.google?.maps) return
+  if (!ftAddressMarker) {
+    ftAddressMarker = new google.maps.Marker({
+      map: ftMap,
+      title: "Your searched location",
+      zIndex: 1000,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 9,
+        fillColor: "#1d3a8a",
+        fillOpacity: 1,
+        strokeColor: "#fffdf7",
+        strokeWeight: 2,
+      },
+    })
+  }
+  ftAddressMarker.setPosition(position)
+  ftFitToSearch(position, label)
+}
+
+/** Region keywords work even when Maps geocoding is down. */
+function ftQuickMatch(query) {
+  const s = String(query || "").toLowerCase().trim()
+  if (!s) return null
+  if (/\bcalifornia\b|\bca\b|el cerrito|bay area|everett|san francisco|oakland|berkeley/.test(s)) {
+    return FT_TUTORS.find((t) => t.state === "CA") || null
+  }
+  if (/\bminnesota\b|\bmn\b|st\.?\s*paul|minneapolis|macalester|twin cities/.test(s)) {
+    return FT_TUTORS.find((t) => t.state === "MN") || null
+  }
+  return null
+}
+
+function ftPickBestNearTutors(candidates) {
+  if (!candidates.length) return null
+  let best = candidates[0]
+  let bestDist = Infinity
+  candidates.forEach((c) => {
+    FT_TUTORS.forEach((t) => {
+      const d = (c.loc.lat - t.location.lat) ** 2 + (c.loc.lng - t.location.lng) ** 2
+      if (d < bestDist) {
+        bestDist = d
+        best = c
+      }
+    })
+  })
+  return best
+}
+
+function searchFtAddress(raw) {
+  const address = (raw || "").trim()
+  if (!address) {
+    ftSetStatus("Type an address, city, or ZIP.", true)
+    return
+  }
+  ftSetStatus("Searching…")
+
+  // Fast path: "california" / "minnesota" etc. works without Google geocoding.
+  const quick = ftQuickMatch(address)
+  if (quick) {
+    ftApplySearchResult(quick.location, quick.regionLabel)
+    return
+  }
+
+  if (!ftGeocoder && !ftPlaces) {
+    ftSetStatus("Map search is limited right now. Try California or Minnesota.", true)
+    return
+  }
+
+  const lower = address.toLowerCase()
+  const hasHint = /\b(ca|california|mn|minnesota|ny|tx|wa|or)\b/.test(lower) || /\b\d{5}\b/.test(lower)
+  const variants = hasHint
+    ? [address]
+    : [
+        address,
+        address + ", El Cerrito, CA",
+        address + ", California",
+        address + ", St Paul, MN",
+        address + ", Minnesota",
+      ]
+
+  const finish = (candidates) => {
+    const best = ftPickBestNearTutors(candidates)
+    if (!best) {
+      const fallback = ftQuickMatch(address)
+      if (fallback) {
+        ftApplySearchResult(fallback.location, fallback.regionLabel)
+        return
+      }
+      ftSetStatus("Could not find that address. Try California, Minnesota, or a ZIP.", true)
+      return
+    }
+    ftApplySearchResult(best.loc, best.label)
+  }
+
+  const fromGeocode = []
+  let pending = variants.length
+  const maybeDone = () => {
+    pending -= 1
+    if (pending <= 0) finish(fromGeocode)
+  }
+
+  const runGeocode = () => {
+    variants.forEach((attempt) => {
+      ftGeocoder.geocode({
+        address: attempt,
+        region: "us",
+        componentRestrictions: { country: "US" },
+      }, (results, status) => {
+        if (status === "OK" && results?.[0]?.geometry?.location) {
+          const loc = results[0].geometry.location
+          fromGeocode.push({
+            loc: { lat: loc.lat(), lng: loc.lng() },
+            label: results[0].formatted_address || attempt,
+          })
+        }
+        maybeDone()
+      })
+    })
+  }
+
+  if (ftPlaces) {
+    ftPlaces.textSearch({ query: address }, (results, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK && results?.length) {
+        const hits = results.slice(0, 8).map((r) => {
+          const loc = r.geometry?.location
+          if (!loc) return null
+          return {
+            loc: { lat: loc.lat(), lng: loc.lng() },
+            label: r.formatted_address || r.name || address,
+          }
+        }).filter(Boolean)
+        if (hits.length) {
+          finish(hits)
+          return
+        }
+      }
+      runGeocode()
+    })
+    return
+  }
+  runGeocode()
+}
+
+function initFtMap() {
+  const mapEl = document.getElementById("ftMap")
+  if (!mapEl || !window.google?.maps) return
+  mapEl.dataset.loaded = "1"
+  ftMap = new google.maps.Map(mapEl, {
+    center: FT_STUDIO,
+    zoom: 11,
+    disableDefaultUI: true,
+    zoomControl: true,
+    styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] }],
+  })
+  ftGeocoder = new google.maps.Geocoder()
+  ftPlaces = new google.maps.places.PlacesService(ftMap)
+  ftTutorMarkers = FT_TUTORS.map((t) => {
+    const marker = new google.maps.Marker({
+      position: t.location,
+      map: ftMap,
+      title: t.name + " (" + t.regionLabel + ")",
+    })
+    const info = new google.maps.InfoWindow({
+      content: "<div style=\"font:600 13px 'Nunito Sans',sans-serif;max-width:210px;color:#143a2e\">"
+        + "<strong>" + t.name + "</strong>"
+        + "<p style=\"margin:6px 0 0;font-weight:500;color:#5a5a5a\">" + t.bio + "</p>"
+        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">" + t.regionLabel + ". Sessions online over Meet.</p>"
+        + "<p style=\"margin:10px 0 0\"><a href=\"" + t.booking + "\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;padding:8px 11px;border-radius:999px;background:#143a2e;color:#fffdf7;text-decoration:none;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase\">Book</a></p>"
+        + "</div>",
+    })
+    marker.addListener("click", () => info.open(ftMap, marker))
+    return { id: t.id, marker }
+  })
+  ftRenderTutors(null, "")
+
+  const searchForm = document.getElementById("ftSearchForm")
+  const addressInput = document.getElementById("ftAddress")
+  if (addressInput && google.maps.places?.Autocomplete) {
+    ftAutocomplete = new google.maps.places.Autocomplete(addressInput, {
+      componentRestrictions: { country: "us" },
+      fields: ["formatted_address", "geometry", "name"],
+    })
+    ftAutocomplete.addListener("place_changed", () => {
+      const place = ftAutocomplete.getPlace()
+      if (place?.geometry?.location) {
+        ftApplySearchResult(
+          { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
+          place.formatted_address || place.name || "your address"
+        )
+        return
+      }
+      searchFtAddress(addressInput.value || "")
+    })
+  }
+  searchForm?.addEventListener("submit", (event) => {
+    event.preventDefault()
+    searchFtAddress(addressInput?.value || "")
+  })
+}
+// Show tutors even before Maps finishes loading.
+ftRenderTutors(null, "")
+
+// Google Maps calls this global if the key/referrer restriction rejects the
+// request. Fall back to an honest card instead of a broken gray box.
+window.gm_authFailure = function () {
+  const mapEl = document.getElementById("ftMap")
+  if (mapEl) mapEl.outerHTML = FT_MAP_FALLBACK
+  ftRenderTutors(ftOrigin, ftOriginLabel)
+  ftSetStatus("Map tiles are limited right now. Search still works. Click a tutor card to book.")
+}
+// Slow networks / ad-blockers. Give Maps more time before swapping fallback.
+setTimeout(() => {
+  const mapEl = document.getElementById("ftMap")
+  if (mapEl && mapEl.dataset.loaded !== "1") {
+    mapEl.outerHTML = FT_MAP_FALLBACK
+    ftRenderTutors(ftOrigin, ftOriginLabel)
+  }
+}, 12000)
+
 </script>
+<!-- Find a Tutor map (see the initFtMap comment above). Same publicly-exposed
+     browser key already baked into the app's production bundle (app/.env.production
+     VITE_GOOGLE_MAPS_API_KEY) — restricted by HTTP referrer + API in Google Cloud
+     Console, not a secret. If this domain isn't on that key's referrer allowlist yet,
+     gm_authFailure above swaps in the honest fallback card. -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCftusRr7_Fio0sRFbSsADsm0uUH3YG2Bc&libraries=places&callback=initFtMap"></script>
 </body>
 </html>

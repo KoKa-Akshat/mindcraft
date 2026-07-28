@@ -21,10 +21,30 @@ export type WeeklyPracticePaper = {
   builtAt: string
 }
 
-function weekKey(d = new Date()): string {
+/** Same calendar-week key scheme as `isoWeek()` in ParentDashboard.tsx — kept
+ * in one place here (exported) so the lock/unlock check in Dashboard.tsx
+ * compares against the exact same cadence the paper's content is built on,
+ * instead of inventing a second date convention. */
+export function weekKey(d = new Date()): string {
   const oneJan = new Date(d.getFullYear(), 0, 1)
   const week = Math.ceil((((d.getTime() - oneJan.getTime()) / 86400000) + oneJan.getDay() + 1) / 7)
   return `${d.getFullYear()}-W${String(week).padStart(2, '0')}`
+}
+
+/** Short, friendly copy for the locked card once this week's paper is done —
+ * "unlocks Monday" is the cadence anchor (a new week's paper is available
+ * from Monday). Never returns "in 0 days": if today IS Monday, the next
+ * unlock is necessarily next week. */
+export function daysUntilNextUnlock(d = new Date()): number {
+  const day = d.getDay() // 0=Sun .. 6=Sat
+  const diff = (8 - day) % 7
+  return diff === 0 ? 7 : diff
+}
+
+export function nextUnlockLabel(d = new Date()): string {
+  const days = daysUntilNextUnlock(d)
+  if (days === 1) return 'Unlocks tomorrow'
+  return `Unlocks in ${days} days`
 }
 
 /**

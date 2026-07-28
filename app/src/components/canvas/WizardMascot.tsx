@@ -1,4 +1,4 @@
-import wizard from '../../assets/canvas/wizard-doodle-cheer.jpg'
+import wizard from '../../assets/canvas/wizard-doodle-cheer.png'
 import s from './WizardMascot.module.css'
 
 export default function WizardMascot({

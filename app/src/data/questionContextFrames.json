@@ -42,9 +42,9 @@
     "spinnerFrame": null
   },
   "right_triangle_geometry": {
-    "protagonist": "Ahmes the rope-stretcher",
-    "settingLine": "The Nile floodplain, ancient Egypt",
-    "questionBridge": "Ahmes pulls the knotted rope taut. Two sides fix the third, and the right angle keeps its promise.",
+    "protagonist": "Pythagoras of Samos",
+    "settingLine": "Egypt, watching the rope-stretchers, 530 BC",
+    "questionBridge": "Pythagoras watches the knotted rope snap taut. Two sides quietly fix the third. Find the pact between them.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -56,9 +56,9 @@
     "spinnerFrame": null
   },
   "linear_inequalities": {
-    "protagonist": "General William Tunner",
-    "settingLine": "West Berlin, the airfields, 1948",
-    "questionBridge": "William weighs the manifest. The answer isn't one number. It's a range. Find where the limit lies.",
+    "protagonist": "George Dantzig",
+    "settingLine": "USAF logistics office, the Berlin Airlift, 1948",
+    "questionBridge": "George maps the constraints. The answer is not one number. It is a region. Find where every limit holds at once.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -70,23 +70,23 @@
     "spinnerFrame": null
   },
   "exponent_rules": {
-    "protagonist": "Jacob Bernoulli",
-    "settingLine": "Basel, Switzerland, 1683",
-    "questionBridge": "Jacob watches the powers stack. Repeated multiplication has its own rules. Use them.",
+    "protagonist": "Archimedes of Syracuse",
+    "settingLine": "Syracuse, Sicily, 216 BC",
+    "questionBridge": "Archimedes climbs his tower of tens. Don't multiply the giants. Add the floors they stand on.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "polynomials": {
-    "protagonist": "Omar Khayyam",
-    "settingLine": "Persia, an observatory, 1074",
-    "questionBridge": "Omar sketches the curve in the margin. Many terms, one expression. Read what it does.",
+    "protagonist": "Niccolò Tartaglia",
+    "settingLine": "Venice, the Republic's arsenal, 1537",
+    "questionBridge": "Niccolò sketches the cannonball's path in the margin. Many terms, one curve. Combine what matches, layer by layer.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "factoring_polynomials": {
-    "protagonist": "François Viète",
-    "settingLine": "France, the royal court, 1591",
-    "questionBridge": "François treats every expression as a cipher. It was built from factors. Take it apart.",
+    "protagonist": "Pierre de Fermat",
+    "settingLine": "Toulouse, France, 1643",
+    "questionBridge": "Pierre hunts the hidden square inside the number. Every product is a disguise. Find what multiplied to build it.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -98,9 +98,9 @@
     "spinnerFrame": null
   },
   "quadratic_equations": {
-    "protagonist": "Muhammad al-Khwarizmi",
-    "settingLine": "Baghdad, House of Wisdom, 820 AD",
-    "questionBridge": "Muhammad draws the square. Find the side that makes it whole.",
+    "protagonist": "Galileo Galilei",
+    "settingLine": "Padua, the Venetian Republic, 1608",
+    "questionBridge": "Galileo marks where the ball lands. The rise and the fall cross the same height twice. Find both.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -112,16 +112,16 @@
     "spinnerFrame": null
   },
   "basic_probability": {
-    "protagonist": "Gerolamo Cardano",
-    "settingLine": "Bologna, a tavern, 1560",
-    "questionBridge": "Cardano taps the table. Before you wager, you need the true odds.",
-    "diceFrame": "Cardano shakes the dice in his cupped hands and slams them onto the table.",
-    "spinnerFrame": "Cardano flicks the pointer into a blur and dares you to call where it stops."
+    "protagonist": "Blaise Pascal",
+    "settingLine": "Paris, in correspondence with Fermat, 1654",
+    "questionBridge": "Blaise counts every path the dice could take. Before you wager, map every future, then take your share of it.",
+    "diceFrame": "Pascal shakes the dice in his cupped hands and slams them onto the table.",
+    "spinnerFrame": "Pascal flicks the pointer into a blur and dares you to call where it stops."
   },
   "exponential_functions": {
-    "protagonist": "John Napier",
-    "settingLine": "Merchiston Castle, Scotland, 1614",
-    "questionBridge": "John traces the doubling. Growth that feeds on itself. Track how fast it runs.",
+    "protagonist": "Max Starkloff",
+    "settingLine": "St. Louis, Missouri, October 1918",
+    "questionBridge": "Max watches the case count double again. Growth that feeds on itself outruns you fast. Recognize the curve before it explodes.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -140,30 +140,30 @@
     "spinnerFrame": null
   },
   "lines_angles": {
-    "protagonist": "Euclid of Alexandria",
-    "settingLine": "Alexandria, the great Library, 300 BC",
-    "questionBridge": "Euclid draws crossing lines in the sand. Every angle here is related to another. Reason it out.",
+    "protagonist": "Eratosthenes",
+    "settingLine": "Alexandria and Syene, Egypt, 240 BC",
+    "questionBridge": "Eratosthenes measures the obelisk's short shadow. One angle, carried across parallel lines, tells you the rest.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "triangles_congruence": {
-    "protagonist": "Euclid of Alexandria",
-    "settingLine": "Alexandria, the great Library, 300 BC",
-    "questionBridge": "Euclid lays the triangles side by side. Show they are the same: every side, every angle.",
+    "protagonist": "Villard de Honnecourt",
+    "settingLine": "Reims and Laon, France, the 1230s",
+    "questionBridge": "Villard lays the two trusses side by side. Match enough sides and angles and the shapes cannot help but agree.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "circles_geometry": {
-    "protagonist": "Archimedes of Syracuse",
-    "settingLine": "Syracuse, Sicily, 250 BC",
-    "questionBridge": "Archimedes traces the perfect curve. Every point is the same distance from the center. Build from that.",
+    "protagonist": "Zu Chongzhi",
+    "settingLine": "Jiankang, the Liu Song court, China, 5th century AD",
+    "questionBridge": "Zu doubles the polygon's sides again. Every point on the rim stays the same distance from the center. Build from that promise.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "area_volume": {
-    "protagonist": "Archimedes of Syracuse",
-    "settingLine": "Syracuse, the public baths, 250 BC",
-    "questionBridge": "Archimedes submerges the crown. Space and substance. Measure what's inside.",
+    "protagonist": "Ahmes",
+    "settingLine": "Egypt, copying the Rhind Papyrus, 1550 BC",
+    "questionBridge": "Ahmes counts the invisible squares across the surface, then stacks the layers. The space must answer in numbers.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -175,9 +175,9 @@
     "spinnerFrame": null
   },
   "rational_expressions": {
-    "protagonist": "Gottfried Leibniz",
-    "settingLine": "Hanover, a rivalry by letter, 1699",
-    "questionBridge": "Gottfried sharpens his quill. A fraction of expressions. Treat the top and bottom with equal rigor.",
+    "protagonist": "Sextus Julius Frontinus",
+    "settingLine": "Rome, commissioner of the aqueducts, 97 AD",
+    "questionBridge": "Sextus reduces every pipe to a common measure. Treat the top and bottom with equal rigor, or the ledger lies.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -189,9 +189,9 @@
     "spinnerFrame": null
   },
   "vectors": {
-    "protagonist": "James Clerk Maxwell",
-    "settingLine": "London, King's College, 1865",
-    "questionBridge": "James reaches for his arrows. Magnitude and direction both matter here.",
+    "protagonist": "Josiah Willard Gibbs",
+    "settingLine": "New Haven, Yale College, 1881",
+    "questionBridge": "Josiah splits the arrow into its parts. Magnitude alone is a rumor. Direction is what makes it true.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -217,44 +217,44 @@
     "spinnerFrame": null
   },
   "applications_of_derivatives": {
-    "protagonist": "Isaac Newton",
-    "settingLine": "Woolsthorpe orchard, England, 1666",
-    "questionBridge": "Isaac watches the apple fall. How fast, and exactly when: the rate of change answers both.",
+    "protagonist": "Katherine Johnson",
+    "settingLine": "NASA Langley Research Center, Virginia, 1962",
+    "questionBridge": "Katherine checks the trajectory by hand. Find where the rate goes to zero. That is the turning point that matters.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "integrals": {
-    "protagonist": "Archimedes of Syracuse",
-    "settingLine": "Syracuse, Sicily, 250 BC",
-    "questionBridge": "Archimedes slices the shape into slivers thinner than hairs. Add up the small pieces. The total is exact.",
+    "protagonist": "Johannes Kepler",
+    "settingLine": "Linz, Austria, his own wedding, 1613",
+    "questionBridge": "Johannes slices the barrel into disks thinner than hairs. Add up the small pieces. The total is exact.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "applications_of_integrals": {
-    "protagonist": "John Roebling",
-    "settingLine": "Brooklyn Bridge works, New York, 1870",
-    "questionBridge": "John checks the cables one more time. Accumulate the small pieces. The whole must hold.",
+    "protagonist": "William Froude",
+    "settingLine": "Torquay, England, the naval testing tank, 1870",
+    "questionBridge": "William slices the hull into cross-sections. Accumulate the small pieces, because the whole must hold.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "inferential_statistics": {
-    "protagonist": "Ronald Fisher",
-    "settingLine": "Rothamsted farm, England, 1919",
-    "questionBridge": "Ronald walks the muddy plots at dawn. One sample proves nothing. Test what the evidence can bear.",
+    "protagonist": "Richard Ruggles",
+    "settingLine": "Washington DC, Economic Warfare Division, 1943",
+    "questionBridge": "Richard reads the serial number off the gearbox. One sample proves nothing alone. Test what the evidence can bear.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "number_properties": {
     "protagonist": "Srinivasa Ramanujan",
-    "settingLine": "Madras, the port office, 1913",
-    "questionBridge": "Srinivasa sees the pattern before anyone else. Look at what these numbers share.",
+    "settingLine": "Putney, London, a hospital room, 1918",
+    "questionBridge": "Srinivasa sees the pattern before anyone else. This number has a personality. Learn it before it surprises you.",
     "diceFrame": null,
     "spinnerFrame": null
   },
   "measurement_units": {
-    "protagonist": "Antoine Lavoisier",
-    "settingLine": "Paris, the Revolution, 1793",
-    "questionBridge": "Antoine weighs everything twice. Convert precisely. The measurement must be exact.",
+    "protagonist": "Arthur Stephenson",
+    "settingLine": "NASA Marshall Space Flight Center, 1999",
+    "questionBridge": "Arthur traces the fault line by line. Convert precisely and carry the units through, or the whole calculation lies.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -273,9 +273,9 @@
     "spinnerFrame": null
   },
   "act_strategy": {
-    "protagonist": "Maya",
-    "settingLine": "A kitchen table, Saturday morning, present day",
-    "questionBridge": "Maya starts the timer. Every second is a choice. Pick your approach and commit.",
+    "protagonist": "Enrico Fermi",
+    "settingLine": "Trinity test site, New Mexico, 1945",
+    "questionBridge": "Enrico drops a handful of torn paper into the wind. Before you compute anything precisely, decide what the answer must roughly be.",
     "diceFrame": null,
     "spinnerFrame": null
   },
@@ -325,6 +325,20 @@
     "protagonist": "Blaise Pascal",
     "settingLine": "Paris, 1654",
     "questionBridge": "Pascal writes to Fermat. How many ways can this happen? Count them all.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "derivatives": {
+    "protagonist": "Isaac Newton",
+    "settingLine": "Woolsthorpe Manor orchard, England, 1666",
+    "questionBridge": "Isaac watches the apple fall. Don't average the whole flight, freeze one instant. That's the rate you want.",
+    "diceFrame": null,
+    "spinnerFrame": null
+  },
+  "limits_continuity": {
+    "protagonist": "Augustin-Louis Cauchy",
+    "settingLine": "École Polytechnique, Paris, 1821",
+    "questionBridge": "Cauchy stops the cadet from evaluating at the point itself. Close in from both sides instead. What is it heading toward?",
     "diceFrame": null,
     "spinnerFrame": null
   }

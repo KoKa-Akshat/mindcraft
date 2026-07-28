@@ -361,14 +361,92 @@
   display: inline-block;
 }
 
-/* Two-column layout */
+/* Two-column layout — question card on the left, writable canvas + live
+   graph on the right (see ACTIVE_TASK.md GraphBox entry). */
 .sessionColumns {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr 320px;
   gap: 20px;
-  align-items: start;
+  /* stretch (not start) so the aside column (GraphBox + ScratchPad) matches
+     the question column's full height — otherwise the aside stops at its
+     own small content height and leaves dead whitespace below it even
+     though the question card runs taller. See ACTIVE_TASK.md. */
+  align-items: stretch;
+  /* Floor the row near the viewport's remaining height (fixed 54px Sidebar
+     + progress-strip chrome above this grid, ~210px measured) — otherwise
+     a short question card makes the WHOLE row short too (stretch only
+     matches the two columns to each other, not to the screen), leaving the
+     rest of the visible page blank below both. The question card itself
+     just sits at its natural height inside the taller row (sessionMain has
+     no background of its own, so the extra space is invisible there); the
+     aside's ScratchPad is the one that grows to fill it (see
+     ScratchPad's fillHeight prop). */
+  min-height: calc(100dvh - 210px);
 }
-.sessionMain { display: flex; flex-direction: column; }
+.sessionMain { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+
+.sessionAside {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  /* GraphBox (when open — e.g. a graphable concept, or now a question with
+     its own real points/equation, see lib/plottablePoints.ts) has a real,
+     fixed vertical footprint (input row + hint + SVG) that competes with
+     ScratchPad for the SAME column height. At a short-but-common browser
+     viewport (~700px tall, e.g. a 13" laptop window that isn't fullscreen),
+     that footprint plus a tall question card can push ScratchPad's writable
+     area mostly or entirely below the fold with no visible cue that it's
+     there at all — reported live as "graph box with zero writing area."
+     Capping the aside to the viewport's remaining height and scrolling it
+     independently (instead of relying on the whole page's scroll position,
+     which gives no affordance that there's more below a full choices list)
+     guarantees ScratchPad is always at most one small, obviously-scrollable
+     panel away, and keeps it pinned in view via `sticky` while the question
+     column runs taller. See ACTIVE_TASK.md for the measured before/after. */
+  position: sticky;
+  top: 16px;
+  max-height: calc(100dvh - 226px);
+  overflow-y: auto;
+}
+
+.asideLabel {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  padding: 0 2px;
+}
+
+/* The paper skin (`.matteShell`/`.shell`, live for every real session — see
+   "PAPER STANDARDIZATION" below) recolors the whole canvas to warm cream, so
+   the aside label needs the same ink tone the rest of the paper uses instead
+   of the dark-theme --text-2. */
+.matteShell .asideLabel { color: #6f6a61; }
+
+.wrongCoach {
+  padding: 12px 12px 10px;
+  border-radius: 18px;
+  background: linear-gradient(165deg, #f3ffe4 0%, #fffdf8 70%);
+  border: 1.5px solid rgba(20, 58, 46, 0.14);
+  box-shadow: 0 10px 24px rgba(20, 58, 46, 0.08);
+  animation: wrongCoachIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.wrongCoachEyebrow {
+  margin: 0 0 8px;
+  font: 800 10px/1 var(--tok-font-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #247a4d;
+}
+@keyframes wrongCoachIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wrongCoach { animation: none; }
+}
 
 /* Question card */
 .questionCard {
@@ -506,14 +584,14 @@
 .choices {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 .choice, .choiceSelected, .choiceCorrect, .choiceWrong {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 14px;
+  padding: 11px 12px;
   border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
@@ -521,19 +599,23 @@
   text-align: left;
   transition: background 150ms, border-color 150ms, transform 80ms, box-shadow 150ms;
   border: 2px solid transparent;
+  border-left-width: 4px;
   width: 100%;
   font-family: var(--f-body);
   color: #1e293b;
-  min-height: 64px;
+  min-height: 52px;
+  line-height: 1.3;
 }
 
 .choice {
   background: #F8FAFC;
   border-color: #E2E8F0;
+  border-left-color: #E2E8F0;
 }
 .choice:hover:not(:disabled) {
   background: #EFF6FF;
   border-color: #93C5FD;
+  border-left-color: #93C5FD;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(59,130,246,0.12);
 }
@@ -541,18 +623,21 @@
 .choiceSelected {
   background: #EFF6FF;
   border-color: #3B82F6;
+  border-left-color: #3B82F6;
   box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
 
 .choiceCorrect {
   background: #F0FDF4;
   border-color: #22C55E;
+  border-left-color: #22C55E;
   cursor: default;
 }
 
 .choiceWrong {
   background: #FFF1F2;
   border-color: #F43F5E;
+  border-left-color: #F43F5E;
   cursor: default;
   opacity: 0.85;
 }
@@ -560,7 +645,7 @@
 .choiceLetter {
   width: 26px;
   height: 26px;
-  border-radius: 7px;
+  border-radius: 8px;
   background: #E2E8F0;
   display: flex;
   align-items: center;
@@ -571,10 +656,14 @@
   font-family: var(--f-display);
   color: #475569;
   margin-top: 1px;
+  transform: rotate(-2deg);
 }
-.choiceCorrect  .choiceLetter { background: #BBF7D0; color: #166534; }
-.choiceWrong    .choiceLetter { background: #FECDD3; color: #9F1239; }
-.choiceSelected .choiceLetter { background: #BFDBFE; color: #1D4ED8; }
+.choices > *:nth-child(2) .choiceLetter { transform: rotate(1.5deg); }
+.choices > *:nth-child(3) .choiceLetter { transform: rotate(-1deg); }
+.choices > *:nth-child(4) .choiceLetter { transform: rotate(2deg); }
+.choiceCorrect  .choiceLetter { background: #BBF7D0; color: #166534; transform: rotate(0deg); }
+.choiceWrong    .choiceLetter { background: #FECDD3; color: #9F1239; transform: rotate(0deg); }
+.choiceSelected .choiceLetter { background: #BFDBFE; color: #1D4ED8; transform: rotate(0deg); }
 
 .choiceText { flex: 1; line-height: 1.4; }
 .choiceTick { font-size: 15px; color: #22C55E; font-weight: 800; margin-left: auto; flex-shrink: 0; }
@@ -4355,7 +4444,7 @@
 .matteShell .questionBanner {
   background: #f0ebe2 !important;
   border-bottom: 1px solid rgba(102,92,78,0.14);
-  padding: 28px 32px 24px;
+  padding: 20px 26px 16px;
   position: relative;
   z-index: 1;
 }
@@ -4387,15 +4476,15 @@
 
 .matteShell .questionText {
   font-family: var(--tok-font-hand);
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 600;
   color: #1c1a17;
-  line-height: 1.55;
+  line-height: 1.45;
 }
 
 /* Choices container + body above it */
 .matteShell .questionBody {
-  padding: 20px 28px 16px;
+  padding: 14px 24px 10px;
   position: relative;
   z-index: 1;
 }
@@ -4407,74 +4496,75 @@
   border-radius: 2px;
 }
 
-/* Choices: sticker stickers on the journal page */
+/* Choices: straight spaced stickers on the journal page */
 .matteShell .choices {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* Base choice — puffy doodle sticker */
+/* Base choice — clean sticker, no tilt (tilt made options collide) */
 .matteShell .choice,
 .matteShell .choiceSelected,
 .matteShell .choiceCorrect,
 .matteShell .choiceWrong {
-  background: linear-gradient(145deg, #fffdf8, #fff4e8);
-  border: 2.5px solid #3a2f55;
-  border-radius: 14px 18px 12px 16px;
+  background: #fffdf8;
+  border: 1.5px solid rgba(20, 58, 46, 0.18);
+  border-radius: 16px;
   padding: 12px 14px;
-  gap: 12px;
-  font-family: var(--tok-font-hand);
-  font-size: 20px;
-  font-weight: 400;
-  color: #2a2430;
-  transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms, filter 160ms;
+  gap: 9px;
+  font-family: var(--tok-font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: #143a2e;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease;
   min-height: auto;
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
-  transform: rotate(-0.3deg);
+  box-shadow: 0 4px 14px rgba(20, 58, 46, 0.06);
+  transform: none;
 }
 
+.matteShell .choices > :nth-child(1) {
+  background: linear-gradient(180deg, #fffdf8, #fff7ea);
+}
 .matteShell .choices > :nth-child(2) {
-  transform: rotate(0.5deg);
-  background: linear-gradient(145deg, #f8fff6, #e8ffe8);
+  background: linear-gradient(180deg, #f8fff6, #eefaea);
 }
 .matteShell .choices > :nth-child(3) {
-  transform: rotate(-0.7deg);
-  background: linear-gradient(145deg, #fff8fc, #ffe8f4);
+  background: linear-gradient(180deg, #fff8fc, #faf0f6);
 }
 .matteShell .choices > :nth-child(4) {
-  transform: rotate(0.4deg);
-  background: linear-gradient(145deg, #f6f4ff, #ebe6ff);
+  background: linear-gradient(180deg, #f7f9ff, #eef2fb);
 }
 
-/* Hover — squishy swell + mint halo */
+/* Hover */
 .matteShell .choice:hover:not(:disabled) {
-  background: linear-gradient(145deg, #fffefb, #fff0d8);
-  transform: scale(1.06) rotate(0deg) !important;
+  background: #fffefb;
+  transform: translateY(-1px) !important;
   box-shadow:
-    0 0 0 4px rgba(125, 255, 179, 0.4),
-    4px 8px 0 rgba(58, 47, 85, 0.14);
-  filter: brightness(1.03);
-  border-color: #3a2f55;
+    0 0 0 3px rgba(196, 245, 71, 0.35),
+    0 10px 22px rgba(20, 58, 46, 0.1);
+  border-color: rgba(20, 58, 46, 0.35);
 }
 
-/* Selected — lilac press */
+/* Selected */
 .matteShell .choiceSelected {
-  background: linear-gradient(145deg, #f3eeff, #e8deff) !important;
+  background: linear-gradient(135deg, #f3ffe4, #fffdf8) !important;
+  border-color: #143a2e !important;
   box-shadow:
-    0 0 0 4px rgba(201, 182, 255, 0.5),
-    3px 5px 0 rgba(58, 47, 85, 0.18) !important;
-  transform: scale(1.04) !important;
+    0 0 0 3px rgba(196, 245, 71, 0.5),
+    0 10px 22px rgba(20, 58, 46, 0.1) !important;
+  transform: none !important;
 }
 
-/* Correct — mint lock */
+/* Correct */
 .matteShell .choiceCorrect {
-  background: linear-gradient(145deg, #e8fff4, #c8ffe0) !important;
+  background: linear-gradient(135deg, #e8fff4, #f4fff8) !important;
+  border-color: #1f6b45 !important;
   box-shadow:
-    0 0 0 4px rgba(125, 255, 179, 0.55),
-    3px 5px 0 rgba(31, 107, 69, 0.18) !important;
+    0 0 0 3px rgba(125, 255, 179, 0.45),
+    0 10px 22px rgba(31, 107, 69, 0.12) !important;
   cursor: default;
-  transform: scale(1.03) !important;
+  transform: none !important;
 }
 
 /* Wrong path unused for soft-retry; keep gentle if shown */
@@ -5304,21 +5394,21 @@
 }
 
 .matteShell .questionBanner {
-  padding: 32px 36px 28px !important;
+  padding: 20px 26px 16px !important;
   background: #f7f3ec !important;
   border-bottom: 1px solid rgba(102, 92, 78, 0.1) !important;
 }
 
 .matteShell .questionText {
-  font-size: clamp(20px, 2.4vw, 26px) !important;
-  line-height: 1.45 !important;
+  font-size: clamp(17px, 2vw, 22px) !important;
+  line-height: 1.4 !important;
 }
 
 .matteShell .choice {
   border: 1.5px solid rgba(58, 47, 85, 0.14) !important;
   box-shadow: 0 3px 10px rgba(58, 47, 85, 0.06) !important;
   border-radius: 16px !important;
-  min-height: 56px;
+  min-height: 44px;
 }
 
 .matteShell .choiceLetter {

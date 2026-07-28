@@ -1,0 +1,80 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.adumbrateHalo {
+  fill: none;
+  stroke: rgba(255, 253, 247, 0.45);
+  stroke-width: 6px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+}
+
+/* Solid black line above the hills — matches the hand-drawn stroke */
+.adumbrate {
+  fill: none;
+  stroke: #0a0a0a;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+}
+
+.centerCut {
+  stroke: rgba(10, 10, 10, 0.55);
+  stroke-width: 2.25px;
+  stroke-linecap: round;
+  stroke-dasharray: 2 4;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+}
+
+.centerCutHalo {
+  stroke: rgba(255, 253, 247, 0.5);
+  stroke-width: 4.5px;
+  stroke-linecap: round;
+  stroke-dasharray: 2 4;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+}
+
+.axisLine {
+  stroke: rgba(10, 10, 10, 0.5);
+  stroke-width: 2px;
+  stroke-dasharray: 4 5;
+  vector-effect: non-scaling-stroke;
+  animation: axisFadeIn 0.5s ease-out;
+}
+
+.overlayIn .adumbrateHalo { opacity: 1; }
+.overlayIn .adumbrate { opacity: 1; }
+.overlayIn .centerCut,
+.overlayIn .centerCutHalo { opacity: 1; }
+
+.adumbrate,
+.adumbrateHalo,
+.centerCut,
+.centerCutHalo {
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes axisFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adumbrate,
+  .adumbrateHalo,
+  .centerCut,
+  .centerCutHalo { transition: none !important; }
+  .axisLine { animation: none !important; }
+}

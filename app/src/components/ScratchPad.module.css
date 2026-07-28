@@ -12,6 +12,20 @@
   display: flex;
   touch-action: none;
 }
+
+/* fillHeight mode (see ScratchPad.tsx) — grows to fill a flex-column parent
+   with definite height instead of capping at a fixed pixel box. Additive to
+   (not a replacement for) the plain .wrap/.canvasWrap classes, so callers
+   that don't opt in keep their exact existing fixed-height behavior. */
+.wrapFill {
+  flex: 1;
+  min-height: 0;
+}
+.canvasWrapFill {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
 .canvasPaper {
   background: transparent !important;
   border: none !important;

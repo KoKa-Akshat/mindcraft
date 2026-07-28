@@ -318,7 +318,7 @@ export default function StudentSessions() {
             <div className={s.emptyIcon}>📋</div>
             <p className={s.emptyTitle}>No sessions yet</p>
             <p className={s.emptySub}>Once you work through a question or your tutor publishes notes, it’ll appear here.</p>
-            <button className={s.bookBtn} onClick={() => navigate('/book')}>Book a Session →</button>
+            <button className={s.bookBtn} onClick={() => navigate('/find-a-tutor')}>Find a Tutor →</button>
           </div>
         ) : visible.length === 0 ? null : (
           <div className={s.summarySection}>
