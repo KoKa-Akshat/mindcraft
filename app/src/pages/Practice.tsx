@@ -40,13 +40,10 @@ import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practi
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
-import { getBakedThemedStem } from '../lib/themedStems'
+import { resolveQuestionStem } from '../lib/questionStem'
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, loadStudentPathContext, type StudyPathConfig } from '../lib/studyPathConfig'
-import { buildStoryDisplay } from '../lib/storyDisplay'
 import { selectStoryForConcept } from '../lib/storySelection'
-import { selectSceneForQuestion } from '../lib/sceneSelection'
 import { storyArtFor } from '../lib/storyArt'
-import framesRaw from '../data/questionContextFrames.json'
 import {
   PRACTICE_DRAFT_VERSION,
   practiceDraftKey,
@@ -63,27 +60,6 @@ import { extractPlottablePoints, extractGraphableExpression } from '../lib/plott
 import { sanitizeAnswer, sanitizeProblemText, safeSvgHtml, MAX_ANSWER_CHARS, MAX_PROBLEM_CHARS } from '../lib/inputGuards'
 import conceptStoriesData from '../data/conceptStories.json'
 import s from './Practice.module.css'
-
-const CONTEXT_FRAMES = framesRaw as Record<string, { questionBridge?: string; settingLine?: string }>
-
-/**
- * Local story wrap when Groq story-module is slow/offline — never bare textbook.
- *
- * Checks the concept's `scenes[]` list (lib/sceneSelection.ts) first, so a
- * fractions_decimals question varies its bridge/setting across a session;
- * concepts with no scenes array fall through to the single locked
- * questionContextFrames.json frame exactly as before.
- */
-function framedLocalStem(q: Question): string {
-  const display = buildStoryDisplay(q)
-  const story = selectStoryForConcept(q.conceptId)
-  if (!story) return display.stem
-  const scene = selectSceneForQuestion(q, story.conceptId)
-  const frame = CONTEXT_FRAMES[story.conceptId]
-  const setting = scene?.settingLine || story.settingLine || frame?.settingLine || ''
-  const bridge = scene?.questionBridge || frame?.questionBridge || `${story.protagonist} sets this on the desk.`
-  return [setting ? `✦ ${setting}` : '', bridge, display.stem].filter(Boolean).join('\n\n')
-}
 
 /** Short wizard line for soft-wrong retries (under Graph). */
 function coachLineForWrong(q: Question): string {
@@ -1571,19 +1547,12 @@ export default function Practice() {
     [currentQ],
   )
 
-  const sessionStem = useMemo(() => {
-    if (!currentQ) return ''
-    // C-4 serve order: baked themed stem > framedLocalStem > plain
-    // Key includes storyId so the reskin must match the active story world.
-    const story = selectStoryForConcept(currentQ.conceptId)
-    const baked = getBakedThemedStem(
-      currentQ.conceptId,
-      currentQ.id,
-      story?.conceptId ?? currentQ.conceptId,
-    )
-    if (baked) return baked
-    return framedLocalStem(currentQ)
-  }, [currentQ])
+  const sessionStem = useMemo(
+    // C-4 serve order (baked > framedLocalStem > plain) lives in lib/questionStem
+    // so the chapter page reads identically.
+    () => (currentQ ? resolveQuestionStem(currentQ) : ''),
+    [currentQ],
+  )
 
   const sessionArt = useMemo(() => {
     if (!currentQ) return null

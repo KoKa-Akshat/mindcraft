@@ -13,6 +13,7 @@ import { submitWorkEvidenceIfReady } from '../lib/workEvidence'
 import { appendChapterWorkToJournal } from '../lib/chapterJournal'
 import { selectStoryForConcept } from '../lib/storySelection'
 import { selectSceneForQuestion } from '../lib/sceneSelection'
+import { resolveQuestionStem } from '../lib/questionStem'
 import { getPastMistakeCallback, type PastMistakeCallback } from '../lib/pastMistakeCallback'
 import WizardMascot from '../components/canvas/WizardMascot'
 import MathText from '../components/MathText'
@@ -503,13 +504,14 @@ export default function ConceptChapterPage() {
   }, [journalQIdx, panelIdx])
 
   const activeQuestion = journalQIdx >= 0 ? questions[journalQIdx] : null
-  // Narrative wrapping removed from the displayed stem (see ACTIVE_TASK.md).
-  // journalGuide highlights now key off the plain bank question, matching
-  // what actually renders in renderQuestPanel. chapterStem/getFrame/
-  // selectStoryForConcept stay wired (used by renderOpenPanel's story intro
-  // and kept computed in renderQuestPanel below) for a future dedicated
-  // wrapping agent; intentionally not consumed here anymore.
-  const activeStem = useMemo(() => activeQuestion?.question ?? '', [activeQuestion])
+  // Displayed stem = the shared C-4 resolve chain (baked themed stem >
+  // framedLocalStem > plain), identical to what Practice serves. journalGuide
+  // highlights key off this same resolved text so they line up with what
+  // renderQuestPanel actually renders.
+  const activeStem = useMemo(
+    () => (activeQuestion ? resolveQuestionStem(activeQuestion) : ''),
+    [activeQuestion],
+  )
   const transcribing = Boolean(
     journalQIdx >= 0
     && (scratchStrokes[journalQIdx]?.strokes?.length ?? 0) > 0
@@ -799,16 +801,17 @@ export default function ConceptChapterPage() {
     const chosen = answers[qIdx] ?? null
     const isDone = submitted[qIdx] ?? false
     const protagonist = localStory?.protagonist ?? frame?.protagonist ?? cs.conceptName
-    // Narrative wrapping removed from the displayed stem (see ACTIVE_TASK.md).
-    // narrativeStem/scene stay wired (computed) for a future dedicated
-    // wrapping agent; intentionally not fed into the JSX below anymore.
+    // Displayed stem comes from the shared C-4 chain; chapterStem stays wired
+    // as the page-local fallback shape for a future dedicated wrapping agent.
     const narrativeStem = chapterStem(q, frame, protagonist, canonicalId)
     const scene = selectSceneForQuestion(q, canonicalId)
     void narrativeStem
+    const displayStem = resolveQuestionStem(q)
     const allHints = (q.hints ?? []).slice(0, 2)
     // GraphBox should plot the question's OWN figure when one is parseable
     // (real points or a stated equation), not always the generic default
-    // curve — see lib/plottablePoints.ts.
+    // curve — see lib/plottablePoints.ts. These parse the RAW bank text on
+    // purpose: the narrative wrap is display-only and not machine-readable.
     const graphPoints = extractPlottablePoints(q.question)
     const graphExpr = extractGraphableExpression(q.question)
 
@@ -834,7 +837,7 @@ export default function ConceptChapterPage() {
               here anymore. */}
 
           <HighlightedStem
-            text={q.question}
+            text={displayStem}
             ink={theme.ink}
             accent={theme.accent}
             highlights={journalGuide.highlights}
