@@ -4,6 +4,27 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-28 — Researcher tick: Part XXXIV Formal causal DAG + identification
+
+**Tick type:** Researcher (UTC hour 22; hour%6≠0; ch34 never written → Researcher)  
+**Chapter written:** `chapters/34_formal_causal_dag_identification.md` (Part XXXIV)  
+**Claim examined:** Product analytics / short A/Bs can defend “FEI / identity transformation works” without a formal estimand.
+
+**Evidence added:**
+- Pearl back-door / identification (1995 *Biometrika*; 2009 *Causality*; 2009 *Statist. Surv.* doi:10.1214/09-SS057).
+- Weidlich, Hicks & Drachsler (2023/24, *ETR&D*, doi:10.1007/s11423-023-10241-0): DAGs for ed-tech causal reasoning.
+- Rohrer (2018, *AMPPS*, doi:10.1177/2515245917745629): mediator/collider over-control harms inference.
+- Steiner, Kim, Hall & Su (2017, *SMR*, doi:10.1177/0049124115582272): QED identification assumptions strengthen as assignment control falls.
+- IES WWC confounding-factor standards / Handbook v5.0 (arm-aligned design confounds).
+
+**Product implication:** Graded L0–L4 claim ladder; Exp A only identifies coach→`retry_120s`; ban selling L3 identity from L1 data; attach FEI DAG to pre-regs; do not adjust away mediators on the FEI path.
+
+**Experiments spawned:** DAG-0 (estimand card), DAG-1 (pre-treatment covariates only), DAG-2 (mediator over-control check).
+
+**PDF:** Regenerate after ch34 mount.
+
+---
+
 ## 2026-07-26 — Ops fix: push-to-main + rotation bug
 
 **Process:** Overnight ticks opened **draft PRs** instead of landing on `main`. Root cause combo: (1) PR tool habit, (2) rotation `hour % 3 == 0` matched **every** `0 */3 * * *` cron fire → all Red Team, no new chapters.
