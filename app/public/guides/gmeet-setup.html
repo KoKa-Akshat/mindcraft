@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCraft · Set up Google Meet</title>
+<style>
+  :root { --ink:#143a2e; --leaf:#247a4d; --cream:#fff8e9; --paper:#fffdf7; --gold:#e8d16b; --muted:#687468; }
+  * { box-sizing:border-box; margin:0; padding:0 }
+  body { font-family:"Nunito Sans",system-ui,sans-serif; background:linear-gradient(160deg,#dceef6,#fff8e9 55%,#fffdf7); color:var(--ink); min-height:100vh; padding:48px 24px }
+  .sheet { max-width:640px; margin:0 auto; background:var(--paper); border:1px solid rgba(20,58,46,.12); border-radius:28px; padding:clamp(28px,5vw,48px); box-shadow:0 24px 60px rgba(20,58,46,.12) }
+  .brand { font-weight:1000; letter-spacing:-.04em; font-size:22px; margin-bottom:8px }
+  .brand span { color:#d3a900 }
+  h1 { font-family:Georgia,"DM Serif Display",serif; font-size:clamp(28px,4vw,40px); line-height:1.15; letter-spacing:-.02em; margin:12px 0 10px }
+  .lead { color:var(--muted); font-weight:700; line-height:1.45; margin-bottom:28px }
+  ol { list-style:none; display:grid; gap:14px; counter-reset:step }
+  li { counter-increment:step; position:relative; padding:16px 16px 16px 56px; border-radius:18px; background:#eef6fb; border:1px solid rgba(36,122,77,.12); font-weight:800; line-height:1.4 }
+  li:before { content:counter(step); position:absolute; left:16px; top:16px; width:28px; height:28px; border-radius:50%; background:var(--ink); color:#fff; display:grid; place-items:center; font-size:12px; font-weight:1000 }
+  .tip { margin-top:24px; padding:14px 16px; border-radius:16px; background:rgba(232,209,107,.28); font-size:14px; font-weight:800; line-height:1.4 }
+  .actions { margin-top:28px; display:flex; flex-wrap:wrap; gap:10px }
+  a.btn { display:inline-flex; align-items:center; min-height:44px; padding:0 18px; border-radius:14px; background:var(--ink); color:#fff; text-decoration:none; font-size:12px; font-weight:1000; letter-spacing:.06em; text-transform:uppercase }
+  a.ghost { background:transparent; color:var(--ink); border:1px solid rgba(20,58,46,.2) }
+  @media print {
+    body { background:#fff; padding:0 }
+    .sheet { box-shadow:none; border:none }
+    .actions { display:none }
+  }
+</style>
+</head>
+<body>
+  <article class="sheet">
+    <p class="brand">Mind<span>Craft</span></p>
+    <h1>Set up Google Meet in 4 moves.</h1>
+    <p class="lead">One permanent room. Every booked session without its own link uses it. Simple for parents. Reliable for you.</p>
+    <ol>
+      <li>Go to meet.google.com while signed into your school Google account.</li>
+      <li>Click New meeting → Create a meeting for later.</li>
+      <li>Copy the meet.google.com link. Keep this room. Do not delete it.</li>
+      <li>In MindCraft Tutor Dashboard, open Google Meet, paste the link, and save.</li>
+    </ol>
+    <p class="tip">Reuse the same room for every student. Rename the calendar event each time if you want a cleaner history.</p>
+    <div class="actions">
+      <a class="btn" href="https://meet.google.com/" target="_blank" rel="noopener">Open Google Meet</a>
+      <a class="btn ghost" href="#" onclick="window.print();return false">Print / Save PDF</a>
+    </div>
+  </article>
+</body>
+</html>

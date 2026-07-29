@@ -20,6 +20,7 @@ import { auth, db } from './firebase'
 import Login         from './pages/Login'
 import Dashboard     from './pages/Dashboard'
 import TutorDashboard from './pages/TutorDashboard'
+import TutorStudentLiveView from './pages/TutorStudentLiveView'
 import SessionDetail from './pages/SessionDetail'
 import FindTutor      from './pages/FindTutor'
 import Admin         from './pages/Admin'
@@ -267,6 +268,7 @@ export default function App() {
         <Route path="/parent"              element={<AuthGuard><ParentDashboard /></AuthGuard>} />
         <Route path="/tutor"               element={<AuthGuard><TutorDashboard /></AuthGuard>} />
         <Route path="/tutor/session/:id"   element={<AuthGuard><SessionDetail /></AuthGuard>} />
+        <Route path="/tutor/student/:studentId" element={<AuthGuard><TutorStudentLiveView /></AuthGuard>} />
         <Route path="/admin"               element={<AuthGuard><Admin /></AuthGuard>} />
         <Route path="/chat/:partnerId"     element={<AuthGuard><Chat /></AuthGuard>} />
         <Route path="/study-timer"         element={<AuthGuard><StudyTimer /></AuthGuard>} />

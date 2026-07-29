@@ -18,6 +18,20 @@ service firebase.storage {
       allow delete: if request.auth != null && request.auth.uid == uid;
     }
 
+    // Tutor profile photo + resume (Tutor Dashboard).
+    match /users/{uid}/profile/{fileName} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 8 * 1024 * 1024
+        && (
+          request.resource.contentType.matches('image/.*')
+          || request.resource.contentType == 'application/pdf'
+          || request.resource.contentType == 'application/msword'
+          || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        );
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
     // Marketing tutor applications: anonymous upload of resume + photo, then
     // download links are emailed via FormSubmit. Tokenized download URLs work
     // even without public read. Size + content-type capped to limit abuse.

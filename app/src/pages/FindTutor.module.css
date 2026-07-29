@@ -44,7 +44,8 @@
 .tutorListCardActive{border-color:var(--green);box-shadow:0 20px 48px rgba(78,181,67,.16)}
 .tutorHeader{display:flex;align-items:center;gap:14px}
 .tutorHeaderText{min-width:0}
-.avatar{flex:0 0 auto;width:52px;height:52px;border:1px solid rgba(255,255,255,.5);border-radius:18px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:950;box-shadow:0 14px 28px rgba(6,45,34,.14)}
+.avatar{flex:0 0 auto;width:52px;height:52px;border:1px solid rgba(255,255,255,.5);border-radius:18px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:950;box-shadow:0 14px 28px rgba(6,45,34,.14);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .tutorName{color:var(--forest);font-family:var(--tok-font-serif);font-size:22px;font-weight:600;line-height:1.06;letter-spacing:-.03em}
 .tutorStat{margin-top:4px;color:rgba(75,0,29,.54);font-size:11px;font-weight:950;letter-spacing:.1em;text-transform:uppercase}
 .tutorBio{color:var(--muted);font-size:14px;font-weight:700;line-height:1.65}

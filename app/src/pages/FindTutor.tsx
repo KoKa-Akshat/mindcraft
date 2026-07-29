@@ -83,6 +83,7 @@ interface Tutor {
   calendlyUrl: string
   sessionsCompleted: number
   avatarColor: string
+  photoUrl?: string | null
   available: boolean
   location: LatLng
   /** US state code used for regional search filtering (MN, CA, …). */
@@ -476,6 +477,7 @@ export default function FindTutor() {
             calendlyUrl,
             sessionsCompleted: data.sessionsCompleted ?? 0,
             avatarColor: data.avatarColor ?? 'linear-gradient(135deg, #2D5016, #58CC02)',
+            photoUrl: typeof data.photoUrl === 'string' ? data.photoUrl : null,
             available: data.available ?? true,
             location,
             state,
@@ -611,7 +613,9 @@ export default function FindTutor() {
               >
                 <div className={s.tutorHeader}>
                   <div className={s.avatar} style={{ background: tutor.avatarColor }}>
-                    {tutor.displayName.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                    {tutor.photoUrl
+                      ? <img src={tutor.photoUrl} alt="" />
+                      : tutor.displayName.split(' ').map(w => w[0]).join('').slice(0, 2)}
                   </div>
                   <div className={s.tutorHeaderText}>
                     <div className={s.tutorName}>{tutor.displayName}</div>
