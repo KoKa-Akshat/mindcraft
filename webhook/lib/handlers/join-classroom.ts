@@ -34,9 +34,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     await db.runTransaction(async tx => {
       tx.update(classroom.ref, { studentIds: FieldValue.arrayUnion(uid) })
+      // tutorId/classroomId stay the single "most recent" scalars for every
+      // existing reader that only ever cared about one tutor (TutorDashboard's
+      // legacy roster query, Admin.tsx). tutorIds is the new array, additive
+      // only — joining a 2nd tutor's classroom never drops the first tutor
+      // the way overwriting a scalar would.
       tx.set(db.collection('users').doc(uid), {
         role: 'student',
         tutorId,
+        tutorIds: FieldValue.arrayUnion(tutorId),
+        // Keep assignedTutor* in sync so Message Tutor + tutor roster
+        // (assignedTutorId queries) work without a separate admin link.
+        assignedTutorId: tutorId,
+        assignedTutorIds: FieldValue.arrayUnion(tutorId),
         classroomId: classroom.id,
       }, { merge: true })
     })

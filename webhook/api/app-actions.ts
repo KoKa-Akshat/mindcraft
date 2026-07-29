@@ -18,6 +18,8 @@ import registerCalendly from '../lib/handlers/register-calendly'
 import conceptGraph from '../lib/handlers/concept-graph'
 import parseHomework from '../lib/handlers/parse-homework'
 import sparkExperience from '../lib/handlers/spark-experience'
+import adminLink from '../lib/handlers/admin-link'
+import deployRules from '../lib/handlers/deploy-rules'
 
 const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Promise<unknown> | unknown> = {
   'create-classroom': createClassroom,
@@ -30,6 +32,8 @@ const HANDLERS: Record<string, (req: VercelRequest, res: VercelResponse) => Prom
   'concept-graph': conceptGraph,
   'parse-homework': parseHomework,
   'spark-experience': sparkExperience,
+  'admin-link': adminLink,
+  'deploy-rules': deployRules,
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

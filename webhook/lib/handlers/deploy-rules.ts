@@ -1,9 +1,25 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { initializeApp, cert, getApps } from 'firebase-admin/app'
-import { getFirestore } from 'firebase-admin/firestore'
 import { existsSync, readFileSync } from 'fs'
 import { resolve } from 'path'
 
+/**
+ * Deploys firebase/firestore.rules + firebase/storage.rules straight from
+ * this repo via the Firebase Rules REST API — the ONLY sanctioned way to
+ * ship a rules change (see CLAUDE.md: "do not use local firebase deploy").
+ * Was previously webhook/scripts/deploy-rules.ts, a real handler that was
+ * simply never wired into api/app-actions.ts's router or vercel.json's
+ * rewrites, so it had no live URL. Moved here, registered below, and given
+ * a /api/deploy-rules rewrite — same pattern as every other action in this
+ * router (see api/app-actions.ts's own header comment for why: Vercel's
+ * Hobby plan caps a deployment at 12 serverless functions).
+ *
+ * Call: POST https://mindcraft-webhook.vercel.app/api/deploy-rules
+ *   body: { "secret": "<last 8 characters of the ANTHROPIC_API_KEY env var>" }
+ * (Both FIREBASE_SERVICE_ACCOUNT and ANTHROPIC_API_KEY are already live
+ * Vercel env vars — every other handler in this file already depends on
+ * them, e.g. lib/firebase.ts and parse-homework.ts.)
+ */
 if (!getApps().length) {
   initializeApp({ credential: cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!)) })
 }

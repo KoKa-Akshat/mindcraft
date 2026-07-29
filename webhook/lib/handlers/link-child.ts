@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { FieldValue } from 'firebase-admin/firestore'
 import { db, auth } from '../firebase'
 import { setCors } from '../cors'
 
@@ -55,8 +56,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(403).json({ error: PARENT_EMAIL_MESSAGE })
     }
 
+    // childId stays the single "most recently linked" scalar for every
+    // existing reader that only ever cared about one kid (ParentDashboard's
+    // legacy path, Admin.tsx's summary columns). childIds is the new array,
+    // additive only — a parent linking a 2nd/3rd child never loses the
+    // earlier ones the way overwriting a scalar would.
     await db.collection('users').doc(parentUid).set({
       childId: childDoc.id,
+      childIds: FieldValue.arrayUnion(childDoc.id),
       role: 'parent',
     }, { merge: true })
 

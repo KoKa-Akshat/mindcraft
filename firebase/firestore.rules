@@ -7,14 +7,20 @@ service cloud.firestore {
 
       // Create: own doc, no privileged links; role may only be student.
       allow create: if request.auth != null && request.auth.uid == userId
-        && !request.resource.data.keys().hasAny(['childId', 'tutorId', 'classroomId'])
+        && !request.resource.data.keys().hasAny([
+             'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
+             'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
+           ])
         && (!('role' in request.resource.data) || request.resource.data.role == 'student');
 
       // Update: own doc, may not touch privileged links; may set role to
       // student only when the existing doc had no role yet.
       allow update: if request.auth != null && request.auth.uid == userId
         && !request.resource.data.diff(resource.data).affectedKeys()
-             .hasAny(['childId', 'tutorId', 'classroomId'])
+             .hasAny([
+               'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
+               'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
+             ])
         && (
           !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
           || (!('role' in resource.data) && request.resource.data.role == 'student')
@@ -86,6 +92,8 @@ service cloud.firestore {
       allow read: if request.auth != null && (
         resource.data.studentId == request.auth.uid
         || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
       );
       allow delete: if false;
     }
@@ -99,6 +107,8 @@ service cloud.firestore {
       allow read: if request.auth != null && (
         resource.data.studentId == request.auth.uid
         || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
       );
       allow delete: if false;
     }
@@ -146,7 +156,9 @@ service cloud.firestore {
     match /interactions/{interactionId} {
       allow read: if request.auth != null && (
         resource.data.studentId == request.auth.uid ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
       );
       allow write: if false;
     }
@@ -154,7 +166,9 @@ service cloud.firestore {
     match /learning_events/{eventId} {
       allow read: if request.auth != null && (
         resource.data.studentId == request.auth.uid ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
       );
       allow write: if false;
     }
@@ -182,7 +196,9 @@ service cloud.firestore {
     match /knowledge_graphs/{studentId} {
       allow read: if request.auth != null && (
         request.auth.uid == studentId ||
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == studentId
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([studentId]))
       );
       allow delete: if request.auth != null && request.auth.uid == studentId;
       allow create, update: if false;
