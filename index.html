@@ -376,8 +376,9 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .parents-pull{margin:8px auto 0;max-width:28ch;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(26px,3.4vw,38px);line-height:1.2;letter-spacing:-.02em;font-weight:400;color:#c4f547}
 .parents-story-foot{margin:0;font-size:15px;line-height:1.45;font-weight:700;color:rgba(244,239,226,.58)}
 .support-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.support-scroll-btn{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;border:1px solid rgba(20,58,46,.16);background:#fffdf7;color:var(--ink);font-size:11px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 24px rgba(20,58,46,.08);transition:transform .2s var(--ease),background .2s var(--ease)}
+.support-scroll-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;min-width:56px;padding:0 18px;border-radius:999px;border:1px solid rgba(20,58,46,.16);background:#fffdf7;color:var(--ink);font-size:22px;font-weight:500;line-height:1;letter-spacing:.08em;cursor:pointer;box-shadow:0 10px 24px rgba(20,58,46,.08);transition:transform .2s var(--ease),background .2s var(--ease)}
 .support-scroll-btn:hover{transform:translateY(-1px);background:#fff}
+.support-scroll-btn span{display:block;transform:translateY(-1px)}
 .support-rail{display:flex;gap:clamp(18px,3vw,28px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;margin-top:28px;padding-bottom:8px;scrollbar-width:none}
 .support-rail::-webkit-scrollbar{display:none}
 .support-slide{flex:0 0 min(100%,980px);scroll-snap-align:start;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(20px,4vw,40px);align-items:stretch}
@@ -845,7 +846,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <p class="label">Voices</p>
             <h2>How MindCraft supports students</h2>
           </div>
-          <button type="button" class="support-scroll-btn" id="supportNextBtn" aria-controls="supportRail">See more →</button>
+          <button type="button" class="support-scroll-btn" id="supportNextBtn" aria-controls="supportRail" aria-label="Next review"><span aria-hidden="true">⟶</span></button>
         </div>
         <div class="support-rail reveal" id="supportRail" tabindex="0" aria-label="Student and parent reviews">
           <article class="support-slide" data-review="sebastian">
@@ -943,11 +944,13 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="name" autocomplete="name" required></div>
               <div class="field"><label for="tutorEmail">Email</label><input id="tutorEmail" name="email" type="email" autocomplete="email" required></div>
               <div class="field full"><label for="tutorUniversity">University</label><input id="tutorUniversity" name="university" placeholder="Macalester, St. Olaf, UNC..." required></div>
+              <div class="field"><label for="tutorLocation">Location</label><input id="tutorLocation" name="location" placeholder="St Paul, MN or online from Chapel Hill" autocomplete="address-level2" required></div>
+              <div class="field"><label for="tutorSubjects">Subjects</label><input id="tutorSubjects" name="subjects" placeholder="ACT math, algebra, precalc..." required></div>
               <div class="field full"><label for="tutorBio">Bio</label><textarea id="tutorBio" name="bio" placeholder="Who you are, what you teach best, and why you want to tutor with MindCraft." required></textarea></div>
               <div class="field full"><label for="tutorResume">Attach resume</label><input id="tutorResume" name="attachment" type="file" accept=".pdf,.doc,.docx,application/pdf" required></div>
             </div>
             <button class="btn primary" type="submit">Apply to tutor</button>
-            <p class="form-note" id="tutorFormNote">Name, university, bio, and resume go to joinmindcraft@gmail.com.</p>
+            <p class="form-note" id="tutorFormNote">Application + resume go to joinmindcraft@gmail.com.</p>
             <div class="status" id="tutorFormStatus" hidden></div>
           </form>
         </div>
