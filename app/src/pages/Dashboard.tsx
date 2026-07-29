@@ -19,6 +19,7 @@ import WizardMascot from '../components/canvas/WizardMascot'
 import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
+import WelcomeRitual, { welcomeRitualSeen } from '../components/WelcomeRitual'
 import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
@@ -138,6 +139,7 @@ export default function Dashboard({
   const [showIntro, setShowIntro] = useState(() => (
     typeof window !== 'undefined' && !preview && !viewingAs && !introAlreadySeen()
   ))
+  const [showWelcome, setShowWelcome] = useState(false)
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
   const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
@@ -243,6 +245,11 @@ export default function Dashboard({
     try { await signOut(auth) } catch { /* ignore */ }
     navigate('/login')
   }
+
+  useEffect(() => {
+    if (preview || viewingAs || !user?.uid || !diagChecked) return
+    if (!welcomeRitualSeen(user.uid, 'student')) setShowWelcome(true)
+  }, [preview, viewingAs, user?.uid, diagChecked])
 
   useEffect(() => {
     if (preview) {
@@ -571,14 +578,21 @@ export default function Dashboard({
         data-glow={manjushreeGlow ? '1' : '0'}
       />
       )}
-      {showCover && !viewingAs && (
+      {showWelcome && user?.uid && (
+        <WelcomeRitual
+          uid={user.uid}
+          role="student"
+          onDone={() => setShowWelcome(false)}
+        />
+      )}
+      {showCover && !viewingAs && !showWelcome && (
         <CoverLanding
           entryLabel="your ACT study notebook"
           accountName={displayName}
           onOpen={() => setShowCover(false)}
         />
       )}
-      {!showCover && showIntro && (
+      {!showCover && !showWelcome && showIntro && (
         <NotebookIntro onContinue={() => setShowIntro(false)} />
       )}
 
