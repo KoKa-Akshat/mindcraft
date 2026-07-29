@@ -4,6 +4,54 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-29 — Researcher tick: Part XXXIX Interleaving vs blocking
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch39 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/39_interleaving_vs_blocking.md` (Part XXXIX)  
+**Claim examined:** Random shuffle / always-on mix / blocked session accuracy are interchangeable proofs of “real learning” and exam readiness.
+
+**Evidence added:**
+- Rohrer & Taylor (2007, *Instructional Science*, doi:10.1007/s11251-007-9015-8): spacing vs massing (E1) and mixed vs blocked (E2); delayed tests favor shuffled/mixed schedules.
+- Rohrer, Dedrick & Stershic (2015, *JEP*, doi:10.1037/edu0000001): 7th-grade interleaved vs blocked; *d* = 0.42 (1-day) and 0.79 (30-day); strategy selection vs execution.
+- Rohrer, Dedrick & Burgess (2014, *Psychonomic Bulletin & Review*, doi:10.3758/s13423-014-0588-3): interleaving benefit not limited to look-alike problem kinds.
+- Rohrer, Dedrick, Hartwig & Cheung (2020, *JEP*, doi:10.1037/edu0000367): preregistered cluster RCT, 54 classes; 61% vs 38% (*d* = 0.83) on 1-month unannounced test.
+- Brunmair & Richter (2019, *Psychological Bulletin*, doi:10.1037/bul0000209): meta *g* = 0.42 overall; math tasks *g* ≈ 0.34; similarity/complexity moderators; words favor blocking.
+- Carvalho & Goldstone (2015, *Frontiers in Psychology*, doi:10.3389/fpsyg.2015.00505): attentional bias — interleave differences / block similarities.
+
+**Product implication:** Default = short block → near-miss interleave coda → spaced mixed `transfer_pass`; ban “shuffle = science” and blocked-accuracy vanity; IL-1…4/QUAL; densifies XXIX INT-1.
+
+**Experiments spawned:** IL-1, IL-2, IL-3, IL-4, IL-QUAL.
+
+**PDF:** Regenerate after ch39 mount.
+
+---
+
+## 2026-07-29 — Researcher tick: Part XXXVIII Goal orientation (mastery vs performance)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; <8 researcher entries since last synthesizer)  
+**Chapter written:** `chapters/38_goal_orientation.md` (Part XXXVIII)  
+**Claim examined:** Competitive / streak / “look smart” framing raises motivation interchangeably with mastery goals — so engagement theater can wear a “mastery” brand.
+
+**Evidence added:**
+- Ames (1992, *JEP*, doi:10.1037/0022-0663.84.3.261): classroom task/evaluation/authority structures cue mastery vs performance goals.
+- Ames & Archer (1988, *JEP*, doi:10.1037/0022-0663.80.3.260): perceived mastery climate → strategies/challenge preference; performance salience → ability threat attributions.
+- Dweck & Leggett (1988, *Psych Review*, doi:10.1037/0033-295X.95.2.256): implicit theories → goals → helpless vs mastery patterns.
+- Elliot & Church (1997, *JPSP*, doi:10.1037/0022-3514.72.1.218): trichotomous model; performance-avoidance harms motivation and grades.
+- Elliot & McGregor (2001, *JPSP*, doi:10.1037/0022-3514.80.3.501): 2×2; mastery-avoidance distinct.
+- Hulleman et al. (2010, *Psych Bulletin*, doi:10.1037/a0018947): normative vs appearance performance-approach measures diverge (r≈+.14 vs −.14 with achievement).
+- Senko & Dawson (2017, *JEP*, doi:10.1037/edu0000160): appearance vs normative split extends to competence/self-regulation.
+- Senko, Hulleman & Harackiewicz (2011, *Ed Psych*, doi:10.1080/00461520.2011.538646): theory crossroads / operationalization discipline.
+- Maehr & Midgley (1991, *Ed Psych*, doi:10.1080/00461520.1991.9653140); Meece, Anderman & Anderman (2006, *ARP*, doi:10.1146/annurev.psych.56.091103.070258); Lüftenegger et al. (2014, doi:10.1080/01443410.2013.814189): TARGET / goal structures → mastery orientations.
+- Senko & Hulleman (2013, *JEP*, doi:10.1037/a0031136): goal-attainment expectancy; harder-looking goals → less pursuit.
+
+**Product implication:** Audit product via TARGET (esp. recognition/evaluation); default-ban appearance UX and streak-as-North-Star; instrument why `challenge_accept` happens; soft-wrong = mastery evaluation structure; GO-1…4/QUAL.
+
+**Experiments spawned:** GO-1, GO-2, GO-3, GO-4, GO-QUAL.
+
+**PDF:** Regenerate after ch38 mount.
+
+---
+
 ## 2026-07-29 — Researcher tick: Part XXXVII Expectancy-value (Eccles)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch37 never written → prefer Researcher per rotation)  

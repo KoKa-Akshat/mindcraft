@@ -19,9 +19,9 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 35 | Competitive session audits | Khan/Duo/Brilliant/ChatGPT | **DONE** (2026-07-29) |
 | 36 | Equity audit of story worlds | Belonging; whose history | **DONE** (2026-07-29) |
 | 37 | Expectancy-value (Eccles) | Utility/cost → course choice | **DONE** (2026-07-29) |
-| 38 | Goal orientation | Mastery vs performance framing | **NEXT** |
-| 39 | Interleaving vs blocking | When to mix problem types | queued |
-| 40 | Self-explanation prompts | Chi/Renkl → coach UX | queued |
+| 38 | Goal orientation | Mastery vs performance framing | **DONE** (2026-07-29) |
+| 39 | Interleaving vs blocking | When to mix problem types | **DONE** (2026-07-29) |
+| 40 | Self-explanation prompts | Chi/Renkl → coach UX | **NEXT** |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (41–70).
 
