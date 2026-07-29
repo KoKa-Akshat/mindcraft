@@ -393,6 +393,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .field input[type="file"]{padding:12px;font-size:13px;font-weight:700;background:#fffdf7;border:1px dashed rgba(20,58,46,.22);border-radius:14px;cursor:pointer}
 .form-note.is-ok{color:var(--leaf)}
 .form-note.is-error{color:#c1180b}
+.honey{position:absolute!important;left:-9999px!important;height:1px!important;width:1px!important;opacity:0!important;pointer-events:none!important}
 .price-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
 .price-card .price-note{margin-top:14px;font-size:13px;font-weight:700;color:rgba(255,253,247,.7);line-height:1.4}
 .tutor-benefits li{font-size:17px;line-height:1.4;font-weight:800}
@@ -921,10 +922,12 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <p class="app-download-note" id="appDownloadNote" style="margin-top:10px">iPad companion in private testing.</p>
         </div>
         <div class="form-stage reveal" id="applyStage" data-state="seat">
-          <form class="form-card apply-form" id="intakeForm">
+          <form class="form-card apply-form" id="intakeForm" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="MindCraft student application">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://mindcraft-marketing-site.web.app/?applied=student#intake">
+            <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field"><label for="parentName">Parent name</label><input id="parentName" name="parentName" autocomplete="name" required></div>
               <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
@@ -933,13 +936,15 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Confidence, ACT math, algebra, study skills..." required></textarea></div>
             </div>
             <button class="btn primary" type="submit">Apply now</button>
-            <p class="form-note" id="formNote">Sent to joinmindcraft@gmail.com. We reply within 48 hours.</p>
+            <p class="form-note" id="formNote">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
             <div class="status" id="formStatus" hidden></div>
           </form>
-          <form class="form-card apply-form" id="tutorForm" enctype="multipart/form-data">
+          <form class="form-card apply-form" id="tutorForm" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="_subject" value="MindCraft tutor application">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://mindcraft-marketing-site.web.app/?applied=tutor#intake">
+            <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="name" autocomplete="name" required></div>
               <div class="field"><label for="tutorEmail">Email</label><input id="tutorEmail" name="email" type="email" autocomplete="email" required></div>
@@ -947,10 +952,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <div class="field"><label for="tutorLocation">Location</label><input id="tutorLocation" name="location" placeholder="St Paul, MN or online from Chapel Hill" autocomplete="address-level2" required></div>
               <div class="field"><label for="tutorSubjects">Subjects</label><input id="tutorSubjects" name="subjects" placeholder="ACT math, algebra, precalc..." required></div>
               <div class="field full"><label for="tutorBio">Bio</label><textarea id="tutorBio" name="bio" placeholder="Who you are, what you teach best, and why you want to tutor with MindCraft." required></textarea></div>
-              <div class="field full"><label for="tutorResume">Attach resume</label><input id="tutorResume" name="attachment" type="file" accept=".pdf,.doc,.docx,application/pdf" required></div>
+              <div class="field"><label for="tutorResume">Attach resume</label><input id="tutorResume" name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf" required></div>
+              <div class="field"><label for="tutorImage">Attach image</label><input id="tutorImage" name="image" type="file" accept="image/*" required></div>
             </div>
             <button class="btn primary" type="submit">Apply to tutor</button>
-            <p class="form-note" id="tutorFormNote">Application + resume go to joinmindcraft@gmail.com.</p>
+            <p class="form-note" id="tutorFormNote">Sends to joinmindcraft@gmail.com with resume and image.</p>
             <div class="status" id="tutorFormStatus" hidden></div>
           </form>
         </div>
@@ -1118,69 +1124,36 @@ if (isLocalDemo) {
   })
 }
 
-const APPLY_INBOX = "https://formsubmit.co/ajax/joinmindcraft@gmail.com"
+const form = document.getElementById("intakeForm")
+const status = document.getElementById("formStatus")
+const formNote = document.getElementById("formNote")
+const tutorForm = document.getElementById("tutorForm")
+const tutorStatus = document.getElementById("tutorFormStatus")
+const tutorFormNote = document.getElementById("tutorFormNote")
 
-async function submitApplication(form, noteEl, statusEl, successText) {
-  if (!form) return
-  const submitBtn = form.querySelector('button[type="submit"]')
-  const data = new FormData(form)
-  if (submitBtn) submitBtn.disabled = true
+// Native FormSubmit POST (not fetch) so file uploads work and CORS cannot block send.
+function applyNextUrl(kind) {
+  const url = new URL(location.href)
+  url.searchParams.set("applied", kind)
+  url.hash = "intake"
+  return url.toString()
+}
+form?.querySelector('input[name="_next"]')?.setAttribute("value", applyNextUrl("student"))
+tutorForm?.querySelector('input[name="_next"]')?.setAttribute("value", applyNextUrl("tutor"))
+
+function markSending(formEl, noteEl) {
+  const btn = formEl?.querySelector('button[type="submit"]')
+  if (btn) {
+    btn.disabled = true
+    btn.textContent = "Sending..."
+  }
   if (noteEl) {
     noteEl.classList.remove("is-ok", "is-error")
     noteEl.textContent = "Sending to joinmindcraft@gmail.com..."
   }
-  if (statusEl) {
-    statusEl.hidden = true
-    statusEl.classList.remove("show")
-  }
-  try {
-    const res = await fetch(APPLY_INBOX, {
-      method: "POST",
-      body: data,
-      headers: { Accept: "application/json" }
-    })
-    const payload = await res.json().catch(() => ({}))
-    if (!res.ok) throw new Error(payload.message || "Could not send application")
-    form.reset()
-    if (noteEl) {
-      noteEl.classList.add("is-ok")
-      noteEl.textContent = successText
-    }
-    if (statusEl) {
-      statusEl.hidden = false
-      statusEl.classList.add("show")
-      statusEl.textContent = "Sent. Check joinmindcraft@gmail.com (first time, activate FormSubmit from that inbox)."
-    }
-  } catch (err) {
-    if (noteEl) {
-      noteEl.classList.add("is-error")
-      noteEl.textContent = "Could not send right now. Email joinmindcraft@gmail.com directly."
-    }
-    if (statusEl) {
-      statusEl.hidden = false
-      statusEl.classList.add("show")
-      statusEl.textContent = String(err?.message || err)
-    }
-  } finally {
-    if (submitBtn) submitBtn.disabled = false
-  }
 }
-
-const form = document.getElementById("intakeForm")
-const status = document.getElementById("formStatus")
-const formNote = document.getElementById("formNote")
-form?.addEventListener("submit", (event) => {
-  event.preventDefault()
-  submitApplication(form, formNote, status, "Student application sent. We reply within 48 hours.")
-})
-
-const tutorForm = document.getElementById("tutorForm")
-const tutorStatus = document.getElementById("tutorFormStatus")
-const tutorFormNote = document.getElementById("tutorFormNote")
-tutorForm?.addEventListener("submit", (event) => {
-  event.preventDefault()
-  submitApplication(tutorForm, tutorFormNote, tutorStatus, "Tutor application sent with resume. We reply within 48 hours.")
-})
+form?.addEventListener("submit", () => markSending(form, formNote))
+tutorForm?.addEventListener("submit", () => markSending(tutorForm, tutorFormNote))
 
 const supportRail = document.getElementById("supportRail")
 const supportNextBtn = document.getElementById("supportNextBtn")
@@ -1191,9 +1164,7 @@ supportNextBtn?.addEventListener("click", () => {
   supportRail.scrollBy({ left: atEnd ? -supportRail.scrollWidth : amount, behavior: "smooth" })
 })
 
-// Apply panel: student intake vs tutor application (Name, University, Bio, Resume).
-// Both post to joinmindcraft@gmail.com via FormSubmit so replies land in inbox,
-// including resume attachments on the tutor form.
+// Apply panel: student vs tutor. Native FormSubmit POST → joinmindcraft@gmail.com.
 const applyTabSeat = document.getElementById("applyTabSeat")
 const applyTabTutor = document.getElementById("applyTabTutor")
 const applyStage = document.getElementById("applyStage")
@@ -1224,6 +1195,22 @@ function setActiveApplyTab(key) {
 }
 applyTabSeat?.addEventListener("click", () => setActiveApplyTab("seat"))
 applyTabTutor?.addEventListener("click", () => setActiveApplyTab("tutor"))
+
+const applied = new URLSearchParams(location.search).get("applied")
+if (applied === "student" || applied === "tutor") {
+  setActiveApplyTab(applied === "tutor" ? "tutor" : "seat")
+  const note = applied === "tutor" ? tutorFormNote : formNote
+  const statusEl = applied === "tutor" ? tutorStatus : status
+  if (note) {
+    note.classList.add("is-ok")
+    note.textContent = "Sent to joinmindcraft@gmail.com. We reply within 48 hours."
+  }
+  if (statusEl) {
+    statusEl.hidden = false
+    statusEl.classList.add("show")
+    statusEl.textContent = "Got it. First time only: open the FormSubmit activation email in joinmindcraft@gmail.com and confirm."
+  }
+}
 
 // Story slideshow first, with one direct free Manjushree demo button.
 const demoStage = document.getElementById("demoStage")
