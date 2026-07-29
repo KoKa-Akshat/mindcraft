@@ -11,7 +11,7 @@ import { auth } from '../firebase'
 import { useNavigate, Link } from 'react-router-dom'
 import {
   collection, query, where, onSnapshot, getDocs,
-  doc, getDoc, updateDoc, orderBy, limit,
+  doc, getDoc, updateDoc, addDoc, setDoc, orderBy, limit, serverTimestamp,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
@@ -101,6 +101,8 @@ export default function TutorDashboard() {
   )
   const [selectedStudent, setSelectedStudent]   = useState<string | null>(null)
   const [chatMessages, setChatMessages]   = useState<{ senderId: string; text: string; createdAt: any }[]>([])
+  const [chatDraft, setChatDraft]         = useState('')
+  const [sendingChat, setSendingChat]     = useState(false)
   const [loading, setLoading]             = useState(true)
   const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
   const [calendlyToken, setCalendlyToken] = useState('')
@@ -213,7 +215,7 @@ export default function TutorDashboard() {
   // Live chat for focused student (comment strip under briefing)
   useEffect(() => {
     const sid = focusStudent?.id
-    if (!sid || panel === 'admin') { setChatMessages([]); return }
+    if (!sid || panel === 'admin') { setChatMessages([]); setChatDraft(''); return }
     const chatId = [user.uid, sid].sort().join('_')
     const unsub = onSnapshot(
       query(collection(db, 'chats', chatId, 'messages'), orderBy('createdAt', 'asc'), limit(20)),
@@ -222,6 +224,34 @@ export default function TutorDashboard() {
     )
     return () => unsub()
   }, [focusStudent?.id, user.uid, panel])
+
+  async function sendLiveComment() {
+    const sid = focusStudent?.id
+    const text = chatDraft.trim()
+    if (!sid || !text) return
+    setSendingChat(true)
+    const chatId = [user.uid, sid].sort().join('_')
+    try {
+      await addDoc(collection(db, 'chats', chatId, 'messages'), {
+        senderId: user.uid,
+        text,
+        fileUrl: null,
+        fileName: null,
+        fileType: null,
+        createdAt: serverTimestamp(),
+      })
+      await setDoc(doc(db, 'chats', chatId), {
+        participants: [user.uid, sid],
+        lastMessage: text,
+        lastAt: serverTimestamp(),
+      }, { merge: true })
+      setChatDraft('')
+    } catch {
+      showToast('Could not send message')
+    } finally {
+      setSendingChat(false)
+    }
+  }
 
   // Latest session notes for Tools → Notes
   useEffect(() => {
@@ -293,15 +323,23 @@ export default function TutorDashboard() {
     }
   }
 
-  // One-time parent lookup + mailto - no extra state needed
+  // One-time parent lookup + mailto - no extra state needed. Checks both the
+  // legacy single-child scalar and the childIds array (a student can now
+  // have more than one linked parent — see admin-link.ts), mailing all of
+  // them at once via a comma-separated recipient list.
   async function emailParent(studentId: string, studentName: string) {
     try {
-      const snap = await getDocs(
-        query(collection(db, 'users'), where('childId', '==', studentId), limit(1))
-      )
-      const parentEmail = snap.empty ? null : snap.docs[0].data().email
-      if (!parentEmail) { showToast('No parent linked'); return }
-      window.open(`mailto:${parentEmail}?subject=${encodeURIComponent(`Update on ${studentName}`)}`)
+      const [byScalar, byArray] = await Promise.all([
+        getDocs(query(collection(db, 'users'), where('childId', '==', studentId), limit(10))),
+        getDocs(query(collection(db, 'users'), where('childIds', 'array-contains', studentId), limit(10))),
+      ])
+      const emails = new Set<string>()
+      for (const d of [...byScalar.docs, ...byArray.docs]) {
+        const email = d.data().email
+        if (email) emails.add(email)
+      }
+      if (emails.size === 0) { showToast('No parent linked'); return }
+      window.open(`mailto:${[...emails].join(',')}?subject=${encodeURIComponent(`Update on ${studentName}`)}`)
     } catch {
       showToast('No parent linked')
     }
@@ -969,6 +1007,26 @@ export default function TutorDashboard() {
                       )
                     })
                   )}
+                  <form
+                    className={s.chatCompose}
+                    onSubmit={e => { e.preventDefault(); void sendLiveComment() }}
+                  >
+                    <input
+                      className={s.chatInput}
+                      type="text"
+                      placeholder={`Message ${heroFirstName}…`}
+                      value={chatDraft}
+                      onChange={e => setChatDraft(e.target.value)}
+                      disabled={sendingChat}
+                    />
+                    <button
+                      type="submit"
+                      className={s.chatSend}
+                      disabled={sendingChat || !chatDraft.trim()}
+                    >
+                      Send
+                    </button>
+                  </form>
                 </div>
               )}
 
@@ -1047,6 +1105,16 @@ export default function TutorDashboard() {
                     onClick={openStudentDash}
                   >
                     Switch to student dash →
+                  </button>
+                  <button
+                    type="button"
+                    className={s.actionBtn}
+                    onClick={() => {
+                      if (!focusStudent) { showToast('No student yet'); return }
+                      navigate(`/chat/${focusStudent.id}`, { state: { from: '/tutor' } })
+                    }}
+                  >
+                    Message student
                   </button>
                   <a
                     className={s.actionBtn}

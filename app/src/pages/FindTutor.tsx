@@ -453,8 +453,13 @@ export default function FindTutor() {
     getDocs(query(collection(db, 'users'), where('role', '==', 'tutor')))
       .then(snap => {
         if (snap.empty) return
-        const remoteTutors: Tutor[] = snap.docs.map(d => {
+        const remoteTutors: Tutor[] = []
+        for (const d of snap.docs) {
           const data = d.data() as Record<string, any>
+          const displayName = typeof data.displayName === 'string' ? data.displayName.trim() : ''
+          // Incomplete / placeholder tutor docs (empty name, no real profile)
+          // should not appear in the public list.
+          if (!displayName) continue
           const email: string = data.calendlyEmail ?? data.email ?? ''
           const slug = email.split('@')[0].replace(/[^a-z0-9]/gi, '').toLowerCase()
           const calendlyUrl = data.calendlyUrl || (slug ? `https://calendly.com/${slug}` : '')
@@ -469,9 +474,9 @@ export default function FindTutor() {
                 .filter((r: any) => r && typeof r.quote === 'string' && typeof r.studentName === 'string')
                 .slice(0, 20)
             : []
-          return {
+          remoteTutors.push({
             id: d.id,
-            displayName: data.displayName ?? 'Tutor',
+            displayName,
             bio: data.bio || DEFAULT_TUTOR_BIO,
             subjects: data.subjects ?? [],
             calendlyUrl,
@@ -484,8 +489,8 @@ export default function FindTutor() {
             regionLabel: data.locationAddress || data.regionLabel || (state === 'CA' ? 'California' : 'Minnesota'),
             hasRealLocation,
             reviews,
-          }
-        })
+          })
+        }
         // Dedupe on BOTH id and normalized display name: real Firestore tutor
         // docs use the account's actual Firebase UID as their doc id, which
         // never matches the demo entries' literal string ids ('akshat-koirala'

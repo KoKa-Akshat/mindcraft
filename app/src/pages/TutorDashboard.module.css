@@ -720,6 +720,38 @@
 .msgName { font-size: 12px; font-weight: 800; color: var(--td-ink); }
 .msgText { font-size: 13px; color: #45564b; font-weight: 600; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+.chatCompose {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--td-line);
+}
+.chatInput {
+  flex: 1;
+  min-width: 0;
+  border: 1.5px solid var(--td-line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--td-ink);
+  background: #fffdf8;
+  outline: none;
+}
+.chatInput:focus { border-color: rgba(88, 204, 2, 0.55); }
+.chatSend {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: var(--td-leaf);
+  color: #fffdf8;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.chatSend:disabled { opacity: 0.45; cursor: not-allowed; }
+
 /* ── LIVE ACTIVITY FEED ── */
 .livePip {
   width: 8px; height: 8px; border-radius: 50%;

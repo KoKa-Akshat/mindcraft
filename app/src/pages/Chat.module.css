@@ -120,6 +120,17 @@
 .sendBtn:hover:not(:disabled) { background: var(--paper-ink-katha); transform: translateY(-1px); }
 .sendBtn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
 
+.errorBanner {
+  margin: 0 16px 8px;
+  padding: 10px 12px;
+  border-radius: 2px;
+  background: rgba(180, 40, 40, 0.08);
+  border: 1px solid rgba(180, 40, 40, 0.25);
+  color: #7a1f1f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 @media (max-width: 600px) {
   .bubble { max-width: 88%; }
 }

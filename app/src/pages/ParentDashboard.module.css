@@ -1,237 +1,97 @@
-/* ParentDashboard.module.css
-   Same parchment/violet notebook language as the student Dashboard
-   (Dashboard.module.css's `--desk-*` scale) and the Tutor dashboard's
-   `--td-*` re-declaration, here as `--pd-*` since this file has its own
-   scope. NOTE: this pass also fixes a real pre-existing bug: the previous
-   version referenced `var(--navy)`, `var(--blue-dd)`, `var(--gdd)`, and
-   `var(--blue-bg)`, none of which are defined anywhere in global.css, so
-   those declarations were silently invalid (text fell back to inherited/
-   default color instead of the intended navy/blue). Replaced with real,
-   locally-scoped tokens below. */
+/* ParentDashboard — retired stub page */
 
-.shell {
-  --pd-bg:        #efe6fb;
-  --pd-ink:       #2a2430;
-  --pd-ink-soft:  #3a2f55;
-  --pd-muted:     #6b5f80;
-  --pd-line:      rgba(58, 47, 85, 0.12);
-  --pd-paper:     #fffdf8;
-  --pd-gold:      #ffe566;
-  --pd-gold-d:    #f0cf3f;
-  --pd-violet:    #6b5cff;
-  --pd-shadow:        0 6px 20px rgba(90, 70, 140, 0.1);
-  --pd-shadow-raised: 0 10px 30px rgba(90, 70, 140, 0.13);
-  --pd-radius-sm: 12px;
-  --pd-radius-md: 16px;
-  --pd-radius-lg: 22px;
-  --pd-font:      var(--tok-font-sans);
-  --pd-font-head: var(--tok-font-hand);
+.page {
+  --pd-bg: #efe6fb;
+  --pd-ink: #2a2430;
+  --pd-muted: #6b5f80;
+  --pd-paper: #fffdf8;
+  --pd-line: rgba(58, 47, 85, 0.12);
+  --pd-font: var(--tok-font-sans, system-ui, sans-serif);
+  --pd-font-head: var(--tok-font-hand, Georgia, serif);
 
+  min-height: 100vh;
   background:
     radial-gradient(ellipse 80% 55% at 15% 10%, rgba(255, 190, 220, 0.25), transparent 55%),
     radial-gradient(ellipse 70% 50% at 90% 80%, rgba(180, 210, 255, 0.3), transparent 50%),
     var(--pd-bg);
-  min-height: 100vh;
   color: var(--pd-ink);
   font-family: var(--pd-font);
 }
 
-/* -- NAV -- */
-.nav {
-  position: fixed; top: 10px; left: 14px; right: 14px; z-index: 100;
-  height: 54px;
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
   background: rgba(255, 253, 248, 0.92);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-radius: var(--pd-radius-md);
-  border: 1.5px solid var(--pd-line);
-  box-shadow: var(--pd-shadow);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 22px;
+  border-bottom: 1px solid var(--pd-line);
 }
+
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--pd-ink);
   font-family: var(--pd-font-head);
-  font-size: 24px; font-weight: 700;
-  color: var(--pd-ink-soft); text-decoration: none; letter-spacing: -0.3px;
-}
-.logo span { color: var(--pd-gold-d); }
-.navRight { display: flex; align-items: center; gap: 12px; }
-.navRole {
-  font-family: var(--tok-font-mono);
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--pd-ink-soft);
-  background: rgba(255, 229, 102, 0.3); padding: 4px 10px; border-radius: 20px;
-}
-.avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--pd-violet), #4a3ecf);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 900; color: #fff;
-  cursor: pointer; border: 1.5px solid rgba(107, 92, 255, 0.35);
+  font-size: 22px;
+  font-weight: 700;
 }
 
-/* -- PAGE -- */
-.page {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 80px 20px 60px;
+.logoMark {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
-/* -- SPINNER -- */
-.spinner { display: flex; justify-content: center; padding: 80px 0; }
-.spinnerDot {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 3px solid rgba(58, 47, 85, 0.12);
-  border-top-color: var(--pd-violet);
-  animation: spin 0.7s linear infinite;
+.topRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 
-/* -- LINK CHILD -- */
-.linkCard {
-  max-width: 480px; margin: 80px auto 0;
-  background: var(--pd-paper); border-radius: var(--pd-radius-lg);
-  border: 1.5px solid var(--pd-line);
-  box-shadow: var(--pd-shadow-raised);
-  padding: 40px 36px;
+.userChip {
+  font-size: 13px;
+  color: var(--pd-muted);
+}
+
+.signOut {
+  border: 1px solid var(--pd-line);
+  background: var(--pd-paper);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--pd-ink);
+}
+
+.signOut:hover {
+  border-color: rgba(58, 47, 85, 0.28);
+}
+
+.retired {
+  max-width: 520px;
+  margin: 72px auto;
+  padding: 0 24px;
   text-align: center;
 }
-.linkIcon { font-size: 48px; margin-bottom: 16px; }
-.linkTitle { font-size: 22px; font-weight: 800; color: var(--pd-ink-soft); margin: 0 0 10px; }
-.linkSub { font-size: 13px; color: var(--pd-muted); line-height: 1.6; margin: 0 0 24px; font-weight: 600; }
-.linkRow { display: flex; gap: 8px; }
-.linkInput {
-  flex: 1; padding: 10px 14px; border-radius: var(--pd-radius-sm);
-  border: 1.5px solid var(--pd-line);
-  font-size: 13px; font-family: inherit;
-  outline: none; transition: border-color 0.2s;
-}
-.linkInput:focus { border-color: var(--pd-violet); }
-.linkBtn {
-  padding: 10px 20px; border-radius: var(--pd-radius-sm);
-  background: var(--pd-violet); color: #fff;
-  font-size: 13px; font-weight: 800;
-  border: none; cursor: pointer; white-space: nowrap;
-  transition: opacity 0.15s;
-}
-.linkBtn:disabled { opacity: 0.5; cursor: default; }
-.linkError { color: #dc2626; font-size: 12px; font-weight: 600; margin-top: 10px; }
 
-/* -- SUMMARY CARD SLOT - the 5-second read, sits above everything else -- */
-.summarySection { margin-bottom: 24px; }
-
-/* -- HERO -- */
-.hero { margin-bottom: 28px; }
-.heroTop { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
-.heroName { font-size: 26px; font-weight: 800; color: var(--pd-ink-soft); margin: 0; letter-spacing: -0.3px; }
-.examBadge {
-  display: inline-block;
-  font-family: var(--tok-font-mono);
-  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-  padding: 4px 12px; border-radius: 20px;
-  background: rgba(255, 229, 102, 0.3); color: var(--pd-ink-soft);
-}
-.heroStats { display: flex; gap: 10px; flex-wrap: wrap; }
-.statPill {
-  display: inline-flex; align-items: baseline; gap: 8px;
-  background: var(--pd-paper); border-radius: 40px; padding: 8px 16px;
-  border: 1px solid var(--pd-line);
-  box-shadow: var(--pd-shadow);
-}
-.statNum { font-size: 18px; font-weight: 900; color: var(--pd-ink-soft); line-height: 1; }
-.statLabel { font-size: 10px; font-weight: 700; color: var(--pd-muted); text-transform: uppercase; letter-spacing: 0.06em; }
-
-/* -- WHAT THEY'RE WORKING ON -- */
-.workSection { margin-bottom: 20px; }
-.sectionLabel {
-  font-family: var(--tok-font-mono);
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--pd-ink-soft); margin-bottom: 10px;
-}
-.workScroll {
-  display: flex; gap: 10px;
-  overflow-x: auto; padding-bottom: 6px;
-  -webkit-overflow-scrolling: touch;
-}
-.workPill {
-  flex-shrink: 0;
-  background: var(--pd-paper); border-radius: var(--pd-radius-md);
-  border: 1px solid var(--pd-line);
-  box-shadow: var(--pd-shadow);
-  padding: 10px 14px; min-width: 130px;
-}
-.workName { display: block; font-size: 12px; font-weight: 700; color: var(--pd-ink-soft); white-space: nowrap; margin-bottom: 7px; }
-.workBar { height: 5px; border-radius: 5px; background: var(--pd-line); overflow: hidden; }
-.workFill {
-  height: 100%; border-radius: 5px;
-  background: linear-gradient(90deg, var(--pd-violet), var(--pd-gold));
-  transition: width 0.4s ease;
+.retired h1 {
+  font-family: var(--pd-font-head);
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  line-height: 1.2;
 }
 
-/* -- GRID -- */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  gap: 16px;
-}
-@media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
-
-/* -- CARDS -- */
-.card {
-  background: var(--pd-paper); border-radius: var(--pd-radius-lg);
-  border: 1px solid var(--pd-line);
-  box-shadow: var(--pd-shadow);
-  padding: 20px 22px;
-}
-.cardHeader { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
-.cardLabel {
-  font-family: var(--tok-font-mono);
-  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--pd-ink-soft);
+.retired p {
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pd-ink);
 }
 
-/* -- PILLS (strengths/gaps - kept semantic green/red, meaningful signal) -- */
-.pillList { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0; }
-.pill {
-  font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px;
-}
-.pillGreen { background: rgba(88, 204, 2, 0.1); color: #2d6a1f; }
-.pillRed   { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
-
-.emptyState { padding: 12px 0; }
-.emptyState p { font-size: 13px; color: var(--pd-muted); font-weight: 600; line-height: 1.5; }
-
-/* -- YOUR TUTOR -- */
-.tutorCard { margin-top: 16px; }
-.tutorRow { display: flex; align-items: center; gap: 12px; }
-.tutorAvatar {
-  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--pd-violet), #4a3ecf);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 900; color: #fff;
-}
-.tutorName { font-size: 14px; font-weight: 800; color: var(--pd-ink-soft); }
-.tutorMail { font-size: 12px; font-weight: 700; color: var(--pd-violet); text-decoration: none; }
-.tutorMail:hover { text-decoration: underline; }
-
-/* -- WEEKLY DIGEST CALLOUT -- */
-.digestCallout {
-  margin-top: 16px;
-  background: rgba(255, 229, 102, 0.18);
-  border: 1px solid rgba(240, 207, 63, 0.4);
-  border-radius: var(--pd-radius-md);
-  padding: 16px 20px;
-  font-size: 13px; font-weight: 600; color: var(--pd-ink-soft);
-  line-height: 1.6;
-}
-
-/* -- TEST ACCOUNT BANNER (kept amber - a warning state, not brand color) -- */
-.testBanner {
-  margin-top: 24px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  border-radius: var(--pd-radius-md);
-  padding: 20px 24px;
-  font-size: 14px; font-weight: 700; color: #b07a00;
-  text-align: center;
+.retiredHint {
+  color: var(--pd-muted) !important;
+  font-size: 14px !important;
 }

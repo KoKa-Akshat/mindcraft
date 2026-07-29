@@ -109,6 +109,21 @@ function sessionToSummary(ps: any): SessionSummary {
   }
 }
 
+/** Resolve linked tutor from student user doc (admin link + classroom join). */
+function linkedTutorId(d: Record<string, unknown>): string | null {
+  if (typeof d.assignedTutorId === 'string' && d.assignedTutorId) return d.assignedTutorId
+  if (typeof d.tutorId === 'string' && d.tutorId) return d.tutorId
+  const assignedIds = d.assignedTutorIds
+  if (Array.isArray(assignedIds) && typeof assignedIds[0] === 'string' && assignedIds[0]) {
+    return assignedIds[0]
+  }
+  const tutorIds = d.tutorIds
+  if (Array.isArray(tutorIds) && typeof tutorIds[0] === 'string' && tutorIds[0]) {
+    return tutorIds[0]
+  }
+  return null
+}
+
 export function useStudentData(user: User | null, opts?: UseStudentDataOpts): StudentData {
   const viewAsUid = opts?.viewAsUid ?? null
   const isViewAs = !!(user && viewAsUid && viewAsUid !== user.uid)
@@ -170,12 +185,11 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
           weeklyPaperCompletedWeek: d.weeklyPaperCompletedWeek ?? null,
         })
         setStudentEmail(typeof d.email === 'string' ? d.email : null)
-        if (typeof d.assignedTutorId === 'string' && d.assignedTutorId) {
-          setTutorId(d.assignedTutorId)
-        } else if (typeof d.tutorId === 'string' && d.tutorId) {
-          setTutorId(d.tutorId)
-        } else {
-          setTutorId(user.uid)
+        const linked = linkedTutorId(d as Record<string, unknown>)
+        // In tutor live-view, fall back to the viewing tutor so chat still peers correctly.
+        setTutorId(linked ?? user.uid)
+        if (typeof d.assignedTutorName === 'string' && d.assignedTutorName) {
+          setTutorName(d.assignedTutorName)
         }
         setLoading(false)
       }).catch(() => { if (!cancelled) setLoading(false) })
@@ -223,11 +237,35 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
         weeklyPaperCompletedWeek: d.weeklyPaperCompletedWeek ?? null,
       })
       setStudentEmail(typeof d.email === 'string' ? d.email : user.email)
+      // Message Tutor + chat peer must resolve from the link even when there
+      // is no upcoming Calendly session yet.
+      const linked = linkedTutorId(d as Record<string, unknown>)
+      if (linked) {
+        setTutorId(linked)
+        if (typeof d.assignedTutorName === 'string' && d.assignedTutorName) {
+          setTutorName(d.assignedTutorName)
+        }
+      } else {
+        setTutorId(null)
+      }
       setLoading(false)
     }, () => setLoading(false))
 
     return () => unsub()
   }, [user, demo, dataUid, isViewAs])
+
+  // Resolve tutor display name for chat previews when only an id is known.
+  useEffect(() => {
+    if (!tutorId || demo) return
+    let cancelled = false
+    void getDoc(doc(db, 'users', tutorId)).then(snap => {
+      if (cancelled || !snap.exists()) return
+      const d = snap.data()
+      const name = d.displayName || d.email?.split('@')[0]
+      if (name) setTutorName(name)
+    }).catch(() => {})
+    return () => { cancelled = true }
+  }, [tutorId, demo])
 
   // ── 2. Upcoming sessions ─────────────────────────────────────────────────────
   useEffect(() => {
@@ -301,8 +339,12 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
             scheduledAt: upcoming.scheduledAt,
             endAt:       upcoming.endAt ?? (upcoming.scheduledAt ? upcoming.scheduledAt + 90 * 60_000 : undefined),
           })
-          setTutorId(upcoming.tutorId ?? null)
-          setTutorName(upcoming.tutorName ?? 'Tutor')
+          // Prefer the booked session tutor when one is upcoming; otherwise
+          // keep the assigned/classroom link from the user-doc effect above.
+          if (typeof upcoming.tutorId === 'string' && upcoming.tutorId) {
+            setTutorId(upcoming.tutorId)
+          }
+          if (upcoming.tutorName) setTutorName(upcoming.tutorName)
           if (!upcoming.studentId) {
             updateDoc(upcoming.ref, { studentId: user.uid }).catch(() => {})
           }

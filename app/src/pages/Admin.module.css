@@ -763,6 +763,49 @@
 }
 .overlayClose:hover { color: var(--tx); border-color: rgba(20, 58, 46, 0.3); }
 
+/* Wide variant — the student live-dashboard popup needs real room, unlike
+   the ML-profile/tutor/parent summary cards which stay at the base width. */
+.overlayCardWide { max-width: 1080px; padding: 0; overflow: hidden; }
+.overlayCardWide .overlayHead { padding: 16px 22px 0; }
+.overlayDashFrame { height: 78vh; overflow-y: auto; }
+
+.tutorPreview p { margin: 0 0 8px; font-size: 13px; }
+.tutorPreview p strong { color: var(--tx); }
+
+/* Links tab — excel-style roster with inline assign controls */
+.linkNameBtn {
+  background: none; border: none; padding: 0; margin: 0;
+  font: inherit; font-weight: 700; color: var(--leaf, #247a4d);
+  cursor: pointer; text-align: left; text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.linkNameBtn:hover { opacity: 0.75; }
+.linkChips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.linkChip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 4px 3px 9px; border-radius: 999px;
+  background: var(--bg); border: 1px solid var(--bd);
+  font-size: 12px;
+}
+.linkChipX {
+  background: none; border: none; cursor: pointer;
+  color: var(--mu); font-size: 13px; line-height: 1; padding: 2px 5px;
+  border-radius: 50%;
+}
+.linkChipX:hover { color: #c1180b; background: rgba(193, 24, 11, 0.08); }
+.linkAssignRow { display: flex; gap: 6px; align-items: center; }
+.linkSelect, .linkInputSm {
+  flex: 1; min-width: 0; font-size: 12px; padding: 6px 8px;
+  border-radius: 8px; border: 1px solid var(--bd); background: var(--w);
+  color: var(--tx); font-family: var(--f);
+}
+.linkAddBtn {
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
+  padding: 6px 10px; border-radius: 8px; border: none;
+  background: var(--tx); color: var(--w); cursor: pointer; white-space: nowrap;
+}
+.linkAddBtn:disabled { opacity: 0.4; cursor: default; }
+
 /* ── TOAST ── */
 .toast {
   position: fixed;

@@ -1254,12 +1254,39 @@ tutorForm?.addEventListener("submit", async (event) => {
 
 const supportRail = document.getElementById("supportRail")
 const supportNextBtn = document.getElementById("supportNextBtn")
+const supportNextIcon = supportNextBtn?.querySelector("span")
+
+function supportAtEnd() {
+  if (!supportRail) return false
+  return supportRail.scrollLeft + supportRail.clientWidth >= supportRail.scrollWidth - 24
+}
+
+function syncSupportArrow() {
+  if (!supportNextBtn || !supportNextIcon) return
+  const goingBack = supportAtEnd()
+  supportNextIcon.textContent = goingBack ? "⟵" : "⟶"
+  supportNextBtn.setAttribute("aria-label", goingBack ? "Previous review" : "Next review")
+}
+
 supportNextBtn?.addEventListener("click", () => {
   if (!supportRail) return
   const amount = Math.max(280, supportRail.clientWidth * 0.92)
-  const atEnd = supportRail.scrollLeft + supportRail.clientWidth >= supportRail.scrollWidth - 24
+  const atEnd = supportAtEnd()
   supportRail.scrollBy({ left: atEnd ? -supportRail.scrollWidth : amount, behavior: "smooth" })
+  // Flip immediately so the control matches the next click during smooth scroll.
+  if (supportNextIcon) {
+    supportNextIcon.textContent = atEnd ? "⟶" : "⟵"
+    supportNextBtn.setAttribute("aria-label", atEnd ? "Next review" : "Previous review")
+  }
 })
+
+let supportArrowRaf = 0
+supportRail?.addEventListener("scroll", () => {
+  // Debounce via rAF so we settle on the final snap position.
+  if (supportArrowRaf) cancelAnimationFrame(supportArrowRaf)
+  supportArrowRaf = requestAnimationFrame(syncSupportArrow)
+}, { passive: true })
+syncSupportArrow()
 
 // Apply panel: student vs tutor. FormSubmit email → joinmindcraft@gmail.com.
 const applyTabSeat = document.getElementById("applyTabSeat")

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams, Link, useLocation } from 'react-router-dom'
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
 import {
   collection, addDoc, onSnapshot, orderBy, query,
@@ -21,9 +21,10 @@ interface Message {
 
 export default function Chat() {
   const user = useUser()
+  const navigate = useNavigate()
   const location = useLocation()
   const { partnerId } = useParams<{ partnerId: string }>()
-  const chatId = [user.uid, partnerId!].sort().join('_')
+  const chatId = partnerId ? [user.uid, partnerId].sort().join('_') : ''
 
   const [messages, setMessages]       = useState<Message[]>([])
   const [text, setText]               = useState('')
@@ -31,8 +32,16 @@ export default function Chat() {
   const [backTo, setBackTo]           = useState('/dashboard')
   const [uploadProgress, setUploadProgress] = useState<number | null>(null)
   const [sending, setSending]         = useState(false)
+  const [error, setError]             = useState('')
   const fileRef  = useRef<HTMLInputElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
+
+  // Guard: no partner → leave chat (avoids writing to a broken chat id).
+  useEffect(() => {
+    if (!partnerId || partnerId === user.uid) {
+      navigate('/dashboard', { replace: true })
+    }
+  }, [partnerId, user.uid, navigate])
 
   // Back target: role home (tutors → /tutor), not marketing /
   useEffect(() => {
@@ -56,15 +65,25 @@ export default function Chat() {
       if (snap.exists()) {
         const d = snap.data()
         setPartnerName(d.displayName || d.email?.split('@')[0] || 'User')
+      } else {
+        setPartnerName('User')
       }
-    })
+    }).catch(() => setPartnerName('User'))
   }, [partnerId])
 
   // Real-time messages
   useEffect(() => {
+    if (!chatId) return
     const unsub = onSnapshot(
       query(collection(db, 'chats', chatId, 'messages'), orderBy('createdAt', 'asc')),
-      snap => setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() } as Message)))
+      snap => {
+        setError('')
+        setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() } as Message)))
+      },
+      err => {
+        console.error('[chat] listen failed', err)
+        setError('Could not load messages. Try refreshing.')
+      },
     )
     return () => unsub()
   }, [chatId])
@@ -75,8 +94,10 @@ export default function Chat() {
   }, [messages])
 
   async function sendMessage(fileUrl?: string, fileName?: string, fileType?: string) {
+    if (!partnerId || !chatId) return
     if (!text.trim() && !fileUrl) return
     setSending(true)
+    setError('')
     const msg = {
       senderId: user.uid,
       text: text.trim(),
@@ -85,37 +106,54 @@ export default function Chat() {
       fileType: fileType ?? null,
       createdAt: serverTimestamp(),
     }
-    await addDoc(collection(db, 'chats', chatId, 'messages'), msg)
-    await setDoc(doc(db, 'chats', chatId), {
-      participants: [user.uid, partnerId],
-      lastMessage: fileUrl ? `📎 ${fileName}` : text.trim(),
-      lastAt: serverTimestamp(),
-    }, { merge: true })
-    setText('')
-    setSending(false)
+    try {
+      await addDoc(collection(db, 'chats', chatId, 'messages'), msg)
+      await setDoc(doc(db, 'chats', chatId), {
+        participants: [user.uid, partnerId],
+        lastMessage: fileUrl ? `📎 ${fileName}` : text.trim(),
+        lastAt: serverTimestamp(),
+      }, { merge: true })
+      setText('')
+    } catch (err) {
+      console.error('[chat] send failed', err)
+      setError('Message failed to send. Check your connection and try again.')
+    } finally {
+      setSending(false)
+    }
   }
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
-    if (!file) return
+    if (!file || !chatId) return
+    setError('')
     const path = `chat-files/${chatId}/${Date.now()}_${file.name}`
     const storageRef = ref(storage, path)
     const task = uploadBytesResumable(storageRef, file)
     task.on('state_changed',
       snap => setUploadProgress(Math.round(snap.bytesTransferred / snap.totalBytes * 100)),
-      () => setUploadProgress(null),
-      async () => {
-        const url = await getDownloadURL(task.snapshot.ref)
-        const type = file.type.startsWith('image/') ? 'image'
-          : file.type === 'application/pdf' ? 'pdf' : 'doc'
-        await sendMessage(url, file.name, type)
+      err => {
+        console.error('[chat] upload failed', err)
         setUploadProgress(null)
-        e.target.value = ''
+        setError('File upload failed. Try a smaller file.')
+      },
+      async () => {
+        try {
+          const url = await getDownloadURL(task.snapshot.ref)
+          const type = file.type.startsWith('image/') ? 'image'
+            : file.type === 'application/pdf' ? 'pdf' : 'doc'
+          await sendMessage(url, file.name, type)
+        } catch (err) {
+          console.error('[chat] upload finalize failed', err)
+          setError('File upload failed.')
+        } finally {
+          setUploadProgress(null)
+          e.target.value = ''
+        }
       }
     )
   }
 
-  const myName = user.displayName || user.email?.split('@')[0] || 'You'
+  if (!partnerId || partnerId === user.uid) return null
 
   return (
     <div className={s.shell}>
@@ -131,7 +169,7 @@ export default function Chat() {
       </div>
 
       <div className={s.messages}>
-        {messages.length === 0 && (
+        {messages.length === 0 && !error && (
           <div className={s.empty}>No messages yet. Say hi!</div>
         )}
         {messages.map(msg => {
@@ -157,6 +195,8 @@ export default function Chat() {
         <div ref={bottomRef} />
       </div>
 
+      {error && <div className={s.errorBanner}>{error}</div>}
+
       {uploadProgress !== null && (
         <div className={s.progressBar}>
           <div className={s.progressFill} style={{ width: `${uploadProgress}%` }} />
@@ -175,9 +215,9 @@ export default function Chat() {
           placeholder="Message..."
           value={text}
           onChange={e => setText(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), sendMessage())}
+          onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), void sendMessage())}
         />
-        <button className={s.sendBtn} onClick={() => sendMessage()} disabled={sending || !text.trim()}>
+        <button className={s.sendBtn} onClick={() => void sendMessage()} disabled={sending || !text.trim()}>
           Send
         </button>
       </div>

@@ -663,7 +663,23 @@ export default function Dashboard({
                         <button type="button" className={s.bookSessionLink} onClick={playWeeklyPaper}>Weekly Review</button>
                       )
                     )}
-                    <button type="button" className={s.bookSessionLink} onClick={() => navigate('/find-a-tutor')}>Find a Tutor</button>
+                    {data.tutorId ? (
+                      <button
+                        type="button"
+                        className={s.bookSessionLink}
+                        onClick={() => navigate(`/chat/${data.tutorId}`)}
+                      >
+                        Message Tutor
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className={s.bookSessionLink}
+                        onClick={() => navigate('/find-a-tutor')}
+                      >
+                        Find a Tutor
+                      </button>
+                    )}
                   </div>
                 </div>
 

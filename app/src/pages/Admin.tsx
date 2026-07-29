@@ -29,6 +29,7 @@ import { fmtDateTime } from '../utils/format'
 import { ML_BASE, WEBHOOK_BASE } from '../lib/mlApi'
 import { listAllActConceptCoverage, coverageSummaryLine, formatQuestionSources, type ConceptCoverage } from '../lib/ontologyBankCoverage'
 import StudentIntelPanel from '../components/StudentIntelPanel'
+import Dashboard from './Dashboard'
 import s from './Admin.module.css'
 
 // Admin sees a flattened view of sessions — simpler than tutor/student views
@@ -52,6 +53,8 @@ interface AdminStudent {
   displayName:       string
   email:             string
   assignedTutorName?: string | null
+  assignedTutorId?:  string | null
+  assignedTutorIds?: string[]
 }
 
 interface AdminParent {
@@ -59,6 +62,7 @@ interface AdminParent {
   displayName: string
   email:       string
   childId:     string | null
+  childIds?:   string[]
 }
 
 interface AdminTutor {
@@ -73,7 +77,7 @@ interface StudentMeta {
   conceptCount: number
 }
 
-type AdminTab = 'overview' | 'students' | 'tutors' | 'parents' | 'sessions' | 'health' | 'settings'
+type AdminTab = 'overview' | 'links' | 'students' | 'tutors' | 'parents' | 'sessions' | 'health' | 'settings'
 type HealthStatus = 'checking' | 'healthy' | 'warning' | 'down' | 'unknown'
 
 interface HealthCheck {
@@ -111,6 +115,10 @@ const NAV_ITEMS: { id: AdminTab; label: string; icon: JSX.Element }[] = [
     icon: <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>,
   },
   {
+    id: 'links', label: 'Links',
+    icon: <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.07 0l2.83-2.83a5 5 0 00-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 00-7.07 0L4.1 13.83a5 5 0 007.07 7.07l1.5-1.5"/></svg>,
+  },
+  {
     id: 'students', label: 'Students',
     icon: <svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>,
   },
@@ -138,6 +146,7 @@ const NAV_ITEMS: { id: AdminTab; label: string; icon: JSX.Element }[] = [
 
 const TAB_TITLES: Record<AdminTab, { title: string; sub: string }> = {
   overview: { title: 'Overview',  sub: 'Platform health at a glance' },
+  links:    { title: 'Links',     sub: 'Wire student, tutor, and parent together — click a name to see their dash' },
   students: { title: 'Students',  sub: 'Activity, mastery, and ML profiles' },
   tutors:   { title: 'Tutors',    sub: 'Load, recency, and student assignment' },
   parents:  { title: 'Parents',   sub: 'Child links and weekly digests' },
@@ -177,6 +186,14 @@ export default function Admin() {
   const [intelStudent, setIntelStudent] = useState<{ id: string; name: string } | null>(null)
   const [assignPick, setAssignPick]   = useState<Record<string, string>>({})
   const [parentMatch, setParentMatch] = useState<Record<string, string>>({})
+  // Links tab — per-student row controls (dropdown/email input), keyed by
+  // studentId, plus which live dashboard popup (if any) is open right now.
+  const [linkTutorPick, setLinkTutorPick] = useState<Record<string, string>>({})
+  const [linkParentPick, setLinkParentPick] = useState<Record<string, string>>({})
+  const [linkBusy, setLinkBusy] = useState<string | null>(null)
+  const [viewingStudentId, setViewingStudentId] = useState<string | null>(null)
+  const [viewingTutor, setViewingTutor] = useState<AdminTutor | null>(null)
+  const [viewingParent, setViewingParent] = useState<AdminParent | null>(null)
   const [tab, setTab]           = useState<AdminTab>('overview')
   const [bookOpen, setBookOpen] = useState(false)
   const [coverageRows]          = useState<ConceptCoverage[]>(() => listAllActConceptCoverage())
@@ -230,6 +247,8 @@ export default function Admin() {
           displayName: d.data().displayName,
           email: d.data().email,
           assignedTutorName: d.data().assignedTutorName ?? null,
+          assignedTutorId: d.data().assignedTutorId ?? null,
+          assignedTutorIds: Array.isArray(d.data().assignedTutorIds) ? d.data().assignedTutorIds : [],
         }))
       ))
       .catch(() => {})
@@ -243,6 +262,7 @@ export default function Admin() {
         displayName: d.data().displayName ?? '',
         email: d.data().email ?? '',
         childId: d.data().childId ?? null,
+        childIds: Array.isArray(d.data().childIds) ? d.data().childIds : [],
       }))))
       .catch(() => {})
     getDocs(query(collection(db, 'users'), where('role', '==', 'tutor')))
@@ -561,17 +581,29 @@ export default function Admin() {
     return sess?.scheduledAt ?? null
   }
 
-  // Assign a student to a tutor (per-tutor dropdown on the Tutors tab)
+  // Assign a student to a tutor (per-tutor dropdown on the Tutors tab).
+  // assignedTutorId/assignedTutorIds are now admin-only fields in
+  // firestore.rules (previously an unprotected direct client updateDoc),
+  // so this goes through the admin-link webhook — same real Admin-SDK
+  // gating as link-child.ts/join-classroom.ts.
   async function assignStudentToTutor(tutorId: string) {
     const t = tutors.find(x => x.id === tutorId)
     const sid = assignPick[tutorId] || students[0]?.id
     const st = students.find(x => x.id === sid)
     if (!t || !st) { showToast('Pick a student to assign.'); return }
     try {
-      await updateDoc(doc(db, 'users', st.id), {
-        assignedTutorId:   t.id,
-        assignedTutorName: t.displayName || t.email,
+      const token = await auth.currentUser?.getIdToken(true)
+      if (!token) { showToast('Sign in again.'); return }
+      const res = await fetch(`${WEBHOOK_BASE}/api/admin-link`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ studentId: st.id, tutorId: t.id }),
       })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        showToast(data.error ?? 'Assignment failed — check permissions.')
+        return
+      }
       setStudents(prev => prev.map(x =>
         x.id === st.id ? { ...x, assignedTutorName: t.displayName || t.email } : x
       ))
@@ -603,6 +635,96 @@ export default function Admin() {
     } catch {
       showToast('Parent link failed.')
     }
+  }
+
+  // ── Links tab — one row per student, assign/unassign tutor + parent
+  // directly (the admin-link webhook, real Admin-SDK gated). ──────────────
+
+  async function callAdminLink(body: Record<string, string>): Promise<boolean> {
+    try {
+      const token = await auth.currentUser?.getIdToken(true)
+      if (!token) { showToast('Sign in again.'); return false }
+      const res = await fetch(`${WEBHOOK_BASE}/api/admin-link`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify(body),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        showToast(data.error ?? 'Link action failed.')
+        return false
+      }
+      return true
+    } catch {
+      showToast('Link action failed.')
+      return false
+    }
+  }
+
+  async function linkTutorToStudent(studentId: string) {
+    const tutorId = linkTutorPick[studentId]
+    if (!tutorId) { showToast('Pick a tutor first.'); return }
+    const t = tutors.find(x => x.id === tutorId)
+    setLinkBusy(studentId)
+    const ok = await callAdminLink({ studentId, tutorId })
+    setLinkBusy(null)
+    if (!ok) return
+    setStudents(prev => prev.map(x => x.id === studentId
+      ? {
+          ...x,
+          assignedTutorId: tutorId,
+          assignedTutorName: t?.displayName || t?.email || tutorId,
+          assignedTutorIds: [...new Set([...(x.assignedTutorIds ?? []), tutorId])],
+        }
+      : x))
+    showToast(`Linked ${t?.displayName || t?.email || 'tutor'}.`)
+  }
+
+  async function unlinkTutorFromStudent(studentId: string, tutorId: string) {
+    setLinkBusy(studentId)
+    const ok = await callAdminLink({ studentId, unlinkTutorId: tutorId })
+    setLinkBusy(null)
+    if (!ok) return
+    setStudents(prev => prev.map(x => x.id === studentId
+      ? {
+          ...x,
+          assignedTutorId: x.assignedTutorId === tutorId ? null : x.assignedTutorId,
+          assignedTutorName: x.assignedTutorId === tutorId ? null : x.assignedTutorName,
+          assignedTutorIds: (x.assignedTutorIds ?? []).filter(id => id !== tutorId),
+        }
+      : x))
+    showToast('Tutor unlinked.')
+  }
+
+  async function linkParentToStudent(studentId: string) {
+    const email = (linkParentPick[studentId] ?? '').trim().toLowerCase()
+    if (!email) { showToast('Enter the parent email first.'); return }
+    const parent = parents.find(p => p.email.toLowerCase() === email)
+    if (!parent) { showToast('No parent account with that email yet — they need to sign up first.'); return }
+    setLinkBusy(studentId)
+    const ok = await callAdminLink({ studentId, parentId: parent.id })
+    setLinkBusy(null)
+    if (!ok) return
+    setParents(prev => prev.map(p => p.id === parent.id
+      ? { ...p, childId: studentId, childIds: [...new Set([...(p.childIds ?? []), studentId])] }
+      : p))
+    setLinkParentPick(prev => ({ ...prev, [studentId]: '' }))
+    showToast(`Linked parent ${parent.displayName || parent.email}.`)
+  }
+
+  async function unlinkParentFromStudent(studentId: string, parentId: string) {
+    setLinkBusy(studentId)
+    const ok = await callAdminLink({ studentId, unlinkParentId: parentId })
+    setLinkBusy(null)
+    if (!ok) return
+    setParents(prev => prev.map(p => p.id === parentId
+      ? {
+          ...p,
+          childId: p.childId === studentId ? null : p.childId,
+          childIds: (p.childIds ?? []).filter(id => id !== studentId),
+        }
+      : p))
+    showToast('Parent unlinked.')
   }
 
   function digestMailto(p: AdminParent): string {
@@ -735,10 +857,6 @@ export default function Admin() {
           <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           Tutor Dashboard
         </Link>
-        <Link to="/parent" className={s.sideItem}>
-          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Parent Dashboard
-        </Link>
         <Link to="/dashboard" className={s.sideItem}>
           <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           Student Dashboard
@@ -840,6 +958,132 @@ export default function Admin() {
               )}
             </div>
           </>
+        )}
+
+        {/* ── LINKS — one row per student, wire tutor + parent directly.
+             Click any name to pop its live dashboard/summary right here. ── */}
+        {tab === 'links' && (
+          <div className={s.card}>
+            {students.length === 0 ? (
+              <div className={s.empty}>No students yet.</div>
+            ) : (
+              <div className={s.tableScroll}>
+                <table className={s.table}>
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Tutor</th>
+                      <th>Parent</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {students.map(st => {
+                      const linkedParents = parents.filter(p =>
+                        p.childId === st.id || (p.childIds ?? []).includes(st.id))
+                      const tutorIds = st.assignedTutorIds?.length
+                        ? st.assignedTutorIds
+                        : (st.assignedTutorId ? [st.assignedTutorId] : [])
+                      const busy = linkBusy === st.id
+                      return (
+                        <tr key={st.id}>
+                          <td>
+                            <button
+                              type="button"
+                              className={s.linkNameBtn}
+                              onClick={() => setViewingStudentId(st.id)}
+                            >
+                              {st.displayName || st.email || st.id}
+                            </button>
+                          </td>
+                          <td>
+                            <div className={s.linkChips}>
+                              {tutorIds.map(tid => {
+                                const t = tutors.find(x => x.id === tid)
+                                return (
+                                  <span key={tid} className={s.linkChip}>
+                                    <button
+                                      type="button"
+                                      className={s.linkNameBtn}
+                                      onClick={() => t && setViewingTutor(t)}
+                                    >
+                                      {t?.displayName || t?.email || tid}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className={s.linkChipX}
+                                      title="Unlink tutor"
+                                      onClick={() => unlinkTutorFromStudent(st.id, tid)}
+                                      disabled={busy}
+                                    >×</button>
+                                  </span>
+                                )
+                              })}
+                            </div>
+                            <div className={s.linkAssignRow}>
+                              <select
+                                className={s.linkSelect}
+                                value={linkTutorPick[st.id] ?? ''}
+                                onChange={e => setLinkTutorPick(prev => ({ ...prev, [st.id]: e.target.value }))}
+                              >
+                                <option value="">Pick a tutor…</option>
+                                {tutors.filter(t => !tutorIds.includes(t.id)).map(t => (
+                                  <option key={t.id} value={t.id}>{t.displayName || t.email}</option>
+                                ))}
+                              </select>
+                              <button
+                                type="button"
+                                className={s.linkAddBtn}
+                                onClick={() => linkTutorToStudent(st.id)}
+                                disabled={busy || !linkTutorPick[st.id]}
+                              >Link</button>
+                            </div>
+                          </td>
+                          <td>
+                            <div className={s.linkChips}>
+                              {linkedParents.map(p => (
+                                <span key={p.id} className={s.linkChip}>
+                                  <button
+                                    type="button"
+                                    className={s.linkNameBtn}
+                                    onClick={() => setViewingParent(p)}
+                                  >
+                                    {p.displayName || p.email}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className={s.linkChipX}
+                                    title="Unlink parent"
+                                    onClick={() => unlinkParentFromStudent(st.id, p.id)}
+                                    disabled={busy}
+                                  >×</button>
+                                </span>
+                              ))}
+                            </div>
+                            <div className={s.linkAssignRow}>
+                              <input
+                                className={s.linkInputSm}
+                                type="email"
+                                placeholder="parent@email.com"
+                                value={linkParentPick[st.id] ?? ''}
+                                onChange={e => setLinkParentPick(prev => ({ ...prev, [st.id]: e.target.value }))}
+                                onKeyDown={e => e.key === 'Enter' && linkParentToStudent(st.id)}
+                              />
+                              <button
+                                type="button"
+                                className={s.linkAddBtn}
+                                onClick={() => linkParentToStudent(st.id)}
+                                disabled={busy || !linkParentPick[st.id]?.trim()}
+                              >Link</button>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         )}
 
         {/* ── STUDENTS ── */}
@@ -1378,6 +1622,89 @@ export default function Admin() {
               </button>
             </div>
             <StudentIntelPanel studentId={intelStudent.id} studentName={intelStudent.name} />
+          </div>
+        </div>
+      )}
+
+      {/* ── Links tab popups — click a name, see their dash right here ── */}
+      {viewingStudentId && (
+        <div className={s.overlay} onClick={() => setViewingStudentId(null)}>
+          <div className={`${s.overlayCard} ${s.overlayCardWide}`} onClick={e => e.stopPropagation()}>
+            <div className={s.overlayHead}>
+              <span className={s.overlayTitle}>
+                {students.find(x => x.id === viewingStudentId)?.displayName || 'Student'} — live dashboard
+              </span>
+              <button type="button" className={s.overlayClose} onClick={() => setViewingStudentId(null)} aria-label="Close">✕</button>
+            </div>
+            <div className={s.overlayDashFrame}>
+              <Dashboard viewAsStudentId={viewingStudentId} embedded onExit={() => setViewingStudentId(null)} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewingTutor && (
+        <div className={s.overlay} onClick={() => setViewingTutor(null)}>
+          <div className={s.overlayCard} onClick={e => e.stopPropagation()}>
+            <div className={s.overlayHead}>
+              <span className={s.overlayTitle}>{viewingTutor.displayName || viewingTutor.email} — tutor</span>
+              <button type="button" className={s.overlayClose} onClick={() => setViewingTutor(null)} aria-label="Close">✕</button>
+            </div>
+            <div className={s.tutorPreview}>
+              <p><strong>Email:</strong> {viewingTutor.email}</p>
+              <p><strong>Students:</strong> {students.filter(st =>
+                st.assignedTutorId === viewingTutor.id || (st.assignedTutorIds ?? []).includes(viewingTutor.id)
+              ).length}</p>
+              <p><strong>Sessions logged:</strong> {sessions.filter(sx => sx.tutorId === viewingTutor.id).length}</p>
+              <div className={s.linkChips}>
+                {students.filter(st =>
+                  st.assignedTutorId === viewingTutor.id || (st.assignedTutorIds ?? []).includes(viewingTutor.id)
+                ).map(st => (
+                  <button
+                    key={st.id}
+                    type="button"
+                    className={s.linkNameBtn}
+                    onClick={() => { setViewingTutor(null); setViewingStudentId(st.id) }}
+                  >
+                    {st.displayName || st.email}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewingParent && (
+        <div className={s.overlay} onClick={() => setViewingParent(null)}>
+          <div className={s.overlayCard} onClick={e => e.stopPropagation()}>
+            <div className={s.overlayHead}>
+              <span className={s.overlayTitle}>{viewingParent.displayName || viewingParent.email} — parent</span>
+              <button type="button" className={s.overlayClose} onClick={() => setViewingParent(null)} aria-label="Close">✕</button>
+            </div>
+            <div className={s.tutorPreview}>
+              <p><strong>Email:</strong> {viewingParent.email}</p>
+              <p><strong>Linked kids:</strong></p>
+              <div className={s.linkChips}>
+                {(viewingParent.childIds?.length ? viewingParent.childIds : (viewingParent.childId ? [viewingParent.childId] : []))
+                  .map(cid => {
+                    const kid = students.find(x => x.id === cid)
+                    return (
+                      <button
+                        key={cid}
+                        type="button"
+                        className={s.linkNameBtn}
+                        onClick={() => { setViewingParent(null); setViewingStudentId(cid) }}
+                      >
+                        {kid?.displayName || kid?.email || cid}
+                      </button>
+                    )
+                  })}
+              </div>
+              <a className={s.linkAddBtn} style={{ display: 'inline-block', marginTop: 12, textDecoration: 'none' }} href={digestMailto(viewingParent)}>
+                Send weekly digest
+              </a>
+            </div>
           </div>
         </div>
       )}
