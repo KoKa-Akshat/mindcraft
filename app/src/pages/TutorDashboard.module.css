@@ -167,40 +167,77 @@
   font-size: 12px !important;
   font-weight: 700 !important;
 }
+.studentStage {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.switchBar {
+  position: sticky;
+  top: 84px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: #143a2e;
+  color: #fffdf8;
+  box-shadow: 0 10px 28px rgba(20, 58, 46, 0.28);
+}
+.switchWho {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.switchLabel {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.switchWho strong {
+  font-size: 16px;
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.switchToggle {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.12);
+  gap: 4px;
+  flex-shrink: 0;
+}
+.switchBtn {
+  min-height: 38px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #fffdf8;
+  font-family: var(--td-font);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.switchBtnOn {
+  background: #ffe566;
+  color: #143a2e;
+}
 .studentFrameWrap {
   min-width: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  height: calc(100vh - 110px);
-  min-height: 560px;
-}
-.studentFrameBar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  background: rgba(20, 58, 46, 0.92);
-  color: #f4efe2;
-  font-size: 12px;
-  font-weight: 800;
-}
-.studentFrameBar strong { font-weight: 1000; }
-.studentFrameBack {
-  border: 1px solid rgba(244, 239, 226, 0.35);
-  background: transparent;
-  color: #f4efe2;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-family: inherit;
+  height: calc(100vh - 180px);
+  min-height: 520px;
 }
 .studentFrame {
   flex: 1;

@@ -32,14 +32,6 @@ const CALENDLY_GUIDE = '/guides/calendly-setup.html'
 const GMEET_GUIDE = '/guides/gmeet-setup.html'
 
 const FIFTEEN_MIN = 15 * 60 * 1000
-const FIVE_MIN = 5 * 60 * 1000
-
-interface ActivityItem {
-  studentId: string
-  conceptId: string
-  outcome:   number
-  ts:        number
-}
 
 interface FlaggedQuestion {
   id: string
@@ -117,7 +109,6 @@ export default function TutorDashboard() {
   const [locationInput, setLocationInput] = useState('')
   const [savingLocation, setSavingLocation] = useState(false)
   const [editingLocation, setEditingLocation] = useState(false)
-  const [activity, setActivity] = useState<ActivityItem[]>([])
   const [flaggedQs, setFlaggedQs] = useState<FlaggedQuestion[]>([])
   const [panel, setPanel] = useState<DashPanel>('home')
   const [locationLatLng, setLocationLatLng] = useState<LatLng | null>(null)
@@ -182,37 +173,10 @@ export default function TutorDashboard() {
     }
   }, [selectedStudent, students, heroStudent])
 
-  // Live activity feed - realtime interactions for the focused student
-  useEffect(() => {
-    const sid = focusStudent?.id
-    if (!sid) { setActivity([]); return }
-    const unsub = onSnapshot(
-      query(
-        collection(db, 'interactions'),
-        where('studentId', '==', sid),
-        orderBy('timestamp', 'desc'),
-        limit(10),
-      ),
-      snap => setActivity(snap.docs.map(d => {
-        const data = d.data()
-        const raw = data.timestamp
-        const ts = raw?.toMillis?.() ?? (typeof raw === 'number' ? raw : 0)
-        return {
-          studentId: data.studentId ?? '',
-          conceptId: data.conceptId ?? '',
-          outcome:   Number(data.outcome ?? 0),
-          ts,
-        }
-      })),
-      () => setActivity([])
-    )
-    return () => unsub()
-  }, [focusStudent?.id])
-
   // Live chat for focused student (comment strip under briefing)
   useEffect(() => {
     const sid = focusStudent?.id
-    if (!sid) { setChatMessages([]); return }
+    if (!sid || panel === 'admin') { setChatMessages([]); return }
     const chatId = [user.uid, sid].sort().join('_')
     const unsub = onSnapshot(
       query(collection(db, 'chats', chatId, 'messages'), orderBy('createdAt', 'asc'), limit(20)),
@@ -220,7 +184,7 @@ export default function TutorDashboard() {
       () => setChatMessages([]),
     )
     return () => unsub()
-  }, [focusStudent?.id, user.uid])
+  }, [focusStudent?.id, user.uid, panel])
 
   // Latest session notes for Tools → Notes
   useEffect(() => {
@@ -559,7 +523,6 @@ export default function TutorDashboard() {
 
   const now = Date.now()
 
-  const activityLiveNow = activity.length > 0 && now - activity[0].ts < FIVE_MIN
   const heroFirstName = focusStudent?.name.split(' ')[0] ?? 'Your student'
 
   const reviewFiltered = focusStudent
@@ -667,10 +630,7 @@ export default function TutorDashboard() {
               return
             }
             const sid = selectedStudent ?? students[0]?.id
-            if (sid) {
-              setSelectedStudent(sid)
-              setTutorViewAsStudentId(sid)
-            }
+            if (sid) setSelectedStudent(sid)
             setPanel('admin')
             setConnectChip(null)
           }}
@@ -695,29 +655,6 @@ export default function TutorDashboard() {
       <main className={s.page}>
         {loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
-        ) : panel === 'admin' && focusStudent ? (
-          <div className={s.studentFrameWrap}>
-            <div className={s.studentFrameBar}>
-              <span>
-                Live student dash · <strong>{focusStudent.name}</strong>
-              </span>
-              <button
-                type="button"
-                className={s.studentFrameBack}
-                onClick={() => {
-                  setTutorViewAsStudentId(null)
-                  setPanel('student')
-                }}
-              >
-                Back
-              </button>
-            </div>
-            <iframe
-              className={s.studentFrame}
-              title={`${focusStudent.name} dashboard`}
-              src={`/tutor/student/${encodeURIComponent(focusStudent.id)}?embed=1`}
-            />
-          </div>
         ) : panel === 'profile' ? (
           <TutorProfilePanel
             user={user}
@@ -910,39 +847,55 @@ export default function TutorDashboard() {
               </button>
             </div>
           </div>
-        ) : (
+        ) : focusStudent && (panel === 'student' || panel === 'admin') ? (
+          <div className={s.studentStage}>
+            <div className={s.switchBar}>
+              <div className={s.switchWho}>
+                <span className={s.switchLabel}>Viewing</span>
+                <strong>{focusStudent.name}</strong>
+              </div>
+              <div className={s.switchToggle} role="group" aria-label="Student view switch">
+                <button
+                  type="button"
+                  className={`${s.switchBtn} ${panel === 'student' ? s.switchBtnOn : ''}`}
+                  onClick={() => {
+                    setTutorViewAsStudentId(null)
+                    setPanel('student')
+                    setConnectChip(null)
+                  }}
+                >
+                  Briefing
+                </button>
+                <button
+                  type="button"
+                  className={`${s.switchBtn} ${panel === 'admin' ? s.switchBtnOn : ''}`}
+                  onClick={() => {
+                    setPanel('admin')
+                    setConnectChip(null)
+                  }}
+                >
+                  Student dash
+                </button>
+              </div>
+            </div>
+
+            {panel === 'admin' ? (
+              <div className={s.studentFrameWrap}>
+                <iframe
+                  key={focusStudent.id}
+                  className={s.studentFrame}
+                  title={`${focusStudent.name} dashboard`}
+                  src={`/tutor/student/${encodeURIComponent(focusStudent.id)}?embed=1`}
+                />
+              </div>
+            ) : (
           <div className={s.grid}>
             <div className={s.col}>
-              {focusStudent ? (
-                <>
-                  <div className={s.dashLaunch}>
-                    <div className={s.dashLaunchText}>
-                      <span className={s.dashLaunchName}>{focusStudent.name}</span>
-                      <span className={s.dashLaunchHint}>Open their live Home / Map / Work / Notes</span>
-                    </div>
-                    <button
-                      type="button"
-                      className={s.dashLaunchBtn}
-                      onClick={() => {
-                        setTutorViewAsStudentId(focusStudent.id)
-                        setPanel('admin')
-                        setConnectChip(null)
-                      }}
-                    >
-                      Open student dash →
-                    </button>
-                  </div>
                   <TutorBriefingPanel
                     studentId={focusStudent.id}
                     studentName={focusStudent.name}
                     examTrack={focusStudent.examTrack}
                   />
-                </>
-              ) : (
-                <div className={s.card}>
-                  <p className={s.heroEmpty}>Pick a linked student under Admin.</p>
-                </div>
-              )}
 
               {focusStudent && (
                 <div className={s.card}>
@@ -1044,12 +997,11 @@ export default function TutorDashboard() {
                     className={`${s.actionBtn} ${s.actionBtnPrimary}`}
                     onClick={() => {
                       if (!focusStudent) { showToast('No student yet'); return }
-                      setTutorViewAsStudentId(focusStudent.id)
                       setPanel('admin')
                       setConnectChip(null)
                     }}
                   >
-                    Open student dash →
+                    Switch to student dash →
                   </button>
                   <a
                     className={s.actionBtn}
@@ -1073,34 +1025,6 @@ export default function TutorDashboard() {
                 </div>
               </div>
 
-              <div className={s.card}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabelRow}>
-                    {activityLiveNow && <span className={s.livePip} />}
-                    <span className={s.cardLabel}>Live practice</span>
-                  </span>
-                </div>
-                {activity.length === 0 ? (
-                  <p className={s.emptyText}>Their practice answers show up here as they work.</p>
-                ) : (
-                  <div className={s.feedList}>
-                    {activity.map((a, i) => {
-                      const mark = a.outcome > 0.3
-                        ? { sym: '✓', cls: s.feedGood }
-                        : a.outcome < -0.1
-                          ? { sym: '✗', cls: s.feedBad }
-                          : { sym: '~', cls: s.feedMid }
-                      return (
-                        <div key={`${a.studentId}-${a.ts}-${i}`} className={s.feedRow}>
-                          <span className={`${s.feedMark} ${mark.cls}`}>{mark.sym}</span>
-                          <span className={s.feedText}>{conceptTitle(a.conceptId) || 'Practice'}</span>
-                          <span className={s.feedTime}>{timeAgo(a.ts)}</span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
 
               {flaggedQs.length > 0 && (
                 <div className={s.card}>
@@ -1137,6 +1061,12 @@ export default function TutorDashboard() {
               )}
 
             </div>
+          </div>
+            )}
+          </div>
+        ) : (
+          <div className={s.card}>
+            <p className={s.heroEmpty}>Pick a linked student under Admin.</p>
           </div>
         )}
       </main>
