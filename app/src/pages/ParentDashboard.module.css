@@ -1,4 +1,4 @@
-/* ParentDashboard — retired stub page */
+/* ParentDashboard */
 
 .page {
   --pd-bg: #efe6fb;
@@ -69,14 +69,14 @@
   border-color: rgba(58, 47, 85, 0.28);
 }
 
-.retired {
+.centerNote {
   max-width: 520px;
   margin: 72px auto;
   padding: 0 24px;
   text-align: center;
 }
 
-.retired h1 {
+.emptyTitle {
   font-family: var(--pd-font-head);
   font-size: 32px;
   font-weight: 700;
@@ -84,14 +84,67 @@
   line-height: 1.2;
 }
 
-.retired p {
+.emptySub {
   margin: 0 0 12px;
   font-size: 16px;
+  line-height: 1.5;
+  color: var(--pd-muted);
+}
+
+/* -- Kid switcher (only rendered when linked to more than one child) -- */
+.kidSwitcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 20px 0;
+}
+.kidPill {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--pd-line);
+  background: var(--pd-paper);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--pd-ink);
+  cursor: pointer;
+}
+.kidPill:hover { border-color: rgba(58, 47, 85, 0.28); }
+.kidPillActive {
+  border-color: #7c3aed;
+  background: color-mix(in srgb, #7c3aed 10%, var(--pd-paper));
+}
+
+/* -- Tutor comment box -- a real, rectangular callout, not buried in the
+   embedded student dash below it. -- */
+.tutorCommentBox {
+  margin: 16px 20px 0;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1.5px solid var(--pd-line);
+  background: var(--pd-paper);
+  box-shadow: 0 4px 16px rgba(58, 47, 85, 0.06);
+}
+.tutorCommentLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pd-muted);
+  margin-bottom: 6px;
+}
+.tutorCommentText {
+  margin: 0;
+  font-size: 15px;
   line-height: 1.5;
   color: var(--pd-ink);
 }
 
-.retiredHint {
-  color: var(--pd-muted) !important;
-  font-size: 14px !important;
+/* -- The embedded live student dashboard -- */
+.dashFrame {
+  margin: 16px 20px 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1.5px solid var(--pd-line);
+  min-height: 70vh;
 }
