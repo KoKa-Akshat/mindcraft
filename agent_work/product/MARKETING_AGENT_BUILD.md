@@ -1,99 +1,95 @@
 # Instagram Content Agent — Build Spec
 
-**Status:** Living build for the Instagram content agent (generate → human approve → export).  
+**Status:** Living. One file. Full scope for the Instagram content agent.  
 **Updated:** 2026-07-29  
-**Lane:** Product (`app/` review UI later) · data reads from existing bank / ontology / research  
-**Does not auto-post.** Batch only. Human ships.
+**Loop:** generate → human approve → export. **Nothing auto-posts in v1.**
 
-Copy / claim law the agent must enforce: [`MARKETING_COPY_DOCTRINE.md`](./MARKETING_COPY_DOCTRINE.md)  
-Brand law: `BRAND_BOOK.md`  
-Product thesis: [`LIVING_LEARNING_RECORD.md`](./LIVING_LEARNING_RECORD.md)  
-Evidence: Research Constitution + Parts XXVII, XXXIII–XXXVI
+Upstream voice and product context (read, do not fork casually):
+- `BRAND_BOOK.md`
+- `WORLD_VISION.md`
+- `agent_work/product/LIVING_LEARNING_RECORD.md`
+- `agent_work/research/MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` + Parts XXVII, XXXIII–XXXVI
 
 ---
 
-## 0. Elevator (short version — use this externally)
+## 0. Short version (external / pitch)
 
 ### What it is
 
-An Instagram content agent that turns MindCraft’s private learning stack into post-ready batches: captions plus finished images. Nothing posts by itself. It builds a queue. Humans approve what ships.
+Generates Instagram post ideas (captions + finished images) from MindCraft’s own data. Nothing posts automatically. It builds a batch. We approve what ships.
 
-### Why this is not a caption toy
+### Why this beats a generic caption tool
 
-Generic tools invent vibes. This agent is chained to assets competitors cannot buy:
+Generic tools invent vibes. This agent is chained to a diagnosis stack competitors cannot copy:
 
-1. **Named failure modes with frequency.** ~1,749 misconception records from the Eedi ingest (`ml/data/eedi_misconceptions.json` and mapping), not generic “students struggle with algebra.” Each post can aim at a real trap students actually fall into.
-2. **A tagged question bank.** ~1,500 exam-grade items across concepts/formats in the live bank, many story-wrapped. Puzzles are selected, never invented.
-3. **A 42-concept map with bridges.** Content can point at the gap between ideas (where students actually fail), not chapter titles.
-4. **Brand + claim enforcement before the queue.** Every caption and image brief is checked against Brand Book voice and the claim ladder. Off-voice, guarantee language, grit posters, and marketplace cosplay die before a human sees them.
-5. **Split brain: model writes; facts are sealed.** The LLM may only phrase. Puzzle answers, research citations, and testimonial quotes come only from verified stores. If the store is empty, that pillar skips. No hallucination path.
+1. **~1,749 named misconception records** with frequency (`ml/data/eedi_misconceptions.json`), not “kids struggle with algebra.”
+2. **~1,500 tagged questions** in the live bank, many story-wrapped. Puzzles are selected. Keys are never invented.
+3. **A 42-concept map with bridges** so posts can aim at the gap between ideas, where students actually fail.
+4. **Brand + claim gates before the queue.** Off-voice, score guarantees, grit posters, marketplace cosplay, and em dashes die before a human sees them.
+5. **Split brain.** The model only phrases. Answers, citations, and testimonial quotes come only from sealed fact packs. Empty store → that pillar skips.
 
-That is the wedge: **mechanism-true content from our diagnosis stack**, not another AI quote card farm.
+Wedge line: **mechanism-true content from our failure data**, not another AI quote farm.
 
 ### Content pillars
 
-| Pillar | Source of truth | Agent may |
-|--------|-----------------|-----------|
-| Story-framed puzzles | Question bank + concept stories | Select item, wrap caption, render card. Never invent the stem or key. |
-| “Most people get this wrong” traps | Misconception frequency + linked items | Name the trap, show reveal after. Frequency language only if count exists. |
-| Pure story | `conceptStories` / Katha prose | Story only. No product CTA required. |
-| Learning-science | Human-curated citation allowlist | Cite only allowlisted papers. No freestyle Scholar. |
-| Data insight | Aggregated misconception / bank stats | Numbers only from computed reports. |
-| Testimonials | Consent store only | Quote only consented, attributed entries. Prefer tutor quotes first (minors). |
-| Manifesto / tutor recruit | Brand Book + approved bank | Quote cards and recruiting. No fake urgency. |
+Puzzles people can solve (story-framed, from the bank) · “Most people get this wrong” traps with reveal · Pure story (no product required) · Learning-science with real citations · Insights from our data · Testimonials · Manifesto quote cards · Tutor recruiting
 
 ### Review loop (email is half right)
 
-Email is a nudge, not the decision surface. Gmail often blocks images; you cannot record approve/reject in a thread cleanly.
+Email is a good nudge. It is a bad decision surface (no durable approve/reject, Gmail blocks images).
 
-**Canonical loop:**
-1. Agent writes a weekly batch to a review page (images + captions laid out).  
-2. Email links to that page.  
-3. Approve / reject / edit per post. Copy button on each caption.  
-4. Approve exports a folder: images + `caption.txt` paste-ready.  
-5. Auto-post to Instagram later (needs Business account + Facebook Page). Not in v1.
+Canonical loop:
+1. Batch lands on a simple review page (images + captions).
+2. Email links to that page.
+3. Approve / reject / edit. Copy button per caption.
+4. Approve exports a folder: images + paste-ready `caption.txt`.
+5. Auto-post to Instagram later (Business account + Facebook Page). Not v1.
 
-**Host path:** start local (~one day), then put the review UI behind existing admin auth so it works on a phone.
+Start local (~a day). Then host behind existing admin login for phone review.
 
 ### Batch size
 
-~10 images / week → roughly 6–8 posts. One sitting to review.
+~10 images / week → about 6–8 posts. One sitting.
 
-### Already on disk (fuel)
+### Already on disk
 
-Misconceptions, questions, story-wrapped stems, story prose, and a small set of story illustrations. Pillars that need humans before scale: citation allowlist, consented testimonials (tutors first), more artwork.
+Misconceptions, questions, story-wrapped puzzles, story prose, a small set of story illustrations.
+
+### Still needs a human
+
+- Allowlisted learning-science papers (no freestyle citations)
+- Testimonials with consent recorded (tutors first; students are often minors)
+- More story artwork (that pillar burns images fast)
 
 ---
 
 ## 1. Job to be done
 
-**Produce Instagram-ready creative that makes Maya stop scrolling and makes parents trust the mechanism**, using only MindCraft data and research-safe claims, with a human gate before anything public.
+Produce Instagram-ready creative that makes Maya stop scrolling and makes parents trust the mechanism, using only MindCraft data and research-safe claims, with a human gate before anything public.
 
-Non-goals (v1):
-- Auto-publish to Instagram  
-- Open “learn guitar / anything” marketplace posts  
-- Inventing pedagogy, scores, or quotes  
-- Optimizing for streak / dopamine copy  
+**Thesis the agent must not violate:** MindCraft is the memory between the student and the tutor. Front door now is ACT Math. Not an open global “learn anything with anyone” marketplace. Horizon 3 “music kid / space kid” means math through interests, not guitar lessons as a product promise.
+
+**Non-goals (v1):** auto-publish · marketplace posts · inventing pedagogy/scores/quotes · streak / dopamine North Stars
 
 ---
 
-## 2. Architecture (v1)
+## 2. Architecture
 
 ```
-[Data adapters] → [Pillar picker] → [Fact pack (sealed JSON)]
+[Data adapters] → [Pillar picker] → [Sealed fact pack]
                                       ↓
-                              [Caption LLM]  ← Brand + doctrine checks
+                              [Caption LLM]  ← brand + claim gates
                                       ↓
                               [Image renderer]
                                       ↓
                               [Batch store] → [Review UI] → [Export folder]
                                       ↑
-                              [Email nudge with deep link]
+                              [Email nudge → deep link]
 ```
 
-### Sealed fact pack (critical)
+### Sealed fact pack
 
-Before any LLM call, the agent builds a **fact pack** the model cannot override:
+Built before any LLM call. The model cannot add facts outside this JSON.
 
 ```json
 {
@@ -110,176 +106,235 @@ Before any LLM call, the agent builds a **fact pack** the model cannot override:
   "citations": [],
   "testimonial": null,
   "product_cta_allowed": false,
-  "banned_phrases": ["guaranteed", "2-sigma", "unlock your potential"]
+  "approved_lines": [],
+  "banned_phrases": ["guaranteed", "2-sigma", "unlock your potential", "math Duolingo"]
 }
 ```
 
-The model receives the fact pack and a style brief. It returns caption variants + image layout hints.  
-**Validators reject** any output that introduces numbers, answers, names, or citations not present in the fact pack.
+Validators reject any caption or on-image text that introduces numbers, answers, DOIs, or quoted names not in the fact pack.
 
 ---
 
-## 3. Brand and research gates (automatic)
+## 3. Voice, claims, and automatic gates
 
-Run on every candidate before it enters the review queue:
+### Hard rules (every caption and on-image string)
+
+- No em dashes (`—`)
+- No score guarantees, Bloom 2-sigma, “tutoring is free,” streak-as-learning, empty grit / growth posters
+- No inventing puzzle answers, research citations, or testimonials
+- Student-facing lines may be identity-led; parent/ACT lines stay clarity and outcome led
+- ChatGPT is never the hero of the sentence
+- No confetti praise, “rockstar,” streak-guilt, cute error language
+- No “learn arts / guitar / anything worldwide” as current product
+
+### Claim ladder (do not sell a higher rung than evidence)
+
+| Rung | May say | Must not say |
+|------|---------|--------------|
+| L0 Product fact | What ships today | Fake live features |
+| L1 Mechanism | Soft wrong, hints before answers, design for independent solving, transfer checks | “We prevent AI dependence” (until measured) |
+| L2 Social proof | Consented testimonials | Causal ACT score proof from a quote |
+| L3 Measured | Only after instrumented metrics (`retry_120s`, `transfer_pass`, etc.) | Identity / FEI transformation sold from L1 data |
+| L4 Competitive | Session-demo wedge; we do not out-library Khan or out-streak Duo | Marketplace cosplay; Bastani-proven MindCraft |
+
+### Approved lines the agent may reuse
+
+- MindCraft is the memory between the student and the tutor.
+- Every session remembers. Every tutor knows where to begin.
+- ACT tutoring that never starts from zero.
+- ACT? We got you.
+- Your tutor shows up already knowing how to best help.
+- You never have to start over.
+- You were never bad at math.
+- Clear support without becoming the math teacher.
+- Parents buy clarity, trust, and steady progress.
+- Practice that still works when the hints are gone.
+
+Site / bio caption (when a product CTA is allowed):
+
+```
+ACT? We got you.
+Your tutor shows up already knowing how to best help.
+You never have to start over.
+
+mindcraft-marketing-site.web.app
+```
+
+### Brand Book student headlines (identity surfaces only)
+
+- Feel what it's like to be good.
+- Math didn't lose you. The story did.
+- The kids in the front row aren't smarter. They just clicked earlier.
+
+### Gate table (queue entry)
 
 | Gate | Fail if |
 |------|---------|
-| Em dash | Caption or on-image text contains `—` |
-| Brand voice | Confetti praise, “rockstar,” streak-guilt, cute error language |
-| Claim ladder | Score guarantees, Bloom 2-sigma, “prevent AI dependence,” marketplace promises |
-| Fact seal | Any numeral, answer choice, DOI, or proper-name quote not in fact pack |
-| Equity | “Culturally magical world closes the gap” style claims (Part XXXVI) |
-| Competitive cosplay | “Math Duolingo,” out-Khan library brags, grit-poster empty mindset |
-| ACT wedge drift | Posts that promise any subject / any tutor worldwide as current product |
+| Em dash | `—` anywhere |
+| Brand voice | Confetti, rockstar, streak-guilt, cute errors |
+| Claim ladder | Any hard ban above |
+| Fact seal | Fact not in pack |
+| Equity | Magical culture-closes-gap claims (Part XXXVI) |
+| Competitive cosplay | Math Duolingo, out-Khan brags, grit posters |
+| Wedge drift | Open marketplace / any-subject promises |
 
-On fail: regenerate once with the violation named; if still fail, drop from batch and log.
+Fail → one regeneration with the violation named → still fail → drop and log.
 
 ---
 
-## 4. Pillar specs (precise)
+## 4. Pillar specs
 
-### 4.1 Puzzle post
-- Pick playable bank item with story frame when available.  
-- Image: stem + choices or stem-only with “answer in comments” if format needs it.  
-- Caption: human, short, optional soft CTA to try MindCraft. No invented keys.  
-- Prefer ACT-relevant concepts for the beachhead, but any bank concept is allowed if labeled honestly.
+### 4.1 Story-framed puzzle
+- Select playable bank item. Prefer story frame when present.
+- Prefer ACT-relevant concepts for beachhead weeks; other concepts OK if honest.
+- Image: stem + choices, or stem with answer held for comments when needed.
+- Never invent stem or key.
 
-### 4.2 Trap reveal (“most people get this wrong”)
-- Require misconception_id + linked wrong choice or documented trap.  
-- Frequency line only when `frequency` is present and computed. Prefer “a common trap” if count is stale.  
-- Structure: hook → attempt → reveal → one-line why. Mechanism-true, not shame.
+### 4.2 Trap reveal
+- Require misconception id + trap text or wrong choice from data.
+- Frequency language only if `frequency` is present and fresh; else “a common trap.”
+- Arc: hook → try → reveal → one-line why. No shame theater.
 
 ### 4.3 Pure story
-- Katha / concept story excerpt. No product mention required.  
-- Visual: story illustration if on disk; else typographic card on brand ground.  
-- Do not dump heritage trivia that fails seductive-details caution (Part XXXVI). Story must earn the math.
+- Katha / concept story excerpt. Product CTA optional and usually off.
+- Art if on disk; else typographic card on brand ground.
+- Story must earn the math. No seductive trivia dump (Part XXXVI).
 
 ### 4.4 Learning-science
-- Citations **only** from `citations_allowlist.json` (human maintained).  
-- Allowed seed direction (examples, not auto-added until listed): Roediger & Karpicke 2006; Cepeda spacing syntheses; Bastani et al. 2025 only for AI-crutch caution, never as “we are proven GPT Tutor.”  
-- Caption must state the finding in plain language and name the paper. No fake DOIs.
+- Citations only from human allowlist file (create `agent_work/product/ig_citations_allowlist.json`; empty = pillar off).
+- Seed candidates for the allowlist (not live until listed): Roediger & Karpicke 2006; Cepeda spacing work; Bastani et al. 2025 only as AI-crutch caution, never “we are proven GPT Tutor.”
+- Plain-language finding + paper name. No fake DOIs.
 
 ### 4.5 Data insight
-- From precomputed reports only (misconception top-N, concept coverage, format mix).  
-- No student-level or identifiable data. Ever.
+- Precomputed aggregates only (top misconceptions, coverage, format mix).
+- Never student-level or identifiable data.
 
 ### 4.6 Testimonials
-- Source: consent table (`consent_recorded_at`, medium, scope includes `instagram`).  
-- Start with tutors. Students who are minors need guardian consent on file.  
-- Sebastian / Gillian style assets already on the marketing site may be reused only if consent scope covers social; otherwise re-consent.
+- Consent record required: who, when, medium, scope includes `instagram`.
+- Tutors first. Minors need guardian consent.
+- Marketing-site quotes (e.g. Sebastian / Gillian) only if social scope is covered; else re-consent.
 
 ### 4.7 Manifesto + tutor recruit
-- Lines from Brand Book / doctrine approved bank only.  
-- Recruit: peer-level, precise. Never gig-labor language. Never “learners.”
+- Only approved bank / Brand Book lines.
+- Recruit: peer-level, precise. No gig-labor tone. No “learners.”
 
 ---
 
-## 5. Weekly batch recipe (default)
+## 5. Weekly batch recipe
 
-Target **6–8 posts / ~10 images**:
+Default **6–8 posts / ~10 images**:
 
 | Count | Pillar |
 |------:|--------|
 | 2 | Puzzle |
 | 2 | Trap reveal |
 | 1 | Pure story |
-| 1 | Learning-science **or** data insight (alternate weeks) |
-| 1 | Testimonial **or** manifesto (if consent/art available) |
+| 1 | Learning-science or data insight (alternate) |
+| 1 | Testimonial or manifesto (if fuel exists) |
 | 0–1 | Tutor recruit |
 
-If a pillar lacks fuel, skip. Do not pad with invented content.
+No fuel → skip pillar. Never pad with invention.
 
 ---
 
-## 6. Review UI (v1)
+## 6. Review UI
 
-**Local first**, then admin-hosted.
+**Phase A local, Phase B admin-hosted.**
 
-Minimum page:
-- Grid of cards: rendered image, caption, pillar tag, source ids  
-- Approve / Reject / Needs edit  
-- Copy caption  
-- Export approved → `exports/ig/YYYY-WW/<slug>/{image.png,caption.txt,meta.json}`  
-- Email: “Batch ready” + deep link only  
+Minimum:
+- Cards: image, caption, pillar, source ids
+- Approve / Reject / Needs edit
+- Copy caption
+- Export: `exports/ig/YYYY-WW/<slug>/{image.png,caption.txt,meta.json}`
+- Email: “Batch ready” + deep link only
 
-Auth for hosted: reuse admin role gate. No public batch URLs.
-
----
-
-## 7. Human inputs (not the agent’s job)
-
-| Need | Why | Owner |
-|------|-----|-------|
-| Citation allowlist | Research bans freestyle citations | Research / founder |
-| Testimonial consent log | Legal + minors | Founder / tutors |
-| More story art | Story pillar burns images fast | Design |
-| Weekly approve sitting | Quality + voice | Founder |
+Hosted auth: existing admin role. No public batch URLs.
 
 ---
 
-## 8. Data adapters (repo paths)
+## 7. Data adapters
 
-| Fuel | Path / note |
-|------|-------------|
-| Misconceptions | `ml/data/eedi_misconceptions.json` (~1,749); mapping CSV under `data/eedi/` |
+| Fuel | Where |
+|------|--------|
+| Misconceptions | `ml/data/eedi_misconceptions.json` (~1,749); `data/eedi/` mapping |
 | Questions | `app/src/lib/questionBank.ts` merge (static + actMaster + eedi + generated) |
-| Stories | `app/src/data` concept stories / story module caches as wired |
-| Illustrations | marketing `img/` + story art folders (inventory in agent config) |
-| Brand checks | `BRAND_BOOK.md` + `MARKETING_COPY_DOCTRINE.md` compiled to machine rules |
-| Citations | `agent_work/product/ig_citations_allowlist.json` (create; empty = pillar off) |
-| Consents | `agent_work/product/ig_testimonial_consents.json` (create) |
+| Stories | concept stories / story module data under `app/src/data` as wired |
+| Illustrations | marketing `img/` + story art inventory in agent config |
+| Brand / claims | this file §3 compiled to machine rules + `BRAND_BOOK.md` |
+| Citations allowlist | `agent_work/product/ig_citations_allowlist.json` (create; empty = off) |
+| Testimonial consents | `agent_work/product/ig_testimonial_consents.json` (create) |
 
-Do not scrape live student Firestore for IG content.
+Do not scrape live student Firestore for Instagram content.
 
 ---
 
-## 9. Success metrics (agent, not vanity)
+## 8. Human inputs (not the agent)
 
-- % batch passing gates on first try  
-- Human reject rate by pillar (target: trap/puzzle rejects &lt; 30% after week 2)  
-- Zero fact-seal violations reaching Approve  
-- Time to review one batch &lt; 20 minutes  
-- Later: save/share on IG (only after manual post). Not a v1 blocker.
+| Need | Why |
+|------|-----|
+| Citation allowlist | Research bans freestyle citations |
+| Consent log | Legal; minors |
+| More story art | Story pillar runs out fast |
+| Weekly approve sitting | Voice and quality |
 
-Banned North Stars for this agent: raw post count, time-on-tool, streak metaphors in captions.
+---
+
+## 9. Success metrics
+
+- First-pass gate pass rate
+- Human reject rate by pillar (aim: puzzle/trap rejects under 30% after week 2)
+- Zero fact-seal violations reaching Approve
+- Review time under 20 minutes per batch
+- Later (manual post): saves/shares. Not a v1 blocker.
+
+Banned North Stars: raw post count, time-on-tool, streak metaphors in captions.
 
 ---
 
 ## 10. Implementation phases
 
-### Phase A — Local batch (≈1 day)
-- Fact-pack builders for puzzle + trap  
-- Caption generation + gates  
-- Simple static image cards (typographic + existing art)  
-- HTML review page on localhost  
-- Export folder  
+**Phase A (~1 day, local)**  
+Fact packs for puzzle + trap · caption + gates · static/typographic cards · localhost review HTML · export folder
 
-### Phase B — Admin host
-- Auth-gated review URL  
-- Email nudge  
-- Consent + citation JSON wired  
+**Phase B (admin host)**  
+Auth-gated review URL · email nudge · consent + citation JSON wired
 
-### Phase C — Auto-post (later)
-- Meta Business login  
-- Publish API only for Approved exports  
-- Still no invent path  
+**Phase C (later)**  
+Meta Business publish for Approved exports only · still no invent path
 
 ---
 
-## 11. Evolution protocol
+## 11. Competitive stance (for captions that mention “why us”)
 
-When Research Lab changes commercial language or bans:
-1. Update `MARKETING_COPY_DOCTRINE.md` claim ladder first.  
-2. Bump gate rules in this agent.  
-3. Note in §12 Changelog.  
-4. Do not silently widen pillars into marketplace or grit-poster content.
+| Competitor | They optimize | We do not | We show |
+|------------|---------------|-----------|---------|
+| Khan | Coverage | Out-contenting | Diagnosis + human wrap |
+| Duolingo | Streaks | Streak-as-learning | Soft wrong → stay with it → transfer |
+| Brilliant | Delight for the curious | Prestige-only | Anxious middle; trap reveals |
+| Marketplaces | Access to humans | Random global board | Briefed tutor + memory |
+| ChatGPT Base | Fluent answers | Solve-for-me cosplay | Guarded help; practice that works when hints are gone |
+
+Prefer session-demo storytelling over feature-matrix brag lists (research CSA-2 hypothesis).
 
 ---
 
-## 12. Changelog
+## 12. Evolution protocol
+
+When research changes commercial language:
+1. Edit §3 in this file.
+2. Bump machine gates to match.
+3. Add a changelog row.
+4. Do not silently widen into marketplace or grit-poster content.
+
+Open constraints (do not fake closure in captions):
+- Parents buy clarity and progress; identity is the deeper student result.
+- Do not claim parent digest / full living-record automation until shipped.
+- Do not claim we prevent AI dependence until measured.
+
+---
+
+## 13. Changelog
 
 | Date | Change |
 |------|--------|
-| 2026-07-29 | Rewrote BUILD as Instagram Content Agent spec. Moved general copy law to MARKETING_COPY_DOCTRINE.md. Replaced weak “better than a caption tool” pitch with sealed-facts + diagnosis-stack wedge. |
-| 2026-07-28 | (superseded) File briefly held a general marketing copy doctrine under the wrong job title. |
+| 2026-07-29 | Single-file Instagram Content Agent build. Folded claim/voice law into this file. Removed side docs. Strengthened diagnosis-stack wedge and sealed fact pack. |
