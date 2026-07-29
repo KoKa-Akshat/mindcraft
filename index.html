@@ -132,6 +132,9 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .atlas-fragment{position:absolute;border:1px solid rgba(232,209,107,.34);background:linear-gradient(135deg,rgba(232,209,107,.22),rgba(255,253,247,.08));box-shadow:0 18px 42px rgba(4,11,9,.24)}
 .atlas-fragment.f1{left:16%;bottom:20%;width:88px;height:54px;border-radius:18px;transform:rotate(-16deg)}
 .atlas-fragment.f2{right:22%;top:4%;width:118px;height:62px;border-radius:20px;transform:rotate(12deg)}
+.atlas-login{display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;color:#fffdf7;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.13em;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),box-shadow .2s var(--ease)}
+.atlas-login:hover{background:linear-gradient(135deg,rgba(232,209,107,.46),rgba(255,253,247,.2));color:#143a2e}
+.atlas-login:focus-visible{outline:2px solid #c4f547;outline-offset:3px;color:#143a2e;background:linear-gradient(135deg,rgba(232,209,107,.46),rgba(255,253,247,.2))}
 .hero-map-svg,.hero-art,.hero-inner,.hero-left,.hero-copy,.stats,.stat,.math-float,.math-buddy,.cool-badge,.note,.hero-glow{display:none!important}
 @keyframes heroNode{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
 @keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
@@ -662,8 +665,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <div class="trust-item" role="listitem"><strong>Proof</strong><span>Shows the student actually learned it.</span></div>
           </div>
         </div>
-        <div class="hero-atlas" aria-hidden="true">
-          <div class="atlas-disc">
+        <div class="hero-atlas">
+          <div class="atlas-disc" aria-hidden="true">
             <div class="atlas-route"></div>
             <div class="atlas-core"><span>gap</span></div>
             <span class="atlas-node a"></span>
@@ -671,8 +674,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <span class="atlas-node c"></span>
             <span class="atlas-node d"></span>
           </div>
-          <span class="atlas-fragment f1"></span>
-          <span class="atlas-fragment f2"></span>
+          <span class="atlas-fragment f1" aria-hidden="true"></span>
+          <a class="atlas-fragment f2 atlas-login app-login-link" href="https://mindcraft-93858.web.app/login">Login</a>
         </div>
       </div>
     </section>
