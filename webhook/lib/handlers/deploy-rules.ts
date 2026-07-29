@@ -18,7 +18,19 @@ import { resolve } from 'path'
  *   body: { "secret": "<last 8 characters of the ANTHROPIC_API_KEY env var>" }
  * (Both FIREBASE_SERVICE_ACCOUNT and ANTHROPIC_API_KEY are already live
  * Vercel env vars — every other handler in this file already depends on
- * them, e.g. lib/firebase.ts and parse-homework.ts.)
+ * them, e.g. lib/firebase.ts and parse-homework.ts. Careful taking that
+ * "last 8 characters" literally by eye in the Vercel dashboard — if the
+ * stored value has a trailing newline from how it was originally pasted in,
+ * `.slice(-8)` includes that newline and shifts what you'd read visually by
+ * one character. Safest: `vercel env pull` and compute it programmatically.)
+ *
+ * IMPORTANT: reads firebase/firestore.rules and firebase/storage.rules from
+ * THIS project's own directory (webhook/firebase/), not the repo-root
+ * firebase/ folder — Vercel's Root Directory for this project is `webhook/`,
+ * so anything outside it never makes it into the deployed bundle. Run
+ * `webhook/scripts/sync-rules.sh` to copy the latest repo-root rules in
+ * here before deploying webhook/ whenever firestore.rules/storage.rules
+ * changed, or this handler will 500 with "Missing canonical ... file".
  */
 if (!getApps().length) {
   initializeApp({ credential: cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!)) })

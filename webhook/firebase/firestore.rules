@@ -1,0 +1,207 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /users/{userId} {
+      allow read: if request.auth != null;
+
+      // Create: own doc, no privileged links; role may only be student.
+      allow create: if request.auth != null && request.auth.uid == userId
+        && !request.resource.data.keys().hasAny([
+             'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
+             'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
+           ])
+        && (!('role' in request.resource.data) || request.resource.data.role == 'student');
+
+      // Update: own doc, may not touch privileged links; may set role to
+      // student only when the existing doc had no role yet.
+      allow update: if request.auth != null && request.auth.uid == userId
+        && !request.resource.data.diff(resource.data).affectedKeys()
+             .hasAny([
+               'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
+               'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
+             ])
+        && (
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
+          || (!('role' in resource.data) && request.resource.data.role == 'student')
+        );
+    }
+
+    match /articles/{articleId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /sessions/{sessionId} {
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid ||
+        resource.data.studentEmail == request.auth.token.email ||
+        resource.data.tutorId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+      allow create: if request.auth != null && (
+        request.resource.data.tutorId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+      allow update: if request.auth != null && (
+        resource.data.tutorId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+      allow delete: if request.auth != null && (
+        resource.data.tutorId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null && (
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid ||
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email ||
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.tutorId == request.auth.uid
+        );
+      }
+
+      // New (TUTOR_PARENT_CLASSROOM_PLAN.md §3) — student-authored async
+      // reasoning capture. Append-only from the client: students create their
+      // own entries, tutors read all entries for their own sessions, nobody
+      // edits/deletes from the client.
+      match /studentWork/{entryId} {
+        allow create: if request.auth != null
+          && request.resource.data.studentId == request.auth.uid
+          && (
+            get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid
+            || get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email
+          );
+        // NOTE: must depend only on the parent session doc's fields, never on
+        // resource.data of the studentWork doc itself — both StudentSessions.tsx
+        // (pending-work check) and SessionDetail.tsx (tutor review) call
+        // getDocs()/onSnapshot() on this subcollection with NO where filter, and
+        // Firestore rejects an entire unfiltered list() if the rule can't be
+        // proven safe without per-document resource.data evaluation.
+        allow read: if request.auth != null && (
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentId == request.auth.uid ||
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.studentEmail == request.auth.token.email ||
+          get(/databases/$(database)/documents/sessions/$(sessionId)).data.tutorId == request.auth.uid
+        );
+        allow update, delete: if false;
+      }
+    }
+
+    match /student_work/{docId} {
+      allow create, update: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow delete: if false;
+    }
+
+    // Self-directed homework upload sessions (HOMEWORK_UPLOAD feature). Same
+    // shape as student_work: a student owns and can update only their own
+    // session doc; a linked parent can read their child's.
+    match /homework_sessions/{docId} {
+      allow create, update: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow delete: if false;
+    }
+
+    match /chats/{chatId} {
+      allow read, write: if request.auth != null && (
+        chatId.split('_')[0] == request.auth.uid ||
+        chatId.split('_')[1] == request.auth.uid
+      );
+
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null && (
+          chatId.split('_')[0] == request.auth.uid ||
+          chatId.split('_')[1] == request.auth.uid
+        );
+      }
+    }
+
+    match /transcripts/{transcriptId} {
+      allow read: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'tutor' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+      allow write: if false;
+    }
+
+    // New (TUTOR_PARENT_CLASSROOM_PLAN.md §1) — classroom join-code roster.
+    // Only the Admin-SDK webhook endpoints (join-classroom, create-classroom)
+    // write these; any signed-in user can read (needed for a student to see
+    // their own classroom's tutor name/roster after joining).
+    match /classrooms/{classroomId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // New (TUTOR_PARENT_CLASSROOM_PLAN.md §4) — previously UNCOVERED by any
+    // rule (confirmed via the live Firebase Rules API, not just the stale
+    // git snapshot). This blocked BOTH: (a) ParentDashboard.tsx reading a
+    // linked child's data, and (b) QAToolbar.tsx reading/deleting the
+    // CURRENT user's own interactions/knowledge_graphs — i.e. this was
+    // broken for direct client access generally, not only the parent case.
+    // Writes are Admin SDK only (the ML backend's server-side Firestore
+    // client bypasses rules entirely) EXCEPT the existing QA "delete my own
+    // knowledge graph" restart-fresh flow, explicitly allowed below.
+    match /interactions/{interactionId} {
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow write: if false;
+    }
+
+    match /learning_events/{eventId} {
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow write: if false;
+    }
+
+    // Student-flagged practice questions → surfaced on the tutor dashboard.
+    // A student may only flag to their OWN linked tutor (users/{uid}.tutorId,
+    // which is Admin-SDK-written via the classroom join flow, so it can't be
+    // spoofed client-side). Tutors may mark their own flags resolved.
+    match /flagged_questions/{flagId} {
+      allow create: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid
+        && request.resource.data.tutorId is string
+        && request.resource.data.tutorId ==
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tutorId;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid ||
+        resource.data.tutorId == request.auth.uid
+      );
+      allow update: if request.auth != null
+        && resource.data.tutorId == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['resolved']);
+      allow delete: if request.auth != null && resource.data.tutorId == request.auth.uid;
+    }
+
+    match /knowledge_graphs/{studentId} {
+      allow read: if request.auth != null && (
+        request.auth.uid == studentId ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == studentId ||
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([studentId]))
+      );
+      allow delete: if request.auth != null && request.auth.uid == studentId;
+      allow create, update: if false;
+    }
+  }
+}
