@@ -17,5 +17,19 @@ service firebase.storage {
         && request.resource.contentType.matches('image/(png|jpeg|svg\\+xml)');
       allow delete: if request.auth != null && request.auth.uid == uid;
     }
+
+    // Marketing tutor applications: anonymous upload of resume + photo, then
+    // download links are emailed via FormSubmit. Tokenized download URLs work
+    // even without public read. Size + content-type capped to limit abuse.
+    match /tutor-applications/{applicationId}/{fileName} {
+      allow read: if true;
+      allow write: if request.resource.size < 8 * 1024 * 1024
+        && (
+          request.resource.contentType == 'application/pdf'
+          || request.resource.contentType.matches('image/.*')
+          || request.resource.contentType == 'application/msword'
+          || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        );
+    }
   }
 }

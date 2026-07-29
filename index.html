@@ -939,11 +939,15 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <p class="form-note" id="formNote">Sends to joinmindcraft@gmail.com. We reply within 48 hours.</p>
             <div class="status" id="formStatus" hidden></div>
           </form>
-          <form class="form-card apply-form" id="tutorForm" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST" enctype="multipart/form-data">
+          <form class="form-card apply-form" id="tutorForm" action="https://formsubmit.co/joinmindcraft@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="MindCraft tutor application">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_next" value="https://mindcraft-marketing-site.web.app/?applied=tutor#intake">
+            <input type="hidden" name="resume_url" id="tutorResumeUrl" value="">
+            <input type="hidden" name="image_url" id="tutorImageUrl" value="">
+            <input type="hidden" name="resume_file" id="tutorResumeMeta" value="">
+            <input type="hidden" name="image_file" id="tutorImageMeta" value="">
             <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="name" autocomplete="name" required></div>
@@ -952,11 +956,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <div class="field"><label for="tutorLocation">Location</label><input id="tutorLocation" name="location" placeholder="St Paul, MN or online from Chapel Hill" autocomplete="address-level2" required></div>
               <div class="field"><label for="tutorSubjects">Subjects</label><input id="tutorSubjects" name="subjects" placeholder="ACT math, algebra, precalc..." required></div>
               <div class="field full"><label for="tutorBio">Bio</label><textarea id="tutorBio" name="bio" placeholder="Who you are, what you teach best, and why you want to tutor with MindCraft." required></textarea></div>
-              <div class="field"><label for="tutorResume">Attach resume</label><input id="tutorResume" name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf" required></div>
-              <div class="field"><label for="tutorImage">Attach image</label><input id="tutorImage" name="image" type="file" accept="image/*" required></div>
+              <div class="field"><label for="tutorResume">Attach resume</label><input id="tutorResume" type="file" accept=".pdf,.doc,.docx,application/pdf" required></div>
+              <div class="field"><label for="tutorImage">Attach image</label><input id="tutorImage" type="file" accept="image/*" required></div>
             </div>
             <button class="btn primary" type="submit">Apply to tutor</button>
-            <p class="form-note" id="tutorFormNote">Sends to joinmindcraft@gmail.com with resume and image.</p>
+            <p class="form-note" id="tutorFormNote">Your email gets clickable resume_url and image_url links (not a Gmail paperclip). Keep each file under 8MB.</p>
             <div class="status" id="tutorFormStatus" hidden></div>
           </form>
         </div>
@@ -977,6 +981,8 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     </div>
   </footer>
 </div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <script>
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches
 const loader = document.getElementById("loader")
@@ -1131,7 +1137,9 @@ const tutorForm = document.getElementById("tutorForm")
 const tutorStatus = document.getElementById("tutorFormStatus")
 const tutorFormNote = document.getElementById("tutorFormNote")
 
-// Native FormSubmit POST (not fetch) so file uploads work and CORS cannot block send.
+// Student form: native FormSubmit POST.
+// Tutor files upload to Firebase Storage first; email gets clickable download links
+// (FormSubmit often drops binary attachments from Gmail).
 function applyNextUrl(kind) {
   const url = new URL(location.href)
   url.searchParams.set("applied", kind)
@@ -1141,7 +1149,7 @@ function applyNextUrl(kind) {
 form?.querySelector('input[name="_next"]')?.setAttribute("value", applyNextUrl("student"))
 tutorForm?.querySelector('input[name="_next"]')?.setAttribute("value", applyNextUrl("tutor"))
 
-function markSending(formEl, noteEl) {
+function markSending(formEl, noteEl, message) {
   const btn = formEl?.querySelector('button[type="submit"]')
   if (btn) {
     btn.disabled = true
@@ -1149,11 +1157,90 @@ function markSending(formEl, noteEl) {
   }
   if (noteEl) {
     noteEl.classList.remove("is-ok", "is-error")
-    noteEl.textContent = "Sending to joinmindcraft@gmail.com..."
+    noteEl.textContent = message || "Sending to joinmindcraft@gmail.com..."
+  }
+}
+function markSendError(formEl, noteEl, statusEl, message) {
+  const btn = formEl?.querySelector('button[type="submit"]')
+  if (btn) {
+    btn.disabled = false
+    btn.textContent = "Apply to tutor"
+  }
+  if (noteEl) {
+    noteEl.classList.add("is-error")
+    noteEl.textContent = message
+  }
+  if (statusEl) {
+    statusEl.hidden = false
+    statusEl.classList.add("show")
+    statusEl.textContent = message
   }
 }
 form?.addEventListener("submit", () => markSending(form, formNote))
-tutorForm?.addEventListener("submit", () => markSending(tutorForm, tutorFormNote))
+
+const MAX_TUTOR_FILE_BYTES = 8 * 1024 * 1024
+let tutorFormReadyToPost = false
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey: "AIzaSyBetzXAekac3zTdzgJ3vGxqKCQAXc3tcsU",
+    authDomain: "mindcraft-93858.web.app",
+    projectId: "mindcraft-93858",
+    storageBucket: "mindcraft-93858.firebasestorage.app",
+    messagingSenderId: "1024068467805",
+    appId: "1:1024068467805:web:1fed20442356c7b757e1b4",
+  })
+}
+const tutorStorage = firebase.storage()
+
+tutorForm?.addEventListener("submit", async (event) => {
+  if (tutorFormReadyToPost) return
+  event.preventDefault()
+  const resumeInput = document.getElementById("tutorResume")
+  const imageInput = document.getElementById("tutorImage")
+  const resumeFile = resumeInput?.files?.[0]
+  const imageFile = imageInput?.files?.[0]
+  const resumeUrlField = document.getElementById("tutorResumeUrl")
+  const imageUrlField = document.getElementById("tutorImageUrl")
+  const resumeMeta = document.getElementById("tutorResumeMeta")
+  const imageMeta = document.getElementById("tutorImageMeta")
+  if (!resumeFile || !imageFile) {
+    markSendError(tutorForm, tutorFormNote, tutorStatus, "Please attach both a resume and an image.")
+    return
+  }
+  if (resumeFile.size > MAX_TUTOR_FILE_BYTES || imageFile.size > MAX_TUTOR_FILE_BYTES) {
+    markSendError(tutorForm, tutorFormNote, tutorStatus, "Each file must be under 8MB.")
+    return
+  }
+  if (resumeMeta) resumeMeta.value = resumeFile.name + " (" + Math.round(resumeFile.size / 1024) + " KB)"
+  if (imageMeta) imageMeta.value = imageFile.name + " (" + Math.round(imageFile.size / 1024) + " KB)"
+
+  markSending(tutorForm, tutorFormNote, "Uploading resume and photo...")
+  try {
+    const appId = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now())
+    const safe = (name) => String(name || "file").replace(/[^\w.\-]+/g, "_").slice(0, 80)
+    const resumeRef = tutorStorage.ref(`tutor-applications/${appId}/resume-${safe(resumeFile.name)}`)
+    const imageRef = tutorStorage.ref(`tutor-applications/${appId}/photo-${safe(imageFile.name)}`)
+    await resumeRef.put(resumeFile)
+    await imageRef.put(imageFile)
+    if (resumeUrlField) resumeUrlField.value = await resumeRef.getDownloadURL()
+    if (imageUrlField) imageUrlField.value = await imageRef.getDownloadURL()
+    // Links are in the email body; do not also post binary files through FormSubmit.
+    if (resumeInput) resumeInput.removeAttribute("name")
+    if (imageInput) imageInput.removeAttribute("name")
+    tutorForm.removeAttribute("enctype")
+  } catch (err) {
+    console.warn("Storage upload failed; falling back to FormSubmit attachments", err)
+    // FormSubmit sometimes drops these, but better than blocking the application.
+    if (resumeInput) resumeInput.setAttribute("name", "attachment")
+    if (imageInput) imageInput.setAttribute("name", "file")
+    tutorForm.setAttribute("enctype", "multipart/form-data")
+    if (resumeUrlField) resumeUrlField.value = "(upload pending — see attachments if present)"
+    if (imageUrlField) imageUrlField.value = "(upload pending — see attachments if present)"
+  }
+  markSending(tutorForm, tutorFormNote, "Sending application email...")
+  tutorFormReadyToPost = true
+  tutorForm.requestSubmit()
+})
 
 const supportRail = document.getElementById("supportRail")
 const supportNextBtn = document.getElementById("supportNextBtn")
@@ -1164,7 +1251,7 @@ supportNextBtn?.addEventListener("click", () => {
   supportRail.scrollBy({ left: atEnd ? -supportRail.scrollWidth : amount, behavior: "smooth" })
 })
 
-// Apply panel: student vs tutor. Native FormSubmit POST → joinmindcraft@gmail.com.
+// Apply panel: student vs tutor. FormSubmit email → joinmindcraft@gmail.com.
 const applyTabSeat = document.getElementById("applyTabSeat")
 const applyTabTutor = document.getElementById("applyTabTutor")
 const applyStage = document.getElementById("applyStage")
@@ -1208,7 +1295,9 @@ if (applied === "student" || applied === "tutor") {
   if (statusEl) {
     statusEl.hidden = false
     statusEl.classList.add("show")
-    statusEl.textContent = "Got it. First time only: open the FormSubmit activation email in joinmindcraft@gmail.com and confirm."
+    statusEl.textContent = applied === "tutor"
+      ? "Got it. In the email, open the resume_url and image_url rows (clickable links)."
+      : "Got it. First time only: open the FormSubmit activation email in joinmindcraft@gmail.com and confirm."
   }
 }
 
