@@ -23,14 +23,11 @@ import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
 import TutorLocationPin from '../components/TutorLocationPin'
 import Dashboard from './Dashboard'
-import KnowledgeGraph from './KnowledgeGraph'
 import type { LatLng } from '../lib/geo'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
-import { getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
-import { fetchKnowledgeGraph } from '../lib/graphCache'
 
-type DashPanel = 'home' | 'student' | 'profile' | 'notes' | 'admin' | 'map'
+type DashPanel = 'home' | 'student' | 'profile' | 'notes' | 'admin'
 const CALENDLY_GUIDE = '/guides/calendly-setup.html'
 const GMEET_GUIDE = '/guides/gmeet-setup.html'
 
@@ -61,11 +58,6 @@ interface AssignedStudent {
   examTrack: string
 }
 
-interface ConceptBar {
-  id: string
-  name: string
-  mastery: number
-}
 
 function timeAgo(ts: number): string {
   if (!ts) return ''
@@ -142,12 +134,8 @@ export default function TutorDashboard() {
   const [savingNotes, setSavingNotes] = useState(false)
   const [connectChip, setConnectChip] = useState<null | 'calendly' | 'meet' | 'location'>(null)
 
-  // ── Assigned student (hero card) ──────────────────────────────────────────
+  // ── Assigned student (roster seed) ──────────────────────────────────────────
   const [assignedStudent, setAssignedStudent] = useState<AssignedStudent | null>(null)
-  const [profile, setProfile]           = useState<StudentProfileResult | null>(null)
-  const [profileLoading, setProfileLoading] = useState(true)
-  const [conceptBars, setConceptBars]   = useState<ConceptBar[]>([])
-  const [lastActiveTs, setLastActiveTs] = useState<number | null>(null)
 
   // Load the first assigned student (users.assignedTutorId === tutor uid)
   useEffect(() => {
@@ -193,51 +181,6 @@ export default function TutorDashboard() {
       examTrack: st.id === heroStudent?.id ? (heroStudent?.examTrack || 'ACT') : 'ACT',
     }
   }, [selectedStudent, students, heroStudent])
-
-  // ML profile + knowledge graph + last-active for the focused student
-  useEffect(() => {
-    const sid = focusStudent?.id
-    if (!sid) { setProfile(null); setConceptBars([]); setLastActiveTs(null); return }
-    let cancelled = false
-    setProfileLoading(true)
-
-    getStudentProfile(sid)
-      .then(p => { if (!cancelled) setProfile(p) })
-      .finally(() => { if (!cancelled) setProfileLoading(false) })
-
-    fetchKnowledgeGraph(sid)
-      .then(kg => {
-        if (cancelled || !kg?.nodes) return
-        const nodes = (kg.nodes as Array<Record<string, unknown>>)
-          .map(n => ({
-            id: String(n.id ?? ''),
-            name: String(n.name ?? conceptTitle(String(n.id ?? ''))),
-            mastery: Number(n.mastery ?? 0),
-            eventCount: Number(n.eventCount ?? 0),
-          }))
-          .filter(n => n.id && n.eventCount > 0)
-          .sort((a, b) => b.eventCount - a.eventCount || b.mastery - a.mastery)
-          .slice(0, 6)
-        setConceptBars(nodes)
-      })
-      .catch(() => {})
-
-    getDocs(query(
-      collection(db, 'interactions'),
-      where('studentId', '==', sid),
-      orderBy('timestamp', 'desc'),
-      limit(1),
-    ))
-      .then(snap => {
-        if (cancelled || snap.empty) return
-        const raw = snap.docs[0].data().timestamp
-        const ts = raw?.toMillis?.() ?? (typeof raw === 'number' ? raw : 0)
-        if (ts) setLastActiveTs(ts)
-      })
-      .catch(() => {})
-
-    return () => { cancelled = true }
-  }, [focusStudent?.id])
 
   // Live activity feed - realtime interactions for the focused student
   useEffect(() => {
@@ -616,20 +559,6 @@ export default function TutorDashboard() {
 
   const now = Date.now()
 
-  // ── Derived hero-card values ───────────────────────────────────────────────
-  const hasMlData = !!profile && profile.eventCount > 0
-  const masteryPct = useMemo(() => {
-    if (!profile) return null
-    const vals = Object.values(profile.masteryByConcept ?? {})
-    if (vals.length > 0) return Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 100)
-    if (profile.topStrengths.length > 0) {
-      return Math.round(
-        (profile.topStrengths.reduce((a, b) => a + b.strength, 0) / profile.topStrengths.length) * 100
-      )
-    }
-    return null
-  }, [profile])
-
   const activityLiveNow = activity.length > 0 && now - activity[0].ts < FIVE_MIN
   const heroFirstName = focusStudent?.name.split(' ')[0] ?? 'Your student'
 
@@ -706,22 +635,6 @@ export default function TutorDashboard() {
         </div>
 
         <div className={s.sideDivider} />
-        <p className={s.sideLabel}>Students</p>
-        {students.length === 0 ? (
-          <p className={s.sideEmpty}>No students linked yet</p>
-        ) : students.map(st => (
-          <button
-            key={st.id}
-            type="button"
-            className={`${s.sideItem} ${panel === 'student' && selectedStudent === st.id ? s.sideActive : ''}`}
-            onClick={() => { setPanel('student'); setSelectedStudent(st.id); setConnectChip(null) }}
-          >
-            <div className={s.sideAvatar}>{(st.displayName || st.email)?.[0]?.toUpperCase()}</div>
-            {st.displayName || st.email?.split('@')[0]}
-          </button>
-        ))}
-
-        <div className={s.sideDivider} />
         <p className={s.sideLabel}>Tools</p>
         <button
           type="button"
@@ -730,17 +643,37 @@ export default function TutorDashboard() {
         >
           Notes
         </button>
+
+        <div className={s.sideDivider} />
         <button
           type="button"
           className={`${s.sideItem} ${panel === 'admin' ? s.sideActive : ''}`}
           onClick={() => {
-            if (!selectedStudent) { showToast('Pick a student first'); return }
+            if (!selectedStudent && !students[0]) {
+              showToast('No students linked yet')
+              return
+            }
+            const sid = selectedStudent ?? students[0]?.id
+            if (sid) setSelectedStudent(sid)
             setPanel('admin')
             setConnectChip(null)
           }}
         >
           Admin
         </button>
+        {students.length === 0 ? (
+          <p className={s.sideEmptyNested}>Linked students show up here</p>
+        ) : students.map(st => (
+          <button
+            key={st.id}
+            type="button"
+            className={`${s.sideItem} ${s.sideItemNested} ${panel === 'student' && selectedStudent === st.id ? s.sideActive : ''}`}
+            onClick={() => { setPanel('student'); setSelectedStudent(st.id); setConnectChip(null) }}
+          >
+            <div className={s.sideAvatar}>{(st.displayName || st.email)?.[0]?.toUpperCase()}</div>
+            {st.displayName || st.email?.split('@')[0]}
+          </button>
+        ))}
       </aside>
 
       <main className={s.page}>
@@ -750,14 +683,6 @@ export default function TutorDashboard() {
           <div className={s.embedFrame}>
             <Dashboard
               viewAsStudentId={focusStudent.id}
-              embedded
-              onExit={() => setPanel('student')}
-            />
-          </div>
-        ) : panel === 'map' && focusStudent ? (
-          <div className={s.embedFrame}>
-            <KnowledgeGraph
-              studentId={focusStudent.id}
               embedded
               onExit={() => setPanel('student')}
             />
@@ -957,66 +882,16 @@ export default function TutorDashboard() {
         ) : (
           <div className={s.grid}>
             <div className={s.col}>
-              <div className={`${s.card} ${s.heroCard}`}>
-                <div className={s.cardHeader}>
-                  <span className={s.cardLabel}>Student</span>
-                  {lastActiveTs && (
-                    <span className={s.lastActive}>Last active {timeAgo(lastActiveTs)}</span>
-                  )}
-                </div>
-                {focusStudent ? (
-                  <>
-                    <div className={s.heroTop}>
-                      <div className={s.heroAvatar}>{focusStudent.name[0]?.toUpperCase()}</div>
-                      <div className={s.heroId}>
-                        <span className={s.heroName}>{focusStudent.name}</span>
-                        <span className={s.heroEmail}>{focusStudent.email}</span>
-                      </div>
-                      <span className={s.examBadge}>{focusStudent.examTrack}</span>
-                    </div>
-                    {profileLoading ? (
-                      <div className={s.loadRow}><div className={s.spinnerSm} /> Loading profile…</div>
-                    ) : hasMlData ? (
-                      <>
-                        {masteryPct !== null && (
-                          <div className={s.masteryRow}>
-                            <span className={s.masteryNum}>{masteryPct}%</span>
-                            <div className={s.masteryMeta}>
-                              <span className={s.masteryLabel}>Overall mastery</span>
-                              <span className={s.masterySub}>{profile!.eventCount} recorded interactions</span>
-                            </div>
-                          </div>
-                        )}
-                        {profile!.topWeaknesses.length > 0 && (
-                          <div className={s.pillSection}>
-                            <span className={s.pillTitle}>Weak spots</span>
-                            <div className={s.pillRow}>
-                              {profile!.topWeaknesses.slice(0, 3).map(sw => (
-                                <span key={sw.conceptId} className={s.pillWeak}>
-                                  {conceptLabel(sw.conceptId)}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <p className={s.heroEmpty}>
-                        {heroFirstName} hasn&apos;t practiced yet. Share the dashboard link to get started.
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <p className={s.heroEmpty}>Pick a student from the left.</p>
-                )}
-              </div>
-
-              {focusStudent && (
+              {focusStudent ? (
                 <TutorBriefingPanel
                   studentId={focusStudent.id}
                   studentName={focusStudent.name}
                   examTrack={focusStudent.examTrack}
                 />
+              ) : (
+                <div className={s.card}>
+                  <p className={s.heroEmpty}>Pick a linked student under Admin.</p>
+                </div>
               )}
 
               {focusStudent && (
@@ -1132,17 +1007,6 @@ export default function TutorDashboard() {
                     }}
                   >
                     Email parent
-                  </button>
-                  <button
-                    type="button"
-                    className={s.actionBtn}
-                    onClick={() => {
-                      if (!focusStudent) { showToast('No student yet'); return }
-                      setPanel('map')
-                      setConnectChip(null)
-                    }}
-                  >
-                    View map
                   </button>
                 </div>
               </div>
