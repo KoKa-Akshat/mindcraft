@@ -4,6 +4,29 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-29 — Researcher tick: Part XXXVI Equity audit of story worlds
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; <8 researcher entries since last synthesizer)  
+**Chapter written:** `chapters/36_equity_audit_story_worlds.md` (Part XXXVI)  
+**Claim examined:** Story worlds are equity-positive by default (or via token character diversity) without an access/role/expression + history-plurality audit.
+
+**Evidence added:**
+- Nasir & Hand (2008, *JLS*, doi:10.1080/10508400801986108): access, integral roles, self-expression → engagement; basketball vs classroom.
+- Nasir, Hand & Taylor (2008, *RER*); Nasir (2016, *JUME*): math≠culture-neutral; race/identity organize learning.
+- Martin (2000): math success/failure among African-American youth — sociohistorical + identity negotiation.
+- Aguirre, Mayfield-Ingram & Martin (NCTM identity/equity practices synthesis).
+- Walton & Cohen (2011, *Science*, doi:10.1126/science.1198364): belonging construal RCT (limits: do not cargo-cult into lore).
+- Joseph (1991/2011, *Crest of the Peacock*); D’Ambrosio ethnomathematics programme; Gutstein (2006) critical math (borrow honesty, not forced activism skin).
+- Harp & Mayer (1998, doi:10.1037/0022-0663.90.3.414); Sundararajan & Adesope (2020, doi:10.1007/s10648-020-09522-4): seductive details hinder learning.
+
+**Product implication:** Content-ops equity rubric (structure/role/belonging-copy/history/seductive/stereotype/claim-ladder); kill token skins and pre-attempt heritage dumps; marketing may claim role-rich design intent, not gap closure.
+
+**Experiments spawned:** EQ-1, EQ-2, EQ-3, EQ-QUAL (+ HIST-EQ carry).
+
+**PDF:** Regenerate after ch36 mount.
+
+---
+
 ## 2026-07-29 — Researcher tick: Part XXXV Competitive session audits
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch35 never written → prefer Researcher per rotation)  

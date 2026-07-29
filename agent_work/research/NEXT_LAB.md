@@ -17,8 +17,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 33 | AI tutors: trust, calibration, sycophancy | Fluent wrongness; overtrust; pedagogy wrap | **DONE** (2026-07-26) + **RT** (Bastani≢PWC / guards≠gain killed) |
 | 34 | Formal causal DAG + identification | FEI RCTs; confounders | **DONE** (2026-07-28) |
 | 35 | Competitive session audits | Khan/Duo/Brilliant/ChatGPT | **DONE** (2026-07-29) |
-| 36 | Equity audit of story worlds | Belonging; whose history | **NEXT** |
-| 37 | Expectancy-value (Eccles) | Utility/cost → course choice | queued |
+| 36 | Equity audit of story worlds | Belonging; whose history | **DONE** (2026-07-29) |
+| 37 | Expectancy-value (Eccles) | Utility/cost → course choice | **NEXT** |
 | 38 | Goal orientation | Mastery vs performance framing | queued |
 | 39 | Interleaving vs blocking | When to mix problem types | queued |
 | 40 | Self-explanation prompts | Chi/Renkl → coach UX | queued |

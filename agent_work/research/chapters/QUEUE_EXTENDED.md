@@ -7,7 +7,7 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 33 | AI tutors: trust, calibration, sycophancy | Fluent wrongness; overtrust; pedagogy; MindCraft wrap |
 | 34 | Causal DAG + identification | What FEI RCTs can identify; confounders |
 | 35 | Competitive session audits | Khan, Duo, Brilliant, ChatGPT — mechanism lens |
-| 36 | Equity audit of story worlds | Whose history; belonging risks; tokenism |
+| 36 | Equity audit of story worlds | Whose history; belonging risks; tokenism | **DONE** → `36_equity_audit_story_worlds.md` |
 | 37 | Expectancy-value theory (Eccles) | Utility, cost, attainment value → course choice |
 | 38 | Goal orientation (mastery vs performance) | Ames/Elliot; product goal framing |
 | 39 | Interleaving vs blocking in math | Rohrer line; when to interleave |

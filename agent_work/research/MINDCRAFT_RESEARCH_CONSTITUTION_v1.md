@@ -25,8 +25,9 @@
 | XXXIII | `chapters/33_ai_tutors_trust_sycophancy.md` | AI trust / sycophancy; RT: Bastani≢PWC, guards≠gain |
 | XXXIV | `chapters/34_formal_causal_dag_identification.md` | FEI causal DAG; L0–L4 claim ladder; confounders |
 | XXXV | `chapters/35_competitive_session_audits.md` | Khan/Duo/Brilliant/ChatGPT session mechanism audits |
+| XXXVI | `chapters/36_equity_audit_story_worlds.md` | Equity audit of story worlds; whose history; tokenism kill |
 
-Queued next: see `NEXT_LAB.md` (equity audit, expectancy-value, goal orientation, interleaving).
+Queued next: see `NEXT_LAB.md` (expectancy-value, goal orientation, interleaving, self-explanation).
 
 ---
 
@@ -791,8 +792,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 1. Neuroscience of math anxiety (amygdala/WM models; cautious translation)  
 2. History of mathematics as meaning technology  
 3. Parent trust economics & willingness-to-pay experiments  
-4. Equity audit of story worlds  
-5. Full competitive teardown with usage telemetry (when available)  
+4. Equity audit of story worlds — **DONE** (Part XXXVI)  
+5. Full competitive teardown with usage telemetry (when available) — partial via Part XXXV session audits  
 6. Formal Bayesian update process for Constitution claims  
 
 ---
