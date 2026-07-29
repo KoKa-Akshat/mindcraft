@@ -99,14 +99,14 @@ function tocDotState(status: string): TocDotState {
 export default function Dashboard({
   preview = false,
   viewAsStudentId,
-  embedded = false,
+  frameEmbed = false,
   onExit,
 }: {
   preview?: boolean
   /** Tutor/admin live view of a linked student's dashboard. */
   viewAsStudentId?: string
-  /** Render inside tutor dash main (no route change). */
-  embedded?: boolean
+  /** True when loaded inside the tutor dash Admin iframe (?embed=1). */
+  frameEmbed?: boolean
   onExit?: () => void
 }) {
   const user = useUser()
@@ -115,10 +115,11 @@ export default function Dashboard({
   const viewingAs = !!viewAsStudentId
   const data = useStudentData(user, { viewAsUid: viewAsStudentId })
   const uid = viewAsStudentId || user?.uid || ''
+  // Inside the Admin iframe, navigate for real so Map/Work/Notes feel native.
   const homeBase = preview
     ? '/try/dashboard'
-    : viewingAs && !embedded
-      ? `/tutor/student/${viewAsStudentId}`
+    : viewingAs
+      ? `/tutor/student/${viewAsStudentId}${frameEmbed ? '?embed=1' : ''}`
       : '/dashboard'
 
   const [diagChecked, setDiagChecked] = useState(preview || viewingAs)
@@ -138,9 +139,8 @@ export default function Dashboard({
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
   const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
-  const [embedView, setEmbedView] = useState<'home' | 'map' | 'work' | 'notes'>('home')
 
-  const rawView = embedded ? embedView : (searchParams.get('view') ?? 'home')
+  const rawView = searchParams.get('view') ?? 'home'
   const view = (
     rawView === 'today' || rawView === 'route' ? 'home'
     : rawView === 'gps' ? 'map'
@@ -149,24 +149,27 @@ export default function Dashboard({
     : rawView
   ) as 'home' | 'map' | 'work' | 'notes'
 
+  function withEmbed(path: string) {
+    if (!frameEmbed || !viewingAs) return path
+    if (path.includes('embed=1')) return path
+    return path.includes('?') ? `${path}&embed=1` : `${path}?embed=1`
+  }
+
   function openHome() {
-    if (embedded) { setEmbedView('home'); return }
-    navigate(homeBase, { replace: true })
+    navigate(withEmbed(homeBase.split('?')[0]), { replace: true })
   }
   function openMap() {
-    if (embedded) { setEmbedView('map'); return }
-    navigate(`${homeBase}?view=map`, { replace: true })
+    navigate(withEmbed(`${homeBase.split('?')[0]}?view=map`), { replace: true })
   }
   function openWork() {
-    if (embedded) { setEmbedView('work'); return }
-    navigate(`${homeBase}?view=work`, { replace: true })
+    navigate(withEmbed(`${homeBase.split('?')[0]}?view=work`), { replace: true })
   }
   function openNotes() {
-    if (embedded) { setEmbedView('notes'); return }
-    navigate(`${homeBase}?view=notes`, { replace: true })
+    navigate(withEmbed(`${homeBase.split('?')[0]}?view=notes`), { replace: true })
   }
 
   function goChallenge() {
+    // Tutor frame: browse the student's map live; practice stays on their login.
     if (viewingAs) {
       openMap()
       return
@@ -218,7 +221,7 @@ export default function Dashboard({
 
   async function handleSignOut() {
     if (viewingAs) {
-      if (embedded && onExit) { onExit(); return }
+      if (onExit) { onExit(); return }
       navigate('/tutor')
       return
     }
@@ -508,7 +511,7 @@ export default function Dashboard({
           Demo dashboard · nothing is saved
         </div>
       )}
-      {viewingAs && !embedded && (
+      {viewingAs && !frameEmbed && (
         <div
           style={{
             position: 'fixed',
@@ -572,7 +575,7 @@ export default function Dashboard({
         <NotebookIntro onContinue={() => setShowIntro(false)} />
       )}
 
-      <div className={`${s.canvasDesk} ${embedded ? s.canvasDeskEmbedded : ''}`}>
+      <div className={`${s.canvasDesk} ${frameEmbed ? s.canvasDeskFrameEmbed : ''}`}>
         {/* ONE hero bar, ONE row (was three stacked bands: nav row,
            "Contents" + wizard row, yellow spark banner)  -  merged per
            Akshat's brief so logo, section nav, the wizard sprite, today's
@@ -610,7 +613,7 @@ export default function Dashboard({
           <div className={s.canvasUser}>
             {displayName && <span>{displayName}</span>}
             <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>
-              {viewingAs ? (embedded ? 'back' : 'back to tutor') : 'sign out'}
+              {viewingAs ? 'back' : 'sign out'}
             </button>
           </div>
         </header>

@@ -111,3 +111,13 @@ button {
 input, textarea, select {
   font-family: var(--f-body);
 }
+
+/* Tutor Admin iframe: student dash fills the frame */
+html.mc-frame-embed,
+html.mc-frame-embed body,
+html.mc-frame-embed #root {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  margin: 0;
+}

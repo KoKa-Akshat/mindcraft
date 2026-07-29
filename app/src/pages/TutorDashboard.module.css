@@ -167,9 +167,49 @@
   font-size: 12px !important;
   font-weight: 700 !important;
 }
-.embedFrame {
+.studentFrameWrap {
   min-width: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: calc(100vh - 110px);
+  min-height: 560px;
+}
+.studentFrameBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(20, 58, 46, 0.92);
+  color: #f4efe2;
+  font-size: 12px;
+  font-weight: 800;
+}
+.studentFrameBar strong { font-weight: 1000; }
+.studentFrameBack {
+  border: 1px solid rgba(244, 239, 226, 0.35);
+  background: transparent;
+  color: #f4efe2;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: inherit;
+}
+.studentFrame {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: 1px solid var(--td-line);
+  border-radius: 18px;
+  background: #efe6fb;
+  box-shadow: var(--td-shadow);
 }
 .homeLayout {
   display: grid;

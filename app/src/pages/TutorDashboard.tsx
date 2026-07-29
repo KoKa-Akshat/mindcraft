@@ -22,8 +22,8 @@ import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
 import TutorLocationPin from '../components/TutorLocationPin'
-import Dashboard from './Dashboard'
 import type { LatLng } from '../lib/geo'
+import { setTutorViewAsStudentId, TUTOR_EXIT_STUDENT_MSG } from '../lib/tutorViewAs'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 
@@ -576,10 +576,23 @@ export default function TutorDashboard() {
   const tutorInitial = (tutorProfile.displayName || 'T')[0]?.toUpperCase()
 
   function goHome() {
+    setTutorViewAsStudentId(null)
     setPanel('home')
     setSelectedStudent(null)
     setConnectChip(null)
   }
+
+  // Admin iframe → "back" posts here so we stay on /tutor
+  useEffect(() => {
+    function onMsg(e: MessageEvent) {
+      if (e.origin !== window.location.origin) return
+      if (e.data?.type !== TUTOR_EXIT_STUDENT_MSG) return
+      setTutorViewAsStudentId(null)
+      setPanel('student')
+    }
+    window.addEventListener('message', onMsg)
+    return () => window.removeEventListener('message', onMsg)
+  }, [])
 
   function openChip(chip: 'calendly' | 'meet' | 'location') {
     setPanel('home')
@@ -654,7 +667,10 @@ export default function TutorDashboard() {
               return
             }
             const sid = selectedStudent ?? students[0]?.id
-            if (sid) setSelectedStudent(sid)
+            if (sid) {
+              setSelectedStudent(sid)
+              setTutorViewAsStudentId(sid)
+            }
             setPanel('admin')
             setConnectChip(null)
           }}
@@ -680,11 +696,26 @@ export default function TutorDashboard() {
         {loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
         ) : panel === 'admin' && focusStudent ? (
-          <div className={s.embedFrame}>
-            <Dashboard
-              viewAsStudentId={focusStudent.id}
-              embedded
-              onExit={() => setPanel('student')}
+          <div className={s.studentFrameWrap}>
+            <div className={s.studentFrameBar}>
+              <span>
+                Live student dash · <strong>{focusStudent.name}</strong>
+              </span>
+              <button
+                type="button"
+                className={s.studentFrameBack}
+                onClick={() => {
+                  setTutorViewAsStudentId(null)
+                  setPanel('student')
+                }}
+              >
+                Back
+              </button>
+            </div>
+            <iframe
+              className={s.studentFrame}
+              title={`${focusStudent.name} dashboard`}
+              src={`/tutor/student/${encodeURIComponent(focusStudent.id)}?embed=1`}
             />
           </div>
         ) : panel === 'profile' ? (
