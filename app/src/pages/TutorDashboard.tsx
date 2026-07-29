@@ -22,13 +22,15 @@ import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
 import TutorLocationPin from '../components/TutorLocationPin'
+import Dashboard from './Dashboard'
+import KnowledgeGraph from './KnowledgeGraph'
 import type { LatLng } from '../lib/geo'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import { getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 
-type DashPanel = 'home' | 'student' | 'profile' | 'notes'
+type DashPanel = 'home' | 'student' | 'profile' | 'notes' | 'admin' | 'map'
 const CALENDLY_GUIDE = '/guides/calendly-setup.html'
 const GMEET_GUIDE = '/guides/gmeet-setup.html'
 
@@ -730,10 +732,11 @@ export default function TutorDashboard() {
         </button>
         <button
           type="button"
-          className={s.sideItem}
+          className={`${s.sideItem} ${panel === 'admin' ? s.sideActive : ''}`}
           onClick={() => {
-            if (!focusStudent) { showToast('Pick a student first'); return }
-            navigate(`/tutor/student/${focusStudent.id}`)
+            if (!selectedStudent) { showToast('Pick a student first'); return }
+            setPanel('admin')
+            setConnectChip(null)
           }}
         >
           Admin
@@ -743,6 +746,22 @@ export default function TutorDashboard() {
       <main className={s.page}>
         {loading ? (
           <div className={s.loading}><div className={s.spinner} /></div>
+        ) : panel === 'admin' && focusStudent ? (
+          <div className={s.embedFrame}>
+            <Dashboard
+              viewAsStudentId={focusStudent.id}
+              embedded
+              onExit={() => setPanel('student')}
+            />
+          </div>
+        ) : panel === 'map' && focusStudent ? (
+          <div className={s.embedFrame}>
+            <KnowledgeGraph
+              studentId={focusStudent.id}
+              embedded
+              onExit={() => setPanel('student')}
+            />
+          </div>
         ) : panel === 'profile' ? (
           <TutorProfilePanel
             user={user}
@@ -1119,7 +1138,8 @@ export default function TutorDashboard() {
                     className={s.actionBtn}
                     onClick={() => {
                       if (!focusStudent) { showToast('No student yet'); return }
-                      navigate(`/knowledge-graph`, { state: { studentId: focusStudent.id } })
+                      setPanel('map')
+                      setConnectChip(null)
                     }}
                   >
                     View map

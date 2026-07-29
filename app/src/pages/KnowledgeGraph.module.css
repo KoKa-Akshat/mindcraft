@@ -8,6 +8,16 @@
   color: var(--tx);
   font-family: var(--f);
 }
+.embeddedShell {
+  min-height: 0;
+  height: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(58, 47, 85, 0.12);
+}
+.embeddedPage {
+  padding: 0 16px 20px !important;
+}
 
 /* ── Page layout ──────────────────────────────────────────────────────────── */
 .page {

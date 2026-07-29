@@ -218,11 +218,21 @@ const QUICK_CONCEPTS = [
   'trigonometry_basics', 'logarithmic_functions', 'linear_equations',
 ]
 
-export default function KnowledgeGraph() {
+export default function KnowledgeGraph({
+  studentId,
+  embedded = false,
+  onExit,
+}: {
+  /** Load this student's map (tutor dash embed). Defaults to signed-in user. */
+  studentId?: string
+  embedded?: boolean
+  onExit?: () => void
+} = {}) {
   const user     = useUser()
   const navigate = useNavigate()
   const { concept: urlConcept } = useParams<{ concept?: string }>()
   const svgWrapRef = useRef<HTMLDivElement | null>(null)
+  const dataUid = studentId || user?.uid || ''
 
   const [search,    setSearch]    = useState(urlConcept ? decodeURIComponent(urlConcept) : '')
   const [graphData, setGraphData] = useState<MLGraphResponse | null>(null)
@@ -246,7 +256,7 @@ export default function KnowledgeGraph() {
 
   // ── Fetch graph from ML API ──
   async function fetchGraph(conceptInput?: string) {
-    if (!user?.uid) return
+    if (!dataUid) return
     setLoading(true)
     setSlowLoad(false)
     setError('')
@@ -260,7 +270,7 @@ export default function KnowledgeGraph() {
     try {
       // Full knowledge graph, shared via graphCache (reuses the dashboard's
       // LearningGPS fetch instead of hitting Cloud Run again).
-      const data = (await fetchKnowledgeGraph(user.uid)) as MLGraphResponse | null
+      const data = (await fetchKnowledgeGraph(dataUid)) as MLGraphResponse | null
       if (!data) throw new Error('Failed to fetch knowledge graph')
 
       if (data.nodes.length === 0) {
@@ -273,10 +283,12 @@ export default function KnowledgeGraph() {
       // If a concept was specified, also get recommendations for it
       if (conceptInput) {
         const conceptId = resolveConceptId(conceptInput)
-        const mlRes = await getRecommendations(user.uid, [conceptId], 'curriculum')
+        const mlRes = await getRecommendations(dataUid, [conceptId], 'curriculum')
         setMlResult(mlRes)
-        navigate(`/knowledge-graph/${encodeURIComponent(conceptInput)}`, { replace: true })
-        logEvent(user.uid, 'graph_search', {
+        if (!embedded) {
+          navigate(`/knowledge-graph/${encodeURIComponent(conceptInput)}`, { replace: true })
+        }
+        logEvent(dataUid, 'graph_search', {
           concept: conceptId,
           nodeCount: data.nodes.length,
           edgeCount: data.edges.length,
@@ -294,12 +306,13 @@ export default function KnowledgeGraph() {
     }
   }
 
-  // Auto-fetch on mount
+  // Auto-fetch on mount / student change
   useEffect(() => {
-    if (user?.uid) {
-      fetchGraph(urlConcept ? decodeURIComponent(urlConcept) : undefined)
+    if (dataUid) {
+      fetchGraph(!embedded && urlConcept ? decodeURIComponent(urlConcept) : undefined)
     }
-  }, [user?.uid, urlConcept])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataUid, urlConcept, embedded])
 
   function adjustZoom(delta: number) {
     setZoom(current => clamp(Number((current + delta).toFixed(2)), ZOOM_MIN, ZOOM_MAX))
@@ -361,7 +374,7 @@ export default function KnowledgeGraph() {
       mastery: node.mastery,
       strengthScore: node.strengthScore,
     })
-    void getRecommendations(user.uid, [node.id], 'curriculum').then(setMlResult)
+    void getRecommendations(dataUid, [node.id], 'curriculum').then(setMlResult)
   }
 
   function openIngredientCard(ingredient: IngredientPreview) {
@@ -377,13 +390,21 @@ export default function KnowledgeGraph() {
   const viewportTranslate = `${SVG_W / 2 * (1 - zoom) + pan.x} ${SVG_H / 2 * (1 - zoom) + pan.y}`
 
   return (
-    <div className={s.shell}>
-      <Sidebar />
+    <div className={`${s.shell} ${embedded ? s.embeddedShell : ''}`}>
+      {!embedded && <Sidebar />}
 
-      <main className={s.page}>
+      <main className={`${s.page} ${embedded ? s.embeddedPage : ''}`}>
         {/* ── Top bar ── */}
         <div className={s.topBar}>
-          <button className={s.backBtn} onClick={() => navigate('/dashboard')}>← Dashboard</button>
+          <button
+            className={s.backBtn}
+            onClick={() => {
+              if (embedded && onExit) { onExit(); return }
+              navigate('/dashboard')
+            }}
+          >
+            {embedded ? '← Student' : '← Dashboard'}
+          </button>
           <div className={s.titleRow}>
             <span className={s.pageTitle}>Map</span>
             <span className={s.conceptBadge}>Grit Map</span>

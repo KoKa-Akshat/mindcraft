@@ -853,6 +853,13 @@
   padding: 4px 8px 8px;
   box-sizing: border-box;
 }
+.canvasDeskEmbedded {
+  min-height: min(78vh, 860px);
+  height: min(78vh, 860px);
+  max-height: min(78vh, 860px);
+  border-radius: 22px;
+  border: 1px solid rgba(58, 47, 85, 0.12);
+}
 
 /* ── merged hero bar ──────────────────────────────────────────────────────
    Was three stacked bands on Home only (nav row -> "Contents" + wizard row
