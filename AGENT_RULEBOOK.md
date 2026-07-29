@@ -30,6 +30,28 @@
 Every agent call has a canonical name, a defined input contract, a defined
 output contract, and a fallback. No ad-hoc LLM calls anywhere in the codebase.
 
+### 1.0 Marketing `/angle-write` and `/personality-judge`
+
+**Purpose:** Marketing language only. The deterministic pipeline selects the
+fact, source, pillar, audience, ordering, and slide budget before either call.
+
+**ANGLE/WRITE input:** a harvested candidate with `pillar`, `audience`,
+`evidence`, and immutable `selected` fields. **Output:** `hook`, `caption`,
+`hashtags` (maximum eight), slide copy, alt text, and an `authorship` map.
+The call may frame selected facts but may not alter puzzle math, answers,
+citations, or testimonials. Deterministic verbatim-source verification blocks
+any changed selected field. Output is structured JSON matching the marketing
+post schema. Fallback is deterministic pillar copy in `marketing/src/lib.mjs`.
+
+**PERSONALITY JUDGE input:** the completed caption and slide copy plus the five
+Brand Book §7 traits and §14 examples. **Output:** pass/fail for cinematic,
+electric, certain, human, and unflinching, with a cited line for every trait
+and a failing line for every miss. Three of five is required. Fallback is the
+explicitly labelled deterministic rubric in `marketing/src/cli.mjs`.
+
+Neither call may publish, choose a candidate, change the mix, or write outside
+`marketing/run/`.
+
 ### 1.1 `/onboard-agent`
 
 **Purpose:** Transform a 3-field student intake (context + cluster ratings +
