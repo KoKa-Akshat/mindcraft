@@ -27,8 +27,9 @@
 | XXXV | `chapters/35_competitive_session_audits.md` | Khan/Duo/Brilliant/ChatGPT session mechanism audits |
 | XXXVI | `chapters/36_equity_audit_story_worlds.md` | Equity audit of story worlds; whose history; tokenism kill |
 | XXXVII | `chapters/37_expectancy_value_eccles.md` | Eccles SEVT; utility/cost/attainment → choice; EVT experiments |
+| XXXVIII | `chapters/38_goal_orientation.md` | Mastery vs performance goal structures; appearance ban; GO experiments |
 
-Queued next: see `NEXT_LAB.md` (goal orientation, interleaving, self-explanation).
+Queued next: see `NEXT_LAB.md` (interleaving, self-explanation).
 
 ---
 
