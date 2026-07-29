@@ -349,6 +349,10 @@
 .cancelBtn:hover:not(:disabled) { background: rgba(197, 48, 48, 0.16); }
 .empty { padding: 40px 12px; text-align: center; font-size: 14px; color: var(--mu); font-weight: 600; }
 
+/* ── Access allowlist (Links tab) ── */
+.allowlistHeader { margin-bottom: 12px; font-size: 14px; }
+.allowlistHint { color: var(--mu); font-weight: 500; }
+
 /* ── STUDENT / TUTOR / PARENT ROWS ── */
 .rowList { display: flex; flex-direction: column; margin: -6px -22px -20px; }
 .studentRow {

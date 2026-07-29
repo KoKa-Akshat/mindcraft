@@ -30,7 +30,10 @@ import { setCors } from '../cors'
  *   unlinkTutorId?: string  — remove this tutor from the student
  *   parentId?: string       — link this parent to the student
  *   unlinkParentId?: string — remove this student from the parent
+ *   program?: string        — dash/curriculum track ('ACT' today; 'SAT'/
+ *     'PIANO' reserved placeholders for future tracks, see PROGRAM_IDS below)
  */
+const PROGRAM_IDS = new Set(['ACT', 'SAT', 'PIANO'])
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
@@ -85,6 +88,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         childId: studentId,
         childIds: FieldValue.arrayUnion(studentId),
       }, { merge: true })
+    }
+
+    if (typeof body.program === 'string' && body.program.trim()) {
+      const program = body.program.trim().toUpperCase()
+      if (!PROGRAM_IDS.has(program)) return res.status(400).json({ error: 'Unknown program' })
+      await db.collection('users').doc(studentId).set({ program }, { merge: true })
     }
 
     if (typeof body.unlinkParentId === 'string' && body.unlinkParentId.trim()) {

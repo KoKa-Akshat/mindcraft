@@ -663,7 +663,22 @@ export default function Dashboard({
                         <button type="button" className={s.bookSessionLink} onClick={playWeeklyPaper}>Weekly Review</button>
                       )
                     )}
-                    {data.tutorId ? (
+                    {data.tutorId && data.parents.length > 0 ? (
+                      <select
+                        className={s.bookSessionLink}
+                        defaultValue=""
+                        onChange={e => {
+                          if (e.target.value) navigate(`/chat/${e.target.value}`)
+                          e.target.value = ''
+                        }}
+                      >
+                        <option value="" disabled>Message…</option>
+                        <option value={data.tutorId}>Message Tutor</option>
+                        {data.parents.map(p => (
+                          <option key={p.id} value={p.id}>Message {p.name}</option>
+                        ))}
+                      </select>
+                    ) : data.tutorId ? (
                       <button
                         type="button"
                         className={s.bookSessionLink}

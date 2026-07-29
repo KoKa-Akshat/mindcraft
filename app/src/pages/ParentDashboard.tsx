@@ -16,7 +16,7 @@ import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import {
-  doc, getDoc, getDocs,
+  doc, getDoc, getDocs, addDoc, setDoc, onSnapshot, serverTimestamp,
   collection, query, where, orderBy, limit,
 } from 'firebase/firestore'
 import { useUser } from '../App'
@@ -34,6 +34,9 @@ export default function ParentDashboard() {
   const [selectedChildId, setSelectedChildId] = useState<string | null>(null)
   const [tutorComment, setTutorComment] = useState<string | null>(null)
   const [tutorCommentFrom, setTutorCommentFrom] = useState<string | null>(null)
+  const [chatMessages, setChatMessages] = useState<{ senderId: string; text: string }[]>([])
+  const [chatDraft, setChatDraft] = useState('')
+  const [sendingChat, setSendingChat] = useState(false)
 
   // ── load parent doc → linked kid(s) ──
   useEffect(() => {
@@ -93,6 +96,49 @@ export default function ParentDashboard() {
     return () => { cancelled = true }
   }, [selectedChildId])
 
+  // ── live chat with the selected kid — same chats/{uidA_uidB}/messages
+  // collection student/tutor chat already uses, just parent<->student ──
+  useEffect(() => {
+    setChatMessages([])
+    setChatDraft('')
+    if (!selectedChildId) return
+    const chatId = [user.uid, selectedChildId].sort().join('_')
+    const unsub = onSnapshot(
+      query(collection(db, 'chats', chatId, 'messages'), orderBy('createdAt', 'asc'), limit(20)),
+      snap => setChatMessages(snap.docs.map(d => d.data() as { senderId: string; text: string })),
+      () => setChatMessages([]),
+    )
+    return () => unsub()
+  }, [selectedChildId, user.uid])
+
+  async function sendMessage() {
+    const text = chatDraft.trim()
+    if (!selectedChildId || !text) return
+    setSendingChat(true)
+    const chatId = [user.uid, selectedChildId].sort().join('_')
+    try {
+      await addDoc(collection(db, 'chats', chatId, 'messages'), {
+        senderId: user.uid,
+        text,
+        fileUrl: null,
+        fileName: null,
+        fileType: null,
+        createdAt: serverTimestamp(),
+      })
+      await setDoc(doc(db, 'chats', chatId), {
+        participants: [user.uid, selectedChildId],
+        lastMessage: text,
+        lastAt: serverTimestamp(),
+      }, { merge: true })
+      setChatDraft('')
+    } catch {
+      // no toast system on this page yet — silent no-op is acceptable, the
+      // draft text stays in the input so the parent can just retry
+    } finally {
+      setSendingChat(false)
+    }
+  }
+
   return (
     <div className={s.page}>
       <header className={s.topbar}>
@@ -146,6 +192,50 @@ export default function ParentDashboard() {
                 {tutorCommentFrom ? `Note from ${tutorCommentFrom}` : 'Tutor note'}
               </span>
               <p className={s.tutorCommentText}>{tutorComment}</p>
+            </div>
+          )}
+
+          {selectedChildId && (
+            <div className={s.messagesBox}>
+              <div className={s.messagesHeader}>
+                <span className={s.tutorCommentLabel}>Messages</span>
+              </div>
+              {chatMessages.length === 0 ? (
+                <p className={s.messagesEmpty}>
+                  No messages yet. {childNames[selectedChildId] || 'Your student'} can message you
+                  from their dashboard, or start the conversation below.
+                </p>
+              ) : (
+                chatMessages.slice(-4).map((msg, i) => {
+                  const isMe = msg.senderId === user.uid
+                  const name = isMe ? 'You' : (childNames[selectedChildId] || 'Student')
+                  return (
+                    <div key={i} className={s.msgRow}>
+                      <div className={`${s.msgAv} ${isMe ? s.msgAvMe : ''}`}>{name[0]?.toUpperCase()}</div>
+                      <div className={s.msgBody}>
+                        <div className={s.msgName}>{name}</div>
+                        <div className={s.msgText}>{msg.text || 'File'}</div>
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+              <form
+                className={s.chatCompose}
+                onSubmit={e => { e.preventDefault(); void sendMessage() }}
+              >
+                <input
+                  className={s.chatInput}
+                  type="text"
+                  placeholder={`Message ${childNames[selectedChildId] || 'your student'}…`}
+                  value={chatDraft}
+                  onChange={e => setChatDraft(e.target.value)}
+                  disabled={sendingChat}
+                />
+                <button type="submit" className={s.chatSend} disabled={sendingChat || !chatDraft.trim()}>
+                  Send
+                </button>
+              </form>
             </div>
           )}
 

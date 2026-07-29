@@ -14,7 +14,7 @@
 import { useEffect, useState } from 'react'
 import {
   doc, setDoc, updateDoc, onSnapshot, serverTimestamp,
-  collection, query, where, orderBy, limit, writeBatch, getDoc,
+  collection, query, where, orderBy, limit, writeBatch, getDoc, getDocs,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { User } from 'firebase/auth'
@@ -64,6 +64,9 @@ export interface StudentData {
   practiceCount: number
   messages:     Message[]
   tutorId:      string | null
+  /** Linked parent(s) — reverse lookup of users.childIds/childId pointing at
+   * this student. Powers the "Message Tutor / Message {parent}" dropdown. */
+  parents:      { id: string; name: string }[]
   loading:      boolean
   /** weekKey() (weeklyPracticePaper.ts) of the last completed "This week's
    * paper" mission — null if never completed. Drives the paper lock state. */
@@ -130,7 +133,7 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
   const dataUid = isViewAs ? viewAsUid! : (user?.uid ?? '')
   const demo = !!user && !isViewAs && (user.uid === DEMO_UID || isDemoMode())
 
-  const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'tutorId' | 'loading' | 'messages'>>({
+  const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'tutorId' | 'loading' | 'messages' | 'parents'>>({
     displayName:   firstName(user),
     streak:        0,
     lastSession:   null,
@@ -144,6 +147,7 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
   const [tutorName, setTutorName]               = useState<string>('Tutor')
   const [studentEmail, setStudentEmail]         = useState<string | null>(null)
   const [messages, setMessages]                 = useState<Message[]>([])
+  const [parents, setParents]                   = useState<{ id: string; name: string }[]>([])
   const [loading, setLoading]                   = useState(!demo)
 
   // Marketing ACT Demo: no Firestore — tab close resets everything.
@@ -161,6 +165,7 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
     setDerivedLast(null)
     setTutorId(null)
     setMessages([])
+    setParents([])
     setLoading(false)
   }, [demo, user])
 
@@ -266,6 +271,27 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
     }).catch(() => {})
     return () => { cancelled = true }
   }, [tutorId, demo])
+
+  // Reverse lookup: which parent(s), if any, are linked to this student —
+  // same childIds/childId fields ParentDashboard.tsx reads, just queried from
+  // the other direction. Powers the "Message Tutor / Message {parent}" picker.
+  useEffect(() => {
+    if (!dataUid || demo) { setParents([]); return }
+    let cancelled = false
+    void Promise.all([
+      getDocs(query(collection(db, 'users'), where('childIds', 'array-contains', dataUid))),
+      getDocs(query(collection(db, 'users'), where('childId', '==', dataUid))),
+    ]).then(([byArray, byScalar]) => {
+      if (cancelled) return
+      const map = new Map<string, string>()
+      for (const d of [...byArray.docs, ...byScalar.docs]) {
+        const pd = d.data()
+        map.set(d.id, pd.displayName || pd.email?.split('@')[0] || 'Parent')
+      }
+      setParents([...map.entries()].map(([id, name]) => ({ id, name })))
+    }).catch(() => { if (!cancelled) setParents([]) })
+    return () => { cancelled = true }
+  }, [dataUid, demo])
 
   // ── 2. Upcoming sessions ─────────────────────────────────────────────────────
   useEffect(() => {
@@ -394,7 +420,7 @@ export function useStudentData(user: User | null, opts?: UseStudentDataOpts): St
   return {
     ...userData,
     lastSession: userData.lastSession ?? derivedLastSession,
-    nextSession, tutorId, messages, loading,
+    nextSession, tutorId, messages, parents, loading,
     homework: userData.homework,
   }
 }

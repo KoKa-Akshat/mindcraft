@@ -6,9 +6,11 @@
  * Prefer client-side navigate (no full reload) once authStateReady resolves.
  */
 import { auth } from '../firebase'
+import { signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { isDiagnosticComplete } from './practiceState'
+import { lookupAllowlistRole, type AllowlistRole } from './loginAllowlist'
 import {
   clearStudentDiagnosticState,
   isDevBypassEmail,
@@ -54,12 +56,28 @@ export function isAuthHandoffActive(): boolean {
 }
 
 async function ensureStudentDoc(email: string | null | undefined, displayName: string | null | undefined, uid: string) {
+  await ensureRoleDoc(email, displayName, uid, 'student')
+}
+
+async function ensureRoleDoc(
+  email: string | null | undefined,
+  displayName: string | null | undefined,
+  uid: string,
+  role: AllowlistRole,
+) {
   await setDoc(doc(db, 'users', uid), {
-    role: 'student',
+    role,
     email: email ?? '',
     displayName: displayName ?? '',
     createdAt: new Date().toISOString(),
   }, { merge: true })
+}
+
+/** Thrown by resolvePostLoginPath when a brand-new email has no admin-added
+ * login_allowlist entry. Login.tsx matches this via friendlyError(). */
+export class NotAllowlistedError extends Error {
+  code = 'mc/not-allowlisted'
+  constructor() { super('This email has not been added by an admin yet.') }
 }
 
 /** Resolve where a signed-in user should land. */
@@ -90,7 +108,19 @@ export async function resolvePostLoginPath(uid: string, opts: PostLoginOpts): Pr
   if (existingRole === 'parent') return '/parent'
 
   if (!snap.exists() || !existingRole) {
-    await ensureStudentDoc(email, currentUser?.displayName, uid)
+    // Invite-only: a brand-new email must already be in the admin-managed
+    // allowlist (Admin -> Links), and lands in whichever role it was added
+    // under. Existing accounts (handled by the early returns above) are
+    // never subject to this — only first-time account creation is gated.
+    const exempt = isTestProfileEmail(email) || isDevBypassEmail(email) || isDiagResetEmail(email)
+    const allowedRole: AllowlistRole | null = exempt ? 'student' : await lookupAllowlistRole(email)
+    if (!allowedRole) {
+      await signOut(auth)
+      throw new NotAllowlistedError()
+    }
+    await ensureRoleDoc(email, currentUser?.displayName, uid, allowedRole)
+    if (allowedRole === 'tutor') return '/tutor'
+    if (allowedRole === 'parent') return '/parent'
   }
 
   // Dev accounts skip the diagnostic gate entirely.

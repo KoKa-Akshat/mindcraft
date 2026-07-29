@@ -10,6 +10,7 @@ service cloud.firestore {
         && !request.resource.data.keys().hasAny([
              'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
              'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
+             'program',
            ])
         && (!('role' in request.resource.data) || request.resource.data.role == 'student');
 
@@ -20,11 +21,23 @@ service cloud.firestore {
              .hasAny([
                'childId', 'childIds', 'tutorId', 'tutorIds', 'classroomId',
                'assignedTutorId', 'assignedTutorIds', 'assignedTutorName',
+               'program',
              ])
         && (
           !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
           || (!('role' in resource.data) && request.resource.data.role == 'student')
         );
+    }
+
+    // Invite-only sign-in gate (see app/src/lib/loginAllowlist.ts + postLogin.ts).
+    // Doc id = lowercased email. Any signed-in user may read (needed at
+    // first-login time, before their own users/{uid} doc exists) — same
+    // permissiveness precedent as users/{userId}'s own unconditional read
+    // rule just above. Only an admin may add/remove entries.
+    match /login_allowlist/{emailId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
     match /articles/{articleId} {

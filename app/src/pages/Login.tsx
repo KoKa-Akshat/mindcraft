@@ -78,6 +78,7 @@ async function grantAdminRole() {
 
 function friendlyError(code: string) {
   switch (code) {
+    case 'mc/not-allowlisted':               return 'This email has not been added yet. Ask your admin to add it, then try again.'
     case 'auth/user-not-found':             return 'No account found with that email.'
     case 'auth/wrong-password':
     case 'auth/invalid-credential':

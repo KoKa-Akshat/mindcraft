@@ -27,6 +27,10 @@ import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime } from '../utils/format'
 import { ML_BASE, WEBHOOK_BASE } from '../lib/mlApi'
+import {
+  listAllowlist, addToAllowlist, removeFromAllowlist,
+  type AllowlistEntry, type AllowlistRole,
+} from '../lib/loginAllowlist'
 import { listAllActConceptCoverage, coverageSummaryLine, formatQuestionSources, type ConceptCoverage } from '../lib/ontologyBankCoverage'
 import StudentIntelPanel from '../components/StudentIntelPanel'
 import Dashboard from './Dashboard'
@@ -55,7 +59,14 @@ interface AdminStudent {
   assignedTutorName?: string | null
   assignedTutorId?:  string | null
   assignedTutorIds?: string[]
+  /** Curriculum/dash track. 'ACT' is the only functional one today — 'SAT'
+   * and 'PIANO' are placeholders so the Links table already has room to
+   * grow into new programs without another schema change. */
+  program?:          string
 }
+
+const PROGRAM_IDS = ['ACT', 'SAT', 'PIANO'] as const
+const PROGRAM_LABELS: Record<string, string> = { ACT: 'ACT', SAT: 'SAT (soon)', PIANO: 'Piano (soon)' }
 
 interface AdminParent {
   id:          string
@@ -191,6 +202,12 @@ export default function Admin() {
   const [linkTutorPick, setLinkTutorPick] = useState<Record<string, string>>({})
   const [linkParentPick, setLinkParentPick] = useState<Record<string, string>>({})
   const [linkBusy, setLinkBusy] = useState<string | null>(null)
+
+  // Invite-only sign-in gate — who's allowed to create an account at all,
+  // and which role they land in on first login (see lib/loginAllowlist.ts).
+  const [allowlist, setAllowlist] = useState<AllowlistEntry[]>([])
+  const [allowlistDrafts, setAllowlistDrafts] = useState<Record<AllowlistRole, string>>({ student: '', tutor: '', parent: '' })
+  const [allowlistBusy, setAllowlistBusy] = useState(false)
   const [viewingStudentId, setViewingStudentId] = useState<string | null>(null)
   const [viewingTutor, setViewingTutor] = useState<AdminTutor | null>(null)
   const [viewingParent, setViewingParent] = useState<AdminParent | null>(null)
@@ -228,6 +245,10 @@ export default function Admin() {
   }, [user, navigate])
 
   useEffect(() => {
+    listAllowlist().then(setAllowlist).catch(() => {})
+  }, [])
+
+  useEffect(() => {
     const unsub = onSnapshot(
       query(collection(db, 'sessions'), orderBy('scheduledAt', 'desc')),
       snap => {
@@ -249,6 +270,7 @@ export default function Admin() {
           assignedTutorName: d.data().assignedTutorName ?? null,
           assignedTutorId: d.data().assignedTutorId ?? null,
           assignedTutorIds: Array.isArray(d.data().assignedTutorIds) ? d.data().assignedTutorIds : [],
+          program: d.data().program ?? 'ACT',
         }))
       ))
       .catch(() => {})
@@ -640,6 +662,35 @@ export default function Admin() {
   // ── Links tab — one row per student, assign/unassign tutor + parent
   // directly (the admin-link webhook, real Admin-SDK gated). ──────────────
 
+  async function addAllowlistEmail(role: AllowlistRole) {
+    const email = allowlistDrafts[role].trim().toLowerCase()
+    if (!email || !email.includes('@')) { showToast('Enter a valid email first.'); return }
+    setAllowlistBusy(true)
+    try {
+      await addToAllowlist(email, role)
+      setAllowlist(prev => [...prev.filter(e => e.email !== email), { email, role }])
+      setAllowlistDrafts(prev => ({ ...prev, [role]: '' }))
+      showToast(`Added ${email} as ${role}.`)
+    } catch {
+      showToast('Could not add that email.')
+    } finally {
+      setAllowlistBusy(false)
+    }
+  }
+
+  async function removeAllowlistEmail(email: string) {
+    setAllowlistBusy(true)
+    try {
+      await removeFromAllowlist(email)
+      setAllowlist(prev => prev.filter(e => e.email !== email))
+      showToast(`Removed ${email}.`)
+    } catch {
+      showToast('Could not remove that email.')
+    } finally {
+      setAllowlistBusy(false)
+    }
+  }
+
   async function callAdminLink(body: Record<string, string>): Promise<boolean> {
     try {
       const token = await auth.currentUser?.getIdToken(true)
@@ -710,6 +761,15 @@ export default function Admin() {
       : p))
     setLinkParentPick(prev => ({ ...prev, [studentId]: '' }))
     showToast(`Linked parent ${parent.displayName || parent.email}.`)
+  }
+
+  async function setStudentProgram(studentId: string, program: string) {
+    setLinkBusy(studentId)
+    const ok = await callAdminLink({ studentId, program })
+    setLinkBusy(null)
+    if (!ok) return
+    setStudents(prev => prev.map(x => x.id === studentId ? { ...x, program } : x))
+    showToast(`Program set to ${PROGRAM_LABELS[program] ?? program}.`)
   }
 
   async function unlinkParentFromStudent(studentId: string, parentId: string) {
@@ -963,6 +1023,53 @@ export default function Admin() {
         {/* ── LINKS — one row per student, wire tutor + parent directly.
              Click any name to pop its live dashboard/summary right here. ── */}
         {tab === 'links' && (
+          <>
+          <div className={s.card}>
+            <div className={s.allowlistHeader}>
+              <strong>Access</strong>
+              <span className={s.allowlistHint}>
+                {' '}— only these emails can sign in. Add one, pick the role,
+                and they'll land in that dashboard the first time they log in.
+              </span>
+            </div>
+            {(['student', 'tutor', 'parent'] as AllowlistRole[]).map(role => (
+              <div key={role} className={s.linkAssignRow}>
+                <span className={s.linkChip} style={{ minWidth: 64 }}>{role}</span>
+                <input
+                  className={s.linkInputSm}
+                  type="email"
+                  placeholder={`${role}@email.com`}
+                  value={allowlistDrafts[role]}
+                  onChange={e => setAllowlistDrafts(prev => ({ ...prev, [role]: e.target.value }))}
+                  onKeyDown={e => e.key === 'Enter' && addAllowlistEmail(role)}
+                />
+                <button
+                  type="button"
+                  className={s.linkAddBtn}
+                  onClick={() => addAllowlistEmail(role)}
+                  disabled={allowlistBusy || !allowlistDrafts[role].trim()}
+                >Add</button>
+              </div>
+            ))}
+            <div className={s.linkChips} style={{ marginTop: 10 }}>
+              {allowlist.length === 0 ? (
+                <span className={s.empty}>No emails added yet — nobody new can sign in until you add one above.</span>
+              ) : (
+                allowlist.map(e => (
+                  <span key={e.email} className={s.linkChip}>
+                    {e.email} · {e.role}
+                    <button
+                      type="button"
+                      className={s.linkChipX}
+                      title="Remove"
+                      onClick={() => removeAllowlistEmail(e.email)}
+                      disabled={allowlistBusy}
+                    >×</button>
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
           <div className={s.card}>
             {students.length === 0 ? (
               <div className={s.empty}>No students yet.</div>
@@ -972,6 +1079,7 @@ export default function Admin() {
                   <thead>
                     <tr>
                       <th>Student</th>
+                      <th>Program</th>
                       <th>Tutor</th>
                       <th>Parent</th>
                     </tr>
@@ -994,6 +1102,20 @@ export default function Admin() {
                             >
                               {st.displayName || st.email || st.id}
                             </button>
+                          </td>
+                          <td>
+                            <select
+                              className={s.linkSelect}
+                              value={st.program ?? 'ACT'}
+                              disabled={busy}
+                              onChange={e => setStudentProgram(st.id, e.target.value)}
+                            >
+                              {PROGRAM_IDS.map(p => (
+                                <option key={p} value={p} disabled={p !== 'ACT'}>
+                                  {PROGRAM_LABELS[p]}
+                                </option>
+                              ))}
+                            </select>
                           </td>
                           <td>
                             <div className={s.linkChips}>
@@ -1084,6 +1206,7 @@ export default function Admin() {
               </div>
             )}
           </div>
+          </>
         )}
 
         {/* ── STUDENTS ── */}

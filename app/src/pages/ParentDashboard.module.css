@@ -140,6 +140,69 @@
   color: var(--pd-ink);
 }
 
+/* -- Messages -- parent <-> student chat, same chats/{a_b}/messages
+   collection the student <-> tutor chat already uses. -- */
+.messagesBox {
+  margin: 16px 20px 0;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1.5px solid var(--pd-line);
+  background: var(--pd-paper);
+  box-shadow: 0 4px 16px rgba(58, 47, 85, 0.06);
+}
+.messagesHeader { margin-bottom: 10px; }
+.messagesEmpty {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pd-muted);
+  font-style: italic;
+  margin: 0;
+  line-height: 1.5;
+}
+.msgRow { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; }
+.msgRow + .msgRow { border-top: 1px solid var(--pd-line); }
+.msgAv {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; color: #fffdf7; flex-shrink: 0;
+  background: #8b7fa8;
+}
+.msgAvMe { background: #7c3aed; }
+.msgBody { flex: 1; min-width: 0; }
+.msgName { font-size: 12px; font-weight: 800; color: var(--pd-ink); margin-bottom: 2px; }
+.msgText { font-size: 13px; color: var(--pd-ink); font-weight: 500; line-height: 1.45; }
+.chatCompose {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--pd-line);
+}
+.chatInput {
+  flex: 1;
+  min-width: 0;
+  border: 1.5px solid var(--pd-line);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pd-ink);
+  background: #fffdf8;
+  outline: none;
+}
+.chatInput:focus { border-color: #7c3aed; }
+.chatSend {
+  border: none;
+  border-radius: 10px;
+  padding: 9px 14px;
+  background: #7c3aed;
+  color: #fffdf8;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.chatSend:disabled { opacity: 0.45; cursor: not-allowed; }
+
 /* -- The embedded live student dashboard -- */
 .dashFrame {
   margin: 16px 20px 20px;
