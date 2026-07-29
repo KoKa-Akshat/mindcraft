@@ -1,5 +1,5 @@
 /**
- * Tiny section mark for Contents lanes — warm-up / algebra / geometry / data.
+ * Tiny section mark for Contents lanes: warm-up / algebra / geometry / data.
  * Matches the notebook ink palette; no emoji puns.
  */
 import type { ActTocSectionId } from '../../lib/actToc'

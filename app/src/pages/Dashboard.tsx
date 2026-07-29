@@ -49,9 +49,9 @@ import s from './Dashboard.module.css'
 const SOLVER_MAX_CHARS = 1200
 
 /** Ambient floating MindCraft-block decorations (2026-07-25). Purely
- * decorative — scattered across the stage's own dead corner whitespace,
+ * decorative, scattered across the stage's own dead corner whitespace,
  * behind the Contents roadmap and the rest of the real UI (low z-index,
- * pointer-events: none, small, low-opacity — see .mcBlock in the CSS
+ * pointer-events: none, small, low-opacity: see .mcBlock in the CSS
  * module). Hand-placed positions/rotations/sizes/delays, not a random
  * scatter, so the same "restrained handful" layout renders identically
  * every load rather than reshuffling. */
@@ -66,7 +66,7 @@ const MC_BLOCKS: Array<{
 }> = [
   // Positions bias toward the two confirmed-open zones on this canvas: the
   // top header band (above the lane cards, roughly y 0-11%) and the thin
-  // margin past the last lane before the stage's rounded corner (y 90%+) —
+  // margin past the last lane before the stage's rounded corner (y 90%+),
   // verified against real renders, since the lane cards themselves fill
   // almost the full card width/height and would otherwise hide a block
   // behind their solid backgrounds.
@@ -82,7 +82,7 @@ const MC_BLOCKS: Array<{
 
 /** Contents roadmap dot state. Backed by the same per-concept `status`/
  * `mastery` the Knowledge Map (ConstellationGpsExplorer) reads off
- * GET /knowledge-graph/{uid} — same signal, same status vocabulary
+ * GET /knowledge-graph/{uid}, same signal, same status vocabulary
  * (learningPathGraph.ts STATUS_COLOR), so a topic that reads "mastered" here
  * reads mastered on the Map too. Not a new/invented completion metric. */
 const TOC_MASTERED_STATUSES = new Set(['mastered', 'stable', 'comeback_built', 'ready_for_challenge'])
@@ -312,7 +312,7 @@ export default function Dashboard({
     getUserRole(user.uid).then(role => setIsAdmin(role === 'admin'))
   }, [user?.uid, preview, viewingAs])
 
-  // Contents roadmap completion signal — same GET /knowledge-graph/{uid} the
+  // Contents roadmap completion signal: same GET /knowledge-graph/{uid} the
   // Map view reads (see graphCache.ts), so "lit up" here means the same
   // per-concept mastery/status the rest of the app already shows.
   useEffect(() => {
@@ -447,7 +447,7 @@ export default function Dashboard({
   }, [weakness, learn, recLoading])
 
   // The wizard's own speech-bubble box (previously reading "Weekly Review")
-  // is removed from next to the mascot per Akshat's follow-up brief — the
+  // is removed from next to the mascot per Akshat's follow-up brief: the
   // "this week's paper" CTA now carries the "Weekly Review" label itself
   // (see .homeTopActions below), so having it twice was redundant. The
   // WizardMascot component (components/canvas/, out of this lane) still
@@ -461,7 +461,7 @@ export default function Dashboard({
 
   // Locked once the student has finished this week's paper (weekKey-keyed
   // completion flag, self-written by the student's own browser same as
-  // diagnosticCompleted — see practiceState.ts). Stays unlocked the whole
+  // diagnosticCompleted, see practiceState.ts). Stays unlocked the whole
   // week up until then; re-locks only on completion, not on a timer.
   const paperLocked = !!weeklyPaper && data.weeklyPaperCompletedWeek === weeklyPaper.weekKey
   const paperUnlockLabel = useMemo(() => nextUnlockLabel(), [])
@@ -672,7 +672,7 @@ export default function Dashboard({
                       ) : (
                         // Reuses .bookSessionLink verbatim (Akshat: label
                         // should read "Weekly Review" and look "just like a
-                        // find a tutor button" — same pill, no arrow, no new
+                        // find a tutor button", same pill, no arrow, no new
                         // CSS invented for it).
                         <button type="button" className={s.bookSessionLink} onClick={playWeeklyPaper}>Weekly Review</button>
                       )
@@ -747,7 +747,7 @@ export default function Dashboard({
                                 ['--node-color' as string]: dotColor,
                                 ['--node-fill' as string]: `${Math.round(mastery * 100)}%`,
                               }}
-                              title={`${actConceptLabel(id)} — ${Math.round(mastery * 100)}% mastery`}
+                              title={`${actConceptLabel(id)}: ${Math.round(mastery * 100)}% mastery`}
                               onClick={() => openChapter(id)}
                             >
                               <span className={s.tocNodeName}>{actConceptLabel(id)}</span>

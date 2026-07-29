@@ -44,7 +44,7 @@ export default function CoverLanding({
 }: {
   entryLabel: string
   /** The student's real signed-in display name (Firestore users/{uid}.displayName,
-   * falling back to the Firebase Auth profile name — see useStudentData.ts).
+   * falling back to the Firebase Auth profile name, see useStudentData.ts).
    * Used to greet a returning student by their actual name on first render,
    * instead of making them re-type it every session. A locally-typed override
    * (saved via saveCoverName) still always wins if one exists. */
