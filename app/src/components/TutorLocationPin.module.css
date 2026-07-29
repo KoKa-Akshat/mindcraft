@@ -1,0 +1,52 @@
+.wrap {
+  display: grid;
+  gap: 12px;
+}
+.hint {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--td-muted, #6b6478);
+  line-height: 1.4;
+}
+.search {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--td-ink, #2a2430);
+  background: #fff;
+}
+.mapFrame {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  min-height: 260px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.14));
+  background: #e4f7dc;
+}
+.address {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--td-ink, #2a2430);
+}
+.save {
+  justify-self: start;
+  min-height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--td-ink, #2a2430);
+  color: #fffdf8;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.save:disabled { opacity: 0.55; cursor: wait; }

@@ -1,10 +1,8 @@
 /**
  * TutorDashboard.tsx
  *
- * Simple tutor shell:
- *   - Left: photo + Profile, then Calendly / Meet / Location chips, students, tools
- *   - Main: student briefing (live) by default, or profile editor / session notes
- * Admin wires tutor-student links later; roster still merges sessions + assignedTutorId.
+ * Home: photo (click = home) + Profile; right-side Calendly / GMeet / Location squares.
+ * Student briefing only after a student is picked. Location uses an interactive map pin.
  */
 
 import { useEffect, useState, useMemo } from 'react'
@@ -24,13 +22,15 @@ import StudentIntelPanel from '../components/StudentIntelPanel'
 import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
+import TutorLocationPin from '../components/TutorLocationPin'
+import type { LatLng } from '../lib/geo'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import { getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { DEFAULT_STUDY_PATH } from '../lib/studyPathConfig'
 
-type DashPanel = 'student' | 'profile' | 'notes' | 'live'
+type DashPanel = 'home' | 'student' | 'profile' | 'notes'
 const CALENDLY_GUIDE = '/guides/calendly-setup.html'
 const GMEET_GUIDE = '/guides/gmeet-setup.html'
 
@@ -106,7 +106,7 @@ export default function TutorDashboard() {
     () => mergeStudents(sessionStudents, extraStudents),
     [sessionStudents, extraStudents],
   )
-  const [selectedStudent, setSelectedStudent]   = useState<string>('all')
+  const [selectedStudent, setSelectedStudent]   = useState<string | null>(null)
   const [chatMessages, setChatMessages]   = useState<{ senderId: string; text: string; createdAt: any }[]>([])
   const [loading, setLoading]             = useState(true)
   const [calendlyConnected, setCalendlyConnected] = useState<string | null>(null)
@@ -127,7 +127,8 @@ export default function TutorDashboard() {
   const [editingLocation, setEditingLocation] = useState(false)
   const [activity, setActivity] = useState<ActivityItem[]>([])
   const [flaggedQs, setFlaggedQs] = useState<FlaggedQuestion[]>([])
-  const [panel, setPanel] = useState<DashPanel>('student')
+  const [panel, setPanel] = useState<DashPanel>('home')
+  const [locationLatLng, setLocationLatLng] = useState<LatLng | null>(null)
   const [tutorProfile, setTutorProfile] = useState<TutorProfileData>({
     displayName: user.displayName || user.email?.split('@')[0] || 'Tutor',
     email: user.email || '',
@@ -184,20 +185,17 @@ export default function TutorDashboard() {
     }
   }, [assignedStudent, students])
 
-  // Sidebar selection drives briefing when a specific student is picked.
+  // Only after the tutor picks a student (home clears selection).
   const focusStudent: AssignedStudent | null = useMemo(() => {
-    if (selectedStudent && selectedStudent !== 'all') {
-      const st = students.find(x => x.id === selectedStudent)
-      if (st) {
-        return {
-          id: st.id,
-          name: st.displayName || st.email?.split('@')[0] || 'Student',
-          email: st.email || '',
-          examTrack: st.id === heroStudent?.id ? (heroStudent?.examTrack || 'ACT') : 'ACT',
-        }
-      }
+    if (!selectedStudent) return null
+    const st = students.find(x => x.id === selectedStudent)
+    if (!st) return null
+    return {
+      id: st.id,
+      name: st.displayName || st.email?.split('@')[0] || 'Student',
+      email: st.email || '',
+      examTrack: st.id === heroStudent?.id ? (heroStudent?.examTrack || 'ACT') : 'ACT',
     }
-    return heroStudent
   }, [selectedStudent, students, heroStudent])
 
   useEffect(() => {
@@ -407,7 +405,10 @@ export default function TutorDashboard() {
       if (typeof data?.googleMeetUrl === 'string' && data.googleMeetUrl) setMeetUrl(data.googleMeetUrl)
       const hasRealLocation = data?.location
         && typeof data.location.lat === 'number' && typeof data.location.lng === 'number'
-      if (hasRealLocation && typeof data?.locationAddress === 'string') setLocationAddress(data.locationAddress)
+      if (hasRealLocation) {
+        setLocationLatLng({ lat: data.location.lat, lng: data.location.lng })
+        if (typeof data?.locationAddress === 'string') setLocationAddress(data.locationAddress)
+      }
       setTutorProfile({
         displayName: data?.displayName || user.displayName || user.email?.split('@')[0] || 'Tutor',
         email: data?.email || user.email || '',
@@ -531,6 +532,7 @@ export default function TutorDashboard() {
         locationAddress: formatted,
       })
       setLocationAddress(formatted)
+      setLocationLatLng({ lat, lng })
       setTutorProfile(prev => ({ ...prev, locationAddress: formatted }))
       setLocationInput('')
       setEditingLocation(false)
@@ -624,15 +626,7 @@ export default function TutorDashboard() {
       .catch(() => {})
   }, [sessions, toReview, studentIdByEmail])
 
-  // Default the selection to the assigned student, else the next session's student
-  useEffect(() => {
-    if (selectedStudent !== 'all') return
-    if (heroStudent) { setSelectedStudent(heroStudent.id); return }
-    const next = sessions[0]
-    if (!next) return
-    const sid = next.studentId ?? studentIdByEmail[next.studentEmail] ?? null
-    if (sid) setSelectedStudent(sid)
-  }, [heroStudent, sessions, studentIdByEmail, selectedStudent])
+  // Home starts with no student selected; tutor picks one from the sidebar.
 
   async function handleDeleteSession(id: string, e: React.MouseEvent) {
     e.preventDefault()
@@ -686,15 +680,20 @@ export default function TutorDashboard() {
   const callUrl = callSession ? (callSession.meetingUrl ?? meetUrl) : null
   const tutorInitial = (tutorProfile.displayName || 'T')[0]?.toUpperCase()
 
+  function goHome() {
+    setPanel('home')
+    setSelectedStudent(null)
+    setConnectChip(null)
+  }
+
   function openChip(chip: 'calendly' | 'meet' | 'location') {
-    setPanel('student')
+    setPanel('home')
+    setSelectedStudent(null)
     if (connectChip === chip) {
       setConnectChip(null)
       return
     }
     setConnectChip(chip)
-    if (chip === 'calendly') window.open(CALENDLY_GUIDE, '_blank', 'noopener')
-    if (chip === 'meet') window.open(GMEET_GUIDE, '_blank', 'noopener')
   }
 
   return (
@@ -718,11 +717,19 @@ export default function TutorDashboard() {
 
       <aside className={s.sidebar}>
         <div className={s.tutorHead}>
-          <div className={s.tutorPhoto}>
-            {tutorProfile.photoUrl
-              ? <img src={tutorProfile.photoUrl} alt="" />
-              : <span>{tutorInitial}</span>}
-          </div>
+          <button
+            type="button"
+            className={s.tutorPhotoBtn}
+            onClick={goHome}
+            aria-label="Back to tutor home"
+            title="Home"
+          >
+            <div className={s.tutorPhoto}>
+              {tutorProfile.photoUrl
+                ? <img src={tutorProfile.photoUrl} alt="" />
+                : <span>{tutorInitial}</span>}
+            </div>
+          </button>
           <button
             type="button"
             className={`${s.profileBtn} ${panel === 'profile' ? s.profileBtnActive : ''}`}
@@ -730,41 +737,13 @@ export default function TutorDashboard() {
           >
             Profile
           </button>
-          <div className={s.chipRow}>
-            <button
-              type="button"
-              className={`${s.chip} ${calendlyConnected ? s.chipOn : ''} ${connectChip === 'calendly' ? s.chipActive : ''}`}
-              onClick={() => openChip('calendly')}
-            >
-              Calendly
-            </button>
-            <button
-              type="button"
-              className={`${s.chip} ${meetUrl ? s.chipOn : ''} ${connectChip === 'meet' ? s.chipActive : ''}`}
-              onClick={() => openChip('meet')}
-            >
-              GMeet
-            </button>
-            <button
-              type="button"
-              className={`${s.chip} ${locationAddress ? s.chipOn : ''} ${connectChip === 'location' ? s.chipActive : ''}`}
-              onClick={() => openChip('location')}
-            >
-              Location
-            </button>
-          </div>
         </div>
 
         <div className={s.sideDivider} />
         <p className={s.sideLabel}>Students</p>
-        <button
-          type="button"
-          className={`${s.sideItem} ${panel === 'student' && !focusStudent ? s.sideActive : ''}`}
-          onClick={() => { setPanel('student'); setSelectedStudent('all'); setConnectChip(null) }}
-        >
-          All Students
-        </button>
-        {students.map(st => (
+        {students.length === 0 ? (
+          <p className={s.sideEmpty}>No students linked yet</p>
+        ) : students.map(st => (
           <button
             key={st.id}
             type="button"
@@ -836,439 +815,460 @@ export default function TutorDashboard() {
               placeholder="What clicked. What to drill next. Parent note if needed."
             />
           </div>
-        ) : (
-          <>
-            {connectChip && (
-              <div className={`${s.card} ${s.connectCard}`}>
-                {connectChip === 'calendly' && (
-                  <>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Calendly</span>
-                      {calendlyConnected && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Connected</span>}
-                      <a className={s.guideLink} href={CALENDLY_GUIDE} target="_blank" rel="noopener">Setup guide</a>
-                    </div>
-                    {calendlyConnected ? (
-                      <div className={s.calendlyDone}>Connected · {calendlyConnected}</div>
-                    ) : (
-                      <>
-                        <p className={s.calendlyHint}>Paste your Personal Access Token after you finish the guide.</p>
-                        <input
-                          className={s.tokenInput}
-                          type="password"
-                          autoComplete="off"
-                          placeholder="Personal Access Token"
-                          value={calendlyToken}
-                          onChange={e => setCalendlyToken(e.target.value)}
-                        />
-                        <button
-                          type="button"
-                          className={s.btnPrimary}
-                          onClick={() => void handleConnectCalendly()}
-                          disabled={connectingCalendly || !calendlyToken.trim()}
-                        >
-                          {connectingCalendly ? 'Connecting…' : 'Connect Calendly'}
-                        </button>
-                      </>
-                    )}
-                  </>
-                )}
-                {connectChip === 'meet' && (
-                  <>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Google Meet</span>
-                      {meetUrl && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Saved</span>}
-                      <a className={s.guideLink} href={GMEET_GUIDE} target="_blank" rel="noopener">Setup guide</a>
-                    </div>
-                    {meetUrl && !editingMeetUrl ? (
-                      <>
-                        <div className={s.calendlyDone}>{meetUrl.replace(/^https:\/\//, '')}</div>
-                        <button
-                          type="button"
-                          className={s.intelToggle}
-                          onClick={() => { setEditingMeetUrl(true); setMeetUrlInput(meetUrl) }}
-                        >
-                          Change room link
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <p className={s.calendlyHint}>Paste your personal Meet room. Sessions without a link use it.</p>
-                        <input
-                          className={s.tokenInput}
-                          type="text"
-                          autoComplete="off"
-                          placeholder="https://meet.google.com/xxx-xxxx-xxx"
-                          value={meetUrlInput}
-                          onChange={e => setMeetUrlInput(e.target.value)}
-                          onKeyDown={e => { if (e.key === 'Enter') void handleSaveMeetUrl() }}
-                        />
-                        <button
-                          type="button"
-                          className={s.btnPrimary}
-                          onClick={() => void handleSaveMeetUrl()}
-                          disabled={savingMeetUrl || !meetUrlInput.trim()}
-                        >
-                          {savingMeetUrl ? 'Saving…' : 'Save Meet room'}
-                        </button>
-                      </>
-                    )}
-                  </>
-                )}
-                {connectChip === 'location' && (
-                  <>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Work location</span>
-                      {locationAddress && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Pinned</span>}
-                      {locationAddress && (
-                        <a
-                          className={s.guideLink}
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationAddress)}`}
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          Open in Maps
-                        </a>
-                      )}
-                    </div>
-                    {locationAddress && !editingLocation ? (
-                      <>
-                        <div className={s.calendlyDone}>{locationAddress}</div>
-                        <p className={s.calendlyFoot}>Students find you here on Find a Tutor. Change anytime from Profile too.</p>
-                        <button
-                          type="button"
-                          className={s.intelToggle}
-                          onClick={() => { setEditingLocation(true); setLocationInput(locationAddress) }}
-                        >
-                          Change pin
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <p className={s.calendlyHint}>Type a city or address. We geocode it and pin that area on Maps.</p>
-                        <input
-                          className={s.tokenInput}
-                          type="text"
-                          autoComplete="street-address"
-                          placeholder="City, state, or full address"
-                          value={locationInput}
-                          onChange={e => setLocationInput(e.target.value)}
-                          onKeyDown={e => { if (e.key === 'Enter') void handleSaveLocation() }}
-                        />
-                        <button
-                          type="button"
-                          className={s.btnPrimary}
-                          onClick={() => void handleSaveLocation()}
-                          disabled={savingLocation || !locationInput.trim()}
-                        >
-                          {savingLocation ? 'Saving…' : 'Pin on Maps'}
-                        </button>
-                      </>
-                    )}
-                  </>
-                )}
-              </div>
-            )}
-
-            <div className={s.grid}>
-              <div className={s.col}>
-                <div className={`${s.card} ${s.heroCard}`}>
+        ) : panel === 'home' ? (
+          <div className={s.homeLayout}>
+            <div className={s.homeMain}>
+              {!connectChip && (
+                <div className={s.card}>
                   <div className={s.cardHeader}>
-                    <span className={s.cardLabel}>Student</span>
-                    {lastActiveTs && (
-                      <span className={s.lastActive}>Last active {timeAgo(lastActiveTs)}</span>
-                    )}
+                    <span className={s.cardLabel}>Tutor home</span>
                   </div>
-                  {focusStudent ? (
-                    <>
-                      <div className={s.heroTop}>
-                        <div className={s.heroAvatar}>{focusStudent.name[0]?.toUpperCase()}</div>
-                        <div className={s.heroId}>
-                          <span className={s.heroName}>{focusStudent.name}</span>
-                          <span className={s.heroEmail}>{focusStudent.email}</span>
-                        </div>
-                        <span className={s.examBadge}>{focusStudent.examTrack}</span>
-                      </div>
-                      {profileLoading ? (
-                        <div className={s.loadRow}><div className={s.spinnerSm} /> Loading profile…</div>
-                      ) : hasMlData ? (
-                        <>
-                          {masteryPct !== null && (
-                            <div className={s.masteryRow}>
-                              <span className={s.masteryNum}>{masteryPct}%</span>
-                              <div className={s.masteryMeta}>
-                                <span className={s.masteryLabel}>Overall mastery</span>
-                                <span className={s.masterySub}>{profile!.eventCount} recorded interactions</span>
-                              </div>
-                            </div>
-                          )}
-                          {profile!.topWeaknesses.length > 0 && (
-                            <div className={s.pillSection}>
-                              <span className={s.pillTitle}>Weak spots</span>
-                              <div className={s.pillRow}>
-                                {profile!.topWeaknesses.slice(0, 3).map(sw => (
-                                  <span key={sw.conceptId} className={s.pillWeak}>
-                                    {conceptLabel(sw.conceptId)}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <p className={s.heroEmpty}>
-                          {heroFirstName} hasn&apos;t practiced yet. Share the dashboard link to get started.
-                        </p>
-                      )}
-                    </>
-                  ) : (
-                    <p className={s.heroEmpty}>
-                      No students yet. Admin will link tutor and student. Bookings still appear here when they land.
-                    </p>
-                  )}
-                </div>
-
-                {focusStudent && (
-                  <TutorBriefingPanel
-                    studentId={focusStudent.id}
-                    studentName={focusStudent.name}
-                    examTrack={focusStudent.examTrack}
-                  />
-                )}
-
-                {focusStudent && (
-                  <div className={s.card}>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Live comment</span>
-                      <Link to={`/chat/${focusStudent.id}`} className={s.openChatLink}>Open chat →</Link>
-                    </div>
-                    {chatMessages.length === 0 ? (
-                      <p className={s.emptyText}>No messages yet. Chat stays live once you both write.</p>
-                    ) : (
-                      chatMessages.slice(-4).map((msg, i) => {
-                        const isMe = msg.senderId === user.uid
-                        const name = isMe ? 'You' : heroFirstName
+                  <p className={s.heroEmpty}>
+                    Connect Calendly, Meet, and your work pin on the right. Open a student from the left when you are ready to brief.
+                  </p>
+                  {sessions.length > 0 && (
+                    <div className={s.sessionList}>
+                      {sessions.slice(0, 4).map(sess => {
+                        const joinUrl = sess.meetingUrl ?? meetUrl
                         return (
-                          <div key={i} className={s.msgRow}>
-                            <div className={`${s.msgAv} ${isMe ? s.msgAvTutor : ''}`}>{name[0]?.toUpperCase()}</div>
-                            <div className={s.msgBody}>
-                              <div className={s.msgMeta}><span className={s.msgName}>{name}</span></div>
-                              <div className={s.msgText}>{msg.text || 'File'}</div>
+                          <div key={sess.id} className={s.sessionRow}>
+                            <div className={s.sessionLeft}>
+                              <div className={s.sessionName}>{sess.studentName}</div>
+                              <div className={s.sessionMeta}>{sess.subject} · {fmtDateTime(sess.scheduledAt)}</div>
                             </div>
+                            {joinUrl && (
+                              <a href={joinUrl} target="_blank" rel="noopener" className={s.joinLink}>Join →</a>
+                            )}
                           </div>
                         )
-                      })
-                    )}
-                  </div>
-                )}
-
-                {reviewFiltered.length > 0 && (
-                  <div className={s.card}>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Sessions to Review</span>
-                      <span className={s.reviewBadge}>{reviewFiltered.length}</span>
+                      })}
                     </div>
-                    <div className={s.sessionList}>
-                      {reviewFiltered.slice(0, 4).map(sess => (
-                        <Link key={sess.id} to={`/tutor/session/${sess.id}`} className={s.reviewRow}>
+                  )}
+                </div>
+              )}
+
+              {connectChip === 'calendly' && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Calendly</span>
+                    {calendlyConnected && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Connected</span>}
+                    <a className={s.guideLink} href={CALENDLY_GUIDE} target="_blank" rel="noopener">Setup guide</a>
+                  </div>
+                  {calendlyConnected ? (
+                    <div className={s.calendlyDone}>Connected · {calendlyConnected}</div>
+                  ) : (
+                    <>
+                      <p className={s.calendlyHint}>Finish the guide, then paste your Personal Access Token.</p>
+                      <input
+                        className={s.tokenInput}
+                        type="password"
+                        autoComplete="off"
+                        placeholder="Personal Access Token"
+                        value={calendlyToken}
+                        onChange={e => setCalendlyToken(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        className={s.btnPrimary}
+                        onClick={() => void handleConnectCalendly()}
+                        disabled={connectingCalendly || !calendlyToken.trim()}
+                      >
+                        {connectingCalendly ? 'Connecting…' : 'Connect Calendly'}
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {connectChip === 'meet' && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Google Meet</span>
+                    {meetUrl && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Saved</span>}
+                    <a className={s.guideLink} href={GMEET_GUIDE} target="_blank" rel="noopener">Setup guide</a>
+                  </div>
+                  {meetUrl && !editingMeetUrl ? (
+                    <>
+                      <div className={s.calendlyDone}>{meetUrl.replace(/^https:\/\//, '')}</div>
+                      <button
+                        type="button"
+                        className={s.intelToggle}
+                        onClick={() => { setEditingMeetUrl(true); setMeetUrlInput(meetUrl) }}
+                      >
+                        Change room link
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <p className={s.calendlyHint}>Paste your personal Meet room. Sessions without a link use it.</p>
+                      <input
+                        className={s.tokenInput}
+                        type="text"
+                        autoComplete="off"
+                        placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                        value={meetUrlInput}
+                        onChange={e => setMeetUrlInput(e.target.value)}
+                        onKeyDown={e => { if (e.key === 'Enter') void handleSaveMeetUrl() }}
+                      />
+                      <button
+                        type="button"
+                        className={s.btnPrimary}
+                        onClick={() => void handleSaveMeetUrl()}
+                        disabled={savingMeetUrl || !meetUrlInput.trim()}
+                      >
+                        {savingMeetUrl ? 'Saving…' : 'Save Meet room'}
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {connectChip === 'location' && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Work location</span>
+                    {locationAddress && <span className={`${s.reviewBadge} ${s.connectedBadge}`}>Pinned</span>}
+                  </div>
+                  <TutorLocationPin
+                    uid={user.uid}
+                    initialLatLng={locationLatLng}
+                    initialAddress={locationAddress}
+                    onSaved={(latLng, address) => {
+                      setLocationLatLng(latLng)
+                      setLocationAddress(address)
+                      setTutorProfile(prev => ({ ...prev, locationAddress: address }))
+                    }}
+                    onToast={showToast}
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className={s.squareCol}>
+              <button
+                type="button"
+                className={`${s.square} ${calendlyConnected ? s.squareOn : ''} ${connectChip === 'calendly' ? s.squareActive : ''}`}
+                onClick={() => openChip('calendly')}
+              >
+                <span className={s.squareTitle}>Calendly</span>
+                <span className={s.squareMeta}>{calendlyConnected ? 'Connected' : 'Set up'}</span>
+              </button>
+              <button
+                type="button"
+                className={`${s.square} ${meetUrl ? s.squareOn : ''} ${connectChip === 'meet' ? s.squareActive : ''}`}
+                onClick={() => openChip('meet')}
+              >
+                <span className={s.squareTitle}>GMeet</span>
+                <span className={s.squareMeta}>{meetUrl ? 'Saved' : 'Set up'}</span>
+              </button>
+              <button
+                type="button"
+                className={`${s.square} ${locationAddress ? s.squareOn : ''} ${connectChip === 'location' ? s.squareActive : ''}`}
+                onClick={() => openChip('location')}
+              >
+                <span className={s.squareTitle}>Location</span>
+                <span className={s.squareMeta}>{locationAddress ? 'Pinned' : 'Pin map'}</span>
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className={s.grid}>
+            <div className={s.col}>
+              <div className={`${s.card} ${s.heroCard}`}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Student</span>
+                  {lastActiveTs && (
+                    <span className={s.lastActive}>Last active {timeAgo(lastActiveTs)}</span>
+                  )}
+                </div>
+                {focusStudent ? (
+                  <>
+                    <div className={s.heroTop}>
+                      <div className={s.heroAvatar}>{focusStudent.name[0]?.toUpperCase()}</div>
+                      <div className={s.heroId}>
+                        <span className={s.heroName}>{focusStudent.name}</span>
+                        <span className={s.heroEmail}>{focusStudent.email}</span>
+                      </div>
+                      <span className={s.examBadge}>{focusStudent.examTrack}</span>
+                    </div>
+                    {profileLoading ? (
+                      <div className={s.loadRow}><div className={s.spinnerSm} /> Loading profile…</div>
+                    ) : hasMlData ? (
+                      <>
+                        {masteryPct !== null && (
+                          <div className={s.masteryRow}>
+                            <span className={s.masteryNum}>{masteryPct}%</span>
+                            <div className={s.masteryMeta}>
+                              <span className={s.masteryLabel}>Overall mastery</span>
+                              <span className={s.masterySub}>{profile!.eventCount} recorded interactions</span>
+                            </div>
+                          </div>
+                        )}
+                        {profile!.topWeaknesses.length > 0 && (
+                          <div className={s.pillSection}>
+                            <span className={s.pillTitle}>Weak spots</span>
+                            <div className={s.pillRow}>
+                              {profile!.topWeaknesses.slice(0, 3).map(sw => (
+                                <span key={sw.conceptId} className={s.pillWeak}>
+                                  {conceptLabel(sw.conceptId)}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <p className={s.heroEmpty}>
+                        {heroFirstName} hasn&apos;t practiced yet. Share the dashboard link to get started.
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className={s.heroEmpty}>Pick a student from the left.</p>
+                )}
+              </div>
+
+              {focusStudent && (
+                <TutorBriefingPanel
+                  studentId={focusStudent.id}
+                  studentName={focusStudent.name}
+                  examTrack={focusStudent.examTrack}
+                />
+              )}
+
+              {focusStudent && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Live comment</span>
+                    <Link to={`/chat/${focusStudent.id}`} className={s.openChatLink}>Open chat →</Link>
+                  </div>
+                  {chatMessages.length === 0 ? (
+                    <p className={s.emptyText}>No messages yet. Chat stays live once you both write.</p>
+                  ) : (
+                    chatMessages.slice(-4).map((msg, i) => {
+                      const isMe = msg.senderId === user.uid
+                      const name = isMe ? 'You' : heroFirstName
+                      return (
+                        <div key={i} className={s.msgRow}>
+                          <div className={`${s.msgAv} ${isMe ? s.msgAvTutor : ''}`}>{name[0]?.toUpperCase()}</div>
+                          <div className={s.msgBody}>
+                            <div className={s.msgMeta}><span className={s.msgName}>{name}</span></div>
+                            <div className={s.msgText}>{msg.text || 'File'}</div>
+                          </div>
+                        </div>
+                      )
+                    })
+                  )}
+                </div>
+              )}
+
+              {reviewFiltered.length > 0 && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Sessions to Review</span>
+                    <span className={s.reviewBadge}>{reviewFiltered.length}</span>
+                  </div>
+                  <div className={s.sessionList}>
+                    {reviewFiltered.slice(0, 4).map(sess => (
+                      <Link key={sess.id} to={`/tutor/session/${sess.id}`} className={s.reviewRow}>
+                        <div className={s.sessionLeft}>
+                          <div className={s.sessionName}>{sess.studentName}</div>
+                          <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
+                          <div className={s.sessionDate}>{fmtDateTime(sess.scheduledAt)}</div>
+                        </div>
+                        <div className={s.sessionRight}>
+                          <span className={`${s.sessionBadge} ${
+                            sess.summaryStatus === 'draft' ? s.badgeDraft :
+                            sess.summaryStatus === 'pending' ? s.badgePending : s.badgeNeedsReview
+                          }`}>
+                            {sess.summaryStatus === 'draft' ? 'Draft' :
+                             sess.summaryStatus === 'pending' ? 'Has transcript' : 'Needs review'}
+                          </span>
+                          <button type="button" className={s.deleteRowBtn} onClick={e => handleDeleteSession(sess.id, e)} title="Delete">✕</button>
+                          <span className={s.reviewArrow}>→</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {upcomingFiltered.length > 0 && (
+                <div className={s.card}>
+                  <div className={s.cardHeader}>
+                    <span className={s.cardLabel}>Upcoming Sessions</span>
+                  </div>
+                  <div className={s.sessionList}>
+                    {upcomingFiltered.slice(0, 5).map(sess => {
+                      const live = now >= sess.scheduledAt - FIFTEEN_MIN && now <= sess.endAt + FIFTEEN_MIN
+                      const joinUrl = sess.meetingUrl ?? meetUrl
+                      return (
+                        <div key={sess.id} className={`${s.sessionRow} ${live ? s.sessionRowLive : ''}`}>
                           <div className={s.sessionLeft}>
                             <div className={s.sessionName}>{sess.studentName}</div>
                             <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
                             <div className={s.sessionDate}>{fmtDateTime(sess.scheduledAt)}</div>
                           </div>
                           <div className={s.sessionRight}>
-                            <span className={`${s.sessionBadge} ${
-                              sess.summaryStatus === 'draft' ? s.badgeDraft :
-                              sess.summaryStatus === 'pending' ? s.badgePending : s.badgeNeedsReview
-                            }`}>
-                              {sess.summaryStatus === 'draft' ? 'Draft' :
-                               sess.summaryStatus === 'pending' ? 'Has transcript' : 'Needs review'}
-                            </span>
-                            <button type="button" className={s.deleteRowBtn} onClick={e => handleDeleteSession(sess.id, e)} title="Delete">✕</button>
-                            <span className={s.reviewArrow}>→</span>
+                            <div className={`${s.sessionBadge} ${live ? s.badgeLive : ''}`}>
+                              {live ? 'Live now' : timeUntil(sess.scheduledAt)}
+                            </div>
+                            {joinUrl && (
+                              <a href={joinUrl} target="_blank" rel="noopener" className={s.joinLink}>Join →</a>
+                            )}
                           </div>
-                        </Link>
-                      ))}
-                    </div>
+                        </div>
+                      )
+                    })}
                   </div>
-                )}
+                </div>
+              )}
+            </div>
 
-                {upcomingFiltered.length > 0 && (
-                  <div className={s.card}>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Upcoming Sessions</span>
-                    </div>
-                    <div className={s.sessionList}>
-                      {upcomingFiltered.slice(0, 5).map(sess => {
-                        const live = now >= sess.scheduledAt - FIFTEEN_MIN && now <= sess.endAt + FIFTEEN_MIN
-                        const joinUrl = sess.meetingUrl ?? meetUrl
-                        return (
-                          <div key={sess.id} className={`${s.sessionRow} ${live ? s.sessionRowLive : ''}`}>
-                            <div className={s.sessionLeft}>
-                              <div className={s.sessionName}>{sess.studentName}</div>
-                              <div className={s.sessionMeta}>{sess.subject} · {sess.duration}</div>
-                              <div className={s.sessionDate}>{fmtDateTime(sess.scheduledAt)}</div>
-                            </div>
-                            <div className={s.sessionRight}>
-                              <div className={`${s.sessionBadge} ${live ? s.badgeLive : ''}`}>
-                                {live ? 'Live now' : timeUntil(sess.scheduledAt)}
-                              </div>
-                              {joinUrl && (
-                                <a href={joinUrl} target="_blank" rel="noopener" className={s.joinLink}>Join →</a>
-                              )}
-                            </div>
-                          </div>
-                        )
-                      })}
-                    </div>
+            <div className={s.col}>
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabel}>Quick Actions</span>
+                </div>
+                <div className={s.actionList}>
+                  <a
+                    className={s.actionBtn}
+                    href={focusStudent?.email
+                      ? `mailto:${focusStudent.email}?subject=${encodeURIComponent('MindCraft Update')}`
+                      : undefined}
+                    onClick={e => { if (!focusStudent?.email) { e.preventDefault(); showToast('No student email yet') } }}
+                  >
+                    Email student
+                  </a>
+                  <button
+                    type="button"
+                    className={s.actionBtn}
+                    onClick={() => {
+                      if (!focusStudent) { showToast('No student yet'); return }
+                      void emailParent(focusStudent.id, focusStudent.name)
+                    }}
+                  >
+                    Email parent
+                  </button>
+                  <button
+                    type="button"
+                    className={s.actionBtn}
+                    onClick={() => {
+                      if (!focusStudent) { showToast('No student yet'); return }
+                      navigate(`/knowledge-graph`, { state: { studentId: focusStudent.id } })
+                    }}
+                  >
+                    View map
+                  </button>
+                </div>
+              </div>
+
+              <div className={s.card}>
+                <div className={s.cardHeader}>
+                  <span className={s.cardLabelRow}>
+                    {activityLiveNow && <span className={s.livePip} />}
+                    <span className={s.cardLabel}>Live Activity</span>
+                  </span>
+                </div>
+                {activity.length === 0 ? (
+                  <p className={s.emptyText}>No practice activity yet</p>
+                ) : (
+                  <div className={s.feedList}>
+                    {activity.map((a, i) => {
+                      const mark = a.outcome > 0.3
+                        ? { sym: '✓', cls: s.feedGood }
+                        : a.outcome < -0.1
+                          ? { sym: '✗', cls: s.feedBad }
+                          : { sym: '~', cls: s.feedMid }
+                      return (
+                        <div key={`${a.studentId}-${a.ts}-${i}`} className={s.feedRow}>
+                          <span className={`${s.feedMark} ${mark.cls}`}>{mark.sym}</span>
+                          <span className={s.feedText}>{conceptTitle(a.conceptId) || 'Practice'}</span>
+                          <span className={s.feedTime}>{timeAgo(a.ts)}</span>
+                        </div>
+                      )
+                    })}
                   </div>
                 )}
               </div>
 
-              <div className={s.col}>
+              {flaggedQs.length > 0 && (
                 <div className={s.card}>
                   <div className={s.cardHeader}>
-                    <span className={s.cardLabel}>Quick Actions</span>
+                    <span className={s.cardLabel}>Flagged Questions</span>
+                    <span className={s.cardSubName}>{flaggedQs.length} open</span>
                   </div>
-                  <div className={s.actionList}>
-                    <a
-                      className={s.actionBtn}
-                      href={focusStudent?.email
-                        ? `mailto:${focusStudent.email}?subject=${encodeURIComponent('MindCraft Update')}`
-                        : undefined}
-                      onClick={e => { if (!focusStudent?.email) { e.preventDefault(); showToast('No student email yet') } }}
-                    >
-                      Email student
-                    </a>
-                    <button
-                      type="button"
-                      className={s.actionBtn}
-                      onClick={() => {
-                        if (!focusStudent) { showToast('No student yet'); return }
-                        void emailParent(focusStudent.id, focusStudent.name)
-                      }}
-                    >
-                      Email parent
-                    </button>
-                    <button
-                      type="button"
-                      className={s.actionBtn}
-                      onClick={() => {
-                        if (!focusStudent) { showToast('No student yet'); return }
-                        navigate(`/knowledge-graph`, { state: { studentId: focusStudent.id } })
-                      }}
-                    >
-                      View map
-                    </button>
+                  <div className={s.flagList}>
+                    {flaggedQs.map(f => (
+                      <div key={f.id} className={s.flagRow}>
+                        <div className={s.flagBody}>
+                          <div className={s.flagMeta}>
+                            <span className={s.flagStudent}>{f.studentName}</span>
+                            {f.conceptName && <span className={s.flagConcept}>{f.conceptName}</span>}
+                            <span className={s.flagTime}>{timeAgo(f.ts)}</span>
+                          </div>
+                          <div className={s.flagText}>
+                            {f.questionLabel ? `${f.questionLabel} · ` : ''}{f.questionText}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className={s.flagResolve}
+                          onClick={() => void resolveFlag(f.id)}
+                          title="Mark reviewed"
+                          aria-label="Mark reviewed"
+                        >
+                          ✓
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
+              )}
 
+              {focusStudent && (
                 <div className={s.card}>
                   <div className={s.cardHeader}>
-                    <span className={s.cardLabelRow}>
-                      {activityLiveNow && <span className={s.livePip} />}
-                      <span className={s.cardLabel}>Live Activity</span>
-                    </span>
+                    <span className={s.cardLabel}>Study path</span>
                   </div>
-                  {activity.length === 0 ? (
-                    <p className={s.emptyText}>No practice activity yet</p>
-                  ) : (
-                    <div className={s.feedList}>
-                      {activity.map((a, i) => {
-                        const mark = a.outcome > 0.3
-                          ? { sym: '✓', cls: s.feedGood }
-                          : a.outcome < -0.1
-                            ? { sym: '✗', cls: s.feedBad }
-                            : { sym: '~', cls: s.feedMid }
-                        return (
-                          <div key={`${a.studentId}-${a.ts}-${i}`} className={s.feedRow}>
-                            <span className={`${s.feedMark} ${mark.cls}`}>{mark.sym}</span>
-                            <span className={s.feedText}>{conceptTitle(a.conceptId) || 'Practice'}</span>
-                            <span className={s.feedTime}>{timeAgo(a.ts)}</span>
-                          </div>
-                        )
-                      })}
-                    </div>
+                  <label className={s.pathField}>
+                    Focus concepts (comma-separated slugs)
+                    <input
+                      className={s.pathInput}
+                      value={tutorFocusInput}
+                      onChange={e => setTutorFocusInput(e.target.value)}
+                      placeholder="descriptive_statistics, linear_equations"
+                    />
+                  </label>
+                  <label className={s.pathField}>
+                    Mastery exit after N questions
+                    <input
+                      className={s.pathInput}
+                      type="number"
+                      min={3}
+                      max={14}
+                      value={masteryMin}
+                      onChange={e => setMasteryMin(parseInt(e.target.value, 10) || 5)}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className={s.intelToggle}
+                    disabled={savingPath}
+                    onClick={() => void saveStudyPathForStudent()}
+                  >
+                    {savingPath ? 'Saving…' : 'Save study path'}
+                  </button>
+                  <button type="button" className={s.intelToggle} onClick={() => setShowIntel(v => !v)}>
+                    {showIntel ? 'Hide Intelligence Report' : 'Full Intelligence Report →'}
+                  </button>
+                  {showIntel && (
+                    <StudentIntelPanel studentId={focusStudent.id} studentName={focusStudent.name} />
                   )}
                 </div>
-
-                {flaggedQs.length > 0 && (
-                  <div className={s.card}>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Flagged Questions</span>
-                      <span className={s.cardSubName}>{flaggedQs.length} open</span>
-                    </div>
-                    <div className={s.flagList}>
-                      {flaggedQs.map(f => (
-                        <div key={f.id} className={s.flagRow}>
-                          <div className={s.flagBody}>
-                            <div className={s.flagMeta}>
-                              <span className={s.flagStudent}>{f.studentName}</span>
-                              {f.conceptName && <span className={s.flagConcept}>{f.conceptName}</span>}
-                              <span className={s.flagTime}>{timeAgo(f.ts)}</span>
-                            </div>
-                            <div className={s.flagText}>
-                              {f.questionLabel ? `${f.questionLabel} · ` : ''}{f.questionText}
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            className={s.flagResolve}
-                            onClick={() => void resolveFlag(f.id)}
-                            title="Mark reviewed"
-                            aria-label="Mark reviewed"
-                          >
-                            ✓
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {focusStudent && (
-                  <div className={s.card}>
-                    <div className={s.cardHeader}>
-                      <span className={s.cardLabel}>Study path</span>
-                    </div>
-                    <label className={s.pathField}>
-                      Focus concepts (comma-separated slugs)
-                      <input
-                        className={s.pathInput}
-                        value={tutorFocusInput}
-                        onChange={e => setTutorFocusInput(e.target.value)}
-                        placeholder="descriptive_statistics, linear_equations"
-                      />
-                    </label>
-                    <label className={s.pathField}>
-                      Mastery exit after N questions
-                      <input
-                        className={s.pathInput}
-                        type="number"
-                        min={3}
-                        max={14}
-                        value={masteryMin}
-                        onChange={e => setMasteryMin(parseInt(e.target.value, 10) || 5)}
-                      />
-                    </label>
-                    <button
-                      type="button"
-                      className={s.intelToggle}
-                      disabled={savingPath}
-                      onClick={() => void saveStudyPathForStudent()}
-                    >
-                      {savingPath ? 'Saving…' : 'Save study path'}
-                    </button>
-                    <button type="button" className={s.intelToggle} onClick={() => setShowIntel(v => !v)}>
-                      {showIntel ? 'Hide Intelligence Report' : 'Full Intelligence Report →'}
-                    </button>
-                    {showIntel && (
-                      <StudentIntelPanel studentId={focusStudent.id} studentName={focusStudent.name} />
-                    )}
-                  </div>
-                )}
-              </div>
+              )}
             </div>
-          </>
+          </div>
         )}
       </main>
 
