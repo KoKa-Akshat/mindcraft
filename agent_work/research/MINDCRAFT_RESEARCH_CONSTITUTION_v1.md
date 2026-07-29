@@ -4,7 +4,7 @@
 **Edition:** v1.5 (multi-chapter lab; ongoing evidence program)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-28  
+**Last updated:** 2026-07-29  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -24,8 +24,9 @@
 | XXXII | `chapters/32_parent_anxiety_transmission.md` | Maloney/Beilock parent anxiety pathway |
 | XXXIII | `chapters/33_ai_tutors_trust_sycophancy.md` | AI trust / sycophancy; RT: Bastani≢PWC, guards≠gain |
 | XXXIV | `chapters/34_formal_causal_dag_identification.md` | FEI causal DAG; L0–L4 claim ladder; confounders |
+| XXXV | `chapters/35_competitive_session_audits.md` | Khan/Duo/Brilliant/ChatGPT session mechanism audits |
 
-Queued next: see `NEXT_LAB.md` (competitive audits, equity audit, expectancy-value, goal orientation).
+Queued next: see `NEXT_LAB.md` (equity audit, expectancy-value, goal orientation, interleaving).
 
 ---
 

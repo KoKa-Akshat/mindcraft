@@ -4,6 +4,28 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-29 — Researcher tick: Part XXXV Competitive session audits
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch35 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/35_competitive_session_audits.md` (Part XXXV)  
+**Claim examined:** MindCraft can position against Khan/Duo/Brilliant/ChatGPT with market slogans alone — without a session-mechanism wedge tied to FEI metrics.
+
+**Evidence added:**
+- Eames, Brunskill, Yamkovenko, Weatherholtz & Oreopoulos (2026, *PNAS*, doi:10.1073/pnas.2507708123): Khan CAL dosage → modest math SD gains at scale (>200k students).
+- Murphy et al. (2014, SRI); Kelly & Rutherford (2017, *IRRODL*, doi:10.19173/irrodl.v18i4.2984): implementation/null caveats on Khan causal claims.
+- Settles & Meeder (2016, ACL): Duolingo HLR; ~+12% activity retention; Duolingo Method (2023) streaks/spacing.
+- de la Puente & Perez (2023, *MTRJ*, ERIC EJ1394390): small Brilliant.org QED (n=60 Colombia).
+- Bastani et al. (2025, *PNAS*, doi:10.1073/pnas.2422633122): ChatGPT-like Base crutch harm; Tutor ≠ gain (carry from XXXIII).
+- Digital Promise Estudia Khanmigo (2024): qualitative warmth, neutral quantitative pilot frame.
+
+**Product implication:** Session-demo GTM (soft-wrong → retry → transfer) over feature-matrix; do not out-library Khan or out-streak Duo; Solver ≠ ChatGPT Base; copy bans restated.
+
+**Experiments spawned:** CSA-1 (blind session preference), CSA-2 (FEI copy vs AI-tutor copy), CSA-3 (paste rate under guards).
+
+**PDF:** Regenerate after ch35 mount.
+
+---
+
 ## 2026-07-28 — Researcher tick: Part XXXIV Formal causal DAG + identification
 
 **Tick type:** Researcher (UTC hour 22; hour%6≠0; ch34 never written → Researcher)  
