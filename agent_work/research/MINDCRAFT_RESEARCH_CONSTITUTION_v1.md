@@ -28,8 +28,9 @@
 | XXXVI | `chapters/36_equity_audit_story_worlds.md` | Equity audit of story worlds; whose history; tokenism kill |
 | XXXVII | `chapters/37_expectancy_value_eccles.md` | Eccles SEVT; utility/cost/attainment → choice; EVT experiments |
 | XXXVIII | `chapters/38_goal_orientation.md` | Mastery vs performance goal structures; appearance ban; GO experiments |
+| XXXIX | `chapters/39_interleaving_vs_blocking.md` | Interleave vs block; strategy selection; IL experiments |
 
-Queued next: see `NEXT_LAB.md` (interleaving, self-explanation).
+Queued next: see `NEXT_LAB.md` (self-explanation, then QUEUE_EXTENDED).
 
 ---
 

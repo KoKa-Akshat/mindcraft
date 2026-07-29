@@ -4,6 +4,28 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-29 — Researcher tick: Part XXXIX Interleaving vs blocking
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch39 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/39_interleaving_vs_blocking.md` (Part XXXIX)  
+**Claim examined:** Random shuffle / always-on mix / blocked session accuracy are interchangeable proofs of “real learning” and exam readiness.
+
+**Evidence added:**
+- Rohrer & Taylor (2007, *Instructional Science*, doi:10.1007/s11251-007-9015-8): spacing vs massing (E1) and mixed vs blocked (E2); delayed tests favor shuffled/mixed schedules.
+- Rohrer, Dedrick & Stershic (2015, *JEP*, doi:10.1037/edu0000001): 7th-grade interleaved vs blocked; *d* = 0.42 (1-day) and 0.79 (30-day); strategy selection vs execution.
+- Rohrer, Dedrick & Burgess (2014, *Psychonomic Bulletin & Review*, doi:10.3758/s13423-014-0588-3): interleaving benefit not limited to look-alike problem kinds.
+- Rohrer, Dedrick, Hartwig & Cheung (2020, *JEP*, doi:10.1037/edu0000367): preregistered cluster RCT, 54 classes; 61% vs 38% (*d* = 0.83) on 1-month unannounced test.
+- Brunmair & Richter (2019, *Psychological Bulletin*, doi:10.1037/bul0000209): meta *g* = 0.42 overall; math tasks *g* ≈ 0.34; similarity/complexity moderators; words favor blocking.
+- Carvalho & Goldstone (2015, *Frontiers in Psychology*, doi:10.3389/fpsyg.2015.00505): attentional bias — interleave differences / block similarities.
+
+**Product implication:** Default = short block → near-miss interleave coda → spaced mixed `transfer_pass`; ban “shuffle = science” and blocked-accuracy vanity; IL-1…4/QUAL; densifies XXIX INT-1.
+
+**Experiments spawned:** IL-1, IL-2, IL-3, IL-4, IL-QUAL.
+
+**PDF:** Regenerate after ch39 mount.
+
+---
+
 ## 2026-07-29 — Researcher tick: Part XXXVIII Goal orientation (mastery vs performance)
 
 **Tick type:** Researcher (UTC hour 9; hour%6≠0; <8 researcher entries since last synthesizer)  
