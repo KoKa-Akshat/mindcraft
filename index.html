@@ -375,8 +375,10 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .parents-story-lines p{margin:0;font-size:clamp(17px,2vw,20px);line-height:1.35;font-weight:800;color:rgba(244,239,226,.78)}
 .parents-pull{margin:8px auto 0;max-width:28ch;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(26px,3.4vw,38px);line-height:1.2;letter-spacing:-.02em;font-weight:400;color:#c4f547}
 .parents-story-foot{margin:0;font-size:15px;line-height:1.45;font-weight:700;color:rgba(244,239,226,.58)}
-.support-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.support-scroll-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;min-width:56px;padding:0 18px;border-radius:999px;border:1px solid rgba(20,58,46,.16);background:#fffdf7;color:var(--ink);font-size:22px;font-weight:500;line-height:1;letter-spacing:.08em;cursor:pointer;box-shadow:0 10px 24px rgba(20,58,46,.08);transition:transform .2s var(--ease),background .2s var(--ease)}
+.support-head{display:grid;gap:8px}
+.support-title{margin:0;display:grid;gap:.08em}
+.support-title-line{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.support-scroll-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;min-width:56px;padding:0 18px;border-radius:999px;border:1px solid rgba(20,58,46,.16);background:#fffdf7;color:var(--ink);font-size:22px;font-weight:500;line-height:1;letter-spacing:.08em;cursor:pointer;box-shadow:0 10px 24px rgba(20,58,46,.08);transition:transform .2s var(--ease),background .2s var(--ease);flex:0 0 auto}
 .support-scroll-btn:hover{transform:translateY(-1px);background:#fff}
 .support-scroll-btn span{display:block;transform:translateY(-1px)}
 .support-rail{display:flex;gap:clamp(18px,3vw,28px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;margin-top:28px;padding-bottom:8px;scrollbar-width:none}
@@ -653,8 +655,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           <p class="lead">Traditional teaching is not designed for retention. We are. Retention builds confidence.</p>
           <a class="hero-cite" href="https://scholar.google.com/scholar?q=Roediger+Karpicke+2006+Test-Enhanced+Learning" target="_blank" rel="noopener">Roediger &amp; Karpicke, 2006 · Test-Enhanced Learning</a>
           <div class="hero-actions">
-            <a class="btn primary" href="#demo">ACT Math Concepts</a>
-            <a class="btn soft" id="heroTryDemo" href="http://127.0.0.1:5173/try/diagnostic">ACT Demo</a>
+            <a class="btn primary" id="heroTryDemo" href="http://127.0.0.1:5173/try/diagnostic">ACT Demo</a>
           </div>
           <div class="hero-trust" role="list" aria-label="What MindCraft delivers">
             <div class="trust-item" role="listitem"><strong>Living record</strong><span>Every session remembers where to begin.</span></div>
@@ -681,7 +682,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="demo" id="demo" data-nav="cream">
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
-          <p class="label">ACT Math Concepts</p>
+          <p class="label">ACT Demo</p>
           <h2 id="demoHeading">Who came up with these frivolous things?</h2>
           <p class="demo-lead">Bookkeepers, sailors, astronomers.<br>The weird stuff had a reason.</p>
           <div class="demo-actions">
@@ -843,11 +844,14 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="support" id="system" data-nav="cream">
       <div class="wrap">
         <div class="support-head reveal">
-          <div>
-            <p class="label">Voices</p>
-            <h2>How MindCraft supports students</h2>
-          </div>
-          <button type="button" class="support-scroll-btn" id="supportNextBtn" aria-controls="supportRail" aria-label="Next review"><span aria-hidden="true">⟶</span></button>
+          <p class="label">Voices</p>
+          <h2 class="support-title">
+            <span>How MindCraft supports</span>
+            <span class="support-title-line">
+              students
+              <button type="button" class="support-scroll-btn" id="supportNextBtn" aria-controls="supportRail" aria-label="Next review"><span aria-hidden="true">⟶</span></button>
+            </span>
+          </h2>
         </div>
         <div class="support-rail reveal" id="supportRail" tabindex="0" aria-label="Student and parent reviews">
           <article class="support-slide" data-review="sebastian">
@@ -878,11 +882,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="findtutor-card reveal">
           <div class="findtutor-copy">
             <p class="label">For parents</p>
-            <h2>Clear support without becoming the math teacher.</h2>
+            <h2>Clear support.</h2>
             <ul class="tutor-benefits">
-              <li>Tutor already knows the gap before the call starts.</li>
-              <li>Stay with one tutor for continuity. Let your child explore other skills with other tutors when it helps.</li>
-              <li>Expertise across domains parents care about: ACT math first, then confidence, study skills, and more as we grow.</li>
+              <li>Find excellent tutors around you.</li>
+              <li>Book a call to set up learning at college, at home, or online.</li>
+              <li>Keep one tutor for math. Let your child explore music, art, and more with other nearby talent.</li>
             </ul>
             <div class="findtutor-actions">
               <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Find &amp; book a tutor near you</a>
@@ -917,7 +921,6 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
             <button type="button" class="demo-tab is-active" id="applyTabSeat" role="tab" aria-selected="true">Apply as a student</button>
             <button type="button" class="demo-tab" id="applyTabTutor" role="tab" aria-selected="false">Apply as a tutor</button>
           </div>
-          <p style="margin-top:18px;font-size:14px;font-weight:700;color:var(--muted);max-width:36ch">Pick student or tutor. Your answers go straight to joinmindcraft@gmail.com.</p>
           <button type="button" class="btn soft" id="appDownloadBtn" style="margin-top:18px">Get the iPad app</button>
           <p class="app-download-note" id="appDownloadNote" style="margin-top:10px">iPad companion in private testing.</p>
         </div>
@@ -960,7 +963,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
               <div class="field"><label for="tutorImage">Attach image</label><input id="tutorImage" type="file" accept="image/*" required></div>
             </div>
             <button class="btn primary" type="submit">Apply to tutor</button>
-            <p class="form-note" id="tutorFormNote">Your email gets clickable resume_url and image_url links (not a Gmail paperclip). Keep each file under 8MB.</p>
+            <p class="form-note" id="tutorFormNote">Keep each file under 8MB.</p>
             <div class="status" id="tutorFormStatus" hidden></div>
           </form>
         </div>
@@ -1192,11 +1195,27 @@ if (!firebase.apps.length) {
 }
 const tutorStorage = firebase.storage()
 
+function enforceTutorFileSize(input) {
+  const file = input?.files?.[0]
+  if (!file) return true
+  if (file.size <= MAX_TUTOR_FILE_BYTES) {
+    tutorFormNote?.classList.remove("is-error")
+    if (tutorFormNote) tutorFormNote.textContent = "Keep each file under 8MB."
+    return true
+  }
+  input.value = ""
+  markSendError(tutorForm, tutorFormNote, tutorStatus, "That file is over 8MB. Choose a smaller one.")
+  return false
+}
+document.getElementById("tutorResume")?.addEventListener("change", (e) => enforceTutorFileSize(e.target))
+document.getElementById("tutorImage")?.addEventListener("change", (e) => enforceTutorFileSize(e.target))
+
 tutorForm?.addEventListener("submit", async (event) => {
   if (tutorFormReadyToPost) return
   event.preventDefault()
   const resumeInput = document.getElementById("tutorResume")
   const imageInput = document.getElementById("tutorImage")
+  if (!enforceTutorFileSize(resumeInput) || !enforceTutorFileSize(imageInput)) return
   const resumeFile = resumeInput?.files?.[0]
   const imageFile = imageInput?.files?.[0]
   const resumeUrlField = document.getElementById("tutorResumeUrl")
@@ -1205,10 +1224,6 @@ tutorForm?.addEventListener("submit", async (event) => {
   const imageMeta = document.getElementById("tutorImageMeta")
   if (!resumeFile || !imageFile) {
     markSendError(tutorForm, tutorFormNote, tutorStatus, "Please attach both a resume and an image.")
-    return
-  }
-  if (resumeFile.size > MAX_TUTOR_FILE_BYTES || imageFile.size > MAX_TUTOR_FILE_BYTES) {
-    markSendError(tutorForm, tutorFormNote, tutorStatus, "Each file must be under 8MB.")
     return
   }
   if (resumeMeta) resumeMeta.value = resumeFile.name + " (" + Math.round(resumeFile.size / 1024) + " KB)"
