@@ -914,11 +914,30 @@ export default function TutorDashboard() {
           <div className={s.grid}>
             <div className={s.col}>
               {focusStudent ? (
-                <TutorBriefingPanel
-                  studentId={focusStudent.id}
-                  studentName={focusStudent.name}
-                  examTrack={focusStudent.examTrack}
-                />
+                <>
+                  <div className={s.dashLaunch}>
+                    <div className={s.dashLaunchText}>
+                      <span className={s.dashLaunchName}>{focusStudent.name}</span>
+                      <span className={s.dashLaunchHint}>Open their live Home / Map / Work / Notes</span>
+                    </div>
+                    <button
+                      type="button"
+                      className={s.dashLaunchBtn}
+                      onClick={() => {
+                        setTutorViewAsStudentId(focusStudent.id)
+                        setPanel('admin')
+                        setConnectChip(null)
+                      }}
+                    >
+                      Open student dash →
+                    </button>
+                  </div>
+                  <TutorBriefingPanel
+                    studentId={focusStudent.id}
+                    studentName={focusStudent.name}
+                    examTrack={focusStudent.examTrack}
+                  />
+                </>
               ) : (
                 <div className={s.card}>
                   <p className={s.heroEmpty}>Pick a linked student under Admin.</p>
@@ -1020,6 +1039,18 @@ export default function TutorDashboard() {
                   <span className={s.cardLabel}>Quick Actions</span>
                 </div>
                 <div className={s.actionList}>
+                  <button
+                    type="button"
+                    className={`${s.actionBtn} ${s.actionBtnPrimary}`}
+                    onClick={() => {
+                      if (!focusStudent) { showToast('No student yet'); return }
+                      setTutorViewAsStudentId(focusStudent.id)
+                      setPanel('admin')
+                      setConnectChip(null)
+                    }}
+                  >
+                    Open student dash →
+                  </button>
                   <a
                     className={s.actionBtn}
                     href={focusStudent?.email

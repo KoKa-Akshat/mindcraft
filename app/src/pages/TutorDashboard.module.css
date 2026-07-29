@@ -777,6 +777,55 @@
   border-color: rgba(107, 92, 255, 0.3);
   transform: translateY(-1px);
 }
+.actionBtnPrimary {
+  background: var(--td-ink) !important;
+  color: #fffdf8 !important;
+  border-color: transparent !important;
+}
+.actionBtnPrimary:hover {
+  background: #143a2e !important;
+  transform: translateY(-1px);
+}
+.dashLaunch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #143a2e, #2f6b4f);
+  color: #fffdf8;
+  box-shadow: var(--td-shadow);
+}
+.dashLaunchText {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.dashLaunchName {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.dashLaunchHint {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.82;
+}
+.dashLaunchBtn {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 14px;
+  background: #ffe566;
+  color: #143a2e;
+  font-family: var(--td-font);
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.dashLaunchBtn:hover { filter: brightness(1.05); }
 
 /* ── CALENDLY ── */
 .calendlyDone { font-size: 13px; color: var(--td-leaf); font-weight: 800; line-height: 1.5; }
