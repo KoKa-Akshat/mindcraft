@@ -330,19 +330,24 @@ export default function TutorDashboard() {
     })
   }, [user, navigate])
 
-  // Roster: assignedTutorId students (admin will wire links later)
+  // Roster: assignedTutorId (legacy single-tutor scalar, still the only
+  // field an older student doc has) UNION assignedTutorIds array-contains
+  // (a student can now be linked to multiple tutors — see admin-link.ts).
+  // Both queries run and get deduped by id, so a tutor sees every student
+  // linked either way, old or new.
   useEffect(() => {
     let cancelled = false
     void (async () => {
       try {
-        const extras: Student[] = []
-        const assignedSnap = await getDocs(
-          query(collection(db, 'users'), where('assignedTutorId', '==', user.uid), limit(30)),
-        )
-        assignedSnap.docs.forEach(d => {
-          extras.push({ id: d.id, ...(d.data() as Omit<Student, 'id'>) })
-        })
-        if (!cancelled) setExtraStudents(extras)
+        const byId = new Map<string, Student>()
+        const [assignedSnap, assignedArraySnap] = await Promise.all([
+          getDocs(query(collection(db, 'users'), where('assignedTutorId', '==', user.uid), limit(30))),
+          getDocs(query(collection(db, 'users'), where('assignedTutorIds', 'array-contains', user.uid), limit(30))),
+        ])
+        for (const d of [...assignedSnap.docs, ...assignedArraySnap.docs]) {
+          byId.set(d.id, { id: d.id, ...(d.data() as Omit<Student, 'id'>) })
+        }
+        if (!cancelled) setExtraStudents([...byId.values()])
       } catch {
         if (!cancelled) setExtraStudents([])
       }
@@ -891,29 +896,48 @@ export default function TutorDashboard() {
               </button>
             </div>
           </div>
-        ) : focusStudent && panel === 'admin' ? (
-          <div className={s.studentFrameWrap}>
-            <Dashboard
-              key={focusStudent.id}
-              viewAsStudentId={focusStudent.id}
-              embedded
-              onExit={() => {
-                setTutorViewAsStudentId(null)
-                setPanel('student')
-              }}
-            />
-          </div>
-        ) : focusStudent && panel === 'student' ? (
-          <>
-            <div className={s.dashLaunch}>
-              <div className={s.dashLaunchText}>
-                <span className={s.dashLaunchName}>{focusStudent.name}</span>
-                <span className={s.dashLaunchHint}>Open their live Home / Map / Work / Notes</span>
+        ) : focusStudent && (panel === 'student' || panel === 'admin') ? (
+          <div className={s.studentStage}>
+            <div className={s.switchBar}>
+              <div className={s.switchWho}>
+                <span className={s.switchLabel}>Viewing</span>
+                <strong>{focusStudent.name}</strong>
               </div>
-              <button type="button" className={s.dashLaunchBtn} onClick={openStudentDash}>
-                Open student dash →
-              </button>
+              <div className={s.switchToggle} role="group" aria-label="Student view switch">
+                <button
+                  type="button"
+                  className={`${s.switchBtn} ${panel === 'student' ? s.switchBtnOn : ''}`}
+                  onClick={() => {
+                    setTutorViewAsStudentId(null)
+                    setPanel('student')
+                    setConnectChip(null)
+                  }}
+                >
+                  Briefing
+                </button>
+                <button
+                  type="button"
+                  className={`${s.switchBtn} ${panel === 'admin' ? s.switchBtnOn : ''}`}
+                  onClick={openStudentDash}
+                >
+                  Student dash
+                </button>
+              </div>
             </div>
+
+            {panel === 'admin' ? (
+              <div className={s.studentFrameWrap}>
+                <Dashboard
+                  key={focusStudent.id}
+                  viewAsStudentId={focusStudent.id}
+                  embedded
+                  onExit={() => {
+                    setTutorViewAsStudentId(null)
+                    setPanel('student')
+                  }}
+                />
+              </div>
+            ) : (
           <div className={s.grid}>
             <div className={s.col}>
                   <TutorBriefingPanel
@@ -1022,7 +1046,7 @@ export default function TutorDashboard() {
                     className={`${s.actionBtn} ${s.actionBtnPrimary}`}
                     onClick={openStudentDash}
                   >
-                    Open student dash →
+                    Switch to student dash →
                   </button>
                   <a
                     className={s.actionBtn}
@@ -1111,7 +1135,8 @@ export default function TutorDashboard() {
 
             </div>
           </div>
-          </>
+            )}
+          </div>
         ) : (
           <div className={s.card}>
             <p className={s.heroEmpty}>Pick a linked student under Admin.</p>
