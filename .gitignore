@@ -62,6 +62,7 @@ data/SchemasV2/
 data/assistments/
 img/Vid.mp4
 *.mp4
+!img/testimonials/sebastian-feedback.mp4
 tmp-*.png
 push.sh
 showcase-qr.html

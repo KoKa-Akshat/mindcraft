@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCraft | You were never bad at math</title>
-<meta name="description" content="MindCraft finds the exact moment math lost you, maps the gap, and pairs you with a college tutor nearby.">
+<title>MindCraft | ACT tutoring that never starts from zero</title>
+<meta name="description" content="MindCraft is the memory between the student and the tutor. Living learning record, targeted practice, and a college tutor briefed before every session.">
 <meta name="theme-color" content="#0c1a14">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mindcraft-marketing-site.web.app/">
-<meta property="og:title" content="MindCraft | You were never bad at math">
-<meta property="og:description" content="Find the gap. Hear the story. Meet a college tutor nearby.">
+<meta property="og:title" content="MindCraft | ACT tutoring that never starts from zero">
+<meta property="og:description" content="Every session remembers. Every tutor knows where to begin.">
 <meta property="og:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MindCraft | You were never bad at math">
-<meta name="twitter:description" content="Find the gap. Hear the story. Meet a college tutor nearby.">
+<meta name="twitter:title" content="MindCraft | ACT tutoring that never starts from zero">
+<meta name="twitter:description" content="Every session remembers. Every tutor knows where to begin.">
 <meta name="twitter:image" content="https://mindcraft-marketing-site.web.app/img/mindcraft-logo.png">
 <link rel="preload" as="image" href="img/mindcraft-logo.png">
 <link rel="preload" as="image" href="img/mindcraft-study-desk-20260706.jpg">
@@ -107,16 +107,20 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .hero-brand span{color:#c4f547}
 .hero h1{font-size:clamp(40px,6.2vw,78px);max-width:14ch;color:#fffdf7;margin:0;animation:heroIn .9s .08s var(--ease) both}
 .hero h1 em{font-style:normal;color:#c4f547}
-.hero .lead{max-width:34ch;margin:20px 0 0;font-size:clamp(16px,1.8vw,20px);font-weight:700;line-height:1.38;color:rgba(255,253,247,.76);animation:heroIn .9s .16s var(--ease) both}
+.hero .lead{max-width:42ch;margin:20px 0 0;font-size:clamp(16px,1.8vw,20px);font-weight:700;line-height:1.38;color:rgba(255,253,247,.76);animation:heroIn .9s .16s var(--ease) both}
+.hero-cite{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;font-weight:800;line-height:1.35;color:rgba(255,253,247,.55);text-decoration:none;border-bottom:1px solid rgba(196,245,71,.35);padding-bottom:2px;animation:heroIn .9s .2s var(--ease) both}
+.hero-cite:hover{color:#c4f547}
+.hero-caption{margin-top:18px;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(18px,2.2vw,24px);line-height:1.25;color:#e8d16b;animation:heroIn .9s .22s var(--ease) both}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;animation:heroIn .9s .24s var(--ease) both}
 .hero .btn.primary{background:#c4f547;color:#143a2e;border-color:#c4f547;box-shadow:0 18px 40px rgba(196,245,71,.22)}
 .hero .btn.primary:hover{background:#d4ff6a}
 .hero .btn.soft{background:transparent;color:#fffdf7;border-color:rgba(255,253,247,.35)}
 .hero .btn.soft:hover{background:rgba(255,253,247,.08)}
-.hero-trust{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 22px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(255,253,247,.16);max-width:100%;animation:heroIn .9s .32s var(--ease) both}
-.trust-item{display:flex;flex-direction:row;align-items:center;gap:12px;min-width:0}
-.trust-item strong{font-family:"Fredoka",system-ui,sans-serif;font-size:clamp(34px,4.6vw,48px);letter-spacing:-.04em;line-height:.95;color:#c4f547;flex:0 0 auto;white-space:nowrap}
-.trust-item span{font-size:12px;font-weight:700;line-height:1.3;color:rgba(255,253,247,.68);min-width:0;flex:1 1 auto}
+.hero-trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,253,247,.16);max-width:100%;animation:heroIn .9s .32s var(--ease) both}
+.trust-item{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0;padding:14px 12px;border-radius:18px;background:rgba(255,253,247,.05);border:1px solid rgba(255,253,247,.1)}
+.trust-item strong{font-family:"Fredoka",system-ui,sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1;color:#c4f547}
+.trust-item span{font-size:15px;font-weight:700;line-height:1.35;color:rgba(255,253,247,.82)}
+@media (max-width:900px){.hero-trust{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .hero-atlas{position:relative;min-height:560px;perspective:1200px;transform-style:preserve-3d;animation:heroIn .9s .18s var(--ease) both}
 .atlas-disc{position:absolute;left:50%;top:50%;width:min(520px,78vw);aspect-ratio:1;transform:translate(-50%,-50%) rotateX(62deg) rotateZ(-18deg);border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,253,247,.12) 0 16%,transparent 17%),radial-gradient(circle at 50% 50%,transparent 0 38%,rgba(196,245,71,.18) 39% 40%,transparent 41%),radial-gradient(circle at 50% 50%,transparent 0 57%,rgba(232,209,107,.34) 58% 59%,transparent 60%),radial-gradient(circle at 50% 50%,transparent 0 73%,rgba(255,253,247,.24) 74% 75%,transparent 76%);box-shadow:0 38px 90px rgba(4,11,9,.42),inset 0 0 54px rgba(196,245,71,.06)}
 .atlas-disc:before,.atlas-disc:after{content:"";position:absolute;inset:9%;border-radius:50%;border:1px solid rgba(255,253,247,.18)}
@@ -265,6 +269,65 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .quote{background:#fffdf7;padding:34px;display:flex;flex-direction:column;justify-content:space-between}
 .quote blockquote{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(34px,4vw,58px);line-height:.95;letter-spacing:-.04em}
 .quote cite{margin-top:28px;font-style:normal;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:#756f66}
+/* Product loop / living record / parents / ACT */
+.panel-forest{background:#0d1f18;color:#f4efe2;position:relative;overflow:hidden}
+.panel-forest:before{content:"";position:absolute;inset:0;opacity:.18;background:
+  radial-gradient(ellipse 50% 40% at 90% 10%,rgba(196,245,71,.2),transparent 55%),
+  radial-gradient(ellipse 40% 35% at 8% 90%,rgba(95,183,121,.16),transparent 50%);
+  pointer-events:none}
+.panel-forest .wrap{position:relative;z-index:1}
+.panel-forest .label{color:rgba(244,239,226,.55)}
+.panel-forest h2{color:#f4efe2;font-family:"DM Serif Display",Georgia,serif;font-weight:400;letter-spacing:-.03em;line-height:1.05;font-size:clamp(40px,5.8vw,72px)}
+.panel-forest .panel-lead{margin-top:16px;max-width:46ch;font-size:17px;line-height:1.5;color:rgba(244,239,226,.72);font-weight:600}
+.panel-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:7px 12px;border-radius:999px;border:1px solid rgba(196,245,71,.28);color:#c4f547;font-size:10px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase}
+.loop-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
+.loop-step{display:flex;flex-direction:column;gap:12px;padding:22px 20px;border-radius:22px;background:rgba(255,253,247,.07);border:1px solid rgba(255,253,247,.12);min-height:180px}
+.loop-step i{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#c4f547;color:#143a2e;font-style:normal;font-size:14px;font-weight:1000}
+.loop-step h3{margin:0;font-size:20px;line-height:1.2;font-weight:800;color:#f4efe2;letter-spacing:-.02em}
+.loop-step p{margin:0;font-size:15px;line-height:1.4;color:rgba(244,239,226,.72);font-weight:650}
+.loop-foot{margin-top:28px;text-align:center;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(20px,2.6vw,28px);color:#e8d16b}
+@media (max-width:980px){.loop-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.loop-grid{grid-template-columns:1fr}}
+.parents-why{background:linear-gradient(180deg,#10261e,#0d1f18)}
+.parent-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+.parent-card{padding:22px 20px;border-radius:22px;background:rgba(255,253,247,.07);border:1px solid rgba(196,245,71,.16)}
+.parent-card strong{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#c4f547;margin-bottom:10px}
+.parent-card p{margin:0;font-size:18px;line-height:1.25;font-weight:800;color:#f4efe2}
+.parents-why .why-foot{margin-top:34px;text-align:center;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(22px,3vw,34px);color:#e8d16b}
+.support{background:var(--cream)}
+.support h2{font-family:"DM Serif Display",Georgia,serif;font-weight:400;letter-spacing:-.03em}
+.support-lead{margin-top:14px;max-width:48ch;font-size:17px;line-height:1.5}
+.hub{margin-top:42px;display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:16px;align-items:center}
+.hub-side{display:grid;gap:14px}
+.hub-node{padding:20px;border-radius:24px;background:#fffdf7;border:1px solid var(--line);box-shadow:0 16px 40px rgba(20,58,46,.08)}
+.hub-node h3{font-size:16px;margin-bottom:8px}
+.hub-node p{font-size:13px;line-height:1.45;margin:0;color:var(--muted)}
+.hub-core{padding:28px 24px;border-radius:30px;background:#143a2e;color:#f4efe2;box-shadow:0 24px 60px rgba(20,58,46,.22)}
+.hub-core h3{font-family:"DM Serif Display",Georgia,serif;font-size:26px;color:#c4f547;margin-bottom:14px}
+.hub-core ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.hub-core li{font-size:13px;font-weight:700;line-height:1.35;padding-left:14px;border-left:2px solid rgba(196,245,71,.45)}
+.hub-tag{display:block;margin-top:8px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#247a4d}
+.act-band{background:linear-gradient(135deg,#0f241c 0%,#1a3d2e 55%,#143a2e 100%);color:#f4efe2;position:relative;overflow:hidden}
+.act-band .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,70px);align-items:center}
+.act-band h2{font-family:"DM Serif Display",Georgia,serif;font-weight:400;color:#f4efe2;font-size:clamp(40px,5.4vw,68px);line-height:1.05;letter-spacing:-.03em}
+.act-band .act-lead{margin-top:18px;font-size:17px;line-height:1.5;color:rgba(244,239,226,.75);font-weight:600;max-width:42ch}
+.act-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.act-pills span{padding:10px 14px;border-radius:999px;border:1px solid rgba(196,245,71,.28);background:rgba(196,245,71,.08);color:#c4f547;font-size:12px;font-weight:900;letter-spacing:.04em}
+.act-flow{display:grid;gap:12px}
+.act-flow article{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:16px 18px;border-radius:20px;background:rgba(255,253,247,.07);border:1px solid rgba(255,253,247,.12)}
+.act-flow b{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:#c4f547;color:#143a2e;font-size:13px}
+.act-flow h3{font-size:15px;margin:0 0 4px;color:#f4efe2}
+.act-flow p{margin:0;font-size:13px;color:rgba(244,239,226,.68);font-weight:600}
+.act-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.act-band .btn.primary{background:#c4f547;color:#143a2e;border-color:#c4f547}
+.act-band .btn.soft{background:transparent;color:#f4efe2;border-color:rgba(244,239,226,.35)}
+@media (max-width:980px){
+  .loop-grid,.act-band .wrap,.hub{grid-template-columns:1fr}
+  .parent-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .parent-grid{grid-template-columns:1fr}
+}
 .pricing{background:linear-gradient(135deg,#143a2e,#247a4d 58%,#5fb779);color:#fff;border-radius:52px 52px 0 0}
 .pricing h2{color:#fff;font-size:clamp(60px,7vw,104px)}
 .pricing .label{color:rgba(255,255,255,.72)}
@@ -303,15 +366,50 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .findtutor-map{overflow:hidden;background:#e4f7dc}
 .findtutor-map-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;background:linear-gradient(160deg,#eaf5ea,#dceef6);font-weight:800;color:var(--muted)}
 .findtutor-map-fallback a{color:var(--leaf);text-decoration:underline;text-underline-offset:2px}
-.findtutor-map-caption{margin:0;text-align:center;font-family:"Caveat",cursive;font-size:19px;color:#7a806f;transform:rotate(-1deg)}
-.findtutor-list{display:grid;gap:10px}
+.findtutor-list{display:grid;gap:10px;max-height:280px;overflow:auto;padding-right:2px}
+.college-strip{margin-top:14px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:center}
+.college-strip img{height:72px;width:100%;display:block;object-fit:contain;background:#fffdf7;border-radius:14px;padding:10px 12px;box-shadow:0 10px 22px rgba(20,58,46,.1)}
+.parents-story{margin:40px auto 0;max-width:44rem;text-align:center;display:grid;gap:18px}
+.parents-story-kicker{margin:0;font-size:13px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase;color:rgba(196,245,71,.72)}
+.parents-story-lines{margin:0;display:grid;gap:8px}
+.parents-story-lines p{margin:0;font-size:clamp(17px,2vw,20px);line-height:1.35;font-weight:800;color:rgba(244,239,226,.78)}
+.parents-pull{margin:8px auto 0;max-width:28ch;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(26px,3.4vw,38px);line-height:1.2;letter-spacing:-.02em;font-weight:400;color:#c4f547}
+.parents-story-foot{margin:0;font-size:15px;line-height:1.45;font-weight:700;color:rgba(244,239,226,.58)}
+.support-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.support-scroll-btn{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;border:1px solid rgba(20,58,46,.16);background:#fffdf7;color:var(--ink);font-size:11px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 24px rgba(20,58,46,.08);transition:transform .2s var(--ease),background .2s var(--ease)}
+.support-scroll-btn:hover{transform:translateY(-1px);background:#fff}
+.support-rail{display:flex;gap:clamp(18px,3vw,28px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;margin-top:28px;padding-bottom:8px;scrollbar-width:none}
+.support-rail::-webkit-scrollbar{display:none}
+.support-slide{flex:0 0 min(100%,980px);scroll-snap-align:start;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(20px,4vw,40px);align-items:stretch}
+.support-slide.is-quote-only{grid-template-columns:1fr}
+.support-quote{padding:clamp(28px,4vw,40px);border-radius:32px;background:#143a2e;color:#f4efe2;box-shadow:0 20px 50px rgba(20,58,46,.16);display:flex;flex-direction:column;justify-content:center;gap:16px;min-height:100%}
+.support-quote blockquote{margin:0;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(22px,2.8vw,30px);line-height:1.25;letter-spacing:-.02em;color:rgba(244,239,226,.9)}
+.support-quote cite{display:block;font-style:normal;font-size:12px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase;color:#c4f547}
+.support-caption{margin:0;font-size:15px;font-weight:800;color:rgba(244,239,226,.7);line-height:1.4}
+.vocal-frame{position:relative;width:100%;aspect-ratio:16/10;border-radius:28px;overflow:hidden;background:#0d1f18;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,58,46,.12)}
+.vocal-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;display:block}
+.vocal-frame.is-soon{display:grid;place-items:center;padding:28px;text-align:center;color:rgba(244,239,226,.7);font-size:14px;font-weight:800}
+.field input[type="file"]{padding:12px;font-size:13px;font-weight:700;background:#fffdf7;border:1px dashed rgba(20,58,46,.22);border-radius:14px;cursor:pointer}
+.form-note.is-ok{color:var(--leaf)}
+.form-note.is-error{color:#c1180b}
+.price-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.price-card .price-note{margin-top:14px;font-size:13px;font-weight:700;color:rgba(255,253,247,.7);line-height:1.4}
+.tutor-benefits li{font-size:17px;line-height:1.4;font-weight:800}
+.findtutor-profile{display:none;padding:14px 16px;border-radius:18px;background:#e4f2df;border:1px solid rgba(36,122,77,.16);font-size:13px;line-height:1.45;font-weight:700;color:#1d3d31}
+.findtutor-cardlet.is-open .findtutor-profile{display:block;grid-column:1/-1;margin-top:4px}
+.findtutor-cardlet{grid-template-columns:64px 1fr auto;grid-template-rows:auto auto}
+@media (max-width:980px){
+  .support-slide{grid-template-columns:1fr;flex-basis:min(100%,100%)}
+  .college-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .college-strip img{height:64px}
+}
 .findtutor-cardlet{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:22px;background:#fffdf7;box-shadow:0 12px 28px rgba(20,58,46,.08);text-decoration:none;color:inherit;cursor:pointer;transition:transform .18s var(--ease),border-color .18s var(--ease),box-shadow .18s var(--ease)}
 .findtutor-cardlet:hover{transform:translateY(-2px);border-color:rgba(36,122,77,.35);box-shadow:0 16px 34px rgba(20,58,46,.14)}
 .findtutor-cardlet img{width:64px;height:64px;border-radius:18px;object-fit:cover;box-shadow:0 10px 20px rgba(20,58,46,.14)}
 .findtutor-cardlet strong{display:block;font-family:"Fredoka",system-ui,sans-serif;font-size:18px;letter-spacing:-.03em;color:var(--ink)}
 .findtutor-cardlet p{font-size:12px;line-height:1.4;margin:3px 0 0;color:var(--muted)}
 .findtutor-distance{font-size:11px!important;font-weight:900!important;color:var(--leaf)!important;margin-top:6px!important}
-.findtutor-book{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:999px;background:var(--ink);color:#fffdf7;font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;pointer-events:none}
+.findtutor-book{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 12px;border-radius:999px;background:var(--ink);color:#fffdf7;font-size:10px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;pointer-events:auto;z-index:1}
 .findtutor-status{margin:0;font-size:12px;font-weight:800;color:var(--leaf)}
 .findtutor-status:empty{display:none}
 .findtutor-status.is-error{color:#c1180b}
@@ -520,10 +618,10 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   <nav class="nav nav-green">
     <a class="brand" href="#top">Mind<span>Craft</span></a>
     <div class="nav-links">
-      <a href="#demo">Preview</a>
+      <a href="#loop">How it works</a>
+      <a href="#demo">ACT</a>
       <a href="#try-app">Tutors</a>
-      <a href="#app">App</a>
-      <a href="#about">Team</a>
+      <a href="#parents">Parents</a>
       <a class="join" href="#intake">Apply</a>
     </div>
     <a class="mobile-try" href="#intake">Apply</a>
@@ -550,16 +648,17 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="hero-copy-lock">
           <p class="hero-brand">Mind<span>Craft</span></p>
           <h1>You were never<br>bad at <em>math.</em></h1>
-          <p class="lead">Somebody decided that about you, and you built a life around it. We find the exact moment math lost you, then put a real tutor right there. Not at page one.</p>
+          <p class="lead">Traditional teaching is not designed for retention. We are. Retention builds confidence.</p>
+          <a class="hero-cite" href="https://scholar.google.com/scholar?q=Roediger+Karpicke+2006+Test-Enhanced+Learning" target="_blank" rel="noopener">Roediger &amp; Karpicke, 2006 · Test-Enhanced Learning</a>
           <div class="hero-actions">
-            <a class="btn primary" href="#map">Find the exact gap</a>
-            <a class="btn soft" href="#intake">Request a seat</a>
+            <a class="btn primary" href="#demo">ACT Math Concepts</a>
+            <a class="btn soft" id="heroTryDemo" href="http://127.0.0.1:5173/try/diagnostic">ACT Demo</a>
           </div>
-          <div class="hero-trust" role="list" aria-label="Why families trust MindCraft">
-            <div class="trust-item" role="listitem"><strong>1:1</strong><span>A real college tutor who starts at your gap. Never a chatbot.</span></div>
-            <div class="trust-item" role="listitem"><strong>48 hrs</strong><span>We reply to every family, ourselves.</span></div>
-            <div class="trust-item" role="listitem"><strong>4</strong><span>Students helped</span></div>
-            <div class="trust-item" role="listitem"><strong>6.5M+</strong><span>Learning moments mapped</span></div>
+          <div class="hero-trust" role="list" aria-label="What MindCraft delivers">
+            <div class="trust-item" role="listitem"><strong>Living record</strong><span>Every session remembers where to begin.</span></div>
+            <div class="trust-item" role="listitem"><strong>College tutor</strong><span>Starts on the gap, not page one.</span></div>
+            <div class="trust-item" role="listitem"><strong>60s brief</strong><span>Teaching time is not wasted.</span></div>
+            <div class="trust-item" role="listitem"><strong>Proof</strong><span>Shows the student actually learned it.</span></div>
           </div>
         </div>
         <div class="hero-atlas" aria-hidden="true">
@@ -580,11 +679,11 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
     <section class="demo" id="demo" data-nav="cream">
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
-          <p class="label">Story Worlds</p>
+          <p class="label">ACT Math Concepts</p>
           <h2 id="demoHeading">Who came up with these frivolous things?</h2>
           <p class="demo-lead">Bookkeepers, sailors, astronomers.<br>The weird stuff had a reason.</p>
           <div class="demo-actions">
-            <button type="button" class="btn primary" id="storyTryBtn">Try demo</button>
+            <a class="btn primary" id="storyTryBtn" href="http://127.0.0.1:5173/try/diagnostic">ACT Demo</a>
           </div>
         </div>
         <div class="demo-panel">
@@ -657,21 +756,22 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
 
     <section class="steps" id="map" data-nav="paper">
       <div class="wrap reveal">
-        <p class="label">The exact gap, found</p>
+        <p class="label">For parents</p>
         <h2>Not “bad at math.”<br>One exact gap, named.</h2>
-        <div class="journey-demo">
+        <p class="panel-lead" style="margin-top:14px;max-width:36ch;color:var(--muted);font-family:'DM Serif Display',Georgia,serif;font-size:clamp(20px,2.4vw,28px);line-height:1.25">Not another night of homework war.</p>
+        <div class="journey-demo" style="margin-top:32px">
           <div class="journey-left">
-            <strong>Sample diagnostic</strong>
-            <h3>Maya keeps missing slope questions.</h3>
-            <p>Not because she is “bad at algebra.” Her answers show one earlier idea slipping: she treats the point as the intercept.</p>
+            <strong>Sample</strong>
+            <h3>Maya misses slope questions.</h3>
+            <p>Not “bad at algebra.” One earlier idea slipped: she treats the point as the intercept.</p>
             <div class="journey-questions" aria-label="Sample diagnostic answers">
-              <div class="journey-q good"><span>01</span><b>Reads a graph correctly</b><em>solid</em></div>
+              <div class="journey-q good"><span>01</span><b>Reads a graph</b><em>solid</em></div>
               <div class="journey-q"><span>02</span><b>Uses (3, 5) as b</b><em>fragile</em></div>
-              <div class="journey-q"><span>03</span><b>Equation form collapses</b><em>gap found</em></div>
+              <div class="journey-q"><span>03</span><b>Equation collapses</b><em>gap</em></div>
             </div>
           </div>
           <div class="journey-right">
-            <div class="journey-map" aria-label="Concept route from graph reading to equation form">
+            <div class="journey-map" aria-label="Concept route">
               <div class="journey-route">
                 <svg viewBox="0 0 520 220" fill="none" aria-hidden="true">
                   <path d="M42 56 C126 28 168 112 250 112 C334 112 354 172 474 148" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
@@ -680,84 +780,93 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
                   <circle cx="474" cy="148" r="13" fill="#c1180b"/>
                 </svg>
               </div>
-              <span class="map-pill pill-a">Graph reading</span>
+              <span class="map-pill pill-a">Graph</span>
               <span class="map-pill pill-b">Slope</span>
-              <span class="map-pill pill-c">Point-intercept confusion</span>
+              <span class="map-pill pill-c">Point-intercept</span>
             </div>
             <div class="view-grid">
-              <article class="view-card"><small>Student</small><p>“I keep getting these questions wrong, and I do not know where it goes off.”</p></article>
-              <article class="view-card"><small>Tutor</small><p>Find the first shaky step, rebuild it slowly, then try the same pattern again.</p></article>
-              <article class="view-card"><small>Parent</small><p>Today she found the step that was slipping. Next session, we make it stick.</p></article>
+              <article class="view-card"><small>Tutor to parent</small><p>Today she found the step that was slipping. Next session, we make it stick.</p></article>
+              <article class="view-card"><small>Tutor to child</small><p>You’re doing great. This one missing idea is the whole puzzle.</p></article>
             </div>
           </div>
         </div>
-        <div class="step-grid stagger">
+      </div>
+    </section>
 
-          <article class="step">
-            <span class="num">01</span>
-            <div class="step-art step-art-scan" aria-hidden="true">
-              <svg viewBox="0 0 120 72" fill="none">
-                <g class="scan-dots">
-                  <circle cx="12" cy="36" r="5" fill="var(--leaf-2)" opacity=".9"/>
-                  <circle cx="28" cy="24" r="5" fill="var(--leaf-2)" opacity=".9"/>
-                  <circle cx="44" cy="48" r="5" fill="var(--leaf-2)" opacity=".9"/>
-                  <circle cx="60" cy="20" r="5" fill="#e8d16b" opacity=".9"/>
-                  <circle cx="76" cy="54" r="5" fill="#e8d16b" opacity=".9"/>
-                  <circle cx="100" cy="30" r="5" fill="#c1180b" opacity=".9" class="gap-dot"/>
-                  <circle cx="114" cy="44" r="5" fill="#c1180b" opacity=".9" class="gap-dot"/>
-                </g>
-                <path d="M92 18 V63" stroke="#c1180b" stroke-width="1.5" stroke-dasharray="3 3" opacity=".55"/>
-              </svg>
-            </div>
-            <div>
-              <h3>Scan</h3>
-              <p>A few answers are enough. We are looking for the exact rung that slipped.</p>
+    <section class="panel-forest" id="loop" data-nav="green">
+      <div class="wrap">
+        <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto">
+          <span class="panel-kicker">Inside MindCraft</span>
+          <h2>What happens in a session</h2>
+          <p class="panel-lead" style="margin-left:auto;margin-right:auto">Simple loop parents can trust. Find the break. Remember it. Fix it. Prove it stuck.</p>
+        </div>
+        <div class="loop-grid reveal" role="list">
+          <article class="loop-step" role="listitem"><i>1</i><h3>See the break</h3><p>We name the exact missing skill, not “needs more math.”</p></article>
+          <article class="loop-step" role="listitem"><i>2</i><h3>Remember it</h3><p>The living record keeps what clicked and what to try next.</p></article>
+          <article class="loop-step" role="listitem"><i>3</i><h3>Tutor starts ready</h3><p>A 60 second brief so the session is teaching, not guessing.</p></article>
+          <article class="loop-step" role="listitem"><i>4</i><h3>Prove it stuck</h3><p>A solo check after help. You see: clicked, stuck, next.</p></article>
+        </div>
+        <p class="loop-foot reveal">Learning should not reset when the Zoom call ends.</p>
+      </div>
+    </section>
+
+    <section class="parents-why panel-forest" id="parents" data-nav="green">
+      <div class="wrap">
+        <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto">
+          <span class="panel-kicker">For parents</span>
+          <h2>Why parents choose MindCraft</h2>
+          <p class="panel-lead" style="margin-left:auto;margin-right:auto">Clear support without becoming the math teacher.</p>
+        </div>
+        <div class="parent-grid reveal">
+          <article class="parent-card"><strong>01</strong><p>Clearer diagnosis</p></article>
+          <article class="parent-card"><strong>02</strong><p>Less wasted tutoring time</p></article>
+          <article class="parent-card"><strong>03</strong><p>Less fighting about homework</p></article>
+          <article class="parent-card"><strong>04</strong><p>A tutor they trust</p></article>
+          <article class="parent-card"><strong>05</strong><p>Visible score improvement</p></article>
+          <article class="parent-card"><strong>06</strong><p>Confidence learning is real</p></article>
+        </div>
+        <div class="parents-story reveal">
+          <p class="parents-story-kicker">Minnesota tutor network</p>
+          <div class="parents-story-lines">
+            <p>Nearby tutors from smart Minnesota campuses.</p>
+            <p>Stay with one guide for continuity. Bring in specialists when you want more.</p>
+          </div>
+          <p class="parents-pull">One person knows your journey.<br>A world of people can contribute to it.</p>
+          <p class="parents-story-foot">Expertise across what parents care about: ACT math, confidence, study skills, and more as we grow.</p>
+        </div>
+        <p class="why-foot reveal">Parents buy clarity, trust, and steady progress.</p>
+      </div>
+    </section>
+
+    <section class="support" id="system" data-nav="cream">
+      <div class="wrap">
+        <div class="support-head reveal">
+          <div>
+            <p class="label">Voices</p>
+            <h2>How MindCraft supports students</h2>
+          </div>
+          <button type="button" class="support-scroll-btn" id="supportNextBtn" aria-controls="supportRail">See more →</button>
+        </div>
+        <div class="support-rail reveal" id="supportRail" tabindex="0" aria-label="Student and parent reviews">
+          <article class="support-slide" data-review="sebastian">
+            <aside class="support-quote">
+              <blockquote>“My tutor inspired me to be a better person as well as a student. He came down to my level and explained things in ways I would understand.”</blockquote>
+              <cite>Sebastian · MindCraft student</cite>
+              <p class="support-caption">Anything is achievable when someone meets you at your level.</p>
+            </aside>
+            <div class="vocal-frame">
+              <video controls playsinline preload="metadata" poster="img/mindcraft-logo.png" title="Sebastian student feedback">
+                <source src="img/testimonials/sebastian-feedback.mp4" type="video/mp4">
+              </video>
             </div>
           </article>
-
-          <article class="step">
-            <span class="num">02</span>
-            <div class="step-art" aria-hidden="true">
-              <svg viewBox="0 0 120 72" fill="none">
-                <circle cx="12" cy="36" r="5" fill="var(--leaf-2)" opacity=".55"/>
-                <circle cx="28" cy="24" r="5" fill="var(--leaf-2)" opacity=".55"/>
-                <circle cx="44" cy="48" r="5" fill="var(--leaf-2)" opacity=".55"/>
-                <circle cx="60" cy="20" r="5" fill="#e8d16b" opacity=".55"/>
-                <circle cx="76" cy="54" r="5" fill="#e8d16b" opacity=".55"/>
-                <circle cx="100" cy="30" r="5" fill="#c1180b" opacity=".95"/>
-                <circle cx="114" cy="44" r="5" fill="#c1180b" opacity=".95"/>
-                <circle cx="100" cy="30" r="13" fill="none" stroke="#c1180b" stroke-width="1.6" class="identified-ring"/>
-                <circle cx="114" cy="44" r="13" fill="none" stroke="#c1180b" stroke-width="1.6" opacity=".72"/>
-              </svg>
-            </div>
-            <div>
-              <h3>Map</h3>
-              <p>Student, parent, and tutor see the same route: mastered, shaky, untouched.</p>
-            </div>
+          <article class="support-slide is-quote-only" data-review="gill">
+            <aside class="support-quote">
+              <blockquote>“Sebastian needs someone who understands what he doesn’t understand about math, not just homework help.”</blockquote>
+              <cite>Gillian · Sebastian’s parent</cite>
+              <p class="support-caption">ACT coming up. Feeling stuck. She wished they had called sooner.</p>
+            </aside>
           </article>
-
-          <article class="step">
-            <span class="num">03</span>
-            <div class="step-art" aria-hidden="true">
-              <svg viewBox="0 0 120 72" fill="none">
-                <circle cx="20" cy="42" r="4.5" fill="var(--leaf-2)" opacity=".55"/>
-                <circle cx="38" cy="28" r="4.5" fill="var(--leaf-2)" opacity=".55"/>
-                <circle cx="56" cy="48" r="4.5" fill="#e8d16b" opacity=".55"/>
-                <circle cx="82" cy="38" r="6" fill="#c1180b"/>
-                <circle cx="82" cy="38" r="13" fill="none" stroke="#c1180b" stroke-width="1.4" class="pulse-ring"/>
-                <g class="teach-bubble">
-                  <rect x="44" y="8" width="52" height="22" rx="9" fill="#fffdf7" stroke="rgba(20,58,46,.18)"/>
-                  <path d="M76 30 L82 38 L86 29" fill="#fffdf7" stroke="rgba(20,58,46,.18)" stroke-linejoin="round"/>
-                  <path d="M58 19 H82 M58 24 H72" stroke="#247a4d" stroke-width="2.4" stroke-linecap="round"/>
-                </g>
-              </svg>
-            </div>
-            <div>
-              <h3>Tutor</h3>
-              <p>A real college tutor opens the same map and starts exactly there. Not page one. Not a review of everything she already knows. The gap, today.</p>
-            </div>
-          </article>
-
         </div>
       </div>
     </section>
@@ -767,237 +876,85 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         <div class="findtutor-card reveal">
           <div class="findtutor-copy">
             <p class="label">For parents</p>
-            <h2>You don’t have to teach this.</h2>
-            <p class="findtutor-lead">A real college tutor already knows exactly where she got stuck, before the session even starts. Afterward, you get the update: what clicked, what’s still shaky. No sitting in, no quizzing her at dinner, no relearning algebra yourself.</p>
+            <h2>Clear support without becoming the math teacher.</h2>
             <ul class="tutor-benefits">
-              <li>A vetted college tutor, not a stranger picked off a marketplace listing.</li>
-              <li>She gets the session. You get a plain-language report, not homework of your own.</li>
-              <li>Not ready to commit? Book a free 15-minute call. Just you and the tutor, talking about what your kid actually needs.</li>
+              <li>Tutor already knows the gap before the call starts.</li>
+              <li>Stay with one tutor for continuity. Let your child explore other skills with other tutors when it helps.</li>
+              <li>Expertise across domains parents care about: ACT math first, then confidence, study skills, and more as we grow.</li>
             </ul>
             <div class="findtutor-actions">
-              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">See tutors near you →</a>
-              <a class="btn soft" href="mailto:joinmindcraft@gmail.com?subject=15-minute%20intro%20call&amp;body=I%27d%20like%20to%20book%20a%20free%2015-minute%20call%20with%20a%20tutor.%0A%0AParent%20name%3A%0AChild%27s%20grade%3A%0ABest%20time%20to%20call%3A">Book a 15-min call</a>
+              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Find &amp; book a tutor near you</a>
             </div>
           </div>
           <div class="findtutor-map-wrap">
-            <p class="findtutor-map-eyebrow">Ready to book? Search your address.</p>
             <form class="findtutor-search" id="ftSearchForm">
-              <input id="ftAddress" type="search" placeholder="City, state, or street (try California)" autocomplete="street-address" aria-label="Find tutors near an address">
+              <input id="ftAddress" type="search" placeholder="Try St Paul, Myrtle Beach, or Chapel Hill" autocomplete="street-address" aria-label="Find tutors near an address">
               <button type="submit">Search</button>
             </form>
             <p class="findtutor-status" id="ftStatus" aria-live="polite"></p>
             <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near you"></div>
             <div class="findtutor-list" id="ftTutorList"></div>
-            <p class="findtutor-map-caption">search your address, then book. sessions run over video</p>
+            <div class="college-strip" aria-label="Tutor colleges">
+              <img src="img/colleges/macalester.png" alt="Macalester">
+              <img src="img/colleges/st-olaf.png" alt="St. Olaf">
+              <img src="img/colleges/st-thomas.webp" alt="St. Thomas">
+              <img src="img/colleges/unc.png" alt="UNC Chapel Hill">
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="app-download" id="app" data-nav="mint">
-      <div class="wrap reveal">
-        <p class="label">The companion app</p>
-        <h2>Take the map home.</h2>
-        <p class="app-download-lead">Between sessions, the map goes where she goes: the same route her tutor sees, the story chapter for whatever gap is open right now, and practice aimed at that exact gap, not a random worksheet.</p>
-        <ul class="tutor-benefits app-download-list">
-          <li>Every chapter frames the gap as a story first, the problem second.</li>
-          <li>The same map her tutor uses: mastered, shaky, untouched, all in one place.</li>
-          <li>Currently iPad only, in private testing ahead of a full release.</li>
-        </ul>
-        <div class="findtutor-actions">
-          <button type="button" class="btn primary" id="appDownloadBtn">Get the iPad app →</button>
-        </div>
-        <p class="app-download-note" id="appDownloadNote" hidden>Public download opens once TestFlight testing goes live. Check back soon.</p>
-      </div>
-    </section>
-
-    <section class="pricing" id="pricing" data-nav="green">
-      <div class="wrap">
-        <div class="reveal">
-          <p class="label">Enrollment</p>
-          <h2>A few seats left.</h2>
-        </div>
-        <div class="price-grid reveal">
-          <div class="includes">
-            <article class="include"><span>01</span><div><h3>Live 1-on-1</h3><p>Session one starts on the map.</p></div></article>
-            <article class="include"><span>02</span><div><h3>The map</h3><p>Mastered, fragile, untouched. Same for everyone.</p></div></article>
-            <article class="include"><span>03</span><div><h3>Daily practice</h3><p>Aimed at the gap, not last week’s chapter.</p></div></article>
-            <article class="include"><span>04</span><div><h3>Parent signal</h3><p>What clicked. What’s stuck. What’s next.</p></div></article>
-          </div>
-          <article class="price-card">
-            <small>MindCraft Premium</small>
-            <strong style="font-size:32px;letter-spacing:-0.02em;line-height:1.2;display:block;margin:18px 0 8px;">Tell us their story.</strong>
-            <p>We reply in 48 hours. No commitment to apply.</p>
-            <a class="btn primary" href="#intake">Request a seat</a>
-          </article>
-        </div>
-      </div>
-    </section>
 
     <section class="intake" id="intake" data-nav="sand">
       <div class="wrap intake-grid">
         <div class="intake-copy reveal">
           <p class="label" id="applyLabel">Apply</p>
-          <h2 id="applyHeading">Tell us their story.</h2>
+          <h2 id="applyHeading">Apply today.</h2>
           <div class="demo-toggle apply-toggle" role="tablist" aria-label="Choose an application type">
-            <button type="button" class="demo-tab is-active" id="applyTabSeat" role="tab" aria-selected="true">Apply for a seat</button>
-            <button type="button" class="demo-tab" id="applyTabTutor" role="tab" aria-selected="false">Apply to tutor</button>
+            <button type="button" class="demo-tab is-active" id="applyTabSeat" role="tab" aria-selected="true">Apply as a student</button>
+            <button type="button" class="demo-tab" id="applyTabTutor" role="tab" aria-selected="false">Apply as a tutor</button>
           </div>
+          <p style="margin-top:18px;font-size:14px;font-weight:700;color:var(--muted);max-width:36ch">Pick student or tutor. Your answers go straight to joinmindcraft@gmail.com.</p>
+          <button type="button" class="btn soft" id="appDownloadBtn" style="margin-top:18px">Get the iPad app</button>
+          <p class="app-download-note" id="appDownloadNote" style="margin-top:10px">iPad companion in private testing.</p>
         </div>
         <div class="form-stage reveal" id="applyStage" data-state="seat">
           <form class="form-card apply-form" id="intakeForm">
+            <input type="hidden" name="_subject" value="MindCraft student application">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
             <div class="form-grid">
               <div class="field"><label for="parentName">Parent name</label><input id="parentName" name="parentName" autocomplete="name" required></div>
               <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
               <div class="field"><label for="studentName">Student name</label><input id="studentName" name="studentName" required></div>
               <div class="field"><label for="grade">Grade</label><select id="grade" name="grade" required><option value="">Select grade</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>ACT prep</option></select></div>
-              <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Homework, confidence, ACT math, algebra, geometry, test anxiety..." required></textarea></div>
+              <div class="field full"><label for="goal">What should feel easier?</label><textarea id="goal" name="goal" placeholder="Confidence, ACT math, algebra, study skills..." required></textarea></div>
             </div>
             <button class="btn primary" type="submit">Apply now</button>
-            <p class="form-note">Opens a pre-filled email. We reply within 48 hours.</p>
-            <div class="status" id="formStatus">Opening your email with the intake details. Responses are sent to joinmindcraft@gmail.com.</div>
+            <p class="form-note" id="formNote">Sent to joinmindcraft@gmail.com. We reply within 48 hours.</p>
+            <div class="status" id="formStatus" hidden></div>
           </form>
-          <form class="form-card apply-form" id="tutorForm">
+          <form class="form-card apply-form" id="tutorForm" enctype="multipart/form-data">
+            <input type="hidden" name="_subject" value="MindCraft tutor application">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
             <div class="form-grid">
-              <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="tutorName" autocomplete="name" required></div>
-              <div class="field"><label for="tutorEmail">Email</label><input id="tutorEmail" name="tutorEmail" type="email" autocomplete="email" required></div>
-              <div class="field"><label for="tutorYear">Year &amp; major</label><input id="tutorYear" name="tutorYear" placeholder="Sophomore, Computer Science" required></div>
-              <div class="field"><label for="tutorAvailability">Availability</label><input id="tutorAvailability" name="tutorAvailability" placeholder="Weekday evenings, weekends" required></div>
-              <div class="field full"><label for="tutorBackground">Math background</label><textarea id="tutorBackground" name="tutorBackground" placeholder="Courses you've taken, where you feel strongest, any tutoring experience..." required></textarea></div>
+              <div class="field"><label for="tutorName">Name</label><input id="tutorName" name="name" autocomplete="name" required></div>
+              <div class="field"><label for="tutorEmail">Email</label><input id="tutorEmail" name="email" type="email" autocomplete="email" required></div>
+              <div class="field full"><label for="tutorUniversity">University</label><input id="tutorUniversity" name="university" placeholder="Macalester, St. Olaf, UNC..." required></div>
+              <div class="field full"><label for="tutorBio">Bio</label><textarea id="tutorBio" name="bio" placeholder="Who you are, what you teach best, and why you want to tutor with MindCraft." required></textarea></div>
+              <div class="field full"><label for="tutorResume">Attach resume</label><input id="tutorResume" name="attachment" type="file" accept=".pdf,.doc,.docx,application/pdf" required></div>
             </div>
             <button class="btn primary" type="submit">Apply to tutor</button>
-            <p class="form-note">Opens a pre-filled email. We reply within 48 hours.</p>
-            <div class="status" id="tutorFormStatus">Opening your email with your tutor application. Responses are sent to joinmindcraft@gmail.com.</div>
+            <p class="form-note" id="tutorFormNote">Name, university, bio, and resume go to joinmindcraft@gmail.com.</p>
+            <div class="status" id="tutorFormStatus" hidden></div>
           </form>
         </div>
       </div>
     </section>
-    <section class="about" id="about" data-nav="mint">
-      <div class="wrap">
-        <div class="about-head reveal">
-          <div>
-            <p class="label">Who we are</p>
-            <h2>Tutors who know the feeling.</h2>
-          </div>
-          <p>Find the gap. Build from there.</p>
-        </div>
-        <div class="founder-grid reveal">
-          <article class="founder-card founder-trigger" tabindex="0" role="button" aria-label="Flip Akshat Koirala profile" aria-expanded="false">
-            <div class="founder-flip">
-              <div class="founder-face founder-front">
-                <div class="founder-photo" aria-hidden="true">
-                  <img src="img/akshat-koirala.jpg" alt="" onerror="this.remove()">
-                  <span>AK</span>
-                </div>
-                <div class="founder-copy">
-                  <small>Founder · Math learning</small>
-                  <h3>Akshat Koirala</h3>
-                  <p>Math and economics at Macalester. Eight years helping students find the first step that finally makes sense.</p>
-                  <div class="founder-open">Click card</div>
-                </div>
-              </div>
-              <div class="founder-face founder-back">
-                <small>Why MindCraft exists</small>
-                <h3>Find the real break.</h3>
-                <p>Akshat has taught math across Nepal, South Africa, and the United States. The pattern kept repeating: students did not need louder explanations. They needed the right starting point.</p>
-                <p>MindCraft turns that tutor instinct into a system: find the break, name the next move, and let confidence return through work the student can actually do.</p>
-              </div>
-            </div>
-          </article>
-          <article class="founder-card founder-trigger" tabindex="0" role="button" aria-label="Flip Blake Kell profile" aria-expanded="false">
-            <div class="founder-flip">
-              <div class="founder-face founder-front">
-                <div class="founder-photo" aria-hidden="true">
-                  <img src="img/blake-kell.jpg" alt="" onerror="this.remove()">
-                  <span>BK</span>
-                </div>
-                <div class="founder-copy">
-                  <small>Founder · Product + data</small>
-                  <h3>Blake Kell</h3>
-                  <p>Data science and math. Builds the calm interface, learning signals, and product feel behind MindCraft.</p>
-                  <div class="founder-open">Click card</div>
-                </div>
-              </div>
-              <div class="founder-face founder-back">
-                <small>Designed for focus</small>
-                <h3>Less noise. More signal.</h3>
-                <p>Blake builds the parts that make MindCraft feel clear: the data flow, the interface, and the small signals that tell a student, “you are here.”</p>
-                <p>Learning with ADHD or neurodivergence should not feel like being the problem. The tool should lower the noise and make progress visible.</p>
-              </div>
-            </div>
-          </article>
-          <article class="founder-card founder-trigger" tabindex="0" role="button" aria-label="Flip Abhigya Koirala profile" aria-expanded="false">
-            <div class="founder-flip">
-              <div class="founder-face founder-front">
-                <div class="founder-photo" aria-hidden="true">
-                  <img src="img/ab-founder.jpeg" alt="" onerror="this.remove()">
-                  <span>AB</span>
-                </div>
-                <div class="founder-copy">
-                  <small>Applied math · Research</small>
-                  <h3>Abhigya Koirala</h3>
-                  <p>Incoming applied mathematics PhD student at UNC. Helps turn hard ideas into clear routes students can actually follow.</p>
-                  <div class="founder-open">Click card</div>
-                </div>
-              </div>
-              <div class="founder-face founder-back">
-                <small>Applied math backbone</small>
-                <h3>Hard math, made navigable.</h3>
-                <p>Abhigya brings the applied math lens: precise, patient, and allergic to fake understanding. He helps MindCraft keep the route honest when a concept gets deep.</p>
-                <p>The mission is simple: make difficult math feel navigable without watering it down.</p>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <section class="case-study" id="proof" data-nav="mint">
-      <div class="wrap case-grid reveal">
-        <div class="case-copy">
-          <p class="label">Product proof</p>
-          <h2>A session should leave a trail.</h2>
-          <p>No fake testimonials while we are early. The proof we can show right now is the shape of the work: answer evidence, a named misconception, and a next session that starts in the right place.</p>
-        </div>
-        <div class="case-timeline" aria-label="Sample MindCraft session trail">
-          <article class="case-step"><span>01</span><div><h3>Before</h3><p>“I know slope, but equations still feel random.”</p></div></article>
-          <article class="case-step"><span>02</span><div><h3>During</h3><p>The map finds point-intercept confusion hiding under linear equations.</p></div></article>
-          <article class="case-step"><span>03</span><div><h3>After</h3><p>The student explains why b is where the line crosses the y-axis, not just any point.</p></div></article>
-        </div>
-      </div>
-    </section>
 
-    <!-- Tutor recruitment CTA - its own section, separate from reviews above
-         (see ACTIVE_TASK.md, "separate the reviews section from the tutor-
-         recruitment CTA" fix). -->
-    <section class="proof" id="tutors" data-nav="cream">
-      <div class="wrap reveal">
-        <p class="label">Teach with us</p>
-        <h2>College tutors wanted.</h2>
-        <div class="testimonial-grid stagger">
-          <article class="tcard">
-            <p class="tcard-q">Set your own hours</p>
-            <p class="tcard-body">Tutor around your class schedule. Mornings, evenings, weekends. You choose the load.</p>
-            <cite class="tcard-tag">Flexible</cite>
-          </article>
-          <article class="tcard">
-            <p class="tcard-q">Get paid to teach</p>
-            <p class="tcard-body">Competitive pay per session, booked straight through Calendly.</p>
-            <cite class="tcard-tag">Paid</cite>
-          </article>
-          <article class="tcard">
-            <p class="tcard-q">Make math click</p>
-            <p class="tcard-body">Real students, real breakthroughs. The map shows you where to start.</p>
-            <cite class="tcard-tag">Impact</cite>
-          </article>
-        </div>
-        <div class="proof-actions">
-          <a class="btn primary" href="mailto:joinmindcraft@gmail.com?subject=Tutor%20application&amp;body=Tell%20us%20about%20your%20math%20background%2C%20availability%2C%20and%20why%20you%20want%20to%20tutor.">Apply to tutor →</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
   <footer>
     <div><strong>Mind<span>Craft</span></strong><p>Math is not a personality flaw. Usually it is one missing step with a very good disguise.</p></div>
     <div class="footer-nav">
@@ -1080,7 +1037,8 @@ document.querySelectorAll("[data-nav]").forEach((el) => navIo.observe(el))
 // Apple dev provisioning profile). Swap this for the real TestFlight link
 // once external testing is live; see ACTIVE_TASK.md.
 document.getElementById("appDownloadBtn")?.addEventListener("click", () => {
-  document.getElementById("appDownloadNote")?.removeAttribute("hidden")
+  const note = document.getElementById("appDownloadNote")
+  if (note) note.textContent = "Public download opens once TestFlight testing goes live. Check back soon."
 })
 
 document.querySelectorAll(".founder-trigger").forEach((card) => {
@@ -1157,48 +1115,82 @@ if (isLocalDemo) {
   })
 }
 
+const APPLY_INBOX = "https://formsubmit.co/ajax/joinmindcraft@gmail.com"
+
+async function submitApplication(form, noteEl, statusEl, successText) {
+  if (!form) return
+  const submitBtn = form.querySelector('button[type="submit"]')
+  const data = new FormData(form)
+  if (submitBtn) submitBtn.disabled = true
+  if (noteEl) {
+    noteEl.classList.remove("is-ok", "is-error")
+    noteEl.textContent = "Sending to joinmindcraft@gmail.com..."
+  }
+  if (statusEl) {
+    statusEl.hidden = true
+    statusEl.classList.remove("show")
+  }
+  try {
+    const res = await fetch(APPLY_INBOX, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" }
+    })
+    const payload = await res.json().catch(() => ({}))
+    if (!res.ok) throw new Error(payload.message || "Could not send application")
+    form.reset()
+    if (noteEl) {
+      noteEl.classList.add("is-ok")
+      noteEl.textContent = successText
+    }
+    if (statusEl) {
+      statusEl.hidden = false
+      statusEl.classList.add("show")
+      statusEl.textContent = "Sent. Check joinmindcraft@gmail.com (first time, activate FormSubmit from that inbox)."
+    }
+  } catch (err) {
+    if (noteEl) {
+      noteEl.classList.add("is-error")
+      noteEl.textContent = "Could not send right now. Email joinmindcraft@gmail.com directly."
+    }
+    if (statusEl) {
+      statusEl.hidden = false
+      statusEl.classList.add("show")
+      statusEl.textContent = String(err?.message || err)
+    }
+  } finally {
+    if (submitBtn) submitBtn.disabled = false
+  }
+}
+
 const form = document.getElementById("intakeForm")
 const status = document.getElementById("formStatus")
+const formNote = document.getElementById("formNote")
 form?.addEventListener("submit", (event) => {
   event.preventDefault()
-  const data = new FormData(form)
-  const lines = [
-    "Parent: " + data.get("parentName"),
-    "Email: " + data.get("email"),
-    "Student: " + data.get("studentName"),
-    "Grade: " + data.get("grade"),
-    "",
-    "Goal: " + data.get("goal")
-  ]
-  status?.classList.add("show")
-  location.href = "mailto:joinmindcraft@gmail.com?subject=" + encodeURIComponent("MindCraft intake") + "&body=" + encodeURIComponent(lines.join("\n"))
+  submitApplication(form, formNote, status, "Student application sent. We reply within 48 hours.")
 })
 
 const tutorForm = document.getElementById("tutorForm")
 const tutorStatus = document.getElementById("tutorFormStatus")
+const tutorFormNote = document.getElementById("tutorFormNote")
 tutorForm?.addEventListener("submit", (event) => {
   event.preventDefault()
-  const data = new FormData(tutorForm)
-  const lines = [
-    "Name: " + data.get("tutorName"),
-    "Email: " + data.get("tutorEmail"),
-    "Year & major: " + data.get("tutorYear"),
-    "Availability: " + data.get("tutorAvailability"),
-    "",
-    "Math background: " + data.get("tutorBackground")
-  ]
-  tutorStatus?.classList.add("show")
-  location.href = "mailto:joinmindcraft@gmail.com?subject=" + encodeURIComponent("Tutor application") + "&body=" + encodeURIComponent(lines.join("\n"))
+  submitApplication(tutorForm, tutorFormNote, tutorStatus, "Tutor application sent with resume. We reply within 48 hours.")
 })
 
-// Apply panel: same tab convention as the live-preview demo above (see
-// DEMO_COPY / setActiveDemoTab below), reused here for the pricing-section
-// intake card. Two tabs share one stage: "Apply for a seat" is the existing
-// parent/student intake form (unchanged fields), "Apply to tutor" swaps in a
-// separate tutor-application form with its own fields, and both the eyebrow
-// label and headline swap to match, so the whole card reads as one coherent
-// application rather than a generic form. Both forms submit through the same
-// pre-filled-mailto pattern as the rest of the page.
+const supportRail = document.getElementById("supportRail")
+const supportNextBtn = document.getElementById("supportNextBtn")
+supportNextBtn?.addEventListener("click", () => {
+  if (!supportRail) return
+  const amount = Math.max(280, supportRail.clientWidth * 0.92)
+  const atEnd = supportRail.scrollLeft + supportRail.clientWidth >= supportRail.scrollWidth - 24
+  supportRail.scrollBy({ left: atEnd ? -supportRail.scrollWidth : amount, behavior: "smooth" })
+})
+
+// Apply panel: student intake vs tutor application (Name, University, Bio, Resume).
+// Both post to joinmindcraft@gmail.com via FormSubmit so replies land in inbox,
+// including resume attachments on the tutor form.
 const applyTabSeat = document.getElementById("applyTabSeat")
 const applyTabTutor = document.getElementById("applyTabTutor")
 const applyStage = document.getElementById("applyStage")
@@ -1208,11 +1200,11 @@ const applyHeading = document.getElementById("applyHeading")
 const APPLY_COPY = {
   seat: {
     label: "Apply",
-    heading: "Tell us their story.",
+    heading: "Apply today.",
   },
   tutor: {
     label: "Teach",
-    heading: "Show us you get it.",
+    heading: "Apply as a tutor.",
   }
 }
 
@@ -1241,15 +1233,12 @@ const storyTryBtn = document.getElementById("storyTryBtn")
 const APP_ORIGIN = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
   ? "http://127.0.0.1:5173"
   : "https://mindcraft-93858.web.app"
+const DIAGNOSTIC_DEMO_URL = APP_ORIGIN + "/try/diagnostic"
 const MANJUSHREE_URL = APP_ORIGIN + "/try/manjushree"
-if (demoOpenFull) demoOpenFull.href = MANJUSHREE_URL
-
-function openDemoLive() {
-  if (demoFrame) demoFrame.src = MANJUSHREE_URL
-  if (demoOpenFull) demoOpenFull.href = MANJUSHREE_URL
-  if (demoLive) demoLive.hidden = false
-  if (demoStage) demoStage.dataset.state = "live"
-}
+if (demoOpenFull) demoOpenFull.href = DIAGNOSTIC_DEMO_URL
+const heroTryDemo = document.getElementById("heroTryDemo")
+if (heroTryDemo) heroTryDemo.href = DIAGNOSTIC_DEMO_URL
+if (storyTryBtn) storyTryBtn.href = DIAGNOSTIC_DEMO_URL
 
 function closeDemoLive() {
   if (demoFrame) demoFrame.src = "about:blank"
@@ -1257,7 +1246,6 @@ function closeDemoLive() {
   if (demoStage) demoStage.dataset.state = "story"
 }
 
-storyTryBtn?.addEventListener("click", openDemoLive)
 demoCloseBtn?.addEventListener("click", closeDemoLive)
 window.addEventListener("message", (event) => {
   if (event.origin !== APP_ORIGIN) return
@@ -1281,7 +1269,7 @@ function startStoryAutoplay() {
   storyTimer = setInterval(() => {
     if (demoStage?.dataset.state !== "story") return
     showStorySlide(storyIndex + 1)
-  }, 5200)
+  }, 2000)
 }
 
 function stopStoryAutoplay() {
@@ -1297,36 +1285,44 @@ storyDots.forEach((btn, i) => {
     startStoryAutoplay()
   })
 })
-const demoPosterStory = document.getElementById("demoPosterStory")
-demoPosterStory?.addEventListener("pointerenter", stopStoryAutoplay)
-demoPosterStory?.addEventListener("pointerleave", startStoryAutoplay)
-demoPosterStory?.addEventListener("focusin", stopStoryAutoplay)
-demoPosterStory?.addEventListener("focusout", startStoryAutoplay)
 startStoryAutoplay()
 
-// Find a Tutor map. Regional pins: MN (Akshat) + Bay Area CA (Abhigya, Everett St
-// area in El Cerrito). Search zooms to the address and shows in-state tutors.
+// Public tutor pins (sessions online). Profiles open on card click; Book opens Calendly.
 const FT_STUDIO = { lat: 44.9379, lng: -93.1706 }
+const FT_BOOK = "https://calendly.com/joinmindcraft/30min"
 const FT_TUTORS = [
   {
     id: "akshat",
     name: "Akshat Koirala",
     bio: "ACT, algebra, precalc, calculus, stats.",
+    profile: "Math and economics at Macalester. Eight years helping students find the first step that finally makes sense. Starts on the gap, not page one.",
     photo: "img/akshat-koirala.jpg",
-    booking: "https://calendly.com/joinmindcraft/30min",
+    booking: FT_BOOK,
     location: { lat: 44.9379, lng: -93.1706 },
     state: "MN",
-    regionLabel: "St Paul, MN",
+    regionLabel: "Macalester · St Paul, MN",
+  },
+  {
+    id: "blake",
+    name: "Blake Kell",
+    bio: "Data science and math. Clear signals, calm focus.",
+    profile: "Macalester student building MindCraft product and learning signals. Currently in Myrtle Beach. Great with students who need less noise and more clarity.",
+    photo: "img/blake-kell.jpg",
+    booking: FT_BOOK,
+    location: { lat: 33.6891, lng: -78.8867 },
+    state: "SC",
+    regionLabel: "Myrtle Beach, SC",
   },
   {
     id: "abhigya",
     name: "Abhigya Koirala",
-    bio: "Applied math PhD track. Bay Area based. Clear routes through hard ideas.",
+    bio: "Applied math at UNC Chapel Hill. Hard ideas, clear routes.",
+    profile: "Incoming applied mathematics PhD student at UNC Chapel Hill. Precise, patient, and allergic to fake understanding. Helps students navigate deep math without watering it down.",
     photo: "img/ab-founder.jpeg",
-    booking: "https://calendly.com/joinmindcraft/30min",
-    location: { lat: 37.9234, lng: -122.3106 },
-    state: "CA",
-    regionLabel: "El Cerrito, CA",
+    booking: FT_BOOK,
+    location: { lat: 35.9049, lng: -79.0469 },
+    state: "NC",
+    regionLabel: "UNC Chapel Hill, NC",
   },
 ]
 const FT_MAP_FALLBACK = '<div class="findtutor-map-fallback">Map unavailable right now.<br><a href="https://mindcraft-93858.web.app/find-a-tutor">Open Find a Tutor</a> to see the live map.</div>'
@@ -1352,30 +1348,50 @@ function ftMiles(a, b) {
 
 function ftStateFromLabel(label) {
   const s = String(label || "").toLowerCase()
-  if (/\bcalifornia\b|\bca\b/.test(s)) return "CA"
-  if (/\bminnesota\b|\bmn\b/.test(s)) return "MN"
-  if (/\b9[0-6]\d{3}\b/.test(s)) return "CA"
+  if (/\bnorth carolina\b|\bnc\b|chapel hill|unc\b/.test(s)) return "NC"
+  if (/\bsouth carolina\b|\bsc\b|myrtle beach/.test(s)) return "SC"
+  if (/\bminnesota\b|\bmn\b|st\.?\s*paul|minneapolis|macalester/.test(s)) return "MN"
   if (/\b5[5-6]\d{3}\b/.test(s)) return "MN"
+  if (/\b27\d{3}\b/.test(s)) return "NC"
+  if (/\b29\d{3}\b/.test(s)) return "SC"
   return null
 }
 
 function ftStateFromLatLng(loc) {
   const { lat, lng } = loc
-  if (lat >= 32.5 && lat <= 42.1 && lng >= -124.6 && lng <= -114.0) return "CA"
   if (lat >= 43.4 && lat <= 49.5 && lng >= -97.3 && lng <= -89.4) return "MN"
+  if (lat >= 33.7 && lat <= 36.7 && lng >= -84.5 && lng <= -75.3) return "NC"
+  if (lat >= 32.0 && lat <= 35.3 && lng >= -83.4 && lng <= -78.4) return "SC"
   return null
 }
 
 function ftVisibleTutors(origin, label) {
+  // Default: show the full named tutor bench.
   if (!origin) return FT_TUTORS.slice()
   const ranked = FT_TUTORS
     .map((t) => ({ ...t, miles: ftMiles(origin, t.location) }))
     .sort((a, b) => a.miles - b.miles)
   if (!ranked.length) return ranked
-  // Always show the nearest tutor pin; include others only if reasonably close.
+  const state = ftStateFromLabel(label) || ftStateFromLatLng(origin)
+  if (state) {
+    const inState = ranked.filter((t) => t.state === state)
+    if (inState.length) return inState
+  }
   const nearest = ranked[0]
-  const alsoNearby = ranked.slice(1).filter((t) => t.miles <= 250)
+  const alsoNearby = ranked.slice(1).filter((t) => t.miles <= 400)
   return [nearest].concat(alsoNearby)
+}
+
+function ftFitVisible(visible) {
+  if (!ftMap || !window.google?.maps || !visible.length) return
+  const bounds = new google.maps.LatLngBounds()
+  visible.forEach((t) => bounds.extend(t.location))
+  if (visible.length === 1) {
+    ftMap.setCenter(visible[0].location)
+    ftMap.setZoom(12)
+    return
+  }
+  ftMap.fitBounds(bounds, 72)
 }
 
 function ftSetStatus(text, isError) {
@@ -1402,14 +1418,30 @@ function ftRenderTutors(origin, label) {
     const dist = miles == null
       ? t.regionLabel + ". Sessions online."
       : t.regionLabel + ". About " + miles.toFixed(miles < 10 ? 1 : 0) + " mi away. Sessions online."
-    // Whole card opens booking (Calendly).
-    return '<a class="findtutor-cardlet" data-tutor="' + t.id + '" href="' + t.booking + '" target="_blank" rel="noopener" aria-label="Book ' + t.name + '">'
+    return '<article class="findtutor-cardlet" data-tutor="' + t.id + '" tabindex="0" role="button" aria-expanded="false" aria-label="Open profile for ' + t.name + '">'
       + '<img src="' + t.photo + '" alt="" width="128" height="128">'
       + '<div><strong>' + t.name + '</strong><p>' + t.bio + '</p>'
       + '<p class="findtutor-distance">' + dist + '</p></div>'
-      + '<span class="findtutor-book">Book</span>'
-      + '</a>'
+      + '<a class="findtutor-book" href="' + t.booking + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>'
+      + '<p class="findtutor-profile">' + (t.profile || t.bio) + '</p>'
+      + '</article>'
   }).join("")
+  list.querySelectorAll(".findtutor-cardlet").forEach((card) => {
+    const toggle = () => {
+      const open = card.classList.toggle("is-open")
+      card.setAttribute("aria-expanded", String(open))
+    }
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("a")) return
+      toggle()
+    })
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault()
+        toggle()
+      }
+    })
+  })
 }
 
 function ftFitToSearch(position, label) {
@@ -1467,8 +1499,11 @@ function ftApplySearchResult(position, label) {
 function ftQuickMatch(query) {
   const s = String(query || "").toLowerCase().trim()
   if (!s) return null
-  if (/\bcalifornia\b|\bca\b|el cerrito|bay area|everett|san francisco|oakland|berkeley/.test(s)) {
-    return FT_TUTORS.find((t) => t.state === "CA") || null
+  if (/\bchapel hill|unc\b|north carolina|\bnc\b/.test(s)) {
+    return FT_TUTORS.find((t) => t.state === "NC") || null
+  }
+  if (/\bmyrtle beach|south carolina|\bsc\b/.test(s)) {
+    return FT_TUTORS.find((t) => t.state === "SC") || null
   }
   if (/\bminnesota\b|\bmn\b|st\.?\s*paul|minneapolis|macalester|twin cities/.test(s)) {
     return FT_TUTORS.find((t) => t.state === "MN") || null
@@ -1607,10 +1642,10 @@ function initFtMap() {
       title: t.name + " (" + t.regionLabel + ")",
     })
     const info = new google.maps.InfoWindow({
-      content: "<div style=\"font:600 13px 'Nunito Sans',sans-serif;max-width:210px;color:#143a2e\">"
+      content: "<div style=\"font:600 13px 'Nunito Sans',sans-serif;max-width:240px;color:#143a2e\">"
         + "<strong>" + t.name + "</strong>"
-        + "<p style=\"margin:6px 0 0;font-weight:500;color:#5a5a5a\">" + t.bio + "</p>"
-        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">" + t.regionLabel + ". Sessions online over Meet.</p>"
+        + "<p style=\"margin:6px 0 0;font-weight:500;color:#5a5a5a\">" + (t.profile || t.bio) + "</p>"
+        + "<p style=\"margin:6px 0 0;font-size:11px;color:#8a8a8a\">" + t.regionLabel + ". Sessions online.</p>"
         + "<p style=\"margin:10px 0 0\"><a href=\"" + t.booking + "\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;padding:8px 11px;border-radius:999px;background:#143a2e;color:#fffdf7;text-decoration:none;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase\">Book</a></p>"
         + "</div>",
     })
@@ -1618,6 +1653,7 @@ function initFtMap() {
     return { id: t.id, marker }
   })
   ftRenderTutors(null, "")
+  ftFitVisible(ftVisibleTutors(null, ""))
 
   const searchForm = document.getElementById("ftSearchForm")
   const addressInput = document.getElementById("ftAddress")

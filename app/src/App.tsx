@@ -34,6 +34,7 @@ import FirstSpark      from './pages/FirstSpark'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
+import DemoNotebook    from './pages/DemoNotebook'
 import ConstellationGpsLab from './pages/ConstellationGpsLab'
 import ParentDashboard    from './pages/ParentDashboard'
 import SessionWork        from './pages/SessionWork'
@@ -264,6 +265,9 @@ export default function App() {
         <Route path="/homework/:homeworkId"    element={<AuthGuard><HomeworkSession /></AuthGuard>} />
         <Route path="/join-classroom"         element={<AuthGuard><JoinClassroom /></AuthGuard>} />
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
+        {/* Marketing Try Demo: ACT diagnostic + notebook, no login. */}
+        <Route path="/try/diagnostic"      element={<Diagnostic preview />} />
+        <Route path="/try/notebook"        element={<DemoNotebook />} />
         {/* GradeOnboard.tsx (the older, heavier "grade + ~10 probe questions"
             flow) is retired from the live gate. Diagnostic.tsx (Jesse's
             Kitchen: goals + time horizon + confidence taps) is now the one
