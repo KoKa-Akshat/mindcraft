@@ -18,6 +18,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { User } from 'firebase/auth'
+import { DEMO_UID, isDemoMode } from '../lib/demoMode'
 
 export interface HomeworkProblem {
   id: string
@@ -89,6 +90,7 @@ function fmtMessageTime(ts: any): string {
 }
 
 export function useStudentData(user: User | null): StudentData {
+  const demo = !!user && (user.uid === DEMO_UID || isDemoMode())
   const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'tutorId' | 'loading' | 'messages'>>({
     displayName:   firstName(user),
     streak:        0,
@@ -102,11 +104,29 @@ export function useStudentData(user: User | null): StudentData {
   const [tutorId, setTutorId]                   = useState<string | null>(null)
   const [tutorName, setTutorName]               = useState<string>('Tutor')
   const [messages, setMessages]                 = useState<Message[]>([])
-  const [loading, setLoading]                   = useState(true)
+  const [loading, setLoading]                   = useState(!demo)
+
+  // Marketing ACT Demo: no Firestore — tab close resets everything.
+  useEffect(() => {
+    if (!demo || !user) return
+    setUserData({
+      displayName: firstName(user) || 'Guest',
+      streak: 0,
+      lastSession: null,
+      homework: null,
+      practiceCount: 0,
+      weeklyPaperCompletedWeek: null,
+    })
+    setNextSession(null)
+    setDerivedLast(null)
+    setTutorId(null)
+    setMessages([])
+    setLoading(false)
+  }, [demo, user])
 
   // ── 1. User doc ──────────────────────────────────────────────────────────────
   useEffect(() => {
-    if (!user) return
+    if (!user || demo) return
     const ref = doc(db, 'users', user.uid)
 
     const unsub = onSnapshot(ref, async snap => {
@@ -154,11 +174,11 @@ export function useStudentData(user: User | null): StudentData {
     }, () => setLoading(false))
 
     return () => unsub()
-  }, [user])
+  }, [user, demo])
 
   // ── 2. Upcoming sessions ─────────────────────────────────────────────────────
   useEffect(() => {
-    if (!user?.email) return
+    if (!user?.email || demo) return
     const unsub = onSnapshot(
       query(collection(db, 'sessions'), where('studentEmail', '==', user.email)),
       snap => {
@@ -211,11 +231,11 @@ export function useStudentData(user: User | null): StudentData {
       () => {}
     )
     return () => unsub()
-  }, [user])
+  }, [user, demo])
 
   // ── 3. Live chat messages from tutor ─────────────────────────────────────────
   useEffect(() => {
-    if (!user || !tutorId) { setMessages([]); return }
+    if (!user || !tutorId || demo) { setMessages([]); return }
 
     const chatId = [user.uid, tutorId].sort().join('_')
     const unsub = onSnapshot(

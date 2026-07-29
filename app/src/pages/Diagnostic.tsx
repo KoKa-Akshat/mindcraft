@@ -23,6 +23,7 @@ import { useContext, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
+import { saveDemoDiagnostic } from '../lib/demoMode'
 import type { Confidence } from '../lib/bridgePractice'
 import { ACT_TOC_SECTIONS, actTocSectionForConcept } from '../lib/actToc'
 import spec from '../data/actDiagnostic.json'
@@ -102,8 +103,6 @@ function groupConceptsForConfidence(concepts: ConfConcept[]): ConfGroup[] {
   if (combined.length) merged.push({ id: 'geometry_data', title: 'Geometry & Data', concepts: combined })
   return merged
 }
-
-const DEMO_KEY = 'mc-demo-diagnostic'
 
 export default function Diagnostic({ preview = false }: { preview?: boolean }) {
   const user = useContext(UserContext)
@@ -197,12 +196,9 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
     try {
       const minDwell = new Promise(resolve => window.setTimeout(resolve, 900))
       if (preview || !user) {
-        sessionStorage.setItem(
-          DEMO_KEY,
-          JSON.stringify({ exam: EXAM, deadlineDays, confidence }),
-        )
+        saveDemoDiagnostic({ exam: EXAM, deadlineDays, confidence })
         await minDwell
-        navigate('/try/notebook', { replace: true })
+        navigate('/try/dashboard', { replace: true })
         return
       }
       await Promise.all([
@@ -220,7 +216,7 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
       ])
       navigate('/dashboard', { replace: true })
     } catch {
-      if (preview || !user) navigate('/try/notebook', { replace: true })
+      if (preview || !user) navigate('/try/dashboard', { replace: true })
       else navigate('/dashboard', { replace: true })
     }
   }

@@ -34,7 +34,7 @@ import FirstSpark      from './pages/FirstSpark'
 import ConstellationCard from './components/ConstellationCard'
 import Prep            from './pages/Prep'
 import Diagnostic      from './pages/Diagnostic'
-import DemoNotebook    from './pages/DemoNotebook'
+import { enableDemoMode, makeDemoUser } from './lib/demoMode'
 import ConstellationGpsLab from './pages/ConstellationGpsLab'
 import ParentDashboard    from './pages/ParentDashboard'
 import SessionWork        from './pages/SessionWork'
@@ -131,6 +131,16 @@ function RoleRedirect() {
 function QAEntry() {
   sessionStorage.setItem('mc-qa-mode', '1') // must be sync — Navigate fires before any useEffect
   return <Navigate to="/dashboard" replace />
+}
+
+/** Public ACT Demo dashboard: real UI, sessionStorage only, tab close resets. */
+function TryDemoDashboard() {
+  enableDemoMode()
+  return (
+    <UserContext.Provider value={makeDemoUser()}>
+      <Dashboard preview />
+    </UserContext.Provider>
+  )
 }
 
 /** Blocks unauthenticated access. Redirects to /login if not signed in. */
@@ -265,9 +275,10 @@ export default function App() {
         <Route path="/homework/:homeworkId"    element={<AuthGuard><HomeworkSession /></AuthGuard>} />
         <Route path="/join-classroom"         element={<AuthGuard><JoinClassroom /></AuthGuard>} />
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
-        {/* Marketing Try Demo: ACT diagnostic + notebook, no login. */}
+        {/* Marketing Try Demo: ACT diagnostic → ephemeral dashboard (no login, resets). */}
         <Route path="/try/diagnostic"      element={<Diagnostic preview />} />
-        <Route path="/try/notebook"        element={<DemoNotebook />} />
+        <Route path="/try/dashboard"       element={<TryDemoDashboard />} />
+        <Route path="/try/notebook"        element={<Navigate to="/try/dashboard" replace />} />
         {/* GradeOnboard.tsx (the older, heavier "grade + ~10 probe questions"
             flow) is retired from the live gate. Diagnostic.tsx (Jesse's
             Kitchen: goals + time horizon + confidence taps) is now the one

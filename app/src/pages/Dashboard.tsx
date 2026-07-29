@@ -30,6 +30,11 @@ import {
   nextUnlockLabel,
 } from '../lib/weeklyPracticePaper'
 import { loadDashboardPersonalization } from '../lib/dashboardPersonalization'
+import {
+  demoConceptProgress,
+  demoWeaknessConceptId,
+  readDemoDiagnostic,
+} from '../lib/demoMode'
 import blockPlus from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-plus.png'
 import blockFraction from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-fraction.png'
 import blockPi from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-pi.png'
@@ -91,26 +96,27 @@ function tocDotState(status: string): TocDotState {
   return 'locked'
 }
 
-export default function Dashboard() {
+export default function Dashboard({ preview = false }: { preview?: boolean }) {
   const user = useUser()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const data = useStudentData(user)
   const uid = user?.uid ?? ''
+  const homeBase = preview ? '/try/dashboard' : '/dashboard'
 
-  const [diagChecked, setDiagChecked] = useState(false)
+  const [diagChecked, setDiagChecked] = useState(preview)
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
   const [learn, setLearn] = useState<NextConcept | null>(null)
   const [curriculumTrack, setCurriculumTrack] = useState<CurriculumTrack | null>(null)
-  const [recLoading, setRecLoading] = useState(true)
+  const [recLoading, setRecLoading] = useState(!preview)
   const [solverText, setSolverText] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   const [showCover, setShowCover] = useState(() => (
-    typeof window !== 'undefined' && !coverAlreadySeen()
+    typeof window !== 'undefined' && !preview && !coverAlreadySeen()
   ))
   const [showIntro, setShowIntro] = useState(() => (
-    typeof window !== 'undefined' && !introAlreadySeen()
+    typeof window !== 'undefined' && !preview && !introAlreadySeen()
   ))
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
@@ -125,12 +131,16 @@ export default function Dashboard() {
     : rawView
   ) as 'home' | 'map' | 'work' | 'notes'
 
-  function openHome() { navigate('/dashboard', { replace: true }) }
-  function openMap() { navigate('/dashboard?view=map', { replace: true }) }
-  function openWork() { navigate('/dashboard?view=work', { replace: true }) }
-  function openNotes() { navigate('/dashboard?view=notes', { replace: true }) }
+  function openHome() { navigate(homeBase, { replace: true }) }
+  function openMap() { navigate(`${homeBase}?view=map`, { replace: true }) }
+  function openWork() { navigate(`${homeBase}?view=work`, { replace: true }) }
+  function openNotes() { navigate(`${homeBase}?view=notes`, { replace: true }) }
 
   function goChallenge() {
+    if (preview) {
+      navigate('/try/manjushree')
+      return
+    }
     if (weakness) {
       navigate('/practice', {
         state: {
@@ -148,24 +158,74 @@ export default function Dashboard() {
 
   function openChapter(conceptId: string) {
     playTap()
+    if (preview) {
+      navigate(`/try/story/${encodeURIComponent(conceptId)}`)
+      return
+    }
     navigate(`/concept/${encodeURIComponent(conceptId)}`, {
       state: { fromDashboard: true },
     })
   }
 
   function launchSolver() {
+    if (preview) {
+      window.location.href = 'https://mindcraft-marketing-site.web.app/#intake'
+      return
+    }
     const text = solverText.trim().slice(0, SOLVER_MAX_CHARS)
     if (!text) return
     navigate('/practice', { state: { problemText: text } })
   }
 
   async function handleSignOut() {
+    if (preview) {
+      try {
+        sessionStorage.removeItem('mc-demo-mode')
+        sessionStorage.removeItem('mc-demo-diagnostic')
+      } catch { /* ignore */ }
+      window.location.href = 'https://mindcraft-marketing-site.web.app/'
+      return
+    }
     try { await signOut(auth) } catch { /* ignore */ }
     navigate('/login')
   }
 
   useEffect(() => {
-    if (!data.tutorId) { setTutorMeetUrl(null); return }
+    if (preview) {
+      const demo = readDemoDiagnostic()
+      const confidence = demo?.confidence ?? {}
+      setConceptProgress(demoConceptProgress(confidence))
+      const weakId = demoWeaknessConceptId(confidence)
+      if (weakId) {
+        setWeakness({
+          conceptId: weakId,
+          label: actConceptLabel(weakId),
+          mastery: 0.12,
+          status: 'open_gap',
+        })
+      } else {
+        setWeakness(null)
+      }
+      const learnId = Object.entries(confidence).find(([, v]) => v === 'easy')?.[0] ?? null
+      if (learnId) {
+        setLearn({
+          conceptId: learnId,
+          label: actConceptLabel(learnId),
+          mastery: 0.72,
+          status: 'stable',
+        })
+      } else {
+        setLearn(null)
+      }
+      setCurriculumTrack('act_prep')
+      setRecLoading(false)
+      setDiagChecked(true)
+      setManjushreeGlow(true)
+    }
+  }, [preview])
+
+  useEffect(() => {
+    if (preview || !data.tutorId) { setTutorMeetUrl(null); return }
     let cancelled = false
     void getDoc(doc(db, 'users', data.tutorId))
       .then(snap => {
@@ -175,27 +235,27 @@ export default function Dashboard() {
       })
       .catch(() => { if (!cancelled) setTutorMeetUrl(null) })
     return () => { cancelled = true }
-  }, [data.tutorId])
+  }, [data.tutorId, preview])
 
   useEffect(() => {
-    if (!uid) return
+    if (preview || !uid) return
     void loadDashboardPersonalization(uid).then(p => {
       setBookmarkedQuestions(p.bookmarkedQuestions)
     })
-  }, [uid])
+  }, [uid, preview])
 
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
 
   useEffect(() => {
-    if (!uid) return
+    if (preview || !uid) return
     getUserRole(uid).then(role => setIsAdmin(role === 'admin'))
-  }, [uid])
+  }, [uid, preview])
 
   // Contents roadmap completion signal — same GET /knowledge-graph/{uid} the
   // Map view reads (see graphCache.ts), so "lit up" here means the same
   // per-concept mastery/status the rest of the app already shows.
   useEffect(() => {
-    if (!uid) return
+    if (preview || !uid) return
     let cancelled = false
     void fetchKnowledgeGraph(uid).then(kg => {
       if (cancelled || !kg) return
@@ -211,10 +271,10 @@ export default function Dashboard() {
       setConceptProgress(next)
     })
     return () => { cancelled = true }
-  }, [uid])
+  }, [uid, preview])
 
   useEffect(() => {
-    if (!uid) return
+    if (preview || !uid) return
     let cancelled = false
     void getDoc(doc(db, 'users', uid)).then(snap => {
       if (cancelled) return
@@ -224,10 +284,10 @@ export default function Dashboard() {
       setManjushreeGlow(keywords.some(k => haystack.includes(k)))
     }).catch(() => { if (!cancelled) setManjushreeGlow(false) })
     return () => { cancelled = true }
-  }, [uid])
+  }, [uid, preview])
 
   useEffect(() => {
-    if (!uid) return
+    if (preview || !uid) return
     let cancelled = false
     void (async () => {
       setRecLoading(true)
@@ -247,9 +307,10 @@ export default function Dashboard() {
       }
     })()
     return () => { cancelled = true }
-  }, [uid])
+  }, [uid, preview])
 
   useEffect(() => {
+    if (preview) return
     let cancelled = false
     ;(async () => {
       const diag = searchParams.get('diag')
@@ -342,6 +403,10 @@ export default function Dashboard() {
   const paperUnlockLabel = useMemo(() => nextUnlockLabel(), [])
 
   function playWeeklyPaper() {
+    if (preview) {
+      navigate('/try/manjushree')
+      return
+    }
     if (!weeklyPaper?.slots[0] || paperLocked) {
       openMap()
       return
@@ -370,9 +435,31 @@ export default function Dashboard() {
 
   return (
     <>
+      {preview && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 10,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 80,
+            padding: '8px 14px',
+            borderRadius: 999,
+            background: 'rgba(20,58,46,.92)',
+            color: '#f4efe2',
+            fontSize: 11,
+            fontWeight: 900,
+            letterSpacing: '.08em',
+            textTransform: 'uppercase',
+            boxShadow: '0 10px 28px rgba(20,58,46,.22)',
+          }}
+        >
+          Demo dashboard · nothing is saved
+        </div>
+      )}
       <button
         type="button"
-        onClick={() => navigate('/manjushree')}
+        onClick={() => navigate(preview ? '/try/manjushree' : '/manjushree')}
         title="?"
         aria-label="A quiet corner of the notebook"
         className={s.secretPortal}
