@@ -7,14 +7,14 @@
  *   2. sessions/           — finds next upcoming session, backfills studentId if missing
  *   3. chats/{chatId}/messages — last 2 messages from tutor (shown in Messages card)
  *
- * Also handles first-time signup: creates the user doc and links any
- * pre-existing sessions booked by email before the account existed.
+ * Optional viewAsUid: tutors/admins viewing a linked student's live dash.
+ * Never creates/mutates the student doc in that mode.
  */
 
 import { useEffect, useState } from 'react'
 import {
   doc, setDoc, updateDoc, onSnapshot, serverTimestamp,
-  collection, query, where, orderBy, limit, writeBatch,
+  collection, query, where, orderBy, limit, writeBatch, getDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { User } from 'firebase/auth'
@@ -70,6 +70,11 @@ export interface StudentData {
   weeklyPaperCompletedWeek: string | null
 }
 
+export type UseStudentDataOpts = {
+  /** When set, load this student's dash data (tutor/admin live view). */
+  viewAsUid?: string | null
+}
+
 function firstName(user: User | null): string {
   if (!user) return 'there'
   if (user.displayName) return user.displayName.split(' ')[0]
@@ -89,8 +94,27 @@ function fmtMessageTime(ts: any): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
-export function useStudentData(user: User | null): StudentData {
-  const demo = !!user && (user.uid === DEMO_UID || isDemoMode())
+function sessionToSummary(ps: any): SessionSummary {
+  const d = new Date(ps.scheduledAt)
+  return {
+    id:        ps.id,
+    subject:   ps.subject   ?? 'Math',
+    date:      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    duration:  ps.duration  ?? '60 min',
+    title:     ps.summary?.title ?? ps.title ?? `${ps.subject ?? 'Math'} Session`,
+    bullets:   Array.isArray(ps.summary?.bullets) ? ps.summary.bullets
+             : Array.isArray(ps.bullets)          ? ps.bullets : [],
+    tutorName: ps.tutorName ?? '',
+    scheduledAt: ps.scheduledAt,
+  }
+}
+
+export function useStudentData(user: User | null, opts?: UseStudentDataOpts): StudentData {
+  const viewAsUid = opts?.viewAsUid ?? null
+  const isViewAs = !!(user && viewAsUid && viewAsUid !== user.uid)
+  const dataUid = isViewAs ? viewAsUid! : (user?.uid ?? '')
+  const demo = !!user && !isViewAs && (user.uid === DEMO_UID || isDemoMode())
+
   const [userData, setUserData] = useState<Omit<StudentData, 'nextSession' | 'tutorId' | 'loading' | 'messages'>>({
     displayName:   firstName(user),
     streak:        0,
@@ -103,6 +127,7 @@ export function useStudentData(user: User | null): StudentData {
   const [derivedLastSession, setDerivedLast]    = useState<SessionSummary | null>(null)
   const [tutorId, setTutorId]                   = useState<string | null>(null)
   const [tutorName, setTutorName]               = useState<string>('Tutor')
+  const [studentEmail, setStudentEmail]         = useState<string | null>(null)
   const [messages, setMessages]                 = useState<Message[]>([])
   const [loading, setLoading]                   = useState(!demo)
 
@@ -126,12 +151,40 @@ export function useStudentData(user: User | null): StudentData {
 
   // ── 1. User doc ──────────────────────────────────────────────────────────────
   useEffect(() => {
-    if (!user || demo) return
-    const ref = doc(db, 'users', user.uid)
+    if (!user || demo || !dataUid) return
 
+    if (isViewAs) {
+      let cancelled = false
+      void getDoc(doc(db, 'users', dataUid)).then(snap => {
+        if (cancelled || !snap.exists()) {
+          if (!cancelled) setLoading(false)
+          return
+        }
+        const d = snap.data()
+        setUserData({
+          displayName:   d.displayName || d.email?.split('@')[0] || 'Student',
+          streak:        d.streak ?? 0,
+          lastSession:   d.lastSession ?? null,
+          homework:      d.homework   ?? null,
+          practiceCount: d.practiceCount ?? 0,
+          weeklyPaperCompletedWeek: d.weeklyPaperCompletedWeek ?? null,
+        })
+        setStudentEmail(typeof d.email === 'string' ? d.email : null)
+        if (typeof d.assignedTutorId === 'string' && d.assignedTutorId) {
+          setTutorId(d.assignedTutorId)
+        } else if (typeof d.tutorId === 'string' && d.tutorId) {
+          setTutorId(d.tutorId)
+        } else {
+          setTutorId(user.uid)
+        }
+        setLoading(false)
+      }).catch(() => { if (!cancelled) setLoading(false) })
+      return () => { cancelled = true }
+    }
+
+    const ref = doc(db, 'users', user.uid)
     const unsub = onSnapshot(ref, async snap => {
       if (!snap.exists()) {
-        // First sign-in — create the user doc
         await setDoc(ref, {
           uid:          user.uid,
           email:        user.email,
@@ -144,7 +197,6 @@ export function useStudentData(user: User | null): StudentData {
           createdAt:    serverTimestamp(),
           lastActive:   serverTimestamp(),
         })
-        // Link any sessions booked by email before the account existed
         if (user.email) {
           const pending = await new Promise<any>(res =>
             onSnapshot(
@@ -170,15 +222,60 @@ export function useStudentData(user: User | null): StudentData {
         practiceCount: d.practiceCount ?? 0,
         weeklyPaperCompletedWeek: d.weeklyPaperCompletedWeek ?? null,
       })
+      setStudentEmail(typeof d.email === 'string' ? d.email : user.email)
       setLoading(false)
     }, () => setLoading(false))
 
     return () => unsub()
-  }, [user, demo])
+  }, [user, demo, dataUid, isViewAs])
 
   // ── 2. Upcoming sessions ─────────────────────────────────────────────────────
   useEffect(() => {
-    if (!user?.email || demo) return
+    if (!user || demo) return
+
+    if (isViewAs) {
+      const unsub = onSnapshot(
+        query(collection(db, 'sessions'), where('tutorId', '==', user.uid)),
+        snap => {
+          const now = Date.now()
+          const allSessions = snap.docs
+            .map(sd => ({ id: sd.id, ref: sd.ref, ...(sd.data() as any) }))
+            .filter(sd =>
+              sd.studentId === dataUid
+              || (studentEmail && sd.studentEmail === studentEmail),
+            )
+
+          const upcoming = allSessions
+            .filter(sd => sd.status === 'scheduled' && (sd.endAt ?? sd.scheduledAt + 90 * 60_000) > now)
+            .sort((a, b) => a.scheduledAt - b.scheduledAt)[0]
+
+          const past = allSessions
+            .filter(sd => (sd.endAt ?? sd.scheduledAt + 90 * 60_000) < now)
+            .sort((a, b) => b.scheduledAt - a.scheduledAt)
+          if (past.length > 0) setDerivedLast(sessionToSummary(past[0]))
+
+          if (upcoming) {
+            setNextSession({
+              id:          upcoming.id,
+              subject:     upcoming.subject,
+              time:        new Date(upcoming.scheduledAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+              tutor:       upcoming.tutorName,
+              meetingUrl:  upcoming.meetingUrl ?? null,
+              scheduledAt: upcoming.scheduledAt,
+              endAt:       upcoming.endAt ?? (upcoming.scheduledAt ? upcoming.scheduledAt + 90 * 60_000 : undefined),
+            })
+            setTutorId(upcoming.tutorId ?? user.uid)
+            setTutorName(upcoming.tutorName ?? 'Tutor')
+          } else {
+            setNextSession(null)
+          }
+        },
+        () => {},
+      )
+      return () => unsub()
+    }
+
+    if (!user.email) return
     const unsub = onSnapshot(
       query(collection(db, 'sessions'), where('studentEmail', '==', user.email)),
       snap => {
@@ -189,25 +286,10 @@ export function useStudentData(user: User | null): StudentData {
           .filter(sd => sd.status === 'scheduled' && (sd.endAt ?? sd.scheduledAt + 90 * 60_000) > now)
           .sort((a, b) => a.scheduledAt - b.scheduledAt)[0]
 
-        // Derive last session from past sessions when user doc field is absent
         const past = allSessions
           .filter(sd => (sd.endAt ?? sd.scheduledAt + 90 * 60_000) < now)
           .sort((a, b) => b.scheduledAt - a.scheduledAt)
-        if (past.length > 0) {
-          const ps = past[0]
-          const d  = new Date(ps.scheduledAt)
-          setDerivedLast({
-            id:        ps.id,
-            subject:   ps.subject   ?? 'Math',
-            date:      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-            duration:  ps.duration  ?? '60 min',
-            title:     ps.summary?.title ?? ps.title ?? `${ps.subject ?? 'Math'} Session`,
-            bullets:   Array.isArray(ps.summary?.bullets) ? ps.summary.bullets
-                     : Array.isArray(ps.bullets)          ? ps.bullets : [],
-            tutorName: ps.tutorName ?? '',
-            scheduledAt: ps.scheduledAt,
-          })
-        }
+        if (past.length > 0) setDerivedLast(sessionToSummary(past[0]))
 
         if (upcoming) {
           setNextSession({
@@ -231,35 +313,41 @@ export function useStudentData(user: User | null): StudentData {
       () => {}
     )
     return () => unsub()
-  }, [user, demo])
+  }, [user, demo, isViewAs, dataUid, studentEmail])
 
-  // ── 3. Live chat messages from tutor ─────────────────────────────────────────
+  // ── 3. Live chat messages ────────────────────────────────────────────────────
   useEffect(() => {
-    if (!user || !tutorId || demo) { setMessages([]); return }
+    if (!user || demo || !dataUid) { setMessages([]); return }
 
-    const chatId = [user.uid, tutorId].sort().join('_')
+    const peerId = isViewAs ? user.uid : tutorId
+    if (!peerId) { setMessages([]); return }
+
+    const chatId = [dataUid, peerId].sort().join('_')
     const unsub = onSnapshot(
       query(collection(db, 'chats', chatId, 'messages'), orderBy('createdAt', 'asc'), limit(20)),
       snap => {
-        // Take the last 2 messages for the dashboard preview
         const recent = snap.docs.slice(-2).map(d => {
           const data = d.data()
-          const isFromTutor = data.senderId !== user.uid
+          const fromPeer = data.senderId !== dataUid
+          const peerLabel = isViewAs ? 'You' : tutorName
+          const studentLabel = userData.displayName || 'Student'
           return {
-            initial:  isFromTutor ? tutorName[0]?.toUpperCase() ?? 'T' : (user.displayName?.[0] ?? user.email?.[0] ?? 'Y').toUpperCase(),
-            isTutor:  isFromTutor,
-            name:     isFromTutor ? tutorName : 'You',
+            initial:  fromPeer
+              ? (isViewAs ? (user.displayName?.[0] ?? 'T') : tutorName[0]?.toUpperCase() ?? 'T')
+              : (studentLabel[0] ?? 'S').toUpperCase(),
+            isTutor:  fromPeer,
+            name:     fromPeer ? peerLabel : (isViewAs ? studentLabel : 'You'),
             time:     fmtMessageTime(data.createdAt),
             text:     data.text || (data.fileName ? `📎 ${data.fileName}` : ''),
-            unread:   isFromTutor, // treat all tutor messages as unread for now
+            unread:   fromPeer && !isViewAs,
           } as Message
         })
         setMessages(recent)
       },
-      () => setMessages([])
+      () => setMessages([]),
     )
     return () => unsub()
-  }, [user, tutorId, tutorName])
+  }, [user, demo, dataUid, isViewAs, tutorId, tutorName, userData.displayName])
 
   return {
     ...userData,

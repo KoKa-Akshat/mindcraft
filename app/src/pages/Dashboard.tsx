@@ -96,15 +96,27 @@ function tocDotState(status: string): TocDotState {
   return 'locked'
 }
 
-export default function Dashboard({ preview = false }: { preview?: boolean }) {
+export default function Dashboard({
+  preview = false,
+  viewAsStudentId,
+}: {
+  preview?: boolean
+  /** Tutor/admin live view of a linked student's dashboard. */
+  viewAsStudentId?: string
+}) {
   const user = useUser()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const data = useStudentData(user)
-  const uid = user?.uid ?? ''
-  const homeBase = preview ? '/try/dashboard' : '/dashboard'
+  const viewingAs = !!viewAsStudentId
+  const data = useStudentData(user, { viewAsUid: viewAsStudentId })
+  const uid = viewAsStudentId || user?.uid || ''
+  const homeBase = preview
+    ? '/try/dashboard'
+    : viewingAs
+      ? `/tutor/student/${viewAsStudentId}`
+      : '/dashboard'
 
-  const [diagChecked, setDiagChecked] = useState(preview)
+  const [diagChecked, setDiagChecked] = useState(preview || viewingAs)
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
   const [learn, setLearn] = useState<NextConcept | null>(null)
   const [curriculumTrack, setCurriculumTrack] = useState<CurriculumTrack | null>(null)
@@ -113,10 +125,10 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
   const [isAdmin, setIsAdmin] = useState(false)
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   const [showCover, setShowCover] = useState(() => (
-    typeof window !== 'undefined' && !preview && !coverAlreadySeen()
+    typeof window !== 'undefined' && !preview && !viewingAs && !coverAlreadySeen()
   ))
   const [showIntro, setShowIntro] = useState(() => (
-    typeof window !== 'undefined' && !preview && !introAlreadySeen()
+    typeof window !== 'undefined' && !preview && !viewingAs && !introAlreadySeen()
   ))
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
@@ -137,6 +149,10 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
   function openNotes() { navigate(`${homeBase}?view=notes`, { replace: true }) }
 
   function goChallenge() {
+    if (viewingAs) {
+      openMap()
+      return
+    }
     if (preview) {
       navigate('/try/manjushree')
       return
@@ -158,6 +174,10 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
 
   function openChapter(conceptId: string) {
     playTap()
+    if (viewingAs) {
+      openMap()
+      return
+    }
     if (preview) {
       navigate(`/try/story/${encodeURIComponent(conceptId)}`)
       return
@@ -168,6 +188,7 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
   }
 
   function launchSolver() {
+    if (viewingAs) return
     if (preview) {
       window.location.href = 'https://mindcraft-marketing-site.web.app/#intake'
       return
@@ -178,6 +199,10 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
   }
 
   async function handleSignOut() {
+    if (viewingAs) {
+      navigate('/tutor')
+      return
+    }
     if (preview) {
       try {
         sessionStorage.removeItem('mc-demo-mode')
@@ -247,9 +272,9 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
   useEffect(() => { localStorage.setItem('dashboardView', 'web') }, [])
 
   useEffect(() => {
-    if (preview || !uid) return
-    getUserRole(uid).then(role => setIsAdmin(role === 'admin'))
-  }, [uid, preview])
+    if (preview || viewingAs || !user?.uid) return
+    getUserRole(user.uid).then(role => setIsAdmin(role === 'admin'))
+  }, [user?.uid, preview, viewingAs])
 
   // Contents roadmap completion signal — same GET /knowledge-graph/{uid} the
   // Map view reads (see graphCache.ts), so "lit up" here means the same
@@ -310,7 +335,10 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
   }, [uid, preview])
 
   useEffect(() => {
-    if (preview) return
+    if (preview || viewingAs) {
+      setDiagChecked(true)
+      return
+    }
     let cancelled = false
     ;(async () => {
       const diag = searchParams.get('diag')
@@ -362,7 +390,7 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
       }
     })()
     return () => { cancelled = true }
-  }, [user.uid, navigate, searchParams])
+  }, [user.uid, navigate, searchParams, preview, viewingAs])
 
   const weaknessLabel = weakness ? pawHubDisplayText(weakness.label, curriculumTrack) : null
   const displayName = data.displayName ?? user?.email?.split('@')[0] ?? ''
@@ -403,6 +431,10 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
   const paperUnlockLabel = useMemo(() => nextUnlockLabel(), [])
 
   function playWeeklyPaper() {
+    if (viewingAs) {
+      openMap()
+      return
+    }
     if (preview) {
       navigate('/try/manjushree')
       return
@@ -457,6 +489,50 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
           Demo dashboard · nothing is saved
         </div>
       )}
+      {viewingAs && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 10,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 80,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            padding: '8px 14px',
+            borderRadius: 999,
+            background: 'rgba(20,58,46,.92)',
+            color: '#f4efe2',
+            fontSize: 11,
+            fontWeight: 900,
+            letterSpacing: '.06em',
+            textTransform: 'uppercase',
+            boxShadow: '0 10px 28px rgba(20,58,46,.22)',
+          }}
+        >
+          <span>Live student dash · {displayName || 'student'}</span>
+          <button
+            type="button"
+            onClick={() => navigate('/tutor')}
+            style={{
+              border: '1px solid rgba(244,239,226,.35)',
+              background: 'transparent',
+              color: '#f4efe2',
+              borderRadius: 999,
+              padding: '4px 10px',
+              fontSize: 10,
+              fontWeight: 900,
+              letterSpacing: '.08em',
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+            }}
+          >
+            Back to tutor
+          </button>
+        </div>
+      )}
+      {!viewingAs && (
       <button
         type="button"
         onClick={() => navigate(preview ? '/try/manjushree' : '/manjushree')}
@@ -465,7 +541,8 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
         className={s.secretPortal}
         data-glow={manjushreeGlow ? '1' : '0'}
       />
-      {showCover && (
+      )}
+      {showCover && !viewingAs && (
         <CoverLanding
           entryLabel="your ACT study notebook"
           accountName={displayName}
@@ -513,7 +590,9 @@ export default function Dashboard({ preview = false }: { preview?: boolean }) {
           </div>
           <div className={s.canvasUser}>
             {displayName && <span>{displayName}</span>}
-            <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>sign out</button>
+            <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>
+              {viewingAs ? 'back to tutor' : 'sign out'}
+            </button>
           </div>
         </header>
 

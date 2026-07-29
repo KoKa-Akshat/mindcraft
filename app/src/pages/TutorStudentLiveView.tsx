@@ -1,22 +1,18 @@
 /**
- * Live read-only view of a student's dash signals for tutors.
- * Admin wires tutor-student links; this page just loads live ML + briefing.
+ * Tutor Admin → full live student dashboard (same UI the student sees).
+ * Practice writes stay on the student account; tutor can browse live Home/Map/Work/Notes.
  */
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
-import TutorBriefingPanel from '../components/TutorBriefingPanel'
-import StudentIntelPanel from '../components/StudentIntelPanel'
-import s from './TutorDashboard.module.css'
+import Dashboard from './Dashboard'
 
 export default function TutorStudentLiveView() {
   const { studentId = '' } = useParams()
   const user = useUser()
   const navigate = useNavigate()
-  const [name, setName] = useState('Student')
-  const [examTrack, setExamTrack] = useState('ACT')
   const [allowed, setAllowed] = useState(false)
 
   useEffect(() => {
@@ -28,61 +24,36 @@ export default function TutorStudentLiveView() {
         navigate('/dashboard', { replace: true })
         return
       }
-      if (!studentId) return
+      if (!studentId) {
+        navigate('/tutor', { replace: true })
+        return
+      }
       const snap = await getDoc(doc(db, 'users', studentId))
       if (cancelled) return
       if (!snap.exists()) {
         navigate('/tutor', { replace: true })
         return
       }
-      const d = snap.data()
-      setName(d.displayName || d.email?.split('@')[0] || 'Student')
-      setExamTrack(d.examTrack || d.exam || d.diagnosticExam || 'ACT')
       setAllowed(true)
     })()
     return () => { cancelled = true }
   }, [user.uid, studentId, navigate])
 
-  if (!allowed) {
+  if (!allowed || !studentId) {
     return (
-      <div className={s.shell}>
-        <div className={s.loading}><div className={s.spinner} /></div>
+      <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center' }}>
+        <div style={{
+          width: 32,
+          height: 32,
+          borderRadius: '50%',
+          border: '3px solid rgba(20,58,46,.15)',
+          borderTopColor: '#143a2e',
+          animation: 'spin 0.7s linear infinite',
+        }} />
+        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
       </div>
     )
   }
 
-  return (
-    <div className={s.shell}>
-      <header className={s.topBar}>
-        <div className={s.topLeft}>
-          <Link to="/tutor" className={s.logo}>Mind<span>Craft</span></Link>
-          <span className={s.topLabel}>Live student view</span>
-        </div>
-        <div className={s.topRight}>
-          <button type="button" className={s.signOutBtn} onClick={() => navigate('/tutor')}>
-            Back to tutor
-          </button>
-        </div>
-      </header>
-
-      <main className={s.livePage}>
-        <div className={s.liveBanner}>
-          Viewing <strong>{name}</strong> live. Same briefing and intel the student dash draws from.
-        </div>
-        <div className={s.grid}>
-          <div className={s.col}>
-            <TutorBriefingPanel studentId={studentId} studentName={name} examTrack={examTrack} />
-          </div>
-          <div className={s.col}>
-            <div className={s.card}>
-              <div className={s.cardHeader}>
-                <span className={s.cardLabel}>Intelligence</span>
-              </div>
-              <StudentIntelPanel studentId={studentId} studentName={name} />
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-  )
+  return <Dashboard viewAsStudentId={studentId} />
 }

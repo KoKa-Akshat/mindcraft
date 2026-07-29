@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import { useUser } from '../App'
 import {
   collection, addDoc, onSnapshot, orderBy, query,
@@ -21,16 +21,33 @@ interface Message {
 
 export default function Chat() {
   const user = useUser()
+  const location = useLocation()
   const { partnerId } = useParams<{ partnerId: string }>()
   const chatId = [user.uid, partnerId!].sort().join('_')
 
   const [messages, setMessages]       = useState<Message[]>([])
   const [text, setText]               = useState('')
   const [partnerName, setPartnerName] = useState('...')
+  const [backTo, setBackTo]           = useState('/dashboard')
   const [uploadProgress, setUploadProgress] = useState<number | null>(null)
   const [sending, setSending]         = useState(false)
   const fileRef  = useRef<HTMLInputElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
+
+  // Back target: role home (tutors → /tutor), not marketing /
+  useEffect(() => {
+    const fromState = (location.state as { from?: string } | null)?.from
+    if (fromState && fromState.startsWith('/')) {
+      setBackTo(fromState)
+      return
+    }
+    void getDoc(doc(db, 'users', user.uid)).then(snap => {
+      const role = snap.data()?.role
+      if (role === 'tutor' || role === 'admin') setBackTo('/tutor')
+      else if (role === 'parent') setBackTo('/parent')
+      else setBackTo('/dashboard')
+    }).catch(() => setBackTo('/dashboard'))
+  }, [user.uid, location.state])
 
   // Load partner name
   useEffect(() => {
@@ -103,7 +120,7 @@ export default function Chat() {
   return (
     <div className={s.shell}>
       <div className={s.header}>
-        <Link to="/" className={s.back}>←</Link>
+        <Link to={backTo} className={s.back} aria-label="Back">←</Link>
         <div className={s.headerInfo}>
           <div className={s.avatar}>{partnerName[0]?.toUpperCase()}</div>
           <div>

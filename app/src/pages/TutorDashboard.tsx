@@ -18,7 +18,6 @@ import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
 import { fmtDateTime, timeUntil } from '../utils/format'
 import type { Session, TutorStudent as Student } from '../types'
-import StudentIntelPanel from '../components/StudentIntelPanel'
 import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
@@ -28,7 +27,6 @@ import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import { getStudentProfile, conceptLabel, type StudentProfileResult } from '../lib/mlApi'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
-import { DEFAULT_STUDY_PATH } from '../lib/studyPathConfig'
 
 type DashPanel = 'home' | 'student' | 'profile' | 'notes'
 const CALENDLY_GUIDE = '/guides/calendly-setup.html'
@@ -148,10 +146,6 @@ export default function TutorDashboard() {
   const [profileLoading, setProfileLoading] = useState(true)
   const [conceptBars, setConceptBars]   = useState<ConceptBar[]>([])
   const [lastActiveTs, setLastActiveTs] = useState<number | null>(null)
-  const [showIntel, setShowIntel]       = useState(false)
-  const [tutorFocusInput, setTutorFocusInput] = useState('')
-  const [masteryMin, setMasteryMin] = useState(DEFAULT_STUDY_PATH.masteryExitMin)
-  const [savingPath, setSavingPath] = useState(false)
 
   // Load the first assigned student (users.assignedTutorId === tutor uid)
   useEffect(() => {
@@ -197,36 +191,6 @@ export default function TutorDashboard() {
       examTrack: st.id === heroStudent?.id ? (heroStudent?.examTrack || 'ACT') : 'ACT',
     }
   }, [selectedStudent, students, heroStudent])
-
-  useEffect(() => {
-    if (!focusStudent?.id) return
-    void getDoc(doc(db, 'users', focusStudent.id)).then(snap => {
-      const d = snap.data()
-      const focus = Array.isArray(d?.tutorFocusConcepts) ? d.tutorFocusConcepts as string[] : []
-      setTutorFocusInput(focus.join(', '))
-      setMasteryMin(d?.studyPathConfig?.masteryExitMin ?? DEFAULT_STUDY_PATH.masteryExitMin)
-    })
-  }, [focusStudent?.id])
-
-  async function saveStudyPathForStudent() {
-    if (!focusStudent?.id) return
-    setSavingPath(true)
-    try {
-      const concepts = tutorFocusInput.split(',').map(c => c.trim()).filter(Boolean)
-      await updateDoc(doc(db, 'users', focusStudent.id), {
-        tutorFocusConcepts: concepts,
-        studyPathConfig: {
-          ...DEFAULT_STUDY_PATH,
-          masteryExitMin: Math.max(3, Math.min(14, masteryMin)),
-        },
-      })
-      showToast('Study path updated for student')
-    } catch {
-      showToast('Could not save. Try again')
-    } finally {
-      setSavingPath(false)
-    }
-  }
 
   // ML profile + knowledge graph + last-active for the focused student
   useEffect(() => {
@@ -1040,7 +1004,7 @@ export default function TutorDashboard() {
                 <div className={s.card}>
                   <div className={s.cardHeader}>
                     <span className={s.cardLabel}>Live comment</span>
-                    <Link to={`/chat/${focusStudent.id}`} className={s.openChatLink}>Open chat →</Link>
+                    <Link to={`/chat/${focusStudent.id}`} state={{ from: '/tutor' }} className={s.openChatLink}>Open chat →</Link>
                   </div>
                   {chatMessages.length === 0 ? (
                     <p className={s.emptyText}>No messages yet. Chat stays live once you both write.</p>
@@ -1167,11 +1131,11 @@ export default function TutorDashboard() {
                 <div className={s.cardHeader}>
                   <span className={s.cardLabelRow}>
                     {activityLiveNow && <span className={s.livePip} />}
-                    <span className={s.cardLabel}>Live Activity</span>
+                    <span className={s.cardLabel}>Live practice</span>
                   </span>
                 </div>
                 {activity.length === 0 ? (
-                  <p className={s.emptyText}>No practice activity yet</p>
+                  <p className={s.emptyText}>Their practice answers show up here as they work.</p>
                 ) : (
                   <div className={s.feedList}>
                     {activity.map((a, i) => {
@@ -1226,47 +1190,6 @@ export default function TutorDashboard() {
                 </div>
               )}
 
-              {focusStudent && (
-                <div className={s.card}>
-                  <div className={s.cardHeader}>
-                    <span className={s.cardLabel}>Study path</span>
-                  </div>
-                  <label className={s.pathField}>
-                    Focus concepts (comma-separated slugs)
-                    <input
-                      className={s.pathInput}
-                      value={tutorFocusInput}
-                      onChange={e => setTutorFocusInput(e.target.value)}
-                      placeholder="descriptive_statistics, linear_equations"
-                    />
-                  </label>
-                  <label className={s.pathField}>
-                    Mastery exit after N questions
-                    <input
-                      className={s.pathInput}
-                      type="number"
-                      min={3}
-                      max={14}
-                      value={masteryMin}
-                      onChange={e => setMasteryMin(parseInt(e.target.value, 10) || 5)}
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    className={s.intelToggle}
-                    disabled={savingPath}
-                    onClick={() => void saveStudyPathForStudent()}
-                  >
-                    {savingPath ? 'Saving…' : 'Save study path'}
-                  </button>
-                  <button type="button" className={s.intelToggle} onClick={() => setShowIntel(v => !v)}>
-                    {showIntel ? 'Hide Intelligence Report' : 'Full Intelligence Report →'}
-                  </button>
-                  {showIntel && (
-                    <StudentIntelPanel studentId={focusStudent.id} studentName={focusStudent.name} />
-                  )}
-                </div>
-              )}
             </div>
           </div>
         )}
