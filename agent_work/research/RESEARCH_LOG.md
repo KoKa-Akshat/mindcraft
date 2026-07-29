@@ -4,6 +4,29 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-29 — Synthesizer tick: v1.6 merge XXXIII–XL
+
+**Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since last synthesizer — none previously logged)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition v1.6); `NEXT_LAB.md`; this log. No new chapter.  
+**Claim examined / cleaned:** Parallel “motivation,” “AI tutor,” “mastery,” and “engagement” framings after Parts XXXIII–XL — risk of orphan experiment families and contradictory marketing.
+
+**Merge actions:**
+- New **I.4 Surviving doctrine stack** — FEI/SAFE-CRAFT, L0–L4 ladder, PWC, E×V×Cost, TARGET/mastery climate, block→interleave→mix, student-generated why, competitive wedge, equity of worlds.
+- Executive Summary I.1–I.3 refreshed: solo transfer, mastery-motive challenge-seeking, Bastani kills, streak/blocked-fluency kills.
+- Part IX densifies A/D into AIT/DAG/CSA/EVT/GO/IL/SE families.
+- Part XIV adds Kills #6–#9 (AI≡product, blocked/streak/shuffle, AI-monologue≡SE, one motivation dial).
+- Part XX/XXI/glossary/XVII.3/Appendix F aligned; metrics add `solo_transfer_pass`, `ai_reveal_rate`, `strategy_class_error`, `se_principle_hit`.
+
+**Weak arguments removed / demoted:** Separate North Stars for “AI tutor warmth,” “engagement,” and “mastery label without transfer”; treating chapter experiment IDs as optional lore.
+
+**Claim killed (synthesis):** That MindCraft can market explanation volume, AI tutor equivalence, streak/blocked fluency, or untargeted explain-boxes as interchangeable proofs of identity transformation.
+
+**Next researcher id:** **41** (Desirable difficulties × anxiety) — flagged as bottleneck in I.4.
+
+**PDF:** Regenerate after v1.6 OS edit.
+
+---
+
 ## 2026-07-29 — Researcher tick: Part XL Self-explanation prompts
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch40 never written → prefer Researcher per rotation)  

@@ -12,7 +12,7 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 38 | Goal orientation (mastery vs performance) | Ames/Elliot; product goal framing — **DONE** Part XXXVIII |
 | 39 | Interleaving vs blocking in math | Rohrer line; when to interleave |
 | 40 | Worked examples + self-explanation | Chi/Renkl; prompts that force generation — **DONE** Part XL |
-| 41 | Desirable difficulties × anxiety | Bjork vs Ashcraft conflict resolution | **NEXT** in NEXT_LAB |
+| 41 | Desirable difficulties × anxiety | Bjork vs Ashcraft conflict resolution | **NEXT** in NEXT_LAB (post v1.6 Synthesizer) |
 
 | 42 | Social comparison & leaderboards | When ranks help/hurt novices |
 | 43 | Habit formation science (Wood/Clear) | Cue design without identity colonization |
