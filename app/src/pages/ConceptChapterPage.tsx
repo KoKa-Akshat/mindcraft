@@ -11,6 +11,7 @@ import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPe
 import { loadQuestionWork, saveQuestionWork } from '../lib/studentWork'
 import { submitWorkEvidenceIfReady } from '../lib/workEvidence'
 import { appendChapterWorkToJournal } from '../lib/chapterJournal'
+import { recordWrongAnswer, resolveWrongAnswerNote } from '../lib/wrongAnswerNotes'
 import { selectStoryForConcept } from '../lib/storySelection'
 import { selectSceneForQuestion } from '../lib/sceneSelection'
 import { resolveQuestionStem } from '../lib/questionStem'
@@ -586,6 +587,13 @@ export default function ConceptChapterPage() {
     else navigate(-1)
   }
 
+  // Title click + "Go to Notes" both land here: this chapter's open gaps on
+  // the Notes page (StudentSessions.tsx), scoped via ?concept=. Does not
+  // touch the page-dot nav below — those still only flip panels.
+  const goToChapterNotes = () => {
+    navigate(`/sessions?concept=${encodeURIComponent(canonicalId)}`)
+  }
+
   const goToPanel = (i: number, d: 'f' | 'b') => {
     if (i < 0) {
       goBack()
@@ -736,6 +744,19 @@ export default function ConceptChapterPage() {
       playTap()
       setWriteMode(false) // exit Write so choices are tappable again
       setWrongCoach({ qIdx, line: coachLineForWrong(q) })
+      // Gap note: only the FIRST wrong pick on this question gets saved — an
+      // empty eliminated list here means this is that first pick. Later
+      // wrong picks at the same question never overwrite it (see
+      // recordWrongAnswer's own no-op-if-already-open guard too).
+      if (user?.uid && (eliminated[qIdx] ?? []).length === 0) {
+        void recordWrongAnswer(user.uid, {
+          question: q,
+          conceptId: canonicalId,
+          conceptName: cs.conceptName,
+          selectedIndex: chosen,
+          source: 'chapter',
+        })
+      }
       setEliminated(e => ({
         ...e,
         [qIdx]: [...new Set([...(e[qIdx] ?? []), chosen])],
@@ -756,6 +777,8 @@ export default function ConceptChapterPage() {
     setSubmitted(d => ({ ...d, [qIdx]: true }))
 
     if (!user?.uid || !q?.id) return
+
+    void resolveWrongAnswerNote(user.uid, q.id)
 
     const workLines = scratchInk[qIdx]?.workLines ?? []
     void saveQuestionWork(user.uid, {
@@ -986,8 +1009,22 @@ export default function ConceptChapterPage() {
 
       <header className={s.canvasChrome}>
         <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
-        <span className={s.canvasWordmark}>{cs.conceptName}</span>
+        <button
+          type="button"
+          className={`${s.canvasWordmark} ${s.wordmarkBtn}`}
+          onClick={goToChapterNotes}
+          title="Go to your notes for this chapter"
+        >
+          {cs.conceptName}
+        </button>
         <div className={s.canvasChromeRight}>
+          <button
+            type="button"
+            className={s.notesChromeBtn}
+            onClick={goToChapterNotes}
+          >
+            Go to Notes
+          </button>
           {currentPanel?.kind === 'quest' && (
             <button
               type="button"

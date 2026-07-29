@@ -38,6 +38,7 @@ import { markDiagnosticComplete, markWeeklyPaperComplete, savePracticeDraftRemot
 import { buildNoContentMessage } from '../lib/ontologyBankCoverage'
 import { pathMasteredStorageKey, notifyPracticePathUpdated } from '../lib/practicePathQueue'
 import { loadDashboardPersonalization, toggleBookmark } from '../lib/dashboardPersonalization'
+import { recordWrongAnswer, resolveWrongAnswerNote } from '../lib/wrongAnswerNotes'
 import { solveWithGemini, clueWithGemini } from '../lib/geminiHomework'
 import { fetchStoryModule, type StoryModule, type StoryModuleContext } from '../lib/storyModule'
 import { resolveQuestionStem } from '../lib/questionStem'
@@ -1403,10 +1404,25 @@ export default function Practice() {
     const currentQ = questions[qIndex]
     const correct = sel === currentQ.correctIndex
 
+    // Gap note: resolve on ANY correct answer, in or out of diagnostic mode —
+    // marking a note resolved never reveals correctness to the student, it
+    // just closes the record silently, wherever the retry happened.
+    if (correct && user?.uid) void resolveWrongAnswerNote(user.uid, currentQ.id)
+
     // Soft wrong (neurodivergent-safe): wiggle + dim, try again — no red buzz, no lock-in.
     if (!correct && !hideCorrectness) {
       playTap()
       setWrongCoachLine(coachLineForWrong(currentQ))
+      // Gap note: only the FIRST wrong pick on this question gets saved (see
+      // recordWrongAnswer — it also no-ops if a note is already open).
+      if (user?.uid && eliminatedChoices.length === 0) {
+        void recordWrongAnswer(user.uid, {
+          question: currentQ,
+          conceptId: toOntologyId(currentQ.conceptId),
+          selectedIndex: sel,
+          source: 'practice',
+        })
+      }
       setEliminatedChoices(prev => (prev.includes(sel!) ? prev : [...prev, sel!]))
       setWiggleChoice(sel)
       window.setTimeout(() => setWiggleChoice(null), 520)

@@ -66,12 +66,50 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Button reset for the title-as-link-to-Notes affordance — same visual
+   weight as the plain wordmark, just clickable, with an underline hint on
+   hover/focus so it doesn't look like dead text. */
+.wordmarkBtn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration-color: rgba(58, 47, 85, 0.35);
+  text-underline-offset: 5px;
+}
+.wordmarkBtn:hover,
+.wordmarkBtn:focus-visible {
+  text-decoration: underline;
+}
 .canvasChromeRight {
   display: flex;
   align-items: center;
   gap: 8px;
   position: relative;
   z-index: 40;
+}
+
+/* "Go to Notes" — a real, always-visible affordance distinct from the title
+   click (which does the same thing). Quieter than the neon Write button. */
+.notesChromeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1.5px solid var(--theme-accent, #3a2f55);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--theme-accent, #3a2f55);
+  font: 700 11px/1 var(--tok-font-mono);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+.notesChromeBtn:hover {
+  background: var(--theme-accent, #3a2f55);
+  color: #fff;
 }
 
 /* Big, always-visible Write control in the top chrome (not buried in the sheet). */

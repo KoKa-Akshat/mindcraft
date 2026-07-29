@@ -492,6 +492,83 @@
   color: var(--paper-sheet);
 }
 
+.gapSectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gapClearFocus {
+  background: transparent;
+  border: none;
+  color: var(--paper-accent-blue);
+  font: 600 11px/1.2 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  cursor: pointer;
+  padding: 0;
+}
+.gapClearFocus:hover { text-decoration: underline; }
+
+.gapEmpty {
+  font: italic 500 14px/1.6 var(--font-serif);
+  color: var(--paper-ink-dim);
+  margin: 4px 0 0;
+}
+
+.gapStem {
+  font: 600 15px/1.4 var(--font-hand);
+  color: var(--paper-ink-katha);
+  margin: 0 0 6px;
+}
+
+.gapPicked {
+  font: 500 12px/1.5 var(--font-mono);
+  color: var(--paper-ink-faded);
+  margin: 0 0 8px;
+  letter-spacing: 0.01em;
+}
+
+.gapDiagnosis {
+  font: italic 500 13.5px/1.6 var(--font-serif);
+  color: var(--paper-ink);
+  background: var(--paper-sheet-recessed);
+  border-left: 2px solid var(--paper-accent-blue);
+  padding: 8px 12px;
+  margin: 0 0 12px;
+  border-radius: 0 2px 2px 0;
+}
+
+.gapClosedToggleRow {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 4px;
+}
+
+.gapClosedToggle {
+  background: transparent;
+  border: 1px solid var(--paper-edge);
+  color: var(--paper-ink-dim);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+.gapClosedToggle:hover { border-color: var(--paper-ink-faded); color: var(--paper-ink-katha); }
+
+.gapClosedCard { opacity: 0.72; margin-top: 12px; }
+
+.gapClosedNote {
+  font: 600 12px/1.4 var(--font-mono);
+  color: #247a4d;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
 @media (max-width: 780px) {
   .page { padding: 0 16px 40px; }
   .header { flex-wrap: wrap; align-items: flex-start; }

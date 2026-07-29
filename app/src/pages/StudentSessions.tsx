@@ -8,13 +8,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { db } from '../firebase'
 import { collection, query, where, onSnapshot, getDocs, orderBy } from 'firebase/firestore'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUser } from '../App'
 import QuestionWorkView from '../components/QuestionWorkView'
 import Sidebar  from '../components/Sidebar'
 import conceptStoriesData from '../data/conceptStories.json'
 import { getQuestionById } from '../lib/questionBank'
 import { groupWorkByConcept } from '../lib/workEvidence'
+import { subscribeWrongAnswerNotes, type WrongAnswerNoteEntry } from '../lib/wrongAnswerNotes'
 import type { StudentWorkEntry } from '../types'
 import s        from './StudentSessions.module.css'
 
@@ -49,8 +50,15 @@ const CONCEPT_STORIES = conceptStoriesData as Record<string, { conceptName?: str
 export default function StudentSessions() {
   const user     = useUser()
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  // ?concept=<canonicalId> — set when arriving from a chapter's title click or
+  // "Go to Notes" button (ConceptChapterPage.tsx); scopes the Open gaps
+  // section to that one chapter without forking a whole new page/route.
+  const conceptFocus = searchParams.get('concept')
   const [sessions,  setSessions]  = useState<Session[]>([])
   const [workEntries, setWorkEntries] = useState<StudentWorkEntry[]>([])
+  const [wrongNotes, setWrongNotes] = useState<WrongAnswerNoteEntry[]>([])
+  const [showClosedGaps, setShowClosedGaps] = useState(false)
   const [loading,   setLoading]   = useState(true)
   const [expanded,  setExpanded]  = useState<string | null>(null)
   const [expandedWork, setExpandedWork] = useState<string | null>(null)
@@ -132,6 +140,54 @@ export default function StudentSessions() {
   }), [workEntries])
   const workCount = conceptWorkGroups.reduce((sum, group) => sum + group.entries.length, 0)
 
+  useEffect(() => {
+    if (!user?.uid) return
+    const unsub = subscribeWrongAnswerNotes(user.uid, setWrongNotes)
+    return () => unsub()
+  }, [user?.uid])
+
+  const getGapConceptName = (conceptId: string, entry: WrongAnswerNoteEntry) =>
+    entry.conceptName ?? CONCEPT_STORIES[conceptId]?.conceptName
+  const getGapStem = (entry: WrongAnswerNoteEntry) => entry.questionStem
+
+  const openGapGroups = useMemo(() => {
+    const groups = groupWorkByConcept(wrongNotes.filter(n => !n.resolved), {
+      cap: 500,
+      getConceptName: getGapConceptName,
+      getQuestionStem: getGapStem,
+    })
+    return conceptFocus ? groups.filter(g => g.conceptId === conceptFocus) : groups
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wrongNotes, conceptFocus])
+  const openGapCount = openGapGroups.reduce((sum, group) => sum + group.entries.length, 0)
+
+  const closedGapGroups = useMemo(() => {
+    const groups = groupWorkByConcept(wrongNotes.filter(n => n.resolved), {
+      cap: 500,
+      getConceptName: getGapConceptName,
+      getQuestionStem: getGapStem,
+    })
+    return conceptFocus ? groups.filter(g => g.conceptId === conceptFocus) : groups
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wrongNotes, conceptFocus])
+  const closedGapCount = closedGapGroups.reduce((sum, group) => sum + group.entries.length, 0)
+
+  const focusConceptName = conceptFocus
+    ? (CONCEPT_STORIES[conceptFocus]?.conceptName ?? openGapGroups[0]?.conceptName ?? closedGapGroups[0]?.conceptName ?? conceptFocus)
+    : null
+
+  function clearConceptFocus() {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev)
+      next.delete('concept')
+      return next
+    })
+  }
+
+  function practiceGapAgain(entry: WrongAnswerNoteEntry) {
+    navigate('/practice', { state: { questionId: entry.questionId, conceptId: entry.conceptId } })
+  }
+
   function toggleSource(conceptId: string, entryId: string) {
     setSelectedSources(prev => {
       const current = prev[conceptId] ?? []
@@ -187,6 +243,96 @@ export default function StudentSessions() {
                 >
                   Work through what we covered →
                 </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {!loading && (openGapGroups.length > 0 || closedGapCount > 0 || conceptFocus) && (
+          <div className={s.workLedger}>
+            <div className={s.gapSectionHead}>
+              <h2 className={s.workSectionTitle}>
+                {conceptFocus ? `Open gaps · ${focusConceptName}` : 'Open gaps'}
+              </h2>
+              {conceptFocus && (
+                <button type="button" className={s.gapClearFocus} onClick={clearConceptFocus}>
+                  ← all notes
+                </button>
+              )}
+            </div>
+
+            {openGapGroups.length === 0 ? (
+              <p className={s.gapEmpty}>No open gaps here. Nice.</p>
+            ) : (
+              <div className={s.list}>
+                {openGapGroups.map(group => (
+                  <div key={group.conceptId} className={s.card}>
+                    <div className={s.cardTop}>
+                      <div className={s.cardLeft}>
+                        <span className={s.subject}>gap</span>
+                        <h3 className={s.sessionTitle}>{group.conceptName}</h3>
+                        <div className={s.meta}>
+                          <span>{group.entries.length} open</span>
+                          <span className={s.dot}>·</span>
+                          <span>{new Date(group.lastWorkedAt).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={s.notebookBody}>
+                      <div className={s.questionRows}>
+                        {group.entries.map(entry => (
+                          <div key={entry.id} className={s.questionRow}>
+                            <p className={s.gapStem}>{entry.recallTag ?? entry.questionStem}</p>
+                            <p className={s.gapPicked}>
+                              First pick: “{entry.choices[entry.selectedIndex] ?? entry.questionStem}”
+                            </p>
+                            <p className={s.gapDiagnosis}>{entry.diagnosis}</p>
+                            <button
+                              type="button"
+                              className={s.openWorkBtn}
+                              onClick={() => practiceGapAgain(entry)}
+                            >
+                              Close this gap →
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {closedGapCount > 0 && (
+              <div className={s.gapClosedToggleRow}>
+                <button
+                  type="button"
+                  className={s.gapClosedToggle}
+                  onClick={() => setShowClosedGaps(v => !v)}
+                >
+                  {showClosedGaps ? 'Hide closed gaps' : `See closed gaps (${closedGapCount})`}
+                </button>
+              </div>
+            )}
+
+            {showClosedGaps && closedGapGroups.map(group => (
+              <div key={`closed-${group.conceptId}`} className={`${s.card} ${s.gapClosedCard}`}>
+                <div className={s.cardTop}>
+                  <div className={s.cardLeft}>
+                    <span className={s.subject}>closed</span>
+                    <h3 className={s.sessionTitle}>{group.conceptName}</h3>
+                  </div>
+                </div>
+                <div className={s.notebookBody}>
+                  <div className={s.questionRows}>
+                    {group.entries.map(entry => (
+                      <div key={entry.id} className={s.questionRow}>
+                        <p className={s.gapStem}>{entry.recallTag ?? entry.questionStem}</p>
+                        <p className={s.gapClosedNote}>Closed. That gap is gone.</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

@@ -113,6 +113,23 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Per-question "gap" notes (WRONG_ANSWER_NOTES feature): the first wrong
+    // pick a student makes on a question, plus a diagnosis, kept open until
+    // that exact question is answered correctly again. Same shape as
+    // student_work / homework_sessions: a student owns and can update only
+    // their own notes; a linked parent can read their child's.
+    match /wrong_answer_notes/{docId} {
+      allow create, update: if request.auth != null
+        && request.resource.data.studentId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.studentId == request.auth.uid
+        || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childId == resource.data.studentId
+        || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds is list
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.childIds.hasAny([resource.data.studentId]))
+      );
+      allow delete: if false;
+    }
+
     match /chats/{chatId} {
       allow read, write: if request.auth != null && (
         chatId.split('_')[0] == request.auth.uid ||
