@@ -622,15 +622,16 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
   <nav class="nav nav-green">
     <a class="brand" href="#top">Mind<span>Craft</span></a>
     <div class="nav-links">
-      <a href="#loop">How it works</a>
-      <a href="#demo">ACT</a>
+      <a href="#proof">Proof</a>
       <a href="#try-app">Tutors</a>
-      <a href="#parents">Parents</a>
+      <a href="#system">Voices</a>
+      <a href="#demo">ACT</a>
       <a class="join" href="#intake">Apply</a>
     </div>
     <a class="mobile-try" href="#intake">Apply</a>
   </nav>
   <main>
+
     <section class="hero" id="top" data-nav="green">
       <div class="hero-bg" aria-hidden="true"></div>
       <svg class="hero-map" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -679,12 +680,161 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       </div>
     </section>
 
+    <section class="steps" id="proof" data-nav="paper">
+      <div class="wrap reveal">
+        <p class="label">The proof</p>
+        <h2>Not “bad at math.”<br>One exact gap, named.</h2>
+        <p class="panel-lead" style="margin-top:14px;max-width:40ch;color:var(--muted);font-family:'DM Serif Display',Georgia,serif;font-size:clamp(20px,2.4vw,28px);line-height:1.25">Then a college tutor starts on that gap, not page one.</p>
+        <div class="journey-demo" style="margin-top:32px">
+          <div class="journey-left">
+            <strong>Sample</strong>
+            <h3>Maya misses slope questions.</h3>
+            <p>Not “bad at algebra.” One earlier idea slipped: she treats the point as the intercept.</p>
+            <div class="journey-questions" aria-label="Sample diagnostic answers">
+              <div class="journey-q good"><span>01</span><b>Reads a graph</b><em>solid</em></div>
+              <div class="journey-q"><span>02</span><b>Uses (3, 5) as b</b><em>fragile</em></div>
+              <div class="journey-q"><span>03</span><b>Equation collapses</b><em>gap</em></div>
+            </div>
+          </div>
+          <div class="journey-right">
+            <div class="journey-map" aria-label="Concept route">
+              <div class="journey-route">
+                <svg viewBox="0 0 520 220" fill="none" aria-hidden="true">
+                  <path d="M42 56 C126 28 168 112 250 112 C334 112 354 172 474 148" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="42" cy="56" r="10" fill="#5fb779"/>
+                  <circle cx="250" cy="112" r="12" fill="#e8d16b"/>
+                  <circle cx="474" cy="148" r="13" fill="#c1180b"/>
+                </svg>
+              </div>
+              <span class="map-pill pill-a">Graph</span>
+              <span class="map-pill pill-b">Slope</span>
+              <span class="map-pill pill-c">Point-intercept</span>
+            </div>
+            <div class="view-grid">
+              <article class="view-card"><small>Tutor to parent</small><p>Today she found the step that was slipping. Next session, we make it stick.</p></article>
+              <article class="view-card"><small>Tutor to child</small><p>You’re doing great. This one missing idea is the whole puzzle.</p></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tryapp" id="try-app" data-nav="cream">
+      <div class="wrap">
+        <div class="findtutor-card reveal">
+          <div class="findtutor-copy">
+            <p class="label">Real tutors</p>
+            <h2>Clear support.</h2>
+            <ul class="tutor-benefits">
+              <li>Find excellent tutors around you.</li>
+              <li>Book a call to set up learning at college, at home, or online.</li>
+              <li>Keep one tutor for math. Let your child explore music, art, and more with other nearby talent.</li>
+            </ul>
+            <div class="findtutor-actions">
+              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Find &amp; book a tutor near you</a>
+            </div>
+          </div>
+          <div class="findtutor-map-wrap">
+            <form class="findtutor-search" id="ftSearchForm">
+              <input id="ftAddress" type="search" placeholder="Try St Paul, Myrtle Beach, or Chapel Hill" autocomplete="street-address" aria-label="Find tutors near an address">
+              <button type="submit">Search</button>
+            </form>
+            <p class="findtutor-status" id="ftStatus" aria-live="polite"></p>
+            <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near you"></div>
+            <div class="findtutor-list" id="ftTutorList"></div>
+            <div class="college-strip" aria-label="Tutor colleges">
+              <img src="img/colleges/macalester.png" alt="Macalester">
+              <img src="img/colleges/st-olaf.png" alt="St. Olaf">
+              <img src="img/colleges/st-thomas.webp" alt="St. Thomas">
+              <img src="img/colleges/unc.png" alt="UNC Chapel Hill">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="support" id="system" data-nav="cream">
+      <div class="wrap">
+        <div class="support-head reveal">
+          <p class="label">Voices</p>
+          <h2 class="support-title">
+            <span>How MindCraft supports</span>
+            <span class="support-title-line">
+              students
+              <button type="button" class="support-scroll-btn" id="supportNextBtn" aria-controls="supportRail" aria-label="Next review"><span aria-hidden="true">⟶</span></button>
+            </span>
+          </h2>
+        </div>
+        <div class="support-rail reveal" id="supportRail" tabindex="0" aria-label="Student and parent reviews">
+          <article class="support-slide" data-review="sebastian">
+            <aside class="support-quote">
+              <blockquote>“My tutor inspired me to be a better person as well as a student. He came down to my level and explained things in ways I would understand.”</blockquote>
+              <cite>Sebastian · MindCraft student</cite>
+              <p class="support-caption">Anything is achievable when someone meets you at your level.</p>
+            </aside>
+            <div class="vocal-frame">
+              <video controls playsinline preload="metadata" poster="img/mindcraft-logo.png" title="Sebastian student feedback">
+                <source src="img/testimonials/sebastian-feedback.mp4" type="video/mp4">
+              </video>
+            </div>
+          </article>
+          <article class="support-slide is-quote-only" data-review="gill">
+            <aside class="support-quote">
+              <blockquote>“Sebastian needs someone who understands what he doesn’t understand about math, not just homework help.”</blockquote>
+              <cite>Gillian · Sebastian’s parent</cite>
+              <p class="support-caption">ACT coming up. Feeling stuck. She wished they had called sooner.</p>
+            </aside>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel-forest" id="loop" data-nav="green">
+      <div class="wrap">
+        <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto">
+          <span class="panel-kicker">How it works</span>
+          <h2>What happens in a session</h2>
+          <p class="panel-lead" style="margin-left:auto;margin-right:auto">Find the break. Remember it. Fix it. Prove it stuck.</p>
+        </div>
+        <div class="loop-grid reveal" role="list">
+          <article class="loop-step" role="listitem"><i>1</i><h3>See the break</h3><p>We name the exact missing skill, not “needs more math.”</p></article>
+          <article class="loop-step" role="listitem"><i>2</i><h3>Remember it</h3><p>The living record keeps what clicked and what to try next.</p></article>
+          <article class="loop-step" role="listitem"><i>3</i><h3>Tutor starts ready</h3><p>A 60 second brief so the session is teaching, not guessing.</p></article>
+          <article class="loop-step" role="listitem"><i>4</i><h3>Prove it stuck</h3><p>A solo check after help. You see: clicked, stuck, next.</p></article>
+        </div>
+        <p class="loop-foot reveal">Learning should not reset when the Zoom call ends.</p>
+      </div>
+    </section>
+
+    <section class="parents-why panel-forest" id="parents" data-nav="green">
+      <div class="wrap">
+        <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto">
+          <span class="panel-kicker">For parents</span>
+          <h2>Why parents choose MindCraft</h2>
+          <p class="panel-lead" style="margin-left:auto;margin-right:auto">Clear support without becoming the math teacher.</p>
+        </div>
+        <div class="parent-grid reveal">
+          <article class="parent-card"><strong>01</strong><p>Clearer diagnosis</p></article>
+          <article class="parent-card"><strong>02</strong><p>Less wasted tutoring time</p></article>
+          <article class="parent-card"><strong>03</strong><p>Less fighting about homework</p></article>
+          <article class="parent-card"><strong>04</strong><p>A tutor they trust</p></article>
+          <article class="parent-card"><strong>05</strong><p>Visible score improvement</p></article>
+          <article class="parent-card"><strong>06</strong><p>Confidence learning is real</p></article>
+        </div>
+        <div class="parents-story reveal">
+          <p class="parents-pull">One person knows your journey.<br>A world of people can contribute to it.</p>
+          <p class="parents-story-foot">ACT math first. Confidence and study skills as we grow.</p>
+        </div>
+        <p class="why-foot reveal">Parents buy clarity, trust, and steady progress.</p>
+      </div>
+    </section>
+
     <section class="demo" id="demo" data-nav="cream">
       <div class="wrap demo-wrap reveal">
         <div class="demo-copy">
-          <p class="label">ACT Demo</p>
+          <p class="label">Try it</p>
           <h2 id="demoHeading">Who came up with these frivolous things?</h2>
-          <p class="demo-lead">Bookkeepers, sailors, astronomers.<br>The weird stuff had a reason.</p>
+          <p class="demo-lead">Bookkeepers, sailors, astronomers.<br>The weird stuff had a reason. Run the free ACT Demo and see your gaps named.</p>
           <div class="demo-actions">
             <a class="btn primary" id="storyTryBtn" href="http://127.0.0.1:5173/try/diagnostic">ACT Demo</a>
           </div>
@@ -756,161 +906,6 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
         </div>
       </div>
     </section>
-
-    <section class="steps" id="map" data-nav="paper">
-      <div class="wrap reveal">
-        <p class="label">For parents</p>
-        <h2>Not “bad at math.”<br>One exact gap, named.</h2>
-        <p class="panel-lead" style="margin-top:14px;max-width:36ch;color:var(--muted);font-family:'DM Serif Display',Georgia,serif;font-size:clamp(20px,2.4vw,28px);line-height:1.25">Not another night of homework war.</p>
-        <div class="journey-demo" style="margin-top:32px">
-          <div class="journey-left">
-            <strong>Sample</strong>
-            <h3>Maya misses slope questions.</h3>
-            <p>Not “bad at algebra.” One earlier idea slipped: she treats the point as the intercept.</p>
-            <div class="journey-questions" aria-label="Sample diagnostic answers">
-              <div class="journey-q good"><span>01</span><b>Reads a graph</b><em>solid</em></div>
-              <div class="journey-q"><span>02</span><b>Uses (3, 5) as b</b><em>fragile</em></div>
-              <div class="journey-q"><span>03</span><b>Equation collapses</b><em>gap</em></div>
-            </div>
-          </div>
-          <div class="journey-right">
-            <div class="journey-map" aria-label="Concept route">
-              <div class="journey-route">
-                <svg viewBox="0 0 520 220" fill="none" aria-hidden="true">
-                  <path d="M42 56 C126 28 168 112 250 112 C334 112 354 172 474 148" stroke="#247a4d" stroke-width="5" stroke-linecap="round"/>
-                  <circle cx="42" cy="56" r="10" fill="#5fb779"/>
-                  <circle cx="250" cy="112" r="12" fill="#e8d16b"/>
-                  <circle cx="474" cy="148" r="13" fill="#c1180b"/>
-                </svg>
-              </div>
-              <span class="map-pill pill-a">Graph</span>
-              <span class="map-pill pill-b">Slope</span>
-              <span class="map-pill pill-c">Point-intercept</span>
-            </div>
-            <div class="view-grid">
-              <article class="view-card"><small>Tutor to parent</small><p>Today she found the step that was slipping. Next session, we make it stick.</p></article>
-              <article class="view-card"><small>Tutor to child</small><p>You’re doing great. This one missing idea is the whole puzzle.</p></article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel-forest" id="loop" data-nav="green">
-      <div class="wrap">
-        <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto">
-          <span class="panel-kicker">Inside MindCraft</span>
-          <h2>What happens in a session</h2>
-          <p class="panel-lead" style="margin-left:auto;margin-right:auto">Simple loop parents can trust. Find the break. Remember it. Fix it. Prove it stuck.</p>
-        </div>
-        <div class="loop-grid reveal" role="list">
-          <article class="loop-step" role="listitem"><i>1</i><h3>See the break</h3><p>We name the exact missing skill, not “needs more math.”</p></article>
-          <article class="loop-step" role="listitem"><i>2</i><h3>Remember it</h3><p>The living record keeps what clicked and what to try next.</p></article>
-          <article class="loop-step" role="listitem"><i>3</i><h3>Tutor starts ready</h3><p>A 60 second brief so the session is teaching, not guessing.</p></article>
-          <article class="loop-step" role="listitem"><i>4</i><h3>Prove it stuck</h3><p>A solo check after help. You see: clicked, stuck, next.</p></article>
-        </div>
-        <p class="loop-foot reveal">Learning should not reset when the Zoom call ends.</p>
-      </div>
-    </section>
-
-    <section class="parents-why panel-forest" id="parents" data-nav="green">
-      <div class="wrap">
-        <div class="reveal" style="text-align:center;max-width:640px;margin:0 auto">
-          <span class="panel-kicker">For parents</span>
-          <h2>Why parents choose MindCraft</h2>
-          <p class="panel-lead" style="margin-left:auto;margin-right:auto">Clear support without becoming the math teacher.</p>
-        </div>
-        <div class="parent-grid reveal">
-          <article class="parent-card"><strong>01</strong><p>Clearer diagnosis</p></article>
-          <article class="parent-card"><strong>02</strong><p>Less wasted tutoring time</p></article>
-          <article class="parent-card"><strong>03</strong><p>Less fighting about homework</p></article>
-          <article class="parent-card"><strong>04</strong><p>A tutor they trust</p></article>
-          <article class="parent-card"><strong>05</strong><p>Visible score improvement</p></article>
-          <article class="parent-card"><strong>06</strong><p>Confidence learning is real</p></article>
-        </div>
-        <div class="parents-story reveal">
-          <p class="parents-story-kicker">Minnesota tutor network</p>
-          <div class="parents-story-lines">
-            <p>Nearby tutors from smart Minnesota campuses.</p>
-            <p>Stay with one guide for continuity. Bring in specialists when you want more.</p>
-          </div>
-          <p class="parents-pull">One person knows your journey.<br>A world of people can contribute to it.</p>
-          <p class="parents-story-foot">Expertise across what parents care about: ACT math, confidence, study skills, and more as we grow.</p>
-        </div>
-        <p class="why-foot reveal">Parents buy clarity, trust, and steady progress.</p>
-      </div>
-    </section>
-
-    <section class="support" id="system" data-nav="cream">
-      <div class="wrap">
-        <div class="support-head reveal">
-          <p class="label">Voices</p>
-          <h2 class="support-title">
-            <span>How MindCraft supports</span>
-            <span class="support-title-line">
-              students
-              <button type="button" class="support-scroll-btn" id="supportNextBtn" aria-controls="supportRail" aria-label="Next review"><span aria-hidden="true">⟶</span></button>
-            </span>
-          </h2>
-        </div>
-        <div class="support-rail reveal" id="supportRail" tabindex="0" aria-label="Student and parent reviews">
-          <article class="support-slide" data-review="sebastian">
-            <aside class="support-quote">
-              <blockquote>“My tutor inspired me to be a better person as well as a student. He came down to my level and explained things in ways I would understand.”</blockquote>
-              <cite>Sebastian · MindCraft student</cite>
-              <p class="support-caption">Anything is achievable when someone meets you at your level.</p>
-            </aside>
-            <div class="vocal-frame">
-              <video controls playsinline preload="metadata" poster="img/mindcraft-logo.png" title="Sebastian student feedback">
-                <source src="img/testimonials/sebastian-feedback.mp4" type="video/mp4">
-              </video>
-            </div>
-          </article>
-          <article class="support-slide is-quote-only" data-review="gill">
-            <aside class="support-quote">
-              <blockquote>“Sebastian needs someone who understands what he doesn’t understand about math, not just homework help.”</blockquote>
-              <cite>Gillian · Sebastian’s parent</cite>
-              <p class="support-caption">ACT coming up. Feeling stuck. She wished they had called sooner.</p>
-            </aside>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="tryapp" id="try-app" data-nav="cream">
-      <div class="wrap">
-        <div class="findtutor-card reveal">
-          <div class="findtutor-copy">
-            <p class="label">For parents</p>
-            <h2>Clear support.</h2>
-            <ul class="tutor-benefits">
-              <li>Find excellent tutors around you.</li>
-              <li>Book a call to set up learning at college, at home, or online.</li>
-              <li>Keep one tutor for math. Let your child explore music, art, and more with other nearby talent.</li>
-            </ul>
-            <div class="findtutor-actions">
-              <a class="btn primary" href="https://mindcraft-93858.web.app/find-a-tutor">Find &amp; book a tutor near you</a>
-            </div>
-          </div>
-          <div class="findtutor-map-wrap">
-            <form class="findtutor-search" id="ftSearchForm">
-              <input id="ftAddress" type="search" placeholder="Try St Paul, Myrtle Beach, or Chapel Hill" autocomplete="street-address" aria-label="Find tutors near an address">
-              <button type="submit">Search</button>
-            </form>
-            <p class="findtutor-status" id="ftStatus" aria-live="polite"></p>
-            <div id="ftMap" class="findtutor-map" role="img" aria-label="Map of MindCraft tutors near you"></div>
-            <div class="findtutor-list" id="ftTutorList"></div>
-            <div class="college-strip" aria-label="Tutor colleges">
-              <img src="img/colleges/macalester.png" alt="Macalester">
-              <img src="img/colleges/st-olaf.png" alt="St. Olaf">
-              <img src="img/colleges/st-thomas.webp" alt="St. Thomas">
-              <img src="img/colleges/unc.png" alt="UNC Chapel Hill">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
 
     <section class="intake" id="intake" data-nav="sand">
       <div class="wrap intake-grid">
