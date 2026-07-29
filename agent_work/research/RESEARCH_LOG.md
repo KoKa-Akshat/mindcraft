@@ -4,6 +4,29 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-29 — Researcher tick: Part XL Self-explanation prompts
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch40 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/40_self_explanation_prompts.md` (Part XL)  
+**Claim examined:** AI/tutor monologue, open “explain yourself” boxes, and structured self-explanation prompts are interchangeable proofs of deep learning — so Solver fluency can wear a “self-explanation” brand.
+
+**Evidence added:**
+- Chi, Bassok, Lewis, Reimann & Glaser (1989, *Cognitive Science*, doi:10.1207/s15516709cog1302_1): good vs poor spontaneous SE while studying worked examples.
+- Chi, de Leeuw, Chiu & LaVancher (1994, *Cognitive Science*, doi:10.1016/0364-0213(94)90016-7): eliciting SE improves understanding vs reread.
+- Renkl (1997, *Cognitive Science*, doi:10.1016/S0364-0213(99)80017-2): principle/operator–goal/anticipative SE quality predicts gains beyond time-on-task.
+- Atkinson, Renkl & Merrill (2003, *JEP*, doi:10.1037/0022-0663.95.4.774): fading + principle prompts → near & far transfer without extra time.
+- Aleven & Koedinger (2002, *Cognitive Science*, doi:10.1016/S0364-0213(02)00061-7): Cognitive Tutor step+rule explanation → deeper understanding/transfer.
+- Rittle-Johnson, Loehr & Durkin (2017, *ZDM*, doi:10.1007/s11858-017-0834-z): math SE meta — immediate PK/CK/transfer ES ≈ .28/.33/.46; scaffold helps; classroom/delay thinner.
+- Rittle-Johnson & Loehr (2017, *Psychonomic Bulletin & Review*, doi:10.3758/s13423-016-1079-5): constraints — prefer explain correct/incorrect over own wrong ideas; prompt focus risks.
+
+**Product implication:** Default = faded examples + structured principle/misconception prompts *before* AI wrap; ban AI-monologue≡SE and explain-own-wrong-first default; SE-1…4/QUAL; densifies Exp A/D and XXXIII wrap.
+
+**Experiments spawned:** SE-1, SE-2, SE-3, SE-4, SE-QUAL.
+
+**PDF:** Regenerate after ch40 mount.
+
+---
+
 ## 2026-07-29 — Researcher tick: Part XXXIX Interleaving vs blocking
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch39 never written → prefer Researcher per rotation)  

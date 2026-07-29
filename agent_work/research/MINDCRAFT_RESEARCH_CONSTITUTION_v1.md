@@ -29,8 +29,9 @@
 | XXXVII | `chapters/37_expectancy_value_eccles.md` | Eccles SEVT; utility/cost/attainment → choice; EVT experiments |
 | XXXVIII | `chapters/38_goal_orientation.md` | Mastery vs performance goal structures; appearance ban; GO experiments |
 | XXXIX | `chapters/39_interleaving_vs_blocking.md` | Interleave vs block; strategy selection; IL experiments |
+| XL | `chapters/40_self_explanation_prompts.md` | Self-explanation prompts; Chi/Renkl → coach UX; SE experiments |
 
-Queued next: see `NEXT_LAB.md` (self-explanation, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (desirable difficulties × anxiety, then QUEUE_EXTENDED).
 
 ---
 
