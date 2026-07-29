@@ -22,6 +22,7 @@ import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
 import TutorLocationPin from '../components/TutorLocationPin'
+import Dashboard from './Dashboard'
 import type { LatLng } from '../lib/geo'
 import { setTutorViewAsStudentId, TUTOR_EXIT_STUDENT_MSG } from '../lib/tutorViewAs'
 import s from './TutorDashboard.module.css'
@@ -881,11 +882,14 @@ export default function TutorDashboard() {
 
             {panel === 'admin' ? (
               <div className={s.studentFrameWrap}>
-                <iframe
+                <Dashboard
                   key={focusStudent.id}
-                  className={s.studentFrame}
-                  title={`${focusStudent.name} dashboard`}
-                  src={`/tutor/student/${encodeURIComponent(focusStudent.id)}?embed=1`}
+                  viewAsStudentId={focusStudent.id}
+                  embedded
+                  onExit={() => {
+                    setTutorViewAsStudentId(null)
+                    setPanel('student')
+                  }}
                 />
               </div>
             ) : (

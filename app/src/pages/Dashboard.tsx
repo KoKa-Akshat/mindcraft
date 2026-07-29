@@ -99,13 +99,16 @@ function tocDotState(status: string): TocDotState {
 export default function Dashboard({
   preview = false,
   viewAsStudentId,
+  embedded = false,
   frameEmbed = false,
   onExit,
 }: {
   preview?: boolean
   /** Tutor/admin live view of a linked student's dashboard. */
   viewAsStudentId?: string
-  /** True when loaded inside the tutor dash Admin iframe (?embed=1). */
+  /** Render inside tutor dash main (stays on /tutor; local Home/Map/Work/Notes). */
+  embedded?: boolean
+  /** True when loaded inside an iframe (?embed=1). */
   frameEmbed?: boolean
   onExit?: () => void
 }) {
@@ -115,10 +118,9 @@ export default function Dashboard({
   const viewingAs = !!viewAsStudentId
   const data = useStudentData(user, { viewAsUid: viewAsStudentId })
   const uid = viewAsStudentId || user?.uid || ''
-  // Inside the Admin iframe, navigate for real so Map/Work/Notes feel native.
   const homeBase = preview
     ? '/try/dashboard'
-    : viewingAs
+    : viewingAs && !embedded
       ? `/tutor/student/${viewAsStudentId}${frameEmbed ? '?embed=1' : ''}`
       : '/dashboard'
 
@@ -139,8 +141,9 @@ export default function Dashboard({
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
   const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
+  const [embedView, setEmbedView] = useState<'home' | 'map' | 'work' | 'notes'>('home')
 
-  const rawView = searchParams.get('view') ?? 'home'
+  const rawView = embedded ? embedView : (searchParams.get('view') ?? 'home')
   const view = (
     rawView === 'today' || rawView === 'route' ? 'home'
     : rawView === 'gps' ? 'map'
@@ -156,15 +159,19 @@ export default function Dashboard({
   }
 
   function openHome() {
+    if (embedded) { setEmbedView('home'); return }
     navigate(withEmbed(homeBase.split('?')[0]), { replace: true })
   }
   function openMap() {
+    if (embedded) { setEmbedView('map'); return }
     navigate(withEmbed(`${homeBase.split('?')[0]}?view=map`), { replace: true })
   }
   function openWork() {
+    if (embedded) { setEmbedView('work'); return }
     navigate(withEmbed(`${homeBase.split('?')[0]}?view=work`), { replace: true })
   }
   function openNotes() {
+    if (embedded) { setEmbedView('notes'); return }
     navigate(withEmbed(`${homeBase.split('?')[0]}?view=notes`), { replace: true })
   }
 
@@ -511,7 +518,7 @@ export default function Dashboard({
           Demo dashboard · nothing is saved
         </div>
       )}
-      {viewingAs && !frameEmbed && (
+      {viewingAs && !frameEmbed && !embedded && (
         <div
           style={{
             position: 'fixed',
@@ -575,7 +582,7 @@ export default function Dashboard({
         <NotebookIntro onContinue={() => setShowIntro(false)} />
       )}
 
-      <div className={`${s.canvasDesk} ${frameEmbed ? s.canvasDeskFrameEmbed : ''}`}>
+      <div className={`${s.canvasDesk} ${embedded || frameEmbed ? s.canvasDeskFrameEmbed : ''}`}>
         {/* ONE hero bar, ONE row (was three stacked bands: nav row,
            "Contents" + wizard row, yellow spark banner)  -  merged per
            Akshat's brief so logo, section nav, the wizard sprite, today's
