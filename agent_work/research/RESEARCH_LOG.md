@@ -4,6 +4,30 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-29 — Researcher tick: Part XXXVII Expectancy-value (Eccles)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch37 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/37_expectancy_value_eccles.md` (Part XXXVII)  
+**Claim examined:** Story delight / “make math meaningful” slogans are enough to drive math course choice — without separate expectancy, value, and cost levers.
+
+**Evidence added:**
+- Eccles-Parsons et al. (1983): expectancy + subjective task value → achievement choice/performance (STEM gender participation origin).
+- Eccles & Wigfield (2020, *CEP*, doi:10.1016/j.cedpsych.2020.101859): SEVT rename; situated hierarchies.
+- Eccles & Wigfield (2024, *Ed Psych Review*, doi:10.1007/s10648-024-09888-9): model development/refinement review; attainment↔identity.
+- Meece, Wigfield & Eccles (1990, *JEP*, doi:10.1037/0022-0663.82.1.60): expectancy→grades; value→enrollment intentions.
+- Wigfield & Eccles (2000, *CEP*, doi:10.1006/ceps.1999.1015): EVT construct definitions.
+- Hulleman & Harackiewicz (2009, *Science*, doi:10.1126/science.1177067): utility-value writing RCT; strongest for low-expectancy students.
+- Hulleman et al. (2010, *JEP*, doi:10.1037/a0019506): utility mediation / interest.
+- Flake et al. (2015, *CEP*, doi:10.1016/j.cedpsych.2015.03.002): multi-dimensional cost scale (effort/opportunity/emotional).
+
+**Product implication:** Instrument E and V separately; student-authored utility post-win; treat soft-wrong/tutor tone as cost design; kill staff utility dumps and streak-as-attainment.
+
+**Experiments spawned:** EVT-1, EVT-2, EVT-3, EVT-4, EVT-QUAL.
+
+**PDF:** Regenerate after ch37 mount.
+
+---
+
 ## 2026-07-29 — Researcher tick: Part XXXVI Equity audit of story worlds
 
 **Tick type:** Researcher (UTC hour 3; hour%6≠0; <8 researcher entries since last synthesizer)  
