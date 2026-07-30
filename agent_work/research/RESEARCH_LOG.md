@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLIII Habit formation science (Wood/Clear)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch43 never written → prefer Researcher per rotation; 2 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
+**Chapter written:** `chapters/43_habit_formation_science.md` (Part XLIII)  
+**Claim examined:** Streaks/habit loops as learning or identity — and “21 days” / Atomic-Habits-as-science folklore — vs cue design that raises return without identity colonization.
+
+**Evidence added:**
+- Wood & Rünger (2016, doi:10.1146/annurev-psych-122414-033417): context–response habits; cue activation; goal-insensitivity.
+- Wood & Neal (2007, *Psychological Review*): habit–goal interface; cue change for habit change.
+- Wood, Mazar & Neal (2021, *Perspectives on Psychological Science*): habits vs goals as interacting systems.
+- Gollwitzer & Sheeran (2006, doi:10.1016/S0065-2601(06)38002-1): implementation intentions *d*≈0.65 (94 tests).
+- Lally et al. (2010, doi:10.1002/ejsp.674): median ~66 days to automaticity asymptote (18–254); one miss OK.
+- Gardner (2015, doi:10.1080/17437199.2013.876238): habit as cue→impulse process.
+- Verplanken & Orbell (2003, doi:10.1111/j.1559-1816.2003.tb01951.x): SRHI includes identity expression — measurement trap.
+- Hadi Mogavi et al. (2022, L@S, doi:10.1145/3491140.3528274): Duolingo gamification misuse (streak/XP fixation).
+
+**Product implication:** SAFE-HABIT stack (cue practice not counter → if-then → tiny equipped start → miss≠identity failure → habit metrics subordinate → identity markers elsewhere); densifies HID / streak NS ban; HAB-1…4.
+
+**Claim killed:** Streak/DAU as North Star or proof of identity; “21-day habit” as science; Atomic Habits branding as peer-reviewed doctrine; shame-on-miss / public streak ranks as Maya default.
+
+**Next researcher id:** **44** (Intrinsic motivation killers — Deci).
+
+**PDF:** Regenerate after ch43 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLII Social comparison & leaderboards
 
 **Tick type:** Researcher (UTC hour 3; hour%6≠0; 1 researcher since synthesizer v1.6 → not yet Synthesizer)  
