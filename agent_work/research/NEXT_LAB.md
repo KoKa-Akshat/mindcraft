@@ -26,8 +26,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 41 | Desirable difficulties × anxiety | Bjork vs Ashcraft conflict | **DONE** (2026-07-30) |
 | 42 | Social comparison & leaderboards | When ranks help/hurt novices | **DONE** (2026-07-30) |
 | 43 | Habit formation science (Wood/Clear) | Cue design without identity colonization | **DONE** (2026-07-30) |
-| 44 | Intrinsic motivation killers (Deci) | Controlling rewards; Deci caveats | **NEXT** |
-| 45 | Mathematical resilience | Johnston-Wilder/Lee; growth under adversity | queued |
+| 44 | Intrinsic motivation killers (Deci) | Controlling rewards; Deci caveats | **DONE** (2026-07-30) |
+| 45 | Mathematical resilience | Johnston-Wilder/Lee; growth under adversity | **NEXT** |
 | 46 | Teacher/tutor expectancy effects | Pygmalion; tutor briefing ethics | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (47–70).

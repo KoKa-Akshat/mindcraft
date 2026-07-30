@@ -4,6 +4,30 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLIV Intrinsic motivation killers (Deci)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0; 3 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
+**Chapter written:** `chapters/44_intrinsic_motivation_killers.md` (Part XLIV)  
+**Claim examined:** Controlling / engagement-contingent rewards (XP, coins, loot-for-login) as motivation or identity architecture — vs informational feedback and CET-differentiated caveats.
+
+**Evidence added:**
+- Ryan & Deci (2000, doi:10.1037/0003-066X.55.1.68): SDT needs — autonomy, competence, relatedness.
+- Deci (1971, doi:10.1037/h0030644): expected extrinsic rewards can reduce free-choice engagement.
+- Deci, Koestner & Ryan (1999, doi:10.1037/0033-2909.125.6.627): 128-study meta — engagement/completion/performance-contingent undermine free-choice (*d*≈−0.40/−0.36/−0.28); unexpected tangible null; positive feedback enhances (*d*≈0.33); children more harmed by tangibles.
+- Deci, Koestner & Ryan (2001, doi:10.3102/00346543071001001): education restatement vs Cameron & Pierce.
+- Cameron & Pierce (1994, doi:10.3102/00346543064003363): overall reward null; circumscribed engagement-tangible negative — contested.
+- Patall, Cooper & Robinson (2008, doi:10.1037/0033-2909.134.2.270): choice ↑ IM/effort/competence; weaker when rewards stacked after choice.
+
+**Product implication:** SAFE-REWARD stack (no expected tokens for mere engagement → feedback > inducement → transfer-gated performance marks → autonomy framing → don’t stack choice+coins → child-risk premium → XP never NS); densifies TARGET / SAFE-HABIT; IM-1…4.
+
+**Claim killed:** Expected engagement-contingent XP/coins as default; “rewards create love of math” / “XP = identity”; absolute “all extrinsic is bad” (bans informational feedback); controlling praise as competence support.
+
+**Next researcher id:** **45** (Mathematical resilience — Johnston-Wilder/Lee).
+
+**PDF:** Regenerate after ch44 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLIII Habit formation science (Wood/Clear)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch43 never written → prefer Researcher per rotation; 2 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
