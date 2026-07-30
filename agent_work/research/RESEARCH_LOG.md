@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLVIII Transfer & variation theory (SAFE-TRANSFER)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0 → Researcher; 7 researcher entries since synthesizer v1.6 → not yet Synthesizer; this tick = 8th)  
+**Chapter written:** `chapters/48_transfer_variation_theory.md` (Part XLVIII)  
+**Claim examined:** Far transfer as designed discernment (variation/invariance + hug/bridge) — vs story-immersion≡transfer, blocked accuracy≡exam-ready, and random cosmetic variety as “variation theory.”
+
+**Evidence added:**
+- Barnett & Ceci (2002, doi:10.1037/0033-2909.128.4.612): nine-dimension far-transfer taxonomy; single ES misguided.
+- Detterman (1993, in *Transfer on Trial*): spontaneous far/general transfer rare; specifics dominate.
+- Gick & Holyoak (1980, doi:10.1016/0010-0285(80)90013-4): analogical transfer often needs hints; isomorphism ≠ noticing.
+- Salomon & Perkins (1989, doi:10.1207/s15326985ep2402_1): low-road vs high-road mechanisms.
+- Perkins & Salomon (1992 encyclopedia; 1988 *Educational Leadership*): hugging vs bridging to teach for transfer.
+- Marton & Booth (1997, *Learning and Awareness*): discernment via variation/invariance.
+- Kullberg, Runesson Kempe & Marton (2017, doi:10.1007/s11858-017-0858-4): VT changes what is made possible to learn; draw attention to patterns.
+- Gu, Huang & Marton (2004, doi:10.1142/9789812562241_0012): Chinese teaching with variation (bianshi).
+- Sun (2011a, doi:10.1007/s10649-010-9263-4): Chinese textbook variation problems / connectedness.
+
+**Product implication:** SAFE-TRANSFER stack (name the hop → design VT sequences → hug exam + bridge abstraction → story≠transfer → blocked≠ready → noticing prompts → SAFE-DD on fusion → measure delayed/format/solo transfer); TR-1…4.
+
+**Claim killed:** Story immersion as automatic far transfer; random cosmetic variety as VT; blocked same-surface accuracy as transferable readiness; AI monologue≡transfer.
+
+**Next researcher id:** **49** (Misconceptions as productive). After this tick, researcher count since synthesizer = **8** → next eligible non-RT hour should prefer Synthesizer.
+
+**PDF:** Regenerate after ch48 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLVII Sleep, stress, and learning (SAFE-TIMING)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch47 never written → prefer Researcher per rotation; 6 researcher entries since synthesizer v1.6 → not yet Synthesizer)  

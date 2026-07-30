@@ -30,8 +30,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 45 | Mathematical resilience | Johnston-Wilder/Lee; growth under adversity | **DONE** (2026-07-30) |
 | 46 | Teacher/tutor expectancy effects | Pygmalion; tutor briefing ethics | **DONE** (2026-07-30) |
 | 47 | Sleep, stress, and learning | Timing practice; exam weeks | **DONE** (2026-07-30) |
-| 48 | Transfer & variation theory | Far transfer design in ontology | **NEXT** |
-| 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science | queued |
+| 48 | Transfer & variation theory | Far transfer design in ontology | **DONE** (2026-07-30) |
+| 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science | **NEXT** |
 | 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (51–70).
