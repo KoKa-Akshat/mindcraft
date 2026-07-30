@@ -4,6 +4,31 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLII Social comparison & leaderboards
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; 1 researcher since synthesizer v1.6 → not yet Synthesizer)  
+**Chapter written:** `chapters/42_social_comparison_leaderboards.md` (Part XLII)  
+**Claim examined:** “Leaderboards motivate learners” / ranks-as-engagement North Star — especially for anxious / novice Maya.
+
+**Evidence added:**
+- Festinger (1954, *Human Relations*): social comparison drive; upward ability evaluation.
+- Gerber, Wheeler & Suls (2018, doi:10.1037/bul0000127): upward selection preference; contrast dominates reactions.
+- Garcia, Tor & Schiff (2013, doi:10.1177/1745691613504114): comparison → competition; proximity to standard / N.
+- Landers & Landers (2014, doi:10.1177/1046878114563662): HE wiki leaderboard ↑ time-on-task (scope-limited).
+- Li, Liang, Fryer & Shum (2024, doi:10.1111/jcal.13077): HE systematic review — design-dependent; absolute + anonymize low ranks; HE≠K–12.
+- Almo, Rocha, Brennan & Dondio (2024, doi:10.17083/ijsg.v11i4.794): N=1389 Seven Spells — maths anxiety ↓ leaderboard enjoyment net of rank.
+- Fong, Patall, Vasquez & Stautberg (2019, doi:10.1007/s10648-018-9446-6): negative vs positive feedback; criterion + how-to softens.
+
+**Product implication:** SAFE-COMPARE stack (criterion default → opt-in → local → anonymize low → process metrics → instructional wrap → transfer/retry metrics); densifies TARGET leaderboard kill + SC-1…4.
+
+**Claim killed:** Universal “leaderboards motivate” / forced infinite named ranks as default engagement for Maya.
+
+**Next researcher id:** **43** (Habit formation science — Wood/Clear).
+
+**PDF:** Regenerate after ch42 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLI Desirable difficulties × anxiety
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch41 never written → prefer Researcher per rotation)  

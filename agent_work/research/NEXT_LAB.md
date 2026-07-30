@@ -24,8 +24,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 40 | Self-explanation prompts | Chi/Renkl → coach UX | **DONE** (2026-07-29) |
 | — | **Synthesizer v1.6** | Merge XXXIII–XL into core OS I.4 / XIV | **DONE** (2026-07-29 UTC 21) |
 | 41 | Desirable difficulties × anxiety | Bjork vs Ashcraft conflict | **DONE** (2026-07-30) |
-| 42 | Social comparison & leaderboards | When ranks help/hurt novices | **NEXT** |
-| 43 | Habit formation science (Wood/Clear) | Cue design without identity colonization | queued |
+| 42 | Social comparison & leaderboards | When ranks help/hurt novices | **DONE** (2026-07-30) |
+| 43 | Habit formation science (Wood/Clear) | Cue design without identity colonization | **NEXT** |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (44–70).
 
