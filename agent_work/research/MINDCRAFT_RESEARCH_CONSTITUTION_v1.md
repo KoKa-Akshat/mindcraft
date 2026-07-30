@@ -4,7 +4,7 @@
 **Edition:** v1.6 (Synthesizer consolidation of Parts XXXIII–XL into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-29 (Synthesizer tick, UTC hour 21)  
+**Last updated:** 2026-07-30 (Researcher tick — Part XLI mounted)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -30,8 +30,9 @@
 | XXXVIII | `chapters/38_goal_orientation.md` | Mastery vs performance goal structures; appearance ban; GO experiments |
 | XXXIX | `chapters/39_interleaving_vs_blocking.md` | Interleave vs block; strategy selection; IL experiments |
 | XL | `chapters/40_self_explanation_prompts.md` | Self-explanation prompts; Chi/Renkl → coach UX; SE experiments |
+| XLI | `chapters/41_desirable_difficulties_x_anxiety.md` | Desirable difficulties × anxiety; SAFE-DD; Bjork vs Ashcraft |
 
-Queued next: see `NEXT_LAB.md` (Part XLI desirable difficulties × anxiety, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part XLII social comparison & leaderboards, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.6):** Eight researcher chapters (XXXIII–XL) landed without a merge pass. This edition collapses duplicate “motivation / mastery / AI tutor” talk into one commercial doctrine stack (I.4), upgrades Red Team kills (XIV), densifies Experiment A/D into chapter experiment families (IX), and refreshes competitive / metrics language. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -118,7 +119,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” and “engagement” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
 
-**Next research bottleneck:** Part XLI must resolve **desirable difficulties × anxiety** (Bjork vs Ashcraft) so interleaving/SE/spacing do not ship as shame.
+**Next research bottleneck (partially addressed):** Part XLI landed **SAFE-DD** (equip → destake → dose → frame → measure). Still needs DD-1/DD-2 data before anxiety-segment interleave/SE claims go above L1.
 
 ---
 
@@ -656,7 +657,7 @@ For some, speed drills and competition *increase* engagement. Segment, do not ro
 2. Parents refuse to pay when score gains lag identity metrics.  
 3. AI-alone matches human+AI on persistence + transfer for target segment.  
 4. Guarded Solver raises concurrent scores but loses `solo_transfer_pass` vs no-AI (PWC fail).  
-5. Interleave/SE regimes raise delayed mix but destroy `retry_120s` in high-anxiety segment without a sequenced alternative (XLI unresolved).
+5. Interleave/SE regimes raise delayed mix but destroy `retry_120s` in high-anxiety segment without sequenced SAFE-DD (XLI; pending DD-1/DD-2).
 
 ---
 
@@ -879,7 +880,9 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
-7. **NEXT:** Desirable difficulties × anxiety (Part XLI) — Bjork vs Ashcraft conflict  
+7. **DONE (2026-07-30):** Desirable difficulties × anxiety (Part XLI) — SAFE-DD stack  
+8. **NEXT:** Social comparison & leaderboards (Part XLII)  
+ 
 8. Social comparison & leaderboards (42); habit science without identity colonization (43)
 
 ---
@@ -914,4 +917,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Next researcher bottleneck: desirable difficulties × anxiety. Page count is not the finish line — falsifiable truth is.**
+**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Part XLI adds SAFE-DD for anxiety-gated desirable difficulties. Next researcher id: XLII social comparison & leaderboards. Page count is not the finish line — falsifiable truth is.**

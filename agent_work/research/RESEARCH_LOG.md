@@ -4,6 +4,30 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLI Desirable difficulties × anxiety
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch41 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/41_desirable_difficulties_x_anxiety.md` (Part XLI)  
+**Claim examined:** “Struggle always equals learning” / always-on desirable difficulties for everyone — vs twin claim that anxious students should only get easy blocked fluency forever.
+
+**Evidence added:**
+- Bjork (1994, Metcalfe & Shimamura) + Bjork & Bjork (JARMAC 2020, doi:10.1016/j.jarmac.2020.09.003): DD only when learner can respond; else undesirable.
+- Ashcraft & Kirk (2001, doi:10.1037/0096-3445.130.2.224); Ashcraft & Krause (2007, doi:10.3758/BF03194059): MA as WM dual-task load.
+- Hinze & Rapp (2014, doi:10.1002/acp.3032): high stakes can erase retrieval benefits on delayed tests (retrieval disruption).
+- Agarwal et al. (2014, doi:10.1016/j.jarmac.2014.07.002): classroom retrieval → many students report *less* exam nerves.
+- Yang et al. (2023, doi:10.1007/s10648-023-09801-w): practice-test meta *g* ≈ −0.52 on test anxiety; easier quizzes help more.
+- Fioriti et al. (2025, doi:10.1037/xlm0001453): HMA impairs procedural learning, accelerates repeated-item retrieval learning.
+
+**Product implication:** SAFE-DD stack (equip → destake → dose → frame → measure); kill “struggle always” and “never struggle anxious kids”; densifies IL-2/SE-3/Exp D as DD-1…4.
+
+**Claim killed:** Unbuffered always-on desirable difficulty as universal pedagogy (and the avoidance twin of permanent easy fluency).
+
+**Next researcher id:** **42** (Social comparison & leaderboards).
+
+**PDF:** Regenerate after ch41 mount.
+
+---
+
 ## 2026-07-29 — Synthesizer tick: v1.6 merge XXXIII–XL
 
 **Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since last synthesizer — none previously logged)  
