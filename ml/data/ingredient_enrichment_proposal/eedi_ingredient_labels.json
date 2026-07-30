@@ -1,0 +1,299 @@
+{
+  "_meta": {
+    "generated_at": "2026-07-28T12:06:56.932381+00:00",
+    "question_count": 97
+  },
+  "labels": {
+    "eedi_1002": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1005": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1013": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_1025": [
+      "systems__solution_as_intersection"
+    ],
+    "eedi_1030": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1041": [
+      "measurement_units__compound_unit_conversion"
+    ],
+    "eedi_1050": [
+      "factoring_polynomials__gcf_extraction"
+    ],
+    "eedi_1055": [
+      "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_1066": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_109": [
+      "quadratics__solutions_as_x_intercepts"
+    ],
+    "eedi_1092": [
+      "descriptive_statistics__median_as_middle"
+    ],
+    "eedi_1115": [
+      "quadratics__discriminant_meaning"
+    ],
+    "eedi_1138": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_1149": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_1152": [
+      "order_of_operations__left_to_right_rule"
+    ],
+    "eedi_1168": [
+      "transformations__translation_rules"
+    ],
+    "eedi_1172": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1186": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1220": [
+      "linear_equations__y_intercept_meaning"
+    ],
+    "eedi_1223": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_1259": [
+      "functions_basics__function_composition"
+    ],
+    "eedi_1263": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_1275": [
+      "lines_angles__supplementary_complementary"
+    ],
+    "eedi_1300": [
+      "measurement_units__compound_unit_conversion"
+    ],
+    "eedi_1311": [
+      "order_of_operations__precedence_hierarchy"
+    ],
+    "eedi_1329": [
+      "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_1339": [
+      "lines_angles__supplementary_complementary"
+    ],
+    "eedi_1345": [
+      "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_1380": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_1386": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_1412": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1421": [
+      "triangles__similarity_ratios"
+    ],
+    "eedi_1426": [
+      "measurement_units__linear_vs_square_units"
+    ],
+    "eedi_1474": [
+      "order_of_operations__left_to_right_rule"
+    ],
+    "eedi_148": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1482": [
+      "lines_angles__supplementary_complementary"
+    ],
+    "eedi_1489": [
+      "measurement_units__linear_vs_square_units"
+    ],
+    "eedi_1506": [
+      "quadratics__quadratic_formula"
+    ],
+    "eedi_1513": [
+      "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_1550": [
+      "exponent_rules__product_rule"
+    ],
+    "eedi_1560": [
+      "measurement_units__linear_vs_square_units"
+    ],
+    "eedi_1637": [
+      "linear_inequalities__absolute_value_split_greater_than"
+    ],
+    "eedi_1661": [
+      "exponent_rules__power_rule"
+    ],
+    "eedi_1664": [
+      "radicals__root_as_inverse"
+    ],
+    "eedi_1667": [
+      "lines_angles__supplementary_complementary"
+    ],
+    "eedi_1670": [
+      "area_volume__rectangular_prism_face_areas"
+    ],
+    "eedi_1685": [
+      "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_1693": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1752": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_1760": [
+      "radicals__root_as_inverse"
+    ],
+    "eedi_1794": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1802": [
+      "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_1815": [
+      "exponent_rules__zero_and_rational"
+    ],
+    "eedi_1818": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_1823": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_1841": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_1846": [
+      "sequences__nth_term_formula"
+    ],
+    "eedi_1856": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_1866": [
+      "order_of_operations__left_to_right_rule"
+    ],
+    "eedi_19": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_194": [
+      "descriptive_statistics__mean_vs_median"
+    ],
+    "eedi_248": [
+      "quadratics__vertex_from_roots"
+    ],
+    "eedi_267": [
+      "exponent_rules__power_rule"
+    ],
+    "eedi_280": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_31": [
+      "measurement_units__linear_vs_square_units"
+    ],
+    "eedi_315": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_318": [
+      "quadratics__quadratic_formula"
+    ],
+    "eedi_328": [
+      "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_339": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_38": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_392": [
+      "lines_angles__supplementary_complementary"
+    ],
+    "eedi_402": [
+      "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_417": [
+      "exponent_rules__product_rule"
+    ],
+    "eedi_425": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_454": [
+      "functions_basics__function_composition"
+    ],
+    "eedi_5": [
+      "area_volume__square_side_from_area"
+    ],
+    "eedi_533": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_542": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_569": [
+      "lines_angles__supplementary_complementary"
+    ],
+    "eedi_586": [
+      "radicals__root_as_inverse"
+    ],
+    "eedi_601": [
+      "circles__semicircle_area_from_diameter"
+    ],
+    "eedi_634": [
+      "quadratics__quadratic_formula"
+    ],
+    "eedi_694": [
+      "algebraic_manipulation__clearing_fractions"
+    ],
+    "eedi_697": [
+      "descriptive_statistics__mean_vs_median"
+    ],
+    "eedi_737": [
+      "radicals__root_as_inverse"
+    ],
+    "eedi_741": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_789": [
+      "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_8": [
+      "fractions_decimals__fraction_arithmetic"
+    ],
+    "eedi_818": [
+      "fractions_decimals__fraction_decimal_conversion"
+    ],
+    "eedi_86": [
+      "fractions_decimals__part_whole_meaning"
+    ],
+    "eedi_901": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_925": [
+      "quadratics__quadratic_formula"
+    ],
+    "eedi_931": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_943": [
+      "linear_equations__parallel_perpendicular"
+    ],
+    "eedi_944": [
+      "algebraic_manipulation__literal_equation_rearrangement"
+    ],
+    "eedi_966": [
+      "quadratics__quadratic_formula"
+    ],
+    "eedi_98": [
+      "systems__substitution_method"
+    ]
+  }
+}

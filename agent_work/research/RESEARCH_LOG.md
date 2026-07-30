@@ -4,6 +4,76 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLI Desirable difficulties × anxiety
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch41 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/41_desirable_difficulties_x_anxiety.md` (Part XLI)  
+**Claim examined:** “Struggle always equals learning” / always-on desirable difficulties for everyone — vs twin claim that anxious students should only get easy blocked fluency forever.
+
+**Evidence added:**
+- Bjork (1994, Metcalfe & Shimamura) + Bjork & Bjork (JARMAC 2020, doi:10.1016/j.jarmac.2020.09.003): DD only when learner can respond; else undesirable.
+- Ashcraft & Kirk (2001, doi:10.1037/0096-3445.130.2.224); Ashcraft & Krause (2007, doi:10.3758/BF03194059): MA as WM dual-task load.
+- Hinze & Rapp (2014, doi:10.1002/acp.3032): high stakes can erase retrieval benefits on delayed tests (retrieval disruption).
+- Agarwal et al. (2014, doi:10.1016/j.jarmac.2014.07.002): classroom retrieval → many students report *less* exam nerves.
+- Yang et al. (2023, doi:10.1007/s10648-023-09801-w): practice-test meta *g* ≈ −0.52 on test anxiety; easier quizzes help more.
+- Fioriti et al. (2025, doi:10.1037/xlm0001453): HMA impairs procedural learning, accelerates repeated-item retrieval learning.
+
+**Product implication:** SAFE-DD stack (equip → destake → dose → frame → measure); kill “struggle always” and “never struggle anxious kids”; densifies IL-2/SE-3/Exp D as DD-1…4.
+
+**Claim killed:** Unbuffered always-on desirable difficulty as universal pedagogy (and the avoidance twin of permanent easy fluency).
+
+**Next researcher id:** **42** (Social comparison & leaderboards).
+
+**PDF:** Regenerate after ch41 mount.
+
+---
+
+## 2026-07-29 — Synthesizer tick: v1.6 merge XXXIII–XL
+
+**Tick type:** Synthesizer (UTC hour 21; hour%6≠0; ≥8 researcher entries since last synthesizer — none previously logged)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition v1.6); `NEXT_LAB.md`; this log. No new chapter.  
+**Claim examined / cleaned:** Parallel “motivation,” “AI tutor,” “mastery,” and “engagement” framings after Parts XXXIII–XL — risk of orphan experiment families and contradictory marketing.
+
+**Merge actions:**
+- New **I.4 Surviving doctrine stack** — FEI/SAFE-CRAFT, L0–L4 ladder, PWC, E×V×Cost, TARGET/mastery climate, block→interleave→mix, student-generated why, competitive wedge, equity of worlds.
+- Executive Summary I.1–I.3 refreshed: solo transfer, mastery-motive challenge-seeking, Bastani kills, streak/blocked-fluency kills.
+- Part IX densifies A/D into AIT/DAG/CSA/EVT/GO/IL/SE families.
+- Part XIV adds Kills #6–#9 (AI≡product, blocked/streak/shuffle, AI-monologue≡SE, one motivation dial).
+- Part XX/XXI/glossary/XVII.3/Appendix F aligned; metrics add `solo_transfer_pass`, `ai_reveal_rate`, `strategy_class_error`, `se_principle_hit`.
+
+**Weak arguments removed / demoted:** Separate North Stars for “AI tutor warmth,” “engagement,” and “mastery label without transfer”; treating chapter experiment IDs as optional lore.
+
+**Claim killed (synthesis):** That MindCraft can market explanation volume, AI tutor equivalence, streak/blocked fluency, or untargeted explain-boxes as interchangeable proofs of identity transformation.
+
+**Next researcher id:** **41** (Desirable difficulties × anxiety) — flagged as bottleneck in I.4.
+
+**PDF:** Regenerate after v1.6 OS edit.
+
+---
+
+## 2026-07-29 — Researcher tick: Part XL Self-explanation prompts
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch40 never written → prefer Researcher per rotation)  
+**Chapter written:** `chapters/40_self_explanation_prompts.md` (Part XL)  
+**Claim examined:** AI/tutor monologue, open “explain yourself” boxes, and structured self-explanation prompts are interchangeable proofs of deep learning — so Solver fluency can wear a “self-explanation” brand.
+
+**Evidence added:**
+- Chi, Bassok, Lewis, Reimann & Glaser (1989, *Cognitive Science*, doi:10.1207/s15516709cog1302_1): good vs poor spontaneous SE while studying worked examples.
+- Chi, de Leeuw, Chiu & LaVancher (1994, *Cognitive Science*, doi:10.1016/0364-0213(94)90016-7): eliciting SE improves understanding vs reread.
+- Renkl (1997, *Cognitive Science*, doi:10.1016/S0364-0213(99)80017-2): principle/operator–goal/anticipative SE quality predicts gains beyond time-on-task.
+- Atkinson, Renkl & Merrill (2003, *JEP*, doi:10.1037/0022-0663.95.4.774): fading + principle prompts → near & far transfer without extra time.
+- Aleven & Koedinger (2002, *Cognitive Science*, doi:10.1016/S0364-0213(02)00061-7): Cognitive Tutor step+rule explanation → deeper understanding/transfer.
+- Rittle-Johnson, Loehr & Durkin (2017, *ZDM*, doi:10.1007/s11858-017-0834-z): math SE meta — immediate PK/CK/transfer ES ≈ .28/.33/.46; scaffold helps; classroom/delay thinner.
+- Rittle-Johnson & Loehr (2017, *Psychonomic Bulletin & Review*, doi:10.3758/s13423-016-1079-5): constraints — prefer explain correct/incorrect over own wrong ideas; prompt focus risks.
+
+**Product implication:** Default = faded examples + structured principle/misconception prompts *before* AI wrap; ban AI-monologue≡SE and explain-own-wrong-first default; SE-1…4/QUAL; densifies Exp A/D and XXXIII wrap.
+
+**Experiments spawned:** SE-1, SE-2, SE-3, SE-4, SE-QUAL.
+
+**PDF:** Regenerate after ch40 mount.
+
+---
+
 ## 2026-07-29 — Researcher tick: Part XXXIX Interleaving vs blocking
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch39 never written → prefer Researcher per rotation)  

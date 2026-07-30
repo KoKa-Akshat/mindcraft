@@ -1,0 +1,15 @@
+{
+  "slideBudget": 10,
+  "trapToWinRatio": "1:2",
+  "conceptCooldownDays": 60,
+  "weeklyPillarQuotas": {
+    "the_miss": 1,
+    "quick_win": 2,
+    "katha": 1,
+    "the_origin": 1,
+    "data_insight": 1,
+    "research": 1,
+    "testimonial": 1
+  },
+  "audienceRotation": ["student", "parent"]
+}

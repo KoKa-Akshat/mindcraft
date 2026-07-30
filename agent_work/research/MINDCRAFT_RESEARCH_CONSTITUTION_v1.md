@@ -1,10 +1,10 @@
 # MindCraft Research Constitution v1
 
 **Status:** Living operating document — not a pitch deck  
-**Edition:** v1.5 (multi-chapter lab; ongoing evidence program)  
+**Edition:** v1.6 (Synthesizer consolidation of Parts XXXIII–XL into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-29  
+**Last updated:** 2026-07-30 (Researcher tick — Part XLI mounted)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -29,8 +29,12 @@
 | XXXVII | `chapters/37_expectancy_value_eccles.md` | Eccles SEVT; utility/cost/attainment → choice; EVT experiments |
 | XXXVIII | `chapters/38_goal_orientation.md` | Mastery vs performance goal structures; appearance ban; GO experiments |
 | XXXIX | `chapters/39_interleaving_vs_blocking.md` | Interleave vs block; strategy selection; IL experiments |
+| XL | `chapters/40_self_explanation_prompts.md` | Self-explanation prompts; Chi/Renkl → coach UX; SE experiments |
+| XLI | `chapters/41_desirable_difficulties_x_anxiety.md` | Desirable difficulties × anxiety; SAFE-DD; Bjork vs Ashcraft |
 
-Queued next: see `NEXT_LAB.md` (self-explanation, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part XLII social comparison & leaderboards, then QUEUE_EXTENDED).
+
+**Synthesizer note (v1.6):** Eight researcher chapters (XXXIII–XL) landed without a merge pass. This edition collapses duplicate “motivation / mastery / AI tutor” talk into one commercial doctrine stack (I.4), upgrades Red Team kills (XIV), densifies Experiment A/D into chapter experiment families (IX), and refreshes competitive / metrics language. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
 ---
 
@@ -57,41 +61,65 @@ This v1 is dense and incomplete on purpose. Expanding toward 150–300 pages is 
 **HYPOTHESIS (confidence: medium–high):** Humans become confident mathematical thinkers when three conditions compound:
 
 1. **Affective permission** — the nervous system stops treating math as social/physical threat.
-2. **Competence evidence** — the learner accumulates undeniable, self-attributed successes at the right grain of difficulty.
-3. **Identity re-storying** — the person revises the narrative “I am not a math person” into a workable self-story compatible with struggle.
+2. **Competence evidence** — the learner accumulates undeniable, self-attributed successes at the right grain of difficulty — including *strategy selection* and *self-accounted why*, not only blocked accuracy.
+3. **Identity re-storying** — the person revises the narrative “I am not a math person” into a workable self-story compatible with struggle — via expectancy × value × cost (Eccles), not posters.
 
-Explanations alone rarely produce (1)–(3). Explanations can accelerate (2) *after* (1) is present. This matches the founder’s tutoring observation and is directionally supported by math-anxiety, SDT, and mindset literatures — with important contradictions (see Red Team).
+Explanations alone rarely produce (1)–(3). Fluent AI explanations can *accelerate wrong confidence* (Bastani unguarded GPT; Part XXXIII). Explanations help (2) only *after* (1) and when the student still does the decisive generative work (Parts XXVI, XL).
 
 ## I.2 Verdict on the scarcity thesis
 
 **FOUNDER BELIEF under audit:** AI commoditizes knowledge; scarcity shifts to motivation, confidence, identity, trust, curiosity, persistence, emotional safety, meaning.
 
-**Red Team verdict (provisional):**
+**Red Team verdict (updated v1.6):**
 
 | Claim | Status | Notes |
 |-------|--------|-------|
 | Explanations are getting cheaper/faster | **FACT** (directionally) | Generative AI + open content lowers marginal cost of explanation |
-| “Tutoring is free” | **FALSE as stated** | High-quality *human* attention, accountability, and diagnosis remain scarce and expensive |
-| Content is free | **MOSTLY FACT** for commodity content | Differentiation migrates to curation, sequencing, trust, outcomes |
-| Motivation/identity become scarce | **HYPOTHESIS** | Likely true as *product differentiators*; not proven as *sole* moat |
-| Emotional safety is first-order | **HYPOTHESIS with supportive evidence** | Math anxiety impairs working memory; interventions that ignore affect underperform for anxious learners |
+| “Tutoring is free” | **FALSE as stated** | Attention, accountability, diagnosis, calibrated trust remain scarce |
+| Content is free | **MOSTLY FACT** for commodity content | Differentiation = curation, sequencing, trust, outcomes |
+| Motivation/identity become scarce | **HYPOTHESIS** | Product differentiator; not proven sole moat — instrument E×V×Cost separately (XXXVII) |
+| Emotional safety is first-order | **HYPOTHESIS with supportive evidence** | Ashcraft WM tax; segment, don’t romanticize softness |
+| Unguarded AI chat improves solo learning | **KILLED** | Bastani: concurrent ↑ then solo exam ↓; guards neutralize harm ≠ prove gain |
+| Bastani “GPT Tutor” ≡ MindCraft ontology wrap | **KILLED** | Category error (XXXIII RT) |
+| Streaks / blocked fluency = mastery | **KILLED as North Star** | HID + XXXVIII/XXXIX; measure delayed mix + transfer |
 
-**Implication:** MindCraft should not bet the company on “better explanations.” It should bet on a **system that converts fear → evidence → identity**, with explanations as infrastructure, not hero feature.
+**Implication:** Do not bet on “better explanations” or “AI tutor warmth.” Bet on **FEI + pedagogy wrap**: fear→evidence→identity, with AI as guarded infrastructure and student generation as the spine.
 
 ## I.3 What to optimize (North Star debate)
 
 | Metric | Predicts short-term engagement? | Predicts durable math identity? | Risk |
 |--------|----------------------------------|----------------------------------|------|
-| Correct answers | Medium | Low–medium | Teaches gaming / guessing |
-| Time spent | High (easy to inflate) | Low | Engagement theater |
-| Streaks / DAU | High | Uncertain | Duo-style habit ≠ identity |
-| Confidence (self-report) | Medium | Medium | Cheap talk, demand effects |
-| Challenge-seeking (advanced course taking) | Medium | **High** (Yeager et al., Nature 2019 signal) | Hard to measure early |
-| Voluntary return after failure | Medium | **High** (HYPOTHESIS) | Needs instrumentation |
-| “I am a math person” endorsement + behavior | Medium | **Highest target** | Slow, noisy |
+| Correct answers (esp. blocked) | Medium | Low–medium | Fluency illusion; gaming |
+| Time spent / chat tokens | High | Low | Engagement / AI-monologue theater |
+| Streaks / DAU | High | Uncertain | Habit ≠ identity (HID) |
+| Confidence (self-report) | Medium | Medium | Cheap talk; overtrust after fluent AI |
+| Challenge-seeking (`challenge_accept` + *why*) | Medium | **High** | Must code mastery vs appearance/normative motive (XXXVIII) |
+| Voluntary return after failure (`retry_120s`) | Medium | **High** | Needs coach content discipline (SE prompts) |
+| Delayed mixed / `transfer_pass` / `solo_transfer_pass` | Medium | **High** | Anti-fake-mastery; anti-AI-crutch |
+| “I am a math person” + behavior | Medium | **Highest target** | Slow, noisy; L3+ claim only |
 
 **Working North Star (HYPOTHESIS):**  
-**Challenge-seeking under safety** — the student chooses a harder problem, returns after a miss, and attributes success to strategy/effort *in math specifically*.
+**Challenge-seeking under safety with transfer** — the student chooses a harder problem for a *mastery* reason, returns after a miss, can pick the strategy on a mixed delayed set, and attributes success to strategy — without needing the model to finish the thought.
+
+## I.4 Surviving doctrine stack (Synthesizer merge of XXXIII–XL)
+
+Duplicate frameworks collapsed. Deep dives own citations; this table is **company law until killed**.
+
+| Layer | Surviving rule | Source parts | Commercial use |
+|-------|----------------|--------------|----------------|
+| **FEI / SAFE-CRAFT** | Safety → attempt → informative miss → earned win → attribution → transfer | XVI, VIII | Session demo in marketing; not feature matrix |
+| **Claim ladder L0–L4** | Do not sell identity (L3) from session A/Bs (L1) | XXXIV | Parent/copy hygiene; pre-reg estimands |
+| **PWC (pedagogy wrap constraint)** | Guarded AI + ontology spine; success = `solo_transfer_pass` ≥ no-AI | XXXIII, XXXV | Ban “we’re Bastani’s Tutor”; ban unguarded Solver hero |
+| **E×V×Cost** | Instrument expectancy, value, cost separately; student-authored utility > staff utility dump | XXXVII | Kill single “motivation” KPI |
+| **TARGET / mastery climate** | Default-ban appearance UX + streak-as-North-Star; soft-wrong = mastery evaluation structure | XXXVIII | CTA copy audit; leaderboard kill for Maya default |
+| **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
+| **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
+| **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
+| **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
+
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” and “engagement” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
+
+**Next research bottleneck (partially addressed):** Part XLI landed **SAFE-DD** (equip → destake → dose → frame → measure). Still needs DD-1/DD-2 data before anxiety-segment interleave/SE claims go above L1.
 
 ---
 
@@ -171,6 +199,11 @@ Explanations alone rarely produce (1)–(3). Explanations can accelerate (2) *af
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-07-29 | Synthesizer v1.6: merge XXXIII–XL into I.4 doctrine stack | Synthesis | Surviving commercial law; next = XLI DD×anxiety |
+| 2026-07-29 | SE prompts: AI monologue ≢ SE; structure before wrap | Evidence | SE-1…4; densify Exp A/D |
+| 2026-07-29 | Interleaving: block→near-miss→spaced mix; kill shuffle=science | Evidence | IL-1…4; ban blocked vanity |
+| 2026-07-29 | Goal climate: appearance/streak NS killed; TARGET audit | Evidence | GO-1…4 |
+| 2026-07-29 | Eccles E×V×Cost: kill single motivation KPI | Evidence | EVT-1…4 |
 | 2026-07-25 | Constituted Research Lab + Constitution v1 | Process | Create OS |
 | 2026-07-25 | Scarcity thesis partially false as slogans; true as product wedge | Analysis | Rewrite pitch language |
 | 2026-07-25 | Yeager 2019 constrains mindset claims | Evidence | Ban empty mindset copy |
@@ -320,27 +353,46 @@ AI should brief tutors, not replace witnessing.
 
 # Part IX — Experiments (pre-registered style)
 
+Core A–D remain. Chapter ticks densified them into families — prefer the densified IDs when shipping.
+
 ### Experiment A — Wizard coach on soft-wrong
 - **Question:** Does the under-Graph wizard increase productive retry vs soft-wrong alone?
 - **Design:** A/B, chapter + practice  
 - **Primary:** retry within 120s; secondary: eventual correct without hint binge  
 - **Falsifier:** no lift; or lift only in engagement with worse accuracy  
+- **Densified content (v1.6):** Coach turns must be SE-constrained (principle / misconception contrast), not pep talk — see SE-1…4 / SE-2 as operational pairs with Experiment D.
 
 ### Experiment B — Story-first vs bare stem
 - **Question:** Does invention-story framing raise persistence on first miss?
 - **Design:** within-concept crossover  
 - **Primary:** time-to-abandon after first miss  
 - **Falsifier:** story slows without improving retention/transfer  
+- **Equity densify:** HIST-EQ / Part XXXVI — whose story, tokenism kill.
 
 ### Experiment C — North Star validation
 - **Question:** Which early metric best predicts 8-week challenge-seeking?
-- **Candidates:** streak length, soft-wrong retry, identity item, map mastery Δ  
+- **Candidates:** streak length, soft-wrong retry, identity item, map mastery Δ, delayed mix accuracy  
 - **Method:** observational + lagged prediction  
+- **v1.6 prior:** Expect streaks to lose; `retry_120s` + `transfer_pass` + mastery-motive `challenge_accept` to win.
 
 ### Experiment D — Explanation timing
 - **Question:** Is explanation-before-attempt worse than attempt-with-safety for anxious students?
 - **Design:** screen with anxiety pretest; randomize explanation-first vs attempt-first  
 - **Falsifier:** explanation-first wins for all segments  
+- **Densified:** Prefer SE-2/SE-3 (contrastive / structured generation) over monologue-first.
+
+### Experiment families mounted in chapters (do not orphan)
+
+| Family | Identifies (max claim without follow-up) | Parts |
+|--------|------------------------------------------|-------|
+| AIT-* | Guarded AI → solo transfer / anti-sycophancy | XXXIII |
+| DAG-* | Estimand hygiene; covariate vs mediator | XXXIV |
+| CSA-* | Session preference vs competitors; paste under guards | XXXV |
+| HIST-EQ / equity probes | Story belonging without stereotype cue | XXXVI |
+| EVT-* | Expectancy / value / cost levers | XXXVII |
+| GO-* | Mastery vs performance CTA climate | XXXVIII |
+| IL-* | Schedule → discrimination / delayed mix | XXXIX |
+| SE-* | Prompt regime → transfer / misconception recurrence | XL |
 
 ---
 
@@ -392,7 +444,7 @@ AI should brief tutors, not replace witnessing.
 
 ### Kill #2: “Just fix mindset”
 **Destroyed:** Poster mindset.  
-**Surviving:** Ecological mindset (task + feedback + peer/tutor norms), math-specific.
+**Surviving:** Ecological mindset (task + feedback + peer/tutor norms), math-specific — TARGET structures (XXXVIII).
 
 ### Kill #3: “Engagement is the goal”
 **Destroyed:** Engagement without transfer.  
@@ -400,11 +452,27 @@ AI should brief tutors, not replace witnessing.
 
 ### Kill #4: “Mastery graph = Bloom 2-sigma”
 **Destroyed:** Inflated tutoring mythology.  
-**Surviving:** Mastery *can* help weaker students if mastery is real and time costs are managed.
+**Surviving:** Mastery *can* help weaker students if mastery is real (`transfer_pass`) and time costs are managed.
 
 ### Kill #5: “Identity transformation is unmeasurable, so ship vibes”
 **Destroyed:** Vibes-as-strategy.  
-**Surviving:** Leading indicators (retry, challenge-seeking) + lagging identity items.
+**Surviving:** Leading indicators (retry, challenge-seeking, delayed mix) + lagging identity items; L0–L4 claim ladder (XXXIV).
+
+### Kill #6 (v1.6): “AI tutor / Bastani GPT Tutor is our product”
+**Destroyed:** Unguarded chat-as-learning; category-error marketing; guards-as-gain.  
+**Surviving:** Pedagogy wrap + `solo_transfer_pass` ≥ no-AI bar (XXXIII RT).
+
+### Kill #7 (v1.6): “Blocked accuracy / streaks / shuffle prove learning”
+**Destroyed:** Fluency illusion; streak North Star; random shuffle ≡ interleaving science.  
+**Surviving:** Short block → near-miss interleave → spaced mixed check (XXXIX); streaks as on-ramp only (HID).
+
+### Kill #8 (v1.6): “Any explain box / AI monologue = self-explanation science”
+**Destroyed:** Untargeted justify-your-wrong-guess; chat length as depth.  
+**Surviving:** Structured principle/misconception SE on correct or known-incorrect content before AI wrap (XL).
+
+### Kill #9 (v1.6): “One motivation dial”
+**Destroyed:** Collapsing expectancy and value; staff “math is useful” dumps as EVT.  
+**Surviving:** E×V×Cost triad with student-authored utility (XXXVII).
 
 ---
 
@@ -579,15 +647,17 @@ For some, speed drills and competition *increase* engagement. Segment, do not ro
 
 ## XVII.3 Surviving thesis (company doctrine)
 
-**Adopted doctrine (refined):**
+**Adopted doctrine (refined v1.6):**
 
-> MindCraft does not compete primarily on explanation volume. It competes on converting threatened learners into challenge-seeking mathematical agents through diagnosis, affective design, mastery evidence, narrative meaning, and human accountability — with AI as infrastructure.
+> MindCraft does not compete primarily on explanation volume or AI tutor warmth. It competes on converting threatened learners into challenge-seeking mathematical agents through diagnosis, affective design, mastery-climate evaluation, faded desirable difficulties, student-generated why, narrative meaning under equity constraints, and human accountability — with AI as *guarded* infrastructure that must clear `solo_transfer_pass` ≥ no-AI.
 
 **Falsifiers (90-day capable):**
 
 1. Anxious segment shows no FEI lift vs explanation-first control.  
 2. Parents refuse to pay when score gains lag identity metrics.  
-3. AI-alone matches human+AI on persistence + transfer for target segment.
+3. AI-alone matches human+AI on persistence + transfer for target segment.  
+4. Guarded Solver raises concurrent scores but loses `solo_transfer_pass` vs no-AI (PWC fail).  
+5. Interleave/SE regimes raise delayed mix but destroy `retry_120s` in high-anxiety segment without sequenced SAFE-DD (XLI; pending DD-1/DD-2).
 
 ---
 
@@ -670,16 +740,16 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 
 | Product | Primary scarce resource they sell | Identity claim? | Risk |
 |---------|-----------------------------------|-----------------|------|
-| Khan Academy | Free mastery content + reputation | Weak–medium | Explanation commodity |
-| Duolingo | Habit / streak motivation | Weak (language identity sometimes) | Extrinsic ceiling |
-| Brilliant | Aesthetic problem joy + prestige | Medium | Narrow segment |
+| Khan Academy | Free mastery content + reputation | Weak–medium | Explanation commodity; “mastery” without transfer_pass |
+| Duolingo | Habit / streak motivation | Weak (language identity sometimes) | Extrinsic ceiling; appearance of consistency |
+| Brilliant | Aesthetic problem joy + prestige | Medium | Narrow segment; not Maya threat profile |
 | Coursera/edX | Credentials | Medium (career identity) | Completion collapse |
 | Chegg / homework help | Answers under deadline | Anti-identity (outsourcing) | Integrity & AI shock |
 | Private tutors | Human accountability + customization | High when good | Supply constrained |
-| ChatGPT tutors | Instant explanation | Low unless wrapped | Trust / hallucination |
-| MindCraft (target) | FEI conversion + tutor witness + gap diagnosis | **Intended high** | Must prove, not assert |
+| ChatGPT tutors | Instant explanation | Low unless wrapped | Trust / hallucination; Bastani Base harm |
+| MindCraft (target) | FEI conversion + tutor witness + gap diagnosis + solo transfer | **Intended high** | Must prove, not assert |
 
-**Strategic implication:** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks. Out-tutor mediocre marketplaces on *diagnosed emotional-cognitive loop*.
+**Strategic implication (XXXV densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency. Out-compete on the **session**: recoverable struggle, visible competence evidence, strategy selection under mix, student-generated why, and transfer when help is gone — then *say that* in marketing (CSA-2).
 
 ---
 
@@ -689,8 +759,10 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 
 - Raw DAU / time-on-app without transfer  
 - Streak length alone  
-- Explanation open-rate  
+- Explanation open-rate / AI chat token count  
 - Points / coins  
+- Blocked-session accuracy alone  
+- Coach thumbs-up / “felt helpful” without `solo_transfer_pass`  
 
 ## XXI.2 Leading indicators (ship first)
 
@@ -699,9 +771,13 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `retry_120s` | New attempt on same or isomorphic item within 120s of soft-wrong | Persistence under safety |
 | `coach_shown` | Wizard/coach surfaced | Treatment exposure |
 | `write_exit_to_retry` | Leave write mode then attempt | Agency after reflection |
-| `challenge_accept` | Chose harder level when offered | Challenge-seeking |
+| `challenge_accept` | Chose harder level when offered | Challenge-seeking (instrument *motive*) |
 | `hint_binge` | ≥3 hints without independent solve | Gaming / helplessness |
 | `transfer_pass` | Correct on varied item after mastery mark | Anti-fake-mastery |
+| `solo_transfer_pass` | Transfer with AI/Solver closed or denied | Anti-crutch (XXXIII) |
+| `ai_reveal_rate` | Full-answer / unguarded reveal frequency | Crutch exposure |
+| `strategy_class_error` | Wrong *procedure family* on mixed set | Interleaving discrimination (XXXIX) |
+| `se_principle_hit` | Correct structured principle/ingredient pick when prompted | SE quality proxy (XL) |
 
 ## XXI.3 Lagging indicators
 
@@ -714,7 +790,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 
 ## XXI.4 Decision rule (HYPOTHESIS)
 
-Ship changes that raise `retry_120s` and `challenge_accept` without raising `hint_binge` or dropping `transfer_pass`.
+Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` without raising `hint_binge` / `ai_reveal_rate`, and without dropping `transfer_pass` or `solo_transfer_pass`. Prefer delayed mixed accuracy over blocked session accuracy.
 
 ---
 
@@ -732,6 +808,12 @@ Ship changes that raise `retry_120s` and `challenge_accept` without raising `hin
 | False growth mindset | Effort praise without strategy / conditions |
 | SAFE-CRAFT | Improved tutoring sequence (Part XVI.3) |
 | Layers 0–6 | Knowledge commodity stack (Part VI.3) |
+| HID | Habit/Identity Divergence — streaks can raise return without identity |
+| MoC | Memory of Competence — spaced retrieval after transfer_pass |
+| PWC | Pedagogy Wrap Constraint — guarded AI + student generation + solo transfer bar |
+| Claim ladder L0–L4 | Max defensible causal/marketing claim given design (Part XXXIV) |
+| E×V×Cost | Eccles expectancy × subjective task value × cost triad |
+| TARGET | Classroom/goal-structure dimensions cueing mastery vs performance |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -793,11 +875,15 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 ## Appendix F — Future chapters (queued, not padded)
 
 1. Neuroscience of math anxiety (amygdala/WM models; cautious translation)  
-2. History of mathematics as meaning technology  
-3. Parent trust economics & willingness-to-pay experiments  
+2. History of mathematics as meaning technology — under trial via XXVIII + HIST  
+3. Parent trust economics & willingness-to-pay — EVT-4 / Part XXVII  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
-5. Full competitive teardown with usage telemetry (when available) — partial via Part XXXV session audits  
+5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
+7. **DONE (2026-07-30):** Desirable difficulties × anxiety (Part XLI) — SAFE-DD stack  
+8. **NEXT:** Social comparison & leaderboards (Part XLII)  
+ 
+8. Social comparison & leaderboards (42); habit science without identity colonization (43)
 
 ---
 
@@ -809,6 +895,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 2. Red Team attempts kill.  
 3. Surviving claim updates Constitution with confidence tag.  
 4. One experiment metric reviewed.  
+
+**Synthesizer (~every 8 researcher ticks):** Merge duplicate frameworks into Part I.4 / XIV; refresh Executive Summary; regenerate PDF. Do not write a new chapter on synthesizer ticks.
 
 **Monthly:**
 
@@ -825,8 +913,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 
 ## Closing stance
 
-MindCraft’s deepest risk is not technical failure. It is **winning the wrong game**: becoming the best explanation engine in a world where explanations are cheap, while losing the only game that compounds — helping a human revise who they are in the presence of difficulty.
+MindCraft’s deepest risk is not technical failure. It is **winning the wrong game**: becoming the best explanation engine in a world where explanations are cheap — or the warmest AI tutor in a world where warmth without solo transfer is a crutch — while losing the only game that compounds: helping a human revise who they are in the presence of difficulty.
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.1 expanded mechanisms, scarcity trial, systems maps, and instrumentation. The lab continues. Page count is not the finish line — falsifiable truth is.**
+**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Part XLI adds SAFE-DD for anxiety-gated desirable difficulties. Next researcher id: XLII social comparison & leaderboards. Page count is not the finish line — falsifiable truth is.**

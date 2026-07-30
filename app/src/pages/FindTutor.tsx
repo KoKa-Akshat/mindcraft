@@ -24,14 +24,13 @@
  *      where that person lives — see `hasRealLocation` below. This activates
  *      automatically, no code change needed here, the moment any tutor doc
  *      sets a real `location: {lat,lng}`.
- *   2. No review/rating system exists ANYWHERE in this codebase (grepped
- *      firestore.rules, TutorDashboard, Book.tsx — nothing). This component
- *      reads an optional `reviews` array off the tutor doc if one is ever
- *      added, and renders an honest "no reviews yet" empty state otherwise.
- *      It does NOT fabricate star ratings or named reviewers.
- *   3. The public demo roster below only includes Akshat for now. More tutors
- *      should appear when they onboard with their own address, intro, subjects,
- *      and real reviews.
+ *   2. There is no public review write-path yet. This page shows consented,
+ *      first-party testimonials for Akshat and reads an optional `reviews`
+ *      array from Firestore for future tutors. It does not synthesize names,
+ *      quotes, recordings, or ratings.
+ *   3. The public roster below contains the current MindCraft tutor team.
+ *      More tutors appear when they onboard with their own address, intro,
+ *      subjects, and real reviews.
  *   4. Tutoring today is virtual (Calendly + Google Meet, see
  *      TutorDashboard.tsx) — nobody meets a tutor in person at the studio
  *      address. The map/copy below says so explicitly so "find tutors near
@@ -50,11 +49,13 @@ import {
   useLoadScript,
   type Libraries,
 } from '@react-google-maps/api'
+import { MessageSquareQuote, PlayCircle, X } from 'lucide-react'
 import {
   formatDistanceMiles,
   filterTutorsForSearch,
   type LatLng,
 } from '../lib/geo'
+import { MARKETING_BASE } from '../lib/siteUrls'
 import s from './FindTutor.module.css'
 
 // ── Studio home base ─────────────────────────────────────────────────────────
@@ -71,8 +72,12 @@ const MAP_LIBRARIES: Libraries = ['places']
 
 interface TutorReview {
   studentName: string
+  reviewerLabel?: string
   quote: string
-  rating: number
+  transcript?: string
+  mediaUrl?: string
+  mediaTitle?: string
+  rating?: number
 }
 
 interface Tutor {
@@ -95,6 +100,25 @@ interface Tutor {
 
 const DEFAULT_TUTOR_BIO = 'Patient ACT, algebra, precalc, calculus, and stats help for students who need the first step to finally make sense.'
 
+const AKSHAT_REVIEWS: TutorReview[] = [
+  {
+    studentName: 'Sebastian',
+    reviewerLabel: 'MindCraft student',
+    quote: 'My tutor inspired me to be a better person as well as a student. He came down to my level and explained things in ways I would understand.',
+    transcript: 'My tutor inspired me to be a better person as well as a student. He came down to my level and explained things in ways I would understand.',
+    mediaUrl: `${MARKETING_BASE}/img/testimonials/sebastian-feedback.mp4`,
+    mediaTitle: 'Sebastian student feedback',
+  },
+  {
+    studentName: 'Mary',
+    reviewerLabel: "Ida's parent",
+    quote: 'She felt really comfortable and in fact told us that she learned some new approaches to working through her IB math problems, which was just so valuable.',
+    transcript: 'Hello, my name is Mary and Akshat tutored my daughter this spring. She was preparing for her IB math exam and he was wonderful. She felt really comfortable and in fact told us that she learned some new approaches to working through her IB math problems, which was just so valuable. He was super reliable, super responsive, and I highly recommend him.',
+    mediaUrl: `${MARKETING_BASE}/img/testimonials/mary-ida-feedback.mp4`,
+    mediaTitle: 'Mary parent feedback about Ida',
+  },
+]
+
 // Public demo roster. Regional pins: MN (Akshat) and Bay Area CA (Abhigya).
 // Sessions stay virtual; the map routes parents to tutors available in-state.
 const DEMO_TUTORS: Tutor[] = [
@@ -111,7 +135,7 @@ const DEMO_TUTORS: Tutor[] = [
     state: 'MN',
     regionLabel: 'Macalester · St Paul, MN',
     hasRealLocation: true,
-    reviews: [],
+    reviews: AKSHAT_REVIEWS,
   },
   {
     id: 'blake-kell',
@@ -436,6 +460,99 @@ function MapPlaceholder() {
   )
 }
 
+function TutorReviewsDialog({ tutor, onClose }: { tutor: Tutor; onClose: () => void }) {
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    closeButtonRef.current?.focus()
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+      previousFocus?.focus()
+    }
+  }, [onClose])
+
+  return (
+    <div className={s.reviewOverlay} onMouseDown={onClose}>
+      <section
+        className={s.reviewDialog}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tutor-reviews-title"
+        onMouseDown={event => event.stopPropagation()}
+      >
+        <header className={s.reviewDialogHeader}>
+          <div>
+            <p className={s.reviewDialogKicker}>Student and parent voices</p>
+            <h2 id="tutor-reviews-title">Reviews for {tutor.displayName}</h2>
+            <p>Read the transcript or play the original recording.</p>
+          </div>
+          <button
+            ref={closeButtonRef}
+            type="button"
+            className={s.reviewClose}
+            onClick={onClose}
+            aria-label="Close reviews"
+            title="Close reviews"
+          >
+            <X aria-hidden="true" size={22} strokeWidth={2.4} />
+          </button>
+        </header>
+
+        <div className={s.reviewStories}>
+          {tutor.reviews.map((review, index) => (
+            <article className={s.reviewStory} key={`${review.studentName}-${index}`}>
+              <div className={s.reviewTranscriptCard}>
+                <div className={s.reviewPanelLabel}>
+                  <MessageSquareQuote aria-hidden="true" size={18} />
+                  Transcript
+                </div>
+                <blockquote>“{review.quote}”</blockquote>
+                {review.transcript && review.transcript !== review.quote && (
+                  <p className={s.reviewTranscript}>{review.transcript}</p>
+                )}
+                <cite>
+                  {review.studentName}
+                  {review.reviewerLabel ? ` · ${review.reviewerLabel}` : ''}
+                </cite>
+              </div>
+
+              <div className={s.reviewRecordingCard}>
+                <div className={s.reviewPanelLabel}>
+                  <PlayCircle aria-hidden="true" size={18} />
+                  Watch and listen
+                </div>
+                {review.mediaUrl ? (
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={`${MARKETING_BASE}/img/mindcraft-logo.png`}
+                    title={review.mediaTitle || `${review.studentName} testimonial`}
+                  >
+                    <source src={review.mediaUrl} type="video/mp4" />
+                  </video>
+                ) : (
+                  <p className={s.reviewMediaEmpty}>Recording coming soon.</p>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  )
+}
+
 export default function FindTutor() {
   const [tutors, setTutors] = useState<Tutor[]>(DEMO_TUTORS)
   const [origin, setOrigin] = useState<LatLng | null>(null)
@@ -443,6 +560,7 @@ export default function FindTutor() {
   const [locating, setLocating] = useState(false)
   const [locError, setLocError] = useState('')
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [reviewTutorId, setReviewTutorId] = useState<string | null>(null)
 
   useEffect(() => {
     // Same fetch the old Book.tsx always used. NOTE: firestore.rules requires
@@ -472,6 +590,15 @@ export default function FindTutor() {
           const reviews: TutorReview[] = Array.isArray(data.reviews)
             ? data.reviews
                 .filter((r: any) => r && typeof r.quote === 'string' && typeof r.studentName === 'string')
+                .map((r: any) => ({
+                  studentName: r.studentName.trim(),
+                  reviewerLabel: typeof r.reviewerLabel === 'string' ? r.reviewerLabel.trim() : undefined,
+                  quote: r.quote.trim(),
+                  transcript: typeof r.transcript === 'string' ? r.transcript.trim() : r.quote.trim(),
+                  mediaUrl: typeof r.mediaUrl === 'string' ? r.mediaUrl.trim() : undefined,
+                  mediaTitle: typeof r.mediaTitle === 'string' ? r.mediaTitle.trim() : undefined,
+                  rating: typeof r.rating === 'number' ? r.rating : undefined,
+                }))
                 .slice(0, 20)
             : []
           remoteTutors.push({
@@ -514,6 +641,8 @@ export default function FindTutor() {
     () => filterTutorsForSearch(tutors, origin, originLabel),
     [tutors, origin, originLabel],
   )
+  const reviewTutor = tutors.find(tutor => tutor.id === reviewTutorId) ?? null
+  const closeReviews = useCallback(() => setReviewTutorId(null), [])
 
   function useMyLocation() {
     if (!navigator.geolocation) {
@@ -642,7 +771,22 @@ export default function FindTutor() {
                 </div>
                 <div className={s.reviewsRow}>
                   {tutor.reviews.length > 0 ? (
-                    <span className={s.reviewsCount}>{tutor.reviews.length} review{tutor.reviews.length === 1 ? '' : 's'}</span>
+                    <button
+                      type="button"
+                      className={s.reviewsButton}
+                      aria-haspopup="dialog"
+                      onClick={event => {
+                        event.stopPropagation()
+                        setSelectedId(tutor.id)
+                        setReviewTutorId(tutor.id)
+                      }}
+                    >
+                      <MessageSquareQuote aria-hidden="true" size={17} />
+                      <span>
+                        <strong>{tutor.reviews.length} family review{tutor.reviews.length === 1 ? '' : 's'}</strong>
+                        <small>Read transcripts and play recordings</small>
+                      </span>
+                    </button>
                   ) : (
                     <span className={s.reviewsEmpty}>No reviews yet. Be the first to book.</span>
                   )}
@@ -659,6 +803,8 @@ export default function FindTutor() {
           </div>
         </div>
       </div>
+
+      {reviewTutor && <TutorReviewsDialog tutor={reviewTutor} onClose={closeReviews} />}
 
       <div className={s.footer}>
         Already have an account?{' '}

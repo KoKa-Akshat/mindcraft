@@ -73,3 +73,9 @@ showcase-qr.html
 # the web app's deploy pipeline) — contains a real (free-tier) MyScript
 # Cloud application key + HMAC key in source, do not commit.
 ios-prototype/
+
+# Marketing pipeline generated output — rerunnable, ~5MB per weekly run.
+# Batches are inspected in Drive (npm run marketing:publish), not in git.
+marketing/run/
+marketing/review/
+marketing-drive-service-account.json
