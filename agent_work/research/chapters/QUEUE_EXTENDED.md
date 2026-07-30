@@ -21,9 +21,9 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 46 | Teacher/tutor expectancy effects | Pygmalion; tutor briefing ethics | **DONE** → `46_teacher_tutor_expectancy.md` |
 | 47 | Sleep, stress, and learning | Timing practice; exam weeks | promoted → NEXT_LAB |
 
-| 48 | Transfer & variation theory | Far transfer design in ontology |
-| 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science |
-| 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic |
+| 48 | Transfer & variation theory | Far transfer design in ontology | promoted → NEXT_LAB **NEXT** |
+| 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science | promoted → NEXT_LAB |
+| 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | promoted → NEXT_LAB |
 | 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick applied to 45-min sessions |
 | 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer |
 | 53 | Religion/ritual light-touch design | Meaning without cult dynamics |

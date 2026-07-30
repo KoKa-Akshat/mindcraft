@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLVII Sleep, stress, and learning (SAFE-TIMING)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch47 never written → prefer Researcher per rotation; 6 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
+**Chapter written:** `chapters/47_sleep_stress_learning.md` (Part XLVII)  
+**Claim examined:** Practice timing under sleep-dependent consolidation + stress/pressure WM theft — vs all-nighter theater, sleep-app brand creep, and pressure-as-desirable-difficulty.
+
+**Evidence added:**
+- Diekelmann & Born (2010, doi:10.1038/nrn2762): sleep consolidates; SWS/REM complementary roles; qualitative+quantitative change.
+- Stickgold (2005, doi:10.1038/nature04286): offline sleep reprocessing shapes memory.
+- Walker & Stickgold (2010, doi:10.1038/nrn2762-c1): integrative/schema evolution beyond verbatim consolidation.
+- Gais & Born (2004, doi:10.1073/pnas.0305404101): low ACh during SWS critical for declarative consolidation (physostigmine block).
+- Beebe, Rose & Amin (2010, doi:10.1016/j.jadohealth.2010.03.005): experimental adolescent restriction → poorer learning/attention in simulated classroom.
+- Beebe (2011, doi:10.1016/j.pcl.2011.03.002): review of cognitive/behavioral costs of inadequate pediatric sleep.
+- Cousins, Wong & Chee (2019, doi:10.1016/j.jadohealth.2019.04.030): multi-night 5h TIB → large long-term factual retention deficits (30min/3d/42d).
+- Ashcraft & Krause (2007, doi:10.3758/BF03194059): math anxiety as WM dual-task; avoidance pathways.
+- Beilock & Carr (2005, doi:10.1111/j.0956-7976.2005.00789.x): pressure chokes high-WM performers on WM-heavy math.
+
+**Product implication:** SAFE-TIMING stack (encode→sleep→transfer claim → never reward midnight volume → restriction/stress-aware load → pressure≠DD → exam-week retrieval mode → not a sleep clinic → tutor timing briefs → measure delayed transfer); TIM-1…4.
+
+**Claim killed:** All-nighter/midnight-streak heroism; exam pressure as DD; same-day cram≡exam-ready; MindCraft-as-sleep-wellness brand.
+
+**Next researcher id:** **48** (Transfer & variation theory). Promoted 48–50 into NEXT_LAB.
+
+**PDF:** Regenerate after ch47 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLVI Teacher/tutor expectancy (Pygmalion/Golem)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0 → Researcher; 5 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
