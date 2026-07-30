@@ -4,6 +4,29 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLV Mathematical resilience (Johnston-Wilder/Lee)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch45 never written → prefer Researcher per rotation; 4 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
+**Chapter written:** `chapters/45_mathematical_resilience.md` (Part XLV)  
+**Claim examined:** Mathematical resilience / growth under adversity as product architecture — vs grit posters, danger-zone-as-desirable-difficulty, and Resilience Score™ theater.
+
+**Evidence added:**
+- Masten (2001, doi:10.1037/0003-066X.56.3.227): ordinary magic — resilience from normative protective systems.
+- Johnston-Wilder & Lee (2010+) mathematical resilience construct; Lee & Johnston-Wilder four aspects (growth, value, how-to-work, recruit support); Growth Zone Model (comfort/growth/danger).
+- Kooken, Welsh, McCoach, Johnston-Wilder & Lee (2016, doi:10.1177/0748175615596782): MRS — Value, Struggle, Growth factors.
+- Duckworth et al. (2007, doi:10.1037/0022-3514.92.6.1087): grit origin (cited for contrast).
+- Credé, Tynan & Harms (2017, doi:10.1037/pspp0000102): grit meta — structure fail, conscientiousness overlap, modest prediction, weak intervention leverage.
+
+**Product implication:** SAFE-RESILIENCE stack (name zones → equip before escalate → struggle expected → support recruitment first-class → exit danger fast → value without coercion → measure recovery/transfer not grit); densifies SAFE-DD / FEI / TARGET; RES-1…4.
+
+**Claim killed:** Grit/character as marketing NS; danger-zone as desirable difficulty; resilience-as-rare-trait branding; in-app Resilience Score™ as identity proof.
+
+**Next researcher id:** **46** (Teacher/tutor expectancy effects — Pygmalion).
+
+**PDF:** Regenerate after ch45 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLIV Intrinsic motivation killers (Deci)
 
 **Tick type:** Researcher (UTC hour 9; hour%6≠0; 3 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
