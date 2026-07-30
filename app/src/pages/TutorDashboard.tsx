@@ -25,7 +25,6 @@ import TutorLocationPin from '../components/TutorLocationPin'
 import Dashboard from './Dashboard'
 import type { LatLng } from '../lib/geo'
 import { setTutorViewAsStudentId, TUTOR_EXIT_STUDENT_MSG } from '../lib/tutorViewAs'
-import WelcomeRitual, { welcomeRitualSeen } from '../components/WelcomeRitual'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 
@@ -137,9 +136,6 @@ export default function TutorDashboard() {
   const [sessionNotesId, setSessionNotesId] = useState<string | null>(null)
   const [savingNotes, setSavingNotes] = useState(false)
   const [connectChip, setConnectChip] = useState<null | 'calendly' | 'meet' | 'location'>(null)
-  const [showWelcome, setShowWelcome] = useState(() => (
-    typeof window !== 'undefined' && !welcomeRitualSeen(user.uid, 'tutor')
-  ))
 
   // ── Assigned student (roster seed) ──────────────────────────────────────────
   const [assignedStudent, setAssignedStudent] = useState<AssignedStudent | null>(null)
@@ -660,13 +656,6 @@ export default function TutorDashboard() {
 
   return (
     <div className={s.shell}>
-      {showWelcome && (
-        <WelcomeRitual
-          uid={user.uid}
-          role="tutor"
-          onDone={() => setShowWelcome(false)}
-        />
-      )}
       <header className={s.topBar}>
         <div className={s.topLeft}>
           <a href={MARKETING_BASE} className={s.logo}>Mind<span>Craft</span></a>
