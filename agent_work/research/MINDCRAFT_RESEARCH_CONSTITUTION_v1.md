@@ -4,7 +4,7 @@
 **Edition:** v1.6 (Synthesizer consolidation of Parts XXXIII–XL into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-30 (Researcher tick — Part XLV mounted)  
+**Last updated:** 2026-07-30 (Researcher tick — Part XLVI mounted)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -35,8 +35,9 @@
 | XLIII | `chapters/43_habit_formation_science.md` | Habit formation (Wood/Clear); SAFE-HABIT; cue≠colonization |
 | XLIV | `chapters/44_intrinsic_motivation_killers.md` | Intrinsic motivation killers (Deci); SAFE-REWARD; controlling≠informational |
 | XLV | `chapters/45_mathematical_resilience.md` | Mathematical resilience (JW/Lee); SAFE-RESILIENCE; grit theater kill |
+| XLVI | `chapters/46_teacher_tutor_expectancy.md` | Tutor expectancy (Pygmalion/Golem); SAFE-EXPECTANCY; trait-label ban |
 
-Queued next: see `NEXT_LAB.md` (Part XLVI tutor expectancy / Pygmalion, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part XLVII sleep/stress/learning, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.6):** Eight researcher chapters (XXXIII–XL) landed without a merge pass. This edition collapses duplicate “motivation / mastery / AI tutor” talk into one commercial doctrine stack (I.4), upgrades Red Team kills (XIV), densifies Experiment A/D into chapter experiment families (IX), and refreshes competitive / metrics language. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -889,7 +890,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 9. **DONE (2026-07-30):** Habit formation science without identity colonization (Part XLIII) — SAFE-HABIT stack  
 10. **DONE (2026-07-30):** Intrinsic motivation killers / Deci caveats (Part XLIV) — SAFE-REWARD stack  
 11. **DONE (2026-07-30):** Mathematical resilience (Part XLV / id 45) — SAFE-RESILIENCE stack  
-12. **NEXT:** Teacher/tutor expectancy effects (Part XLVI / id 46)
+12. **DONE (2026-07-30):** Teacher/tutor expectancy effects (Part XLVI / id 46) — SAFE-EXPECTANCY stack  
+13. **NEXT:** Sleep, stress, and learning (Part XLVII / id 47)
 
 ---
 
@@ -923,4 +925,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Part XLI adds SAFE-DD; Part XLII adds SAFE-COMPARE; Part XLIII adds SAFE-HABIT; Part XLIV adds SAFE-REWARD; Part XLV adds SAFE-RESILIENCE (growth zone + support recruitment; grit theater kill). Next researcher id: XLVI tutor expectancy / Pygmalion. Page count is not the finish line — falsifiable truth is.**
+**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Part XLI adds SAFE-DD; Part XLII adds SAFE-COMPARE; Part XLIII adds SAFE-HABIT; Part XLIV adds SAFE-REWARD; Part XLV adds SAFE-RESILIENCE; Part XLVI adds SAFE-EXPECTANCY (task-only tutor briefs; Golem/trait-label kill; CIOF mediation). Next researcher id: XLVII sleep/stress/learning. Page count is not the finish line — falsifiable truth is.**

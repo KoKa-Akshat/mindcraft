@@ -28,9 +28,10 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 43 | Habit formation science (Wood/Clear) | Cue design without identity colonization | **DONE** (2026-07-30) |
 | 44 | Intrinsic motivation killers (Deci) | Controlling rewards; Deci caveats | **DONE** (2026-07-30) |
 | 45 | Mathematical resilience | Johnston-Wilder/Lee; growth under adversity | **DONE** (2026-07-30) |
-| 46 | Teacher/tutor expectancy effects | Pygmalion; tutor briefing ethics | **NEXT** |
+| 46 | Teacher/tutor expectancy effects | Pygmalion; tutor briefing ethics | **DONE** (2026-07-30) |
+| 47 | Sleep, stress, and learning | Timing practice; exam weeks | **NEXT** |
 
-More IDs: `chapters/QUEUE_EXTENDED.md` (47–70).
+More IDs: `chapters/QUEUE_EXTENDED.md` (48–70).
 
 ## Standing Red Team targets
 

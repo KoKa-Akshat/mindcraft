@@ -18,8 +18,9 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 43 | Habit formation science (Wood/Clear) | Cue design without identity colonization | **DONE** → `43_habit_formation_science.md` |
 | 44 | Intrinsic motivation killers | Controlling rewards; Deci caveats | **DONE** (Part XLIV / SAFE-REWARD) |
 | 45 | Mathematical resilience | Johnston-Wilder/Lee; growth under adversity | **DONE** → `45_mathematical_resilience.md` |
-| 46 | Teacher/tutor expectancy effects | Pygmalion; tutor briefing ethics | promoted → NEXT_LAB |
-| 47 | Sleep, stress, and learning | Timing practice; exam weeks |
+| 46 | Teacher/tutor expectancy effects | Pygmalion; tutor briefing ethics | **DONE** → `46_teacher_tutor_expectancy.md` |
+| 47 | Sleep, stress, and learning | Timing practice; exam weeks | promoted → NEXT_LAB |
+
 | 48 | Transfer & variation theory | Far transfer design in ontology |
 | 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science |
 | 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic |

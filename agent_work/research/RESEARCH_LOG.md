@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-30 — Researcher tick: Part XLVI Teacher/tutor expectancy (Pygmalion/Golem)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0 → Researcher; 5 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
+**Chapter written:** `chapters/46_teacher_tutor_expectancy.md` (Part XLVI)  
+**Claim examined:** Tutor/teacher expectancy as product ops — Pygmalion IQ folklore vs small/accurate effects, Golem from trait labels, CIOF mediation, high-expectation class-level practice.
+
+**Evidence added:**
+- Rosenthal & Jacobson (1968; Urban Review doi:10.1007/BF02322211): origin Pygmalion classroom study (contested IQ story).
+- Raudenbush (1984, doi:10.1037/0022-0663.76.1.85): expectancy effects larger with little prior teacher–pupil contact.
+- Jussim & Harber (2005, doi:10.1207/s15327957pspr0902_3): small average SFP; stigma amplifiers; accuracy often drives prediction.
+- Brophy & Good (1970, doi:10.1037/h0029908): differential demand/praise by expectation.
+- Harris & Rosenthal (1985, doi:10.1037/0033-2909.97.3.363): four-factor mediation (climate/input/output/feedback).
+- Babad, Inbar & Rosenthal (1982, doi:10.1037/0022-0663.74.4.459): Golem / high-bias negative treatment.
+- Brattesani, Weinstein & Marshall (1984, doi:10.1037/0022-0663.76.2.236): perceived differential treatment moderates expectancy→achievement.
+- Rubie-Davies (2007, doi:10.1348/000709906X101601): high- vs low-expectation teachers’ whole-class practices.
+
+**Product implication:** SAFE-EXPECTANCY stack (task-only briefs → cold-start high challenge+support → CIOF audit → accuracy without Golem → stigma premium → measure mediation+FEI); EXP-1…4.
+
+**Claim killed:** Pygmalion IQ marketing; trait/weakness-identity tutor labels; climate-only positivity; “tell tutors she’s weak” as hygiene.
+
+**Next researcher id:** **47** (Sleep, stress, and learning).
+
+**PDF:** Regenerate after ch46 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLV Mathematical resilience (Johnston-Wilder/Lee)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch45 never written → prefer Researcher per rotation; 4 researcher entries since synthesizer v1.6 → not yet Synthesizer)  
