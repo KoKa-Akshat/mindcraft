@@ -111,7 +111,7 @@ const AKSHAT_REVIEWS: TutorReview[] = [
   },
   {
     studentName: 'Mary',
-    reviewerLabel: "Ida's parent and former student",
+    reviewerLabel: "Ida's parent",
     quote: 'She felt really comfortable and in fact told us that she learned some new approaches to working through her IB math problems, which was just so valuable.',
     transcript: 'Hello, my name is Mary and Akshat tutored my daughter this spring. She was preparing for her IB math exam and he was wonderful. She felt really comfortable and in fact told us that she learned some new approaches to working through her IB math problems, which was just so valuable. He was super reliable, super responsive, and I highly recommend him.',
     mediaUrl: `${MARKETING_BASE}/img/testimonials/mary-ida-feedback.mp4`,
