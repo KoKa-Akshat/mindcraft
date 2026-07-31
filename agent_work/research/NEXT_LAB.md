@@ -33,9 +33,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 48 | Transfer & variation theory | Far transfer design in ontology | **DONE** (2026-07-30) |
 | 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science | **DONE** (2026-07-31) |
 | — | **Synthesizer v1.7** | Merge XLI–XLIX SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-07-31 UTC 03) |
-| 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | **NEXT** |
+| 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | **DONE** (2026-07-31) — Part L / SAFE-CALIB |
+| 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick; 45-min session design | **NEXT** |
+| 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer | queued |
+| 53 | Religion/ritual light-touch design | Meaning without cult dynamics | queued |
 
-More IDs: `chapters/QUEUE_EXTENDED.md` (51–70).
+More IDs: `chapters/QUEUE_EXTENDED.md` (54–70).
 
 ## Standing Red Team targets
 
@@ -45,3 +48,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (51–70).
 - Any streak KPI promoted as learning
 - Any fabricated citation
 - Any AI-monologue≡SE or blocked-accuracy≡exam-ready claim (v1.6)
+- Any “raise confidence” / CA-raises-grades / Belief Score™ claim (v1.7 + Part L)

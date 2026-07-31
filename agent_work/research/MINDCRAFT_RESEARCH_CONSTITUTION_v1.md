@@ -39,8 +39,9 @@
 | XLVII | `chapters/47_sleep_stress_learning.md` | Sleep/stress/learning; SAFE-TIMING; all-nighter & sleep-app kill |
 | XLVIII | `chapters/48_transfer_variation_theory.md` | Transfer & variation theory; SAFE-TRANSFER; story≠far-transfer kill |
 | XLIX | `chapters/49_misconceptions_as_productive.md` | Misconceptions as productive; SAFE-MISCON; soft-wrong / diagnostic wrongs |
+| L | `chapters/50_confidence_calibration.md` | Confidence calibration; SAFE-CALIB; over/underconfidence; C4 hide-correctness |
 
-Queued next: see `NEXT_LAB.md` (Part L confidence calibration, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LI deliberate practice, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.7):** Nine researcher chapters (XLI–XLIX) landed after v1.6 without a merge pass — SAFE-* stacks had been stuffed as footnotes into the TARGET row. This edition promotes each stack to its own I.4 law, adds Red Team kills #10–#14, mounts experiment families DD/SC/HAB/IM/RES/EXP/TIM/TR/MIS in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -139,7 +140,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” and “celebrate mistakes” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
 
-**Next research bottleneck:** Part L **confidence calibration** (over/underconfidence; hide-correctness diagnostic; hypercorrection × MISCON). DD-1/DD-2 and MIS-3 still gate anxiety-segment and confidence-tiered claims above L1.
+**Next research bottleneck:** Part LI **deliberate practice** in tutoring sessions (Ericsson vs Hambrick; 45-min design). CAL-1…5 and MIS-3 still gate confidence-tiered / CA-alone claims above L1; SAFE-CALIB lives in Part L until synthesizer promotion.
 
 ---
 
@@ -961,7 +962,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 14. **DONE (2026-07-30):** Transfer & variation theory (Part XLVIII / id 48) — SAFE-TRANSFER stack  
 15. **DONE (2026-07-31):** Misconceptions as productive (Part XLIX / id 49) — SAFE-MISCON stack  
 16. **Synthesizer v1.7 (2026-07-31):** Merged XLI–XLIX into I.4 / XIV / IX / XXI — no new chapter  
-17. **NEXT:** Confidence calibration (Part L / id 50)
+17. **DONE (2026-07-31):** Confidence calibration (Part L / id 50) — SAFE-CALIB stack  
+18. **NEXT:** Deliberate practice in tutoring sessions (Part LI / id 51)
 
 ---
 
@@ -995,4 +997,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Researcher count since synthesizer reset to 0. Next researcher id: L confidence calibration. Page count is not the finish line — falsifiable truth is.**
+**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Part L (SAFE-CALIB) densifies confidence doctrine pending next synthesizer. Next researcher id: LI deliberate practice. Page count is not the finish line — falsifiable truth is.**

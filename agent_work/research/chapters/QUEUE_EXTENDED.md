@@ -23,10 +23,10 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 
 | 48 | Transfer & variation theory | Far transfer design in ontology | promoted → NEXT_LAB **NEXT** |
 | 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science | promoted → NEXT_LAB |
-| 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | promoted → NEXT_LAB |
-| 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick applied to 45-min sessions |
-| 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer |
-| 53 | Religion/ritual light-touch design | Meaning without cult dynamics |
+| 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | **DONE** → `50_confidence_calibration.md` |
+| 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick applied to 45-min sessions | promoted → NEXT_LAB **NEXT** |
+| 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer | promoted → NEXT_LAB |
+| 53 | Religion/ritual light-touch design | Meaning without cult dynamics | promoted → NEXT_LAB |
 | 54 | Military/aviation brief-debrief | After-action reviews for math sessions |
 | 55 | Sports film-study pedagogy | Error clips → coach cards |
 | 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers |

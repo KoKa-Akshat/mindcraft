@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Researcher tick: Part L Confidence calibration (SAFE-CALIB)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch50 never written → prefer Researcher per rotation; 0 researcher entries since synthesizer v1.7)  
+**Chapter written:** `chapters/50_confidence_calibration.md` (Part L)  
+**Claim examined:** Confidence as calibrated self-knowledge — vs raise-confidence theater, Belief Score™ / confidence streaks, CA-alone grade claims, equal-wrong graph updates, and hide-correctness as “never teach answers.”
+
+**Evidence added:**
+- Fischhoff, Slovic & Lichtenstein (1977, doi:10.1037/0096-1523.3.4.552): extreme certainty often inappropriate; calibration definition.
+- Lichtenstein & Fischhoff (1977): overconfidence dominant; difficulty × calibration pattern.
+- Kruger & Dunning (1999, doi:10.1037/0022-3514.77.6.1121): dual burden — low skill impairs self-appraisal (wound: meme shaming).
+- García et al. (2016, *Metacognition and Learning*): elementary math overconfidence / poor calibration.
+- Lingel, Lenhart & Schneider (2019, *ZDM*): pervasive overconfidence; absolute vs relative accuracy measures diverge.
+- Foster (2016, ESM doi:10.1007/s10649-015-9660-9; *Mathematics Teaching* 251): CA usable; appropriate confidence ≠ maximal confidence.
+- Foster (2021/2022, IJSME doi:10.1007/s10763-021-10207-9): CA trial N=475; d≈−0.02 — null on attainment; non-inferior, not a grade engine alone.
+- Butterfield & Metcalfe (2001); Foster et al. (ESM doi:10.1007/s10649-021-10084-7): hypercorrection.
+- Koriat, Lichtenstein & Fischhoff (1980): contradicting reasons improve confidence appropriateness.
+
+**Product implication:** SAFE-CALIB stack (elicit → classify → destake → recalibrate → tier feedback → contradicting prompt → measure); CAL-1…5; wire CA to MISCON/graph — do not ship confidence slider as attainment product.
+
+**Claim killed:** Raise-confidence as NS; Belief Score™ / confidence streaks; CA-raises-grades without data; how-sure UI without routing; equal mastery deltas for all wrongs; hide-correctness as never-teach-answers; DK shaming as brand voice.
+
+**Next researcher id:** **51** (Deliberate practice in tutoring sessions).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-07-31 — Synthesizer tick: v1.7 merge XLI–XLIX
 
 **Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.6 — nine chapters XLI–XLIX)  
