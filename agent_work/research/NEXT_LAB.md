@@ -37,8 +37,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick; 45-min session design | **DONE** (2026-07-31) — Part LI / SAFE-DP |
 | 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer | **DONE** (2026-07-31) — Part LII / SAFE-CoP |
 | 53 | Religion/ritual light-touch design | Meaning without cult dynamics | **DONE** (2026-07-31) — Part LIII / SAFE-RITUAL |
-| 54 | Military/aviation brief-debrief | After-action reviews for math sessions | **NEXT** |
-| 55 | Sports film-study pedagogy | Error clips → coach cards | queued |
+| 54 | Military/aviation brief-debrief | After-action reviews for math sessions | **DONE** (2026-07-31) — Part LIV / SAFE-AAR |
+| 55 | Sports film-study pedagogy | Error clips → coach cards | **NEXT** |
 | 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (57–70).
@@ -54,3 +54,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (57–70).
 - Any “raise confidence” / CA-raises-grades / Belief Score™ claim (v1.7 + Part L)
 - Any Discord/forum/streak ≡ CoP or LPP / “we’re a community of practice” without enterprise+repertoire (Part LII)
 - Any ritual→score / streak-as-liturgy / “family-order” milieu / unretracted Brooks-ritual claim (Part LIII)
+- Any military-cosplay / “+25% from debriefs” ACT claim / lecture≡debrief / AAR≡CISD conflation (Part LIV)

@@ -4,6 +4,30 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Researcher tick: Part LIV Military/aviation brief-debrief (SAFE-AAR)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch54 never written → prefer Researcher per rotation; 4 researcher entries since synthesizer v1.7 → Researcher)  
+**Chapter written:** `chapters/54_military_aviation_brief_debrief.md` (Part LIV)  
+**Claim examined:** Brief–attempt–debrief / AAR as session spine for math tutoring — vs militaristic cosplay, blame/lecture-as-debrief, trauma-CISD conflation, and borrowed meta *d* as ACT marketing.
+
+**Evidence added:**
+- Tannenbaum & Cerasoli (2013, *Human Factors*, doi:10.1177/0018720812448394): debriefs/AARs *d* ≈ 0.67 (~25%); alignment matters; 46 samples, *N*=2,136.
+- Keiser & Arthur (2021, *JAP*, doi:10.1037/apl0000821): AAR *d* ≈ 0.79; alignment + objective performance media; facilitation interactions; 61 studies.
+- U.S. Army TC 25-20 (*A Leader’s Guide to After Action Reviews*, 1993) + CALL/USAID restatements: four-question AAR (expected / actual / well / improve); avoid critique-as-lecture.
+- Dismukes, Jobe & McDonnell (1997, NASA TM-110442): LOFT debrief facilitation → deeper crew self-analysis; instructor skill variance; companion facilitation manual TM-112192.
+- Rudolph, Simon, Dufresne & Raemer (2006, *Simul Healthc*, doi:10.1097/01266021-200600110-00006): debriefing with good judgment; advocacy–inquiry; frames→actions.
+- FAA AC 120-51E CRM briefing markers; Helmreich/Merritt/Wilhelm CRM error-management line (brief as countermeasure).
+
+**Product implication:** SAFE-AAR stack (brief → traces → four-question close → student-first facilitation → good judgment → next-attempt); AAR-1…5; kill bootcamp cosplay / “+25%” ACT ads / monologue≡debrief.
+
+**Claim killed:** Military-grade/warrior branding as efficacy; undifferentiated “+25%” from debrief metas as ACT promise; AAR≡CISD; lecture/AI-monologue labeled as debrief; vibes-only close when traces exist; streak-as-AAR substitute.
+
+**Next researcher id:** **55** (Sports film-study pedagogy).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-07-31 — Researcher tick: Part LIII Religion/ritual light-touch (SAFE-RITUAL)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; 3 researcher entries since synthesizer v1.7 → Researcher)  
