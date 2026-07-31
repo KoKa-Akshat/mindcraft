@@ -4,6 +4,30 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Researcher tick: Part LII Community of practice (SAFE-CoP)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch52 never written → prefer Researcher per rotation; 2 researcher entries since synthesizer v1.7 → Researcher)  
+**Chapter written:** `chapters/52_community_of_practice.md` (Part LII)  
+**Claim examined:** Community of practice / LPP as identity pathway — vs Discord theater, streak-as-belonging, AI-as-old-timer, and “we’re a CoP” brand without enterprise+repertoire; careful school transfer.
+
+**Evidence added:**
+- Lave & Wenger (1991, *Situated Learning*, CUP, doi:10.1017/CBO9780511815355): LPP as central descriptor of situated learning; craft/mutual-aid cases.
+- Wenger (1998, *Communities of Practice*, CUP, doi:10.1017/CBO9780511803932): meaning–practice–community–identity.
+- Boylan (2010, *Teaching and Teacher Education*, doi:10.1016/j.tate.2009.08.005): LPP transfer to usual school math problematic; ecologies of participation.
+- Fuller, Hodkinson, Hodkinson & Unwin (2005, *BERJ*, doi:10.1080/0141192052000310029): LPP limits in complex institutions.
+- Sfard (1998, *Educational Researcher*, doi:10.3102/0013189X027002004): acquisition vs participation — dangers of choosing just one.
+- Boaler classroom situated line (ally, careful): participation forms / affordances shape what students learn to do.
+
+**Product implication:** SAFE-CoP stack (name practice → real peripheral work → old-timer criteria → legitimacy without trait labels → trajectory metrics → metaphor pluralism → equity → claim ladder); CoP-1…5; kill Discord/forum/streak ≡ CoP.
+
+**Claim killed:** CoP brand without enterprise+repertoire; forums/streaks/leagues/chat volume as LPP; AI monologue ≡ apprenticeship; school/ACT/app ≡ ethnographic craft cases; Community features → identity (L3) without instruments.
+
+**Next researcher id:** **53** (Religion/ritual light-touch design).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-07-31 — Researcher tick: Part LI Deliberate practice in tutoring (SAFE-DP)
 
 **Tick type:** Researcher (UTC hour 09; hour%6≠0; 1 researcher entry since synthesizer v1.7 → Researcher)  
