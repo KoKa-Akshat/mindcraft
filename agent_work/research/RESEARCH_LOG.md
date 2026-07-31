@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Researcher tick: Part XLIX Misconceptions as productive (SAFE-MISCON)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch49 never written → prefer Researcher per rotation; 8 researcher entries since synthesizer v1.6 → Synthesizer deferred to next eligible non-RT hour; this tick = 9th researcher since v1.6)  
+**Chapter written:** `chapters/49_misconceptions_as_productive.md` (Part XLIX)  
+**Claim examined:** Wrong answers as diagnostic resources (refinement + springboard) — vs confront-and-replace disease model, instant red-X pedagogy, soft-wrong-as-empty-kindness, and equal graph updates for all wrongs.
+
+**Evidence added:**
+- Smith, diSessa & Roschelle (1993/1994, doi:10.1207/s15327809jls0302_1): misconceptions both flawed and productive; refine/reorganize ≠ replace-only.
+- diSessa (1993, doi:10.1207/s1532690xci1002&3_2): knowledge-in-pieces / weakly organized intuitive system.
+- Hammer (1996, doi:10.1207/s15327809jls0502_1): misconceptions vs p-prims change instructional task.
+- Borasi (1994, doi:10.5951/jresematheduc.25.2.0166): errors as springboards for inquiry.
+- Radatz (1979, doi:10.5951/jresematheduc.10.3.0163): error analysis diagnostic tradition.
+- Bell (1993a/b ESM): diagnostic teaching / conflict vs error-avoidant exposition.
+- Swan (2001, in *Issues in Mathematics Teaching*): dealing with misconceptions; expose → conflict → resolve.
+- Butterfield & Metcalfe (2001, doi:10.1037//0278-7393.27.6.1491): hypercorrection of high-confidence errors.
+- Foster et al. (ESM, doi:10.1007/s10649-021-10084-7): confidence on diagnostic math items; hypercorrection signal in authentic setting.
+
+**Product implication:** SAFE-MISCON stack (elicit → classify → destake → springboard → route → purposeful reveal → measure); MIS-1…4; soft-wrong = FEI informative miss + routing, not brand voice.
+
+**Claim killed:** Misconceptions-as-disease replace-only doctrine; instant red-X as default rigor; soft-wrong without diagnostic route; equal mastery updates for guess/slip/confident wrong; hide-correctness as “never teach answers.”
+
+**Next researcher id:** **50** (Confidence calibration). Researcher count since synthesizer = **9** → next eligible non-RT hour should still prefer Synthesizer (merge XLI–XLIX).
+
+**PDF:** Regenerate after ch49 mount.
+
+---
+
 ## 2026-07-30 — Researcher tick: Part XLVIII Transfer & variation theory (SAFE-TRANSFER)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0 → Researcher; 7 researcher entries since synthesizer v1.6 → not yet Synthesizer; this tick = 8th)  

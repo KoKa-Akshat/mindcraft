@@ -4,7 +4,7 @@
 **Edition:** v1.6 (Synthesizer consolidation of Parts XXXIII–XL into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-30 (Researcher tick — Part XLVIII mounted)  
+**Last updated:** 2026-07-31 (Researcher tick — Part XLIX mounted)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -38,8 +38,9 @@
 | XLVI | `chapters/46_teacher_tutor_expectancy.md` | Tutor expectancy (Pygmalion/Golem); SAFE-EXPECTANCY; trait-label ban |
 | XLVII | `chapters/47_sleep_stress_learning.md` | Sleep/stress/learning; SAFE-TIMING; all-nighter & sleep-app kill |
 | XLVIII | `chapters/48_transfer_variation_theory.md` | Transfer & variation theory; SAFE-TRANSFER; story≠far-transfer kill |
+| XLIX | `chapters/49_misconceptions_as_productive.md` | Misconceptions as productive; SAFE-MISCON; soft-wrong / diagnostic wrongs |
 
-Queued next: see `NEXT_LAB.md` (Part XLIX misconceptions, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part L confidence calibration, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.6):** Eight researcher chapters (XXXIII–XL) landed without a merge pass. This edition collapses duplicate “motivation / mastery / AI tutor” talk into one commercial doctrine stack (I.4), upgrades Red Team kills (XIV), densifies Experiment A/D into chapter experiment families (IX), and refreshes competitive / metrics language. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -118,7 +119,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **Claim ladder L0–L4** | Do not sell identity (L3) from session A/Bs (L1) | XXXIV | Parent/copy hygiene; pre-reg estimands |
 | **PWC (pedagogy wrap constraint)** | Guarded AI + ontology spine; success = `solo_transfer_pass` ≥ no-AI | XXXIII, XXXV | Ban “we’re Bastani’s Tutor”; ban unguarded Solver hero |
 | **E×V×Cost** | Instrument expectancy, value, cost separately; student-authored utility > staff utility dump | XXXVII | Kill single “motivation” KPI |
-| **TARGET / mastery climate** | Default-ban appearance UX + streak-as-North-Star; soft-wrong = mastery evaluation structure; **SAFE-COMPARE** (XLII): criterion default, peer opt-in, no forced infinite named ranks for Maya; **SAFE-HABIT** (XLIII): cue practice not counter, miss≠identity failure, habit metrics subordinate; **SAFE-REWARD** (XLIV): no expected tokens for mere engagement; feedback > inducement; transfer-gated unlocks; **SAFE-RESILIENCE** (XLV): growth-zone challenge + support recruitment; ban grit NS / danger-zone-as-DD / Resilience Score™; **SAFE-TIMING** (XLVII): encode→sleep→transfer claim; never reward midnight volume; stress/restriction-aware load; pressure≠DD; exam-week retrieval mode; not a sleep clinic | XXXVIII / XLII / XLIII / XLIV / XLV / XLVII | CTA copy audit; leaderboard kill; streak colonization kill; XP-as-love kill; grit-poster kill; all-nighter kill; SC-1…4 / HAB-1…4 / IM-1…4 / RES-1…4 / TIM-1…4 |
+| **TARGET / mastery climate** | Default-ban appearance UX + streak-as-North-Star; soft-wrong = mastery evaluation structure; **SAFE-COMPARE** (XLII): criterion default, peer opt-in, no forced infinite named ranks for Maya; **SAFE-HABIT** (XLIII): cue practice not counter, miss≠identity failure, habit metrics subordinate; **SAFE-REWARD** (XLIV): no expected tokens for mere engagement; feedback > inducement; transfer-gated unlocks; **SAFE-RESILIENCE** (XLV): growth-zone challenge + support recruitment; ban grit NS / danger-zone-as-DD / Resilience Score™; **SAFE-TIMING** (XLVII): encode→sleep→transfer claim; never reward midnight volume; stress/restriction-aware load; pressure≠DD; exam-week retrieval mode; not a sleep clinic; **SAFE-MISCON** (XLIX): elicit→classify→destake→springboard→route; soft-wrong≠empty kindness; ban red-X default & equal-wrong graph updates | XXXVIII / XLII / XLIII / XLIV / XLV / XLVII / XLIX | CTA copy audit; leaderboard kill; streak colonization kill; XP-as-love kill; grit-poster kill; all-nighter kill; mistake-poster kill; SC-1…4 / HAB-1…4 / IM-1…4 / RES-1…4 / TIM-1…4 / MIS-1…4 |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -895,7 +896,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 12. **DONE (2026-07-30):** Teacher/tutor expectancy effects (Part XLVI / id 46) — SAFE-EXPECTANCY stack  
 13. **DONE (2026-07-30):** Sleep, stress, and learning (Part XLVII / id 47) — SAFE-TIMING stack  
 14. **DONE (2026-07-30):** Transfer & variation theory (Part XLVIII / id 48) — SAFE-TRANSFER stack  
-15. **NEXT:** Misconceptions as productive (Part XLIX / id 49)
+15. **DONE (2026-07-31):** Misconceptions as productive (Part XLIX / id 49) — SAFE-MISCON stack  
+16. **NEXT:** Confidence calibration (Part L / id 50)
 
 ---
 
@@ -929,4 +931,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Part XLI adds SAFE-DD; Part XLII adds SAFE-COMPARE; Part XLIII adds SAFE-HABIT; Part XLIV adds SAFE-REWARD; Part XLV adds SAFE-RESILIENCE; Part XLVI adds SAFE-EXPECTANCY; Part XLVII adds SAFE-TIMING; Part XLVIII adds SAFE-TRANSFER (named hops; VT sequences; hug/bridge; story≠far transfer; blocked≠ready). Researcher count since v1.6 now 8 — next eligible tick should prefer Synthesizer merge of XLI–XLVIII. Next researcher id after that: XLIX misconceptions. Page count is not the finish line — falsifiable truth is.**
+**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Part XLI adds SAFE-DD; Part XLII adds SAFE-COMPARE; Part XLIII adds SAFE-HABIT; Part XLIV adds SAFE-REWARD; Part XLV adds SAFE-RESILIENCE; Part XLVI adds SAFE-EXPECTANCY; Part XLVII adds SAFE-TIMING; Part XLVIII adds SAFE-TRANSFER; Part XLIX adds SAFE-MISCON (productive wrongs; springboard; confidence-tiered feedback; soft-wrong≠empty kindness). Researcher count since v1.6 now 9 — next eligible non-RT tick should prefer Synthesizer merge of XLI–XLIX. Next researcher id: L confidence calibration. Page count is not the finish line — falsifiable truth is.**
