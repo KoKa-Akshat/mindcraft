@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Researcher tick: Part LIII Religion/ritual light-touch (SAFE-RITUAL)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; 3 researcher entries since synthesizer v1.7 → Researcher)  
+**Chapter written:** `chapters/53_religion_ritual_light_touch.md` (Part LIII)  
+**Claim examined:** Light-touch ritual / passage design for meaning and affect — vs cult dynamics, streak liturgy, high-arousal initiation, and unretracted ritual→performance marketing.
+
+**Evidence added:**
+- Hobson, Schroeder, Risen, Xygalatas & Inzlicht (2018, *PSPR*, doi:10.1177/1088868317734944): emotion / goal-state / social-connection regulatory functions of ritual.
+- Norton & Gino (2014, *JEP:General*, doi:10.1037/a0031772): rituals after loss → less grief, more felt control.
+- Vohs, Wang, Gino & Norton (2013, *Psychological Science*, doi:10.1177/0956797613478949): ritualized action can enhance consumption experience (ally, not learning RCT).
+- Brooks et al. (2016, *OBHDP*, doi:10.1016/j.obhdp.2016.07.004): **RETRACTED** — do not cite as ritual→performance evidence.
+- Whitehouse (2004, *Modes of Religiosity*, AltaMira, ISBN 978-0-7591-0615-4): imagistic vs doctrinal modes.
+- Xygalatas et al. (2013, *Psychological Science*, doi:10.1177/0956797612472910): extreme rituals ↔ prosociality (risk surface, not teen product default).
+- van Gennep (1909/1960, *Rites of Passage*); Turner (*Ritual Process* / liminality & communitas): separation–liminal–aggregation.
+- Lifton (1961, *Thought Reform and the Psychology of Totalism*): totalism criteria as anti-pattern checklist.
+
+**Product implication:** SAFE-RITUAL stack (light/optional, practice-pointing, doctrinal default, bounded liminality, anti-totalism, no grade claim); RIT-1…5; kill streak liturgy / ordeal / “family-order” copy.
+
+**Claim killed:** Ritual→exam-score marketing (esp. retracted Brooks et al.); streak/league as sacred NS; high-arousal initiation & confession milieus; movement/family/order totalism-adjacent copy; permanent liminality-as-retention.
+
+**Next researcher id:** **54** (Military/aviation brief-debrief).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-07-31 — Researcher tick: Part LII Community of practice (SAFE-CoP)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch52 never written → prefer Researcher per rotation; 2 researcher entries since synthesizer v1.7 → Researcher)  

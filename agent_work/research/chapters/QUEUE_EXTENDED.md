@@ -26,10 +26,10 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | **DONE** → `50_confidence_calibration.md` |
 | 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick applied to 45-min sessions | promoted → NEXT_LAB **NEXT** |
 | 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer | promoted → NEXT_LAB |
-| 53 | Religion/ritual light-touch design | Meaning without cult dynamics | promoted → NEXT_LAB |
-| 54 | Military/aviation brief-debrief | After-action reviews for math sessions |
-| 55 | Sports film-study pedagogy | Error clips → coach cards |
-| 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers |
+| 53 | Religion/ritual light-touch design | Meaning without cult dynamics | **DONE** → `53_religion_ritual_light_touch.md` |
+| 54 | Military/aviation brief-debrief | After-action reviews for math sessions | promoted → NEXT_LAB **NEXT** |
+| 55 | Sports film-study pedagogy | Error clips → coach cards | promoted → NEXT_LAB |
+| 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers | promoted → NEXT_LAB |
 | 57 | Chess annotation & metacognition | Postmortem UX |
 | 58 | Therapy: graded exposure | Math anxiety exposure ladders |
 | 59 | Parent WTP experiments design | Conjoint / message tests |
