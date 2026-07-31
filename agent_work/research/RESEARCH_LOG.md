@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Researcher tick: Part LV Sports film-study pedagogy (SAFE-FILM)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; 5 researcher entries since synthesizer v1.7 → Researcher)  
+**Chapter written:** `chapters/55_sports_film_study_pedagogy.md` (Part LV)  
+**Claim examined:** Sports film-study / video-based feedback as review media for math attempts — vs sports cosplay, tip floods, tip-recall≡transfer, and shame/success-only reels.
+
+**Evidence added:**
+- Ste-Marie, Law, Rymal, Jenny, Hall & McCullagh (2012, *IRSEP*, doi:10.1080/1750984X.2012.665076): Applied Model for the Use of Observation (who/what/when/how).
+- Ste-Marie et al. (2020, *RQES*, doi:10.1080/02701367.2019.1693489): AMUO revisit 2011–2018 — intentional design still required.
+- Pearson, Webb, Milligan & Dicks (2023, *IRSEP*, doi:10.1080/1750984X.2023.2235700): VBF-as-PA integrative review (16 studies); delivery/scheduling; declarative retention vs performance transfer caution.
+- Mason, Farrow & Hattie (2020, *IJSSC*, doi:10.1177/1747954120951080): AFL video feedback — ~30 messages/meeting; ~50% theme recall / ~6% fine-grained week-later recall; less-is-more.
+- van der Meer, van den Hoven, van der Kamp & Savelsbergh (2024, *RQES*, doi:10.1080/02701367.2023.2275801): self-controlled VBF > yoked on tennis tactical learning + 1-week retention.
+- Aiken, Fairbrother & Post (2012, *Frontiers in Psychology*, doi:10.3389/fpsyg.2012.00338): self-controlled video feedback basketball set shot.
+- Robertson, St. Germain & Ste-Marie (2018, *JMLD*, doi:10.1123/jmld.2016-0027): self∪skilled-model > self-observation alone (gymnastics).
+- Dowrick (1999; 2012) self-modeling/feedforward theory; Dowrick, Kim-Rupnow & Power (2006, *J Spec Educ*): video feedforward + tutoring reading fluency gains.
+
+**Product implication:** SAFE-FILM stack (objective clips → ≤3 cues → self-controlled timing → self∪model pairing → student-first → transfer metrics); FILM-1…5; kill sports cosplay / tip floods / tip-quiz-as-mastery.
+
+**Claim killed:** Sports-academy branding as efficacy; tip floods labeled film study; tip recall ≡ transfer/exam readiness; failure-only shame reels and success-only dopamine montages; replay UI without AMUO design.
+
+**Next researcher id:** **56** (Music pedagogy ladders).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-07-31 — Researcher tick: Part LIV Military/aviation brief-debrief (SAFE-AAR)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch54 never written → prefer Researcher per rotation; 4 researcher entries since synthesizer v1.7 → Researcher)  

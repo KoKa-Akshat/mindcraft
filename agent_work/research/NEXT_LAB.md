@@ -38,10 +38,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer | **DONE** (2026-07-31) — Part LII / SAFE-CoP |
 | 53 | Religion/ritual light-touch design | Meaning without cult dynamics | **DONE** (2026-07-31) — Part LIII / SAFE-RITUAL |
 | 54 | Military/aviation brief-debrief | After-action reviews for math sessions | **DONE** (2026-07-31) — Part LIV / SAFE-AAR |
-| 55 | Sports film-study pedagogy | Error clips → coach cards | **NEXT** |
-| 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers | queued |
+| 55 | Sports film-study pedagogy | Error clips → coach cards | **DONE** (2026-07-31) — Part LV / SAFE-FILM |
+| 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers | **NEXT** |
+| 57 | Chess annotation & metacognition | Postmortem UX | queued |
+| 58 | Therapy: graded exposure | Math anxiety exposure ladders | queued |
 
-More IDs: `chapters/QUEUE_EXTENDED.md` (57–70).
+More IDs: `chapters/QUEUE_EXTENDED.md` (59–70).
 
 ## Standing Red Team targets
 
@@ -55,3 +57,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (57–70).
 - Any Discord/forum/streak ≡ CoP or LPP / “we’re a community of practice” without enterprise+repertoire (Part LII)
 - Any ritual→score / streak-as-liturgy / “family-order” milieu / unretracted Brooks-ritual claim (Part LIII)
 - Any military-cosplay / “+25% from debriefs” ACT claim / lecture≡debrief / AAR≡CISD conflation (Part LIV)
+- Any sports-academy cosplay / tip-flood≡film-study / tip-recall≡transfer / failure-shame-reel claim (Part LV)
