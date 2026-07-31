@@ -4,6 +4,29 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Synthesizer tick: v1.7 merge XLI–XLIX
+
+**Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.6 — nine chapters XLI–XLIX)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition v1.7); `NEXT_LAB.md`; this log. No new chapter.  
+**Claim examined / cleaned:** Parallel SAFE-* footnotes crammed into the TARGET row after Parts XLI–XLIX — risk of orphan experiment families, contradictory “grit / streak / story / mistake” marketing, and treating difficulty/habit/reward as interchangeable motivation dials.
+
+**Merge actions:**
+- **I.4** promotes SAFE-DD / COMPARE / HABIT / REWARD / RESILIENCE / EXPECTANCY / TIMING / TRANSFER / MISCON to first-class doctrine rows (no longer TARGET footnotes).
+- Executive Summary I.2 adds kills for anxiety-blind DD, ranks/XP/grit, story/mistake-poster transfer myths.
+- Part IX mounts DD/SC/HAB/IM/RES/EXP/TIM/TR/MIS experiment families.
+- Part XIV adds Kills #10–#14.
+- Part XVII.3 / XX / XXI / glossary / Appendix F / closing aligned; metrics add `help_recruit_then_solo`, `misconception_route_hit`, `format_hop_pass`, `confidence_miss_tier`.
+
+**Weak arguments removed / demoted:** Separate North Stars for grit meters, league ranks, XP-as-love, midnight grind, sleep-wellness brand, story-immersion-as-transfer, and mistake-celebration without routing; stuffing nine SAFE stacks into one TARGET cell.
+
+**Claim killed (synthesis):** That MindCraft can market hardness theater, streak/XP/leaderboard identity, grit/Resilience Score™, Pygmalion trait labels, narrative immersion, sleep tips, or empty mistake posters as interchangeable proofs of identity transformation.
+
+**Next researcher id:** **50** (Confidence calibration). Researcher count since synthesizer reset to **0**.
+
+**PDF:** Regenerate after v1.7 OS edit.
+
+---
+
 ## 2026-07-31 — Researcher tick: Part XLIX Misconceptions as productive (SAFE-MISCON)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch49 never written → prefer Researcher per rotation; 8 researcher entries since synthesizer v1.6 → Synthesizer deferred to next eligible non-RT hour; this tick = 9th researcher since v1.6)  

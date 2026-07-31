@@ -32,6 +32,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 47 | Sleep, stress, and learning | Timing practice; exam weeks | **DONE** (2026-07-30) |
 | 48 | Transfer & variation theory | Far transfer design in ontology | **DONE** (2026-07-30) |
 | 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science | **DONE** (2026-07-31) |
+| — | **Synthesizer v1.7** | Merge XLI–XLIX SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-07-31 UTC 03) |
 | 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | **NEXT** |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (51–70).

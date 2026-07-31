@@ -1,10 +1,10 @@
 # MindCraft Research Constitution v1
 
 **Status:** Living operating document — not a pitch deck  
-**Edition:** v1.6 (Synthesizer consolidation of Parts XXXIII–XL into surviving doctrine)  
+**Edition:** v1.7 (Synthesizer consolidation of Parts XLI–XLIX into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-31 (Researcher tick — Part XLIX mounted)  
+**Last updated:** 2026-07-31 (Synthesizer tick — v1.7 merge XLI–XLIX)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -42,7 +42,7 @@
 
 Queued next: see `NEXT_LAB.md` (Part L confidence calibration, then QUEUE_EXTENDED).
 
-**Synthesizer note (v1.6):** Eight researcher chapters (XXXIII–XL) landed without a merge pass. This edition collapses duplicate “motivation / mastery / AI tutor” talk into one commercial doctrine stack (I.4), upgrades Red Team kills (XIV), densifies Experiment A/D into chapter experiment families (IX), and refreshes competitive / metrics language. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
+**Synthesizer note (v1.7):** Nine researcher chapters (XLI–XLIX) landed after v1.6 without a merge pass — SAFE-* stacks had been stuffed as footnotes into the TARGET row. This edition promotes each stack to its own I.4 law, adds Red Team kills #10–#14, mounts experiment families DD/SC/HAB/IM/RES/EXP/TIM/TR/MIS in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
 ---
 
@@ -78,7 +78,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 
 **FOUNDER BELIEF under audit:** AI commoditizes knowledge; scarcity shifts to motivation, confidence, identity, trust, curiosity, persistence, emotional safety, meaning.
 
-**Red Team verdict (updated v1.6):**
+**Red Team verdict (updated v1.7):**
 
 | Claim | Status | Notes |
 |-------|--------|-------|
@@ -90,8 +90,11 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Unguarded AI chat improves solo learning | **KILLED** | Bastani: concurrent ↑ then solo exam ↓; guards neutralize harm ≠ prove gain |
 | Bastani “GPT Tutor” ≡ MindCraft ontology wrap | **KILLED** | Category error (XXXIII RT) |
 | Streaks / blocked fluency = mastery | **KILLED as North Star** | HID + XXXVIII/XXXIX; measure delayed mix + transfer |
+| Harder-always / anxiety-blind “desirable difficulty” | **KILLED** | SAFE-DD (XLI); equip→destake→dose before Bjork dose |
+| Ranks / XP / grit meters as identity engines | **KILLED** | SAFE-COMPARE / REWARD / RESILIENCE (XLII–XLV) |
+| Story immersion ≡ far transfer; mistake posters ≡ learning | **KILLED** | SAFE-TRANSFER / MISCON (XLVIII–XLIX) |
 
-**Implication:** Do not bet on “better explanations” or “AI tutor warmth.” Bet on **FEI + pedagogy wrap**: fear→evidence→identity, with AI as guarded infrastructure and student generation as the spine.
+**Implication:** Do not bet on “better explanations,” “AI tutor warmth,” streak theater, or grit posters. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with AI as guarded infrastructure and student generation as the spine.
 
 ## I.3 What to optimize (North Star debate)
 
@@ -109,7 +112,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 **Working North Star (HYPOTHESIS):**  
 **Challenge-seeking under safety with transfer** — the student chooses a harder problem for a *mastery* reason, returns after a miss, can pick the strategy on a mixed delayed set, and attributes success to strategy — without needing the model to finish the thought.
 
-## I.4 Surviving doctrine stack (Synthesizer merge of XXXIII–XL)
+## I.4 Surviving doctrine stack (Synthesizer merge through XLIX)
 
 Duplicate frameworks collapsed. Deep dives own citations; this table is **company law until killed**.
 
@@ -119,15 +122,24 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **Claim ladder L0–L4** | Do not sell identity (L3) from session A/Bs (L1) | XXXIV | Parent/copy hygiene; pre-reg estimands |
 | **PWC (pedagogy wrap constraint)** | Guarded AI + ontology spine; success = `solo_transfer_pass` ≥ no-AI | XXXIII, XXXV | Ban “we’re Bastani’s Tutor”; ban unguarded Solver hero |
 | **E×V×Cost** | Instrument expectancy, value, cost separately; student-authored utility > staff utility dump | XXXVII | Kill single “motivation” KPI |
-| **TARGET / mastery climate** | Default-ban appearance UX + streak-as-North-Star; soft-wrong = mastery evaluation structure; **SAFE-COMPARE** (XLII): criterion default, peer opt-in, no forced infinite named ranks for Maya; **SAFE-HABIT** (XLIII): cue practice not counter, miss≠identity failure, habit metrics subordinate; **SAFE-REWARD** (XLIV): no expected tokens for mere engagement; feedback > inducement; transfer-gated unlocks; **SAFE-RESILIENCE** (XLV): growth-zone challenge + support recruitment; ban grit NS / danger-zone-as-DD / Resilience Score™; **SAFE-TIMING** (XLVII): encode→sleep→transfer claim; never reward midnight volume; stress/restriction-aware load; pressure≠DD; exam-week retrieval mode; not a sleep clinic; **SAFE-MISCON** (XLIX): elicit→classify→destake→springboard→route; soft-wrong≠empty kindness; ban red-X default & equal-wrong graph updates | XXXVIII / XLII / XLIII / XLIV / XLV / XLVII / XLIX | CTA copy audit; leaderboard kill; streak colonization kill; XP-as-love kill; grit-poster kill; all-nighter kill; mistake-poster kill; SC-1…4 / HAB-1…4 / IM-1…4 / RES-1…4 / TIM-1…4 / MIS-1…4 |
+| **TARGET / mastery climate** | Default-ban appearance UX + streak-as-North-Star; soft-wrong = mastery evaluation structure | XXXVIII | CTA copy audit; appearance climate kill |
+| **SAFE-DD** | Equip → destake → dose → frame → measure; desirable difficulty only after WM/threat capacity | XLI | Ban hardness-as-virtue; gate IL/SE by anxiety segment |
+| **SAFE-COMPARE** | Criterion feedback default; peer ranks opt-in; no forced infinite named leaderboards for Maya | XLII | Leaderboard / league kill as growth engine |
+| **SAFE-HABIT** | Cue practice not the counter; miss ≠ identity failure; habit metrics subordinate to FEI | XLIII | Streak colonization kill; if-then onboarding OK |
+| **SAFE-REWARD** | No expected tokens for mere engagement; informational feedback > inducement; transfer-gated unlocks | XLIV | XP-as-love / coin-for-open kill |
+| **SAFE-RESILIENCE** | Growth-zone challenge + support recruitment; ban grit NS, danger-zone-as-DD, Resilience Score™ | XLV | Grit-poster / character-meter kill |
+| **SAFE-EXPECTANCY** | Task-only tutor briefs; ban trait/weakness labels; CIOF mediation; cold-start scripts | XLVI | Pygmalion marketing kill; tutor ethics |
+| **SAFE-TIMING** | Encode → sleep → transfer claim; never reward midnight volume; stress/restriction-aware load; pressure ≠ DD | XLVII | All-nighter / sleep-app brand kill |
+| **SAFE-TRANSFER** | Name the hop; VT vary-on-purpose; hug exam + bridge abstraction; story ≠ transfer; blocked ≠ ready | XLVIII | Narrative-theater / blocked-accuracy vanity kill |
+| **SAFE-MISCON** | Elicit → classify → destake → springboard → route; soft-wrong ≠ empty kindness; confidence-tiered feedback | XLIX | Mistake-poster / red-X-as-rigor / equal-wrong graph kill |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” and “engagement” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” and “celebrate mistakes” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
 
-**Next research bottleneck (partially addressed):** Part XLI landed **SAFE-DD** (equip → destake → dose → frame → measure). Still needs DD-1/DD-2 data before anxiety-segment interleave/SE claims go above L1.
+**Next research bottleneck:** Part L **confidence calibration** (over/underconfidence; hide-correctness diagnostic; hypercorrection × MISCON). DD-1/DD-2 and MIS-3 still gate anxiety-segment and confidence-tiered claims above L1.
 
 ---
 
@@ -207,7 +219,11 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
-| 2026-07-29 | Synthesizer v1.6: merge XXXIII–XL into I.4 doctrine stack | Synthesis | Surviving commercial law; next = XLI DD×anxiety |
+| 2026-07-31 | Synthesizer v1.7: merge XLI–XLIX SAFE-* into I.4; kills #10–#14 | Synthesis | Surviving commercial law; next = L confidence calibration |
+| 2026-07-31 | Misconceptions productive: SAFE-MISCON; soft-wrong ≠ empty kindness | Evidence | MIS-1…4; springboard + classify |
+| 2026-07-30 | Transfer/VT: story ≠ far transfer; blocked ≠ ready | Evidence | TR-1…4; SAFE-TRANSFER |
+| 2026-07-30 | Sleep/stress: encode→sleep→claim; pressure ≠ DD | Evidence | TIM-1…4; SAFE-TIMING |
+| 2026-07-29 | Synthesizer v1.6: merge XXXIII–XL into I.4 doctrine stack | Synthesis | Surviving commercial law; next was XLI DD×anxiety |
 | 2026-07-29 | SE prompts: AI monologue ≢ SE; structure before wrap | Evidence | SE-1…4; densify Exp A/D |
 | 2026-07-29 | Interleaving: block→near-miss→spaced mix; kill shuffle=science | Evidence | IL-1…4; ban blocked vanity |
 | 2026-07-29 | Goal climate: appearance/streak NS killed; TARGET audit | Evidence | GO-1…4 |
@@ -401,6 +417,15 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | GO-* | Mastery vs performance CTA climate | XXXVIII |
 | IL-* | Schedule → discrimination / delayed mix | XXXIX |
 | SE-* | Prompt regime → transfer / misconception recurrence | XL |
+| DD-* | Equip/destake/dose × anxiety → retry + delayed mix | XLI |
+| SC-* | Criterion vs peer rank climate → affect + challenge | XLII |
+| HAB-* | Cue/if-then vs streak colonization → return without identity harm | XLIII |
+| IM-* | Informational vs engagement-loot rewards → free-choice + transfer | XLIV |
+| RES-* | Growth-zone + support recruitment vs grit theater | XLV |
+| EXP-* | Tutor brief / CIOF / AI expectancy → talk ratio + solo transfer | XLVI |
+| TIM-* | Practice timing × sleep/stress → delayed transfer | XLVII |
+| TR-* | VT / hug / bridge sequence → format-hop + solo transfer | XLVIII |
+| MIS-* | Soft-wrong springboard / mis-mapped distractors / confidence tier | XLIX |
 
 ---
 
@@ -481,6 +506,26 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #9 (v1.6): “One motivation dial”
 **Destroyed:** Collapsing expectancy and value; staff “math is useful” dumps as EVT.  
 **Surviving:** E×V×Cost triad with student-authored utility (XXXVII).
+
+### Kill #10 (v1.7): “Harder is always better / desirable difficulty ignores anxiety”
+**Destroyed:** Anxiety-blind interleave/SE/pressure-as-DD; hardness theater as rigor brand.  
+**Surviving:** SAFE-DD equip → destake → dose → frame → measure (XLI); gate IL/SE by segment.
+
+### Kill #11 (v1.7): “Leaderboards / streaks / XP create math identity”
+**Destroyed:** Appearance climates, streak colonization, engagement-loot as love-of-math.  
+**Surviving:** SAFE-COMPARE + SAFE-HABIT + SAFE-REWARD — criterion feedback, cue practice, informational unlocks only (XLII–XLIV).
+
+### Kill #12 (v1.7): “Grit / Resilience Score™ / stay in the danger zone”
+**Destroyed:** Character meters; danger-zone-as-desirable-difficulty; grit posters as product.  
+**Surviving:** SAFE-RESILIENCE growth-zone + support recruitment; measure recovery/transfer not MRS theater (XLV).
+
+### Kill #13 (v1.7): “Pygmalion labels / warm AI that finishes the problem”
+**Destroyed:** Trait/weakness tutor briefs; warmth-without-output-demand as expectancy science.  
+**Surviving:** SAFE-EXPECTANCY task briefs + CIOF; AI must clear PWC/`solo_transfer_pass` (XLVI + XXXIII).
+
+### Kill #14 (v1.7): “Story / sleep tips / mistake celebration = transfer”
+**Destroyed:** Narrative immersion as automatic far transfer; sleep-app brand; empty mistake posters; red-X-as-rigor; equal graph updates for all wrongs.  
+**Surviving:** SAFE-TRANSFER + SAFE-TIMING + SAFE-MISCON — vary on purpose, encode→sleep→claim, elicit→classify→springboard→route (XLVII–XLIX).
 
 ---
 
@@ -655,9 +700,9 @@ For some, speed drills and competition *increase* engagement. Segment, do not ro
 
 ## XVII.3 Surviving thesis (company doctrine)
 
-**Adopted doctrine (refined v1.6):**
+**Adopted doctrine (refined v1.7):**
 
-> MindCraft does not compete primarily on explanation volume or AI tutor warmth. It competes on converting threatened learners into challenge-seeking mathematical agents through diagnosis, affective design, mastery-climate evaluation, faded desirable difficulties, student-generated why, narrative meaning under equity constraints, and human accountability — with AI as *guarded* infrastructure that must clear `solo_transfer_pass` ≥ no-AI.
+> MindCraft does not compete primarily on explanation volume, AI tutor warmth, streak/XP theater, grit meters, or story immersion. It competes on converting threatened learners into challenge-seeking mathematical agents through diagnosis, affective design, mastery-climate evaluation, sequenced desirable difficulties (SAFE-DD), student-generated why, variation-designed transfer, productive-error routing, narrative meaning under equity constraints, and human accountability — with AI as *guarded* infrastructure that must clear `solo_transfer_pass` ≥ no-AI.
 
 **Falsifiers (90-day capable):**
 
@@ -665,7 +710,9 @@ For some, speed drills and competition *increase* engagement. Segment, do not ro
 2. Parents refuse to pay when score gains lag identity metrics.  
 3. AI-alone matches human+AI on persistence + transfer for target segment.  
 4. Guarded Solver raises concurrent scores but loses `solo_transfer_pass` vs no-AI (PWC fail).  
-5. Interleave/SE regimes raise delayed mix but destroy `retry_120s` in high-anxiety segment without sequenced SAFE-DD (XLI; pending DD-1/DD-2).
+5. Interleave/SE regimes raise delayed mix but destroy `retry_120s` in high-anxiety segment without sequenced SAFE-DD (XLI; pending DD-1/DD-2).  
+6. Soft-wrong without springboard/route matches key-only on retry + misconception recurrence (MIS-1 fail).  
+7. VT/hug sequences fail to beat random surface skins on next-day format-hop transfer (TR-1 fail).
 
 ---
 
@@ -757,7 +804,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | ChatGPT tutors | Instant explanation | Low unless wrapped | Trust / hallucination; Bastani Base harm |
 | MindCraft (target) | FEI conversion + tutor witness + gap diagnosis + solo transfer | **Intended high** | Must prove, not assert |
 
-**Strategic implication (XXXV densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency. Out-compete on the **session**: recoverable struggle, visible competence evidence, strategy selection under mix, student-generated why, and transfer when help is gone — then *say that* in marketing (CSA-2).
+**Strategic implication (v1.7 densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks/leagues/XP. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency. Do not out-grit character apps on Resilience Score™. Out-compete on the **session**: recoverable struggle under SAFE-DD, productive-error routing (SAFE-MISCON), variation-designed transfer (SAFE-TRANSFER), visible competence evidence without appearance climates, strategy selection under mix, student-generated why, and transfer when help is gone — then *say that* in marketing (CSA-2).
 
 ---
 
@@ -768,9 +815,12 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 - Raw DAU / time-on-app without transfer  
 - Streak length alone  
 - Explanation open-rate / AI chat token count  
-- Points / coins  
+- Points / coins / XP velocity  
 - Blocked-session accuracy alone  
 - Coach thumbs-up / “felt helpful” without `solo_transfer_pass`  
+- Named leaderboard rank / league tier  
+- Resilience Score™ / grit meter / MRS as in-app KPI  
+- Midnight minutes practiced / all-nighter volume  
 
 ## XXI.2 Leading indicators (ship first)
 
@@ -786,6 +836,10 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `ai_reveal_rate` | Full-answer / unguarded reveal frequency | Crutch exposure |
 | `strategy_class_error` | Wrong *procedure family* on mixed set | Interleaving discrimination (XXXIX) |
 | `se_principle_hit` | Correct structured principle/ingredient pick when prompted | SE quality proxy (XL) |
+| `help_recruit_then_solo` | Opened card/tutor/peer help then solved without full reveal | SAFE-RESILIENCE support path (XLV) |
+| `misconception_route_hit` | Soft-wrong routed to mapped `mis_` / ingredient failure_mode | SAFE-MISCON classification (XLIX) |
+| `format_hop_pass` | Correct after declared format/context hop (VT check) | SAFE-TRANSFER discernment (XLVIII) |
+| `confidence_miss_tier` | High vs low confidence on miss (when elicited) | Hypercorrection / Part L calibration |
 
 ## XXI.3 Lagging indicators
 
@@ -822,6 +876,15 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | Claim ladder L0–L4 | Max defensible causal/marketing claim given design (Part XXXIV) |
 | E×V×Cost | Eccles expectancy × subjective task value × cost triad |
 | TARGET | Classroom/goal-structure dimensions cueing mastery vs performance |
+| SAFE-DD | Equip → destake → dose → frame → measure (Part XLI) |
+| SAFE-COMPARE | Criterion-default comparison policy (Part XLII) |
+| SAFE-HABIT | Cue practice without streak colonization (Part XLIII) |
+| SAFE-REWARD | Informational / non-controlling reward policy (Part XLIV) |
+| SAFE-RESILIENCE | Growth-zone + support recruitment, not grit meters (Part XLV) |
+| SAFE-EXPECTANCY | Task briefs + CIOF; ban trait labels (Part XLVI) |
+| SAFE-TIMING | Encode → sleep → delayed transfer claim (Part XLVII) |
+| SAFE-TRANSFER | Variation/hug/bridge transfer design (Part XLVIII) |
+| SAFE-MISCON | Productive-error elicit → classify → springboard → route (Part XLIX) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -897,7 +960,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 13. **DONE (2026-07-30):** Sleep, stress, and learning (Part XLVII / id 47) — SAFE-TIMING stack  
 14. **DONE (2026-07-30):** Transfer & variation theory (Part XLVIII / id 48) — SAFE-TRANSFER stack  
 15. **DONE (2026-07-31):** Misconceptions as productive (Part XLIX / id 49) — SAFE-MISCON stack  
-16. **NEXT:** Confidence calibration (Part L / id 50)
+16. **Synthesizer v1.7 (2026-07-31):** Merged XLI–XLIX into I.4 / XIV / IX / XXI — no new chapter  
+17. **NEXT:** Confidence calibration (Part L / id 50)
 
 ---
 
@@ -931,4 +995,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.6 synthesizer pass folded Parts XXXIII–XL into surviving commercial doctrine (I.4). Part XLI adds SAFE-DD; Part XLII adds SAFE-COMPARE; Part XLIII adds SAFE-HABIT; Part XLIV adds SAFE-REWARD; Part XLV adds SAFE-RESILIENCE; Part XLVI adds SAFE-EXPECTANCY; Part XLVII adds SAFE-TIMING; Part XLVIII adds SAFE-TRANSFER; Part XLIX adds SAFE-MISCON (productive wrongs; springboard; confidence-tiered feedback; soft-wrong≠empty kindness). Researcher count since v1.6 now 9 — next eligible non-RT tick should prefer Synthesizer merge of XLI–XLIX. Next researcher id: L confidence calibration. Page count is not the finish line — falsifiable truth is.**
+**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Researcher count since synthesizer reset to 0. Next researcher id: L confidence calibration. Page count is not the finish line — falsifiable truth is.**
