@@ -4,6 +4,31 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-07-31 — Researcher tick: Part LI Deliberate practice in tutoring (SAFE-DP)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; 1 researcher entry since synthesizer v1.7 → Researcher)  
+**Chapter written:** `chapters/51_deliberate_practice_tutoring.md` (Part LI)  
+**Claim examined:** Deliberate practice as session grammar — vs 10k-hours theater, grind-volume NS, AI-monologue-as-coach, talent-denial, and “DP explains nearly all expertise.”
+
+**Evidence added:**
+- Ericsson, Krampe & Tesch-Römer (1993, *Psychological Review*, doi:10.1037/0033-295X.100.3.363): DP definition; coach/feedback/effort; duration constraints.
+- Ericsson & Pool (2016, *Peak*): purposeful vs deliberate practice distinction.
+- Macnamara, Hambrick & Oswald (2014, *Psychological Science*, doi:10.1177/0956797614535810): DP variance ~26/21/18/4/<1% by domain; education ~4%.
+- Macnamara, Moreau & Hambrick (2016); Ericsson (2016) reply; Macnamara & Hambrick (2016) reply: definition / importance dispute.
+- Ericsson & Harwell (2019, *Frontiers*, doi:10.3389/fpsyg.2019.02396): structured vs deliberate practice critique of meta-inclusion.
+- Lehtinen, Hannula-Sormunen, McMullen & Gruber (2017, *ZDM*, doi:10.1007/s11858-017-0856-6): math drill ≠ DP; adaptive representations.
+- Plant, Ericsson, Hill & Asberg (2005, *Contemporary Educational Psychology*): study hours ≠ GPA when quality ignored.
+
+**Product implication:** SAFE-DP stack (diagnose → isolate → goal → stretch → attempt → feedback → revise → prove → stop → measure); DP-1…5; 45-min spine; kill hours/streaks as DP proof.
+
+**Claim killed:** 10k-hours / practice-makes-perfect causal brand; minutes/XP as DP; DP-explains-expertise overclaim; hard-drill≡DP; AI monologue≡DP coach; talent-denial; multi-topic coverage theater as default rigor.
+
+**Next researcher id:** **52** (Community of practice — Lave/Wenger).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-07-31 — Researcher tick: Part L Confidence calibration (SAFE-CALIB)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch50 never written → prefer Researcher per rotation; 0 researcher entries since synthesizer v1.7)  

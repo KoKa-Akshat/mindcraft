@@ -4,7 +4,7 @@
 **Edition:** v1.7 (Synthesizer consolidation of Parts XLI–XLIX into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-31 (Synthesizer tick — v1.7 merge XLI–XLIX)  
+**Last updated:** 2026-07-31 (Researcher tick — Part LI deliberate practice / SAFE-DP)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -40,8 +40,9 @@
 | XLVIII | `chapters/48_transfer_variation_theory.md` | Transfer & variation theory; SAFE-TRANSFER; story≠far-transfer kill |
 | XLIX | `chapters/49_misconceptions_as_productive.md` | Misconceptions as productive; SAFE-MISCON; soft-wrong / diagnostic wrongs |
 | L | `chapters/50_confidence_calibration.md` | Confidence calibration; SAFE-CALIB; over/underconfidence; C4 hide-correctness |
+| LI | `chapters/51_deliberate_practice_tutoring.md` | Deliberate practice in tutoring; SAFE-DP; Ericsson vs Hambrick; 45-min spine |
 
-Queued next: see `NEXT_LAB.md` (Part LI deliberate practice, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LII community of practice, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.7):** Nine researcher chapters (XLI–XLIX) landed after v1.6 without a merge pass — SAFE-* stacks had been stuffed as footnotes into the TARGET row. This edition promotes each stack to its own I.4 law, adds Red Team kills #10–#14, mounts experiment families DD/SC/HAB/IM/RES/EXP/TIM/TR/MIS in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -140,7 +141,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” and “celebrate mistakes” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
 
-**Next research bottleneck:** Part LI **deliberate practice** in tutoring sessions (Ericsson vs Hambrick; 45-min design). CAL-1…5 and MIS-3 still gate confidence-tiered / CA-alone claims above L1; SAFE-CALIB lives in Part L until synthesizer promotion.
+**Next research bottleneck:** Part LII **community of practice** (Lave/Wenger; careful transfer). SAFE-DP / SAFE-CALIB live in Parts LI / L until synthesizer promotion; DP-1…5 and CAL-1…5 gate session-architecture and confidence-tiered claims above L1.
 
 ---
 
@@ -963,7 +964,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 15. **DONE (2026-07-31):** Misconceptions as productive (Part XLIX / id 49) — SAFE-MISCON stack  
 16. **Synthesizer v1.7 (2026-07-31):** Merged XLI–XLIX into I.4 / XIV / IX / XXI — no new chapter  
 17. **DONE (2026-07-31):** Confidence calibration (Part L / id 50) — SAFE-CALIB stack  
-18. **NEXT:** Deliberate practice in tutoring sessions (Part LI / id 51)
+18. **DONE (2026-07-31):** Deliberate practice in tutoring sessions (Part LI / id 51) — SAFE-DP stack  
+19. **NEXT:** Community of practice / Lave–Wenger (Part LII / id 52)
 
 ---
 
@@ -997,4 +999,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Part L (SAFE-CALIB) densifies confidence doctrine pending next synthesizer. Next researcher id: LI deliberate practice. Page count is not the finish line — falsifiable truth is.**
+**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Parts L–LI (SAFE-CALIB, SAFE-DP) densify confidence and session-practice doctrine pending next synthesizer. Next researcher id: LII community of practice. Page count is not the finish line — falsifiable truth is.**

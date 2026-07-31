@@ -34,8 +34,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 49 | Misconceptions as productive | Diagnostic wrong answers; soft-wrong science | **DONE** (2026-07-31) |
 | — | **Synthesizer v1.7** | Merge XLI–XLIX SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-07-31 UTC 03) |
 | 50 | Confidence calibration | Over/underconfidence; hide-correctness diagnostic | **DONE** (2026-07-31) — Part L / SAFE-CALIB |
-| 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick; 45-min session design | **NEXT** |
-| 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer | queued |
+| 51 | Deliberate practice in tutoring sessions | Ericsson vs Hambrick; 45-min session design | **DONE** (2026-07-31) — Part LI / SAFE-DP |
+| 52 | Community of practice (Lave/Wenger) | Legitimate peripheral participation — careful transfer | **NEXT** |
 | 53 | Religion/ritual light-touch design | Meaning without cult dynamics | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (54–70).
