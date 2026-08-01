@@ -4,6 +4,35 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-01 — Synthesizer tick v1.8: merge Parts L–LVIII
+
+**Tick type:** Synthesizer (UTC hour 09; hour%6≠0; ≥8 researcher entries since synthesizer v1.7 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (I.2 / I.4 / VI.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law:**
+- SAFE-CALIB (L) — appropriate confidence; Belief Score™ kill
+- SAFE-DP (LI) — diagnose→prove spine; 10k-hours kill
+- SAFE-CoP (LII) — named practice; Discord≢LPP
+- SAFE-RITUAL (LIII) — light optional marks; ritual→score kill
+- SAFE-AAR (LIV) — brief–debrief; bootcamp / +25% ACT kill
+- SAFE-FILM (LV) — sparse clips; tip-flood kill
+- SAFE-MUSIC (LVI) — scales→pieces→proof; hours KPI kill
+- SAFE-ANNOT (LVII) — annotate-before-reveal; GM / engine-dump kill
+- SAFE-EXPOSE (LVIII) — situation hierarchy; therapy cosplay / flooding / Calm Score™ kill
+
+**Red Team kills added:** #15 (raise-confidence / CA→grades), #16 (hours / forums / ritual→score / costume), #17 (tip-flood / engine-dump / flooding≡pedagogy).
+
+**Experiment families mounted in Part IX:** CAL / DP / CoP / RIT / AAR / FILM / MUSIC / ANNOT / EXP-O.
+
+**Claim killed (synthesis):** Treating L–LVIII domain metaphors as independent North Stars or marketing costumes — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **59** (Parent WTP experiments design). Researcher count since v1.8 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-01 — Researcher tick: Part LVIII Therapy graded exposure (SAFE-EXPOSE)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch58 never written → prefer Researcher per rotation; 8 researcher entries since synthesizer v1.7 → Synthesizer deferred; unfinished chapter wins)  

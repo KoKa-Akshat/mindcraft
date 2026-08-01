@@ -42,6 +42,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers | **DONE** (2026-08-01) — Part LVI / SAFE-MUSIC |
 | 57 | Chess annotation & metacognition | Postmortem UX | **DONE** (2026-08-01) — Part LVII / SAFE-ANNOT |
 | 58 | Therapy: graded exposure | Math anxiety exposure ladders | **DONE** (2026-08-01) — Part LVIII / SAFE-EXPOSE |
+| — | **Synthesizer v1.8** | Merge L–LVIII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-01 UTC 09) |
 | 59 | Parent WTP experiments design | Conjoint / message tests | **NEXT** |
 | 60 | Trust after AI hallucination | Repair protocols; when to escalate to human | queued |
 

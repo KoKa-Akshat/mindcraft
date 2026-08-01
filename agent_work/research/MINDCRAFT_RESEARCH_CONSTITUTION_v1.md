@@ -1,10 +1,10 @@
 # MindCraft Research Constitution v1
 
 **Status:** Living operating document — not a pitch deck  
-**Edition:** v1.7 (Synthesizer consolidation of Parts XLI–XLIX into surviving doctrine)  
+**Edition:** v1.8 (Synthesizer consolidation of Parts L–LVIII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-01 (Researcher tick — Part LVIII therapy graded exposure / SAFE-EXPOSE)  
+**Last updated:** 2026-08-01 (Synthesizer v1.8 — merge L–LVIII SAFE-* into I.4 / XIV / IX / XXI)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -51,7 +51,7 @@
 
 Queued next: see `NEXT_LAB.md` (Part LIX parent WTP experiments, then QUEUE_EXTENDED).
 
-**Synthesizer note (v1.7):** Nine researcher chapters (XLI–XLIX) landed after v1.6 without a merge pass — SAFE-* stacks had been stuffed as footnotes into the TARGET row. This edition promotes each stack to its own I.4 law, adds Red Team kills #10–#14, mounts experiment families DD/SC/HAB/IM/RES/EXP/TIM/TR/MIS in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
+**Synthesizer note (v1.8):** Nine researcher chapters (L–LVIII) landed after v1.7 without a merge pass — calibration, deliberate-practice spine, CoP caution, ritual light-touch, AAR, film-study, music ladder, annotation, and graded exposure lived only in deep dives. This edition promotes each stack to its own I.4 law, adds Red Team kills #15–#17, mounts experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
 ---
 
@@ -87,7 +87,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 
 **FOUNDER BELIEF under audit:** AI commoditizes knowledge; scarcity shifts to motivation, confidence, identity, trust, curiosity, persistence, emotional safety, meaning.
 
-**Red Team verdict (updated v1.7):**
+**Red Team verdict (updated v1.8):**
 
 | Claim | Status | Notes |
 |-------|--------|-------|
@@ -102,8 +102,11 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Harder-always / anxiety-blind “desirable difficulty” | **KILLED** | SAFE-DD (XLI); equip→destake→dose before Bjork dose |
 | Ranks / XP / grit meters as identity engines | **KILLED** | SAFE-COMPARE / REWARD / RESILIENCE (XLII–XLV) |
 | Story immersion ≡ far transfer; mistake posters ≡ learning | **KILLED** | SAFE-TRANSFER / MISCON (XLVIII–XLIX) |
+| Raise confidence / Belief Score™ / CA→grades | **KILLED** | SAFE-CALIB (L); Foster: appropriate confidence, not inflate |
+| Hours / forums / ritual→score / domain cosplay | **KILLED** | SAFE-DP / CoP / RITUAL (LI–LIII); borrow method not costume |
+| Tip-flood / engine-dump / flooding ≡ pedagogy | **KILLED** | SAFE-AAR / FILM / MUSIC / ANNOT / EXPOSE (LIV–LVIII) |
 
-**Implication:** Do not bet on “better explanations,” “AI tutor warmth,” streak theater, or grit posters. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with AI as guarded infrastructure and student generation as the spine.
+**Implication:** Do not bet on “better explanations,” “AI tutor warmth,” streak theater, grit posters, therapy cosplay, or academy/bootcamp branding. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with AI as guarded infrastructure and student generation as the spine.
 
 ## I.3 What to optimize (North Star debate)
 
@@ -121,7 +124,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 **Working North Star (HYPOTHESIS):**  
 **Challenge-seeking under safety with transfer** — the student chooses a harder problem for a *mastery* reason, returns after a miss, can pick the strategy on a mixed delayed set, and attributes success to strategy — without needing the model to finish the thought.
 
-## I.4 Surviving doctrine stack (Synthesizer merge through XLIX)
+## I.4 Surviving doctrine stack (Synthesizer merge through LVIII)
 
 Duplicate frameworks collapsed. Deep dives own citations; this table is **company law until killed**.
 
@@ -141,14 +144,23 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-TIMING** | Encode → sleep → transfer claim; never reward midnight volume; stress/restriction-aware load; pressure ≠ DD | XLVII | All-nighter / sleep-app brand kill |
 | **SAFE-TRANSFER** | Name the hop; VT vary-on-purpose; hug exam + bridge abstraction; story ≠ transfer; blocked ≠ ready | XLVIII | Narrative-theater / blocked-accuracy vanity kill |
 | **SAFE-MISCON** | Elicit → classify → destake → springboard → route; soft-wrong ≠ empty kindness; confidence-tiered feedback | XLIX | Mistake-poster / red-X-as-rigor / equal-wrong graph kill |
+| **SAFE-CALIB** | Item-level confidence → miss class → tiered feedback; raise *appropriate* confidence, not Belief Score™ | L | Hide-correctness diagnostic; ban CA→grades marketing |
+| **SAFE-DP** | Diagnose → isolate → goal → stretch → attempt → method feedback → revise → prove → stop | LI | Ban 10k-hours / minutes / coverage theater as DP |
+| **SAFE-CoP** | Name the practice; peripheral = real work; old-timer required; trajectory > community tab | LII | Ban Discord/streak ≡ LPP; “join the practice” not “join the community” |
+| **SAFE-RITUAL** | Light, optional, practice-pointing marks; doctrinal default; anti-totalism; no ritual→score | LIII | Ban streak-as-liturgy; family/order milieu copy |
+| **SAFE-AAR** | Brief → attempt with traces → four-question student-first close → one improve-how | LIV | Ban bootcamp brand; +25% ACT from debrief metas |
+| **SAFE-FILM** | Objective clip + ≤3 cues + learner-timed review + self∪model; next-attempt commitment | LV | Ban tip-flood film room; sports-academy cosplay |
+| **SAFE-MUSIC** | Scales (goalful ingredients) → chosen repertoire → transfer-as-recital proof | LVI | Ban virtuoso cosplay; hours KPI; bare-pass theater |
+| **SAFE-ANNOT** | Annotate-before-reveal; principle tags; forced critical restudy; classify→drill; annotate wins | LVII | Ban GM cosplay; engine-dump≡coaching; rating NS |
+| **SAFE-EXPOSE** | Situation hierarchy; destaked approach; expectancy violation; fade safety behaviors; multi-context | LVIII | Ban therapy branding; flooding; Calm Score™; one-session cure |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” and “celebrate mistakes” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” and “exposure therapy” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LIX **parent WTP experiments design**. SAFE-EXPOSE / SAFE-ANNOT / SAFE-MUSIC / SAFE-FILM / SAFE-AAR / SAFE-RITUAL / SAFE-CoP / SAFE-DP / SAFE-CALIB live in Parts LVIII / LVII / LVI / LV / LIV / LIII / LII / LI / L until synthesizer promotion; EXP-O1…5, ANNOT-1…5, MUSIC-1…5, FILM-1…5, AAR-1…5, RIT-1…5, CoP-1…5, DP-1…5, and CAL-1…5 gate anxiety-approach ladders, postmortem architecture, ladder architecture, review-media, session brief-debrief, ritual, community, session-architecture, and confidence-tiered claims above L1. Researcher count since v1.7 = 9 → synthesizer eligible on next non-RT tick.
+**Next research bottleneck:** Part LIX **parent WTP experiments design**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, and anxiety-approach claims above L1. Researcher count since v1.8 synthesizer = **0**.
 
 ---
 
@@ -228,6 +240,9 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-01 | Synthesizer v1.8: merge L–LVIII SAFE-* into I.4; kills #15–#17 | Synthesis | Surviving commercial law; next = LIX parent WTP |
+| 2026-08-01 | SAFE-EXPOSE: graded approach; kill therapy cosplay / flooding / Calm Score™ | Evidence | EXP-O1…5; expectancy violation |
+| 2026-08-01 | SAFE-ANNOT / MUSIC / FILM: postmortem + ladder + sparse clips | Evidence | ANNOT/MUSIC/FILM-1…5 |
 | 2026-07-31 | Synthesizer v1.7: merge XLI–XLIX SAFE-* into I.4; kills #10–#14 | Synthesis | Surviving commercial law; next = L confidence calibration |
 | 2026-07-31 | Misconceptions productive: SAFE-MISCON; soft-wrong ≠ empty kindness | Evidence | MIS-1…4; springboard + classify |
 | 2026-07-30 | Transfer/VT: story ≠ far transfer; blocked ≠ ready | Evidence | TR-1…4; SAFE-TRANSFER |
@@ -317,16 +332,18 @@ MindCraft’s durable stack lives in **Layers 2–6**, with 0–1 as utilities.
 
 ## VI.4 Transfer from outside education
 
-| Domain | Mechanism | Transfer to MindCraft |
-|--------|-----------|----------------------|
-| Games (Celeste, FromSoftware-lite design) | Fair difficulty + death as information | Soft-wrong as physics, not moral failure |
-| Sports coaching | Film study of *specific* error | Gap map + wrong-choice coach |
-| Music | Scales before repertoire; recital as identity | Concept drills → story quest → public signal |
-| Therapy (exposure) | Graded exposure to feared stimulus | Math anxiety: graded challenge under safety |
-| Aviation checklists | Externalize working memory under stress | Procedure scaffolds when anxious |
-| Martial arts belts | Visible competence ladder | Mastery pips / map regions |
-| Language apps | Habit loops | Daily practice — without Duo’s extrinsic ceiling |
-| Religion / ritual | Shared meaning + belonging | Caution: do not cultify; use *light* ritual (map lighting) |
+| Domain | Mechanism | Transfer to MindCraft (surviving law) |
+|--------|-----------|--------------------------------------|
+| Games (Celeste, FromSoftware-lite design) | Fair difficulty + death as information | Soft-wrong as physics (SAFE-MISCON / FEI) |
+| Sports coaching | Film study of *specific* error | SAFE-FILM: ≤3-cue attempt clips + self∪model |
+| Music | Scales → repertoire → recital | SAFE-MUSIC: ingredient drills → chosen pieces → transfer proof |
+| Therapy (exposure) | Graded approach + expectancy violation | SAFE-EXPOSE: situation hierarchy under destaked stakes |
+| Aviation / military | Brief → attempt → structured debrief | SAFE-AAR: four-question student-first close |
+| Chess annotation | Postmortem before engine; principle tags | SAFE-ANNOT: annotate→classify→drill; wins too |
+| Martial arts belts | Visible competence ladder | Mastery pips / map regions (criterion, not league) |
+| Language apps | Habit loops | SAFE-HABIT cue practice — without Duo’s extrinsic ceiling |
+| Religion / ritual | Shared meaning + belonging | SAFE-RITUAL: light optional marks; anti-totalism |
+| Craft apprenticeship | Legitimate peripheral participation | SAFE-CoP: real peripheral work + old-timer; not Discord KPIs |
 
 ---
 
@@ -435,6 +452,15 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | TIM-* | Practice timing × sleep/stress → delayed transfer | XLVII |
 | TR-* | VT / hug / bridge sequence → format-hop + solo transfer | XLVIII |
 | MIS-* | Soft-wrong springboard / mis-mapped distractors / confidence tier | XLIX |
+| CAL-* | Confidence-tiered feedback / hide-correctness / underconf unlock | L |
+| DP-* | Session spine / edge targeting / method feedback / effort cap | LI |
+| CoP-* | Named practice / peripheral work / old-timer / trajectory metrics | LII |
+| RIT-* | Light ritual vs silent / recovery marker / anti-streak liturgy | LIII |
+| AAR-* | Brief + four-question close / student-first / trace-backed debrief | LIV |
+| FILM-* | Sparse clip cues / self-controlled review / self∪model pairing | LV |
+| MUSIC-* | Ladder UX / repertoire choice / identified technique / transfer recital | LVI |
+| ANNOT-* | Annotate-before-reveal / forced restudy / classify→drill / annotate wins | LVII |
+| EXP-O-* | Situation hierarchy / expectancy check / fade safety / multi-context | LVIII |
 
 ---
 
@@ -535,6 +561,18 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #14 (v1.7): “Story / sleep tips / mistake celebration = transfer”
 **Destroyed:** Narrative immersion as automatic far transfer; sleep-app brand; empty mistake posters; red-X-as-rigor; equal graph updates for all wrongs.  
 **Surviving:** SAFE-TRANSFER + SAFE-TIMING + SAFE-MISCON — vary on purpose, encode→sleep→claim, elicit→classify→springboard→route (XLVII–XLIX).
+
+### Kill #15 (v1.8): “Raise confidence / Belief Score™ / CA raises grades”
+**Destroyed:** Inflate-confidence brand; confidence meters as identity; confidence assessment alone as attainment lever; equal updates for guess vs high-conf misconception.  
+**Surviving:** SAFE-CALIB — item-level elicit → miss class → tiered feedback; appropriate confidence; C4 hide-correctness as diagnostic hygiene (L).
+
+### Kill #16 (v1.8): “Hours / forums / ritual→score / domain costume = identity”
+**Destroyed:** 10k-hours and minutes KPIs; Discord/streak ≡ CoP; unretracted ritual→performance marketing; bootcamp/conservatory/GM/therapy branding as belonging.  
+**Surviving:** SAFE-DP + SAFE-CoP + SAFE-RITUAL — diagnose→prove spine; named practice with real peripheral work; light optional marks pointing at recover/prove (LI–LIII).
+
+### Kill #17 (v1.8): “Tip-flood / engine-dump / flooding ≡ high-performance pedagogy”
+**Destroyed:** Uncapped film-room tips; Stockfish/LLM monologue as annotation; day-one timed mixed ACT as “exposure”; calm-to-zero / Calm Score™; loss-only shame reels; bare-pass recital theater.  
+**Surviving:** SAFE-AAR + SAFE-FILM + SAFE-MUSIC + SAFE-ANNOT + SAFE-EXPOSE — brief–debrief, sparse clips, skills→pieces→proof, annotate→drill, graded approach with expectancy violation (LIV–LVIII).
 
 ---
 
@@ -813,7 +851,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | ChatGPT tutors | Instant explanation | Low unless wrapped | Trust / hallucination; Bastani Base harm |
 | MindCraft (target) | FEI conversion + tutor witness + gap diagnosis + solo transfer | **Intended high** | Must prove, not assert |
 
-**Strategic implication (v1.7 densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks/leagues/XP. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency. Do not out-grit character apps on Resilience Score™. Out-compete on the **session**: recoverable struggle under SAFE-DD, productive-error routing (SAFE-MISCON), variation-designed transfer (SAFE-TRANSFER), visible competence evidence without appearance climates, strategy selection under mix, student-generated why, and transfer when help is gone — then *say that* in marketing (CSA-2).
+**Strategic implication (v1.8 densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks/leagues/XP. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency. Do not out-grit character apps on Resilience Score™. Do not out-therapy Calm Score™, sports academies, conservatories, or grandmaster cosplay. Out-compete on the **session**: SAFE-DP spine under SAFE-DD, productive-error + calibration routing (SAFE-MISCON / CALIB), brief–debrief + sparse film + annotation (SAFE-AAR / FILM / ANNOT), laddered approach for feared formats (SAFE-MUSIC / EXPOSE), variation-designed transfer (SAFE-TRANSFER), student-generated why, and transfer when help is gone — then *say that* in marketing (CSA-2).
 
 ---
 
@@ -830,6 +868,10 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 - Named leaderboard rank / league tier  
 - Resilience Score™ / grit meter / MRS as in-app KPI  
 - Midnight minutes practiced / all-nighter volume  
+- Belief Score™ / confidence meters / confidence streaks  
+- Community tab visits / Discord volume / games played / rating  
+- Calm Score™ / anxiety-must-hit-zero meters  
+- Tip-recall / film-room engagement without method-change + transfer  
 
 ## XXI.2 Leading indicators (ship first)
 
@@ -839,16 +881,20 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `coach_shown` | Wizard/coach surfaced | Treatment exposure |
 | `write_exit_to_retry` | Leave write mode then attempt | Agency after reflection |
 | `challenge_accept` | Chose harder level when offered | Challenge-seeking (instrument *motive*) |
-| `hint_binge` | ≥3 hints without independent solve | Gaming / helplessness |
+| `hint_binge` | ≥3 hints without independent solve | Gaming / helplessness / failed exposure fade |
 | `transfer_pass` | Correct on varied item after mastery mark | Anti-fake-mastery |
 | `solo_transfer_pass` | Transfer with AI/Solver closed or denied | Anti-crutch (XXXIII) |
 | `ai_reveal_rate` | Full-answer / unguarded reveal frequency | Crutch exposure |
 | `strategy_class_error` | Wrong *procedure family* on mixed set | Interleaving discrimination (XXXIX) |
 | `se_principle_hit` | Correct structured principle/ingredient pick when prompted | SE quality proxy (XL) |
 | `help_recruit_then_solo` | Opened card/tutor/peer help then solved without full reveal | SAFE-RESILIENCE support path (XLV) |
-| `misconception_route_hit` | Soft-wrong routed to mapped `mis_` / ingredient failure_mode | SAFE-MISCON classification (XLIX) |
+| `misconception_route_hit` | Soft-wrong routed to mapped mis_ / ingredient failure_mode | SAFE-MISCON classification (XLIX) |
 | `format_hop_pass` | Correct after declared format/context hop (VT check) | SAFE-TRANSFER discernment (XLVIII) |
-| `confidence_miss_tier` | High vs low confidence on miss (when elicited) | Hypercorrection / Part L calibration |
+| `confidence_miss_tier` | High vs low confidence on miss (when elicited) | SAFE-CALIB / hypercorrection (L) |
+| `annotate_before_reveal` | Student principle/why logged before key/coach/model | SAFE-ANNOT / SAFE-AAR (LVII / LIV) |
+| `film_cue_count` | Coaching points attached to attempt clip (cap ≤3) | SAFE-FILM less-is-more (LV) |
+| `avoided_format_approach` | Attempt on previously avoided format/stakes step | SAFE-EXPOSE approach rate (LVIII) |
+| `improve_how_specificity` | Debrief yields concrete next-attempt tweak | SAFE-AAR close quality (LIV) |
 
 ## XXI.3 Lagging indicators
 
@@ -894,6 +940,15 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-TIMING | Encode → sleep → delayed transfer claim (Part XLVII) |
 | SAFE-TRANSFER | Variation/hug/bridge transfer design (Part XLVIII) |
 | SAFE-MISCON | Productive-error elicit → classify → springboard → route (Part XLIX) |
+| SAFE-CALIB | Item-level confidence → miss class → tiered feedback (Part L) |
+| SAFE-DP | Diagnose → isolate → attempt → method feedback → prove spine (Part LI) |
+| SAFE-CoP | Named practice; peripheral = real work; trajectory > tab (Part LII) |
+| SAFE-RITUAL | Light optional practice-pointing marks; anti-totalism (Part LIII) |
+| SAFE-AAR | Brief → traces → four-question student-first close (Part LIV) |
+| SAFE-FILM | Sparse attempt clips + self∪model + next commitment (Part LV) |
+| SAFE-MUSIC | Scales → repertoire → transfer-as-recital ladder (Part LVI) |
+| SAFE-ANNOT | Annotate-before-reveal → classify → drill; annotate wins (Part LVII) |
+| SAFE-EXPOSE | Situation hierarchy + expectancy violation + fade safety (Part LVIII) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -979,7 +1034,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 23. **DONE (2026-08-01):** Music pedagogy ladders (Part LVI / id 56) — SAFE-MUSIC stack  
 24. **DONE (2026-08-01):** Chess annotation & metacognition (Part LVII / id 57) — SAFE-ANNOT stack  
 25. **DONE (2026-08-01):** Therapy graded exposure (Part LVIII / id 58) — SAFE-EXPOSE stack  
-26. **NEXT:** Parent WTP experiments design (Part LIX / id 59)
+26. **Synthesizer v1.8 (2026-08-01):** Merged L–LVIII into I.4 / XIV / IX / XXI — no new chapter  
+27. **NEXT:** Parent WTP experiments design (Part LIX / id 59)
 
 ---
 
@@ -1013,4 +1069,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Parts L–LVIII (SAFE-CALIB, SAFE-DP, SAFE-CoP, SAFE-RITUAL, SAFE-AAR, SAFE-FILM, SAFE-MUSIC, SAFE-ANNOT, SAFE-EXPOSE) densify confidence, session-practice, community-participation, meaning-without-cult, brief–debrief, review-media, pedagogy-ladder, postmortem-metacognition, and anxiety-approach-ladder doctrine pending next synthesizer. Next researcher id: LIX parent WTP experiments (synthesizer also eligible: ≥8 researcher entries since v1.7). Page count is not the finish line — falsifiable truth is.**
+**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Next researcher id: LIX parent WTP experiments. Page count is not the finish line — falsifiable truth is.**
