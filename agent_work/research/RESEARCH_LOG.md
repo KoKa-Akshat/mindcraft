@@ -4,6 +4,36 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-01 — Researcher tick: Part LX Trust after AI hallucination (SAFE-REPAIR)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch60 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 1 → not Synthesizer)  
+**Chapter written:** `chapters/60_trust_after_ai_hallucination.md` (Part LX)  
+**Claim examined:** Post-hallucination trust repair and human-escalation protocols for MindCraft — vs never-wrong marketing, apology theater, silent overwrite, infinite free human handoff, and permanent disuse branding.
+
+**Evidence added:**
+- Bastani et al. (2025, *PNAS*, doi:10.1073/pnas.2422633122): unguarded GPT harm; hallucinations as mechanism (re-anchored from XXXIII).
+- Li et al. (L@S 2025, doi:10.1145/3698205.3729550): novices miss fluent errors.
+- Lee & See (2004, *Human Factors*); Parasuraman & Riley (1997); Hoff & Bashir (2015, doi:10.1177/0018720814547570): appropriate reliance / misuse–disuse / trust layers.
+- de Visser, Pak & Shaw (2018, *Ergonomics*, doi:10.1080/00140139.2018.1457701): trust repair as design requirement for autonomy.
+- Kim, Ferrin, Cooper & Dirks (2004, *JAP*, doi:10.1037/0021-9010.89.1.104); Kim et al. (2006, *OBHDP*): apology vs denial × competence/integrity.
+- Liu et al. (2024, *IEEE THMS*, doi:10.1109/THMS.2024.3434680): apology+explain+promise failed to restore ADS trust (wound).
+- Zhang et al. (doi:10.1145/3793679 / arXiv:2507.02745): explanatory apologies generally preferred; hallucination apology-type unsettled.
+- Harland et al. (2025, *AI Review*, doi:10.1007/s10462-025-11305-8): apology needs corrective system behavior.
+- Kazemitabaar et al. (arXiv:2510.14457): hybrid escalate underused (11% of unhelpful hints); instructor replies ~half insufficient.
+- Nagashima et al. (arXiv:2606.03822): fallibility banner → more hints, not accuracy (re-anchored).
+
+**Product implication:** SAFE-REPAIR stack — detect → classify competence/integrity → own explanatorily → Map-checked correct → destaked re-attempt → calibrate → triggered packetized escalate; REPAIR-1…6 + QUAL. Position as recoverable truth, not invincible AI.
+
+**Claim killed:** “AI never hallucinates” marketing; rote/empathy-only apology as repair; silent overwrite when detection exists; thumbs-up≡trust fixed; infinite free human escalation; permanent never-trust-AI brand.
+
+**Survives:** Competence ownership + checked correction + re-attempt; scarce packetized human escalation; preference≠recovery wound.
+
+**Next researcher id:** **61** (Measurement of math identity). Researcher count since synthesizer v1.8: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-01 — Researcher tick: Part LIX Parent WTP experiments (SAFE-WTP)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch59 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 0 → not Synthesizer)  

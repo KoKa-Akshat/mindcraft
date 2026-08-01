@@ -44,8 +44,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 58 | Therapy: graded exposure | Math anxiety exposure ladders | **DONE** (2026-08-01) — Part LVIII / SAFE-EXPOSE |
 | — | **Synthesizer v1.8** | Merge L–LVIII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-01 UTC 09) |
 | 59 | Parent WTP experiments design | Conjoint / message tests | **DONE** (2026-08-01) — Part LIX / SAFE-WTP |
-| 60 | Trust after AI hallucination | Repair protocols; when to escalate to human | **NEXT** |
-| 61 | Measurement of math identity | Valid scales; demand effects | queued |
+| 60 | Trust after AI hallucination | Repair protocols; when to escalate to human | **DONE** (2026-08-01) — Part LX / SAFE-REPAIR |
+| 61 | Measurement of math identity | Valid scales; demand effects | **NEXT** |
 | 62 | Longitudinal identity change models | What 8/26/52 week looks like | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (63–70).
@@ -67,3 +67,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (63–70).
 - Any grandmaster cosplay / engine-dump≡annotation / rating-or-games≡mastery / loss-only shame review / AI-postmortem-closes-gaps-equally claim (Part LVII)
 - Any therapy/CBT cosplay / day-one flooding≡exposure / calm-to-zero North Star / Calm Score™ / permanent-hint “support” / one-session-cures-anxiety claim (Part LVIII)
 - Any Likert≡WTP / survey-dollars≡revenue / “parents only buy scores” without CBC / streak-or-AI-unlimited as default parent value prop / guaranteed ACT points in package levels (Part LIX)
+- Any “AI never hallucinates” / rote-or-empathy apology≡repair / thumbs-up≡trust-fixed / infinite free human escalation / permanent never-trust-AI brand (Part LX)
