@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-01 — Researcher tick: Part LVII Chess annotation & metacognition (SAFE-ANNOT)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; 7 researcher entries since synthesizer v1.7 → Researcher)  
+**Chapter written:** `chapters/57_chess_annotation_metacognition.md` (Part LVII)  
+**Claim examined:** Chess annotation / postmortem as metacognitive review architecture for MindCraft — vs grandmaster cosplay, engine-eval floods, rating/volume vanity, loss-only shame, and AI-feedback equity myths.
+
+**Evidence added:**
+- de Groot (1946/1965/1978): thinking-aloud protocols for choice-of-move; structured phases of chess thought.
+- Chase & Simon (1973) chunking; Gobet & Simon template theory / Gobet (1998, 2005): expertise as patterns + deliberate attention, not mysticism.
+- de Bruin, Rikers & Schmidt (2007, *Contemporary Educational Psychology*, doi:10.1016/j.cedpsych.2006.01.001): prediction + self-explanation > prediction/observation for novice chess principles.
+- de Bruin, Rikers & Schmidt (2005, *Applied Cognitive Psychology*, doi:10.1002/acp.1109): forced restudy selection helps; JOLs can overload novices.
+- de Bruin, Rikers & Schmidt (2007, doi:10.1080/09541440701326204): expertise improves metacomprehension/self-regulation in chess skill learning.
+- Yiannakoulias (2026, *Simulation & Gaming*, doi:10.1177/10468781261443352): game analysis ↔ rating gains; play volume weak; wins analysis salient (observational).
+- Riedl & Bogert (arXiv:2409.18660): AI feedback self-selection; illusion of effectiveness; skill-gap / diversity wounds.
+- Bilalić et al. citation-hygiene wound on textbook de Groot search slogans.
+
+**Product implication:** SAFE-ANNOT stack (annotate-before-reveal; SE principles; forced critical restudy; classify→drill; annotate wins; sparse AI second pass; anti-cosplay); ANNOT-1…5; kill GM branding / engine≡coaching / rating NS.
+
+**Claim killed:** Grandmaster cosplay as efficacy; engine/LLM dump ≡ annotation; games/rating/streaks as mastery; loss-only shame review; bare JOLs as metacognition; AI postmortem closes gaps equally.
+
+**Next researcher id:** **58** (Therapy: graded exposure). Researcher count since v1.7 synthesizer: **8** — next non-RT tick with ≥8 since synthesizer → Synthesizer eligible.
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-08-01 — Researcher tick: Part LVI Music pedagogy ladders (SAFE-MUSIC)
 
 **Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch56 never written → prefer Researcher per rotation; 6 researcher entries since synthesizer v1.7 → Researcher)  

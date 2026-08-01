@@ -40,10 +40,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 54 | Military/aviation brief-debrief | After-action reviews for math sessions | **DONE** (2026-07-31) — Part LIV / SAFE-AAR |
 | 55 | Sports film-study pedagogy | Error clips → coach cards | **DONE** (2026-07-31) — Part LV / SAFE-FILM |
 | 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers | **DONE** (2026-08-01) — Part LVI / SAFE-MUSIC |
-| 57 | Chess annotation & metacognition | Postmortem UX | **NEXT** |
-| 58 | Therapy: graded exposure | Math anxiety exposure ladders | queued |
+| 57 | Chess annotation & metacognition | Postmortem UX | **DONE** (2026-08-01) — Part LVII / SAFE-ANNOT |
+| 58 | Therapy: graded exposure | Math anxiety exposure ladders | **NEXT** |
+| 59 | Parent WTP experiments design | Conjoint / message tests | queued |
+| 60 | Trust after AI hallucination | Repair protocols; when to escalate to human | queued |
 
-More IDs: `chapters/QUEUE_EXTENDED.md` (59–70).
+More IDs: `chapters/QUEUE_EXTENDED.md` (61–70).
 
 ## Standing Red Team targets
 
@@ -59,3 +61,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (59–70).
 - Any military-cosplay / “+25% from debriefs” ACT claim / lecture≡debrief / AAR≡CISD conflation (Part LIV)
 - Any sports-academy cosplay / tip-flood≡film-study / tip-recall≡transfer / failure-shame-reel claim (Part LV)
 - Any conservatory/virtuoso cosplay / hours-practiced≡mastery / bare-pass recital theater / scales-without-repertoire claim (Part LVI)
+- Any grandmaster cosplay / engine-dump≡annotation / rating-or-games≡mastery / loss-only shame review / AI-postmortem-closes-gaps-equally claim (Part LVII)
