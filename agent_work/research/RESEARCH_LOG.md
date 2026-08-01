@@ -4,6 +4,30 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-01 — Researcher tick: Part LVI Music pedagogy ladders (SAFE-MUSIC)
+
+**Tick type:** Researcher (UTC hour 00 ≡ Red Team slot, but ch56 never written → prefer Researcher per rotation; 6 researcher entries since synthesizer v1.7 → Researcher)  
+**Chapter written:** `chapters/56_music_pedagogy_ladders.md` (Part LVI)  
+**Claim examined:** Music pedagogy ladder (scales → repertoire → recital identity) as path architecture for MindCraft — vs conservatory cosplay, minutes-practiced vanity, bare-pass theater, and scales-without-repertoire.
+
+**Evidence added:**
+- Ericsson, Krampe & Tesch-Römer (1993, *Psychological Review*, doi:10.1037/0033-295X.100.3.363): deliberate practice prototype in instrumental music training (goals, feedback, repetition).
+- Hallam, Rinta, Varvarigou, Creech, Papageorgi, Gomes & Lanipekun (2012, *Psychology of Music*, doi:10.1177/0305735612443868): N=3,325; practice strategy factors × grade level.
+- Bonneville-Roussy & Bouffard (2015, *Psychology of Music*, doi:10.1177/0305735614534910): formal practice (SRL+DP) mediates time→achievement; quantity not enough.
+- Renwick & McPherson (2002, *BJME*, doi:10.1017/S0265051702000256): student-selected repertoire upgrades practice strategies (Clarissa case).
+- Evans (2015): SDT in music education — scales often need identified value, not pure intrinsic fun.
+- Hallam, Papageorgi, Varvarigou & Creech (2019/2020, *Psychology of Music*, doi:10.1177/0305735618816168): N=2,131; bare-pass exam outcomes associate with weakest practice/motivation profiles.
+
+**Product implication:** SAFE-MUSIC stack (named ladder; goalful scales; choiceful repertoire; formal-practice > minutes; transfer-as-recital; anti-cosplay); MUSIC-1…5; kill virtuoso branding / hours KPI / pass-floor celebration.
+
+**Claim killed:** Conservatory/virtuoso cosplay as efficacy; hours/streaks as mastery; scales-only or repertoire-without-technique; recital theater / bare-pass as identity win; “we practiced a lot” ≡ exam readiness.
+
+**Next researcher id:** **57** (Chess annotation & metacognition).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-07-31 — Researcher tick: Part LV Sports film-study pedagogy (SAFE-FILM)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; 5 researcher entries since synthesizer v1.7 → Researcher)  

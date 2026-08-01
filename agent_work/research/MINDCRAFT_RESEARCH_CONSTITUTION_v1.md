@@ -4,7 +4,7 @@
 **Edition:** v1.7 (Synthesizer consolidation of Parts XLI–XLIX into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-07-31 (Researcher tick — Part LV sports film-study pedagogy / SAFE-FILM)  
+**Last updated:** 2026-08-01 (Researcher tick — Part LVI music pedagogy ladders / SAFE-MUSIC)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -45,8 +45,9 @@
 | LIII | `chapters/53_religion_ritual_light_touch.md` | Religion/ritual light-touch; SAFE-RITUAL; meaning without cult dynamics |
 | LIV | `chapters/54_military_aviation_brief_debrief.md` | Military/aviation brief-debrief; SAFE-AAR; after-action reviews for sessions |
 | LV | `chapters/55_sports_film_study_pedagogy.md` | Sports film-study pedagogy; SAFE-FILM; error clips → coach cards |
+| LVI | `chapters/56_music_pedagogy_ladders.md` | Music pedagogy ladders; SAFE-MUSIC; scales → repertoire → recital |
 
-Queued next: see `NEXT_LAB.md` (Part LVI music pedagogy ladders, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LVII chess annotation & metacognition, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.7):** Nine researcher chapters (XLI–XLIX) landed after v1.6 without a merge pass — SAFE-* stacks had been stuffed as footnotes into the TARGET row. This edition promotes each stack to its own I.4 law, adds Red Team kills #10–#14, mounts experiment families DD/SC/HAB/IM/RES/EXP/TIM/TR/MIS in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -145,7 +146,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” and “celebrate mistakes” are *not* independent North Stars — they are subordinate UX under FEI + the rows above.
 
-**Next research bottleneck:** Part LVI **music pedagogy ladders**. SAFE-FILM / SAFE-AAR / SAFE-RITUAL / SAFE-CoP / SAFE-DP / SAFE-CALIB live in Parts LV / LIV / LIII / LII / LI / L until synthesizer promotion; FILM-1…5, AAR-1…5, RIT-1…5, CoP-1…5, DP-1…5, and CAL-1…5 gate review-media, session brief-debrief, ritual, community, session-architecture, and confidence-tiered claims above L1.
+**Next research bottleneck:** Part LVII **chess annotation & metacognition**. SAFE-MUSIC / SAFE-FILM / SAFE-AAR / SAFE-RITUAL / SAFE-CoP / SAFE-DP / SAFE-CALIB live in Parts LVI / LV / LIV / LIII / LII / LI / L until synthesizer promotion; MUSIC-1…5, FILM-1…5, AAR-1…5, RIT-1…5, CoP-1…5, DP-1…5, and CAL-1…5 gate ladder architecture, review-media, session brief-debrief, ritual, community, session-architecture, and confidence-tiered claims above L1.
 
 ---
 
@@ -973,7 +974,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 20. **DONE (2026-07-31):** Religion/ritual light-touch (Part LIII / id 53) — SAFE-RITUAL stack  
 21. **DONE (2026-07-31):** Military/aviation brief-debrief (Part LIV / id 54) — SAFE-AAR stack  
 22. **DONE (2026-07-31):** Sports film-study pedagogy (Part LV / id 55) — SAFE-FILM stack  
-23. **NEXT:** Music pedagogy ladders (Part LVI / id 56)
+23. **DONE (2026-08-01):** Music pedagogy ladders (Part LVI / id 56) — SAFE-MUSIC stack  
+24. **NEXT:** Chess annotation & metacognition (Part LVII / id 57)
 
 ---
 
@@ -1007,4 +1009,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Parts L–LV (SAFE-CALIB, SAFE-DP, SAFE-CoP, SAFE-RITUAL, SAFE-AAR, SAFE-FILM) densify confidence, session-practice, community-participation, meaning-without-cult, brief–debrief, and review-media doctrine pending next synthesizer. Next researcher id: LVI music pedagogy ladders. Page count is not the finish line — falsifiable truth is.**
+**v1.7 synthesizer pass folded Parts XLI–XLIX into surviving commercial doctrine (I.4 rows SAFE-DD through SAFE-MISCON; Red Team kills #10–#14). Parts L–LVI (SAFE-CALIB, SAFE-DP, SAFE-CoP, SAFE-RITUAL, SAFE-AAR, SAFE-FILM, SAFE-MUSIC) densify confidence, session-practice, community-participation, meaning-without-cult, brief–debrief, review-media, and pedagogy-ladder doctrine pending next synthesizer. Next researcher id: LVII chess annotation & metacognition. Page count is not the finish line — falsifiable truth is.**
