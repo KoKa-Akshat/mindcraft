@@ -4,7 +4,7 @@
 **Edition:** v1.8 (Synthesizer consolidation of Parts L–LVIII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-01 (Researcher — Part LX Trust after AI hallucination / SAFE-REPAIR)  
+**Last updated:** 2026-08-01 (Researcher — Part LXI Measurement of math identity / SAFE-IDMEASURE)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -50,8 +50,9 @@
 | LVIII | `chapters/58_therapy_graded_exposure.md` | Therapy graded exposure; SAFE-EXPOSE; math anxiety ladders |
 | LIX | `chapters/59_parent_wtp_experiments.md` | Parent WTP experiments; SAFE-WTP; CBC/conjoint + message tests |
 | LX | `chapters/60_trust_after_ai_hallucination.md` | Trust after AI hallucination; SAFE-REPAIR; escalate-to-human |
+| LXI | `chapters/61_measurement_of_math_identity.md` | Measurement of math identity; SAFE-IDMEASURE; scales + demand effects |
 
-Queued next: see `NEXT_LAB.md` (Part LXI math-identity measurement, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LXII longitudinal identity change, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.8):** Nine researcher chapters (L–LVIII) landed after v1.7 without a merge pass — calibration, deliberate-practice spine, CoP caution, ritual light-touch, AAR, film-study, music ladder, annotation, and graded exposure lived only in deep dives. This edition promotes each stack to its own I.4 law, adds Red Team kills #15–#17, mounts experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -957,6 +958,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-EXPOSE | Situation hierarchy + expectancy violation + fade safety (Part LVIII) |
 | SAFE-WTP | Parent CBC + bias controls + message≠package (Part LIX) |
 | SAFE-REPAIR | Detect→own→correct→reattempt→triggered escalate (Part LX) |
+| SAFE-IDMEASURE | Validated identity factors + FEI behavior + demand-aware admin (Part LXI) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1021,6 +1023,7 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 2. History of mathematics as meaning technology — under trial via XXVIII + HIST  
 3. Parent trust economics & willingness-to-pay — **DONE** Part LIX / SAFE-WTP (builds EVT-4 / XXVII)  
 3b. Trust after AI hallucination / repair + escalate — **DONE** Part LX / SAFE-REPAIR (builds XXXIII)
+3c. Measurement of math identity — **DONE** Part LXI / SAFE-IDMEASURE
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
@@ -1046,7 +1049,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 26. **Synthesizer v1.8 (2026-08-01):** Merged L–LVIII into I.4 / XIV / IX / XXI — no new chapter  
 27. **DONE (2026-08-01):** Parent WTP experiments design (Part LIX / id 59) — SAFE-WTP stack  
 28. **DONE (2026-08-01):** Trust after AI hallucination (Part LX / id 60) — SAFE-REPAIR stack  
-29. **NEXT:** Measurement of math identity (Part LXI / id 61)
+29. **DONE (2026-08-01):** Measurement of math identity (Part LXI / id 61) — SAFE-IDMEASURE stack  
+30. **NEXT:** Longitudinal identity change models (Part LXII / id 62)
 
 ---
 
@@ -1080,4 +1084,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP; Part LX added SAFE-REPAIR (post-hallucination detect→own→correct→reattempt→escalate). Next researcher id: LXI math-identity measurement. Page count is not the finish line — falsifiable truth is.**
+**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP; Part LX added SAFE-REPAIR; Part LXI added SAFE-IDMEASURE (validated identity scales + demand-aware triangulation). Next researcher id: LXII longitudinal identity change. Page count is not the finish line — falsifiable truth is.**

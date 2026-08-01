@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-01 — Researcher tick: Part LXI Measurement of math identity (SAFE-IDMEASURE)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0 → not Red Team; researcher count since synthesizer v1.8 = 2 → not Synthesizer)  
+**Chapter written:** `chapters/61_measurement_of_math_identity.md` (Part LXI)  
+**Claim examined:** How MindCraft should measure mathematics identity — validated scales, demand/SDR, triangulation with FEI behavior — vs Identity Score™ theater and competence≡identity.
+
+**Evidence added:**
+- Cribbs, Hazari, Sonnert & Sadler (2015, *Child Development*, doi:10.1111/cdev.12363): N>9,000 calculus SEM — competence/performance mostly *indirect* via interest + recognition.
+- Cribbs & Utley (2023/2024, *MERJ*, doi:10.1007/s13394-023-00474-w): N=1559 grades 5–12; 16-item validated interest/recognition/competence–performance instrument.
+- Cass et al. (2011, FIE, doi:10.1109/FIE.2011.6142881): competence/performance often load together.
+- Carlone & Johnson (2007, *JRST*, doi:10.1002/tea.20237): recognition/competence/performance science-identity lens.
+- Sfard & Prusak (2005, *Educational Researcher*, doi:10.3102/0013189X034004014): narrative identity; actual vs designated.
+- Miller & Wang (2019, *J Youth Adolescence*, doi:10.1007/s10964-019-01115-x): classroom practices → motivation → math identity mediation.
+- HSLS/Ingels NCES two-item “math person” tradition (screening, thin as sole RCT endpoint).
+- Kreitchmann et al. (2019, *Frontiers in Psychology*, doi:10.3389/fpsyg.2019.02309): SDR/acquiescence on Likert; modeling/forced-choice tradeoffs.
+
+**Product implication:** SAFE-IDMEASURE — validated Cribbs-factor battery + FEI behavioral co-primary + light narrative probe; separate measure from marketing splash; no Identity Score™; IDM-1…5 + QUAL.
+
+**Claim killed:** Math Identity Score™; two-item pre/post≡FEI proof; competence/confidence survey≡identity; identity Likert on marketing splash; empty AI “math person” praise≡recognition; single-session identity transformation claims.
+
+**Survives:** Triangulated measurement; interest+recognition design weight; demand-aware administration.
+
+**Next researcher id:** **62** (Longitudinal identity change models). Researcher count since synthesizer v1.8: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-01 — Researcher tick: Part LX Trust after AI hallucination (SAFE-REPAIR)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch60 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 1 → not Synthesizer)  
