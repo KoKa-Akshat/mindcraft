@@ -41,8 +41,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 55 | Sports film-study pedagogy | Error clips → coach cards | **DONE** (2026-07-31) — Part LV / SAFE-FILM |
 | 56 | Music pedagogy ladders | Scales→repertoire→recital identity markers | **DONE** (2026-08-01) — Part LVI / SAFE-MUSIC |
 | 57 | Chess annotation & metacognition | Postmortem UX | **DONE** (2026-08-01) — Part LVII / SAFE-ANNOT |
-| 58 | Therapy: graded exposure | Math anxiety exposure ladders | **NEXT** |
-| 59 | Parent WTP experiments design | Conjoint / message tests | queued |
+| 58 | Therapy: graded exposure | Math anxiety exposure ladders | **DONE** (2026-08-01) — Part LVIII / SAFE-EXPOSE |
+| 59 | Parent WTP experiments design | Conjoint / message tests | **NEXT** |
 | 60 | Trust after AI hallucination | Repair protocols; when to escalate to human | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (61–70).
@@ -62,3 +62,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (61–70).
 - Any sports-academy cosplay / tip-flood≡film-study / tip-recall≡transfer / failure-shame-reel claim (Part LV)
 - Any conservatory/virtuoso cosplay / hours-practiced≡mastery / bare-pass recital theater / scales-without-repertoire claim (Part LVI)
 - Any grandmaster cosplay / engine-dump≡annotation / rating-or-games≡mastery / loss-only shame review / AI-postmortem-closes-gaps-equally claim (Part LVII)
+- Any therapy/CBT cosplay / day-one flooding≡exposure / calm-to-zero North Star / Calm Score™ / permanent-hint “support” / one-session-cures-anxiety claim (Part LVIII)

@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-01 — Researcher tick: Part LVIII Therapy graded exposure (SAFE-EXPOSE)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch58 never written → prefer Researcher per rotation; 8 researcher entries since synthesizer v1.7 → Synthesizer deferred; unfinished chapter wins)  
+**Chapter written:** `chapters/58_therapy_graded_exposure.md` (Part LVIII)  
+**Claim examined:** Graded exposure / inhibitory learning as math-anxiety approach architecture for MindCraft — vs therapy cosplay, flooding, habituation-only meters, permanent safety behaviors, and one-session cure myths.
+
+**Evidence added:**
+- Hembree (1990, *JRME*, doi:10.2307/749455): math anxiety ↔ avoidance; valid treatments often accompany performance gains.
+- Ashcraft & Kirk (2001, *JEP: General*, doi:10.1037/0096-3445.130.2.224): anxiety as WM dual-task load.
+- Craske et al. (2014, *BRAT*, doi:10.1016/j.brat.2014.04.006; PMC4114726): inhibitory learning / expectancy violation > calm-to-zero habituation.
+- Craske inhibitory regulation overview (doi:10.1159/000381574); variability-in-exposure reviews (e.g. PMC6884337).
+- Bouton (2002, *Biol Psychiatry*, doi:10.1016/S0006-3223(02)01546-9; PMID 12437938): extinction context-bound; renewal.
+- Bouton (2004, *Learning & Memory*): contexts as occasion setters.
+- Park, Ramirez & Beilock (2014, *JEP: Applied*, doi:10.1037/xap0000013); Ramirez & Beilock (2011, *Science*): expressive writing pre-test.
+- Zettle (2003, *Psychological Record*, doi:10.1007/BF03395440): ACT vs systematic desensitization for math anxiety.
+- Case/protocol wound: childhood MA CBT hierarchy+exposure (PMC8283868) — N=1, not product proof.
+
+**Product implication:** SAFE-EXPOSE stack (situation hierarchy; destaked approach; expectancy violation; fade safety behaviors; multi-context renewal; anti-cosplay); EXP-O1…5; kill therapy branding / flooding / Calm Score™.
+
+**Claim killed:** Day-one flooding≡exposure; habituation-only / calm-to-zero NS; clinical CBT cosplay; permanent hint binge as support; anxiety meters as NS; one cozy session≡exam-ready; exposure→2σ marketing.
+
+**Next researcher id:** **59** (Parent WTP experiments design). Researcher count since v1.7 synthesizer: **9** — synthesizer eligible on next non-RT tick (hour%6≠0).
+
+**PDF:** Regenerate after manifest + OS table update.
+
+---
+
 ## 2026-08-01 — Researcher tick: Part LVII Chess annotation & metacognition (SAFE-ANNOT)
 
 **Tick type:** Researcher (UTC hour 03; hour%6≠0; 7 researcher entries since synthesizer v1.7 → Researcher)  
