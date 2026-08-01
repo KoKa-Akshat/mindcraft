@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-01 — Researcher tick: Part LIX Parent WTP experiments (SAFE-WTP)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch59 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 0 → not Synthesizer)  
+**Chapter written:** `chapters/59_parent_wtp_experiments.md` (Part LIX)  
+**Claim examined:** How to measure parent willingness-to-pay and message effects for MindCraft packages — CBC/DCE + bias controls — vs Likert WTP, survey-dollars-as-revenue, and settled “parents only buy scores / identity.”
+
+**Evidence added:**
+- Kim, Goodman & West (2024, CESifo WP 11251 / IZA DP 17178): US tutoring centers ~3k→10k (1997–2022); high-income concentration; CES spend snapshot (~6–7% paid; ~$437 mean months-with-purchase).
+- Bray (2010); Bray & Lykins (2012, ADB): shadow education framing.
+- Louviere, Hensher & Swait (2000): stated choice methods; McFadden (1974) RUM.
+- Murphy et al. (2005, *ERE*): hypothetical bias meta (median ratio ~1.35); choice formats help.
+- Cummings & Taylor (1999, *AER*): cheap-talk mitigation lineage.
+- Schmidt & Bijmolt (2020, *JAMS*, doi:10.1007/s11747-019-00666-6): consumer-goods hypothetical-bias meta; prefer indirect/choice.
+- Gambi & De Witte (2024, *Higher Education*, doi:10.1007/s10734-024-01358-z): HE tutoring DCE — high WTP, low uptake, SES frictions (transfer wound to K-12 parents).
+
+**Product implication:** SAFE-WTP stack — CBC with price+neither; ship-mapped attributes (diagnosis, FEI report, human minutes, AI policy); message≠package; segment classes; cash pilot before sticker prices. Experiment family WTP-1…6 + WTP-QUAL.
+
+**Claim killed:** Likert/open-ended “name a price” as pricing research; survey WTP as P&L; settled “parents only buy scores” *or* “parents buy identity” without trade-off data; streak/AI-unlimited as default parent props without losing on part-worths.
+
+**Survives:** Relative part-worth packaging; hybrid diagnosis+transfer+honest-plateau messaging as hypothesis; FEI-comprehension gate.
+
+**Next researcher id:** **60** (Trust after AI hallucination). Researcher count since synthesizer v1.8: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-01 — Synthesizer tick v1.8: merge Parts L–LVIII
 
 **Tick type:** Synthesizer (UTC hour 09; hour%6≠0; ≥8 researcher entries since synthesizer v1.7 → Synthesizer)  

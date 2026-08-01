@@ -4,7 +4,7 @@
 **Edition:** v1.8 (Synthesizer consolidation of Parts L–LVIII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-01 (Synthesizer v1.8 — merge L–LVIII SAFE-* into I.4 / XIV / IX / XXI)  
+**Last updated:** 2026-08-01 (Researcher — Part LIX Parent WTP / SAFE-WTP)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -48,8 +48,9 @@
 | LVI | `chapters/56_music_pedagogy_ladders.md` | Music pedagogy ladders; SAFE-MUSIC; scales → repertoire → recital |
 | LVII | `chapters/57_chess_annotation_metacognition.md` | Chess annotation & metacognition; SAFE-ANNOT; postmortem UX |
 | LVIII | `chapters/58_therapy_graded_exposure.md` | Therapy graded exposure; SAFE-EXPOSE; math anxiety ladders |
+| LIX | `chapters/59_parent_wtp_experiments.md` | Parent WTP experiments; SAFE-WTP; CBC/conjoint + message tests |
 
-Queued next: see `NEXT_LAB.md` (Part LIX parent WTP experiments, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LX trust after AI hallucination, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.8):** Nine researcher chapters (L–LVIII) landed after v1.7 without a merge pass — calibration, deliberate-practice spine, CoP caution, ritual light-touch, AAR, film-study, music ladder, annotation, and graded exposure lived only in deep dives. This edition promotes each stack to its own I.4 law, adds Red Team kills #15–#17, mounts experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -160,7 +161,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” and “exposure therapy” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LIX **parent WTP experiments design**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, and anxiety-approach claims above L1. Researcher count since v1.8 synthesizer = **0**.
+**Next research bottleneck:** Part LX **trust after AI hallucination**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, anxiety-approach, and parent-pricing claims above L1. Researcher count since v1.8 synthesizer = **1**.
 
 ---
 
@@ -461,6 +462,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | MUSIC-* | Ladder UX / repertoire choice / identified technique / transfer recital | LVI |
 | ANNOT-* | Annotate-before-reveal / forced restudy / classify→drill / annotate wins | LVII |
 | EXP-O-* | Situation hierarchy / expectancy check / fade safety / multi-context | LVIII |
+| WTP-* | Parent CBC / FEI report vs score / message arms / cash pilot | LIX |
 
 ---
 
@@ -1011,7 +1013,7 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 
 1. Neuroscience of math anxiety (amygdala/WM models; cautious translation)  
 2. History of mathematics as meaning technology — under trial via XXVIII + HIST  
-3. Parent trust economics & willingness-to-pay — EVT-4 / Part XXVII  
+3. Parent trust economics & willingness-to-pay — **DONE** Part LIX / SAFE-WTP (builds EVT-4 / XXVII)  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
@@ -1035,7 +1037,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 24. **DONE (2026-08-01):** Chess annotation & metacognition (Part LVII / id 57) — SAFE-ANNOT stack  
 25. **DONE (2026-08-01):** Therapy graded exposure (Part LVIII / id 58) — SAFE-EXPOSE stack  
 26. **Synthesizer v1.8 (2026-08-01):** Merged L–LVIII into I.4 / XIV / IX / XXI — no new chapter  
-27. **NEXT:** Parent WTP experiments design (Part LIX / id 59)
+27. **DONE (2026-08-01):** Parent WTP experiments design (Part LIX / id 59) — SAFE-WTP stack  
+28. **NEXT:** Trust after AI hallucination (Part LX / id 60)
 
 ---
 
@@ -1069,4 +1072,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Next researcher id: LIX parent WTP experiments. Page count is not the finish line — falsifiable truth is.**
+**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP experiment design (parent CBC + message tests). Next researcher id: LX trust after AI hallucination. Page count is not the finish line — falsifiable truth is.**
