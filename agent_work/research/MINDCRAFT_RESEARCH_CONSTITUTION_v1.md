@@ -4,7 +4,7 @@
 **Edition:** v1.9 (Synthesizer consolidation of Parts LIX–LXVI into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-02 (Synthesizer v1.9 — merge LIX–LXVI SAFE-* into I.4 / XIV / IX / XXI)  
+**Last updated:** 2026-08-02 (Researcher LXVII — SAFE-ONTOLOGY / ontology diagnosis moat; provisional I.4 until synthesizer)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -56,8 +56,9 @@
 | LXIV | `chapters/64_multilingual_ell_math_identity.md` | Multilingual/ELL math identity; SAFE-ELL; language vs math load |
 | LXV | `chapters/65_gender_math_stereotypes_update.md` | Gender & math stereotypes update; SAFE-GENDER; parity vs climate |
 | LXVI | `chapters/66_socioeconomic_constraint_on_grit.md` | Socioeconomic constraint on grit; SAFE-STRUCTURE; structure > slogans |
+| LXVII | `chapters/67_ontology_as_diagnosis_moat.md` | Ontology as diagnosis moat; SAFE-ONTOLOGY; state×graph×FEI×transfer |
 
-Queued next: see `NEXT_LAB.md` (Part LXVII ontology diagnosis moat, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LXVIII human-in-the-loop tutor ops, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.9):** Eight researcher chapters (LIX–LXVI) landed after v1.8 without a merge pass — parent WTP, post-hallucination repair, identity measurement, longitudinal horizons, exam-pressure dual rail, multilingual access, gender stereotype hygiene, and socioeconomic structure-over-grit lived only in deep dives (plus orphaned I.4 appends for GENDER/STRUCTURE). This edition promotes each stack to its own I.4 law, adds Red Team kills #18–#20, mounts experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -172,6 +173,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-ELL** | Separate language vs math load; linguistic modify without math dilute; format triangulation before verdict | LXIV | Ban math-is-language-free; forever procedure ELL track; translate≡identity |
 | **SAFE-GENDER** | Parity hygiene; cue hygiene; belonging via practice recognition; no ST→score / pink cosplay | LXV | Ban innate-gap premise; threat-theater ACT; girl-SKU / pink track |
 | **SAFE-STRUCTURE** | Structure/scaffolds before grit slogans; bandwidth hygiene; behavior≠trait; no character-blame equity | LXVI | Ban grit-NS / Grit Score™ / poor-kids-need-grit / streak-as-character |
+| **SAFE-ONTOLOGY** *(provisional until synthesizer)* | Diagnosis-before-dialogue; inspectable state; LLM bookends; moat = state×ontology×FEI×transfer not graph file | LXVII | Ban node-count moat / RAG≡KT / fluency-as-diagnosis / ITS-2σ / smarter-than-ChatGPT |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -179,7 +181,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” and “character equity” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXVII **Ontology as diagnosis moat**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT gate claims above L1. Researcher count since v1.9 synthesizer = **0**.
+**Next research bottleneck:** Part LXVIII **Human-in-the-loop tutor ops**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO gate claims above L1. Researcher count since v1.9 synthesizer = **1**.
 
 ---
 
@@ -489,6 +491,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | ELL-* | Language vs math load / linguistic modify / format triangulation | LXIV |
 | GEND-* | Cue hygiene / practice recognition / no ST→score / no pink track | LXV |
 | STRUCT-* | Bandwidth hygiene / structure>slogans / access honesty / no grit-NS | LXVI |
+| ONTO-* | Ontology-constrained next vs chat / bridge route / Map brief / state vs summary | LXVII |
 
 ---
 
@@ -613,6 +616,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #20 (v1.9): “Day-one ACT flood / EL≡ability / pink track / grit-as-character”
 **Destroyed:** Timed ACT as onboarding; blocked accuracy as exam-ready; Calm Score™ exam NS; math-is-language-free; forever procedure-only ELL track; translate≡identity; innate boys-better premise; ST-removal→ACT; pink/for-her easy track; grit-as-NS / Grit Score™ / poor-kids-need-grit / streak-as-character / scarcity-dropout≡moral-failure.  
 **Surviving:** SAFE-EXAM + SAFE-ELL + SAFE-GENDER + SAFE-STRUCTURE — destake-to-learn/dose-to-prove; separate language vs math load; parity + cue hygiene + practice recognition; structure/scaffolds before slogans (LXIII–LXVI).
+
+### Kill #21 (LXVII provisional): “Graph file / RAG chat ≡ diagnosis moat”
+**Destroyed:** Node-count or ontology JSON as moat; RAG or chat-memory as knowledge tracing; fluency/tokens as diagnosis; Bloom ITS-2σ; “smarter than ChatGPT”; ALEKS-cosplay without FEI transfer proof.  
+**Surviving:** SAFE-ONTOLOGY — diagnosis-before-dialogue; inspectable longitudinal state; LLM bookends under PWC; moat = state×ontology×FEI×solo transfer (LXVII).
 
 ---
 
@@ -1008,6 +1015,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-ELL | Language load ≠ math load; modify incidental English not math; no deficit track (Part LXIV) |
 | SAFE-GENDER | Parity hygiene; cue hygiene; practice recognition; no ST→score / pink cosplay (Part LXV) |
 | SAFE-STRUCTURE | Structure > slogans; bandwidth hygiene; no grit-NS / character-blame equity (Part LXVI) |
+| SAFE-ONTOLOGY | Diagnosis-before-dialogue; inspectable state; LLM bookends; moat≠graph file (Part LXVII; provisional) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1078,7 +1086,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3f. Multilingual / ELL math identity — **DONE** Part LXIV / SAFE-ELL  
 3g. Gender & math stereotypes update — **DONE** Part LXV / SAFE-GENDER  
 3h. Socioeconomic constraint on “grit” — **DONE** Part LXVI / SAFE-STRUCTURE  
-3i. Ontology as diagnosis moat — **NEXT** Part LXVII / id 67
+3i. Ontology as diagnosis moat — **DONE** Part LXVII / SAFE-ONTOLOGY  
+3j. Human-in-the-loop tutor ops — **NEXT** Part LXVIII / id 68  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
@@ -1111,7 +1120,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 33. **DONE (2026-08-02):** Gender & math stereotypes update (Part LXV / id 65) — SAFE-GENDER stack  
 34. **DONE (2026-08-02):** Socioeconomic constraint on “grit” (Part LXVI / id 66) — SAFE-STRUCTURE stack  
 35. **Synthesizer v1.9 (2026-08-02):** Merged LIX–LXVI into I.4 / XIV / IX / XXI — no new chapter  
-36. **NEXT:** Ontology as diagnosis moat (Part LXVII / id 67)
+36. **DONE (2026-08-02):** Ontology as diagnosis moat (Part LXVII / id 67) — SAFE-ONTOLOGY stack  
+37. **NEXT:** Human-in-the-loop tutor ops (Part LXVIII / id 68)
 
 ---
 
@@ -1145,4 +1155,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Next researcher id: LXVII ontology diagnosis moat. Researcher count since v1.9 = 0. Page count is not the finish line — falsifiable truth is.**
+**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Part LXVII adds provisional SAFE-ONTOLOGY + ONTO-* family (awaiting synthesizer merge). Next researcher id: LXVIII human-in-the-loop tutor ops. Researcher count since v1.9 = 1. Page count is not the finish line — falsifiable truth is.**

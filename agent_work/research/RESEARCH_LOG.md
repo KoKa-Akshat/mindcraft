@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-02 — Researcher tick: Part LXVII Ontology as diagnosis moat (SAFE-ONTOLOGY)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch67 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 0 → not Synthesizer)  
+**Chapter written:** `chapters/67_ontology_as_diagnosis_moat.md` (Part LXVII)  
+**Claim examined:** When structured ontology + persistent student models beat fluent chat for diagnosis — and what is (not) a commercial moat.
+
+**Evidence added:**
+- VanLehn (2011, *Educational Psychologist*, doi:10.1080/00461520.2011.611369): human tutoring ≈ d=0.79; step ITS ≈ d=0.76; anti-Bloom-2σ.
+- Steenbergen-Hu & Cooper (2013, *JEP*, doi:10.1037/a0032447): K–12 math ITS meta often near-zero–small vs classroom.
+- Steenbergen-Hu & Cooper (2014, *JEP*, doi:10.1037/a0034752): college ITS g≈0.32–0.37; not reliably ≥ human tutors.
+- Corbett & Anderson (1994/95, *UMUAI*, doi:10.1007/BF01099821): Bayesian knowledge tracing / mastery sequencing.
+- Anderson, Corbett, Koedinger & Pelletier (1995, *JLS*, doi:10.1207/s15327809jls0402_2): Cognitive Tutor lessons — explicit models, not chatbot persona.
+- Doignon & Falmagne (1985); Falmagne et al. (1990, *Psych Review*, doi:10.1037/0033-295X.97.2.201): knowledge spaces; ALEKS lineage as prior art wound.
+- Bastani et al. (2025, *PNAS*, doi:10.1073/pnas.2422633122): unguarded GPT Base harm on solo exam — fluency≠learning architecture.
+
+**Claim killed (this tick):** Graph-file / node-count as moat; RAG or chat-memory ≡ knowledge tracing; fluency-as-diagnosis; Bloom/ITS-2σ marketing; “smarter than ChatGPT” brag; ALEKS-cosplay without FEI.
+
+**Doctrine proposed:** SAFE-ONTOLOGY — diagnosis-before-dialogue; inspectable state; LLM bookends under PWC; moat = state×ontology×FEI×transfer.
+
+**Experiments:** ONTO-1…5 + ONTO-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **68** (Human-in-the-loop tutor ops). Researcher count since v1.9 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-02 — Synthesizer tick v1.9: merge Parts LIX–LXVI
 
 **Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.8 → Synthesizer)  
