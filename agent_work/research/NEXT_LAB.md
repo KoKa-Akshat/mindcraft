@@ -50,8 +50,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 63 | ACT/exam pressure special case | High-stakes affect vs learning affect | **DONE** (2026-08-02) — Part LXIII / SAFE-EXAM |
 | 64 | Multilingual / ELL math identity | Language load vs math load | **DONE** (2026-08-02) — Part LXIV / SAFE-ELL |
 | 65 | Gender & math stereotypes update | Current evidence, not 1990s only | **DONE** (2026-08-02) — Part LXV / SAFE-GENDER |
-| 66 | Socioeconomic constraint on “grit” | Structure > slogans | **NEXT** |
-| 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | queued |
+| 66 | Socioeconomic constraint on “grit” | Structure > slogans | **DONE** (2026-08-02) — Part LXVI / SAFE-STRUCTURE |
+| 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | **NEXT** |
 | 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (69–70).
@@ -79,3 +79,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (69–70).
 - Any day-one timed ACT flood≡exposure / blocked-accuracy≡exam-ready / guaranteed ACT points / Calm Score™ exam NS / journaling≡product / stereotype-threat-removal→score / stress-bias≡skip-prep (Part LXIII)
 - Any math-is-language-free / EL-gap≡ability / procedure-only forever ELL track / translate-or-vocab≡identity / NAEP-EL-gap-closure claim / homogeneous ELL persona / EL-status-waives-challenge (Part LXIV)
 - Any innate-boys-better-at-math premise / ST-removal→ACT guarantee / pink-or-for-her easy track / token-STEM-costume≡belonging / empty “math girl” praise≡recognition / we-close-the-gender-STEM-gap claim / gender-waives-challenge (Part LXV)
+- Any grit-as-NS / Grit Score™ / “poor kids need more grit” / streak-as-character / Alan-RCT≡ACT guarantee / scarcity-dropout≡moral-failure / soften-standards-not-taxes (Part LXVI)

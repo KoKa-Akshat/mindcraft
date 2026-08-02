@@ -4,6 +4,35 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-02 — Researcher tick: Part LXVI Socioeconomic constraint on “grit” (SAFE-STRUCTURE)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch66 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 7 → not Synthesizer)  
+**Chapter written:** `chapters/66_socioeconomic_constraint_on_grit.md` (Part LXVI)  
+**Claim examined:** Grit as equity/product lever vs SES structure — construct wounds, income gaps, poverty cognitive load, sense-of-control pathway, classroom grit RCT transfer limits.
+
+**Evidence added:**
+- Duckworth, Peterson, Matthews & Kelly (2007, *JPSP*, doi:10.1037/0022-3514.92.6.1087): grit definition; ~4% avg success variance; conscientiousness overlap.
+- Duckworth & Quinn (2009, *JPA*, doi:10.1080/00223890802634290): Grit-S.
+- Credé, Tynan & Harms (2017, *JPSP*, doi:10.1037/pspp0000102): N=66,807 meta; higher-order grit fails; PE≫CI; strong conscientiousness; weak intervention expectation.
+- Credé (2018, *Educational Researcher*, doi:10.3102/0013189X18801322): grit not uniquely predictive / readily trainable as marketed.
+- Reardon (2011) in Duncan & Murnane *Whither Opportunity?*: 90–10 income achievement gap grew ~30–40%.
+- Kim, Goodman & West (2024, CESifo/IZA): tutoring-market SES skew (cross-ref LIX); Bray shadow-education line.
+- Mani, Mullainathan, Shafir & Zhao (2013, *Science*, doi:10.1126/science.1238041): poverty concerns impair cognition (~13 IQ / sleep-loss calibration).
+- Kwon (2021, *Socius*, doi:10.1177/23780231211005216): SES → sense of control → grit facets (US/Korea).
+- Alan, Boneva & Ertac (2019, *QJE*, doi:10.1093/qje/qjz006): classroom grit RCT; ~0.2 SD math at 2.5y — not ACT insurance.
+
+**Product implication:** SAFE-STRUCTURE — structure/scaffolds before slogans; bandwidth hygiene; behavior≠trait; no character-blame equity; STRUCT-1…5 + QUAL.
+
+**Claim killed:** Grit-as-NS; Grit Score™; poor-kids-need-grit; streak-as-character; Alan≡ACT; scarcity-dropout≡moral-failure; soften-standards-instead-of-taxes.
+
+**Survives:** Credé hygiene; Mani bandwidth humility; Reardon/WTP structural honesty; Kwon control pathway; behavioral perseverance under SAFE-RESILIENCE; STRUCT experiments.
+
+**Next researcher id:** **67** (Ontology as diagnosis moat). Researcher count since synthesizer v1.8: **8** (Synthesizer eligible next non-forced-Researcher tick).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-02 — Researcher tick: Part LXV Gender & math stereotypes update (SAFE-GENDER)
 
 **Tick type:** Researcher (UTC hour 9; hour%6≠0 → not Red Team; researcher count since synthesizer v1.8 = 6 → not Synthesizer)  

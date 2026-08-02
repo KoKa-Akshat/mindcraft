@@ -4,7 +4,7 @@
 **Edition:** v1.8 (Synthesizer consolidation of Parts L–LVIII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-02 (Researcher — Part LXV Gender & math stereotypes / SAFE-GENDER)  
+**Last updated:** 2026-08-02 (Researcher — Part LXVI Socioeconomic grit constraint / SAFE-STRUCTURE)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -55,8 +55,9 @@
 | LXIII | `chapters/63_act_exam_pressure.md` | ACT/exam pressure; SAFE-EXAM; learn affect vs exam affect |
 | LXIV | `chapters/64_multilingual_ell_math_identity.md` | Multilingual/ELL math identity; SAFE-ELL; language vs math load |
 | LXV | `chapters/65_gender_math_stereotypes_update.md` | Gender & math stereotypes update; SAFE-GENDER; parity vs climate |
+| LXVI | `chapters/66_socioeconomic_constraint_on_grit.md` | Socioeconomic constraint on grit; SAFE-STRUCTURE; structure > slogans |
 
-Queued next: see `NEXT_LAB.md` (Part LXVI socioeconomic grit constraint, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LXVII ontology diagnosis moat, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.8):** Nine researcher chapters (L–LVIII) landed after v1.7 without a merge pass — calibration, deliberate-practice spine, CoP caution, ritual light-touch, AAR, film-study, music ladder, annotation, and graded exposure lived only in deep dives. This edition promotes each stack to its own I.4 law, adds Red Team kills #15–#17, mounts experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -165,10 +166,11 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 | **SAFE-GENDER** | Parity hygiene; cue hygiene; belonging via practice recognition; no ST→score / pink cosplay | LXV | Innate-gap / threat-theater / girl-SKU kill |
+| **SAFE-STRUCTURE** | Structure/scaffolds before grit slogans; bandwidth hygiene; behavior≠trait; no character-blame equity | LXVI | Grit-NS / Grit Score™ / poor-kids-need-grit kill |
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” and “girl STEM brand” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXVI **Socioeconomic constraint on “grit”**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, anxiety-approach, parent-pricing, post-hallucination repair, identity measurement, longitudinal-horizon, exam-pressure, multilingual-access, and gender-stereotype claims above L1. Researcher count since v1.8 synthesizer = **7**.
+**Next research bottleneck:** Part LXVII **Ontology as diagnosis moat**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, anxiety-approach, parent-pricing, post-hallucination repair, identity measurement, longitudinal-horizon, exam-pressure, multilingual-access, gender-stereotype, and socioeconomic-structure claims above L1. Researcher count since v1.8 synthesizer = **8** (Synthesizer eligible on next qualifying tick).
 
 ---
 
@@ -968,6 +970,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-EXAM | Destake-to-learn / dose-to-prove; delayed mixed under stakes; no ACT guarantees (Part LXIII) |
 | SAFE-ELL | Language load ≠ math load; modify incidental English not math; no deficit track (Part LXIV) |
 | SAFE-GENDER | Parity hygiene; cue hygiene; practice recognition; no ST→score / pink cosplay (Part LXV) |
+| SAFE-STRUCTURE | Structure > slogans; bandwidth hygiene; no grit-NS / character-blame equity (Part LXVI) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1037,7 +1040,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3e. ACT/exam pressure special case — **DONE** Part LXIII / SAFE-EXAM
 3f. Multilingual / ELL math identity — **DONE** Part LXIV / SAFE-ELL  
 3g. Gender & math stereotypes update — **DONE** Part LXV / SAFE-GENDER  
-3h. Socioeconomic constraint on “grit” — **NEXT** Part LXVI / id 66
+3h. Socioeconomic constraint on “grit” — **DONE** Part LXVI / SAFE-STRUCTURE  
+3i. Ontology as diagnosis moat — **NEXT** Part LXVII / id 67
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
@@ -1068,7 +1072,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 31. **DONE (2026-08-02):** ACT/exam pressure special case (Part LXIII / id 63) — SAFE-EXAM stack  
 32. **DONE (2026-08-02):** Multilingual / ELL math identity (Part LXIV / id 64) — SAFE-ELL stack  
 33. **DONE (2026-08-02):** Gender & math stereotypes update (Part LXV / id 65) — SAFE-GENDER stack  
-34. **NEXT:** Socioeconomic constraint on “grit” (Part LXVI / id 66)
+34. **DONE (2026-08-02):** Socioeconomic constraint on “grit” (Part LXVI / id 66) — SAFE-STRUCTURE stack  
+35. **NEXT:** Ontology as diagnosis moat (Part LXVII / id 67)
 
 ---
 
@@ -1102,4 +1107,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP; Part LX added SAFE-REPAIR; Part LXI added SAFE-IDMEASURE; Part LXII added SAFE-LONGID; Part LXIII added SAFE-EXAM; Part LXIV added SAFE-ELL; Part LXV added SAFE-GENDER (parity hygiene; cue hygiene; no ST→score / pink cosplay). Next researcher id: LXVI socioeconomic grit constraint. Page count is not the finish line — falsifiable truth is.**
+**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP; Part LX added SAFE-REPAIR; Part LXI added SAFE-IDMEASURE; Part LXII added SAFE-LONGID; Part LXIII added SAFE-EXAM; Part LXIV added SAFE-ELL; Part LXV added SAFE-GENDER; Part LXVI added SAFE-STRUCTURE (structure > slogans; bandwidth hygiene; no grit-NS / character-blame). Next researcher id: LXVII ontology diagnosis moat. Researcher count since v1.8 = 8 (Synthesizer eligible). Page count is not the finish line — falsifiable truth is.**
