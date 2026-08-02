@@ -4,6 +4,38 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-02 — Researcher tick: Part LXV Gender & math stereotypes update (SAFE-GENDER)
+
+**Tick type:** Researcher (UTC hour 9; hour%6≠0 → not Red Team; researcher count since synthesizer v1.8 = 6 → not Synthesizer)  
+**Chapter written:** `chapters/65_gender_math_stereotypes_update.md` (Part LXV)  
+**Claim examined:** Current gender×math evidence — mean performance parity vs stereotype/interest/identity channels; ST literature wounds; cultural gatekeeping without pink cosplay.
+
+**Evidence added:**
+- Hyde (2005, *American Psychologist*, doi:10.1037/0003-066X.60.6.581): gender similarities hypothesis; 46 metas.
+- Hyde, Lindberg, Linn, Ellis & Williams (2008, *Science*, doi:10.1126/science.1160364): >7M students; mean d≈0.0065.
+- Lindberg, Hyde, Petersen & Linn (2010, *Psychological Bulletin*, doi:10.1037/a0021276): overall math gender d≈0; HS/high-tail caveats.
+- Hyde, Fennema, Ryan, Frost & Hopp (1990, *PWQ*, doi:10.1111/j.1471-6402.1990.tb00022.x): attitudes/affect gaps often > performance.
+- Nosek et al. (2009, *PNAS*, doi:10.1073/pnas.0809921106): nation IAT stereotypes ↔ TIMSS sex gaps (r≈0.60 science).
+- Spencer, Steele & Quinn (1999, *JESP*, doi:10.1006/jesp.1998.1373): classic college ST.
+- Flore & Wicherts (2015, *J. School Psych.*, doi:10.1016/j.jsp.2014.10.002): child/adol ST meta g≈−0.22 + publication bias signs.
+- Flore, Mulder & Wicherts (2018, *CRSP*, doi:10.1080/23743603.2018.1559647): N=2064 registered report — null ST.
+- Ganley et al. (2013, *Dev Psych*, doi:10.1037/a0031412): N=931 school-age nulls.
+- Cheryan, Master & Meltzoff (2015, *Front Psych*, doi:10.3389/fpsyg.2015.00049): cultural stereotypes as gatekeepers.
+- Stoet & Geary (2018, *Psych Science*, doi:10.1177/0956797617741719): gender-equality paradox (PISA N≈472k).
+- Breda, Jouini, Napp & Thebault (2020, *PNAS*, doi:10.1073/pnas.2008704117): math-gender stereotypes mediate paradox.
+
+**Product implication:** SAFE-GENDER — parity hygiene; cue hygiene; belonging via practice recognition; no ST→score; no pink cosplay; GEND-1…5 + QUAL.
+
+**Claim killed:** Innate boys-better premise; ST-removal ACT guarantee; pink/for-her easy track; token STEM costume; empty math-girl praise; gender-STEM-gap-closure marketing; gender waives challenge.
+
+**Survives:** Mean parity hygiene; Nosek climate caution (no IAT product); Cheryan representation-with-agency; EVT/identity channel split; GEND experiments.
+
+**Next researcher id:** **66** (Socioeconomic constraint on “grit”). Researcher count since synthesizer v1.8: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-02 — Researcher tick: Part LXIV Multilingual / ELL math identity (SAFE-ELL)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch64 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 5 → not Synthesizer)  

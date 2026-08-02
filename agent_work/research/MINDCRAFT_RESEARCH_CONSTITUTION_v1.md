@@ -4,7 +4,7 @@
 **Edition:** v1.8 (Synthesizer consolidation of Parts L–LVIII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-02 (Researcher — Part LXIV Multilingual / ELL math identity / SAFE-ELL)  
+**Last updated:** 2026-08-02 (Researcher — Part LXV Gender & math stereotypes / SAFE-GENDER)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -54,8 +54,9 @@
 | LXII | `chapters/62_longitudinal_identity_change.md` | Longitudinal identity change; SAFE-LONGID; 8/26/52 week horizons |
 | LXIII | `chapters/63_act_exam_pressure.md` | ACT/exam pressure; SAFE-EXAM; learn affect vs exam affect |
 | LXIV | `chapters/64_multilingual_ell_math_identity.md` | Multilingual/ELL math identity; SAFE-ELL; language vs math load |
+| LXV | `chapters/65_gender_math_stereotypes_update.md` | Gender & math stereotypes update; SAFE-GENDER; parity vs climate |
 
-Queued next: see `NEXT_LAB.md` (Part LXV gender & math stereotypes, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LXVI socioeconomic grit constraint, then QUEUE_EXTENDED).
 
 **Synthesizer note (v1.8):** Nine researcher chapters (L–LVIII) landed after v1.7 without a merge pass — calibration, deliberate-practice spine, CoP caution, ritual light-touch, AAR, film-study, music ladder, annotation, and graded exposure lived only in deep dives. This edition promotes each stack to its own I.4 law, adds Red Team kills #15–#17, mounts experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -163,10 +164,11 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
+| **SAFE-GENDER** | Parity hygiene; cue hygiene; belonging via practice recognition; no ST→score / pink cosplay | LXV | Innate-gap / threat-theater / girl-SKU kill |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” and “exposure therapy” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” and “girl STEM brand” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXV **Gender & math stereotypes update**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, anxiety-approach, parent-pricing, post-hallucination repair, identity measurement, longitudinal-horizon, exam-pressure, and multilingual-access claims above L1. Researcher count since v1.8 synthesizer = **6**.
+**Next research bottleneck:** Part LXVI **Socioeconomic constraint on “grit”**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, anxiety-approach, parent-pricing, post-hallucination repair, identity measurement, longitudinal-horizon, exam-pressure, multilingual-access, and gender-stereotype claims above L1. Researcher count since v1.8 synthesizer = **7**.
 
 ---
 
@@ -965,6 +967,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-LONGID | Stage 8w process / 26w triangulated identity / 52w persistence; fade-aware (Part LXII) |
 | SAFE-EXAM | Destake-to-learn / dose-to-prove; delayed mixed under stakes; no ACT guarantees (Part LXIII) |
 | SAFE-ELL | Language load ≠ math load; modify incidental English not math; no deficit track (Part LXIV) |
+| SAFE-GENDER | Parity hygiene; cue hygiene; practice recognition; no ST→score / pink cosplay (Part LXV) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1032,8 +1035,9 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3c. Measurement of math identity — **DONE** Part LXI / SAFE-IDMEASURE
 3d. Longitudinal identity change models — **DONE** Part LXII / SAFE-LONGID
 3e. ACT/exam pressure special case — **DONE** Part LXIII / SAFE-EXAM
-3f. Multilingual / ELL math identity — **DONE** Part LXIV / SAFE-ELL
-3g. Gender & math stereotypes update — **NEXT** Part LXV / id 65
+3f. Multilingual / ELL math identity — **DONE** Part LXIV / SAFE-ELL  
+3g. Gender & math stereotypes update — **DONE** Part LXV / SAFE-GENDER  
+3h. Socioeconomic constraint on “grit” — **NEXT** Part LXVI / id 66
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
@@ -1063,7 +1067,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 30. **DONE (2026-08-02):** Longitudinal identity change models (Part LXII / id 62) — SAFE-LONGID stack  
 31. **DONE (2026-08-02):** ACT/exam pressure special case (Part LXIII / id 63) — SAFE-EXAM stack  
 32. **DONE (2026-08-02):** Multilingual / ELL math identity (Part LXIV / id 64) — SAFE-ELL stack  
-33. **NEXT:** Gender & math stereotypes update (Part LXV / id 65)
+33. **DONE (2026-08-02):** Gender & math stereotypes update (Part LXV / id 65) — SAFE-GENDER stack  
+34. **NEXT:** Socioeconomic constraint on “grit” (Part LXVI / id 66)
 
 ---
 
@@ -1097,4 +1102,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP; Part LX added SAFE-REPAIR; Part LXI added SAFE-IDMEASURE; Part LXII added SAFE-LONGID; Part LXIII added SAFE-EXAM; Part LXIV added SAFE-ELL (language load ≠ math load; no deficit track / translate-theater). Next researcher id: LXV gender & math stereotypes. Page count is not the finish line — falsifiable truth is.**
+**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP; Part LX added SAFE-REPAIR; Part LXI added SAFE-IDMEASURE; Part LXII added SAFE-LONGID; Part LXIII added SAFE-EXAM; Part LXIV added SAFE-ELL; Part LXV added SAFE-GENDER (parity hygiene; cue hygiene; no ST→score / pink cosplay). Next researcher id: LXVI socioeconomic grit constraint. Page count is not the finish line — falsifiable truth is.**

@@ -49,9 +49,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 62 | Longitudinal identity change models | What 8/26/52 week looks like | **DONE** (2026-08-02) — Part LXII / SAFE-LONGID |
 | 63 | ACT/exam pressure special case | High-stakes affect vs learning affect | **DONE** (2026-08-02) — Part LXIII / SAFE-EXAM |
 | 64 | Multilingual / ELL math identity | Language load vs math load | **DONE** (2026-08-02) — Part LXIV / SAFE-ELL |
-| 65 | Gender & math stereotypes update | Current evidence, not 1990s only | **NEXT** |
+| 65 | Gender & math stereotypes update | Current evidence, not 1990s only | **DONE** (2026-08-02) — Part LXV / SAFE-GENDER |
+| 66 | Socioeconomic constraint on “grit” | Structure > slogans | **NEXT** |
+| 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | queued |
+| 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | queued |
 
-More IDs: `chapters/QUEUE_EXTENDED.md` (66–70).
+More IDs: `chapters/QUEUE_EXTENDED.md` (69–70).
 
 ## Standing Red Team targets
 
@@ -75,3 +78,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (66–70).
 - Any “math person in 8 weeks” / end-of-program Likert≡durable identity / linear always-rising HS math-identity curve / mindset-MOOC≡Cribbs-identity / Railside-years≡app-session identity / forever-STEM annual claim without fade check (Part LXII)
 - Any day-one timed ACT flood≡exposure / blocked-accuracy≡exam-ready / guaranteed ACT points / Calm Score™ exam NS / journaling≡product / stereotype-threat-removal→score / stress-bias≡skip-prep (Part LXIII)
 - Any math-is-language-free / EL-gap≡ability / procedure-only forever ELL track / translate-or-vocab≡identity / NAEP-EL-gap-closure claim / homogeneous ELL persona / EL-status-waives-challenge (Part LXIV)
+- Any innate-boys-better-at-math premise / ST-removal→ACT guarantee / pink-or-for-her easy track / token-STEM-costume≡belonging / empty “math girl” praise≡recognition / we-close-the-gender-STEM-gap claim / gender-waives-challenge (Part LXV)

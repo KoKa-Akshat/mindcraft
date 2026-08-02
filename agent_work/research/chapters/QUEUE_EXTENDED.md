@@ -38,9 +38,9 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 62 | Longitudinal identity change models | What 8/26/52 week looks like | **DONE** → `62_longitudinal_identity_change.md` |
 | 63 | ACT/exam pressure special case | High-stakes affect vs learning affect | promoted → NEXT_LAB **NEXT** |
 | 64 | Multilingual / ELL math identity | Language load vs math load | promoted → NEXT_LAB |
-| 65 | Gender & math stereotypes update | Current evidence, not 1990s only | promoted → NEXT_LAB |
-| 66 | Socioeconomic constraint on “grit” | Structure > slogans |
-| 67 | Ontology as diagnosis moat | When knowledge graphs beat chat |
-| 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training |
+| 65 | Gender & math stereotypes update | Current evidence, not 1990s only | **DONE** → `65_gender_math_stereotypes_update.md` |
+| 66 | Socioeconomic constraint on “grit” | Structure > slogans | promoted → NEXT_LAB **NEXT** |
+| 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | promoted → NEXT_LAB |
+| 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | promoted → NEXT_LAB |
 | 69 | Privacy & student affect data | Ethics of anxiety telemetry |
 | 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process |
