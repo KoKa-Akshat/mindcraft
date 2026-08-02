@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-02 — Researcher tick: Part LXIII ACT/exam pressure special case (SAFE-EXAM)
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0 → not Red Team; researcher count since synthesizer v1.8 = 4 → not Synthesizer)  
+**Chapter written:** `chapters/63_act_exam_pressure.md` (Part LXIII)  
+**Claim examined:** High-stakes exam affect vs learning-session affect — destake-to-learn / dose-to-prove vs day-one ACT flood or cozy-accuracy≡ready.
+
+**Evidence added:**
+- Hembree (1988, *RER*, doi:10.3102/00346543058001047): test anxiety meta (562 studies) — TA↔performance; treatments often accompany better outcomes.
+- Hembree (1990, *JRME*, doi:10.5951/jresematheduc.21.1.0033): math anxiety↔achievement/avoidance.
+- Caviola et al. (2022, *Educ Psych Review*, doi:10.1007/s10648-021-09618-5): MA–math *r*≈−0.30; TA–math *r*≈−0.23; ~906k participants.
+- Ashcraft & Kirk (2001); Beilock (2008, *CDPS*, doi:10.1111/j.1467-8721.2008.00602.x); Beilock & Carr (2005, *Psych Science*): pressure/worry consumes WM; choke risk.
+- Heissel, Adam, Doleac, Figlio & Meer (2021, *EFP*, doi:10.1162/edfp_a_00306): high-stakes week cortisol ↑; large swings ↔ ~0.40 SD worse-than-expected scores (correlational score link; K–8 sample wound for ACT transfer).
+- Hinze & Rapp (2014, *ACP*, doi:10.1002/acp.3032): high-stakes quizzes blunt retrieval-learning benefits despite equal quiz scores.
+- Ramirez & Beilock (2011, *Science*, doi:10.1126/science.1199427): expressive writing helps some high-TA — micro-tool not product.
+- Spencer, Steele & Quinn (1999, *JESP*); Stoet & Geary (2012, *RGP*, doi:10.1037/a0026617): threat real in labs; gap-explanation overclaim wounded.
+
+**Product implication:** SAFE-EXAM — dual rail MA+TA; destake acquire / dose prove; readiness = delayed mixed under stakes; EXAM-1…5 + QUAL; parent speech split; no point guarantees.
+
+**Claim killed:** Day-one ACT flood≡exposure; blocked-accuracy≡exam-ready; guaranteed ACT points; Calm Score™ exam NS; journaling≡product; stereotype-threat-removal→score marketing; stress-bias≡skip-prep.
+
+**Survives:** Affect separation; pressure ladder after equip; EXAM experiment family; architecture-not-composite positioning.
+
+**Next researcher id:** **64** (Multilingual / ELL math identity). Researcher count since synthesizer v1.8: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-02 — Researcher tick: Part LXII Longitudinal identity change models (SAFE-LONGID)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch62 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 3 → not Synthesizer)  
