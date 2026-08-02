@@ -1,10 +1,10 @@
 # MindCraft Research Constitution v1
 
 **Status:** Living operating document — not a pitch deck  
-**Edition:** v1.8 (Synthesizer consolidation of Parts L–LVIII into surviving doctrine)  
+**Edition:** v1.9 (Synthesizer consolidation of Parts LIX–LXVI into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-02 (Researcher — Part LXVI Socioeconomic grit constraint / SAFE-STRUCTURE)  
+**Last updated:** 2026-08-02 (Synthesizer v1.9 — merge LIX–LXVI SAFE-* into I.4 / XIV / IX / XXI)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -59,7 +59,7 @@
 
 Queued next: see `NEXT_LAB.md` (Part LXVII ontology diagnosis moat, then QUEUE_EXTENDED).
 
-**Synthesizer note (v1.8):** Nine researcher chapters (L–LVIII) landed after v1.7 without a merge pass — calibration, deliberate-practice spine, CoP caution, ritual light-touch, AAR, film-study, music ladder, annotation, and graded exposure lived only in deep dives. This edition promotes each stack to its own I.4 law, adds Red Team kills #15–#17, mounts experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
+**Synthesizer note (v1.9):** Eight researcher chapters (LIX–LXVI) landed after v1.8 without a merge pass — parent WTP, post-hallucination repair, identity measurement, longitudinal horizons, exam-pressure dual rail, multilingual access, gender stereotype hygiene, and socioeconomic structure-over-grit lived only in deep dives (plus orphaned I.4 appends for GENDER/STRUCTURE). This edition promotes each stack to its own I.4 law, adds Red Team kills #18–#20, mounts experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
 ---
 
@@ -95,7 +95,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 
 **FOUNDER BELIEF under audit:** AI commoditizes knowledge; scarcity shifts to motivation, confidence, identity, trust, curiosity, persistence, emotional safety, meaning.
 
-**Red Team verdict (updated v1.8):**
+**Red Team verdict (updated v1.9):**
 
 | Claim | Status | Notes |
 |-------|--------|-------|
@@ -113,8 +113,11 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | Raise confidence / Belief Score™ / CA→grades | **KILLED** | SAFE-CALIB (L); Foster: appropriate confidence, not inflate |
 | Hours / forums / ritual→score / domain cosplay | **KILLED** | SAFE-DP / CoP / RITUAL (LI–LIII); borrow method not costume |
 | Tip-flood / engine-dump / flooding ≡ pedagogy | **KILLED** | SAFE-AAR / FILM / MUSIC / ANNOT / EXPOSE (LIV–LVIII) |
+| Likert≡WTP / survey$≡revenue / ACT-point packages | **KILLED** | SAFE-WTP (LIX); CBC + bias controls; message≠package |
+| Never-hallucinates / apology≡repair / Identity Score™ / 8-week math person | **KILLED** | SAFE-REPAIR / IDMEASURE / LONGID (LX–LXII) |
+| Day-one ACT flood / EL≡ability / pink track / grit-as-character | **KILLED** | SAFE-EXAM / ELL / GENDER / STRUCTURE (LXIII–LXVI) |
 
-**Implication:** Do not bet on “better explanations,” “AI tutor warmth,” streak theater, grit posters, therapy cosplay, or academy/bootcamp branding. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with AI as guarded infrastructure and student generation as the spine.
+**Implication:** Do not bet on “better explanations,” “AI tutor warmth,” streak theater, grit posters, therapy cosplay, academy branding, survey pricing, invincible AI, Identity Score™, pink STEM SKUs, or character-blame equity. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with AI as guarded/recoverable infrastructure, honest parent economics, and structure before slogans.
 
 ## I.3 What to optimize (North Star debate)
 
@@ -132,7 +135,7 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 **Working North Star (HYPOTHESIS):**  
 **Challenge-seeking under safety with transfer** — the student chooses a harder problem for a *mastery* reason, returns after a miss, can pick the strategy on a mixed delayed set, and attributes success to strategy — without needing the model to finish the thought.
 
-## I.4 Surviving doctrine stack (Synthesizer merge through LVIII)
+## I.4 Surviving doctrine stack (Synthesizer merge through LXVI)
 
 Duplicate frameworks collapsed. Deep dives own citations; this table is **company law until killed**.
 
@@ -161,16 +164,22 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-MUSIC** | Scales (goalful ingredients) → chosen repertoire → transfer-as-recital proof | LVI | Ban virtuoso cosplay; hours KPI; bare-pass theater |
 | **SAFE-ANNOT** | Annotate-before-reveal; principle tags; forced critical restudy; classify→drill; annotate wins | LVII | Ban GM cosplay; engine-dump≡coaching; rating NS |
 | **SAFE-EXPOSE** | Situation hierarchy; destaked approach; expectancy violation; fade safety behaviors; multi-context | LVIII | Ban therapy branding; flooding; Calm Score™; one-session cure |
+| **SAFE-WTP** | Parent CBC with price+neither; ship-mapped attributes; message≠package; cash pilot before stickers | LIX | Ban Likert≡WTP; survey$≡revenue; ACT-point SKUs |
+| **SAFE-REPAIR** | Detect → classify → own explanatorily → Map-checked correct → destaked re-attempt → triggered escalate | LX | Ban never-hallucinates; rote apology≡repair; infinite free escalate |
+| **SAFE-IDMEASURE** | Validated Cribbs-factor battery + FEI behavioral co-primary + demand-aware admin; narrative probe light | LXI | Ban Identity Score™; two-item≡FEI; splash Likert; empty “math person” praise |
+| **SAFE-LONGID** | Stage claims: 8w process / 26w triangulated movement / 52w persistence; fade-aware packages | LXII | Ban math-person-in-8-weeks; end-of-program Likert≡durable |
+| **SAFE-EXAM** | Dual rail MA+TA; destake-to-learn / dose-to-prove; readiness = delayed mixed under stakes | LXIII | Ban day-one ACT flood; blocked≡exam-ready; ACT guarantees; Calm Score™ exam NS |
+| **SAFE-ELL** | Separate language vs math load; linguistic modify without math dilute; format triangulation before verdict | LXIV | Ban math-is-language-free; forever procedure ELL track; translate≡identity |
+| **SAFE-GENDER** | Parity hygiene; cue hygiene; belonging via practice recognition; no ST→score / pink cosplay | LXV | Ban innate-gap premise; threat-theater ACT; girl-SKU / pink track |
+| **SAFE-STRUCTURE** | Structure/scaffolds before grit slogans; bandwidth hygiene; behavior≠trait; no character-blame equity | LXVI | Ban grit-NS / Grit Score™ / poor-kids-need-grit / streak-as-character |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
-| **SAFE-GENDER** | Parity hygiene; cue hygiene; belonging via practice recognition; no ST→score / pink cosplay | LXV | Innate-gap / threat-theater / girl-SKU kill |
-| **SAFE-STRUCTURE** | Structure/scaffolds before grit slogans; bandwidth hygiene; behavior≠trait; no character-blame equity | LXVI | Grit-NS / Grit Score™ / poor-kids-need-grit kill |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” and “girl STEM brand” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” and “character equity” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXVII **Ontology as diagnosis moat**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT gate confidence-tiered, session-architecture, participation, ritual, brief–debrief, review-media, ladder, postmortem, anxiety-approach, parent-pricing, post-hallucination repair, identity measurement, longitudinal-horizon, exam-pressure, multilingual-access, gender-stereotype, and socioeconomic-structure claims above L1. Researcher count since v1.8 synthesizer = **8** (Synthesizer eligible on next qualifying tick).
+**Next research bottleneck:** Part LXVII **Ontology as diagnosis moat**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT gate claims above L1. Researcher count since v1.9 synthesizer = **0**.
 
 ---
 
@@ -250,6 +259,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 | Date | Finding | Type | Action |
 |------|---------|------|--------|
+| 2026-08-02 | Synthesizer v1.9: merge LIX–LXVI SAFE-* into I.4; kills #18–#20 | Synthesis | Surviving commercial law; next = LXVII ontology moat |
 | 2026-08-01 | Synthesizer v1.8: merge L–LVIII SAFE-* into I.4; kills #15–#17 | Synthesis | Surviving commercial law; next = LIX parent WTP |
 | 2026-08-01 | SAFE-EXPOSE: graded approach; kill therapy cosplay / flooding / Calm Score™ | Evidence | EXP-O1…5; expectancy violation |
 | 2026-08-01 | SAFE-ANNOT / MUSIC / FILM: postmortem + ladder + sparse clips | Evidence | ANNOT/MUSIC/FILM-1…5 |
@@ -473,6 +483,12 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | EXP-O-* | Situation hierarchy / expectancy check / fade safety / multi-context | LVIII |
 | WTP-* | Parent CBC / FEI report vs score / message arms / cash pilot | LIX |
 | REPAIR-* | Post-hallucination repair / reattempt / packetized escalate | LX |
+| IDM-* | Validated identity battery / demand controls / FEI co-primary | LXI |
+| LONG-* | 8/26/52w horizons / fade checks / staged identity claims | LXII |
+| EXAM-* | Destake-learn / dose-prove ladders / delayed mixed under stakes | LXIII |
+| ELL-* | Language vs math load / linguistic modify / format triangulation | LXIV |
+| GEND-* | Cue hygiene / practice recognition / no ST→score / no pink track | LXV |
+| STRUCT-* | Bandwidth hygiene / structure>slogans / access honesty / no grit-NS | LXVI |
 
 ---
 
@@ -585,6 +601,18 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #17 (v1.8): “Tip-flood / engine-dump / flooding ≡ high-performance pedagogy”
 **Destroyed:** Uncapped film-room tips; Stockfish/LLM monologue as annotation; day-one timed mixed ACT as “exposure”; calm-to-zero / Calm Score™; loss-only shame reels; bare-pass recital theater.  
 **Surviving:** SAFE-AAR + SAFE-FILM + SAFE-MUSIC + SAFE-ANNOT + SAFE-EXPOSE — brief–debrief, sparse clips, skills→pieces→proof, annotate→drill, graded approach with expectancy violation (LIV–LVIII).
+
+### Kill #18 (v1.9): “Likert≡WTP / survey dollars≡revenue / ACT-point packages”
+**Destroyed:** Parent survey willingness as price truth; engagement-streak or unlimited-AI as default parent value props; guaranteed ACT points in tiers; message arms treated as package economics.  
+**Surviving:** SAFE-WTP — CBC with price+neither, ship-mapped attributes (diagnosis, FEI report, human minutes, AI policy), cheap-talk/cash pilots, message≠package (LIX).
+
+### Kill #19 (v1.9): “Never-hallucinates / apology≡repair / Identity Score™ / 8-week math person”
+**Destroyed:** Invincible-AI brand; rote or empathy apology as trust fix; thumbs-up≡repaired; permanent disuse brand; Math Identity Score™; two-item HSLS pre/post≡FEI; splash-screen identity Likert; empty AI “math person” praise; end-of-program Likert≡durable identity; math-person-in-8-weeks.  
+**Surviving:** SAFE-REPAIR + SAFE-IDMEASURE + SAFE-LONGID — detect→own→Map-correct→reattempt→triggered escalate; validated factors + FEI behavioral co-primary; staged 8/26/52w claims with fade checks (LX–LXII).
+
+### Kill #20 (v1.9): “Day-one ACT flood / EL≡ability / pink track / grit-as-character”
+**Destroyed:** Timed ACT as onboarding; blocked accuracy as exam-ready; Calm Score™ exam NS; math-is-language-free; forever procedure-only ELL track; translate≡identity; innate boys-better premise; ST-removal→ACT; pink/for-her easy track; grit-as-NS / Grit Score™ / poor-kids-need-grit / streak-as-character / scarcity-dropout≡moral-failure.  
+**Surviving:** SAFE-EXAM + SAFE-ELL + SAFE-GENDER + SAFE-STRUCTURE — destake-to-learn/dose-to-prove; separate language vs math load; parity + cue hygiene + practice recognition; structure/scaffolds before slogans (LXIII–LXVI).
 
 ---
 
@@ -863,7 +891,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | ChatGPT tutors | Instant explanation | Low unless wrapped | Trust / hallucination; Bastani Base harm |
 | MindCraft (target) | FEI conversion + tutor witness + gap diagnosis + solo transfer | **Intended high** | Must prove, not assert |
 
-**Strategic implication (v1.8 densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks/leagues/XP. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency. Do not out-grit character apps on Resilience Score™. Do not out-therapy Calm Score™, sports academies, conservatories, or grandmaster cosplay. Out-compete on the **session**: SAFE-DP spine under SAFE-DD, productive-error + calibration routing (SAFE-MISCON / CALIB), brief–debrief + sparse film + annotation (SAFE-AAR / FILM / ANNOT), laddered approach for feared formats (SAFE-MUSIC / EXPOSE), variation-designed transfer (SAFE-TRANSFER), student-generated why, and transfer when help is gone — then *say that* in marketing (CSA-2).
+**Strategic implication (v1.9 densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks/leagues/XP. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency. Do not out-grit character apps on Resilience/Grit Score™. Do not out-therapy Calm Score™, sports academies, conservatories, grandmaster cosplay, pink STEM SKUs, or survey-priced ACT guarantees. Out-compete on the **session + honest economics**: SAFE-DP spine under SAFE-DD, productive-error + calibration routing (SAFE-MISCON / CALIB), brief–debrief + sparse film + annotation (SAFE-AAR / FILM / ANNOT), laddered approach for feared formats (SAFE-MUSIC / EXPOSE / EXAM), recoverable AI truth (SAFE-REPAIR), validated identity measurement on long clocks (SAFE-IDMEASURE / LONGID), multilingual/gender/SES structure honesty (SAFE-ELL / GENDER / STRUCTURE), parent CBC not Likert theater (SAFE-WTP), variation-designed transfer (SAFE-TRANSFER), student-generated why, and transfer when help is gone — then *say that* in marketing (CSA-2).
 
 ---
 
@@ -878,12 +906,15 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 - Blocked-session accuracy alone  
 - Coach thumbs-up / “felt helpful” without `solo_transfer_pass`  
 - Named leaderboard rank / league tier  
-- Resilience Score™ / grit meter / MRS as in-app KPI  
+- Resilience Score™ / grit meter / MRS / Grit Score™ as in-app KPI  
 - Midnight minutes practiced / all-nighter volume  
 - Belief Score™ / confidence meters / confidence streaks  
 - Community tab visits / Discord volume / games played / rating  
 - Calm Score™ / anxiety-must-hit-zero meters  
 - Tip-recall / film-room engagement without method-change + transfer  
+- Math Identity Score™ / two-item “math person” alone / splash identity Likert  
+- Parent survey WTP dollars / guaranteed ACT-point package tiers  
+- NAEP EL-gap closure / gender STEM-gap closure as product claims  
 
 ## XXI.2 Leading indicators (ship first)
 
@@ -909,15 +940,21 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `repair_reattempt_pass` | Correct destaked re-attempt after owned AI miss | SAFE-REPAIR calibration (LX) |
 | `escalation_resolve_48h` | Packetized human handoff closed with fix | SAFE-REPAIR escalate SLA (LX) |
 | `improve_how_specificity` | Debrief yields concrete next-attempt tweak | SAFE-AAR close quality (LIV) |
+| `stakes_ladder_step` | Declared pressure step completed after destaked equip | SAFE-EXAM dose-to-prove (LXIII) |
+| `lang_vs_math_miss_flag` | Miss tagged language-parse vs concept (when elicited) | SAFE-ELL load separation (LXIV) |
+| `identity_battery_ok` | Validated multi-factor identity admin completed (not splash) | SAFE-IDMEASURE demand-aware (LXI) |
+| `bandwidth_tax_skip` | Incomplete mission under self-reported scarcity/stress (not grit) | SAFE-STRUCTURE hygiene (LXVI) |
 
 ## XXI.3 Lagging indicators
 
 | Metric ID | Definition |
 |-----------|------------|
-| `math_person_item` | 1–7 agreement: “I am a math person” (math-specific) |
+| `math_person_item` | 1–7 agreement: “I am a math person” (math-specific; never sole endpoint) |
+| `cribbs_interest` / `cribbs_recognition` / `cribbs_competence` | Factor scores from validated battery (LXI) |
 | `anxiety_state_item` | Short state anxiety before session |
 | `advanced_intent` | Intent to take harder course / contest |
 | `tutor_witness_note` | Tutor tagged identity-relevant growth |
+| `identity_fade_26w` / `identity_fade_52w` | Triangulated identity movement vs baseline at horizons (LXII) |
 
 ## XXI.4 Decision rule (HYPOTHESIS)
 
@@ -1073,7 +1110,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 32. **DONE (2026-08-02):** Multilingual / ELL math identity (Part LXIV / id 64) — SAFE-ELL stack  
 33. **DONE (2026-08-02):** Gender & math stereotypes update (Part LXV / id 65) — SAFE-GENDER stack  
 34. **DONE (2026-08-02):** Socioeconomic constraint on “grit” (Part LXVI / id 66) — SAFE-STRUCTURE stack  
-35. **NEXT:** Ontology as diagnosis moat (Part LXVII / id 67)
+35. **Synthesizer v1.9 (2026-08-02):** Merged LIX–LXVI into I.4 / XIV / IX / XXI — no new chapter  
+36. **NEXT:** Ontology as diagnosis moat (Part LXVII / id 67)
 
 ---
 
@@ -1107,4 +1145,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.8 synthesizer pass folded Parts L–LVIII into surviving commercial doctrine (I.4 rows SAFE-CALIB through SAFE-EXPOSE; Red Team kills #15–#17). Part LIX added SAFE-WTP; Part LX added SAFE-REPAIR; Part LXI added SAFE-IDMEASURE; Part LXII added SAFE-LONGID; Part LXIII added SAFE-EXAM; Part LXIV added SAFE-ELL; Part LXV added SAFE-GENDER; Part LXVI added SAFE-STRUCTURE (structure > slogans; bandwidth hygiene; no grit-NS / character-blame). Next researcher id: LXVII ontology diagnosis moat. Researcher count since v1.8 = 8 (Synthesizer eligible). Page count is not the finish line — falsifiable truth is.**
+**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Next researcher id: LXVII ontology diagnosis moat. Researcher count since v1.9 = 0. Page count is not the finish line — falsifiable truth is.**

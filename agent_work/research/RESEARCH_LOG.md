@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-02 — Synthesizer tick v1.9: merge Parts LIX–LXVI
+
+**Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.8 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / IX / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law:**
+- SAFE-WTP (LIX) — CBC + bias controls; Likert≡WTP / ACT-point SKU kill
+- SAFE-REPAIR (LX) — detect→own→correct→reattempt→escalate; never-hallucinates / apology≡repair kill
+- SAFE-IDMEASURE (LXI) — validated factors + FEI co-primary; Identity Score™ kill
+- SAFE-LONGID (LXII) — staged 8/26/52w; math-person-in-8-weeks kill
+- SAFE-EXAM (LXIII) — destake-learn / dose-prove; day-one ACT flood kill
+- SAFE-ELL (LXIV) — language≠math load; forever ELL procedure track kill
+- SAFE-GENDER (LXV) — parity + cue hygiene; pink track / ST→ACT kill
+- SAFE-STRUCTURE (LXVI) — structure>slogans; grit-NS / character-blame kill
+
+**Red Team kills added:** #18 (Likert≡WTP / survey$ / ACT packages), #19 (never-hallucinates / apology≡repair / Identity Score™ / 8-week math person), #20 (ACT flood / EL≡ability / pink track / grit-as-character).
+
+**Experiment families mounted in Part IX:** WTP / REPAIR / IDM / LONG / EXAM / ELL / GEND / STRUCT (completed after partial WTP/REPAIR mount).
+
+**Claim killed (synthesis):** Treating LIX–LXVI commercial stacks as orphan deep-dive rows or independent North Stars (survey pricing, invincible AI, Identity Score™, 8-week identity, exam flooding, deficit ELL tracks, pink STEM, grit equity) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **67** (Ontology as diagnosis moat). Researcher count since v1.9 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-02 — Researcher tick: Part LXVI Socioeconomic constraint on “grit” (SAFE-STRUCTURE)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch66 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 7 → not Synthesizer)  

@@ -51,6 +51,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 64 | Multilingual / ELL math identity | Language load vs math load | **DONE** (2026-08-02) — Part LXIV / SAFE-ELL |
 | 65 | Gender & math stereotypes update | Current evidence, not 1990s only | **DONE** (2026-08-02) — Part LXV / SAFE-GENDER |
 | 66 | Socioeconomic constraint on “grit” | Structure > slogans | **DONE** (2026-08-02) — Part LXVI / SAFE-STRUCTURE |
+| — | **Synthesizer v1.9** | Merge LIX–LXVI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-02 UTC 15) |
 | 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | **NEXT** |
 | 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | queued |
 
