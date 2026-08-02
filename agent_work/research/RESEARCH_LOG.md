@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-02 — Researcher tick: Part LXIV Multilingual / ELL math identity (SAFE-ELL)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch64 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 5 → not Synthesizer)  
+**Chapter written:** `chapters/64_multilingual_ell_math_identity.md` (Part LXIV)  
+**Claim examined:** Language load vs math load for multilingual/EL learners — access to mathematical practice vs deficit tracks, translate theater, or math-is-language-free identity verdicts.
+
+**Evidence added:**
+- NCES COE Mathematics Performance / Digest 222.12 (2022 NAEP): EL vs non-EL gaps grade 4 = 23 pts (216 vs 239), grade 8 = 36 pts (241 vs 277); grade 12 (2019) = 41 pts.
+- Abedi & Lord (2001, *Applied Measurement in Education*, doi:10.1207/S15324818AME1403_2): linguistic modification of NAEP-style items; N=1,174 grade 8; gains especially for ELs / low-SES / lower-track.
+- Martiniello (2008, *Harvard Educational Review*, doi:10.17763/haer.78.2.70783570r1111t32): linguistic complexity → DIF against ELs at comparable math proficiency; think-aloud reading traps.
+- Cummins (1979, *Working Papers on Bilingualism* 19); Cummins (2008, doi:10.1007/978-0-387-30424-3_36): BICS ≠ CALP.
+- Moschkovich (2002, *MTL*, doi:10.1207/s15327833mtl04023_5); Moschkovich (2013, *JUME*, doi:10.21423/jume-v6i1a204): language as resource; discourse > vocab-only.
+- de Araujo, Roberts, Willey & Zahner (2018, *RER*, doi:10.3102/0034654318798093): 75-study EL×math review.
+- de Araujo (2017, *Curriculum Inquiry*, doi:10.1080/03626784.2017.1368351): over-accommodation → procedure/context-stripped tasks.
+
+**Product implication:** SAFE-ELL — separate loads; linguistic modify without math dilute; format triangulation before identity/mastery verdicts; no deficit forever track; ELL-1…5 + QUAL.
+
+**Claim killed:** Math-is-language-free⇒EL-gap=ability; procedure-only ELL track; translate/vocab≡identity product; NAEP gap-closure marketing; homogeneous ELL persona; EL status waives challenge/FEI/transfer/exam dosing.
+
+**Survives:** Load separation; Moschkovich resource/discourse stance; Abedi-style parallels; format-honest diagnosis; ELL experiment family.
+
+**Next researcher id:** **65** (Gender & math stereotypes update). Researcher count since synthesizer v1.8: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-02 — Researcher tick: Part LXIII ACT/exam pressure special case (SAFE-EXAM)
 
 **Tick type:** Researcher (UTC hour 3; hour%6≠0 → not Red Team; researcher count since synthesizer v1.8 = 4 → not Synthesizer)  
