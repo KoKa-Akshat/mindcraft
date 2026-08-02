@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-02 — Researcher tick: Part LXII Longitudinal identity change models (SAFE-LONGID)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch62 never written → prefer Researcher per rotation; researcher count since synthesizer v1.8 = 3 → not Synthesizer)  
+**Chapter written:** `chapters/62_longitudinal_identity_change.md` (Part LXII)  
+**Claim examined:** What honest math-identity change looks like at 8/26/52 weeks — vs 8-week transformation marketing, fade-blind end-of-program claims, and linear always-rising HS identity curves.
+
+**Evidence added:**
+- Wan, Lauermann, Bailey & Eccles (2021, *Psychological Bulletin*, doi:10.1037/bul0000340): dimensional comparison meta — math/verbal motivational beliefs differentiate across grades.
+- Wan, Tian, Guo & Lauermann (2026, *Child Development*, doi:10.1093/chidev/aacag069): four U.S. longitudinal samples — both-high shrinks; math-person plateaus in HS; language-person rises; HS math-person → math-intensive occupations in adult follow-ups.
+- Simpkins, Davis-Kean & Eccles (2006, *Developmental Psychology*, doi:10.1037/0012-1649.42.1.70): multi-year activity → expectancy–value → course-taking chain.
+- Andersen & Ward (2014, *Science Education*, doi:10.1002/sce.21092): HSLS attainment value predicts STEM persistence plans (thin items; directional).
+- Cribbs, Tassell, Hazari, Sadler & Sonnert (2022, *RIPEM*, doi:10.37001/ripem.v12i2.2923): college math identity stable over ~3 years under status quo.
+- Boaler & Staples (2008, *TCR*, doi:10.1177/016146810811000302); Horn (2008, *MTL*, doi:10.1080/10986060802216177): multi-year departmental identity/achievement ecology (not app-session proof).
+- Boaler et al. (2018, *Frontiers in Education*, doi:10.3389/feduc.2018.00026): semester-scale belief MOOC — not Cribbs-identity doctrine.
+- Bailey, Duncan, Cunha, Foorman & Yeager (2020, *PSPI*, doi:10.1177/1529100620915848); Bailey, Duncan, Odgers & Yu (2017, *JREE*, doi:10.1080/19345747.2016.1232459): fade-out widespread; persistence needs supporting environments.
+
+**Product implication:** SAFE-LONGID — stage claims (8w process; 26w triangulated movement; 52w persistence); fade-aware retention/packages; LONG-1…5 + QUAL; align WTP horizons.
+
+**Claim killed:** Math person in 8 weeks; end-of-program Likert≡durable identity; linear always-rising HS math-identity curves; mindset-MOOC≡Cribbs+FEI identity; Railside-years≡app-session identity; forever-STEM annual claim without fade check.
+
+**Survives:** Staged horizons; differentiation-aware HS positioning; fade-aware maintenance; SAFE-IDMEASURE on longer clocks.
+
+**Next researcher id:** **63** (ACT/exam pressure special case). Researcher count since synthesizer v1.8: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-01 — Researcher tick: Part LXI Measurement of math identity (SAFE-IDMEASURE)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0 → not Red Team; researcher count since synthesizer v1.8 = 2 → not Synthesizer)  

@@ -46,9 +46,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 59 | Parent WTP experiments design | Conjoint / message tests | **DONE** (2026-08-01) — Part LIX / SAFE-WTP |
 | 60 | Trust after AI hallucination | Repair protocols; when to escalate to human | **DONE** (2026-08-01) — Part LX / SAFE-REPAIR |
 | 61 | Measurement of math identity | Valid scales; demand effects | **DONE** (2026-08-01) — Part LXI / SAFE-IDMEASURE |
-| 62 | Longitudinal identity change models | What 8/26/52 week looks like | **NEXT** |
+| 62 | Longitudinal identity change models | What 8/26/52 week looks like | **DONE** (2026-08-02) — Part LXII / SAFE-LONGID |
+| 63 | ACT/exam pressure special case | High-stakes affect vs learning affect | **NEXT** |
+| 64 | Multilingual / ELL math identity | Language load vs math load | queued |
+| 65 | Gender & math stereotypes update | Current evidence, not 1990s only | queued |
 
-More IDs: `chapters/QUEUE_EXTENDED.md` (63–70).
+More IDs: `chapters/QUEUE_EXTENDED.md` (66–70).
 
 ## Standing Red Team targets
 
@@ -69,3 +72,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (63–70).
 - Any Likert≡WTP / survey-dollars≡revenue / “parents only buy scores” without CBC / streak-or-AI-unlimited as default parent value prop / guaranteed ACT points in package levels (Part LIX)
 - Any “AI never hallucinates” / rote-or-empathy apology≡repair / thumbs-up≡trust-fixed / infinite free human escalation / permanent never-trust-AI brand (Part LX)
 - Any Math Identity Score™ / two-item HSLS pre-post≡FEI proof / competence-survey≡identity / identity-Likert-on-marketing-splash / empty AI “math person” praise≡recognition / single-session identity transformation claim (Part LXI)
+- Any “math person in 8 weeks” / end-of-program Likert≡durable identity / linear always-rising HS math-identity curve / mindset-MOOC≡Cribbs-identity / Railside-years≡app-session identity / forever-STEM annual claim without fade check (Part LXII)

@@ -35,10 +35,10 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 59 | Parent WTP experiments design | Conjoint / message tests |
 | 60 | Trust after AI hallucination | Repair protocols; when to escalate to human |
 | 61 | Measurement of math identity | Valid scales; demand effects |
-| 62 | Longitudinal identity change models | What 8/26/52 week looks like |
-| 63 | ACT/exam pressure special case | High-stakes affect vs learning affect |
-| 64 | Multilingual / ELL math identity | Language load vs math load |
-| 65 | Gender & math stereotypes update | Current evidence, not 1990s only |
+| 62 | Longitudinal identity change models | What 8/26/52 week looks like | **DONE** → `62_longitudinal_identity_change.md` |
+| 63 | ACT/exam pressure special case | High-stakes affect vs learning affect | promoted → NEXT_LAB **NEXT** |
+| 64 | Multilingual / ELL math identity | Language load vs math load | promoted → NEXT_LAB |
+| 65 | Gender & math stereotypes update | Current evidence, not 1990s only | promoted → NEXT_LAB |
 | 66 | Socioeconomic constraint on “grit” | Structure > slogans |
 | 67 | Ontology as diagnosis moat | When knowledge graphs beat chat |
 | 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training |
