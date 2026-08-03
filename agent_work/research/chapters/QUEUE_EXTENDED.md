@@ -45,5 +45,5 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 69 | Privacy & student affect data | Ethics of anxiety telemetry | **DONE** → `69_privacy_student_affect_data.md` |
 | 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | promoted → NEXT_LAB **NEXT** |
 | 71 | Peer vs near-peer vs expert tutoring | Evidence on tutor expertise grain; ops hire bar | promoted → NEXT_LAB |
-| 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | promoted → NEXT_LAB |
+| 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | **DONE** → `72_generated_question_validity_key_risk.md` |
 | 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | promoted → NEXT_LAB |

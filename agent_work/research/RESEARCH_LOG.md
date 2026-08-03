@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-03 — Researcher tick: Part LXXII Generated question validity & key risk (SAFE-GENQ)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch72 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 5 → not Synthesizer)  
+**Chapter written:** `chapters/72_generated_question_validity_key_risk.md` (Part LXXII)  
+**Claim examined:** When MindCraft may generate practice/diagnostic items and what key/validity failures make generation a graph-poisoning hazard rather than a coverage moat.
+
+**Evidence added:**
+- Gierl & Lai (2012, *International Journal of Testing*, 12(3), 273–298, doi:10.1080/15305058.2011.635830): AIG via item models + algorithmic instantiation.
+- Gierl & Lai (2016, *Educational Measurement: Issues and Practice*, 35(4), 6–20, doi:10.1111/emip.12129): review/evaluate generated items via content+logic of the generation procedure (math + surgical examples).
+- Gierl, Lai & Turner (2012, *Medical Education*, 46(8), 757–765, doi:10.1111/j.1365-2923.2012.04289.x): AIG MCQ creation; quality comparable with distractor weakness.
+- Kane (2013, *Journal of Educational Measurement*, 50(1), 1–73, doi:10.1111/jedm.12000): validate interpretations/uses; ambitious claims need more evidence; consequences can kill a use.
+- Bastani et al. (2025, *PNAS*, doi:10.1073/pnas.2422633122): GPT Base ~51% correct on answer queries; logical/arithmetic errors; solo exam harm.
+- IEEE AIRC 2024 ChatGPT/robot maths study (doi:10.1109/airc61399.2024.10672220): ~13/29 inaccurate (~55% accuracy); detection tracks student correctness.
+- Findings-EMNLP 2023 (doi:10.18653/v1/2023.findings-emnlp.201): LLM math facilitation risks (mis-grade, wrong intermediates).
+- Internal MindCraft `--verify` audit: 104 kept / 45 dropped (~30% bad-key rate) — scale blocker.
+
+**Claim killed (this tick):** LLM-items≡shipped bank; item-count NS; unverified keys as diagnostic/mastery ground truth; “AI wrote N questions” hero; fluency≡keyed correctness; clone floods≡transfer; scale-at-~30%-drop.
+
+**Doctrine proposed:** SAFE-GENQ — verify-before-ship; key fails hard-fail; Kane IUA for bank uses; drop-rate gate; coverage≠NS.
+
+**Experiments:** GENQ-1…5 + GENQ-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **73** (district procurement & privacy review as GTM). Researcher count since v1.9 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-03 — Researcher tick: Part LXXI Peer vs near-peer vs expert tutoring (SAFE-TUTORGRAIN)
 
 **Tick type:** Researcher (UTC hour 15; 15 % 6 ≠ 0 → not Red Team; researcher count since synthesizer v1.9 = 4 → not Synthesizer)  
