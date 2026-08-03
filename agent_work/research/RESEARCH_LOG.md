@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-03 — Researcher tick: Part LXXIII District procurement & privacy review as GTM (SAFE-PROCURE)
+
+**Tick type:** Researcher (UTC hour 21; 21 % 6 ≠ 0 → not Red Team; researcher count since synthesizer v1.9 = 6 → not Synthesizer)  
+**Chapter written:** `chapters/73_district_procurement_privacy_gtm.md` (Part LXXIII)  
+**Claim examined:** What district privacy/procurement gates actually block school sales — and how MindCraft should treat the trust packet as GTM, not post-hoc legal cleanup.
+
+**Evidence added:**
+- PTAC (2014), *Protecting Student Privacy While Using Online Educational Services: Requirements and Best Practices* — written agreements; FERPA/PPRA/COPPA still apply to school-used online services.
+- PTAC (2016), *Model Terms of Service* (ERIC ED585306) — click-wrap ToS risk; checklist of GOOD provisions (purpose limit, security, modification, breach).
+- CoSN *Protecting Privacy in Connected Learning* toolkit Part 2 (*Partnering with Service Providers*, ~2023) — teacher click-wrap can bind LEA; free tools need same/similar approval; COPPA decisions at admin level.
+- SDPC / A4L National Data Privacy Agreement (NDPA v2, Apr 2024+) — school-official framing; DPA precedence over conflicting ToS; FERPA/PPRA/COPPA citations; registry/standardization rail.
+- California Education Code § 49073.1 (AB 1584) — mandatory LEA–vendor contract clauses incl. ownership, purpose limit, security, breach notice, deletion, joint FERPA, no targeted ads on pupil-record PII.
+- Illinois SOPPA (105 ILCS 85/) — operator agreements; broad covered information incl. biometrics; ad/profile/sale prohibitions.
+- Zeide (2016) *Drexel Law Review* 8 / Zeide (2017) *U. Miami Law Review* 71(2) — FERPA delegation / purpose-limitation theater (reused from SAFE-PRIVACY).
+- Nissenbaum (2010) *Privacy in Context* — contextual integrity (reused).
+
+**Claim killed (this tick):** FERPA-badge≡district-ready; teacher-click-wrap≡school contract; free-tool-skips-privacy; biometric empathy as school SKU; marketing-first RFP without DPA/Exhibit A; parent WTP copy as LEA trust story; pupil-data ads / sell-affect.
+
+**Doctrine proposed:** SAFE-PROCURE — privacy review = GTM gate; NDPA-ready; Exhibit A honesty; no bio / no pupil ads; free=paid approval rigor.
+
+**Experiments:** PROCURE-1…5 + PROCURE-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **74** (spaced retrieval schedules in product UX). Researcher count since v1.9 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-03 — Researcher tick: Part LXXII Generated question validity & key risk (SAFE-GENQ)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch72 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 5 → not Synthesizer)  

@@ -4,7 +4,7 @@
 **Edition:** v1.9 (Synthesizer consolidation of Parts LIX–LXVI into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-03 (Researcher LXXII — SAFE-GENQ / generated question validity & key risk; provisional I.4 until synthesizer)  
+**Last updated:** 2026-08-03 (Researcher LXXIII — SAFE-PROCURE / district procurement & privacy GTM; provisional I.4 until synthesizer)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -62,8 +62,9 @@
 | LXX | `chapters/70_constitution_meta_bayesian_lab.md` | Constitution meta; SAFE-LABMETA; falsify/check/demote lab process |
 | LXXI | `chapters/71_peer_nearpeer_expert_tutoring.md` | Peer vs near-peer vs expert tutoring; SAFE-TUTORGRAIN; hire bar |
 | LXXII | `chapters/72_generated_question_validity_key_risk.md` | Generated question validity & key risk; SAFE-GENQ; verify-before-ship |
+| LXXIII | `chapters/73_district_procurement_privacy_gtm.md` | District procurement & privacy GTM; SAFE-PROCURE; trust packet / NDPA |
 
-Queued next: see `NEXT_LAB.md` (Part LXXIII district privacy GTM, then 74–75).
+Queued next: see `NEXT_LAB.md` (Part LXXIV spaced retrieval UX, then 75).
 
 **Synthesizer note (v1.9):** Eight researcher chapters (LIX–LXVI) landed after v1.8 without a merge pass — parent WTP, post-hallucination repair, identity measurement, longitudinal horizons, exam-pressure dual rail, multilingual access, gender stereotype hygiene, and socioeconomic structure-over-grit lived only in deep dives (plus orphaned I.4 appends for GENDER/STRUCTURE). This edition promotes each stack to its own I.4 law, adds Red Team kills #18–#20, mounts experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -184,6 +185,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-LABMETA** *(provisional until synthesizer)* | Label → check → kill/wound/survive → demote copy; small FEI hard core; synthesizer must delete; page count vanity | LXX | Ban page-count NS / Bayesian theater / cite-wash / belief-by-repetition / science-backed ads without falsifiers |
 | **SAFE-TUTORGRAIN** *(provisional until synthesizer)* | Default trained near-peer; structure>pairing; no 2σ; Map>credential diagnosis; suppress knowledge-telling; expert=escalate | LXXI | Ban Ivy/PhD≡FEI / Discord-peer≡tutoring / explainers hire bar / expertise≡diagnosis / tutor-learning NS |
 | **SAFE-GENQ** *(provisional until synthesizer)* | Verify-before-ship; key fails hard-fail; Kane IUA for bank uses; drop-rate gate; coverage≠NS; LLM≠classical AIG without constraints | LXXII | Ban LLM-items≡shipped / item-count hero / unverified diagnostic keys / fluency≡keyed correctness / scale-at-30%-drop |
+| **SAFE-PROCURE** *(provisional until synthesizer)* | Privacy review = GTM gate; NDPA-ready DPA; Exhibit A honesty; free=paid approval; no bio / no pupil-data ads | LXXIII | Ban FERPA-badge≡ready / click-wrap school path / biometric school SKU / marketing-first without packet |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -191,7 +193,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” and “character equity” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXXIII **District procurement & privacy review as GTM**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ gate claims above L1. Researcher count since v1.9 synthesizer = **6**.
+**Next research bottleneck:** Part LXXIV **Spaced retrieval schedules in product UX**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE gate claims above L1. Researcher count since v1.9 synthesizer = **7**.
 
 ---
 
@@ -507,6 +509,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | LABMETA-* | Pre-reg gate / Red Team bite / copy lint / synthesizer demote / external skeptic | LXX |
 | GRAIN-* | Trained near-peer / Map vs expert-no-Map / peer-pair / hire-by-fidelity / parent CBC grain | LXXI |
 | GENQ-* | Verify-on vs off / generated vs seed / diagnostic seal / prompt-harden drop rate / parent CBC verified-bank | LXXII |
+| PROCURE-* | Trust-packet-first / NDPA vs custom / LEA-approved free pilot / district vs parent message / no-bio attribute | LXXIII |
 
 ---
 
@@ -655,6 +658,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #26 (LXXII provisional): “LLM items ≡ shipped bank / item-count hero / unverified diagnostic keys”
 **Destroyed:** LLM-generated items as ready-to-ship without independent key verify; item-count / “AI wrote N questions” as hero metric or ACT/identity proof; unverified keys as C4 diagnostic or mastery ground truth; fluency of stem ≡ keyed correctness; clone floods ≡ transfer; scaling generation at ~30% verify drop.  
 **Surviving:** SAFE-GENQ — verify-before-ship; key fails hard-fail; Kane IUA for bank uses; drop-rate gate before scale; coverage≠NS; seal C4/mastery writes to verified keys (LXXII).
+
+### Kill #27 (LXXIII provisional): “FERPA badge / click-wrap / biometric school SKU ≡ district GTM”
+**Destroyed:** FERPA-compliant badge as district-ready or ethics; teacher click-wrap / free viral classroom as primary school path; biometric/face-voice empathy as school differentiator; marketing-first RFP without DPA+Exhibit A; parent WTP copy as LEA trust story; targeted ads / sell-affect on pupil records.  
+**Surviving:** SAFE-PROCURE — privacy review = GTM gate; NDPA-ready contracting; Exhibit A honesty; free=paid approval rigor; no biometrics; no pupil-data ads; deletion on exit (LXXIII).
 
 ---
 
@@ -1056,6 +1063,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-LABMETA | Label→check→kill/demote; small FEI core; page-count vanity kill (Part LXX; provisional) |
 | SAFE-TUTORGRAIN | Trained near-peer default; structure>pairing; hire by fidelity; expert=escalate (Part LXXI; provisional) |
 | SAFE-GENQ | Verify-before-ship; key hard-fail; Kane IUA; drop-rate gate; coverage≠NS (Part LXXII; provisional) |
+| SAFE-PROCURE | Privacy review = GTM gate; NDPA-ready; Exhibit A honesty; no bio / no pupil ads (Part LXXIII; provisional) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1132,9 +1140,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3l. Constitution meta / Bayesian lab process — **DONE** Part LXX / SAFE-LABMETA  
 3m. Peer vs near-peer vs expert tutoring — **DONE** Part LXXI / SAFE-TUTORGRAIN  
 3n. Generated question validity & key risk — **DONE** Part LXXII / SAFE-GENQ  
-3o. District procurement & privacy review as GTM — **NEXT** Part LXXIII / id 73  
-3o. District procurement & privacy review as GTM — queued id 73  
-3p. Spaced retrieval schedules in product UX — queued id 74  
+3o. District procurement & privacy review as GTM — **DONE** Part LXXIII / SAFE-PROCURE  
+3p. Spaced retrieval schedules in product UX — **NEXT** Part LXXIV / id 74  
 3q. Tutor workforce pipeline & quality drift — queued id 75  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
@@ -1174,7 +1181,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 39. **DONE (2026-08-03):** Constitution meta / Bayesian lab process (Part LXX / id 70) — SAFE-LABMETA stack  
 40. **DONE (2026-08-03):** Peer vs near-peer vs expert tutoring (Part LXXI / id 71) — SAFE-TUTORGRAIN stack  
 41. **DONE (2026-08-03):** Generated question validity & key risk (Part LXXII / id 72) — SAFE-GENQ stack  
-42. **NEXT:** District procurement & privacy review as GTM (Part LXXIII / id 73)
+42. **DONE (2026-08-03):** District procurement & privacy review as GTM (Part LXXIII / id 73) — SAFE-PROCURE stack  
+43. **NEXT:** Spaced retrieval schedules in product UX (Part LXXIV / id 74)
 
 ---
 
@@ -1208,4 +1216,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Parts LXVII–LXXII add provisional SAFE-ONTOLOGY + SAFE-HITL + SAFE-PRIVACY + SAFE-LABMETA + SAFE-TUTORGRAIN + SAFE-GENQ and ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ experiment families (awaiting synthesizer merge). Next researcher id: LXXIII district privacy GTM. Researcher count since v1.9 = 6. Page count is not the finish line — falsifiable truth is.**
+**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Parts LXVII–LXXIII add provisional SAFE-ONTOLOGY + SAFE-HITL + SAFE-PRIVACY + SAFE-LABMETA + SAFE-TUTORGRAIN + SAFE-GENQ + SAFE-PROCURE and ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE experiment families (awaiting synthesizer merge). Next researcher id: LXXIV spaced retrieval UX. Researcher count since v1.9 = 7. Page count is not the finish line — falsifiable truth is.**

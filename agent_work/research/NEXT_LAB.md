@@ -58,8 +58,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | **DONE** (2026-08-03) — Part LXX / SAFE-LABMETA |
 | 71 | Peer vs near-peer vs expert tutoring | Evidence on tutor expertise grain; ops hire bar | **DONE** (2026-08-03) — Part LXXI / SAFE-TUTORGRAIN |
 | 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | **DONE** (2026-08-03) — Part LXXII / SAFE-GENQ |
-| 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | **NEXT** |
-| 74 | Spaced retrieval schedules in product UX | Expanding spacing vs cramming week; ACT calendar | queued |
+| 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | **DONE** (2026-08-03) — Part LXXIII / SAFE-PROCURE |
+| 74 | Spaced retrieval schedules in product UX | Expanding spacing vs cramming week; ACT calendar | **NEXT** |
 | 75 | Tutor workforce pipeline & quality drift | Hiring bar; burnout; FEI fidelity over tenure | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
@@ -94,3 +94,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any page-count NS / Bayesian-theater without checks / cite-wash / FOUNDER BELIEF→FACT by repetition / synthesizer-without-demote / “science-backed Constitution” ads without falsifiers (Part LXX)
 - Any Ivy/PhD≡FEI / Bloom-2σ expert tutors / Discord-peer≡tutoring / “great explainers” hire bar / expertise≡diagnosis / tutor-learning-as-NS (Part LXXI)
 - Any LLM-items≡shipped bank / item-count NS / unverified keys as diagnostic ground truth / “AI wrote N questions” hero / fluency≡keyed correctness / scale-at-30%-drop (Part LXXII)
+- Any FERPA-badge≡district-ready / teacher-click-wrap≡school-contract / free-tool-skips-privacy / biometric-empathy school SKU / marketing-first without DPA packet / parent-WTP-copy-as-LEA-trust / pupil-data ads (Part LXXIII)
