@@ -54,8 +54,11 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | — | **Synthesizer v1.9** | Merge LIX–LXVI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-02 UTC 15) |
 | 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | **DONE** (2026-08-02) — Part LXVII / SAFE-ONTOLOGY |
 | 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | **DONE** (2026-08-03) — Part LXVIII / SAFE-HITL |
-| 69 | Privacy & student affect data | Ethics of anxiety telemetry | **NEXT** |
-| 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | queued |
+| 69 | Privacy & student affect data | Ethics of anxiety telemetry | **DONE** (2026-08-03) — Part LXIX / SAFE-PRIVACY |
+| 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | **NEXT** |
+| 71 | Peer vs near-peer vs expert tutoring | Evidence on tutor expertise grain; ops hire bar | queued |
+| 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | queued |
+| 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -85,3 +88,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any grit-as-NS / Grit Score™ / “poor kids need more grit” / streak-as-character / Alan-RCT≡ACT guarantee / scarcity-dropout≡moral-failure / soften-standards-not-taxes (Part LXVI)
 - Any graph-file/node-count≡moat / RAG-or-chat-memory≡knowledge-tracing / fluency-as-diagnosis / Bloom-ITS-2σ / “smarter than ChatGPT” / ALEKS-cosplay without FEI (Part LXVII)
 - Any warm-human≡quality / hours-booked NS / “got it?”≡mastery / Discord≡tutor-QA / Ivy≡playbook / explain-first brand / AI-replaces-tutors OR humans-skip-Map / onboarding-deck≡coaching (Part LXVIII)
+- Any face/voice emotion AI ≡ empathy / Anxiety Score™ NS / FERPA≡ethics / mandatory mood gate / emotion-trait tutor briefs / sell-affect-data / empathy-camera brand (Part LXIX)

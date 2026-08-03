@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-03 — Researcher tick: Part LXIX Privacy & student affect data (SAFE-PRIVACY)
+
+**Tick type:** Researcher (UTC hour 3; 3 % 6 ≠ 0 → not Red Team; researcher count since synthesizer v1.9 = 2 → not Synthesizer)  
+**Chapter written:** `chapters/69_privacy_student_affect_data.md` (Part LXIX)  
+**Claim examined:** What affect/anxiety telemetry MindCraft may ethically collect and act on — self-report soften vs emotional surveillance / emotion AI.
+
+**Evidence added:**
+- Picard (1997, *Affective Computing*, MIT Press); Picard (2003, *IJHCS*, doi:10.1016/S1071-5819(03)00052-1): founding affective computing + privacy/manipulation challenges.
+- Barrett, Adolphs, Marsella, Martinez & Pollak (2019, *PSPI*, doi:10.1177/1529100619832930): facial movements unreliable as general emotion meters.
+- McStay (2020, *Learning, Media and Technology*, doi:10.1080/17439884.2020.1686016): facial emotional AI in EdTech — significant classroom risks.
+- Katirai (2023, *AI and Ethics*, doi:10.1007/s43681-023-00307-3): ERT ethics review — bias, sensitive data, education harms.
+- McStay (2020, *Big Data & Society*, doi:10.1177/2053951720904386): weak privacy consensus on soft-biometric emotional AI.
+- Zeide (2016, *Drexel Law Review* 8; SSRN:2821837): FERPA delegation / school-official limits.
+- Zeide (2017, *U. Miami Law Review* 71(2)): education purpose-limitation theater.
+- Nissenbaum (2010, *Privacy in Context*; 2004 *Wash. L. Rev.*): contextual integrity.
+
+**Claim killed (this tick):** Face/voice ERT≡empathy; Anxiety Score™; FERPA≡ethics; mandatory mood gates; emotion-trait tutor briefs; sell-affect; empathy-camera brand.
+
+**Doctrine proposed:** SAFE-PRIVACY — self-authored, purpose-bound, short-TTL, ERT-banned, refusal-safe affect → pedagogy modifiers only.
+
+**Experiments:** PRIV-1…5 + PRIV-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **70** (Constitution meta). Researcher count since v1.9 synthesizer: **3**. Queued 71–73 into NEXT_LAB (unfinished was <3).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-03 — Researcher tick: Part LXVIII Human-in-the-loop tutor ops (SAFE-HITL)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch68 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 1 → not Synthesizer)  

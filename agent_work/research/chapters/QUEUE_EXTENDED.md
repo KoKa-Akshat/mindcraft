@@ -41,6 +41,9 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 65 | Gender & math stereotypes update | Current evidence, not 1990s only | **DONE** → `65_gender_math_stereotypes_update.md` |
 | 66 | Socioeconomic constraint on “grit” | Structure > slogans | **DONE** → `66_socioeconomic_constraint_on_grit.md` |
 | 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | **DONE** → `67_ontology_as_diagnosis_moat.md` |
-| 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | promoted → NEXT_LAB **NEXT** |
-| 69 | Privacy & student affect data | Ethics of anxiety telemetry | promoted → NEXT_LAB |
-| 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | promoted → NEXT_LAB |
+| 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | **DONE** → `68_human_in_the_loop_tutor_ops.md` |
+| 69 | Privacy & student affect data | Ethics of anxiety telemetry | **DONE** → `69_privacy_student_affect_data.md` |
+| 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | promoted → NEXT_LAB **NEXT** |
+| 71 | Peer vs near-peer vs expert tutoring | Evidence on tutor expertise grain; ops hire bar | promoted → NEXT_LAB |
+| 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | promoted → NEXT_LAB |
+| 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | promoted → NEXT_LAB |

@@ -4,7 +4,7 @@
 **Edition:** v1.9 (Synthesizer consolidation of Parts LIX–LXVI into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-03 (Researcher LXVIII — SAFE-HITL / human-in-the-loop tutor ops; provisional I.4 until synthesizer)  
+**Last updated:** 2026-08-03 (Researcher LXIX — SAFE-PRIVACY / privacy & student affect data; provisional I.4 until synthesizer)  
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -58,8 +58,9 @@
 | LXVI | `chapters/66_socioeconomic_constraint_on_grit.md` | Socioeconomic constraint on grit; SAFE-STRUCTURE; structure > slogans |
 | LXVII | `chapters/67_ontology_as_diagnosis_moat.md` | Ontology as diagnosis moat; SAFE-ONTOLOGY; state×graph×FEI×transfer |
 | LXVIII | `chapters/68_human_in_the_loop_tutor_ops.md` | Human-in-the-loop tutor ops; SAFE-HITL; playbooks/QA/FEI training |
+| LXIX | `chapters/69_privacy_student_affect_data.md` | Privacy & student affect data; SAFE-PRIVACY; ERT ban; check-in ethics |
 
-Queued next: see `NEXT_LAB.md` (Part LXIX privacy & affect data, then QUEUE_EXTENDED).
+Queued next: see `NEXT_LAB.md` (Part LXX constitution meta, then 71–73).
 
 **Synthesizer note (v1.9):** Eight researcher chapters (LIX–LXVI) landed after v1.8 without a merge pass — parent WTP, post-hallucination repair, identity measurement, longitudinal horizons, exam-pressure dual rail, multilingual access, gender stereotype hygiene, and socioeconomic structure-over-grit lived only in deep dives (plus orphaned I.4 appends for GENDER/STRUCTURE). This edition promotes each stack to its own I.4 law, adds Red Team kills #18–#20, mounts experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -176,6 +177,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-STRUCTURE** | Structure/scaffolds before grit slogans; bandwidth hygiene; behavior≠trait; no character-blame equity | LXVI | Ban grit-NS / Grit Score™ / poor-kids-need-grit / streak-as-character |
 | **SAFE-ONTOLOGY** *(provisional until synthesizer)* | Diagnosis-before-dialogue; inspectable state; LLM bookends; moat = state×ontology×FEI×transfer not graph file | LXVII | Ban node-count moat / RAG≡KT / fluency-as-diagnosis / ITS-2σ / smarter-than-ChatGPT |
 | **SAFE-HITL** *(provisional until synthesizer)* | Map-briefed tutors; prompt>pour; answer evidence not “got it?”; complementarity; coaching cycles; FEI QA; packetized escalate | LXVIII | Ban warm≡quality / hours NS / Discord≡QA / Ivy≡playbook / explain-first / humans-skip-Map |
+| **SAFE-PRIVACY** *(provisional until synthesizer)* | Self-authored short-TTL affect → pedagogy modifiers only; ERT ban; contextual integrity; refusal-safe | LXIX | Ban face/voice emotion AI / Anxiety Score™ / FERPA≡ethics / mood gates / sell-affect |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -183,7 +185,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” and “character equity” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXIX **Privacy & student affect data**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL gate claims above L1. Researcher count since v1.9 synthesizer = **2**.
+**Next research bottleneck:** Part LXX **Constitution meta (lab belief updates)**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV gate claims above L1. Researcher count since v1.9 synthesizer = **3**.
 
 ---
 
@@ -495,6 +497,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | STRUCT-* | Bandwidth hygiene / structure>slogans / access honesty / no grit-NS | LXVI |
 | ONTO-* | Ontology-constrained next vs chat / bridge route / Map brief / state vs summary | LXVII |
 | HITL-* | Map-briefed tutor / prompt-first playbook / coached QA / tutor+Map vs AI-alone | LXVIII |
+| PRIV-* | Check-in TTL / soften-on-stress / task-only brief / ERT preference / refusal-safe | LXIX |
 
 ---
 
@@ -627,6 +630,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #22 (LXVIII provisional): “Warm human / hours / got-it ≡ tutor quality”
 **Destroyed:** Warm presence or Ivy credentials as quality; hours-booked NS; “Do you understand?” / smile / stars as mastery or QA; Discord≡tutor QA; explain-first brand; AI-replaces-tutors or humans-skip-Map; onboarding deck≡coaching.  
 **Surviving:** SAFE-HITL — Map-briefed tutors; prompt>pour; answer evidence; complementarity; coaching cycles with fidelity; FEI QA; packetized escalate (LXVIII).
+
+### Kill #23 (LXIX provisional): “Emotion AI / Anxiety Score™ / FERPA≡ethics”
+**Destroyed:** Face/voice/wearable emotion recognition as empathy or personalization; Anxiety Score™ / continuous mood NS or parent SKU; FERPA-compliant as ethics proof; mandatory mood gates; emotion-trait tutor briefs; sell/enrich affect; empathy-camera brand.  
+**Surviving:** SAFE-PRIVACY — self-authored short-TTL check-in → pedagogy modifiers only; ERT ban; contextual integrity; refusal-safe; compliance is a floor not a doctrine (LXIX).
 
 ---
 
@@ -1024,6 +1031,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-STRUCTURE | Structure > slogans; bandwidth hygiene; no grit-NS / character-blame equity (Part LXVI) |
 | SAFE-ONTOLOGY | Diagnosis-before-dialogue; inspectable state; LLM bookends; moat≠graph file (Part LXVII; provisional) |
 | SAFE-HITL | Map-briefed tutors; prompt>pour; coaching cycles; FEI QA; packetized escalate (Part LXVIII; provisional) |
+| SAFE-PRIVACY | Self-authored short-TTL affect → pedagogy only; ERT ban; contextual integrity (Part LXIX; provisional) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1096,7 +1104,11 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3h. Socioeconomic constraint on “grit” — **DONE** Part LXVI / SAFE-STRUCTURE  
 3i. Ontology as diagnosis moat — **DONE** Part LXVII / SAFE-ONTOLOGY  
 3j. Human-in-the-loop tutor ops — **DONE** Part LXVIII / SAFE-HITL  
-3k. Privacy & student affect data — **NEXT** Part LXIX / id 69  
+3k. Privacy & student affect data — **DONE** Part LXIX / SAFE-PRIVACY  
+3l. Constitution meta / Bayesian lab process — **NEXT** Part LXX / id 70  
+3m. Peer vs near-peer vs expert tutoring — queued id 71  
+3n. Generated question validity & key risk — queued id 72  
+3o. District procurement & privacy review as GTM — queued id 73  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims  
@@ -1131,7 +1143,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 35. **Synthesizer v1.9 (2026-08-02):** Merged LIX–LXVI into I.4 / XIV / IX / XXI — no new chapter  
 36. **DONE (2026-08-02):** Ontology as diagnosis moat (Part LXVII / id 67) — SAFE-ONTOLOGY stack  
 37. **DONE (2026-08-03):** Human-in-the-loop tutor ops (Part LXVIII / id 68) — SAFE-HITL stack  
-38. **NEXT:** Privacy & student affect data (Part LXIX / id 69)
+38. **DONE (2026-08-03):** Privacy & student affect data (Part LXIX / id 69) — SAFE-PRIVACY stack  
+39. **NEXT:** Constitution meta / Bayesian lab process (Part LXX / id 70)
 
 ---
 
@@ -1165,4 +1178,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Parts LXVII–LXVIII add provisional SAFE-ONTOLOGY + SAFE-HITL and ONTO/HITL experiment families (awaiting synthesizer merge). Next researcher id: LXIX privacy & student affect data. Researcher count since v1.9 = 2. Page count is not the finish line — falsifiable truth is.**
+**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Parts LXVII–LXIX add provisional SAFE-ONTOLOGY + SAFE-HITL + SAFE-PRIVACY and ONTO/HITL/PRIV experiment families (awaiting synthesizer merge). Next researcher id: LXX constitution meta. Researcher count since v1.9 = 3. Page count is not the finish line — falsifiable truth is.**
