@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-03 — Researcher tick: Part LXVIII Human-in-the-loop tutor ops (SAFE-HITL)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch68 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 1 → not Synthesizer)  
+**Chapter written:** `chapters/68_human_in_the_loop_tutor_ops.md` (Part LXVIII)  
+**Claim examined:** What quality human tutoring requires as an operating system (playbooks, QA, FEI training, escalate) atop Map diagnosis — not warm presence or headcount theater.
+
+**Evidence added:**
+- Graesser, Person & Magliano (1995, *ACP*, doi:10.1002/acp.2350090604): naturalistic unskilled tutoring = collaborative Q&A/examples; deep ideal strategies rare.
+- Graesser & Person (1994, *AERJ*, doi:10.3102/00028312031001104): student question quality (not frequency) ↔ achievement after experience; ~240× classroom question rate.
+- Person, Graesser, Magliano & Kreuz (1994, *L&ID*, doi:10.1016/1041-6080(94)90010-8): answer quality diagnoses understanding; “Do you understand?” misleads.
+- Person, Kreuz, Zwaan & Graesser (1995, *C&I*, doi:10.1207/s1532690xci1302_1): politeness strategies can inhibit effective tutoring.
+- Chi, Siler, Jeong, Yamauchi & Hausmann (2001, *Cognitive Science*, doi:10.1207/s15516709cog2504_1): prompt/scaffold (suppress explanations) ≈ didactic learning.
+- Holstein, McLaren & Aleven (2020, *AI Magazine*, doi:10.1002/aaai.12058); Holstein et al. (2019, *JLA*, doi:10.18608/jla.2019.62.3): teacher–AI complementarity / orchestration lifts learning vs AI-classroom without support.
+- Kraft, Blazar & Hogan (2018, *RER*, doi:10.3102/0034654318759268): coaching ≈0.49 SD instruction / ≈0.18 SD achievement; scale shrinks effects.
+
+**Claim killed (this tick):** Warm-human≡quality; hours-booked NS; “got it?”≡mastery; Discord≡tutor-QA; Ivy≡playbook; explain-first brand; AI-replaces-tutors OR humans-skip-Map; onboarding-deck≡coaching.
+
+**Doctrine proposed:** SAFE-HITL — Map-briefed humans; prompt>pour; answer evidence; complementarity; coaching cycles; FEI QA; packetized escalate.
+
+**Experiments:** HITL-1…5 + HITL-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **69** (Privacy & student affect data). Researcher count since v1.9 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-02 — Researcher tick: Part LXVII Ontology as diagnosis moat (SAFE-ONTOLOGY)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch67 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 0 → not Synthesizer)  

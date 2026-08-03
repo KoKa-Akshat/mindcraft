@@ -53,8 +53,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 66 | Socioeconomic constraint on “grit” | Structure > slogans | **DONE** (2026-08-02) — Part LXVI / SAFE-STRUCTURE |
 | — | **Synthesizer v1.9** | Merge LIX–LXVI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-02 UTC 15) |
 | 67 | Ontology as diagnosis moat | When knowledge graphs beat chat | **DONE** (2026-08-02) — Part LXVII / SAFE-ONTOLOGY |
-| 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | **NEXT** |
-| 69 | Privacy & student affect data | Ethics of anxiety telemetry | queued |
+| 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | **DONE** (2026-08-03) — Part LXVIII / SAFE-HITL |
+| 69 | Privacy & student affect data | Ethics of anxiety telemetry | **NEXT** |
 | 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
@@ -84,3 +84,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any innate-boys-better-at-math premise / ST-removal→ACT guarantee / pink-or-for-her easy track / token-STEM-costume≡belonging / empty “math girl” praise≡recognition / we-close-the-gender-STEM-gap claim / gender-waives-challenge (Part LXV)
 - Any grit-as-NS / Grit Score™ / “poor kids need more grit” / streak-as-character / Alan-RCT≡ACT guarantee / scarcity-dropout≡moral-failure / soften-standards-not-taxes (Part LXVI)
 - Any graph-file/node-count≡moat / RAG-or-chat-memory≡knowledge-tracing / fluency-as-diagnosis / Bloom-ITS-2σ / “smarter than ChatGPT” / ALEKS-cosplay without FEI (Part LXVII)
+- Any warm-human≡quality / hours-booked NS / “got it?”≡mastery / Discord≡tutor-QA / Ivy≡playbook / explain-first brand / AI-replaces-tutors OR humans-skip-Map / onboarding-deck≡coaching (Part LXVIII)
