@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-03 — Researcher tick: Part LXX Constitution meta / Bayesian lab process (SAFE-LABMETA)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch70 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 3 → not Synthesizer)  
+**Chapter written:** `chapters/70_constitution_meta_bayesian_lab.md` (Part LXX)  
+**Claim examined:** How the Research Lab updates beliefs so the Constitution constrains shipping/copy — falsifiers, model checks, progressive programme — not page-count theater.
+
+**Evidence added:**
+- Popper (1959/2002, *The Logic of Scientific Discovery*, Routledge): falsifiability / asymmetry of verification vs refutation.
+- Lakatos (1970, in Lakatos & Musgrave, *Criticism and the Growth of Knowledge*; MSRP): hard core, protective belt, progressive vs degenerating programmes.
+- Gelman & Shalizi (2013, *British Journal of Mathematical and Statistical Psychology*, 66(1), 8–38, doi:10.1111/j.2044-8317.2011.02037.x): Bayesian practice as model build → infer → check → revise (hypothetico-deductive), not inductivist automatic rationality.
+- Ioannidis (2005, *PLoS Medicine*, 2(8), e124, doi:10.1371/journal.pmed.0020124): many published findings likely false under low power/bias/flexibility/poor odds.
+- Open Science Collaboration (2015, *Science*, 349(6251), aac4716, doi:10.1126/science.aac4716): ~36% replication significance; effects ~half.
+- Simmons, Nelson & Simonsohn (2011, *Psychological Science*, 22(11), 1359–1366, doi:10.1177/0956797611417632): researcher degrees of freedom → false positives; disclosure remedies.
+- Nosek, Spies & Motyl (2012, *Perspectives on Psychological Science*, 7(6), 615–631, doi:10.1177/1745691612459058): publishability incentives; transparency/OSF-style openness.
+
+**Claim killed (this tick):** Page-count NS; Bayesian theater without checks; cite-washing; FOUNDER BELIEF→FACT by repetition; synthesizer-without-demote; science-backed Constitution ads without falsifiers; fake precision confidence.
+
+**Doctrine proposed:** SAFE-LABMETA — label → check → kill/wound/survive → demote marketing until FEI evidence; small hard core; synthesizer must delete.
+
+**Experiments:** LABMETA-1…5 + LABMETA-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **71** (peer vs near-peer vs expert tutoring). Researcher count since v1.9 synthesizer: **4**. Queued 74–75 (unfinished was heading <3 after promoting 71).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-03 — Researcher tick: Part LXIX Privacy & student affect data (SAFE-PRIVACY)
 
 **Tick type:** Researcher (UTC hour 3; 3 % 6 ≠ 0 → not Red Team; researcher count since synthesizer v1.9 = 2 → not Synthesizer)  
