@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-03 — Researcher tick: Part LXXI Peer vs near-peer vs expert tutoring (SAFE-TUTORGRAIN)
+
+**Tick type:** Researcher (UTC hour 15; 15 % 6 ≠ 0 → not Red Team; researcher count since synthesizer v1.9 = 4 → not Synthesizer)  
+**Chapter written:** `chapters/71_peer_nearpeer_expert_tutoring.md` (Part LXXI)  
+**Claim examined:** At what tutor-expertise grain (same-age peer / near-peer college→HS / expert) MindCraft should hire and sell — structure+training vs Ivy theater vs peer Discord.
+
+**Evidence added:**
+- Cohen, Kulik & Kulik (1982, *American Educational Research Journal*, 19(2), 237–248, doi:10.3102/00028312019002237): school tutoring programs help tutees (and tutors) on achievement/attitudes.
+- Leung (2015, *Journal of Educational Psychology*, 107(2), 558–579, doi:10.1037/a0037698): peer tutoring positive on achievement; role/structure moderators.
+- Topping (1996, *Higher Education*, 32(3), 321–345, doi:10.1007/BF00138870): HE peer-tutoring typology; cross-year formats among evidenced lines.
+- VanLehn (2011, *Educational Psychologist*, 46(4), 197–221, doi:10.1080/00461520.2011.611369): human tutoring ~d=0.79; ITS ~d=0.76; not Bloom ~2.0.
+- Chi, Siler & Jeong (2004, *Cognition and Instruction*, 22(3), 363–386, doi:10.1207/s1532690xci2203_4): novice tutors monitor understanding poorly.
+- Roscoe & Chi (2007, *Review of Educational Research*, 77(4), 534–574, doi:10.3102/0034654307309920): knowledge-telling bias in peer tutors.
+- Roscoe & Chi (2008, *Instructional Science*, 36(4), 321–350, doi:10.1007/s11251-007-9034-5): knowledge-building rarer; inferential tutee Qs elicit elaboration.
+
+**Claim killed (this tick):** Ivy/PhD≡FEI; Bloom 2σ expert marketing; Discord-peer≡tutoring; “great explainers” hire bar; expertise≡diagnosis; tutor-learning as student NS.
+
+**Doctrine proposed:** SAFE-TUTORGRAIN — default trained near-peer; structure>pairing; expert=escalate/coach-of-tutors; hire by fidelity drills.
+
+**Experiments:** GRAIN-1…5 + GRAIN-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **72** (generated question validity & key risk). Researcher count since v1.9 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-03 — Researcher tick: Part LXX Constitution meta / Bayesian lab process (SAFE-LABMETA)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch70 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 3 → not Synthesizer)  

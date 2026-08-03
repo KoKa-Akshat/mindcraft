@@ -60,8 +60,9 @@
 | LXVIII | `chapters/68_human_in_the_loop_tutor_ops.md` | Human-in-the-loop tutor ops; SAFE-HITL; playbooks/QA/FEI training |
 | LXIX | `chapters/69_privacy_student_affect_data.md` | Privacy & student affect data; SAFE-PRIVACY; ERT ban; check-in ethics |
 | LXX | `chapters/70_constitution_meta_bayesian_lab.md` | Constitution meta; SAFE-LABMETA; falsify/check/demote lab process |
+| LXXI | `chapters/71_peer_nearpeer_expert_tutoring.md` | Peer vs near-peer vs expert tutoring; SAFE-TUTORGRAIN; hire bar |
 
-Queued next: see `NEXT_LAB.md` (Part LXXI peer/expert tutoring, then 72–75).
+Queued next: see `NEXT_LAB.md` (Part LXXII generated-Q validity, then 73–75).
 
 **Synthesizer note (v1.9):** Eight researcher chapters (LIX–LXVI) landed after v1.8 without a merge pass — parent WTP, post-hallucination repair, identity measurement, longitudinal horizons, exam-pressure dual rail, multilingual access, gender stereotype hygiene, and socioeconomic structure-over-grit lived only in deep dives (plus orphaned I.4 appends for GENDER/STRUCTURE). This edition promotes each stack to its own I.4 law, adds Red Team kills #18–#20, mounts experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT in Part IX, and refreshes metrics/glossary. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -180,6 +181,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-HITL** *(provisional until synthesizer)* | Map-briefed tutors; prompt>pour; answer evidence not “got it?”; complementarity; coaching cycles; FEI QA; packetized escalate | LXVIII | Ban warm≡quality / hours NS / Discord≡QA / Ivy≡playbook / explain-first / humans-skip-Map |
 | **SAFE-PRIVACY** *(provisional until synthesizer)* | Self-authored short-TTL affect → pedagogy modifiers only; ERT ban; contextual integrity; refusal-safe | LXIX | Ban face/voice emotion AI / Anxiety Score™ / FERPA≡ethics / mood gates / sell-affect |
 | **SAFE-LABMETA** *(provisional until synthesizer)* | Label → check → kill/wound/survive → demote copy; small FEI hard core; synthesizer must delete; page count vanity | LXX | Ban page-count NS / Bayesian theater / cite-wash / belief-by-repetition / science-backed ads without falsifiers |
+| **SAFE-TUTORGRAIN** *(provisional until synthesizer)* | Default trained near-peer; structure>pairing; no 2σ; Map>credential diagnosis; suppress knowledge-telling; expert=escalate | LXXI | Ban Ivy/PhD≡FEI / Discord-peer≡tutoring / explainers hire bar / expertise≡diagnosis / tutor-learning NS |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
@@ -187,7 +189,7 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 
 **Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” and “character equity” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXXI **Peer vs near-peer vs expert tutoring**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA gate claims above L1. Researcher count since v1.9 synthesizer = **4**.
+**Next research bottleneck:** Part LXXII **Generated question validity & key risk**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN gate claims above L1. Researcher count since v1.9 synthesizer = **5**.
 
 ---
 
@@ -501,6 +503,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | HITL-* | Map-briefed tutor / prompt-first playbook / coached QA / tutor+Map vs AI-alone | LXVIII |
 | PRIV-* | Check-in TTL / soften-on-stress / task-only brief / ERT preference / refusal-safe | LXIX |
 | LABMETA-* | Pre-reg gate / Red Team bite / copy lint / synthesizer demote / external skeptic | LXX |
+| GRAIN-* | Trained near-peer / Map vs expert-no-Map / peer-pair / hire-by-fidelity / parent CBC grain | LXXI |
 
 ---
 
@@ -641,6 +644,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #24 (LXX provisional): “Page-count science / Bayesian theater / cite-wash”
 **Destroyed:** Chapter/page count as lab NS; “Bayesian update” without model check or experiment; DOI lists that change no product rule; FOUNDER BELIEF promoted to FACT by repetition; synthesizer that never demotes; “science-backed Constitution” ads without falsifiers; fake precision confidence numbers.  
 **Surviving:** SAFE-LABMETA — label → Red Team/check → kill/wound/survive → claim-ladder demotion of copy; small FEI hard core; hostile prior on single-study overclaim; synthesizer must delete (LXX).
+
+### Kill #25 (LXXI provisional): “Ivy/expert résumé / peer Discord ≡ tutoring quality”
+**Destroyed:** PhD/Ivy/expert credentials as FEI proof or default SKU; Bloom 2σ human-tutor marketing; unstructured peer Discord ≡ product tutoring; “great explainers” hire bar; expertise ≡ accurate diagnosis; tutor-learning as student North Star.  
+**Surviving:** SAFE-TUTORGRAIN — trained near-peer default; structure>pairing; Map carries diagnosis; suppress knowledge-telling; expert=escalate/coach-of-tutors; hire by fidelity drills (LXXI).
 
 ---
 
@@ -1040,6 +1047,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-HITL | Map-briefed tutors; prompt>pour; coaching cycles; FEI QA; packetized escalate (Part LXVIII; provisional) |
 | SAFE-PRIVACY | Self-authored short-TTL affect → pedagogy only; ERT ban; contextual integrity (Part LXIX; provisional) |
 | SAFE-LABMETA | Label→check→kill/demote; small FEI core; page-count vanity kill (Part LXX; provisional) |
+| SAFE-TUTORGRAIN | Trained near-peer default; structure>pairing; hire by fidelity; expert=escalate (Part LXXI; provisional) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1114,8 +1122,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3j. Human-in-the-loop tutor ops — **DONE** Part LXVIII / SAFE-HITL  
 3k. Privacy & student affect data — **DONE** Part LXIX / SAFE-PRIVACY  
 3l. Constitution meta / Bayesian lab process — **DONE** Part LXX / SAFE-LABMETA  
-3m. Peer vs near-peer vs expert tutoring — **NEXT** Part LXXI / id 71  
-3n. Generated question validity & key risk — queued id 72  
+3m. Peer vs near-peer vs expert tutoring — **DONE** Part LXXI / SAFE-TUTORGRAIN  
+3n. Generated question validity & key risk — **NEXT** Part LXXII / id 72  
 3o. District procurement & privacy review as GTM — queued id 73  
 3p. Spaced retrieval schedules in product UX — queued id 74  
 3q. Tutor workforce pipeline & quality drift — queued id 75  
@@ -1155,7 +1163,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 37. **DONE (2026-08-03):** Human-in-the-loop tutor ops (Part LXVIII / id 68) — SAFE-HITL stack  
 38. **DONE (2026-08-03):** Privacy & student affect data (Part LXIX / id 69) — SAFE-PRIVACY stack  
 39. **DONE (2026-08-03):** Constitution meta / Bayesian lab process (Part LXX / id 70) — SAFE-LABMETA stack  
-40. **NEXT:** Peer vs near-peer vs expert tutoring (Part LXXI / id 71)
+40. **DONE (2026-08-03):** Peer vs near-peer vs expert tutoring (Part LXXI / id 71) — SAFE-TUTORGRAIN stack  
+41. **NEXT:** Generated question validity & key risk (Part LXXII / id 72)
 
 ---
 
@@ -1189,4 +1198,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Parts LXVII–LXX add provisional SAFE-ONTOLOGY + SAFE-HITL + SAFE-PRIVACY + SAFE-LABMETA and ONTO/HITL/PRIV/LABMETA experiment families (awaiting synthesizer merge). Next researcher id: LXXI peer/expert tutoring. Researcher count since v1.9 = 4. Page count is not the finish line — falsifiable truth is.**
+**v1.9 synthesizer pass folded Parts LIX–LXVI into surviving commercial doctrine (I.4 rows SAFE-WTP through SAFE-STRUCTURE; Red Team kills #18–#20). Experiment families WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT mounted. Parts LXVII–LXXI add provisional SAFE-ONTOLOGY + SAFE-HITL + SAFE-PRIVACY + SAFE-LABMETA + SAFE-TUTORGRAIN and ONTO/HITL/PRIV/LABMETA/GRAIN experiment families (awaiting synthesizer merge). Next researcher id: LXXII generated-Q validity. Researcher count since v1.9 = 5. Page count is not the finish line — falsifiable truth is.**

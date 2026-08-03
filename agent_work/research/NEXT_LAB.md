@@ -56,8 +56,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 68 | Human-in-the-loop tutor ops | Playbooks; QA; FEI training | **DONE** (2026-08-03) — Part LXVIII / SAFE-HITL |
 | 69 | Privacy & student affect data | Ethics of anxiety telemetry | **DONE** (2026-08-03) — Part LXIX / SAFE-PRIVACY |
 | 70 | Constitution meta: how the lab updates beliefs | Bayesian lab process | **DONE** (2026-08-03) — Part LXX / SAFE-LABMETA |
-| 71 | Peer vs near-peer vs expert tutoring | Evidence on tutor expertise grain; ops hire bar | **NEXT** |
-| 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | queued |
+| 71 | Peer vs near-peer vs expert tutoring | Evidence on tutor expertise grain; ops hire bar | **DONE** (2026-08-03) — Part LXXI / SAFE-TUTORGRAIN |
+| 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | **NEXT** |
 | 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | queued |
 | 74 | Spaced retrieval schedules in product UX | Expanding spacing vs cramming week; ACT calendar | queued |
 | 75 | Tutor workforce pipeline & quality drift | Hiring bar; burnout; FEI fidelity over tenure | queued |
@@ -92,3 +92,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any warm-human≡quality / hours-booked NS / “got it?”≡mastery / Discord≡tutor-QA / Ivy≡playbook / explain-first brand / AI-replaces-tutors OR humans-skip-Map / onboarding-deck≡coaching (Part LXVIII)
 - Any face/voice emotion AI ≡ empathy / Anxiety Score™ NS / FERPA≡ethics / mandatory mood gate / emotion-trait tutor briefs / sell-affect-data / empathy-camera brand (Part LXIX)
 - Any page-count NS / Bayesian-theater without checks / cite-wash / FOUNDER BELIEF→FACT by repetition / synthesizer-without-demote / “science-backed Constitution” ads without falsifiers (Part LXX)
+- Any Ivy/PhD≡FEI / Bloom-2σ expert tutors / Discord-peer≡tutoring / “great explainers” hire bar / expertise≡diagnosis / tutor-learning-as-NS (Part LXXI)
