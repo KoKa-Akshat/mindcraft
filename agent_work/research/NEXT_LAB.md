@@ -65,9 +65,12 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 76 | Forgetting curves as product honesty | Parent/student retention truth vs mastery fireworks | **DONE** (2026-08-04) — Part LXXVI / SAFE-FORGET |
 | 77 | Adaptive spacing algorithms vs fixed calendars | SM-2/FSRS-style claims; inspectable lags; no black-box SRS brand | **DONE** (2026-08-04) — Part LXXVII / SAFE-ADAPT |
 | 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns; exam dual-rail GTM | **DONE** (2026-08-04) — Part LXXVIII / SAFE-DURABLE |
-| 79 | Feedback timing: immediate vs delayed | Tutoring UX; Kluger/DeNisi; soft-wrong delay | **NEXT** |
-| 80 | Bridge-gap product narrative | Connection failures > concept failures; Map copy | queued |
+| 79 | Feedback timing: immediate vs delayed | Tutoring UX; Kluger/DeNisi; soft-wrong delay | **DONE** (2026-08-04) — Part LXXIX / SAFE-FBTIME |
+| 80 | Bridge-gap product narrative | Connection failures > concept failures; Map copy | **NEXT** |
 | 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | queued |
+| 82 | Format-axis product narrative | Diagram vs symbolic gaps; FormatId CTA copy | queued |
+| 83 | Parent dashboard honesty UX | Proof age without shame; MoC surfaces | queued |
+| 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -107,3 +110,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any mastery-fireworks≡durable / personal-Ebbinghaus Score™ / streak-as-memory / confidence≡retention / cured-forgetting ads / guaranteed retention% from decay UI (Part LXXVI)
 - Any SM-2/FSRS/Anki hero / black-box perfect-interval AI / flashcard-MAE≡ACT / engagement≡learning from scheduler / silent ease-hell rewrite (Part LXXVII)
 - Any cram≡ready / guaranteed ACT-point packages / overlearn-tonight as method / shame-parent GTM / streak-as-durable / bootcamp-mastery blitz unlabeled (Part LXXVIII)
+- Any instant-feedback AI hero / always-delay≡science / feedback≡learning / green-check NS / ego-toast≡FI / soft-wrong-delay Calm Score™ (Part LXXIX)

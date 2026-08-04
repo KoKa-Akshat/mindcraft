@@ -4,6 +4,38 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Researcher tick: Part LXXIX Feedback timing immediate vs delayed (SAFE-FBTIME)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch79 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 4 → not Synthesizer)  
+**Chapter written:** `chapters/79_feedback_timing_immediate_vs_delayed.md` (Part LXXIX)  
+**Claim examined:** When MindCraft should reveal correctness vs micro-delay/soft-wrong vs hide-correctness — without selling instant-feedback AI or always-delay cosplay.
+
+**Evidence added:**
+- Kluger & DeNisi (1996, *Psychological Bulletin*, 119(2), 254–284, doi:10.1037/0033-2909.119.2.254) — FI d≈0.41; >1/3 harm; FIT task→self.
+- Hattie & Timperley (2007, *RER*, 77(1), 81–112, doi:10.3102/003465430298487) — feedback power contingent on type/level; timing thorny.
+- Shute (2008, *RER*, 78(1), 153–189, doi:10.3102/0034654307313795) — formative feedback guidelines; timing×learner×task.
+- Kulik & Kulik (1988, *RER*, 58(1), 79–97, doi:10.3102/00346543058001079) — classroom often immediate; lab often delayed.
+- Butler, Karpicke & Roediger (2007, *JEP: Applied*, 13(4), 273–281, doi:10.1037/1076-898X.13.4.273) — delayed feedback > immediate on later recall (spacing).
+- Brummer, de Boer, Mouw & Strijbos (2024, *Learning Environments Research*, 27(3), 453–476, doi:10.1007/s10984-024-09501-4) — digital FI g≈0.41; both timings work; focus > timing in meta-regression.
+- Kandemir, Esposito, Gurgand & Ramus (preprint, HAL:hal-05546645) — CAL timing contrast g=0.03 ns; heterogeneity.
+- Fyfe & Rittle-Johnson (2016a, *JEP*, 108(1), 82–97, doi:10.1037/edu0000053) — prior knowledge flips feedback help/hurt.
+- Fyfe & Rittle-Johnson (2016b, *JECP*, 147, 140–151, doi:10.1016/j.jecp.2016.03.009) — computer feedback helps low-knowledge math; immediate strong for mastery in that design.
+- van der Kleij, Feskens & Eggen (2015, *RER*, 85(4), 475–511, doi:10.3102/0034654314564881) — EF > KR/KCR; content/outcome grain matter.
+
+**Claim killed (this tick):** Instant-feedback AI hero; always-delay≡science; feedback≡learning; green-check / latency NPS as NS; ego-toast≡FI; soft-wrong-delay Calm Score™.
+
+**Doctrine proposed:** SAFE-FBTIME — mode-conditional timing (diagnostic hide / learn micro-delay+SE / prove KR); focus>timing; prior-knowledge switch.
+
+**Experiments:** FB-1…5 + FB-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Queue hygiene:** Promoted ids 82–84 into NEXT_LAB (unfinished would otherwise drop below 3).
+
+**Next researcher id:** **80** (bridge-gap product narrative). Researcher count since v1.10 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Researcher tick: Part LXXVIII Cram products vs durable-identity positioning (SAFE-DURABLE)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.10 = 3 → not Synthesizer)  

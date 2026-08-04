@@ -4,7 +4,7 @@
 **Edition:** v1.10 (Synthesizer consolidation of Parts LXVII–LXXIV into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-04 (Researcher Part LXXVIII SAFE-DURABLE — provisional append after Synthesizer v1.10)
+**Last updated:** 2026-08-04 (Researcher Part LXXIX SAFE-FBTIME — provisional append after Synthesizer v1.10)
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -68,8 +68,9 @@
 | LXXVI | `chapters/76_forgetting_curves_product_honesty.md` | Forgetting curves as product honesty; SAFE-FORGET; aged evidence / delayed probes |
 | LXXVII | `chapters/77_adaptive_spacing_algorithms_vs_fixed_calendars.md` | Adaptive spacing vs fixed calendars; SAFE-ADAPT; calendar-first / banded personalization |
 | LXXVIII | `chapters/78_cram_products_vs_durable_identity.md` | Cram products vs durable-identity positioning; SAFE-DURABLE; dual-rail GTM / no point guarantees |
+| LXXIX | `chapters/79_feedback_timing_immediate_vs_delayed.md` | Feedback timing immediate vs delayed; SAFE-FBTIME; mode-conditional clocks / focus>timing |
 
-Queued next: see `NEXT_LAB.md` (Part LXXIX feedback timing, then 80–81).
+Queued next: see `NEXT_LAB.md` (Part LXXX bridge-gap narrative, then 81–84).
 
 **Synthesizer note (v1.10):** Eight researcher chapters (LXVII–LXXIV) landed after v1.9 as provisional I.4 appends — ontology diagnosis moat, HITL tutor ops, affect privacy, lab meta-process, tutor-grain hire bar, generated-question key risk, district procurement GTM, and spaced-retrieval product UX. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #21–#28, confirms ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -204,14 +205,15 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-FORGET** *(provisional)* | Age evidence; JOLs≠retention; delayed probes as truth; returns as competence protection; no shame-curve hero | LXXVI | Ban mastery-fireworks≡durable / Ebbinghaus Score™ / streak-as-memory / confidence≡retention / cured-forgetting ads / retention% guarantees |
 | **SAFE-ADAPT** *(provisional)* | Calendar-first; adapt only inside RI bands with due+why; selection-among-due > opaque rewrite; flashcard lineage≠FEI | LXXVII | Ban SM-2/FSRS/Anki hero / black-box perfect-interval AI / flashcard-MAE≡ACT / engagement≡learning / silent ease-hell |
 | **SAFE-DURABLE** *(provisional)* | Dual-rail GTM: durable learn + late prove; cram-intercept not cosplay; legible MoC for WTP; no point guarantees | LXXVIII | Ban cram≡ready / ACT-point packages / overlearn-tonight / shame-parent GTM / streak-as-durable |
+| **SAFE-FBTIME** *(provisional)* | Mode-conditional timing: diagnostic hide / learn micro-delay+SE / prove KR; focus>timing; prior-knowledge switch | LXXIX | Ban instant-feedback AI hero / always-delay≡science / feedback≡learning / green-check NS / ego-toast≡FI |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” and “cram/bootcamp/+points packages” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” and “instant feedback AI / always-delay science” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXXIX **Feedback timing: immediate vs delayed**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM gate claims above L1. Researcher count since v1.10 synthesizer = **4**.
+**Next research bottleneck:** Part LXXX **Bridge-gap product narrative**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB gate claims above L1. Researcher count since v1.10 synthesizer = **5**.
 
 ---
 
@@ -534,6 +536,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | FORGET-* | Aged-node vs fireworks / honest post-mission vs confetti / parent proof-age CBC / RI-salience vs fluency JOL / clear-state expiry | LXXVI |
 | ADAPT-* | Fixed calendar vs banded modulation / due-set priority vs FIFO / inspectable vs opaque smart review / FSRS-urgency priority-only / stress-capped pull-forward | LXXVII |
 | CRAM-* | Durable vs cram-pack CBC / cram-intercept UX / dual-rail label / score-lift vs proof-age ads / massed week vs horizon Returns | LXXVIII |
+| FB-* | Micro-delay+SE vs instant KR / tiered timing / diagnostic hide / prove-rail KR / process vs ego toast | LXXIX |
 
 ---
 
@@ -698,6 +701,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill (provisional, Part LXXVIII): “Cram / bootcamp / +points packages ≡ durable math identity”
 **Destroyed:** Cram-week ≡ ACT-ready or math-person; guaranteed ACT/SAT point SKUs; overlearn-tonight as retention method; score-only default parent brand; shame-parent GTM; streak/tonight-accuracy as durable proof; unlabeled “final mastery blitz.”  
 **Surviving (provisional):** SAFE-DURABLE — dual-rail GTM (durable learn + late prove); cram-intercept not cram-cosplay; legible MoC (proof age / returns) for WTP; no point guarantees; instrument CRAM-* before anti-cram attack ads (LXXVIII).
+
+### Kill (provisional, Part LXXIX): “Instant feedback AI / always-delay science ≡ learning”
+**Destroyed:** Instant-feedback AI as hero claim; always-delay≡desirable-difficulty science; feedback≡learning (ignore Kluger harm rate); green-check / latency NPS as North Star; ego-toast≡formative feedback; soft-wrong delay as Calm Score™.  
+**Surviving (provisional):** SAFE-FBTIME — mode-conditional timing (diagnostic hide / learn micro-delay+SE / prove KR labeled); focus>timing; prior-knowledge switch; instrument FB-* before timing brand ads (LXXIX).
 
 ---
 
@@ -976,7 +983,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | ChatGPT tutors | Instant explanation | Low unless wrapped | Trust / hallucination; Bastani Base harm |
 | MindCraft (target) | FEI conversion + tutor witness + gap diagnosis + solo transfer | **Intended high** | Must prove, not assert |
 
-**Strategic implication (v1.10 densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks/leagues/XP or expanding-SRS mystique. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency or graph-file cosplay. Do not out-Anki/FSRS on black-box interval theater. Do not out-Kaplan/bootcamp on massed cram or +points packages (SAFE-DURABLE, provisional). Do not out-grit character apps, therapy Calm Score™, sports academies, conservatories, grandmaster cosplay, pink STEM SKUs, survey-priced ACT guarantees, Ivy-tutor theater, emotion cameras, or FERPA-badge GTM. Out-compete on the **session + ops + honesty stack**: inspectable diagnosis (SAFE-ONTOLOGY), Map-briefed prompt>pour humans (SAFE-HITL / TUTORGRAIN), verify-before-ship banks (SAFE-GENQ), privacy-bound affect + district trust packets (SAFE-PRIVACY / PROCURE), horizon-matched returns (SAFE-SCHED), calendar-first banded adaptivity (SAFE-ADAPT, provisional), time-honest aged evidence (SAFE-FORGET, provisional), dual-rail durable GTM (SAFE-DURABLE, provisional), SAFE-DP spine under SAFE-DD, productive-error + calibration (SAFE-MISCON / CALIB), recoverable AI truth (SAFE-REPAIR), validated identity on long clocks (SAFE-IDMEASURE / LONGID), structure honesty (SAFE-ELL / GENDER / STRUCTURE), parent CBC (SAFE-WTP), and transfer when help is gone — then *say that* in marketing (CSA-2). Lab process itself obeys SAFE-LABMETA (falsify before “science-backed”).
+**Strategic implication (v1.10 densified):** Do not out-Khan Khan on content breadth. Do not out-Duo Duo on streaks/leagues/XP or expanding-SRS mystique. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency or graph-file cosplay. Do not out-Anki/FSRS on black-box interval theater. Do not out-Kaplan/bootcamp on massed cram or +points packages (SAFE-DURABLE, provisional). Do not out-instant-feedback AI or always-delay cosplay (SAFE-FBTIME, provisional). Do not out-grit character apps, therapy Calm Score™, sports academies, conservatories, grandmaster cosplay, pink STEM SKUs, survey-priced ACT guarantees, Ivy-tutor theater, emotion cameras, or FERPA-badge GTM. Out-compete on the **session + ops + honesty stack**: inspectable diagnosis (SAFE-ONTOLOGY), Map-briefed prompt>pour humans (SAFE-HITL / TUTORGRAIN), verify-before-ship banks (SAFE-GENQ), privacy-bound affect + district trust packets (SAFE-PRIVACY / PROCURE), horizon-matched returns (SAFE-SCHED), calendar-first banded adaptivity (SAFE-ADAPT, provisional), time-honest aged evidence (SAFE-FORGET, provisional), dual-rail durable GTM (SAFE-DURABLE, provisional), mode-conditional feedback clocks (SAFE-FBTIME, provisional), SAFE-DP spine under SAFE-DD, productive-error + calibration (SAFE-MISCON / CALIB), recoverable AI truth (SAFE-REPAIR), validated identity on long clocks (SAFE-IDMEASURE / LONGID), structure honesty (SAFE-ELL / GENDER / STRUCTURE), parent CBC (SAFE-WTP), and transfer when help is gone — then *say that* in marketing (CSA-2). Lab process itself obeys SAFE-LABMETA (falsify before “science-backed”).
 
 ---
 
@@ -1050,6 +1057,8 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `adapt_band_isi_days` | Actual ISI vs horizon baseline (within declared band) | SAFE-ADAPT modulation audit (LXXVII) |
 | `cram_intercept_shown` | User requested massed week and saw RI tradeoff + denser Returns offer | SAFE-DURABLE cram-intercept (LXXVIII) |
 | `prove_rail_labeled` | Exam-week intensity sessions tagged prove (not mastery) | SAFE-DURABLE dual-rail honesty (LXXVIII) |
+| `fb_microdelay_ms` | Forced SE/attempt gate duration before learn-rail reveal | SAFE-FBTIME learn gate (LXXIX) |
+| `soft_wrong_se_before_reveal` | Soft-wrong path required student why before coach | SAFE-FBTIME / SAFE-SE (LXXIX) |
 
 ## XXI.3 Lagging indicators
 
@@ -1126,6 +1135,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-FORGET | Age evidence; JOLs≠retention; delayed probes as truth; returns as competence protection; no Ebbinghaus Score™ (Part LXXVI, provisional) |
 | SAFE-ADAPT | Calendar-first; banded inspectable personalization; selection>opaque rewrite; flashcard lineage≠FEI (Part LXXVII, provisional) |
 | SAFE-DURABLE | Dual-rail GTM; cram-intercept not cosplay; legible MoC for WTP; no point guarantees (Part LXXVIII, provisional) |
+| SAFE-FBTIME | Mode-conditional timing; focus>timing; prior-knowledge switch; no instant-feedback hero (Part LXXIX, provisional) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1208,9 +1218,12 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3r. Forgetting curves as product honesty — **DONE** Part LXXVI / SAFE-FORGET  
 3s. Adaptive spacing algorithms vs fixed calendars — **DONE** Part LXXVII / SAFE-ADAPT  
 3t. Cram products vs durable-identity positioning — **DONE** Part LXXVIII / SAFE-DURABLE  
-3u. Feedback timing immediate vs delayed — **NEXT** id 79  
-3v. Bridge-gap product narrative — queued id 80  
+3u. Feedback timing immediate vs delayed — **DONE** Part LXXIX / SAFE-FBTIME  
+3v. Bridge-gap product narrative — **NEXT** id 80  
 3w. Cold-start without fake mastery — queued id 81  
+3x. Format-axis product narrative — queued id 82  
+3y. Parent dashboard honesty UX — queued id 83  
+3z. Tutor talk-ratio instrumentation — queued id 84  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims — **DONE** Part LXX / SAFE-LABMETA  
@@ -1256,7 +1269,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 46. **DONE (2026-08-04):** Forgetting curves as product honesty (Part LXXVI / id 76) — SAFE-FORGET stack  
 47. **DONE (2026-08-04):** Adaptive spacing algorithms vs fixed calendars (Part LXXVII / id 77) — SAFE-ADAPT stack  
 48. **DONE (2026-08-04):** Cram products vs durable-identity positioning (Part LXXVIII / id 78) — SAFE-DURABLE stack  
-49. **NEXT:** Feedback timing immediate vs delayed (Part LXXIX / id 79)
+49. **DONE (2026-08-04):** Feedback timing immediate vs delayed (Part LXXIX / id 79) — SAFE-FBTIME stack  
+50. **NEXT:** Bridge-gap product narrative (Part LXXX / id 80)
 
 ---
 
@@ -1290,4 +1304,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.10 synthesizer pass folded Parts LXVII–LXXIV into surviving commercial doctrine (I.4 rows SAFE-ONTOLOGY through SAFE-SCHED; Red Team kills #21–#28 promoted from provisional). Experiment families ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED confirmed mounted. Parts LXXV–LXXVIII (SAFE-WORKFORCE / SAFE-FORGET / SAFE-ADAPT / SAFE-DURABLE) landed as provisional I.4 appends (researcher count since v1.10 = 4). Next researcher id: LXXIX feedback timing immediate vs delayed. Page count is not the finish line — falsifiable truth is.**
+**v1.10 synthesizer pass folded Parts LXVII–LXXIV into surviving commercial doctrine (I.4 rows SAFE-ONTOLOGY through SAFE-SCHED; Red Team kills #21–#28 promoted from provisional). Experiment families ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED confirmed mounted. Parts LXXV–LXXIX (SAFE-WORKFORCE / SAFE-FORGET / SAFE-ADAPT / SAFE-DURABLE / SAFE-FBTIME) landed as provisional I.4 appends (researcher count since v1.10 = 5). Next researcher id: LXXX bridge-gap product narrative. Page count is not the finish line — falsifiable truth is.**
