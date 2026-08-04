@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Researcher tick: Part LXXX Bridge-gap product narrative (SAFE-BRIDGE)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.10 = 5 → not Synthesizer)  
+**Chapter written:** `chapters/80_bridge_gap_product_narrative.md` (Part LXXX)  
+**Claim examined:** When MindCraft should narrate failure as connection (knows A, knows B, fails A→B) vs weak-node — without bridge-count moat or re-explain≡bridge cosplay.
+
+**Evidence added:**
+- Gick & Holyoak (1980, *Cognitive Psychology*, 12(3), 306–355, doi:10.1016/0010-0285(80)90013-4) — spontaneous analogical transfer often fails until hints.
+- Salomon & Perkins (1989, *Educational Psychologist*, 24(2), 113–142, doi:10.1207/s15326985ep2402_1) — low-road vs high-road transfer mechanisms.
+- Perkins & Salomon (1988, *Educational Leadership*, 46(1), 22–32; 1992 encyclopedia) — hugging vs bridging instruction.
+- Barnett & Ceci (2002, *Psychological Bulletin*, 128(4), 612–637, doi:10.1037/0033-2909.128.4.612) — name transfer dimensions.
+- Eylon & Linn (1988, *RER*, 58(3), 251–301, doi:10.3102/00346543058003251) — knowledge organization / depth over fleeting coverage.
+- Linn & Eylon (2006, *Handbook of Educational Psychology*, 2nd ed., pp. 511–544) — knowledge integration (elicit/add/distinguish/reflect).
+- Richland, Zur & Holyoak (2007, *Science*, 316(5828), 1128–1129, doi:10.1126/science.1142103) — TIMSS analogies need cognitive supports.
+- Richland, Stigler & Holyoak (2012, *Educational Psychologist*, 47(3), 189–203, doi:10.1080/00461520.2012.667065) — relational comparisons for conceptual structure.
+
+**Claim killed (this tick):** Bridge-count≡moat; re-explain≡bridge; coverage≡connection; absolute “we connect everything”; missing-prereq≡bridge-gap; shame-edge Map; analogy-mention≡pedagogy.
+
+**Doctrine proposed:** SAFE-BRIDGE — connection-first narrative when endpoints non-naive; remediate the relation with co-present supports; measure join transfer.
+
+**Experiments:** BRIDGE-1…5 + BRIDGE-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **81** (cold-start without fake mastery). Researcher count since v1.10 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Researcher tick: Part LXXIX Feedback timing immediate vs delayed (SAFE-FBTIME)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch79 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 4 → not Synthesizer)  
