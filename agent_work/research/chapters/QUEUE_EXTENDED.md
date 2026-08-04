@@ -50,5 +50,8 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 74 | Spaced retrieval schedules in product UX | Expanding vs equal; ACT calendar | **DONE** → `74_spaced_retrieval_schedules_product_ux.md` |
 | 75 | Tutor workforce pipeline & quality drift | Hiring bar; burnout; FEI fidelity over tenure | promoted → NEXT_LAB **NEXT** |
 | 76 | Forgetting curves as product honesty | Parent/student retention truth vs mastery fireworks | promoted → NEXT_LAB |
-| 77 | Adaptive spacing algorithms vs fixed calendars | SM-2/FSRS-style claims; inspectable lags | promoted → NEXT_LAB |
-| 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns | promoted → NEXT_LAB |
+| 77 | Adaptive spacing algorithms vs fixed calendars | SM-2/FSRS-style claims; inspectable lags | **DONE** → `77_adaptive_spacing_algorithms_vs_fixed_calendars.md` |
+| 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns | promoted → NEXT_LAB **NEXT** |
+| 79 | Feedback timing: immediate vs delayed | Tutoring UX; Kluger/DeNisi; soft-wrong delay | promoted → NEXT_LAB |
+| 80 | Bridge-gap product narrative | Connection failures > concept failures; Map copy | promoted → NEXT_LAB |
+| 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | promoted → NEXT_LAB |

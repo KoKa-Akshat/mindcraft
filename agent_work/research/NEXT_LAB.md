@@ -63,8 +63,11 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | — | **Synthesizer v1.10** | Merge LXVII–LXXIV SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-04 UTC 03) |
 | 75 | Tutor workforce pipeline & quality drift | Hiring bar; burnout; FEI fidelity over tenure | **DONE** (2026-08-04) — Part LXXV / SAFE-WORKFORCE |
 | 76 | Forgetting curves as product honesty | Parent/student retention truth vs mastery fireworks | **DONE** (2026-08-04) — Part LXXVI / SAFE-FORGET |
-| 77 | Adaptive spacing algorithms vs fixed calendars | SM-2/FSRS-style claims; inspectable lags; no black-box SRS brand | **NEXT** |
-| 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns; exam dual-rail GTM | queued |
+| 77 | Adaptive spacing algorithms vs fixed calendars | SM-2/FSRS-style claims; inspectable lags; no black-box SRS brand | **DONE** (2026-08-04) — Part LXXVII / SAFE-ADAPT |
+| 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns; exam dual-rail GTM | **NEXT** |
+| 79 | Feedback timing: immediate vs delayed | Tutoring UX; Kluger/DeNisi; soft-wrong delay | queued |
+| 80 | Bridge-gap product narrative | Connection failures > concept failures; Map copy | queued |
+| 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
@@ -102,3 +105,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any expanding-SRS / “perfect interval AI” hero / streak-as-spacing / cram-week≡ACT-ready / overlearn-tonight≡retention / restudy-tip≡review / shuffle≡spaced-retrieval / guaranteed ACT points from schedule (Part LXXIV)
 - Any tutor-headcount/hours/retention-% NS / tenure≡quality / onboarding≡coaching / wellness-theater burnout fix / Burnout Score™ / marketplace-volume pipeline / Ivy-bench-as-attrition-insurance (Part LXXV)
 - Any mastery-fireworks≡durable / personal-Ebbinghaus Score™ / streak-as-memory / confidence≡retention / cured-forgetting ads / guaranteed retention% from decay UI (Part LXXVI)
+- Any SM-2/FSRS/Anki hero / black-box perfect-interval AI / flashcard-MAE≡ACT / engagement≡learning from scheduler / silent ease-hell rewrite (Part LXXVII)

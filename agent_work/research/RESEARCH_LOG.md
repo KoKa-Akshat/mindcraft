@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Researcher tick: Part LXXVII Adaptive spacing algorithms vs fixed calendars (SAFE-ADAPT)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch77 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 2 → not Synthesizer)  
+**Chapter written:** `chapters/77_adaptive_spacing_algorithms_vs_fixed_calendars.md` (Part LXXVII)  
+**Claim examined:** When MindCraft may personalize lags without SM-2/FSRS black-box brand or flashcard-MAE≡transfer lies.
+
+**Evidence added:**
+- Pavlik & Anderson (2008, *JEP: Applied*, 14(2), 101–117, doi:10.1037/1076-898X.14.2.101) — ACT-R optimal practice schedule beats comparison schedules on recall/latency; intervals lengthen as items stabilize.
+- Lindsey, Shroyer, Pashler & Mozer (2014, *Psychological Science*, 25(3), 639–647, doi:10.1177/0956797613504302) — personalized classroom review +16.5% vs massed, +10% vs generic spaced on delayed cumulative exam (FL).
+- Settles & Meeder (2016, *ACL*, 1848–1858, doi:10.18653/v1/P16-1174) — HLR cuts recall-prediction error >45%; ops study ~12% daily engagement (wound: engagement≠FEI).
+- Ye, Su & Cao (2022, *KDD ’22*, 4381–4390, doi:10.1145/3534678.3539081) — MaiMemo-scale SSP spaced scheduler; production language-learning efficiency claims.
+- Woźniak SM-2 (1987/archived SuperMemo 2 algorithm docs) — ease-factor expanding heuristic lineage (Anki legacy); not math-ed RCT.
+- Cepeda 2006/2008 + Karpicke & Roediger 2007 — reuse: ISI×RI; expanding short / equal long (SAFE-SCHED continuity).
+
+**Claim killed (this tick):** SM-2/FSRS/Anki as hero brand; black-box perfect-interval AI; flashcard MAE≡ACT/transfer; scheduler engagement≡learning; silent ease-hell ISI rewrite.
+
+**Doctrine proposed:** SAFE-ADAPT — calendar-first (SAFE-SCHED); adapt only inside declared RI bands with visible due+why; selection-among-due > opaque rewrite; flashcard lineage≠FEI proof.
+
+**Experiments:** ADAPT-1…5 + ADAPT-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **78** (cram products vs durable-identity positioning). Researcher count since v1.10 synthesizer: **3**. Queue extended with ids 79–81 (unfinished was <3).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Researcher tick: Part LXXVI Forgetting curves as product honesty (SAFE-FORGET)
 
 **Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.10 = 1 → not Synthesizer)  
