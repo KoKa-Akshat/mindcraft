@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Researcher tick: Part LXXVIII Cram products vs durable-identity positioning (SAFE-DURABLE)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.10 = 3 → not Synthesizer)  
+**Chapter written:** `chapters/78_cram_products_vs_durable_identity.md` (Part LXXVIII)  
+**Claim examined:** How MindCraft competes with massed cram/bootcamp/point-guarantee prep without becoming a cram SKU or shaming score-anxious parents.
+
+**Evidence added:**
+- Cepeda et al. (2006, *Psychological Bulletin*, 132(3), 354–380, doi:10.1037/0033-2909.132.3.354) — spacing > massing; ISI×RI (reuse).
+- Cepeda et al. (2008, *Psychological Science*, 19(11), 1095–1102, doi:10.1111/j.1467-9280.2008.02209.x) — optimal lag scales with RI (reuse).
+- Rohrer & Taylor (2006, *Applied Cognitive Psychology*, 20(9), 1209–1224, doi:10.1002/acp.1266) — math distributed practise ≫ massing at 4-week RI; overlearning null at 1/4 weeks.
+- Murray, Horner & Göbel (2025, *Educational Psychology Review*, 37:75, doi:10.1007/s10648-025-10035-1) — math spaced vs massed g=0.28; testing-vs-restudy not robust.
+- Dunlosky et al. (2013, *PSPI*, 14(1), 4–58, doi:10.1177/1529100612453266) — distributed practice high utility.
+- Kornell (2009, *Applied Cognitive Psychology*, 23(9), 1297–1317, doi:10.1002/acp.1537) — spacing > massing/cramming; ~72% still believed massing better.
+- Moore, Sanchez & San Pedro (ACT R1710, 2018) — private-tutor hours related to small ACT retest gains; not point guarantees.
+- Reber, Roller & Sanderson (Brookings, 2025) — prep uneven by income; commercial effects modest vs ads; weak evidence for guaranteed-score packages.
+
+**Claim killed (this tick):** Cram≡ready / bootcamp mastery; guaranteed ACT-point packages; overlearn-tonight as method; score-only default brand; shame-parent GTM; streak/tonight-accuracy as durable proof.
+
+**Doctrine proposed:** SAFE-DURABLE — dual-rail GTM (durable learn + late prove); cram-intercept not cram-cosplay; legible MoC for WTP; no point guarantees.
+
+**Experiments:** CRAM-1…5 + CRAM-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **79** (feedback timing: immediate vs delayed). Researcher count since v1.10 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Researcher tick: Part LXXVII Adaptive spacing algorithms vs fixed calendars (SAFE-ADAPT)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch77 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 2 → not Synthesizer)  
