@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Researcher tick: Part LXXIV Spaced retrieval schedules in product UX (SAFE-SCHED)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch74 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 7 → not Synthesizer)  
+**Chapter written:** `chapters/74_spaced_retrieval_schedules_product_ux.md` (Part LXXIV)  
+**Claim examined:** How MindCraft should schedule concept returns (ISI×RI, expanding vs equal, ACT calendar) in product UX without SRS/streak theater.
+
+**Evidence added:**
+- Cepeda, Pashler, Vul, Wixted & Rohrer (2006, *Psychological Bulletin*, 132(3), 354–380, doi:10.1037/0033-2909.132.3.354) — distributed-practice meta; optimal ISI rises with RI.
+- Cepeda, Vul, Rohrer, Wixted & Pashler (2008, *Psychological Science*, 19(11), 1095–1102, doi:10.1111/j.1467-9280.2008.02209.x) — temporal ridgeline; gap×RI interaction; proportion of RI shrinks at long delays.
+- Rohrer & Taylor (2006, *Applied Cognitive Psychology*, 20(9), 1209–1224, doi:10.1002/acp.1266) — math: spacing helps at 4 weeks not 1 week; overlearning nil.
+- Karpicke & Roediger (2007, *JEP:LMC*, 33(4), 704–719, doi:10.1037/0278-7393.33.4.704) — expanding helps short-term; equal spacing better at 2 days; first-test delay matters.
+- Landauer & Bjork (1978) — expanding retrieval proposal (tradition under audit).
+- Roediger & Karpicke (2006a *Psychological Science* 17(3); 2006b *Perspectives on Psychological Science* 1(3)) — testing effect / test-enhanced learning.
+- Lyle, Bego, Hopkins, Hieb & Ralston (2020, *Educational Psychology Review*, 32, 277–295, doi:10.1007/s10648-019-09489-x) — precalculus: across-semester retention from spacing not amount.
+- Murray, Horner & Göbel (2025, *Educational Psychology Review*, 37, 75, doi:10.1007/s10648-025-10035-1) — math meta: spacing g≈0.28; testing-vs-restudy CI crosses zero.
+
+**Claim killed (this tick):** Expanding-SRS / perfect-interval-AI hero; streak-as-spacing; cram-week≡ACT-ready; overlearn-tonight≡retention; restudy-tip≡review; shuffle≡spaced-retrieval; guaranteed ACT points from schedule.
+
+**Doctrine proposed:** SAFE-SCHED — horizon-matched ISI; delayed first return; equal-ish lags for long RI; generation Returns; exam dual rail; anxiety-aware lag stretch.
+
+**Experiments:** SCHED-1…5 + SCHED-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **75** (tutor workforce pipeline & quality drift). Researcher count since v1.9 synthesizer: **8** (next eligible non-RT tick → Synthesizer if threshold met).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-03 — Researcher tick: Part LXXIII District procurement & privacy review as GTM (SAFE-PROCURE)
 
 **Tick type:** Researcher (UTC hour 21; 21 % 6 ≠ 0 → not Red Team; researcher count since synthesizer v1.9 = 6 → not Synthesizer)  
