@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Researcher tick: Part LXXVI Forgetting curves as product honesty (SAFE-FORGET)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.10 = 1 → not Synthesizer)  
+**Chapter written:** `chapters/76_forgetting_curves_product_honesty.md` (Part LXXVI)  
+**Claim examined:** How MindCraft shows decay risk and delayed competence without mastery fireworks, personal-Ebbinghaus theater, or confidence≡retention lies.
+
+**Evidence added:**
+- Murre & Dros (2015, *PLoS ONE*, 10(7), e0120644, doi:10.1371/journal.pone.0120644) — Ebbinghaus savings forgetting curve replication; delays 20 min–31 days; robust, not perfectly smooth.
+- Wixted (2004, *Annual Review of Psychology*, 55, 235–269, doi:10.1146/annurev.psych.55.090902.141555) — psychology/neuroscience of forgetting; decelerating decay forms; not a student-facing curve widget mandate.
+- Koriat, Bjork, Sheffer & Bar (2004, *Journal of Experimental Psychology: General*, 133(4), 643–656, doi:10.1037/0096-3445.133.4.643) — experience-based JOLs largely ignore anticipated RI; theory framing can restore forgetting sensitivity.
+- Koriat & Bjork (2005, *JEP:LMC*, 31(2), 187–194, doi:10.1037/0278-7393.31.2.187) — foresight bias / illusion of competence at study.
+- Koriat & Bjork (2006, *Memory & Cognition*, 34(5), 959–972, doi:10.3758/BF03193244) — test experience / delayed JOLs remediate foresight bias.
+- Bjork & Bjork (2011) desirable-difficulties / learning≠performance tradition; Rohrer & Taylor (2006) math spacing vs overlearning (reuse from SAFE-SCHED).
+
+**Claim killed (this tick):** Mastery fireworks≡durable competence; personal Ebbinghaus / Forgetting Score™; streak/tonight-accuracy as memory-held; confidence≡retention KPI; cured-forgetting ads; guaranteed retention% from decay UI.
+
+**Doctrine proposed:** SAFE-FORGET — age the evidence; JOLs≠retention; delayed probes as truth surface; frame returns as competence protection; no shame-curve hero.
+
+**Experiments:** FORGET-1…5 + FORGET-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **77** (adaptive spacing algorithms vs fixed calendars). Researcher count since v1.10 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Researcher tick: Part LXXV Tutor workforce pipeline & quality drift (SAFE-WORKFORCE)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch75 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 0 → not Synthesizer)  
