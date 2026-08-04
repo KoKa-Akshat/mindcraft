@@ -4,6 +4,30 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Researcher tick: Part LXXV Tutor workforce pipeline & quality drift (SAFE-WORKFORCE)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch75 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 0 → not Synthesizer)  
+**Chapter written:** `chapters/75_tutor_workforce_pipeline_quality_drift.md` (Part LXXV)  
+**Claim examined:** How MindCraft preserves FEI fidelity across hire→tenure→churn without headcount vanity, wellness theater, or Kraft scale collapse.
+
+**Evidence added:**
+- Nickow, Oreopoulos & Quan (2024, *American Educational Research Journal*, 61(1), 74–107, doi:10.3102/00028312231208687) — tutoring RCT meta; pooled ES ≈ 0.288 SD; stronger for teacher/para, ≥3×/week, during school.
+- Kraft, Blazar & Hogan (2018, *Review of Educational Research*, 88(4), 547–588, doi:10.3102/0034654318759268) — coaching ≈ 0.49 SD instruction / 0.18 SD achievement; scale shrinks effects (reuse + tenure extension).
+- Madigan & Kim (2021, *Teaching and Teacher Education*, 105, 103425, doi:10.1016/j.tate.2021.103425) — burnout→quit intent (exhaustion r+≈.41; depersonalization≈.32; reduced accomplishment≈.21); satisfaction r+≈−.40; burnout outweighs satisfaction as risk.
+- Klusmann, Aldrup, Roloff, Lüdtke & Hamre (2022, *Journal of Educational Psychology*, 114(6), 1442–1460, doi:10.1037/edu0000703) — exhaustion→less emotional support/organization→student outcomes (partial mediation).
+
+**Claim killed (this tick):** Tutor headcount / hours-booked / retention-% as NS; tenure≡quality; onboarding≡coaching; wellness theater as burnout strategy; Burnout Score™; marketplace volume / Ivy bench as pipeline.
+
+**Doctrine proposed:** SAFE-WORKFORCE — fidelity-over-tenure; continuous coaching; coach-capacity gates hiring; burnout→load redesign; named drift channels; retention without fidelity = vanity.
+
+**Experiments:** WORK-1…5 + WORK-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **76** (forgetting curves as product honesty). Researcher count since v1.10 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Synthesizer tick v1.10: merge Parts LXVII–LXXIV
 
 **Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.9 → Synthesizer)  

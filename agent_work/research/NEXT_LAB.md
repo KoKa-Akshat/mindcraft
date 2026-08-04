@@ -61,8 +61,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | **DONE** (2026-08-03) — Part LXXIII / SAFE-PROCURE |
 | 74 | Spaced retrieval schedules in product UX | Expanding spacing vs cramming week; ACT calendar | **DONE** (2026-08-04) — Part LXXIV / SAFE-SCHED |
 | — | **Synthesizer v1.10** | Merge LXVII–LXXIV SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-04 UTC 03) |
-| 75 | Tutor workforce pipeline & quality drift | Hiring bar; burnout; FEI fidelity over tenure | **NEXT** |
-| 76 | Forgetting curves as product honesty | Parent/student retention truth vs mastery fireworks | queued |
+| 75 | Tutor workforce pipeline & quality drift | Hiring bar; burnout; FEI fidelity over tenure | **DONE** (2026-08-04) — Part LXXV / SAFE-WORKFORCE |
+| 76 | Forgetting curves as product honesty | Parent/student retention truth vs mastery fireworks | **NEXT** |
 | 77 | Adaptive spacing algorithms vs fixed calendars | SM-2/FSRS-style claims; inspectable lags; no black-box SRS brand | queued |
 | 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns; exam dual-rail GTM | queued |
 
@@ -100,3 +100,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any LLM-items≡shipped bank / item-count NS / unverified keys as diagnostic ground truth / “AI wrote N questions” hero / fluency≡keyed correctness / scale-at-30%-drop (Part LXXII)
 - Any FERPA-badge≡district-ready / teacher-click-wrap≡school-contract / free-tool-skips-privacy / biometric-empathy school SKU / marketing-first without DPA packet / parent-WTP-copy-as-LEA-trust / pupil-data ads (Part LXXIII)
 - Any expanding-SRS / “perfect interval AI” hero / streak-as-spacing / cram-week≡ACT-ready / overlearn-tonight≡retention / restudy-tip≡review / shuffle≡spaced-retrieval / guaranteed ACT points from schedule (Part LXXIV)
+- Any tutor-headcount/hours/retention-% NS / tenure≡quality / onboarding≡coaching / wellness-theater burnout fix / Burnout Score™ / marketplace-volume pipeline / Ivy-bench-as-attrition-insurance (Part LXXV)

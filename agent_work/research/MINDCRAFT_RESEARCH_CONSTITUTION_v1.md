@@ -4,7 +4,7 @@
 **Edition:** v1.10 (Synthesizer consolidation of Parts LXVII–LXXIV into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-04 (Synthesizer v1.10 — merge LXVII–LXXIV SAFE-* into I.4 / XIV / IX / XXI)  
+**Last updated:** 2026-08-04 (Researcher Part LXXV SAFE-WORKFORCE — provisional append after Synthesizer v1.10)
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -64,8 +64,9 @@
 | LXXII | `chapters/72_generated_question_validity_key_risk.md` | Generated question validity & key risk; SAFE-GENQ; verify-before-ship |
 | LXXIII | `chapters/73_district_procurement_privacy_gtm.md` | District procurement & privacy GTM; SAFE-PROCURE; trust packet / NDPA |
 | LXXIV | `chapters/74_spaced_retrieval_schedules_product_ux.md` | Spaced retrieval schedules in product UX; SAFE-SCHED; ISI×RI / equal vs expanding |
+| LXXV | `chapters/75_tutor_workforce_pipeline_quality_drift.md` | Tutor workforce pipeline & quality drift; SAFE-WORKFORCE; fidelity over tenure |
 
-Queued next: see `NEXT_LAB.md` (Part LXXV tutor workforce pipeline & quality drift, then 76–78).
+Queued next: see `NEXT_LAB.md` (Part LXXVI forgetting curves as product honesty, then 77–78).
 
 **Synthesizer note (v1.10):** Eight researcher chapters (LXVII–LXXIV) landed after v1.9 as provisional I.4 appends — ontology diagnosis moat, HITL tutor ops, affect privacy, lab meta-process, tutor-grain hire bar, generated-question key risk, district procurement GTM, and spaced-retrieval product UX. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #21–#28, confirms ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -196,14 +197,15 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-GENQ** | Verify-before-ship; key fails hard-fail; Kane IUA for bank uses; drop-rate gate; coverage≠NS; LLM≠classical AIG without constraints | LXXII | Ban LLM-items≡shipped / item-count hero / unverified diagnostic keys / fluency≡keyed correctness / scale-at-30%-drop |
 | **SAFE-PROCURE** | Privacy review = GTM gate; NDPA-ready DPA; Exhibit A honesty; free=paid approval; no bio / no pupil-data ads | LXXIII | Ban FERPA-badge≡ready / click-wrap school path / biometric school SKU / marketing-first without packet |
 | **SAFE-SCHED** | Horizon-matched ISI×RI; delayed first return; equal-ish lags for long RI; generation Returns; exam dual rail; no streak-as-spacing | LXXIV | Ban expanding-SRS hero / perfect-interval AI / cram≡ready / overlearn-tonight / restudy≡review / shuffle≡spacing |
+| **SAFE-WORKFORCE** *(provisional)* | Fidelity-over-tenure; continuous coaching; coach-capacity gates hiring; burnout→load redesign; named drift channels; retention≠NS | LXXV | Ban headcount/hours/retention-% NS / tenure≡quality / onboarding≡coaching / wellness-theater burnout / Burnout Score™ / Ivy-bench pipeline |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” and “perfect-interval SRS” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” and “tutor headcount / retention-%” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXXV **Tutor workforce pipeline & quality drift**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED gate claims above L1. Researcher count since v1.10 synthesizer = **0**.
+**Next research bottleneck:** Part LXXVI **Forgetting curves as product honesty**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK gate claims above L1. Researcher count since v1.10 synthesizer = **1**.
 
 ---
 
@@ -522,6 +524,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | GENQ-* | Verify-on vs off / generated vs seed / diagnostic seal / prompt-harden drop rate / parent CBC verified-bank | LXXII |
 | PROCURE-* | Trust-packet-first / NDPA vs custom / LEA-approved free pilot / district vs parent message / no-bio attribute | LXXIII |
 | SCHED-* | Horizon equal-lag vs massed / expanding vs equal / delayed first return / generation vs restudy / ACT-date scheduler | LXXIV |
+| WORK-* | Continuous coaching vs onboard-only / coach-capacity hire cap / caseload vs wellness / Map-brief hard-require / parent CBC fidelity | LXXV |
 
 ---
 
@@ -1020,6 +1023,8 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `key_verify_pass` | Generated item passed independent key check before bank write | SAFE-GENQ ship gate (LXXII) |
 | `return_isi_days` | Days between concept exposure and scheduled retrieval return | SAFE-SCHED horizon lag (LXXIV) |
 | `trust_packet_ready` | DPA + Exhibit A + data map + deletion/breach posted for LEA | SAFE-PROCURE GTM gate (LXXIII) |
+| `tutor_fidelity_30d` / `tutor_fidelity_90d` | FEI rubric sample pass rate at tenure horizons | SAFE-WORKFORCE drift gate (LXXV) |
+| `coach_util` | Coach sample bandwidth vs active tutor count | SAFE-WORKFORCE hire-cap (LXXV) |
 
 ## XXI.3 Lagging indicators
 
@@ -1092,6 +1097,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-GENQ | Verify-before-ship; key hard-fail; Kane IUA; drop-rate gate; coverage≠NS (Part LXXII) |
 | SAFE-PROCURE | Privacy review = GTM gate; NDPA-ready; Exhibit A honesty; no bio / no pupil ads (Part LXXIII) |
 | SAFE-SCHED | Horizon-matched ISI×RI; delayed first return; equal-ish lags; generation Returns; no streak-as-spacing (Part LXXIV) |
+| SAFE-WORKFORCE | Fidelity-over-tenure; continuous coaching; coach-capacity hire gate; burnout→load redesign; no headcount NS (Part LXXV, provisional) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1170,8 +1176,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3n. Generated question validity & key risk — **DONE** Part LXXII / SAFE-GENQ  
 3o. District procurement & privacy review as GTM — **DONE** Part LXXIII / SAFE-PROCURE  
 3p. Spaced retrieval schedules in product UX — **DONE** Part LXXIV / SAFE-SCHED  
-3q. Tutor workforce pipeline & quality drift — **NEXT** id 75  
-3r. Forgetting curves as product honesty — queued id 76  
+3q. Tutor workforce pipeline & quality drift — **DONE** Part LXXV / SAFE-WORKFORCE  
+3r. Forgetting curves as product honesty — **NEXT** id 76  
 3s. Adaptive spacing algorithms vs fixed calendars — queued id 77  
 3t. Cram products vs durable-identity positioning — queued id 78  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
@@ -1215,7 +1221,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 42. **DONE (2026-08-03):** District procurement & privacy review as GTM (Part LXXIII / id 73) — SAFE-PROCURE stack  
 43. **DONE (2026-08-04):** Spaced retrieval schedules in product UX (Part LXXIV / id 74) — SAFE-SCHED stack  
 44. **Synthesizer v1.10 (2026-08-04):** Merged LXVII–LXXIV into I.4 / XIV / IX / XXI — no new chapter  
-45. **NEXT:** Tutor workforce pipeline & quality drift (Part LXXV / id 75)
+45. **DONE (2026-08-04):** Tutor workforce pipeline & quality drift (Part LXXV / id 75) — SAFE-WORKFORCE stack  
+46. **NEXT:** Forgetting curves as product honesty (Part LXXVI / id 76)
 
 ---
 
@@ -1249,4 +1256,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.10 synthesizer pass folded Parts LXVII–LXXIV into surviving commercial doctrine (I.4 rows SAFE-ONTOLOGY through SAFE-SCHED; Red Team kills #21–#28 promoted from provisional). Experiment families ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED confirmed mounted. Next researcher id: LXXV tutor workforce pipeline. Researcher count since v1.10 = 0. Page count is not the finish line — falsifiable truth is.**
+**v1.10 synthesizer pass folded Parts LXVII–LXXIV into surviving commercial doctrine (I.4 rows SAFE-ONTOLOGY through SAFE-SCHED; Red Team kills #21–#28 promoted from provisional). Experiment families ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED confirmed mounted. Part LXXV (SAFE-WORKFORCE) landed as provisional I.4 append (researcher count since v1.10 = 1). Next researcher id: LXXVI forgetting curves as product honesty. Page count is not the finish line — falsifiable truth is.**
