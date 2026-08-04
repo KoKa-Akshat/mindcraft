@@ -60,6 +60,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 72 | Generated question validity & key risk | Arithmetic/key failures; bank trust; verify loops | **DONE** (2026-08-03) — Part LXXII / SAFE-GENQ |
 | 73 | District procurement & privacy review as GTM | Trust packets; biometric bans; school sales gate | **DONE** (2026-08-03) — Part LXXIII / SAFE-PROCURE |
 | 74 | Spaced retrieval schedules in product UX | Expanding spacing vs cramming week; ACT calendar | **DONE** (2026-08-04) — Part LXXIV / SAFE-SCHED |
+| — | **Synthesizer v1.10** | Merge LXVII–LXXIV SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-04 UTC 03) |
 | 75 | Tutor workforce pipeline & quality drift | Hiring bar; burnout; FEI fidelity over tenure | **NEXT** |
 | 76 | Forgetting curves as product honesty | Parent/student retention truth vs mastery fireworks | queued |
 | 77 | Adaptive spacing algorithms vs fixed calendars | SM-2/FSRS-style claims; inspectable lags; no black-box SRS brand | queued |

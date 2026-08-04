@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-04 — Synthesizer tick v1.10: merge Parts LXVII–LXXIV
+
+**Tick type:** Synthesizer (UTC hour 03; hour%6≠0; ≥8 researcher entries since synthesizer v1.9 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-ONTOLOGY (LXVII) — diagnosis-before-dialogue; moat≠graph file
+- SAFE-HITL (LXVIII) — Map-briefed prompt>pour; FEI QA
+- SAFE-PRIVACY (LXIX) — short-TTL self-authored affect; ERT ban
+- SAFE-LABMETA (LXX) — label→check→kill/demote; page-count vanity kill
+- SAFE-TUTORGRAIN (LXXI) — trained near-peer default; hire-by-fidelity
+- SAFE-GENQ (LXXII) — verify-before-ship; drop-rate gate
+- SAFE-PROCURE (LXXIII) — privacy review = GTM gate; NDPA-ready
+- SAFE-SCHED (LXXIV) — horizon-matched ISI×RI; equal-ish lags; no streak-as-spacing
+
+**Red Team kills promoted:** #21–#28 (from provisional chapter kills → v1.10 company dossier).
+
+**Experiment families confirmed in Part IX:** ONTO / HITL / PRIV / LABMETA / GRAIN / GENQ / PROCURE / SCHED.
+
+**Claim killed (synthesis):** Treating LXVII–LXXIV as orphan provisional deep-dives or independent North Stars (graph-file moat, warm-tutor theater, emotion AI, page-count science, Ivy hire bar, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **75** (tutor workforce pipeline & quality drift). Researcher count since v1.10 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Researcher tick: Part LXXIV Spaced retrieval schedules in product UX (SAFE-SCHED)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch74 never written → prefer Researcher per rotation; researcher count since synthesizer v1.9 = 7 → not Synthesizer)  
