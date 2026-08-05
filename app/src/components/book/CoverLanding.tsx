@@ -304,10 +304,6 @@ export default function CoverLanding({
                   <X size={18} strokeWidth={2.4} aria-hidden="true" />
                 </button>
               </div>
-              <p className={s.storeCopy}>
-                Pin up to {COVER_STICKER_EQUIP_CAP} on your cover. Tap again to peel off.
-                {equipped.length > 0 ? ` ${equipped.length}/${COVER_STICKER_EQUIP_CAP} stuck.` : ''}
-              </p>
               <ul className={s.storeGrid}>
                 {COVER_STICKERS.map(sticker => {
                   const on = equipped.includes(sticker.id)
