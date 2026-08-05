@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, BookOpen, Search } from 'lucide-react'
+import { ArrowRight, ChevronDown, Search } from 'lucide-react'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
@@ -35,27 +35,27 @@ function saveCoverName(name: string) {
 type SubjectChip = {
   id: string
   label: string
+  short: string
   tone: string
   slot: string
-  /** Only ACT opens the live notebook today. */
-  opens: boolean
+  live: boolean
 }
 
-/** Orbit of worlds — ACT is the open book; others live on the shelf. */
+/** Orbit of worlds — atmospheric only. ACT is selected in the name row. */
 const SUBJECT_CHIPS: ReadonlyArray<SubjectChip> = [
-  { id: 'act', label: 'ACT Math', tone: s.toneMint, slot: s.slot0, opens: true },
-  { id: 'writing', label: 'Writing', tone: s.toneSand, slot: s.slot1, opens: false },
-  { id: 'fashion', label: 'Fashion', tone: s.tonePeach, slot: s.slot2, opens: false },
-  { id: 'violin', label: 'Violin', tone: s.toneGold, slot: s.slot3, opens: false },
-  { id: 'law', label: 'Law', tone: s.toneBlue, slot: s.slot4, opens: false },
-  { id: 'coding', label: 'Coding', tone: s.toneMint, slot: s.slot5, opens: false },
-  { id: 'spanish', label: 'Spanish', tone: s.tonePeach, slot: s.slot6, opens: false },
-  { id: 'photo', label: 'Photography', tone: s.toneBlue, slot: s.slot7, opens: false },
+  { id: 'act', label: 'ACT Math', short: 'ACT', tone: s.toneMint, slot: s.slot0, live: true },
+  { id: 'writing', label: 'Writing', short: 'Writing', tone: s.toneSand, slot: s.slot1, live: false },
+  { id: 'fashion', label: 'Fashion', short: 'Fashion', tone: s.tonePeach, slot: s.slot2, live: false },
+  { id: 'violin', label: 'Violin', short: 'Violin', tone: s.toneGold, slot: s.slot3, live: false },
+  { id: 'law', label: 'Law', short: 'Law', tone: s.toneBlue, slot: s.slot4, live: false },
+  { id: 'coding', label: 'Coding', short: 'Coding', tone: s.toneMint, slot: s.slot5, live: false },
+  { id: 'spanish', label: 'Spanish', short: 'Spanish', tone: s.tonePeach, slot: s.slot6, live: false },
+  { id: 'photo', label: 'Photography', short: 'Photo', tone: s.toneBlue, slot: s.slot7, live: false },
 ]
 
 /**
- * Cover entry — Deep Field title card. Floating subjects signal a shelf of
- * worlds; the CTA opens the ACT Math notebook that ships today.
+ * Cover entry — Deep Field title card. Floating subjects hint at a shelf of
+ * worlds; the name row opens the live ACT notebook.
  */
 export default function CoverLanding({
   accountName,
@@ -69,10 +69,8 @@ export default function CoverLanding({
   const navigate = useNavigate()
   const [closing, setClosing] = useState(false)
   const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
-  const [selectedId, setSelectedId] = useState('act')
-  const [shelfNote, setShelfNote] = useState('')
-
-  const selected = SUBJECT_CHIPS.find(c => c.id === selectedId) ?? SUBJECT_CHIPS[0]
+  const [courseOpen, setCourseOpen] = useState(false)
+  const courseWrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (loadCoverName()) return
@@ -80,19 +78,25 @@ export default function CoverLanding({
     if (trimmedAccount) setName(prev => prev || trimmedAccount)
   }, [accountName])
 
+  useEffect(() => {
+    if (!courseOpen) return
+    function onDoc(e: MouseEvent) {
+      if (!courseWrapRef.current?.contains(e.target as Node)) setCourseOpen(false)
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setCourseOpen(false)
+    }
+    document.addEventListener('mousedown', onDoc)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDoc)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [courseOpen])
+
   function open() {
     if (closing) return
-    // Only ACT opens the live Contents notebook for now.
-    if (!selected.opens) {
-      setShelfNote(`${selected.label} is on the shelf. Opening ACT Math for now.`)
-      setSelectedId('act')
-      window.setTimeout(() => {
-        setClosing(true)
-        markCoverSeen()
-        window.setTimeout(onOpen, 480)
-      }, 720)
-      return
-    }
+    setCourseOpen(false)
     setClosing(true)
     markCoverSeen()
     window.setTimeout(onOpen, 480)
@@ -108,20 +112,11 @@ export default function CoverLanding({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [closing, selectedId])
+  }, [closing])
 
   function onNameChange(value: string) {
     setName(value)
     saveCoverName(value.trim())
-  }
-
-  function pickSubject(chip: SubjectChip) {
-    setSelectedId(chip.id)
-    if (chip.opens) {
-      setShelfNote('')
-    } else {
-      setShelfNote(`${chip.label} is coming. ACT Math is open today.`)
-    }
   }
 
   function goFindTutor() {
@@ -143,32 +138,25 @@ export default function CoverLanding({
           <span>Find a Tutor</span>
         </button>
 
-        <ul className={s.subjectField} aria-label="Subjects on the shelf">
-          {SUBJECT_CHIPS.map((chip, i) => {
-            const active = chip.id === selectedId
-            return (
-              <li
-                key={chip.id}
-                className={`${s.subjectChipWrap} ${chip.slot}`}
-                style={{ ['--chip-i' as string]: String(i) }}
+        <ul className={s.subjectField} aria-hidden="true">
+          {SUBJECT_CHIPS.map((chip, i) => (
+            <li
+              key={chip.id}
+              className={`${s.subjectChipWrap} ${chip.slot}`}
+              style={{ ['--chip-i' as string]: String(i) }}
+            >
+              <span
+                className={`${s.subjectChip} ${chip.tone} ${chip.live ? s.subjectChipLive : s.subjectChipSoon}`}
               >
-                <button
-                  type="button"
-                  className={`${s.subjectChip} ${chip.tone} ${active ? s.subjectChipActive : ''} ${chip.opens ? s.subjectChipLive : ''}`}
-                  onClick={() => pickSubject(chip)}
-                  aria-pressed={active}
-                  title={chip.opens ? 'Open this notebook' : 'Coming soon'}
-                >
-                  {chip.label}
-                  {chip.opens && <span className={s.chipLiveDot} aria-hidden="true" />}
-                </button>
-              </li>
-            )
-          })}
+                {chip.label}
+                {chip.live && <span className={s.chipLiveDot} />}
+              </span>
+            </li>
+          ))}
         </ul>
 
         <div className={s.coverFace}>
-          <span className={s.eyebrow}>a shelf of worlds</span>
+          <span className={s.eyebrow}>your notebook</span>
           <button
             type="button"
             className={s.wordmark}
@@ -177,15 +165,6 @@ export default function CoverLanding({
           >
             Mind<span className={s.wordmarkCraft}>Craft</span>
           </button>
-
-          <p className={s.entryLine}>
-            {selected.opens
-              ? 'Open your ACT Math notebook.'
-              : `${selected.label} waits on the shelf.`}
-          </p>
-          <p className={s.shelfHint}>
-            ACT is live. Writing, law, violin… more lessons on the orbit.
-          </p>
 
           <div className={s.nameField}>
             <label className={s.nameLabel} htmlFor="cover-name">What should we call you?</label>
@@ -206,24 +185,54 @@ export default function CoverLanding({
                 maxLength={40}
                 autoComplete="given-name"
               />
+
+              <div className={s.courseWrap} ref={courseWrapRef}>
+                <button
+                  type="button"
+                  className={`${s.courseSelect} ${courseOpen ? s.courseSelectOpen : ''}`}
+                  onClick={() => setCourseOpen(v => !v)}
+                  aria-haspopup="listbox"
+                  aria-expanded={courseOpen}
+                  aria-label="Course: ACT Math"
+                >
+                  <span className={s.courseSelectLabel}>ACT</span>
+                  <ChevronDown size={16} strokeWidth={2.6} aria-hidden="true" />
+                </button>
+                {courseOpen && (
+                  <ul className={s.courseMenu} role="listbox" aria-label="Courses">
+                    {SUBJECT_CHIPS.map(chip => (
+                      <li key={chip.id} role="option" aria-selected={chip.live} aria-disabled={!chip.live}>
+                        <button
+                          type="button"
+                          className={`${s.courseOption} ${chip.live ? s.courseOptionLive : s.courseOptionSoon}`}
+                          disabled={!chip.live}
+                          onClick={() => {
+                            if (!chip.live) return
+                            setCourseOpen(false)
+                          }}
+                        >
+                          <span>{chip.label}</span>
+                          {!chip.live && <span className={s.courseSoon}>soon</span>}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
               <button
                 type="button"
-                className={s.actBookCta}
+                className={s.openArrow}
                 onClick={open}
                 aria-label={
                   name.trim()
-                    ? `Open ACT Math notebook as ${name.trim()}`
-                    : 'Open ACT Math notebook'
+                    ? `Open ACT notebook as ${name.trim()}`
+                    : 'Open ACT notebook'
                 }
               >
-                <BookOpen size={16} strokeWidth={2.4} aria-hidden="true" />
-                <span className={s.actBookLabel}>ACT Math</span>
                 <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
               </button>
             </div>
-            {shelfNote && (
-              <p className={s.shelfNote} role="status">{shelfNote}</p>
-            )}
           </div>
         </div>
       </div>
