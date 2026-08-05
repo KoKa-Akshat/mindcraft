@@ -21,6 +21,7 @@ import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIn
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
+import { CalendarCheck, Lock, MessageCircle, Search, LogOut } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
 import WeeklyReviewPicker from '../components/WeeklyReviewPicker'
@@ -617,8 +618,14 @@ export default function Dashboard({
           </div>
           <div className={s.canvasUser}>
             {displayName && <span>{displayName}</span>}
-            <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>
-              {viewingAs ? 'back' : 'sign out'}
+            <button
+              type="button"
+              className={s.signOut}
+              onClick={() => void handleSignOut()}
+              aria-label={viewingAs ? 'Back' : 'Sign out'}
+            >
+              <LogOut size={13} aria-hidden="true" />
+              <span>{viewingAs ? 'back' : 'sign out'}</span>
             </button>
           </div>
         </header>
@@ -647,7 +654,7 @@ export default function Dashboard({
                     {showWeeklyCta && (
                       paperLocked ? (
                         <div className={s.paperCtaLocked} aria-live="off">
-                          <span className={s.paperCtaLockIcon} aria-hidden="true">🔒</span>
+                          <Lock size={14} className={s.paperCtaLockIcon} aria-hidden="true" />
                           <span className={s.paperCtaLockedText}>
                             <span className={s.paperCtaEyebrow}>this week’s paper</span>
                             <span className={s.paperCtaUnlockLabel}>Done! {paperUnlockLabel}</span>
@@ -658,31 +665,39 @@ export default function Dashboard({
                         // should read "Weekly Review" and look "just like a
                         // find a tutor button", same pill, no arrow, no new
                         // CSS invented for it). Opens the topic picker.
-                        <button type="button" className={s.bookSessionLink} onClick={openWeeklyReview}>Weekly Review</button>
+                        <button type="button" className={s.bookSessionLink} onClick={openWeeklyReview}>
+                          <CalendarCheck size={14} aria-hidden="true" />
+                          <span>Weekly Review</span>
+                        </button>
                       )
                     )}
                     {data.tutorId && data.parents.length > 0 ? (
-                      <select
-                        className={s.bookSessionLink}
-                        defaultValue=""
-                        onChange={e => {
-                          if (e.target.value) navigate(`/chat/${e.target.value}`)
-                          e.target.value = ''
-                        }}
-                      >
-                        <option value="" disabled>Message…</option>
-                        <option value={data.tutorId}>Message Tutor</option>
-                        {data.parents.map(p => (
-                          <option key={p.id} value={p.id}>Message {p.name}</option>
-                        ))}
-                      </select>
+                      <div className={s.iconSelectWrap}>
+                        <MessageCircle size={14} className={s.iconSelectIcon} aria-hidden="true" />
+                        <select
+                          className={`${s.bookSessionLink} ${s.iconSelect}`}
+                          defaultValue=""
+                          aria-label="Message tutor or parent"
+                          onChange={e => {
+                            if (e.target.value) navigate(`/chat/${e.target.value}`)
+                            e.target.value = ''
+                          }}
+                        >
+                          <option value="" disabled>Message…</option>
+                          <option value={data.tutorId}>Message Tutor</option>
+                          {data.parents.map(p => (
+                            <option key={p.id} value={p.id}>Message {p.name}</option>
+                          ))}
+                        </select>
+                      </div>
                     ) : data.tutorId ? (
                       <button
                         type="button"
                         className={s.bookSessionLink}
                         onClick={() => navigate(`/chat/${data.tutorId}`)}
                       >
-                        Message Tutor
+                        <MessageCircle size={14} aria-hidden="true" />
+                        <span>Message Tutor</span>
                       </button>
                     ) : (
                       <button
@@ -690,7 +705,8 @@ export default function Dashboard({
                         className={s.bookSessionLink}
                         onClick={() => navigate('/find-a-tutor')}
                       >
-                        Find a Tutor
+                        <Search size={14} aria-hidden="true" />
+                        <span>Find a Tutor</span>
                       </button>
                     )}
                   </div>
