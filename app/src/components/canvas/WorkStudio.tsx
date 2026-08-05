@@ -57,8 +57,16 @@ export default function WorkStudio({
         return
       }
       const { questions, unavailable } = await parseHomeworkPages(pages)
-      if (unavailable || questions.length === 0) {
-        setError('Couldn’t find questions. Try another page.')
+      if (unavailable) {
+        // Both the primary and fallback reading providers failed (not "no
+        // questions on this page" — the readers themselves are down). Say so
+        // distinctly so a real outage doesn't look like a bad photo.
+        setError('Reading is temporarily unavailable. Try again in a bit.')
+        setStage('error')
+        return
+      }
+      if (questions.length === 0) {
+        setError('Couldn’t find questions on that page. Try another page.')
         setStage('error')
         return
       }
