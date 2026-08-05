@@ -1,29 +1,23 @@
+/* Cover — marketing palette from index.html:
+   ink #143a2e · leaf #247a4d · leaf-2 #5fb779 · sprout #b9e86f
+   gold #f5d348 · cream #fff8e9 · paper #fffdf7 · mint #e4f7dc
+   blue #dceef6 · sand #f5efd9 · peach #f9dfcf · Craft #d3a900 */
+
 .desk {
-  /* Padding here is DELIBERATELY the exact same numbers as .canvasDesk's own
-     padding (Dashboard.module.css: "padding: 4px 8px 8px")  -  not a similar
-     looking value, the same formula. .cover below fills this box at 100%,
-     so its rendered width is byte-for-byte 100vw minus the same 16px every
-     time, which is exactly how .canvasStage (the desk's content stage)
-     computes its own width. Unchanged by the 2026-07-23 redesign pass below
-     (that pass replaced the photo/scrim/ribbon content, not the sizing,
-     which was already fixed to match canvasStage in the prior pass). */
+  /* Same padding formula as Dashboard .canvasDesk so the cover box
+     matches canvasStage width byte-for-byte. */
   position: fixed;
   inset: 0;
   z-index: 200;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 10px;
   padding: 4px 8px 8px;
-  /* Calmer, lighter background than the old heavy pink/purple wash  -  same
-     3 gradient layers as canvasDesk/NotebookIntro for family resemblance,
-     opacity roughly halved so it reads as a soft morning light instead of a
-     saturated pink/purple gradient. */
   background:
-    radial-gradient(ellipse 80% 55% at 20% 10%, rgba(255, 210, 230, 0.28), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 90% 80%, rgba(195, 220, 255, 0.3), transparent 50%),
-    linear-gradient(165deg, #faf6ef 0%, #f2ecf8 50%, #ece3f6 100%);
-  animation: deskIn 0.45s cubic-bezier(0.2, 0, 0, 1) both;
+    radial-gradient(ellipse 70% 50% at 78% 12%, rgba(185, 232, 111, 0.34), transparent 58%),
+    radial-gradient(ellipse 55% 45% at 12% 88%, rgba(245, 211, 72, 0.18), transparent 55%),
+    linear-gradient(155deg, #fff8e9 0%, #fffdf7 48%, #e4f7dc 100%);
+  animation: deskIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
   box-sizing: border-box;
 }
 
@@ -33,7 +27,7 @@
 }
 
 .deskClosing {
-  animation: deskOut 0.48s cubic-bezier(0.2, 0, 0, 1) both;
+  animation: deskOut 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes deskOut {
@@ -41,43 +35,28 @@
 }
 
 .cover {
-  /* Full-bleed match to canvasStage, unchanged sizing formula from the prior
-     pass: flex:1 inside .desk (which shares .canvasDesk's exact padding),
-     border-radius matching --desk-radius-lg (22px). */
   position: relative;
   width: 100%;
   flex: 1 1 auto;
   min-height: 0;
-  border: none;
-  border-radius: 22px;
+  border: 1px solid rgba(20, 58, 46, 0.12);
+  border-radius: 28px;
   overflow: hidden;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
-  /* No photo. Calm parchment-to-lavender wash, same "paper" family as
-     canvasStage / NotebookIntro's card (#fffdf8) softened toward the desk's
-     own lavender at the edges instead of a saturated pink/purple gradient
-     or a stock photo. */
+  padding: clamp(28px, 4vw, 48px);
   background:
-    radial-gradient(ellipse 120% 90% at 50% -10%, rgba(255, 244, 214, 0.55), transparent 60%),
-    linear-gradient(165deg, #fffdf8 0%, #f8f1fb 55%, #efe3fa 100%);
-  box-shadow:
-    0 8px 20px rgba(80, 60, 120, 0.08),
-    0 28px 70px rgba(90, 70, 140, 0.16);
-  transform: perspective(1400px) rotateY(-0.8deg) rotateX(0.5deg);
-  transition: transform 220ms cubic-bezier(0.34, 1.2, 0.64, 1);
-  animation: coverSettle 0.65s cubic-bezier(0.2, 0, 0, 1) both;
+    radial-gradient(ellipse 90% 70% at 50% -8%, rgba(255, 248, 233, 0.95), transparent 62%),
+    linear-gradient(165deg, #fffdf7 0%, #fff8e9 42%, #eef9e6 100%);
+  box-shadow: 0 24px 70px rgba(29, 84, 54, 0.14);
+  animation: coverSettle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes coverSettle {
-  from { opacity: 0; transform: perspective(1200px) rotateY(-1.2deg) translateY(14px); }
-  to { opacity: 1; transform: perspective(1200px) rotateY(-1.2deg) rotateX(0.6deg) translateY(0); }
-}
-
-.cover:hover {
-  transform: perspective(1200px) rotateY(-0.3deg) rotateX(0.3deg) translateY(-3px) scale(1.004);
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .deskClosing .cover {
@@ -87,45 +66,61 @@
 @keyframes coverClose {
   to {
     opacity: 0;
-    transform: perspective(1200px) rotateY(3deg) scale(1.012) translateY(-10px);
+    transform: translateY(-10px) scale(1.01);
   }
 }
 
-/* Subtle hand-drawn accents, standing in for the old photo's charm without
-   needing an image  -  same ink-line family as DiagnosticArt.tsx / the
-   concept-art SVG plates, at low opacity so they read as texture, not
-   clutter. */
-.decor {
+.wash {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  color: #3a2f55;
-}
-.decor svg { position: absolute; fill: none; stroke: currentColor; stroke-width: 2; }
-.doodleStar {
-  top: 8%; right: 9%;
-  width: 46px; height: 46px;
-  opacity: 0.14;
-  fill: #c99a3a;
-  stroke: #c99a3a;
-  stroke-width: 1.4;
-}
-.doodleWave {
-  bottom: 10%; left: 7%;
-  width: 130px; height: 60px;
-  opacity: 0.16;
-  stroke-width: 3;
-  stroke-linecap: round;
-}
-.doodleTri {
-  top: 12%; left: 10%;
-  width: 52px; height: 52px;
-  opacity: 0.12;
-  stroke-width: 2.2;
-  stroke-linejoin: round;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(228, 247, 220, 0.7), transparent 28%),
+    radial-gradient(circle at 84% 70%, rgba(220, 238, 246, 0.55), transparent 26%),
+    radial-gradient(circle at 72% 22%, rgba(245, 239, 217, 0.65), transparent 22%);
+  opacity: 0.9;
 }
 
-/* ── Subject constellation ─────────────────────────────────────────────── */
+/* Top-right — marketing nav pill language */
+.findTutorBtn {
+  position: absolute;
+  top: clamp(16px, 3vw, 24px);
+  right: clamp(16px, 3vw, 24px);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgba(20, 58, 46, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.9);
+  color: #143a2e;
+  font-family: var(--tok-font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 32px rgba(28, 55, 45, 0.08);
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 200ms ease,
+    border-color 200ms ease;
+}
+.findTutorBtn:hover {
+  transform: translateY(-2px);
+  background: #e4f7dc;
+  border-color: rgba(36, 122, 77, 0.28);
+}
+.findTutorBtn:active { transform: translateY(0); }
+.findTutorBtn:focus-visible {
+  outline: 2px solid #247a4d;
+  outline-offset: 2px;
+}
+
+/* ── Composed subject orbit (keeps a clear center for the brand) ───── */
 .subjectField {
   position: absolute;
   inset: 0;
@@ -138,51 +133,47 @@
 
 .subjectChip {
   position: absolute;
-  font-family: var(--tok-font-serif);
-  font-size: clamp(11px, 1.35vw, 13px);
-  letter-spacing: 0.02em;
-  color: rgba(42, 36, 48, 0.58);
-  background: rgba(255, 253, 248, 0.72);
-  border: 1px solid rgba(58, 47, 85, 0.12);
+  font-family: var(--tok-font-sans);
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #143a2e;
+  border: 1px solid rgba(20, 58, 46, 0.1);
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   white-space: nowrap;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 10px rgba(80, 60, 120, 0.06);
+  box-shadow: 0 8px 22px rgba(29, 84, 54, 0.07);
   opacity: 0;
   animation:
-    chipIn 0.7s cubic-bezier(0.2, 0, 0, 1) calc(0.18s + var(--chip-i, 0) * 0.06s) both,
-    chipFloat 5.6s ease-in-out calc(0.9s + var(--chip-i, 0) * 0.22s) infinite;
+    chipIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) calc(0.12s + var(--chip-i, 0) * 0.05s) both,
+    chipFloat 6.4s ease-in-out calc(0.8s + var(--chip-i, 0) * 0.18s) infinite;
 }
 
 @keyframes chipIn {
-  from { opacity: 0; transform: translateY(8px) scale(0.96) rotate(var(--chip-rot, 0deg)); }
-  to { opacity: 1; transform: translateY(0) scale(1) rotate(var(--chip-rot, 0deg)); }
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes chipFloat {
-  0%, 100% { transform: translateY(0) rotate(var(--chip-rot, 0deg)); }
-  50% { transform: translateY(-5px) rotate(var(--chip-rot, 0deg)); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
-/* Scattered placements — keep clear of the centered brand / name cluster. */
-.chipAct {
-  top: 14%; left: 16%;
-  --chip-rot: -2deg;
-  color: rgba(31, 107, 69, 0.78);
-  border-color: rgba(125, 201, 94, 0.35);
-  background: rgba(232, 255, 236, 0.78);
-  font-weight: 600;
-}
-.chipWriting { top: 22%; right: 14%; --chip-rot: 3deg; }
-.chipFashion { top: 38%; left: 8%; --chip-rot: -4deg; }
-.chipLaw { bottom: 28%; right: 11%; --chip-rot: 2deg; }
-.chipViolin { top: 58%; left: 12%; --chip-rot: 5deg; }
-.chipSpanish { bottom: 16%; left: 22%; --chip-rot: -1deg; }
-.chipPhoto { top: 18%; left: 42%; --chip-rot: -2deg; }
-.chipCoding { bottom: 22%; right: 28%; --chip-rot: 3deg; }
-.chipPhil { top: 48%; right: 8%; --chip-rot: -3deg; }
-.chipDebate { bottom: 36%; left: 28%; --chip-rot: 2deg; }
+.toneMint { background: rgba(228, 247, 220, 0.92); }
+.toneSand { background: rgba(245, 239, 217, 0.94); }
+.tonePeach { background: rgba(249, 223, 207, 0.94); }
+.toneBlue { background: rgba(220, 238, 246, 0.94); }
+.toneGold { background: rgba(245, 211, 72, 0.42); }
+
+/* Eight slots on an ellipse — never over the center cluster */
+.slot0 { top: 16%; left: 10%; }
+.slot1 { top: 12%; left: 34%; }
+.slot2 { top: 18%; right: 12%; }
+.slot3 { top: 38%; left: 6%; }
+.slot4 { top: 42%; right: 8%; }
+.slot5 { bottom: 28%; left: 11%; }
+.slot6 { bottom: 18%; right: 14%; }
+.slot7 { bottom: 14%; left: 36%; }
 
 .coverFace {
   position: relative;
@@ -190,54 +181,60 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   text-align: center;
-  max-width: 380px;
+  max-width: 420px;
+  padding: 8px 12px;
 }
 
 .eyebrow {
-  font-family: var(--tok-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-family: var(--tok-font-sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(58, 47, 85, 0.5);
+  color: rgba(20, 58, 46, 0.5);
 }
 
 .wordmark {
-  font-family: var(--tok-font-hand);
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--tok-font-display);
   font-weight: 700;
-  font-size: clamp(48px, 9vw, 68px);
-  line-height: 0.95;
-  color: #2a2430;
+  font-size: clamp(52px, 9vw, 76px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: #143a2e;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
 }
-
-.wordmarkSub {
-  font-family: var(--tok-font-serif);
-  font-size: 15px;
-  color: rgba(42, 36, 48, 0.62);
-  margin-bottom: 8px;
+.wordmark:hover { transform: translateY(-2px); opacity: 0.92; }
+.wordmark:active { transform: translateY(0); }
+.wordmarkCraft {
+  color: #d3a900;
 }
 
 .nameField {
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin: 10px 0 4px;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 .nameLabel {
-  font-family: var(--tok-font-hand);
-  font-size: 18px;
-  font-weight: 700;
-  color: rgba(42, 36, 48, 0.7);
+  font-family: var(--tok-font-serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: rgba(20, 58, 46, 0.62);
 }
 
 .nameRow {
   display: flex;
   align-items: stretch;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
 }
 
@@ -245,111 +242,80 @@
   flex: 1 1 auto;
   min-width: 0;
   box-sizing: border-box;
-  background: rgba(255, 253, 248, 0.9);
-  border: 1.5px solid rgba(58, 47, 85, 0.22);
-  border-radius: 12px;
-  padding: 10px 14px;
-  font-family: var(--tok-font-serif);
-  font-size: 15px;
-  color: #2a2430;
+  background: rgba(255, 253, 247, 0.95);
+  border: 1.5px solid rgba(20, 58, 46, 0.16);
+  border-radius: 16px;
+  padding: 12px 16px;
+  font-family: var(--tok-font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: #143a2e;
   text-align: center;
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
-.nameInput::placeholder { color: rgba(42, 36, 48, 0.32); }
+.nameInput::placeholder { color: rgba(20, 58, 46, 0.32); font-weight: 600; }
 .nameInput:focus {
   outline: none;
-  border-color: #7dc95e;
-  box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.28);
+  border-color: #5fb779;
+  box-shadow: 0 0 0 3px rgba(185, 232, 111, 0.35);
 }
 
 .openArrow {
   flex: 0 0 auto;
-  width: 44px;
+  width: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid rgba(58, 47, 85, 0.85);
-  border-radius: 12px;
-  background: linear-gradient(145deg, #7dffb3, #5fe89a);
-  color: #1f6b45;
+  border: 1px solid #143a2e;
+  border-radius: 16px;
+  background: #143a2e;
+  color: #fffdf7;
   cursor: pointer;
-  box-shadow: 2px 3px 0 rgba(58, 47, 85, 0.14);
+  box-shadow: 0 12px 24px rgba(20, 58, 46, 0.18);
   transition:
-    transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1),
-    box-shadow 160ms cubic-bezier(0.34, 1.4, 0.64, 1);
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 160ms ease,
+    box-shadow 200ms ease;
 }
 .openArrow:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.32), 3px 6px 0 rgba(58, 47, 85, 0.14);
+  transform: translateY(-2px);
+  background: #247a4d;
+  border-color: #247a4d;
+  box-shadow: 0 16px 28px rgba(36, 122, 77, 0.22);
 }
-.openArrow:active { transform: translateY(0) scale(1); }
+.openArrow:active { transform: translateY(0); }
 .openArrow:focus-visible {
-  outline: 2px solid #1f6b45;
+  outline: 2px solid #b9e86f;
   outline-offset: 2px;
-}
-
-.findTutorBtn {
-  margin-top: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1.5px solid rgba(58, 47, 85, 0.28);
-  border-radius: 999px;
-  background: rgba(255, 253, 248, 0.88);
-  color: rgba(42, 36, 48, 0.78);
-  font-family: var(--tok-font-serif);
-  font-size: 14px;
-  padding: 9px 16px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(80, 60, 120, 0.06);
-  transition:
-    transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1),
-    border-color 160ms ease,
-    background 160ms ease,
-    color 160ms ease;
-}
-.findTutorBtn:hover {
-  transform: translateY(-1px);
-  border-color: rgba(58, 47, 85, 0.45);
-  background: #fff;
-  color: #2a2430;
-}
-.findTutorBtn:active { transform: translateY(0); }
-.findTutorBtn:focus-visible {
-  outline: 2px solid rgba(58, 47, 85, 0.55);
-  outline-offset: 2px;
-}
-
-.caption {
-  margin: 0;
-  text-align: center;
-  flex-shrink: 0;
-  font-family: var(--tok-font-hand);
-  font-size: 20px;
-  color: rgba(58, 47, 85, 0.65);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .desk, .cover, .deskClosing, .deskClosing .cover,
-  .openArrow, .nameInput, .findTutorBtn, .subjectChip {
+  .openArrow, .nameInput, .findTutorBtn, .subjectChip, .wordmark {
     animation: none;
     transition: none;
   }
-  .subjectChip { opacity: 0.85; }
+  .subjectChip { opacity: 0.92; }
 }
 
 @media (max-width: 860px) {
-  .chipPhoto, .chipDebate, .chipCoding { display: none; }
+  .slot1, .slot7 { display: none; }
 }
 
 @media (max-width: 620px) {
-  .wordmark { font-size: clamp(40px, 14vw, 56px); }
-  .doodleWave, .doodleTri, .doodleStar { display: none; }
-  .chipFashion, .chipPhil, .chipSpanish { display: none; }
-  .chipAct { top: 10%; left: 8%; }
-  .chipWriting { top: 12%; right: 6%; }
-  .chipLaw { bottom: 18%; right: 8%; }
-  .chipViolin { bottom: 14%; left: 10%; }
+  .wordmark { font-size: clamp(42px, 14vw, 58px); }
+  .slot2, .slot5 { display: none; }
+  .slot0 { top: 12%; left: 6%; }
+  .slot3 { top: 34%; left: 4%; }
+  .slot4 { top: 36%; right: 4%; }
+  .slot6 { bottom: 14%; right: 6%; }
+  .findTutorBtn {
+    top: 12px;
+    right: 12px;
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 10px;
+  }
   .nameField { max-width: 280px; }
-  .openArrow { width: 42px; }
+  .openArrow { width: 44px; }
 }
