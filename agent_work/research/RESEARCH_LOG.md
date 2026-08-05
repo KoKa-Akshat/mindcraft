@@ -4,6 +4,32 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Researcher tick: Part LXXXIII Parent dashboard honesty UX (SAFE-PDASH)
+
+**Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch83 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 8 → still prefer unfinished chapter over Synthesizer on RT-prefer hour)  
+**Chapter written:** `chapters/83_parent_dashboard_honesty_ux.md` (Part LXXXIII)  
+**Claim examined:** How MindCraft’s parent surface should show proof age / returns / MoC so families act — without shame heatmaps, tonight-% fireworks, or surveillance cosplay.
+
+**Evidence added:**
+- Bergman (2021, *JPE*, 129(1), 286–322, doi:10.1086/711410) — parent effort belief bias; information attenuates bias and raises achievement.
+- Bergman & Chan (2021, *JHR*, 56(1), 125–158, doi:10.3368/jhr.56.1.1118-9837R1) — automated weekly alerts cut failures / raise attendance; no state-test miracle.
+- Rogers & Feller (2018, *Nat Hum Behav*, 2, 335–342, doi:10.1038/s41562-018-0328-1) — cumulative absence facts correct misbeliefs; relative peer framing not the active ingredient.
+- Kraft & Rogers (2015, *Econ Educ Rev*, 47, 49–63, doi:10.1016/j.econedurev.2015.04.001) — weekly improvement-framed teacher→parent notes raise credit earning.
+- Xu, Guo, Feng, Ma, Zhang, Núñez & Fan (2024, *Psicothema*, 36(1), 1–14, doi:10.7334/psicothema2023.92) — autonomy-supportive homework involvement helps; control/frequency do not.
+- See, Gorard, Lu, Dong & Siddiqui (2021, *Educ Res Eval*, doi:10.1080/13803611.2021.1924791) — tech-mediated parent engagement gains concentrate in personalized comms; portal-alone evidence weak.
+
+**Claim killed (this tick):** Tonight-%/streak/XP as parent NS; mastery fireworks on parent portal; shame ranks; live wrong-answer surveillance; Anxiety Score™ parent view; gradebook cosplay; controlling nag loop; guaranteed points from parent widgets.
+
+**Doctrine proposed:** SAFE-PDASH — beliefs before chrome; proof age hero; one improvement CTA; autonomy>control; ranks/affect off; not a SIS clone.
+
+**Experiments:** PDASH-1…5 + PDASH-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **84** (tutor talk-ratio instrumentation). Researcher count since v1.10 synthesizer: **9** → Synthesizer eligible on next non-RT preference check.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXII Format-axis product narrative (SAFE-FORMAT)
 
 **Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.10 = 7 → not Synthesizer)  

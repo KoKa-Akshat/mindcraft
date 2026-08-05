@@ -69,8 +69,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 80 | Bridge-gap product narrative | Connection failures > concept failures; Map copy | **DONE** (2026-08-04) — Part LXXX / SAFE-BRIDGE |
 | 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | **DONE** (2026-08-05) — Part LXXXI / SAFE-COLD |
 | 82 | Format-axis product narrative | Diagram vs symbolic gaps; FormatId CTA copy | **DONE** (2026-08-05) — Part LXXXII / SAFE-FORMAT |
-| 83 | Parent dashboard honesty UX | Proof age without shame; MoC surfaces | **NEXT** |
-| 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | queued |
+| 83 | Parent dashboard honesty UX | Proof age without shame; MoC surfaces | **DONE** (2026-08-05) — Part LXXXIII / SAFE-PDASH |
+| 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | **NEXT** |
 | 85 | Story-world cognitive load vs identity payoff | Narrative wrap CLT; when story helps/hurts | queued |
 | 86 | Competence evidence as social proof | Solo-transfer artifacts parents/tutors can witness | queued |
 | 87 | Bank coverage honesty in marketing | Coverage tables; no item-count hero; GENQ×GTM | queued |
@@ -117,3 +117,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any bridge-count≡moat / re-explain≡bridge / coverage≡connection / “we connect everything” / missing-prereq≡bridge-gap / shame-edge Map / analogy-mention≡pedagogy (Part LXXX)
 - Any day-one mastery fireworks / confidence≡mastery / skip-to-green / population-prior-as-biography / placement-belt cold start / Identity Score™ onboarding / diagnostic-completion NS (Part LXXXI)
 - Any format-count≡moat / “we teach every format” / decoration≡FormatId / concept≡format-flexible / format-shuffle≡science / Format Personality™ / learning-style quiz NS (Part LXXXII)
+- Any tonight-%/streak/XP parent NS / mastery fireworks on parent portal / shame ranks / live wrong-answer stalk / Anxiety Score™ parent view / gradebook cosplay / controlling nag loop / guaranteed points from parent widgets (Part LXXXIII)
