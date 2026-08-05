@@ -44,6 +44,17 @@ export function framedLocalStem(q: Question): string {
   return [setting ? `✦ ${setting}` : '', bridge, display.stem].filter(Boolean).join('\n\n')
 }
 
+// STORY WRAP DISABLED (2026-08-04): both the offline bake and framedLocalStem
+// were pasting the same fixed sentence onto every question in a concept
+// verbatim ("On the 1761 voyage to Jamaica, William Harrison enters this
+// calculation..." on literally every linear_equations item, "Antwerp...Simon
+// Stevin" on every fractions_decimals item) — not per-question narrative,
+// just uniform noise wrapped around the real question. Reverting to the
+// deterministic structural reskin only (table/vignette handling in
+// storyDisplay.ts) until the bake is redone with actual per-question scenes.
+// Flip STORY_WRAP_ENABLED back to true once that's fixed.
+const STORY_WRAP_ENABLED = false
+
 /**
  * Resolve the stem a student should read for this question.
  *
@@ -51,6 +62,8 @@ export function framedLocalStem(q: Question): string {
  * the story world currently active for the concept.
  */
 export function resolveQuestionStem(q: Question): string {
+  if (!STORY_WRAP_ENABLED) return buildStoryDisplay(q).stem
+
   const story = selectStoryForConcept(q.conceptId)
   const baked = getBakedThemedStem(q.conceptId, q.id, story?.conceptId ?? q.conceptId)
   if (baked) return baked
