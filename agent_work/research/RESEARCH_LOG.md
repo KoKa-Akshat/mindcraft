@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Researcher tick: Part LXXXI Cold-start without fake mastery (SAFE-COLD)
+
+**Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch81 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 6 → not Synthesizer)  
+**Chapter written:** `chapters/81_cold_start_without_fake_mastery.md` (Part LXXXI)  
+**Claim examined:** How MindCraft should initialize student state on day one — humble priors + labeled seed + hide-correctness probes — without manufacturing mastery fireworks or confidence≡mastery.
+
+**Evidence added:**
+- Corbett & Anderson (1995, *UMUAI*, 4, 253–278, doi:10.1007/BF01099821) — BKT prior/learn/guess/slip; mastery sequencing depends on honest estimates.
+- Pardos & Heffernan (2010, *UMAP 2010*, LNCS 6075, 255–266, doi:10.1007/978-3-642-13470-8_24) — individualizing P(L0) improves prediction; multi-skill prior strategy best in their eval.
+- Fischhoff, Slovic & Lichtenstein (1977, *JEP:HPP*, 3(4), 552–564) — overconfidence at extreme certainty.
+- Koriat, Lichtenstein & Fischhoff (1980, *JEP:HLM*, 6(2), 107–118) — confidence inflated by supporting reasons; contradicting reasons help.
+- Kruger & Dunning (1999, *JPSP*, 77(6), 1121–1134, doi:10.1037/0022-3514.77.6.1121) — unskilled–unaware overestimation pattern.
+- Erickson & Heit (2015, *Frontiers in Psychology*, 6, 742, doi:10.3389/fpsyg.2015.00742) — math score overprediction with anxiety.
+- Lindsey & Nagel (2015, *PRST-PER*, 11, 020103, doi:10.1103/PhysRevSTPER.11.020103) — item-level self-assessment blindness across abilities.
+- Baker, Corbett, Koedinger & Wagner (2004, *CHI ’04*, 383–390) — gaming the system harms learning; distinct from other off-task.
+
+**Claim killed (this tick):** Day-one mastery fireworks; confidence≡mastery; skip-to-green; population-prior-as-biography; placement-belt/Identity Score™ cold start; diagnostic-completion NS.
+
+**Doctrine proposed:** SAFE-COLD — humble prior → labeled seed → hide-correctness probes; Map chrome matches evidence age; sell honest mapping not fake knowing.
+
+**Experiments:** COLD-1…5 + COLD-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **82** (format-axis product narrative). Researcher count since v1.10 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-04 — Researcher tick: Part LXXX Bridge-gap product narrative (SAFE-BRIDGE)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.10 = 5 → not Synthesizer)  

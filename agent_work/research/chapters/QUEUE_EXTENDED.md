@@ -54,7 +54,7 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns | promoted → NEXT_LAB **NEXT** |
 | 79 | Feedback timing: immediate vs delayed | Tutoring UX; Kluger/DeNisi; soft-wrong delay | **DONE** → `79_feedback_timing_immediate_vs_delayed.md` |
 | 80 | Bridge-gap product narrative | Connection failures > concept failures; Map copy | promoted → NEXT_LAB **NEXT** |
-| 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | promoted → NEXT_LAB |
+| 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | DONE → Part LXXXI / SAFE-COLD |
 | 82 | Format-axis product narrative | Diagram vs symbolic gaps; FormatId CTA copy | promoted → NEXT_LAB |
 | 83 | Parent dashboard honesty UX | Proof age without shame; MoC surfaces | promoted → NEXT_LAB |
 | 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | promoted → NEXT_LAB |

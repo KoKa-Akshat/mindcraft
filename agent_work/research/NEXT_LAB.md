@@ -67,8 +67,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 78 | Cram products vs durable-identity positioning | Competitor cram packs; WTP for returns; exam dual-rail GTM | **DONE** (2026-08-04) — Part LXXVIII / SAFE-DURABLE |
 | 79 | Feedback timing: immediate vs delayed | Tutoring UX; Kluger/DeNisi; soft-wrong delay | **DONE** (2026-08-04) — Part LXXIX / SAFE-FBTIME |
 | 80 | Bridge-gap product narrative | Connection failures > concept failures; Map copy | **DONE** (2026-08-04) — Part LXXX / SAFE-BRIDGE |
-| 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | **NEXT** |
-| 82 | Format-axis product narrative | Diagram vs symbolic gaps; FormatId CTA copy | queued |
+| 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | **DONE** (2026-08-05) — Part LXXXI / SAFE-COLD |
+| 82 | Format-axis product narrative | Diagram vs symbolic gaps; FormatId CTA copy | **NEXT** |
 | 83 | Parent dashboard honesty UX | Proof age without shame; MoC surfaces | queued |
 | 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | queued |
 
@@ -112,3 +112,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any cram≡ready / guaranteed ACT-point packages / overlearn-tonight as method / shame-parent GTM / streak-as-durable / bootcamp-mastery blitz unlabeled (Part LXXVIII)
 - Any instant-feedback AI hero / always-delay≡science / feedback≡learning / green-check NS / ego-toast≡FI / soft-wrong-delay Calm Score™ (Part LXXIX)
 - Any bridge-count≡moat / re-explain≡bridge / coverage≡connection / “we connect everything” / missing-prereq≡bridge-gap / shame-edge Map / analogy-mention≡pedagogy (Part LXXX)
+- Any day-one mastery fireworks / confidence≡mastery / skip-to-green / population-prior-as-biography / placement-belt cold start / Identity Score™ onboarding / diagnostic-completion NS (Part LXXXI)
