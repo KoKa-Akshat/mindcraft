@@ -2,31 +2,35 @@
 
 Post **as JoinMindCraft** (logo identity, not your face).
 
-## Carousel order (upload in this order)
+## Images (upload in this order)
 
-1. `linkedin_carousel/01_what_we_are.png`
-2. `linkedin_carousel/02_product_merged.png` ← gap scan + living notebook combined
-3. `linkedin_carousel/03_story_tutors.png`
-4. `linkedin_carousel/04_duo.png` ← Blake face fixed (top-aligned)
-5. `linkedin_carousel/05_ask.png`
+In Downloads (and `pitch/linkedin_carousel/`):
+
+1. `0001.png` — what we are  
+2. `0002.png` — gap scan + living notebook  
+3. `0003.png` — story missions + tutors  
+4. `0004.png` — Akshat + Blake  
+5. `0005.png` — who we should talk to  
 
 ## Caption (paste as-is)
 
-Somewhere in middle school the story lost them.
+We did not build MindCraft because the world needed another homework app.
 
-Tutoring kept guessing. Homework kept piling up. Nobody drew the map.
+We built it because of a student who was sure they were bad at math. Not failing. Just quietly convinced the front row was for other people. Tutors meant well. Parents paid. ChatGPT gave answers. And every week still started on page one, because nobody had mapped where the story actually broke.
 
-MindCraft finds that break first. Then a college tutor starts there, not page one, inside a world where getting it right finally feels like being good at math.
+Our mission is simple: give that student the click. The felt experience of being good at math, inside a world where being good matters.
 
-I am Akshat. Blake builds the engine underneath.
+Our vision is a living map of learning. Gap first. Story practice that has stakes. A college tutor who walks in already knowing where to start. Parents who can finally see the path instead of guessing from grades.
 
-If you know an ACT parent, a counselor who hears “I am not a math person,” or a college tutor tired of detective hours, we would love an intro.
+I am Akshat. I have spent eight years watching that broken hour. Blake builds the engine underneath. Together we are turning “I am not a math person” into “not yet.”
 
-akshat@mindcraft.com
+If you know an ACT parent, a counselor who hears that line every week, or a college tutor tired of playing detective, we would love an intro.
+
+akshat@mindcraft.com  
 https://www.linkedin.com/company/joinmindcraft
 
 ## How to post
 
-1. Admin → identity = JoinMindCraft
-2. Start a post → add images in order 01→05
-3. Paste caption → Post
+1. Identity = JoinMindCraft  
+2. Start a post → add `0001` through `0005` in order  
+3. Paste caption → Post  
