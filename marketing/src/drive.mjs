@@ -16,6 +16,21 @@ const FOLDER_MIME = 'application/vnd.google-apps.folder'
 // folder rather than writing into one made by hand. A folder created in the Drive UI is
 // invisible to this scope and returns 404.
 const ROOT_FOLDER_NAME = process.env.MARKETING_DRIVE_ROOT_NAME || 'MindCraft Marketing'
+
+// Drive is organised by post type, not by date: browsing "Stories" or "Testimonials" is
+// how anyone actually looks for an asset later. Batch contact sheets keep the date axis.
+export const PILLAR_FOLDERS = {
+  the_miss: 'The Miss',
+  quick_win: 'Quick Wins',
+  katha: 'Stories',
+  research: 'Research',
+  data_insight: 'Data Insights',
+  testimonial: 'Testimonials',
+  the_verdict: 'The Verdict',
+  the_origin: 'The Origin',
+  jordan: 'Tutor Recruiting',
+}
+const BATCHES_FOLDER = 'Batches'
 const base64url = buffer => Buffer.from(buffer).toString('base64').replaceAll('+','-').replaceAll('/','_').replaceAll('=','')
 
 export function loadServiceAccount() {
@@ -94,12 +109,21 @@ export async function publishRun(date, runDir, posts, { contactSheetPdf }={}) {
   const publishable=selectPublishable(posts); const withheld=posts.length-publishable.length
   const token=await accessToken()
   const parent=process.env.MARKETING_DRIVE_FOLDER_ID||await ensureRootFolder(token)
-  const batchFolder=await ensureFolder(date,parent,token); const uploaded=[]
-  if(contactSheetPdf&&fs.existsSync(contactSheetPdf)) uploaded.push(await uploadFile(`marketing-batch-${date}.pdf`,fs.readFileSync(contactSheetPdf),'application/pdf',batchFolder,token))
+  // Create the full taxonomy every run, so the shape of the plan is visible even in weeks
+  // a pillar produces nothing.
+  const pillarFolders={}
+  for(const [pillar,name] of Object.entries(PILLAR_FOLDERS)) pillarFolders[pillar]=await ensureFolder(name,parent,token)
+  const uploaded=[]
+  if(contactSheetPdf&&fs.existsSync(contactSheetPdf)){
+    const batches=await ensureFolder(BATCHES_FOLDER,parent,token)
+    uploaded.push(await uploadFile(`marketing-batch-${date}.pdf`,fs.readFileSync(contactSheetPdf),'application/pdf',batches,token))
+  }
   for(const post of publishable){
-    const short=post.id.slice(-3); const folder=await ensureFolder(`${short}-${post.pillar}`,batchFolder,token)
+    const short=post.id.slice(-3)
+    const home=pillarFolders[post.pillar]||await ensureFolder(PILLAR_FOLDERS[post.pillar]||post.pillar,parent,token)
+    const folder=await ensureFolder(`${date}-${short}`,home,token)
     for(const slide of post.slides){ const png=path.join(runDir,short,`slide-${slide.n}.png`); if(fs.existsSync(png)) uploaded.push(await uploadFile(`slide-${slide.n}.png`,fs.readFileSync(png),'image/png',folder,token)) }
     uploaded.push(await uploadFile('caption.txt',`${post.caption}\n\n${post.hashtags.slice(0,8).join(' ')}\n`,'text/plain',folder,token))
   }
-  return {date,folder_id:batchFolder,folder_url:`https://drive.google.com/drive/folders/${batchFolder}`,posts_published:publishable.length,posts_withheld_blocked:withheld,files:uploaded.map(f=>({id:f.id,name:f.name,url:f.webViewLink}))}
+  return {date,root_folder_id:parent,root_folder_url:`https://drive.google.com/drive/folders/${parent}`,pillar_folders:Object.fromEntries(Object.entries(pillarFolders).map(([k,v])=>[k,`https://drive.google.com/drive/folders/${v}`])),posts_published:publishable.length,posts_withheld_blocked:withheld,files:uploaded.map(f=>({id:f.id,name:f.name,url:f.webViewLink}))}
 }

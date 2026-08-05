@@ -347,6 +347,13 @@ Inspection should not wait on a git push, and run output does not belong in git
 shared Drive folder: a contact-sheet PDF plus one folder per post with slides
 and a paste-ready caption.
 
+Drive is filed **by post type**, not by date — `Stories/`, `Testimonials/`,
+`The Miss/` and so on, each holding `<date>-<id>/` post folders, with batch
+contact sheets under `Batches/`. All nine pillar folders are created on every
+run so the taxonomy stays visible even when a pillar produces nothing that
+week. Date-first filing made the batch easy to review once and the archive
+useless afterwards; post-type filing makes it an asset library.
+
 - **Drive cannot run the interactive review page** — it won't serve the HTML as
   a live page, so the keyboard shortcuts and Export button don't survive. The
   batch therefore travels as a **contact-sheet PDF**, which Drive previews and

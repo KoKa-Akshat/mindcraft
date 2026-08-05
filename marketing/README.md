@@ -56,7 +56,26 @@ The pipeline creates and owns a `MindCraft Marketing` folder instead
 (`MARKETING_DRIVE_ROOT_NAME` overrides the name). Set the folder id only for a
 Workspace Shared Drive, alongside `MARKETING_DRIVE_SERVICE_ACCOUNT`.
 
-Results are written to `marketing/run/<date>/drive.json`.
+Drive is organised **by post type**, since that is how anyone looks for an asset
+later. All nine pillar folders are created every run, so unused pillars stay
+visible as empty placeholders. Batch contact sheets keep the date axis.
+
+```
+MindCraft Marketing/
+  Batches/            marketing-batch-<date>.pdf
+  The Miss/           <date>-002/  slide-1..3.png, caption.txt
+  Quick Wins/         <date>-005/
+  Stories/            <date>-004/
+  Data Insights/      <date>-001/
+  The Origin/         <date>-003/
+  Research/           (empty until the pillar produces)
+  Testimonials/
+  The Verdict/
+  Tutor Recruiting/
+```
+
+Results are written to `marketing/run/<date>/drive.json`, including a
+`pillar_folders` map of per-type links.
 
 **Posts with `status: blocked` are never uploaded.** Publishing is where
 content leaves the repo, so the privacy floor is enforced at the upload
