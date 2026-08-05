@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Researcher tick: Part LXXXVI Competence evidence as social proof (SAFE-PROOF)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch86 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 2 → Researcher)  
+**Chapter written:** `chapters/86_competence_evidence_social_proof.md` (Part LXXXVI)  
+**Claim examined:** What witnessable solo-transfer / dated MoC artifacts should serve as MindCraft social proof — vs vanity counts, vague praise, or +points testimonials.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-PROOF** — competence > crowd; enactive > verbal; provincial similarity; age the claim; student-owned thin portfolio; two-sided honesty; opt-in dignity; PROOF-* before star/user-count learning ads.
+
+**Evidence spine:** Bandura (1977) efficacy sources; Usher & Pajares (2008) school sources review; Cialdini Influence social-proof principle; Goldstein/Cialdini/Griskevicius (2008) provincial descriptive norms; Schultz et al. (2007) norms boomerang; Paulson/Paulson/Meyer (1991) portfolio-by-student; Eisend (2006) two-sided advertising meta.
+
+**Claim killed (this tick):** User-count / star-wall / vague confidence testimonials / Identity Score™ / +points case studies as learning social proof — demoted under mastery-first efficacy + provincial norms + honesty; witnessable dated solo artifacts survive behind PROOF-*.
+
+**Experiments mounted:** PROOF-1…5 + PROOF-QUAL.
+
+**Next researcher id:** **87** (bank coverage honesty in marketing). Researcher count since v1.11 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXV Story-world cognitive load vs identity payoff (SAFE-STORYLOAD)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.11 = 1 → Researcher)  
