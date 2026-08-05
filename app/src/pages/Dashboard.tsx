@@ -20,7 +20,7 @@ import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
-import { conceptIconUrl } from '../lib/conceptIcon'
+import { storyArtFor } from '../lib/storyArt'
 import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
@@ -799,7 +799,7 @@ export default function Dashboard({
                               onClick={() => openChapter(id)}
                             >
                               <span className={s.tocNodeIcon} aria-hidden="true">
-                                <img src={conceptIconUrl(id)} alt="" />
+                                <img src={storyArtFor(id)} alt="" />
                                 {dotState === 'complete' && <span className={s.tocNodeCheck}>✓</span>}
                               </span>
                               <span className={s.tocNodeName}>{actConceptLabel(id)}</span>

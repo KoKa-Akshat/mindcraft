@@ -1458,11 +1458,14 @@
    and neighboring lanes stay put and readable. */
 .tocTrack {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(116px, 1fr);
   align-items: stretch;
   gap: 10px;
   position: relative;
   z-index: 1;
+  flex: 1;
+  min-height: 0;
 }
 
 .tocNode {
@@ -1515,7 +1518,7 @@
   position: relative;
   width: 50px;
   height: 50px;
-  padding: 6px;
+  padding: 3px;
   border-radius: 50%;
   flex-shrink: 0;
   display: flex;
@@ -1531,7 +1534,9 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: inherit;
+  filter: saturate(1.08) contrast(1.03);
 }
 .tocNodeIcon::before {
   content: '';
@@ -1677,7 +1682,7 @@
   .tocLane { padding: 12px 10px 10px; }
   .tocLaneTitle { font-size: 24px; }
   .tocLaneScene { width: 108px; }
-  .tocTrack { grid-template-columns: repeat(auto-fit, minmax(82px, 1fr)); }
+  .tocTrack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(108px, 1fr); }
   .tocNode { min-height: 108px; }
   .tocNodeName { font-size: 11px; }
   .tocNodeBlurb { font-size: 9.5px; -webkit-line-clamp: 2; }
