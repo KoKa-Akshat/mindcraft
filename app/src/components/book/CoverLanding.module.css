@@ -343,6 +343,13 @@
   cursor: pointer;
 }
 .storeClose:hover { background: rgba(245, 245, 245, 0.08); }
+.storeNote {
+  margin: 10px 0 0;
+  font-family: var(--tok-font-serif);
+  font-size: 15px;
+  line-height: 1.35;
+  color: rgba(245, 245, 245, 0.72);
+}
 .storeGrid {
   margin: 14px 0 0;
   padding: 0;
@@ -395,11 +402,29 @@
   letter-spacing: 0.02em;
   color: #fffdf7;
 }
-.storeBlurb {
-  font-family: var(--tok-font-serif);
-  font-size: 12px;
-  line-height: 1.25;
+.storePriceRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.storePrice {
+  font-family: var(--tok-font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   color: rgba(245, 245, 245, 0.55);
+  text-decoration: line-through;
+  text-decoration-color: rgba(245, 245, 245, 0.35);
+}
+.storeFree {
+  font-family: var(--tok-font-sans);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c4f547;
 }
 
 @keyframes chipIn {

@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { doc, getDoc } from 'firebase/firestore'
 import { ArrowRight, Search, Sparkles, X } from 'lucide-react'
+import { useUser } from '../../App'
+import { db } from '../../firebase'
 import {
   COVER_STICKERS,
   COVER_STICKER_EQUIP_CAP,
+  canEquipCoverSticker,
   coverStickerById,
+  formatStickerPrice,
   loadEquippedCoverStickers,
+  parseStickerPlan,
   saveEquippedCoverStickers,
+  showStickerFreeBadge,
+  stickerShelfNote,
+  type StickerPlan,
 } from '../../lib/coverStickers'
 import s from './CoverLanding.module.css'
 
@@ -77,7 +86,7 @@ const SUBJECT_CHIPS: ReadonlyArray<SubjectChip> = [
 const EQUIP_SLOTS = [s.equip0, s.equip1, s.equip2, s.equip3] as const
 
 /**
- * Cover entry — floating worlds + sticker store; center is name + arrow.
+ * Cover entry: floating worlds + Stickers shelf; center is name + arrow.
  */
 export default function CoverLanding({
   accountName,
@@ -88,18 +97,38 @@ export default function CoverLanding({
   accountName?: string
   onOpen: () => void
 }) {
+  const user = useUser()
   const navigate = useNavigate()
   const [closing, setClosing] = useState(false)
   const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
   const [hiddenSubjects, setHiddenSubjects] = useState<string[]>(() => loadHiddenSubjects())
   const [equipped, setEquipped] = useState<string[]>(() => loadEquippedCoverStickers())
   const [storeOpen, setStoreOpen] = useState(false)
+  const [stickerPlan, setStickerPlan] = useState<StickerPlan>('testing')
 
   useEffect(() => {
     if (loadCoverName()) return
     const trimmedAccount = accountName?.trim()
     if (trimmedAccount) setName(prev => prev || trimmedAccount)
   }, [accountName])
+
+  useEffect(() => {
+    const uid = user?.uid
+    if (!uid) {
+      setStickerPlan('testing')
+      return
+    }
+    let cancelled = false
+    void getDoc(doc(db, 'users', uid))
+      .then(snap => {
+        if (cancelled) return
+        setStickerPlan(parseStickerPlan(snap.data()?.stickerPlan))
+      })
+      .catch(() => {
+        if (!cancelled) setStickerPlan('testing')
+      })
+    return () => { cancelled = true }
+  }, [user?.uid])
 
   function open() {
     if (closing) return
@@ -140,6 +169,7 @@ export default function CoverLanding({
   }
 
   function toggleSticker(id: string) {
+    if (!canEquipCoverSticker(stickerPlan) && !equipped.includes(id)) return
     setEquipped(prev => {
       const next = prev.includes(id)
         ? prev.filter(x => x !== id)
@@ -150,6 +180,9 @@ export default function CoverLanding({
       return next
     })
   }
+
+  const freeBadge = showStickerFreeBadge(stickerPlan)
+  const shelfNote = stickerShelfNote(stickerPlan)
 
   function goFindTutor() {
     markCoverSeen()
@@ -172,7 +205,7 @@ export default function CoverLanding({
             onClick={() => setStoreOpen(true)}
           >
             <Sparkles size={17} strokeWidth={2.5} aria-hidden="true" />
-            <span>Sticker Store</span>
+            <span>Stickers</span>
           </button>
           <button
             type="button"
@@ -287,23 +320,24 @@ export default function CoverLanding({
               className={s.storePanel}
               role="dialog"
               aria-modal="true"
-              aria-labelledby="cover-sticker-store-title"
+              aria-labelledby="cover-stickers-title"
               onClick={e => e.stopPropagation()}
             >
               <div className={s.storeHead}>
                 <div>
-                  <p className={s.storeEyebrow}>free shelf · tap to pin</p>
-                  <h2 id="cover-sticker-store-title" className={s.storeTitle}>Sticker Store</h2>
+                  <p className={s.storeEyebrow}>tap to pin · up to {COVER_STICKER_EQUIP_CAP}</p>
+                  <h2 id="cover-stickers-title" className={s.storeTitle}>Stickers</h2>
                 </div>
                 <button
                   type="button"
                   className={s.storeClose}
                   onClick={() => setStoreOpen(false)}
-                  aria-label="Close sticker store"
+                  aria-label="Close stickers"
                 >
                   <X size={18} strokeWidth={2.4} aria-hidden="true" />
                 </button>
               </div>
+              <p className={s.storeNote} role="status">{shelfNote}</p>
               <ul className={s.storeGrid}>
                 {COVER_STICKERS.map(sticker => {
                   const on = equipped.includes(sticker.id)
@@ -319,7 +353,10 @@ export default function CoverLanding({
                       >
                         <img src={sticker.src} alt="" className={s.storeArt} draggable={false} />
                         <span className={s.storeName}>{sticker.name}</span>
-                        <span className={s.storeBlurb}>{sticker.blurb}</span>
+                        <span className={s.storePriceRow}>
+                          <span className={s.storePrice}>{formatStickerPrice(sticker.priceUsd)}</span>
+                          {freeBadge && <span className={s.storeFree}>Free</span>}
+                        </span>
                       </button>
                     </li>
                   )
