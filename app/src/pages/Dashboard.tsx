@@ -18,7 +18,7 @@ import WorkStudio from '../components/canvas/WorkStudio'
 import WizardMascot from '../components/canvas/WizardMascot'
 import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
-import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
+import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
 import { CalendarCheck, Lock, MessageCircle, LogOut } from 'lucide-react'
@@ -242,6 +242,7 @@ export default function Dashboard({
       window.location.href = 'https://mindcraft-marketing-site.web.app/'
       return
     }
+    clearCoverSeen()
     try { await signOut(auth) } catch { /* ignore */ }
     navigate('/login')
   }
@@ -496,6 +497,18 @@ export default function Dashboard({
     navigate('/practice', { state: { weeklyWalkthrough: true } })
   }
 
+  // Cover first — before the diagnostic loading gate — so login lands on the
+  // notebook cover, not a spinner or Contents.
+  if (showCover && !viewingAs) {
+    return (
+      <CoverLanding
+        entryLabel="your ACT study notebook"
+        accountName={displayName}
+        onOpen={() => setShowCover(false)}
+      />
+    )
+  }
+
   if (!diagChecked) {
     return (
       <div className={s.canvasDesk}>
@@ -584,14 +597,7 @@ export default function Dashboard({
         data-glow={manjushreeGlow ? '1' : '0'}
       />
       )}
-      {showCover && !viewingAs && (
-        <CoverLanding
-          entryLabel="your ACT study notebook"
-          accountName={displayName}
-          onOpen={() => setShowCover(false)}
-        />
-      )}
-      {!showCover && showIntro && (
+      {showIntro && (
         <NotebookIntro onContinue={() => setShowIntro(false)} />
       )}
 

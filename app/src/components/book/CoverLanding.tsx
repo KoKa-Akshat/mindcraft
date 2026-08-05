@@ -8,11 +8,17 @@ const NAME_KEY = 'mc-student-display-name'
 
 /** Has the student already opened the cover once this browser session? */
 export function coverAlreadySeen(): boolean {
-  try { return sessionStorage.getItem(SEEN_KEY) === '1' } catch { return true }
+  // Fail open: storage errors should still show the cover, not skip it.
+  try { return sessionStorage.getItem(SEEN_KEY) === '1' } catch { return false }
 }
 
 function markCoverSeen() {
   try { sessionStorage.setItem(SEEN_KEY, '1') } catch { /* ignore */ }
+}
+
+/** Clear so the next dashboard visit (e.g. after login) shows the cover again. */
+export function clearCoverSeen() {
+  try { sessionStorage.removeItem(SEEN_KEY) } catch { /* ignore */ }
 }
 
 /** Whatever name the student last typed on the cover, if any. Read by

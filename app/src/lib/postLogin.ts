@@ -152,6 +152,11 @@ export async function completePostLoginNavigate(
     throw new Error('auth/missing-user')
   }
   await auth.currentUser.getIdToken()
+  // Fresh login → show cover before Contents (session flag from an earlier
+  // open / Find a Tutor would otherwise skip straight to the dashboard).
+  if (path === '/dashboard' || path.startsWith('/dashboard?')) {
+    try { sessionStorage.removeItem('mc-cover-seen-session') } catch { /* ignore */ }
+  }
   if (navigate) {
     navigate(path, { replace: true })
     return
