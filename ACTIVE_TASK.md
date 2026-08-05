@@ -112,7 +112,7 @@ tab, correctly stroke-less), `live_session_tutor_sees_student_stroke.png` /
 `live_session_tutor_after_own_stroke.png` / `live_session_student_sees_tutor_stroke.png`
 (the real cross-account sync proof described above).
 
-Commit `<fill in below>` — `app/src/components/CallButton.tsx`,
+Commit `c9248d66` — `app/src/components/CallButton.tsx`,
 `app/src/components/CallButton.module.css`, `app/src/pages/LiveSessionPage.tsx`,
 `app/src/pages/LiveSessionPage.module.css`, `app/src/App.tsx`,
 `app/src/pages/Practice.tsx`, `app/src/pages/Practice.module.css`,
