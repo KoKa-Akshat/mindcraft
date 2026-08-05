@@ -1132,7 +1132,7 @@ export default function Practice() {
 
   function pickConcept(conceptId: string) {
     setConcept(conceptId)
-    setPPhase('explore')
+    setPPhase('weekly-story')
   }
 
   function showCheckin(conceptId: string, lv: 1|2|3, bridge?: BridgeRecommendation) {
@@ -2060,14 +2060,21 @@ export default function Practice() {
               )
             })()}
 
-            {/* ── Weekly Review walkthrough: per-slot story/context beat ──
-                Light framing touch shown before that slot's formula card —
+            {/* ── Story beat: per-topic priming, before the formula card ──
+                Light framing touch shown before that concept's formula card —
                 reuses the concept's real story data (storySelection.ts) rather
                 than inventing new prose. Falls back to a one-line "up next"
-                if a concept has no story entry. */}
-            {pPhase === 'weekly-story' && weeklyWalkSlots && (() => {
-              const slot = weeklyWalkSlots[weeklyWalkIndex]
-              const story = selectStoryForConcept(slot.conceptId)
+                if a concept has no story entry. Serves BOTH the Weekly Review
+                walkthrough (weeklyWalkSlots set — "Topic X of Y" + role framing)
+                AND a plain single-concept practice session (conceptMeta only —
+                no slot, so those walkthrough-only bits are dropped). Mirrors
+                the same conceptMeta-first / weeklyWalkSlots-fallback pattern the
+                explore (formula card) block below already uses. */}
+            {pPhase === 'weekly-story' && (conceptMeta || (weeklyWalkSlots && concept)) && (() => {
+              const slot = weeklyWalkSlots?.[weeklyWalkIndex]
+              const storyId = slot?.conceptId ?? conceptMeta?.id ?? concept ?? ''
+              const storyLabel = slot?.label ?? conceptMeta?.label ?? actConceptLabel(storyId)
+              const story = selectStoryForConcept(storyId)
               const opener = story?.story?.split(/(?<=[.!?])\s+/)[0] ?? ''
               return (
                 <div className={s.exploreScreen}>
@@ -2076,31 +2083,35 @@ export default function Practice() {
                   </button>
 
                   <div className={s.exploreCard}>
-                    <p className={s.exploreTagline} style={{ marginBottom: '0.5rem' }}>
-                      Weekly Review · Topic {weeklyWalkIndex + 1} of {weeklyWalkSlots.length}
-                    </p>
+                    {weeklyWalkSlots && (
+                      <p className={s.exploreTagline} style={{ marginBottom: '0.5rem' }}>
+                        Weekly Review · Topic {weeklyWalkIndex + 1} of {weeklyWalkSlots.length}
+                      </p>
+                    )}
                     <div className={s.exploreHead}>
                       <span className={s.exploreIconWrap}>
-                        <ConceptPathIcon conceptId={slot.conceptId} size={44} />
+                        <ConceptPathIcon conceptId={storyId} size={44} />
                       </span>
                       <div>
-                        <h2 className={s.exploreName}>{slot.label}</h2>
+                        <h2 className={s.exploreName}>{storyLabel}</h2>
                         <p className={s.exploreTagline}>
-                          {slot.role === 'strengthen'
-                            ? 'A weak spot we’re strengthening.'
-                            : slot.role === 'stretch'
-                            ? 'Something new to stretch into.'
-                            : 'A light review pass.'}
+                          {slot
+                            ? (slot.role === 'strengthen'
+                                ? 'A weak spot we’re strengthening.'
+                                : slot.role === 'stretch'
+                                ? 'Something new to stretch into.'
+                                : 'A light review pass.')
+                            : 'A quick warm-up before you dive in.'}
                         </p>
                       </div>
                     </div>
 
                     <div className={s.exploreSection}>
                       <div className={s.exploreSectionTitle}>
-                        📖 {story?.protagonist ?? slot.label}
+                        📖 {story?.protagonist ?? storyLabel}
                       </div>
-                      <p style={{ color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, margin: 0 }}>
-                        {story?.settingLine || opener || `Up next: ${slot.label}.`}
+                      <p className={s.exploreTagline} style={{ margin: 0 }}>
+                        {story?.settingLine || opener || `Up next: ${storyLabel}.`}
                       </p>
                     </div>
 
