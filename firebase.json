@@ -6,6 +6,10 @@
   "storage": {
     "rules": "firebase/storage.rules"
   },
+  "emulators": {
+    "firestore": { "port": 8091 },
+    "ui": { "enabled": false }
+  },
   "hosting": [
     {
       "target": "app",
