@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Researcher tick: Part LXXXIV Tutor talk-ratio instrumentation (SAFE-TALK)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch84 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 0)  
+**Chapter written:** `chapters/84_tutor_talk_ratio_instrumentation.md` (Part LXXXIV)  
+**Claim examined:** How MindCraft should instrument prompt>pour / student construction / wait time for HITL QA — without Talk Ratio Score™ or silence theater.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-TALK** — construction > airtime; prompt density + student constructive share + wait bands + pour-streak caps; same schema for human and AI; no talk-% NS / got-it≡evidence / emotion-AI scoring.
+
+**Evidence spine:** Sinclair & Coulthard (1975) IRF; Graesser et al. (1995) 5-step tutoring frame; Graesser & Person (1994) question asking; Chi et al. (2001) prompt-constrained tutoring ≈ freer tutoring; Chi & Wylie (2014) ICAP; Rowe (1974/1986) + Tobin (1987) wait time; Alexander (2018) dialogic teaching ≠ talk-count knob.
+
+**Claim killed (this tick):** Raw tutor/student talk-% (or 50/50 dogma / silence cosplay) as learning North Star or “Socratic” proof — demoted under construction-first instrumentation.
+
+**Experiments mounted:** TALK-1…5 + TALK-QUAL.
+
+**Next researcher id:** **85** (story-world cognitive load vs identity payoff). Researcher count since v1.11 synthesizer: **1**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Synthesizer tick v1.11: merge Parts LXXV–LXXXIII
 
 **Tick type:** Synthesizer (UTC hour 09; hour%6≠0; ≥8 researcher entries since synthesizer v1.10 → Synthesizer)  

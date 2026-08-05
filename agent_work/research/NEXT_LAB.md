@@ -71,8 +71,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 82 | Format-axis product narrative | Diagram vs symbolic gaps; FormatId CTA copy | **DONE** (2026-08-05) — Part LXXXII / SAFE-FORMAT |
 | 83 | Parent dashboard honesty UX | Proof age without shame; MoC surfaces | **DONE** (2026-08-05) — Part LXXXIII / SAFE-PDASH |
 | — | **Synthesizer v1.11** | Merge LXXV–LXXXIII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-05 UTC 09) |
-| 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | **NEXT** |
-| 85 | Story-world cognitive load vs identity payoff | Narrative wrap CLT; when story helps/hurts | queued |
+| 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | **DONE** (2026-08-05) — Part LXXXIV / SAFE-TALK |
+| 85 | Story-world cognitive load vs identity payoff | Narrative wrap CLT; when story helps/hurts | **NEXT** |
 | 86 | Competence evidence as social proof | Solo-transfer artifacts parents/tutors can witness | queued |
 | 87 | Bank coverage honesty in marketing | Coverage tables; no item-count hero; GENQ×GTM | queued |
 
@@ -119,3 +119,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any day-one mastery fireworks / confidence≡mastery / skip-to-green / population-prior-as-biography / placement-belt cold start / Identity Score™ onboarding / diagnostic-completion NS (Part LXXXI)
 - Any format-count≡moat / “we teach every format” / decoration≡FormatId / concept≡format-flexible / format-shuffle≡science / Format Personality™ / learning-style quiz NS (Part LXXXII)
 - Any tonight-%/streak/XP parent NS / mastery fireworks on parent portal / shame ranks / live wrong-answer stalk / Anxiety Score™ parent view / gradebook cosplay / controlling nag loop / guaranteed points from parent widgets (Part LXXXIII)
+- Any Talk Ratio Score™ / raw talk-% NS / 50/50 airtime dogma / silence theater≡Socratic / “got it?”≡construction / AI monologue≡dialogue / emotion-AI talk scoring / Bloom-from-student-talk (Part LXXXIV)
