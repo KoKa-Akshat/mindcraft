@@ -19,7 +19,7 @@ import WizardMascot from '../components/canvas/WizardMascot'
 import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
-import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
+import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
 import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
@@ -793,6 +793,7 @@ export default function Dashboard({
                               data-state={dotState}
                               style={{
                                 ['--node-color' as string]: dotColor,
+                                ['--mastery' as string]: String(mastery),
                               }}
                               title={`${actConceptLabel(id)}: ${Math.round(mastery * 100)}% mastery`}
                               onClick={() => openChapter(id)}
@@ -802,10 +803,6 @@ export default function Dashboard({
                                 {dotState === 'complete' && <span className={s.tocNodeCheck}>✓</span>}
                               </span>
                               <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
-                              <span className={s.tocNodeBlurb}>{actConceptBlurb(id)}</span>
-                              <span className={s.tocMasteryTrack} aria-hidden="true">
-                                <span style={{ width: `${mastery * 100}%` }} />
-                              </span>
                             </button>
                           )
                         })}
