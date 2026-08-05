@@ -5,7 +5,7 @@ import { ROOT, flattenText } from './lib.mjs'
 export const MARKETING_MODEL = process.env.MARKETING_MODEL || 'llama-3.3-70b-versatile'
 
 export function loadLocalEnv() {
-  for (const file of ['.env','ml/.env.local','webhook/.env.local']) {
+  for (const file of ['.env','marketing/.env','ml/.env.local','webhook/.env.local']) {
     const full=path.resolve(ROOT,file); if(!fs.existsSync(full)) continue
     for(const line of fs.readFileSync(full,'utf8').split(/\r?\n/)){const m=line.match(/^([A-Z][A-Z0-9_]*)=(.*)$/);if(m&&!process.env[m[1]])process.env[m[1]]=m[2].replace(/^['"]|['"]$/g,'')}
   }

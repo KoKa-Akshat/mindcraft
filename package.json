@@ -7,6 +7,7 @@
     "marketing:build": "node marketing/src/cli.mjs build",
     "marketing:review": "node marketing/src/cli.mjs review",
     "marketing:export": "node marketing/src/cli.mjs export",
+    "marketing:drive-auth": "node marketing/src/drive-auth.mjs",
     "marketing:contact-sheet": "node marketing/src/cli.mjs contact-sheet",
     "marketing:publish": "node marketing/src/cli.mjs publish",
     "test:marketing": "node --test marketing/test/*.test.mjs"

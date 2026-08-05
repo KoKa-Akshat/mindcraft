@@ -347,15 +347,31 @@ Inspection should not wait on a git push, and run output does not belong in git
 shared Drive folder: a contact-sheet PDF plus one folder per post with slides
 and a paste-ready caption.
 
+Drive is filed **by post type**, not by date — `Stories/`, `Testimonials/`,
+`The Miss/` and so on, each holding `<date>-<id>/` post folders, with batch
+contact sheets under `Batches/`. All nine pillar folders are created on every
+run so the taxonomy stays visible even when a pillar produces nothing that
+week. Date-first filing made the batch easy to review once and the archive
+useless afterwards; post-type filing makes it an asset library.
+
 - **Drive cannot run the interactive review page** — it won't serve the HTML as
   a live page, so the keyboard shortcuts and Export button don't survive. The
   batch therefore travels as a **contact-sheet PDF**, which Drive previews and
   accepts inline comments on. Comments are lightweight decision capture until
   v1 exists.
-- Auth is a **service account** with `drive.file` scope and write access to one
-  shared folder — `MARKETING_DRIVE_SERVICE_ACCOUNT` +
-  `MARKETING_DRIVE_FOLDER_ID`. The pipeline needs its own credentials; this is
-  not a personal Drive connector.
+- **Auth is OAuth, not a service account.** Service accounts have no Drive
+  storage quota, so they can only own files inside a Workspace Shared Drive; on
+  personal Gmail every upload 403s regardless of folder sharing. The pipeline
+  authenticates as a user via refresh token (`npm run marketing:drive-auth`).
+  `driveMode()` still selects the service-account path when
+  `MARKETING_DRIVE_SERVICE_ACCOUNT` is set, for a Workspace Shared Drive later.
+- Scope is `drive.file`, which reaches only files this app created — so the
+  pipeline **creates and owns its root folder** rather than writing into one
+  made by hand (a hand-made folder returns 404 under this scope). Keeping the
+  narrow scope means a leaked token cannot read the rest of the Drive.
+- Consent screens left in **Testing** mode expire refresh tokens after 7 days,
+  which silently breaks a weekly pipeline. Publish the app; `drive.file` is
+  non-sensitive, so no verification is required.
 - **Blocked posts are never uploaded** (§13). Publishing is the moment content
   leaves the repo, so the privacy floor is enforced at the upload boundary, not
   only at build. `drive.json` records what was published and what was withheld.

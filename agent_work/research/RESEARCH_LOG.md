@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Researcher tick: Part LXXXV Story-world cognitive load vs identity payoff (SAFE-STORYLOAD)
+
+**Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.11 = 1 → Researcher)  
+**Chapter written:** `chapters/85_story_world_cognitive_load_vs_identity.md` (Part LXXXV)  
+**Claim examined:** When MindCraft story wrap pays for WM tax with identity/belonging/transfer — vs seductive lore that hurts learning while looking branded.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-STORYLOAD** — CLT budgets narrative; structure-encode or cut; coherence > immersion; novices get less lore; language≠math; story≠transfer; skip-story always; STORYLOAD-* before immersion ads.
+
+**Evidence spine:** Sweller (1988) CLT; Sweller/van Merriënboer/Paas (1998); Harp & Mayer (1998) seductive details; Rey (2012) + Sundararajan & Adesope (2020) metas; Moreno & Mayer (2000) coherence/sounds; Hidi & Renninger (2006) interest phases; Renninger/Ewen/Lasher (2002); Walkington (2013) personalization benefit; Van de Weijer-Bergsma & Van der Ven (2021) personalization null.
+
+**Claim killed (this tick):** Immersion / lore depth / Story Engagement Score™ as learning North Star or “story always helps” — demoted under CLT + seductive-details + coherence; structure-encoding wrap survives only behind non-inferiority gates.
+
+**Experiments mounted:** STORYLOAD-1…5 + STORYLOAD-QUAL.
+
+**Next researcher id:** **86** (competence evidence as social proof). Researcher count since v1.11 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXIV Tutor talk-ratio instrumentation (SAFE-TALK)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch84 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 0)  
