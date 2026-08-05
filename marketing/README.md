@@ -33,10 +33,30 @@ push. Drive cannot run the interactive review page, so the PDF is the artifact
 that previews and takes inline comments; the local review page remains the
 place where decisions are actually recorded.
 
-Requires `MARKETING_DRIVE_SERVICE_ACCOUNT` (path to a service-account JSON, or
-the JSON itself) and `MARKETING_DRIVE_FOLDER_ID`. The service account needs
-`drive.file` scope and write access to that folder. Results are written to
-`marketing/run/<date>/drive.json`.
+### Authorising Drive
+
+**Personal Gmail must use OAuth.** Service accounts have no storage quota, so
+they can only own files inside a Workspace Shared Drive. On a personal account
+every upload fails with a 403 no matter how the folder is shared.
+
+1. Google Cloud Console → APIs & Services → enable the **Google Drive API**
+2. Credentials → Create credentials → **OAuth client ID** → **Desktop app**
+3. Put the id and secret in `marketing/.env` as `MARKETING_DRIVE_CLIENT_ID`
+   and `MARKETING_DRIVE_CLIENT_SECRET`
+4. `npm run marketing:drive-auth` — opens consent, writes
+   `MARKETING_DRIVE_REFRESH_TOKEN` back to `marketing/.env`
+
+**Publish the OAuth consent screen.** Left in Testing mode, Google expires
+refresh tokens after 7 days, which breaks a weekly pipeline. `drive.file` is a
+non-sensitive scope, so publishing does not require app verification.
+
+`MARKETING_DRIVE_FOLDER_ID` stays **empty**. The `drive.file` scope only reaches
+files this app created, so a folder made by hand in the Drive UI returns 404.
+The pipeline creates and owns a `MindCraft Marketing` folder instead
+(`MARKETING_DRIVE_ROOT_NAME` overrides the name). Set the folder id only for a
+Workspace Shared Drive, alongside `MARKETING_DRIVE_SERVICE_ACCOUNT`.
+
+Results are written to `marketing/run/<date>/drive.json`.
 
 **Posts with `status: blocked` are never uploaded.** Publishing is where
 content leaves the repo, so the privacy floor is enforced at the upload
