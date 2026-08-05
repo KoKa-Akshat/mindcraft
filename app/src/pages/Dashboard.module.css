@@ -1418,13 +1418,50 @@
    and neighboring lanes stay put and readable. */
 .tocTrack {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: minmax(116px, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: minmax(76px, 1fr);
+  grid-auto-flow: dense;
   align-items: stretch;
   gap: 10px;
   position: relative;
   z-index: 1;
   flex: 1;
+  min-height: 0;
+}
+
+/* Each lane uses the same six-unit canvas but composes its real number of
+   concepts differently. This keeps the illustrated work lively and removes
+   blank spreadsheet cells when a section has only two or seven topics. */
+.tocLane[data-lane='warmups'] .tocNode:first-child,
+.tocLane[data-lane='geometry'] .tocNode:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.tocLane[data-lane='warmups'] .tocNode:nth-child(6),
+.tocLane[data-lane='warmups'] .tocNode:nth-child(7),
+.tocLane[data-lane='geometry'] .tocNode:nth-child(6),
+.tocLane[data-lane='geometry'] .tocNode:nth-child(7) {
+  grid-column: span 2;
+}
+
+.tocLane[data-lane='algebra'] .tocTrack {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.tocLane[data-lane='algebra'] .tocNode:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.tocLane[data-lane='algebra'] .tocNode:nth-child(2),
+.tocLane[data-lane='algebra'] .tocNode:nth-child(7),
+.tocLane[data-lane='algebra'] .tocNode:nth-child(11) {
+  grid-column: span 2;
+}
+
+.tocLane[data-lane='data'] .tocTrack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: 1fr;
+}
+.tocLane[data-lane='data'] .tocNode {
   min-height: 0;
 }
 
@@ -1434,7 +1471,7 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  gap: 7px;
+  gap: 6px;
   min-height: 0;
   padding: 6px 6px 9px;
   text-align: center;
@@ -1642,7 +1679,18 @@
   .tocLane:nth-child(n) { grid-column: auto; }
   .tocLane { padding: 12px 10px 10px; }
   .tocLaneTitle { font-size: 15px; }
-  .tocTrack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(108px, 1fr); }
+  .tocTrack,
+  .tocLane[data-lane='algebra'] .tocTrack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(108px, 1fr);
+  }
+  .tocLane[data-lane='data'] .tocTrack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tocLane[data-lane='warmups'] .tocNode:first-child,
+  .tocLane[data-lane='geometry'] .tocNode:first-child,
+  .tocLane[data-lane='algebra'] .tocNode:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
   .tocNode { min-height: 108px; }
   .tocNodeName { font-size: 11px; }
   .tocNodeBlurb { font-size: 9.5px; -webkit-line-clamp: 2; }

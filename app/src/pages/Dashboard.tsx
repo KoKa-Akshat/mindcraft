@@ -749,6 +749,7 @@ export default function Dashboard({
                     <section
                       key={section.id}
                       className={s.tocLane}
+                      data-lane={section.id}
                       style={{
                         background: section.wash,
                         ['--lane-accent' as string]: section.accent,
