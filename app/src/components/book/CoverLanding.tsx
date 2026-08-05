@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, Search, Sparkles, X } from 'lucide-react'
+import {
+  COVER_STICKERS,
+  COVER_STICKER_EQUIP_CAP,
+  coverStickerById,
+  loadEquippedCoverStickers,
+  saveEquippedCoverStickers,
+} from '../../lib/coverStickers'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
@@ -67,9 +74,10 @@ const SUBJECT_CHIPS: ReadonlyArray<SubjectChip> = [
   { label: 'Photography', tone: s.toneBlue, slot: s.slot7 },
 ]
 
+const EQUIP_SLOTS = [s.equip0, s.equip1, s.equip2, s.equip3] as const
+
 /**
- * Cover entry — floating worlds in orbit; center is name + arrow into the notebook.
- * Sticker store scaffold waits for catalog ideas.
+ * Cover entry — floating worlds + sticker store; center is name + arrow.
  */
 export default function CoverLanding({
   accountName,
@@ -84,6 +92,7 @@ export default function CoverLanding({
   const [closing, setClosing] = useState(false)
   const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
   const [hiddenSubjects, setHiddenSubjects] = useState<string[]>(() => loadHiddenSubjects())
+  const [equipped, setEquipped] = useState<string[]>(() => loadEquippedCoverStickers())
   const [storeOpen, setStoreOpen] = useState(false)
 
   useEffect(() => {
@@ -126,6 +135,18 @@ export default function CoverLanding({
       if (prev.includes(label)) return prev
       const next = [...prev, label]
       saveHiddenSubjects(next)
+      return next
+    })
+  }
+
+  function toggleSticker(id: string) {
+    setEquipped(prev => {
+      const next = prev.includes(id)
+        ? prev.filter(x => x !== id)
+        : prev.length >= COVER_STICKER_EQUIP_CAP
+          ? prev
+          : [...prev, id]
+      saveEquippedCoverStickers(next)
       return next
     })
   }
@@ -193,6 +214,27 @@ export default function CoverLanding({
           ))}
         </ul>
 
+        <ul className={s.equipField} aria-label="Stickers on your cover">
+          {equipped.map((id, i) => {
+            const sticker = coverStickerById(id)
+            if (!sticker) return null
+            const slot = EQUIP_SLOTS[i] ?? EQUIP_SLOTS[0]
+            return (
+              <li key={id} className={`${s.equipWrap} ${slot}`}>
+                <button
+                  type="button"
+                  className={s.equipSticker}
+                  onClick={() => toggleSticker(id)}
+                  title={`Remove ${sticker.name}`}
+                  aria-label={`Remove ${sticker.name}`}
+                >
+                  <img src={sticker.src} alt="" draggable={false} />
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+
         <div className={s.coverFace}>
           <span className={s.eyebrow}>study · create · explore</span>
           <button
@@ -250,7 +292,7 @@ export default function CoverLanding({
             >
               <div className={s.storeHead}>
                 <div>
-                  <p className={s.storeEyebrow}>coming soon</p>
+                  <p className={s.storeEyebrow}>free shelf · tap to pin</p>
                   <h2 id="cover-sticker-store-title" className={s.storeTitle}>Sticker Store</h2>
                 </div>
                 <button
@@ -263,15 +305,30 @@ export default function CoverLanding({
                 </button>
               </div>
               <p className={s.storeCopy}>
-                Drop your sticker ideas here next — we’ll stock the shelf.
+                Pin up to {COVER_STICKER_EQUIP_CAP} on your cover. Tap again to peel off.
+                {equipped.length > 0 ? ` ${equipped.length}/${COVER_STICKER_EQUIP_CAP} stuck.` : ''}
               </p>
-              <div className={s.storeGrid} aria-hidden="true">
-                {Array.from({ length: 6 }, (_, i) => (
-                  <div key={i} className={s.storeSlot}>
-                    <Sparkles size={20} strokeWidth={2} />
-                  </div>
-                ))}
-              </div>
+              <ul className={s.storeGrid}>
+                {COVER_STICKERS.map(sticker => {
+                  const on = equipped.includes(sticker.id)
+                  const full = !on && equipped.length >= COVER_STICKER_EQUIP_CAP
+                  return (
+                    <li key={sticker.id}>
+                      <button
+                        type="button"
+                        className={`${s.storeCard} ${on ? s.storeCardOn : ''} ${full ? s.storeCardFull : ''}`}
+                        onClick={() => toggleSticker(sticker.id)}
+                        disabled={full}
+                        aria-pressed={on}
+                      >
+                        <img src={sticker.src} alt="" className={s.storeArt} draggable={false} />
+                        <span className={s.storeName}>{sticker.name}</span>
+                        <span className={s.storeBlurb}>{sticker.blurb}</span>
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
           </div>
         )}

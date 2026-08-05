@@ -244,7 +244,47 @@
   box-shadow: 0 0 10px rgba(196, 245, 71, 0.7);
 }
 
-/* Sticker store panel — catalog slots ready for your ideas */
+/* Equipped stickers floating on the cover */
+.equipField {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 2;
+  pointer-events: none;
+}
+.equipWrap {
+  position: absolute;
+  pointer-events: auto;
+  animation: chipFloat 7s ease-in-out infinite;
+}
+.equipSticker {
+  display: block;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.equipSticker img {
+  display: block;
+  width: clamp(72px, 9vw, 104px);
+  height: auto;
+}
+.equipSticker:hover { transform: scale(1.06) rotate(-2deg); }
+.equipSticker:focus-visible {
+  outline: 2px solid #f5d348;
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+.equip0 { top: 22%; left: 22%; animation-delay: 0.1s; }
+.equip1 { top: 20%; right: 20%; animation-delay: 0.4s; }
+.equip2 { bottom: 22%; left: 18%; animation-delay: 0.7s; }
+.equip3 { bottom: 20%; right: 16%; animation-delay: 1s; }
+
+/* Sticker store panel */
 .storeBackdrop {
   position: absolute;
   inset: 0;
@@ -252,16 +292,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 20px;
   background: rgba(8, 14, 20, 0.55);
   backdrop-filter: blur(6px);
   animation: deskIn 0.28s ease both;
 }
 .storePanel {
-  width: min(420px, 100%);
+  width: min(560px, 100%);
+  max-height: min(86vh, 720px);
+  overflow: auto;
   border: 1px solid rgba(245, 245, 245, 0.14);
   border-radius: 18px;
-  background: rgba(8, 14, 20, 0.92);
+  background: rgba(8, 14, 20, 0.94);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
   padding: 22px 22px 20px;
 }
@@ -309,19 +351,62 @@
   color: rgba(245, 245, 245, 0.72);
 }
 .storeGrid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
-.storeSlot {
-  aspect-ratio: 1;
+.storeCard {
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border: 1.5px dashed rgba(245, 245, 245, 0.18);
+  gap: 6px;
+  padding: 12px 10px 11px;
+  border: 1px solid rgba(245, 245, 245, 0.12);
   border-radius: 14px;
-  color: rgba(245, 245, 245, 0.28);
-  background: rgba(245, 245, 245, 0.03);
+  background: rgba(245, 245, 245, 0.04);
+  color: #fffdf7;
+  cursor: pointer;
+  text-align: center;
+  transition:
+    transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 160ms ease,
+    background 160ms ease;
+}
+.storeCard:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(245, 211, 72, 0.45);
+  background: rgba(245, 211, 72, 0.08);
+}
+.storeCardOn {
+  border-color: rgba(36, 122, 77, 0.85);
+  background: rgba(36, 122, 77, 0.22);
+  box-shadow: 0 0 0 2px rgba(36, 122, 77, 0.25);
+}
+.storeCardFull {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.storeArt {
+  width: 78px;
+  height: auto;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.28));
+}
+.storeName {
+  font-family: var(--tok-font-sans);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: #fffdf7;
+}
+.storeBlurb {
+  font-family: var(--tok-font-serif);
+  font-size: 12px;
+  line-height: 1.25;
+  color: rgba(245, 245, 245, 0.55);
 }
 
 @keyframes chipIn {
@@ -501,4 +586,7 @@
   }
   .nameField { max-width: 280px; }
   .openArrow { width: 44px; }
+  .storeGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .storeArt { width: 72px; }
+  .equipSticker img { width: 68px; }
 }
