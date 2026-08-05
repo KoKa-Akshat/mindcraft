@@ -117,33 +117,72 @@
   outline-offset: 2px;
 }
 
-/* ── Composed subject orbit (keeps a clear center for the brand) ───── */
+/* ── Subject shelf orbit — ACT is the live book; others wait ───────── */
 .subjectField {
   position: absolute;
   inset: 0;
   margin: 0;
   padding: 0;
   list-style: none;
-  pointer-events: none;
   z-index: 1;
+  pointer-events: none;
+}
+
+.subjectChipWrap {
+  position: absolute;
+  pointer-events: auto;
+  opacity: 0;
+  animation:
+    chipIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) calc(0.12s + var(--chip-i, 0) * 0.05s) both,
+    chipFloat 6.4s ease-in-out calc(0.8s + var(--chip-i, 0) * 0.18s) infinite;
 }
 
 .subjectChip {
-  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--tok-font-sans);
   font-size: clamp(11px, 1.2vw, 13px);
   font-weight: 800;
   letter-spacing: 0.04em;
   color: rgba(245, 245, 245, 0.88);
   border: 1px solid rgba(245, 245, 245, 0.14);
-  border-radius: 6px;
-  padding: 7px 11px;
+  border-radius: 999px;
+  padding: 7px 12px;
   white-space: nowrap;
+  background: rgba(8, 14, 20, 0.55);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
-  opacity: 0;
-  animation:
-    chipIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) calc(0.12s + var(--chip-i, 0) * 0.05s) both,
-    chipFloat 6.4s ease-in-out calc(0.8s + var(--chip-i, 0) * 0.18s) infinite;
+  cursor: pointer;
+  transition:
+    transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+.subjectChip:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: rgba(245, 245, 245, 0.35);
+}
+.subjectChip:focus-visible {
+  outline: 2px solid #c4f547;
+  outline-offset: 2px;
+}
+
+.subjectChipActive {
+  border-color: rgba(196, 245, 71, 0.75);
+  background: rgba(196, 245, 71, 0.16);
+  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.18), 0 10px 28px rgba(0, 0, 0, 0.22);
+  color: #f5f5f5;
+}
+.subjectChipLive {
+  font-weight: 900;
+}
+.chipLiveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c4f547;
+  box-shadow: 0 0 10px rgba(196, 245, 71, 0.7);
 }
 
 @keyframes chipIn {
@@ -217,16 +256,24 @@
 }
 
 .entryLine {
-  margin: 4px 0 2px;
+  margin: 4px 0 0;
   font-family: var(--tok-font-serif);
   font-size: clamp(19px, 2vw, 24px);
   line-height: 1.2;
-  color: rgba(245, 245, 245, 0.78);
+  color: rgba(245, 245, 245, 0.86);
+}
+.shelfHint {
+  margin: 0;
+  font-family: var(--tok-font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(245, 245, 245, 0.48);
 }
 
 .nameField {
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -253,7 +300,7 @@
   box-sizing: border-box;
   background: rgba(245, 245, 245, 0.97);
   border: 1.5px solid rgba(245, 245, 245, 0.28);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 12px 16px;
   font-family: var(--tok-font-sans);
   font-size: 16px;
@@ -269,42 +316,59 @@
   box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.28);
 }
 
-.openArrow {
+/* ACT book CTA — the arrow box is the ACT notebook */
+.actBookCta {
   flex: 0 0 auto;
-  width: 48px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 14px 0 12px;
   border: 1px solid #c4f547;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #c4f547;
   color: #080e14;
   cursor: pointer;
-  box-shadow: 0 12px 24px rgba(196, 245, 71, 0.2);
+  box-shadow: 0 12px 24px rgba(196, 245, 71, 0.22);
   transition:
     transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
     background 160ms ease,
     box-shadow 200ms ease;
 }
-.openArrow:hover {
+.actBookLabel {
+  font-family: var(--tok-font-sans);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.actBookCta:hover {
   transform: translateY(-2px);
   background: #f5f5f5;
   border-color: #f5f5f5;
   box-shadow: 0 16px 28px rgba(196, 245, 71, 0.28);
 }
-.openArrow:active { transform: translateY(0); }
-.openArrow:focus-visible {
+.actBookCta:active { transform: translateY(0); }
+.actBookCta:focus-visible {
   outline: 2px solid #f5f5f5;
   outline-offset: 2px;
 }
 
+.shelfNote {
+  margin: 0;
+  font-family: var(--tok-font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(196, 245, 71, 0.85);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .desk, .cover, .deskClosing, .deskClosing .cover,
-  .openArrow, .nameInput, .findTutorBtn, .subjectChip, .wordmark {
+  .actBookCta, .nameInput, .findTutorBtn, .subjectChipWrap, .wordmark {
     animation: none;
     transition: none;
   }
-  .subjectChip { opacity: 0.92; }
+  .subjectChipWrap { opacity: 0.92; }
 }
 
 @media (max-width: 860px) {
@@ -325,6 +389,8 @@
     padding: 0 12px;
     font-size: 10px;
   }
-  .nameField { max-width: 280px; }
-  .openArrow { width: 44px; }
+  .nameField { max-width: 300px; }
+  .nameRow { flex-wrap: wrap; }
+  .actBookCta { width: 100%; justify-content: center; }
+  .shelfHint { max-width: 28ch; }
 }

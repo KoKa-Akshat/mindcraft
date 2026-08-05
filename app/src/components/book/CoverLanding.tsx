@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, Search } from 'lucide-react'
+import { ArrowRight, BookOpen, Search } from 'lucide-react'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
@@ -32,21 +32,30 @@ function saveCoverName(name: string) {
   try { localStorage.setItem(NAME_KEY, name) } catch { /* ignore */ }
 }
 
-/** Atmospheric subject orbit — college-tutorable worlds, non-interactive. */
-const SUBJECT_CHIPS: ReadonlyArray<{ label: string; tone: string; slot: string }> = [
-  { label: 'ACT Math', tone: s.toneMint, slot: s.slot0 },
-  { label: 'Writing', tone: s.toneSand, slot: s.slot1 },
-  { label: 'Fashion', tone: s.tonePeach, slot: s.slot2 },
-  { label: 'Violin', tone: s.toneGold, slot: s.slot3 },
-  { label: 'Law', tone: s.toneBlue, slot: s.slot4 },
-  { label: 'Coding', tone: s.toneMint, slot: s.slot5 },
-  { label: 'Spanish', tone: s.tonePeach, slot: s.slot6 },
-  { label: 'Photography', tone: s.toneBlue, slot: s.slot7 },
+type SubjectChip = {
+  id: string
+  label: string
+  tone: string
+  slot: string
+  /** Only ACT opens the live notebook today. */
+  opens: boolean
+}
+
+/** Orbit of worlds — ACT is the open book; others live on the shelf. */
+const SUBJECT_CHIPS: ReadonlyArray<SubjectChip> = [
+  { id: 'act', label: 'ACT Math', tone: s.toneMint, slot: s.slot0, opens: true },
+  { id: 'writing', label: 'Writing', tone: s.toneSand, slot: s.slot1, opens: false },
+  { id: 'fashion', label: 'Fashion', tone: s.tonePeach, slot: s.slot2, opens: false },
+  { id: 'violin', label: 'Violin', tone: s.toneGold, slot: s.slot3, opens: false },
+  { id: 'law', label: 'Law', tone: s.toneBlue, slot: s.slot4, opens: false },
+  { id: 'coding', label: 'Coding', tone: s.toneMint, slot: s.slot5, opens: false },
+  { id: 'spanish', label: 'Spanish', tone: s.tonePeach, slot: s.slot6, opens: false },
+  { id: 'photo', label: 'Photography', tone: s.toneBlue, slot: s.slot7, opens: false },
 ]
 
 /**
- * Cover entry — marketing cream/mint/leaf system, Find a Tutor in the
- * top-right, subject chips in a composed orbit (not a random scatter).
+ * Cover entry — Deep Field title card. Floating subjects signal a shelf of
+ * worlds; the CTA opens the ACT Math notebook that ships today.
  */
 export default function CoverLanding({
   accountName,
@@ -60,6 +69,10 @@ export default function CoverLanding({
   const navigate = useNavigate()
   const [closing, setClosing] = useState(false)
   const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
+  const [selectedId, setSelectedId] = useState('act')
+  const [shelfNote, setShelfNote] = useState('')
+
+  const selected = SUBJECT_CHIPS.find(c => c.id === selectedId) ?? SUBJECT_CHIPS[0]
 
   useEffect(() => {
     if (loadCoverName()) return
@@ -69,6 +82,17 @@ export default function CoverLanding({
 
   function open() {
     if (closing) return
+    // Only ACT opens the live Contents notebook for now.
+    if (!selected.opens) {
+      setShelfNote(`${selected.label} is on the shelf. Opening ACT Math for now.`)
+      setSelectedId('act')
+      window.setTimeout(() => {
+        setClosing(true)
+        markCoverSeen()
+        window.setTimeout(onOpen, 480)
+      }, 720)
+      return
+    }
     setClosing(true)
     markCoverSeen()
     window.setTimeout(onOpen, 480)
@@ -76,7 +100,7 @@ export default function CoverLanding({
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if ((e.key === 'Enter' || e.key === ' ') && !(e.target instanceof HTMLInputElement)) {
+      if ((e.key === 'Enter' || e.key === ' ') && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLButtonElement)) {
         e.preventDefault()
         open()
       }
@@ -84,11 +108,20 @@ export default function CoverLanding({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [closing])
+  }, [closing, selectedId])
 
   function onNameChange(value: string) {
     setName(value)
     saveCoverName(value.trim())
+  }
+
+  function pickSubject(chip: SubjectChip) {
+    setSelectedId(chip.id)
+    if (chip.opens) {
+      setShelfNote('')
+    } else {
+      setShelfNote(`${chip.label} is coming. ACT Math is open today.`)
+    }
   }
 
   function goFindTutor() {
@@ -110,20 +143,32 @@ export default function CoverLanding({
           <span>Find a Tutor</span>
         </button>
 
-        <ul className={s.subjectField} aria-hidden="true">
-          {SUBJECT_CHIPS.map((chip, i) => (
-            <li
-              key={chip.label}
-              className={`${s.subjectChip} ${chip.tone} ${chip.slot}`}
-              style={{ ['--chip-i' as string]: String(i) }}
-            >
-              {chip.label}
-            </li>
-          ))}
+        <ul className={s.subjectField} aria-label="Subjects on the shelf">
+          {SUBJECT_CHIPS.map((chip, i) => {
+            const active = chip.id === selectedId
+            return (
+              <li
+                key={chip.id}
+                className={`${s.subjectChipWrap} ${chip.slot}`}
+                style={{ ['--chip-i' as string]: String(i) }}
+              >
+                <button
+                  type="button"
+                  className={`${s.subjectChip} ${chip.tone} ${active ? s.subjectChipActive : ''} ${chip.opens ? s.subjectChipLive : ''}`}
+                  onClick={() => pickSubject(chip)}
+                  aria-pressed={active}
+                  title={chip.opens ? 'Open this notebook' : 'Coming soon'}
+                >
+                  {chip.label}
+                  {chip.opens && <span className={s.chipLiveDot} aria-hidden="true" />}
+                </button>
+              </li>
+            )
+          })}
         </ul>
 
         <div className={s.coverFace}>
-          <span className={s.eyebrow}>study · create · explore</span>
+          <span className={s.eyebrow}>a shelf of worlds</span>
           <button
             type="button"
             className={s.wordmark}
@@ -133,7 +178,14 @@ export default function CoverLanding({
             Mind<span className={s.wordmarkCraft}>Craft</span>
           </button>
 
-          <p className={s.entryLine}>Your map starts here.</p>
+          <p className={s.entryLine}>
+            {selected.opens
+              ? 'Open your ACT Math notebook.'
+              : `${selected.label} waits on the shelf.`}
+          </p>
+          <p className={s.shelfHint}>
+            ACT is live. Writing, law, violin… more lessons on the orbit.
+          </p>
 
           <div className={s.nameField}>
             <label className={s.nameLabel} htmlFor="cover-name">What should we call you?</label>
@@ -156,13 +208,22 @@ export default function CoverLanding({
               />
               <button
                 type="button"
-                className={s.openArrow}
+                className={s.actBookCta}
                 onClick={open}
-                aria-label={name.trim() ? `Open notebook as ${name.trim()}` : 'Open your notebook'}
+                aria-label={
+                  name.trim()
+                    ? `Open ACT Math notebook as ${name.trim()}`
+                    : 'Open ACT Math notebook'
+                }
               >
-                <ArrowRight size={20} strokeWidth={2.4} aria-hidden="true" />
+                <BookOpen size={16} strokeWidth={2.4} aria-hidden="true" />
+                <span className={s.actBookLabel}>ACT Math</span>
+                <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
               </button>
             </div>
+            {shelfNote && (
+              <p className={s.shelfNote} role="status">{shelfNote}</p>
+            )}
           </div>
         </div>
       </div>
