@@ -242,7 +242,7 @@
 
 .nameField {
   width: 100%;
-  max-width: 360px;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -259,7 +259,7 @@
 .nameRow {
   display: flex;
   align-items: stretch;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
 }
 
@@ -270,12 +270,12 @@
   background: rgba(245, 245, 245, 0.97);
   border: 1.5px solid rgba(245, 245, 245, 0.28);
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 12px 16px;
   font-family: var(--tok-font-sans);
   font-size: 16px;
   font-weight: 700;
   color: #080e14;
-  text-align: left;
+  text-align: center;
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 .nameInput::placeholder { color: rgba(8, 14, 20, 0.42); font-weight: 600; }
@@ -283,100 +283,6 @@
   outline: none;
   border-color: #c4f547;
   box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.28);
-}
-
-/* Compact ACT course chip + dropdown (uses leftover name-row space) */
-.courseWrap {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.courseSelect {
-  height: 100%;
-  min-height: 48px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0 10px 0 12px;
-  border: 1.5px solid rgba(196, 245, 71, 0.65);
-  border-radius: 8px;
-  background: rgba(196, 245, 71, 0.14);
-  color: #f5f5f5;
-  cursor: pointer;
-  transition:
-    transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
-    background 160ms ease,
-    border-color 160ms ease;
-}
-.courseSelectLabel {
-  font-family: var(--tok-font-sans);
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-}
-.courseSelect:hover {
-  background: rgba(196, 245, 71, 0.22);
-  border-color: #c4f547;
-}
-.courseSelectOpen {
-  background: rgba(196, 245, 71, 0.22);
-  border-color: #c4f547;
-}
-.courseSelect:focus-visible {
-  outline: 2px solid #c4f547;
-  outline-offset: 2px;
-}
-
-.courseMenu {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  z-index: 5;
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  min-width: 168px;
-  border: 1px solid rgba(245, 245, 245, 0.16);
-  border-radius: 10px;
-  background: rgba(8, 14, 20, 0.94);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(14px);
-}
-
-.courseOption {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  border: none;
-  border-radius: 7px;
-  background: transparent;
-  padding: 9px 10px;
-  font-family: var(--tok-font-sans);
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(245, 245, 245, 0.9);
-  text-align: left;
-  cursor: pointer;
-}
-.courseOptionLive {
-  color: #080e14;
-  background: #c4f547;
-}
-.courseOptionSoon {
-  color: rgba(245, 245, 245, 0.42);
-  cursor: not-allowed;
-}
-.courseOptionSoon:disabled {
-  cursor: not-allowed;
-}
-.courseSoon {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(245, 245, 245, 0.35);
 }
 
 .openArrow {
@@ -410,7 +316,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .desk, .cover, .deskClosing, .deskClosing .cover,
-  .openArrow, .courseSelect, .nameInput, .findTutorBtn, .subjectChipWrap, .wordmark {
+  .openArrow, .nameInput, .findTutorBtn, .subjectChipWrap, .wordmark {
     animation: none;
     transition: none;
   }
@@ -435,8 +341,6 @@
     padding: 0 12px;
     font-size: 10px;
   }
-  .nameField { max-width: 300px; }
+  .nameField { max-width: 280px; }
   .openArrow { width: 44px; }
-  .courseSelect { padding: 0 8px 0 10px; }
-  .courseSelectLabel { font-size: 12px; }
 }

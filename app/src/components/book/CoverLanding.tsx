@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, ChevronDown, Search } from 'lucide-react'
+import { ArrowRight, Search } from 'lucide-react'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
@@ -33,29 +33,26 @@ function saveCoverName(name: string) {
 }
 
 type SubjectChip = {
-  id: string
   label: string
-  short: string
   tone: string
   slot: string
-  live: boolean
+  live?: boolean
 }
 
-/** Orbit of worlds — atmospheric only. ACT is selected in the name row. */
+/** Atmospheric subject orbit — non-interactive. ACT is the live world. */
 const SUBJECT_CHIPS: ReadonlyArray<SubjectChip> = [
-  { id: 'act', label: 'ACT Math', short: 'ACT', tone: s.toneMint, slot: s.slot0, live: true },
-  { id: 'writing', label: 'Writing', short: 'Writing', tone: s.toneSand, slot: s.slot1, live: false },
-  { id: 'fashion', label: 'Fashion', short: 'Fashion', tone: s.tonePeach, slot: s.slot2, live: false },
-  { id: 'violin', label: 'Violin', short: 'Violin', tone: s.toneGold, slot: s.slot3, live: false },
-  { id: 'law', label: 'Law', short: 'Law', tone: s.toneBlue, slot: s.slot4, live: false },
-  { id: 'coding', label: 'Coding', short: 'Coding', tone: s.toneMint, slot: s.slot5, live: false },
-  { id: 'spanish', label: 'Spanish', short: 'Spanish', tone: s.tonePeach, slot: s.slot6, live: false },
-  { id: 'photo', label: 'Photography', short: 'Photo', tone: s.toneBlue, slot: s.slot7, live: false },
+  { label: 'ACT Math', tone: s.toneMint, slot: s.slot0, live: true },
+  { label: 'Writing', tone: s.toneSand, slot: s.slot1 },
+  { label: 'Fashion', tone: s.tonePeach, slot: s.slot2 },
+  { label: 'Violin', tone: s.toneGold, slot: s.slot3 },
+  { label: 'Law', tone: s.toneBlue, slot: s.slot4 },
+  { label: 'Coding', tone: s.toneMint, slot: s.slot5 },
+  { label: 'Spanish', tone: s.tonePeach, slot: s.slot6 },
+  { label: 'Photography', tone: s.toneBlue, slot: s.slot7 },
 ]
 
 /**
- * Cover entry — Deep Field title card. Floating subjects hint at a shelf of
- * worlds; the name row opens the live ACT notebook.
+ * Cover entry — floating worlds in orbit; center is name + arrow into the notebook.
  */
 export default function CoverLanding({
   accountName,
@@ -69,8 +66,6 @@ export default function CoverLanding({
   const navigate = useNavigate()
   const [closing, setClosing] = useState(false)
   const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
-  const [courseOpen, setCourseOpen] = useState(false)
-  const courseWrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (loadCoverName()) return
@@ -78,25 +73,8 @@ export default function CoverLanding({
     if (trimmedAccount) setName(prev => prev || trimmedAccount)
   }, [accountName])
 
-  useEffect(() => {
-    if (!courseOpen) return
-    function onDoc(e: MouseEvent) {
-      if (!courseWrapRef.current?.contains(e.target as Node)) setCourseOpen(false)
-    }
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setCourseOpen(false)
-    }
-    document.addEventListener('mousedown', onDoc)
-    window.addEventListener('keydown', onKey)
-    return () => {
-      document.removeEventListener('mousedown', onDoc)
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [courseOpen])
-
   function open() {
     if (closing) return
-    setCourseOpen(false)
     setClosing(true)
     markCoverSeen()
     window.setTimeout(onOpen, 480)
@@ -141,12 +119,12 @@ export default function CoverLanding({
         <ul className={s.subjectField} aria-hidden="true">
           {SUBJECT_CHIPS.map((chip, i) => (
             <li
-              key={chip.id}
+              key={chip.label}
               className={`${s.subjectChipWrap} ${chip.slot}`}
               style={{ ['--chip-i' as string]: String(i) }}
             >
               <span
-                className={`${s.subjectChip} ${chip.tone} ${chip.live ? s.subjectChipLive : s.subjectChipSoon}`}
+                className={`${s.subjectChip} ${chip.tone} ${chip.live ? s.subjectChipLive : ''}`}
               >
                 {chip.label}
                 {chip.live && <span className={s.chipLiveDot} />}
@@ -156,7 +134,7 @@ export default function CoverLanding({
         </ul>
 
         <div className={s.coverFace}>
-          <span className={s.eyebrow}>your notebook</span>
+          <span className={s.eyebrow}>study · create · explore</span>
           <button
             type="button"
             className={s.wordmark}
@@ -185,52 +163,13 @@ export default function CoverLanding({
                 maxLength={40}
                 autoComplete="given-name"
               />
-
-              <div className={s.courseWrap} ref={courseWrapRef}>
-                <button
-                  type="button"
-                  className={`${s.courseSelect} ${courseOpen ? s.courseSelectOpen : ''}`}
-                  onClick={() => setCourseOpen(v => !v)}
-                  aria-haspopup="listbox"
-                  aria-expanded={courseOpen}
-                  aria-label="Course: ACT Math"
-                >
-                  <span className={s.courseSelectLabel}>ACT</span>
-                  <ChevronDown size={16} strokeWidth={2.6} aria-hidden="true" />
-                </button>
-                {courseOpen && (
-                  <ul className={s.courseMenu} role="listbox" aria-label="Courses">
-                    {SUBJECT_CHIPS.map(chip => (
-                      <li key={chip.id} role="option" aria-selected={chip.live} aria-disabled={!chip.live}>
-                        <button
-                          type="button"
-                          className={`${s.courseOption} ${chip.live ? s.courseOptionLive : s.courseOptionSoon}`}
-                          disabled={!chip.live}
-                          onClick={() => {
-                            if (!chip.live) return
-                            setCourseOpen(false)
-                          }}
-                        >
-                          <span>{chip.label}</span>
-                          {!chip.live && <span className={s.courseSoon}>soon</span>}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
               <button
                 type="button"
                 className={s.openArrow}
                 onClick={open}
-                aria-label={
-                  name.trim()
-                    ? `Open ACT notebook as ${name.trim()}`
-                    : 'Open ACT notebook'
-                }
+                aria-label={name.trim() ? `Open notebook as ${name.trim()}` : 'Open your notebook'}
               >
-                <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" />
+                <ArrowRight size={20} strokeWidth={2.4} aria-hidden="true" />
               </button>
             </div>
           </div>
