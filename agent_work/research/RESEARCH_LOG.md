@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Researcher tick: Part LXXXVII Bank coverage honesty in marketing (SAFE-COVER)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.11 = 3 → Researcher)  
+**Chapter written:** `chapters/87_bank_coverage_honesty_marketing.md` (Part LXXXVII)  
+**Claim examined:** How to market question-bank coverage (ACT track, concept×level×format) without item-count heroics, complete-ACT puffery, or GENQ volume theater.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-COVER** — matrix > total; gaps are features; use-tier labels (Kane IUA); examTag honesty; GENQ never counted unverified; prior substantiation via regenerated audit; no complete-bank puffery; COVER-* before coverage ads.
+
+**Evidence spine:** Kane (2013) IUA; AERA/APA/NCME (2014) Standards; Sireci (1998b) domain representation; Martone & Sireci (2009) alignment RER; Webb (2007) alignment criteria; Herman/Webb/Zuniga (2007) rater variability; FTC (1984) advertising substantiation; internal `actOntologyCoverage.json` audit fields.
+
+**Claim killed (this tick):** Item-count / complete-ACT / GCSE-as-ACT / unsynced-GENQ-as-coverage / ontology-nodes≡playable bank as marketing — demoted under representation + IUA + FTC prior substantiation; honest matrices + sealed keys survive behind COVER-*.
+
+**Experiments mounted:** COVER-1…5 + COVER-QUAL.
+
+**Next researcher id:** **88** (worked-example fading in Solver UX). Researcher count since v1.11 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXVI Competence evidence as social proof (SAFE-PROOF)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch86 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 2 → Researcher)  
