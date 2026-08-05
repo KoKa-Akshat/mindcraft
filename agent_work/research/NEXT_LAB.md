@@ -70,6 +70,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 81 | Cold-start without fake mastery | Onboarding probes; hide-correctness; no fireworks | **DONE** (2026-08-05) — Part LXXXI / SAFE-COLD |
 | 82 | Format-axis product narrative | Diagram vs symbolic gaps; FormatId CTA copy | **DONE** (2026-08-05) — Part LXXXII / SAFE-FORMAT |
 | 83 | Parent dashboard honesty UX | Proof age without shame; MoC surfaces | **DONE** (2026-08-05) — Part LXXXIII / SAFE-PDASH |
+| — | **Synthesizer v1.11** | Merge LXXV–LXXXIII SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-05 UTC 09) |
 | 84 | Tutor talk-ratio instrumentation | Prompt>pour metrics; HITL QA telemetry | **NEXT** |
 | 85 | Story-world cognitive load vs identity payoff | Narrative wrap CLT; when story helps/hurts | queued |
 | 86 | Competence evidence as social proof | Solo-transfer artifacts parents/tutors can witness | queued |

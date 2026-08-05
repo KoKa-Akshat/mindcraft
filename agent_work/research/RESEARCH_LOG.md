@@ -4,6 +4,35 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Synthesizer tick v1.11: merge Parts LXXV–LXXXIII
+
+**Tick type:** Synthesizer (UTC hour 09; hour%6≠0; ≥8 researcher entries since synthesizer v1.10 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-WORKFORCE (LXXV) — fidelity-over-tenure; coach-capacity hire gate
+- SAFE-FORGET (LXXVI) — aged evidence; JOLs≠retention; delayed probes
+- SAFE-ADAPT (LXXVII) — calendar-first; banded inspectable adaptivity
+- SAFE-DURABLE (LXXVIII) — dual-rail GTM; cram-intercept; no point guarantees
+- SAFE-FBTIME (LXXIX) — mode-conditional timing; focus>timing
+- SAFE-BRIDGE (LXXX) — connection-first; join transfer
+- SAFE-COLD (LXXXI) — humble prior → labeled seed → probes
+- SAFE-FORMAT (LXXXII) — format evidence; conversion as object
+- SAFE-PDASH (LXXXIII) — proof-age hero; autonomy>control parent UX
+
+**Red Team kills promoted:** #29–#37 (from provisional chapter kills → v1.11 company dossier).
+
+**Experiment families confirmed in Part IX:** WORK / FORGET / ADAPT / CRAM / FB / BRIDGE / COLD / FORMAT / PDASH.
+
+**Claim killed (synthesis):** Treating LXXV–LXXXIII as orphan provisional deep-dives or independent North Stars (headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **84** (tutor talk-ratio instrumentation). Researcher count since v1.11 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXIII Parent dashboard honesty UX (SAFE-PDASH)
 
 **Tick type:** Researcher (UTC hour 6 ≡ Red Team slot, but ch83 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 8 → still prefer unfinished chapter over Synthesizer on RT-prefer hour)  
