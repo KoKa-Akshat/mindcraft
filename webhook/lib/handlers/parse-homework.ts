@@ -8,27 +8,26 @@
  * Turns 1-4 photographed/scanned homework page images into a structured
  * array of extracted questions. One vision call per page (parallel),
  * merged into a single question list. PDFs are rasterized to page images
- * client-side before this endpoint ever sees them (Groq vision cannot read
+ * client-side before this endpoint ever sees them (vision models can't read
  * PDFs directly, and rasterizing client-side keeps each request small).
  *
  * Contract lives in AGENT_RULEBOOK.md §1.8 — keep both in sync.
  *
- * Provider: Anthropic claude-haiku-4-5 vision primary, Groq llama-4-scout
- * vision fallback (same cascade as transcribe-scratch.ts). Transcribe/split
+ * Provider: Google Gemini (gemini-2.5-flash) vision, single provider (no
+ * fallback cascade — see webhook/CLAUDE.md migration notes). Transcribe/split
  * only — never solves, answers, or annotates the homework.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
+import { GoogleGenAI } from '@google/genai'
 import { setCors } from '../cors'
 import { auth } from '../firebase'
 
 const MAX_IMAGE_BASE64_BYTES = 1.5 * 1024 * 1024
 const MAX_PAGES_PER_CALL = 4
 const PER_PAGE_TIMEOUT_MS = 20_000
-const MODEL = process.env.PARSE_HOMEWORK_MODEL ?? 'claude-haiku-4-5-20251001'
-const GROQ_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
+const MODEL = process.env.PARSE_HOMEWORK_MODEL ?? 'gemini-2.5-flash'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? '' })
+const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY ?? '' })
 
 export interface ParsedHomeworkQuestion {
   number: string | null
@@ -109,50 +108,25 @@ function safeJsonQuestions(raw: string): ParsedHomeworkQuestion[] {
   }
 }
 
-async function parsePageWithAnthropic(base64: string, mediaType: 'image/png' | 'image/jpeg' | 'image/webp' | 'image/gif'): Promise<PageResult> {
-  if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY missing')
-  const result = await withTimeout(anthropic.messages.create({
+async function parsePageWithGemini(base64: string, mediaType: 'image/png' | 'image/jpeg' | 'image/webp' | 'image/gif'): Promise<PageResult> {
+  if (!process.env.GEMINI_API_KEY) throw new Error('GEMINI_API_KEY missing')
+  const result = await withTimeout(genai.models.generateContent({
     model: MODEL,
-    max_tokens: 2048,
-    temperature: 0,
-    system: systemPrompt(),
-    messages: [{
+    contents: [{
       role: 'user',
-      content: [
-        { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
-        { type: 'text', text: 'Extract the questions on this homework page.' },
+      parts: [
+        { inlineData: { mimeType: mediaType, data: base64 } },
+        { text: 'Extract the questions on this homework page.' },
       ],
     }],
-  }), PER_PAGE_TIMEOUT_MS)
-  const raw = result.content[0]?.type === 'text' ? result.content[0].text : ''
-  return { questions: safeJsonQuestions(raw), unavailable: false }
-}
-
-async function parsePageWithGroq(base64: string, mediaType: string): Promise<PageResult> {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) throw new Error('GROQ_API_KEY missing')
-  const res = await withTimeout(fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: GROQ_MODEL,
+    config: {
+      systemInstruction: systemPrompt(),
       temperature: 0,
-      max_tokens: 2048,
-      messages: [
-        { role: 'system', content: systemPrompt() },
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: 'Extract the questions on this homework page.' },
-            { type: 'image_url', image_url: { url: `data:${mediaType};base64,${base64}` } },
-          ],
-        },
-      ],
-    }),
+      maxOutputTokens: 2048,
+    },
   }), PER_PAGE_TIMEOUT_MS)
-  if (!res.ok) throw new Error(`Groq parse-homework failed: ${res.status}`)
-  const data = await res.json()
-  return { questions: safeJsonQuestions(data.choices?.[0]?.message?.content ?? ''), unavailable: false }
+  const raw = result.text ?? ''
+  return { questions: safeJsonQuestions(raw), unavailable: false }
 }
 
 async function parsePage(rawImage: string): Promise<PageResult> {
@@ -162,15 +136,9 @@ async function parsePage(rawImage: string): Promise<PageResult> {
   }
 
   try {
-    return await parsePageWithAnthropic(base64, mediaType)
-  } catch (anthropicErr: any) {
-    console.warn('parse-homework anthropic fallback:', anthropicErr?.message ?? anthropicErr)
-  }
-
-  try {
-    return await parsePageWithGroq(base64, mediaType)
-  } catch (groqErr: any) {
-    console.warn('parse-homework unavailable:', groqErr?.message ?? groqErr)
+    return await parsePageWithGemini(base64, mediaType)
+  } catch (geminiErr: any) {
+    console.warn('parse-homework unavailable:', geminiErr?.message ?? geminiErr)
     return fallbackPage()
   }
 }

@@ -4,6 +4,112 @@
 
 ---
 
+## webhook/: migrate 3 LLM endpoints from Anthropic+Groq cascade to Gemini (Fable 5, 2026-08-05)
+
+Akshat added `GEMINI_API_KEY` to Vercel production env (verified it
+authenticates against `gemini-2.5-flash` — just blocked on prepaid billing
+credits at zero, his problem to fix, not a code problem). Migrated
+`webhook/lib/handlers/parse-homework.ts`, `webhook/api/transcribe-scratch.ts`,
+and `webhook/api/agent-check-in.ts` off the dead `ANTHROPIC_API_KEY` (401 in
+prod) + blank `GROQ_API_KEY` fallback cascade onto a single Gemini call each
+(`@google/genai` SDK, `ai.models.generateContent(...)`, model
+`gemini-2.5-flash`). Prompts, response JSON contracts (`{questions,
+pageCount, unavailable?}`, `{text, latex, unavailable?, perLine?}`, the
+affective-state shape), `safeJson`/`safeJsonQuestions`, `withTimeout`,
+CORS/auth, and HTTP status codes all preserved exactly — zero frontend
+changes needed. Deleted the Groq codepaths in the two vision files (dead
+2→3-provider cascade collapsed to 1). Left `webhook/api/gemini.ts` (unrelated
+legacy Claude+Stripe endpoint despite the name) and
+`webhook/lib/handlers/deploy-rules.ts` (unrelated `ANTHROPIC_API_KEY` use)
+untouched, per scope. `@anthropic-ai/sdk` dependency kept in
+`webhook/package.json` since those two files still use it.
+
+**Ready to go the instant billing is topped up** — no further code work
+needed. `npx tsc --noEmit` clean on all 3 files (one pre-existing unrelated
+error in `spark-experience.ts`, confirmed present before this change too).
+Sanity-checked the Gemini call shape with a throwaway fake-key request that
+correctly reached Google's API and got back a structured `API_KEY_INVALID`
+auth error (not a code/type error) — proves the SDK method signature is
+right without spending real quota.
+
+**Still needed from a human**: `webhook/.env.local` has `GROQ_API_KEY` only
+(no `ANTHROPIC_API_KEY` was ever there either) — add a real `GEMINI_API_KEY`
+there for local dev parity. Not fabricated/guessed here since no real key was
+available outside Vercel prod.
+
+---
+
+## Dashboard top-right cluster: text-label pills → icon + label (Fable 5, 2026-08-05)
+
+Akshat's ask: the Dashboard's top-right area got cluttered with too many
+text-label buttons once Weekly Review shipped ("a wall of text") — wanted
+intuitive icons instead, no bigger redesign.
+
+**What changed**, all in `app/src/pages/Dashboard.tsx` (JSX) +
+`app/src/pages/Dashboard.module.css` (layout only, no new colors/shapes —
+`.bookSessionLink`'s pill border/radius/background untouched, just made
+`inline-flex` with a `gap` so icon+label sit side by side):
+- **Weekly Review** pill: `CalendarCheck` icon + kept "Weekly Review" label.
+- **Locked variant**: the 🔒 emoji swapped for a real `Lock` icon (matches
+  the rest of the row now using lucide glyphs instead of emoji).
+- **Message Tutor** (plain button) and the **Message…** `<select>` (tutor +
+  parents case): `MessageCircle` icon. The native `<select>` can't carry
+  per-option icons cross-browser, so it's wrapped in a new `.iconSelectWrap`
+  with the icon absolutely positioned over `.iconSelect`'s reserved left
+  padding (34px) instead — same pill underneath, `defaultValue`/`onChange`/
+  navigate-to-`/chat/:id` behavior untouched. Added `aria-label="Message
+  tutor or parent"` since the visible "Message…" placeholder option isn't a
+  real accessible name for a `<select>`.
+- **Find a Tutor**: `Search` icon + label.
+- **Sign out / back** (hero bar, `.canvasUser`): `LogOut` icon kept
+  alongside the text label rather than going icon-only — this is a kids'-
+  facing product and "sign out" vs "back" (tutor/admin viewing-as mode)
+  carries real meaning the icon alone doesn't disambiguate. Added an
+  explicit `aria-label` (`Sign out` / `Back`) on top of the visible text.
+- All icons from `lucide-react` (already a dependency, matches existing
+  usage in `ConceptChapterPage.tsx`/`FindTutor.tsx`/etc.) — no new icon
+  dependency added. Every icon-bearing button/select kept its exact prior
+  `onClick`/`navigate` target — visual/copy polish only, zero functional
+  change.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **181 passed / 1 skipped (13 files)**. Baseline note:
+  the 2026-08-05 sessions below added `storyMatch.test.ts` +
+  `storySelection.test.ts` since the original 176/1/12 baseline, so file/test
+  counts don't match verbatim — confirmed no NEW failures from this change
+  (all 181 green).
+- `npm run build` — succeeded (only the pre-existing >500kB chunk-size
+  warning, unrelated).
+
+**Screenshots** (via the public `/try/dashboard` demo route + seeded
+`sessionStorage['mc-demo-diagnostic']`, same zero-footprint technique as the
+Contents icon-ring session directly below — confirmed via `git diff
+app/src/App.tsx app/src/hooks/useStudentData.ts` empty both before and after).
+For the locked-weekly-review shot specifically, demo mode has **no** live
+path to `weeklyPaperCompletedWeek` (it's Firestore-only per
+`useStudentData.ts`, never populated for the demo uid) — seeding
+`sessionStorage` alone can't trigger it. Used a temporary one-line override
+(`const paperLocked = true`) in `Dashboard.tsx`, screenshotted, then reverted
+immediately; `git diff app/src/pages/Dashboard.tsx | grep TEMP-SCREENSHOT`
+confirmed clean before committing. Driven by a local Playwright script
+(`app/.tmp_shot_dashboard_icons.mjs`, deleted after) against
+`npx vite --port 5198 --strictPort`.
+
+Saved to `agent_work/product/screenshots_2026-08-05/`:
+`dashboard_topright_icons_full_before.png` / `_after.png` (whole hero bar +
+Contents row, 1440px), `dashboard_homeTopActions_pills_before.png` / `_after.png`
+(tight crop on just the Weekly Review / Find a Tutor pills),
+`dashboard_heroBar_signout_before.png` / `_after.png` (tight crop on the
+name + sign-out corner), `dashboard_topright_icons_full_locked.png` +
+`dashboard_homeTopActions_pills_locked_tight.png` (locked-weekly-review state,
+real `Lock` icon in place of the old emoji).
+
+Commit `5b19bdca` — `app/src/pages/Dashboard.tsx`,
+`app/src/pages/Dashboard.module.css` only. Not pushed (per instructions).
+
+---
+
 ## Dashboard Contents dots get the Map's icon-badge + mastery-ring treatment (Fable 5, 2026-08-05)
 
 Akshat's ask: the Map's concept nodes (`ConstellationGpsExplorer.tsx`) already
