@@ -1372,8 +1372,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 15px;
+  gap: 10px;
+  padding: 12px;
   border: 1px solid color-mix(in srgb, var(--lane-accent) 38%, transparent);
   border-radius: 12px;
   box-shadow: 0 12px 26px color-mix(in srgb, var(--lane-accent) 10%, transparent);
@@ -1396,60 +1396,20 @@
 .tocLane:nth-child(3) { grid-column: span 7; }
 .tocLaneHead {
   display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 18px;
-  min-height: 88px;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
   position: relative;
   z-index: 1;
-}
-.tocLaneCopy {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-}
-.tocLaneTitleRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .tocLaneTitle {
   margin: 0;
   font-family: var(--tok-font-display);
-  font-size: clamp(25px, 2.1vw, 33px);
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1;
   color: var(--lane-ink);
-}
-.tocLaneBlurb {
-  margin: 0;
-  font-family: var(--tok-font-sans);
-  font-size: 12px;
-  line-height: 1.35;
-  color: color-mix(in srgb, var(--lane-ink) 72%, transparent);
-}
-
-.tocLaneScene {
-  width: clamp(116px, 14vw, 178px);
-  flex: 0 0 auto;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--lane-accent) 46%, transparent);
-  border-radius: 7px 18px 7px 18px;
-  box-shadow: 5px 6px 0 color-mix(in srgb, var(--lane-accent) 22%, transparent), inset 0 0 0 1px rgba(255, 253, 247, 0.32);
-  transform: rotate(1.5deg);
-}
-.tocLaneScene img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 88px;
-  object-fit: cover;
-  object-position: center;
-  opacity: 0.9;
-  filter: saturate(1.08) contrast(1.03);
 }
 
 /* Horizontal-scroll track: the responsive strategy for narrow widths is a
@@ -1472,11 +1432,11 @@
   --node-color: #8B9BA8;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  min-height: 118px;
-  padding: 12px 7px 10px;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 7px;
+  min-height: 0;
+  padding: 6px 6px 9px;
   text-align: center;
   background: linear-gradient(155deg, rgba(255, 253, 248, 0.9), rgba(255, 253, 248, 0.46));
   border: 1px solid color-mix(in srgb, var(--node-color) 24%, transparent);
@@ -1504,7 +1464,7 @@
 .tocNodeName {
   font-family: var(--tok-font-sans);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.25;
   letter-spacing: -0.005em;
   color: var(--lane-ink);
@@ -1516,10 +1476,11 @@
 
 .tocNodeIcon {
   position: relative;
-  width: 50px;
-  height: 50px;
-  padding: 3px;
-  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  padding: 4px;
+  border-radius: 9px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -1535,13 +1496,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: inherit;
+  border-radius: 6px;
   filter: saturate(1.08) contrast(1.03);
 }
 .tocNodeIcon::before {
   content: '';
   position: absolute;
-  inset: -6px;
+  inset: -5px;
   border: 2px solid color-mix(in srgb, var(--node-color) 48%, transparent);
   border-radius: 50%;
   opacity: calc(0.22 + var(--mastery) * 0.78);
@@ -1680,8 +1641,7 @@
   .horizontalToc { display: flex; flex-direction: column; }
   .tocLane:nth-child(n) { grid-column: auto; }
   .tocLane { padding: 12px 10px 10px; }
-  .tocLaneTitle { font-size: 24px; }
-  .tocLaneScene { width: 108px; }
+  .tocLaneTitle { font-size: 15px; }
   .tocTrack { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(108px, 1fr); }
   .tocNode { min-height: 108px; }
   .tocNodeName { font-size: 11px; }

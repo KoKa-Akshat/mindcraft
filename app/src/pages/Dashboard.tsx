@@ -44,10 +44,6 @@ import blockParabola from '../assets/canvas/generated/mindcraft-blocks/mindcraft
 import blockPercent from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-percent.png'
 import blockEquals from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-equals.png'
 import blockRadical from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-radical.png'
-import warmupsScene from '../assets/canvas/generated/story-fractions_decimals.jpg'
-import algebraScene from '../assets/canvas/generated/story-linear_equations.jpg'
-import geometryScene from '../assets/canvas/generated/story-right_triangle_geometry.jpg'
-import dataScene from '../assets/canvas/generated/story-basic_probability.jpg'
 import s from './Dashboard.module.css'
 
 const SOLVER_MAX_CHARS = 1200
@@ -93,13 +89,6 @@ const TOC_MASTERED_STATUSES = new Set(['mastered', 'stable', 'comeback_built', '
 const TOC_STRUGGLING_STATUSES = new Set(['struggling', 'open_gap'])
 
 type TocDotState = 'complete' | 'needs' | 'progress' | 'locked'
-
-const TOC_LANE_SCENES = {
-  warmups: warmupsScene,
-  algebra: algebraScene,
-  geometry: geometryScene,
-  data: dataScene,
-} as const
 
 function tocDotState(status: string): TocDotState {
   if (TOC_MASTERED_STATUSES.has(status)) return 'complete'
@@ -767,16 +756,8 @@ export default function Dashboard({
                       }}
                     >
                       <header className={s.tocLaneHead}>
-                        <div className={s.tocLaneCopy}>
-                          <div className={s.tocLaneTitleRow}>
-                            <TocSectionMark id={section.id} accent={section.accent} />
-                            <h2 className={s.tocLaneTitle}>{section.title}</h2>
-                          </div>
-                          <p className={s.tocLaneBlurb}>{section.blurb}</p>
-                        </div>
-                        <div className={s.tocLaneScene} aria-hidden="true">
-                          <img src={TOC_LANE_SCENES[section.id]} alt="" />
-                        </div>
+                        <TocSectionMark id={section.id} accent={section.accent} />
+                        <h2 className={s.tocLaneTitle}>{section.title}</h2>
                       </header>
                       <div className={s.tocTrack}>
                         {section.conceptIds.map(id => {
