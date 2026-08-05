@@ -4,6 +4,80 @@
 
 ---
 
+## Dashboard Contents dots get the Map's icon-badge + mastery-ring treatment (Fable 5, 2026-08-05)
+
+Akshat's ask: the Map's concept nodes (`ConstellationGpsExplorer.tsx`) already
+render as "beautiful subject logos with an outer ring as the visible progress
+bar, full green once complete" — port that exact treatment to the Dashboard's
+Contents/subject icons, which were still a plain flat colored dot with no
+icon.
+
+**What changed.** `Dashboard.tsx`'s Contents `.tocNodeDot` (previously a CSS
+`conic-gradient` pie in a `<span>`) now renders an inline `<svg>` per dot,
+same technique as the Map: the real `conceptIconUrl(id)` icon clipped to a
+circle via `<clipPath>`, a solid status-colored ring (`STATUS_COLOR[status]`,
+same table the Map reads — a topic reading "mastered" here reads mastered on
+the Map too), and a `strokeDasharray` arc sized by `mastery` starting at 12
+o'clock (`rotate(-90 22 22)`) — the literal "outer ring progress bar." At
+mastery ≈1 with a mastered status the ring reads as a full, solid circle, plus
+a glow halo (kept from the old `data-state='complete'` box-shadow rule) — the
+"full green once complete" ask. The old centered checkmark would now sit on
+top of the always-visible icon, so it moved to a small absolute-positioned
+corner badge (`.tocNodeCheck`) instead of being dropped — still an explicit
+"done" signal, not just ring color/fullness.
+
+Preserved: the `::before`/`::after` connector-line system between dots (still
+reads `--node-color`, untouched), the 720px mobile breakpoint's
+`--node-w`/`--dot-size` shrink (the SVG's `viewBox` scales with the box via
+`width/height: 100%`, no separate mobile SVG sizing needed), `.tocNodeSpark`'s
+gold glow, hover scale-up, and `[data-state='locked']` dimming. Removed the
+now-unused `--node-fill` custom property (was only feeding the old
+conic-gradient background, which no longer exists).
+
+Checked `PawHub.tsx` and `DashboardRoutePanel.tsx` (the other `STATUS_COLOR`
+consumers) per the brief's "check anywhere else on the Dashboard" ask —
+`PawHub.tsx` has no flat dot pattern to begin with, and `DashboardRoutePanel`
+isn't imported/rendered anywhere in the app (dead code), so out of scope.
+`Dashboard.tsx`'s "today's spark" CTA icon (hero bar) already shows the real
+concept icon with no ring — left as-is, it's a CTA button, not a mastery
+progress node.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **176 passed / 1 skipped (12 files)**, matches baseline exactly.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning, unrelated).
+
+Screenshots taken via the existing public `/try/dashboard` demo route
+(`TryDemoDashboard` in `App.tsx`, already unauthenticated — `enableDemoMode()`
++ `makeDemoUser()`) rather than a new `AuthGuard` shim: seeded
+`sessionStorage['mc-demo-diagnostic']` with a canned confidence map (real
+concept ids from `actOntologyCoverage.json`, e.g. `fractions_decimals: easy`,
+`ratios_proportions: kinda`, `order_of_operations: hard`, others left out of
+the map entirely) before reload, which `Dashboard.tsx`'s existing
+`demoConceptProgress()` (`demoMode.ts`) turns into real mastered/in-progress/
+struggling/untouched states — no source shim needed at all. Driven by a local
+Playwright script (`app/.tmp_shot_dashboard_icons.mjs`, deleted after) against
+`npx vite --port 5197 --strictPort`. Confirmed zero footprint: `git diff
+app/src/App.tsx app/src/hooks/useStudentData.ts` empty, `grep -rn
+SCREENSHOT_MODE app/src` empty (this session never added one).
+
+3 screenshots saved to `agent_work/product/screenshots_2026-08-05/`:
+`dashboard_contents_icon_ring_desktop.png` (all 4 lanes, 1440px),
+`dashboard_contents_icon_ring_lane_closeup.png` (Warm-ups lane cropped tight —
+clearly shows complete/green+checkmark, in-progress/blue partial ring,
+needs/red thin ring, and untouched/dim-hollow side by side),
+`dashboard_contents_icon_ring_mobile.png` (390px, confirms the `--dot-size:
+20px` breakpoint still renders the icon+rings correctly).
+
+Files touched: `app/src/pages/Dashboard.tsx` (`.tocNodeDot` JSX → inline SVG
+icon+rings), `app/src/pages/Dashboard.module.css` (`.tocNodeDot`/`.tocNodeDotSvg`/
+`.tocNodeCheck`/`[data-state='complete']` reworked, `--node-fill` removed).
+
+Not done / open: no other Dashboard surface needed this (see PawHub/
+DashboardRoutePanel note above) — scope was Contents only, as asked.
+
+---
+
 ## Fixed ConceptChapterPage import regression from Cursor's context-frame fold-in (Fable 5, 2026-08-05)
 
 Follow-up to the two sessions below. Cursor finished two Codex briefs: (1)

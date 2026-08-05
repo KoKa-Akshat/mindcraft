@@ -1408,7 +1408,6 @@
   --node-w: 128px;
   --dot-size: 26px;
   --node-color: #8B9BA8;
-  --node-fill: 0%;
   flex: 0 0 var(--node-w);
   width: var(--node-w);
   scroll-snap-align: start;
@@ -1454,14 +1453,15 @@
   overflow: hidden;
 }
 
-/* The dot itself: a conic-gradient "pie" fills clockwise by raw mastery
-   percentage (the "slowly fills" ask)  -  hollow/gray at 0%, part-colored
-   mid-mastery, and forced to a solid glowing fill once status crosses into
-   a mastered tier (the "lights up" ask, data-state='complete' below). The
-   connecting line to the previous/next dot is drawn from the dot itself
-   (not the whole column) via ::before/::after, so it always passes through
-   the dot's own vertical center no matter how tall the name/blurb text
-   above/below it is. */
+/* The dot itself: same icon-badge + mastery-ring treatment as the Map's
+   concept nodes (ConstellationGpsExplorer)  -  the real concept icon, clipped
+   to a circle, with an inline SVG progress ring that fills clockwise by raw
+   mastery percentage (the "slowly fills" ask) starting hollow/gray at 0%,
+   and a glowing halo once status crosses into a mastered tier (the "lights
+   up" ask, data-state='complete' below). The connecting line to the
+   previous/next dot is drawn from the dot itself (not the whole column) via
+   ::before/::after, so it always passes through the dot's own vertical
+   center no matter how tall the name/blurb text above/below it is. */
 .tocNodeDot {
   position: relative;
   width: var(--dot-size);
@@ -1471,12 +1471,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: conic-gradient(var(--node-color) var(--node-fill), rgba(58, 47, 85, 0.12) 0);
+  background: rgba(255, 253, 248, 0.95);
   box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), inset 0 0 0 1.5px rgba(58, 47, 85, 0.16);
-  transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce), background 420ms var(--desk-ease);
+  transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce);
   z-index: 1;
 }
 .tocNode:hover .tocNodeDot { transform: scale(1.12); }
+
+/* viewBox coordinates scale to whatever --dot-size resolves to (26px desktop,
+   20px mobile per the 720px override below), so the icon + rings stay crisp
+   and correctly proportioned at both sizes without any extra media-query
+   work here. */
+.tocNodeDotSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
 
 .tocNodeDot::before,
 .tocNodeDot::after {
@@ -1494,18 +1505,35 @@
 .tocNode:first-child .tocNodeDot::before { visibility: hidden; }
 .tocNode:last-child  .tocNodeDot::after  { visibility: hidden; }
 
+/* Complete state: the icon stays visible (the mastery ring is already a full
+   solid circle at this point, see the SVG's dasharray logic), and this glow
+   halo is the extra "lights up" signal layered on top  -  same read as the
+   Map's full-green stable nodes. */
 .tocNode[data-state='complete'] .tocNodeDot {
-  background: var(--node-color);
   box-shadow:
     0 0 0 3px rgba(255, 253, 248, 0.95),
     0 0 0 5px color-mix(in srgb, var(--node-color) 35%, transparent),
     0 0 10px color-mix(in srgb, var(--node-color) 55%, transparent);
 }
+/* Small corner badge rather than a centered overlay  -  a centered checkmark
+   would sit on top of the concept icon now that the icon is always visible.
+   Keeps an explicit "done" signal that doesn't rely on the viewer reading
+   ring color/fullness alone. */
 .tocNodeCheck {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--node-color);
   color: #fffdf8;
-  font-size: 13px;
+  font-size: 9px;
   font-weight: 800;
-  line-height: 1;
+  line-height: 14px;
+  text-align: center;
+  box-shadow: 0 0 0 2px rgba(255, 253, 248, 0.95);
+  z-index: 2;
 }
 .tocNode[data-state='needs'] .tocNodeDot {
   box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), 0 0 8px color-mix(in srgb, var(--node-color) 55%, transparent);

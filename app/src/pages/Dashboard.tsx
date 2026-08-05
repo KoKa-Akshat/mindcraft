@@ -721,6 +721,7 @@ export default function Dashboard({
                           const status = progress?.status ?? 'untouched'
                           const dotState = tocDotState(status)
                           const dotColor = STATUS_COLOR[status] ?? STATUS_COLOR.untouched
+                          const clipId = `toc-dot-clip-${id}`
                           return (
                             <button
                               key={id}
@@ -729,13 +730,50 @@ export default function Dashboard({
                               data-state={dotState}
                               style={{
                                 ['--node-color' as string]: dotColor,
-                                ['--node-fill' as string]: `${Math.round(mastery * 100)}%`,
                               }}
                               title={`${actConceptLabel(id)}: ${Math.round(mastery * 100)}% mastery`}
                               onClick={() => openChapter(id)}
                             >
                               <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
+                              {/* Icon badge + mastery progress ring  -  same
+                                  treatment as the Map's concept nodes
+                                  (ConstellationGpsExplorer): the real concept
+                                  icon clipped to a circle, a solid status ring,
+                                  and a stroke-dasharray arc that fills
+                                  proportional to mastery, starting at 12
+                                  o'clock. Reads full/solid + glowing once
+                                  mastery is high and status is mastered. */}
                               <span className={s.tocNodeDot} aria-hidden="true">
+                                <svg className={s.tocNodeDotSvg} viewBox="0 0 44 44">
+                                  <defs>
+                                    <clipPath id={clipId}>
+                                      <circle cx="22" cy="22" r="14" />
+                                    </clipPath>
+                                  </defs>
+                                  <image
+                                    href={conceptIconUrl(id)}
+                                    x="8" y="8" width="28" height="28"
+                                    clipPath={`url(#${clipId})`}
+                                  />
+                                  <circle
+                                    cx="22" cy="22" r="14"
+                                    fill="none"
+                                    stroke={dotColor}
+                                    strokeWidth="2"
+                                  />
+                                  {mastery > 0.05 && (
+                                    <circle
+                                      cx="22" cy="22" r="18"
+                                      fill="none"
+                                      stroke={dotColor}
+                                      strokeWidth="2.2"
+                                      strokeOpacity="0.9"
+                                      strokeDasharray={`${mastery * 2 * Math.PI * 18} ${2 * Math.PI * 18}`}
+                                      strokeLinecap="round"
+                                      transform="rotate(-90 22 22)"
+                                    />
+                                  )}
+                                </svg>
                                 {dotState === 'complete' && <span className={s.tocNodeCheck}>✓</span>}
                               </span>
                               <span className={s.tocNodeBlurb}>{actConceptBlurb(id)}</span>
