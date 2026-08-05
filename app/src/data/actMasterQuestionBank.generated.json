@@ -380,7 +380,7 @@
     "id": "act_math_t02_q03",
     "conceptId": "quadratic_equations",
     "level": 1,
-    "question": "If a and b are the two values of t that satisfy the equation t 2 – 6 t + 8 = 0, with a > b, what is the value of a – b ?",
+    "question": "If a and b are the two values of t that satisfy the equation t² – 6 t + 8 = 0, with a > b, what is the value of a – b ?",
     "choices": [
       "2",
       "4",
@@ -446,7 +446,7 @@
     "id": "act_math_t02_q06",
     "conceptId": "factoring_polynomials",
     "level": 2,
-    "question": "Which of the following equals 12 x 2 y 3 z 4 – 30 xy 2 + 24 x 2 y 5 z ?",
+    "question": "Which of the following equals 12 x 2 y³ z⁴ – 30 xy² + 24 x 2 y 5 z ?",
     "choices": [
       "6 xy 2 (2 yz 3 – 5 + 4 xy 3 )",
       "6 xy 2 (2 xyz 4 – 5 + 4 xy 3 z )",
@@ -790,7 +790,7 @@
     "id": "act_math_t03_q09",
     "conceptId": "complex_numbers",
     "level": 2,
-    "question": "Given that i 2 = –1, what is the value of (4 + 2 i )(4 – 2 i )?",
+    "question": "Given that i² = –1, what is the value of (4 + 2 i )(4 – 2 i )?",
     "choices": [
       "12",
       "20",
@@ -812,7 +812,7 @@
     "id": "act_math_t03_q10",
     "conceptId": "quadratic_equations",
     "level": 2,
-    "question": "Which of the following could be the graph of the equation y = 175 x 2 – 33 x – 2,000?",
+    "question": "Which of the following could be the graph of the equation y = 175 x² – 33 x – 2,000?",
     "choices": [
       "upward parabola, vertex visibly LEFT of the y-axis",
       "upward parabola, vertex at/just right of the y-axis, nearly symmetric",
@@ -1006,7 +1006,7 @@
     "id": "act_math_t04_q05",
     "conceptId": "linear_inequalities",
     "level": 1,
-    "question": "If x 2 – x – 2 > 0, which of the following is the solution set for x ?",
+    "question": "If x² – x – 2 > 0, which of the following is the solution set for x ?",
     "choices": [
       "x > –1",
       "x > 2",
@@ -1156,7 +1156,7 @@
     "id": "act_math_t04_q12",
     "conceptId": "polynomials",
     "level": 3,
-    "question": "If the equation x 2 + mx + n = 0 has two solutions, x = k and x = 2 k, what is the value of mn in terms of k ?",
+    "question": "If the equation x² + mx + n = 0 has two solutions, x = k and x = 2 k, what is the value of mn in terms of k ?",
     "choices": [
       "2 k 2",
       "–2 k 2",
@@ -1288,7 +1288,7 @@
     "id": "act_math_t05_q03",
     "conceptId": "linear_equations",
     "level": 1,
-    "question": "If x = 6 and y = –2, what is the value of 3 xy + 2 x 2 – y 3 ?",
+    "question": "If x = 6 and y = –2, what is the value of 3 xy + 2 x² – y³ ?",
     "choices": [
       "44",
       "48",
@@ -1464,7 +1464,7 @@
     "id": "act_math_t05_q12",
     "conceptId": "quadratic_equations",
     "level": 3,
-    "question": "What is the value of x if x 2 – 5 x – 14 = 0 and x > 0?",
+    "question": "What is the value of x if x² – 5 x – 14 = 0 and x > 0?",
     "choices": [
       "2",
       "4",
@@ -1718,7 +1718,7 @@
     "id": "act_math_t06_q12",
     "conceptId": "linear_equations",
     "level": 3,
-    "question": "If pq = 3, then p 3 q 4 + p 4 q 5 =",
+    "question": "If pq = 3, then p³ q⁴ + p⁴ q⁵ =",
     "choices": [
       "12 q",
       "7 p + 9 q",
@@ -1916,7 +1916,7 @@
     "id": "act_math_t07_q10",
     "conceptId": "quadratic_equations",
     "level": 2,
-    "question": "Which of the following is a possible value of x if 5 x 2 – 10 x + 4 = 0?",
+    "question": "Which of the following is a possible value of x if 5 x² – 10 x + 4 = 0?",
     "choices": [
       "K."
     ],
@@ -2022,7 +2022,7 @@
     "id": "act_math_t07_q15",
     "conceptId": "functions_basics",
     "level": 3,
-    "question": "Let f ( x ) = x 2 + 10 x + 2. If g ( x ) is a transformation that moves f ( x ) both one unit up and one unit to the right, then g ( x ) =",
+    "question": "Let f ( x ) = x² + 10 x + 2. If g ( x ) is a transformation that moves f ( x ) both one unit up and one unit to the right, then g ( x ) =",
     "choices": [
       "x 2 + 8 x – 6",
       "x 2 + 9 x + 3",
@@ -2428,7 +2428,7 @@
     "id": "act_math_t09_q06",
     "conceptId": "linear_equations",
     "level": 2,
-    "question": "What is the value of 4 v ( w 2 – 3 vw ) given that v = –1 and w = 4",
+    "question": "What is the value of 4 v ( w² – 3 vw ) given that v = –1 and w = 4",
     "choices": [
       "–84",
       "–92",
@@ -2576,7 +2576,7 @@
     "id": "act_math_t09_q14",
     "conceptId": "polynomials",
     "level": 3,
-    "question": "Which of the following is NOT a factor of 4 x 2 y 4 – 12 x 3 y 2 – 8 xy 3 ?",
+    "question": "Which of the following is NOT a factor of 4 x² y⁴ – 12 x³ y² – 8 xy³ ?",
     "choices": [
       "2 x 2",
       "2 xy 2",
@@ -3190,7 +3190,7 @@
     "id": "act_math_t12_q01",
     "conceptId": "complex_numbers",
     "level": 1,
-    "question": "In the complex numbers, where i 2 = –1, what is the value of 5 + 6 i multiplied by 3 – 2 i ?",
+    "question": "In the complex numbers, where i² = –1, what is the value of 5 + 6 i multiplied by 3 – 2 i ?",
     "choices": [
       "27",
       "27 i",
@@ -3689,7 +3689,7 @@
     "id": "act_math_t13_q11",
     "conceptId": "functions_basics",
     "level": 3,
-    "question": "If f ( x ) = 7 x 2 - 9 x + 4, then f (-3) = ?",
+    "question": "If f ( x ) = 7 x² - 9 x + 4, then f (-3) = ?",
     "choices": [
       "-32",
       "-2",
@@ -3953,7 +3953,7 @@
     "id": "act_math_t14_q08",
     "conceptId": "linear_equations",
     "level": 2,
-    "question": "When (2 x + 4) 2 is written in the format ax 2 + bx + c , where a , b , and c are integers, what is the value of a + b - c ?",
+    "question": "When (2 x + 4) 2 is written in the format ax² + bx + c , where a , b , and c are integers, what is the value of a + b - c ?",
     "choices": [
       "-20",
       "4",
@@ -4039,7 +4039,7 @@
     "id": "act_math_t14_q12",
     "conceptId": "quadratic_equations",
     "level": 3,
-    "question": "What is the sum of the 2 solutions of the equation x 2 + 5 x - 24 = 0?",
+    "question": "What is the sum of the 2 solutions of the equation x² + 5 x - 24 = 0?",
     "choices": [
       "-24",
       "-8",
@@ -4127,7 +4127,7 @@
     "id": "act_math_t15_q01",
     "conceptId": "linear_equations",
     "level": 1,
-    "question": "The kinetic energy, KE , of an object travelling at v velocity can be modeled by the equation KE = mv 2 , where m is the mass of the object. If an object is moving at a velocity of 9, and it has a kinetic energy of 120, about how great is the object's mass?",
+    "question": "The kinetic energy, KE , of an object travelling at v velocity can be modeled by the equation KE = mv² , where m is the mass of the object. If an object is moving at a velocity of 9, and it has a kinetic energy of 120, about how great is the object's mass?",
     "choices": [
       "Between 0 and 1",
       "Between 1 and 2",
@@ -4149,7 +4149,7 @@
     "id": "act_math_t15_q02",
     "conceptId": "linear_equations",
     "level": 1,
-    "question": "Let x , y , and z be distinct positive integers. What is the fourth term of the geometric sequence below? 2 xz , 2 x 2 yz , 2 x 3 y 2 z ,…",
+    "question": "Let x , y , and z be distinct positive integers. What is the fourth term of the geometric sequence below? 2 xz , 2 x² yz , 2 x³ y² z ,…",
     "choices": [
       "2 x 2 yz",
       "2 x 4 y 3 z",
