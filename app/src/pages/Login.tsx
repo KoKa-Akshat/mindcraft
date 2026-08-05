@@ -7,6 +7,8 @@ import {
   signInWithRedirect,
   getRedirectResult,
   sendPasswordResetEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
 } from 'firebase/auth'
 import { auth, googleProvider } from '../firebase'
 import { useSearchParams } from 'react-router-dom'
@@ -117,6 +119,30 @@ export default function Login() {
     let cancelled = false
     void (async () => {
       await auth.authStateReady()
+
+      // Admin > Links "Add" sends a real Firebase email-sign-in link. Same
+      // device: email was stashed at send time. Different device/browser:
+      // Firebase can't tell whose link this is, so ask once.
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        const storedEmail = window.localStorage.getItem('mc_email_for_signin')
+        const linkEmail = storedEmail || window.prompt('Confirm your email to finish signing in:') || ''
+        if (linkEmail) {
+          try {
+            setLoading(true)
+            const cred = await signInWithEmailLink(auth, linkEmail, window.location.href)
+            window.localStorage.removeItem('mc_email_for_signin')
+            if (!cancelled) await routeAfterLogin(cred.user.uid)
+            return
+          } catch (e: any) {
+            if (!cancelled) {
+              setError(friendlyError(e.code ?? e.message ?? 'unknown'))
+              setLoading(false)
+            }
+            return
+          }
+        }
+      }
+
       const redirect = await getRedirectResult(auth).catch(() => null)
       if (cancelled || routedRef.current) return
 
