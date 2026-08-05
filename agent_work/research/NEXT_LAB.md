@@ -75,6 +75,9 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 85 | Story-world cognitive load vs identity payoff | Narrative wrap CLT; when story helps/hurts | **DONE** (2026-08-05) — Part LXXXV / SAFE-STORYLOAD |
 | 86 | Competence evidence as social proof | Solo-transfer artifacts parents/tutors can witness | **NEXT** |
 | 87 | Bank coverage honesty in marketing | Coverage tables; no item-count hero; GENQ×GTM | queued |
+| 88 | Worked-example fading in Solver UX | Completion problems; expertise reversal; attempt grain | queued |
+| 89 | Help-seeking vs help abuse | Contingent hints; tutor dependency; solo gate | queued |
+| 90 | Product analytics for FEI North Stars | Instrument retry_120s / challenge_accept / transfer_pass | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 
