@@ -17,16 +17,26 @@
      aliases (many components already depend on those names) but point
      them at one definition.
 
-     Four typographic roles, deliberately, nothing else:
-     Caveat (voice/personality), DM Sans (body/UI everywhere),
-     Source Serif 4 (story/chapter headings), IBM Plex Mono (data/labels).
-     Sora, Fredoka, Space Grotesk, plain Nunito, Nunito Sans, and DM Mono
-     were accumulated debt, not intentional choices, and have been swept
-     out of the app entirely (2026-07-23 font consolidation pass). */
+     Re-aligned to the marketing site's actual brand fonts (2026-08-05 —
+     the app had drifted onto its own DM Sans/Source Serif 4 pairing from
+     the 2026-07-23 consolidation pass, while index.html kept using
+     Fredoka/Nunito Sans/Inter Tight/DM Serif Display; "our brand book is
+     the website" per Akshat). Five roles now: Fredoka (--tok-font-display,
+     big splashy headings — the website's h1/h2/.hero-brand role, new),
+     Nunito Sans + Inter Tight (--tok-font-sans, body/UI/nav/answers
+     everywhere — matches the website's body font-family exactly), DM
+     Serif Display (--tok-font-serif, story/chapter voice — matches the
+     website's serif accent role), IBM Plex Mono (--tok-font-mono,
+     data/labels, unchanged), Caveat (--tok-font-hand, kept ONLY for
+     genuinely decorative flourishes — small watermarks, atmospheric
+     captions — never for headings, nav, answer choices, or typed answer
+     input; that misuse is what read as "weird italic" and is being fixed
+     at each call site alongside this token change). */
+  --tok-font-display: "Fredoka", "Nunito Sans", sans-serif;
   --tok-font-hand:    "Caveat", cursive;
-  --tok-font-serif:   "Source Serif 4", Georgia, serif;
+  --tok-font-serif:   "DM Serif Display", Georgia, serif;
   --tok-font-mono:    "IBM Plex Mono", monospace;
-  --tok-font-sans:    "DM Sans", sans-serif;
+  --tok-font-sans:    "Nunito Sans", "Inter Tight", system-ui, sans-serif;
 
   /* Motion — the book system's "weighted" ease, reused by components
      outside the book shell (JarvisGuide, ConceptVignette). */

@@ -700,7 +700,7 @@
 }
 .actTocTitle {
   margin: 0;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-display);
   font-size: 36px;
   font-weight: 700;
   color: #2a2430;
@@ -743,7 +743,7 @@
   border-radius: 10px;
   padding: 7px 8px;
   cursor: pointer;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 20px;
   font-weight: 600;
   color: #2a2430;
@@ -799,14 +799,14 @@
   color: #c45c00;
 }
 .sparkName {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 28px;
   font-weight: 700;
   color: #2a2430;
   line-height: 1.1;
 }
 .sparkGo {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 18px;
   color: #1f6b45;
   margin-top: 4px;
@@ -927,7 +927,7 @@
    Practice; there is no --desk-* green token to reuse instead). The plain
    white-on-dark version from MindCraftLogo would be invisible here. */
 .canvasWordmark {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 26px;
   font-weight: 700;
   color: var(--desk-ink);
@@ -951,7 +951,7 @@
 .navBtn, .navActive {
   border: none;
   background: transparent;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 24px;
   font-weight: 700;
   padding: 10px 22px;
@@ -1243,7 +1243,7 @@
 }
 .paperCtaLockedText .paperCtaEyebrow { color: rgba(58, 47, 85, 0.55); }
 .paperCtaUnlockLabel {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 14px;
   font-weight: 600;
   color: rgba(58, 47, 85, 0.6);
@@ -1283,7 +1283,7 @@
 
 .homeTitle {
   margin: 0;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-display);
   font-size: clamp(38px, 5vw, 50px);
   font-weight: 700;
   color: var(--desk-ink);
@@ -1311,13 +1311,13 @@
   color: #c45c00;
 }
 .sparkName {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 26px;
   font-weight: 700;
   color: var(--desk-ink);
 }
 .sparkGo {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 20px;
   font-weight: 700;
   color: #1f6b45;
@@ -1369,7 +1369,7 @@
 }
 .tocLaneTitle {
   margin: 0;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-display);
   font-size: 28px;
   font-weight: 700;
   letter-spacing: -0.01em;

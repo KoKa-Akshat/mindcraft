@@ -362,7 +362,7 @@
 }
 .confBoxTitle {
   flex-shrink: 0;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-display);
   font-size: 20px;
   font-weight: 700;
   color: #2a2430;
@@ -580,7 +580,7 @@
   text-align: center;
 }
 .loadingTitle {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-display);
   font-size: 34px;
   font-weight: 700;
   color: #2a2430;

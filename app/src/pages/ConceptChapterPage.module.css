@@ -55,7 +55,7 @@
   padding: 6px 10px 8px;
 }
 .canvasWordmark {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 26px;
   font-weight: 700;
   color: #3a2f55;
@@ -340,7 +340,7 @@
 }
 .blendTitle {
   margin: 0 0 8px;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-display);
   font-size: clamp(36px, 5vw, 52px);
   font-weight: 700;
   color: #2a2430;
@@ -1047,7 +1047,7 @@
   width: 14px;
 }
 .choiceText {
-  font: 400 13.5px/20px "Inter", sans-serif;
+  font: 400 13.5px/20px var(--tok-font-sans);
   color: var(--theme-ink, #3d2f10);
 }
 
@@ -1138,7 +1138,7 @@
   transform: rotate(0deg);
 }
 .stickerChoice .choiceText {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 17px;
   line-height: 1.25;
   color: #2a2430;

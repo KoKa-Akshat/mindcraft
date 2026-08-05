@@ -4475,7 +4475,7 @@
 }
 
 .matteShell .questionText {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 19px;
   font-weight: 600;
   color: #1c1a17;
@@ -4622,7 +4622,7 @@
 }
 
 .matteShell .answerInput {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 20px;
   color: #2b3a5c;
   caret-color: #2b3a5c;
@@ -4971,7 +4971,7 @@
 }
 
 .paperScan .answerInput {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 22px;
   color: #232f4e;
   caret-color: #232f4e;
