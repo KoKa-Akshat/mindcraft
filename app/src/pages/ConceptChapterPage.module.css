@@ -55,7 +55,7 @@
   padding: 6px 10px 8px;
 }
 .canvasWordmark {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 26px;
   font-weight: 700;
   color: #3a2f55;
@@ -340,7 +340,7 @@
 }
 .blendTitle {
   margin: 0 0 8px;
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-display);
   font-size: clamp(36px, 5vw, 52px);
   font-weight: 700;
   color: #2a2430;
@@ -1047,7 +1047,7 @@
   width: 14px;
 }
 .choiceText {
-  font: 400 13.5px/20px "Inter", sans-serif;
+  font: 400 13.5px/20px var(--tok-font-sans);
   color: var(--theme-ink, #3d2f10);
 }
 
@@ -1138,7 +1138,7 @@
   transform: rotate(0deg);
 }
 .stickerChoice .choiceText {
-  font-family: var(--tok-font-hand);
+  font-family: var(--tok-font-sans);
   font-size: 17px;
   line-height: 1.25;
   color: #2a2430;
@@ -1442,6 +1442,93 @@
   .storyBody { margin-left: -12px; padding-left: 12px; }
   .desk .backBtn { top: 10px; left: 12px; }
   .desk .pageTools { top: 10px; right: 12px; }
+}
+
+/* ── One-time concept cover (generated story art) ────────────────────── */
+.conceptCover {
+  position: relative;
+  min-height: 100dvh;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  background: #1c1814;
+  display: grid;
+  place-items: end stretch;
+}
+
+.conceptCoverArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.conceptCoverScrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(28, 24, 20, 0.15) 0%, rgba(28, 24, 20, 0.35) 45%, rgba(28, 24, 20, 0.82) 100%);
+}
+
+.conceptCoverFace {
+  position: relative;
+  z-index: 1;
+  padding: 28px 28px 36px;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  max-width: 640px;
+}
+
+.conceptCoverEyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 226, 0.7);
+}
+
+.conceptCoverTitle {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f4efe2;
+  line-height: 1.15;
+}
+
+.conceptCoverSetting {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: rgba(244, 239, 226, 0.82);
+}
+
+.conceptCoverOpen {
+  min-height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 14px;
+  background: #f4efe2;
+  color: #143a2e;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.conceptCoverBack {
+  border: none;
+  background: transparent;
+  color: rgba(244, 239, 226, 0.7);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 4px 0;
 }
 
 /* ── Not-found ───────────────────────────────────────────────────────── */

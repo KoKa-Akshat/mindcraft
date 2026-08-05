@@ -2,7 +2,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { PenLine } from 'lucide-react'
 import conceptStoriesRaw from '../data/conceptStories.json'
-import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionFormat, type Question } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import { useUser } from '../App'
@@ -27,21 +26,13 @@ import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
 import HighlightedStem from '../components/HighlightedStem'
 import { useJournalGuide } from '../hooks/useJournalGuide'
-import { storyArtFor, storyArtTilt } from '../lib/storyArt'
+import { hasConceptAccurateArt, storyArtFor, storyArtTilt } from '../lib/storyArt'
 import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward'
 import SoundToggle from '../components/SoundToggle'
 import { playChime, playTap } from '../lib/uiSound'
 import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
-
-type CS = {
-  conceptId: string
-  conceptName: string
-  story: string
-  ingredientStories: Record<string, unknown>
-}
-const DB = conceptStoriesRaw as unknown as Record<string, CS>
 
 type ContextFrame = {
   protagonist: string
@@ -50,7 +41,14 @@ type ContextFrame = {
   diceFrame: string | null
   spinnerFrame: string | null
 }
-const FRAMES = contextFramesRaw as unknown as Record<string, ContextFrame>
+type CS = {
+  conceptId: string
+  conceptName: string
+  story: string
+  ingredientStories: Record<string, unknown>
+  contextFrame?: ContextFrame
+}
+const DB = conceptStoriesRaw as unknown as Record<string, CS>
 
 // Resolve any short/legacy concept ID to the canonical ontology ID,
 // then look up in DB (conceptStories.json keys = canonical IDs).
@@ -69,7 +67,7 @@ const FRAME_ALIAS: Record<string, string> = {
 
 function getFrame(rawId: string): ContextFrame | null {
   const id = resolveId(rawId)
-  return FRAMES[id] ?? FRAMES[FRAME_ALIAS[rawId] ?? ''] ?? FRAMES[FRAME_ALIAS[id] ?? ''] ?? null
+  return DB[id]?.contextFrame ?? DB[FRAME_ALIAS[rawId] ?? '']?.contextFrame ?? DB[FRAME_ALIAS[id] ?? '']?.contextFrame ?? null
 }
 
 function makeSyntheticStory(name: string, conceptId: string): CS {
@@ -294,7 +292,7 @@ function extractMathAsk(text: string): string {
  * concept's `scenes[]` list (see lib/sceneSelection.ts). Concepts without a
  * scenes array (everything except the fractions_decimals pilot, for now)
  * get `null` back and this falls through to the single locked
- * questionContextFrames.json frame exactly as before, unchanged behavior.
+ * conceptStories contextFrame exactly as before, unchanged behavior.
  */
 function chapterStem(
   q: Question,
@@ -428,6 +426,17 @@ export default function ConceptChapterPage() {
   const storySeenKey = `mc-story-seen-v2-${resolveId(conceptId)}`
   const [hasSeenStory] = useState(() => typeof window !== 'undefined' && !!localStorage.getItem(storySeenKey))
 
+  // One-time concept cover (Cursor brief #5): generated story-{id} art as a
+  // full-bleed landing plate the first time you enter this chapter. Skipped
+  // when only theme-fallback photos exist, so we never flash a recycled
+  // fractions plate as if it were this concept's cover.
+  const coverSeenKey = `mc-concept-cover-seen-${canonicalId}`
+  const [showConceptCover, setShowConceptCover] = useState(() => {
+    if (typeof window === 'undefined') return false
+    if (!hasConceptAccurateArt(canonicalId)) return false
+    try { return localStorage.getItem(coverSeenKey) !== '1' } catch { return false }
+  })
+
   const firstQuestIdx = useMemo(
     () => panels.findIndex(p => p.kind === 'quest'),
     [panels],
@@ -436,6 +445,12 @@ export default function ConceptChapterPage() {
     hasSeenStory && firstQuestIdx > 0 ? firstQuestIdx : 0
   ))
   const [slideDir, setSlideDir] = useState<'f' | 'b'>('f')
+
+  function openConceptCover() {
+    try { localStorage.setItem(coverSeenKey, '1') } catch { /* ignore */ }
+    setShowConceptCover(false)
+    playTap()
+  }
 
   useEffect(() => {
     if (panels[panelIdx]?.kind === 'quest' && !localStorage.getItem(storySeenKey)) {
@@ -990,6 +1005,28 @@ export default function ConceptChapterPage() {
       return renderOpenPanel(currentPanel.paras, currentPanel.pageNum, currentPanel.pageCount)
     }
     return renderQuestPanel(currentPanel.qIdx, currentPanel.beat, currentPanel.beatIndex)
+  }
+
+  if (showConceptCover) {
+    return (
+      <div className={s.conceptCover} style={{ '--theme-accent': theme.accent } as React.CSSProperties}>
+        <img className={s.conceptCoverArt} src={artSrc} alt="" draggable={false} />
+        <div className={s.conceptCoverScrim} aria-hidden="true" />
+        <div className={s.conceptCoverFace}>
+          <p className={s.conceptCoverEyebrow}>Chapter</p>
+          <h1 className={s.conceptCoverTitle}>{cs.conceptName}</h1>
+          {localStory?.settingLine && (
+            <p className={s.conceptCoverSetting}>{localStory.settingLine}</p>
+          )}
+          <button type="button" className={s.conceptCoverOpen} onClick={openConceptCover}>
+            Open chapter
+          </button>
+          <button type="button" className={s.conceptCoverBack} onClick={goBack}>
+            ← back
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (

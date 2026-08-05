@@ -1,26 +1,31 @@
 /**
  * storySelection — pick the best narrative world per question.
- * Folk tale matcher first; 42 concept stories are fallback spine.
+ * Folk tale matcher first; concept stories are the fallback spine.
  */
 import conceptStoriesRaw from '../data/conceptStories.json'
-import framesRaw from '../data/questionContextFrames.json'
 import type { Question } from './questionBank'
 import { toOntologyId } from './conceptMap'
 import { matchSkinForQuestion, type MatchContext } from './storyMatch'
 
 export type { MatchContext }
 
-type ConceptStory = { conceptId: string; conceptName: string; story: string }
-
-/** Shape of `data/questionContextFrames.json` entries — shared with storyDisplay.ts. */
+/** Per-concept narrative frame, stored beside its story in conceptStories.json. */
 export type ContextFrame = {
   protagonist: string
   settingLine: string
   questionBridge: string
+  diceFrame?: string | null
+  spinnerFrame?: string | null
+}
+
+type ConceptStory = {
+  conceptId: string
+  conceptName: string
+  story?: string
+  contextFrame?: ContextFrame
 }
 
 const STORIES = conceptStoriesRaw as Record<string, ConceptStory>
-const FRAMES = framesRaw as Record<string, ContextFrame>
 
 const GOAL_TONE: Record<string, string> = {
   act_prep: 'exam stakes — crisp mission briefing energy',
@@ -35,6 +40,7 @@ export interface SelectedStory {
   story: string
   protagonist: string
   settingLine: string
+  questionBridge: string
 }
 
 function resolveConceptId(conceptId: string): string {
@@ -47,13 +53,14 @@ export function selectStoryForConcept(conceptId: string): SelectedStory | null {
   const id = resolveConceptId(conceptId)
   const entry = STORIES[id]
   if (!entry?.story) return null
-  const frame = FRAMES[id]
+  const frame = entry.contextFrame
   return {
     conceptId: id,
     conceptName: entry.conceptName,
     story: entry.story,
     protagonist: frame?.protagonist ?? entry.conceptName,
     settingLine: frame?.settingLine ?? '',
+    questionBridge: frame?.questionBridge ?? '',
   }
 }
 

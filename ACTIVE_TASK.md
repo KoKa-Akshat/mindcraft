@@ -4,6 +4,274 @@
 
 ---
 
+## Dashboard Contents dots get the Map's icon-badge + mastery-ring treatment (Fable 5, 2026-08-05)
+
+Akshat's ask: the Map's concept nodes (`ConstellationGpsExplorer.tsx`) already
+render as "beautiful subject logos with an outer ring as the visible progress
+bar, full green once complete" — port that exact treatment to the Dashboard's
+Contents/subject icons, which were still a plain flat colored dot with no
+icon.
+
+**What changed.** `Dashboard.tsx`'s Contents `.tocNodeDot` (previously a CSS
+`conic-gradient` pie in a `<span>`) now renders an inline `<svg>` per dot,
+same technique as the Map: the real `conceptIconUrl(id)` icon clipped to a
+circle via `<clipPath>`, a solid status-colored ring (`STATUS_COLOR[status]`,
+same table the Map reads — a topic reading "mastered" here reads mastered on
+the Map too), and a `strokeDasharray` arc sized by `mastery` starting at 12
+o'clock (`rotate(-90 22 22)`) — the literal "outer ring progress bar." At
+mastery ≈1 with a mastered status the ring reads as a full, solid circle, plus
+a glow halo (kept from the old `data-state='complete'` box-shadow rule) — the
+"full green once complete" ask. The old centered checkmark would now sit on
+top of the always-visible icon, so it moved to a small absolute-positioned
+corner badge (`.tocNodeCheck`) instead of being dropped — still an explicit
+"done" signal, not just ring color/fullness.
+
+Preserved: the `::before`/`::after` connector-line system between dots (still
+reads `--node-color`, untouched), the 720px mobile breakpoint's
+`--node-w`/`--dot-size` shrink (the SVG's `viewBox` scales with the box via
+`width/height: 100%`, no separate mobile SVG sizing needed), `.tocNodeSpark`'s
+gold glow, hover scale-up, and `[data-state='locked']` dimming. Removed the
+now-unused `--node-fill` custom property (was only feeding the old
+conic-gradient background, which no longer exists).
+
+Checked `PawHub.tsx` and `DashboardRoutePanel.tsx` (the other `STATUS_COLOR`
+consumers) per the brief's "check anywhere else on the Dashboard" ask —
+`PawHub.tsx` has no flat dot pattern to begin with, and `DashboardRoutePanel`
+isn't imported/rendered anywhere in the app (dead code), so out of scope.
+`Dashboard.tsx`'s "today's spark" CTA icon (hero bar) already shows the real
+concept icon with no ring — left as-is, it's a CTA button, not a mastery
+progress node.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **176 passed / 1 skipped (12 files)**, matches baseline exactly.
+- `npm run build` — green (only the pre-existing >500kB chunk-size warning, unrelated).
+
+Screenshots taken via the existing public `/try/dashboard` demo route
+(`TryDemoDashboard` in `App.tsx`, already unauthenticated — `enableDemoMode()`
++ `makeDemoUser()`) rather than a new `AuthGuard` shim: seeded
+`sessionStorage['mc-demo-diagnostic']` with a canned confidence map (real
+concept ids from `actOntologyCoverage.json`, e.g. `fractions_decimals: easy`,
+`ratios_proportions: kinda`, `order_of_operations: hard`, others left out of
+the map entirely) before reload, which `Dashboard.tsx`'s existing
+`demoConceptProgress()` (`demoMode.ts`) turns into real mastered/in-progress/
+struggling/untouched states — no source shim needed at all. Driven by a local
+Playwright script (`app/.tmp_shot_dashboard_icons.mjs`, deleted after) against
+`npx vite --port 5197 --strictPort`. Confirmed zero footprint: `git diff
+app/src/App.tsx app/src/hooks/useStudentData.ts` empty, `grep -rn
+SCREENSHOT_MODE app/src` empty (this session never added one).
+
+3 screenshots saved to `agent_work/product/screenshots_2026-08-05/`:
+`dashboard_contents_icon_ring_desktop.png` (all 4 lanes, 1440px),
+`dashboard_contents_icon_ring_lane_closeup.png` (Warm-ups lane cropped tight —
+clearly shows complete/green+checkmark, in-progress/blue partial ring,
+needs/red thin ring, and untouched/dim-hollow side by side),
+`dashboard_contents_icon_ring_mobile.png` (390px, confirms the `--dot-size:
+20px` breakpoint still renders the icon+rings correctly).
+
+Files touched: `app/src/pages/Dashboard.tsx` (`.tocNodeDot` JSX → inline SVG
+icon+rings), `app/src/pages/Dashboard.module.css` (`.tocNodeDot`/`.tocNodeDotSvg`/
+`.tocNodeCheck`/`[data-state='complete']` reworked, `--node-fill` removed).
+
+Not done / open: no other Dashboard surface needed this (see PawHub/
+DashboardRoutePanel note above) — scope was Contents only, as asked.
+
+---
+
+## Fixed ConceptChapterPage import regression from Cursor's context-frame fold-in (Fable 5, 2026-08-05)
+
+Follow-up to the two sessions below. Cursor finished two Codex briefs: (1)
+fixed folk-tale matching in `storyMatch.ts` so Eedi questions can clear the
+0.38 activation threshold, via a new `taleMathSignals()` canonicalization
+helper; (2) folded all 49 entries of `questionContextFrames.json` into a new
+`contextFrame` field on each concept object in `conceptStories.json`, deleted
+`questionContextFrames.json`, and updated the readers (`storySelection.ts`,
+`storyDisplay.ts`, `sceneSelection.ts`, `questionStem.ts`) to read
+`entry.contextFrame`. Added `storyMatch.test.ts` + `storySelection.test.ts`
+and reported `npm run test` (176/1 skipped) and `npm run build` both green.
+
+**The regression, exactly as flagged in the font-standardization entry
+below**: Cursor's diff never touched `app/src/pages/ConceptChapterPage.tsx`.
+It still imported the now-deleted `questionContextFrames.json` directly and
+kept its own standalone `FRAMES` const + `getFrame()` lookup, independent of
+the four readers Cursor did update. `npx tsc --noEmit` failed with
+`TS2307: Cannot find module '../data/questionContextFrames.json'`, and since
+`app/package.json`'s `build` script is `tsc && vite build`, `npm run build`
+could not have been passing end to end on this tree — Cursor's green build
+was run against a different disk state (plausibly before this deletion
+landed, or a stale cache).
+
+**Fix**: deleted the `contextFramesRaw` import and the standalone `FRAMES`
+const; `getFrame()` now pulls `contextFrame` off `DB` entries (the same
+`conceptStoriesRaw` map already imported in this file) instead of a separate
+JSON. Preserved the exact same alias-fallback resolution order and the
+pre-existing `FRAME_ALIAS` table (`coordinate_geometry` →
+`representation_translation`, `absolute_value` → `algebraic_manipulation`) —
+that table diverges from `conceptAliases.ts`'s `canonicalConceptId` mapping
+for the same two ids, which is a pre-existing inconsistency, left untouched
+per scope. Also strengthened the weak second assertion in
+`storyMatch.test.ts` (`activates at least one folk match across the
+production Eedi bank`): a bare `toBeGreaterThan(0)` wouldn't catch a
+regression back to the pre-fix state (max score was 0.343, effectively
+non-firing) — a single stray match would still pass. Measured the actual
+match rate (658/1508 = 43.6% of the Eedi bank) and changed the bound to
+`> bank.length * 0.15`, comfortably below current signal so it won't flake on
+minor bank edits, but far above "a handful slipped through."
+
+**Verification, all clean on this tree**: `npx tsc --noEmit` — no errors.
+`npx vitest run` — **176 passed / 1 skipped (12 files)**, no regressions.
+`npm run build` — succeeded end to end (only pre-existing chunk-size
+warnings, unrelated).
+
+**`ml/**` note**: `git status` also showed `ml/scripts/enrich_questions.py`,
+`fix_em_dashes.py`, `pipeline/story_generator.py`, `pipeline/story_wrapper.py`,
+`pipeline/README.md`, `promote_questions.py` as modified. Diffed all six —
+small, self-contained changes (em-dash cleanup, minor refactors) with no
+connection to the story-match/context-frame work and not mentioned in
+Cursor's report. Left untouched per lane ownership (Engine/Blake owns `ml/**`)
+— reads as Codex's concurrent unrelated work sitting in the same shared tree.
+
+Nothing committed, left in the working tree for review.
+
+---
+
+## Font standardization: app re-aligned to the marketing site's brand fonts (Claude, 2026-08-05)
+
+Akshat's ask: Dashboard's "Contents" title and answer-choice text were rendering
+in cursive Caveat ("weird italic answers"), and the app's fonts had drifted
+from the marketing site (`index.html`), which he treats as the brand
+reference. Root cause: the 2026-07-23 font-consolidation pass picked DM
+Sans/Source Serif 4 as the app's body/serif fonts, independent of
+`index.html`'s own Fredoka/Nunito Sans/Inter Tight/DM Serif Display — two
+different type systems on one product. Also several components misused the
+`--tok-font-hand` (Caveat) role on functional UI text (answer choices, typed
+answer inputs, nav pills, page titles) rather than genuine decorative
+accents, which is what actually read as "weird."
+
+**Fix, platform-wide token swap (Akshat's chosen scope, not just Dashboard):**
+- `app/src/styles/tokens.css`: `--tok-font-sans` → `"Nunito Sans", "Inter
+  Tight", system-ui, sans-serif` (was DM Sans), `--tok-font-serif` →
+  `"DM Serif Display", Georgia, serif` (was Source Serif 4), new
+  `--tok-font-display: "Fredoka", "Nunito Sans", sans-serif` for big headings
+  (the website's h1/h2/`.hero-brand` role — didn't exist as an app token
+  before). `--tok-font-hand` (Caveat) and `--tok-font-mono` (IBM Plex Mono)
+  unchanged.
+- `app/index.html`: Google Fonts link swapped to load the same 5 families
+  `index.html` (root, the marketing site) already loads, plus IBM Plex Mono
+  (app-only, data/labels).
+- Per-instance fixes, swapping `--tok-font-hand` off functional text (kept
+  Caveat only on 2 genuinely decorative leftovers — `ConceptChapterPage`'s
+  `.asideScene` photo caption and `.storyIntroBlock` narrative flavor text):
+  headings → `--tok-font-display` (`Dashboard.module.css` `.actTocTitle`/
+  `.homeTitle`/`.tocLaneTitle`, `ConceptChapterPage.module.css` `.blendTitle`,
+  `DashboardPanels.module.css` `.savedStripTitle`, `Diagnostic.module.css`
+  `.confBoxTitle`/`.loadingTitle`); functional/interactive text →
+  `--tok-font-sans` (`Dashboard.module.css` `.actTocItem`/`.sparkName`(x2)/
+  `.sparkGo`(x2)/`.canvasWordmark`/`.navBtn`/`.navActive`/
+  `.paperCtaUnlockLabel`, `ConceptChapterPage.module.css` `.canvasWordmark`/
+  `.stickerChoice .choiceText`/base `.choiceText` — the last one was also
+  hardcoded to literal `"Inter"` instead of a token, fixed to
+  `var(--tok-font-sans)`, `Practice.module.css` `.matteShell .questionText`/
+  `.matteShell .answerInput`/`.paperScan .answerInput` — the two
+  `.answerInput` rules are almost certainly the literal "weird italic
+  answers" Akshat saw, since that's the typed free-response input field).
+
+**Verification:** `npx tsc --noEmit` — one pre-existing error unrelated to
+this pass (`ConceptChapterPage.tsx` can't resolve `questionContextFrames.json`
+— see the concurrent-session note below). `npx vitest run` — **176 passed / 1
+skipped (12 files)**, clean. Did not run a real browser screenshot pass — the
+gated pages (Dashboard, Practice, ConceptChapterPage) sit behind Firebase
+auth and this session didn't build a screenshot shim; **recommend a follow-up
+visual check** the way several 2026-07-2x sessions did (temporary
+`VITE_SCREENSHOT_MODE` `AuthGuard` bypass + Playwright), especially to see
+the new Fredoka headings and confirm no font falls back to a missing-glyph
+box. Nothing committed, left in the working tree for review.
+
+**Concurrent-session note, for the record (not caused by this pass, not
+fixed by this pass):** this checkout had substantial live uncommitted work
+from another agent already in progress mid-session — `git status` shows
+`questionContextFrames.json` deleted, `storyMatch.ts`/`storySelection.ts`/
+`sceneSelection.ts`/`storyDisplay.ts`/`questionStem.ts` modified, matching
+the Codex brief items above (folk-tale story-match fix, `questionContextFrames.json`
+fold-in). That work is what's currently breaking `tsc` on
+`ConceptChapterPage.tsx`'s import of the now-deleted JSON — genuinely
+someone else's in-flight edit, not something to revert or fix here. Also
+note: TutorProfilePanel.tsx/.module.css, GradeOnboard.tsx, and
+TutorDashboard.tsx had pre-existing uncommitted modifications at session
+start (untouched by this font pass).
+
+---
+
+## READ FIRST: work only from /Users/akoirala/Developer/mindcraft (Claude, 2026-08-05)
+
+The `Desktop/Business Ideas/mindcraft-site` clone is iCloud-synced and effectively
+broken — even a plain `git status` there can take 10+ minutes, and some git ops
+hang indefinitely. If that's where you've been working, whatever you have
+uncommitted there is still safe (do not force-push or discard it), but do not
+start new work there. Clone fresh from GitHub into `~/Developer/mindcraft` (or
+use this existing one) and work from there from now on. Akshat is archiving the
+Desktop clone once its last bits (generated concept images) are pulled over.
+
+## Briefs — pick these up next session
+
+**Codex (`ml/**`, `webhook/**`, `data/**`)**
+1. ~~`mathSkinTop.json` folk-tale matching never actually fires in production~~
+   DONE (Codex, 2026-08-05): folk `math_theme_tags` now normalize to the same
+   canonical math signals as questions; regression coverage confirms active
+   matches in the 1,508-question Eedi bank.
+2. `themedStems.generated.json` (the offline story bake) is disabled right now
+   (`app/src/lib/questionStem.ts`, `STORY_WRAP_ENABLED = false`) — it was
+   pasting one fixed template sentence onto every question in a concept
+   verbatim instead of per-question scenes, and losing exponent notation along
+   the way. When you rebuild it: ground each rewrite in `conceptStories.json`
+   per question (not a fixed template), reuse the numeric-preservation +
+   em-dash + answer-leak checks already proven in
+   `webhook/api/story-module.ts`'s `isValidItem` / `ml/scripts/pipeline/story_wrapper.py`'s
+   `_valid_context`, and flip the flag back on once it's real.
+3. ~~`questionContextFrames.json` is a condensed duplicate of
+   `conceptStories.json`~~ DONE (Codex, 2026-08-05): all 49 frames, including
+   seven frame-only concepts, now live as `contextFrame` on concept-story
+   records; readers and generators use that one source and the duplicate file
+   is deleted.
+4. Exponent-notation bug: I safely fixed 19 questions in
+   `actMasterQuestionBank.generated.json` by cross-checking each question's own
+   `explanation` field for the correct superscript, only replacing where that
+   grounding existed. That was a conservative pass — there may be more
+   fixable cases I didn't catch, worth a dedicated audit.
+5. New question tier for the practice-paper feature (see Cursor brief #3):
+   free-response, no verified answer key required, but WITH real generated
+   diagrams — worth the generation cost here since correctness isn't gated the
+   way the live MCQ bank is. Source pool: the ~180 questions currently tagged
+   `needs_diagram_work` in `app/scripts/output/storyBatchQualityTags.json`
+   (rerun `node app/scripts/tagStoryBatchQuality.mjs` for a fresh count).
+
+**Cursor (`app/**`)**
+1. ~~`GradeOnboard.tsx` → `resolveQuestionStem`~~ DONE (Cursor, 2026-08-05):
+   probe stem + journal highlights + InteractiveWidget now share
+   `lib/questionStem.ts` with Practice/ConceptChapterPage; deleted unused
+   `hooks/useStoryQuestion.ts`.
+2. ~~Tutor self-serve `subjects` editor~~ DONE (Cursor, 2026-08-05): chip +
+   custom-add editor in `TutorProfilePanel.tsx`, saves `users/{uid}.subjects`
+   (same field FindTutor already reads). Loaded from the tutor doc in
+   `TutorDashboard.tsx`.
+3. ~~Weekly Review topic picker~~ DONE (Cursor, 2026-08-05):
+   `WeeklyReviewPicker.tsx` — modes Recommended / Pick topics / All topics,
+   TOC map with lit dots (manual = click toggle). Extends
+   `weeklyPracticePaper.ts` (`TopicPickMode`, `recommendedConceptIds`,
+   `playableActConceptIds`). Dashboard Weekly Review opens the picker; Start
+   caches the paper and launches practice.
+4. ~~Practice-paper render mode~~ DONE (Cursor, 2026-08-05):
+   `/weekly-paper` scrollable + printable free-response layout with ScratchPad
+   per question; Dashboard Weekly Review Start lands here. Progress on
+   `users/{uid}.weeklyPaperProgress` keyed by `weekKey()`; tutor briefing
+   shows `TutorWeeklyPaperCard` (not started / in progress / done).
+5. ~~Concept cover images~~ DONE (Cursor, 2026-08-05): one-time full-bleed
+   cover on `ConceptChapterPage` when `hasConceptAccurateArt(conceptId)`
+   (generated `story-{id}.svg/.jpg` via `storyArt.ts`). Skipped for theme
+   fallbacks; `localStorage` key `mc-concept-cover-seen-{id}`.
+
+---
+
 ## Note for Cursor / whoever's on the research-lab loop: shared working directory picked up my staged changes twice (Claude, 2026-07-26)
 
 Not a bug in your work, just a heads-up since commit attribution got tangled.

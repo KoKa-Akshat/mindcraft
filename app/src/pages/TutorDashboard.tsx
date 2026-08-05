@@ -21,11 +21,11 @@ import type { Session, TutorStudent as Student } from '../types'
 import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
+import TutorWeeklyPaperCard from '../components/TutorWeeklyPaperCard'
 import TutorLocationPin from '../components/TutorLocationPin'
 import Dashboard from './Dashboard'
 import type { LatLng } from '../lib/geo'
 import { setTutorViewAsStudentId, TUTOR_EXIT_STUDENT_MSG } from '../lib/tutorViewAs'
-import WelcomeRitual, { welcomeRitualSeen } from '../components/WelcomeRitual'
 import s from './TutorDashboard.module.css'
 import { MARKETING_BASE } from '../lib/siteUrls'
 
@@ -129,6 +129,7 @@ export default function TutorDashboard() {
     displayName: user.displayName || user.email?.split('@')[0] || 'Tutor',
     email: user.email || '',
     bio: '',
+    subjects: [],
     photoUrl: null,
     resumeUrl: null,
     locationAddress: null,
@@ -137,9 +138,6 @@ export default function TutorDashboard() {
   const [sessionNotesId, setSessionNotesId] = useState<string | null>(null)
   const [savingNotes, setSavingNotes] = useState(false)
   const [connectChip, setConnectChip] = useState<null | 'calendly' | 'meet' | 'location'>(null)
-  const [showWelcome, setShowWelcome] = useState(() => (
-    typeof window !== 'undefined' && !welcomeRitualSeen(user.uid, 'tutor')
-  ))
 
   // ── Assigned student (roster seed) ──────────────────────────────────────────
   const [assignedStudent, setAssignedStudent] = useState<AssignedStudent | null>(null)
@@ -365,6 +363,9 @@ export default function TutorDashboard() {
         displayName: data?.displayName || user.displayName || user.email?.split('@')[0] || 'Tutor',
         email: data?.email || user.email || '',
         bio: typeof data?.bio === 'string' ? data.bio : '',
+        subjects: Array.isArray(data?.subjects)
+          ? data.subjects.filter((x: unknown): x is string => typeof x === 'string' && !!x.trim())
+          : [],
         photoUrl: typeof data?.photoUrl === 'string' ? data.photoUrl : null,
         resumeUrl: typeof data?.resumeUrl === 'string' ? data.resumeUrl : null,
         locationAddress: typeof data?.locationAddress === 'string' ? data.locationAddress : null,
@@ -660,13 +661,6 @@ export default function TutorDashboard() {
 
   return (
     <div className={s.shell}>
-      {showWelcome && (
-        <WelcomeRitual
-          uid={user.uid}
-          role="tutor"
-          onDone={() => setShowWelcome(false)}
-        />
-      )}
       <header className={s.topBar}>
         <div className={s.topLeft}>
           <a href={MARKETING_BASE} className={s.logo}>Mind<span>Craft</span></a>
@@ -993,6 +987,11 @@ export default function TutorDashboard() {
                     studentId={focusStudent.id}
                     studentName={focusStudent.name}
                     examTrack={focusStudent.examTrack}
+                  />
+
+                  <TutorWeeklyPaperCard
+                    studentId={focusStudent.id}
+                    studentName={focusStudent.name}
                   />
 
               {focusStudent && (

@@ -1140,7 +1140,7 @@ export default function Practice() {
   function prefetchStoryModule(conceptId: string, qs: Question[], startIndex: number) {
     setStoryModule(null)
     storyFromIndexRef.current = startIndex
-    const stories = conceptStoriesData as Record<string, { conceptName: string; story: string }>
+    const stories = conceptStoriesData as Record<string, { conceptName: string; story?: string }>
     const entry = stories[conceptId] ?? stories[toOntologyId(conceptId)]
     if (!entry?.story || qs.length === 0) return
     const ctx: StoryModuleContext = {

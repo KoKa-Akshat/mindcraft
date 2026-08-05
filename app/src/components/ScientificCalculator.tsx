@@ -95,10 +95,14 @@ export function ScientificCalcToggle({ active, onToggle, disabled }: Pick<Props,
       title="Scientific keyboard"
     >
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="3.5" y="3.5" width="17" height="17" rx="4" fill="none" stroke="currentColor" strokeWidth="1.8" />
-        <path d="M7.5 8h9M8 13h8M12 8v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-        <circle cx="8" cy="16.5" r="1" fill="currentColor" />
-        <circle cx="16" cy="16.5" r="1" fill="currentColor" />
+        <rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        <rect x="7.5" y="5.5" width="9" height="4" rx="0.8" fill="none" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="8.5" cy="13.5" r="1" fill="currentColor" />
+        <circle cx="12" cy="13.5" r="1" fill="currentColor" />
+        <circle cx="15.5" cy="13.5" r="1" fill="currentColor" />
+        <circle cx="8.5" cy="17.5" r="1" fill="currentColor" />
+        <circle cx="12" cy="17.5" r="1" fill="currentColor" />
+        <circle cx="15.5" cy="17.5" r="1" fill="currentColor" />
       </svg>
     </button>
   )

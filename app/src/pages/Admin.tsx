@@ -21,7 +21,7 @@ import {
   collection, query, orderBy, onSnapshot,
   doc, getDoc, setDoc, updateDoc, serverTimestamp, getDocs, where, deleteField, limit,
 } from 'firebase/firestore'
-import { signOut } from 'firebase/auth'
+import { signOut, sendSignInLinkToEmail } from 'firebase/auth'
 import { db, auth } from '../firebase'
 import { useUser } from '../App'
 import { useToast } from '../hooks/useToast'
@@ -120,6 +120,57 @@ const SUBJECTS = [
   'AP Physics', 'Chemistry', 'SAT Prep', 'Other',
 ]
 
+// Standard welcome copy per role, editable before sending. No em dashes
+// anywhere (house style — see BRAND_BOOK.md / prior generated-copy commits).
+function welcomeEmailTemplate(role: AllowlistRole, name: string): { subject: string; body: string } {
+  const first = name.trim().split(' ')[0] || 'there'
+  if (role === 'tutor') {
+    return {
+      subject: 'Welcome to MindCraft, let’s get you set up',
+      body: `Hi ${first},
+
+Welcome to the team. Here is how to get started.
+
+1. Sign in: you will get a separate login link by email. Just click it, no password needed.
+2. Connect Calendly: once you are in, go to your Tutor Dashboard and link your Calendly. That is what puts you on the booking page.
+3. Your profile: add your subjects and a short bio from the Tutor Dashboard.
+
+Sessions run over Google Meet. Let me know if anything does not come through.
+
+Welcome aboard,
+Akshat`,
+    }
+  }
+  if (role === 'parent') {
+    return {
+      subject: 'Welcome to MindCraft',
+      body: `Hi ${first},
+
+Welcome to MindCraft. Your account is ready.
+
+Sign in with the link in the next email to see your child's dashboard: sessions, progress, and what is next.
+
+Questions any time, just reply here.
+
+Best,
+The MindCraft Team`,
+    }
+  }
+  return {
+    subject: 'Welcome to MindCraft',
+    body: `Hi ${first},
+
+Welcome to MindCraft. Your account is ready.
+
+Sign in with the link in the next email to see your dashboard, start your first diagnostic, and get matched with a tutor.
+
+Questions any time, just reply here.
+
+Talk soon,
+The MindCraft Team`,
+  }
+}
+
 const NAV_ITEMS: { id: AdminTab; label: string; icon: JSX.Element }[] = [
   {
     id: 'overview', label: 'Overview',
@@ -208,6 +259,7 @@ export default function Admin() {
   const [allowlist, setAllowlist] = useState<AllowlistEntry[]>([])
   const [allowlistDrafts, setAllowlistDrafts] = useState<Record<AllowlistRole, string>>({ student: '', tutor: '', parent: '' })
   const [allowlistBusy, setAllowlistBusy] = useState(false)
+  const [emailComposer, setEmailComposer] = useState<{ email: string; role: AllowlistRole; subject: string; body: string } | null>(null)
   const [viewingStudentId, setViewingStudentId] = useState<string | null>(null)
   const [viewingTutor, setViewingTutor] = useState<AdminTutor | null>(null)
   const [viewingParent, setViewingParent] = useState<AdminParent | null>(null)
@@ -670,12 +722,31 @@ export default function Admin() {
       await addToAllowlist(email, role)
       setAllowlist(prev => [...prev.filter(e => e.email !== email), { email, role }])
       setAllowlistDrafts(prev => ({ ...prev, [role]: '' }))
-      showToast(`Added ${email} as ${role}.`)
+
+      // Real, working login link (Firebase's own delivery — no third-party
+      // email service wired in yet, see the Email box below for the rest).
+      try {
+        await sendSignInLinkToEmail(auth, email, {
+          url: `${window.location.origin}/login`,
+          handleCodeInApp: true,
+        })
+      } catch { /* non-fatal — allowlist entry still succeeded */ }
+
+      setEmailComposer({ email, role, ...welcomeEmailTemplate(role, '') })
+      showToast(`Added ${email} as ${role} and sent a login link.`)
     } catch {
       showToast('Could not add that email.')
     } finally {
       setAllowlistBusy(false)
     }
+  }
+
+  function sendComposedWelcomeEmail() {
+    if (!emailComposer) return
+    const url = `mailto:${encodeURIComponent(emailComposer.email)}`
+      + `?subject=${encodeURIComponent(emailComposer.subject)}`
+      + `&body=${encodeURIComponent(emailComposer.body)}`
+    window.location.href = url
   }
 
   async function removeAllowlistEmail(email: string) {
@@ -1070,6 +1141,39 @@ export default function Admin() {
               )}
             </div>
           </div>
+
+          {emailComposer && (
+            <div className={s.card}>
+              <div className={s.allowlistHeader}>
+                <strong>Email</strong>
+                <span className={s.allowlistHint}>
+                  {' '}— {emailComposer.email} ({emailComposer.role}). Standard welcome copy, editable. No email
+                  service is wired in yet, so this opens your own mail app pre-filled rather than sending silently.
+                </span>
+              </div>
+              <input
+                className={s.linkInputSm}
+                style={{ width: '100%', marginBottom: 8 }}
+                value={emailComposer.subject}
+                onChange={e => setEmailComposer(c => c && { ...c, subject: e.target.value })}
+              />
+              <textarea
+                rows={8}
+                style={{ width: '100%', padding: 12, borderRadius: 10, border: '1.5px solid var(--bd)', font: 'inherit', resize: 'vertical' }}
+                value={emailComposer.body}
+                onChange={e => setEmailComposer(c => c && { ...c, body: e.target.value })}
+              />
+              <div className={s.btnCluster} style={{ marginTop: 10 }}>
+                <button type="button" className={s.linkAddBtn} onClick={sendComposedWelcomeEmail}>
+                  Open email to send
+                </button>
+                <button type="button" className={s.actionBtn} onClick={() => setEmailComposer(null)}>
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className={s.card}>
             {students.length === 0 ? (
               <div className={s.empty}>No students yet.</div>

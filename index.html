@@ -385,13 +385,17 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .support-rail{display:flex;gap:clamp(18px,3vw,28px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;margin-top:28px;padding-bottom:8px;scrollbar-width:none}
 .support-rail::-webkit-scrollbar{display:none}
 .support-slide{flex:0 0 min(100%,980px);scroll-snap-align:start;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(20px,4vw,40px);align-items:stretch}
+.support-slide>*{min-width:0}
 .support-slide.is-quote-only{grid-template-columns:1fr}
+.support-slide.is-even{grid-template-columns:repeat(2,minmax(0,1fr))}
 .support-quote{padding:clamp(28px,4vw,40px);border-radius:32px;background:#143a2e;color:#f4efe2;box-shadow:0 20px 50px rgba(20,58,46,.16);display:flex;flex-direction:column;justify-content:center;gap:16px;min-height:100%}
 .support-quote blockquote{margin:0;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(22px,2.8vw,30px);line-height:1.25;letter-spacing:-.02em;color:rgba(244,239,226,.9)}
 .support-quote cite{display:block;font-style:normal;font-size:12px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase;color:#c4f547}
 .support-caption{margin:0;font-size:15px;font-weight:800;color:rgba(244,239,226,.7);line-height:1.4}
-.vocal-frame{position:relative;width:100%;aspect-ratio:16/10;border-radius:28px;overflow:hidden;background:#0d1f18;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,58,46,.12)}
-.vocal-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;display:block}
+.support-recording{display:grid;gap:12px;align-content:start}
+.support-recording-label{margin:0;padding-left:4px;color:var(--ink);font-size:12px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+.vocal-frame{position:relative;width:100%;aspect-ratio:1;border-radius:28px;overflow:hidden;background:#0d1f18;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,58,46,.12)}
+.vocal-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border:0;display:block}
 .vocal-frame.is-soon{display:grid;place-items:center;padding:28px;text-align:center;color:rgba(244,239,226,.7);font-size:14px;font-weight:800}
 .field input[type="file"]{padding:12px;font-size:13px;font-weight:700;background:#fffdf7;border:1px dashed rgba(20,58,46,.22);border-radius:14px;cursor:pointer}
 .form-note.is-ok{color:var(--leaf)}
@@ -404,7 +408,7 @@ p{font-size:18px;line-height:1.45;font-weight:700;color:var(--muted)}
 .findtutor-cardlet.is-open .findtutor-profile{display:block;grid-column:1/-1;margin-top:4px}
 .findtutor-cardlet{grid-template-columns:64px 1fr auto;grid-template-rows:auto auto}
 @media (max-width:980px){
-  .support-slide{grid-template-columns:1fr;flex-basis:min(100%,100%)}
+  .support-slide,.support-slide.is-even{grid-template-columns:1fr;flex-basis:min(100%,100%)}
   .college-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
   .college-strip img{height:64px}
 }
@@ -766,24 +770,42 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
           </h2>
         </div>
         <div class="support-rail reveal" id="supportRail" tabindex="0" aria-label="Student and parent reviews">
-          <article class="support-slide" data-review="sebastian">
+          <article class="support-slide is-even" data-review="sebastian-family">
             <aside class="support-quote">
               <blockquote>“My tutor inspired me to be a better person as well as a student. He came down to my level and explained things in ways I would understand.”</blockquote>
               <cite>Sebastian · MindCraft student</cite>
               <p class="support-caption">Anything is achievable when someone meets you at your level.</p>
             </aside>
-            <div class="vocal-frame">
-              <video controls playsinline preload="metadata" poster="img/mindcraft-logo.png" title="Sebastian student feedback">
-                <source src="img/testimonials/sebastian-feedback.mp4" type="video/mp4">
-              </video>
-            </div>
-          </article>
-          <article class="support-slide is-quote-only" data-review="gill">
             <aside class="support-quote">
               <blockquote>“Sebastian needs someone who understands what he doesn’t understand about math, not just homework help.”</blockquote>
               <cite>Gillian · Sebastian’s parent</cite>
               <p class="support-caption">ACT coming up. Feeling stuck. She wished they had called sooner.</p>
             </aside>
+          </article>
+          <article class="support-slide is-quote-only" data-review="mary">
+            <aside class="support-quote">
+              <blockquote>“She felt really comfortable and in fact told us that she learned some new approaches to working through her IB math problems, which was just so valuable.”</blockquote>
+              <cite>Mary · Ida’s parent</cite>
+              <p class="support-caption">Comfort first. New approaches when the old ones stopped working.</p>
+            </aside>
+          </article>
+          <article class="support-slide is-even" data-review="recordings">
+            <div class="support-recording">
+              <p class="support-recording-label">Sebastian’s story</p>
+              <div class="vocal-frame">
+                <video controls playsinline preload="metadata" poster="img/mindcraft-logo.png" title="Sebastian student feedback">
+                  <source src="img/testimonials/sebastian-feedback.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="support-recording">
+              <p class="support-recording-label">Mary on Ida’s experience</p>
+              <div class="vocal-frame">
+                <video controls playsinline preload="metadata" poster="img/mindcraft-logo.png" title="Mary parent feedback about Ida">
+                  <source src="img/testimonials/mary-ida-feedback.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -967,7 +989,7 @@ footer p,footer a{font-size:13px;font-weight:800;color:#747a68}
       <div class="footer-social" aria-label="MindCraft social links">
         <a href="https://www.instagram.com/joinmindcraft/" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://open.spotify.com/playlist/3P9VnnuuoRYLKQB3QYCSe2" target="_blank" rel="noopener noreferrer">Spotify</a>
+        <a href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noopener noreferrer">Spotify</a>
         <a href="https://x.com/joinmindcraft" target="_blank" rel="noopener noreferrer">X</a>
       </div>
     </div>

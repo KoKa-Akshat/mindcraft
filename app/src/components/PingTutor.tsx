@@ -139,7 +139,7 @@ export default function PingTutor({ context = {}, className, embedded = false, c
       aria-expanded={open}
       title="Message your tutor"
     >
-      {compact ? <>✉ tutor</> : <>✉ Ping tutor</>}
+      {compact ? <>✉ Tutor</> : <>✉ Ping tutor</>}
     </button>
   )
 

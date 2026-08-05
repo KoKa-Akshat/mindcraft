@@ -3,7 +3,7 @@
  * bake-themed-stems-local.mjs
  *
  * Offline themed-stem bake WITHOUT Groq — agent/local compositor.
- * Uses conceptStories + questionContextFrames (+ scenes when present) to
+ * Uses conceptStories (including contextFrame + scenes when present) to
  * weave each plain bank stem into its story world while keeping every
  * digit-run from the original (C-3).
  *
@@ -148,7 +148,6 @@ function isValidStem(original, stem) {
 }
 
 const stories = readJson(resolve(DATA, 'conceptStories.json'))
-const frames = readJson(resolve(DATA, 'questionContextFrames.json'))
 const bank = loadBank()
 const hash = bankHash(bank)
 
@@ -180,7 +179,7 @@ for (const q of bank) {
   }
 
   const storyEntry = stories[q.conceptId]
-  const frame = frames[q.conceptId]
+  const frame = storyEntry.contextFrame
   const stem = composeStem(q, storyEntry, frame)
   if (isValidStem(q.question, stem)) {
     stems[key] = stem

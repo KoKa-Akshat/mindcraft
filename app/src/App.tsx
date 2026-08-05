@@ -40,6 +40,7 @@ import ConstellationGpsLab from './pages/ConstellationGpsLab'
 import ParentDashboard    from './pages/ParentDashboard'
 import SessionWork        from './pages/SessionWork'
 import HomeworkSession    from './pages/HomeworkSession'
+import WeeklyPracticePaperPage from './pages/WeeklyPracticePaperPage'
 import JoinClassroom      from './pages/JoinClassroom'
 import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
@@ -294,6 +295,7 @@ export default function App() {
         <Route path="/constellation"       element={<AuthGuard><ConstellationPage /></AuthGuard>} />
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
+        <Route path="/weekly-paper"            element={<AuthGuard><WeeklyPracticePaperPage /></AuthGuard>} />
         <Route path="/concept/:conceptId"      element={<AuthGuard><ConceptChapterPage /></AuthGuard>} />
         <Route path="/prep"                    element={<Prep />} />
 

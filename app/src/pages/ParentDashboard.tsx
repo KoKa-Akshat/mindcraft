@@ -22,7 +22,6 @@ import {
 import { useUser } from '../App'
 import { MARKETING_BASE } from '../lib/siteUrls'
 import Dashboard from './Dashboard'
-import WelcomeRitual, { welcomeRitualSeen } from '../components/WelcomeRitual'
 import s from './ParentDashboard.module.css'
 
 export default function ParentDashboard() {
@@ -30,9 +29,6 @@ export default function ParentDashboard() {
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true)
-  const [showWelcome, setShowWelcome] = useState(() => (
-    typeof window !== 'undefined' && !welcomeRitualSeen(user.uid, 'parent')
-  ))
   const [childIds, setChildIds] = useState<string[]>([])
   const [childNames, setChildNames] = useState<Record<string, string>>({})
   const [selectedChildId, setSelectedChildId] = useState<string | null>(null)
@@ -145,13 +141,6 @@ export default function ParentDashboard() {
 
   return (
     <div className={s.page}>
-      {showWelcome && (
-        <WelcomeRitual
-          uid={user.uid}
-          role="parent"
-          onDone={() => setShowWelcome(false)}
-        />
-      )}
       <header className={s.topbar}>
         <a href={MARKETING_BASE} className={s.logo}>
           <img src="/brand/logo-mark.png" alt="" className={s.logoMark} />
