@@ -4,6 +4,130 @@
 
 ---
 
+## Fixed ConceptChapterPage import regression from Cursor's context-frame fold-in (Fable 5, 2026-08-05)
+
+Follow-up to the two sessions below. Cursor finished two Codex briefs: (1)
+fixed folk-tale matching in `storyMatch.ts` so Eedi questions can clear the
+0.38 activation threshold, via a new `taleMathSignals()` canonicalization
+helper; (2) folded all 49 entries of `questionContextFrames.json` into a new
+`contextFrame` field on each concept object in `conceptStories.json`, deleted
+`questionContextFrames.json`, and updated the readers (`storySelection.ts`,
+`storyDisplay.ts`, `sceneSelection.ts`, `questionStem.ts`) to read
+`entry.contextFrame`. Added `storyMatch.test.ts` + `storySelection.test.ts`
+and reported `npm run test` (176/1 skipped) and `npm run build` both green.
+
+**The regression, exactly as flagged in the font-standardization entry
+below**: Cursor's diff never touched `app/src/pages/ConceptChapterPage.tsx`.
+It still imported the now-deleted `questionContextFrames.json` directly and
+kept its own standalone `FRAMES` const + `getFrame()` lookup, independent of
+the four readers Cursor did update. `npx tsc --noEmit` failed with
+`TS2307: Cannot find module '../data/questionContextFrames.json'`, and since
+`app/package.json`'s `build` script is `tsc && vite build`, `npm run build`
+could not have been passing end to end on this tree — Cursor's green build
+was run against a different disk state (plausibly before this deletion
+landed, or a stale cache).
+
+**Fix**: deleted the `contextFramesRaw` import and the standalone `FRAMES`
+const; `getFrame()` now pulls `contextFrame` off `DB` entries (the same
+`conceptStoriesRaw` map already imported in this file) instead of a separate
+JSON. Preserved the exact same alias-fallback resolution order and the
+pre-existing `FRAME_ALIAS` table (`coordinate_geometry` →
+`representation_translation`, `absolute_value` → `algebraic_manipulation`) —
+that table diverges from `conceptAliases.ts`'s `canonicalConceptId` mapping
+for the same two ids, which is a pre-existing inconsistency, left untouched
+per scope. Also strengthened the weak second assertion in
+`storyMatch.test.ts` (`activates at least one folk match across the
+production Eedi bank`): a bare `toBeGreaterThan(0)` wouldn't catch a
+regression back to the pre-fix state (max score was 0.343, effectively
+non-firing) — a single stray match would still pass. Measured the actual
+match rate (658/1508 = 43.6% of the Eedi bank) and changed the bound to
+`> bank.length * 0.15`, comfortably below current signal so it won't flake on
+minor bank edits, but far above "a handful slipped through."
+
+**Verification, all clean on this tree**: `npx tsc --noEmit` — no errors.
+`npx vitest run` — **176 passed / 1 skipped (12 files)**, no regressions.
+`npm run build` — succeeded end to end (only pre-existing chunk-size
+warnings, unrelated).
+
+**`ml/**` note**: `git status` also showed `ml/scripts/enrich_questions.py`,
+`fix_em_dashes.py`, `pipeline/story_generator.py`, `pipeline/story_wrapper.py`,
+`pipeline/README.md`, `promote_questions.py` as modified. Diffed all six —
+small, self-contained changes (em-dash cleanup, minor refactors) with no
+connection to the story-match/context-frame work and not mentioned in
+Cursor's report. Left untouched per lane ownership (Engine/Blake owns `ml/**`)
+— reads as Codex's concurrent unrelated work sitting in the same shared tree.
+
+Nothing committed, left in the working tree for review.
+
+---
+
+## Font standardization: app re-aligned to the marketing site's brand fonts (Claude, 2026-08-05)
+
+Akshat's ask: Dashboard's "Contents" title and answer-choice text were rendering
+in cursive Caveat ("weird italic answers"), and the app's fonts had drifted
+from the marketing site (`index.html`), which he treats as the brand
+reference. Root cause: the 2026-07-23 font-consolidation pass picked DM
+Sans/Source Serif 4 as the app's body/serif fonts, independent of
+`index.html`'s own Fredoka/Nunito Sans/Inter Tight/DM Serif Display — two
+different type systems on one product. Also several components misused the
+`--tok-font-hand` (Caveat) role on functional UI text (answer choices, typed
+answer inputs, nav pills, page titles) rather than genuine decorative
+accents, which is what actually read as "weird."
+
+**Fix, platform-wide token swap (Akshat's chosen scope, not just Dashboard):**
+- `app/src/styles/tokens.css`: `--tok-font-sans` → `"Nunito Sans", "Inter
+  Tight", system-ui, sans-serif` (was DM Sans), `--tok-font-serif` →
+  `"DM Serif Display", Georgia, serif` (was Source Serif 4), new
+  `--tok-font-display: "Fredoka", "Nunito Sans", sans-serif` for big headings
+  (the website's h1/h2/`.hero-brand` role — didn't exist as an app token
+  before). `--tok-font-hand` (Caveat) and `--tok-font-mono` (IBM Plex Mono)
+  unchanged.
+- `app/index.html`: Google Fonts link swapped to load the same 5 families
+  `index.html` (root, the marketing site) already loads, plus IBM Plex Mono
+  (app-only, data/labels).
+- Per-instance fixes, swapping `--tok-font-hand` off functional text (kept
+  Caveat only on 2 genuinely decorative leftovers — `ConceptChapterPage`'s
+  `.asideScene` photo caption and `.storyIntroBlock` narrative flavor text):
+  headings → `--tok-font-display` (`Dashboard.module.css` `.actTocTitle`/
+  `.homeTitle`/`.tocLaneTitle`, `ConceptChapterPage.module.css` `.blendTitle`,
+  `DashboardPanels.module.css` `.savedStripTitle`, `Diagnostic.module.css`
+  `.confBoxTitle`/`.loadingTitle`); functional/interactive text →
+  `--tok-font-sans` (`Dashboard.module.css` `.actTocItem`/`.sparkName`(x2)/
+  `.sparkGo`(x2)/`.canvasWordmark`/`.navBtn`/`.navActive`/
+  `.paperCtaUnlockLabel`, `ConceptChapterPage.module.css` `.canvasWordmark`/
+  `.stickerChoice .choiceText`/base `.choiceText` — the last one was also
+  hardcoded to literal `"Inter"` instead of a token, fixed to
+  `var(--tok-font-sans)`, `Practice.module.css` `.matteShell .questionText`/
+  `.matteShell .answerInput`/`.paperScan .answerInput` — the two
+  `.answerInput` rules are almost certainly the literal "weird italic
+  answers" Akshat saw, since that's the typed free-response input field).
+
+**Verification:** `npx tsc --noEmit` — one pre-existing error unrelated to
+this pass (`ConceptChapterPage.tsx` can't resolve `questionContextFrames.json`
+— see the concurrent-session note below). `npx vitest run` — **176 passed / 1
+skipped (12 files)**, clean. Did not run a real browser screenshot pass — the
+gated pages (Dashboard, Practice, ConceptChapterPage) sit behind Firebase
+auth and this session didn't build a screenshot shim; **recommend a follow-up
+visual check** the way several 2026-07-2x sessions did (temporary
+`VITE_SCREENSHOT_MODE` `AuthGuard` bypass + Playwright), especially to see
+the new Fredoka headings and confirm no font falls back to a missing-glyph
+box. Nothing committed, left in the working tree for review.
+
+**Concurrent-session note, for the record (not caused by this pass, not
+fixed by this pass):** this checkout had substantial live uncommitted work
+from another agent already in progress mid-session — `git status` shows
+`questionContextFrames.json` deleted, `storyMatch.ts`/`storySelection.ts`/
+`sceneSelection.ts`/`storyDisplay.ts`/`questionStem.ts` modified, matching
+the Codex brief items above (folk-tale story-match fix, `questionContextFrames.json`
+fold-in). That work is what's currently breaking `tsc` on
+`ConceptChapterPage.tsx`'s import of the now-deleted JSON — genuinely
+someone else's in-flight edit, not something to revert or fix here. Also
+note: TutorProfilePanel.tsx/.module.css, GradeOnboard.tsx, and
+TutorDashboard.tsx had pre-existing uncommitted modifications at session
+start (untouched by this font pass).
+
+---
+
 ## READ FIRST: work only from /Users/akoirala/Developer/mindcraft (Claude, 2026-08-05)
 
 The `Desktop/Business Ideas/mindcraft-site` clone is iCloud-synced and effectively

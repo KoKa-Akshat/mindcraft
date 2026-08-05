@@ -41,6 +41,13 @@
       "fractions_decimals__fraction_arithmetic": "A paymaster tried to combine half a ration of grain with a third of a ration by stacking the numbers as written, and came up short at muster. Stevin had him pour both into sixth-measures first, three sixths and two sixths, and suddenly the pieces matched and counted cleanly to five. Halves and thirds are different-sized pieces, and pieces only add once they agree on a size.",
       "fractions_decimals__decimal_place_value": "Comparing two lengths of cable, a canal foreman grabbed the one marked 0.25 over the one marked 0.7, certain that twenty-five beat seven. Stevin laid them side by side on the dock, and the 0.7 stretched nearly three times longer. Each place in the ladder is a smaller bin than the last, he explained, so you read what the position is worth, not the size of the digits sitting in it.",
       "fractions_decimals__fraction_decimal_conversion": "A ship's carpenter needed three-fourths of a meter marked on a gauge that spoke only in decimals, and in his hurry he wrote 0.34, as if the digits could simply slide over. The plank he cut dangled uselessly short of its bracket. Stevin showed him the quiet secret: a fraction is a division waiting to be finished, and three divided by four comes out, every time, as 0.75."
+    },
+    "contextFrame": {
+      "protagonist": "Simon Stevin",
+      "settingLine": "Antwerp, the Low Countries, 1585",
+      "questionBridge": "Simon slides the ledger toward you. Break the whole into parts. Every tenth counts.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "ratios_proportions": {
@@ -51,6 +58,13 @@
       "ratios_proportions__ratio_as_comparison": "A student traveling with Thales measured a column three times taller than its neighbor and reported it as three cubits taller, adding where he should have stretched. When they paced the shadows, the difference between the columns dwarfed his little gap. A ratio is not how much more, Thales told him, it is how many times over, and the two questions live in different worlds.",
       "ratios_proportions__proportion_setup": "Setting up the pyramid calculation, a priest scribbled height over shadow on one side and shadow over height on the other, and the sand arithmetic produced a pyramid shorter than a house. Thales rebuilt both comparisons the same way, height above, shadow below, on each side. Two ratios can only speak to each other when they are built in the same order.",
       "ratios_proportions__cross_multiply_meaning": "Later, a merchant tried Thales' shortcut on two fractions he merely needed to add, crossing them and producing nonsense that cost him a cargo's price. The crossing trick, Thales explained, is not magic for any two fractions. It is what falls out when two ratios are declared equal, a balance being kept, and it only works where a true equality stands."
+    },
+    "contextFrame": {
+      "protagonist": "Thales of Miletus",
+      "settingLine": "Giza, foot of the pyramid, 600 BC",
+      "questionBridge": "Thales measures the shadow against his staff. If one thing scales, so does the other.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "order_of_operations": {
@@ -62,6 +76,13 @@
       "order_of_operations__parentheses_override": "One instruction required the engine to double an entire bundled quantity, a sum waiting inside brackets. Ada saw that if the machine doubled only the first piece and then added the rest, the bundle would be torn apart mid-calculation. Parentheses, she noted, are a sealed package: everything inside is finished before anything outside may touch it.",
       "order_of_operations__left_to_right_rule": "A colleague checking Ada's work computed a division-then-multiplication line from the middle outward, and his answer disagreed with hers by a factor of nine. The engine, she pointed out, consumes its operation cards strictly in the order they arrive, like passengers boarding a train. Division and multiplication hold equal rank, so they simply take turns, left to right.",
       "order_of_operations__exponent_before_multiply": "In one formula, a quantity had to be squared and then doubled, and a hurried copyist doubled first, squaring a quantity that was never meant to be squared. The little raised two, Ada explained, belongs to its own base alone and acts before any multiplier standing nearby. Let the power finish its work first, and everything downstream stays true."
+    },
+    "contextFrame": {
+      "protagonist": "Ada Lovelace",
+      "settingLine": "London, a lamplit study, 1843",
+      "questionBridge": "Ada taps the punch cards. Do the steps in the right order. The machine forgives nothing.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "basic_equations": {
@@ -74,6 +95,13 @@
       "basic_equations__do_same_to_both_sides": "In the market, Diophantus watched a spice seller lift weight from one pan of her scale and none from the other, then read the tilted beam as if it still told the truth. The sale went sour and the customer never returned. An equation is that same scale, he taught: change one side alone and the reading means nothing, but treat both sides identically and the balance never lies.",
       "basic_equations__isolate_variable": "A young copyist solved a problem down to the line where twice the unknown equaled eight, wrote eight as his answer, and walked away proud. Diophantus called him back to finish the last honest step, dividing away the two so the unknown stood by itself at four. The hunt is not over, he said, until the named thing stands alone.",
       "basic_equations__solution_verification": "Diophantus' habit, his students noticed, was strange: after cornering the unknown, he always carried the answer back to the original riddle and walked it through. Once, the number failed the very sentence that produced it, exposing a slipped sign three lines up, and an afternoon's work was saved in a breath. Testing the answer costs ten seconds; trusting an untested one can cost everything after it."
+    },
+    "contextFrame": {
+      "protagonist": "Diophantus of Alexandria",
+      "settingLine": "Alexandria, 250 AD",
+      "questionBridge": "Diophantus scratches a riddle into the wax. A number is hiding. Undo each step until you find it.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "linear_equations": {
@@ -86,6 +114,13 @@
       "linear_equations__slope_intercept_form": "William's daily reckoning was one line long: the departure offset, plus the drift rate times the days at sea. A navigator borrowing the method once buried the rate inside a doubled expression and read the doubled number as the drift itself, putting his position off by miles. The line only confesses its rate and its start after it is untangled into that clean form.",
       "linear_equations__two_points_determine_line": "A skeptical captain asked how anyone could know the watch's rate without months of trials. William checked it against the heavens twice, days apart, and drew the line through those two readings; the rise between them over the days between them was the drift, and the whole future of the watch lay along that line. One reading tells you where a line sits, but only a second one tells you where it is going.",
       "linear_equations__parallel_perpendicular": "In the workshop, two of Harrison's trial watches drifted at exactly the same rate, and their disagreement, set on day one, never widened or narrowed by a second across a year. Their error lines ran parallel, matched in slope, never meeting. Only a watch with a different rate could ever close the gap, because only lines with different slopes cross."
+    },
+    "contextFrame": {
+      "protagonist": "William Harrison",
+      "settingLine": "At sea, bound for Jamaica, 1761",
+      "questionBridge": "William stares at the balance. One unknown. Find what makes both sides equal.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "functions_basics": {
@@ -99,6 +134,13 @@
       "functions_basics__function_composition": "For a lens calculation, Euler chained two rules: the first bent the light, and its output became the input of the second. A copyist reversed the order, applying the second rule first, and the predicted image landed nowhere near the glass. Composition is a relay, not a mixture: the first runner hands the baton to the second, and the order of the handoff is everything.",
       "functions_basics__one_to_one_invertibility": "Asked to run a squaring rule backward, a student recovered the input five and declared victory, never noticing that negative five squared to the same output. The original could have been either, and the reversal had silently guessed. Euler's warning was simple: a rule can only be undone when each output has exactly one parent, because an undo that must guess will sometimes guess against you.",
       "functions_basics__piecewise_context_threshold": "Calculating a customs tariff, Euler's clerk applied the above-threshold rate to an entire shipment, though the tax only changed for weight past the mark, and the merchant was charged triple. Euler split the calculation at the boundary: one rule below the line, another rule only for what crossed it. Some functions change their behavior at a threshold, and the whole art is charging each region by its own rule."
+    },
+    "contextFrame": {
+      "protagonist": "Leonhard Euler",
+      "settingLine": "St. Petersburg, 1734",
+      "questionBridge": "Euler scrawls f(x). Feed it a number and watch what comes out.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "right_triangle_geometry": {
@@ -111,6 +153,13 @@
       "right_triangle__sohcahtoa_setup": "Measuring a temple ramp, an apprentice compared a mismatched pair of sides, height against slant when his tables described height against base, and the ramp he staked out rose steep enough to spill offerings. The ratios themselves were never the difficulty, the master told him; the whole craft is knowing exactly which two sides your question is comparing before you compare them.",
       "right_triangle__special_triangles": "The rope stretchers carried two treasured templates: the half-square, whose two legs match, and the half-of-an-equilateral, whose sides keep one unchanging family of proportions forever. A builder who mixed up which side faced the sharpest corner watched his roof brace tilt visibly askew, because the widest angle always opens toward the longest side. Learn the two templates once, and half the triangles in the world are already solved.",
       "right_triangle__coordinate_distance_formula": "Laying out a tiled courtyard, a surveyor needed the distance between two marker stones, three tiles east and four tiles north of each other. He walked the L-shaped path and called it seven, but the taut rope between the stones measured five. The grid had drawn him a right triangle without asking permission, and the straight-line distance was its hypotenuse, squares added, root taken, same ancient law."
+    },
+    "contextFrame": {
+      "protagonist": "Pythagoras of Samos",
+      "settingLine": "Egypt, watching the rope-stretchers, 530 BC",
+      "questionBridge": "Pythagoras watches the knotted rope snap taut. Two sides quietly fix the third. Find the pact between them.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "trigonometry_basics": {
@@ -123,6 +172,13 @@
       "trig_basics__sin_as_vertical_component": "Asked how high a star stood above the horizon, the assistant hunted for a triangle to build and found only empty air. Hipparchus tilted his sighting rod to the star and pointed to what mattered: the vertical reach of that tilted line, the height its tip claims against the sky. Sine is simply that reach, the shadow a leaning rod casts on a wall, and it exists at every angle whether or not you draw the triangle.",
       "trig_basics__cos_as_horizontal_component": "Charting the same star, the assistant swapped the two shadows, writing its height along the ground and its ground-reach up the sky, and the star chart smeared the constellation sideways into nonsense. Hipparchus set the rod in sunlight: the shadow on the ground is cosine, the climb up the wall is sine. One walks, one climbs, and once you watch the shadows fall you never trade them again.",
       "trig_basics__pythagorean_trig_identity": "Checking the tables one winter, Hipparchus found an entry where a star's ground-shadow and sky-reach could not both be true, and the flaw traced back to a copyist adjusting each number separately. On a circle of radius one, the two components are the legs of a right triangle whose slant is the radius itself, so their squares must always sum to exactly one. The old triangle law, hiding inside the circle, audits every entry for free."
+    },
+    "contextFrame": {
+      "protagonist": "Hipparchus of Nicaea",
+      "settingLine": "Rhodes, a hilltop observatory, 150 BC",
+      "questionBridge": "Hipparchus lowers his instrument. Angles and sides are bound together. Use one to find the other.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "derivatives": {
@@ -135,6 +191,13 @@
       "derivatives__chain_rule": "Studying the moon, Newton faced change flowing through change: the moon's pull depended on its distance, and the distance itself changed with time. Tracking only one layer gave rates that missed the truth entirely, like reckoning a ship by the wind but ignoring the tide. When one quantity changes through another, both rates ride together, multiplied, all the way down the chain.",
       "derivatives__product_quotient_rule": "Computing the sweep of an orbit, Newton needed the rate of a product, two changing quantities multiplied, and saw the tempting shortcut of multiplying their rates would betray him. Each partner, he found, pushes on the current size of the other: the first changes while the second holds, the second changes while the first holds, and the true rate is both contributions gathered. In a product, everyone gets a turn to change.",
       "derivatives__derivative_as_rate": "Newton wrote to a friend that the fluxion of the apple's height was a certain number, and the friend replied asking, a number of what? Feet per second, per minute, per heartbeat? The rate only became knowledge when its units spoke: so many feet of fall for each second of falling. A derivative without units is arithmetic; with them, it is a fact about the world."
+    },
+    "contextFrame": {
+      "protagonist": "Isaac Newton",
+      "settingLine": "Woolsthorpe Manor orchard, England, 1666",
+      "questionBridge": "Isaac watches the apple fall. Don't average the whole flight, freeze one instant. That's the rate you want.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "linear_inequalities": {
@@ -146,6 +209,13 @@
       "linear_inequalities__open_closed_circles": "One runway's rated load read strictly under ten tons, and a dispatcher waved through a plane loaded to exactly ten, reasoning that the edge surely counted. The airstrip's engineers grounded the field for inspection, because strictly under means the boundary itself is excluded. An open endpoint is honesty about the edge: the safe zone ends just before that number, not on it.",
       "linear_inequalities__compound_inequalities": "Flight crews had two limits at once, enough rest hours to stay sharp but few enough duty hours to stay legal, and a scheduler who checked each rule on separate pages cleared a pilot who satisfied one and violated the other. The two conditions were never separate answers; together they formed one narrow window, and a crew only existed safely inside it. Hold both fences in view at once, and the window appears.",
       "linear_inequalities__absolute_value_split_greater_than": "The air corridors into Berlin were twenty miles wide, and straying more than ten miles from the centerline in either direction meant Soviet fighters. A navigator monitoring only the eastward drift let a storm push his plane far to the west, equally out of corridor and equally in danger. Too far means too far both ways: one limit on distance from center always splits into a watch on the left and a watch on the right."
+    },
+    "contextFrame": {
+      "protagonist": "George Dantzig",
+      "settingLine": "USAF logistics office, the Berlin Airlift, 1948",
+      "questionBridge": "George maps the constraints. The answer is not one number. It is a region. Find where every limit holds at once.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "systems_of_linear_equations": {
@@ -157,6 +227,13 @@
       "systems__substitution_method": "Liu Hui described a clerk who learned from one record that a top bundle equaled two middle bundles, then carried that fact back into the very record that taught it, producing a statement that agreed with itself and said nothing. Carried into the other shipment's record instead, the same fact collapsed two unknowns into one and the price fell out. A substitution only works when you deliver the clue to an equation that has not spoken yet.",
       "systems__elimination_method": "The counting-rod masters would double one row of the grid and subtract another, so that the top-grade column emptied entirely, one unknown swept from the board in a single stroke. An apprentice who scaled only part of a row watched the board dissolve into contradictions, because a shipment's record is one fact and must be scaled whole. Let matching terms cancel cleanly, and the truth stands alone at the end.",
       "systems__no_solution_infinite": "One tax season, two shipment records led the rod-board to declare that zero equaled five, and the apprentice assumed his own arithmetic had failed, redoing it three times. Liu Hui read it differently: the two records contradicted each other, and no prices could ever satisfy both, which meant a scribe somewhere had falsified a total. Sometimes the absurd line is the honest answer: these constraints never meet, and the mathematics is telling you to question the records."
+    },
+    "contextFrame": {
+      "protagonist": "Liu Hui",
+      "settingLine": "Ancient China, counting rods, 263 AD",
+      "questionBridge": "Liu Hui lays the counting rods in rows. Two unknowns, two conditions. Make them agree at once.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "exponent_rules": {
@@ -169,6 +246,13 @@
       "exponent_rules__power_rule": "One stage of the sand count required raising an already-towering number to a power, a tower of towers. Archimedes saw that repeating a floor-count so many times over means the counts multiply, not add: the third floor taken four times over lands on the twelfth, not the seventh. A power of a power multiplies the exponents, and the giant stays on its leash.",
       "exponent_rules__negative_exponents": "Working downward from the universe to a grain, Archimedes ran his tower in reverse, each step dividing by the same factor, descending below the ground floor into smaller-than-one. A student took the minus mark on a floor-count to mean the quantity itself was less than nothing, an impossible negative volume of sand. The sign on the exponent points downstairs, into fractions, one over the power, never below zero.",
       "exponent_rules__zero_and_rational": "At the tower's base a student asked what a number grown zero times could be, and guessed zero, wiping out an entire calculation when the factor should have quietly been one. Zero growings leave a thing exactly as it started: one whole, untouched. And the half-steps between floors, Archimedes showed, are roots, the number that climbs a full floor in two equal strides."
+    },
+    "contextFrame": {
+      "protagonist": "Archimedes of Syracuse",
+      "settingLine": "Syracuse, Sicily, 216 BC",
+      "questionBridge": "Archimedes climbs his tower of tens. Don't multiply the giants. Add the floors they stand on.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "polynomials": {
@@ -181,6 +265,13 @@
       "polynomials__foil_expansion": "Enlarging a fortress courtyard by two paces one way and three the other, an engineer multiplied only the old sides and the new strips' corner, and his stone order left two long bare bands of earth along the walls. Tartaglia sketched it: the new length crosses the old width, the new width crosses the old length, four regions, every term meeting every term. Multiply two binomials and every piece greets every piece, because every strip of the courtyard is real ground.",
       "polynomials__degree_identification": "Two rival gunners argued over whose range expression predicted farther flight, comparing their smaller terms in loving detail. Tartaglia pointed to the highest power in each, because at long distance the top degree devours every term below it, the way a cube outgrows a square outgrows a line. Read the degree first; it tells you the fate of the curve before any arithmetic begins.",
       "polynomials__greatest_common_factor_factoring": "Tartaglia's charge table repeated the same factor in every line, and a clerk copied the full multiplication out dozens of times, introducing a slip somewhere past the fortieth row. Tartaglia pulled the shared factor out front once, leaving small clean terms inside. What every term already shares can be said a single time, and saying it once is both shorter and safer."
+    },
+    "contextFrame": {
+      "protagonist": "Niccolò Tartaglia",
+      "settingLine": "Venice, the Republic's arsenal, 1537",
+      "questionBridge": "Niccolò sketches the cannonball's path in the margin. Many terms, one curve. Combine what matches, layer by layer.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "factoring_polynomials": {
@@ -192,6 +283,13 @@
       "factoring_polynomials__factor_pairs": "Splitting a number in a wager with a colleague, Fermat listed factor pairs and stopped exactly at the square root, while his colleague ground on past it, rediscovering every pair a second time in reverse. The pairs meet at the root, one partner below and one above, like dancers meeting at the center of a hall. Walk up to the square root and stop; everything has already been found once.",
       "factoring_polynomials__ac_method": "A Parisian scholar factored an expression by its ends alone, ignoring the coefficient standing guard at the front, and his factors multiplied back into a different expression entirely, a forgery of the original. Fermat's discipline was to let the leading number and the last number work together, splitting the middle term under their combined instruction. When the front coefficient is not one, it is part of the puzzle, not decoration.",
       "factoring_polynomials__special_patterns": "Fermat's whole method against giant numbers rested on one beloved pattern: any square minus a square splits, instantly, into a sum times a difference. A rival once expanded a two-term expression the long way, filling a page, where Fermat read the difference of squares at sight and finished in one line. Learn the few patterns that repeat forever, and they will do the work before the work begins."
+    },
+    "contextFrame": {
+      "protagonist": "Pierre de Fermat",
+      "settingLine": "Toulouse, France, 1643",
+      "questionBridge": "Pierre hunts the hidden square inside the number. Every product is a disguise. Find what multiplied to build it.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "radical_expressions": {
@@ -203,6 +301,13 @@
       "radicals__simplification": "Comparing diagonals, a student wrote one as the root of seventy-two and treated the number as a sealed mystery, too tangled to use. Hippasus split it open: seventy-two hides a perfect square, thirty-six times two, so the length steps out as six roots of two, a clean count of a familiar diagonal. Pull the hidden square from under the radical, and the unspeakable length learns to speak plainly.",
       "radicals__adding_radicals": "Laying two braces along diagonals of the same kind, a builder counted two of the root-three lengths and three more, then merged them into five of some new root entirely, and his beam overshot the frame by an arm's length. Radicals with the same radicand count together like boards of the same cut, five roots of three, but the number under the root never changes by counting. Combine the counts; leave the kind alone.",
       "radicals__rationalizing": "Dividing a cord into lengths of one over the root of two, a student adjusted only the bottom of his fraction to clear the radical, and every measured piece came out short. Hippasus multiplied top and bottom by the same root, which is multiplying by one, the only change that changes nothing. The messy root leaves the bottom, the value stays true, and the tape measure can finally read it."
+    },
+    "contextFrame": {
+      "protagonist": "Hippasus of Metapontum",
+      "settingLine": "The Mediterranean, aboard ship, 500 BC",
+      "questionBridge": "Hippasus lowers his voice. Some numbers hide under the root sign. Handle them exactly.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "quadratic_equations": {
@@ -215,6 +320,13 @@
       "quadratics__factoring_method": "A student factored the flight equation cleanly into two pieces multiplied to zero, then combined the two landing times into one by adding them. Galileo held up the factored form: a product is zero only when one of its factors is, so each factor takes its own turn at zero, and each turn is its own true answer. Two factors, two moments the arc touches ground, no blending allowed.",
       "quadratics__quadratic_formula": "When an awkward flight equation refused to factor, an assistant guessed at landings for a wager and missed by half a field. Galileo worked the general formula instead, feeding it each coefficient with its sign intact, and the arc's two crossings dropped out exactly. The formula already knows the way through any quadratic; the only craft is handing it the true numbers, signs and all.",
       "quadratics__discriminant_meaning": "A fortress commander asked whether a besieger's cannon could ever reach the height of his wall, and Galileo computed only the small expression under the formula's root. It came out negative, and he stopped: the arc never attains that height, no solutions exist, the wall stands. The discriminant is the sentry at the gate, telling you whether there is anything beyond it to find."
+    },
+    "contextFrame": {
+      "protagonist": "Galileo Galilei",
+      "settingLine": "Padua, the Venetian Republic, 1608",
+      "questionBridge": "Galileo marks where the ball lands. The rise and the fall cross the same height twice. Find both.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "descriptive_statistics": {
@@ -227,6 +339,13 @@
       "descriptive_statistics__mean_vs_median": "A War Office report averaged supply costs across hospitals and declared them lavish, but one gilded officers' facility had dragged the average far above every ordinary ward. Nightingale answered with the median hospital, whose budget told the story of the many rather than the one. When a single number can shout over all the others, she wrote, let the middle one speak.",
       "descriptive_statistics__spread_measures": "Two wards showed the same average of deaths, and an administrator declared them identical, closing the inquiry. Nightingale reopened it with the spread: one ward held steady week after week, while the other swung from calm to catastrophe, and the swings were exactly where the preventable deaths hid. The average tells you where the middle sits; the spread tells you what the place is actually like.",
       "descriptive_statistics__categorical_chart_reading": "A minister citing her own diagram back to her read the wedge for wounds when he meant the wedge for disease, and nearly funded the smaller problem. Nightingale walked him around the circle, wedge by labeled wedge, before allowing a single conclusion. A chart holds the answer only for readers who first make sure of which piece they are looking at."
+    },
+    "contextFrame": {
+      "protagonist": "Florence Nightingale",
+      "settingLine": "Scutari hospital, Crimea, 1854",
+      "questionBridge": "Florence sets down her pen. What does the data actually say?",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "basic_probability": {
@@ -238,6 +357,13 @@
       "basic_probability__complement_rule": "Computing the chance of at least one six in four throws, Fermat refused to chase the tangled ways it could happen and counted the one clean opposite instead: no six at all, four misses in a row. The whole pie is one, so the chance he wanted was simply one minus the chance of the opposite. The quickest door into a crowded question is often the back door.",
       "basic_probability__and_or_distinction": "Gombaud once priced a bet on this throw or the next as if it needed both to succeed, multiplying his chances into something tiny and folding a hand he was favored to win. Pascal drew the map: and is a narrow gate both events must pass through together, while or throws the gate wide to either. Multiplying shrinks toward the both; the either gathers more paths, never fewer.",
       "basic_probability__conditional_probability": "With one card already face-up on the table, Gombaud kept reckoning his chances against the full deck, as though the revealed card still lived in it. Fermat's letters put it plainly: each new fact shrinks the world, and the honest count divides by the futures that remain, not the futures that once existed. Once you know something, you are standing in a smaller world, so count from where you stand."
+    },
+    "contextFrame": {
+      "protagonist": "Blaise Pascal",
+      "settingLine": "Paris, in correspondence with Fermat, 1654",
+      "questionBridge": "Blaise counts every path the dice could take. Before you wager, map every future, then take your share of it.",
+      "diceFrame": "Pascal shakes the dice in his cupped hands and slams them onto the table.",
+      "spinnerFrame": "Pascal flicks the pointer into a blur and dares you to call where it stops."
     }
   },
   "exponential_functions": {
@@ -249,6 +375,13 @@
       "exponential_functions__growth_vs_decay": "After St. Louis closed its schools and halls, each sick person infected fewer than one other, and a health officer plotting the numbers kept searching for the peak long after it had passed. The multiplying factor had slipped below one, and the same exponential machinery that exploded the counts was now shrinking them toward zero. Read the base first: above one the fire spreads, below one it starves.",
       "exponential_functions__constant_ratio": "A hospital administrator planned beds by the first week's increase, adding that same amount to each week's forecast, stairs all the way up. But the ledgers showed each week's total was a multiple of the last, the same ratio again and again, so every step up was larger than the one before it. Exponential growth never adds the same amount twice; it multiplies by the same factor, which is why the stairs became a cliff.",
       "exponential_functions__initial_value": "Comparing two districts, an official fixated on their identical doubling times and called their futures identical, but one district had started with three cases and the other with three hundred. Every projection is the starting count carried forward by the growth; the number out front is simply where the fire began. Same spark rate, different size of spark, wildly different city."
+    },
+    "contextFrame": {
+      "protagonist": "Max Starkloff",
+      "settingLine": "St. Louis, Missouri, October 1918",
+      "questionBridge": "Max watches the case count double again. Growth that feeds on itself outruns you fast. Recognize the curve before it explodes.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "logarithmic_functions": {
@@ -261,6 +394,13 @@
       "logarithmic_functions__log_power_rule": "Raising a quantity to the twelfth power, Kepler's copyist looked up its logarithm and then dutifully raised that to the twelfth as well, producing a number too vast for the page. Napier's rule was gentler: the exponent steps outside and becomes a multiplier, twelve times the logarithm, one clean product. The power does not stay inside; it walks out front and shrinks into a coefficient.",
       "logarithmic_functions__log_properties_combined": "Handed a logarithm of a product raised to a power, an assistant tried to split and shift everything in one movement and scattered the pieces into a sum that equaled nothing true. Kepler unwrapped it like a parcel, one layer per line: first the exponent out front, then the product split into a sum, each rule taking its own turn. Logarithms come apart in layers, and only one layer lifts at a time.",
       "logarithmic_functions__basic_log_equation_conversion": "An astronomy student stared at a statement saying the logarithm, base two, of some unknown equaled ten, and multiplied to guess twenty. Kepler rewrote the sentence in its other native tongue: two raised to the tenth equals the unknown, so the answer was 1,024. Every logarithmic equation is an exponential one wearing a disguise, and rewriting it pulls the mask off."
+    },
+    "contextFrame": {
+      "protagonist": "John Napier",
+      "settingLine": "Merchiston Castle, Scotland, 1614",
+      "questionBridge": "John slides his great table across the desk. To undo a power, ask what exponent got you there.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "sequences_series": {
@@ -272,6 +412,13 @@
       "sequences__geometric_identification": "Another student subtracted his way down a doubling sequence, found the differences always changing, and declared the pattern broken and untrustworthy. Gauss divided instead of subtracting: each term was exactly twice the one before, a constant ratio hiding beneath restless differences. Some patterns grow by adding and some by multiplying, and you must interrogate each with its own operation.",
       "sequences__nth_term_formula": "Asked for the fiftieth number in a sequence starting at 10 and climbing by 15, a boy multiplied fifty steps and overshot, forgetting that the first term stands at the start before any step is taken. Gauss counted honestly: forty-nine steps follow the first term, so the fiftieth term is 10 plus forty-nine fifteens. The opening term is a starting line, not a stride, and every term after is just counted steps from it.",
       "sequences__geometric_series_sum": "Summing a doubling series term by term, a student lost his place near the twentieth line and his total quietly dropped by half. Gauss wrote the sum, wrote it again doubled, and subtracted the two lines: everything canceled except the ends, and the whole series collapsed into one short expression. A multiplying series folds up even more dramatically than an adding one, if you let a shifted copy of it cancel itself."
+    },
+    "contextFrame": {
+      "protagonist": "Carl Friedrich Gauss",
+      "settingLine": "Brunswick, a schoolroom, 1787",
+      "questionBridge": "Carl reaches for his slate. There is a pattern in the terms. Find it before you count.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "lines_angles": {
@@ -283,6 +430,13 @@
       "lines_angles__vertical_angles": "Where two sight lines crossed on his diagram, a copyist measured one angle and labeled its side-neighbor as its equal, skewing the whole map of shadows. Eratosthenes pointed across the crossing instead: the angle directly opposite is the true twin, while neighbors merely share a straight line between them. When lines cross, trust the angle facing you, not the one leaning against you.",
       "lines_angles__transversal_angles": "A skeptic in the library refused to believe an angle in Alexandria could equal an angle at the center of the Earth, five hundred miles beneath his feet. Eratosthenes drew the sun's rays as parallel lanes and the obelisk as a line crossing both, and the matching angles appeared, forced into equality by the parallels. A transversal carries an angle faithfully from one parallel line to another, across any distance whatsoever.",
       "lines_angles__parallel_line_angle_chasing": "The whole measurement, doubters said, must require instruments at the center of the Earth, in Syene, and in the heavens at once. Eratosthenes needed one angle, the shadow at Alexandria, and let the theorems carry it: alternate angles equal, straight lines summing, each step handing its certainty to the next like dominoes falling. One honest measurement, chased carefully through the geometry, unlocked every angle he could never visit."
+    },
+    "contextFrame": {
+      "protagonist": "Eratosthenes",
+      "settingLine": "Alexandria and Syene, Egypt, 240 BC",
+      "questionBridge": "Eratosthenes measures the obelisk's short shadow. One angle, carried across parallel lines, tells you the rest.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "triangles_congruence": {
@@ -293,6 +447,13 @@
       "triangles__angle_sum": "An apprentice in the lodge cut a gable brace with two corners already set at ninety and forty-two degrees, then sawed the third at ninety out of habit, and the pieces refused to close, gapping wide enough to slide a chisel through. Villard chalked the old truth on the timber: a triangle's three corners share exactly a half circle among them, no more. Two known corners always dictate the third, whether the wood agrees or not.",
       "triangles__congruence_criteria": "Copying a truss, a carver measured two sides and an angle, but took the angle from the far corner rather than between his measured sides, and three of his six copies sagged at a different slant, same measurements, different triangles. The lodge rule was strict: the angle must sit embraced between the two sides to lock the shape. Measure the right three things and the triangle has no freedom left to differ.",
       "triangles__similarity_ratios": "Scaling a parchment sketch of a window truss up to full size, an apprentice matched sides by their order on the page rather than by the angles they faced, and the great frame wobbled with yawning joints. Villard laid sketch beside timber and paired angle with angle first, letting each side find the side across from its matching corner. In similar triangles the ratios only speak truth between properly married sides."
+    },
+    "contextFrame": {
+      "protagonist": "Villard de Honnecourt",
+      "settingLine": "Reims and Laon, France, the 1230s",
+      "questionBridge": "Villard lays the two trusses side by side. Match enough sides and angles and the shapes cannot help but agree.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "circles_geometry": {
@@ -304,6 +465,13 @@
       "circles__inscribed_angle": "Sighting a star's arc from the rim of the great armillary ring, an observer doubled what the center's markings promised, and his reading disagreed with every colleague's. Standing on the rim, Zu explained, you see any arc at exactly half the angle the center sees it. Move your eye from center to rim, and every arc politely halves itself.",
       "circles__tangent_properties": "Fitting a straight sighting rod against the instrument's wheel, a craftsman angled it by eye and it either cut across the rim or hovered off it, never resting true. Zu drew the radius out to the intended touch-point and set the rod square against it, and the rod kissed the circle at exactly one point. A tangent meets its radius at a perfect right angle, and that corner is the whole secret of the fit.",
       "circles__semicircle_area_from_diameter": "Casting a half-moon bronze gnomon plate twelve units across, the foundry squared the full width, multiplied by pi, and ordered four times the metal the mold could drink. Zu halved the width to the true radius first, squared that, then took half the circle's area for the half-moon shape. Half a circle means half the area, but only after you begin from the radius, never the diameter."
+    },
+    "contextFrame": {
+      "protagonist": "Zu Chongzhi",
+      "settingLine": "Jiankang, the Liu Song court, China, 5th century AD",
+      "questionBridge": "Zu doubles the polygon's sides again. Every point on the rim stays the same distance from the center. Build from that promise.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "area_volume": {
@@ -315,6 +483,13 @@
       "area_volume__composite_figures": "An L-shaped temple field defeated a young scribe until he sliced it into two clean rectangles, but he drew them overlapping and taxed the shared corner twice, and the farmer protested loudly enough to reach the vizier. Ahmes redrew the cut so the pieces touched without overlapping, every square counted exactly once. Any strange shape yields to clean pieces, provided the pieces claim no square twice.",
       "area_volume__volume_as_base_times_height": "Estimating a granary, an apprentice multiplied the floor's length by its width and recorded the result as its capacity, promising the storehouse could feed the village through the flood season. His number was a floor, flat as papyrus, with no upward room in it at all. The floor area lifted through every cubit of height, layer stacked on layer, is what actually holds grain, and the true figure came out three times his promise.",
       "area_volume__rectangular_prism_face_areas": "Ordered to whitewash a rectangular storehouse, a painter measured one wall, multiplied by the count of surfaces, and ran out of lime wash before the second long wall was half done. Ahmes had him measure honestly: the building wears three different sizes of face, each size appearing twice. A box has six faces but only three measurements, and each pair must be reckoned on its own."
+    },
+    "contextFrame": {
+      "protagonist": "Ahmes",
+      "settingLine": "Egypt, copying the Rhind Papyrus, 1550 BC",
+      "questionBridge": "Ahmes counts the invisible squares across the surface, then stacks the layers. The space must answer in numbers.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "geometric_transformations": {
@@ -325,6 +500,13 @@
       "transformations__translation_rules": "Sliding a bird motif across a print, Escher's early attempt moved the wingtips a different step than the beak, and the creature smeared into something broken-shouldered. The rule he learned from the Alhambra tiles was absolute: every point of the shape takes the identical step, same distance, same direction, all together. A translation is the whole figure agreeing on one exact stride.",
       "transformations__reflection_rules": "Composing a swan mirrored in a lake, Escher first turned the copy fully around, and the reflection swam the opposite direction of its original, a stranger rather than a mirror twin. A true reflection flips across one line only, reversing a single direction while everything parallel to the mirror holds still. Flipping is not turning, and the water only asks one coordinate to change its mind.",
       "transformations__rotation_rules": "For a pinwheel of lizards, each copy had to pivot a quarter turn about a single shared point, and a print where Escher pivoted one lizard the opposite way jammed the pattern with colliding tails. A quarter turn trades a point's two directions and flips the sign of one, and which one carries the difference between clockwise and counter. The swap is only half the move; the sign tells the world which way to spin."
+    },
+    "contextFrame": {
+      "protagonist": "M.C. Escher",
+      "settingLine": "The Alhambra, Granada, 1936",
+      "questionBridge": "Maurits studies the tiles. Slide it, flip it, turn it, and ask what stays the same.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "rational_expressions": {
@@ -335,6 +517,13 @@
       "rational_expressions__factor_first": "Auditing a suspicious ledger, a clerk of Frontinus canceled matching-looking terms from the top and bottom of a flow ratio, the way one crosses out words, and certified a thieving villa as honest. Frontinus made him factor both quantities completely first, into their true multiplied pieces, and only shared factors, whole ones, could be canceled. Only factors cancel; terms merely sitting in the expression are not yours to erase.",
       "rational_expressions__lcd_method": "Combining the outputs of two channels, one measured in eighths of a quinaria and one in twelfths, a gauger multiplied the measures together and drowned himself in giant clumsy numbers, misreading one mid-ledger. Frontinus converted both flows to twenty-fourths, the smallest measure both fit, and the addition became two small honest numbers meeting. The least common denominator does the same work with half the weight.",
       "rational_expressions__excluded_values": "A formula for flow per outlet worked flawlessly across the city until a survey team fed it an abandoned junction with zero outlets, and the whole audit collapsed into an impossible division. Frontinus had the forbidden case written into the ledger's margin before any calculation began. Simplifying may hide a denominator's danger, but the impossible value survives every disguise, so name it at the start."
+    },
+    "contextFrame": {
+      "protagonist": "Sextus Julius Frontinus",
+      "settingLine": "Rome, commissioner of the aqueducts, 97 AD",
+      "questionBridge": "Sextus reduces every pipe to a common measure. Treat the top and bottom with equal rigor, or the ledger lies.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "complex_numbers": {
@@ -345,6 +534,13 @@
       "complex_numbers__i_definition": "Working the cubic, Bombelli's first drafts dragged the square of his strange new quantity along page after page like an unpayable debt, and the arithmetic stayed knotted. The wild thought only bore fruit when he enforced the one defining law: the new number, squared, is negative one, nothing more mysterious than that. Collapse each square the moment it appears, and the knots untie themselves.",
       "complex_numbers__powers_of_i": "Raising his new quantity to higher and higher powers, Bombelli multiplied step by patient step until the pattern stopped him mid-page: the values circled back on themselves every four steps, the same four faces returning forever. After that he never climbed the whole ladder again, only divided the exponent by four and read the remainder. What cycles in fours never requires the full journey, just the last few steps.",
       "complex_numbers__complex_arithmetic": "Multiplying two of his two-part numbers, Bombelli expanded all four products faithfully but left the squared term sitting among them unconverted, and the ordinary part of his answer came out false. The craft, he wrote, is bookkeeping: convert the square to negative one, then gather the plain numbers in one column and the new kind in another. Real with real, impossible with impossible, and both columns come out true."
+    },
+    "contextFrame": {
+      "protagonist": "Rafael Bombelli",
+      "settingLine": "Bologna, Italy, 1572",
+      "questionBridge": "Rafael refuses to discard the impossible number. Follow the rules anyway. They still hold.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "vectors": {
@@ -355,6 +551,13 @@
       "vectors__component_decomposition": "Reconstructing the fleet's final days, an Admiralty examiner split each day's sail into its eastward part and its northward part, and a junior clerk who swapped the two parts placed the ships ashore in France. The along-the-ground piece and the upward-the-chart piece each belong to their own axis, and the split must honor the angle. An arrow is just its shadow and its rise, kept in their proper places.",
       "vectors__vector_addition": "One captain's log added thirty miles of easting to forty miles of northing and recorded seventy miles made good, and the examiner drew the truth instead: two arrows, tip to tail, closed by a single arrow of fifty miles pointing northeast. Distances in different directions refuse plain addition. East adds with east, north with north, and only then does the true course appear.",
       "vectors__dot_product_meaning": "Weighing whether the fatal current had helped or fought the fleet's intended course, the examiner needed neither map nor arrow but a single number: how much one direction agrees with another. A current square across the course scores zero, aiding nothing; along it, full value; against it, negative. That one number of agreement, and no more, is what the dot product distills from two arrows."
+    },
+    "contextFrame": {
+      "protagonist": "Josiah Willard Gibbs",
+      "settingLine": "New Haven, Yale College, 1881",
+      "questionBridge": "Josiah splits the arrow into its parts. Magnitude alone is a rumor. Direction is what makes it true.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "matrices": {
@@ -365,6 +568,13 @@
       "matrices__dimensions_and_compatibility": "A computer, in Cayley's day a person hired to calculate, tried to multiply two of his grids whose inner dimensions disagreed, and produced a page of confident numbers describing nothing. Cayley's memoir sets the handshake rule: the columns of the first must match the rows of the second, or the multiplication does not exist at all. Check the handshake before you compute, and you will never manufacture eloquent nonsense.",
       "matrices__multiplication_order": "Demonstrating his strange arithmetic, Cayley multiplied two grids in both orders on the same blackboard and let the audience watch the answers disagree, a rotation-then-stretch parting ways with a stretch-then-rotation. The audience assumed a slip; Cayley had them verify every entry. Matrices are instructions, not ingredients, and instructions obey the order they are given.",
       "matrices__row_operations": "Simplifying a system on the grid, a student doubled the first entry of a row to clear a coefficient and left the row's other entries untouched, and the system began asserting facts no one had given it. Each row is one complete statement, Cayley's followers taught, and a statement scales as a whole or not at all. Multiply a row, and every entry rides along together, keeping the system honest."
+    },
+    "contextFrame": {
+      "protagonist": "Arthur Cayley",
+      "settingLine": "London, a law office, 1858",
+      "questionBridge": "Arthur arranges the numbers into a grid. The grid itself obeys algebra. Work it row by column.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "conic_sections": {
@@ -375,6 +585,13 @@
       "conics__identification": "Sorting his candidate curves, Kepler learned to read an equation's silhouette before drawing a single point: both square terms present with matching coefficients meant a circle, matching signs but different sizes meant the stretched circle he needed, and a sign at war between them meant the hyperbola's two branches. An assistant who saw two squares and shouted circle wasted a week plotting Mars onto the round path it had already refused. The coefficients announce the family, to anyone who checks.",
       "conics__completing_the_square": "Rearranging an orbit equation toward a readable form, Kepler tucked a new constant onto one side to complete a perfect square and, in candlelit fatigue, granted nothing to the other side, and the equation began describing a different curve entirely. His own rule pulled him back: an equation is a ledger, and whatever one side receives, the other must receive in the same breath. Balance kept, the square completed itself and the orbit's center stepped out of hiding.",
       "conics__circle_standard_form": "Checking a rival's circular model, Kepler read the center straight from the equation's pattern, and his assistant, seeing x minus three, placed the center at negative three, sweeping the whole construction to the far side of the sun. The form subtracts the center's coordinates, so x minus three whispers three, and a plus sign is only a minus in disguise. Read the signs as part of the pattern, and the equation hands you the center directly."
+    },
+    "contextFrame": {
+      "protagonist": "Johannes Kepler",
+      "settingLine": "Prague, an observatory, 1609",
+      "questionBridge": "Johannes checks the data once more. Slice the cone. The curve tells you which cut was made.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "probability_distributions": {
@@ -385,6 +602,13 @@
       "prob_dist__distribution_as_model": "A gambler at de Moivre's table listed his game's outcomes with chances that summed to nine-tenths, leaving a tenth of the future unowned, and could not see why his ledger bled money in exactly that gap. De Moivre made him assign every last outcome its share until the shares summed to one. A distribution is a promise of completeness: every possible future accounted for, the whole pie and nothing missing.",
       "prob_dist__normal_empirical_rule": "An annuity broker asked what fraction of outcomes fell within one standard step above the average, and answered himself with the famous sixty-eight before de Moivre could speak. The sixty-eight, de Moivre corrected, spans both slopes of the hill, one step below to one step above; a single side claims only half of it. Picture the bell split down its center, and the halving stops feeling like a rule and starts feeling obvious.",
       "prob_dist__z_score_transformation": "Two clients argued over which was rarer, a tall son or a long-lived aunt, comparing inches against years as though the units could quarrel to a verdict. De Moivre translated each into the same currency: how many standard steps from its own average? One stood two steps out, the other barely one, and the argument ended. Measured in steps from the middle, every bell speaks one language, though the tables answer only for the lower side, so mind which tail your question wants."
+    },
+    "contextFrame": {
+      "protagonist": "Abraham de Moivre",
+      "settingLine": "London, Slaughter's coffeehouse, 1733",
+      "questionBridge": "Abraham tallies a thousand trials. Chance has a shape. Read the whole distribution.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "applications_of_derivatives": {
@@ -396,6 +620,13 @@
       "deriv_apps__first_derivative_test": "One trajectory showed a moment of zero climb rate mid-flight, and a computer operator flagged it as the peak until Johnson checked the rate on either side: positive before, positive after. The capsule had merely paused its climbing before climbing on, a shelf in the curve rather than a summit. A flat spot only becomes a peak when the slopes around it change their allegiance.",
       "deriv_apps__second_derivative_test": "Distinguishing two candidate points on a fuel curve, Johnson read the bending: where the curve cupped upward like a bowl, the point rested at a valley bottom, the fuel minimum she wanted, and where it domed downward, a crest. An analyst who took cupped-upward for a maximum would have committed the mission to its costliest moment. The second derivative tells you whether you stand in the valley or on the peak.",
       "deriv_apps__optimization_setup": "Asked to minimize reentry heating, a new engineer differentiated a formula bristling with free variables and got equations that answered nothing. Johnson reached for the mission's constraints first, the locked relations between angle, speed, and mass, and substituted until one variable carried the whole question. Only then did the derivative have one clean thing to say. The constraint is not a complication; it is what makes the question answerable."
+    },
+    "contextFrame": {
+      "protagonist": "Katherine Johnson",
+      "settingLine": "NASA Langley Research Center, Virginia, 1962",
+      "questionBridge": "Katherine checks the trajectory by hand. Find where the rate goes to zero. That is the turning point that matters.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "integrals": {
@@ -407,6 +638,13 @@
       "integrals__definite_integral_as_area": "Tallying a cellar's holdings over a market week, a steward summed the flow record as though every swing were a delivery, counting the days wine flowed out among the days it flowed in. Kepler kept the ledger honest: the record's regions above the zero line pour in, and regions below pour out, subtracting. The area only tells the truth when what lies beneath the axis counts against.",
       "integrals__fundamental_theorem": "Asked how much wine had entered between the noon and evening bells, a clerk evaluated the accumulation at evening and stopped, reporting the whole day's total since dawn. Kepler had him evaluate at both bells and subtract, the end state minus the beginning. An integral over an interval never asks for one value; it asks for a change, and change is always the end minus the start.",
       "integrals__definite_vs_indefinite": "Two questions came to Kepler's table the same afternoon: how much wine a cask gained during the fair, and a rule for its contents at any hour. The first closed into a single number, start subtracted from finish, no loose ends; the second stayed open, a family of functions with a constant waiting to be pinned by one known moment. Ask first whether you are owed a number or a rule, and the mysterious constant settles itself."
+    },
+    "contextFrame": {
+      "protagonist": "Johannes Kepler",
+      "settingLine": "Linz, Austria, his own wedding, 1613",
+      "questionBridge": "Johannes slices the barrel into disks thinner than hairs. Add up the small pieces. The total is exact.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "applications_of_integrals": {
@@ -416,6 +654,13 @@
     "ingredientStories": {
       "integral_apps__area_between_curves": "Computing the steel in a hull side, a draftsman integrated the deck curve alone, down to the baseline of his drawing, and priced a solid wall of plate reaching to the keel of the page. Froude subtracted the lower boundary before integrating, keeping only the band between the two curves. The area between curves is the top minus the bottom, sliver by sliver, because you only pay for the plate that exists.",
       "integral_apps__net_change_theorem": "Analyzing a model's rolling in his Torquay tank, Froude noted its position ended almost exactly where it began, a net change near zero, while the model had swung through yards of total travel that heated and strained every fiber. An observer reading only the net change declared the trial uneventful. The integral of velocity gives the destination; the integral of its magnitude gives the journey, and a hull is punished by the journey."
+    },
+    "contextFrame": {
+      "protagonist": "William Froude",
+      "settingLine": "Torquay, England, the naval testing tank, 1870",
+      "questionBridge": "William slices the hull into cross-sections. Accumulate the small pieces, because the whole must hold.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "inferential_statistics": {
@@ -426,6 +671,13 @@
       "inferential__sampling_variability": "When a second batch of captured serial numbers implied a production figure slightly unlike the first batch's, an intelligence officer declared the method broken and moved to discard it. The statisticians ran the arithmetic on batch after batch: each landed near the same truth, none exactly on it, scattering like darts around a bullseye. Samples wobble by nature, and a small wobble is not failure; it is precisely what honest samples do.",
       "inferential__hypothesis_structure": "Testing whether German production had surged, an analyst framed the surge itself as the default and treated thin evidence against it as confirmation, and fear nearly wrote the report. The senior statistician inverted the seats: the skeptical assumption, no change in production, holds the protected chair, and the dramatic claim must earn its way past the data. Absence of evidence against an idea was never evidence for it.",
       "inferential__p_value_interpretation": "When the serial-number estimate contradicted the spies, the team computed how surprising their captured sample would be if production truly were 1,400 a month, and the answer was vanishingly surprising, wildly unlikely under that assumption. A staff officer repeated it as a ninety-nine percent chance the spies were mistaken, and the statisticians winced at the translation. The number grades the evidence against an assumption; it measures the data's surprise, never the hypothesis's odds."
+    },
+    "contextFrame": {
+      "protagonist": "Richard Ruggles",
+      "settingLine": "Washington DC, Economic Warfare Division, 1943",
+      "questionBridge": "Richard reads the serial number off the gearbox. One sample proves nothing alone. Test what the evidence can bear.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "number_properties": {
@@ -439,6 +691,13 @@
       "number_properties__factor_count_exactly_three": "Asked at tea for every number with exactly three factors, a student began testing integers one by one, drowning in divisor lists before reaching fifty. Ramanujan simply squared the primes: four, nine, twenty-five, forty-nine, each holding one, itself, and its prime root, nothing more. A three-factor number must be a prime squared, so you never hunt them; you build them.",
       "number_properties__parity_even_odd_product_sum": "A colleague hunting two numbers with an even product restricted his search to even pairs and came away empty-handed and suspicious of the problem itself. Ramanujan read the parity like a fingerprint: one even partner suffices to make a product even, while a sum turns odd exactly when the partners disagree. Parity rules out half the world before arithmetic begins, but only when read precisely.",
       "number_properties__factor_pair_sum_search": "A puzzle demanded two whole numbers multiplying to thirty-six and summing to thirteen, and a visitor to the ward built equations, wrestled a quadratic, and mangled a sign into an impossible answer. Ramanujan listed the factor pairs of thirty-six in a breath, one and thirty-six, two and eighteen, three and twelve, four and nine, and the pair summing to thirteen introduced itself. When answers must be whole, let the factors run the search."
+    },
+    "contextFrame": {
+      "protagonist": "Srinivasa Ramanujan",
+      "settingLine": "Putney, London, a hospital room, 1918",
+      "questionBridge": "Srinivasa sees the pattern before anyone else. This number has a personality. Learn it before it surprises you.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "measurement_units": {
@@ -450,6 +709,13 @@
       "measurement_units__unit_rate_per_one": "Comparing thruster options, a review engineer faced totals gathered over different burn durations, impulse over minutes here, over full maneuvers there, and the raw numbers argued past each other. She divided each down to force per single second, one common heartbeat, and the honest comparison surfaced instantly. Every big total hides a small per-one rate, and one clean division sets it free.",
       "measurement_units__linear_vs_square_units": "Sizing replacement solar panels for the follow-up mission, a young designer doubled the panel's edge length and expected double the power, but the panel drinks sunlight by area, and area had quadrupled along with the mass budget he then blew. Length measures how far, area measures how much surface, and stretching a shape both directions multiplies twice. The units, meters against square meters, were shouting the difference all along.",
       "measurement_units__compound_unit_conversion": "Converting an atmospheric density table, a contractor swapped kilometers for meters with a single factor of a thousand, but the quantity carried a squared length inside it, and his converted table was off by another thousandfold. The review board's rule went up on the wall: when a unit is squared, its conversion factor is squared with it, because the unit stretches in two directions at once. Convert the unit's every power, and the table tells the truth in any language."
+    },
+    "contextFrame": {
+      "protagonist": "Arthur Stephenson",
+      "settingLine": "NASA Marshall Space Flight Center, 1999",
+      "questionBridge": "Arthur traces the fault line by line. Convert precisely and carry the units through, or the whole calculation lies.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "algebraic_manipulation": {
@@ -461,6 +727,13 @@
       "algebraic_manipulation__symbolic_substitution": "One inheritance rule used the estate's value in two distant clauses, and a scribe updated the figure in the first clause while the second quietly kept the old number, splitting the same estate two different ways in one document. Al-Khwarizmi taught the symbol as a promise: give the unknown a value, and the value must be honored at every place the symbol appears. A name kept in one clause and broken in another is no name at all.",
       "algebraic_manipulation__equivalent_forms": "Two judges nearly came to a verdict against a widow because her advocate's expression matched nothing in the law scroll's phrasing, though both described the same amount. Al-Khwarizmi unfolded one form into the other in three lines, multiplication opened across a sum, and the expressions embraced. An amount can change its clothing without changing its value, and the manipulations are how you recognize it across outfits.",
       "algebraic_manipulation__clearing_fractions": "An estate split into a third, a seventh, and a ninth tormented a clerk who tried to reason with the fractions one at a time, tangling deeper with each step. Al-Khwarizmi multiplied the entire statement, every term on both sides, by a number all the denominators divided, and the fractions vanished in one stroke, leaving whole numbers to argue with. Scale everything together and the relationship survives; scale anything alone and it lies."
+    },
+    "contextFrame": {
+      "protagonist": "Muhammad al-Khwarizmi",
+      "settingLine": "Baghdad, House of Wisdom, 820 AD",
+      "questionBridge": "Muhammad calls it al-jabr, the restoring. Rearrange the symbols. Keep both sides in balance.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "representation_translation": {
@@ -472,6 +745,13 @@
       "representation_translation__number_line_to_inequality": "Reading a shaded ray on a number line, a copyist wrote the boundary number into his solution set although the endpoint wore a hollow circle, and his translated statement quietly claimed one value the picture had excluded. The open circle is the picture's way of whispering not this number, only everything beyond it. Translate the emptiness as faithfully as the shading, and the two languages agree.",
       "representation_translation__diagram_to_ratio": "Scaling a small diagram of a fortification up to field dimensions, an engineer matched the sketch's short side to the rampart's long side, and the built angles disagreed with the drawn ones by a margin that flunked inspection. A diagram is a map, Descartes' method insists: each drawn side points to exactly one real counterpart, matched through the angles they face. Marry the sides correctly and the proportions carry themselves across.",
       "representation_translation__graph_to_rate": "Reading a curve of distance against time, a student divided the time change by the distance change and announced a crawl where the motion was swift, the fraction upside down. On the grid, the rate is how far up for each step across, rise carried over run, in that order. The graph states the rate visually in the steepness; the reader's only job is to take the ratio the right way up."
+    },
+    "contextFrame": {
+      "protagonist": "René Descartes",
+      "settingLine": "A stove-heated room, France, 1637",
+      "questionBridge": "René sees the same truth in a graph, a table, an equation. Translate between them.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "act_strategy": {
@@ -483,6 +763,13 @@
       "act_strategy__estimate_and_eliminate": "Before any Trinity instrument was read, Fermi's paper-scrap figure had already fenced the plausible yields, and when one hurried calculation later claimed a result far outside that fence, it was quarantined before it misled anyone. A rough bound, honestly made, executes impossible answers on sight. Ask what the answer could not possibly be, and most of the choices remove themselves.",
       "act_strategy__draw_auxiliary_diagram": "A blast-wave geometry problem circled the bunker's blackboard for an hour as pure sentences, resisting three of Fermi's best people. Fermi drew it: the tower, the gauge line, one added segment closing the triangle nobody had mentioned, and the relationship stood exposed. The figure you sketch in ten seconds reveals the structure that words can bury indefinitely.",
       "act_strategy__strategy_selection": "One of Fermi's calculators loved his precision method the way a carpenter loves a favorite plane, and applied it to everything, including a morning briefing question that needed only a two-minute bound; the briefing ended before his answer did. Fermi kept three tools in reach, estimate, test the candidates, compute exactly, and spent his first thirty seconds choosing among them. Matching the tool to the moment is itself the skill."
+    },
+    "contextFrame": {
+      "protagonist": "Enrico Fermi",
+      "settingLine": "Trinity test site, New Mexico, 1945",
+      "questionBridge": "Enrico drops a handful of torn paper into the wind. Before you compute anything precisely, decide what the answer must roughly be.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   },
   "limits_continuity": {
@@ -495,6 +782,90 @@
       "limits__one_sided_limits": "Grading a piecewise tariff schedule, a cadet checked the values approaching from below a threshold, saw them settle nicely, and declared the limit found. Cauchy made him check from above too, where the schedule jumped to a different rate entirely. A limit exists only when both approaches, left and right, settle on the same number — checking one side proves nothing about the other.",
       "limits__continuity_definition": "A cadet built a curve with a value plotted at x equals 3, a limit that clearly existed there too, and presented it as continuous. Cauchy asked the question the cadet had skipped: did the value and the limit actually agree? They did not, off by a stray unit. Continuity is not one condition but three, checked in order, and the third is the one students always assume for free.",
       "limits__limit_as_derivative_setup": "Asked for a curve's instantaneous rate at one point, a cadet reached for Newton's old language, a quantity vanishing into nothing. Cauchy stopped him: write the average rate over a shrinking interval instead, then take its limit rigorously, the same limit already proven trustworthy in this course. The derivative is not a new kind of object. It is one particular limit, built from machinery already in hand."
+    },
+    "contextFrame": {
+      "protagonist": "Augustin-Louis Cauchy",
+      "settingLine": "École Polytechnique, Paris, 1821",
+      "questionBridge": "Cauchy stops the cadet from evaluating at the point itself. Close in from both sides instead. What is it heading toward?",
+      "diceFrame": null,
+      "spinnerFrame": null
+    }
+  },
+  "coordinate_geometry": {
+    "conceptId": "coordinate_geometry",
+    "conceptName": "Coordinate Geometry",
+    "contextFrame": {
+      "protagonist": "René Descartes",
+      "settingLine": "Paris, a fever dream, 1637",
+      "questionBridge": "Descartes watches a fly on the ceiling. Two numbers are enough to name any point.",
+      "diceFrame": null,
+      "spinnerFrame": null
+    }
+  },
+  "absolute_value": {
+    "conceptId": "absolute_value",
+    "conceptName": "Absolute Value",
+    "contextFrame": {
+      "protagonist": "Jean-Robert Argand",
+      "settingLine": "Paris, 1806",
+      "questionBridge": "Argand draws the number line. Distance from zero: direction doesn't matter here.",
+      "diceFrame": null,
+      "spinnerFrame": null
+    }
+  },
+  "integer_operations": {
+    "conceptId": "integer_operations",
+    "conceptName": "Integer Operations",
+    "contextFrame": {
+      "protagonist": "Brahmagupta",
+      "settingLine": "Ujjain, India, 628 AD",
+      "questionBridge": "Brahmagupta argues that debts are real numbers. Work with what you have.",
+      "diceFrame": null,
+      "spinnerFrame": null
+    }
+  },
+  "polynomial_operations": {
+    "conceptId": "polynomial_operations",
+    "conceptName": "Polynomial Operations",
+    "contextFrame": {
+      "protagonist": "Gerolamo Cardano",
+      "settingLine": "Milan, 1545",
+      "questionBridge": "Cardano combines the terms carefully. Like with like. Simplify until it's clean.",
+      "diceFrame": null,
+      "spinnerFrame": null
+    }
+  },
+  "percent_ratio": {
+    "conceptId": "percent_ratio",
+    "conceptName": "Percents and Ratios",
+    "contextFrame": {
+      "protagonist": "Luca Pacioli",
+      "settingLine": "Venice, 1494",
+      "questionBridge": "Pacioli checks the ledger. Out of every hundred: what portion is this?",
+      "diceFrame": null,
+      "spinnerFrame": null
+    }
+  },
+  "data_interpretation": {
+    "conceptId": "data_interpretation",
+    "conceptName": "Data Interpretation",
+    "contextFrame": {
+      "protagonist": "John Snow",
+      "settingLine": "London, Broad Street, 1854",
+      "questionBridge": "Snow marks each case on the map. The data is telling a story. Read it.",
+      "diceFrame": null,
+      "spinnerFrame": null
+    }
+  },
+  "combinatorics": {
+    "conceptId": "combinatorics",
+    "conceptName": "Combinatorics",
+    "contextFrame": {
+      "protagonist": "Blaise Pascal",
+      "settingLine": "Paris, 1654",
+      "questionBridge": "Pascal writes to Fermat. How many ways can this happen? Count them all.",
+      "diceFrame": null,
+      "spinnerFrame": null
     }
   }
 }

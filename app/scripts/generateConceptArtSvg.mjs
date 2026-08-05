@@ -8,7 +8,7 @@
  * Fable 5 hand-authored the rest as real vector illustrations instead of
  * faking photoreal generation. No image-generation model runs here  -  every
  * path below was composed by hand from each concept's LOCKED protagonist +
- * setting (questionContextFrames.json) and its historical scene
+ * setting (conceptStories.json contextFrame) and its historical scene
  * (conceptStories.json), the same source data generateConceptArt.mjs reads.
  *
  * Style system (documented reasoning, see ACTIVE_TASK.md 2026-07-21 entry):
@@ -195,7 +195,7 @@ function wrap(inner) {
 // ── per-concept scenes ────────────────────────────────────────────────────
 // Each entry: bespoke background + figure pose/palette + ONE hand-drawn
 // metaphor prop for that concept's actual math. Protagonist/setting locked
-// from questionContextFrames.json; metaphor invented fresh per concept.
+// from conceptStories.json contextFrame; metaphor invented fresh per concept.
 const SCENES = {
 
   ratios_proportions: () => wrap(`
@@ -568,7 +568,7 @@ const SCENES = {
   // fractions_decimals bakery photo or an unrelated theme-fallback photo
   // (ACTIVE_TASK.md 2026-07-24 entry). Same rig, same palette, one bespoke
   // metaphor prop each, protagonist/setting locked from the just-corrected
-  // questionContextFrames.json entries.
+  // conceptStories.json contextFrame entries.
 
   derivatives: () => wrap(`
     ${groundLine(640)}
@@ -777,7 +777,7 @@ const SCENES = {
   // ── 2026-07-24 second pass: limits_continuity was the one concept still
   // missing a story AND art entirely (ACTIVE_TASK.md entry) — not a
   // fallback-photo case like the batch above, a true gap. Protagonist/
-  // setting locked from the just-added questionContextFrames.json entry.
+  // setting locked from the just-added conceptStories.json contextFrame.
 
   limits_continuity: () => wrap(`
     ${windowArch(80, 100, 200, 300)}

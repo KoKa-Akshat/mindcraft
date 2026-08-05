@@ -2,7 +2,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { PenLine } from 'lucide-react'
 import conceptStoriesRaw from '../data/conceptStories.json'
-import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, questionFormat, type Question } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import { useUser } from '../App'
@@ -35,14 +34,6 @@ import s from './ConceptChapterPage.module.css'
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
-type CS = {
-  conceptId: string
-  conceptName: string
-  story: string
-  ingredientStories: Record<string, unknown>
-}
-const DB = conceptStoriesRaw as unknown as Record<string, CS>
-
 type ContextFrame = {
   protagonist: string
   settingLine: string
@@ -50,7 +41,14 @@ type ContextFrame = {
   diceFrame: string | null
   spinnerFrame: string | null
 }
-const FRAMES = contextFramesRaw as unknown as Record<string, ContextFrame>
+type CS = {
+  conceptId: string
+  conceptName: string
+  story: string
+  ingredientStories: Record<string, unknown>
+  contextFrame?: ContextFrame
+}
+const DB = conceptStoriesRaw as unknown as Record<string, CS>
 
 // Resolve any short/legacy concept ID to the canonical ontology ID,
 // then look up in DB (conceptStories.json keys = canonical IDs).
@@ -69,7 +67,7 @@ const FRAME_ALIAS: Record<string, string> = {
 
 function getFrame(rawId: string): ContextFrame | null {
   const id = resolveId(rawId)
-  return FRAMES[id] ?? FRAMES[FRAME_ALIAS[rawId] ?? ''] ?? FRAMES[FRAME_ALIAS[id] ?? ''] ?? null
+  return DB[id]?.contextFrame ?? DB[FRAME_ALIAS[rawId] ?? '']?.contextFrame ?? DB[FRAME_ALIAS[id] ?? '']?.contextFrame ?? null
 }
 
 function makeSyntheticStory(name: string, conceptId: string): CS {
@@ -294,7 +292,7 @@ function extractMathAsk(text: string): string {
  * concept's `scenes[]` list (see lib/sceneSelection.ts). Concepts without a
  * scenes array (everything except the fractions_decimals pilot, for now)
  * get `null` back and this falls through to the single locked
- * questionContextFrames.json frame exactly as before, unchanged behavior.
+ * conceptStories contextFrame exactly as before, unchanged behavior.
  */
 function chapterStem(
   q: Question,

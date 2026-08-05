@@ -136,6 +136,19 @@ function detectMathSignals(stem: string): string[] {
   return [...out]
 }
 
+/**
+ * The question bank uses canonical concept ids while the folk bank records
+ * human-readable tags (for example, `fractions_decimals` vs `fraction`).
+ * Run folk tags through the question-side vocabulary before comparing them.
+ */
+function taleMathSignals(tale: FolkTaleEntry): Set<string> {
+  const signals = new Set(detectMathSignals((tale.math_theme_tags ?? []).join(' ')))
+  for (const conceptId of tale.concept_affinity ?? []) {
+    signals.add(toOntologyId(conceptId))
+  }
+  return signals
+}
+
 /** Extract matchable signals from a bank question. */
 export function extractQuestionSignals(q: Question): QuestionSignals {
   const stem = q.question ?? ''
@@ -179,11 +192,11 @@ function scoreTale(
   const kwOverlap = jaccard(signals.keywords, taleKeywordBag(tale))
   score += 0.25 * kwOverlap
 
-  const taleMath = new Set((tale.math_theme_tags ?? []).map(t => t.toLowerCase()))
+  const taleMath = taleMathSignals(tale)
   const signalMath = new Set(signals.mathSignals)
   let mathHit = 0
   for (const s of signalMath) {
-    if (taleMath.has(s) || tale.concept_affinity?.includes(s)) mathHit++
+    if (taleMath.has(s)) mathHit++
   }
   score += 0.20 * Math.min(1, mathHit / Math.max(1, signalMath.size))
 
@@ -252,7 +265,7 @@ function buildFolkPayload(tale: FolkTaleEntry, ctx: MatchContext): MatchedSkin {
  * Full match pipeline: concept story (locked) → folk tale → question context.
  *
  * Concept-lock takes priority over folk-tale rotation. Every concept that has
- * a chapter identity (data/conceptStories.json + questionContextFrames.json —
+ * a chapter identity (data/conceptStories.json + its contextFrame —
  * a fixed protagonist/setting, e.g. Simon Stevin for fractions_decimals) must
  * show that SAME protagonist in Practice, not a different, unrelated folk
  * tale (e.g. Kwame). Two reasons this was chosen over keeping folk-tale

@@ -17,12 +17,6 @@ import { buildStoryDisplay } from './storyDisplay'
 import { selectStoryForConcept } from './storySelection'
 import { selectSceneForQuestion } from './sceneSelection'
 import { getBakedThemedStem } from './themedStems'
-import framesRaw from '../data/questionContextFrames.json'
-
-const CONTEXT_FRAMES = framesRaw as Record<
-  string,
-  { questionBridge?: string; settingLine?: string }
->
 
 /**
  * Local story wrap when no baked stem exists — never bare textbook.
@@ -30,17 +24,16 @@ const CONTEXT_FRAMES = framesRaw as Record<
  * Checks the concept's `scenes[]` list (lib/sceneSelection.ts) first, so a
  * fractions_decimals question varies its bridge/setting across a session;
  * concepts with no scenes array fall through to the single locked
- * questionContextFrames.json frame.
+ * `contextFrame` stored on their concept story.
  */
 export function framedLocalStem(q: Question): string {
   const display = buildStoryDisplay(q)
   const story = selectStoryForConcept(q.conceptId)
   if (!story) return display.stem
   const scene = selectSceneForQuestion(q, story.conceptId)
-  const frame = CONTEXT_FRAMES[story.conceptId]
-  const setting = scene?.settingLine || story.settingLine || frame?.settingLine || ''
+  const setting = scene?.settingLine || story.settingLine || ''
   const bridge =
-    scene?.questionBridge || frame?.questionBridge || `${story.protagonist} sets this on the desk.`
+    scene?.questionBridge || story.questionBridge || `${story.protagonist} sets this on the desk.`
   return [setting ? `✦ ${setting}` : '', bridge, display.stem].filter(Boolean).join('\n\n')
 }
 

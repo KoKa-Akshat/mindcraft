@@ -2,7 +2,7 @@
  * sceneSelection: pick one scene from a concept's `scenes[]` list for a
  * given bank question.
  *
- * Concept-lock (conceptStories.json / questionContextFrames.json) fixes ONE
+ * Concept-lock (conceptStories.json + its contextFrame) fixes ONE
  * protagonist, setting, and art per concept forever (see storyMatch.ts). That
  * is right for identity, but it means the per-question bridge sentence never
  * varied, which reads as boring on repeat sessions. `scenes[]` is an
@@ -93,7 +93,7 @@ export function archetypeIdsForQuestion(questionId: string): string[] {
 /**
  * Pick a scene for a question within its concept's scene list.
  * Returns null when the concept has no `scenes[]` yet, callers should fall
- * back to the legacy single questionContextFrames.json frame in that case.
+ * back to the legacy single contextFrame in that case.
  */
 export function selectSceneForQuestion(
   question: Pick<Question, 'id' | 'conceptId'>,

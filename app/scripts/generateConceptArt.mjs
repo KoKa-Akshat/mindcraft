@@ -3,8 +3,8 @@
  * generateConceptArt.mjs — concept-accurate story art pipeline.
  *
  * Generates ONE illustration per concept, using that concept's own LOCKED
- * chapter identity (protagonist + setting, from questionContextFrames.json /
- * conceptStories.json — the same data ConceptChapterPage.tsx and
+ * chapter identity (protagonist + setting, from conceptStories.json — the
+ * same data ConceptChapterPage.tsx and
  * storyMatch.ts already use), so the art matches the story a student
  * actually reads for that concept instead of a shared generic photo.
  *
@@ -39,7 +39,6 @@ const APP_ROOT = resolve(__dirname, '..')
 const GENERATED_DIR = resolve(APP_ROOT, 'src/assets/canvas/generated')
 const MANIFEST_PATH = resolve(__dirname, 'conceptArtManifest.json')
 
-const FRAMES = JSON.parse(await readFile(resolve(APP_ROOT, 'src/data/questionContextFrames.json'), 'utf8'))
 const STORIES = JSON.parse(await readFile(resolve(APP_ROOT, 'src/data/conceptStories.json'), 'utf8'))
 const COVERAGE = JSON.parse(await readFile(resolve(APP_ROOT, 'src/data/actOntologyCoverage.json'), 'utf8'))
 
@@ -75,9 +74,9 @@ function firstSentence(text, maxLen = 260) {
 }
 
 function buildPrompt(conceptId) {
-  const frame = FRAMES[conceptId]
   const story = STORIES[conceptId]
-  if (!frame && !story) return null
+  if (!story) return null
+  const frame = story.contextFrame
   const protagonist = frame?.protagonist ?? story?.conceptName ?? conceptId
   const setting = frame?.settingLine ?? ''
   const scene = story?.story ? firstSentence(story.story) : ''
@@ -188,7 +187,7 @@ im.save("${outPath}", "JPEG", quality=${JPEG_QUALITY})
 async function generateOne(conceptId, { dryRun = false, force = false } = {}) {
   const prompt = buildPrompt(conceptId)
   if (!prompt) {
-    console.log(`SKIP ${conceptId}: no locked protagonist/story found in questionContextFrames.json or conceptStories.json`)
+    console.log(`SKIP ${conceptId}: no locked protagonist/story found in conceptStories.json`)
     return null
   }
   if (!force && await alreadyGenerated(conceptId)) {
@@ -210,8 +209,8 @@ async function generateOne(conceptId, { dryRun = false, force = false } = {}) {
   const manifest = await loadManifest()
   manifest.generations.push({
     conceptId,
-    protagonist: FRAMES[conceptId]?.protagonist ?? null,
-    setting: FRAMES[conceptId]?.settingLine ?? null,
+    protagonist: STORIES[conceptId]?.contextFrame?.protagonist ?? null,
+    setting: STORIES[conceptId]?.contextFrame?.settingLine ?? null,
     prompt,
     model: MODEL,
     aspect: ASPECT,

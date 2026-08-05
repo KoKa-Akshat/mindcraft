@@ -7,7 +7,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import conceptStoriesRaw from '../data/conceptStories.json'
-import contextFramesRaw from '../data/questionContextFrames.json'
 import { getQuestions, type Question } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
 import { storyArtFor, storyArtTilt } from '../lib/storyArt'
@@ -17,19 +16,18 @@ import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward
 import { playChime, playTap } from '../lib/uiSound'
 import s from './ConceptChapterPage.module.css'
 
-type CS = {
-  conceptId: string
-  conceptName: string
-  story: string
-}
-const DB = conceptStoriesRaw as unknown as Record<string, CS>
-
 type ContextFrame = {
   protagonist: string
   settingLine: string
   questionBridge: string
 }
-const FRAMES = contextFramesRaw as unknown as Record<string, ContextFrame>
+type CS = {
+  conceptId: string
+  conceptName: string
+  story: string
+  contextFrame?: ContextFrame
+}
+const DB = conceptStoriesRaw as unknown as Record<string, CS>
 
 const THEME = {
   bg: '#080e14',
@@ -97,7 +95,7 @@ export default function StorySlideshow() {
   const navigate = useNavigate()
   const conceptId = canonicalConceptId(rawId) || 'fractions_decimals'
   const cs = DB[conceptId] ?? DB.fractions_decimals
-  const frame = FRAMES[conceptId] ?? FRAMES.fractions_decimals ?? null
+  const frame = DB[conceptId]?.contextFrame ?? DB.fractions_decimals.contextFrame ?? null
   const artSrc = storyArtFor(conceptId)
 
   const [deckKey, setDeckKey] = useState(0)

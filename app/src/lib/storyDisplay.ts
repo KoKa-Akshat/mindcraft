@@ -9,14 +9,14 @@
  * / dataset into a story scene) was removed — see ACTIVE_TASK.md. Every
  * branch below must stay a plain VISUAL/layout transform; it must never
  * invent narrative prose for the `stem` field. The future wrapping agent
- * (per CLAUDE.md) is what will add story framing, from `questionContextFrames.json`
+ * (per CLAUDE.md) is what will add story framing, from `conceptStories.json`
  * + one LLM call — not this module.
  */
 import type { FormatId, Question } from './questionBank'
-import conceptFrames from '../data/questionContextFrames.json'
+import conceptStories from '../data/conceptStories.json'
 import type { ContextFrame } from './storySelection'
 
-const FRAMES = conceptFrames as Record<string, ContextFrame>
+const STORIES = conceptStories as Record<string, { contextFrame?: ContextFrame }>
 
 const OPENSTAX_PREFIX = /^For the following exercises,\s*use the table,?\s*/i
 
@@ -41,7 +41,7 @@ export interface StoryDisplay {
 }
 
 function frameFor(conceptId: string): ContextFrame | undefined {
-  return FRAMES[conceptId]
+  return STORIES[conceptId]?.contextFrame
 }
 
 function extractAskLine(text: string): string {
