@@ -20,6 +20,7 @@ import { fmtDateTime, timeUntil } from '../utils/format'
 import type { Session, TutorStudent as Student } from '../types'
 import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
+import LiveJoinBanner from '../components/LiveJoinBanner'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
 import TutorWeeklyPaperCard from '../components/TutorWeeklyPaperCard'
 import TutorLocationPin from '../components/TutorLocationPin'
@@ -99,6 +100,12 @@ export default function TutorDashboard() {
   const students = useMemo(
     () => mergeStudents(sessionStudents, extraStudents),
     [sessionStudents, extraStudents],
+  )
+  // studentId -> display name, reused for LiveJoinBanner (no new Firestore
+  // read — same fallback chain focusStudent/heroStudent already use).
+  const studentNames = useMemo(
+    () => Object.fromEntries(students.map(st => [st.id, st.displayName || st.email?.split('@')[0] || 'Student'])),
+    [students],
   )
   const [selectedStudent, setSelectedStudent]   = useState<string | null>(null)
   const [chatMessages, setChatMessages]   = useState<{ senderId: string; text: string; createdAt: any }[]>([])
@@ -1232,6 +1239,8 @@ export default function TutorDashboard() {
           endAt={callSession.endAt}
         />
       )}
+
+      <LiveJoinBanner role="tutor" linkedId={user.uid} studentNames={studentNames} />
 
       {toast && <div className={s.toast}>{toast}</div>}
     </div>

@@ -4,6 +4,127 @@
 
 ---
 
+## Live "Call" co-writing — LiveJoinBanner on Tutor + Parent dashboards (build-order steps 4+5 of 8, both done) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1-3
+were already done (see entries below). This session built **step 4 AND
+step 5 in one pass** — the plan calls step 4 (tutor) "the first real
+cross-role, end-to-end demo" of the whole feature, and since the parent
+side is the identical pattern, did both rather than leaving a near-duplicate
+half-done.
+
+**New: `app/src/components/LiveJoinBanner.tsx` (+ `.module.css`).** Props:
+`role: 'tutor' | 'parent'`, `linkedId: string | null | undefined` (the
+signed-in user's OWN uid — read the real current
+`subscribeActiveLiveSessionsForTutor`/`subscribeActiveLiveSessionsForParent`
+exports in `liveSession.ts` before building: BOTH take the caller's own uid,
+not a list of student ids — the parent variant resolves `childId`/
+`childIds` internally via `getDoc`. The task brief's guessed
+`linkedIds: string[]` prop shape doesn't match the actual current export, so
+built to the real signature instead), `studentNames?: Record<string,
+string>` (studentId -> display name, reused from the host page's existing
+lookup, no new Firestore read). Subscribes, picks the most-recently-active
+session if more than one, renders nothing when there's no active session.
+Visually a slim top-pinned pill banner with one pulsing dot — deliberately
+simpler than `SessionCallCard`'s bottom-right "incoming call" card with full
+pulsing rings and a 10-minute early-join timer (no timing logic here at
+all — a live session simply exists or it doesn't).
+
+**Wiring**: `TutorDashboard.tsx` — added a `studentNames` memo built from
+the existing `students` roster (id -> `displayName || email prefix ||
+'Student'`, same fallback chain `focusStudent`/`heroStudent` already use)
+and `<LiveJoinBanner role="tutor" linkedId={user.uid}
+studentNames={studentNames} />` placed right after the existing
+`SessionCallCard` render, kept as its own separate element (not merged into
+`SessionCallCard`/`callSession` — that's booked-session Calendly windows,
+this is ad-hoc live calls, per the plan). `ParentDashboard.tsx` — added
+`<LiveJoinBanner role="parent" linkedId={user.uid}
+studentNames={childNames} />` right after the header; `childNames` was
+already exactly the `Record<string,string>` shape needed (built earlier in
+the file for the kid switcher), so no new lookup was added there either.
+Checked `git diff` on both dashboard files before touching them (clean) —
+both diffs are surgical (one import + a few lines each), verified after via
+`git diff` again.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 197 passed / 1 skipped (14 files), exact match to the
+  step-3 baseline, zero regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- **Real cross-account proof, both roles** (the actual point of this step):
+  stood up the Firestore + Auth emulators (Java 21 via
+  `/opt/homebrew/opt/openjdk@21`), temporarily re-added the exact same
+  scaffolding step 3 used (`auth` emulator port in `firebase.json`, a
+  `VITE_USE_EMULATORS`-gated emulator-connect branch in `firebase.ts`, a
+  `VITE_SCREENSHOT_MODE`-gated custom-token sign-in bridge in `App.tsx`).
+  **New wrinkle found and fixed this session**: the naive version of the
+  sign-in bridge lost a race — `AuthGuard` would redirect to `/login`
+  (dropping the `?screenshotToken=` param) before the async
+  `signInWithCustomToken` call resolved. Fixed by adding a
+  `screenshotSignInDone` gate that holds the loading state until the sign-in
+  attempt (success or failure) finishes, so the "not signed in" redirect
+  can't fire early. Seeded real student/tutor/parent accounts + a real
+  `liveSessions` doc directly via `firebase-admin` against the emulator
+  (faster and equally valid per the plan's verification note, since steps
+  1-3 already proved the create-path and sync — this step is specifically
+  about discovery). **Second real bug found while seeding**: the student
+  roster `TutorDashboard.tsx` builds for its OWN UI reads
+  `users/{uid}.assignedTutorId` (Admin.tsx's actual linking write), while
+  `firestore.rules`' `liveSessions` block and `liveSession.ts` read
+  `users/{uid}.tutorId` — two different field names for "this tutor" on the
+  same student doc. Not this step's bug to fix (pre-existing, out of scope —
+  flagging here for whoever eventually reconciles it), but the seed had to
+  set both fields to get a realistic test. Drove it with Playwright, two
+  separate signed-in accounts (a real tutor UID, then a real parent UID,
+  neither the student):
+  - **Tutor** (`/tutor`): banner appeared reading "Priya Test Student wants
+    you to join — live now", clicking "Join call" navigated to
+    `/live-session/<realSessionId>`, landed correctly on the live session
+    page showing the real snapshotted context ("Linear Equations", "Solve
+    for x: 3x + 5 = 20") with the "leave" button (not "end call" — correct
+    role gating, confirming `LiveSessionPage.tsx`'s existing `resolveRole`
+    logic sees the tutor correctly).
+  - **Parent** (`/parent`): same banner, same student name, same click ->
+    navigate -> correct context -> "leave" button. Confirms
+    `subscribeActiveLiveSessionsForParent`'s internal `childId`/`childIds`
+    resolution works end-to-end for a real, different account.
+  - All scaffolding (`firebase.json`, `app/src/firebase.ts`, `App.tsx`)
+    fully reverted via `git checkout --`, confirmed via `git diff` (empty)
+    and a grep sweep for `VITE_USE_EMULATORS|VITE_SCREENSHOT_MODE|
+    screenshotToken|signInWithCustomToken|connectAuthEmulator|
+    connectFirestoreEmulator` across those three files (empty). Temp driver
+    script (had to live inside the repo root briefly for Node ESM module
+    resolution to find `node_modules/playwright`) deleted, confirmed gone.
+    `tsc`/`vitest`/`build` re-run clean after the revert — numbers above are
+    post-revert.
+
+**Screenshots** (`agent_work/product/screenshots_2026-08-05/`):
+`tutor_dashboard_with_live_join_banner.png`,
+`tutor_landed_on_live_session_page.png`,
+`parent_dashboard_with_live_join_banner.png`,
+`parent_landed_on_live_session_page.png`.
+
+Files touched: `app/src/components/LiveJoinBanner.tsx`,
+`app/src/components/LiveJoinBanner.module.css`,
+`app/src/pages/TutorDashboard.tsx`, `app/src/pages/ParentDashboard.tsx`,
+`ACTIVE_TASK.md`, plus the 4 screenshots above. Not pushed.
+
+**Next**: build-order step 6 — "Talk" button real wiring. `LiveSessionPage.tsx`
+currently has a placeholder `handleTalk()` that reads
+`users/{tutorId}.googleMeetUrl` directly; the plan calls for reusing
+`SessionCallCard`'s actual `meetingUrl` resolution logic (which also checks
+an active booked session's own `meetingUrl` before falling back to the
+tutor's permanent room) instead of duplicating a simpler version. Lowest-risk
+step left, purely additive once sync + discovery both work (they now do).
+Step 7 (Weekly Review page's `<CallButton>`) and step 8 (idle-timeout
+cleanup) are still open after that. Also worth a look, out of this step's
+scope: the `assignedTutorId` vs `tutorId` field mismatch noted above — worth
+confirming with Blake/CLAUDE.md's linking flow whether both are supposed to
+be set together, since `liveSessions` create-rule + subscribe queries depend
+on `tutorId` existing on the student doc.
+
+---
+
 ## Live "Call" co-writing — CallButton + LiveSessionPage + route (build-order step 3 of 8) (Fable 5, 2026-08-05)
 
 Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1
