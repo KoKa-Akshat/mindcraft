@@ -9,7 +9,7 @@ import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLoca
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import { playTap } from '../lib/uiSound'
-import { pawHubDisplayText, type CurriculumTrack } from '../lib/curriculumTrack'
+import { type CurriculumTrack } from '../lib/curriculumTrack'
 import type { Confidence } from '../lib/bridgePractice'
 import SessionCallCard from '../components/SessionCallCard'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
@@ -21,7 +21,7 @@ import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIn
 import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
-import { CalendarCheck, Lock, MessageCircle, LogOut } from 'lucide-react'
+import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
 import WeeklyReviewPicker from '../components/WeeklyReviewPicker'
@@ -175,31 +175,6 @@ export default function Dashboard({
   function openNotes() {
     if (embedded) { setEmbedView('notes'); return }
     navigate(withEmbed(`${homeBase.split('?')[0]}?view=notes`), { replace: true })
-  }
-
-  function goChallenge() {
-    // Tutor frame: browse the student's map live; practice stays on their login.
-    if (viewingAs) {
-      openMap()
-      return
-    }
-    if (preview) {
-      navigate('/try/manjushree')
-      return
-    }
-    if (weakness) {
-      navigate('/practice', {
-        state: {
-          conceptId: weakness.conceptId,
-          missionType: 'weakness',
-          formatId: weakness.formatId,
-          ingredientId: weakness.ingredientId,
-          misconceptionId: weakness.misconceptionId,
-        },
-      })
-    } else {
-      openMap()
-    }
   }
 
   function openChapter(conceptId: string) {
@@ -424,7 +399,6 @@ export default function Dashboard({
     return () => { cancelled = true }
   }, [user.uid, navigate, searchParams, preview, viewingAs])
 
-  const weaknessLabel = weakness ? pawHubDisplayText(weakness.label, curriculumTrack) : null
   const displayName = data.displayName ?? user?.email?.split('@')[0] ?? ''
   const sparkId = weakness?.conceptId ?? null
 
@@ -436,18 +410,8 @@ export default function Dashboard({
   // The topic picker builds (and caches) the paper on Start.
   const thisWeekKey = useMemo(() => weekKey(), [])
 
-  // The wizard's own speech-bubble box (previously reading "Weekly Review")
-  // is removed from next to the mascot per Akshat's follow-up brief: the
-  // "this week's paper" CTA now carries the "Weekly Review" label itself
-  // (see .homeTopActions below), so having it twice was redundant. The
-  // WizardMascot component (components/canvas/, out of this lane) still
-  // requires a `line` string prop; it's kept computed here but its bubble
-  // is hidden purely via CSS (`.heroMiddle > aside > div` in
-  // Dashboard.module.css) so the sprite alone remains next to today's
-  // spark, with no dead empty box left behind.
-  const wizardLine = weaknessLabel
-    ? 'Weekly Review'
-    : 'Pick any sticker on the map and we’ll dive in ★'
+  // Wizard bubble is CSS-hidden; prop still required by WizardMascot.
+  const wizardLine = 'Pick any sticker on the map and we’ll dive in ★'
 
   // Locked once the student has finished this week's paper (weekKey-keyed
   // completion flag, self-written by the student's own browser same as
@@ -616,25 +580,46 @@ export default function Dashboard({
            module) so today's spark sits right up against the sprite instead
            of leaving the bubble's old footprint as dead space. */}
         <header className={s.heroBar}>
-          <span className={s.canvasWordmark}>Mind<span className={s.canvasWordmarkCraft}>Craft</span></span>
+          <button
+            type="button"
+            className={s.canvasWordmark}
+            onClick={openHome}
+            aria-label="Home"
+            title="Home"
+          >
+            Mind<span className={s.canvasWordmarkCraft}>Craft</span>
+          </button>
           <nav className={s.canvasNav} aria-label="Notebook sections">
-            <button type="button" className={view === 'home' ? s.navActive : s.navBtn} onClick={openHome}>Home</button>
-            <button type="button" className={view === 'map' ? s.navActive : s.navBtn} onClick={openMap}>Map</button>
-            <button type="button" className={view === 'work' ? s.navActive : s.navBtn} onClick={openWork}>Work</button>
-            <button type="button" className={view === 'notes' ? s.navActive : s.navBtn} onClick={openNotes}>Notes</button>
+            <button
+              type="button"
+              className={view === 'map' ? s.navActive : s.navBtn}
+              onClick={openMap}
+              aria-label="Map"
+              title="Map"
+            >
+              <Map size={22} strokeWidth={2.25} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={view === 'work' ? s.navActive : s.navBtn}
+              onClick={openWork}
+              aria-label="Work"
+              title="Work"
+            >
+              <PenLine size={22} strokeWidth={2.25} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={view === 'notes' ? s.navActive : s.navBtn}
+              onClick={openNotes}
+              aria-label="Notes"
+              title="Notes"
+            >
+              <NotebookPen size={22} strokeWidth={2.25} aria-hidden="true" />
+            </button>
           </nav>
           <div className={s.heroMiddle}>
             <WizardMascot line={wizardLine} compact />
-            {weakness && (
-              <button type="button" className={s.heroSpark} onClick={goChallenge}>
-                <img className={s.heroSparkIcon} src={conceptIconUrl(weakness.conceptId)} alt="" draggable={false} />
-                <span className={s.sparkText}>
-                  <span className={s.sparkEyebrow}>today’s spark</span>
-                  <span className={s.sparkName}>{weaknessLabel}</span>
-                </span>
-                <span className={s.sparkGo}>play</span>
-              </button>
-            )}
           </div>
           <div className={s.canvasUser}>
             {displayName && <span>{displayName}</span>}
