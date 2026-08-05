@@ -91,7 +91,16 @@ def kicker(c: canvas.Canvas, text: str, x: float, y: float, light: bool = False)
     c.drawString(x, y, text.upper())
 
 
-def fit_cover(c: canvas.Canvas, name: str, x: float, y: float, mw: float, mh: float) -> None:
+def fit_cover(
+    c: canvas.Canvas,
+    name: str,
+    x: float,
+    y: float,
+    mw: float,
+    mh: float,
+    *,
+    align: str = "center",
+) -> None:
     path = IMG / name
     c.setFillColor(HexColor("#0c1a14"))
     c.roundRect(x, y, mw, mh, 22, fill=1, stroke=0)
@@ -101,12 +110,14 @@ def fit_cover(c: canvas.Canvas, name: str, x: float, y: float, mw: float, mh: fl
     iw, ih = img.getSize()
     scale = max(mw / iw, mh / ih)
     dw, dh = iw * scale, ih * scale
-    # clip via temp path
+    ox = x + (mw - dw) / 2
+    # Top-align tall portraits so faces aren't cropped out.
+    oy = y if align == "top" else y + (mh - dh) / 2
     c.saveState()
     p = c.beginPath()
     p.roundRect(x, y, mw, mh, 22)
     c.clipPath(p, stroke=0, fill=0)
-    c.drawImage(img, x + (mw - dw) / 2, y + (mh - dh) / 2, width=dw, height=dh, mask="auto")
+    c.drawImage(img, ox, oy, width=dw, height=dh, mask="auto")
     c.restoreState()
     c.setStrokeColor(LINE)
     c.setLineWidth(1)
@@ -293,10 +304,10 @@ def slide_08(c: canvas.Canvas) -> None:
     c.setFont(SERIF, 40)
     c.drawString(64, H - 185, "Big picture. Allen wrench.")
 
-    def person(x: float, photo: str, role: str, title: str, blurb: str) -> None:
+    def person(x: float, photo: str, role: str, title: str, blurb: str, *, align: str = "top") -> None:
         c.setFillColor(PAPER)
         c.roundRect(x, 80, 880, 720, 28, fill=1, stroke=0)
-        fit_cover(c, photo, x + 24, 320, 832, 450)
+        fit_cover(c, photo, x + 24, 320, 832, 450, align=align)
         c.setFillColor(LEAF)
         c.setFont(SANS_B, 12)
         c.drawString(x + 40, 270, role.upper())
@@ -305,7 +316,6 @@ def slide_08(c: canvas.Canvas) -> None:
         c.drawString(x + 40, 225, title)
         c.setFillColor(INK_SOFT)
         c.setFont(SANS, 16)
-        # wrap blurb lightly
         c.drawString(x + 40, 185, blurb)
 
     person(64, "akshat-koirala.jpg", "Akshat · Big picture", "Why the student gave up",
