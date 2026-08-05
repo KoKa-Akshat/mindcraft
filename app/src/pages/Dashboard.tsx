@@ -23,11 +23,11 @@ import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actTo
 import { conceptIconUrl } from '../lib/conceptIcon'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
+import WeeklyReviewPicker from '../components/WeeklyReviewPicker'
 import {
-  buildWeeklyPracticePaper,
-  cacheWeeklyPaper,
-  loadCachedWeeklyPaper,
   nextUnlockLabel,
+  weekKey,
+  type WeeklyPracticePaper,
 } from '../lib/weeklyPracticePaper'
 import { loadDashboardPersonalization } from '../lib/dashboardPersonalization'
 import {
@@ -142,6 +142,7 @@ export default function Dashboard({
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
   const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
   const [embedView, setEmbedView] = useState<'home' | 'map' | 'work' | 'notes'>('home')
+  const [showWeeklyPicker, setShowWeeklyPicker] = useState(false)
 
   const rawView = embedded ? embedView : (searchParams.get('view') ?? 'home')
   const view = (
@@ -425,19 +426,13 @@ export default function Dashboard({
   const displayName = data.displayName ?? user?.email?.split('@')[0] ?? ''
   const sparkId = weakness?.conceptId ?? null
 
-  const weeklyPaper = useMemo(() => {
-    const cached = loadCachedWeeklyPaper()
-    if (cached) return cached
-    if (recLoading) return null
-    const paper = buildWeeklyPracticePaper({
-      weakness,
-      learn,
-      reviewConceptIds: ACT_TOC_SECTIONS[0]?.conceptIds.slice(0, 2) ?? [],
-      questionsPerSlot: 3,
-    })
-    if (paper.questionIds.length) cacheWeeklyPaper(paper)
-    return paper
-  }, [weakness, learn, recLoading])
+  const weeklyReviewIds = useMemo(
+    () => ACT_TOC_SECTIONS[0]?.conceptIds.slice(0, 2) ?? [],
+    [],
+  )
+  // Lock is weekKey-keyed against the student's completion flag only.
+  // The topic picker builds (and caches) the paper on Start.
+  const thisWeekKey = useMemo(() => weekKey(), [])
 
   // The wizard's own speech-bubble box (previously reading "Weekly Review")
   // is removed from next to the mascot per Akshat's follow-up brief: the
@@ -456,10 +451,11 @@ export default function Dashboard({
   // completion flag, self-written by the student's own browser same as
   // diagnosticCompleted, see practiceState.ts). Stays unlocked the whole
   // week up until then; re-locks only on completion, not on a timer.
-  const paperLocked = !!weeklyPaper && data.weeklyPaperCompletedWeek === weeklyPaper.weekKey
+  const paperLocked = data.weeklyPaperCompletedWeek === thisWeekKey
   const paperUnlockLabel = useMemo(() => nextUnlockLabel(), [])
+  const showWeeklyCta = !recLoading
 
-  function playWeeklyPaper() {
+  function openWeeklyReview() {
     if (viewingAs) {
       openMap()
       return
@@ -468,17 +464,26 @@ export default function Dashboard({
       navigate('/try/manjushree')
       return
     }
-    if (!weeklyPaper?.slots[0] || paperLocked) {
+    if (paperLocked) {
       openMap()
       return
     }
-    const first = weeklyPaper.slots[0]
+    setShowWeeklyPicker(true)
+  }
+
+  function startWeeklyPaper(paper: WeeklyPracticePaper) {
+    setShowWeeklyPicker(false)
+    const first = paper.slots[0]
+    if (!first) {
+      openMap()
+      return
+    }
     navigate('/practice', {
       state: {
         conceptId: first.conceptId,
         missionType: first.role === 'stretch' ? 'learn' : 'weakness',
         weeklyPaper: true,
-        weeklyPaperWeekKey: weeklyPaper.weekKey,
+        weeklyPaperWeekKey: paper.weekKey,
       },
     })
   }
@@ -646,7 +651,7 @@ export default function Dashboard({
                     <h1 className={s.homeTitle}>Contents</h1>
                   </div>
                   <div className={s.homeTopActions}>
-                    {weeklyPaper && weeklyPaper.questionIds.length > 0 && (
+                    {showWeeklyCta && (
                       paperLocked ? (
                         <div className={s.paperCtaLocked} aria-live="off">
                           <span className={s.paperCtaLockIcon} aria-hidden="true">🔒</span>
@@ -659,8 +664,8 @@ export default function Dashboard({
                         // Reuses .bookSessionLink verbatim (Akshat: label
                         // should read "Weekly Review" and look "just like a
                         // find a tutor button", same pill, no arrow, no new
-                        // CSS invented for it).
-                        <button type="button" className={s.bookSessionLink} onClick={playWeeklyPaper}>Weekly Review</button>
+                        // CSS invented for it). Opens the topic picker.
+                        <button type="button" className={s.bookSessionLink} onClick={openWeeklyReview}>Weekly Review</button>
                       )
                     )}
                     {data.tutorId && data.parents.length > 0 ? (
@@ -837,6 +842,16 @@ export default function Dashboard({
           endAt={data.nextSession.endAt}
         />
       ) : null}
+
+      {showWeeklyPicker && (
+        <WeeklyReviewPicker
+          weakness={weakness}
+          learn={learn}
+          reviewConceptIds={weeklyReviewIds}
+          onClose={() => setShowWeeklyPicker(false)}
+          onStart={startWeeklyPaper}
+        />
+      )}
     </>
   )
 }

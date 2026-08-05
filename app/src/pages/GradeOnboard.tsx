@@ -32,8 +32,8 @@ import HighlightedStem from '../components/HighlightedStem'
 import JarvisGuide from '../components/JarvisGuide'
 import { useJournalGuide } from '../hooks/useJournalGuide'
 import { insightsForSide } from '../lib/journalGuide'
-import { useStoryQuestion } from '../hooks/useStoryQuestion'
-import { resolveStoryScene } from '../lib/storyDisplay'
+import { resolveQuestionStem } from '../lib/questionStem'
+import { buildStoryDisplay, resolveStoryScene } from '../lib/storyDisplay'
 import { resolveStudyPathConfig, DEFAULT_STUDY_PATH, type StudyPathConfig } from '../lib/studyPathConfig'
 import {
   initBelief, applyProbeOutcome, type BeliefState,
@@ -51,7 +51,7 @@ type Step = 'welcome' | 'grade' | 'goals' | 'probe' | 'seeding'
 
 // GOALS chips removed — users now type/record their goals freely
 
-type ConceptStory = { conceptId: string; conceptName: string; story: string }
+type ConceptStory = { conceptId: string; conceptName: string; story?: string }
 const stories = conceptStoriesRaw as Record<string, ConceptStory>
 
 interface ProbeResult {
@@ -64,7 +64,7 @@ interface ProbeResult {
 
 function storyExcerpt(conceptId: string): { title: string; excerpt: string; story: string } {
   const entry = stories[conceptId]
-  if (!entry) return { title: 'Your map', excerpt: 'Jesse is lining up your first chapter.', story: '' }
+  if (!entry?.story) return { title: 'Your map', excerpt: 'Jesse is lining up your first chapter.', story: '' }
   const paragraphs = entry.story.split('\n').filter(Boolean)
   return {
     title: entry.conceptName,
@@ -113,9 +113,17 @@ export default function GradeOnboard() {
 
   const currentQ = probeQs[probeIdx]
   const storyItem = currentQ ? storyMod?.[currentQ.id] : undefined
-  // stemText (story-reskinned) intentionally left wired but unused — the
-  // rendered stem now always uses currentQ.question (plain). See ACTIVE_TASK.md.
-  const { display: storyDisplay, stemText: _stemText } = useStoryQuestion(currentQ, storyItem?.storyStem)
+  // Shared C-4 stem resolve (same path as Practice + ConceptChapterPage).
+  const probeStem = useMemo(
+    () => (currentQ ? resolveQuestionStem(currentQ) : ''),
+    [currentQ],
+  )
+  // storyDisplay/sceneLine stay wired for the future wrapping agent even though
+  // narrative paragraphs are not rendered on the probe page right now.
+  const storyDisplay = useMemo(
+    () => (currentQ ? buildStoryDisplay(currentQ) : null),
+    [currentQ],
+  )
   const sceneLine = currentQ && storyDisplay ? resolveStoryScene(currentQ, storyDisplay) : currentQ?.storyContext
 
   const probeTheme = useMemo(() => ({
@@ -161,10 +169,8 @@ export default function GradeOnboard() {
 
   const journalGuide = useJournalGuide({
     conceptId: currentQ?.conceptId ?? '',
-    // Highlight phrases must be found in the text HighlightedStem actually
-    // renders (currentQ.question, plain) — not the story-reskinned stemText,
-    // which is left wired above for the future wrapping agent.
-    questionText: currentQ?.question ?? '',
+    // Highlights key off the same resolved stem HighlightedStem renders.
+    questionText: probeStem,
     strokeData: probeStrokes,
     inkState: probeInk,
     transcribing: probeTranscribing,
@@ -398,7 +404,7 @@ export default function GradeOnboard() {
                             (see ACTIVE_TASK.md). bridgeLine/storyItem/sceneLine stay wired
                             above for the future wrapping agent. */}
                         <HighlightedStem
-                          text={currentQ.question}
+                          text={probeStem}
                           ink={probeTheme.ink}
                           accent={probeTheme.accent}
                           highlights={journalGuide.highlights}
@@ -407,7 +413,7 @@ export default function GradeOnboard() {
                         />
                         <InteractiveWidget
                           conceptId={currentQ.conceptId}
-                          questionText={storyDisplay?.stem ?? currentQ.question}
+                          questionText={probeStem}
                           format={questionFormat(currentQ)}
                           theme={probeTheme}
                         />

@@ -17,11 +17,10 @@ Desktop clone once its last bits (generated concept images) are pulled over.
 ## Briefs — pick these up next session
 
 **Codex (`ml/**`, `webhook/**`, `data/**`)**
-1. `mathSkinTop.json` folk-tale matching never actually fires in production —
-   max match score across all 1,508 Eedi questions is 0.343, below
-   `storyMatch.ts`'s own 0.38 activation threshold. Either fix the scoring so
-   it can clear its own bar sometimes, or pull it out of the active pipeline
-   until it can.
+1. ~~`mathSkinTop.json` folk-tale matching never actually fires in production~~
+   DONE (Codex, 2026-08-05): folk `math_theme_tags` now normalize to the same
+   canonical math signals as questions; regression coverage confirms active
+   matches in the 1,508-question Eedi bank.
 2. `themedStems.generated.json` (the offline story bake) is disabled right now
    (`app/src/lib/questionStem.ts`, `STORY_WRAP_ENABLED = false`) — it was
    pasting one fixed template sentence onto every question in a concept
@@ -31,9 +30,11 @@ Desktop clone once its last bits (generated concept images) are pulled over.
    em-dash + answer-leak checks already proven in
    `webhook/api/story-module.ts`'s `isValidItem` / `ml/scripts/pipeline/story_wrapper.py`'s
    `_valid_context`, and flip the flag back on once it's real.
-3. `questionContextFrames.json` (47 entries) is a condensed duplicate of
-   `conceptStories.json` (41 entries) — same protagonist/setting data, shorter.
-   Fold it into `conceptStories.json` as a field rather than maintaining both.
+3. ~~`questionContextFrames.json` is a condensed duplicate of
+   `conceptStories.json`~~ DONE (Codex, 2026-08-05): all 49 frames, including
+   seven frame-only concepts, now live as `contextFrame` on concept-story
+   records; readers and generators use that one source and the duplicate file
+   is deleted.
 4. Exponent-notation bug: I safely fixed 19 questions in
    `actMasterQuestionBank.generated.json` by cross-checking each question's own
    `explanation` field for the correct superscript, only replacing where that
@@ -47,20 +48,20 @@ Desktop clone once its last bits (generated concept images) are pulled over.
    (rerun `node app/scripts/tagStoryBatchQuality.mjs` for a fresh count).
 
 **Cursor (`app/**`)**
-1. `GradeOnboard.tsx` still resolves question text via the old
-   `useStoryQuestion` hook; `Practice.tsx` and `ConceptChapterPage.tsx` already
-   migrated to `resolveQuestionStem` (`lib/questionStem.ts`). Migrate
-   GradeOnboard onto the same path so there's one resolver, not two.
-2. Tutor self-serve `subjects` editor in `TutorDashboard.tsx` — `bio` and
-   `location` already have real editors there and both already flow through to
-   `FindTutor.tsx`'s booking page; `subjects` is read by that same page but has
-   no UI anywhere to set it. Mirror the existing bio/location editor pattern.
-3. Weekly Review topic picker: three modes (all topics / manually pick topics /
-   recommended picks), with the knowledge map rendered on the page so dots
-   light up per mode (all = every dot, manual = click to toggle, recommended =
-   our algo's picks pre-lit). Build on the existing scaffold in
-   `app/src/lib/weeklyPracticePaper.ts` (already builds a weakness+stretch+review
-   mix, just has no topic-choice UI yet) rather than starting fresh.
+1. ~~`GradeOnboard.tsx` → `resolveQuestionStem`~~ DONE (Cursor, 2026-08-05):
+   probe stem + journal highlights + InteractiveWidget now share
+   `lib/questionStem.ts` with Practice/ConceptChapterPage; deleted unused
+   `hooks/useStoryQuestion.ts`.
+2. ~~Tutor self-serve `subjects` editor~~ DONE (Cursor, 2026-08-05): chip +
+   custom-add editor in `TutorProfilePanel.tsx`, saves `users/{uid}.subjects`
+   (same field FindTutor already reads). Loaded from the tutor doc in
+   `TutorDashboard.tsx`.
+3. ~~Weekly Review topic picker~~ DONE (Cursor, 2026-08-05):
+   `WeeklyReviewPicker.tsx` — modes Recommended / Pick topics / All topics,
+   TOC map with lit dots (manual = click toggle). Extends
+   `weeklyPracticePaper.ts` (`TopicPickMode`, `recommendedConceptIds`,
+   `playableActConceptIds`). Dashboard Weekly Review opens the picker; Start
+   caches the paper and launches practice.
 4. Practice-paper render mode: scrollable/printable layout for the
    free-response question tier above, reusing the existing `ScratchPad`
    ink-capture component (already wired into 5 pages) for write-on-it. Tutor

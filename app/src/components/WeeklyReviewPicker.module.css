@@ -1,0 +1,234 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(28, 24, 20, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+.panel {
+  width: min(720px, 100%);
+  max-height: min(92vh, 840px);
+  overflow: auto;
+  background: #fffaf2;
+  border: 1px solid rgba(40, 32, 24, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(28, 24, 20, 0.28);
+  padding: 22px 22px 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(40, 32, 24, 0.45);
+}
+
+.title {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1c1814;
+  letter-spacing: -0.02em;
+}
+
+.close {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(40, 32, 24, 0.12);
+  background: #fff;
+  color: #1c1814;
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modeBtn {
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(40, 32, 24, 0.14);
+  background: #fff;
+  color: #1c1814;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.modeOn {
+  background: #143a2e;
+  border-color: #143a2e;
+  color: #f4efe2;
+}
+
+.modeCopy {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(28, 24, 20, 0.72);
+}
+
+.mapWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 16px;
+  border: 1px solid rgba(40, 32, 24, 0.1);
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(95, 183, 121, 0.12), transparent 55%),
+    radial-gradient(ellipse at 70% 80%, rgba(58, 126, 184, 0.1), transparent 50%),
+    linear-gradient(180deg, #f7f1e6 0%, #efe6d6 100%);
+  overflow: hidden;
+}
+
+.mapSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dotRing {
+  fill: rgba(40, 32, 24, 0.06);
+  stroke: rgba(40, 32, 24, 0.12);
+  stroke-width: 0.35;
+}
+
+.dotRingLit {
+  fill: rgba(20, 58, 46, 0.14);
+  stroke: rgba(20, 58, 46, 0.55);
+  stroke-width: 0.45;
+}
+
+.dot {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 2px solid rgba(40, 32, 24, 0.12);
+  border-radius: 50%;
+  background: #fffdf8;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  opacity: 0.38;
+  filter: grayscale(0.35);
+  cursor: default;
+  transition: opacity 160ms ease, transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.dot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dot span {
+  font-size: 13px;
+  font-weight: 900;
+  color: #143a2e;
+}
+
+.dotLit {
+  opacity: 1;
+  filter: none;
+  border-color: #143a2e;
+  box-shadow: 0 0 0 3px rgba(20, 58, 46, 0.18), 0 6px 14px rgba(20, 58, 46, 0.16);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.dotClickable {
+  cursor: pointer;
+}
+
+.dotClickable:hover {
+  opacity: 0.85;
+  filter: none;
+}
+
+.dotClickable:disabled {
+  cursor: default;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.count {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(28, 24, 20, 0.62);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.secondary,
+.primary {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.secondary {
+  border: 1px solid rgba(40, 32, 24, 0.14);
+  background: #fff;
+  color: #1c1814;
+}
+
+.primary {
+  border: none;
+  background: #143a2e;
+  color: #f4efe2;
+}
+
+.primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 560px) {
+  .panel { padding: 16px; border-radius: 16px; }
+  .title { font-size: 22px; }
+  .dot { width: 30px; height: 30px; }
+  .foot { flex-direction: column; align-items: stretch; }
+  .actions { width: 100%; }
+  .secondary, .primary { flex: 1; }
+}

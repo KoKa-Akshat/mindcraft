@@ -128,6 +128,7 @@ export default function TutorDashboard() {
     displayName: user.displayName || user.email?.split('@')[0] || 'Tutor',
     email: user.email || '',
     bio: '',
+    subjects: [],
     photoUrl: null,
     resumeUrl: null,
     locationAddress: null,
@@ -361,6 +362,9 @@ export default function TutorDashboard() {
         displayName: data?.displayName || user.displayName || user.email?.split('@')[0] || 'Tutor',
         email: data?.email || user.email || '',
         bio: typeof data?.bio === 'string' ? data.bio : '',
+        subjects: Array.isArray(data?.subjects)
+          ? data.subjects.filter((x: unknown): x is string => typeof x === 'string' && !!x.trim())
+          : [],
         photoUrl: typeof data?.photoUrl === 'string' ? data.photoUrl : null,
         resumeUrl: typeof data?.resumeUrl === 'string' ? data.resumeUrl : null,
         locationAddress: typeof data?.locationAddress === 'string' ? data.locationAddress : null,

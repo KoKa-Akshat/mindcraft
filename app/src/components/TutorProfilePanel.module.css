@@ -106,3 +106,66 @@
 }
 .resumeRow a { color: var(--td-leaf, #6b5cff); font-weight: 800 }
 .muted { color: var(--td-muted, #6b5f80); font-size: 13px }
+.hint {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--td-muted, #6b5f80);
+}
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.16));
+  background: #fff;
+  color: var(--td-ink, #2a2430);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+.chipOn {
+  background: var(--td-ink, #2a2430);
+  border-color: var(--td-ink, #2a2430);
+  color: #fffdf8;
+}
+.customRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.customRow input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.16));
+  border-radius: 14px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--td-ink, #2a2430);
+  background: #fffaf4;
+}
+.addBtn {
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.16));
+  background: #fff;
+  color: var(--td-ink, #2a2430);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.addBtn:disabled { opacity: 0.45; cursor: not-allowed }

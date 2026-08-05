@@ -3,9 +3,15 @@
  * Combines "practice next" (weakness) and "learn new" (fresh) into one
  * printable/playable set for the week. Pure client scaffold for now;
  * mastery evidence still flows through /record-outcomes as usual.
+ *
+ * Topic picker (Dashboard Weekly Review): three modes — all / manual /
+ * recommended — choose which concept dots light up before the paper builds.
  */
-import { getQuestions, type Question, shuffle } from './questionBank'
+import { allActConceptIds, actConceptLabel } from './actToc'
+import { getQuestions, questionCount, type Question, shuffle } from './questionBank'
 import type { NextConcept } from './recommendNextConcept'
+
+export type TopicPickMode = 'all' | 'manual' | 'recommended'
 
 export type WeeklyPaperSlot = {
   conceptId: string
@@ -19,6 +25,9 @@ export type WeeklyPracticePaper = {
   slots: WeeklyPaperSlot[]
   questionIds: string[]
   builtAt: string
+  /** How topics were chosen for this paper (topic picker). */
+  mode?: TopicPickMode
+  selectedConceptIds?: string[]
 }
 
 /** Same calendar-week key scheme as `isoWeek()` in ParentDashboard.tsx — kept
@@ -47,39 +56,73 @@ export function nextUnlockLabel(d = new Date()): string {
   return `Unlocks in ${days} days`
 }
 
+/** ACT TOC concepts that can actually serve practice questions. */
+export function playableActConceptIds(): string[] {
+  return allActConceptIds().filter(id =>
+    ([1, 2, 3] as const).some(level => questionCount(id, level) > 0),
+  )
+}
+
 /**
- * Build a short weekly mix: mostly weakness drills, a stretch of learn-next,
- * plus light review. Caps questions so the paper feels like a warm quiz, not
- * a marathon.
+ * Algo picks for "recommended" mode — same weakness + stretch + light review
+ * mix the original scaffold used when auto-building the paper.
+ */
+export function recommendedConceptIds(opts: {
+  weakness: NextConcept | null
+  learn: NextConcept | null
+  reviewConceptIds?: string[]
+  max?: number
+}): string[] {
+  const max = opts.max ?? 4
+  const ids: string[] = []
+  if (opts.weakness) ids.push(opts.weakness.conceptId)
+  if (opts.learn && !ids.includes(opts.learn.conceptId)) ids.push(opts.learn.conceptId)
+  for (const id of opts.reviewConceptIds ?? []) {
+    if (ids.includes(id)) continue
+    ids.push(id)
+    if (ids.length >= max) break
+  }
+  return ids.slice(0, max)
+}
+
+function roleForConcept(
+  conceptId: string,
+  weakness: NextConcept | null,
+  learn: NextConcept | null,
+): WeeklyPaperSlot['role'] {
+  if (weakness && conceptId === weakness.conceptId) return 'strengthen'
+  if (learn && conceptId === learn.conceptId) return 'stretch'
+  return 'review'
+}
+
+/**
+ * Build a short weekly mix. Prefer explicit `selectedConceptIds` from the
+ * topic picker; otherwise fall back to weakness/learn/review scaffold.
  */
 export function buildWeeklyPracticePaper(opts: {
   weakness: NextConcept | null
   learn: NextConcept | null
   reviewConceptIds?: string[]
+  selectedConceptIds?: string[]
   questionsPerSlot?: number
+  mode?: TopicPickMode
+  /** Hard cap on total questions (all-topics mode uses a lower per-slot count). */
+  maxQuestions?: number
 }): WeeklyPracticePaper {
-  const per = opts.questionsPerSlot ?? 3
-  const slots: WeeklyPaperSlot[] = []
+  const mode = opts.mode ?? (opts.selectedConceptIds ? 'manual' : 'recommended')
+  const selected = opts.selectedConceptIds?.length
+    ? [...new Set(opts.selectedConceptIds)]
+    : recommendedConceptIds(opts)
 
-  if (opts.weakness) {
-    slots.push({
-      conceptId: opts.weakness.conceptId,
-      role: 'strengthen',
-      label: opts.weakness.label,
-    })
-  }
-  if (opts.learn && opts.learn.conceptId !== opts.weakness?.conceptId) {
-    slots.push({
-      conceptId: opts.learn.conceptId,
-      role: 'stretch',
-      label: opts.learn.label,
-    })
-  }
-  for (const id of opts.reviewConceptIds ?? []) {
-    if (slots.some(s => s.conceptId === id)) continue
-    if (slots.length >= 4) break
-    slots.push({ conceptId: id, role: 'review', label: id.replace(/_/g, ' ') })
-  }
+  const slots: WeeklyPaperSlot[] = selected.map(conceptId => ({
+    conceptId,
+    role: roleForConcept(conceptId, opts.weakness, opts.learn),
+    label: actConceptLabel(conceptId),
+  }))
+
+  const many = slots.length > 6
+  const per = opts.questionsPerSlot ?? (many ? 1 : 3)
+  const maxQuestions = opts.maxQuestions ?? (many ? 12 : Math.max(6, slots.length * per))
 
   const questions: Question[] = []
   for (const slot of slots) {
@@ -88,7 +131,7 @@ export function buildWeeklyPracticePaper(opts: {
     questions.push(...batch)
   }
 
-  const mixed = shuffle(questions).slice(0, Math.max(6, slots.length * per))
+  const mixed = shuffle(questions).slice(0, maxQuestions)
 
   return {
     weekKey: weekKey(),
@@ -96,6 +139,8 @@ export function buildWeeklyPracticePaper(opts: {
     slots,
     questionIds: mixed.map(q => q.id),
     builtAt: new Date().toISOString(),
+    mode,
+    selectedConceptIds: selected,
   }
 }
 
@@ -116,5 +161,11 @@ export function loadCachedWeeklyPaper(): WeeklyPracticePaper | null {
 export function cacheWeeklyPaper(paper: WeeklyPracticePaper) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(paper))
+  } catch { /* ignore */ }
+}
+
+export function clearCachedWeeklyPaper() {
+  try {
+    localStorage.removeItem(STORAGE_KEY)
   } catch { /* ignore */ }
 }
