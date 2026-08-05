@@ -44,6 +44,10 @@ import blockParabola from '../assets/canvas/generated/mindcraft-blocks/mindcraft
 import blockPercent from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-percent.png'
 import blockEquals from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-equals.png'
 import blockRadical from '../assets/canvas/generated/mindcraft-blocks/mindcraft-block-radical.png'
+import warmupsScene from '../assets/canvas/generated/story-fractions_decimals.jpg'
+import algebraScene from '../assets/canvas/generated/story-linear_equations.jpg'
+import geometryScene from '../assets/canvas/generated/story-right_triangle_geometry.jpg'
+import dataScene from '../assets/canvas/generated/story-basic_probability.jpg'
 import s from './Dashboard.module.css'
 
 const SOLVER_MAX_CHARS = 1200
@@ -90,6 +94,13 @@ const TOC_STRUGGLING_STATUSES = new Set(['struggling', 'open_gap'])
 
 type TocDotState = 'complete' | 'needs' | 'progress' | 'locked'
 
+const TOC_LANE_SCENES = {
+  warmups: warmupsScene,
+  algebra: algebraScene,
+  geometry: geometryScene,
+  data: dataScene,
+} as const
+
 function tocDotState(status: string): TocDotState {
   if (TOC_MASTERED_STATUSES.has(status)) return 'complete'
   if (TOC_STRUGGLING_STATUSES.has(status)) return 'needs'
@@ -115,7 +126,7 @@ export default function Dashboard({
 }) {
   const user = useUser()
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const viewingAs = !!viewAsStudentId
   const data = useStudentData(user, { viewAsUid: viewAsStudentId })
   const uid = viewAsStudentId || user?.uid || ''
@@ -124,6 +135,7 @@ export default function Dashboard({
     : viewingAs && !embedded
       ? `/tutor/student/${viewAsStudentId}${frameEmbed ? '?embed=1' : ''}`
       : '/dashboard'
+  const coverInUrl = searchParams.get('cover') === '1'
 
   const [diagChecked, setDiagChecked] = useState(preview || viewingAs)
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
@@ -133,12 +145,45 @@ export default function Dashboard({
   const [solverText, setSolverText] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
+  // Cover is a real history step (?cover=1) so browser Back returns to the
+  // shelf — not out to the marketing site.
   const [showCover, setShowCover] = useState(() => (
-    typeof window !== 'undefined' && !preview && !viewingAs && !coverAlreadySeen()
+    typeof window !== 'undefined'
+    && !preview
+    && !viewingAs
+    && (new URLSearchParams(window.location.search).get('cover') === '1' || !coverAlreadySeen())
   ))
   const [showIntro, setShowIntro] = useState(() => (
     typeof window !== 'undefined' && !preview && !viewingAs && !introAlreadySeen()
   ))
+
+  // Keep cover ↔ URL in sync (Back/Forward + first paint).
+  useEffect(() => {
+    if (preview || viewingAs) return
+    if (coverInUrl) {
+      // Back onto the shelf = cover is "unread" again this session.
+      clearCoverSeen()
+      setShowCover(true)
+      return
+    }
+    if (coverAlreadySeen()) setShowCover(false)
+  }, [coverInUrl, preview, viewingAs])
+
+  // Stamp ?cover=1 when the shelf is up so this visit is a history entry.
+  useEffect(() => {
+    if (preview || viewingAs || !showCover || coverInUrl) return
+    const next = new URLSearchParams(searchParams)
+    next.set('cover', '1')
+    setSearchParams(next, { replace: true })
+  }, [showCover, coverInUrl, preview, viewingAs, searchParams, setSearchParams])
+
+  function openCoverBook() {
+    setShowCover(false)
+    const next = new URLSearchParams(searchParams)
+    next.delete('cover')
+    // Push (not replace) so Back restores ?cover=1 → CoverLanding.
+    setSearchParams(next, { replace: false })
+  }
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
   const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
@@ -467,7 +512,7 @@ export default function Dashboard({
     return (
       <CoverLanding
         accountName={displayName}
-        onOpen={() => setShowCover(false)}
+        onOpen={openCoverBook}
       />
     )
   }
@@ -722,10 +767,15 @@ export default function Dashboard({
                       }}
                     >
                       <header className={s.tocLaneHead}>
-                        <TocSectionMark id={section.id} accent={section.accent} />
                         <div className={s.tocLaneCopy}>
-                          <h2 className={s.tocLaneTitle}>{section.title}</h2>
+                          <div className={s.tocLaneTitleRow}>
+                            <TocSectionMark id={section.id} accent={section.accent} />
+                            <h2 className={s.tocLaneTitle}>{section.title}</h2>
+                          </div>
                           <p className={s.tocLaneBlurb}>{section.blurb}</p>
+                        </div>
+                        <div className={s.tocLaneScene} aria-hidden="true">
+                          <img src={TOC_LANE_SCENES[section.id]} alt="" />
                         </div>
                       </header>
                       <div className={s.tocTrack}>
@@ -735,7 +785,6 @@ export default function Dashboard({
                           const status = progress?.status ?? 'untouched'
                           const dotState = tocDotState(status)
                           const dotColor = STATUS_COLOR[status] ?? STATUS_COLOR.untouched
-                          const clipId = `toc-dot-clip-${id}`
                           return (
                             <button
                               key={id}
@@ -748,49 +797,15 @@ export default function Dashboard({
                               title={`${actConceptLabel(id)}: ${Math.round(mastery * 100)}% mastery`}
                               onClick={() => openChapter(id)}
                             >
-                              <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
-                              {/* Icon badge + mastery progress ring  -  same
-                                  treatment as the Map's concept nodes
-                                  (ConstellationGpsExplorer): the real concept
-                                  icon clipped to a circle, a solid status ring,
-                                  and a stroke-dasharray arc that fills
-                                  proportional to mastery, starting at 12
-                                  o'clock. Reads full/solid + glowing once
-                                  mastery is high and status is mastered. */}
-                              <span className={s.tocNodeDot} aria-hidden="true">
-                                <svg className={s.tocNodeDotSvg} viewBox="0 0 44 44">
-                                  <defs>
-                                    <clipPath id={clipId}>
-                                      <circle cx="22" cy="22" r="14" />
-                                    </clipPath>
-                                  </defs>
-                                  <image
-                                    href={conceptIconUrl(id)}
-                                    x="8" y="8" width="28" height="28"
-                                    clipPath={`url(#${clipId})`}
-                                  />
-                                  <circle
-                                    cx="22" cy="22" r="14"
-                                    fill="none"
-                                    stroke={dotColor}
-                                    strokeWidth="2"
-                                  />
-                                  {mastery > 0.05 && (
-                                    <circle
-                                      cx="22" cy="22" r="18"
-                                      fill="none"
-                                      stroke={dotColor}
-                                      strokeWidth="2.2"
-                                      strokeOpacity="0.9"
-                                      strokeDasharray={`${mastery * 2 * Math.PI * 18} ${2 * Math.PI * 18}`}
-                                      strokeLinecap="round"
-                                      transform="rotate(-90 22 22)"
-                                    />
-                                  )}
-                                </svg>
+                              <span className={s.tocNodeIcon} aria-hidden="true">
+                                <img src={conceptIconUrl(id)} alt="" />
                                 {dotState === 'complete' && <span className={s.tocNodeCheck}>✓</span>}
                               </span>
+                              <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
                               <span className={s.tocNodeBlurb}>{actConceptBlurb(id)}</span>
+                              <span className={s.tocMasteryTrack} aria-hidden="true">
+                                <span style={{ width: `${mastery * 100}%` }} />
+                              </span>
                             </button>
                           )
                         })}
