@@ -4,6 +4,250 @@
 
 ---
 
+## Live "Call" co-writing — CallButton + LiveSessionPage + route (build-order step 3 of 8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1
+(rules + `liveSession.ts`) and 2 (`ScratchPad.tsx` plumbing) were already
+done (see entry below). This session built **step 3**: the actual UI —
+`CallButton.tsx`, `LiveSessionPage.tsx`, the `/live-session/:sessionId`
+route, and wiring `CallButton` into `Practice.tsx`. Did NOT build
+`LiveJoinBanner.tsx` or touch `TutorDashboard.tsx`/`ParentDashboard.tsx` —
+that's step 4, next, and it's the first real cross-role milestone.
+
+**New: `app/src/components/CallButton.tsx` (+ `.module.css`).** Props
+`studentId`, `tutorId` (nullable — hidden entirely if null, same guard
+pattern as `FlagQuestion.tsx`/`PingTutor.tsx`), `context`. On click calls
+`createLiveSession()` then `navigate('/live-session/' + id)`. Visually
+matches `FlagQuestion.tsx`'s pill style (not `BookmarkButton`'s icon-only
+style — a labeled pill reads better for an action that has a loading/error
+state to show).
+
+**New: `app/src/pages/LiveSessionPage.tsx` (+ `.module.css`), route
+`/live-session/:sessionId`.** Used by both the creating student and a
+joining tutor/parent. Defense-in-depth access check on mount (`getDoc` once,
+resolve role via `studentId`/`tutorId`/`childId`+`childIds` — same fields the
+rules already enforce, this is a UX layer on top, not instead of). Renders
+the context header from the session doc's own snapshot fields (never
+refetches the question bank), the co-writable `ScratchPad` wired with
+`liveSessionId`/`authorId`/`authorRole`/`remoteStrokes` (strokes filtered to
+exclude the current user's own `authorId`, per step 2's documented caller
+responsibility), a placeholder "Talk" button (reads
+`users/{tutorId}.googleMeetUrl` directly, opens it or shows "no meeting link
+set" — the real `SessionCallCard` resolution logic is step 6, not built here
+per the brief), and role-gated End/Leave: "end call" (visible only to the
+student) calls `endLiveSession()` + navigates away; "leave" (joiner) just
+navigates away without ending the student's session.
+
+**Route wiring** (`app/src/App.tsx`): one surgical `<Route
+path="/live-session/:sessionId" element={<AuthGuard><LiveSessionPage
+/></AuthGuard>}>` line + one import, placed next to `/weekly-paper`. Checked
+`git diff app/src/App.tsx` before touching it (clean) — didn't reformat or
+touch anything else.
+
+**Practice.tsx wiring**: destructured `tutorId` from `useStudentData` (was
+only pulling `streak, practiceCount` before — the hook already returned it,
+confirmed at `useStudentData.ts:66,146-256`). Added `<CallButton>` into
+`s.bannerTools` next to `FlagQuestion`/`BookmarkButton` (~line 2465), built
+from `currentQ` (`questionId`, `conceptId` via `toOntologyId`, `conceptName`
+via the same `PRACTICE_CONCEPTS.find(...) ?? bridgeLabel(...)` fallback the
+neighboring controls already use, `questionText`).
+
+**Bug caught and fixed while screenshotting**: `CallButton`'s base CSS
+(`CallButton.module.css`) copies `FlagQuestion.module.css`'s white-on-
+translucent pill styling, which assumes a dark question-banner background.
+But `Practice.module.css` overrides `.qFlag`'s colors for the light
+matte/paper banner phases (`.matteShell .qFlag` / `.paperScan .qFlag`, ~line
+480) — `CallButton` had no equivalent override, so on the light banner it
+rendered white-text-on-cream, effectively invisible (confirmed via a real
+screenshot: a barely-visible ghost pill next to a clearly legible "tag for
+tutor"). Fixed by adding matching `.matteShell .qCall` / `.paperScan .qCall`
+rules to `Practice.module.css` and passing `className={s.qCall}` to
+`CallButton`, same treatment `FlagQuestion` already gets via `s.qFlag`.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 197 passed / 1 skipped (14 files), matches baseline
+  exactly, zero regressions (no new unit tests this step — the new code is
+  UI wiring + navigation, not new pure logic to unit-test).
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- **Real end-to-end proof, not just "it renders"**: stood up the Firestore +
+  Auth emulators locally (Java 21 via `/opt/homebrew/opt/openjdk@21`, the
+  system default 17 is too old), temporarily added an `auth` emulator port
+  to `firebase.json`, a `VITE_USE_EMULATORS`-gated emulator-connect branch in
+  `firebase.ts`, a `VITE_SCREENSHOT_MODE`-gated custom-token sign-in bridge
+  in `App.tsx`, and a matching `?screenshotDirect=<conceptId>` direct-session
+  launcher in `Practice.tsx` (calls the real `launchMissionDirect()` — the
+  same function PawHub uses — not a fake state injection). Seeded a real
+  test student + tutor via `firebase-admin` (`users/{uid}.tutorId` link +
+  `googleMeetUrl`), minted custom tokens for both, drove it with Playwright:
+  - Two tabs of the SAME student account: confirmed the Call button appears,
+    creates a real `liveSessions` doc, navigates to `/live-session/:id`, and
+    a second tab opened directly on that URL passes the access check and
+    renders the same context + scratchpad. The second tab correctly does
+    **not** show the first tab's stroke — expected per design, since both
+    tabs share one `authorId` and the remote-stroke exclusion can't tell
+    "my other tab" from "my own local echo." Confirms the dedup guard works
+    as designed, not a bug.
+  - **Stronger proof, a separate browser context signed in as the real
+    linked tutor account**, joining the same session URL: the tutor's tab
+    immediately replayed the student's stroke from Firestore (genuine
+    cross-account real-time sync, not the same-uid case above), then drew
+    its own stroke, which appeared on the student's original tab live.
+    Role-gating also confirmed correct in the same run: the student's tab
+    showed "end call", the tutor's tab showed "leave".
+  - All scaffolding (`firebase.json`, `app/src/firebase.ts`, `App.tsx`,
+    `Practice.tsx` shims) fully reverted, confirmed via `git diff firebase.json
+    app/src/firebase.ts` (empty) and `grep VITE_USE_EMULATORS|VITE_SCREENSHOT_MODE|
+    screenshotDirect|signInWithCustomToken|connectAuthEmulator` across those
+    files (empty). `tsc`/`vitest`/`build` re-run clean after the revert —
+    numbers above are post-revert.
+
+**Screenshots** (`agent_work/product/screenshots_2026-08-05/`):
+`practice_call_button.png` (Practice question banner, Call button legible
+next to tag-for-tutor/bookmark, post-CSS-fix), `live_session_page_context.png`
+(LiveSessionPage rendering real context header + empty scratchpad right
+after creation), `live_session_pageA_after_own_stroke.png` (creator's own
+stroke), `live_session_pageB_same_student_no_dupe.png` (second same-student
+tab, correctly stroke-less), `live_session_tutor_sees_student_stroke.png` /
+`live_session_tutor_after_own_stroke.png` / `live_session_student_sees_tutor_stroke.png`
+(the real cross-account sync proof described above).
+
+Commit `<fill in below>` — `app/src/components/CallButton.tsx`,
+`app/src/components/CallButton.module.css`, `app/src/pages/LiveSessionPage.tsx`,
+`app/src/pages/LiveSessionPage.module.css`, `app/src/App.tsx`,
+`app/src/pages/Practice.tsx`, `app/src/pages/Practice.module.css`,
+`ACTIVE_TASK.md` only. Not pushed.
+
+**Next**: build-order step 4 — `LiveJoinBanner.tsx` on `TutorDashboard.tsx`
+(and step 5, `ParentDashboard.tsx`) — the first real cross-role, end-to-end
+UI demo (a real tutor sees a banner when their student calls, joins from it).
+This session's emulator test already proves the underlying sync works
+cross-account; step 4 is wiring the actual UI entry point for it.
+
+---
+
+## Live "Call" co-writing — ScratchPad plumbing done (build-order step 2 of 8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Step 1
+(Firestore rules + `app/src/lib/liveSession.ts` data layer) was already done
+before this session. This session did **step 2 only**: `ScratchPad.tsx`
+live-write plumbing. No UI was built — that's step 3, next.
+
+**`app/src/components/ScratchPad.tsx`** — added optional props
+`liveSessionId`, `authorId`, `authorRole`, `remoteStrokes` (reuses
+`ScratchStrokePoint` from `types/index.ts`, no redefinition). Two new pure
+functions, both exported for testability (this repo has no jsdom test
+environment, per `vitest.config.ts`'s `.test.ts`-only include glob — no DOM
+to mount a real component into):
+- `maybeAppendLiveStroke(points, liveSessionId, authorId, authorRole, appendFn)`
+  — no-op unless both `liveSessionId` and `authorId` are set; called from
+  `end()` with the just-finished stroke, captured into its own `const`
+  BEFORE `pointsRef.current` is cleared (the off-by-one-in-time bug the plan
+  warned about — verified the capture ordering by hand).
+- `combineStrokesForPaint(committed, inProgress, remoteStrokes)` — merge used
+  by `redraw()` so remote ink paints through the exact same `drawStrokes()`
+  call as local ink, no second canvas. Added a `useEffect` on `[remoteStrokes,
+  redraw]` since remote strokes arrive via props, not a user gesture, and
+  nothing else would trigger a repaint. Doc comment on `combineStrokesForPaint`
+  makes explicit that dedup (not drawing the local user's own stroke twice)
+  is the responsibility of whoever wires `subscribeLiveStrokes` later — this
+  function just concatenates.
+- Purely additive: grepped every real call site (`HomeworkSession.tsx`,
+  `GradeOnboard.tsx`, `SessionWork.tsx`, `ConceptChapterPage.tsx`,
+  `Practice.tsx`, `WeeklyPracticePaperPage.tsx`) — none pass the new props,
+  confirmed unaffected.
+
+**Verification**: `npx tsc --noEmit` clean. `npx vitest run` 197 passed (was
+184) + 1 skipped, 14 files (was 13) — the 13 new tests are in the new
+`app/src/components/ScratchPad.test.ts`, zero regressions. `npm run build`
+succeeded. New test file covers: forwards on complete stroke when both ids
+set, defaults `authorRole` to `'student'`, passes through `tutor`/`parent`
+roles, does NOT forward when either id is missing or when stroke is empty,
+and `combineStrokesForPaint` ordering/omission/backward-compat cases.
+
+Committed (not pushed): `171a8bec` — `app/src/components/ScratchPad.tsx` +
+`app/src/components/ScratchPad.test.ts` only.
+
+**Next**: build-order step 3 — `CallButton.tsx`, `LiveSessionPage.tsx`
+(+ `.module.css`s), and the `/live-session/:sessionId` route in `App.tsx`.
+Not started.
+
+---
+
+## Story beat now also primes plain single-concept practice, not just Weekly Review (Fable 5, 2026-08-05)
+
+Earlier today's Weekly Review walkthrough (entry below) added a `weekly-story`
+phase — story beat → formula card, per topic — but only generalized the
+formula card (`explore` phase) to serve both flows; the story beat itself
+stayed hard-gated to `weeklyWalkSlots`. Akshat confirmed he wants the same
+story-beat priming for the regular single-concept flow too (click one concept
+from the path/dashboard → practice it directly), which previously skipped
+straight to the formula card.
+
+**`app/src/pages/Practice.tsx`** — mirrored the formula card's own
+generalization pattern, didn't invent a new one:
+- `weekly-story` render condition: `pPhase === 'weekly-story' && weeklyWalkSlots`
+  → `pPhase === 'weekly-story' && (conceptMeta || (weeklyWalkSlots && concept))`.
+- Inside, `slot = weeklyWalkSlots?.[weeklyWalkIndex]` (now optional); id/label
+  resolve `slot?.conceptId ?? conceptMeta?.id ?? concept ?? ''` /
+  `slot?.label ?? conceptMeta?.label ?? actConceptLabel(storyId)`. The
+  "Weekly Review · Topic X of Y" line now only renders `{weeklyWalkSlots && (...)}`
+  (same idiom the formula card already used one block down). The role-framing
+  line (`slot.role === 'strengthen' | 'stretch' | ...`) falls back to a plain
+  "A quick warm-up before you dive in." when there's no slot, instead of
+  showing broken/undefined text.
+- `pickConcept()` (the single-concept entry point, called from both the path-
+  view topic cards and the "Topics to explore" grid) now sets `weekly-story`
+  instead of jumping straight to `explore`. Grepped all `setPPhase('explore')`
+  call sites to confirm no other direct entry point was missed — the two
+  remaining ones are internal "Continue"/"back" navigation within the phase
+  machine itself, unchanged.
+- **Bug caught while screenshotting**: the story beat's `settingLine`
+  paragraph used a raw white inline style (`rgba(255,255,255,0.75)`) on the
+  light "matte" paper background — illegible (confirmed via screenshot,
+  "At sea, bound for Jamaica, 1761" nearly invisible). This is the exact bug
+  the earlier Weekly Review entry below says it fixed, but the fix wasn't
+  actually on disk. Fixed for real this time: swapped to the existing
+  `s.exploreTagline` class (slate-gray, already has dark/light + matte
+  overrides in `Practice.module.css`), same as every other tagline in this
+  block already uses.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 184 passed / 1 skipped (13 files), matches baseline, zero
+  regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk-size
+  warning, unrelated).
+
+**Screenshots** — real, via a temporary `VITE_SCREENSHOT_MODE`-gated
+`AuthGuard` bypass in `App.tsx` (demo user, same technique as the Weekly
+Review entry below) + a temporary `?screenshotMode=single|weekly` query-param
+useEffect in `Practice.tsx` (single: calls `pickConcept()` directly; weekly:
+builds a 2-slot paper and calls `startWeeklyWalkthrough()`), driven by a
+scripted Playwright session against `VITE_SCREENSHOT_MODE=1 npx vite --port
+5199 --strictPort`. Both shims applied on top of byte-for-byte backups of
+this session's own already-edited `App.tsx`/`Practice.tsx` and reverted
+afterward — confirmed via `diff` against the backups (`App.tsx` identical)
+and `grep SCREENSHOT app/src/App.tsx app/src/pages/Practice.tsx` returning
+empty before committing. `tsc`/`vitest`/`build` re-run clean after the revert
+(numbers above are post-revert, post-fix).
+
+5 screenshots saved to `agent_work/product/screenshots_2026-08-05/`:
+`single_concept_01_story_beat.png` (Linear Equations, single-concept entry —
+story beat with no "Weekly Review · Topic X of Y" line, generic "A quick
+warm-up before you dive in." instead of role framing, readable settingLine),
+`single_concept_02_formula_card.png` (Continue → same concept's real formula
+card), `single_concept_03_story_beat_quadratics.png` (a second concept,
+Quadratic Equations/Galileo, proving the story beat generalizes rather than
+being a fluke of one concept), `weekly_regression_01_story_beat.png` /
+`weekly_regression_02_formula_card.png` (Weekly Review walkthrough, unchanged
+— "Weekly Review · Topic 1 of 2" + "A weak spot we're strengthening." still
+render exactly as before, confirming no regression).
+
+Commit `2177ea54` — `app/src/pages/Practice.tsx` only. Not pushed.
+
+---
+
 ## Weekly Review guided play-through: story → formula card → question batch, per topic (Fable 5, 2026-08-05)
 
 Akshat's ask: a new guided Weekly Review mode — story beat → concept/formula

@@ -496,6 +496,22 @@
   border-color: transparent;
 }
 
+/* Call button contrast on the light matte / paper banners — same treatment
+   as .qFlag above, CallButton.module.css's base styling assumes a dark
+   banner background which these light phases don't have. */
+.matteShell .qCall,
+.paperScan .qCall {
+  background: transparent;
+  color: #8a8073;
+  border-color: rgba(102,92,78,0.28);
+}
+.matteShell .qCall:hover:not(:disabled),
+.paperScan .qCall:hover:not(:disabled) {
+  background: rgba(102,92,78,0.08);
+  color: #4a4237;
+  border-color: rgba(102,92,78,0.45);
+}
+
 .examTagLight {
   font-size: 10px;
   font-weight: 700;

@@ -9,6 +9,7 @@ import AppTabBar from '../components/AppTabBar'
 import PingTutor from '../components/PingTutor'
 import BookmarkButton from '../components/BookmarkButton'
 import FlagQuestion from '../components/FlagQuestion'
+import CallButton from '../components/CallButton'
 import { ConceptPathIcon } from '../components/ConceptPathIcon'
 import { ScientificCalcPanel, ScientificCalcToggle } from '../components/ScientificCalculator'
 import { useStudentData } from '../hooks/useStudentData'
@@ -372,7 +373,7 @@ export default function Practice() {
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
-  const { streak, practiceCount } = useStudentData(user)
+  const { streak, practiceCount, tutorId } = useStudentData(user)
   const fileRef  = useRef<HTMLInputElement>(null)
   const answerInputRef = useRef<HTMLInputElement>(null)
   const draftHydratedRef = useRef(false)
@@ -2480,6 +2481,21 @@ export default function Practice() {
                                 .then(setBookmarkedQuestions)
                             }}
                           />
+                          {user?.uid && (
+                            <CallButton
+                              className={s.qCall}
+                              studentId={user.uid}
+                              tutorId={tutorId}
+                              context={{
+                                contextType: 'question',
+                                questionId: currentQ.id,
+                                conceptId: toOntologyId(currentQ.conceptId),
+                                conceptName: PRACTICE_CONCEPTS.find(c => c.id === currentQ.conceptId)?.label
+                                  ?? bridgeLabel(toOntologyId(currentQ.conceptId)),
+                                questionText: currentQ.question,
+                              }}
+                            />
+                          )}
                         </div>
                       </div>
                       {/* Narrative storyIntro / settingLine / storyContext paragraphs

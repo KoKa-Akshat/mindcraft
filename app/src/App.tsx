@@ -41,6 +41,7 @@ import ParentDashboard    from './pages/ParentDashboard'
 import SessionWork        from './pages/SessionWork'
 import HomeworkSession    from './pages/HomeworkSession'
 import WeeklyPracticePaperPage from './pages/WeeklyPracticePaperPage'
+import LiveSessionPage    from './pages/LiveSessionPage'
 import JoinClassroom      from './pages/JoinClassroom'
 import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
@@ -296,6 +297,7 @@ export default function App() {
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
         <Route path="/weekly-paper"            element={<AuthGuard><WeeklyPracticePaperPage /></AuthGuard>} />
+        <Route path="/live-session/:sessionId" element={<AuthGuard><LiveSessionPage /></AuthGuard>} />
         <Route path="/concept/:conceptId"      element={<AuthGuard><ConceptChapterPage /></AuthGuard>} />
         <Route path="/prep"                    element={<Prep />} />
 
