@@ -376,10 +376,10 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 10px 12px;
-  border: 2.5px solid #3a2f55;
+  border: 2.5px solid #143a2e;
   background: none;
   text-align: left;
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+  box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.16);
   transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms;
 }
 
@@ -387,7 +387,7 @@
   transform: scale(1.05) rotate(-0.5deg);
   box-shadow:
     0 0 0 3px rgba(125, 255, 179, 0.35),
-    4px 8px 0 rgba(58, 47, 85, 0.14);
+    4px 8px 0 rgba(20, 58, 46, 0.14);
 }
 
 .exploreCard:focus-visible {
@@ -696,7 +696,7 @@
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(58, 47, 85, 0.45);
+  color: rgba(20, 58, 46, 0.45);
 }
 .actTocTitle {
   margin: 0;
@@ -721,7 +721,7 @@
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(58, 47, 85, 0.4);
+  color: rgba(20, 58, 46, 0.4);
   margin-bottom: 6px;
 }
 .actTocList {
@@ -768,7 +768,7 @@
   font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: rgba(58, 47, 85, 0.35);
+  color: rgba(20, 58, 46, 0.35);
   cursor: pointer;
   align-self: flex-start;
 }
@@ -781,11 +781,11 @@
   gap: 4px;
   width: 100%;
   text-align: left;
-  border: 2.5px solid #3a2f55;
+  border: 2.5px solid #143a2e;
   border-radius: 16px 20px 14px 18px;
   padding: 14px 16px;
   background: linear-gradient(145deg, #fff8c8, #ffe566);
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+  box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.16);
   cursor: pointer;
   margin-bottom: 16px;
   transition: transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -826,17 +826,18 @@
    dashboard desk, the chapter canvas, and Practice's matte all read as
    one continuous surface instead of three separately-tuned UIs. */
 .canvasDesk {
+  /* Marketing palette (index.html / CoverLanding): ink, leaf, mint, cream. */
   --desk-radius-sm: 12px;
   --desk-radius-md: 16px;
   --desk-radius-lg: 22px;
-  --desk-ink: #2a2430;
-  --desk-ink-soft: #3a2f55;
-  --desk-shadow-soft: 0 6px 20px rgba(90, 70, 140, 0.1);
-  --desk-shadow-raised: 0 10px 30px rgba(90, 70, 140, 0.13);
-  --desk-shadow-stage: 0 16px 48px rgba(90, 70, 140, 0.16);
-  --desk-shadow-sticker: 3px 4px 0 rgba(58, 47, 85, 0.16);
-  --desk-shadow-sticker-hover: 0 0 0 3px rgba(125, 255, 179, 0.35), 5px 9px 0 rgba(58, 47, 85, 0.16);
-  --desk-border-sticker: 2px solid rgba(58, 47, 85, 0.85);
+  --desk-ink: #143a2e;
+  --desk-ink-soft: #2a5244;
+  --desk-shadow-soft: 0 6px 20px rgba(29, 84, 54, 0.08);
+  --desk-shadow-raised: 0 10px 30px rgba(29, 84, 54, 0.11);
+  --desk-shadow-stage: 0 16px 48px rgba(29, 84, 54, 0.14);
+  --desk-shadow-sticker: 3px 4px 0 rgba(20, 58, 46, 0.14);
+  --desk-shadow-sticker-hover: 0 0 0 3px rgba(185, 232, 111, 0.35), 5px 9px 0 rgba(20, 58, 46, 0.14);
+  --desk-border-sticker: 2px solid rgba(20, 58, 46, 0.85);
   --desk-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --desk-ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
 
@@ -847,9 +848,9 @@
   flex-direction: column;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 80% 55% at 15% 10%, rgba(255, 190, 220, 0.4), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 90% 80%, rgba(180, 210, 255, 0.45), transparent 50%),
-    linear-gradient(165deg, #efe6fb 0%, #e4dcf5 50%, #d9d0ef 100%);
+    radial-gradient(ellipse 70% 50% at 78% 12%, rgba(185, 232, 111, 0.34), transparent 58%),
+    radial-gradient(ellipse 55% 45% at 12% 88%, rgba(245, 211, 72, 0.16), transparent 55%),
+    linear-gradient(155deg, #fff8e9 0%, #fffdf7 48%, #e4f7dc 100%);
   padding: 4px 8px 8px;
   box-sizing: border-box;
 }
@@ -858,7 +859,7 @@
   height: min(78vh, 860px);
   max-height: min(78vh, 860px);
   border-radius: 18px;
-  border: 1px solid rgba(58, 47, 85, 0.12);
+  border: 1px solid rgba(20, 58, 46, 0.12);
 }
 
 /* ── merged hero bar ──────────────────────────────────────────────────────
@@ -990,23 +991,25 @@
      dropping styles (the Notes panel's search line and empty-state text
      were nearly invisible before this fix). Values tuned to match this
      canvas desk's own ink/paper palette rather than the book's. */
-  --rule: rgba(58, 47, 85, 0.14);
-  --ink-katha: #3a2f55;
-  --ink-pencil: rgba(58, 47, 85, 0.62);
-  --ink-depth: #6b5cff;
-  --ink-faded: rgba(58, 47, 85, 0.4);
-  --paper-edge: #ece6f7;
-  --paper-raised: #fffdf8;
-  --paper-recessed: #f3eefc;
-  --shadow-card: 0 3px 10px rgba(58, 47, 85, 0.1);
+  --rule: rgba(20, 58, 46, 0.12);
+  --ink-katha: #143a2e;
+  --ink-pencil: rgba(20, 58, 46, 0.62);
+  --ink-depth: #247a4d;
+  --ink-faded: rgba(20, 58, 46, 0.4);
+  --paper-edge: #e4f0e6;
+  --paper-raised: #fffdf7;
+  --paper-recessed: #eef7f1;
+  --shadow-card: 0 3px 10px rgba(29, 84, 54, 0.1);
   --font-katha: var(--tok-font-serif);
   --font-script: var(--tok-font-hand);
   --font-stamp: var(--tok-font-mono);
 
   flex: 1;
   min-height: 0;
-  background: rgba(255, 253, 248, 0.96);
-  border: none;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -8%, rgba(255, 248, 233, 0.9), transparent 55%),
+    #fffdf7;
+  border: 1px solid rgba(20, 58, 46, 0.08);
   border-radius: var(--desk-radius-lg);
   box-shadow: var(--desk-shadow-stage);
   /* Extra left gutter (was 24px) makes room for .deskSpine's ring column
@@ -1045,17 +1048,17 @@
   transform: translateX(-50%);
   border-radius: 999px;
   background: linear-gradient(180deg,
-    rgba(58, 47, 85, 0.05),
-    rgba(58, 47, 85, 0.16) 50%,
-    rgba(58, 47, 85, 0.05));
+    rgba(20, 58, 46, 0.05),
+    rgba(20, 58, 46, 0.16) 50%,
+    rgba(20, 58, 46, 0.05));
 }
 .deskRing {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fffdf8, #cfc3e8 55%, #8a7ab0 100%);
-  border: 1.5px solid rgba(58, 47, 85, 0.8);
-  box-shadow: 0 1px 0 rgba(58, 47, 85, 0.18);
+  background: radial-gradient(circle at 35% 30%, #fffdf7, #b9e86f 55%, #247a4d 100%);
+  border: 1.5px solid rgba(20, 58, 46, 0.75);
+  box-shadow: 0 1px 0 rgba(20, 58, 46, 0.16);
   flex-shrink: 0;
 }
 
@@ -1108,7 +1111,7 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: rgba(58, 47, 85, 0.22);
+  color: rgba(20, 58, 46, 0.22);
   pointer-events: none;
   user-select: none;
 }
@@ -1191,10 +1194,10 @@
   background: linear-gradient(145deg, #8dffc0, #6aefab);
   padding: 7px 14px;
   cursor: pointer;
-  box-shadow: 0 3px 12px rgba(58, 47, 85, 0.08);
+  box-shadow: 0 3px 12px rgba(20, 58, 46, 0.08);
   transition: transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 140ms ease;
 }
-.paperCta:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(58, 47, 85, 0.14); }
+.paperCta:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(20, 58, 46, 0.14); }
 .paperCta:active { transform: translateY(0); }
 .paperCtaEyebrow {
   font-family: var(--tok-font-mono);
@@ -1219,15 +1222,15 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1.5px solid rgba(58, 47, 85, 0.14);
+  border: 1.5px solid rgba(20, 58, 46, 0.14);
   border-radius: 12px 16px 12px 14px;
-  background: rgba(58, 47, 85, 0.05);
+  background: rgba(20, 58, 46, 0.05);
   padding: 7px 14px;
   cursor: default;
 }
 .paperCtaLockIcon {
   flex-shrink: 0;
-  color: rgba(58, 47, 85, 0.55);
+  color: rgba(20, 58, 46, 0.55);
 }
 .paperCtaLockedText {
   display: flex;
@@ -1235,12 +1238,12 @@
   align-items: flex-start;
   gap: 1px;
 }
-.paperCtaLockedText .paperCtaEyebrow { color: rgba(58, 47, 85, 0.55); }
+.paperCtaLockedText .paperCtaEyebrow { color: rgba(20, 58, 46, 0.55); }
 .paperCtaUnlockLabel {
   font-family: var(--tok-font-sans);
   font-size: 14px;
   font-weight: 600;
-  color: rgba(58, 47, 85, 0.6);
+  color: rgba(20, 58, 46, 0.6);
 }
 
 /* "Find a Tutor", new on this view  -  same destination as Sidebar.tsx's
@@ -1258,22 +1261,22 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border: 1.5px solid rgba(58, 47, 85, 0.22);
+  border: 1.5px solid rgba(20, 58, 46, 0.22);
   border-radius: 12px 16px 12px 14px;
   background: rgba(255, 253, 248, 0.5);
   cursor: pointer;
   font-family: var(--tok-font-sans);
   font-size: 13px;
   font-weight: 600;
-  color: rgba(58, 47, 85, 0.7);
+  color: rgba(20, 58, 46, 0.7);
   padding: 7px 14px;
   white-space: nowrap;
   transition: color 140ms ease, border-color 140ms ease, background 140ms ease, transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 .bookSessionLink:hover {
   color: var(--desk-ink);
-  border-color: rgba(58, 47, 85, 0.4);
-  background: rgba(255, 253, 248, 0.85);
+  border-color: rgba(36, 122, 77, 0.35);
+  background: rgba(228, 247, 220, 0.72);
   transform: translateY(-1px);
 }
 .bookSessionLink:active { transform: translateY(0); }
@@ -1293,7 +1296,7 @@
 .iconSelectIcon {
   position: absolute;
   left: 14px;
-  color: rgba(58, 47, 85, 0.7);
+  color: rgba(20, 58, 46, 0.7);
   pointer-events: none;
 }
 .iconSelect {
@@ -1363,8 +1366,8 @@
   min-height: 0;
 }
 .tocLane {
-  --lane-accent: #6b5cff;
-  --lane-ink: #2a2430;
+  --lane-accent: #247a4d;
+  --lane-ink: #143a2e;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1491,7 +1494,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(255, 253, 248, 0.95);
-  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), inset 0 0 0 1.5px rgba(58, 47, 85, 0.16);
+  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), inset 0 0 0 1.5px rgba(20, 58, 46, 0.16);
   transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce);
   z-index: 1;
 }
@@ -1516,7 +1519,7 @@
   height: 3px;
   width: calc((var(--node-w) - var(--dot-size)) / 2);
   transform: translateY(-50%);
-  background: color-mix(in srgb, var(--node-color) 50%, rgba(58, 47, 85, 0.14));
+  background: color-mix(in srgb, var(--node-color) 50%, rgba(20, 58, 46, 0.14));
   z-index: -1;
 }
 .tocNodeDot::before { right: 100%; }
