@@ -78,21 +78,65 @@
   opacity: 0.8;
 }
 
-/* Top-right — vivid leaf pill */
-.findTutorBtn {
+/* Top-right action cluster — Sticker Store, then Find a Tutor */
+.topActions {
   position: absolute;
   top: clamp(16px, 3vw, 24px);
   right: clamp(16px, 3vw, 24px);
   z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: min(92vw, 520px);
+}
+
+.stickerStoreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 52px;
+  padding: 0 18px;
+  border: 1.5px solid rgba(245, 245, 245, 0.28);
+  border-radius: 999px;
+  background: rgba(8, 14, 20, 0.72);
+  color: #fffdf7;
+  font-family: var(--tok-font-sans);
+  font-size: clamp(12px, 1.25vw, 14px);
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 200ms ease,
+    border-color 200ms ease;
+}
+.stickerStoreBtn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 211, 72, 0.7);
+  background: rgba(245, 211, 72, 0.14);
+  color: #f5d348;
+}
+.stickerStoreBtn:focus-visible {
+  outline: 2px solid #f5d348;
+  outline-offset: 3px;
+}
+
+/* Forest green CTA — cream text */
+.findTutorBtn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   min-height: 52px;
   padding: 0 22px;
-  border: 1.5px solid #c4f547;
+  border: 1.5px solid #143a2e;
   border-radius: 999px;
-  background: #c4f547;
-  color: #080e14;
+  background: #247a4d;
+  color: #fffdf7;
   font-family: var(--tok-font-sans);
   font-size: clamp(13px, 1.35vw, 15px);
   font-weight: 900;
@@ -100,8 +144,8 @@
   text-transform: uppercase;
   cursor: pointer;
   box-shadow:
-    0 0 0 4px rgba(196, 245, 71, 0.16),
-    0 14px 36px rgba(196, 245, 71, 0.28);
+    0 0 0 4px rgba(36, 122, 77, 0.22),
+    0 14px 36px rgba(20, 58, 46, 0.35);
   transition:
     transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
     background 200ms ease,
@@ -110,19 +154,20 @@
 }
 .findTutorBtn:hover {
   transform: translateY(-3px);
-  background: #f5f5f5;
-  border-color: #f5f5f5;
+  background: #143a2e;
+  border-color: #143a2e;
+  color: #fffdf7;
   box-shadow:
-    0 0 0 4px rgba(196, 245, 71, 0.22),
-    0 18px 40px rgba(196, 245, 71, 0.34);
+    0 0 0 4px rgba(36, 122, 77, 0.28),
+    0 18px 40px rgba(20, 58, 46, 0.42);
 }
 .findTutorBtn:active { transform: translateY(-1px); }
 .findTutorBtn:focus-visible {
-  outline: 2px solid #f5f5f5;
+  outline: 2px solid #fffdf7;
   outline-offset: 3px;
 }
 
-/* ── Subject orbit — decorative only (course picker is in the name row) */
+/* ── Subject orbit — ACT fixed; others dismissible ─────────────────── */
 .subjectField {
   position: absolute;
   inset: 0;
@@ -135,7 +180,7 @@
 
 .subjectChipWrap {
   position: absolute;
-  pointer-events: none;
+  pointer-events: auto;
   opacity: 0;
   animation:
     chipIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) calc(0.12s + var(--chip-i, 0) * 0.05s) both,
@@ -160,12 +205,36 @@
 }
 .subjectChipLive {
   font-weight: 900;
-  border-color: rgba(196, 245, 71, 0.75);
-  background: rgba(196, 245, 71, 0.16);
-  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.18), 0 10px 28px rgba(0, 0, 0, 0.22);
+  border-color: rgba(36, 122, 77, 0.85);
+  background: rgba(36, 122, 77, 0.28);
+  box-shadow: 0 0 0 3px rgba(36, 122, 77, 0.22), 0 10px 28px rgba(0, 0, 0, 0.22);
+  pointer-events: none;
 }
-.subjectChipSoon {
-  opacity: 0.92;
+.subjectChipRemovable {
+  padding-right: 6px;
+}
+.chipDismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(245, 245, 245, 0.12);
+  color: rgba(245, 245, 245, 0.75);
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+}
+.chipDismiss:hover {
+  background: rgba(193, 18, 31, 0.55);
+  color: #fffdf7;
+  transform: scale(1.06);
+}
+.chipDismiss:focus-visible {
+  outline: 2px solid #fffdf7;
+  outline-offset: 1px;
 }
 .chipLiveDot {
   width: 7px;
@@ -173,6 +242,86 @@
   border-radius: 50%;
   background: #c4f547;
   box-shadow: 0 0 10px rgba(196, 245, 71, 0.7);
+}
+
+/* Sticker store panel — catalog slots ready for your ideas */
+.storeBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(8, 14, 20, 0.55);
+  backdrop-filter: blur(6px);
+  animation: deskIn 0.28s ease both;
+}
+.storePanel {
+  width: min(420px, 100%);
+  border: 1px solid rgba(245, 245, 245, 0.14);
+  border-radius: 18px;
+  background: rgba(8, 14, 20, 0.92);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+  padding: 22px 22px 20px;
+}
+.storeHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.storeEyebrow {
+  margin: 0 0 4px;
+  font-family: var(--tok-font-sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 211, 72, 0.8);
+}
+.storeTitle {
+  margin: 0;
+  font-family: var(--tok-font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fffdf7;
+}
+.storeClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(245, 245, 245, 0.16);
+  border-radius: 10px;
+  background: transparent;
+  color: #fffdf7;
+  cursor: pointer;
+}
+.storeClose:hover { background: rgba(245, 245, 245, 0.08); }
+.storeCopy {
+  margin: 12px 0 16px;
+  font-family: var(--tok-font-serif);
+  font-size: 16px;
+  line-height: 1.4;
+  color: rgba(245, 245, 245, 0.72);
+}
+.storeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.storeSlot {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed rgba(245, 245, 245, 0.18);
+  border-radius: 14px;
+  color: rgba(245, 245, 245, 0.28);
+  background: rgba(245, 245, 245, 0.03);
 }
 
 @keyframes chipIn {
@@ -321,7 +470,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .desk, .cover, .deskClosing, .deskClosing .cover,
-  .openArrow, .nameInput, .findTutorBtn, .subjectChipWrap, .wordmark {
+  .openArrow, .nameInput, .findTutorBtn, .stickerStoreBtn, .subjectChipWrap, .wordmark {
     animation: none;
     transition: none;
   }
@@ -339,12 +488,16 @@
   .slot3 { top: 34%; left: 4%; }
   .slot4 { top: 36%; right: 4%; }
   .slot6 { bottom: 14%; right: 6%; }
-  .findTutorBtn {
+  .topActions {
     top: 12px;
     right: 12px;
-    min-height: 46px;
-    padding: 0 16px;
-    font-size: 12px;
+    gap: 8px;
+  }
+  .stickerStoreBtn,
+  .findTutorBtn {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 11px;
   }
   .nameField { max-width: 280px; }
   .openArrow { width: 44px; }
