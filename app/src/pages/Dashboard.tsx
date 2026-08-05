@@ -21,7 +21,7 @@ import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIn
 import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
-import { CalendarCheck, Lock, MessageCircle, Search, LogOut } from 'lucide-react'
+import { CalendarCheck, Lock, MessageCircle, LogOut } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
 import WeeklyReviewPicker from '../components/WeeklyReviewPicker'
@@ -482,6 +482,20 @@ export default function Dashboard({
     navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey } })
   }
 
+  /** New guided play-through: story beat → formula card → question batch,
+   *  per topic, in sequence — alongside the printable paper above, not a
+   *  replacement. Practice.tsx reads the paper back via loadCachedWeeklyPaper()
+   *  (already cached by the picker before calling this), same as the
+   *  printable path reads it in WeeklyPracticePaperPage.tsx. */
+  function startWeeklyPlaythrough(paper: WeeklyPracticePaper) {
+    setShowWeeklyPicker(false)
+    if (!paper.questionIds.length) {
+      openMap()
+      return
+    }
+    navigate('/practice', { state: { weeklyWalkthrough: true } })
+  }
+
   if (!diagChecked) {
     return (
       <div className={s.canvasDesk}>
@@ -671,6 +685,9 @@ export default function Dashboard({
                         </button>
                       )
                     )}
+                    {/* Find a Tutor lives on CoverLanding now (session cover).
+                        Students who already have a tutor still message from here;
+                        Sidebar keeps /find-a-tutor for later sessions. */}
                     {data.tutorId && data.parents.length > 0 ? (
                       <div className={s.iconSelectWrap}>
                         <MessageCircle size={14} className={s.iconSelectIcon} aria-hidden="true" />
@@ -699,16 +716,7 @@ export default function Dashboard({
                         <MessageCircle size={14} aria-hidden="true" />
                         <span>Message Tutor</span>
                       </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className={s.bookSessionLink}
-                        onClick={() => navigate('/find-a-tutor')}
-                      >
-                        <Search size={14} aria-hidden="true" />
-                        <span>Find a Tutor</span>
-                      </button>
-                    )}
+                    ) : null}
                   </div>
                 </div>
 
@@ -897,6 +905,7 @@ export default function Dashboard({
           reviewConceptIds={weeklyReviewIds}
           onClose={() => setShowWeeklyPicker(false)}
           onStart={startWeeklyPaper}
+          onPlayThrough={startWeeklyPlaythrough}
         />
       )}
     </>

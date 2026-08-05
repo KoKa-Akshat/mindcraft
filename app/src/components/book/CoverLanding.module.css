@@ -125,6 +125,65 @@
   stroke-linejoin: round;
 }
 
+/* ── Subject constellation ─────────────────────────────────────────────── */
+.subjectField {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.subjectChip {
+  position: absolute;
+  font-family: var(--tok-font-serif);
+  font-size: clamp(11px, 1.35vw, 13px);
+  letter-spacing: 0.02em;
+  color: rgba(42, 36, 48, 0.58);
+  background: rgba(255, 253, 248, 0.72);
+  border: 1px solid rgba(58, 47, 85, 0.12);
+  border-radius: 999px;
+  padding: 6px 12px;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgba(80, 60, 120, 0.06);
+  opacity: 0;
+  animation:
+    chipIn 0.7s cubic-bezier(0.2, 0, 0, 1) calc(0.18s + var(--chip-i, 0) * 0.06s) both,
+    chipFloat 5.6s ease-in-out calc(0.9s + var(--chip-i, 0) * 0.22s) infinite;
+}
+
+@keyframes chipIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.96) rotate(var(--chip-rot, 0deg)); }
+  to { opacity: 1; transform: translateY(0) scale(1) rotate(var(--chip-rot, 0deg)); }
+}
+
+@keyframes chipFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--chip-rot, 0deg)); }
+  50% { transform: translateY(-5px) rotate(var(--chip-rot, 0deg)); }
+}
+
+/* Scattered placements — keep clear of the centered brand / name cluster. */
+.chipAct {
+  top: 14%; left: 16%;
+  --chip-rot: -2deg;
+  color: rgba(31, 107, 69, 0.78);
+  border-color: rgba(125, 201, 94, 0.35);
+  background: rgba(232, 255, 236, 0.78);
+  font-weight: 600;
+}
+.chipWriting { top: 22%; right: 14%; --chip-rot: 3deg; }
+.chipFashion { top: 38%; left: 8%; --chip-rot: -4deg; }
+.chipLaw { bottom: 28%; right: 11%; --chip-rot: 2deg; }
+.chipViolin { top: 58%; left: 12%; --chip-rot: 5deg; }
+.chipSpanish { bottom: 16%; left: 22%; --chip-rot: -1deg; }
+.chipPhoto { top: 18%; left: 42%; --chip-rot: -2deg; }
+.chipCoding { bottom: 22%; right: 28%; --chip-rot: 3deg; }
+.chipPhil { top: 48%; right: 8%; --chip-rot: -3deg; }
+.chipDebate { bottom: 36%; left: 28%; --chip-rot: 2deg; }
+
 .coverFace {
   position: relative;
   z-index: 2;
@@ -161,10 +220,10 @@
 
 .nameField {
   width: 100%;
-  max-width: 280px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   margin: 10px 0 4px;
 }
 
@@ -175,8 +234,16 @@
   color: rgba(42, 36, 48, 0.7);
 }
 
-.nameInput {
+.nameRow {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
   width: 100%;
+}
+
+.nameInput {
+  flex: 1 1 auto;
+  min-width: 0;
   box-sizing: border-box;
   background: rgba(255, 253, 248, 0.9);
   border: 1.5px solid rgba(58, 47, 85, 0.22);
@@ -195,22 +262,63 @@
   box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.28);
 }
 
-.openBtn {
-  margin-top: 14px;
-  border: 2px solid rgba(58, 47, 85, 0.85);
-  border-radius: 16px;
+.openArrow {
+  flex: 0 0 auto;
+  width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(58, 47, 85, 0.85);
+  border-radius: 12px;
   background: linear-gradient(145deg, #7dffb3, #5fe89a);
   color: #1f6b45;
-  font-family: var(--tok-font-hand);
-  font-size: 22px;
-  font-weight: 700;
-  padding: 12px 26px;
   cursor: pointer;
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
-  transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  box-shadow: 2px 3px 0 rgba(58, 47, 85, 0.14);
+  transition:
+    transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 160ms cubic-bezier(0.34, 1.4, 0.64, 1);
 }
-.openBtn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.35), 5px 9px 0 rgba(58, 47, 85, 0.16); }
-.openBtn:active { transform: translateY(0) scale(1); }
+.openArrow:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.32), 3px 6px 0 rgba(58, 47, 85, 0.14);
+}
+.openArrow:active { transform: translateY(0) scale(1); }
+.openArrow:focus-visible {
+  outline: 2px solid #1f6b45;
+  outline-offset: 2px;
+}
+
+.findTutorBtn {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid rgba(58, 47, 85, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.88);
+  color: rgba(42, 36, 48, 0.78);
+  font-family: var(--tok-font-serif);
+  font-size: 14px;
+  padding: 9px 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(80, 60, 120, 0.06);
+  transition:
+    transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+.findTutorBtn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(58, 47, 85, 0.45);
+  background: #fff;
+  color: #2a2430;
+}
+.findTutorBtn:active { transform: translateY(0); }
+.findTutorBtn:focus-visible {
+  outline: 2px solid rgba(58, 47, 85, 0.55);
+  outline-offset: 2px;
+}
 
 .caption {
   margin: 0;
@@ -222,10 +330,26 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .desk, .cover, .deskClosing, .deskClosing .cover, .openBtn, .nameInput { animation: none; transition: none; }
+  .desk, .cover, .deskClosing, .deskClosing .cover,
+  .openArrow, .nameInput, .findTutorBtn, .subjectChip {
+    animation: none;
+    transition: none;
+  }
+  .subjectChip { opacity: 0.85; }
+}
+
+@media (max-width: 860px) {
+  .chipPhoto, .chipDebate, .chipCoding { display: none; }
 }
 
 @media (max-width: 620px) {
   .wordmark { font-size: clamp(40px, 14vw, 56px); }
   .doodleWave, .doodleTri, .doodleStar { display: none; }
+  .chipFashion, .chipPhil, .chipSpanish { display: none; }
+  .chipAct { top: 10%; left: 8%; }
+  .chipWriting { top: 12%; right: 6%; }
+  .chipLaw { bottom: 18%; right: 8%; }
+  .chipViolin { bottom: 14%; left: 10%; }
+  .nameField { max-width: 280px; }
+  .openArrow { width: 42px; }
 }

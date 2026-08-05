@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ArrowRight, Search } from 'lucide-react'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
@@ -24,18 +26,26 @@ function saveCoverName(name: string) {
   try { localStorage.setItem(NAME_KEY, name) } catch { /* ignore */ }
 }
 
+/** Soft subject constellation — atmospheric only (college-tutorable worlds).
+ *  Non-interactive so they never steal focus from name / open / Find a Tutor. */
+const SUBJECT_CHIPS: ReadonlyArray<{ label: string; className: string }> = [
+  { label: 'ACT Math', className: s.chipAct },
+  { label: 'Writing', className: s.chipWriting },
+  { label: 'Fashion', className: s.chipFashion },
+  { label: 'Law', className: s.chipLaw },
+  { label: 'Violin', className: s.chipViolin },
+  { label: 'Spanish', className: s.chipSpanish },
+  { label: 'Photography', className: s.chipPhoto },
+  { label: 'Coding', className: s.chipCoding },
+  { label: 'Philosophy', className: s.chipPhil },
+  { label: 'Debate', className: s.chipDebate },
+]
+
 /**
- * Cover, redesigned 2026-07-23: no background photo (the old
- * mindcraft-cover-hero.jpg was a portrait-shot image forced into this
- * full-bleed landscape box via object-fit: cover, which is what produced the
- * "blending artifact bleeding on the right edge" Akshat flagged, the photo's
- * bright window content got cropped/stretched toward the right edge and
- * washed out against the dark vignette scrim sitting on top of it), calmer
- * lighter colors (dropped the saturated hot-pink ribbon + heavy dark scrim
- * in favor of the same soft parchment/violet desk palette everything else
- * uses), and a name input so the cover greets the student by name.
- * Sizing is unchanged from the 2026-07-23 full-bleed fix (still exactly
- * matches Dashboard.module.css's .canvasDesk padding formula).
+ * Cover, redesigned 2026-07-23: no background photo… (sizing match to
+ * canvasDesk unchanged). 2026-08-05 pass: drop the big “Let’s go” CTA for
+ * an inline name→arrow, host Find a Tutor here, and scatter subject chips
+ * as a quiet constellation around the brand.
  */
 export default function CoverLanding({
   entryLabel,
@@ -51,6 +61,7 @@ export default function CoverLanding({
   accountName?: string
   onOpen: () => void
 }) {
+  const navigate = useNavigate()
   const [closing, setClosing] = useState(false)
   const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
 
@@ -90,7 +101,10 @@ export default function CoverLanding({
     saveCoverName(value.trim())
   }
 
-  const trimmed = name.trim()
+  function goFindTutor() {
+    markCoverSeen()
+    navigate('/find-a-tutor')
+  }
 
   return (
     <div className={`${s.desk} ${closing ? s.deskClosing : ''}`}>
@@ -101,35 +115,60 @@ export default function CoverLanding({
           <svg viewBox="0 0 48 48" className={s.doodleTri}><path d="M24 6 L44 40 L4 40 Z" fill="none" /><path d="M24 6 L24 40 M4 40 L44 40" /></svg>
         </div>
 
+        <ul className={s.subjectField} aria-hidden="true">
+          {SUBJECT_CHIPS.map((chip, i) => (
+            <li
+              key={chip.label}
+              className={`${s.subjectChip} ${chip.className}`}
+              style={{ ['--chip-i' as string]: String(i) }}
+            >
+              {chip.label}
+            </li>
+          ))}
+        </ul>
+
         <div className={s.coverFace}>
-          <span className={s.eyebrow}>ACT Math</span>
+          <span className={s.eyebrow}>study · create · explore</span>
           <span className={s.wordmark}>MindCraft</span>
           <span className={s.wordmarkSub}>your cozy study notebook</span>
 
           <div className={s.nameField}>
             <label className={s.nameLabel} htmlFor="cover-name">What should we call you?</label>
-            <input
-              id="cover-name"
-              type="text"
-              className={s.nameInput}
-              value={name}
-              onChange={e => onNameChange(e.target.value)}
-              placeholder="Type your name"
-              maxLength={40}
-              autoComplete="given-name"
-            />
+            <div className={s.nameRow}>
+              <input
+                id="cover-name"
+                type="text"
+                className={s.nameInput}
+                value={name}
+                onChange={e => onNameChange(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    open()
+                  }
+                }}
+                placeholder="Type your name"
+                maxLength={40}
+                autoComplete="given-name"
+              />
+              <button
+                type="button"
+                className={s.openArrow}
+                onClick={open}
+                aria-label={name.trim() ? `Open notebook as ${name.trim()}` : 'Open your notebook'}
+              >
+                <ArrowRight size={20} strokeWidth={2.4} aria-hidden="true" />
+              </button>
+            </div>
           </div>
 
           <button
             type="button"
-            className={s.openBtn}
-            onClick={open}
+            className={s.findTutorBtn}
+            onClick={goFindTutor}
           >
-            {/* No separate aria-label: the visible text IS the accessible
-             * name here, so a screen reader announces the personalized
-             * "Let's go, {name}" too, not a generic label frozen at "Open
-             * your notebook" while the sighted text changes underneath it. */}
-            {trimmed ? `Let's go, ${trimmed} →` : 'Tap to open →'}
+            <Search size={14} aria-hidden="true" />
+            <span>Find a Tutor</span>
           </button>
         </div>
       </div>
