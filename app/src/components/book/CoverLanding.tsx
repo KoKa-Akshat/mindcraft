@@ -254,15 +254,18 @@ export default function CoverLanding({
             const slot = EQUIP_SLOTS[i] ?? EQUIP_SLOTS[0]
             return (
               <li key={id} className={`${s.equipWrap} ${slot}`}>
-                <button
-                  type="button"
-                  className={s.equipSticker}
-                  onClick={() => toggleSticker(id)}
-                  title={`Remove ${sticker.name}`}
-                  aria-label={`Remove ${sticker.name}`}
-                >
-                  <img src={sticker.src} alt="" draggable={false} />
-                </button>
+                <div className={s.equipSticker}>
+                  <img src={sticker.src} alt={sticker.name} draggable={false} />
+                  <button
+                    type="button"
+                    className={s.equipDismiss}
+                    onClick={() => toggleSticker(id)}
+                    title={`Remove ${sticker.name}`}
+                    aria-label={`Remove ${sticker.name}`}
+                  >
+                    <X size={12} strokeWidth={3} aria-hidden="true" />
+                  </button>
+                </div>
               </li>
             )
           })}

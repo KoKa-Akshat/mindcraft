@@ -225,7 +225,18 @@
   background: rgba(245, 245, 245, 0.12);
   color: rgba(245, 245, 245, 0.75);
   cursor: pointer;
-  transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 140ms ease,
+    background 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+.subjectChipRemovable:hover .chipDismiss,
+.subjectChipRemovable:focus-within .chipDismiss {
+  opacity: 1;
+  pointer-events: auto;
 }
 .chipDismiss:hover {
   background: rgba(193, 18, 31, 0.55);
@@ -233,6 +244,8 @@
   transform: scale(1.06);
 }
 .chipDismiss:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
   outline: 2px solid #fffdf7;
   outline-offset: 1px;
 }
@@ -260,11 +273,11 @@
   animation: chipFloat 7s ease-in-out infinite;
 }
 .equipSticker {
+  position: relative;
   display: block;
   padding: 0;
   border: none;
   background: transparent;
-  cursor: pointer;
   filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
   transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -273,11 +286,39 @@
   width: clamp(72px, 9vw, 104px);
   height: auto;
 }
-.equipSticker:hover { transform: scale(1.06) rotate(-2deg); }
-.equipSticker:focus-visible {
+.equipWrap:hover .equipSticker { transform: scale(1.06) rotate(-2deg); }
+.equipDismiss {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(8, 14, 20, 0.72);
+  color: #fffdf7;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease, background 140ms ease, transform 140ms ease;
+}
+.equipWrap:hover .equipDismiss,
+.equipWrap:focus-within .equipDismiss {
+  opacity: 1;
+  pointer-events: auto;
+}
+.equipDismiss:hover {
+  background: rgba(193, 18, 31, 0.75);
+  transform: scale(1.06);
+}
+.equipDismiss:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
   outline: 2px solid #f5d348;
-  outline-offset: 4px;
-  border-radius: 12px;
+  outline-offset: 2px;
 }
 .equip0 { top: 22%; left: 22%; animation-delay: 0.1s; }
 .equip1 { top: 20%; right: 20%; animation-delay: 0.4s; }
@@ -578,6 +619,19 @@
     transition: none;
   }
   .subjectChipWrap { opacity: 0.92; }
+  .chipDismiss,
+  .equipDismiss {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (hover: none) {
+  .chipDismiss,
+  .equipDismiss {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 @media (max-width: 860px) {
