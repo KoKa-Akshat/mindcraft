@@ -27,7 +27,12 @@ type Props = {
   learn: NextConcept | null
   reviewConceptIds?: string[]
   onClose: () => void
+  /** Printable / scrollable paper — the original Weekly Review flow. */
   onStart: (paper: WeeklyPracticePaper) => void
+  /** Guided play-through: story beat → formula card → question batch per
+   *  topic, in sequence, inside Practice.tsx. New alongside `onStart`, not a
+   *  replacement — the printable path stays reachable via its own button. */
+  onPlayThrough: (paper: WeeklyPracticePaper) => void
 }
 
 type Placed = {
@@ -75,6 +80,7 @@ export default function WeeklyReviewPicker({
   reviewConceptIds = [],
   onClose,
   onStart,
+  onPlayThrough,
 }: Props) {
   const playable = useMemo(() => playableActConceptIds(), [])
   const playableSet = useMemo(() => new Set(playable), [playable])
@@ -123,8 +129,8 @@ export default function WeeklyReviewPicker({
     ))
   }
 
-  function handleStart() {
-    if (litIds.length === 0) return
+  function buildPaper(): WeeklyPracticePaper | null {
+    if (litIds.length === 0) return null
     const paper = buildWeeklyPracticePaper({
       weakness,
       learn,
@@ -134,9 +140,19 @@ export default function WeeklyReviewPicker({
       questionsPerSlot: mode === 'all' ? 1 : 3,
       maxQuestions: mode === 'all' ? 12 : undefined,
     })
-    if (!paper.questionIds.length) return
+    if (!paper.questionIds.length) return null
     cacheWeeklyPaper(paper)
-    onStart(paper)
+    return paper
+  }
+
+  function handlePlayThrough() {
+    const paper = buildPaper()
+    if (paper) onPlayThrough(paper)
+  }
+
+  function handlePrintScroll() {
+    const paper = buildPaper()
+    if (paper) onStart(paper)
   }
 
   return (
@@ -220,11 +236,19 @@ export default function WeeklyReviewPicker({
             </button>
             <button
               type="button"
+              className={s.secondary}
+              disabled={litIds.length === 0}
+              onClick={handlePrintScroll}
+            >
+              Print / scroll
+            </button>
+            <button
+              type="button"
               className={s.primary}
               disabled={litIds.length === 0}
-              onClick={handleStart}
+              onClick={handlePlayThrough}
             >
-              Start paper
+              Play through →
             </button>
           </div>
         </footer>

@@ -4,6 +4,145 @@
 
 ---
 
+## Weekly Review guided play-through: story → formula card → question batch, per topic (Fable 5, 2026-08-05)
+
+Akshat's ask: a new guided Weekly Review mode — story beat → concept/formula
+primer card → that topic's question batch → next topic's story/formula →
+its batch → … → completion screen — sitting alongside (not replacing) the
+just-shipped printable/scrollable Weekly Review page. Formula cards pulled
+deterministically from real data (`conceptContent.ts`), not LLM-generated,
+per his own instinct going in.
+
+**Almost entirely reuse, as scoped.** All in `app/src/pages/Practice.tsx`:
+- New `PracticePhase` value `'weekly-story'` — a light per-slot story/context
+  beat (protagonist + `contextFrame.settingLine` from `conceptStories.json`
+  via the existing `selectStoryForConcept()`), added to the `matteOn`/
+  `isMatteFlow` phase lists so it gets the same paper skin as `explore`/
+  `session`/`complete`.
+- The existing `explore` phase (concept/formula card, previously gated to a
+  single concept per session) now doubles as the walkthrough's per-slot
+  formula card. Its `Start Practice →` button branches: normal flow still
+  goes to the level picker; walkthrough flow calls a new
+  `beginWeeklySlotSession(slot)` that loads that slot's pre-built question
+  batch directly (paper already picked level count per role in
+  `weeklyPracticePaper.ts` — no level-picker detour needed).
+- New state: `weeklyWalkSlots`/`weeklyWalkIndex`/`weeklyWalkQuestionsBySlot`.
+  `missionType` stays `null` for the whole walkthrough so it never collides
+  with the weakness/learn/gapscan draft-autosave slots (autosave no-ops when
+  `!missionType`) — refreshing mid-walkthrough just loses progress, same as
+  the pre-existing `explore`/`level` phases with no mission.
+- `startWeeklyWalkthrough(paper)` groups `paper.questionIds` back into
+  per-slot batches by `question.conceptId` (same grouping pattern
+  `WeeklyPracticePaperPage.tsx`'s `slotByConcept` already established, not
+  re-derived) and drops any slot whose concept resolved zero questions,
+  rather than blocking the whole paper.
+- `finishSession()` extended: if more walkthrough slots remain, advances to
+  the next slot's `weekly-story` phase instead of ending; on the last slot it
+  falls through to the **exact same** `weeklyPaperWeekKey` /
+  `markWeeklyPaperComplete()` wiring the old single-concept weekly-paper nav-
+  state path already had (reused, not duplicated) before showing the
+  existing `complete` phase.
+- **Real bug caught + fixed during screenshotting**: walkthrough concept ids
+  aren't all in `PRACTICE_CONCEPTS` (e.g. `fractions_decimals`,
+  `ratios_proportions`, `order_of_operations` — real ACT-tested, real bank
+  coverage, just not in that hand-curated ~38-id list the `explore`/`level`
+  phases gate on). Reused `explore` block would have silently rendered blank
+  for those slots. Fixed by resolving id/label as
+  `conceptMeta?.id ?? concept` / `conceptMeta?.label ?? actConceptLabel(id)`
+  instead of requiring a `PRACTICE_CONCEPTS` hit — confirmed via a real
+  screenshot of `fractions_decimals` (no `CONCEPT_CONTENT` entry either)
+  showing the intended graceful fallback ("No formula sheet yet for this
+  topic — heading straight to the questions.") instead of a blank card.
+- Also caught: the story-beat's settingLine was first styled with white
+  inline-style text on the light "matte" paper background (copied from a
+  dark-background phase) — invisible. Fixed to reuse `s.exploreTagline`
+  (the class already carries correct light/dark-matte theming) instead of a
+  raw inline color.
+
+**Entry point** (`app/src/components/WeeklyReviewPicker.tsx` +
+`Dashboard.tsx`): the picker's single "Start paper" button became two —
+**"Play through →"** (primary, new — `onPlayThrough` prop, navigates
+`/practice` with `{ state: { weeklyWalkthrough: true } }`, paper already
+cached to `localStorage` by the picker same as before) and **"Print /
+scroll"** (secondary, same handler/behavior as the old default button,
+still lands on `/weekly-paper` unmodified). Made Play-through the primary
+CTA since it's the flashier new feature Akshat was excited about, while
+keeping the printable path exactly as-reachable as before — least-disruptive
+option that still satisfies "a real choice." `WeeklyPracticePaperPage.tsx`
+itself: **zero changes**, per the brief's protection on that file.
+`Dashboard.tsx` gained one new sibling function, `startWeeklyPlaythrough()`,
+mirroring `startWeeklyPaper()`.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **181 passed / 1 skipped (13 files)**, matches today's
+  established baseline exactly, zero regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk-size
+  warning, unrelated).
+
+**Screenshots** — real, not mocked: temporary `VITE_SCREENSHOT_MODE`-gated
+`AuthGuard` bypass in `App.tsx` (demo user via the existing `makeDemoUser()`)
++ a narrowly-scoped `VITE_SCREENSHOT_MODE`-gated `?screenshotWeekly=1` query
+param in `Practice.tsx` that builds a deterministic 2-slot paper
+(`linear_equations` → `linear_inequalities`, real bank question ids via
+`getQuestions()`) and calls `startWeeklyWalkthrough()` directly — same
+"narrowly-scoped temporary hook to reach a state deterministically without
+live Firestore data" precedent as the 2026-07-24 `?screenshotQid=` shim. Ran
+against `VITE_SCREENSHOT_MODE=1 npx vite --port 5199 --strictPort`, driven by
+a scripted Playwright session (not manual clicking) that clicked through
+slot 1's story → formula → questions, answered 3 questions (retrying choices
+until one is accepted — soft-wrong answers just wiggle in place, only a
+correct pick sets `checked`/reveals the Next button), confirmed the
+walkthrough auto-advanced to slot 2's story + formula. A second short run
+swapped the slot list to `fractions_decimals` to capture the no-content
+fallback. Both shims applied on top of byte-for-byte backups of this
+session's own already-edited `App.tsx`/`Practice.tsx`, restored from those
+exact backups afterward — confirmed via `diff` returning identical output
+for both files, `git status` showing `App.tsx` untouched, and a fresh
+`grep SCREENSHOT app/src/App.tsx app/src/pages/Practice.tsx` returning empty.
+`tsc`/`vitest`/`build` re-run clean after the revert (numbers above are
+post-revert).
+
+6 screenshots saved to `agent_work/product/screenshots_2026-08-05/`:
+`weekly_walkthrough_01_slot1_story.png` (Linear Equations story beat,
+protagonist "William Harrison", settingLine "At sea, bound for Jamaica,
+1761", "Weekly Review · Topic 1 of 2"), `weekly_walkthrough_02_slot1_formula.png`
+(same slot's formula card — real `~4–5 ACT questions / always on SAT` weight,
+key rules, worked examples), `weekly_walkthrough_03_slot1_questions.png`
+(question batch, session strip showing the "Weekly Review · Topic 1/2" badge),
+`weekly_walkthrough_04_slot2_story.png` (auto-advanced to Linear Inequalities,
+"Topic 2 of 2", protagonist "George Dantzig" — proves the sequence actually
+advances, not just repeats slot 1), `weekly_walkthrough_05_slot2_formula.png`
+(slot 2's real formula card), `weekly_walkthrough_nocontent_fallback.png`
+(`fractions_decimals` slot — no `CONCEPT_CONTENT` entry, graceful fallback
+message + working "Start these questions →" button, walkthrough not blocked).
+
+**Collision note**: this is a live shared tree, and while this session was
+mid-flight a concurrent Cursor/Akshat session committed unrelated
+CoverLanding work (`12525cbb`, already on `origin/main`) whose commit swept
+up this session's still-uncommitted `Dashboard.tsx` edit (`startWeeklyPlaythrough`
++ the `onPlayThrough` wire) as a same-file side effect — confirmed via
+`git show 12525cbb -- app/src/pages/Dashboard.tsx` containing exactly those
+two hunks and `git diff HEAD -- app/src/pages/Dashboard.tsx` now empty. The
+content is correct and intentional (this session's own code, verified
+identical to what was written and tested above), just attributed to someone
+else's commit message rather than this session's — nothing to redo, `git
+add` on `Dashboard.tsx` would be a no-op. Re-ran `tsc`/`vitest`/`build` after
+noticing this to confirm the final on-disk state (post-collision) is still
+clean; numbers above are from that final run.
+
+Files touched this session: `app/src/pages/Practice.tsx`,
+`app/src/components/WeeklyReviewPicker.tsx`,
+`app/src/components/WeeklyReviewPicker.module.css` (all committed by this
+session), plus `app/src/pages/Dashboard.tsx` (written by this session,
+already committed via `12525cbb` above — see collision note). `app/src/App.tsx`
+and `app/src/pages/WeeklyPracticePaperPage.tsx` both **untouched by this
+session's own commit** (confirmed via `git diff HEAD` — the former only ever
+carried the fully-reverted screenshot shim, the latter was never opened for
+editing beyond reading it for context).
+
+---
+
 ## webhook/: migrate 3 LLM endpoints from Anthropic+Groq cascade to Gemini (Fable 5, 2026-08-05)
 
 Akshat added `GEMINI_API_KEY` to Vercel production env (verified it
