@@ -890,17 +890,7 @@
   min-width: 0;
 }
 
-/* The wizard's speech-bubble box ("Weekly Review") removed from next to the
-   mascot (Akshat, 2026-07-25 fix pass) — WizardMascot itself lives in
-   components/canvas/, outside this lane's scope, so its bubble is hidden
-   structurally instead of edited at the source: the mascot's markup is
-   always <aside><img class="sprite"/><div class="bubble">...</div></aside>,
-   so the lone <div> direct child of that <aside> IS the bubble, no class
-   name from the other module needed. Sprite stays; hiding the div also
-   collapses .wrap's own 12px gap, so today's spark now sits right up
-   against the sprite using only .heroMiddle's existing 10px gap  -  no
-   leftover dead space, no separate "tighten the gap" rule needed. */
-.heroMiddle > aside > div { display: none; }
+/* Wizard sticker + quote bubble fill .heroMiddle (tap sprite → Stickers). */
 
 /* Marketing / brand palette (index.html): ink #143a2e, leaf #247a4d,
    leaf-2 #5fb779, sprout #b9e86f, gold #f5d348 / Craft #d3a900, paper #fffdf7. */

@@ -16,6 +16,15 @@ import DashboardNotesPanel from '../components/DashboardNotesPanel'
 import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
 import WorkStudio from '../components/canvas/WorkStudio'
 import WizardMascot from '../components/canvas/WizardMascot'
+import StickersShelf from '../components/book/StickersShelf'
+import {
+  coverStickerById,
+  DEFAULT_MASCOT_STICKER_ID,
+  loadMascotStickerId,
+  parseStickerPlan,
+  saveMascotStickerId,
+  type StickerPlan,
+} from '../lib/coverStickers'
 import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
@@ -257,6 +266,20 @@ export default function Dashboard({
   }
 
   useEffect(() => {
+    if (!uid || preview) {
+      setStickerPlan('testing')
+      return
+    }
+    let cancelled = false
+    void getDoc(doc(db, 'users', uid))
+      .then(snap => {
+        if (!cancelled) setStickerPlan(parseStickerPlan(snap.data()?.stickerPlan))
+      })
+      .catch(() => { if (!cancelled) setStickerPlan('testing') })
+    return () => { cancelled = true }
+  }, [uid, preview])
+
+  useEffect(() => {
     if (preview) {
       const demo = readDemoDiagnostic()
       const confidence = demo?.confidence ?? {}
@@ -444,8 +467,11 @@ export default function Dashboard({
   // The topic picker builds (and caches) the paper on Start.
   const thisWeekKey = useMemo(() => weekKey(), [])
 
-  // Wizard bubble is CSS-hidden; prop still required by WizardMascot.
-  const wizardLine = 'Pick any sticker on the map and we’ll dive in ★'
+  const [stickersOpen, setStickersOpen] = useState(false)
+  const [mascotId, setMascotId] = useState(() => loadMascotStickerId())
+  const [stickerPlan, setStickerPlan] = useState<StickerPlan>('testing')
+  const mascot = coverStickerById(mascotId) ?? coverStickerById(DEFAULT_MASCOT_STICKER_ID)!
+  const wizardLine = mascot.blurb
 
   // Locked once the student has finished this week's paper (weekKey-keyed
   // completion flag, self-written by the student's own browser same as
@@ -652,7 +678,12 @@ export default function Dashboard({
             </button>
           </nav>
           <div className={s.heroMiddle}>
-            <WizardMascot line={wizardLine} compact />
+            <WizardMascot
+              line={wizardLine}
+              spriteSrc={mascot.src}
+              onSpriteClick={viewingAs || preview ? undefined : () => setStickersOpen(true)}
+              compact
+            />
           </div>
           <div className={s.canvasUser}>
             {displayName && <span>{displayName}</span>}
@@ -890,6 +921,19 @@ export default function Dashboard({
           onClose={() => setShowWeeklyPicker(false)}
           onStart={startWeeklyPaper}
           onPlayThrough={startWeeklyPlaythrough}
+        />
+      )}
+
+      {stickersOpen && (
+        <StickersShelf
+          plan={stickerPlan}
+          activeId={mascotId}
+          onClose={() => setStickersOpen(false)}
+          onPickMascot={id => {
+            setMascotId(id)
+            saveMascotStickerId(id)
+            setStickersOpen(false)
+          }}
         />
       )}
     </>

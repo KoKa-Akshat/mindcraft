@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { doc, getDoc } from 'firebase/firestore'
-import { ArrowRight, Search, Sparkles, X } from 'lucide-react'
+import { ArrowRight, Search, X } from 'lucide-react'
 import { useUser } from '../../App'
 import { db } from '../../firebase'
+import wizardSparkIcon from '../../assets/canvas/generated/dashboard-stickers-3d/wizard-spark-3d.png'
 import {
-  COVER_STICKERS,
   COVER_STICKER_EQUIP_CAP,
   canEquipCoverSticker,
   coverStickerById,
-  formatStickerPrice,
   loadEquippedCoverStickers,
   parseStickerPlan,
   saveEquippedCoverStickers,
-  showStickerFreeBadge,
-  stickerShelfNote,
   type StickerPlan,
 } from '../../lib/coverStickers'
+import StickersShelf from './StickersShelf'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
@@ -181,9 +179,6 @@ export default function CoverLanding({
     })
   }
 
-  const freeBadge = showStickerFreeBadge(stickerPlan)
-  const shelfNote = stickerShelfNote(stickerPlan)
-
   function goFindTutor() {
     markCoverSeen()
     navigate('/find-a-tutor')
@@ -204,7 +199,7 @@ export default function CoverLanding({
             className={s.stickerStoreBtn}
             onClick={() => setStoreOpen(true)}
           >
-            <Sparkles size={17} strokeWidth={2.5} aria-hidden="true" />
+            <img src={wizardSparkIcon} alt="" className={s.stickerBtnIcon} draggable={false} />
             <span>Stickers</span>
           </button>
           <button
@@ -212,7 +207,7 @@ export default function CoverLanding({
             className={s.findTutorBtn}
             onClick={goFindTutor}
           >
-            <Search size={18} strokeWidth={2.6} aria-hidden="true" />
+            <Search size={15} strokeWidth={2.6} aria-hidden="true" />
             <span>Find a Tutor</span>
           </button>
         </div>
@@ -314,59 +309,12 @@ export default function CoverLanding({
         </div>
 
         {storeOpen && (
-          <div
-            className={s.storeBackdrop}
-            role="presentation"
-            onClick={() => setStoreOpen(false)}
-          >
-            <div
-              className={s.storePanel}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="cover-stickers-title"
-              onClick={e => e.stopPropagation()}
-            >
-              <div className={s.storeHead}>
-                <div>
-                  <p className={s.storeEyebrow}>tap to pin · up to {COVER_STICKER_EQUIP_CAP}</p>
-                  <h2 id="cover-stickers-title" className={s.storeTitle}>Stickers</h2>
-                </div>
-                <button
-                  type="button"
-                  className={s.storeClose}
-                  onClick={() => setStoreOpen(false)}
-                  aria-label="Close stickers"
-                >
-                  <X size={18} strokeWidth={2.4} aria-hidden="true" />
-                </button>
-              </div>
-              <p className={s.storeNote} role="status">{shelfNote}</p>
-              <ul className={s.storeGrid}>
-                {COVER_STICKERS.map(sticker => {
-                  const on = equipped.includes(sticker.id)
-                  const full = !on && equipped.length >= COVER_STICKER_EQUIP_CAP
-                  return (
-                    <li key={sticker.id}>
-                      <button
-                        type="button"
-                        className={`${s.storeCard} ${on ? s.storeCardOn : ''} ${full ? s.storeCardFull : ''}`}
-                        onClick={() => toggleSticker(sticker.id)}
-                        disabled={full}
-                        aria-pressed={on}
-                      >
-                        <img src={sticker.src} alt="" className={s.storeArt} draggable={false} />
-                        <span className={s.storeName}>{sticker.name}</span>
-                        <span className={s.storePriceRow}>
-                          <span className={s.storePrice}>{formatStickerPrice(sticker.priceUsd)}</span>
-                          {freeBadge && <span className={s.storeFree}>Free</span>}
-                        </span>
-                      </button>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          </div>
+          <StickersShelf
+            plan={stickerPlan}
+            onClose={() => setStoreOpen(false)}
+            equippedIds={equipped}
+            onToggleEquip={toggleSticker}
+          />
         )}
       </div>
     </div>

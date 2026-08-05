@@ -3,6 +3,26 @@
   align-items: flex-end;
   gap: 12px;
   pointer-events: none;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.clickable {
+  pointer-events: auto;
+}
+
+.spriteBtn {
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 12px;
+  line-height: 0;
+}
+.spriteBtn:focus-visible {
+  outline: 2px solid #247a4d;
+  outline-offset: 3px;
 }
 
 .sprite {
@@ -23,12 +43,14 @@
 }
 
 .bubble {
-  max-width: 240px;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 360px;
   background: #fffdf8;
-  border: 2.5px solid #3a2f55;
+  border: 2.5px solid #143a2e;
   border-radius: 18px 20px 20px 6px;
   padding: 10px 14px;
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.14);
+  box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.12);
 }
 
 .line {
@@ -44,9 +66,9 @@
    so it needs to sit comfortably in one shared strip alongside the nav and
    the spark pill, not dominate a whole row the way the old standalone
    Home-only header could afford to. */
-.compact .sprite { width: 46px; height: 46px; }
-.compact .bubble { max-width: 260px; padding: 7px 12px; border-radius: 14px 16px 16px 5px; }
-.compact .line { font-size: 16px; }
+.compact .sprite { width: 52px; height: 52px; }
+.compact .bubble { max-width: none; padding: 8px 14px; border-radius: 14px 16px 16px 5px; }
+.compact .line { font-size: 15px; }
 
 @media (prefers-reduced-motion: reduce) {
   .cheer .sprite { animation: none; }

@@ -56,6 +56,8 @@ export const COVER_STICKERS: ReadonlyArray<CoverSticker> = [
 
 export const COVER_STICKER_EQUIP_CAP = 4
 const EQUIPPED_KEY = 'mc-cover-equipped-stickers-v2'
+const MASCOT_KEY = 'mc-cover-mascot-sticker'
+export const DEFAULT_MASCOT_STICKER_ID = 'wizard-spark'
 
 export function parseStickerPlan(raw: unknown): StickerPlan {
   if (raw === 'standard' || raw === 'premium' || raw === 'testing') return raw
@@ -103,4 +105,18 @@ export function saveEquippedCoverStickers(ids: string[]) {
 
 export function coverStickerById(id: string): CoverSticker | undefined {
   return COVER_STICKERS.find(s => s.id === id)
+}
+
+export function loadMascotStickerId(): string {
+  try {
+    const id = localStorage.getItem(MASCOT_KEY)
+    if (id && COVER_STICKERS.some(s => s.id === id)) return id
+  } catch { /* ignore */ }
+  return DEFAULT_MASCOT_STICKER_ID
+}
+
+export function saveMascotStickerId(id: string) {
+  try {
+    if (COVER_STICKERS.some(s => s.id === id)) localStorage.setItem(MASCOT_KEY, id)
+  } catch { /* ignore */ }
 }
