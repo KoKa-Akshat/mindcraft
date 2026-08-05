@@ -88,10 +88,60 @@ export async function markWeeklyPaperComplete(uid: string, weekKey: string): Pro
   try {
     await setDoc(
       doc(db, 'users', uid),
-      { weeklyPaperCompletedWeek: weekKey },
+      {
+        weeklyPaperCompletedWeek: weekKey,
+        weeklyPaperProgress: {
+          weekKey,
+          completed: true,
+          updatedAt: new Date().toISOString(),
+        },
+      },
       { merge: true },
     )
   } catch { /* fail soft */ }
+}
+
+/** Live progress for this week's scrollable practice paper (tutor-readable). */
+export type WeeklyPaperProgress = {
+  weekKey: string
+  inkedQuestionIds: string[]
+  totalQuestions: number
+  completed: boolean
+  updatedAt: string
+}
+
+export async function saveWeeklyPaperProgress(
+  uid: string,
+  progress: WeeklyPaperProgress,
+): Promise<void> {
+  try {
+    const payload: Record<string, unknown> = {
+      weeklyPaperProgress: progress,
+    }
+    if (progress.completed) payload.weeklyPaperCompletedWeek = progress.weekKey
+    await setDoc(doc(db, 'users', uid), payload, { merge: true })
+  } catch { /* fail soft */ }
+}
+
+export async function loadWeeklyPaperProgress(uid: string): Promise<WeeklyPaperProgress | null> {
+  try {
+    const snap = await getDoc(doc(db, 'users', uid))
+    const raw = snap.data()?.weeklyPaperProgress
+    if (!raw || typeof raw !== 'object') return null
+    const week = typeof raw.weekKey === 'string' ? raw.weekKey : ''
+    if (!week) return null
+    return {
+      weekKey: week,
+      inkedQuestionIds: Array.isArray(raw.inkedQuestionIds)
+        ? raw.inkedQuestionIds.filter((x: unknown): x is string => typeof x === 'string')
+        : [],
+      totalQuestions: typeof raw.totalQuestions === 'number' ? raw.totalQuestions : 0,
+      completed: !!raw.completed,
+      updatedAt: typeof raw.updatedAt === 'string' ? raw.updatedAt : '',
+    }
+  } catch {
+    return null
+  }
 }
 
 export async function getUserRole(uid: string): Promise<string | null> {

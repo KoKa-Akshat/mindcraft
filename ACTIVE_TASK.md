@@ -62,11 +62,11 @@ Desktop clone once its last bits (generated concept images) are pulled over.
    `weeklyPracticePaper.ts` (`TopicPickMode`, `recommendedConceptIds`,
    `playableActConceptIds`). Dashboard Weekly Review opens the picker; Start
    caches the paper and launches practice.
-4. Practice-paper render mode: scrollable/printable layout for the
-   free-response question tier above, reusing the existing `ScratchPad`
-   ink-capture component (already wired into 5 pages) for write-on-it. Tutor
-   progress view keyed on `weekKey()` from `weeklyPracticePaper.ts` (same key
-   the lock/unlock logic already uses).
+4. ~~Practice-paper render mode~~ DONE (Cursor, 2026-08-05):
+   `/weekly-paper` scrollable + printable free-response layout with ScratchPad
+   per question; Dashboard Weekly Review Start lands here. Progress on
+   `users/{uid}.weeklyPaperProgress` keyed by `weekKey()`; tutor briefing
+   shows `TutorWeeklyPaperCard` (not started / in progress / done).
 5. Once the pulled concept images land in `app/src/assets/canvas/generated/`,
    wire them into the per-concept cover/landing page (see the "Redesign the
    notebook: combined question page, cover landing" work already in

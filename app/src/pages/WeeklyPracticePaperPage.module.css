@@ -1,0 +1,271 @@
+.shell {
+  min-height: 100vh;
+  background: #ebe4d8;
+  color: #1c1814;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(255, 250, 242, 0.92);
+  border-bottom: 1px solid rgba(40, 32, 24, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.toolbarMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.week {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(28, 24, 20, 0.45);
+}
+
+.progress {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.toolbarActions {
+  display: flex;
+  gap: 8px;
+}
+
+.ghost,
+.primary {
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.ghost {
+  border: 1px solid rgba(40, 32, 24, 0.14);
+  background: #fff;
+  color: #1c1814;
+}
+
+.primary {
+  border: none;
+  background: #143a2e;
+  color: #f4efe2;
+}
+
+.primary:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+
+.paper {
+  width: min(760px, calc(100% - 28px));
+  margin: 18px auto 48px;
+  background: #fffaf2;
+  border: 1px solid rgba(40, 32, 24, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(40, 32, 24, 0.12);
+  padding: 28px 28px 40px;
+}
+
+.paperHead {
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(40, 32, 24, 0.1);
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(28, 24, 20, 0.45);
+}
+
+.title {
+  margin: 0 0 8px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sub {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(28, 24, 20, 0.68);
+}
+
+.item {
+  padding: 22px 0;
+  border-bottom: 1px dashed rgba(40, 32, 24, 0.14);
+  break-inside: avoid;
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
+
+.itemHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #143a2e;
+  color: #f4efe2;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.topic {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(28, 24, 20, 0.5);
+}
+
+.stem {
+  font-size: 16px;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.workLabel {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(28, 24, 20, 0.4);
+}
+
+.work {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(40, 32, 24, 0.1);
+  background: #fff;
+}
+
+.printOnly {
+  display: none;
+}
+
+.printLines {
+  margin-top: 12px;
+}
+
+.printLine {
+  height: 28px;
+  border-bottom: 1px solid rgba(40, 32, 24, 0.18);
+}
+
+.doneBanner {
+  margin-top: 24px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(20, 58, 46, 0.08);
+  border: 1px solid rgba(20, 58, 46, 0.18);
+  font-size: 14px;
+  font-weight: 700;
+  color: #143a2e;
+}
+
+.empty {
+  width: min(480px, calc(100% - 32px));
+  margin: 80px auto;
+  text-align: center;
+  background: #fffaf2;
+  border-radius: 18px;
+  padding: 32px 24px;
+  border: 1px solid rgba(40, 32, 24, 0.1);
+}
+
+.empty h1 {
+  margin: 0 0 8px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 26px;
+}
+
+.empty p {
+  margin: 0 0 18px;
+  color: rgba(28, 24, 20, 0.65);
+}
+
+.primaryLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #143a2e;
+  color: #f4efe2;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+@media print {
+  .shell {
+    background: #fff;
+  }
+
+  .noPrint {
+    display: none !important;
+  }
+
+  .printOnly {
+    display: block;
+  }
+
+  .paper {
+    width: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .item {
+    page-break-inside: avoid;
+  }
+}
+
+@media (max-width: 640px) {
+  .paper {
+    padding: 20px 16px 32px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .toolbarMeta {
+    order: 3;
+    width: 100%;
+    align-items: flex-start;
+  }
+}

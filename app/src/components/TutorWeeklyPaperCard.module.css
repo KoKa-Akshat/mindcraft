@@ -1,0 +1,92 @@
+.card {
+  background: var(--td-paper, #fffdf8);
+  border: 1px solid var(--td-line, rgba(58, 47, 85, 0.12));
+  border-radius: 22px;
+  padding: 18px 20px;
+  box-shadow: var(--td-shadow, 0 6px 20px rgba(90, 70, 140, 0.1));
+  display: grid;
+  gap: 10px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--td-label, #8a7ea0);
+}
+
+.week {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--td-muted, #6b5f80);
+}
+
+.statusRow {
+  display: grid;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-self: start;
+  min-height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badgeDone {
+  background: rgba(20, 58, 46, 0.12);
+  color: #143a2e;
+}
+
+.badgeLive {
+  background: rgba(58, 126, 184, 0.14);
+  color: #1a4a72;
+}
+
+.badgeIdle {
+  background: rgba(40, 32, 24, 0.08);
+  color: rgba(40, 32, 24, 0.55);
+}
+
+.copy {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--td-ink, #2a2430);
+}
+
+.muted {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--td-muted, #6b5f80);
+}
+
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(40, 32, 24, 0.08);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  background: #143a2e;
+  border-radius: inherit;
+}

@@ -21,6 +21,7 @@ import type { Session, TutorStudent as Student } from '../types'
 import TutorBriefingPanel from '../components/TutorBriefingPanel'
 import SessionCallCard from '../components/SessionCallCard'
 import TutorProfilePanel, { type TutorProfileData } from '../components/TutorProfilePanel'
+import TutorWeeklyPaperCard from '../components/TutorWeeklyPaperCard'
 import TutorLocationPin from '../components/TutorLocationPin'
 import Dashboard from './Dashboard'
 import type { LatLng } from '../lib/geo'
@@ -986,6 +987,11 @@ export default function TutorDashboard() {
                     studentId={focusStudent.id}
                     studentName={focusStudent.name}
                     examTrack={focusStudent.examTrack}
+                  />
+
+                  <TutorWeeklyPaperCard
+                    studentId={focusStudent.id}
+                    studentName={focusStudent.name}
                   />
 
               {focusStudent && (

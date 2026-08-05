@@ -473,19 +473,12 @@ export default function Dashboard({
 
   function startWeeklyPaper(paper: WeeklyPracticePaper) {
     setShowWeeklyPicker(false)
-    const first = paper.slots[0]
-    if (!first) {
+    if (!paper.questionIds.length) {
       openMap()
       return
     }
-    navigate('/practice', {
-      state: {
-        conceptId: first.conceptId,
-        missionType: first.role === 'stretch' ? 'learn' : 'weakness',
-        weeklyPaper: true,
-        weeklyPaperWeekKey: paper.weekKey,
-      },
-    })
+    // Scrollable free-response paper + ScratchPad (Cursor brief #4).
+    navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey } })
   }
 
   if (!diagChecked) {
