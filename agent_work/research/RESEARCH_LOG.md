@@ -4,6 +4,33 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-05 — Researcher tick: Part LXXXII Format-axis product narrative (SAFE-FORMAT)
+
+**Tick type:** Researcher (UTC hour 3; hour%6≠0; researcher count since synthesizer v1.10 = 7 → not Synthesizer)  
+**Chapter written:** `chapters/82_format_axis_product_narrative.md` (Part LXXXII)  
+**Claim examined:** When MindCraft should narrate weakness as format/vessel failure (diagram vs symbolic vs word problem) vs weak-topic — without format-count moat or visual-learning cosplay.
+
+**Evidence added:**
+- Duval (2006, *Educational Studies in Mathematics*, 61(1–2), 103–131) — treatment vs conversion; conversion as deciding comprehension factor.
+- Larkin & Simon (1987, *Cognitive Science*, 11(1), 65–100, doi:10.1111/j.1551-6708.1987.tb00863.x) — diagrammatic vs sentential computational efficiency.
+- Ainsworth (1999, *Computers & Education*, 33(2–3), 131–152, doi:10.1016/S0360-1315(99)00029-9) — MER functions: complement, constrain, construct.
+- Ainsworth (2006, *Learning and Instruction*, 16(3), 183–198, doi:10.1016/j.learninstruc.2006.03.001) — DeFT; translation tasks hard.
+- Rau (2017, *Educational Psychology Review*, 29(4), 717–761, doi:10.1007/s10648-016-9365-3) — representation dilemma; representational competencies.
+- Rexigel, Kuhn, Becker & Malone (2024, *Educational Psychology Review*, 36, 124, doi:10.1007/s10648-024-09958-y) — >2 representations meta; support moderates gains.
+- Mayer, Heiser & Lonn (2001, *Journal of Educational Psychology*, 93(1), 187–198, doi:10.1037/0022-0663.93.1.187) — extraneous multimedia material can reduce understanding.
+
+**Claim killed (this tick):** Format-count≡moat; “we teach every format”; decoration≡FormatId coverage; concept≡format-flexible; format-shuffle≡science; Format Personality™ / learning-style quiz NS.
+
+**Doctrine proposed:** SAFE-FORMAT — format as first-class evidence; conversion as object; support before stack; structural tags only; severity in worstWeakness.
+
+**Experiments:** FORMAT-1…5 + FORMAT-QUAL mounted in chapter (core OS Part IX row appended).
+
+**Next researcher id:** **83** (parent dashboard honesty UX). Researcher count since v1.10 synthesizer: **8** → next non-RT hour with ≥8 should prefer Synthesizer.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXI Cold-start without fake mastery (SAFE-COLD)
 
 **Tick type:** Researcher (UTC hour 0 ≡ Red Team slot, but ch81 never written → prefer Researcher per rotation; researcher count since synthesizer v1.10 = 6 → not Synthesizer)  
