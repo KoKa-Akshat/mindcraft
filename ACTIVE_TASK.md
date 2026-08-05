@@ -67,11 +67,10 @@ Desktop clone once its last bits (generated concept images) are pulled over.
    per question; Dashboard Weekly Review Start lands here. Progress on
    `users/{uid}.weeklyPaperProgress` keyed by `weekKey()`; tutor briefing
    shows `TutorWeeklyPaperCard` (not started / in progress / done).
-5. Once the pulled concept images land in `app/src/assets/canvas/generated/`,
-   wire them into the per-concept cover/landing page (see the "Redesign the
-   notebook: combined question page, cover landing" work already in
-   `ConceptChapterPage.tsx`) — Akshat wants these to replace the plain topic
-   circles as a one-time cover shown when entering a concept.
+5. ~~Concept cover images~~ DONE (Cursor, 2026-08-05): one-time full-bleed
+   cover on `ConceptChapterPage` when `hasConceptAccurateArt(conceptId)`
+   (generated `story-{id}.svg/.jpg` via `storyArt.ts`). Skipped for theme
+   fallbacks; `localStorage` key `mc-concept-cover-seen-{id}`.
 
 ---
 

@@ -27,7 +27,7 @@ import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
 import HighlightedStem from '../components/HighlightedStem'
 import { useJournalGuide } from '../hooks/useJournalGuide'
-import { storyArtFor, storyArtTilt } from '../lib/storyArt'
+import { hasConceptAccurateArt, storyArtFor, storyArtTilt } from '../lib/storyArt'
 import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward'
 import SoundToggle from '../components/SoundToggle'
 import { playChime, playTap } from '../lib/uiSound'
@@ -428,6 +428,17 @@ export default function ConceptChapterPage() {
   const storySeenKey = `mc-story-seen-v2-${resolveId(conceptId)}`
   const [hasSeenStory] = useState(() => typeof window !== 'undefined' && !!localStorage.getItem(storySeenKey))
 
+  // One-time concept cover (Cursor brief #5): generated story-{id} art as a
+  // full-bleed landing plate the first time you enter this chapter. Skipped
+  // when only theme-fallback photos exist, so we never flash a recycled
+  // fractions plate as if it were this concept's cover.
+  const coverSeenKey = `mc-concept-cover-seen-${canonicalId}`
+  const [showConceptCover, setShowConceptCover] = useState(() => {
+    if (typeof window === 'undefined') return false
+    if (!hasConceptAccurateArt(canonicalId)) return false
+    try { return localStorage.getItem(coverSeenKey) !== '1' } catch { return false }
+  })
+
   const firstQuestIdx = useMemo(
     () => panels.findIndex(p => p.kind === 'quest'),
     [panels],
@@ -436,6 +447,12 @@ export default function ConceptChapterPage() {
     hasSeenStory && firstQuestIdx > 0 ? firstQuestIdx : 0
   ))
   const [slideDir, setSlideDir] = useState<'f' | 'b'>('f')
+
+  function openConceptCover() {
+    try { localStorage.setItem(coverSeenKey, '1') } catch { /* ignore */ }
+    setShowConceptCover(false)
+    playTap()
+  }
 
   useEffect(() => {
     if (panels[panelIdx]?.kind === 'quest' && !localStorage.getItem(storySeenKey)) {
@@ -990,6 +1007,28 @@ export default function ConceptChapterPage() {
       return renderOpenPanel(currentPanel.paras, currentPanel.pageNum, currentPanel.pageCount)
     }
     return renderQuestPanel(currentPanel.qIdx, currentPanel.beat, currentPanel.beatIndex)
+  }
+
+  if (showConceptCover) {
+    return (
+      <div className={s.conceptCover} style={{ '--theme-accent': theme.accent } as React.CSSProperties}>
+        <img className={s.conceptCoverArt} src={artSrc} alt="" draggable={false} />
+        <div className={s.conceptCoverScrim} aria-hidden="true" />
+        <div className={s.conceptCoverFace}>
+          <p className={s.conceptCoverEyebrow}>Chapter</p>
+          <h1 className={s.conceptCoverTitle}>{cs.conceptName}</h1>
+          {localStory?.settingLine && (
+            <p className={s.conceptCoverSetting}>{localStory.settingLine}</p>
+          )}
+          <button type="button" className={s.conceptCoverOpen} onClick={openConceptCover}>
+            Open chapter
+          </button>
+          <button type="button" className={s.conceptCoverBack} onClick={goBack}>
+            ← back
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
