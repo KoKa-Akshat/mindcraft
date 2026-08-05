@@ -133,6 +133,8 @@ export default function CoverLanding({
             Mind<span className={s.wordmarkCraft}>Craft</span>
           </button>
 
+          <p className={s.entryLine}>Your map starts here.</p>
+
           <div className={s.nameField}>
             <label className={s.nameLabel} htmlFor="cover-name">What should we call you?</label>
             <div className={s.nameRow}>
