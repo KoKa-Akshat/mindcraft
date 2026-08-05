@@ -112,7 +112,7 @@ export default function CoverLanding({
           className={s.findTutorBtn}
           onClick={goFindTutor}
         >
-          <Search size={14} strokeWidth={2.4} aria-hidden="true" />
+          <Search size={18} strokeWidth={2.6} aria-hidden="true" />
           <span>Find a Tutor</span>
         </button>
 
