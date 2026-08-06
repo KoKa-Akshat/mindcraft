@@ -972,23 +972,42 @@
 .canvasUser {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
-  font-family: var(--tok-font-mono);
-  font-size: 11px;
-  color: rgba(244, 239, 226, 0.58);
+}
+.canvasUserName {
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #fffdf7;
+  text-shadow: 0 0 18px rgba(185, 232, 111, 0.28);
+  white-space: nowrap;
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .signOut {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: none;
-  border: none;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1.5px solid rgba(185, 232, 111, 0.28);
+  border-radius: 12px;
+  background: rgba(244, 239, 226, 0.06);
   cursor: pointer;
-  font: inherit;
-  color: rgba(244, 239, 226, 0.48);
+  color: rgba(244, 239, 226, 0.72);
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
 }
-.signOut:hover { color: #b9e86f; }
+.signOut:hover {
+  color: #b9e86f;
+  border-color: rgba(185, 232, 111, 0.55);
+  background: rgba(185, 232, 111, 0.14);
+}
 
 .canvasStage {
   /* Chalkboard stage — blends from Cover Deep Field into a board you write on. */

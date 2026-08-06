@@ -758,15 +758,15 @@ export default function Dashboard({
             />
           </div>
           <div className={s.canvasUser}>
-            {displayName && <span>{displayName}</span>}
+            {displayName && <span className={s.canvasUserName}>{displayName}</span>}
             <button
               type="button"
               className={s.signOut}
               onClick={() => void handleSignOut()}
               aria-label={viewingAs ? 'Back' : 'Sign out'}
+              title={viewingAs ? 'Back' : 'Sign out'}
             >
-              <LogOut size={13} aria-hidden="true" />
-              <span>{viewingAs ? 'back' : 'sign out'}</span>
+              <LogOut size={18} strokeWidth={2.25} aria-hidden="true" />
             </button>
           </div>
         </header>
