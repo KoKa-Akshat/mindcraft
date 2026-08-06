@@ -4,6 +4,125 @@
 
 ---
 
+## Live "Call" co-working sessions — COMPLETE (8/8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. This session
+closed out the last two build-order steps; the feature is now fully built,
+verified, and committed (not pushed — see below).
+
+**Journey (all 8 steps, across today's sessions):** 1) `liveSessions` Firestore
+rules + `lib/liveSession.ts` data layer, emulator-verified. 2) `ScratchPad.tsx`
+live-write plumbing (append-only strokes, merged `remoteStrokes` redraw).
+3) `CallButton.tsx` + `LiveSessionPage.tsx` + the `/live-session/:sessionId`
+route, wired into `Practice.tsx`'s question banner. 4+5) `LiveJoinBanner.tsx`
+on `TutorDashboard.tsx`/`ParentDashboard.tsx` — real cross-account proof (tutor
++ parent) via the Firestore/Auth emulator. 6) Real "Talk" button meeting-link
+resolution (`isBookedSessionCurrentlyActive`/`pickActiveBookedSession`/
+`resolveTalkUrl` in `LiveSessionPage.tsx`), reusing `SessionCallCard`'s
+existing two-tier precedence instead of a placeholder direct read. **7)
+`<CallButton>` on the printable Weekly Review page (this session). 8)
+Idle-timeout "gone quiet" handling + confirmed the unmount-ends-session
+cleanup (this session).**
+
+**Step 7 — `app/src/pages/WeeklyPracticePaperPage.tsx`.** Added a
+`useStudentData(user)` call (page didn't make one before) to resolve
+`tutorId`, and `<CallButton studentId tutorId context={{ contextType:
+'weekly_paper', conceptName: paper.title }} />` into the toolbar, next to
+Print / Mark week done. `WeeklyReviewPicker.tsx` (the pre-mode-pick topic
+picker) deliberately did NOT get one: at that point there's no question/paper
+yet to attach a call to, and wiring a `tutorId` prop through would require
+editing `Dashboard.tsx` (its only call site) — out of this session's scope
+and already carrying unrelated concurrent work from another agent. Also fixed
+a small pre-existing layout gap: `.toolbarActions` had no `align-items`, so
+flex-stretch was silently inflating any short pill button placed there —
+added `align-items: center` (`WeeklyPracticePaperPage.module.css`).
+
+**Step 8 — `app/src/pages/LiveSessionPage.tsx`.** Two real gaps found by
+reading the code rather than assuming the plan's prose was already built:
+(a) `LiveJoinBanner.tsx`'s tutor/parent subscriptions already excluded stale
+sessions (`isLiveSessionStale`, wired in step 1's `subscribeActiveLiveSessionsForTutor`/`Parent` — no change needed there), but
+`LiveSessionPage.tsx` itself had no staleness check at all — a session idle
+past 20 minutes still rendered as if fully live. (b) the plan's own Lifecycle
+section describes ending "by the student's page-unmount effect," but no such
+effect existed anywhere in the codebase — only the explicit "end call"
+button called `endLiveSession`. Built both: a new pure, exported
+`isSessionGoneQuiet(session, now?)` (distinct from `ended` — never true for
+an explicitly-ended session, so the two banners can't both fire for the same
+reason), driven by a 30s `setInterval` tick so the check re-evaluates even
+when no new Firestore snapshot arrives; renders "This session has gone quiet…"
+next to the existing "This call has ended." banner. And a `role === 'student'`
+gated `useEffect` cleanup that calls `endLiveSession` on unmount (fail-soft,
+matches `saveQuestionWork`'s pattern) — deliberately scoped to the student
+only, matching the plan (a tutor/parent's "leave" just stops watching, it
+doesn't end the call for the student). Went slightly outside the session's
+literal file-scope note to make this change since (1) the plan's own Step 8
+text explicitly requires it, (2) `LiveSessionPage.tsx` had zero uncommitted
+conflicts from any other agent, and (3) leaving it undone would mean step 8
+wasn't actually done.
+
+**Verification (real, not eyeballed).**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **211 passed / 1 skipped (15 files)**; baseline going in
+  was 206/1/15, and the 5 new tests are exactly `isSessionGoneQuiet`'s new
+  suite in `LiveSessionPage.test.ts` (gone-quiet-after-20min, not-quiet-
+  recent, not-quiet-for-null, not-quiet-for-brand-new, and — the important
+  one — not-quiet-for-an-explicitly-ended-session). Zero regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- **Real screenshot proof for step 7** (not a mock): a temporary, fully-
+  reverted harness — `app/screenshot-harness.html` + `app/src/ScreenshotHarness.tsx`
+  (new throwaway files, deleted after) mounting the REAL
+  `WeeklyPracticePaperPage.tsx` directly via `UserContext.Provider` (same
+  context `useUser()` reads in the real `App.tsx`, imported not modified) +
+  a real cached paper via the real `buildWeeklyPracticePaper`/
+  `cacheWeeklyPaper` (localStorage, no Firestore needed for that part), plus
+  one temporary `VITE_SCREENSHOT_MODE`-gated `tutorId` line inside
+  `WeeklyPracticePaperPage.tsx` itself (no real Firebase auth in the harness,
+  so `useStudentData`'s real Firestore-backed `tutorId` would otherwise
+  never resolve) — reverted immediately after, confirmed **byte-identical**
+  via `diff` against a pre-edit backup, plus a `grep -rn
+  "SCREENSHOT_TEMP\|VITE_SCREENSHOT_MODE\|screenshot-tutor-id"` sweep
+  returning empty. Driven by Playwright (`chromium`, already cached from an
+  earlier session) against `VITE_SCREENSHOT_MODE=1 vite --port 5199`: the
+  Call button renders correctly sized next to Print/Mark week done (confirms
+  the `align-items` fix), and clicking it actually fires `createLiveSession`
+  and falls through to its designed fail-soft "try again" state (expected —
+  no real Firebase auth in this harness, proving the click handler runs
+  end-to-end rather than just proving static markup). `tsc`/`vitest`/`build`
+  re-run clean after the revert (numbers above are post-revert).
+
+Screenshots saved to `agent_work/product/screenshots_2026-08-06/`:
+`weekly_paper_full.png` (full page, real questions/notes/graph, Call button
+top-right), `weekly_paper_toolbar_call_button.png` (toolbar closeup, resting
+state), `weekly_paper_toolbar_call_clicked.png` (post-click fail-soft state).
+
+**Scope check before commit:** `git diff --stat` shows exactly 4 files —
+`app/src/pages/LiveSessionPage.tsx`, `app/src/pages/LiveSessionPage.test.ts`,
+`app/src/pages/WeeklyPracticePaperPage.tsx`,
+`app/src/pages/WeeklyPracticePaperPage.module.css`. `WeeklyReviewPicker.tsx`/
+`.module.css` and `Dashboard.module.css` — the other agent's concurrent WIP
+flagged at the start of this session — landed as their own commit
+(`5eff9452`, "Ship desk polish...") sometime during this session and are
+untouched by me (confirmed clean in `git status` for those paths). No
+`ml/**`/`webhook/**` files touched (Blake's lane).
+
+Committed (`app/src/pages/LiveSessionPage.tsx`,
+`app/src/pages/LiveSessionPage.test.ts`,
+`app/src/pages/WeeklyPracticePaperPage.tsx`,
+`app/src/pages/WeeklyPracticePaperPage.module.css`, this file, plus the 3
+screenshots), **not pushed** — leaving it for a final human review pass
+before `git push origin main`, per this session's own instructions.
+
+This closes out `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`
+end to end: real-time co-writing (ScratchPad sync), student→tutor/parent
+discovery (join banners), voice hand-off (Talk button reusing the existing
+Meet-link pattern), both entry points (Practice question banner + Weekly
+Review printable page), and honest lifecycle (explicit end + passive
+staleness), built incrementally across 8 steps today with real
+cross-account/unit-test verification at every step, zero regressions
+end to end.
+
+---
+
 ## Live "Call" co-writing — real "Talk" button resolution (build-order step 6 of 8) (Fable 5, 2026-08-05)
 
 Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1-5

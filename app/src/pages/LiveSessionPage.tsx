@@ -22,7 +22,7 @@ import { db } from '../firebase'
 import { useUser } from '../App'
 import ScratchPad from '../components/ScratchPad'
 import {
-  endLiveSession, subscribeLiveSession, subscribeLiveStrokes,
+  endLiveSession, isLiveSessionStale, subscribeLiveSession, subscribeLiveStrokes,
 } from '../lib/liveSession'
 import type {
   LiveSessionAuthorRole, LiveSessionEntry, LiveStrokeEntry,
@@ -107,6 +107,24 @@ export function pickActiveBookedSession(
   return candidates.find(sd => isBookedSessionCurrentlyActive(sd, now)) ?? null
 }
 
+/** Plan build-order step 8's "gone quiet" display check — distinct from
+ * `ended` (an explicit `status: 'ended'` from the student's own End button
+ * or page-unmount effect): this is the passive case where nobody ever
+ * formally ended the call but nothing has happened in ~20 minutes (browser
+ * closed, tab lost, etc). Reuses `isLiveSessionStale` (lib/liveSession.ts)
+ * so the "is this session still live" definition lives in exactly one
+ * place; `ended` sessions are explicitly excluded here so the two banners
+ * never both render for the same reason. Pure and exported so it's
+ * unit-testable without mocking Firestore, same pattern as
+ * `isBookedSessionCurrentlyActive`/`pickActiveBookedSession` above. */
+export function isSessionGoneQuiet(
+  session: Pick<LiveSessionEntry, 'status' | 'lastActivityAt' | 'createdAt'> | null,
+  now = Date.now(),
+): boolean {
+  if (!session || session.status === 'ended') return false
+  return isLiveSessionStale(session, now)
+}
+
 /** Two-tier "Talk" link resolution (plan build-order step 6) — the same
  * precedence `SessionCallCard`'s existing callers use elsewhere in the app
  * (`Dashboard.tsx` ~line 999: `nextSession.meetingUrl ?? tutorMeetUrl`;
@@ -172,6 +190,16 @@ export default function LiveSessionPage() {
   const [strokes, setStrokes] = useState<LiveStrokeEntry[]>([])
   const [meetUrl, setMeetUrl] = useState<string | null | undefined>(undefined) // undefined = not looked up yet
   const [ending, setEnding] = useState(false)
+  // Ticks periodically so the staleness check below re-evaluates even when
+  // no new Firestore snapshot arrives (a quiet session produces no writes,
+  // so nothing else would trigger a re-render once the 20-min window
+  // elapses). Cheap: just forces `isLiveSessionStale` to re-run against a
+  // fresh `Date.now()`, no extra reads.
+  const [nowTick, setNowTick] = useState(() => Date.now())
+  useEffect(() => {
+    const id = window.setInterval(() => setNowTick(Date.now()), 30_000)
+    return () => window.clearInterval(id)
+  }, [])
 
   // One-time defense-in-depth access check on mount.
   useEffect(() => {
@@ -210,6 +238,21 @@ export default function LiveSessionPage() {
     () => strokes.filter(st => st.authorId !== user?.uid).map(st => st.points),
     [strokes, user?.uid],
   )
+
+  // Lifecycle (plan build-order step 8): the student's own page-unmount ends
+  // the session — fail-soft, same spirit as `saveQuestionWork`'s empty
+  // catch{}. Deliberately scoped to `role === 'student'` (only the creator's
+  // page going away should end it; a tutor/parent navigating away via
+  // "leave" just stops watching). Runs only once `role` has actually
+  // resolved to 'student' — on the initial render (`role` still null while
+  // the access check is in flight) this is a no-op, so the cleanup can't
+  // fire prematurely off a null role.
+  useEffect(() => {
+    if (!sessionId || role !== 'student') return
+    return () => {
+      void endLiveSession(sessionId)
+    }
+  }, [sessionId, role])
 
   async function handleTalk() {
     if (!session || !user?.uid) { setMeetUrl(null); return }
@@ -259,6 +302,12 @@ export default function LiveSessionPage() {
 
   const isStudent = role === 'student'
   const ended = session?.status === 'ended'
+  // Client-side staleness check (plan: no presence/heartbeat protocol for
+  // v1) — a session with no recent activity is treated as "not live" here
+  // too, same as the join banners, rather than pretending it's still an
+  // active call. `nowTick` (a 30s interval, above) forces this to
+  // re-evaluate even when the session doc itself hasn't changed.
+  const wentQuiet = isSessionGoneQuiet(session, nowTick)
 
   return (
     <div className={s.shell}>
@@ -281,6 +330,11 @@ export default function LiveSessionPage() {
       <main className={s.page}>
         {ended && (
           <div className={s.endedBanner}>This call has ended.</div>
+        )}
+        {wentQuiet && (
+          <div className={s.endedBanner}>
+            This session has gone quiet — no activity for a while. Start a new call to keep working together.
+          </div>
         )}
 
         <div className={s.progress}>

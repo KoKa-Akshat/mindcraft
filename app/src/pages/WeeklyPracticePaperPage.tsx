@@ -8,6 +8,8 @@ import { useUser } from '../App'
 import MathText from '../components/MathText'
 import ScratchPad from '../components/ScratchPad'
 import GraphBox from '../components/GraphBox'
+import CallButton from '../components/CallButton'
+import { useStudentData } from '../hooks/useStudentData'
 import { getQuestionById, type Question } from '../lib/questionBank'
 import { resolveQuestionStem } from '../lib/questionStem'
 import {
@@ -148,6 +150,7 @@ function ToolsTile({ showCalc, onToggleCalc }: { showCalc: boolean; onToggleCalc
 
 export default function WeeklyPracticePaperPage() {
   const user = useUser()
+  const { tutorId } = useStudentData(user)
   const navigate = useNavigate()
   const paper = useMemo(() => loadCachedWeeklyPaper(), [])
   const items = useMemo(() => (paper ? resolvePaperItems(paper) : []), [paper])
@@ -231,6 +234,13 @@ export default function WeeklyPracticePaperPage() {
           </span>
         </div>
         <div className={s.toolbarActions}>
+          {user?.uid && (
+            <CallButton
+              studentId={user.uid}
+              tutorId={tutorId}
+              context={{ contextType: 'weekly_paper', conceptName: paper.title }}
+            />
+          )}
           <button type="button" className={s.ghost} onClick={() => window.print()}>
             Print
           </button>

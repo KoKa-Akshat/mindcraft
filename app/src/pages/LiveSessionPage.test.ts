@@ -13,8 +13,17 @@ import { describe, expect, it, vi } from 'vitest'
 // `useUser` themselves.
 vi.mock('../App', () => ({ useUser: () => null }))
 
-import { isBookedSessionCurrentlyActive, pickActiveBookedSession } from './LiveSessionPage'
+import { isBookedSessionCurrentlyActive, isSessionGoneQuiet, pickActiveBookedSession } from './LiveSessionPage'
 import type { BookedSessionCandidate } from './LiveSessionPage'
+import type { Timestamp } from 'firebase/firestore'
+
+/** Minimal fake matching the `.toMillis?.()` shape `isLiveSessionStale`
+ * (lib/liveSession.ts) actually reads off a Firestore Timestamp — same
+ * fake shape liveSession.test.ts already uses for the function this one
+ * wraps. */
+function fakeTimestamp(millis: number): Timestamp {
+  return { toMillis: () => millis } as unknown as Timestamp
+}
 
 describe('isBookedSessionCurrentlyActive', () => {
   const now = Date.now()
@@ -89,6 +98,46 @@ describe('isBookedSessionCurrentlyActive', () => {
       status: 'cancelled',
       scheduledAt: now,
       meetingUrl: 'https://meet.google.com/abc',
+    }, now)).toBe(false)
+  })
+})
+
+describe('isSessionGoneQuiet', () => {
+  const now = Date.now()
+
+  it('is not quiet for null (no session loaded yet)', () => {
+    expect(isSessionGoneQuiet(null, now)).toBe(false)
+  })
+
+  it('is not quiet for an active session with recent activity', () => {
+    expect(isSessionGoneQuiet({
+      status: 'active',
+      lastActivityAt: fakeTimestamp(now - 2 * 60_000),
+      createdAt: fakeTimestamp(now - 10 * 60_000),
+    }, now)).toBe(false)
+  })
+
+  it('is quiet for an active session idle past the 20-minute staleness window', () => {
+    expect(isSessionGoneQuiet({
+      status: 'active',
+      lastActivityAt: fakeTimestamp(now - 25 * 60_000),
+      createdAt: fakeTimestamp(now - 40 * 60_000),
+    }, now)).toBe(true)
+  })
+
+  it('is NOT quiet for an explicitly ended session — that is the "ended" banner\'s job, not this one, so the two never render for the same reason', () => {
+    expect(isSessionGoneQuiet({
+      status: 'ended',
+      lastActivityAt: fakeTimestamp(now - 25 * 60_000),
+      createdAt: fakeTimestamp(now - 40 * 60_000),
+    }, now)).toBe(false)
+  })
+
+  it('is not quiet for a brand-new session with no activity timestamp yet', () => {
+    expect(isSessionGoneQuiet({
+      status: 'active',
+      lastActivityAt: null,
+      createdAt: null,
     }, now)).toBe(false)
   })
 })
