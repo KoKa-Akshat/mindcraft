@@ -14,6 +14,7 @@ import {
   saveEquippedCoverStickers,
   type StickerPlan,
 } from '../../lib/coverStickers'
+import RotatableSticker from './RotatableSticker'
 import StickersShelf from './StickersShelf'
 import s from './CoverLanding.module.css'
 
@@ -222,11 +223,10 @@ export default function CoverLanding({
               {chip.live ? (
                 <span className={`${s.subjectChip} ${chip.tone} ${s.subjectChipLive}`}>
                   {chip.label}
-                  <span className={s.chipLiveDot} aria-hidden="true" />
                 </span>
               ) : (
                 <span className={`${s.subjectChip} ${chip.tone} ${s.subjectChipRemovable}`}>
-                  <span>{chip.label}</span>
+                  {chip.label}
                   <button
                     type="button"
                     className={s.chipDismiss}
@@ -234,7 +234,7 @@ export default function CoverLanding({
                     aria-label={`Remove ${chip.label}`}
                     title="Remove"
                   >
-                    <X size={12} strokeWidth={3} aria-hidden="true" />
+                    <X size={11} strokeWidth={3} aria-hidden="true" />
                   </button>
                 </span>
               )}
@@ -250,7 +250,7 @@ export default function CoverLanding({
             return (
               <li key={id} className={`${s.equipWrap} ${slot}`}>
                 <div className={s.equipSticker}>
-                  <img src={sticker.src} alt={sticker.name} draggable={false} />
+                  <RotatableSticker src={sticker.src} alt={sticker.name} className={s.equipSpin} />
                   <button
                     type="button"
                     className={s.equipDismiss}

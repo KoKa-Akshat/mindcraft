@@ -95,18 +95,28 @@
   border-radius: 14px;
   background: rgba(245, 245, 245, 0.04);
   color: #fffdf7;
-  cursor: pointer;
   text-align: center;
   transition:
-    transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
     border-color 160ms ease,
     background 160ms ease;
 }
-.card:hover:not(:disabled) {
-  transform: translateY(-2px);
+.card:hover {
   border-color: rgba(245, 211, 72, 0.45);
   background: rgba(245, 211, 72, 0.08);
 }
+.metaBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+.metaBtn:disabled { cursor: not-allowed; }
 .cardOn {
   border-color: rgba(36, 122, 77, 0.85);
   background: rgba(36, 122, 77, 0.22);
@@ -119,15 +129,14 @@
 
 .art {
   width: 78px;
-  height: auto;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.28));
 }
 
 .name {
   font-family: var(--tok-font-sans);
   font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
+  font-weight: 800;
+  letter-spacing: 0.01em;
   color: #fffdf7;
 }
 
@@ -142,20 +151,20 @@
 .price {
   font-family: var(--tok-font-sans);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.02em;
-  color: rgba(245, 245, 245, 0.55);
+  color: rgba(255, 253, 247, 0.42);
   text-decoration: line-through;
-  text-decoration-color: rgba(245, 245, 245, 0.35);
+  text-decoration-color: rgba(255, 253, 247, 0.28);
 }
 
 .free {
   font-family: var(--tok-font-sans);
   font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #c4f547;
+  color: #b9e86f;
 }
 
 @media (max-width: 620px) {

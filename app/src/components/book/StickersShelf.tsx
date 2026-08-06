@@ -7,6 +7,7 @@ import {
   stickerShelfNote,
   type StickerPlan,
 } from '../../lib/coverStickers'
+import RotatableSticker from './RotatableSticker'
 import s from './StickersShelf.module.css'
 
 type Props = {
@@ -75,26 +76,36 @@ export default function StickersShelf({
             const active = activeId === sticker.id
             const on = equipMode ? equipped : active
             const full = Boolean(equipMode && !equipped && (equippedIds?.length ?? 0) >= COVER_STICKER_EQUIP_CAP)
+            function pick() {
+              if (full) return
+              if (onPickMascot) onPickMascot(sticker.id)
+              if (onToggleEquip) onToggleEquip(sticker.id)
+            }
             return (
               <li key={sticker.id}>
-                <button
-                  type="button"
+                <div
                   className={`${s.card} ${on ? s.cardOn : ''} ${full ? s.cardFull : ''}`}
-                  onClick={() => {
-                    if (full) return
-                    if (onPickMascot) onPickMascot(sticker.id)
-                    if (onToggleEquip) onToggleEquip(sticker.id)
-                  }}
-                  disabled={full}
                   aria-pressed={on}
                 >
-                  <img src={sticker.src} alt="" className={s.art} draggable={false} />
-                  <span className={s.name}>{sticker.name}</span>
-                  <span className={s.priceRow}>
-                    <span className={s.price}>{formatStickerPrice(sticker.priceUsd)}</span>
-                    {freeBadge && <span className={s.free}>Free</span>}
-                  </span>
-                </button>
+                  <RotatableSticker
+                    src={sticker.src}
+                    alt={sticker.name}
+                    className={s.art}
+                    onClick={full ? undefined : pick}
+                  />
+                  <button
+                    type="button"
+                    className={s.metaBtn}
+                    onClick={pick}
+                    disabled={full}
+                  >
+                    <span className={s.name}>{sticker.name}</span>
+                    <span className={s.priceRow}>
+                      <span className={s.price}>{formatStickerPrice(sticker.priceUsd)}</span>
+                      {freeBadge && <span className={s.free}>Free</span>}
+                    </span>
+                  </button>
+                </div>
               </li>
             )
           })}
