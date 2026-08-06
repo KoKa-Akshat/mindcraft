@@ -1157,9 +1157,9 @@
 }
 
 .homeTop {
-  /* Title on the left; color index + Weekly Review on the right. */
+  /* Contents + color index on the left; Weekly Review stays on the right. */
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px;
@@ -1167,7 +1167,7 @@
 .homeTopMain {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
   min-width: 0;
 }
 .homeTopActions {
@@ -1331,7 +1331,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 12px;
+  gap: 8px 14px;
 }
 .ringLegend li {
   display: inline-flex;

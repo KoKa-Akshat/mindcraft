@@ -790,14 +790,14 @@ export default function Dashboard({
                 <div className={s.homeTop}>
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>
-                  </div>
-                  <div className={s.homeTopActions}>
                     <ul className={s.ringLegend} aria-label="Status color guide">
                       <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.mastered }} /> Mastered</li>
                       <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.in_progress }} /> In progress</li>
                       <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.struggling }} /> Needs work</li>
                       <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.untouched }} /> Not started</li>
                     </ul>
+                  </div>
+                  <div className={s.homeTopActions}>
                     {showWeeklyCta && (
                       paperLocked ? (
                         <div className={s.weeklyCardLocked} aria-live="off">
