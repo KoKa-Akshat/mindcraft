@@ -1354,7 +1354,7 @@
 .horizontalToc {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: minmax(278px, auto);
+  grid-auto-rows: minmax(224px, auto);
   gap: 14px;
   flex: 1;
   min-height: 0;
@@ -1362,6 +1362,13 @@
 .tocLane {
   --lane-accent: #247a4d;
   --lane-ink: #143a2e;
+  /* --lane-span is set inline per section, computed from that lane's real
+     conceptIds.length in Dashboard.tsx (tocLaneSpanPair) — see the "Contents
+     lane grid math" comment above the helper functions in Dashboard.tsx.
+     The fallback here only applies before the first paint's inline style
+     lands (never in practice, since it's set synchronously with the DOM node). */
+  --lane-span: 6;
+  grid-column: span var(--lane-span);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1383,10 +1390,6 @@
   background: radial-gradient(ellipse, color-mix(in srgb, var(--lane-accent) 14%, transparent), transparent 68%);
   pointer-events: none;
 }
-.tocLane:nth-child(1),
-.tocLane:nth-child(4) { grid-column: span 5; }
-.tocLane:nth-child(2),
-.tocLane:nth-child(3) { grid-column: span 7; }
 .tocLaneHead {
   display: flex;
   align-items: center;
@@ -1407,54 +1410,25 @@
 
 /* Horizontal-scroll track: the responsive strategy for narrow widths is a
    dedicated scroll region PER LANE (not page-level wrapping), so a lane with
-   11 concepts (Algebra) scrolls sideways on a phone while the lane header
-   and neighboring lanes stay put and readable. */
+   many concepts (Algebra) scrolls sideways on a phone while the lane header
+   and neighboring lanes stay put and readable.
+
+   --lane-columns is set inline per lane, computed from that lane's real
+   conceptIds.length (Dashboard.tsx, tocColumnsFor — see the "Contents lane
+   grid math" comment there). Individual .tocNode cells that fall in an
+   incomplete trailing row get their own inline `grid-column: span N`
+   (tocTrailingSpans), computed so that row always fills edge-to-edge with no
+   dead cells, instead of a per-lane-name nth-child guess. */
 .tocTrack {
+  --lane-columns: 4;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: minmax(76px, 1fr);
-  grid-auto-flow: dense;
+  grid-template-columns: repeat(var(--lane-columns), minmax(0, 1fr));
+  grid-auto-rows: minmax(64px, 1fr);
   align-items: stretch;
   gap: 10px;
   position: relative;
   z-index: 1;
   flex: 1;
-  min-height: 0;
-}
-
-/* Each lane uses the same six-unit canvas but composes its real number of
-   concepts differently. This keeps the illustrated work lively and removes
-   blank spreadsheet cells when a section has only two or seven topics. */
-.tocLane[data-lane='warmups'] .tocNode:first-child,
-.tocLane[data-lane='geometry'] .tocNode:first-child {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-.tocLane[data-lane='warmups'] .tocNode:nth-child(6),
-.tocLane[data-lane='warmups'] .tocNode:nth-child(7),
-.tocLane[data-lane='geometry'] .tocNode:nth-child(6),
-.tocLane[data-lane='geometry'] .tocNode:nth-child(7) {
-  grid-column: span 2;
-}
-
-.tocLane[data-lane='algebra'] .tocTrack {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-.tocLane[data-lane='algebra'] .tocNode:first-child {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-.tocLane[data-lane='algebra'] .tocNode:nth-child(2),
-.tocLane[data-lane='algebra'] .tocNode:nth-child(7),
-.tocLane[data-lane='algebra'] .tocNode:nth-child(11) {
-  grid-column: span 2;
-}
-
-.tocLane[data-lane='data'] .tocTrack {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: 1fr;
-}
-.tocLane[data-lane='data'] .tocNode {
   min-height: 0;
 }
 
