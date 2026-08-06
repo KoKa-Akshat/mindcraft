@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Researcher tick: Part XC Product analytics for FEI North Stars (SAFE-INSTRUMENT)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.11 = 6 → Researcher)  
+**Chapter written:** `chapters/90_product_analytics_fei_north_stars.md` (Part XC)  
+**Claim examined:** How to instrument/govern/commercially use FEI North Star events without vanity-metric theater or Goodhart-corrupted dashboards.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-INSTRUMENT** — ship the four (`retry_120s`, motive-coded `challenge_accept`, `transfer_pass`, `solo_transfer_pass`); NSM stack + stage OMTM; XXI.4 co-primary gates; anti-Goodhart (no single-event pay/shame); anti-gaming companions; Kane IUA for marketing uses; dignity telemetry; INSTR-* before identity-from-dashboard ads.
+
+**Evidence spine:** Croll & Yoskovitz Lean Analytics (vanity vs actionable / OMTM); Campbell (1979) metric corruption; Goodhart / Strathern paraphrase; Baker et al. gaming-the-system (2004/2009) + Cocea et al.; Kane (1992/2013) IUA; Constitution I.3 / VIII / IX Exp C / XXI.
+
+**Claim killed (this tick):** DAU/streak/XP/blocked-accuracy as learning NS; FEI Score™; single-KPI tutor pay; thumbs-up≡learning; science-backed identity ads without IUA; celebrate retry without binge/reveal gates — demoted under vanity-metric + Campbell/Goodhart + gaming + Kane IUA; FEI event stack + co-gates survive behind INSTR-*.
+
+**Experiments mounted:** INSTR-1…5 + INSTR-QUAL (densifies Experiment C).
+
+**Next researcher id:** **91** (hint economy & contingent scaffolding). Researcher count since v1.11 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Researcher tick: Part LXXXIX Help-seeking vs help abuse (SAFE-HELP)
 
 **Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch89 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 5 → Researcher)  

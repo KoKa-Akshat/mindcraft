@@ -77,8 +77,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 87 | Bank coverage honesty in marketing | Coverage tables; no item-count hero; GENQ×GTM | **DONE** (2026-08-05) — Part LXXXVII / SAFE-COVER |
 | 88 | Worked-example fading in Solver UX | Completion problems; expertise reversal; attempt grain | **DONE** (2026-08-06) — Part LXXXVIII / SAFE-FADE |
 | 89 | Help-seeking vs help abuse | Contingent hints; tutor dependency; solo gate | **DONE** (2026-08-06) — Part LXXXIX / SAFE-HELP |
-| 90 | Product analytics for FEI North Stars | Instrument retry_120s / challenge_accept / transfer_pass | **NEXT** |
-| 91 | Hint economy & contingent scaffolding | Soft vs hard hints; cost of peek; fade×hint | queued |
+| 90 | Product analytics for FEI North Stars | Instrument retry_120s / challenge_accept / transfer_pass | **DONE** (2026-08-06) — Part XC / SAFE-INSTRUMENT |
+| 91 | Hint economy & contingent scaffolding | Soft vs hard hints; cost of peek; fade×hint | **NEXT** |
 | 92 | Explanation length vs germane load | Short coach vs monologue; token tax | queued |
 | 93 | Retrieval failure modes in practice UX | Tip-of-tongue; blanking; productive struggle bounds | queued |
 
@@ -131,3 +131,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any item-count hero / “complete ACT bank” / GCSE-as-ACT / counting unsynced GENQ / ontology-nodes≡playable bank / stale-audit coverage ads (Part LXXXVII)
 - Any always-full-worked / never-fade / solution-first Solver ≡ learning / view≡mastery / Fade Score™ / unlimited-solutions hero / expertise-blind step dump (Part LXXXVIII)
 - Any unlimited-hints / help-NPS NS / avoidance-as-grit / Help Score™ / parent hint-stalk / metacognition≡ACT points / “never stuck” answer-dump hero (Part LXXXIX)
+- Any DAU/streak/XP/blocked-accuracy as learning NS / FEI Score™ / single-KPI tutor pay on one FEI event / thumbs-up≡learning / science-backed identity ads without IUA / celebrate retry without binge gates (Part XC)
