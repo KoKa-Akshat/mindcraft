@@ -78,6 +78,9 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 88 | Worked-example fading in Solver UX | Completion problems; expertise reversal; attempt grain | **DONE** (2026-08-06) — Part LXXXVIII / SAFE-FADE |
 | 89 | Help-seeking vs help abuse | Contingent hints; tutor dependency; solo gate | **NEXT** |
 | 90 | Product analytics for FEI North Stars | Instrument retry_120s / challenge_accept / transfer_pass | queued |
+| 91 | Hint economy & contingent scaffolding | Soft vs hard hints; cost of peek; fade×hint | queued |
+| 92 | Explanation length vs germane load | Short coach vs monologue; token tax | queued |
+| 93 | Retrieval failure modes in practice UX | Tip-of-tongue; blanking; productive struggle bounds | queued |
 
 More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 

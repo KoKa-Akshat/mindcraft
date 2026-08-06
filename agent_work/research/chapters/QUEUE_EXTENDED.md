@@ -61,6 +61,9 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 85 | Story-world cognitive load vs identity payoff | Narrative wrap CLT; when story helps/hurts | promoted → NEXT_LAB **DONE** Part LXXXV |
 | 86 | Competence evidence as social proof | Solo-transfer artifacts parents/tutors can witness | DONE → Part LXXXVI / SAFE-PROOF |
 | 87 | Bank coverage honesty in marketing | Coverage tables; no item-count hero; GENQ×GTM | promoted → NEXT_LAB |
-| 88 | Worked-example fading in Solver UX | Completion problems; expertise reversal; attempt grain | promoted → NEXT_LAB |
-| 89 | Help-seeking vs help abuse | Contingent hints; tutor dependency; solo gate | promoted → NEXT_LAB |
+| 88 | Worked-example fading in Solver UX | Completion problems; expertise reversal; attempt grain | **DONE** → Part LXXXVIII / SAFE-FADE |
+| 89 | Help-seeking vs help abuse | Contingent hints; tutor dependency; solo gate | promoted → NEXT_LAB **NEXT** |
 | 90 | Product analytics for FEI North Stars | Instrument retry_120s / challenge_accept / transfer_pass | promoted → NEXT_LAB |
+| 91 | Hint economy & contingent scaffolding | Soft vs hard hints; cost of peek; fade×hint | promoted → NEXT_LAB |
+| 92 | Explanation length vs germane load | Short coach vs monologue; token tax | promoted → NEXT_LAB |
+| 93 | Retrieval failure modes in practice UX | Tip-of-tongue; blanking; productive struggle bounds | promoted → NEXT_LAB |
