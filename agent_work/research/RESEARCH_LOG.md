@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Researcher tick: Part LXXXVIII Worked-example fading in Solver UX (SAFE-FADE)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.11 = 4 → Researcher)  
+**Chapter written:** `chapters/88_worked_example_fading_solver_ux.md` (Part LXXXVIII)  
+**Claim examined:** How Solver/Practice help should fade from full worked examples → completion → solo without permanent solution-dump or expertise-reversal tax.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-FADE** — stage not costume; completion bridge; backward fade first; expertise-aware up/down; attempt grain before reveal; proof = solo transfer; no Fade Score™ / unlimited-solutions hero; FADE-* before solution-dump campaigns.
+
+**Evidence spine:** Sweller & Cooper (1985) worked-example effect; Sweller (1988) CLT search tax; Kalyuga et al. (2003) expertise reversal; Kalyuga et al. (2001) solving > examples with expertise; Paas (1992) completion ≈ examples on transfer efficiency; Renkl et al. (2002) fading > example–problem pairs + backward fade; Renkl & Atkinson (2003) CLT transition argument.
+
+**Claim killed (this tick):** Always-full-worked / never-fade / solution-first Solver / view≡mastery / expertise-blind dump / unlimited-solutions ads as learning brand — demoted under worked-example + expertise-reversal + fading literature; completion ladder + solo transfer survive behind FADE-*.
+
+**Experiments mounted:** FADE-1…5 + FADE-QUAL.
+
+**Next researcher id:** **89** (help-seeking vs help abuse). Researcher count since v1.11 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXVII Bank coverage honesty in marketing (SAFE-COVER)
 
 **Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.11 = 3 → Researcher)  
