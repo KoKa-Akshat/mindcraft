@@ -2,6 +2,7 @@
  * Rich concept explanations for each atomic concept node.
  * Used in the practice flow to show a concept card before questions start.
  */
+import { canonicalConceptId } from './conceptAliases'
 
 export interface ConceptContent {
   id:       string
@@ -650,6 +651,196 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
     examWeight: '~6–8 ACT questions; the most common non-word algebra form',
   },
 
+  fractions_decimals: {
+    id: 'fractions_decimals', label: 'Fractions & Decimals', emoji: '½',
+    tagline: 'Move freely between fractions, decimals, and percents. Same amount, different clothes.',
+    keyRules: [
+      'Percent → decimal: divide by 100 (803% → 8.03). Decimal → percent: multiply by 100.',
+      'Fraction → decimal: divide numerator by denominator.',
+      'To compare fractions: cross-multiply, or convert both to decimals.',
+      'a/b + c/d needs a common denominator. a/b × c/d = (a×c)/(b×d).',
+      'Dividing by a fraction: multiply by its reciprocal (keep-change-flip).',
+    ],
+    tips: [
+      'Write messy percents as decimals first, then compare or compute.',
+      'Benchmark fractions (1/2, 1/3, 1/4, 1/5) make estimation fast.',
+      'On ACT, answer choices often mix forms. Convert everything to one form.',
+    ],
+    watchOut: [
+      'ACT trap: 803% is 8.03, not 0.803.',
+      'ACT trap: dividing decimals without lining up place value.',
+      'ACT trap: flipping the wrong fraction when dividing.',
+    ],
+    formula: '% ÷ 100 = decimal | a/b ÷ c/d = a/b × d/c | common denominator for +/−',
+    examples: [
+      { problem: 'Write 803% as a decimal.', solution: '803 ÷ 100 = 8.03' },
+      { problem: '0.9 ÷ 0.3 = ?', solution: '0.9 ÷ 0.3 = 3' },
+    ],
+    examWeight: '~3–5 ACT questions; foundational for almost every word problem',
+  },
+
+  order_of_operations: {
+    id: 'order_of_operations', label: 'Order of Operations', emoji: '🔢',
+    tagline: 'Parentheses, powers, multiply/divide left to right, add/subtract left to right.',
+    keyRules: [
+      'PEMDAS / GEMDAS: grouping first, then exponents, then ×÷, then +−.',
+      'Multiply and divide share priority. Same for add and subtract. Go left to right.',
+      'Absolute value bars and fraction bars act like grouping symbols.',
+    ],
+    tips: [
+      'Rewrite the expression after each step so you do not skip a layer.',
+      'On calculator questions, still respect order. Parentheses save you.',
+    ],
+    watchOut: [
+      'ACT trap: doing addition before multiplication.',
+      'ACT trap: evaluating exponents after multiplying.',
+    ],
+    formula: 'Grouping → Exponents → ×÷ (L→R) → +− (L→R)',
+    examples: [
+      { problem: '3 + 4 × 2²', solution: '2²=4 → 4×4=16 → 3+16=19' },
+    ],
+    examWeight: '~1–2 ACT questions; often embedded inside larger expressions',
+  },
+
+  basic_equations: {
+    id: 'basic_equations', label: 'Basic Equations', emoji: '⚖️',
+    tagline: 'Whatever you do to one side, do to the other until x stands alone.',
+    keyRules: [
+      'Undo operations in reverse order: add/subtract first, then multiply/divide.',
+      'Distribute before combining like terms when parentheses appear.',
+      'Check by substituting your answer back into the original equation.',
+    ],
+    tips: [
+      'Keep the equation balanced. Write each step on a new line.',
+      'Clear fractions early by multiplying every term by the LCD.',
+    ],
+    watchOut: [
+      'ACT trap: forgetting to distribute a negative sign.',
+      'ACT trap: dividing only one term instead of every term.',
+    ],
+    formula: 'ax + b = c → ax = c − b → x = (c − b)/a',
+    examples: [
+      { problem: 'Solve 2x + 5 = 17', solution: '2x = 12 → x = 6' },
+    ],
+    examWeight: '~2–4 ACT questions; foundation for linear equations',
+  },
+
+  radical_expressions: {
+    id: 'radical_expressions', label: 'Radicals', emoji: '√',
+    tagline: 'Simplify roots the way you simplify fractions: clean the inside first.',
+    keyRules: [
+      '√(ab) = √a × √b when a,b ≥ 0. Pull perfect-square factors out.',
+      '√(a/b) = √a / √b. Rationalize denominators when needed.',
+      '√a × √a = a (for a ≥ 0).',
+    ],
+    tips: [
+      'Factor the radicand and look for perfect squares (4, 9, 16, 25…).',
+      'Do not cancel terms across a + or − inside a radical.',
+    ],
+    watchOut: [
+      'ACT trap: √(a+b) is not √a + √b.',
+      'ACT trap: dropping the absolute value when simplifying √(x²).',
+    ],
+    formula: '√(ab)=√a√b | √(a/b)=√a/√b | √(a²)=|a|',
+    examples: [
+      { problem: 'Simplify √72', solution: '√(36×2) = 6√2' },
+    ],
+    examWeight: '~2–3 ACT questions',
+  },
+
+  exponential_functions: {
+    id: 'exponential_functions', label: 'Exponential Functions', emoji: '📈',
+    tagline: 'Growth and decay multiply, they do not add.',
+    keyRules: [
+      'Form y = a · bˣ. a is the start value; b is the growth/decay factor.',
+      'b > 1 means growth. 0 < b < 1 means decay.',
+      'a^m · a^n = a^(m+n). (a^m)^n = a^(mn). a^0 = 1 (a ≠ 0).',
+    ],
+    tips: [
+      'Translate “increases by 5%” to multiply by 1.05 each period.',
+      'Translate “decreases by 20%” to multiply by 0.80.',
+    ],
+    watchOut: [
+      'ACT trap: adding the percent instead of multiplying by (1 ± r).',
+      'ACT trap: mixing up growth factor and growth rate.',
+    ],
+    formula: 'y = a(1+r)ᵗ growth | y = a(1−r)ᵗ decay',
+    examples: [
+      { problem: '$200 grows 5% per year for 3 years. Amount?', solution: '200(1.05)³ ≈ 231.53' },
+    ],
+    examWeight: '~2–4 ACT questions',
+  },
+
+  sequences_series: {
+    id: 'sequences_series', label: 'Sequences & Series', emoji: '⋯',
+    tagline: 'Find the pattern, then the next term, or the sum.',
+    keyRules: [
+      'Arithmetic: common difference d. aₙ = a₁ + (n−1)d.',
+      'Geometric: common ratio r. aₙ = a₁ · rⁿ⁻¹.',
+      'Sum of first n arithmetic terms: Sₙ = n/2 · (a₁ + aₙ).',
+    ],
+    tips: [
+      'Write the first few terms before choosing a formula.',
+      'Check whether the problem wants a term or a sum.',
+    ],
+    watchOut: [
+      'ACT trap: off-by-one on the (n−1) exponent or term index.',
+      'ACT trap: treating an arithmetic sequence as geometric.',
+    ],
+    formula: 'aₙ = a₁+(n−1)d | aₙ = a₁ rⁿ⁻¹ | Sₙ = n/2 (first+last)',
+    examples: [
+      { problem: '2, 5, 8, 11… What is the 10th term?', solution: 'a₁₀ = 2 + 9×3 = 29' },
+    ],
+    examWeight: '~1–3 ACT questions',
+  },
+
+  triangles_congruence: {
+    id: 'triangles_congruence', label: 'Triangles & Congruence', emoji: '△',
+    tagline: 'Same shape and size: matching sides and angles tell the story.',
+    keyRules: [
+      'Triangle angle sum is 180°.',
+      'Congruence shortcuts: SSS, SAS, ASA, AAS. SSA is not a shortcut.',
+      'Corresponding parts of congruent triangles are congruent (CPCTC).',
+    ],
+    tips: [
+      'Mark equal sides and angles on the figure before you write a proof.',
+      'Isosceles: base angles are equal.',
+    ],
+    watchOut: [
+      'ACT trap: assuming SSA proves congruence.',
+      'ACT trap: mixing up corresponding vertices in the congruence statement.',
+    ],
+    formula: '∠A+∠B+∠C = 180° | SSS / SAS / ASA / AAS',
+    examples: [
+      { problem: 'Angles 40° and 65°. Third angle?', solution: '180−40−65 = 75°' },
+    ],
+    examWeight: '~2–4 ACT questions',
+  },
+
+  geometric_transformations: {
+    id: 'geometric_transformations', label: 'Transformations', emoji: '🔄',
+    tagline: 'Slide, flip, and turn: the figure moves, the measures stay.',
+    keyRules: [
+      'Translation: every point moves the same distance and direction.',
+      'Reflection: flip over a line. Distance to the line is preserved.',
+      'Rotation: turn about a point by a given angle.',
+      'Dilation: scale from a center by factor k. Angles stay; lengths × k.',
+    ],
+    tips: [
+      'Track one vertex through the transformation, then check a second.',
+      'On the coordinate plane, write the rule (x,y) → (…) explicitly.',
+    ],
+    watchOut: [
+      'ACT trap: reflecting over the wrong axis.',
+      'ACT trap: confusing rotation direction (CW vs CCW).',
+    ],
+    formula: 'Reflection over y-axis: (x,y)→(−x,y) | over x-axis: (x,y)→(x,−y)',
+    examples: [
+      { problem: 'Reflect (3,−2) over the y-axis.', solution: '(−3,−2)' },
+    ],
+    examWeight: '~1–3 ACT questions',
+  },
+
   ratios_proportions: {
     id: 'ratios_proportions', label: 'Ratios & Proportions', emoji: '⚖️',
     tagline: 'A ratio is a fraction, so set up two equal fractions and cross-multiply.',
@@ -764,5 +955,35 @@ export const CONCEPT_CONTENT: Record<string, ConceptContent> = {
 }
 
 export function getConceptContent(conceptId: string): ConceptContent | null {
-  return CONCEPT_CONTENT[conceptId] ?? null
+  const id = canonicalConceptId(conceptId)
+  return CONCEPT_CONTENT[id] ?? CONCEPT_CONTENT[conceptId] ?? null
+}
+
+/** Always returns a notes sheet — curated content when we have it, else a
+ *  short structured fallback so chapter / weekly never skip the notes page. */
+export function resolveConceptNotes(conceptId: string): ConceptContent {
+  const hit = getConceptContent(conceptId)
+  if (hit) return hit
+  const id = canonicalConceptId(conceptId)
+  const label = id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+  return {
+    id,
+    label,
+    emoji: '📗',
+    tagline: `Core moves for ${label}. Read these, then work the batch.`,
+    keyRules: [
+      `Name the quantity you need before you compute.`,
+      `Write one clear equation or diagram, then solve.`,
+      `Check units and whether the answer matches the question asked.`,
+    ],
+    tips: [
+      `Underline what the question is asking for.`,
+      `Estimate first so a wild answer stands out.`,
+    ],
+    watchOut: [
+      `ACT trap: solving for the wrong unknown.`,
+      `ACT trap: stopping one step early and picking a distractor.`,
+    ],
+    examples: [],
+  }
 }

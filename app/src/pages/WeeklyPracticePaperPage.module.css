@@ -1,10 +1,10 @@
 .shell {
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
-    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(185, 232, 111, 0.18), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(36, 122, 77, 0.08), transparent 50%),
-    #ebe4d8;
-  color: #1c1814;
+    radial-gradient(ellipse 70% 50% at 78% 12%, rgba(185, 232, 111, 0.34), transparent 58%),
+    radial-gradient(ellipse 55% 45% at 12% 88%, rgba(245, 211, 72, 0.14), transparent 55%),
+    linear-gradient(155deg, #fff8e9 0%, #fffdf7 48%, #e4f7dc 100%);
+  color: #143a2e;
 }
 
 .toolbar {
@@ -16,9 +16,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 12px 20px;
-  background: rgba(255, 250, 242, 0.94);
-  border-bottom: 1px solid rgba(40, 32, 24, 0.1);
+  padding: 10px 20px;
+  margin: 0;
+  background: rgba(255, 253, 247, 0.92);
+  border-bottom: 1px solid rgba(20, 58, 46, 0.1);
   backdrop-filter: blur(8px);
 }
 
@@ -34,11 +35,11 @@
   font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(28, 24, 20, 0.45);
+  color: rgba(20, 58, 46, 0.45);
 }
 
 .progress {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -58,9 +59,9 @@
 }
 
 .ghost {
-  border: 1px solid rgba(40, 32, 24, 0.14);
-  background: #fff;
-  color: #1c1814;
+  border: 1px solid rgba(20, 58, 46, 0.16);
+  background: #fffdf7;
+  color: #143a2e;
 }
 
 .primary {
@@ -74,29 +75,19 @@
   cursor: wait;
 }
 
-/* Desk: ~3/4 questions + ~1/4 tools */
+/* Full-bleed desk — same spirit as Contents */
 .desk {
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr);
-  gap: 18px;
-  width: min(1280px, calc(100% - 28px));
-  margin: 16px auto 48px;
-  align-items: start;
-}
-
-.mainCol {
-  min-width: 0;
-  background: #fffaf2;
-  border: 1px solid rgba(40, 32, 24, 0.1);
-  border-radius: 20px;
-  box-shadow: 0 18px 40px rgba(40, 32, 24, 0.1);
-  padding: 26px 26px 36px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 18px 22px 48px;
+  box-sizing: border-box;
 }
 
 .paperHead {
-  margin-bottom: 22px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(40, 32, 24, 0.1);
+  margin-bottom: 20px;
+  padding: 4px 2px 16px;
+  border-bottom: 1px solid rgba(20, 58, 46, 0.1);
 }
 
 .eyebrow {
@@ -105,23 +96,24 @@
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(28, 24, 20, 0.45);
+  color: rgba(20, 58, 46, 0.45);
 }
 
 .title {
   margin: 0 0 8px;
   font-family: var(--tok-font-serif, Georgia, serif);
-  font-size: clamp(28px, 3vw, 36px);
+  font-size: clamp(32px, 4vw, 44px);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: #143a2e;
 }
 
 .sub {
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.45;
-  color: rgba(28, 24, 20, 0.68);
+  color: rgba(20, 58, 46, 0.68);
+  max-width: 60ch;
 }
 
 .topicBlock {
@@ -139,15 +131,15 @@
 .topicTitle {
   margin: 0;
   font-family: var(--tok-font-serif, Georgia, serif);
-  font-size: 22px;
+  font-size: clamp(22px, 2.4vw, 28px);
   font-weight: 600;
   color: #143a2e;
 }
 
 .topicCount {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
-  color: rgba(28, 24, 20, 0.45);
+  color: rgba(20, 58, 46, 0.45);
 }
 
 .notesToggle {
@@ -164,33 +156,40 @@
 
 .formulaNotes {
   margin-bottom: 14px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(36, 122, 77, 0.06);
-  border: 1px solid rgba(36, 122, 77, 0.16);
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(36, 122, 77, 0.08);
+  border: 1px solid rgba(36, 122, 77, 0.18);
 }
 
 .formulaBanner {
-  margin: 0 0 12px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: rgba(255, 253, 247, 0.9);
+  margin: 0 0 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 253, 247, 0.95);
   font-family: var(--tok-font-serif, Georgia, serif);
-  font-size: 16px;
+  font-size: clamp(16px, 1.8vw, 20px);
   font-weight: 600;
   color: #143a2e;
   text-align: center;
 }
 
+.notesTag {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgba(20, 58, 46, 0.72);
+}
+
 .notesGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 
 .notesGrid h3 {
   margin: 0 0 6px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -200,27 +199,29 @@
 .notesGrid ul {
   margin: 0;
   padding-left: 18px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.45;
-  color: rgba(28, 24, 20, 0.78);
+  color: rgba(20, 58, 46, 0.82);
 }
 
+/* 2×2 pages: 3 questions + tools */
 .qGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 18px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .item {
-  padding: 14px 14px 12px;
-  border-radius: 14px;
-  background: rgba(255, 253, 247, 0.72);
-  border: 1px solid rgba(40, 32, 24, 0.08);
-  break-inside: avoid;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 253, 247, 0.9);
+  border: 1px solid rgba(20, 58, 46, 0.1);
+  box-shadow: 0 10px 24px rgba(20, 58, 46, 0.06);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 0;
+  min-height: 240px;
 }
 
 .itemHead {
@@ -230,8 +231,8 @@
 }
 
 .num {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -243,126 +244,72 @@
 }
 
 .topic {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(28, 24, 20, 0.5);
+  color: rgba(20, 58, 46, 0.5);
 }
 
 .stem {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
-  color: #1c1814;
+  color: #143a2e;
+  flex: 0 0 auto;
 }
 
-/* Soft write pad — no heavy “YOUR WORK” chrome */
 .work {
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.55);
-  border: 1px dashed rgba(40, 32, 24, 0.14);
-  min-height: 140px;
+  border: 1px dashed rgba(20, 58, 46, 0.16);
+  min-height: 130px;
+  flex: 1 1 auto;
 }
 
-.choices {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.choice {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 4px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(20, 58, 46, 0.12);
-  border-radius: 0;
-  cursor: pointer;
-  text-align: left;
-  font: inherit;
-  color: inherit;
-  transition: background 120ms, opacity 160ms, filter 160ms;
-}
-
-.choice:hover:not(:disabled) {
-  background: rgba(36, 122, 77, 0.05);
-}
-
-.choiceLetter {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  display: grid;
-  place-items: center;
-  font-size: 11px;
-  font-weight: 800;
-  background: rgba(20, 58, 46, 0.08);
-  color: #143a2e;
-  flex-shrink: 0;
-}
-
-.choiceText {
-  font-size: 14px;
-  line-height: 1.35;
-  flex: 1;
-}
-
-.choicePicked .choiceLetter {
-  background: #3a5da8;
-  color: #fff;
-}
-
-.choiceCorrect {
-  border-bottom-color: #1f6b45 !important;
-  background: rgba(31, 107, 69, 0.08) !important;
-}
-
-.choiceCorrect .choiceLetter {
-  background: #1f6b45;
-  color: #fff;
-}
-
-.choiceOut {
-  opacity: 0.35;
-  filter: grayscale(0.85);
-  cursor: default;
-  text-decoration: line-through;
-  text-decoration-color: rgba(28, 24, 20, 0.35);
-}
-
-.toolsRail {
-  min-width: 0;
-}
-
-.toolsSticky {
-  position: sticky;
-  top: 68px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 14px;
+.emptyTile {
   border-radius: 16px;
-  background: rgba(255, 250, 242, 0.92);
-  border: 1px solid rgba(40, 32, 24, 0.1);
-  box-shadow: 0 10px 28px rgba(40, 32, 24, 0.08);
+  background:
+    radial-gradient(ellipse 80% 70% at 30% 30%, rgba(185, 232, 111, 0.35), transparent 60%),
+    rgba(36, 122, 77, 0.08);
+  border: 1px dashed rgba(36, 122, 77, 0.22);
+  min-height: 240px;
 }
 
-.toolBtns {
+.toolsCell {
+  border-radius: 16px;
+  padding: 12px;
+  background:
+    radial-gradient(ellipse 70% 60% at 70% 20%, rgba(185, 232, 111, 0.28), transparent 55%),
+    rgba(255, 253, 247, 0.92);
+  border: 1.5px solid rgba(20, 58, 46, 0.14);
+  box-shadow: 0 10px 24px rgba(20, 58, 46, 0.08);
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 240px;
+}
+
+.toolsCellHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #247a4d;
 }
 
 .toolBtn {
-  flex: 1;
-  min-height: 36px;
-  border-radius: 10px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 9px;
   border: 1px solid rgba(20, 58, 46, 0.18);
   background: #fff;
   color: #143a2e;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -377,10 +324,11 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 8px;
+  padding: 6px;
   border-radius: 12px;
   background: #fff;
-  border: 1px solid rgba(40, 32, 24, 0.1);
+  border: 1px solid rgba(20, 58, 46, 0.1);
+  flex: 1;
 }
 
 .calcDisplay {
@@ -401,13 +349,13 @@
 }
 
 .calcBtn {
-  min-height: 36px;
+  min-height: 34px;
   border-radius: 8px;
-  border: 1px solid rgba(40, 32, 24, 0.1);
+  border: 1px solid rgba(20, 58, 46, 0.1);
   background: #faf6ee;
   font-weight: 700;
   cursor: pointer;
-  color: #1c1814;
+  color: #143a2e;
 }
 
 .calcBtn:hover {
@@ -417,15 +365,10 @@
 .graphWrap {
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(40, 32, 24, 0.1);
+  border: 1px solid rgba(20, 58, 46, 0.1);
   background: #fff;
-}
-
-.toolsHint {
-  margin: 0;
-  font-size: 12px;
-  line-height: 1.4;
-  color: rgba(28, 24, 20, 0.55);
+  flex: 1;
+  min-height: 0;
 }
 
 .printOnly {
@@ -437,12 +380,12 @@
 }
 
 .printLine {
-  height: 24px;
-  border-bottom: 1px solid rgba(40, 32, 24, 0.16);
+  height: 22px;
+  border-bottom: 1px solid rgba(20, 58, 46, 0.16);
 }
 
 .doneBanner {
-  margin-top: 18px;
+  margin-top: 12px;
   padding: 14px 16px;
   border-radius: 14px;
   background: rgba(20, 58, 46, 0.08);
@@ -459,7 +402,7 @@
   background: #fffaf2;
   border-radius: 18px;
   padding: 32px 24px;
-  border: 1px solid rgba(40, 32, 24, 0.1);
+  border: 1px solid rgba(20, 58, 46, 0.1);
 }
 
 .empty h1 {
@@ -470,7 +413,7 @@
 
 .empty p {
   margin: 0 0 18px;
-  color: rgba(28, 24, 20, 0.65);
+  color: rgba(20, 58, 46, 0.65);
 }
 
 .primaryLink {
@@ -499,14 +442,6 @@
   }
 
   .desk {
-    display: block;
-    width: 100%;
-    margin: 0;
-  }
-
-  .mainCol {
-    border: none;
-    box-shadow: none;
     padding: 0;
   }
 
@@ -519,36 +454,20 @@
   }
 }
 
-@media (max-width: 960px) {
-  .desk {
-    grid-template-columns: 1fr;
-  }
-
-  .toolsSticky {
-    position: static;
-  }
-
+@media (max-width: 860px) {
   .qGrid {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 640px) {
-  .mainCol {
-    padding: 18px 14px 28px;
-  }
-
-  .title {
-    font-size: 24px;
+  .emptyTile {
+    display: none;
   }
 
   .notesGrid {
     grid-template-columns: 1fr;
   }
 
-  .toolbarMeta {
-    order: 3;
-    width: 100%;
-    align-items: flex-start;
+  .desk {
+    padding: 14px 14px 36px;
   }
 }

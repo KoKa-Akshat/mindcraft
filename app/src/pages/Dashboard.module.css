@@ -851,7 +851,7 @@
     radial-gradient(ellipse 70% 50% at 78% 12%, rgba(185, 232, 111, 0.34), transparent 58%),
     radial-gradient(ellipse 55% 45% at 12% 88%, rgba(245, 211, 72, 0.16), transparent 55%),
     linear-gradient(155deg, #fff8e9 0%, #fffdf7 48%, #e4f7dc 100%);
-  padding: 4px 8px 8px;
+  padding: 10px 16px 12px;
   box-sizing: border-box;
 }
 .canvasDeskFrameEmbed {
@@ -877,9 +877,13 @@
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  gap: 14px;
+  gap: 16px;
   flex-shrink: 0;
-  padding: 8px 12px;
+  padding: 10px 14px;
+  margin: 0 2px 6px;
+  border-radius: 16px;
+  background: rgba(255, 253, 247, 0.55);
+  border: 1px solid rgba(20, 58, 46, 0.08);
 }
 
 .heroMiddle {
@@ -899,10 +903,10 @@
    leaf-2 #5fb779, sprout #b9e86f, gold #f5d348 / Craft #d3a900, paper #fffdf7. */
 .canvasWordmark {
   font-family: var(--tok-font-sans);
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 700;
   color: #143a2e;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   flex-shrink: 0;
   white-space: nowrap;
   border: none;
@@ -1000,6 +1004,7 @@
   flex: 1;
   min-height: 0;
   background:
+    radial-gradient(ellipse 80% 50% at 90% 10%, rgba(185, 232, 111, 0.18), transparent 55%),
     radial-gradient(ellipse 90% 60% at 50% -8%, rgba(255, 248, 233, 0.9), transparent 55%),
     #fffdf7;
   border: 1px solid rgba(20, 58, 46, 0.08);
@@ -1007,7 +1012,7 @@
   box-shadow: var(--desk-shadow-stage);
   /* Extra left gutter (was 24px) makes room for .deskSpine's ring column
      without it overlapping stage content. */
-  padding: 20px 24px 22px 38px;
+  padding: 22px 28px 24px 42px;
   overflow: hidden;
   position: relative;
 }
@@ -1299,19 +1304,19 @@
 .homeTitle {
   margin: 0;
   font-family: var(--tok-font-display);
-  font-size: clamp(38px, 5vw, 50px);
+  font-size: clamp(44px, 5.5vw, 58px);
   font-weight: 700;
   color: var(--desk-ink);
   line-height: 1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 .homeLead {
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   max-width: 46ch;
   font-family: var(--tok-font-sans);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.45;
-  color: rgba(42, 36, 48, 0.62);
+  color: rgba(20, 58, 46, 0.62);
 }
 
 /* .sparkBanner (the old standalone yellow Home-only band) and its .sparkEmoji
@@ -1403,9 +1408,9 @@
 .tocLaneTitle {
   margin: 0;
   font-family: var(--tok-font-display);
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   line-height: 1.1;
   color: var(--lane-ink);
 }
@@ -1473,7 +1478,7 @@
 .tocNodeName {
   font-family: var(--tok-font-sans);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.3;
   letter-spacing: -0.01em;
   color: var(--lane-ink);

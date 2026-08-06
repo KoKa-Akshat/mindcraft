@@ -1,11 +1,9 @@
 /**
- * Weekly Review desk — scroll paper (free-response) or playthrough (MC).
- * Two-up question grid (~3/4 width) + sticky calc/graph rail. Play mode
- * shows every paper question at once (not one-at-a-time), with soft-wrong
- * gray-out on misses. Formula notes per topic sit above that topic's batch.
+ * Weekly Review desk — full-bleed, two-up questions with Graph/Calc in the
+ * fourth tile of every page (no side dead space). Notes open above each topic.
  */
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useUser } from '../App'
 import MathText from '../components/MathText'
 import ScratchPad from '../components/ScratchPad'
@@ -23,7 +21,7 @@ import {
   type WeeklyPracticePaper,
 } from '../lib/weeklyPracticePaper'
 import { actConceptLabel } from '../lib/actToc'
-import { getConceptContent } from '../lib/conceptContent'
+import { resolveConceptNotes } from '../lib/conceptContent'
 import s from './WeeklyPracticePaperPage.module.css'
 
 type PaperItem = {
@@ -66,6 +64,12 @@ function groupByTopic(items: PaperItem[]): TopicBlock[] {
     map.get(id)!.items.push(item)
   }
   return order.map(id => map.get(id)!)
+}
+
+function chunkThree<T>(arr: T[]): T[][] {
+  const out: T[][] = []
+  for (let i = 0; i < arr.length; i += 3) out.push(arr.slice(i, i + 3))
+  return out
 }
 
 function MiniCalc() {
@@ -118,12 +122,33 @@ function MiniCalc() {
   )
 }
 
+function ToolsTile({ showCalc, onToggleCalc }: { showCalc: boolean; onToggleCalc: () => void }) {
+  return (
+    <aside className={`${s.toolsCell} ${s.noPrint}`}>
+      <div className={s.toolsCellHead}>
+        <span>Tools</span>
+        <button
+          type="button"
+          className={`${s.toolBtn} ${showCalc ? s.toolBtnOn : ''}`}
+          onClick={onToggleCalc}
+        >
+          {showCalc ? 'Graph' : 'Calculator'}
+        </button>
+      </div>
+      {showCalc ? (
+        <MiniCalc />
+      ) : (
+        <div className={s.graphWrap}>
+          <GraphBox defaultOpen />
+        </div>
+      )}
+    </aside>
+  )
+}
+
 export default function WeeklyPracticePaperPage() {
   const user = useUser()
   const navigate = useNavigate()
-  const location = useLocation()
-  const playMode = Boolean((location.state as { weeklyPlay?: boolean } | null)?.weeklyPlay)
-
   const paper = useMemo(() => loadCachedWeeklyPaper(), [])
   const items = useMemo(() => (paper ? resolvePaperItems(paper) : []), [paper])
   const topics = useMemo(() => groupByTopic(items), [items])
@@ -132,13 +157,7 @@ export default function WeeklyPracticePaperPage() {
   const [done, setDone] = useState(false)
   const [saving, setSaving] = useState(false)
   const [showCalc, setShowCalc] = useState(false)
-  const [showGraph, setShowGraph] = useState(true)
   const [openNotes, setOpenNotes] = useState<Record<string, boolean>>({})
-
-  // Playthrough: per-question selection + soft-wrong eliminations
-  const [picked, setPicked] = useState<Record<string, number>>({})
-  const [eliminated, setEliminated] = useState<Record<string, number[]>>({})
-  const [locked, setLocked] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     if (!user?.uid || !paper) return
@@ -184,24 +203,6 @@ export default function WeeklyPracticePaperPage() {
     }
   }
 
-  function tryChoice(q: Question, choiceIndex: number) {
-    if (locked[q.id] || (eliminated[q.id] ?? []).includes(choiceIndex)) return
-    setPicked(prev => ({ ...prev, [q.id]: choiceIndex }))
-    if (choiceIndex === q.correctIndex) {
-      setLocked(prev => ({ ...prev, [q.id]: true }))
-      setInked(prev => {
-        const next = new Set(prev)
-        next.add(q.id)
-        return next
-      })
-      return
-    }
-    setEliminated(prev => ({
-      ...prev,
-      [q.id]: [...new Set([...(prev[q.id] ?? []), choiceIndex])],
-    }))
-  }
-
   if (!paper || items.length === 0) {
     return (
       <div className={s.shell}>
@@ -225,16 +226,14 @@ export default function WeeklyPracticePaperPage() {
         <div className={s.toolbarMeta}>
           <span className={s.week}>{paper.weekKey}</span>
           <span className={s.progress}>
-            {inked.size}/{items.length} {playMode ? 'solved' : 'worked'}
+            {inked.size}/{items.length} worked
             {done ? ' · done' : ''}
           </span>
         </div>
         <div className={s.toolbarActions}>
-          {!playMode && (
-            <button type="button" className={s.ghost} onClick={() => window.print()}>
-              Print
-            </button>
-          )}
+          <button type="button" className={s.ghost} onClick={() => window.print()}>
+            Print
+          </button>
           {!done && (
             <button
               type="button"
@@ -249,73 +248,64 @@ export default function WeeklyPracticePaperPage() {
       </header>
 
       <div className={s.desk}>
-        <div className={s.mainCol}>
-          <header className={s.paperHead}>
-            <p className={s.eyebrow}>
-              MindCraft · Weekly Review{playMode ? ' · Play through' : ''}
-            </p>
-            <h1 className={s.title}>{paper.title}</h1>
-            <p className={s.sub}>
-              {playMode
-                ? 'All questions on one desk. Wrong picks gray out so you can try again.'
-                : 'Free-response. Write under each question. Calc and graph stay on the right.'}
-              {paper.mode ? ` Mode: ${paper.mode}.` : ''} Week {paper.weekKey}.
-            </p>
-          </header>
+        <header className={s.paperHead}>
+          <p className={s.eyebrow}>MindCraft · Weekly Review</p>
+          <h1 className={s.title}>Week paper</h1>
+          <p className={s.sub}>
+            Write under each question. Graph and calculator sit in the fourth tile.
+          </p>
+        </header>
 
-          {topics.map(topic => {
-            const content = getConceptContent(topic.conceptId)
-            const notesOpen = openNotes[topic.conceptId] ?? true
-            return (
-              <section key={topic.conceptId} className={s.topicBlock}>
-                <div className={s.topicHead}>
-                  <h2 className={s.topicTitle}>{topic.label}</h2>
-                  <span className={s.topicCount}>{topic.items.length} Q</span>
-                  {content && (
-                    <button
-                      type="button"
-                      className={s.notesToggle}
-                      onClick={() => setOpenNotes(prev => ({
-                        ...prev,
-                        [topic.conceptId]: !notesOpen,
-                      }))}
-                    >
-                      {notesOpen ? 'Hide notes' : 'Show notes'}
-                    </button>
+        {topics.map(topic => {
+          const content = resolveConceptNotes(topic.conceptId)
+          const notesOpen = openNotes[topic.conceptId] ?? true
+          const pages = chunkThree(topic.items)
+          return (
+            <section key={topic.conceptId} className={s.topicBlock}>
+              <div className={s.topicHead}>
+                <h2 className={s.topicTitle}>{topic.label}</h2>
+                <span className={s.topicCount}>{topic.items.length} Q</span>
+                <button
+                  type="button"
+                  className={s.notesToggle}
+                  onClick={() => setOpenNotes(prev => ({
+                    ...prev,
+                    [topic.conceptId]: !notesOpen,
+                  }))}
+                >
+                  {notesOpen ? 'Hide notes' : 'Show notes'}
+                </button>
+              </div>
+
+              {notesOpen && (
+                <div className={s.formulaNotes}>
+                  {content.formula && (
+                    <p className={s.formulaBanner}>{content.formula}</p>
                   )}
-                </div>
-
-                {content && notesOpen && (
-                  <div className={s.formulaNotes}>
-                    {content.formula && (
-                      <p className={s.formulaBanner}>{content.formula}</p>
-                    )}
-                    <div className={s.notesGrid}>
-                      <div>
-                        <h3>Key rules</h3>
-                        <ul>
-                          {content.keyRules.slice(0, 4).map((r, i) => <li key={i}>{r}</li>)}
-                        </ul>
-                      </div>
-                      <div>
-                        <h3>Watch out</h3>
-                        <ul>
-                          {content.watchOut.slice(0, 3).map((w, i) => <li key={i}>{w}</li>)}
-                        </ul>
-                      </div>
+                  <p className={s.notesTag}>{content.tagline}</p>
+                  <div className={s.notesGrid}>
+                    <div>
+                      <h3>Key rules</h3>
+                      <ul>
+                        {content.keyRules.slice(0, 4).map((r, i) => <li key={i}>{r}</li>)}
+                      </ul>
+                    </div>
+                    <div>
+                      <h3>Watch out</h3>
+                      <ul>
+                        {content.watchOut.slice(0, 3).map((w, i) => <li key={i}>{w}</li>)}
+                      </ul>
                     </div>
                   </div>
-                )}
+                </div>
+              )}
 
-                <div className={s.qGrid}>
-                  {topic.items.map(item => {
+              {pages.map((page, pageIdx) => (
+                <div key={`${topic.conceptId}-p${pageIdx}`} className={s.qGrid}>
+                  {page.map(item => {
                     globalIndex += 1
                     const n = globalIndex
                     const q = item.question
-                    const outs = eliminated[q.id] ?? []
-                    const isLocked = !!locked[q.id]
-                    const selected = picked[q.id]
-
                     return (
                       <article key={q.id} className={s.item}>
                         <div className={s.itemHead}>
@@ -325,108 +315,52 @@ export default function WeeklyPracticePaperPage() {
                         <div className={s.stem}>
                           <MathText text={item.stem} />
                         </div>
-
-                        {playMode ? (
-                          <div className={s.choices}>
-                            {q.choices.slice(0, 4).map((choice, i) => {
-                              const out = outs.includes(i)
-                              const correct = isLocked && i === q.correctIndex
-                              const chosen = selected === i
-                              return (
-                                <button
-                                  key={i}
-                                  type="button"
-                                  className={[
-                                    s.choice,
-                                    out ? s.choiceOut : '',
-                                    correct ? s.choiceCorrect : '',
-                                    chosen && !out && !correct ? s.choicePicked : '',
-                                  ].filter(Boolean).join(' ')}
-                                  disabled={isLocked || out}
-                                  onClick={() => tryChoice(q, i)}
-                                >
-                                  <span className={s.choiceLetter}>
-                                    {String.fromCharCode(65 + i)}
-                                  </span>
-                                  <span className={s.choiceText}>
-                                    <MathText text={choice} />
-                                  </span>
-                                </button>
-                              )
-                            })}
-                          </div>
-                        ) : (
-                          <div className={`${s.work} ${s.noPrint}`}>
-                            <ScratchPad
-                              key={`paper-${paper.weekKey}-${q.id}`}
-                              questionId={`weekly-${paper.weekKey}-${q.id}`}
-                              height={160}
-                              paperMode
-                              onChange={(_canvas, data) => {
-                                const hasInk = (data.strokes?.length ?? 0) > 0
-                                setInked(prev => {
-                                  const next = new Set(prev)
-                                  if (hasInk) next.add(q.id)
-                                  else next.delete(q.id)
-                                  return next
-                                })
-                              }}
-                            />
-                          </div>
-                        )}
-
-                        {!playMode && (
-                          <div className={`${s.printLines} ${s.printOnly}`} aria-hidden="true">
-                            {Array.from({ length: 6 }).map((_, line) => (
-                              <div key={line} className={s.printLine} />
-                            ))}
-                          </div>
-                        )}
+                        <div className={`${s.work} ${s.noPrint}`}>
+                          <ScratchPad
+                            key={`paper-${paper.weekKey}-${q.id}`}
+                            questionId={`weekly-${paper.weekKey}-${q.id}`}
+                            height={150}
+                            paperMode
+                            onChange={(_canvas, data) => {
+                              const hasInk = (data.strokes?.length ?? 0) > 0
+                              setInked(prev => {
+                                const next = new Set(prev)
+                                if (hasInk) next.add(q.id)
+                                else next.delete(q.id)
+                                return next
+                              })
+                            }}
+                          />
+                        </div>
+                        <div className={`${s.printLines} ${s.printOnly}`} aria-hidden="true">
+                          {Array.from({ length: 5 }).map((_, line) => (
+                            <div key={line} className={s.printLine} />
+                          ))}
+                        </div>
                       </article>
                     )
                   })}
+                  {/* Fourth tile: graph/calc. Fill empty slots with soft green wash. */}
+                  {page.length < 3 &&
+                    Array.from({ length: 3 - page.length }).map((_, i) => (
+                      <div key={`pad-${pageIdx}-${i}`} className={s.emptyTile} aria-hidden="true" />
+                    ))}
+                  <ToolsTile
+                    showCalc={showCalc}
+                    onToggleCalc={() => setShowCalc(c => !c)}
+                  />
                 </div>
-              </section>
-            )
-          })}
+              ))}
+            </section>
+          )
+        })}
 
-          {done && (
-            <div className={`${s.doneBanner} ${s.noPrint}`}>
-              This week’s paper is marked done. Next unlock follows the Monday cadence
-              ({weekKey()} locked until then).
-            </div>
-          )}
-        </div>
-
-        <aside className={`${s.toolsRail} ${s.noPrint}`}>
-          <div className={s.toolsSticky}>
-            <div className={s.toolBtns}>
-              <button
-                type="button"
-                className={`${s.toolBtn} ${showCalc ? s.toolBtnOn : ''}`}
-                onClick={() => setShowCalc(c => !c)}
-              >
-                Calculator
-              </button>
-              <button
-                type="button"
-                className={`${s.toolBtn} ${showGraph ? s.toolBtnOn : ''}`}
-                onClick={() => setShowGraph(g => !g)}
-              >
-                Graph
-              </button>
-            </div>
-            {showCalc && <MiniCalc />}
-            {showGraph && (
-              <div className={s.graphWrap}>
-                <GraphBox defaultOpen />
-              </div>
-            )}
-            <p className={s.toolsHint}>
-              Tools stay here while you scroll. Questions use about three-quarters of the desk.
-            </p>
+        {done && (
+          <div className={`${s.doneBanner} ${s.noPrint}`}>
+            This week&apos;s paper is marked done. Next unlock follows the Monday cadence
+            ({weekKey()} locked until then).
           </div>
-        </aside>
+        )}
       </div>
     </div>
   )

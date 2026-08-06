@@ -1532,6 +1532,40 @@
   grid-column: 1 / -1;
 }
 
+.formulaSheetHighlight {
+  grid-column: 1 / -1;
+  background: linear-gradient(145deg, rgba(185, 232, 111, 0.28), rgba(255, 253, 247, 0.95)) !important;
+  border-color: rgba(36, 122, 77, 0.28) !important;
+}
+
+.formulaSheetHighlight p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(20, 58, 46, 0.78);
+}
+
+.formulaSheetExample {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: rgba(255, 253, 247, 0.9);
+  border: 1px solid rgba(20, 58, 46, 0.1);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.formulaSheetExample strong {
+  color: #143a2e;
+}
+
+.formulaSheetExample span {
+  color: #247a4d;
+  font-weight: 600;
+}
+
 .formulaSheetGrid h2 {
   margin: 0 0 8px;
   font-size: 12px;
@@ -1569,7 +1603,8 @@
   .formulaSheetGrid {
     grid-template-columns: 1fr;
   }
-  .formulaSheetWide {
+  .formulaSheetWide,
+  .formulaSheetHighlight {
     grid-column: auto;
   }
 }

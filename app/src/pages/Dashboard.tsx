@@ -590,15 +590,9 @@ export default function Dashboard({
     navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey } })
   }
 
-  /** Play-through: same weekly desk as scroll, but with MC + soft-wrong
-   *  gray-out and every paper question visible at once (not one-at-a-time). */
+  /** Play-through uses the same full desk as print/scroll (no separate mode). */
   function startWeeklyPlaythrough(paper: WeeklyPracticePaper) {
-    setShowWeeklyPicker(false)
-    if (!paper.questionIds.length) {
-      openMap()
-      return
-    }
-    navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey, weeklyPlay: true } })
+    startWeeklyPaper(paper)
   }
 
   // Cover first — before the diagnostic loading gate — so login lands on the
