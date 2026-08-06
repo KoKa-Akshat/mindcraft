@@ -4,6 +4,34 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Synthesizer tick v1.12: merge Parts LXXXIV–XCI
+
+**Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.11 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-TALK (LXXXIV) — construction > airtime; prompt density + wait bands
+- SAFE-STORYLOAD (LXXXV) — CLT-budgeted wrap; coherence > immersion
+- SAFE-PROOF (LXXXVI) — dated solo competence artifacts; competence > crowd
+- SAFE-COVER (LXXXVII) — matrix > total; gaps as features; GENQ honesty
+- SAFE-FADE (LXXXVIII) — completion ladder; attempt grain; solo proof
+- SAFE-HELP (LXXXIX) — instrumental > executive; contingent stage
+- SAFE-INSTRUMENT (XC) — ship the four FEI events; XXI.4 co-gates
+- SAFE-HINT (XCI) — soft-first contingent; construction-priced peeks
+
+**Red Team kills promoted:** #38–#45 (from provisional chapter kills → v1.12 company dossier).
+
+**Experiment families confirmed in Part IX:** TALK / STORYLOAD / PROOF / COVER / FADE / HELP / INSTR / HINT.
+
+**Claim killed (synthesis):** Treating LXXXIV–XCI as orphan provisional deep-dives or independent North Stars (Talk Ratio theater, immersive lore-as-pedagogy, star-wall learning proof, item-count coverage theater, always-full-worked Solver, unlimited-hints dumps, DAU/streak/FEI Score™ dashboards, unlimited free hard peeks / Hint Score™) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **92** (explanation length vs germane load). Researcher count since v1.12 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Researcher tick: Part XCI Hint economy & contingent scaffolding (SAFE-HINT)
 
 **Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch91 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 7 → Researcher)  

@@ -79,6 +79,7 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 89 | Help-seeking vs help abuse | Contingent hints; tutor dependency; solo gate | **DONE** (2026-08-06) — Part LXXXIX / SAFE-HELP |
 | 90 | Product analytics for FEI North Stars | Instrument retry_120s / challenge_accept / transfer_pass | **DONE** (2026-08-06) — Part XC / SAFE-INSTRUMENT |
 | 91 | Hint economy & contingent scaffolding | Soft vs hard hints; cost of peek; fade×hint | **DONE** (2026-08-06) — Part XCI / SAFE-HINT |
+| — | **Synthesizer v1.12** | Merge LXXXIV–XCI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-06 UTC 15) |
 | 92 | Explanation length vs germane load | Short coach vs monologue; token tax | **NEXT** |
 | 93 | Retrieval failure modes in practice UX | Tip-of-tongue; blanking; productive struggle bounds | queued |
 | 94 | Productive failure vs guided success sequencing | Kapur PF; when struggle-first helps/hurts | queued |
