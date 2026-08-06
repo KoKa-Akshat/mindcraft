@@ -67,3 +67,6 @@ Promote 3 at a time into `NEXT_LAB.md`. Do not write all at once.
 | 91 | Hint economy & contingent scaffolding | Soft vs hard hints; cost of peek; fade×hint | promoted → NEXT_LAB |
 | 92 | Explanation length vs germane load | Short coach vs monologue; token tax | promoted → NEXT_LAB |
 | 93 | Retrieval failure modes in practice UX | Tip-of-tongue; blanking; productive struggle bounds | promoted → NEXT_LAB |
+| 94 | Productive failure vs guided success sequencing | Kapur PF; when struggle-first helps/hurts | promoted → NEXT_LAB |
+| 95 | Cognitive apprenticeship in tutor playbooks | Collins modeling→coaching→fading ops | promoted → NEXT_LAB |
+| 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | promoted → NEXT_LAB |

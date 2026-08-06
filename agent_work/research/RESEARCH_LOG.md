@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Researcher tick: Part XCI Hint economy & contingent scaffolding (SAFE-HINT)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch91 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 7 → Researcher)  
+**Chapter written:** `chapters/91_hint_economy_contingent_scaffolding.md` (Part XCI)  
+**Claim examined:** How to price peeks and run contingent soft→hard scaffolding without free bottom-out racing or shame economies.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-HINT** — soft before hard; contingency up/down; peek cost = construction (SE/dwell/stage); fade×hint one machine; two soft/hard vocabularies separate (ITS vs Saye & Brush); no XP/Hint Score™ for peeks; inspectable stage; proof = solo transfer + lower executive race; HINT-* before unlimited-free-hints campaigns.
+
+**Evidence spine:** Wood, Bruner & Ross (1976); van de Pol, Volman & Beishuizen (2010); Wood & Wood (1999); Aleven & Koedinger (2000/2001); Aleven et al. (2016); Roll et al. (2011); Saye & Brush (2002); Shih et al. (2008); Baker gaming line; SAFE-FADE / SAFE-HELP / SAFE-SE.
+
+**Claim killed (this tick):** Unlimited free hard peeks / Hint Score™ / XP-for-hints / shame-timer costs / black-box perfect-hint AI / fade costume with free hard menu — demoted under scaffolding contingency + Cognitive Tutor hint-abuse evidence; soft-first contingent ladder + construction-priced peeks survive behind HINT-*.
+
+**Experiments mounted:** HINT-1…5 + HINT-QUAL.
+
+**Next researcher id:** **92** (explanation length vs germane load). Researcher count since v1.11 synthesizer: **8** → next non-RT hour with ≥8 should run Synthesizer v1.12 (or RT if hour%6==0). Promoted stubs 94–96 into NEXT_LAB (queue was drying).
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Researcher tick: Part XC Product analytics for FEI North Stars (SAFE-INSTRUMENT)
 
 **Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.11 = 6 → Researcher)  
