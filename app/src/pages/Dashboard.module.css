@@ -887,8 +887,13 @@
   padding: 10px 14px;
   margin: 0 2px 6px;
   border-radius: 16px;
-  background: rgba(255, 253, 247, 0.55);
-  border: 1px solid rgba(20, 58, 46, 0.08);
+  /* Chalkboard rail — matches the desk stage instead of cream paper. */
+  background:
+    linear-gradient(180deg, rgba(36, 58, 46, 0.92), rgba(18, 34, 26, 0.96));
+  border: 1px solid rgba(185, 232, 111, 0.22);
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(244, 239, 226, 0.06);
 }
 
 .heroMiddle {
@@ -910,7 +915,7 @@
   font-family: var(--tok-font-sans);
   font-size: 30px;
   font-weight: 700;
-  color: #143a2e;
+  color: #f4efe2;
   letter-spacing: -0.015em;
   flex-shrink: 0;
   white-space: nowrap;
@@ -923,7 +928,7 @@
 .canvasWordmark:hover { opacity: 0.88; transform: translateY(-1px); }
 .canvasWordmark:active { transform: translateY(0); opacity: 1; }
 .canvasWordmarkCraft {
-  color: #d3a900;
+  color: #f5d348;
 }
 
 .canvasNav {
@@ -945,23 +950,23 @@
   padding: 0;
   border-radius: 14px;
   cursor: pointer;
-  color: rgba(20, 58, 46, 0.48);
+  color: rgba(244, 239, 226, 0.55);
   transition: background 160ms var(--desk-ease), color 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), transform 160ms var(--desk-ease-bounce);
 }
 .navActive {
-  background: rgba(228, 247, 220, 0.95);
-  color: #247a4d;
-  box-shadow: 0 2px 10px rgba(29, 84, 54, 0.1);
+  background: rgba(185, 232, 111, 0.22);
+  color: #b9e86f;
+  box-shadow: 0 0 0 1px rgba(185, 232, 111, 0.35), 0 0 14px rgba(185, 232, 111, 0.2);
 }
 .navBtn:hover {
-  color: #143a2e;
-  background: rgba(255, 253, 247, 0.72);
+  color: #f4efe2;
+  background: rgba(244, 239, 226, 0.1);
   transform: translateY(-1px);
 }
 .navBtn:active { transform: translateY(0); }
 .navActive:hover {
-  color: #247a4d;
-  background: rgba(185, 232, 111, 0.45);
+  color: #e8f7b8;
+  background: rgba(185, 232, 111, 0.3);
 }
 
 .canvasUser {
@@ -971,7 +976,7 @@
   flex-shrink: 0;
   font-family: var(--tok-font-mono);
   font-size: 11px;
-  color: rgba(20, 58, 46, 0.55);
+  color: rgba(244, 239, 226, 0.58);
 }
 .signOut {
   display: inline-flex;
@@ -981,9 +986,9 @@
   border: none;
   cursor: pointer;
   font: inherit;
-  color: rgba(20, 58, 46, 0.45);
+  color: rgba(244, 239, 226, 0.48);
 }
-.signOut:hover { color: #143a2e; }
+.signOut:hover { color: #b9e86f; }
 
 .canvasStage {
   /* Chalkboard stage — blends from Cover Deep Field into a board you write on. */
@@ -1152,13 +1157,9 @@
 }
 
 .homeTop {
-  /* Was a WizardMascot side-by-side row, then a plain eyebrow+title stack
-     (the mascot now lives in the merged .heroBar, shared across every
-     view). Now: title+lead on the left, "this week's paper" + "Book a
-     Session" on the right  -  the two things Akshat wants living next to
-     Contents instead of buried at the bottom of the page. */
+  /* Title on the left; color index + Weekly Review on the right. */
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px;
@@ -1325,26 +1326,31 @@
 
 .ringLegend {
   list-style: none;
-  margin: 12px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 16px;
+  align-items: center;
+  gap: 8px 12px;
 }
 .ringLegend li {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: rgba(244, 239, 226, 0.78);
 }
+/* Border-sample swatch (matches tile outer borders), not a status circle. */
 .ringSwatch {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  box-shadow: 0 0 8px currentColor, 0 0 0 2px rgba(244, 239, 226, 0.15);
+  --swatch: #A8B4C0;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 2.5px solid var(--swatch);
+  background: color-mix(in srgb, var(--swatch) 18%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--swatch) 45%, transparent);
   flex-shrink: 0;
 }
 
@@ -1430,7 +1436,7 @@
   font-family: var(--tok-font-sans);
   font-size: 20px;
   font-weight: 700;
-  color: #1f6b45;
+  color: #b9e86f;
 }
 
 /* ── Contents roadmap (2026-07-24) ──────────────────────────────────────
@@ -1545,24 +1551,41 @@
   padding: 12px 12px 14px;
   text-align: center;
   background: rgba(8, 18, 14, 0.45);
-  border: 1px solid color-mix(in srgb, var(--lane-accent) 28%, transparent);
+  /* Status lives on the tile’s outer border (no circular mastery ring). */
+  border: 2.5px solid color-mix(in srgb, var(--node-color) calc(40% + var(--mastery) * 50%), transparent);
   border-radius: 14px;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--node-color) calc(18% + var(--mastery) * 35%), transparent);
   cursor: pointer;
   font: inherit;
   color: inherit;
   position: relative;
-  transition: opacity 200ms var(--desk-ease), transform 160ms var(--desk-ease-bounce), background 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease);
+  transition: opacity 200ms var(--desk-ease), transform 160ms var(--desk-ease-bounce), background 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), border-color 160ms var(--desk-ease);
 }
 .tocNode:hover {
   transform: translateY(-3px);
   background: rgba(12, 28, 20, 0.72);
+  border-color: var(--node-color);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--node-color) 45%, transparent),
-    0 0 18px color-mix(in srgb, var(--node-color) 40%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--node-color) 35%, transparent),
+    0 0 18px color-mix(in srgb, var(--node-color) 45%, transparent),
     0 14px 28px rgba(0, 0, 0, 0.35);
 }
 .tocNode:active { transform: translateY(0); }
 .tocNode[data-state='locked'] { opacity: 0.62; }
+.tocNode[data-state='complete'] {
+  border-color: var(--node-color);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--node-color) 40%, transparent),
+    0 0 18px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNode[data-state='needs'] {
+  border-style: solid;
+  border-color: var(--node-color);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNode[data-state='progress'] {
+  border-color: var(--node-color);
+}
 
 /* Fixed height (2 lines' worth, not just a 2-line clamp) is load-bearing:
    the dot below sits at whatever flow position follows this block, so a
@@ -1614,16 +1637,6 @@
   border-radius: 7px;
   filter: saturate(1.05) contrast(1.05) brightness(0.92);
 }
-.tocNodeIcon::before {
-  content: '';
-  position: absolute;
-  inset: -6px;
-  border: 2.5px solid var(--node-color);
-  border-radius: 50%;
-  opacity: calc(0.35 + var(--mastery) * 0.65);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--node-color) 55%, transparent);
-  transition: opacity 220ms var(--desk-ease), box-shadow 220ms var(--desk-ease), border-color 220ms var(--desk-ease);
-}
 .tocNode:hover .tocNodeIcon { transform: scale(1.04); }
 
 .tocNodeCheck {
@@ -1632,56 +1645,22 @@
   bottom: -5px;
   width: 17px;
   height: 17px;
-  border-radius: 50%;
+  border-radius: 5px;
   background: var(--node-color);
-  color: #fffdf8;
+  color: #14261c;
   font-size: 10px;
   font-weight: 800;
   line-height: 17px;
   text-align: center;
-  box-shadow: 0 0 0 2px rgba(255, 253, 248, 0.95);
+  box-shadow: 0 0 0 2px rgba(20, 40, 32, 0.9);
   display: block;
 }
 
-/* Complete state: the icon stays visible (the mastery ring is already a full
-   solid circle at this point, see the SVG's dasharray logic), and this glow
-   halo is the extra "lights up" signal layered on top  -  same read as the
-   Map's full-green stable nodes. */
-.tocNode[data-state='complete'] .tocNodeIcon {
-  box-shadow:
-    0 0 0 2px rgba(20, 40, 32, 0.9),
-    0 0 0 5px color-mix(in srgb, var(--node-color) 55%, transparent),
-    0 0 18px color-mix(in srgb, var(--node-color) 70%, transparent);
-}
-.tocNode[data-state='complete'] .tocNodeIcon::before {
-  border-width: 3px;
-  opacity: 1;
-  box-shadow: 0 0 16px color-mix(in srgb, var(--node-color) 80%, transparent);
-}
-.tocNode[data-state='needs'] .tocNodeIcon {
-  box-shadow: 0 0 14px color-mix(in srgb, var(--node-color) 70%, transparent);
-}
-.tocNode[data-state='needs'] .tocNodeIcon::before {
-  border-style: dashed;
-  opacity: 1;
-  box-shadow: 0 0 14px color-mix(in srgb, var(--node-color) 75%, transparent);
-}
-.tocNodeSpark .tocNodeIcon {
-  box-shadow:
-    0 0 0 2px rgba(20, 40, 32, 0.9),
-    0 0 0 5px rgba(245, 211, 72, 0.65),
-    0 0 20px rgba(245, 211, 72, 0.55);
-}
 .tocNodeSpark {
   background: rgba(80, 60, 12, 0.55);
-  border-color: rgba(245, 211, 72, 0.55);
-  box-shadow: 0 0 0 2px rgba(245, 211, 72, 0.25), 0 12px 28px rgba(0, 0, 0, 0.35);
-  animation: tocSuggestedGlow 2.6s ease-in-out infinite;
-}
-.tocNodeSpark .tocNodeIcon::before {
   border-color: #f5d348;
-  box-shadow: 0 0 18px rgba(245, 211, 72, 0.85);
-  opacity: 1;
+  box-shadow: 0 0 0 1px rgba(245, 211, 72, 0.25), 0 0 18px rgba(245, 211, 72, 0.4), 0 12px 28px rgba(0, 0, 0, 0.35);
+  animation: tocSuggestedGlow 2.6s ease-in-out infinite;
 }
 .tocNodeSpark .tocNodeName { color: #f5d348; }
 

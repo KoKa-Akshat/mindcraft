@@ -222,6 +222,7 @@ export default function CoverLanding({
             >
               {chip.live ? (
                 <span className={`${s.subjectChip} ${chip.tone} ${s.subjectChipLive}`}>
+                  <span className={s.actLiveDot} aria-hidden="true" />
                   {chip.label}
                 </span>
               ) : (

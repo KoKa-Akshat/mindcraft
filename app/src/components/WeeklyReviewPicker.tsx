@@ -8,7 +8,8 @@
  * practice from the first slot (same launch path Dashboard used before).
  */
 import { useEffect, useMemo, useState } from 'react'
-import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
+import { layoutActMapNodes } from '../lib/actMapLayout'
+import { actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
 import type { NextConcept } from '../lib/recommendNextConcept'
 import {
@@ -35,39 +36,6 @@ type Props = {
   onPlayThrough: (paper: WeeklyPracticePaper) => void
 }
 
-type Placed = {
-  id: string
-  section: string
-  x: number
-  y: number
-}
-
-/** Same TOC-column layout ActEmojiMap uses so the picker map matches Map tab. */
-function layoutNodes(ids: Set<string>): Placed[] {
-  const out: Placed[] = []
-  const sections = ACT_TOC_SECTIONS.filter(sec => sec.conceptIds.some(id => ids.has(id)))
-  const nSec = sections.length
-  sections.forEach((sec, si) => {
-    const conceptIds = sec.conceptIds.filter(id => ids.has(id))
-    const colX = nSec <= 1 ? 50 : 10 + (si / Math.max(1, nSec - 1)) * 80
-    const count = conceptIds.length
-    conceptIds.forEach((id, ti) => {
-      const row = Math.floor(ti / 2)
-      const side = ti % 2 === 0 ? -1 : 1
-      const rowSpan = Math.max(1, Math.ceil(count / 2) - 1)
-      const y = 14 + (rowSpan === 0 ? 0 : (row / rowSpan) * 72)
-      const x = colX + side * (6 + (ti % 3) * 2.2)
-      out.push({
-        id,
-        section: sec.title,
-        x: Math.min(94, Math.max(6, x)),
-        y: Math.min(88, Math.max(10, y)),
-      })
-    })
-  })
-  return out
-}
-
 const MODE_COPY: Record<TopicPickMode, string> = {
   all: 'Every topic on your map lights up. The paper samples across all of them.',
   recommended: 'Our mix: strengthen your weak spot, stretch into something new, light review.',
@@ -84,7 +52,7 @@ export default function WeeklyReviewPicker({
 }: Props) {
   const playable = useMemo(() => playableActConceptIds(), [])
   const playableSet = useMemo(() => new Set(playable), [playable])
-  const nodes = useMemo(() => layoutNodes(playableSet), [playableSet])
+  const nodes = useMemo(() => layoutActMapNodes(playableSet), [playableSet])
 
   const recommended = useMemo(
     () => recommendedConceptIds({ weakness, learn, reviewConceptIds }).filter(id => playableSet.has(id)),

@@ -210,12 +210,49 @@
   user-select: none;
 }
 .subjectChipLive {
+  gap: 8px;
   font-weight: 900;
-  border-color: rgba(36, 122, 77, 0.85);
-  background: rgba(36, 122, 77, 0.32);
+  border-color: rgba(185, 232, 111, 0.75);
+  background: rgba(36, 122, 77, 0.38);
   color: #fffdf7;
-  box-shadow: 0 0 0 3px rgba(36, 122, 77, 0.22), 0 10px 28px rgba(0, 0, 0, 0.22);
+  box-shadow:
+    0 0 0 3px rgba(185, 232, 111, 0.22),
+    0 0 22px rgba(185, 232, 111, 0.35),
+    0 10px 28px rgba(0, 0, 0, 0.22);
   pointer-events: none;
+}
+
+/* Bright “this is the live ACT book” cue on the cover orbit chip. */
+.actLiveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #b9e86f;
+  box-shadow:
+    0 0 0 2px rgba(185, 232, 111, 0.35),
+    0 0 10px rgba(185, 232, 111, 0.95),
+    0 0 18px rgba(185, 232, 111, 0.65);
+  animation: actDotPulse 1.8s ease-in-out infinite;
+}
+@keyframes actDotPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 2px rgba(185, 232, 111, 0.3),
+      0 0 10px rgba(185, 232, 111, 0.9),
+      0 0 18px rgba(185, 232, 111, 0.55);
+  }
+  50% {
+    transform: scale(1.18);
+    box-shadow:
+      0 0 0 3px rgba(185, 232, 111, 0.45),
+      0 0 16px rgba(185, 232, 111, 1),
+      0 0 28px rgba(185, 232, 111, 0.75);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .actLiveDot { animation: none; }
 }
 .subjectChipRemovable {
   /* X overlays; chip keeps normal padding */

@@ -38,7 +38,7 @@
   line-height: 0;
 }
 .spriteBtn:focus-visible {
-  outline: 2px solid #247a4d;
+  outline: 2px solid #b9e86f;
   outline-offset: 3px;
 }
 
@@ -86,7 +86,7 @@
   font-style: italic;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  color: #143a2e;
+  color: #f4efe2;
 }
 
 .compact .sprite { width: 68px; height: 68px; }
@@ -100,7 +100,7 @@
 .compact .line {
   font-size: 18px;
   font-weight: 500;
-  color: #143a2e;
+  color: #f4efe2;
 }
 
 @media (prefers-reduced-motion: reduce) {

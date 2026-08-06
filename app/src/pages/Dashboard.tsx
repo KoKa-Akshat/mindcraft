@@ -13,7 +13,7 @@ import { type CurriculumTrack } from '../lib/curriculumTrack'
 import type { Confidence } from '../lib/bridgePractice'
 import SessionCallCard from '../components/SessionCallCard'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
-import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
+import ActEmojiMap from '../components/canvas/ActEmojiMap'
 import WorkStudio from '../components/canvas/WorkStudio'
 import WizardMascot from '../components/canvas/WizardMascot'
 import StickersShelf from '../components/book/StickersShelf'
@@ -90,7 +90,7 @@ const MC_BLOCKS: Array<{
 ]
 
 /** Contents roadmap dot state. Backed by the same per-concept `status`/
- * `mastery` the Knowledge Map (ConstellationGpsExplorer) reads off
+ * `mastery` the Knowledge Map (ActEmojiMap) reads off
  * GET /knowledge-graph/{uid}, same signal, same status vocabulary
  * (learningPathGraph.ts STATUS_COLOR), so a topic that reads "mastered" here
  * reads mastered on the Map too. Not a new/invented completion metric. */
@@ -790,14 +790,14 @@ export default function Dashboard({
                 <div className={s.homeTop}>
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>
-                    <ul className={s.ringLegend} aria-label="Ring color guide">
-                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.mastered }} /> Mastered</li>
-                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.in_progress }} /> In progress</li>
-                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.struggling }} /> Needs work</li>
-                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.untouched }} /> Not started</li>
-                    </ul>
                   </div>
                   <div className={s.homeTopActions}>
+                    <ul className={s.ringLegend} aria-label="Status color guide">
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.mastered }} /> Mastered</li>
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.in_progress }} /> In progress</li>
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.struggling }} /> Needs work</li>
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.untouched }} /> Not started</li>
+                    </ul>
                     {showWeeklyCta && (
                       paperLocked ? (
                         <div className={s.weeklyCardLocked} aria-live="off">
@@ -813,7 +813,6 @@ export default function Dashboard({
                           <div>
                             <span className={s.weeklyCardEyebrow}>This week</span>
                             <span className={s.weeklyCardTitle}>Weekly Review</span>
-                            <span className={s.weeklyCardSub}>Open your paper · write on the board</span>
                           </div>
                         </button>
                       )
@@ -928,9 +927,9 @@ export default function Dashboard({
 
             {view === 'map' && (
               <div className={s.mapCanvas}>
-                <ConstellationGpsExplorer
-                  embedded
-                  autoPlotConceptId={searchParams.get('concept') || sparkId}
+                <ActEmojiMap
+                  sparkId={searchParams.get('concept') || sparkId}
+                  onOpenLesson={openChapter}
                 />
               </div>
             )}
