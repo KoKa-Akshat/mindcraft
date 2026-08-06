@@ -45,13 +45,16 @@ export interface NextConcept {
 export interface PracticeHubRecommendations {
   weakness: NextConcept | null
   learn: NextConcept | null
+  /** C6 auxiliary insight; intentionally does not compete in worstWeakness(). */
+  topMisconceptionGap: NextConcept | null
 }
 
 export type WeaknessCandidate = {
   conceptId: string
   formatId?: FormatId
   severity: number
-  source: 'profile' | 'concept_gap' | 'format_gap' | 'misconception_gap'
+  source: 'profile' | 'concept_gap' | 'format_gap'
+  /** Auxiliary C6 targeting metadata, never part of the severity comparison. */
   misconceptionId?: string
   ingredientId?: string
   distractorChoiceIndex?: number
@@ -94,9 +97,38 @@ function gapSeverity(gap: ConceptRecommendation, nodeMap: Map<string, GraphNode>
 }
 
 function gapIngredientId(gap: MisconceptionGap): string | undefined {
-  if (gap.ingredientId) return gap.ingredientId
-  if (gap.ingredientIds?.length) return gap.ingredientIds[0]
-  return undefined
+  return gap.ingredientId ?? gap.ingredientIds?.[0]
+}
+
+/** Highest-severity playable misconception insight, kept outside C1 ranking. */
+export function topMisconceptionGap(
+  rec: RecommendResult | null,
+  excludedConcepts: ReadonlySet<string> = new Set(),
+): MisconceptionGap | null {
+  return (rec?.misconceptionGaps ?? [])
+    .filter(g => hasPlayableQuestions(g.conceptId) && !excludedConcepts.has(g.conceptId))
+    .reduce<MisconceptionGap | null>(
+      (best, gap) => !best || gap.severity > best.severity ? gap : best,
+      null,
+    )
+}
+
+/** Attach targeting detail only when it describes the already-ranked concept. */
+export function withMatchingMisconception(
+  weakness: WeaknessCandidate | null,
+  rec: RecommendResult | null,
+): WeaknessCandidate | null {
+  if (!weakness) return null
+  const gap = (rec?.misconceptionGaps ?? [])
+    .filter(g => g.conceptId === weakness.conceptId)
+    .sort((a, b) => b.severity - a.severity)[0]
+  if (!gap) return weakness
+  return {
+    ...weakness,
+    misconceptionId: gap.misconceptionId,
+    ingredientId: gapIngredientId(gap),
+    distractorChoiceIndex: gap.distractorChoiceIndex,
+  }
 }
 
 /** Human label from a Layer-1 ingredient id slug (e.g. ratios_proportions__unit_rate). */
@@ -168,19 +200,6 @@ export function worstWeakness(
     }
   }
 
-  for (const g of profileRec?.misconceptionGaps ?? []) {
-    if (!hasPlayableQuestions(g.conceptId)) continue
-    if (excludedConcepts.has(g.conceptId)) continue
-    candidates.push({
-      conceptId: g.conceptId,
-      severity: g.severity,
-      source: 'misconception_gap',
-      misconceptionId: g.misconceptionId,
-      ingredientId: gapIngredientId(g),
-      distractorChoiceIndex: g.distractorChoiceIndex,
-    })
-  }
-
   if (!candidates.length) return null
   return candidates.reduce((best, c) => (c.severity > best.severity ? c : best))
 }
@@ -194,7 +213,7 @@ function toNextConcept(
   if (!conceptId) return null
   const node = nodeMap.get(conceptId)
   const baseLabel = mlIdToLabel(conceptId)
-  const label = weakness?.source === 'misconception_gap'
+  const label = weakness?.misconceptionId || weakness?.ingredientId
     ? formatMisconceptionWeaknessLabel(weakness.ingredientId, weakness.misconceptionId, baseLabel)
     : baseLabel
   return {
@@ -227,7 +246,7 @@ export async function fetchPracticeHubRecommendations(
   userId: string,
   curriculumTrack?: CurriculumTrack | null,
 ): Promise<PracticeHubRecommendations> {
-  if (!userId) return { weakness: null, learn: null }
+  if (!userId) return { weakness: null, learn: null, topMisconceptionGap: null }
 
   const diagnostic = await loadDiagnostic(userId)
   const exam = trackToExam(curriculumTrack, diagnostic?.exam ?? null)
@@ -275,9 +294,21 @@ export async function fetchPracticeHubRecommendations(
         .sort((a, b) => (a.mastery ?? 0) - (b.mastery ?? 0))[0]?.id
     ?? null
 
+  const rankedWeakness = tutorPick ? null : withMatchingMisconception(worst, profileRec)
+  const misconception = topMisconceptionGap(profileRec)
+  const misconceptionCandidate: WeaknessCandidate | null = misconception ? {
+    conceptId: misconception.conceptId,
+    severity: misconception.severity,
+    source: 'profile',
+    misconceptionId: misconception.misconceptionId,
+    ingredientId: gapIngredientId(misconception),
+    distractorChoiceIndex: misconception.distractorChoiceIndex,
+  } : null
+
   return {
-    weakness: toNextConcept(weaknessId, nodeMap, tutorPick ? null : worst, { isTutorPick: tutorPick }),
+    weakness: toNextConcept(weaknessId, nodeMap, rankedWeakness, { isTutorPick: tutorPick }),
     learn: toNextConcept(learnId, nodeMap),
+    topMisconceptionGap: toNextConcept(misconception?.conceptId, nodeMap, misconceptionCandidate),
   }
 }
 

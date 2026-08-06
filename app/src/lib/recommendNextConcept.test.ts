@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import fixture from '../../../data/c1_worst_weakness_fixture.json'
 import type { RecommendResult } from './mlApi'
-import { worstWeakness, type WeaknessCandidate } from './recommendNextConcept'
+import { topMisconceptionGap, withMatchingMisconception, worstWeakness, type WeaknessCandidate } from './recommendNextConcept'
 import { hasFormatQuestions, questionCount, type FormatId } from './questionBank'
 
 type GraphNode = { id: string; mastery?: number; status?: string; eventCount?: number }
@@ -86,18 +86,6 @@ function allCandidates(
     }
   }
 
-  for (const g of profileRec.misconceptionGaps ?? []) {
-    if (!hasPlayableQuestions(g.conceptId)) continue
-    candidates.push({
-      conceptId: g.conceptId,
-      severity: g.severity,
-      source: 'misconception_gap',
-      misconceptionId: g.misconceptionId,
-      ingredientId: g.ingredientId ?? g.ingredientIds?.[0],
-      distractorChoiceIndex: g.distractorChoiceIndex,
-    })
-  }
-
   return candidates.sort((a, b) => b.severity - a.severity)
 }
 
@@ -152,7 +140,7 @@ describe('worstWeakness — C1 shared fixture', () => {
   }
 })
 
-describe('worstWeakness — tier-3 misconception gaps', () => {
+describe('worstWeakness — C6 misconception isolation', () => {
   const c = (fixture.cases as FixtureCase[])[0]
   const nodeMap = nodeMapFromFixture(c.nodeMap)
 
@@ -168,7 +156,7 @@ describe('worstWeakness — tier-3 misconception gaps', () => {
     expect(baseline?.conceptId).toBe('functions_basics')
   })
 
-  it('0.9-severity misconception gap beats format/concept/profile tiers', () => {
+  it('does not fold a high-severity misconception insight into C1 ranking', () => {
     const profileWithGap: RecommendResult = {
       ...c.profileRec,
       misconceptionGaps: [{
@@ -180,13 +168,11 @@ describe('worstWeakness — tier-3 misconception gaps', () => {
       }],
     }
     const result = worstWeakness(profileWithGap, c.pathRec, nodeMap)
-    expect(result?.source).toBe('misconception_gap')
-    expect(result?.conceptId).toBe('ratios_proportions')
-    expect(result?.severity).toBeCloseTo(0.9)
-    expect(result?.ingredientId).toBe('ratios_proportions__unit_rate')
+    expect(result?.source).toBe('format_gap')
+    expect(result?.conceptId).toBe('functions_basics')
   })
 
-  it('same response minus misconceptionGaps restores today\'s winner', () => {
+  it('returns the same winner with or without misconceptionGaps', () => {
     const profileWithGap: RecommendResult = {
       ...c.profileRec,
       misconceptionGaps: [{
@@ -198,8 +184,56 @@ describe('worstWeakness — tier-3 misconception gaps', () => {
     }
     const tier3 = worstWeakness(profileWithGap, c.pathRec, nodeMap)
     const today = worstWeakness(c.profileRec, c.pathRec, nodeMap)
-    expect(tier3?.source).toBe('misconception_gap')
+    expect(tier3).toEqual(today)
     expect(today?.source).toBe('format_gap')
     expect(today?.conceptId).toBe('functions_basics')
+  })
+
+  it('exposes the top playable misconception separately from the C1 winner', () => {
+    const profileWithGaps: RecommendResult = {
+      ...c.profileRec,
+      misconceptionGaps: [
+        {
+          conceptId: 'ratios_proportions',
+          misconceptionId: 'mis_ratio_low',
+          ingredientId: 'ratios_proportions__unit_rate',
+          severity: 0.6,
+        },
+        {
+          conceptId: 'linear_equations',
+          misconceptionId: 'mis_linear_high',
+          ingredientId: 'linear_equations__inverse_operations',
+          distractorChoiceIndex: 2,
+          severity: 0.9,
+        },
+      ],
+    }
+    expect(worstWeakness(profileWithGaps, c.pathRec, nodeMap)?.source).toBe('format_gap')
+    expect(topMisconceptionGap(profileWithGaps)).toMatchObject({
+      conceptId: 'linear_equations',
+      misconceptionId: 'mis_linear_high',
+      ingredientId: 'linear_equations__inverse_operations',
+      distractorChoiceIndex: 2,
+    })
+  })
+
+  it('attaches matching targeting metadata without changing the ranked source or severity', () => {
+    const ranked = worstWeakness(c.profileRec, c.pathRec, nodeMap)!
+    const rec: RecommendResult = {
+      ...c.profileRec,
+      misconceptionGaps: [{
+        conceptId: ranked.conceptId,
+        misconceptionId: 'mis_matching_format_concept',
+        ingredientId: 'functions_basics__function_notation',
+        distractorChoiceIndex: 1,
+        severity: 0.99,
+      }],
+    }
+    expect(withMatchingMisconception(ranked, rec)).toEqual({
+      ...ranked,
+      misconceptionId: 'mis_matching_format_concept',
+      ingredientId: 'functions_basics__function_notation',
+      distractorChoiceIndex: 1,
+    })
   })
 })

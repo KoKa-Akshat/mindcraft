@@ -23,6 +23,8 @@ import { useContext, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
+import { recordOutcomes, type OutcomeInput } from '../lib/mlApi'
+import { resolveChoiceEvidence, type FormatId } from '../lib/questionBank'
 import { saveDemoDiagnostic } from '../lib/demoMode'
 import type { Confidence } from '../lib/bridgePractice'
 import { ACT_TOC_SECTIONS, actTocSectionForConcept } from '../lib/actToc'
@@ -39,14 +41,24 @@ import s from './Diagnostic.module.css'
 interface ConfConcept { concept_id: string; name: string; act_high_priority: boolean }
 interface ScalePoint { value: Confidence; label: string }
 interface ProbeQuestionSpec { question_id: string; concept_id: string; cluster: string }
-interface ActQuestion { id: string; conceptId: string; level: 1 | 2 | 3; question: string; choices: string[]; correctIndex: number }
+interface ActQuestion {
+  id: string
+  conceptId: string
+  level: 1 | 2 | 3
+  question: string
+  choices: string[]
+  correctIndex: number
+  explanation: string
+  hints: string[]
+  format?: FormatId
+  distractor_taxonomy?: Array<{
+    choice_index: number
+    misconception_id?: string
+    error_type: string
+    student_thinking?: string
+  }>
+}
 interface ConfGroup { id: string; title: string; concepts: ConfConcept[] }
-
-const PROBE_ANSWERS: { value: Confidence; label: string }[] = [
-  { value: 'easy', label: 'Yes, I know it' },
-  { value: 'kinda', label: 'Seen it before' },
-  { value: 'hard', label: 'New to me' },
-]
 
 const EXAM = 'ACT'
 
@@ -116,7 +128,8 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
   const [zooming, setZooming] = useState(false)
   const [deadlineDays, setDeadlineDays] = useState<number | null>(null)
   const [confidence, setConfidence] = useState<Record<string, Confidence>>({})
-  const [probeAnswers, setProbeAnswers] = useState<Record<string, Confidence>>({})
+  const [probeAnswers, setProbeAnswers] = useState<Record<string, number>>({})
+  const [savingProbes, setSavingProbes] = useState(false)
   const [confettiOn, setConfettiOn] = useState(false)
 
   const progress = useMemo(() => {
@@ -140,7 +153,7 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
   }, [probeSpecs])
 
   const allProbesAnswered = useMemo(
-    () => probeQuestions.length > 0 && probeQuestions.every(item => probeAnswers[item.concept_id]),
+    () => probeQuestions.length > 0 && probeQuestions.every(item => probeAnswers[item.question_id] != null),
     [probeQuestions, probeAnswers],
   )
 
@@ -159,21 +172,33 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
     setConfidence(prev => ({ ...prev, [conceptId]: value }))
   }
 
-  function setProbeAnswer(conceptId: string, value: Confidence) {
-    setProbeAnswers(prev => ({ ...prev, [conceptId]: value }))
+  function setProbeAnswer(questionId: string, choiceIndex: number) {
+    setProbeAnswers(prev => ({ ...prev, [questionId]: choiceIndex }))
   }
 
-  function applyProbeAnswers() {
+  async function applyProbeAnswers() {
+    if (!allProbesAnswered || savingProbes) return
+    setSavingProbes(true)
     celebrateStep()
-    setConfidence(prev => {
-      const next = { ...prev }
-      for (const item of probeQuestions) {
-        const answer = probeAnswers[item.concept_id]
-        if (answer) next[item.concept_id] = answer
-      }
-      return next
-    })
+    if (!preview && user) {
+      const outcomes: OutcomeInput[] = probeQuestions.map(item => {
+        const selected = probeAnswers[item.question_id]
+        const evidence = resolveChoiceEvidence(item.question, selected)
+        return {
+          conceptId: item.question.conceptId,
+          score: selected === item.question.correctIndex ? 1 : 0,
+          formatId: item.question.format,
+          level: item.question.level,
+          questionId: item.question.id,
+          selectedChoiceIndex: selected,
+          misconceptionId: evidence.misconceptionId,
+          errorType: evidence.errorType,
+        }
+      })
+      await recordOutcomes(user.uid, outcomes)
+    }
     setStep('confidence')
+    setSavingProbes(false)
   }
 
   /** Intro's illustration IS the interaction: tap the notebook, it zooms in,
@@ -291,15 +316,15 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
                 <article key={item.question_id} className={s.probeCard}>
                   <div className={s.probeCluster}>{item.cluster}</div>
                   <p className={s.probeStem}><MathText text={item.question.question} /></p>
-                  <p className={s.probeAsk}>Do you recognize this kind of problem?</p>
+                  <p className={s.probeAsk}>Choose the best answer.</p>
                   <div className={s.probeButtons}>
-                    {PROBE_ANSWERS.map(answer => (
+                    {item.question.choices.map((choice, choiceIndex) => (
                       <button
-                        key={answer.value}
+                        key={choiceIndex}
                         type="button"
-                        className={`${s.probeBtn} ${answer.value === 'easy' ? s.probeBtnKnown : ''} ${probeAnswers[item.concept_id] === answer.value ? s.probeBtnOn : ''}`}
-                        onClick={() => setProbeAnswer(item.concept_id, answer.value)}
-                      >{answer.label}</button>
+                        className={`${s.probeBtn} ${probeAnswers[item.question_id] === choiceIndex ? s.probeBtnOn : ''}`}
+                        onClick={() => setProbeAnswer(item.question_id, choiceIndex)}
+                      ><MathText text={choice} /></button>
                     ))}
                   </div>
                 </article>
@@ -307,9 +332,9 @@ export default function Diagnostic({ preview = false }: { preview?: boolean }) {
             </div>
             <button
               className={s.primary}
-              disabled={!allProbesAnswered}
-              onClick={applyProbeAnswers}
-            >Use these anchors</button>
+              disabled={!allProbesAnswered || savingProbes}
+              onClick={() => void applyProbeAnswers()}
+            >{savingProbes ? 'Saving…' : 'Continue'}</button>
           </section>
         )}
 

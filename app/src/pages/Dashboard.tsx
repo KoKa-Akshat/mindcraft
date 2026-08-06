@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { signOut } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc, deleteField } from 'firebase/firestore'
 import { auth, db } from '../firebase'
 import { useUser } from '../App'
 import { useStudentData } from '../hooks/useStudentData'
@@ -225,6 +225,17 @@ export default function Dashboard({
     const text = solverText.trim().slice(0, SOLVER_MAX_CHARS)
     if (!text) return
     navigate('/practice', { state: { problemText: text } })
+  }
+
+  async function resetOwnDiagnostic() {
+    if (!confirm('Reset your diagnostic? You will re-run the gap scan on next visit.')) return
+    await updateDoc(doc(db, 'users', user.uid), {
+      diagnosticCompleted: deleteField(),
+      diagnosticCompletedAt: deleteField(),
+      practiceDrafts: deleteField(),
+      practiceDraftAt: deleteField(),
+    })
+    alert('Diagnostic reset. Reload to re-run the gap scan.')
   }
 
   async function handleSignOut() {
@@ -793,6 +804,7 @@ export default function Dashboard({
                 {isAdmin && (
                   <div className={s.homeActions}>
                     <button type="button" className={s.adminQuietLink} onClick={() => navigate('/admin')}>admin</button>
+                    <button type="button" className={s.adminQuietLink} onClick={() => void resetOwnDiagnostic()}>reset my diagnostic</button>
                   </div>
                 )}
               </div>

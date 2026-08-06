@@ -403,55 +403,6 @@ export async function recordWorkEvidence(req: RecordWorkEvidenceRequest): Promis
   }
 }
 
-// ── Learning events (diagnostic kickstart) ──────────────────────────────────
-
-export interface LearningEventInput {
-  studentId: string
-  subjectId: string
-  conceptId: string
-  eventType:
-    | 'confidence_report'
-    | 'answer_submitted'
-    | 'correct_answer'
-    | 'wrong_answer'
-    | 'diagnostic_complete'
-  outcome?: number | null
-  durationMs?: number
-  source?: string
-  metadata?: Record<string, unknown>
-}
-
-/**
- * Emit a single learning event to the engine. This is the ingestion point that
- * starts building the student's knowledge graph from their first diagnostic.
- * Non-blocking: returns true/false, never throws.
- */
-/**
- * @deprecated Orphan endpoint — no handler in serve.py. Diagnostic.tsx now uses
- * /seed-assessment + /record-outcomes. Left for legacy world2 mc-diagnostic.js.
- */
-export async function sendLearningEvent(ev: LearningEventInput): Promise<boolean> {
-  try {
-    const res = await fetch(`${ML_BASE}/learning-event`, {
-      method: 'POST',
-      headers: await mlAuthHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({
-        student_id: ev.studentId,
-        subject_id: ev.subjectId,
-        concept_id: ev.conceptId,
-        event_type: ev.eventType,
-        outcome: ev.outcome ?? null,
-        duration_ms: ev.durationMs ?? null,
-        source: ev.source ?? 'diagnostic',
-        metadata: ev.metadata ?? {},
-      }),
-    })
-    return res.ok
-  } catch {
-    return false
-  }
-}
-
 /** Pretty-print a concept_id like "quadratic_equations" → "Quadratic Equations" */
 export function conceptLabel(id: string): string {
   return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())

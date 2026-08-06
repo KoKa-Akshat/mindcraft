@@ -116,6 +116,63 @@ Rules:
 - This is **Lane-crossing** (touches `app/Diagnostic.tsx` + relies on `ml/` sinks
   already shipped) — Lane B owns the frontend retarget; no new `ml/` endpoint needed.
 
+## WS4 — misconception-informed diagnosis surfacing (added 2026-08-05, not in original plan)
+
+Found while auditing question quality, not proposed from scratch: this pipeline
+**already exists and is live**, further along than anyone had tracked here.
+Confirmed by reading the actual code, not assumed:
+
+- `Question.distractor_taxonomy[].misconception_id` (per-choice tagging) —
+  currently **Eedi/GCSE-sourced questions only** (`questionBank.ts:37-46`).
+- `OutcomeItem.misconception_id` sent to `/record-outcomes` fires a **negative
+  ingredient event on every ingredient linked to that misconception** ("Stream
+  A", `serve.py:867-901`) — not just a concept-level ding.
+- `ml/data/misconception_ingredient_map.json` — 493 of 1,749 minted
+  misconceptions (28%) mapped to an ingredient, embedding + LLM provenance,
+  confidence-scored. Produced by `enrich_ingredient_misconception_map.py`.
+- `/recommend` → `misconceptionGaps[]` ("tier-3 distractor evidence").
+- `TutorBriefingPanel.tsx` already turns a gap into narrative copy:
+  `trapName()` names the misconception, `trapHitLine()` renders e.g. "fired on
+  60% of recent attempts (5 answers seen) — population baseline 22%". This is
+  the personal-vs-population framing the diagnostic-vs-insight discussion
+  landed on — it's built, it just renders for tutors, not students.
+
+Two real gaps, both cheap relative to what's already standing:
+
+**Gap 1 — coverage.** `distractor_taxonomy` tagging doesn't exist outside
+Eedi/GCSE content, so the ACT-relevant static/actMaster bank — most of what a
+US student actually sees — feeds nothing into this pipeline. Separately, only
+28% of misconceptions have an ingredient mapping.
+- Owning lane: **Product** (`app/src/data/**`) to add `distractor_taxonomy` to
+  non-Eedi questions; **Engine** (`ml/scripts/enrich_ingredient_misconception_map.py`)
+  to extend map coverage past 493.
+- Seed batch ready to merge: `area_volume_five_seed.json` (repo root) — 5
+  hand-authored, schema-exact `Question` objects, `distractor_taxonomy` on
+  every distractor, sourced from `eedi_misconceptions.json`'s real
+  `area_volume` taxonomy (one exception flagged inline as non-sourced).
+
+**Gap 2 — surfacing.** `misconceptionGaps` + the trap narrative exists and
+reads well, but only `TutorBriefingPanel.tsx` consumes it. No student surface
+does.
+- **C6 (new contract) — misconception-gap surfacing is a dedicated surface,
+  NOT folded into C1's `worstWeakness()` ranking.** `trapHitLine`'s
+  personal-rate-vs-population-baseline framing is a different kind of
+  statement than a severity float competing for one ranked slot; collapsing it
+  into `worstWeakness()` would flatten the exact texture that makes it read as
+  insight rather than a score. Recommend extracting `TutorBriefingPanel`'s
+  `trapName`/`trapHitLine`/row-building logic into a shared lib both the tutor
+  panel and a new student-facing component call, so copy doesn't drift between
+  audiences.
+- Placement on the student side (PawHub main pad vs. a dedicated "what's
+  tripping you up" card) is an open call for whoever picks this up — no
+  backend work needed, `/recommend` already returns `misconceptionGaps`.
+- Owning lane: **Product** (`app/**`).
+
+Status: ❌ not started. Gap 1 (data) and Gap 2 (frontend reuse) touch disjoint
+files and can run in parallel; neither has a prerequisite on the other.
+
+---
+
 ## Coordination rules (avoid the collisions we've had)
 - Lanes are **disjoint** (`ml/**` vs `app/**`). If you must cross, ping first.
 - **Push to `main`; never `firebase deploy` from a laptop** — CI auto-deploys

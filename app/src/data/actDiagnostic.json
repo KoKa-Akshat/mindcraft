@@ -157,12 +157,12 @@
         "cluster": "Data"
       }
     ],
-    "note": "Use these as anchors. You can still adjust every rating on the next page."
+    "note": "Answer each one. We will use the results to tune your route without showing scores here."
   },
   "event_emission": {
     "note": "Canonical sinks (FORMAT_WEAKNESS_PLAN.md diagnostic reconciliation). Do NOT use /learning-event.",
     "confidence_step": "POST {ML_BASE}/seed-assessment: per-concept hard, kind, or easy from scale.",
-    "probe_step": "local prefill only maps cluster probe answers to confidence seeds because they have already been seeded in the seed-assessment.",
+    "probe_step": "POST {ML_BASE}/record-outcomes with score, canonical conceptId, format, question id, selected choice, and distractor evidence. The UI advances without revealing correctness.",
     "completion": "users/{uid}.diagnosticCompleted via markDiagnosticComplete + goals on users/{uid}.goals"
   }
 }
