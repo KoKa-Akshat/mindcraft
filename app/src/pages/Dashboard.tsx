@@ -131,8 +131,9 @@ function tocDotState(status: string): TocDotState {
 function tocColumnsFor(count: number): number {
   if (count <= 0) return 1
   if (count <= 4) return count
+  // Prefer 4-across tiles (Pinterest-calm) over dense 5–6 col grids.
   const ideal = Math.ceil(Math.sqrt(count))
-  return Math.min(6, Math.max(3, ideal))
+  return Math.min(4, Math.max(3, ideal))
 }
 
 function tocTrailingSpans(remainder: number, columns: number): number[] {
@@ -589,18 +590,15 @@ export default function Dashboard({
     navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey } })
   }
 
-  /** New guided play-through: story beat → formula card → question batch,
-   *  per topic, in sequence — alongside the printable paper above, not a
-   *  replacement. Practice.tsx reads the paper back via loadCachedWeeklyPaper()
-   *  (already cached by the picker before calling this), same as the
-   *  printable path reads it in WeeklyPracticePaperPage.tsx. */
+  /** Play-through: same weekly desk as scroll, but with MC + soft-wrong
+   *  gray-out and every paper question visible at once (not one-at-a-time). */
   function startWeeklyPlaythrough(paper: WeeklyPracticePaper) {
     setShowWeeklyPicker(false)
     if (!paper.questionIds.length) {
       openMap()
       return
     }
-    navigate('/practice', { state: { weeklyWalkthrough: true } })
+    navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey, weeklyPlay: true } })
   }
 
   // Cover first — before the diagnostic loading gate — so login lands on the

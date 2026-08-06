@@ -1515,21 +1515,23 @@
 ══════════════════════════════════════════════════════════════════════════════ */
 
 .exploreScreen {
-  max-width: 720px;
+  max-width: min(1100px, 96vw);
   margin: 0 auto;
   width: 100%;
+  padding: 8px 0 32px;
 }
 
 .exploreCard {
   background: var(--practice-surface, #21616E);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
-  padding: 36px;
+  border-radius: 20px;
+  padding: clamp(24px, 3vw, 40px) clamp(22px, 3.5vw, 48px);
   display: flex;
   flex-direction: column;
   gap: 24px;
   box-shadow: none;
   color: rgba(255, 255, 255, 0.88);
+  min-height: min(72vh, 720px);
 }
 
 .exploreHead {
@@ -5421,10 +5423,22 @@
 }
 
 .matteShell .choice {
-  border: 1.5px solid rgba(58, 47, 85, 0.14) !important;
-  box-shadow: 0 3px 10px rgba(58, 47, 85, 0.06) !important;
-  border-radius: 16px !important;
-  min-height: 44px;
+  border: none !important;
+  border-bottom: 1px solid rgba(58, 47, 85, 0.14) !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  min-height: 40px;
+  background: transparent !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+
+.matteShell .choiceSoftWrong,
+.choiceSoftWrong {
+  opacity: 0.32 !important;
+  filter: grayscale(0.9);
+  text-decoration: line-through;
+  text-decoration-color: rgba(28, 24, 20, 0.35);
 }
 
 .matteShell .choiceLetter {

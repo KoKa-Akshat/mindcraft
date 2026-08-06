@@ -120,9 +120,13 @@ export function buildWeeklyPracticePaper(opts: {
     label: actConceptLabel(conceptId),
   }))
 
+  // Keep enough questions per topic that playthrough never feels like a
+  // single-item quiz — even when the picker lights up many concepts.
   const many = slots.length > 6
-  const per = opts.questionsPerSlot ?? (many ? 1 : 3)
-  const maxQuestions = opts.maxQuestions ?? (many ? 12 : Math.max(6, slots.length * per))
+  const per = opts.questionsPerSlot ?? (many ? 2 : 3)
+  const maxQuestions = opts.maxQuestions ?? (many
+    ? Math.min(24, Math.max(12, slots.length * per))
+    : Math.max(8, slots.length * per))
 
   const questions: Question[] = []
   for (const slot of slots) {

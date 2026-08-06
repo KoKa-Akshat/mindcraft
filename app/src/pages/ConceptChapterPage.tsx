@@ -21,6 +21,7 @@ import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/
 import GraphBox from '../components/GraphBox'
 import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
 import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
+import { getConceptContent } from '../lib/conceptContent'
 import type { ScratchStrokeData } from '../types'
 import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
@@ -451,6 +452,12 @@ export default function ConceptChapterPage() {
     setShowConceptCover(false)
     playTap()
   }
+
+  // Formula / key-rules sheet (same content as Weekly Review explore) — once
+  // per chapter open, before story/questions, so the 10-Q batch has a clear
+  // concept map. Skipped when CONCEPT_CONTENT has no entry for this id.
+  const conceptNotes = useMemo(() => getConceptContent(canonicalId), [canonicalId])
+  const [showFormulaSheet, setShowFormulaSheet] = useState(() => Boolean(getConceptContent(canonicalId)))
 
   useEffect(() => {
     if (panels[panelIdx]?.kind === 'quest' && !localStorage.getItem(storySeenKey)) {
@@ -1025,6 +1032,49 @@ export default function ConceptChapterPage() {
             ← back
           </button>
         </div>
+      </div>
+    )
+  }
+
+  if (showFormulaSheet && conceptNotes) {
+    return (
+      <div className={s.formulaSheet} style={{ '--theme-accent': theme.accent } as React.CSSProperties}>
+        <header className={s.formulaSheetHead}>
+          <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
+          <p className={s.formulaSheetEyebrow}>Before today{"'"}s 10 questions</p>
+          <h1 className={s.formulaSheetTitle}>{cs.conceptName}</h1>
+          <p className={s.formulaSheetTag}>{conceptNotes.tagline}</p>
+        </header>
+        {conceptNotes.formula && (
+          <p className={s.formulaSheetBanner}>{conceptNotes.formula}</p>
+        )}
+        <div className={s.formulaSheetGrid}>
+          <section>
+            <h2>Key rules</h2>
+            <ul>
+              {conceptNotes.keyRules.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+          </section>
+          <section>
+            <h2>Pro tips</h2>
+            <ul>
+              {conceptNotes.tips.map((t, i) => <li key={i}>{t}</li>)}
+            </ul>
+          </section>
+          <section className={s.formulaSheetWide}>
+            <h2>Watch out</h2>
+            <ul>
+              {conceptNotes.watchOut.map((w, i) => <li key={i}>{w}</li>)}
+            </ul>
+          </section>
+        </div>
+        <button
+          type="button"
+          className={s.formulaSheetCta}
+          onClick={() => { setShowFormulaSheet(false); playTap() }}
+        >
+          Start questions →
+        </button>
       </div>
     )
   }

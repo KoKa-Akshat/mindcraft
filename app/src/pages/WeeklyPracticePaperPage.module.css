@@ -1,20 +1,23 @@
 .shell {
   min-height: 100vh;
-  background: #ebe4d8;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(185, 232, 111, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(36, 122, 77, 0.08), transparent 50%),
+    #ebe4d8;
   color: #1c1814;
 }
 
 .toolbar {
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 8;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 12px 18px;
-  background: rgba(255, 250, 242, 0.92);
+  padding: 12px 20px;
+  background: rgba(255, 250, 242, 0.94);
   border-bottom: 1px solid rgba(40, 32, 24, 0.1);
   backdrop-filter: blur(8px);
 }
@@ -71,19 +74,28 @@
   cursor: wait;
 }
 
-.paper {
-  width: min(760px, calc(100% - 28px));
-  margin: 18px auto 48px;
+/* Desk: ~3/4 questions + ~1/4 tools */
+.desk {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr);
+  gap: 18px;
+  width: min(1280px, calc(100% - 28px));
+  margin: 16px auto 48px;
+  align-items: start;
+}
+
+.mainCol {
+  min-width: 0;
   background: #fffaf2;
   border: 1px solid rgba(40, 32, 24, 0.1);
-  border-radius: 18px;
-  box-shadow: 0 18px 40px rgba(40, 32, 24, 0.12);
-  padding: 28px 28px 40px;
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(40, 32, 24, 0.1);
+  padding: 26px 26px 36px;
 }
 
 .paperHead {
-  margin-bottom: 28px;
-  padding-bottom: 18px;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
   border-bottom: 1px solid rgba(40, 32, 24, 0.1);
 }
 
@@ -98,34 +110,123 @@
 
 .title {
   margin: 0 0 8px;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 32px;
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: clamp(28px, 3vw, 36px);
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: #143a2e;
 }
 
 .sub {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.45;
   color: rgba(28, 24, 20, 0.68);
 }
 
-.item {
-  padding: 22px 0;
-  border-bottom: 1px dashed rgba(40, 32, 24, 0.14);
-  break-inside: avoid;
+.topicBlock {
+  margin-bottom: 28px;
 }
 
-.item:last-of-type {
-  border-bottom: none;
+.topicHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.topicTitle {
+  margin: 0;
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: #143a2e;
+}
+
+.topicCount {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(28, 24, 20, 0.45);
+}
+
+.notesToggle {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #247a4d;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.formulaNotes {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(36, 122, 77, 0.06);
+  border: 1px solid rgba(36, 122, 77, 0.16);
+}
+
+.formulaBanner {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 253, 247, 0.9);
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: #143a2e;
+  text-align: center;
+}
+
+.notesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.notesGrid h3 {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #247a4d;
+}
+
+.notesGrid ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(28, 24, 20, 0.78);
+}
+
+.qGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
+}
+
+.item {
+  padding: 14px 14px 12px;
+  border-radius: 14px;
+  background: rgba(255, 253, 247, 0.72);
+  border: 1px solid rgba(40, 32, 24, 0.08);
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
 }
 
 .itemHead {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
 }
 
 .num {
@@ -138,10 +239,11 @@
   color: #f4efe2;
   font-size: 13px;
   font-weight: 900;
+  flex-shrink: 0;
 }
 
 .topic {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -149,25 +251,181 @@
 }
 
 .stem {
-  font-size: 16px;
-  line-height: 1.55;
-  margin-bottom: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #1c1814;
 }
 
-.workLabel {
-  margin: 0 0 8px;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(28, 24, 20, 0.4);
-}
-
+/* Soft write pad — no heavy “YOUR WORK” chrome */
 .work {
-  border-radius: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px dashed rgba(40, 32, 24, 0.14);
+  min-height: 140px;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 4px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(20, 58, 46, 0.12);
+  border-radius: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: background 120ms, opacity 160ms, filter 160ms;
+}
+
+.choice:hover:not(:disabled) {
+  background: rgba(36, 122, 77, 0.05);
+}
+
+.choiceLetter {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  background: rgba(20, 58, 46, 0.08);
+  color: #143a2e;
+  flex-shrink: 0;
+}
+
+.choiceText {
+  font-size: 14px;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.choicePicked .choiceLetter {
+  background: #3a5da8;
+  color: #fff;
+}
+
+.choiceCorrect {
+  border-bottom-color: #1f6b45 !important;
+  background: rgba(31, 107, 69, 0.08) !important;
+}
+
+.choiceCorrect .choiceLetter {
+  background: #1f6b45;
+  color: #fff;
+}
+
+.choiceOut {
+  opacity: 0.35;
+  filter: grayscale(0.85);
+  cursor: default;
+  text-decoration: line-through;
+  text-decoration-color: rgba(28, 24, 20, 0.35);
+}
+
+.toolsRail {
+  min-width: 0;
+}
+
+.toolsSticky {
+  position: sticky;
+  top: 68px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255, 250, 242, 0.92);
+  border: 1px solid rgba(40, 32, 24, 0.1);
+  box-shadow: 0 10px 28px rgba(40, 32, 24, 0.08);
+}
+
+.toolBtns {
+  display: flex;
+  gap: 8px;
+}
+
+.toolBtn {
+  flex: 1;
+  min-height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(20, 58, 46, 0.18);
+  background: #fff;
+  color: #143a2e;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.toolBtnOn {
+  background: #143a2e;
+  color: #f4efe2;
+  border-color: #143a2e;
+}
+
+.calcPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid rgba(40, 32, 24, 0.1);
+}
+
+.calcDisplay {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f4efe2;
+  font-family: var(--tok-font-mono, ui-monospace, monospace);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: right;
+  color: #143a2e;
+}
+
+.calcRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.calcBtn {
+  min-height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(40, 32, 24, 0.1);
+  background: #faf6ee;
+  font-weight: 700;
+  cursor: pointer;
+  color: #1c1814;
+}
+
+.calcBtn:hover {
+  background: #efe6d4;
+}
+
+.graphWrap {
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(40, 32, 24, 0.1);
   background: #fff;
+}
+
+.toolsHint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(28, 24, 20, 0.55);
 }
 
 .printOnly {
@@ -175,16 +433,16 @@
 }
 
 .printLines {
-  margin-top: 12px;
+  margin-top: 4px;
 }
 
 .printLine {
-  height: 28px;
-  border-bottom: 1px solid rgba(40, 32, 24, 0.18);
+  height: 24px;
+  border-bottom: 1px solid rgba(40, 32, 24, 0.16);
 }
 
 .doneBanner {
-  margin-top: 24px;
+  margin-top: 18px;
   padding: 14px 16px;
   border-radius: 14px;
   background: rgba(20, 58, 46, 0.08);
@@ -206,7 +464,7 @@
 
 .empty h1 {
   margin: 0 0 8px;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--tok-font-serif, Georgia, serif);
   font-size: 26px;
 }
 
@@ -240,13 +498,20 @@
     display: block;
   }
 
-  .paper {
+  .desk {
+    display: block;
     width: 100%;
     margin: 0;
+  }
+
+  .mainCol {
     border: none;
-    border-radius: 0;
     box-shadow: none;
     padding: 0;
+  }
+
+  .qGrid {
+    grid-template-columns: 1fr;
   }
 
   .item {
@@ -254,13 +519,31 @@
   }
 }
 
+@media (max-width: 960px) {
+  .desk {
+    grid-template-columns: 1fr;
+  }
+
+  .toolsSticky {
+    position: static;
+  }
+
+  .qGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
-  .paper {
-    padding: 20px 16px 32px;
+  .mainCol {
+    padding: 18px 14px 28px;
   }
 
   .title {
     font-size: 24px;
+  }
+
+  .notesGrid {
+    grid-template-columns: 1fr;
   }
 
   .toolbarMeta {

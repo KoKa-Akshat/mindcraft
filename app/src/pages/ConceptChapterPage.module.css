@@ -251,7 +251,8 @@
   overflow: hidden;
 }
 .blendQuest {
-  grid-template-columns: minmax(0, 1.4fr) minmax(160px, 0.65fr);
+  /* ~3/4 question + write, ~1/4 graph/tools */
+  grid-template-columns: minmax(0, 3fr) minmax(200px, 1fr);
   align-items: stretch;
 }
 .blendQuestMain {
@@ -785,10 +786,10 @@
   margin-bottom: 12px;
 }
 .qKicker {
-  font: 400 10px/1 var(--tok-font-mono);
-  letter-spacing: 0.1em;
+  font: 600 12px/1 var(--tok-font-mono);
+  letter-spacing: 0.08em;
   text-transform: lowercase;
-  color: #9a8a6a;
+  color: #6b5f4a;
 }
 .qChipSmall {
   font: 500 10px/1 var(--tok-font-mono);
@@ -1058,31 +1059,33 @@
    matching the tilted-block-tile direction picked from the 3-option redesign
    review that same session. */
 .stickerChoices {
-  gap: 10px !important;
+  gap: 2px !important;
+  margin-top: 12px !important;
 }
+/* Underline rows — no heavy answer cards (leaves room to write on the page). */
 .stickerChoice {
-  border: 1.5px solid rgba(20, 58, 46, 0.14) !important;
-  border-left: 4px solid transparent !important;
-  border-radius: 14px !important;
-  padding: 12px 14px !important;
-  background: #fffdf8 !important;
-  box-shadow: 0 4px 14px rgba(20, 58, 46, 0.06);
+  border: none !important;
+  border-bottom: 1px solid rgba(20, 58, 46, 0.14) !important;
+  border-radius: 0 !important;
+  padding: 10px 4px !important;
+  background: transparent !important;
+  box-shadow: none !important;
   transform: none;
-  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease !important;
+  transition: background 120ms ease, opacity 160ms ease, filter 160ms ease !important;
 }
 .stickerChoice:hover:not(:disabled) {
-  transform: translateY(-1px) !important;
-  border-color: rgba(20, 58, 46, 0.32) !important;
-  border-left-color: rgba(20, 58, 46, 0.32) !important;
-  box-shadow: 0 0 0 3px rgba(196, 245, 71, 0.35), 0 10px 22px rgba(20, 58, 46, 0.1);
-  background: #fffefb !important;
+  transform: none !important;
+  border-color: transparent !important;
+  border-bottom-color: rgba(20, 58, 46, 0.28) !important;
+  box-shadow: none !important;
+  background: rgba(36, 122, 77, 0.05) !important;
 }
 .stickerChoice.choiceChosen {
   transform: none !important;
-  border-color: #143a2e !important;
-  border-left-color: #3a5da8 !important;
-  box-shadow: 0 0 0 3px rgba(58, 93, 168, 0.22), 0 10px 22px rgba(20, 58, 46, 0.1) !important;
-  background: linear-gradient(135deg, #eef2fb, #fffdf8) !important;
+  border-color: transparent !important;
+  border-bottom-color: #3a5da8 !important;
+  box-shadow: none !important;
+  background: rgba(58, 93, 168, 0.07) !important;
 }
 .stickerChoice.choiceChosen .choiceLetter {
   background: #3a5da8 !important;
@@ -1090,10 +1093,10 @@
   border-color: #3a5da8 !important;
 }
 .stickerChoice.choiceCorrect {
-  background: linear-gradient(135deg, #e8fff4, #f4fff8) !important;
-  border-color: #1f6b45 !important;
-  border-left-color: #1f6b45 !important;
-  box-shadow: 0 0 0 3px rgba(125, 255, 179, 0.45), 0 10px 22px rgba(31, 107, 69, 0.12) !important;
+  background: rgba(31, 107, 69, 0.08) !important;
+  border-color: transparent !important;
+  border-bottom-color: #1f6b45 !important;
+  box-shadow: none !important;
   opacity: 1 !important;
 }
 .stickerChoice.choiceCorrect .choiceLetter {
@@ -1102,10 +1105,12 @@
   border-color: #1f6b45 !important;
 }
 .choiceSoftWrong {
-  opacity: 0.42 !important;
-  filter: saturate(0.55);
+  opacity: 0.3 !important;
+  filter: grayscale(0.9);
   cursor: default !important;
   pointer-events: none;
+  text-decoration: line-through;
+  text-decoration-color: rgba(28, 24, 20, 0.35);
 }
 .choiceWiggle {
   animation: softNo 0.48s ease;
@@ -1118,15 +1123,15 @@
   80% { transform: translateX(3px); }
 }
 .stickerChoice .choiceLetter {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   margin-top: 0;
-  border-radius: 8px;
+  border-radius: 6px;
   display: grid;
   place-items: center;
-  background: #ffe566;
-  border: 1.5px solid rgba(58, 47, 85, 0.22);
-  color: #3a2f55 !important;
+  background: rgba(20, 58, 46, 0.1);
+  border: 1px solid rgba(20, 58, 46, 0.18);
+  color: #143a2e !important;
   font-weight: 800;
   transform: rotate(-2deg);
 }
@@ -1442,6 +1447,131 @@
   .storyBody { margin-left: -12px; padding-left: 12px; }
   .desk .backBtn { top: 10px; left: 12px; }
   .desk .pageTools { top: 10px; right: 12px; }
+}
+
+/* ── Formula / key-rules sheet (Weekly Review parity) ────────────────── */
+.formulaSheet {
+  min-height: 100dvh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px clamp(18px, 4vw, 48px) 40px;
+  background:
+    radial-gradient(ellipse 70% 45% at 12% 0%, rgba(185, 232, 111, 0.22), transparent 55%),
+    #f4efe2;
+  color: #143a2e;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: auto;
+}
+
+.formulaSheetHead {
+  display: grid;
+  gap: 6px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.formulaSheetEyebrow {
+  margin: 8px 0 0;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(20, 58, 46, 0.5);
+}
+
+.formulaSheetTitle {
+  margin: 0;
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.formulaSheetTag {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(20, 58, 46, 0.72);
+  max-width: 52ch;
+}
+
+.formulaSheetBanner {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(36, 122, 77, 0.1);
+  border: 1px solid rgba(36, 122, 77, 0.2);
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+  text-align: center;
+}
+
+.formulaSheetGrid {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.formulaSheetGrid section {
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: rgba(255, 253, 247, 0.85);
+  border: 1px solid rgba(20, 58, 46, 0.1);
+}
+
+.formulaSheetWide {
+  grid-column: 1 / -1;
+}
+
+.formulaSheetGrid h2 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #247a4d;
+}
+
+.formulaSheetGrid ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(28, 24, 20, 0.82);
+}
+
+.formulaSheetCta {
+  align-self: flex-start;
+  max-width: 1100px;
+  width: fit-content;
+  margin: 4px auto 0;
+  min-height: 46px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 14px;
+  background: #143a2e;
+  color: #f4efe2;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .formulaSheetGrid {
+    grid-template-columns: 1fr;
+  }
+  .formulaSheetWide {
+    grid-column: auto;
+  }
 }
 
 /* ── One-time concept cover (generated story art) ────────────────────── */

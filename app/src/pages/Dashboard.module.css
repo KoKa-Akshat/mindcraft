@@ -1354,10 +1354,11 @@
 .horizontalToc {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: minmax(224px, auto);
-  gap: 14px;
+  grid-auto-rows: auto;
+  gap: 20px;
   flex: 1;
   min-height: 0;
+  align-items: start;
 }
 .tocLane {
   --lane-accent: #247a4d;
@@ -1372,14 +1373,15 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid color-mix(in srgb, var(--lane-accent) 38%, transparent);
-  border-radius: 12px;
-  box-shadow: 0 12px 26px color-mix(in srgb, var(--lane-accent) 10%, transparent);
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--lane-accent) 28%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--lane-accent) 9%, transparent);
   min-height: 0;
   overflow: hidden;
   position: relative;
+  background: color-mix(in srgb, var(--lane-accent) 4%, rgba(255, 253, 247, 0.72));
 }
 .tocLane::after {
   content: '';
@@ -1401,10 +1403,10 @@
 .tocLaneTitle {
   margin: 0;
   font-family: var(--tok-font-display);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  line-height: 1;
+  line-height: 1.1;
   color: var(--lane-ink);
 }
 
@@ -1426,12 +1428,12 @@
   /* auto, not 1fr — 1fr here fights the outer .horizontalToc's auto-sized
      row track and creates a runaway feedback loop (measured: rows ballooning
      to 550-780px instead of the ~140px this content actually needs). */
-  grid-auto-rows: minmax(64px, auto);
-  align-items: stretch;
-  gap: 10px;
+  grid-auto-rows: auto;
+  align-items: start;
+  gap: 14px;
   position: relative;
   z-index: 1;
-  flex: 1;
+  flex: 0 1 auto;
   min-height: 0;
 }
 
@@ -1441,13 +1443,13 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  gap: 6px;
+  gap: 10px;
   min-height: 0;
-  padding: 6px 6px 9px;
+  padding: 10px 10px 12px;
   text-align: center;
-  background: linear-gradient(155deg, rgba(255, 253, 248, 0.9), rgba(255, 253, 248, 0.46));
-  border: 1px solid color-mix(in srgb, var(--node-color) 24%, transparent);
-  border-radius: 12px 12px 9px 9px;
+  background: linear-gradient(155deg, rgba(255, 253, 248, 0.96), rgba(255, 253, 248, 0.72));
+  border: 1px solid color-mix(in srgb, var(--lane-accent) 18%, transparent);
+  border-radius: 14px;
   cursor: pointer;
   font: inherit;
   color: inherit;
@@ -1471,10 +1473,11 @@
 .tocNodeName {
   font-family: var(--tok-font-sans);
   font-weight: 700;
-  font-size: 10px;
-  line-height: 1.25;
-  letter-spacing: -0.005em;
+  font-size: 13px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--lane-ink);
+  min-height: calc(1.3em * 2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1485,15 +1488,15 @@
   position: relative;
   width: 100%;
   height: auto;
-  aspect-ratio: 1;
-  padding: 4px;
-  border-radius: 9px;
+  aspect-ratio: 5 / 4;
+  padding: 6px;
+  border-radius: 12px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--node-color) 10%, rgba(255, 253, 248, 0.98));
-  border: 1.5px solid color-mix(in srgb, var(--node-color) 46%, transparent);
+  background: color-mix(in srgb, var(--lane-accent) 8%, rgba(255, 253, 248, 0.98));
+  border: 1.5px solid color-mix(in srgb, var(--lane-accent) 28%, transparent);
   box-shadow: inset 0 0 0 1px rgba(255, 253, 248, 0.8);
   transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce);
   z-index: 1;
