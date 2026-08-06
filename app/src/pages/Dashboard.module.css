@@ -1182,6 +1182,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px;
+  overflow: visible;
 }
 .homeTopMain {
   display: flex;
@@ -1196,6 +1197,7 @@
   gap: 10px;
   flex-wrap: wrap;
   flex-shrink: 0;
+  overflow: visible;
 }
 
 /* .paperCta / .paperCtaGo are retired (Akshat, 2026-07-25 fix pass) — the
@@ -1374,6 +1376,7 @@
   flex-shrink: 0;
 }
 
+.nextTopicCard,
 .weeklyCard,
 .weeklyCardLocked {
   display: inline-flex;
@@ -1397,14 +1400,56 @@
     0 0 24px rgba(185, 232, 111, 0.18);
   cursor: pointer;
   font: inherit;
-  transition: transform 160ms var(--desk-ease-bounce), box-shadow 160ms var(--desk-ease);
+  /* No scale/translate — stage + scrollport clip any growth past the edge. */
+  transition: border-color 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), background 160ms var(--desk-ease);
 }
-.weeklyCard:hover {
-  transform: translateY(-2px);
+
+/* Gold “suggested next” sits just before Weekly Review. */
+.nextTopicCard {
+  border-color: rgba(245, 211, 72, 0.65);
+  background:
+    radial-gradient(ellipse 80% 120% at 0% 50%, rgba(245, 211, 72, 0.28), transparent 55%),
+    linear-gradient(135deg, rgba(80, 60, 12, 0.75), rgba(20, 40, 24, 0.9));
   box-shadow:
-    0 0 0 1px rgba(185, 232, 111, 0.28),
-    0 16px 32px rgba(0, 0, 0, 0.35),
-    0 0 32px rgba(185, 232, 111, 0.32);
+    0 0 0 1px rgba(245, 211, 72, 0.2),
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 0 22px rgba(245, 211, 72, 0.22);
+}
+.nextTopicCard:hover,
+.nextTopicCard:focus-visible {
+  border-color: rgba(245, 211, 72, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(245, 211, 72, 0.45),
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 28px rgba(245, 211, 72, 0.35);
+}
+.nextTopicCard:focus-visible {
+  outline: 2px solid rgba(245, 211, 72, 0.75);
+  outline-offset: 2px;
+}
+.nextTopicCard .weeklyCardEyebrow {
+  color: rgba(245, 211, 72, 0.95);
+}
+.nextTopicCard .weeklyCardTitle {
+  max-width: 16ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.weeklyCard:hover,
+.weeklyCard:focus-visible {
+  border-color: rgba(245, 211, 72, 0.85);
+  background:
+    radial-gradient(ellipse 80% 120% at 0% 50%, rgba(245, 211, 72, 0.32), transparent 55%),
+    linear-gradient(135deg, rgba(42, 140, 90, 0.65), rgba(20, 58, 46, 0.9));
+  box-shadow:
+    0 0 0 1px rgba(245, 211, 72, 0.4),
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 28px rgba(245, 211, 72, 0.28);
+}
+.weeklyCard:focus-visible {
+  outline: 2px solid rgba(245, 211, 72, 0.75);
+  outline-offset: 2px;
 }
 .weeklyCardLocked {
   cursor: default;
@@ -1482,7 +1527,7 @@
   gap: 20px;
   flex: 1;
   min-height: 0;
-  align-items: start;
+  align-items: stretch;
 }
 .tocLane {
   --lane-accent: #b9e86f;
@@ -1495,6 +1540,8 @@
   --lane-span: 6;
   grid-column: span var(--lane-span);
   width: 100%;
+  height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1506,7 +1553,8 @@
     0 16px 32px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(244, 239, 226, 0.06);
   min-height: 0;
-  overflow: hidden;
+  /* Visible so tile hover glow isn’t clipped by the lane chrome. */
+  overflow: visible;
   position: relative;
 }
 .tocLane::after {
@@ -1561,6 +1609,7 @@
   z-index: 1;
   flex: 0 1 auto;
   min-height: 0;
+  overflow: visible;
 }
 
 .tocNode {
@@ -1582,18 +1631,20 @@
   font: inherit;
   color: inherit;
   position: relative;
-  transition: opacity 200ms var(--desk-ease), transform 160ms var(--desk-ease-bounce), background 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), border-color 160ms var(--desk-ease);
+  z-index: 1;
+  /* Glow/brighten only — no translateY/scale (scrollport + lane clip tops). */
+  transition: opacity 200ms var(--desk-ease), background 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), border-color 160ms var(--desk-ease);
 }
 .tocNode:hover {
-  transform: translateY(-3px);
+  z-index: 3;
   background: rgba(12, 28, 20, 0.72);
   border-color: var(--node-color);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--node-color) 35%, transparent),
     0 0 18px color-mix(in srgb, var(--node-color) 45%, transparent),
-    0 14px 28px rgba(0, 0, 0, 0.35);
+    0 10px 22px rgba(0, 0, 0, 0.28);
 }
-.tocNode:active { transform: translateY(0); }
+.tocNode:active { background: rgba(10, 24, 18, 0.8); }
 .tocNode[data-state='locked'] { opacity: 0.62; }
 .tocNode[data-state='complete'] {
   border-color: var(--node-color);
@@ -1649,18 +1700,25 @@
   background: rgba(0, 0, 0, 0.28);
   border: 1.5px solid color-mix(in srgb, var(--lane-accent) 32%, transparent);
   box-shadow: inset 0 0 0 1px rgba(244, 239, 226, 0.06);
-  transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce);
+  transition: box-shadow 220ms var(--desk-ease), border-color 200ms var(--desk-ease);
   z-index: 1;
+  overflow: hidden;
 }
 .tocNodeIcon img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   border-radius: 7px;
   filter: saturate(1.05) contrast(1.05) brightness(0.92);
 }
-.tocNode:hover .tocNodeIcon { transform: scale(1.04); }
+.tocNode:hover .tocNodeIcon {
+  border-color: color-mix(in srgb, var(--node-color) 55%, var(--lane-accent));
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 239, 226, 0.1),
+    0 0 14px color-mix(in srgb, var(--node-color) 35%, transparent);
+}
 
 .tocNodeCheck {
   position: absolute;

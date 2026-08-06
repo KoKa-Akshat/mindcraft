@@ -30,7 +30,7 @@ import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIn
 import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
 import { ACT_TOC_SECTIONS, actConceptLabel, type ActTocSection } from '../lib/actToc'
 import { storyArtFor } from '../lib/storyArt'
-import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen } from 'lucide-react'
+import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen, Sparkles } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
 import WeeklyReviewPicker from '../components/WeeklyReviewPicker'
@@ -267,7 +267,7 @@ export default function Dashboard({
   }
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
-  const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
+  const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string; eventCount: number }>>({})
   const [embedView, setEmbedView] = useState<'home' | 'map' | 'work' | 'notes'>('home')
   const [showWeeklyPicker, setShowWeeklyPicker] = useState(false)
 
@@ -431,13 +431,25 @@ export default function Dashboard({
     let cancelled = false
     void fetchKnowledgeGraph(uid).then(kg => {
       if (cancelled || !kg) return
-      const nodes = (kg.nodes ?? []) as Array<{ id?: unknown; mastery?: unknown; status?: unknown }>
-      const next: Record<string, { mastery: number; status: string }> = {}
+      const nodes = (kg.nodes ?? []) as Array<{
+        id?: unknown
+        mastery?: unknown
+        status?: unknown
+        eventCount?: unknown
+        event_count?: unknown
+      }>
+      const next: Record<string, { mastery: number; status: string; eventCount: number }> = {}
       for (const n of nodes) {
         if (typeof n.id !== 'string') continue
+        const events = typeof n.eventCount === 'number'
+          ? n.eventCount
+          : typeof n.event_count === 'number'
+            ? n.event_count
+            : 0
         next[n.id] = {
           mastery: typeof n.mastery === 'number' ? n.mastery : 0,
           status: typeof n.status === 'string' ? n.status : 'untouched',
+          eventCount: events,
         }
       }
       setConceptProgress(next)
@@ -541,6 +553,8 @@ export default function Dashboard({
 
   const displayName = data.displayName ?? user?.email?.split('@')[0] ?? ''
   const sparkId = weakness?.conceptId ?? null
+  /** Weak spot first, else learn-next — same signal the Map spark uses. */
+  const nextTopic = weakness ?? learn
 
   const weeklyReviewIds = useMemo(
     () => ACT_TOC_SECTIONS[0]?.conceptIds.slice(0, 2) ?? [],
@@ -580,19 +594,14 @@ export default function Dashboard({
     setShowWeeklyPicker(true)
   }
 
-  function startWeeklyPaper(paper: WeeklyPracticePaper) {
+  /** Guided Weekly Review: story → formula → questions per lit topic. */
+  function startWeeklyPlaythrough(paper: WeeklyPracticePaper) {
     setShowWeeklyPicker(false)
     if (!paper.questionIds.length) {
       openMap()
       return
     }
-    // Scrollable free-response paper + ScratchPad (Cursor brief #4).
-    navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey } })
-  }
-
-  /** Play-through uses the same full desk as print/scroll (no separate mode). */
-  function startWeeklyPlaythrough(paper: WeeklyPracticePaper) {
-    startWeeklyPaper(paper)
+    navigate('/practice', { state: { weeklyWalkthrough: true } })
   }
 
   // Cover first — before the diagnostic loading gate — so login lands on the
@@ -791,13 +800,29 @@ export default function Dashboard({
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>
                     <ul className={s.ringLegend} aria-label="Status color guide">
-                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.mastered }} /> Mastered</li>
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.mastered }} /> Mastered (✓)</li>
                       <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.in_progress }} /> In progress</li>
                       <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.struggling }} /> Needs work</li>
                       <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.untouched }} /> Not started</li>
                     </ul>
                   </div>
                   <div className={s.homeTopActions}>
+                    {nextTopic && !recLoading && (
+                      <button
+                        type="button"
+                        className={s.nextTopicCard}
+                        onClick={() => openChapter(nextTopic.conceptId)}
+                        title={`Open ${nextTopic.label} and tackle questions`}
+                      >
+                        <Sparkles size={20} aria-hidden="true" />
+                        <div>
+                          <span className={s.weeklyCardEyebrow}>
+                            {weakness ? 'Suggested next' : 'Learn next'}
+                          </span>
+                          <span className={s.weeklyCardTitle}>{nextTopic.label}</span>
+                        </div>
+                      </button>
+                    )}
                     {showWeeklyCta && (
                       paperLocked ? (
                         <div className={s.weeklyCardLocked} aria-live="off">
@@ -1007,7 +1032,6 @@ export default function Dashboard({
           learn={learn}
           reviewConceptIds={weeklyReviewIds}
           onClose={() => setShowWeeklyPicker(false)}
-          onStart={startWeeklyPaper}
           onPlayThrough={startWeeklyPlaythrough}
         />
       )}

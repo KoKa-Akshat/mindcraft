@@ -15,11 +15,12 @@ export type ActMapPlaced = {
 }
 
 const STEM_X = 16
-const TOP_Y = 13
-const MID_Y = 42
-const BOT_Y = 90
-const TOP_END = 90
-const MID_END = 66
+/* Keep top bar clear of the map frame so lit rings / focus glow never clip. */
+const TOP_Y = 18
+const MID_Y = 44
+const BOT_Y = 88
+const TOP_END = 88
+const MID_END = 64
 
 /** Ordered concept list: Warm-ups → Algebra → Geometry → Data. */
 export function actMapConceptOrder(): Array<{ id: string; section: string }> {

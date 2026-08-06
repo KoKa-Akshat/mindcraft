@@ -1,16 +1,12 @@
 /**
- * Weekly Review topic picker — three modes on a lit knowledge map:
- *   all         → every playable ACT dot lit
- *   recommended → weakness + stretch + review algo picks lit
- *   manual      → click dots to toggle
- *
- * Builds on lib/weeklyPracticePaper.ts; Confirm caches the paper and starts
- * practice from the first slot (same launch path Dashboard used before).
+ * Weekly Review topic picker — modes on a mandala of concept icons.
+ * One circle per topic (the icon badge itself). Let's Go starts the
+ * guided play-through from the lit set.
  */
 import { useEffect, useMemo, useState } from 'react'
-import { layoutActMapNodes } from '../lib/actMapLayout'
 import { actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
+import { layoutMandalaNodes } from '../lib/mandalaLayout'
 import type { NextConcept } from '../lib/recommendNextConcept'
 import {
   buildWeeklyPracticePaper,
@@ -28,11 +24,9 @@ type Props = {
   learn: NextConcept | null
   reviewConceptIds?: string[]
   onClose: () => void
-  /** Printable / scrollable paper — the original Weekly Review flow. */
-  onStart: (paper: WeeklyPracticePaper) => void
-  /** Guided play-through: story beat → formula card → question batch per
-   *  topic, in sequence, inside Practice.tsx. New alongside `onStart`, not a
-   *  replacement — the printable path stays reachable via its own button. */
+  /** @deprecated Print path retired from UI; kept optional for callers. */
+  onStart?: (paper: WeeklyPracticePaper) => void
+  /** Guided play-through inside Practice.tsx. */
   onPlayThrough: (paper: WeeklyPracticePaper) => void
 }
 
@@ -42,17 +36,40 @@ const MODE_COPY: Record<TopicPickMode, string> = {
   manual: 'Tap dots to choose. Lit = in this week’s paper.',
 }
 
+/** Soft orbit guides only — not a second circle per concept. */
+function MandalaOrbits({ ringCount }: { ringCount: number }) {
+  const radii = [18, 32, 44].slice(0, Math.max(0, ringCount - 1))
+  return (
+    <g aria-hidden="true">
+      {radii.map(r => (
+        <ellipse
+          key={r}
+          cx={50}
+          cy={50}
+          rx={r}
+          ry={r * 0.92}
+          className={s.mandalaOrbit}
+        />
+      ))}
+      <circle cx={50} cy={50} r={1.1} fill="rgba(212, 168, 40, 0.35)" />
+    </g>
+  )
+}
+
 export default function WeeklyReviewPicker({
   weakness,
   learn,
   reviewConceptIds = [],
   onClose,
-  onStart,
   onPlayThrough,
 }: Props) {
   const playable = useMemo(() => playableActConceptIds(), [])
   const playableSet = useMemo(() => new Set(playable), [playable])
-  const nodes = useMemo(() => layoutActMapNodes(playableSet), [playableSet])
+  const nodes = useMemo(() => layoutMandalaNodes(playable), [playable])
+  const maxRing = useMemo(
+    () => nodes.reduce((m, n) => Math.max(m, n.ring), 0),
+    [nodes],
+  )
 
   const recommended = useMemo(
     () => recommendedConceptIds({ weakness, learn, reviewConceptIds }).filter(id => playableSet.has(id)),
@@ -113,14 +130,9 @@ export default function WeeklyReviewPicker({
     return paper
   }
 
-  function handlePlayThrough() {
+  function handleLetsGo() {
     const paper = buildPaper()
     if (paper) onPlayThrough(paper)
-  }
-
-  function handlePrintScroll() {
-    const paper = buildPaper()
-    if (paper) onStart(paper)
   }
 
   return (
@@ -158,18 +170,7 @@ export default function WeeklyReviewPicker({
 
         <div className={s.mapWrap}>
           <svg className={s.mapSvg} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            {nodes.map(n => {
-              const lit = litSet.has(n.id)
-              return (
-                <circle
-                  key={`ring-${n.id}`}
-                  cx={n.x}
-                  cy={n.y}
-                  r={lit ? 4.2 : 3.4}
-                  className={lit ? s.dotRingLit : s.dotRing}
-                />
-              )
-            })}
+            <MandalaOrbits ringCount={maxRing + 1} />
           </svg>
           {nodes.map(n => {
             const lit = litSet.has(n.id)
@@ -198,27 +199,14 @@ export default function WeeklyReviewPicker({
               ? 'Pick at least one topic'
               : `${litIds.length} topic${litIds.length === 1 ? '' : 's'} lit`}
           </p>
-          <div className={s.actions}>
-            <button type="button" className={s.secondary} onClick={onClose}>
-              Cancel
-            </button>
-            <button
-              type="button"
-              className={s.secondary}
-              disabled={litIds.length === 0}
-              onClick={handlePrintScroll}
-            >
-              Print / scroll
-            </button>
-            <button
-              type="button"
-              className={s.primary}
-              disabled={litIds.length === 0}
-              onClick={handlePlayThrough}
-            >
-              Play through →
-            </button>
-          </div>
+          <button
+            type="button"
+            className={s.letsGo}
+            disabled={litIds.length === 0}
+            onClick={handleLetsGo}
+          >
+            Let’s Go!
+          </button>
         </footer>
       </div>
     </div>

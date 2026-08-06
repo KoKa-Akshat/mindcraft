@@ -50,8 +50,9 @@
     radial-gradient(circle at 82% 68%, rgba(180, 210, 255, 0.28), transparent 48%),
     radial-gradient(circle at 50% 50%, rgba(255, 253, 248, 0.4), transparent 70%),
     #fffdf8;
-  overflow: hidden;
-  box-shadow: var(--desk-shadow-raised, 0 10px 30px rgba(90, 70, 140, 0.13));
+  /* Visible so top-row focus/hover scale isn’t clipped by the frame. */
+  overflow: visible;
+  box-shadow: none;
 }
 
 .links {

@@ -23,6 +23,7 @@ import GraphBox from '../components/GraphBox'
 import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
 import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
 import { resolveConceptNotes } from '../lib/conceptContent'
+import { buildChapterBatchBrief } from '../lib/chapterBatchBrief'
 import type { ScratchStrokeData } from '../types'
 import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
@@ -393,6 +394,8 @@ export default function ConceptChapterPage() {
   // Formula / key-rules sheet before story/questions — always shown once per
   // chapter open (resolveConceptNotes falls back when curated content is thin).
   const conceptNotes = useMemo(() => resolveConceptNotes(canonicalId), [canonicalId])
+  // Rebuilt whenever this chapter's question draw changes (new open / new shuffle).
+  const batchBrief = useMemo(() => buildChapterBatchBrief(questions), [questions])
   const [showFormulaSheet, setShowFormulaSheet] = useState(true)
 
   useEffect(() => {
@@ -835,6 +838,7 @@ export default function ConceptChapterPage() {
               here anymore. */}
 
           <HighlightedStem
+            className={s.questStem}
             text={displayStem}
             ink={theme.ink}
             accent={theme.accent}
@@ -1020,9 +1024,20 @@ export default function ConceptChapterPage() {
       <div className={s.formulaSheet} style={{ '--theme-accent': theme.accent } as React.CSSProperties}>
         <header className={s.formulaSheetHead}>
           <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
-          <p className={s.formulaSheetEyebrow}>Chapter notes · {questions.length} questions next</p>
-          <h1 className={s.formulaSheetTitle}>{cs.conceptName}</h1>
-          <p className={s.formulaSheetTag}>{conceptNotes.tagline}</p>
+          <div className={s.formulaSheetHero}>
+            <img
+              className={s.formulaSheetArt}
+              src={artSrc}
+              alt=""
+              draggable={false}
+              style={{ transform: `rotate(${storyArtTilt(canonicalId, 2)}deg)` }}
+            />
+            <div className={s.formulaSheetHeroCopy}>
+              <p className={s.formulaSheetEyebrow}>Chapter notes · {questions.length} questions next</p>
+              <h1 className={s.formulaSheetTitle}>{cs.conceptName}</h1>
+              <p className={s.formulaSheetTag}>{conceptNotes.tagline}</p>
+            </div>
+          </div>
         </header>
         {conceptNotes.formula && (
           <p className={s.formulaSheetBanner}>{conceptNotes.formula}</p>
@@ -1046,18 +1061,34 @@ export default function ConceptChapterPage() {
               {conceptNotes.watchOut.map((w, i) => <li key={i}>{w}</li>)}
             </ul>
           </section>
-          <section className={s.formulaSheetHighlight}>
-            <h2>For this batch</h2>
-            <p>
-              Today&apos;s {questions.length} questions lean on the rules above.
-              Highlighted formulas stay pinned in your head: read once, then write.
-            </p>
-            {conceptNotes.examples.slice(0, 2).map((ex, i) => (
-              <div key={i} className={s.formulaSheetExample}>
-                <strong>{ex.problem}</strong>
-                <span>{ex.solution}</span>
-              </div>
-            ))}
+          <section className={s.formulaSheetHighlight} aria-live="polite">
+            <div className={s.batchHead}>
+              <h2>For this batch</h2>
+              <span className={s.batchLiveDot} aria-hidden="true" />
+              <span className={s.batchBadge}>This draw</span>
+            </div>
+            <p>{batchBrief.lead}</p>
+            {batchBrief.chips.length > 0 && (
+              <ul className={s.batchChips}>
+                {batchBrief.chips.map(chip => (
+                  <li key={chip}>{chip}</li>
+                ))}
+              </ul>
+            )}
+            <div className={s.batchCards}>
+              {batchBrief.cards.map((card, i) => (
+                <div key={`${card.title}-${i}`} className={s.formulaSheetExample}>
+                  <strong>{card.title}</strong>
+                  <span>{card.body}</span>
+                </div>
+              ))}
+              {batchBrief.cards.length === 0 && conceptNotes.examples.slice(0, 2).map((ex, i) => (
+                <div key={i} className={s.formulaSheetExample}>
+                  <strong>{ex.problem}</strong>
+                  <span>{ex.solution}</span>
+                </div>
+              ))}
+            </div>
           </section>
         </div>
         <button
