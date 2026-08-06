@@ -296,13 +296,13 @@
   overflow: hidden;
 }
 .blendQuest {
-  /* ~3/4 question + write, ~1/4 graph/tools */
-  grid-template-columns: minmax(0, 3fr) minmax(200px, 1fr);
+  /* Question + write left; graph/tools a touch wider on the right. */
+  grid-template-columns: minmax(0, 2.65fr) minmax(240px, 1.15fr);
   align-items: stretch;
 }
 .blendQuestWithCalc {
   /* Widen tools column so the scientific pad fits under Graph. */
-  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1.15fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1.2fr);
 }
 .blendQuestMain {
   position: relative;
@@ -1146,18 +1146,16 @@
   padding: 8px 6px 8px 0;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(29, 58, 138, 0.12);
   border-radius: 0;
   cursor: pointer;
   text-align: left;
-  transition: background 120ms, border-color 120ms, transform 90ms;
+  transition: background 120ms, transform 90ms;
 }
 .choice:hover:not(:disabled) {
   background: rgba(29, 58, 138, 0.04);
   transform: translateX(2px);
 }
 .choiceChosen {
-  border-bottom-color: var(--theme-accent, #1d3a8a) !important;
   background: rgba(29, 58, 138, 0.06) !important;
 }
 .choiceDone { opacity: 0.62; cursor: default; }
@@ -1182,12 +1180,11 @@
   gap: 2px !important;
   margin-top: 12px !important;
 }
-/* Underline rows — no heavy answer cards (leaves room to write on the page). */
+/* Flat answer rows — no underlines / heavy cards (room to write on the page). */
 .stickerChoice {
   border: none !important;
-  border-bottom: 1px solid rgba(244, 239, 226, 0.16) !important;
-  border-radius: 0 !important;
-  padding: 10px 4px !important;
+  border-radius: 10px !important;
+  padding: 10px 8px !important;
   background: transparent !important;
   box-shadow: none !important;
   transform: none;
@@ -1196,16 +1193,14 @@
 .stickerChoice:hover:not(:disabled) {
   transform: none !important;
   border-color: transparent !important;
-  border-bottom-color: rgba(185, 232, 111, 0.45) !important;
   box-shadow: none !important;
   background: rgba(185, 232, 111, 0.08) !important;
 }
 .stickerChoice.choiceChosen {
   transform: none !important;
   border-color: transparent !important;
-  border-bottom-color: #3a5da8 !important;
   box-shadow: none !important;
-  background: rgba(58, 93, 168, 0.07) !important;
+  background: rgba(58, 93, 168, 0.12) !important;
 }
 .stickerChoice.choiceChosen .choiceLetter {
   background: #3a5da8 !important;
@@ -1213,9 +1208,8 @@
   border-color: #3a5da8 !important;
 }
 .stickerChoice.choiceCorrect {
-  background: rgba(31, 107, 69, 0.08) !important;
+  background: rgba(31, 107, 69, 0.12) !important;
   border-color: transparent !important;
-  border-bottom-color: #1f6b45 !important;
   box-shadow: none !important;
   opacity: 1 !important;
 }
