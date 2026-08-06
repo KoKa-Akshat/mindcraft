@@ -1,7 +1,7 @@
 .wrap {
   display: flex;
-  align-items: flex-end;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
   pointer-events: none;
   min-width: 0;
   flex: 1 1 auto;
@@ -65,44 +65,54 @@
   50% { transform: translateY(-8px) rotate(3deg); }
 }
 
+/* Quote sits beside the sticker with no speech-bubble chrome. */
 .bubble {
   flex: 1 1 auto;
   min-width: 0;
-  max-width: 360px;
-  background: #fffdf8;
-  border: 2.5px solid #143a2e;
-  border-radius: 18px 20px 20px 6px;
-  padding: 10px 14px;
-  box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.12);
+  max-width: 420px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
   pointer-events: none;
 }
 
 .line {
   margin: 0;
-  font-family: var(--tok-font-hand);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.2;
+  font-family: var(--tok-font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   color: #143a2e;
 }
 
-.compact .sprite { width: 52px; height: 52px; }
-.compact .spin { width: 52px; }
+.compact .sprite { width: 68px; height: 68px; }
+.compact .spin { width: 68px; }
 .compact .spriteHit,
 .compact .spriteBtn {
-  min-width: 64px;
-  min-height: 64px;
+  min-width: 76px;
+  min-height: 76px;
 }
-.compact .bubble { max-width: none; padding: 8px 14px; border-radius: 14px 16px 16px 5px; }
-.compact .line { font-size: 15px; color: #143a2e; }
+.compact .bubble { max-width: none; padding: 0; }
+.compact .line {
+  font-size: 18px;
+  font-weight: 500;
+  color: #143a2e;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .cheer .sprite { animation: none; }
 }
 
 @media (max-width: 720px) {
-  .sprite { width: 68px; height: 68px; }
-  .spin { width: 48px; }
-  .bubble { max-width: 180px; }
-  .line { font-size: 17px; }
+  .sprite { width: 72px; height: 72px; }
+  .spin { width: 60px; }
+  .compact .sprite { width: 60px; height: 60px; }
+  .compact .spin { width: 60px; }
+  .bubble { max-width: 220px; }
+  .line { font-size: 18px; }
+  .compact .line { font-size: 16px; }
 }

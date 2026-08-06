@@ -28,7 +28,7 @@ import {
 import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
 import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
-import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
+import { ACT_TOC_SECTIONS, actConceptLabel, type ActTocSection } from '../lib/actToc'
 import { storyArtFor } from '../lib/storyArt'
 import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
@@ -105,6 +105,88 @@ function tocDotState(status: string): TocDotState {
   if (status === 'in_progress' || status === 'repairing') return 'progress'
   return 'locked'
 }
+
+/* ── Contents lane grid math (2026-08-05) ──────────────────────────────────
+ * Replaces hand-guessed `nth-child` span rules in the CSS module (which
+ * hardcoded which cell gets bigger to fill dead space for TODAY's specific
+ * per-lane concept counts) with a real computation off each lane's actual
+ * `conceptIds.length`. Three pieces:
+ *   1. `tocColumnsFor(count)` — how many columns a lane's thumbnail grid
+ *      should use: a near-square layout (ceil(sqrt(count))), clamped to a
+ *      legible range, but never MORE columns than items (so a 2-item lane
+ *      gets a clean 2-column single row, not 2 items adrift in 6 columns).
+ *   2. `tocTrailingSpans(remainder, columns)` — when `count` doesn't divide
+ *      evenly by `columns`, the leftover row's cells get computed
+ *      `grid-column: span N` values that sum back to `columns`, so the last
+ *      row always fills edge-to-edge (Akshat's "lone leftover becomes a
+ *      clean 1x2" ask) instead of sitting next to dead cells.
+ *   3. `tocLaneSpanPair(colsA, colsB)` — the two lanes drawn on the same row
+ *      of the outer 12-column `.horizontalToc` grid split that width
+ *      proportional to how many thumbnail columns each actually needs, so a
+ *      lane with fewer concepts doesn't inherit a wide track sized for its
+ *      neighbor. (Verified this reproduces the previously hand-tuned 5/7
+ *      split on today's live counts — it's the same visual result, just
+ *      derived instead of guessed, and it moves when the counts do.)
+ */
+function tocColumnsFor(count: number): number {
+  if (count <= 0) return 1
+  if (count <= 4) return count
+  const ideal = Math.ceil(Math.sqrt(count))
+  return Math.min(6, Math.max(3, ideal))
+}
+
+function tocTrailingSpans(remainder: number, columns: number): number[] {
+  if (remainder <= 0) return []
+  const base = Math.floor(columns / remainder)
+  const extra = columns - base * remainder
+  return Array.from({ length: remainder }, (_, i) => base + (i < extra ? 1 : 0))
+}
+
+type TocLaneLayout = {
+  /** Thumbnail columns for this lane's own track. */
+  columns: number
+  /** grid-column span (out of 12) for this lane on the outer .horizontalToc grid. */
+  laneSpan: number
+  /** Index (0-based) of the first concept in the incomplete trailing row, or null if none. */
+  lastRowStart: number | null
+  /** grid-column span per node in the trailing row, aligned to lastRowStart. */
+  trailingSpans: number[]
+}
+
+function tocLaneSpanPair(colsA: number, colsB: number): [number, number] {
+  const total = colsA + colsB
+  if (total <= 0) return [6, 6]
+  const spanA = Math.min(10, Math.max(2, Math.round((colsA / total) * 12)))
+  return [spanA, 12 - spanA]
+}
+
+/** Computes the full per-lane grid layout from the real section list, once. */
+function computeTocLaneLayouts(sections: readonly ActTocSection[]): Record<string, TocLaneLayout> {
+  const columnsBySection = sections.map(sec => tocColumnsFor(sec.conceptIds.length))
+  const layouts: Record<string, TocLaneLayout> = {}
+  for (let i = 0; i < sections.length; i += 2) {
+    const colsA = columnsBySection[i]
+    const colsB = columnsBySection[i + 1]
+    const spans = colsB !== undefined ? tocLaneSpanPair(colsA, colsB) : [12, 12]
+    for (let offset = 0; offset < 2 && i + offset < sections.length; offset++) {
+      const section = sections[i + offset]
+      const count = section.conceptIds.length
+      const columns = columnsBySection[i + offset]
+      const remainder = columns > 0 ? count % columns : 0
+      layouts[section.id] = {
+        columns,
+        laneSpan: spans[offset],
+        lastRowStart: remainder !== 0 ? count - remainder : null,
+        trailingSpans: tocTrailingSpans(remainder, columns),
+      }
+    }
+  }
+  return layouts
+}
+
+/** Computed once at module load — ACT_TOC_SECTIONS is a fixed module-level
+ *  array, so this never needs to be recomputed per render/component instance. */
+const TOC_LANE_LAYOUTS = computeTocLaneLayouts(ACT_TOC_SECTIONS)
 
 export default function Dashboard({
   preview = false,
@@ -634,10 +716,8 @@ export default function Dashboard({
             -  not just Contents. .heroMiddle is the flexible zone (wizard +
            spark) that absorbs width pressure; the wordmark, nav, and user
            block hold their size. Below 720px it wraps onto extra lines
-           rather than truncating content. The wizard's own speech-bubble
-           box is hidden here (see .heroMiddle > aside > div in the CSS
-           module) so today's spark sits right up against the sprite instead
-           of leaving the bubble's old footprint as dead space. */}
+           rather than truncating content. The wizard quote is plain text
+           beside the sticker (no speech-bubble chrome). */}
         <header className={s.heroBar}>
           <button
             type="button"
@@ -776,7 +856,9 @@ export default function Dashboard({
                 </div>
 
                 <div className={s.horizontalToc}>
-                  {ACT_TOC_SECTIONS.map(section => (
+                  {ACT_TOC_SECTIONS.map(section => {
+                    const layout = TOC_LANE_LAYOUTS[section.id]
+                    return (
                     <section
                       key={section.id}
                       className={s.tocLane}
@@ -785,19 +867,29 @@ export default function Dashboard({
                         background: section.wash,
                         ['--lane-accent' as string]: section.accent,
                         ['--lane-ink' as string]: section.ink,
+                        ['--lane-span' as string]: String(layout.laneSpan),
                       }}
                     >
                       <header className={s.tocLaneHead}>
                         <TocSectionMark id={section.id} accent={section.accent} />
                         <h2 className={s.tocLaneTitle}>{section.title}</h2>
                       </header>
-                      <div className={s.tocTrack}>
-                        {section.conceptIds.map(id => {
+                      <div
+                        className={s.tocTrack}
+                        style={{ ['--lane-columns' as string]: String(layout.columns) }}
+                      >
+                        {section.conceptIds.map((id, index) => {
                           const progress = conceptProgress[id]
                           const mastery = Math.max(0, Math.min(1, progress?.mastery ?? 0))
                           const status = progress?.status ?? 'untouched'
                           const dotState = tocDotState(status)
                           const dotColor = STATUS_COLOR[status] ?? STATUS_COLOR.untouched
+                          // Trailing-row cells (computed above, off the lane's real
+                          // concept count) get a computed column span so the last
+                          // row always fills edge-to-edge instead of leaving dead
+                          // cells beside an arbitrarily-sized leftover box.
+                          const trailingIndex = layout.lastRowStart === null ? -1 : index - layout.lastRowStart
+                          const colSpan = trailingIndex >= 0 ? layout.trailingSpans[trailingIndex] : 1
                           return (
                             <button
                               key={id}
@@ -807,6 +899,7 @@ export default function Dashboard({
                               style={{
                                 ['--node-color' as string]: dotColor,
                                 ['--mastery' as string]: String(mastery),
+                                ...(colSpan > 1 ? { gridColumn: `span ${colSpan}` } : null),
                               }}
                               title={`${actConceptLabel(id)}: ${Math.round(mastery * 100)}% mastery`}
                               onClick={() => openChapter(id)}
@@ -821,7 +914,8 @@ export default function Dashboard({
                         })}
                       </div>
                     </section>
-                  ))}
+                    )
+                  })}
                 </div>
 
                 {/* Map/Work/Notes pills retired here  -  they duplicated the
