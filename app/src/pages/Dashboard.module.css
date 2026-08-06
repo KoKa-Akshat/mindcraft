@@ -1423,7 +1423,10 @@
   --lane-columns: 4;
   display: grid;
   grid-template-columns: repeat(var(--lane-columns), minmax(0, 1fr));
-  grid-auto-rows: minmax(64px, 1fr);
+  /* auto, not 1fr — 1fr here fights the outer .horizontalToc's auto-sized
+     row track and creates a runaway feedback loop (measured: rows ballooning
+     to 550-780px instead of the ~140px this content actually needs). */
+  grid-auto-rows: minmax(64px, auto);
   align-items: stretch;
   gap: 10px;
   position: relative;
@@ -1649,7 +1652,8 @@
   .tocTrack,
   .tocLane[data-lane='algebra'] .tocTrack {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: minmax(108px, 1fr);
+    /* Same 1fr-vs-outer-auto-track fix as the desktop .tocTrack above. */
+    grid-auto-rows: minmax(108px, auto);
   }
   .tocLane[data-lane='data'] .tocTrack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tocLane[data-lane='warmups'] .tocNode:first-child,
