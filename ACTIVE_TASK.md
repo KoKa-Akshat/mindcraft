@@ -4,6 +4,102 @@
 
 ---
 
+## Live "Call" co-writing — real "Talk" button resolution (build-order step 6 of 8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1-5
+were already done (see entries below — rules/data layer, ScratchPad live-write
+plumbing, CallButton/LiveSessionPage/route, LiveJoinBanner on tutor+parent
+dashboards). This session built **step 6**: replaced `LiveSessionPage.tsx`'s
+placeholder `handleTalk()` (which just read `users/{tutorId}.googleMeetUrl`
+directly) with the real two-tier resolution `SessionCallCard`'s existing
+callers already use elsewhere — `Dashboard.tsx` (~line 999:
+`nextSession.meetingUrl ?? tutorMeetUrl`) and `TutorDashboard.tsx` (~line
+636-637: `callSession.meetingUrl ?? meetUrl`): a currently-active booked
+(Calendly) `sessions` doc's own `meetingUrl` first, then the tutor's
+permanent `users/{tutorId}.googleMeetUrl` as fallback.
+
+**`app/src/pages/LiveSessionPage.tsx`** — added three new exported pure
+helpers plus the async resolver:
+- `isBookedSessionCurrentlyActive(sess, now?)` — mirrors
+  `SessionCallCard.tsx`'s own window (10 min before `scheduledAt` through
+  `endAt`, defaulting to a 90-min session when `endAt` is missing), plus a
+  same-doc `meetingUrl` requirement (an active booked session with no link
+  of its own isn't usable as tier 1).
+- `pickActiveBookedSession(candidates, now?)` — picks the first active one
+  out of an **already student-scoped** list. Deliberately does NOT do the
+  student-scoping itself: for the student role the `sessions` query is
+  already scoped by `studentEmail`, but for the tutor role one query spans
+  every one of that tutor's students, so a session doc missing `studentId`
+  (not yet backfilled — `Session.studentId: string | null`) would be
+  ambiguous between "unscoped" and "wrong student." Scoping happens per-role
+  in `resolveTalkUrl` instead.
+- `resolveTalkUrl({ role, userUid, userEmail, studentId, tutorId })` — role
+  branches: **student** queries `sessions` by `studentEmail` (same shape as
+  `useStudentData.ts`'s `nextSession` lookup); **tutor** queries by
+  `tutorId` (same single-field, no-composite-index shape
+  `TutorDashboard.tsx` already uses), filtered client-side to
+  `studentId === session.studentId`; **parent** skips tier 1 entirely and
+  goes straight to tier 2, because `firebase/firestore.rules`' `sessions`
+  block has **no parent-read clause** today (confirmed by reading the
+  rules file — same kind of pre-existing gap the plan's own footnote flags
+  for `interactions`). A parent's tier-1 query would just be denied by
+  rules anyway; skipping it avoids a pointless round trip, and the
+  try/catch around the whole tier-1 block still fails soft to tier 2 as a
+  backstop. `handleTalk()` now calls this instead of the old direct
+  `googleMeetUrl` read; UX unchanged (still resolves lazily on click, same
+  "no meeting link set" fallback copy).
+
+**New: `app/src/pages/LiveSessionPage.test.ts`** (9 tests, all passing) —
+unit coverage for the two pure helpers: active-window boundaries (10-min
+early start, `endAt` cutoff, 90-min default when `endAt` missing), the
+`meetingUrl`-required and `status === 'scheduled'`-required gates, and
+`pickActiveBookedSession` picking the right one out of a mixed list.
+Importing `LiveSessionPage.tsx` directly pulls in `useUser` from `../App`,
+which statically imports every page (including Practice.tsx's homework
+upload path -> `pdfjs-dist` -> needs `DOMMatrix`, and this repo's vitest
+config has no jsdom environment — same constraint `ScratchPad.test.ts`
+documents for itself). Fixed by `vi.mock('../App', () => ({ useUser: () =>
+null }))` in the test file only — doesn't touch the real `App.tsx`.
+
+**Scope note — did NOT run the full emulator+Playwright cross-account
+screenshot pass** this session, unlike steps 3/4/5. This task's brief was
+explicit: "Live shared tree — only touch `app/src/pages/LiveSessionPage.tsx`
+... Leave everything else alone." The emulator screenshot technique those
+steps used requires *temporarily* editing `firebase.json`, `app/src/firebase.ts`,
+and `app/src/App.tsx` (emulator connect gate + custom-token sign-in bridge),
+even though it's fully reverted before commit. Given `App.tsx` itself
+carries a scar-tissue comment about being **"LOST TO CONCURRENT OVERWRITES
+ON THIS SHARED CHECKOUT THREE TIMES"** already, and this step's brief
+explicitly ruled out touching anything but `LiveSessionPage.tsx`, judged
+that risk not worth taking for what the plan itself calls "the lowest-risk
+step left, purely additive." Used the plan's own documented fallback
+instead: "a solid unit/logic-level test of the resolution function alone is
+an acceptable substitute." If a real cross-account visual proof is wanted
+later, it needs a dedicated session with permission to touch those three
+shared files (same technique as step 3/4/5, this time seeding a `sessions`
+doc with its own `meetingUrl` alongside the tutor's permanent one).
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 206 passed / 1 skipped (15 files) — was 197/1 before
+  this session (step 4/5's baseline), so exactly the 9 new tests, zero
+  regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- No screenshot this session (see scope note above).
+
+Files touched: `app/src/pages/LiveSessionPage.tsx`,
+`app/src/pages/LiveSessionPage.test.ts`, `ACTIVE_TASK.md`. No
+`.module.css` changes were needed. Committed, not pushed.
+
+**Next**: build-order step 7 — `<CallButton>` on the Weekly Review page
+(the Weekly Practice Paper page needs a `useStudentData` call to resolve
+`tutorId`, which it doesn't currently make, plus a `<CallButton>` in its
+toolbar actions next to Print/Mark week done — near-zero new code once
+step 3's `CallButton`/`LiveSessionPage`/route already exist). Step 8
+(idle-timeout/unmount-ends-session cleanup) is still open after that.
+
+---
+
 ## Live "Call" co-writing — LiveJoinBanner on Tutor + Parent dashboards (build-order steps 4+5 of 8, both done) (Fable 5, 2026-08-05)
 
 Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1-3

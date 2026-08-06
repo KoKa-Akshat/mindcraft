@@ -15,7 +15,9 @@
  */
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { doc, getDoc } from 'firebase/firestore'
+import {
+  collection, doc, getDoc, getDocs, query, where,
+} from 'firebase/firestore'
 import { db } from '../firebase'
 import { useUser } from '../App'
 import ScratchPad from '../components/ScratchPad'
@@ -56,6 +58,107 @@ async function resolveRole(
 function contextLabel(session: LiveSessionEntry | null): string {
   if (!session) return ''
   return session.contextType === 'weekly_paper' ? 'Weekly paper' : 'Practice question'
+}
+
+/** Mirrors `SessionCallCard`'s own "is this booked session happening right
+ * now" window (10 min before `scheduledAt` through `endAt`, defaulting to a
+ * 90-min session when `endAt` is missing — SessionCallCard.tsx:23,59-60),
+ * plus a same-doc `meetingUrl` requirement: an active booked session with no
+ * link of its own isn't usable as tier 1, so it falls through to the
+ * tutor's permanent room instead. Pure and exported so it's unit-testable
+ * without touching Firestore (same pattern as `isLiveSessionStale` in
+ * `lib/liveSession.ts`). */
+const TALK_CALL_EARLY_MS = 10 * 60 * 1000
+const TALK_DEFAULT_SESSION_MS = 90 * 60 * 1000
+
+export interface BookedSessionCandidate {
+  studentId?: string | null
+  status?: string
+  scheduledAt?: number
+  endAt?: number
+  meetingUrl?: string | null
+}
+
+export function isBookedSessionCurrentlyActive(
+  sess: BookedSessionCandidate,
+  now = Date.now(),
+): boolean {
+  if (sess.status !== 'scheduled') return false
+  if (typeof sess.meetingUrl !== 'string' || !sess.meetingUrl) return false
+  if (typeof sess.scheduledAt !== 'number') return false
+  const end = sess.endAt ?? sess.scheduledAt + TALK_DEFAULT_SESSION_MS
+  return now >= sess.scheduledAt - TALK_CALL_EARLY_MS && now <= end
+}
+
+/** Picks the first currently-active session out of an already
+ * student-scoped candidate list. Callers are responsible for the scoping
+ * (see `resolveTalkUrl`): a student's own query is inherently scoped by
+ * `studentEmail`, while a tutor's query spans every one of their students
+ * and must be filtered to `studentId` first — that filter isn't folded in
+ * here because a session doc missing `studentId` (not yet backfilled, see
+ * `Session.studentId: string | null` in `types/index.ts`) would otherwise
+ * be ambiguous: "unscoped" for the student case, but "wrong student" for
+ * the tutor case. Split out from `resolveTalkUrl` purely so the active-
+ * window logic is unit-testable without mocking Firestore. */
+export function pickActiveBookedSession(
+  candidates: BookedSessionCandidate[],
+  now = Date.now(),
+): BookedSessionCandidate | null {
+  return candidates.find(sd => isBookedSessionCurrentlyActive(sd, now)) ?? null
+}
+
+/** Two-tier "Talk" link resolution (plan build-order step 6) — the same
+ * precedence `SessionCallCard`'s existing callers use elsewhere in the app
+ * (`Dashboard.tsx` ~line 999: `nextSession.meetingUrl ?? tutorMeetUrl`;
+ * `TutorDashboard.tsx` ~line 636-637: `callSession.meetingUrl ?? meetUrl`):
+ * a currently-active booked (Calendly) session's own `meetingUrl` first,
+ * then the tutor's permanent `users/{tutorId}.googleMeetUrl`. This function
+ * does the lookup those callers already had on hand from their own
+ * `sessions`/`users` subscriptions — this page has neither, so it fetches
+ * once on demand instead of subscribing (a "Talk" click is a one-shot
+ * action, not something that needs to live-update).
+ *
+ * `firebase/firestore.rules`' `sessions` block has no parent-read clause
+ * today (the same kind of pre-existing gap the plan's footnote calls out
+ * for `interactions`) — a parent viewer's tier-1 query is denied by rules,
+ * caught here, and treated as "no active booked session" rather than an
+ * error, falling straight through to tier 2. */
+async function resolveTalkUrl(params: {
+  role: LiveSessionAuthorRole
+  userUid: string
+  userEmail: string | null | undefined
+  studentId: string
+  tutorId: string | null
+}): Promise<string | null> {
+  try {
+    let candidates: BookedSessionCandidate[] = []
+    if (params.role === 'student' && params.userEmail) {
+      // Same query shape as useStudentData.ts's own `nextSession` lookup.
+      const snap = await getDocs(query(collection(db, 'sessions'), where('studentEmail', '==', params.userEmail)))
+      candidates = snap.docs.map(d => d.data() as BookedSessionCandidate)
+    } else if (params.role === 'tutor') {
+      // Same single-field query TutorDashboard.tsx uses (no composite index
+      // needed) — spans every one of this tutor's students, so filter
+      // client-side to this session's student before picking the active one.
+      const snap = await getDocs(query(collection(db, 'sessions'), where('tutorId', '==', params.userUid)))
+      candidates = snap.docs
+        .map(d => d.data() as BookedSessionCandidate)
+        .filter(sd => sd.studentId === params.studentId)
+    }
+    const active = pickActiveBookedSession(candidates)
+    if (active?.meetingUrl) return active.meetingUrl
+  } catch {
+    // fail-soft (e.g. a parent viewer denied by rules) — fall through to tier 2
+  }
+
+  if (!params.tutorId) return null
+  try {
+    const snap = await getDoc(doc(db, 'users', params.tutorId))
+    const url = snap.data()?.googleMeetUrl
+    return typeof url === 'string' && url ? url : null
+  } catch {
+    return null
+  }
 }
 
 export default function LiveSessionPage() {
@@ -109,15 +212,16 @@ export default function LiveSessionPage() {
   )
 
   async function handleTalk() {
-    if (!session?.tutorId) { setMeetUrl(null); return }
-    try {
-      const snap = await getDoc(doc(db, 'users', session.tutorId))
-      const url = snap.data()?.googleMeetUrl
-      setMeetUrl(typeof url === 'string' && url ? url : null)
-      if (typeof url === 'string' && url) window.open(url, '_blank', 'noopener')
-    } catch {
-      setMeetUrl(null)
-    }
+    if (!session || !user?.uid) { setMeetUrl(null); return }
+    const url = await resolveTalkUrl({
+      role: role ?? 'student',
+      userUid: user.uid,
+      userEmail: user.email,
+      studentId: session.studentId,
+      tutorId: session.tutorId,
+    })
+    setMeetUrl(url)
+    if (url) window.open(url, '_blank', 'noopener')
   }
 
   async function handleEnd() {
