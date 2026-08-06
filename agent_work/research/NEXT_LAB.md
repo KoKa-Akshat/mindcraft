@@ -81,8 +81,8 @@ When this table’s unfinished rows < 3, promote from `chapters/QUEUE_EXTENDED.m
 | 91 | Hint economy & contingent scaffolding | Soft vs hard hints; cost of peek; fade×hint | **DONE** (2026-08-06) — Part XCI / SAFE-HINT |
 | — | **Synthesizer v1.12** | Merge LXXXIV–XCI SAFE-* into core OS I.4 / XIV / IX / XXI | **DONE** (2026-08-06 UTC 15) |
 | 92 | Explanation length vs germane load | Short coach vs monologue; token tax | **DONE** (2026-08-06) — Part XCII / SAFE-EXPLAIN |
-| 93 | Retrieval failure modes in practice UX | Tip-of-tongue; blanking; productive struggle bounds | **NEXT** |
-| 94 | Productive failure vs guided success sequencing | Kapur PF; when struggle-first helps/hurts | queued |
+| 93 | Retrieval failure modes in practice UX | Tip-of-tongue; blanking; productive struggle bounds | **DONE** (2026-08-06) — Part XCIII / SAFE-RETRIEVE |
+| 94 | Productive failure vs guided success sequencing | Kapur PF; when struggle-first helps/hurts | **NEXT** |
 | 95 | Cognitive apprenticeship in tutor playbooks | Collins modeling→coaching→fading ops | queued |
 | 96 | Attention residue & device distraction in practice | Phone/task-switch tax on FEI attempts | queued |
 
@@ -138,3 +138,4 @@ More IDs: `chapters/QUEUE_EXTENDED.md` (extend when <3 unfinished).
 - Any DAU/streak/XP/blocked-accuracy as learning NS / FEI Score™ / single-KPI tutor pay on one FEI event / thumbs-up≡learning / science-backed identity ads without IUA / celebrate retry without binge gates (Part XC)
 - Any unlimited free hard peeks / Hint Score™ / XP-for-hints / shame-timer peek cost / black-box perfect-hint AI / fade costume with free bottom-out menu (Part XCI)
 - Any longer≡better / token-count quality / Explanation Score™ / AI monologue≡SE / unlimited thorough AI essays / fixed long wrap across expertise / seductive coach fluff as pedagogy (Part XCII)
+- Any all-struggle≡productive / Struggle Score™ / blank-time NS / always-wait silence theater / instant hard dump on first stall / never-stuck answer hero / errors-always-scar fear / dwell-XP grit (Part XCIII)

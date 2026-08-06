@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Researcher tick: Part XCIII Retrieval failure modes in practice UX (SAFE-RETRIEVE)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.12 = 1 → Researcher)  
+**Chapter written:** `chapters/93_retrieval_failure_modes_practice_ux.md` (Part XCIII)  
+**Claim examined:** When mid-practice retrieval stalls should be treated as tip-of-tongue / partial access vs freeze/blanking vs productive struggle vs avoidance — and which UX preserves construction without struggle theater or answer dumps.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-RETRIEVE** — name the stall mode; attempt before heavy help; TOT → wait + micro-cue; freeze → bounded soft scaffold; progress≠blank-seconds; unsuccessful retrieval + feedback can potentiate; no Struggle Score™ / never-stuck dump; proof = retry/transfer; RETRIEVE-* before struggle-theater or never-stuck campaigns.
+
+**Evidence spine:** Brown & McNeill (1966); Schwartz & Metcalfe (2011); Kornell, Hays & Bjork (2009); Richland, Kornell & Kao (2009); Kornell & Vaughn (2016); Hiebert & Grouws (2007); Warshauer (2015); Kapur (2014) PF boundary; Ashcraft (2002) / Ashcraft & Kirk (2001); SAFE-HINT / SAFE-HELP / SAFE-EXPLAIN / XLI.
+
+**Claim killed (this tick):** All-struggle≡productive / Struggle Score™ / blank-time NS / always-wait silence theater / instant hard dump on first stall / never-stuck answer hero / errors-always-scar fear / dwell-XP — demoted under TOT metacognition + failed-retrieval potentiation + productive-struggle taxonomy + anxiety–WM; mode-contingent retrieve UX survives behind RETRIEVE-*.
+
+**Experiments mounted:** RETRIEVE-1…5 + RETRIEVE-QUAL.
+
+**Next researcher id:** **94** (productive failure vs guided success sequencing). Researcher count since v1.12 synthesizer: **2**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Researcher tick: Part XCII Explanation length vs germane load (SAFE-EXPLAIN)
 
 **Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch92 never written → prefer Researcher per rotation; researcher count since synthesizer v1.12 = 0 → Researcher)  
