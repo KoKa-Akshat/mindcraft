@@ -13,6 +13,8 @@
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
 import { getStroke } from 'perfect-freehand'
 import type { InkBbox, ScratchStrokeData, ScratchStrokePoint } from '../types'
+import { appendLiveStroke } from '../lib/liveSession'
+import type { LiveSessionAuthorRole } from '../lib/liveSession'
 import s from './ScratchPad.module.css'
 
 type Point = ScratchStrokePoint
@@ -291,18 +293,64 @@ function roundStrokes(strokes: Point[][]): Point[][] {
   )
 }
 
+/**
+ * Combines the paintable strokes for one redraw pass: committed local
+ * strokes, the in-progress stroke (if any), then remote strokes last (drawn
+ * on top, order doesn't otherwise matter — `drawStrokes` just fills each
+ * independently). Split out as a pure function so the merge itself is
+ * unit-testable without a canvas/DOM (this repo has no jsdom test
+ * environment).
+ *
+ * Double-draw note: this function trusts its inputs — it does NOT dedupe
+ * `remoteStrokes` against `committed`. It's the responsibility of whoever
+ * wires up `subscribeLiveStrokes` (a later build-order step) to exclude the
+ * local user's own authored strokes from what it passes in as
+ * `remoteStrokes`, since those already exist locally via `committed`.
+ */
+export function combineStrokesForPaint(
+  committed: Point[][],
+  inProgress: Point[],
+  remoteStrokes: Point[][] = [],
+): Point[][] {
+  const all = [...committed]
+  if (inProgress.length) all.push(inProgress)
+  return [...all, ...remoteStrokes]
+}
+
+/**
+ * Forwards a just-completed local stroke into a live co-working session
+ * (plan: snuggly-wandering-candle.md, build-order step 2). Purely additive —
+ * a no-op unless both `liveSessionId` and `authorId` are set, so every
+ * existing ScratchPad call site (HomeworkSession, GradeOnboard, SessionWork,
+ * ConceptChapterPage, Practice, WeeklyPracticePaperPage) — none of which pass
+ * these props — is completely unaffected. Split out from `end()` as its own
+ * function (default param binds the real `appendLiveStroke`) so the wiring
+ * decision is unit-testable with a mock in place of the real Firestore call.
+ */
+export function maybeAppendLiveStroke(
+  points: Point[],
+  liveSessionId: string | undefined,
+  authorId: string | undefined,
+  authorRole: LiveSessionAuthorRole | undefined,
+  appendFn: typeof appendLiveStroke = appendLiveStroke,
+): void {
+  if (!liveSessionId || !authorId || !points.length) return
+  void appendFn(liveSessionId, authorId, authorRole ?? 'student', points)
+}
+
 function drawStrokes(
   ctx: CanvasRenderingContext2D,
   strokes: Point[][],
   width: number,
   height: number,
   transparentBg = false,
+  chalkInk = false,
 ) {
   if (!transparentBg) {
-    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = chalkInk ? '#14261c' : '#ffffff'
     ctx.fillRect(0, 0, width, height)
   }
-  ctx.fillStyle = '#1a2234'
+  ctx.fillStyle = chalkInk ? '#f4efe2' : '#1a2234'
   for (const pts of strokes) {
     const outline = getStroke(pts, { size: 2.6, thinning: 0.55, smoothing: 0.72, streamline: 0.55 })
     if (outline.length) ctx.fill(new Path2D(pathFromStroke(outline)))
@@ -340,6 +388,8 @@ interface Props {
   lineOverlays?: LineOverlay[]
   /** Transparent canvas over ruled paper — chapter pages. */
   paperMode?: boolean
+  /** White chalk strokes on a dark board (Contents / chapter / weekly desk). */
+  chalkInk?: boolean
   /**
    * Grow to fill 100% of a flex-column parent's available height instead of
    * capping at `height` — `height` becomes a floor, not a fixed box. Needs a
@@ -353,6 +403,38 @@ interface Props {
   evalLines?: EvalLine[]
   /** Question id used for keying localStorage scratch logs. */
   questionId?: string
+  /**
+   * Live co-working session id (plan: snuggly-wandering-candle.md). When set
+   * together with `authorId`, each completed local stroke is additionally
+   * forwarded to `appendLiveStroke` so a linked tutor/parent viewing the same
+   * session sees it appear. Omit for a normal solo scratchpad — every
+   * existing call site does, and behavior is unchanged when unset.
+   */
+  liveSessionId?: string
+  /** Firebase uid of the person drawing — required (with `liveSessionId`) to forward strokes. */
+  authorId?: string
+  /** Role of `authorId` in the live session. Defaults to 'student' when omitted but `liveSessionId`/`authorId` are set. */
+  authorRole?: LiveSessionAuthorRole
+  /**
+   * Other participants' strokes in the same live session, painted through the
+   * exact same `drawStrokes()` path as local ink (no second canvas). The
+   * caller (a later build-order step, wiring `subscribeLiveStrokes`) is
+   * responsible for excluding this user's own authored strokes from this
+   * list — see `combineStrokesForPaint`'s doc comment.
+   */
+  remoteStrokes?: ScratchStrokePoint[][]
+  /**
+   * Renders behind the drawing canvas as a real page to write on top of —
+   * "mark up a photocopy" mode (worksheet upload write-on-it flow, live
+   * worksheet calls). A data-URL or remote URL. Purely additive: when unset
+   * every existing call site (HomeworkSession, GradeOnboard, SessionWork,
+   * ConceptChapterPage, Practice, WeeklyPracticePaperPage, LiveSessionPage's
+   * question/weekly_paper contexts) renders exactly as before — the ink
+   * canvas keeps its normal opaque white/chalk fill. When set, the ink
+   * canvas draws transparently (same mechanism as `paperMode`) so the image
+   * shows through underneath.
+   */
+  backgroundImage?: string
 }
 
 export default function ScratchPad({
@@ -360,9 +442,15 @@ export default function ScratchPad({
   height = 320,
   lineOverlays,
   paperMode = false,
+  chalkInk = false,
   fillHeight = false,
   evalLines,
   questionId,
+  liveSessionId,
+  authorId,
+  authorRole,
+  remoteStrokes,
+  backgroundImage,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const strokesRef = useRef<Point[][]>([])
@@ -390,10 +478,18 @@ export default function ScratchPad({
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.scale(dpr, dpr)
 
-    const all = [...strokesRef.current]
-    if (pointsRef.current.length) all.push(pointsRef.current)
-    drawStrokes(ctx, all, w, h, paperMode)
-  }, [paperMode])
+    const all = combineStrokesForPaint(strokesRef.current, pointsRef.current, remoteStrokes ?? [])
+    // backgroundImage needs the same transparent-ink treatment as paperMode
+    // (an opaque white/chalk fill would hide the page image underneath).
+    drawStrokes(ctx, all, w, h, paperMode || Boolean(backgroundImage), chalkInk)
+  }, [paperMode, chalkInk, remoteStrokes, backgroundImage])
+
+  // Remote ink (other participant's strokes in a live session) arrives via
+  // props, not a user gesture — nothing else would trigger a repaint when a
+  // new remote stroke lands, so redraw explicitly whenever the list changes.
+  useEffect(() => {
+    redraw()
+  }, [remoteStrokes, redraw])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -470,10 +566,16 @@ export default function ScratchPad({
     if (!drawingRef.current) return
     drawingRef.current = false
     if (pointsRef.current.length) {
-      strokesRef.current.push([...pointsRef.current])
+      // Capture the finished stroke's points into their own array BEFORE
+      // pointsRef.current is cleared below — both the local commit and the
+      // live-session forward read from this same snapshot, so neither can
+      // observe a half-cleared buffer.
+      const finishedStroke = [...pointsRef.current]
+      strokesRef.current.push(finishedStroke)
       pointsRef.current = []
       redraw()
       deliverChange()
+      maybeAppendLiveStroke(finishedStroke, liveSessionId, authorId, authorRole)
     }
   }
 
@@ -534,6 +636,12 @@ export default function ScratchPad({
     <div className={`${s.wrap} ${paperMode ? s.wrapPaper : ''} ${fillHeight ? s.wrapFill : ''}`}>
       <div className={`${s.canvasWrap} ${paperMode ? s.canvasWrapPaper : ''} ${fillHeight ? s.canvasWrapFill : ''}`}>
 
+        {/* The page being written on — sits behind the ink canvas, which
+            draws transparently over it (see redraw() above). */}
+        {backgroundImage && (
+          <img src={backgroundImage} className={s.bgImage} alt="" aria-hidden />
+        )}
+
         {/* Eraser + Logs toolbar (top-right corner) */}
         <div className={s.toolbar} onClick={e => e.stopPropagation()}>
           {confirmClear ? (
@@ -587,7 +695,7 @@ export default function ScratchPad({
 
         <canvas
           ref={canvasRef}
-          className={`${s.canvas} ${paperMode ? s.canvasPaper : ''} ${fading ? s.canvasFading : ''}`}
+          className={`${s.canvas} ${paperMode ? s.canvasPaper : ''} ${backgroundImage ? s.canvasBgImage : ''} ${fading ? s.canvasFading : ''}`}
           style={
             paperMode
               ? { flex: 1, minHeight: height ?? 0, height: height ? undefined : '100%' }

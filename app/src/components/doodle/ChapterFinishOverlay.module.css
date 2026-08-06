@@ -1,0 +1,121 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 35%, rgba(185, 232, 111, 0.28), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(245, 211, 72, 0.18), transparent 55%),
+    rgba(8, 14, 20, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: finishIn 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  pointer-events: auto;
+}
+
+.overlayOut {
+  animation: finishOut 700ms ease forwards;
+}
+
+@keyframes finishIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes finishOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.card {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+  max-width: min(520px, 92vw);
+  padding: 36px 32px 32px;
+  border-radius: 24px;
+  border: 1.5px solid rgba(185, 232, 111, 0.4);
+  background:
+    linear-gradient(165deg, rgba(36, 58, 46, 0.92), rgba(14, 28, 22, 0.96));
+  box-shadow:
+    0 0 0 1px rgba(185, 232, 111, 0.12),
+    0 24px 60px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(185, 232, 111, 0.22);
+  animation: cardPop 560ms cubic-bezier(0.34, 1.35, 0.64, 1) both;
+}
+
+@keyframes cardPop {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(185, 232, 111, 0.85);
+}
+
+.cheer {
+  margin: 0;
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: clamp(40px, 8vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #fffdf7;
+  text-shadow: 0 0 28px rgba(185, 232, 111, 0.35);
+}
+
+.concept {
+  margin: 0;
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-style: italic;
+  color: rgba(244, 239, 226, 0.72);
+}
+
+.sub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b9e86f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlayOut,
+  .card {
+    animation: none;
+  }
+  .overlayOut {
+    opacity: 0;
+  }
+}

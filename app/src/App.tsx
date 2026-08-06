@@ -40,7 +40,9 @@ import ConstellationGpsLab from './pages/ConstellationGpsLab'
 import ParentDashboard    from './pages/ParentDashboard'
 import SessionWork        from './pages/SessionWork'
 import HomeworkSession    from './pages/HomeworkSession'
+import WorksheetSession   from './pages/WorksheetSession'
 import WeeklyPracticePaperPage from './pages/WeeklyPracticePaperPage'
+import LiveSessionPage    from './pages/LiveSessionPage'
 import JoinClassroom      from './pages/JoinClassroom'
 import QAToolbar       from './components/QAToolbar'
 import { MARKETING_BASE } from './lib/siteUrls'
@@ -276,6 +278,7 @@ export default function App() {
         <Route path="/sessions"            element={<AuthGuard><StudentSessions /></AuthGuard>} />
         <Route path="/session-work/:sessionId" element={<AuthGuard><SessionWork /></AuthGuard>} />
         <Route path="/homework/:homeworkId"    element={<AuthGuard><HomeworkSession /></AuthGuard>} />
+        <Route path="/worksheet"               element={<AuthGuard><WorksheetSession /></AuthGuard>} />
         <Route path="/join-classroom"         element={<AuthGuard><JoinClassroom /></AuthGuard>} />
         <Route path="/diagnostic"          element={<AuthGuard><Diagnostic /></AuthGuard>} />
         {/* Marketing Try Demo: ACT diagnostic → ephemeral dashboard (no login, resets). */}
@@ -296,6 +299,7 @@ export default function App() {
         <Route path="/organize-notes"          element={<AuthGuard><OrganizeNotes /></AuthGuard>} />
         <Route path="/practice"                element={<AuthGuard><Practice /></AuthGuard>} />
         <Route path="/weekly-paper"            element={<AuthGuard><WeeklyPracticePaperPage /></AuthGuard>} />
+        <Route path="/live-session/:sessionId" element={<AuthGuard><LiveSessionPage /></AuthGuard>} />
         <Route path="/concept/:conceptId"      element={<AuthGuard><ConceptChapterPage /></AuthGuard>} />
         <Route path="/prep"                    element={<Prep />} />
 

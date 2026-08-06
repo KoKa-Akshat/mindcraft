@@ -1,15 +1,12 @@
 /**
- * Weekly Review topic picker — three modes on a lit knowledge map:
- *   all         → every playable ACT dot lit
- *   recommended → weakness + stretch + review algo picks lit
- *   manual      → click dots to toggle
- *
- * Builds on lib/weeklyPracticePaper.ts; Confirm caches the paper and starts
- * practice from the first slot (same launch path Dashboard used before).
+ * Weekly Review topic picker — modes on a mandala of concept icons.
+ * One circle per topic (the icon badge itself). Let's Go starts the
+ * guided play-through from the lit set.
  */
 import { useEffect, useMemo, useState } from 'react'
-import { ACT_TOC_SECTIONS, actConceptLabel } from '../lib/actToc'
+import { actConceptLabel } from '../lib/actToc'
 import { conceptIconUrl } from '../lib/conceptIcon'
+import { layoutMandalaNodes } from '../lib/mandalaLayout'
 import type { NextConcept } from '../lib/recommendNextConcept'
 import {
   buildWeeklyPracticePaper,
@@ -27,40 +24,10 @@ type Props = {
   learn: NextConcept | null
   reviewConceptIds?: string[]
   onClose: () => void
-  onStart: (paper: WeeklyPracticePaper) => void
-}
-
-type Placed = {
-  id: string
-  section: string
-  x: number
-  y: number
-}
-
-/** Same TOC-column layout ActEmojiMap uses so the picker map matches Map tab. */
-function layoutNodes(ids: Set<string>): Placed[] {
-  const out: Placed[] = []
-  const sections = ACT_TOC_SECTIONS.filter(sec => sec.conceptIds.some(id => ids.has(id)))
-  const nSec = sections.length
-  sections.forEach((sec, si) => {
-    const conceptIds = sec.conceptIds.filter(id => ids.has(id))
-    const colX = nSec <= 1 ? 50 : 10 + (si / Math.max(1, nSec - 1)) * 80
-    const count = conceptIds.length
-    conceptIds.forEach((id, ti) => {
-      const row = Math.floor(ti / 2)
-      const side = ti % 2 === 0 ? -1 : 1
-      const rowSpan = Math.max(1, Math.ceil(count / 2) - 1)
-      const y = 14 + (rowSpan === 0 ? 0 : (row / rowSpan) * 72)
-      const x = colX + side * (6 + (ti % 3) * 2.2)
-      out.push({
-        id,
-        section: sec.title,
-        x: Math.min(94, Math.max(6, x)),
-        y: Math.min(88, Math.max(10, y)),
-      })
-    })
-  })
-  return out
+  /** @deprecated Print path retired from UI; kept optional for callers. */
+  onStart?: (paper: WeeklyPracticePaper) => void
+  /** Guided play-through inside Practice.tsx. */
+  onPlayThrough: (paper: WeeklyPracticePaper) => void
 }
 
 const MODE_COPY: Record<TopicPickMode, string> = {
@@ -69,16 +36,40 @@ const MODE_COPY: Record<TopicPickMode, string> = {
   manual: 'Tap dots to choose. Lit = in this week’s paper.',
 }
 
+/** Soft orbit guides only — not a second circle per concept. */
+function MandalaOrbits({ ringCount }: { ringCount: number }) {
+  const radii = [18, 32, 44].slice(0, Math.max(0, ringCount - 1))
+  return (
+    <g aria-hidden="true">
+      {radii.map(r => (
+        <ellipse
+          key={r}
+          cx={50}
+          cy={50}
+          rx={r}
+          ry={r * 0.92}
+          className={s.mandalaOrbit}
+        />
+      ))}
+      <circle cx={50} cy={50} r={1.1} fill="rgba(212, 168, 40, 0.35)" />
+    </g>
+  )
+}
+
 export default function WeeklyReviewPicker({
   weakness,
   learn,
   reviewConceptIds = [],
   onClose,
-  onStart,
+  onPlayThrough,
 }: Props) {
   const playable = useMemo(() => playableActConceptIds(), [])
   const playableSet = useMemo(() => new Set(playable), [playable])
-  const nodes = useMemo(() => layoutNodes(playableSet), [playableSet])
+  const nodes = useMemo(() => layoutMandalaNodes(playable), [playable])
+  const maxRing = useMemo(
+    () => nodes.reduce((m, n) => Math.max(m, n.ring), 0),
+    [nodes],
+  )
 
   const recommended = useMemo(
     () => recommendedConceptIds({ weakness, learn, reviewConceptIds }).filter(id => playableSet.has(id)),
@@ -123,8 +114,8 @@ export default function WeeklyReviewPicker({
     ))
   }
 
-  function handleStart() {
-    if (litIds.length === 0) return
+  function buildPaper(): WeeklyPracticePaper | null {
+    if (litIds.length === 0) return null
     const paper = buildWeeklyPracticePaper({
       weakness,
       learn,
@@ -134,9 +125,14 @@ export default function WeeklyReviewPicker({
       questionsPerSlot: mode === 'all' ? 1 : 3,
       maxQuestions: mode === 'all' ? 12 : undefined,
     })
-    if (!paper.questionIds.length) return
+    if (!paper.questionIds.length) return null
     cacheWeeklyPaper(paper)
-    onStart(paper)
+    return paper
+  }
+
+  function handleLetsGo() {
+    const paper = buildPaper()
+    if (paper) onPlayThrough(paper)
   }
 
   return (
@@ -174,18 +170,7 @@ export default function WeeklyReviewPicker({
 
         <div className={s.mapWrap}>
           <svg className={s.mapSvg} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            {nodes.map(n => {
-              const lit = litSet.has(n.id)
-              return (
-                <circle
-                  key={`ring-${n.id}`}
-                  cx={n.x}
-                  cy={n.y}
-                  r={lit ? 4.2 : 3.4}
-                  className={lit ? s.dotRingLit : s.dotRing}
-                />
-              )
-            })}
+            <MandalaOrbits ringCount={maxRing + 1} />
           </svg>
           {nodes.map(n => {
             const lit = litSet.has(n.id)
@@ -214,19 +199,14 @@ export default function WeeklyReviewPicker({
               ? 'Pick at least one topic'
               : `${litIds.length} topic${litIds.length === 1 ? '' : 's'} lit`}
           </p>
-          <div className={s.actions}>
-            <button type="button" className={s.secondary} onClick={onClose}>
-              Cancel
-            </button>
-            <button
-              type="button"
-              className={s.primary}
-              disabled={litIds.length === 0}
-              onClick={handleStart}
-            >
-              Start paper
-            </button>
-          </div>
+          <button
+            type="button"
+            className={s.letsGo}
+            disabled={litIds.length === 0}
+            onClick={handleLetsGo}
+          >
+            Let’s Go!
+          </button>
         </footer>
       </div>
     </div>

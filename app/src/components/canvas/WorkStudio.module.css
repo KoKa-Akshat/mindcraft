@@ -105,6 +105,69 @@
 .go:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(31, 107, 69, 0.22); }
 .go:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
 
+/* ── Extract-vs-write choice (after a page is rasterized) ───────── */
+.choiceWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choicePrompt {
+  margin: 0;
+  font-family: var(--tok-font-serif);
+  font-size: 14px;
+  color: rgba(58, 47, 85, 0.75);
+}
+
+.choiceRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.choiceBtn {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border: 1.5px solid rgba(58, 47, 85, 0.14);
+  border-radius: var(--desk-radius-sm, 12px);
+  background: linear-gradient(145deg, #f5f3ff, #ebe6ff);
+  font-family: var(--tok-font-hand);
+  font-size: 19px;
+  font-weight: 700;
+  color: #2a2430;
+  padding: 12px 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(58, 47, 85, 0.1);
+  transition: transform 160ms var(--desk-ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)), box-shadow 160ms ease;
+}
+.choiceBtn:hover { transform: translateY(-2px); box-shadow: 0 7px 16px rgba(58, 47, 85, 0.14); }
+
+.choiceHint {
+  font-family: var(--tok-font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(58, 47, 85, 0.45);
+}
+
+.choiceCancel {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  font-family: var(--tok-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: rgba(58, 47, 85, 0.4);
+  cursor: pointer;
+  padding: 4px 0;
+}
+.choiceCancel:hover { color: rgba(58, 47, 85, 0.7); }
+
 .err {
   margin: 0;
   font-family: var(--tok-font-hand);

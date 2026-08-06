@@ -51,12 +51,12 @@ export function saveDemoDiagnostic(payload: DemoDiagnostic) {
 /** Confidence → dashboard TOC / map status vocabulary. */
 export function demoConceptProgress(
   confidence: Record<string, string> | undefined,
-): Record<string, { mastery: number; status: string }> {
-  const next: Record<string, { mastery: number; status: string }> = {}
+): Record<string, { mastery: number; status: string; eventCount: number }> {
+  const next: Record<string, { mastery: number; status: string; eventCount: number }> = {}
   for (const [id, v] of Object.entries(confidence ?? {})) {
-    if (v === 'easy') next[id] = { mastery: 0.72, status: 'stable' }
-    else if (v === 'kinda') next[id] = { mastery: 0.38, status: 'in_progress' }
-    else if (v === 'hard') next[id] = { mastery: 0.12, status: 'open_gap' }
+    if (v === 'easy') next[id] = { mastery: 0.72, status: 'stable', eventCount: 4 }
+    else if (v === 'kinda') next[id] = { mastery: 0.38, status: 'in_progress', eventCount: 2 }
+    else if (v === 'hard') next[id] = { mastery: 0.12, status: 'open_gap', eventCount: 1 }
   }
   return next
 }

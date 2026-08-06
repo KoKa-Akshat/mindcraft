@@ -2,7 +2,7 @@
  * api/agent-check-in.ts
  *
  * Optional pre-session check-in. Student writes 2–3 sentences about how they
- * feel; Claude Haiku extracts a structured affective state and stores it at
+ * feel; Gemini extracts a structured affective state and stores it at
  * Firestore affective_state/{student_id}/latest.
  *
  * The mindcraft-ml /recommend endpoint reads this on every call and adjusts:
@@ -15,11 +15,11 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
+import { GoogleGenAI } from '@google/genai'
 import { db } from '../lib/firebase'
 import { verifyToken } from '../lib/verifyToken'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? '' })
+const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY ?? '' })
 
 const ALLOWED_ORIGINS = [
   'https://mindcraft-93858.web.app',
@@ -28,7 +28,7 @@ const ALLOWED_ORIGINS = [
   'http://localhost:4173',
 ]
 
-// Canonical concept list so Haiku maps student words to exact ontology IDs.
+// Canonical concept list so Gemini maps student words to exact ontology IDs.
 const CONCEPT_IDS: Record<string, string> = {
   'fractions_decimals':        'Fractions and Decimals',
   'ratios_proportions':        'Ratios and Proportions',
@@ -171,13 +171,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const msg = await anthropic.messages.create({
-      model:      'claude-haiku-4-5-20251001',
-      max_tokens: 512,
-      messages:   [{ role: 'user', content: buildPrompt(text) }],
+    const msg = await genai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: [{ role: 'user', parts: [{ text: buildPrompt(text) }] }],
+      config: { maxOutputTokens: 512 },
     })
 
-    const raw = msg.content[0]?.type === 'text' ? msg.content[0].text : '{}'
+    const raw = msg.text ?? '{}'
 
     let affectiveState: AffectiveState
     try {

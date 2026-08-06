@@ -5,7 +5,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../../App'
-import { ACT_TOC_SECTIONS, actConceptLabel } from '../../lib/actToc'
+import {
+  actMapSpineEdges,
+  layoutActMapNodes,
+  type ActMapPlaced,
+} from '../../lib/actMapLayout'
+import { actConceptLabel } from '../../lib/actToc'
 import { getConceptContent } from '../../lib/conceptContent'
 import { conceptIconUrl } from '../../lib/conceptIcon'
 import { fetchKnowledgeGraph } from '../../lib/graphCache'
@@ -17,12 +22,7 @@ type Props = {
   onOpenLesson: (conceptId: string) => void
 }
 
-type Placed = {
-  id: string
-  section: string
-  x: number
-  y: number
-}
+type Placed = ActMapPlaced
 
 type NodeMeta = {
   mastery: number
@@ -47,10 +47,10 @@ type RouteStep = {
 type StatusKind = 'stable' | 'progress' | 'needs' | 'unknown'
 
 const KIND_COLOR: Record<StatusKind, string> = {
-  stable: '#00875a',
-  progress: '#4361ee',
-  needs: '#d63e3e',
-  unknown: '#9aabb6',
+  stable: '#1f6b45',
+  progress: '#2f6fbf',
+  needs: '#c94a4a',
+  unknown: '#8a9aa6',
 }
 const KIND_LABEL: Record<StatusKind, string> = {
   stable: 'Stable',
@@ -74,59 +74,16 @@ function whatToDo(kind: StatusKind, isSpark: boolean): string {
   return 'Untouched so far. Open the lesson for the story, then try a short drill.'
 }
 
-/** Spread nodes by TOC section so edges read clearly, no pile-up in the middle. */
-function layoutNodes(): Placed[] {
-  const out: Placed[] = []
-  const sections = ACT_TOC_SECTIONS.filter(sec => sec.conceptIds.length > 0)
-  const nSec = sections.length
-
-  sections.forEach((sec, si) => {
-    const ids = sec.conceptIds
-    const colX = nSec <= 1 ? 50 : 10 + (si / (nSec - 1)) * 80
-    const count = ids.length
-    ids.forEach((id, ti) => {
-      const row = Math.floor(ti / 2)
-      const side = ti % 2 === 0 ? -1 : 1
-      const rowSpan = Math.max(1, Math.ceil(count / 2) - 1)
-      const y = 14 + (rowSpan === 0 ? 0 : (row / rowSpan) * 72)
-      const x = colX + side * (6 + (ti % 3) * 2.2)
-      out.push({
-        id,
-        section: sec.title,
-        x: Math.min(94, Math.max(6, x)),
-        y: Math.min(88, Math.max(10, y)),
-      })
-    })
-  })
+/** Letterform spine: adjacent slots along the capital-F path. */
+function spineEdges(nodes: Placed[]): Array<[Placed, Placed, string]> {
+  const byId = new Map(nodes.map(n => [n.id, n]))
+  const out: Array<[Placed, Placed, string]> = []
+  for (const [fromId, toId] of actMapSpineEdges(nodes)) {
+    const a = byId.get(fromId)
+    const b = byId.get(toId)
+    if (a && b) out.push([a, b, 'spine'])
+  }
   return out
-}
-
-/** Fallback ONLY: a synthetic "same section, in list order" chain plus one
- * hub-to-hub link per section boundary. This is NOT real prerequisite data,
- * it is just enough of a line to look connected while the real graph is
- * still loading (or if the ML fetch fails). Root cause of Akshat's "the Map
- * is missing so many connections" complaint (2026-07-23): this synthetic
- * scheme used to be the ONLY edge source the Map ever drew, full stop, never
- * touching the real ontology graph at all. `realEdgesFor` below is the fix,
- * see the `links` useMemo. */
-function syntheticFallbackEdges(nodes: Placed[]): Array<[Placed, Placed, string]> {
-  const bySection = new Map<string, Placed[]>()
-  for (const n of nodes) {
-    const list = bySection.get(n.section) ?? []
-    list.push(n)
-    bySection.set(n.section, list)
-  }
-  const edges: Array<[Placed, Placed, string]> = []
-  for (const list of bySection.values()) {
-    for (let i = 0; i < list.length - 1; i++) {
-      edges.push([list[i], list[i + 1], 'fallback'])
-    }
-  }
-  const hubs = [...bySection.values()].map(list => list[0]).filter(Boolean)
-  for (let i = 0; i < hubs.length - 1; i++) {
-    edges.push([hubs[i], hubs[i + 1], 'fallback'])
-  }
-  return edges
 }
 
 /** Real prerequisite/bridge edges from the ontology graph, same source and
@@ -172,7 +129,7 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
   const [routeSteps, setRouteSteps] = useState<RouteStep[]>([])
   const [routeLoading, setRouteLoading] = useState(false)
 
-  const all = useMemo(() => layoutNodes(), [])
+  const all = useMemo(() => layoutActMapNodes(), [])
 
   useEffect(() => {
     if (sparkId && !focus) setFocus(sparkId)
@@ -270,13 +227,19 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
     })
   }, [all, q])
 
-  // Real ontology edges once loaded; synthetic chain only as a loading/error
-  // fallback so the map isn't a bare field of disconnected icons while the
-  // graph fetch is in flight. See `realEdgesFor`/`syntheticFallbackEdges`.
-  const links = useMemo(() => {
-    const real = kgEdges && kgEdges.length > 0 ? realEdgesFor(nodes, kgEdges) : []
-    return real.length > 0 ? real : syntheticFallbackEdges(nodes)
-  }, [nodes, kgEdges])
+  // F-spine is always drawn so the letterform reads; ontology edges layer
+  // under it as soft cross-links once the graph arrives.
+  const spineLinks = useMemo(() => spineEdges(nodes), [nodes])
+  const ontologyLinks = useMemo(() => {
+    if (!kgEdges || kgEdges.length === 0) return [] as Array<[Placed, Placed, string]>
+    const spineKeys = new Set(
+      spineLinks.map(([a, b]) => [a.id, b.id].sort().join('|')),
+    )
+    return realEdgesFor(nodes, kgEdges).filter(([a, b]) => {
+      const key = [a.id, b.id].sort().join('|')
+      return !spineKeys.has(key)
+    })
+  }, [nodes, kgEdges, spineLinks])
   const byId = useMemo(() => new Map(nodes.map(n => [n.id, n])), [nodes])
 
   const routeIds = useMemo(() => new Set(routeSteps.map(step => step.id)), [routeSteps])
@@ -284,12 +247,12 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
   const neighborIds = useMemo(() => {
     if (!focus) return new Set<string>()
     const set = new Set<string>([focus])
-    for (const [a, b] of links) {
+    for (const [a, b] of [...spineLinks, ...ontologyLinks]) {
       if (a.id === focus) set.add(b.id)
       if (b.id === focus) set.add(a.id)
     }
     return set
-  }, [focus, links])
+  }, [focus, spineLinks, ontologyLinks])
 
   const litIds = useMemo(() => {
     if (!focus) return new Set<string>()
@@ -328,19 +291,34 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
 
       <div className={s.sky} aria-label="ACT topic map">
         <svg className={s.links} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
-          {links.map(([a, b, relation]) => {
+          {ontologyLinks.map(([a, b, relation]) => {
             const lit = focus
               && ((routeIds.size > 1 && routeIds.has(a.id) && routeIds.has(b.id))
                 || (routeIds.size <= 1 && (a.id === focus || b.id === focus)))
             return (
               <line
-                key={`${a.id}-${b.id}`}
+                key={`onto-${a.id}-${b.id}`}
                 x1={a.x}
                 y1={a.y}
                 x2={b.x}
                 y2={b.y}
-                className={lit ? s.linkLit : (focus ? s.linkDim : s.link)}
+                className={lit ? s.linkOntoLit : (focus ? s.linkOntoDim : s.linkOnto)}
                 strokeDasharray={relationDash(relation)}
+              />
+            )
+          })}
+          {spineLinks.map(([a, b]) => {
+            const lit = focus
+              && ((routeIds.size > 1 && routeIds.has(a.id) && routeIds.has(b.id))
+                || (routeIds.size <= 1 && (a.id === focus || b.id === focus)))
+            return (
+              <line
+                key={`spine-${a.id}-${b.id}`}
+                x1={a.x}
+                y1={a.y}
+                x2={b.x}
+                y2={b.y}
+                className={lit ? s.linkSpineLit : (focus ? s.linkSpineDim : s.linkSpine)}
               />
             )
           })}
@@ -360,6 +338,8 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
           const isFocus = n.id === focus
           const onRoute = litIds.has(n.id)
           const dimmed = !!focus && !onRoute
+          const kind = statusKind(metaById[n.id]?.status ?? 'untouched')
+          const ring = KIND_COLOR[kind]
           return (
             <button
               key={n.id}
@@ -370,8 +350,13 @@ export default function ActEmojiMap({ sparkId, onOpenLesson }: Props) {
                 isFocus ? s.nodeFocus : '',
                 onRoute && !isFocus ? s.nodeRoute : '',
                 dimmed ? s.nodeDim : '',
+                kind !== 'unknown' ? s.nodeLit : '',
               ].filter(Boolean).join(' ')}
-              style={{ left: `${n.x}%`, top: `${n.y}%` }}
+              style={{
+                left: `${n.x}%`,
+                top: `${n.y}%`,
+                ['--node-ring' as string]: ring,
+              }}
               onClick={() => setFocus(n.id)}
               onDoubleClick={() => onOpenLesson(n.id)}
               title={actConceptLabel(n.id)}

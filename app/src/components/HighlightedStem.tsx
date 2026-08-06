@@ -14,7 +14,7 @@ function escapeRegExp(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function highlightPlainText(text: string, spans: HighlightSpan[], accent: string, questionId?: string) {
+function highlightPlainText(text: string, spans: HighlightSpan[], questionId?: string) {
   if (!spans.length || !text.trim()) return <MathText text={text} questionId={questionId} />
 
   const focus = spans.find(h => h.kind === 'focus') ?? spans.find(h => h.kind === 'ask')
@@ -34,7 +34,6 @@ function highlightPlainText(text: string, spans: HighlightSpan[], accent: string
             <mark
               key={i}
               className={`${s.focusStroke} ${definition ? s.glossaryTerm : ''}`}
-              style={{ backgroundImage: `linear-gradient(104deg, transparent 2%, ${accent}55 4%, ${accent}44 96%, transparent 98%)` }}
               title={definition}
               tabIndex={definition ? 0 : undefined}
             >
@@ -83,7 +82,7 @@ export default function HighlightedStem({ text, ink, accent, highlights = [], cl
           // accessibility description as a sentence — see lib/altDiagram.ts.
           return <AltDiagramCallout key={i} alt={part.alt} accent={accent} questionId={questionId} />
         }
-        return <span key={i}>{highlightPlainText(part.content, highlights, accent, questionId)}</span>
+        return <span key={i}>{highlightPlainText(part.content, highlights, questionId)}</span>
       })}
     </p>
   )

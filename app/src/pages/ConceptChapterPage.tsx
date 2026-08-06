@@ -1,6 +1,7 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { PenLine } from 'lucide-react'
+import { NotebookPen, PenLine } from 'lucide-react'
+import { ScientificCalcPanel } from '../components/ScientificCalculator'
 import conceptStoriesRaw from '../data/conceptStories.json'
 import { getQuestions, questionFormat, type Question } from '../lib/questionBank'
 import { canonicalConceptId } from '../lib/conceptAliases'
@@ -21,6 +22,8 @@ import ScratchPad, { exportScratchImage, type LineOverlay } from '../components/
 import GraphBox from '../components/GraphBox'
 import { GRAPHABLE_CONCEPT_IDS } from '../lib/graphableConcepts'
 import { extractPlottablePoints, extractGraphableExpression } from '../lib/plottablePoints'
+import { resolveConceptNotes } from '../lib/conceptContent'
+import { buildChapterBatchBrief } from '../lib/chapterBatchBrief'
 import type { ScratchStrokeData } from '../types'
 import type { ScratchInkState } from '../components/ScratchTranscriptionPane'
 import PingTutor from '../components/PingTutor'
@@ -28,6 +31,7 @@ import HighlightedStem from '../components/HighlightedStem'
 import { useJournalGuide } from '../hooks/useJournalGuide'
 import { hasConceptAccurateArt, storyArtFor, storyArtTilt } from '../lib/storyArt'
 import DoodleReward, { pickDoodleStamp } from '../components/doodle/DoodleReward'
+import ChapterFinishOverlay from '../components/doodle/ChapterFinishOverlay'
 import SoundToggle from '../components/SoundToggle'
 import { playChime, playTap } from '../lib/uiSound'
 import s from './ConceptChapterPage.module.css'
@@ -144,17 +148,17 @@ const CLUSTER_MAP: Record<string, Cluster> = {
 
 const JOURNAL_PAPER = {
   bg: '#080e14',
-  paper: '#f7f3ee',
-  ink: '#1c1a17',
-  dim: '#6f6a61',
-  lineBg: 'rgba(29, 58, 138, 0.09)',
+  paper: '#14261c',
+  ink: '#f4efe2',
+  dim: 'rgba(244, 239, 226, 0.62)',
+  lineBg: 'rgba(185, 232, 111, 0.12)',
 }
 
 const CLUSTER_THEME = {
-  algebra:   { ...JOURNAL_PAPER, accent: '#1d3a8a', chip: '#1d3a8a' },
-  geometry:  { ...JOURNAL_PAPER, accent: '#1e5f8a', chip: '#1e5f8a' },
-  functions: { ...JOURNAL_PAPER, accent: '#247a4d', chip: '#247a4d' },
-  data:      { ...JOURNAL_PAPER, accent: '#7a2e26', chip: '#7a2e26' },
+  algebra:   { ...JOURNAL_PAPER, accent: '#7ec8e3', chip: '#7ec8e3' },
+  geometry:  { ...JOURNAL_PAPER, accent: '#6eb6ff', chip: '#6eb6ff' },
+  functions: { ...JOURNAL_PAPER, accent: '#b9e86f', chip: '#b9e86f' },
+  data:      { ...JOURNAL_PAPER, accent: '#f5d348', chip: '#f5d348' },
 }
 
 // ── Horizontal canvas panels (story + questions blend on one sheet) ─────────
@@ -320,71 +324,6 @@ function fmtChoice(text: string): string {
     .trim()
 }
 
-// ── Calculator ───────────────────────────────────────────────────────────────
-
-function Calculator() {
-  const [display, setDisplay] = useState('0')
-  const [prev, setPrev] = useState<number | null>(null)
-  const [op, setOp] = useState<string | null>(null)
-  const [fresh, setFresh] = useState(true)
-
-  const press = (val: string) => {
-    if ('0123456789.'.includes(val)) {
-      if (val === '.' && display.includes('.')) return
-      setDisplay(d => fresh ? val === '.' ? '0.' : val : d === '0' ? val : d + val)
-      setFresh(false)
-    } else if (val === '←') {
-      setDisplay(d => d.length > 1 ? d.slice(0, -1) : '0')
-    } else if (val === 'C') {
-      setDisplay('0'); setPrev(null); setOp(null); setFresh(true)
-    } else if (val === '±') {
-      setDisplay(d => d === '0' ? '0' : d.startsWith('-') ? d.slice(1) : '-' + d)
-    } else if (val === '√') {
-      const n = parseFloat(display)
-      setDisplay(n < 0 ? 'Error' : String(parseFloat(Math.sqrt(n).toFixed(8))))
-      setFresh(true)
-    } else if (['+', '−', '×', '÷'].includes(val)) {
-      setPrev(parseFloat(display)); setOp(val); setFresh(true)
-    } else if (val === '=' && prev !== null && op) {
-      const n = parseFloat(display)
-      let r: number
-      if (op === '+') r = prev + n
-      else if (op === '−') r = prev - n
-      else if (op === '×') r = prev * n
-      else r = n === 0 ? NaN : prev / n
-      setDisplay(isFinite(r) ? String(parseFloat(r.toFixed(10))) : 'Error')
-      setPrev(null); setOp(null); setFresh(true)
-    }
-  }
-
-  const BTNS = [
-    ['C', '←', '√', '÷'],
-    ['7', '8', '9', '×'],
-    ['4', '5', '6', '−'],
-    ['1', '2', '3', '+'],
-    ['±', '0', '.', '='],
-  ]
-
-  return (
-    <div className={s.calcPanel}>
-      <div className={s.calcDisplay}>{display}</div>
-      {BTNS.map((row, ri) => (
-        <div key={ri} className={s.calcRow}>
-          {row.map(btn => (
-            <button
-              key={btn}
-              className={`${s.calcBtn} ${btn === '=' ? s.calcEq : ''} ${['C','←','√','÷','×','−','+'].includes(btn) ? s.calcOp : ''}`}
-              onClick={() => press(btn)}
-            >
-              {btn}
-            </button>
-          ))}
-        </div>
-      ))}
-    </div>
-  )
-}
-
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function ConceptChapterPage() {
@@ -452,6 +391,13 @@ export default function ConceptChapterPage() {
     playTap()
   }
 
+  // Formula / key-rules sheet before story/questions — always shown once per
+  // chapter open (resolveConceptNotes falls back when curated content is thin).
+  const conceptNotes = useMemo(() => resolveConceptNotes(canonicalId), [canonicalId])
+  // Rebuilt whenever this chapter's question draw changes (new open / new shuffle).
+  const batchBrief = useMemo(() => buildChapterBatchBrief(questions), [questions])
+  const [showFormulaSheet, setShowFormulaSheet] = useState(true)
+
   useEffect(() => {
     if (panels[panelIdx]?.kind === 'quest' && !localStorage.getItem(storySeenKey)) {
       localStorage.setItem(storySeenKey, '1')
@@ -474,6 +420,10 @@ export default function ConceptChapterPage() {
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
   const hydratedWorkRef = useRef<Set<string>>(new Set())
   const [showCalc, setShowCalc] = useState(false)
+  const [calcValue, setCalcValue] = useState('')
+  const calcInputRef = useRef<HTMLInputElement>(null)
+  const [chapterDone, setChapterDone] = useState(false)
+  const finishingRef = useRef(false)
   // Full-page "write anywhere" annotation mode — off by default so choices,
   // hints, and the submit button stay clickable; the pencil toggle turns the
   // entire page into a writing surface without a separate scratch page.
@@ -597,6 +547,10 @@ export default function ConceptChapterPage() {
     return () => window.clearTimeout(timer)
   }, [user?.uid, spec, questions, scratchStrokes, scratchInk, notes, canonicalId, panelIdx, answers])
 
+  const goHome = () => {
+    navigate('/dashboard', { replace: true })
+  }
+
   const goBack = () => {
     if (fromDashboard) navigate('/dashboard')
     else navigate(-1)
@@ -609,13 +563,22 @@ export default function ConceptChapterPage() {
     navigate(`/sessions?concept=${encodeURIComponent(canonicalId)}`)
   }
 
+  /** Advance past the last panel → random cheer, then fade home. */
+  const finishChapter = () => {
+    if (finishingRef.current) return
+    finishingRef.current = true
+    playChime()
+    setChapterDone(true)
+  }
+
   const goToPanel = (i: number, d: 'f' | 'b') => {
+    if (finishingRef.current) return
     if (i < 0) {
       goBack()
       return
     }
     if (i >= panels.length) {
-      navigate('/dashboard', { replace: true })
+      finishChapter()
       return
     }
     setSlideDir(d)
@@ -854,7 +817,7 @@ export default function ConceptChapterPage() {
     const graphExpr = extractGraphableExpression(q.question)
 
     return (
-      <div className={`${s.blendSheet} ${s.blendQuest}`}>
+      <div className={`${s.blendSheet} ${s.blendQuest} ${showCalc ? s.blendQuestWithCalc : ''}`}>
         <div className={s.blendQuestMain}>
           <header className={s.qHead}>
             <span className={s.qKicker}>{qNum} / {qSpreadCount}</span>
@@ -875,6 +838,7 @@ export default function ConceptChapterPage() {
               here anymore. */}
 
           <HighlightedStem
+            className={s.questStem}
             text={displayStem}
             ink={theme.ink}
             accent={theme.accent}
@@ -930,21 +894,20 @@ export default function ConceptChapterPage() {
             </div>
           )}
 
-          {!isDone ? (
+          {!isDone && chosen !== null ? (
             <button
               type="button"
               className={s.submitBtn}
               style={{ background: theme.ink, color: theme.paper }}
-              disabled={chosen === null}
               onClick={() => lockAnswer(qIdx)}
             >
-              {chosen === null ? 'Pick one' : 'Lock in →'}
+              Lock in →
             </button>
-          ) : (
+          ) : isDone ? (
             <p className={s.qDoneNote} style={{ color: theme.dim }}>
               {chosen === q.correctIndex ? 'Nice.' : 'Try the next one.'}
             </p>
-          )}
+          ) : null}
 
           <div
             className={`${s.annotationLayer} ${writeMode ? s.annotationActive : ''}`}
@@ -953,6 +916,7 @@ export default function ConceptChapterPage() {
             <ScratchPad
               key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
               paperMode
+              chalkInk
               questionId={`${conceptId}-q${qIdx}`}
               evalLines={scratchInk[qIdx]?.workLines?.map(l => ({ bbox: l.bbox, text: l.text, latex: l.latex }))}
               lineOverlays={(() => {
@@ -988,6 +952,32 @@ export default function ConceptChapterPage() {
             points={graphPoints ?? undefined}
             initialExpression={graphExpr ?? undefined}
           />
+          {showCalc && (
+            <div className={s.asideCalc} aria-label="Scientific calculator">
+              <div className={s.asideCalcHead}>
+                <span>Scientific calc</span>
+                <button type="button" className={s.asideCalcClose} onClick={() => setShowCalc(false)}>
+                  Close
+                </button>
+              </div>
+              <input
+                ref={calcInputRef}
+                className={s.asideCalcDisplay}
+                type="text"
+                value={calcValue}
+                onChange={e => setCalcValue(e.target.value)}
+                placeholder="Type or tap keys…"
+                aria-label="Calculator display"
+              />
+              <ScientificCalcPanel
+                open
+                value={calcValue}
+                onChange={setCalcValue}
+                onSubmit={() => calcInputRef.current?.blur()}
+                inputRef={calcInputRef}
+              />
+            </div>
+          )}
           {wrongCoach?.qIdx === qIdx && (
             <div className={s.wrongCoach} aria-live="polite">
               <p className={s.wrongCoachEyebrow}>What happened</p>
@@ -1029,6 +1019,89 @@ export default function ConceptChapterPage() {
     )
   }
 
+  if (showFormulaSheet) {
+    return (
+      <div className={s.formulaSheet} style={{ '--theme-accent': theme.accent } as React.CSSProperties}>
+        <header className={s.formulaSheetHead}>
+          <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
+          <div className={s.formulaSheetHero}>
+            <img
+              className={s.formulaSheetArt}
+              src={artSrc}
+              alt=""
+              draggable={false}
+              style={{ transform: `rotate(${storyArtTilt(canonicalId, 2)}deg)` }}
+            />
+            <div className={s.formulaSheetHeroCopy}>
+              <p className={s.formulaSheetEyebrow}>Chapter notes · {questions.length} questions next</p>
+              <h1 className={s.formulaSheetTitle}>{cs.conceptName}</h1>
+              <p className={s.formulaSheetTag}>{conceptNotes.tagline}</p>
+            </div>
+          </div>
+        </header>
+        {conceptNotes.formula && (
+          <p className={s.formulaSheetBanner}>{conceptNotes.formula}</p>
+        )}
+        <div className={s.formulaSheetGrid}>
+          <section>
+            <h2>Key rules</h2>
+            <ul>
+              {conceptNotes.keyRules.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+          </section>
+          <section>
+            <h2>Pro tips</h2>
+            <ul>
+              {conceptNotes.tips.map((t, i) => <li key={i}>{t}</li>)}
+            </ul>
+          </section>
+          <section>
+            <h2>Watch out</h2>
+            <ul>
+              {conceptNotes.watchOut.map((w, i) => <li key={i}>{w}</li>)}
+            </ul>
+          </section>
+          <section className={s.formulaSheetHighlight} aria-live="polite">
+            <div className={s.batchHead}>
+              <h2>For this batch</h2>
+              <span className={s.batchLiveDot} aria-hidden="true" />
+              <span className={s.batchBadge}>This draw</span>
+            </div>
+            <p>{batchBrief.lead}</p>
+            {batchBrief.chips.length > 0 && (
+              <ul className={s.batchChips}>
+                {batchBrief.chips.map(chip => (
+                  <li key={chip}>{chip}</li>
+                ))}
+              </ul>
+            )}
+            <div className={s.batchCards}>
+              {batchBrief.cards.map((card, i) => (
+                <div key={`${card.title}-${i}`} className={s.formulaSheetExample}>
+                  <strong>{card.title}</strong>
+                  <span>{card.body}</span>
+                </div>
+              ))}
+              {batchBrief.cards.length === 0 && conceptNotes.examples.slice(0, 2).map((ex, i) => (
+                <div key={i} className={s.formulaSheetExample}>
+                  <strong>{ex.problem}</strong>
+                  <span>{ex.solution}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+        <button
+          type="button"
+          className={s.formulaSheetCta}
+          onClick={() => { setShowFormulaSheet(false); playTap() }}
+        >
+          Start chapter →
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div
       className={`${s.chapterDesk} ${writeMode ? s.chapterDeskLocked : ''}`}
@@ -1043,6 +1116,11 @@ export default function ConceptChapterPage() {
       onTouchEnd={onTouchEnd}
     >
       <DoodleReward phrase={rewardPhrase} onDone={() => setRewardPhrase(null)} />
+      <ChapterFinishOverlay
+        active={chapterDone}
+        conceptName={cs.conceptName}
+        onDone={goHome}
+      />
 
       <header className={s.canvasChrome}>
         <button type="button" className={s.chromeBack} onClick={goBack}>← back</button>
@@ -1060,7 +1138,8 @@ export default function ConceptChapterPage() {
             className={s.notesChromeBtn}
             onClick={goToChapterNotes}
           >
-            Go to Notes
+            <NotebookPen size={18} strokeWidth={2.2} aria-hidden="true" />
+            <span>Notes</span>
           </button>
           {currentPanel?.kind === 'quest' && (
             <button
@@ -1070,27 +1149,31 @@ export default function ConceptChapterPage() {
               aria-pressed={writeMode}
               aria-label={writeMode ? 'Done writing — tap answers again' : 'Write on this page'}
             >
-              <PenLine size={16} strokeWidth={2.4} />
+              <PenLine size={18} strokeWidth={2.4} aria-hidden="true" />
               <span>{writeMode ? 'Done' : 'Write'}</span>
             </button>
           )}
-          <SoundToggle className={s.soundToggle} />
           <PingTutor context={pingContext} compact />
-          <div className={s.calcWrap}>
-            <button
-              type="button"
-              className={s.miniCalc}
-              onClick={() => setShowCalc(c => !c)}
-              aria-label="Calculator"
-              aria-expanded={showCalc}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <rect x="4" y="2" width="16" height="20" rx="2" />
-                <line x1="8" x2="16" y1="6" y2="6" />
-              </svg>
-            </button>
-            {showCalc && <div className={s.calcDrop}><Calculator /></div>}
-          </div>
+          <button
+            type="button"
+            className={`${s.calcChromeBtn} ${showCalc ? s.calcChromeBtnActive : ''}`}
+            onClick={() => setShowCalc(c => !c)}
+            aria-label="Scientific calculator"
+            aria-expanded={showCalc}
+            title="Scientific calculator"
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+              <rect x="7.5" y="5.5" width="9" height="4" rx="0.8" fill="none" stroke="currentColor" strokeWidth="1.6" />
+              <circle cx="8.5" cy="13.5" r="1.1" fill="currentColor" />
+              <circle cx="12" cy="13.5" r="1.1" fill="currentColor" />
+              <circle cx="15.5" cy="13.5" r="1.1" fill="currentColor" />
+              <circle cx="8.5" cy="17.5" r="1.1" fill="currentColor" />
+              <circle cx="12" cy="17.5" r="1.1" fill="currentColor" />
+              <circle cx="15.5" cy="17.5" r="1.1" fill="currentColor" />
+            </svg>
+          </button>
+          <SoundToggle className={s.soundToggle} />
         </div>
       </header>
 
@@ -1176,9 +1259,10 @@ export default function ConceptChapterPage() {
             type="button"
             className={s.navPrimary}
             style={{ background: theme.ink, color: theme.paper }}
-            onClick={() => navigate('/dashboard', { replace: true })}
+            onClick={finishChapter}
+            disabled={chapterDone}
           >
-            Go to Dashboard →
+            Finish →
           </button>
         ) : (
           <button type="button" className={s.navArrow} onClick={() => goToPanel(panelIdx + 1, 'f')} aria-label="Next">→</button>

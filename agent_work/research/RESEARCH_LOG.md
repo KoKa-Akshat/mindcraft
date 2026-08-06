@@ -4,6 +4,154 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Synthesizer tick v1.12: merge Parts LXXXIV–XCI
+
+**Tick type:** Synthesizer (UTC hour 15; hour%6≠0; ≥8 researcher entries since synthesizer v1.11 → Synthesizer)  
+**Chapter written:** none (merge pass only)  
+**Files revised:** `MINDCRAFT_RESEARCH_CONSTITUTION_v1.md` (edition/header / I.2 / I.4 / III / XIV / XX / XXI / XXII glossary / Appendix F / closing); `NEXT_LAB.md`; this log; PDF regen.
+
+**Doctrine promoted to I.4 company law (provisional tags removed):**
+- SAFE-TALK (LXXXIV) — construction > airtime; prompt density + wait bands
+- SAFE-STORYLOAD (LXXXV) — CLT-budgeted wrap; coherence > immersion
+- SAFE-PROOF (LXXXVI) — dated solo competence artifacts; competence > crowd
+- SAFE-COVER (LXXXVII) — matrix > total; gaps as features; GENQ honesty
+- SAFE-FADE (LXXXVIII) — completion ladder; attempt grain; solo proof
+- SAFE-HELP (LXXXIX) — instrumental > executive; contingent stage
+- SAFE-INSTRUMENT (XC) — ship the four FEI events; XXI.4 co-gates
+- SAFE-HINT (XCI) — soft-first contingent; construction-priced peeks
+
+**Red Team kills promoted:** #38–#45 (from provisional chapter kills → v1.12 company dossier).
+
+**Experiment families confirmed in Part IX:** TALK / STORYLOAD / PROOF / COVER / FADE / HELP / INSTR / HINT.
+
+**Claim killed (synthesis):** Treating LXXXIV–XCI as orphan provisional deep-dives or independent North Stars (Talk Ratio theater, immersive lore-as-pedagogy, star-wall learning proof, item-count coverage theater, always-full-worked Solver, unlimited-hints dumps, DAU/streak/FEI Score™ dashboards, unlimited free hard peeks / Hint Score™) — demoted under FEI + SAFE-* method-not-costume rule.
+
+**Next researcher id:** **92** (explanation length vs germane load). Researcher count since v1.12 synthesizer: **0**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-06 — Researcher tick: Part XCI Hint economy & contingent scaffolding (SAFE-HINT)
+
+**Tick type:** Researcher (UTC hour 12 ≡ Red Team slot, but ch91 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 7 → Researcher)  
+**Chapter written:** `chapters/91_hint_economy_contingent_scaffolding.md` (Part XCI)  
+**Claim examined:** How to price peeks and run contingent soft→hard scaffolding without free bottom-out racing or shame economies.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-HINT** — soft before hard; contingency up/down; peek cost = construction (SE/dwell/stage); fade×hint one machine; two soft/hard vocabularies separate (ITS vs Saye & Brush); no XP/Hint Score™ for peeks; inspectable stage; proof = solo transfer + lower executive race; HINT-* before unlimited-free-hints campaigns.
+
+**Evidence spine:** Wood, Bruner & Ross (1976); van de Pol, Volman & Beishuizen (2010); Wood & Wood (1999); Aleven & Koedinger (2000/2001); Aleven et al. (2016); Roll et al. (2011); Saye & Brush (2002); Shih et al. (2008); Baker gaming line; SAFE-FADE / SAFE-HELP / SAFE-SE.
+
+**Claim killed (this tick):** Unlimited free hard peeks / Hint Score™ / XP-for-hints / shame-timer costs / black-box perfect-hint AI / fade costume with free hard menu — demoted under scaffolding contingency + Cognitive Tutor hint-abuse evidence; soft-first contingent ladder + construction-priced peeks survive behind HINT-*.
+
+**Experiments mounted:** HINT-1…5 + HINT-QUAL.
+
+**Next researcher id:** **92** (explanation length vs germane load). Researcher count since v1.11 synthesizer: **8** → next non-RT hour with ≥8 should run Synthesizer v1.12 (or RT if hour%6==0). Promoted stubs 94–96 into NEXT_LAB (queue was drying).
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-06 — Researcher tick: Part XC Product analytics for FEI North Stars (SAFE-INSTRUMENT)
+
+**Tick type:** Researcher (UTC hour 09; hour%6≠0; researcher count since synthesizer v1.11 = 6 → Researcher)  
+**Chapter written:** `chapters/90_product_analytics_fei_north_stars.md` (Part XC)  
+**Claim examined:** How to instrument/govern/commercially use FEI North Star events without vanity-metric theater or Goodhart-corrupted dashboards.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-INSTRUMENT** — ship the four (`retry_120s`, motive-coded `challenge_accept`, `transfer_pass`, `solo_transfer_pass`); NSM stack + stage OMTM; XXI.4 co-primary gates; anti-Goodhart (no single-event pay/shame); anti-gaming companions; Kane IUA for marketing uses; dignity telemetry; INSTR-* before identity-from-dashboard ads.
+
+**Evidence spine:** Croll & Yoskovitz Lean Analytics (vanity vs actionable / OMTM); Campbell (1979) metric corruption; Goodhart / Strathern paraphrase; Baker et al. gaming-the-system (2004/2009) + Cocea et al.; Kane (1992/2013) IUA; Constitution I.3 / VIII / IX Exp C / XXI.
+
+**Claim killed (this tick):** DAU/streak/XP/blocked-accuracy as learning NS; FEI Score™; single-KPI tutor pay; thumbs-up≡learning; science-backed identity ads without IUA; celebrate retry without binge/reveal gates — demoted under vanity-metric + Campbell/Goodhart + gaming + Kane IUA; FEI event stack + co-gates survive behind INSTR-*.
+
+**Experiments mounted:** INSTR-1…5 + INSTR-QUAL (densifies Experiment C).
+
+**Next researcher id:** **91** (hint economy & contingent scaffolding). Researcher count since v1.11 synthesizer: **7**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-06 — Researcher tick: Part LXXXIX Help-seeking vs help abuse (SAFE-HELP)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch89 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 5 → Researcher)  
+**Chapter written:** `chapters/89_help_seeking_vs_help_abuse.md` (Part LXXXIX)  
+**Claim examined:** When help use is adaptive instrumental self-regulation vs executive help abuse (or help avoidance), and what Solver/Practice/HITL rules follow.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-HELP** — instrumental > executive; abuse and avoidance both fail; contingent stage not unlimited menu; SE/attempt before bottom-out; metacognition ≠ score magic; dignity telemetry; proof = solo transfer; no Help Score™ / unlimited-hints hero; HELP-* before never-stuck campaigns.
+
+**Evidence spine:** Nelson-Le Gall (1981) / Karabenick & Knapp (1991) instrumental vs executive; Aleven & Koedinger early Cognitive Tutor help misuse; Aleven et al. (2004/2006) help-seeking model (abuse/avoidance/try-step); Baker gaming-the-system; Wood & Wood (1999) contingent tutoring; Roll et al. (2006/2011) Help Tutor behavior↑ domain↔; Aleven et al. (2016) “help helps, but only so much” + Shih et al. (2008) bottom-out-as-example caveat.
+
+**Claim killed (this tick):** Unlimited-hints / help-NPS / avoidance-as-grit / Help Score™ / parent hint-stalk / metacognition≡ACT / never-stuck answer-dump as learning brand — demoted under help-seeking + gaming + contingent-tutoring literature; instrumental contingent help + solo transfer survive behind HELP-*.
+
+**Experiments mounted:** HELP-1…5 + HELP-QUAL.
+
+**Next researcher id:** **90** (product analytics for FEI North Stars). Researcher count since v1.11 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-06 — Researcher tick: Part LXXXVIII Worked-example fading in Solver UX (SAFE-FADE)
+
+**Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.11 = 4 → Researcher)  
+**Chapter written:** `chapters/88_worked_example_fading_solver_ux.md` (Part LXXXVIII)  
+**Claim examined:** How Solver/Practice help should fade from full worked examples → completion → solo without permanent solution-dump or expertise-reversal tax.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-FADE** — stage not costume; completion bridge; backward fade first; expertise-aware up/down; attempt grain before reveal; proof = solo transfer; no Fade Score™ / unlimited-solutions hero; FADE-* before solution-dump campaigns.
+
+**Evidence spine:** Sweller & Cooper (1985) worked-example effect; Sweller (1988) CLT search tax; Kalyuga et al. (2003) expertise reversal; Kalyuga et al. (2001) solving > examples with expertise; Paas (1992) completion ≈ examples on transfer efficiency; Renkl et al. (2002) fading > example–problem pairs + backward fade; Renkl & Atkinson (2003) CLT transition argument.
+
+**Claim killed (this tick):** Always-full-worked / never-fade / solution-first Solver / view≡mastery / expertise-blind dump / unlimited-solutions ads as learning brand — demoted under worked-example + expertise-reversal + fading literature; completion ladder + solo transfer survive behind FADE-*.
+
+**Experiments mounted:** FADE-1…5 + FADE-QUAL.
+
+**Next researcher id:** **89** (help-seeking vs help abuse). Researcher count since v1.11 synthesizer: **5**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-05 — Researcher tick: Part LXXXVII Bank coverage honesty in marketing (SAFE-COVER)
+
+**Tick type:** Researcher (UTC hour 21; hour%6≠0; researcher count since synthesizer v1.11 = 3 → Researcher)  
+**Chapter written:** `chapters/87_bank_coverage_honesty_marketing.md` (Part LXXXVII)  
+**Claim examined:** How to market question-bank coverage (ACT track, concept×level×format) without item-count heroics, complete-ACT puffery, or GENQ volume theater.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-COVER** — matrix > total; gaps are features; use-tier labels (Kane IUA); examTag honesty; GENQ never counted unverified; prior substantiation via regenerated audit; no complete-bank puffery; COVER-* before coverage ads.
+
+**Evidence spine:** Kane (2013) IUA; AERA/APA/NCME (2014) Standards; Sireci (1998b) domain representation; Martone & Sireci (2009) alignment RER; Webb (2007) alignment criteria; Herman/Webb/Zuniga (2007) rater variability; FTC (1984) advertising substantiation; internal `actOntologyCoverage.json` audit fields.
+
+**Claim killed (this tick):** Item-count / complete-ACT / GCSE-as-ACT / unsynced-GENQ-as-coverage / ontology-nodes≡playable bank as marketing — demoted under representation + IUA + FTC prior substantiation; honest matrices + sealed keys survive behind COVER-*.
+
+**Experiments mounted:** COVER-1…5 + COVER-QUAL.
+
+**Next researcher id:** **88** (worked-example fading in Solver UX). Researcher count since v1.11 synthesizer: **4**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
+## 2026-08-05 — Researcher tick: Part LXXXVI Competence evidence as social proof (SAFE-PROOF)
+
+**Tick type:** Researcher (UTC hour 18 ≡ Red Team slot, but ch86 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 2 → Researcher)  
+**Chapter written:** `chapters/86_competence_evidence_social_proof.md` (Part LXXXVI)  
+**Claim examined:** What witnessable solo-transfer / dated MoC artifacts should serve as MindCraft social proof — vs vanity counts, vague praise, or +points testimonials.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-PROOF** — competence > crowd; enactive > verbal; provincial similarity; age the claim; student-owned thin portfolio; two-sided honesty; opt-in dignity; PROOF-* before star/user-count learning ads.
+
+**Evidence spine:** Bandura (1977) efficacy sources; Usher & Pajares (2008) school sources review; Cialdini Influence social-proof principle; Goldstein/Cialdini/Griskevicius (2008) provincial descriptive norms; Schultz et al. (2007) norms boomerang; Paulson/Paulson/Meyer (1991) portfolio-by-student; Eisend (2006) two-sided advertising meta.
+
+**Claim killed (this tick):** User-count / star-wall / vague confidence testimonials / Identity Score™ / +points case studies as learning social proof — demoted under mastery-first efficacy + provincial norms + honesty; witnessable dated solo artifacts survive behind PROOF-*.
+
+**Experiments mounted:** PROOF-1…5 + PROOF-QUAL.
+
+**Next researcher id:** **87** (bank coverage honesty in marketing). Researcher count since v1.11 synthesizer: **3**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-05 — Researcher tick: Part LXXXV Story-world cognitive load vs identity payoff (SAFE-STORYLOAD)
 
 **Tick type:** Researcher (UTC hour 15; hour%6≠0; researcher count since synthesizer v1.11 = 1 → Researcher)  

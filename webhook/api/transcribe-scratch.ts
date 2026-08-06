@@ -1,14 +1,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import Anthropic from '@anthropic-ai/sdk'
+import { GoogleGenAI } from '@google/genai'
 import { setCors } from '../lib/cors'
 import { auth } from '../lib/firebase'
 
 const MAX_IMAGE_BASE64_BYTES = 1.5 * 1024 * 1024
 const MAX_LINES = 20
 const MODEL_TIMEOUT_MS = 4000
-const DEFAULT_ANTHROPIC_MODEL = 'claude-haiku-4-5-20251001'
-const DEFAULT_GROQ_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
-const TRANSCRIBE_MODEL = process.env.TRANSCRIBE_MODEL ?? DEFAULT_ANTHROPIC_MODEL
+const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash'
+const TRANSCRIBE_MODEL = process.env.TRANSCRIBE_MODEL ?? DEFAULT_GEMINI_MODEL
 
 interface TranscriptionResult {
   text: string
@@ -17,7 +16,7 @@ interface TranscriptionResult {
   perLine?: Array<{ text: string; latex: string }>
 }
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? '' })
+const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY ?? '' })
 
 function fallback(unavailable = false, perLine?: Array<{ text: string; latex: string }>): TranscriptionResult {
   const result: TranscriptionResult = unavailable ? { text: '', latex: '', unavailable: true } : { text: '', latex: '' }
@@ -73,56 +72,25 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   })
 }
 
-async function transcribeWithAnthropic(base64: string, mediaType: 'image/png' | 'image/jpeg' | 'image/webp' | 'image/gif') {
-  if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY missing')
-  const result = await withTimeout(anthropic.messages.create({
+async function transcribeWithGemini(base64: string, mediaType: 'image/png' | 'image/jpeg' | 'image/webp' | 'image/gif') {
+  if (!process.env.GEMINI_API_KEY) throw new Error('GEMINI_API_KEY missing')
+  const result = await withTimeout(genai.models.generateContent({
     model: TRANSCRIBE_MODEL,
-    max_tokens: 700,
-    temperature: 0,
-    system: systemPrompt(),
-    messages: [{
+    contents: [{
       role: 'user',
-      content: [
-        { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
-        { type: 'text', text: 'Transcribe this scratch work.' },
+      parts: [
+        { inlineData: { mimeType: mediaType, data: base64 } },
+        { text: 'Transcribe this scratch work.' },
       ],
     }],
-  }), MODEL_TIMEOUT_MS)
-  const raw = result.content[0]?.type === 'text' ? result.content[0].text : ''
-  return safeJson(raw)
-}
-
-async function transcribeWithGroq(base64: string, mediaType: string) {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) throw new Error('GROQ_API_KEY missing')
-  const model = TRANSCRIBE_MODEL.includes('llama') || TRANSCRIBE_MODEL.includes('meta-')
-    ? TRANSCRIBE_MODEL
-    : DEFAULT_GROQ_MODEL
-  const res = await withTimeout(fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model,
+    config: {
+      systemInstruction: systemPrompt(),
       temperature: 0,
-      max_tokens: 700,
-      messages: [
-        { role: 'system', content: systemPrompt() },
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: 'Transcribe this scratch work.' },
-            { type: 'image_url', image_url: { url: `data:${mediaType};base64,${base64}` } },
-          ],
-        },
-      ],
-    }),
+      maxOutputTokens: 700,
+    },
   }), MODEL_TIMEOUT_MS)
-  if (!res.ok) throw new Error(`Groq transcription failed: ${res.status}`)
-  const data = await res.json()
-  return safeJson(data.choices?.[0]?.message?.content ?? '')
+  const raw = result.text ?? ''
+  return safeJson(raw)
 }
 
 async function transcribeImage(rawImage: string): Promise<TranscriptionResult> {
@@ -132,15 +100,9 @@ async function transcribeImage(rawImage: string): Promise<TranscriptionResult> {
   }
 
   try {
-    return await transcribeWithAnthropic(base64, mediaType)
-  } catch (anthropicErr: any) {
-    console.warn('transcribe-scratch anthropic fallback:', anthropicErr?.message ?? anthropicErr)
-  }
-
-  try {
-    return await transcribeWithGroq(base64, mediaType)
-  } catch (groqErr: any) {
-    console.warn('transcribe-scratch unavailable:', groqErr?.message ?? groqErr)
+    return await transcribeWithGemini(base64, mediaType)
+  } catch (geminiErr: any) {
+    console.warn('transcribe-scratch unavailable:', geminiErr?.message ?? geminiErr)
     return fallback(true)
   }
 }

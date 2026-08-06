@@ -4,6 +4,909 @@
 
 ---
 
+## Worksheet "write on it" mode + live Call — COMPLETE (Fable 5, 2026-08-06)
+
+Second way to work an uploaded PDF/photo, alongside the existing
+"extract questions" path (`HomeworkSession.tsx`, unchanged). Full build,
+verified, committed (not pushed).
+
+**What was built:**
+1. `ScratchPad.tsx` — new optional `backgroundImage?: string` prop. Renders an
+   `<img>` behind the canvas (`.bgImage`, absolute, z-index 0); ink canvas
+   draws transparently over it (`.canvasBgImage`, same mechanism `paperMode`
+   already used). Purely additive — every existing call site (11 of them)
+   passes nothing and is byte-for-byte unaffected.
+2. `app/src/pages/WorksheetSession.tsx` (+ `.module.css`, route `/worksheet`
+   in `App.tsx`) — new page. Pages arrive via router state from
+   `WorkStudio.tsx` (`pagesFromFile()`'s in-memory rasterized pages, not a new
+   Firestore collection — see size rationale below). Prev/next remounts
+   `ScratchPad` by page index (`key={fileName-index}`), same reset convention
+   `HomeworkSession.tsx` already uses between questions — not a new pattern.
+   No server-side persistence of worksheet ink (documented limitation, see
+   WorksheetSession.tsx's file doc comment — parallels "Designed, not built").
+3. `WorkStudio.tsx` — upload now pauses after rasterization with a choice:
+   "Extract questions" (existing path, unchanged) vs "Write on it" (new,
+   `navigate('/worksheet', { state: { pages, fileName } })`). Both reachable.
+4. `liveSession.ts` — `LiveSessionContextType` gains `'worksheet'`.
+   `LiveSessionDoc`/`CreateLiveSessionInput` gain `pageImage`/`pageIndex`/
+   `pageCount`. **Size decision**: `pagesFromFile()`'s normal output (1400px,
+   q=0.8) is too large to risk in a Firestore doc (~1MiB cap) — rather than
+   route through Firebase Storage (precedented elsewhere — stickers, tutor
+   profiles, chat — but adds an upload round-trip + new storage.rules path),
+   added `homework.ts#downscaleForLiveSession` — a separate 900px/q=0.5
+   re-encode just for this field. Keeps live-session creation a single
+   Firestore write, matching question/weekly_paper exactly. A worksheet call
+   is scoped to the one page it started on (no in-call page nav) — same
+   shape as a question-context call having no in-call navigation either.
+5. `CallButton.tsx` context type + `LiveSessionPage.tsx` — renders
+   `backgroundImage` on worksheet-context sessions; "page X of Y" header line;
+   student end/leave routes to `/dashboard?view=worksheet` instead of
+   `/practice` for this context only.
+6. `firebase/firestore.rules` — **NOT changed**. The `liveSessions` create/
+   update rules never allowlisted specific field names (only studentId/
+   tutorId immutability), so the schema addition needed no rule edit — but
+   this was verified empirically, not assumed: `liveSessionsRulesCheck.mjs`
+   got 6 new worksheet-context cases (create/read/update/stroke-write,
+   authorized + denied). **25/25 passed** (19 pre-existing + 6 new), via the
+   Firestore emulator (`firebase emulators:exec`, JDK 21 required —
+   `/opt/homebrew/opt/openjdk@21`, not the system JDK 17).
+
+**Verification:** `tsc --noEmit` clean. `vitest run` — 211 passed / 1 skipped
+/ 15 files, unchanged from baseline (includes `ScratchPad.test.ts`,
+`liveSession.test.ts`, `LiveSessionPage.test.ts` — the exact existing-context
+tests, all still green). `npm run build` succeeds. Emulator rules-check
+25/25. Real Playwright screenshots (no chromium-cli in this environment;
+used `playwright` directly, resolved via repo-root `node_modules` +
+`NODE_PATH`) in `agent_work/product/screenshots_2026-08-06/`:
+`worksheet_01_work_tab.png`, `worksheet_02_choice_ui.png` (real upload
+through the demo dashboard's actual file input, choice UI appears),
+`worksheet_03_write_on_it_page.png`, `worksheet_04_background_image.png`,
+`worksheet_05_ink_drawn.png` (real mouse-drag ink stroke drawn on top of the
+background image — visibly on top of the worksheet text). Screenshots
+`04`/`05` used a temporary, fully-reverted `App.tsx` route swap (demo
+UserContext instead of AuthGuard, plus a seeded `/dev/worksheet-harness`
+redirect carrying router state) since this environment has no real Firebase
+Auth credentials — reverted immediately after, confirmed via `git diff` and
+a second clean `tsc`/`vitest`/`build` pass. Call button code path is
+unchanged (only additive optional context fields) and not visually present
+in the demo screenshots because the demo user has no linked tutor
+(`CallButton`'s existing null-safe `tutorId` guard — expected, not a bug;
+same guard already proven live in `weekly_paper_toolbar_call_button.png`
+from the prior session).
+
+**Regression check on existing question/weekly_paper contexts**: unchanged
+by inspection (`contextLabel`/render branches are additive `if`s, not
+replacements) and by the full existing test suite staying green
+(`ScratchPad.test.ts`, `liveSession.test.ts`, `LiveSessionPage.test.ts`) plus
+19/19 pre-existing emulator rules-check cases still passing unmodified.
+
+---
+
+## Live "Call" co-working sessions — COMPLETE (8/8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. This session
+closed out the last two build-order steps; the feature is now fully built,
+verified, and committed (not pushed — see below).
+
+**Journey (all 8 steps, across today's sessions):** 1) `liveSessions` Firestore
+rules + `lib/liveSession.ts` data layer, emulator-verified. 2) `ScratchPad.tsx`
+live-write plumbing (append-only strokes, merged `remoteStrokes` redraw).
+3) `CallButton.tsx` + `LiveSessionPage.tsx` + the `/live-session/:sessionId`
+route, wired into `Practice.tsx`'s question banner. 4+5) `LiveJoinBanner.tsx`
+on `TutorDashboard.tsx`/`ParentDashboard.tsx` — real cross-account proof (tutor
++ parent) via the Firestore/Auth emulator. 6) Real "Talk" button meeting-link
+resolution (`isBookedSessionCurrentlyActive`/`pickActiveBookedSession`/
+`resolveTalkUrl` in `LiveSessionPage.tsx`), reusing `SessionCallCard`'s
+existing two-tier precedence instead of a placeholder direct read. **7)
+`<CallButton>` on the printable Weekly Review page (this session). 8)
+Idle-timeout "gone quiet" handling + confirmed the unmount-ends-session
+cleanup (this session).**
+
+**Step 7 — `app/src/pages/WeeklyPracticePaperPage.tsx`.** Added a
+`useStudentData(user)` call (page didn't make one before) to resolve
+`tutorId`, and `<CallButton studentId tutorId context={{ contextType:
+'weekly_paper', conceptName: paper.title }} />` into the toolbar, next to
+Print / Mark week done. `WeeklyReviewPicker.tsx` (the pre-mode-pick topic
+picker) deliberately did NOT get one: at that point there's no question/paper
+yet to attach a call to, and wiring a `tutorId` prop through would require
+editing `Dashboard.tsx` (its only call site) — out of this session's scope
+and already carrying unrelated concurrent work from another agent. Also fixed
+a small pre-existing layout gap: `.toolbarActions` had no `align-items`, so
+flex-stretch was silently inflating any short pill button placed there —
+added `align-items: center` (`WeeklyPracticePaperPage.module.css`).
+
+**Step 8 — `app/src/pages/LiveSessionPage.tsx`.** Two real gaps found by
+reading the code rather than assuming the plan's prose was already built:
+(a) `LiveJoinBanner.tsx`'s tutor/parent subscriptions already excluded stale
+sessions (`isLiveSessionStale`, wired in step 1's `subscribeActiveLiveSessionsForTutor`/`Parent` — no change needed there), but
+`LiveSessionPage.tsx` itself had no staleness check at all — a session idle
+past 20 minutes still rendered as if fully live. (b) the plan's own Lifecycle
+section describes ending "by the student's page-unmount effect," but no such
+effect existed anywhere in the codebase — only the explicit "end call"
+button called `endLiveSession`. Built both: a new pure, exported
+`isSessionGoneQuiet(session, now?)` (distinct from `ended` — never true for
+an explicitly-ended session, so the two banners can't both fire for the same
+reason), driven by a 30s `setInterval` tick so the check re-evaluates even
+when no new Firestore snapshot arrives; renders "This session has gone quiet…"
+next to the existing "This call has ended." banner. And a `role === 'student'`
+gated `useEffect` cleanup that calls `endLiveSession` on unmount (fail-soft,
+matches `saveQuestionWork`'s pattern) — deliberately scoped to the student
+only, matching the plan (a tutor/parent's "leave" just stops watching, it
+doesn't end the call for the student). Went slightly outside the session's
+literal file-scope note to make this change since (1) the plan's own Step 8
+text explicitly requires it, (2) `LiveSessionPage.tsx` had zero uncommitted
+conflicts from any other agent, and (3) leaving it undone would mean step 8
+wasn't actually done.
+
+**Verification (real, not eyeballed).**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **211 passed / 1 skipped (15 files)**; baseline going in
+  was 206/1/15, and the 5 new tests are exactly `isSessionGoneQuiet`'s new
+  suite in `LiveSessionPage.test.ts` (gone-quiet-after-20min, not-quiet-
+  recent, not-quiet-for-null, not-quiet-for-brand-new, and — the important
+  one — not-quiet-for-an-explicitly-ended-session). Zero regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- **Real screenshot proof for step 7** (not a mock): a temporary, fully-
+  reverted harness — `app/screenshot-harness.html` + `app/src/ScreenshotHarness.tsx`
+  (new throwaway files, deleted after) mounting the REAL
+  `WeeklyPracticePaperPage.tsx` directly via `UserContext.Provider` (same
+  context `useUser()` reads in the real `App.tsx`, imported not modified) +
+  a real cached paper via the real `buildWeeklyPracticePaper`/
+  `cacheWeeklyPaper` (localStorage, no Firestore needed for that part), plus
+  one temporary `VITE_SCREENSHOT_MODE`-gated `tutorId` line inside
+  `WeeklyPracticePaperPage.tsx` itself (no real Firebase auth in the harness,
+  so `useStudentData`'s real Firestore-backed `tutorId` would otherwise
+  never resolve) — reverted immediately after, confirmed **byte-identical**
+  via `diff` against a pre-edit backup, plus a `grep -rn
+  "SCREENSHOT_TEMP\|VITE_SCREENSHOT_MODE\|screenshot-tutor-id"` sweep
+  returning empty. Driven by Playwright (`chromium`, already cached from an
+  earlier session) against `VITE_SCREENSHOT_MODE=1 vite --port 5199`: the
+  Call button renders correctly sized next to Print/Mark week done (confirms
+  the `align-items` fix), and clicking it actually fires `createLiveSession`
+  and falls through to its designed fail-soft "try again" state (expected —
+  no real Firebase auth in this harness, proving the click handler runs
+  end-to-end rather than just proving static markup). `tsc`/`vitest`/`build`
+  re-run clean after the revert (numbers above are post-revert).
+
+Screenshots saved to `agent_work/product/screenshots_2026-08-06/`:
+`weekly_paper_full.png` (full page, real questions/notes/graph, Call button
+top-right), `weekly_paper_toolbar_call_button.png` (toolbar closeup, resting
+state), `weekly_paper_toolbar_call_clicked.png` (post-click fail-soft state).
+
+**Scope check before commit:** `git diff --stat` shows exactly 4 files —
+`app/src/pages/LiveSessionPage.tsx`, `app/src/pages/LiveSessionPage.test.ts`,
+`app/src/pages/WeeklyPracticePaperPage.tsx`,
+`app/src/pages/WeeklyPracticePaperPage.module.css`. `WeeklyReviewPicker.tsx`/
+`.module.css` and `Dashboard.module.css` — the other agent's concurrent WIP
+flagged at the start of this session — landed as their own commit
+(`5eff9452`, "Ship desk polish...") sometime during this session and are
+untouched by me (confirmed clean in `git status` for those paths). No
+`ml/**`/`webhook/**` files touched (Blake's lane).
+
+Committed (`app/src/pages/LiveSessionPage.tsx`,
+`app/src/pages/LiveSessionPage.test.ts`,
+`app/src/pages/WeeklyPracticePaperPage.tsx`,
+`app/src/pages/WeeklyPracticePaperPage.module.css`, this file, plus the 3
+screenshots), **not pushed** — leaving it for a final human review pass
+before `git push origin main`, per this session's own instructions.
+
+This closes out `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`
+end to end: real-time co-writing (ScratchPad sync), student→tutor/parent
+discovery (join banners), voice hand-off (Talk button reusing the existing
+Meet-link pattern), both entry points (Practice question banner + Weekly
+Review printable page), and honest lifecycle (explicit end + passive
+staleness), built incrementally across 8 steps today with real
+cross-account/unit-test verification at every step, zero regressions
+end to end.
+
+---
+
+## Live "Call" co-writing — real "Talk" button resolution (build-order step 6 of 8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1-5
+were already done (see entries below — rules/data layer, ScratchPad live-write
+plumbing, CallButton/LiveSessionPage/route, LiveJoinBanner on tutor+parent
+dashboards). This session built **step 6**: replaced `LiveSessionPage.tsx`'s
+placeholder `handleTalk()` (which just read `users/{tutorId}.googleMeetUrl`
+directly) with the real two-tier resolution `SessionCallCard`'s existing
+callers already use elsewhere — `Dashboard.tsx` (~line 999:
+`nextSession.meetingUrl ?? tutorMeetUrl`) and `TutorDashboard.tsx` (~line
+636-637: `callSession.meetingUrl ?? meetUrl`): a currently-active booked
+(Calendly) `sessions` doc's own `meetingUrl` first, then the tutor's
+permanent `users/{tutorId}.googleMeetUrl` as fallback.
+
+**`app/src/pages/LiveSessionPage.tsx`** — added three new exported pure
+helpers plus the async resolver:
+- `isBookedSessionCurrentlyActive(sess, now?)` — mirrors
+  `SessionCallCard.tsx`'s own window (10 min before `scheduledAt` through
+  `endAt`, defaulting to a 90-min session when `endAt` is missing), plus a
+  same-doc `meetingUrl` requirement (an active booked session with no link
+  of its own isn't usable as tier 1).
+- `pickActiveBookedSession(candidates, now?)` — picks the first active one
+  out of an **already student-scoped** list. Deliberately does NOT do the
+  student-scoping itself: for the student role the `sessions` query is
+  already scoped by `studentEmail`, but for the tutor role one query spans
+  every one of that tutor's students, so a session doc missing `studentId`
+  (not yet backfilled — `Session.studentId: string | null`) would be
+  ambiguous between "unscoped" and "wrong student." Scoping happens per-role
+  in `resolveTalkUrl` instead.
+- `resolveTalkUrl({ role, userUid, userEmail, studentId, tutorId })` — role
+  branches: **student** queries `sessions` by `studentEmail` (same shape as
+  `useStudentData.ts`'s `nextSession` lookup); **tutor** queries by
+  `tutorId` (same single-field, no-composite-index shape
+  `TutorDashboard.tsx` already uses), filtered client-side to
+  `studentId === session.studentId`; **parent** skips tier 1 entirely and
+  goes straight to tier 2, because `firebase/firestore.rules`' `sessions`
+  block has **no parent-read clause** today (confirmed by reading the
+  rules file — same kind of pre-existing gap the plan's own footnote flags
+  for `interactions`). A parent's tier-1 query would just be denied by
+  rules anyway; skipping it avoids a pointless round trip, and the
+  try/catch around the whole tier-1 block still fails soft to tier 2 as a
+  backstop. `handleTalk()` now calls this instead of the old direct
+  `googleMeetUrl` read; UX unchanged (still resolves lazily on click, same
+  "no meeting link set" fallback copy).
+
+**New: `app/src/pages/LiveSessionPage.test.ts`** (9 tests, all passing) —
+unit coverage for the two pure helpers: active-window boundaries (10-min
+early start, `endAt` cutoff, 90-min default when `endAt` missing), the
+`meetingUrl`-required and `status === 'scheduled'`-required gates, and
+`pickActiveBookedSession` picking the right one out of a mixed list.
+Importing `LiveSessionPage.tsx` directly pulls in `useUser` from `../App`,
+which statically imports every page (including Practice.tsx's homework
+upload path -> `pdfjs-dist` -> needs `DOMMatrix`, and this repo's vitest
+config has no jsdom environment — same constraint `ScratchPad.test.ts`
+documents for itself). Fixed by `vi.mock('../App', () => ({ useUser: () =>
+null }))` in the test file only — doesn't touch the real `App.tsx`.
+
+**Scope note — did NOT run the full emulator+Playwright cross-account
+screenshot pass** this session, unlike steps 3/4/5. This task's brief was
+explicit: "Live shared tree — only touch `app/src/pages/LiveSessionPage.tsx`
+... Leave everything else alone." The emulator screenshot technique those
+steps used requires *temporarily* editing `firebase.json`, `app/src/firebase.ts`,
+and `app/src/App.tsx` (emulator connect gate + custom-token sign-in bridge),
+even though it's fully reverted before commit. Given `App.tsx` itself
+carries a scar-tissue comment about being **"LOST TO CONCURRENT OVERWRITES
+ON THIS SHARED CHECKOUT THREE TIMES"** already, and this step's brief
+explicitly ruled out touching anything but `LiveSessionPage.tsx`, judged
+that risk not worth taking for what the plan itself calls "the lowest-risk
+step left, purely additive." Used the plan's own documented fallback
+instead: "a solid unit/logic-level test of the resolution function alone is
+an acceptable substitute." If a real cross-account visual proof is wanted
+later, it needs a dedicated session with permission to touch those three
+shared files (same technique as step 3/4/5, this time seeding a `sessions`
+doc with its own `meetingUrl` alongside the tutor's permanent one).
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 206 passed / 1 skipped (15 files) — was 197/1 before
+  this session (step 4/5's baseline), so exactly the 9 new tests, zero
+  regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- No screenshot this session (see scope note above).
+
+Files touched: `app/src/pages/LiveSessionPage.tsx`,
+`app/src/pages/LiveSessionPage.test.ts`, `ACTIVE_TASK.md`. No
+`.module.css` changes were needed. Committed, not pushed.
+
+**Next**: build-order step 7 — `<CallButton>` on the Weekly Review page
+(the Weekly Practice Paper page needs a `useStudentData` call to resolve
+`tutorId`, which it doesn't currently make, plus a `<CallButton>` in its
+toolbar actions next to Print/Mark week done — near-zero new code once
+step 3's `CallButton`/`LiveSessionPage`/route already exist). Step 8
+(idle-timeout/unmount-ends-session cleanup) is still open after that.
+
+---
+
+## Live "Call" co-writing — LiveJoinBanner on Tutor + Parent dashboards (build-order steps 4+5 of 8, both done) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1-3
+were already done (see entries below). This session built **step 4 AND
+step 5 in one pass** — the plan calls step 4 (tutor) "the first real
+cross-role, end-to-end demo" of the whole feature, and since the parent
+side is the identical pattern, did both rather than leaving a near-duplicate
+half-done.
+
+**New: `app/src/components/LiveJoinBanner.tsx` (+ `.module.css`).** Props:
+`role: 'tutor' | 'parent'`, `linkedId: string | null | undefined` (the
+signed-in user's OWN uid — read the real current
+`subscribeActiveLiveSessionsForTutor`/`subscribeActiveLiveSessionsForParent`
+exports in `liveSession.ts` before building: BOTH take the caller's own uid,
+not a list of student ids — the parent variant resolves `childId`/
+`childIds` internally via `getDoc`. The task brief's guessed
+`linkedIds: string[]` prop shape doesn't match the actual current export, so
+built to the real signature instead), `studentNames?: Record<string,
+string>` (studentId -> display name, reused from the host page's existing
+lookup, no new Firestore read). Subscribes, picks the most-recently-active
+session if more than one, renders nothing when there's no active session.
+Visually a slim top-pinned pill banner with one pulsing dot — deliberately
+simpler than `SessionCallCard`'s bottom-right "incoming call" card with full
+pulsing rings and a 10-minute early-join timer (no timing logic here at
+all — a live session simply exists or it doesn't).
+
+**Wiring**: `TutorDashboard.tsx` — added a `studentNames` memo built from
+the existing `students` roster (id -> `displayName || email prefix ||
+'Student'`, same fallback chain `focusStudent`/`heroStudent` already use)
+and `<LiveJoinBanner role="tutor" linkedId={user.uid}
+studentNames={studentNames} />` placed right after the existing
+`SessionCallCard` render, kept as its own separate element (not merged into
+`SessionCallCard`/`callSession` — that's booked-session Calendly windows,
+this is ad-hoc live calls, per the plan). `ParentDashboard.tsx` — added
+`<LiveJoinBanner role="parent" linkedId={user.uid}
+studentNames={childNames} />` right after the header; `childNames` was
+already exactly the `Record<string,string>` shape needed (built earlier in
+the file for the kid switcher), so no new lookup was added there either.
+Checked `git diff` on both dashboard files before touching them (clean) —
+both diffs are surgical (one import + a few lines each), verified after via
+`git diff` again.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 197 passed / 1 skipped (14 files), exact match to the
+  step-3 baseline, zero regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- **Real cross-account proof, both roles** (the actual point of this step):
+  stood up the Firestore + Auth emulators (Java 21 via
+  `/opt/homebrew/opt/openjdk@21`), temporarily re-added the exact same
+  scaffolding step 3 used (`auth` emulator port in `firebase.json`, a
+  `VITE_USE_EMULATORS`-gated emulator-connect branch in `firebase.ts`, a
+  `VITE_SCREENSHOT_MODE`-gated custom-token sign-in bridge in `App.tsx`).
+  **New wrinkle found and fixed this session**: the naive version of the
+  sign-in bridge lost a race — `AuthGuard` would redirect to `/login`
+  (dropping the `?screenshotToken=` param) before the async
+  `signInWithCustomToken` call resolved. Fixed by adding a
+  `screenshotSignInDone` gate that holds the loading state until the sign-in
+  attempt (success or failure) finishes, so the "not signed in" redirect
+  can't fire early. Seeded real student/tutor/parent accounts + a real
+  `liveSessions` doc directly via `firebase-admin` against the emulator
+  (faster and equally valid per the plan's verification note, since steps
+  1-3 already proved the create-path and sync — this step is specifically
+  about discovery). **Second real bug found while seeding**: the student
+  roster `TutorDashboard.tsx` builds for its OWN UI reads
+  `users/{uid}.assignedTutorId` (Admin.tsx's actual linking write), while
+  `firestore.rules`' `liveSessions` block and `liveSession.ts` read
+  `users/{uid}.tutorId` — two different field names for "this tutor" on the
+  same student doc. Not this step's bug to fix (pre-existing, out of scope —
+  flagging here for whoever eventually reconciles it), but the seed had to
+  set both fields to get a realistic test. Drove it with Playwright, two
+  separate signed-in accounts (a real tutor UID, then a real parent UID,
+  neither the student):
+  - **Tutor** (`/tutor`): banner appeared reading "Priya Test Student wants
+    you to join — live now", clicking "Join call" navigated to
+    `/live-session/<realSessionId>`, landed correctly on the live session
+    page showing the real snapshotted context ("Linear Equations", "Solve
+    for x: 3x + 5 = 20") with the "leave" button (not "end call" — correct
+    role gating, confirming `LiveSessionPage.tsx`'s existing `resolveRole`
+    logic sees the tutor correctly).
+  - **Parent** (`/parent`): same banner, same student name, same click ->
+    navigate -> correct context -> "leave" button. Confirms
+    `subscribeActiveLiveSessionsForParent`'s internal `childId`/`childIds`
+    resolution works end-to-end for a real, different account.
+  - All scaffolding (`firebase.json`, `app/src/firebase.ts`, `App.tsx`)
+    fully reverted via `git checkout --`, confirmed via `git diff` (empty)
+    and a grep sweep for `VITE_USE_EMULATORS|VITE_SCREENSHOT_MODE|
+    screenshotToken|signInWithCustomToken|connectAuthEmulator|
+    connectFirestoreEmulator` across those three files (empty). Temp driver
+    script (had to live inside the repo root briefly for Node ESM module
+    resolution to find `node_modules/playwright`) deleted, confirmed gone.
+    `tsc`/`vitest`/`build` re-run clean after the revert — numbers above are
+    post-revert.
+
+**Screenshots** (`agent_work/product/screenshots_2026-08-05/`):
+`tutor_dashboard_with_live_join_banner.png`,
+`tutor_landed_on_live_session_page.png`,
+`parent_dashboard_with_live_join_banner.png`,
+`parent_landed_on_live_session_page.png`.
+
+Files touched: `app/src/components/LiveJoinBanner.tsx`,
+`app/src/components/LiveJoinBanner.module.css`,
+`app/src/pages/TutorDashboard.tsx`, `app/src/pages/ParentDashboard.tsx`,
+`ACTIVE_TASK.md`, plus the 4 screenshots above. Not pushed.
+
+**Next**: build-order step 6 — "Talk" button real wiring. `LiveSessionPage.tsx`
+currently has a placeholder `handleTalk()` that reads
+`users/{tutorId}.googleMeetUrl` directly; the plan calls for reusing
+`SessionCallCard`'s actual `meetingUrl` resolution logic (which also checks
+an active booked session's own `meetingUrl` before falling back to the
+tutor's permanent room) instead of duplicating a simpler version. Lowest-risk
+step left, purely additive once sync + discovery both work (they now do).
+Step 7 (Weekly Review page's `<CallButton>`) and step 8 (idle-timeout
+cleanup) are still open after that. Also worth a look, out of this step's
+scope: the `assignedTutorId` vs `tutorId` field mismatch noted above — worth
+confirming with Blake/CLAUDE.md's linking flow whether both are supposed to
+be set together, since `liveSessions` create-rule + subscribe queries depend
+on `tutorId` existing on the student doc.
+
+---
+
+## Live "Call" co-writing — CallButton + LiveSessionPage + route (build-order step 3 of 8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Steps 1
+(rules + `liveSession.ts`) and 2 (`ScratchPad.tsx` plumbing) were already
+done (see entry below). This session built **step 3**: the actual UI —
+`CallButton.tsx`, `LiveSessionPage.tsx`, the `/live-session/:sessionId`
+route, and wiring `CallButton` into `Practice.tsx`. Did NOT build
+`LiveJoinBanner.tsx` or touch `TutorDashboard.tsx`/`ParentDashboard.tsx` —
+that's step 4, next, and it's the first real cross-role milestone.
+
+**New: `app/src/components/CallButton.tsx` (+ `.module.css`).** Props
+`studentId`, `tutorId` (nullable — hidden entirely if null, same guard
+pattern as `FlagQuestion.tsx`/`PingTutor.tsx`), `context`. On click calls
+`createLiveSession()` then `navigate('/live-session/' + id)`. Visually
+matches `FlagQuestion.tsx`'s pill style (not `BookmarkButton`'s icon-only
+style — a labeled pill reads better for an action that has a loading/error
+state to show).
+
+**New: `app/src/pages/LiveSessionPage.tsx` (+ `.module.css`), route
+`/live-session/:sessionId`.** Used by both the creating student and a
+joining tutor/parent. Defense-in-depth access check on mount (`getDoc` once,
+resolve role via `studentId`/`tutorId`/`childId`+`childIds` — same fields the
+rules already enforce, this is a UX layer on top, not instead of). Renders
+the context header from the session doc's own snapshot fields (never
+refetches the question bank), the co-writable `ScratchPad` wired with
+`liveSessionId`/`authorId`/`authorRole`/`remoteStrokes` (strokes filtered to
+exclude the current user's own `authorId`, per step 2's documented caller
+responsibility), a placeholder "Talk" button (reads
+`users/{tutorId}.googleMeetUrl` directly, opens it or shows "no meeting link
+set" — the real `SessionCallCard` resolution logic is step 6, not built here
+per the brief), and role-gated End/Leave: "end call" (visible only to the
+student) calls `endLiveSession()` + navigates away; "leave" (joiner) just
+navigates away without ending the student's session.
+
+**Route wiring** (`app/src/App.tsx`): one surgical `<Route
+path="/live-session/:sessionId" element={<AuthGuard><LiveSessionPage
+/></AuthGuard>}>` line + one import, placed next to `/weekly-paper`. Checked
+`git diff app/src/App.tsx` before touching it (clean) — didn't reformat or
+touch anything else.
+
+**Practice.tsx wiring**: destructured `tutorId` from `useStudentData` (was
+only pulling `streak, practiceCount` before — the hook already returned it,
+confirmed at `useStudentData.ts:66,146-256`). Added `<CallButton>` into
+`s.bannerTools` next to `FlagQuestion`/`BookmarkButton` (~line 2465), built
+from `currentQ` (`questionId`, `conceptId` via `toOntologyId`, `conceptName`
+via the same `PRACTICE_CONCEPTS.find(...) ?? bridgeLabel(...)` fallback the
+neighboring controls already use, `questionText`).
+
+**Bug caught and fixed while screenshotting**: `CallButton`'s base CSS
+(`CallButton.module.css`) copies `FlagQuestion.module.css`'s white-on-
+translucent pill styling, which assumes a dark question-banner background.
+But `Practice.module.css` overrides `.qFlag`'s colors for the light
+matte/paper banner phases (`.matteShell .qFlag` / `.paperScan .qFlag`, ~line
+480) — `CallButton` had no equivalent override, so on the light banner it
+rendered white-text-on-cream, effectively invisible (confirmed via a real
+screenshot: a barely-visible ghost pill next to a clearly legible "tag for
+tutor"). Fixed by adding matching `.matteShell .qCall` / `.paperScan .qCall`
+rules to `Practice.module.css` and passing `className={s.qCall}` to
+`CallButton`, same treatment `FlagQuestion` already gets via `s.qFlag`.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 197 passed / 1 skipped (14 files), matches baseline
+  exactly, zero regressions (no new unit tests this step — the new code is
+  UI wiring + navigation, not new pure logic to unit-test).
+- `npm run build` — succeeded (only the pre-existing >500kB chunk warning).
+- **Real end-to-end proof, not just "it renders"**: stood up the Firestore +
+  Auth emulators locally (Java 21 via `/opt/homebrew/opt/openjdk@21`, the
+  system default 17 is too old), temporarily added an `auth` emulator port
+  to `firebase.json`, a `VITE_USE_EMULATORS`-gated emulator-connect branch in
+  `firebase.ts`, a `VITE_SCREENSHOT_MODE`-gated custom-token sign-in bridge
+  in `App.tsx`, and a matching `?screenshotDirect=<conceptId>` direct-session
+  launcher in `Practice.tsx` (calls the real `launchMissionDirect()` — the
+  same function PawHub uses — not a fake state injection). Seeded a real
+  test student + tutor via `firebase-admin` (`users/{uid}.tutorId` link +
+  `googleMeetUrl`), minted custom tokens for both, drove it with Playwright:
+  - Two tabs of the SAME student account: confirmed the Call button appears,
+    creates a real `liveSessions` doc, navigates to `/live-session/:id`, and
+    a second tab opened directly on that URL passes the access check and
+    renders the same context + scratchpad. The second tab correctly does
+    **not** show the first tab's stroke — expected per design, since both
+    tabs share one `authorId` and the remote-stroke exclusion can't tell
+    "my other tab" from "my own local echo." Confirms the dedup guard works
+    as designed, not a bug.
+  - **Stronger proof, a separate browser context signed in as the real
+    linked tutor account**, joining the same session URL: the tutor's tab
+    immediately replayed the student's stroke from Firestore (genuine
+    cross-account real-time sync, not the same-uid case above), then drew
+    its own stroke, which appeared on the student's original tab live.
+    Role-gating also confirmed correct in the same run: the student's tab
+    showed "end call", the tutor's tab showed "leave".
+  - All scaffolding (`firebase.json`, `app/src/firebase.ts`, `App.tsx`,
+    `Practice.tsx` shims) fully reverted, confirmed via `git diff firebase.json
+    app/src/firebase.ts` (empty) and `grep VITE_USE_EMULATORS|VITE_SCREENSHOT_MODE|
+    screenshotDirect|signInWithCustomToken|connectAuthEmulator` across those
+    files (empty). `tsc`/`vitest`/`build` re-run clean after the revert —
+    numbers above are post-revert.
+
+**Screenshots** (`agent_work/product/screenshots_2026-08-05/`):
+`practice_call_button.png` (Practice question banner, Call button legible
+next to tag-for-tutor/bookmark, post-CSS-fix), `live_session_page_context.png`
+(LiveSessionPage rendering real context header + empty scratchpad right
+after creation), `live_session_pageA_after_own_stroke.png` (creator's own
+stroke), `live_session_pageB_same_student_no_dupe.png` (second same-student
+tab, correctly stroke-less), `live_session_tutor_sees_student_stroke.png` /
+`live_session_tutor_after_own_stroke.png` / `live_session_student_sees_tutor_stroke.png`
+(the real cross-account sync proof described above).
+
+Commit `c9248d66` — `app/src/components/CallButton.tsx`,
+`app/src/components/CallButton.module.css`, `app/src/pages/LiveSessionPage.tsx`,
+`app/src/pages/LiveSessionPage.module.css`, `app/src/App.tsx`,
+`app/src/pages/Practice.tsx`, `app/src/pages/Practice.module.css`,
+`ACTIVE_TASK.md` only. Not pushed.
+
+**Next**: build-order step 4 — `LiveJoinBanner.tsx` on `TutorDashboard.tsx`
+(and step 5, `ParentDashboard.tsx`) — the first real cross-role, end-to-end
+UI demo (a real tutor sees a banner when their student calls, joins from it).
+This session's emulator test already proves the underlying sync works
+cross-account; step 4 is wiring the actual UI entry point for it.
+
+---
+
+## Live "Call" co-writing — ScratchPad plumbing done (build-order step 2 of 8) (Fable 5, 2026-08-05)
+
+Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. Step 1
+(Firestore rules + `app/src/lib/liveSession.ts` data layer) was already done
+before this session. This session did **step 2 only**: `ScratchPad.tsx`
+live-write plumbing. No UI was built — that's step 3, next.
+
+**`app/src/components/ScratchPad.tsx`** — added optional props
+`liveSessionId`, `authorId`, `authorRole`, `remoteStrokes` (reuses
+`ScratchStrokePoint` from `types/index.ts`, no redefinition). Two new pure
+functions, both exported for testability (this repo has no jsdom test
+environment, per `vitest.config.ts`'s `.test.ts`-only include glob — no DOM
+to mount a real component into):
+- `maybeAppendLiveStroke(points, liveSessionId, authorId, authorRole, appendFn)`
+  — no-op unless both `liveSessionId` and `authorId` are set; called from
+  `end()` with the just-finished stroke, captured into its own `const`
+  BEFORE `pointsRef.current` is cleared (the off-by-one-in-time bug the plan
+  warned about — verified the capture ordering by hand).
+- `combineStrokesForPaint(committed, inProgress, remoteStrokes)` — merge used
+  by `redraw()` so remote ink paints through the exact same `drawStrokes()`
+  call as local ink, no second canvas. Added a `useEffect` on `[remoteStrokes,
+  redraw]` since remote strokes arrive via props, not a user gesture, and
+  nothing else would trigger a repaint. Doc comment on `combineStrokesForPaint`
+  makes explicit that dedup (not drawing the local user's own stroke twice)
+  is the responsibility of whoever wires `subscribeLiveStrokes` later — this
+  function just concatenates.
+- Purely additive: grepped every real call site (`HomeworkSession.tsx`,
+  `GradeOnboard.tsx`, `SessionWork.tsx`, `ConceptChapterPage.tsx`,
+  `Practice.tsx`, `WeeklyPracticePaperPage.tsx`) — none pass the new props,
+  confirmed unaffected.
+
+**Verification**: `npx tsc --noEmit` clean. `npx vitest run` 197 passed (was
+184) + 1 skipped, 14 files (was 13) — the 13 new tests are in the new
+`app/src/components/ScratchPad.test.ts`, zero regressions. `npm run build`
+succeeded. New test file covers: forwards on complete stroke when both ids
+set, defaults `authorRole` to `'student'`, passes through `tutor`/`parent`
+roles, does NOT forward when either id is missing or when stroke is empty,
+and `combineStrokesForPaint` ordering/omission/backward-compat cases.
+
+Committed (not pushed): `171a8bec` — `app/src/components/ScratchPad.tsx` +
+`app/src/components/ScratchPad.test.ts` only.
+
+**Next**: build-order step 3 — `CallButton.tsx`, `LiveSessionPage.tsx`
+(+ `.module.css`s), and the `/live-session/:sessionId` route in `App.tsx`.
+Not started.
+
+---
+
+## Story beat now also primes plain single-concept practice, not just Weekly Review (Fable 5, 2026-08-05)
+
+Earlier today's Weekly Review walkthrough (entry below) added a `weekly-story`
+phase — story beat → formula card, per topic — but only generalized the
+formula card (`explore` phase) to serve both flows; the story beat itself
+stayed hard-gated to `weeklyWalkSlots`. Akshat confirmed he wants the same
+story-beat priming for the regular single-concept flow too (click one concept
+from the path/dashboard → practice it directly), which previously skipped
+straight to the formula card.
+
+**`app/src/pages/Practice.tsx`** — mirrored the formula card's own
+generalization pattern, didn't invent a new one:
+- `weekly-story` render condition: `pPhase === 'weekly-story' && weeklyWalkSlots`
+  → `pPhase === 'weekly-story' && (conceptMeta || (weeklyWalkSlots && concept))`.
+- Inside, `slot = weeklyWalkSlots?.[weeklyWalkIndex]` (now optional); id/label
+  resolve `slot?.conceptId ?? conceptMeta?.id ?? concept ?? ''` /
+  `slot?.label ?? conceptMeta?.label ?? actConceptLabel(storyId)`. The
+  "Weekly Review · Topic X of Y" line now only renders `{weeklyWalkSlots && (...)}`
+  (same idiom the formula card already used one block down). The role-framing
+  line (`slot.role === 'strengthen' | 'stretch' | ...`) falls back to a plain
+  "A quick warm-up before you dive in." when there's no slot, instead of
+  showing broken/undefined text.
+- `pickConcept()` (the single-concept entry point, called from both the path-
+  view topic cards and the "Topics to explore" grid) now sets `weekly-story`
+  instead of jumping straight to `explore`. Grepped all `setPPhase('explore')`
+  call sites to confirm no other direct entry point was missed — the two
+  remaining ones are internal "Continue"/"back" navigation within the phase
+  machine itself, unchanged.
+- **Bug caught while screenshotting**: the story beat's `settingLine`
+  paragraph used a raw white inline style (`rgba(255,255,255,0.75)`) on the
+  light "matte" paper background — illegible (confirmed via screenshot,
+  "At sea, bound for Jamaica, 1761" nearly invisible). This is the exact bug
+  the earlier Weekly Review entry below says it fixed, but the fix wasn't
+  actually on disk. Fixed for real this time: swapped to the existing
+  `s.exploreTagline` class (slate-gray, already has dark/light + matte
+  overrides in `Practice.module.css`), same as every other tagline in this
+  block already uses.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — 184 passed / 1 skipped (13 files), matches baseline, zero
+  regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk-size
+  warning, unrelated).
+
+**Screenshots** — real, via a temporary `VITE_SCREENSHOT_MODE`-gated
+`AuthGuard` bypass in `App.tsx` (demo user, same technique as the Weekly
+Review entry below) + a temporary `?screenshotMode=single|weekly` query-param
+useEffect in `Practice.tsx` (single: calls `pickConcept()` directly; weekly:
+builds a 2-slot paper and calls `startWeeklyWalkthrough()`), driven by a
+scripted Playwright session against `VITE_SCREENSHOT_MODE=1 npx vite --port
+5199 --strictPort`. Both shims applied on top of byte-for-byte backups of
+this session's own already-edited `App.tsx`/`Practice.tsx` and reverted
+afterward — confirmed via `diff` against the backups (`App.tsx` identical)
+and `grep SCREENSHOT app/src/App.tsx app/src/pages/Practice.tsx` returning
+empty before committing. `tsc`/`vitest`/`build` re-run clean after the revert
+(numbers above are post-revert, post-fix).
+
+5 screenshots saved to `agent_work/product/screenshots_2026-08-05/`:
+`single_concept_01_story_beat.png` (Linear Equations, single-concept entry —
+story beat with no "Weekly Review · Topic X of Y" line, generic "A quick
+warm-up before you dive in." instead of role framing, readable settingLine),
+`single_concept_02_formula_card.png` (Continue → same concept's real formula
+card), `single_concept_03_story_beat_quadratics.png` (a second concept,
+Quadratic Equations/Galileo, proving the story beat generalizes rather than
+being a fluke of one concept), `weekly_regression_01_story_beat.png` /
+`weekly_regression_02_formula_card.png` (Weekly Review walkthrough, unchanged
+— "Weekly Review · Topic 1 of 2" + "A weak spot we're strengthening." still
+render exactly as before, confirming no regression).
+
+Commit `2177ea54` — `app/src/pages/Practice.tsx` only. Not pushed.
+
+---
+
+## Weekly Review guided play-through: story → formula card → question batch, per topic (Fable 5, 2026-08-05)
+
+Akshat's ask: a new guided Weekly Review mode — story beat → concept/formula
+primer card → that topic's question batch → next topic's story/formula →
+its batch → … → completion screen — sitting alongside (not replacing) the
+just-shipped printable/scrollable Weekly Review page. Formula cards pulled
+deterministically from real data (`conceptContent.ts`), not LLM-generated,
+per his own instinct going in.
+
+**Almost entirely reuse, as scoped.** All in `app/src/pages/Practice.tsx`:
+- New `PracticePhase` value `'weekly-story'` — a light per-slot story/context
+  beat (protagonist + `contextFrame.settingLine` from `conceptStories.json`
+  via the existing `selectStoryForConcept()`), added to the `matteOn`/
+  `isMatteFlow` phase lists so it gets the same paper skin as `explore`/
+  `session`/`complete`.
+- The existing `explore` phase (concept/formula card, previously gated to a
+  single concept per session) now doubles as the walkthrough's per-slot
+  formula card. Its `Start Practice →` button branches: normal flow still
+  goes to the level picker; walkthrough flow calls a new
+  `beginWeeklySlotSession(slot)` that loads that slot's pre-built question
+  batch directly (paper already picked level count per role in
+  `weeklyPracticePaper.ts` — no level-picker detour needed).
+- New state: `weeklyWalkSlots`/`weeklyWalkIndex`/`weeklyWalkQuestionsBySlot`.
+  `missionType` stays `null` for the whole walkthrough so it never collides
+  with the weakness/learn/gapscan draft-autosave slots (autosave no-ops when
+  `!missionType`) — refreshing mid-walkthrough just loses progress, same as
+  the pre-existing `explore`/`level` phases with no mission.
+- `startWeeklyWalkthrough(paper)` groups `paper.questionIds` back into
+  per-slot batches by `question.conceptId` (same grouping pattern
+  `WeeklyPracticePaperPage.tsx`'s `slotByConcept` already established, not
+  re-derived) and drops any slot whose concept resolved zero questions,
+  rather than blocking the whole paper.
+- `finishSession()` extended: if more walkthrough slots remain, advances to
+  the next slot's `weekly-story` phase instead of ending; on the last slot it
+  falls through to the **exact same** `weeklyPaperWeekKey` /
+  `markWeeklyPaperComplete()` wiring the old single-concept weekly-paper nav-
+  state path already had (reused, not duplicated) before showing the
+  existing `complete` phase.
+- **Real bug caught + fixed during screenshotting**: walkthrough concept ids
+  aren't all in `PRACTICE_CONCEPTS` (e.g. `fractions_decimals`,
+  `ratios_proportions`, `order_of_operations` — real ACT-tested, real bank
+  coverage, just not in that hand-curated ~38-id list the `explore`/`level`
+  phases gate on). Reused `explore` block would have silently rendered blank
+  for those slots. Fixed by resolving id/label as
+  `conceptMeta?.id ?? concept` / `conceptMeta?.label ?? actConceptLabel(id)`
+  instead of requiring a `PRACTICE_CONCEPTS` hit — confirmed via a real
+  screenshot of `fractions_decimals` (no `CONCEPT_CONTENT` entry either)
+  showing the intended graceful fallback ("No formula sheet yet for this
+  topic — heading straight to the questions.") instead of a blank card.
+- Also caught: the story-beat's settingLine was first styled with white
+  inline-style text on the light "matte" paper background (copied from a
+  dark-background phase) — invisible. Fixed to reuse `s.exploreTagline`
+  (the class already carries correct light/dark-matte theming) instead of a
+  raw inline color.
+
+**Entry point** (`app/src/components/WeeklyReviewPicker.tsx` +
+`Dashboard.tsx`): the picker's single "Start paper" button became two —
+**"Play through →"** (primary, new — `onPlayThrough` prop, navigates
+`/practice` with `{ state: { weeklyWalkthrough: true } }`, paper already
+cached to `localStorage` by the picker same as before) and **"Print /
+scroll"** (secondary, same handler/behavior as the old default button,
+still lands on `/weekly-paper` unmodified). Made Play-through the primary
+CTA since it's the flashier new feature Akshat was excited about, while
+keeping the printable path exactly as-reachable as before — least-disruptive
+option that still satisfies "a real choice." `WeeklyPracticePaperPage.tsx`
+itself: **zero changes**, per the brief's protection on that file.
+`Dashboard.tsx` gained one new sibling function, `startWeeklyPlaythrough()`,
+mirroring `startWeeklyPaper()`.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **181 passed / 1 skipped (13 files)**, matches today's
+  established baseline exactly, zero regressions.
+- `npm run build` — succeeded (only the pre-existing >500kB chunk-size
+  warning, unrelated).
+
+**Screenshots** — real, not mocked: temporary `VITE_SCREENSHOT_MODE`-gated
+`AuthGuard` bypass in `App.tsx` (demo user via the existing `makeDemoUser()`)
++ a narrowly-scoped `VITE_SCREENSHOT_MODE`-gated `?screenshotWeekly=1` query
+param in `Practice.tsx` that builds a deterministic 2-slot paper
+(`linear_equations` → `linear_inequalities`, real bank question ids via
+`getQuestions()`) and calls `startWeeklyWalkthrough()` directly — same
+"narrowly-scoped temporary hook to reach a state deterministically without
+live Firestore data" precedent as the 2026-07-24 `?screenshotQid=` shim. Ran
+against `VITE_SCREENSHOT_MODE=1 npx vite --port 5199 --strictPort`, driven by
+a scripted Playwright session (not manual clicking) that clicked through
+slot 1's story → formula → questions, answered 3 questions (retrying choices
+until one is accepted — soft-wrong answers just wiggle in place, only a
+correct pick sets `checked`/reveals the Next button), confirmed the
+walkthrough auto-advanced to slot 2's story + formula. A second short run
+swapped the slot list to `fractions_decimals` to capture the no-content
+fallback. Both shims applied on top of byte-for-byte backups of this
+session's own already-edited `App.tsx`/`Practice.tsx`, restored from those
+exact backups afterward — confirmed via `diff` returning identical output
+for both files, `git status` showing `App.tsx` untouched, and a fresh
+`grep SCREENSHOT app/src/App.tsx app/src/pages/Practice.tsx` returning empty.
+`tsc`/`vitest`/`build` re-run clean after the revert (numbers above are
+post-revert).
+
+6 screenshots saved to `agent_work/product/screenshots_2026-08-05/`:
+`weekly_walkthrough_01_slot1_story.png` (Linear Equations story beat,
+protagonist "William Harrison", settingLine "At sea, bound for Jamaica,
+1761", "Weekly Review · Topic 1 of 2"), `weekly_walkthrough_02_slot1_formula.png`
+(same slot's formula card — real `~4–5 ACT questions / always on SAT` weight,
+key rules, worked examples), `weekly_walkthrough_03_slot1_questions.png`
+(question batch, session strip showing the "Weekly Review · Topic 1/2" badge),
+`weekly_walkthrough_04_slot2_story.png` (auto-advanced to Linear Inequalities,
+"Topic 2 of 2", protagonist "George Dantzig" — proves the sequence actually
+advances, not just repeats slot 1), `weekly_walkthrough_05_slot2_formula.png`
+(slot 2's real formula card), `weekly_walkthrough_nocontent_fallback.png`
+(`fractions_decimals` slot — no `CONCEPT_CONTENT` entry, graceful fallback
+message + working "Start these questions →" button, walkthrough not blocked).
+
+**Collision note**: this is a live shared tree, and while this session was
+mid-flight a concurrent Cursor/Akshat session committed unrelated
+CoverLanding work (`12525cbb`, already on `origin/main`) whose commit swept
+up this session's still-uncommitted `Dashboard.tsx` edit (`startWeeklyPlaythrough`
++ the `onPlayThrough` wire) as a same-file side effect — confirmed via
+`git show 12525cbb -- app/src/pages/Dashboard.tsx` containing exactly those
+two hunks and `git diff HEAD -- app/src/pages/Dashboard.tsx` now empty. The
+content is correct and intentional (this session's own code, verified
+identical to what was written and tested above), just attributed to someone
+else's commit message rather than this session's — nothing to redo, `git
+add` on `Dashboard.tsx` would be a no-op. Re-ran `tsc`/`vitest`/`build` after
+noticing this to confirm the final on-disk state (post-collision) is still
+clean; numbers above are from that final run.
+
+Files touched this session: `app/src/pages/Practice.tsx`,
+`app/src/components/WeeklyReviewPicker.tsx`,
+`app/src/components/WeeklyReviewPicker.module.css` (all committed by this
+session), plus `app/src/pages/Dashboard.tsx` (written by this session,
+already committed via `12525cbb` above — see collision note). `app/src/App.tsx`
+and `app/src/pages/WeeklyPracticePaperPage.tsx` both **untouched by this
+session's own commit** (confirmed via `git diff HEAD` — the former only ever
+carried the fully-reverted screenshot shim, the latter was never opened for
+editing beyond reading it for context).
+
+---
+
+## webhook/: migrate 3 LLM endpoints from Anthropic+Groq cascade to Gemini (Fable 5, 2026-08-05)
+
+Akshat added `GEMINI_API_KEY` to Vercel production env (verified it
+authenticates against `gemini-2.5-flash` — just blocked on prepaid billing
+credits at zero, his problem to fix, not a code problem). Migrated
+`webhook/lib/handlers/parse-homework.ts`, `webhook/api/transcribe-scratch.ts`,
+and `webhook/api/agent-check-in.ts` off the dead `ANTHROPIC_API_KEY` (401 in
+prod) + blank `GROQ_API_KEY` fallback cascade onto a single Gemini call each
+(`@google/genai` SDK, `ai.models.generateContent(...)`, model
+`gemini-2.5-flash`). Prompts, response JSON contracts (`{questions,
+pageCount, unavailable?}`, `{text, latex, unavailable?, perLine?}`, the
+affective-state shape), `safeJson`/`safeJsonQuestions`, `withTimeout`,
+CORS/auth, and HTTP status codes all preserved exactly — zero frontend
+changes needed. Deleted the Groq codepaths in the two vision files (dead
+2→3-provider cascade collapsed to 1). Left `webhook/api/gemini.ts` (unrelated
+legacy Claude+Stripe endpoint despite the name) and
+`webhook/lib/handlers/deploy-rules.ts` (unrelated `ANTHROPIC_API_KEY` use)
+untouched, per scope. `@anthropic-ai/sdk` dependency kept in
+`webhook/package.json` since those two files still use it.
+
+**Ready to go the instant billing is topped up** — no further code work
+needed. `npx tsc --noEmit` clean on all 3 files (one pre-existing unrelated
+error in `spark-experience.ts`, confirmed present before this change too).
+Sanity-checked the Gemini call shape with a throwaway fake-key request that
+correctly reached Google's API and got back a structured `API_KEY_INVALID`
+auth error (not a code/type error) — proves the SDK method signature is
+right without spending real quota.
+
+**Still needed from a human**: `webhook/.env.local` has `GROQ_API_KEY` only
+(no `ANTHROPIC_API_KEY` was ever there either) — add a real `GEMINI_API_KEY`
+there for local dev parity. Not fabricated/guessed here since no real key was
+available outside Vercel prod.
+
+---
+
+## Dashboard top-right cluster: text-label pills → icon + label (Fable 5, 2026-08-05)
+
+Akshat's ask: the Dashboard's top-right area got cluttered with too many
+text-label buttons once Weekly Review shipped ("a wall of text") — wanted
+intuitive icons instead, no bigger redesign.
+
+**What changed**, all in `app/src/pages/Dashboard.tsx` (JSX) +
+`app/src/pages/Dashboard.module.css` (layout only, no new colors/shapes —
+`.bookSessionLink`'s pill border/radius/background untouched, just made
+`inline-flex` with a `gap` so icon+label sit side by side):
+- **Weekly Review** pill: `CalendarCheck` icon + kept "Weekly Review" label.
+- **Locked variant**: the 🔒 emoji swapped for a real `Lock` icon (matches
+  the rest of the row now using lucide glyphs instead of emoji).
+- **Message Tutor** (plain button) and the **Message…** `<select>` (tutor +
+  parents case): `MessageCircle` icon. The native `<select>` can't carry
+  per-option icons cross-browser, so it's wrapped in a new `.iconSelectWrap`
+  with the icon absolutely positioned over `.iconSelect`'s reserved left
+  padding (34px) instead — same pill underneath, `defaultValue`/`onChange`/
+  navigate-to-`/chat/:id` behavior untouched. Added `aria-label="Message
+  tutor or parent"` since the visible "Message…" placeholder option isn't a
+  real accessible name for a `<select>`.
+- **Find a Tutor**: `Search` icon + label.
+- **Sign out / back** (hero bar, `.canvasUser`): `LogOut` icon kept
+  alongside the text label rather than going icon-only — this is a kids'-
+  facing product and "sign out" vs "back" (tutor/admin viewing-as mode)
+  carries real meaning the icon alone doesn't disambiguate. Added an
+  explicit `aria-label` (`Sign out` / `Back`) on top of the visible text.
+- All icons from `lucide-react` (already a dependency, matches existing
+  usage in `ConceptChapterPage.tsx`/`FindTutor.tsx`/etc.) — no new icon
+  dependency added. Every icon-bearing button/select kept its exact prior
+  `onClick`/`navigate` target — visual/copy polish only, zero functional
+  change.
+
+**Verification.**
+- `npx tsc --noEmit` — clean.
+- `npx vitest run` — **181 passed / 1 skipped (13 files)**. Baseline note:
+  the 2026-08-05 sessions below added `storyMatch.test.ts` +
+  `storySelection.test.ts` since the original 176/1/12 baseline, so file/test
+  counts don't match verbatim — confirmed no NEW failures from this change
+  (all 181 green).
+- `npm run build` — succeeded (only the pre-existing >500kB chunk-size
+  warning, unrelated).
+
+**Screenshots** (via the public `/try/dashboard` demo route + seeded
+`sessionStorage['mc-demo-diagnostic']`, same zero-footprint technique as the
+Contents icon-ring session directly below — confirmed via `git diff
+app/src/App.tsx app/src/hooks/useStudentData.ts` empty both before and after).
+For the locked-weekly-review shot specifically, demo mode has **no** live
+path to `weeklyPaperCompletedWeek` (it's Firestore-only per
+`useStudentData.ts`, never populated for the demo uid) — seeding
+`sessionStorage` alone can't trigger it. Used a temporary one-line override
+(`const paperLocked = true`) in `Dashboard.tsx`, screenshotted, then reverted
+immediately; `git diff app/src/pages/Dashboard.tsx | grep TEMP-SCREENSHOT`
+confirmed clean before committing. Driven by a local Playwright script
+(`app/.tmp_shot_dashboard_icons.mjs`, deleted after) against
+`npx vite --port 5198 --strictPort`.
+
+Saved to `agent_work/product/screenshots_2026-08-05/`:
+`dashboard_topright_icons_full_before.png` / `_after.png` (whole hero bar +
+Contents row, 1440px), `dashboard_homeTopActions_pills_before.png` / `_after.png`
+(tight crop on just the Weekly Review / Find a Tutor pills),
+`dashboard_heroBar_signout_before.png` / `_after.png` (tight crop on the
+name + sign-out corner), `dashboard_topright_icons_full_locked.png` +
+`dashboard_homeTopActions_pills_locked_tight.png` (locked-weekly-review state,
+real `Lock` icon in place of the old emoji).
+
+Commit `5b19bdca` — `app/src/pages/Dashboard.tsx`,
+`app/src/pages/Dashboard.module.css` only. Not pushed (per instructions).
+
+---
+
 ## Dashboard Contents dots get the Map's icon-badge + mastery-ring treatment (Fable 5, 2026-08-05)
 
 Akshat's ask: the Map's concept nodes (`ConstellationGpsExplorer.tsx`) already

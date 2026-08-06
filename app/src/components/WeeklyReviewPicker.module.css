@@ -5,18 +5,19 @@
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(28, 24, 20, 0.45);
-  backdrop-filter: blur(4px);
+  background: rgba(12, 22, 18, 0.55);
+  backdrop-filter: blur(5px);
 }
 
 .panel {
-  width: min(720px, 100%);
-  max-height: min(92vh, 840px);
+  width: min(760px, 100%);
+  max-height: min(92vh, 860px);
   overflow: auto;
-  background: #fffaf2;
-  border: 1px solid rgba(40, 32, 24, 0.12);
-  border-radius: 20px;
-  box-shadow: 0 24px 60px rgba(28, 24, 20, 0.28);
+  background:
+    radial-gradient(ellipse 55% 40% at 50% 58%, rgba(245, 211, 72, 0.1), transparent 60%),
+    #fffaf2;
+  border: 1px solid rgba(40, 32, 24, 0.1);
+  border-radius: 22px;
   padding: 22px 22px 18px;
   display: grid;
   gap: 14px;
@@ -50,13 +51,18 @@
 .close {
   width: 36px;
   height: 36px;
-  border-radius: 12px;
-  border: 1px solid rgba(40, 32, 24, 0.12);
-  background: #fff;
+  border-radius: 50%;
+  border: 1.5px solid rgba(40, 32, 24, 0.14);
+  background: transparent;
   color: #1c1814;
   font-size: 14px;
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.close:hover {
+  border-color: rgba(20, 58, 46, 0.45);
+  background: rgba(20, 58, 46, 0.06);
 }
 
 .modes {
@@ -69,8 +75,8 @@
   min-height: 36px;
   padding: 0 14px;
   border-radius: 999px;
-  border: 1px solid rgba(40, 32, 24, 0.14);
-  background: #fff;
+  border: 1.5px solid rgba(40, 32, 24, 0.14);
+  background: transparent;
   color: #1c1814;
   font-size: 13px;
   font-weight: 800;
@@ -80,7 +86,7 @@
 .modeOn {
   background: #143a2e;
   border-color: #143a2e;
-  color: #f4efe2;
+  color: #fff8d6;
 }
 
 .modeCopy {
@@ -92,15 +98,17 @@
 
 .mapWrap {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 11;
-  border-radius: 16px;
-  border: 1px solid rgba(40, 32, 24, 0.1);
+  width: min(100%, 520px);
+  aspect-ratio: 1 / 1;
+  max-height: min(52vh, 480px);
+  justify-self: center;
+  border-radius: 50%;
+  border: none;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(95, 183, 121, 0.12), transparent 55%),
-    radial-gradient(ellipse at 70% 80%, rgba(58, 126, 184, 0.1), transparent 50%),
-    linear-gradient(180deg, #f7f1e6 0%, #efe6d6 100%);
-  overflow: hidden;
+    radial-gradient(circle at 50% 50%, rgba(245, 211, 72, 0.16), transparent 42%),
+    radial-gradient(circle at 50% 50%, rgba(95, 183, 121, 0.1), transparent 68%),
+    linear-gradient(165deg, #f8f3e8 0%, #efe6d4 100%);
+  overflow: visible;
 }
 
 .mapSvg {
@@ -109,48 +117,54 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  overflow: visible;
 }
 
-.dotRing {
-  fill: rgba(40, 32, 24, 0.06);
-  stroke: rgba(40, 32, 24, 0.12);
-  stroke-width: 0.35;
+.mandalaOrbit {
+  fill: none;
+  stroke: rgba(212, 168, 40, 0.22);
+  stroke-width: 0.28;
+  stroke-dasharray: 1 1.6;
 }
 
-.dotRingLit {
-  fill: rgba(20, 58, 46, 0.14);
-  stroke: rgba(20, 58, 46, 0.55);
-  stroke-width: 0.45;
-}
-
+/* One circle = the icon badge. No outer ring, no second plate. */
 .dot {
   position: absolute;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   margin: 0;
   padding: 0;
-  border: 2px solid rgba(40, 32, 24, 0.12);
+  border: none;
   border-radius: 50%;
-  background: #fffdf8;
+  background: transparent;
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
   opacity: 0.38;
   filter: grayscale(0.35);
   cursor: default;
-  transition: opacity 160ms ease, transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  box-shadow: none;
+  transition: opacity 160ms ease, filter 160ms ease, transform 160ms ease;
 }
 
 .dot img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  border-radius: 50%;
 }
 
 .dot span {
-  font-size: 13px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff8d6;
+  border: 2px solid #143a2e;
+  font-size: 14px;
   font-weight: 900;
   color: #143a2e;
 }
@@ -158,9 +172,12 @@
 .dotLit {
   opacity: 1;
   filter: none;
-  border-color: #143a2e;
-  box-shadow: 0 0 0 3px rgba(20, 58, 46, 0.18), 0 6px 14px rgba(20, 58, 46, 0.16);
-  transform: translate(-50%, -50%) scale(1.06);
+  transform: translate(-50%, -50%) scale(1.08);
+  z-index: 2;
+}
+
+.dotLit img {
+  filter: drop-shadow(0 0 6px rgba(240, 201, 58, 0.75));
 }
 
 .dotClickable {
@@ -168,7 +185,7 @@
 }
 
 .dotClickable:hover {
-  opacity: 0.85;
+  opacity: 0.95;
   filter: none;
 }
 
@@ -181,8 +198,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 4px;
+  gap: 14px;
+  padding-top: 2px;
 }
 
 .count {
@@ -192,43 +209,42 @@
   color: rgba(28, 24, 20, 0.62);
 }
 
-.actions {
-  display: flex;
-  gap: 8px;
-}
-
-.secondary,
-.primary {
-  min-height: 40px;
-  padding: 0 16px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 900;
+.letsGo {
+  min-height: 48px;
+  padding: 0 32px;
+  border-radius: 999px;
+  border: 2px solid #f0c93a;
+  background:
+    radial-gradient(ellipse 80% 120% at 30% 20%, rgba(255, 255, 255, 0.35), transparent 55%),
+    linear-gradient(135deg, #1a4a38 0%, #143a2e 55%, #0f2e24 100%);
+  color: #fff8d6;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   cursor: pointer;
+  box-shadow: none;
 }
 
-.secondary {
-  border: 1px solid rgba(40, 32, 24, 0.14);
-  background: #fff;
-  color: #1c1814;
+.letsGo:hover:not(:disabled) {
+  border-color: #ffe28a;
+  color: #fffef0;
 }
 
-.primary {
-  border: none;
-  background: #143a2e;
-  color: #f4efe2;
-}
-
-.primary:disabled {
-  opacity: 0.4;
+.letsGo:disabled {
+  opacity: 0.38;
   cursor: not-allowed;
 }
 
 @media (max-width: 560px) {
   .panel { padding: 16px; border-radius: 16px; }
   .title { font-size: 22px; }
-  .dot { width: 30px; height: 30px; }
+  .mapWrap { max-height: min(48vh, 360px); }
+  .dot { width: 36px; height: 36px; }
   .foot { flex-direction: column; align-items: stretch; }
-  .actions { width: 100%; }
-  .secondary, .primary { flex: 1; }
+  .letsGo { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotLit { transform: translate(-50%, -50%); }
 }

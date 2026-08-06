@@ -1,16 +1,59 @@
 .wrap {
   display: flex;
-  align-items: flex-end;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
   pointer-events: none;
+  min-width: 0;
+  flex: 1 1 auto;
+  position: relative;
+  z-index: 6;
+}
+
+.spriteHit {
+  position: relative;
+  z-index: 7;
+  flex-shrink: 0;
+  pointer-events: auto;
+  /* Generous hit target so the irregular sticker PNG is easy to click */
+  min-width: 56px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  margin: -6px;
+}
+
+.spriteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 56px;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 12px;
+  line-height: 0;
+}
+.spriteBtn:focus-visible {
+  outline: 2px solid #b9e86f;
+  outline-offset: 3px;
 }
 
 .sprite {
   width: 88px;
   height: 88px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 0 rgba(58, 47, 85, 0.12));
+  filter: drop-shadow(0 4px 0 rgba(20, 58, 46, 0.12));
   transform-origin: 50% 90%;
+  pointer-events: none;
+}
+
+.spin {
+  width: 56px;
+  filter: drop-shadow(0 4px 8px rgba(20, 58, 46, 0.18));
 }
 
 .cheer .sprite {
@@ -22,38 +65,54 @@
   50% { transform: translateY(-8px) rotate(3deg); }
 }
 
+/* Quote sits beside the sticker with no speech-bubble chrome. */
 .bubble {
-  max-width: 240px;
-  background: #fffdf8;
-  border: 2.5px solid #3a2f55;
-  border-radius: 18px 20px 20px 6px;
-  padding: 10px 14px;
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.14);
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 420px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  pointer-events: none;
 }
 
 .line {
   margin: 0;
-  font-family: var(--tok-font-hand);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.2;
-  color: #2a2430;
+  font-family: var(--tok-font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #f4efe2;
 }
 
-/* Hero-bar sizing  -  shows on every dashboard view now (Home/Map/Work/Notes),
-   so it needs to sit comfortably in one shared strip alongside the nav and
-   the spark pill, not dominate a whole row the way the old standalone
-   Home-only header could afford to. */
-.compact .sprite { width: 46px; height: 46px; }
-.compact .bubble { max-width: 260px; padding: 7px 12px; border-radius: 14px 16px 16px 5px; }
-.compact .line { font-size: 16px; }
+.compact .sprite { width: 68px; height: 68px; }
+.compact .spin { width: 68px; }
+.compact .spriteHit,
+.compact .spriteBtn {
+  min-width: 76px;
+  min-height: 76px;
+}
+.compact .bubble { max-width: none; padding: 0; }
+.compact .line {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f4efe2;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .cheer .sprite { animation: none; }
 }
 
 @media (max-width: 720px) {
-  .sprite { width: 68px; height: 68px; }
-  .bubble { max-width: 180px; }
-  .line { font-size: 17px; }
+  .sprite { width: 72px; height: 72px; }
+  .spin { width: 60px; }
+  .compact .sprite { width: 60px; height: 60px; }
+  .compact .spin { width: 60px; }
+  .bubble { max-width: 220px; }
+  .line { font-size: 18px; }
+  .compact .line { font-size: 16px; }
 }

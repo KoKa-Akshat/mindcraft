@@ -9,18 +9,28 @@ import { isDiagnosticComplete, markDiagnosticComplete, persistDiagnosticDoneLoca
 import { applyDiagnosticConfidence } from '../lib/diagnosticSeed'
 import { fetchPracticeHubRecommendations, type NextConcept } from '../lib/recommendNextConcept'
 import { playTap } from '../lib/uiSound'
-import { pawHubDisplayText, type CurriculumTrack } from '../lib/curriculumTrack'
+import { type CurriculumTrack } from '../lib/curriculumTrack'
 import type { Confidence } from '../lib/bridgePractice'
 import SessionCallCard from '../components/SessionCallCard'
 import DashboardNotesPanel from '../components/DashboardNotesPanel'
-import ConstellationGpsExplorer from '../components/ConstellationGpsExplorer'
+import ActEmojiMap from '../components/canvas/ActEmojiMap'
 import WorkStudio from '../components/canvas/WorkStudio'
 import WizardMascot from '../components/canvas/WizardMascot'
+import StickersShelf from '../components/book/StickersShelf'
+import {
+  coverStickerById,
+  DEFAULT_MASCOT_STICKER_ID,
+  loadMascotStickerId,
+  parseStickerPlan,
+  saveMascotStickerId,
+  type StickerPlan,
+} from '../lib/coverStickers'
 import TocSectionMark from '../components/canvas/TocSectionMark'
 import NotebookIntro, { introAlreadySeen } from '../components/canvas/NotebookIntro'
-import CoverLanding, { coverAlreadySeen } from '../components/book/CoverLanding'
-import { ACT_TOC_SECTIONS, actConceptBlurb, actConceptLabel } from '../lib/actToc'
-import { conceptIconUrl } from '../lib/conceptIcon'
+import CoverLanding, { clearCoverSeen, coverAlreadySeen } from '../components/book/CoverLanding'
+import { ACT_TOC_SECTIONS, actConceptLabel, type ActTocSection } from '../lib/actToc'
+import { storyArtFor } from '../lib/storyArt'
+import { CalendarCheck, Lock, MessageCircle, LogOut, Map, PenLine, NotebookPen, Sparkles } from 'lucide-react'
 import { fetchKnowledgeGraph } from '../lib/graphCache'
 import { STATUS_COLOR } from '../lib/learningPathGraph'
 import WeeklyReviewPicker from '../components/WeeklyReviewPicker'
@@ -80,7 +90,7 @@ const MC_BLOCKS: Array<{
 ]
 
 /** Contents roadmap dot state. Backed by the same per-concept `status`/
- * `mastery` the Knowledge Map (ConstellationGpsExplorer) reads off
+ * `mastery` the Knowledge Map (ActEmojiMap) reads off
  * GET /knowledge-graph/{uid}, same signal, same status vocabulary
  * (learningPathGraph.ts STATUS_COLOR), so a topic that reads "mastered" here
  * reads mastered on the Map too. Not a new/invented completion metric. */
@@ -95,6 +105,89 @@ function tocDotState(status: string): TocDotState {
   if (status === 'in_progress' || status === 'repairing') return 'progress'
   return 'locked'
 }
+
+/* ── Contents lane grid math (2026-08-05) ──────────────────────────────────
+ * Replaces hand-guessed `nth-child` span rules in the CSS module (which
+ * hardcoded which cell gets bigger to fill dead space for TODAY's specific
+ * per-lane concept counts) with a real computation off each lane's actual
+ * `conceptIds.length`. Three pieces:
+ *   1. `tocColumnsFor(count)` — how many columns a lane's thumbnail grid
+ *      should use: a near-square layout (ceil(sqrt(count))), clamped to a
+ *      legible range, but never MORE columns than items (so a 2-item lane
+ *      gets a clean 2-column single row, not 2 items adrift in 6 columns).
+ *   2. `tocTrailingSpans(remainder, columns)` — when `count` doesn't divide
+ *      evenly by `columns`, the leftover row's cells get computed
+ *      `grid-column: span N` values that sum back to `columns`, so the last
+ *      row always fills edge-to-edge (Akshat's "lone leftover becomes a
+ *      clean 1x2" ask) instead of sitting next to dead cells.
+ *   3. `tocLaneSpanPair(colsA, colsB)` — the two lanes drawn on the same row
+ *      of the outer 12-column `.horizontalToc` grid split that width
+ *      proportional to how many thumbnail columns each actually needs, so a
+ *      lane with fewer concepts doesn't inherit a wide track sized for its
+ *      neighbor. (Verified this reproduces the previously hand-tuned 5/7
+ *      split on today's live counts — it's the same visual result, just
+ *      derived instead of guessed, and it moves when the counts do.)
+ */
+function tocColumnsFor(count: number): number {
+  if (count <= 0) return 1
+  if (count <= 4) return count
+  // Prefer 4-across tiles (Pinterest-calm) over dense 5–6 col grids.
+  const ideal = Math.ceil(Math.sqrt(count))
+  return Math.min(4, Math.max(3, ideal))
+}
+
+function tocTrailingSpans(remainder: number, columns: number): number[] {
+  if (remainder <= 0) return []
+  const base = Math.floor(columns / remainder)
+  const extra = columns - base * remainder
+  return Array.from({ length: remainder }, (_, i) => base + (i < extra ? 1 : 0))
+}
+
+type TocLaneLayout = {
+  /** Thumbnail columns for this lane's own track. */
+  columns: number
+  /** grid-column span (out of 12) for this lane on the outer .horizontalToc grid. */
+  laneSpan: number
+  /** Index (0-based) of the first concept in the incomplete trailing row, or null if none. */
+  lastRowStart: number | null
+  /** grid-column span per node in the trailing row, aligned to lastRowStart. */
+  trailingSpans: number[]
+}
+
+function tocLaneSpanPair(colsA: number, colsB: number): [number, number] {
+  const total = colsA + colsB
+  if (total <= 0) return [6, 6]
+  const spanA = Math.min(10, Math.max(2, Math.round((colsA / total) * 12)))
+  return [spanA, 12 - spanA]
+}
+
+/** Computes the full per-lane grid layout from the real section list, once. */
+function computeTocLaneLayouts(sections: readonly ActTocSection[]): Record<string, TocLaneLayout> {
+  const columnsBySection = sections.map(sec => tocColumnsFor(sec.conceptIds.length))
+  const layouts: Record<string, TocLaneLayout> = {}
+  for (let i = 0; i < sections.length; i += 2) {
+    const colsA = columnsBySection[i]
+    const colsB = columnsBySection[i + 1]
+    const spans = colsB !== undefined ? tocLaneSpanPair(colsA, colsB) : [12, 12]
+    for (let offset = 0; offset < 2 && i + offset < sections.length; offset++) {
+      const section = sections[i + offset]
+      const count = section.conceptIds.length
+      const columns = columnsBySection[i + offset]
+      const remainder = columns > 0 ? count % columns : 0
+      layouts[section.id] = {
+        columns,
+        laneSpan: spans[offset],
+        lastRowStart: remainder !== 0 ? count - remainder : null,
+        trailingSpans: tocTrailingSpans(remainder, columns),
+      }
+    }
+  }
+  return layouts
+}
+
+/** Computed once at module load — ACT_TOC_SECTIONS is a fixed module-level
+ *  array, so this never needs to be recomputed per render/component instance. */
+const TOC_LANE_LAYOUTS = computeTocLaneLayouts(ACT_TOC_SECTIONS)
 
 export default function Dashboard({
   preview = false,
@@ -114,7 +207,7 @@ export default function Dashboard({
 }) {
   const user = useUser()
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const viewingAs = !!viewAsStudentId
   const data = useStudentData(user, { viewAsUid: viewAsStudentId })
   const uid = viewAsStudentId || user?.uid || ''
@@ -123,6 +216,7 @@ export default function Dashboard({
     : viewingAs && !embedded
       ? `/tutor/student/${viewAsStudentId}${frameEmbed ? '?embed=1' : ''}`
       : '/dashboard'
+  const coverInUrl = searchParams.get('cover') === '1'
 
   const [diagChecked, setDiagChecked] = useState(preview || viewingAs)
   const [weakness, setWeakness] = useState<NextConcept | null>(null)
@@ -132,15 +226,48 @@ export default function Dashboard({
   const [solverText, setSolverText] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<string[]>([])
+  // Cover is a real history step (?cover=1) so browser Back returns to the
+  // shelf — not out to the marketing site.
   const [showCover, setShowCover] = useState(() => (
-    typeof window !== 'undefined' && !preview && !viewingAs && !coverAlreadySeen()
+    typeof window !== 'undefined'
+    && !preview
+    && !viewingAs
+    && (new URLSearchParams(window.location.search).get('cover') === '1' || !coverAlreadySeen())
   ))
   const [showIntro, setShowIntro] = useState(() => (
     typeof window !== 'undefined' && !preview && !viewingAs && !introAlreadySeen()
   ))
+
+  // Keep cover ↔ URL in sync (Back/Forward + first paint).
+  useEffect(() => {
+    if (preview || viewingAs) return
+    if (coverInUrl) {
+      // Back onto the shelf = cover is "unread" again this session.
+      clearCoverSeen()
+      setShowCover(true)
+      return
+    }
+    if (coverAlreadySeen()) setShowCover(false)
+  }, [coverInUrl, preview, viewingAs])
+
+  // Stamp ?cover=1 when the shelf is up so this visit is a history entry.
+  useEffect(() => {
+    if (preview || viewingAs || !showCover || coverInUrl) return
+    const next = new URLSearchParams(searchParams)
+    next.set('cover', '1')
+    setSearchParams(next, { replace: true })
+  }, [showCover, coverInUrl, preview, viewingAs, searchParams, setSearchParams])
+
+  function openCoverBook() {
+    setShowCover(false)
+    const next = new URLSearchParams(searchParams)
+    next.delete('cover')
+    // Push (not replace) so Back restores ?cover=1 → CoverLanding.
+    setSearchParams(next, { replace: false })
+  }
   const [tutorMeetUrl, setTutorMeetUrl] = useState<string | null>(null)
   const [manjushreeGlow, setManjushreeGlow] = useState(false)
-  const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string }>>({})
+  const [conceptProgress, setConceptProgress] = useState<Record<string, { mastery: number; status: string; eventCount: number }>>({})
   const [embedView, setEmbedView] = useState<'home' | 'map' | 'work' | 'notes'>('home')
   const [showWeeklyPicker, setShowWeeklyPicker] = useState(false)
 
@@ -174,31 +301,6 @@ export default function Dashboard({
   function openNotes() {
     if (embedded) { setEmbedView('notes'); return }
     navigate(withEmbed(`${homeBase.split('?')[0]}?view=notes`), { replace: true })
-  }
-
-  function goChallenge() {
-    // Tutor frame: browse the student's map live; practice stays on their login.
-    if (viewingAs) {
-      openMap()
-      return
-    }
-    if (preview) {
-      navigate('/try/manjushree')
-      return
-    }
-    if (weakness) {
-      navigate('/practice', {
-        state: {
-          conceptId: weakness.conceptId,
-          missionType: 'weakness',
-          formatId: weakness.formatId,
-          ingredientId: weakness.ingredientId,
-          misconceptionId: weakness.misconceptionId,
-        },
-      })
-    } else {
-      openMap()
-    }
   }
 
   function openChapter(conceptId: string) {
@@ -252,9 +354,24 @@ export default function Dashboard({
       window.location.href = 'https://mindcraft-marketing-site.web.app/'
       return
     }
+    clearCoverSeen()
     try { await signOut(auth) } catch { /* ignore */ }
     navigate('/login')
   }
+
+  useEffect(() => {
+    if (!uid || preview) {
+      setStickerPlan('testing')
+      return
+    }
+    let cancelled = false
+    void getDoc(doc(db, 'users', uid))
+      .then(snap => {
+        if (!cancelled) setStickerPlan(parseStickerPlan(snap.data()?.stickerPlan))
+      })
+      .catch(() => { if (!cancelled) setStickerPlan('testing') })
+    return () => { cancelled = true }
+  }, [uid, preview])
 
   useEffect(() => {
     if (preview) {
@@ -325,13 +442,25 @@ export default function Dashboard({
     let cancelled = false
     void fetchKnowledgeGraph(uid).then(kg => {
       if (cancelled || !kg) return
-      const nodes = (kg.nodes ?? []) as Array<{ id?: unknown; mastery?: unknown; status?: unknown }>
-      const next: Record<string, { mastery: number; status: string }> = {}
+      const nodes = (kg.nodes ?? []) as Array<{
+        id?: unknown
+        mastery?: unknown
+        status?: unknown
+        eventCount?: unknown
+        event_count?: unknown
+      }>
+      const next: Record<string, { mastery: number; status: string; eventCount: number }> = {}
       for (const n of nodes) {
         if (typeof n.id !== 'string') continue
+        const events = typeof n.eventCount === 'number'
+          ? n.eventCount
+          : typeof n.event_count === 'number'
+            ? n.event_count
+            : 0
         next[n.id] = {
           mastery: typeof n.mastery === 'number' ? n.mastery : 0,
           status: typeof n.status === 'string' ? n.status : 'untouched',
+          eventCount: events,
         }
       }
       setConceptProgress(next)
@@ -433,9 +562,10 @@ export default function Dashboard({
     return () => { cancelled = true }
   }, [user.uid, navigate, searchParams, preview, viewingAs])
 
-  const weaknessLabel = weakness ? pawHubDisplayText(weakness.label, curriculumTrack) : null
   const displayName = data.displayName ?? user?.email?.split('@')[0] ?? ''
   const sparkId = weakness?.conceptId ?? null
+  /** Weak spot first, else learn-next — same signal the Map spark uses. */
+  const nextTopic = weakness ?? learn
 
   const weeklyReviewIds = useMemo(
     () => ACT_TOC_SECTIONS[0]?.conceptIds.slice(0, 2) ?? [],
@@ -445,18 +575,11 @@ export default function Dashboard({
   // The topic picker builds (and caches) the paper on Start.
   const thisWeekKey = useMemo(() => weekKey(), [])
 
-  // The wizard's own speech-bubble box (previously reading "Weekly Review")
-  // is removed from next to the mascot per Akshat's follow-up brief: the
-  // "this week's paper" CTA now carries the "Weekly Review" label itself
-  // (see .homeTopActions below), so having it twice was redundant. The
-  // WizardMascot component (components/canvas/, out of this lane) still
-  // requires a `line` string prop; it's kept computed here but its bubble
-  // is hidden purely via CSS (`.heroMiddle > aside > div` in
-  // Dashboard.module.css) so the sprite alone remains next to today's
-  // spark, with no dead empty box left behind.
-  const wizardLine = weaknessLabel
-    ? 'Weekly Review'
-    : 'Pick any sticker on the map and we’ll dive in ★'
+  const [stickersOpen, setStickersOpen] = useState(false)
+  const [mascotId, setMascotId] = useState(() => loadMascotStickerId())
+  const [stickerPlan, setStickerPlan] = useState<StickerPlan>('testing')
+  const mascot = coverStickerById(mascotId) ?? coverStickerById(DEFAULT_MASCOT_STICKER_ID)!
+  const wizardLine = mascot.blurb
 
   // Locked once the student has finished this week's paper (weekKey-keyed
   // completion flag, self-written by the student's own browser same as
@@ -482,14 +605,25 @@ export default function Dashboard({
     setShowWeeklyPicker(true)
   }
 
-  function startWeeklyPaper(paper: WeeklyPracticePaper) {
+  /** Guided Weekly Review: story → formula → questions per lit topic. */
+  function startWeeklyPlaythrough(paper: WeeklyPracticePaper) {
     setShowWeeklyPicker(false)
     if (!paper.questionIds.length) {
       openMap()
       return
     }
-    // Scrollable free-response paper + ScratchPad (Cursor brief #4).
-    navigate('/weekly-paper', { state: { weeklyPaperWeekKey: paper.weekKey } })
+    navigate('/practice', { state: { weeklyWalkthrough: true } })
+  }
+
+  // Cover first — before the diagnostic loading gate — so login lands on the
+  // notebook cover, not a spinner or Contents.
+  if (showCover && !viewingAs) {
+    return (
+      <CoverLanding
+        accountName={displayName}
+        onOpen={openCoverBook}
+      />
+    )
   }
 
   if (!diagChecked) {
@@ -580,14 +714,7 @@ export default function Dashboard({
         data-glow={manjushreeGlow ? '1' : '0'}
       />
       )}
-      {showCover && !viewingAs && (
-        <CoverLanding
-          entryLabel="your ACT study notebook"
-          accountName={displayName}
-          onOpen={() => setShowCover(false)}
-        />
-      )}
-      {!showCover && showIntro && (
+      {showIntro && (
         <NotebookIntro onContinue={() => setShowIntro(false)} />
       )}
 
@@ -601,35 +728,65 @@ export default function Dashboard({
             -  not just Contents. .heroMiddle is the flexible zone (wizard +
            spark) that absorbs width pressure; the wordmark, nav, and user
            block hold their size. Below 720px it wraps onto extra lines
-           rather than truncating content. The wizard's own speech-bubble
-           box is hidden here (see .heroMiddle > aside > div in the CSS
-           module) so today's spark sits right up against the sprite instead
-           of leaving the bubble's old footprint as dead space. */}
+           rather than truncating content. The wizard quote is plain text
+           beside the sticker (no speech-bubble chrome). */}
         <header className={s.heroBar}>
-          <span className={s.canvasWordmark}>Mind<span className={s.canvasWordmarkCraft}>Craft</span></span>
+          <button
+            type="button"
+            className={s.canvasWordmark}
+            onClick={openHome}
+            aria-label="Home"
+            title="Home"
+          >
+            Mind<span className={s.canvasWordmarkCraft}>Craft</span>
+          </button>
           <nav className={s.canvasNav} aria-label="Notebook sections">
-            <button type="button" className={view === 'home' ? s.navActive : s.navBtn} onClick={openHome}>Home</button>
-            <button type="button" className={view === 'map' ? s.navActive : s.navBtn} onClick={openMap}>Map</button>
-            <button type="button" className={view === 'work' ? s.navActive : s.navBtn} onClick={openWork}>Work</button>
-            <button type="button" className={view === 'notes' ? s.navActive : s.navBtn} onClick={openNotes}>Notes</button>
+            <button
+              type="button"
+              className={view === 'map' ? s.navActive : s.navBtn}
+              onClick={openMap}
+              aria-label="Map"
+              title="Map"
+            >
+              <Map size={22} strokeWidth={2.25} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={view === 'work' ? s.navActive : s.navBtn}
+              onClick={openWork}
+              aria-label="Work"
+              title="Work"
+            >
+              <PenLine size={22} strokeWidth={2.25} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={view === 'notes' ? s.navActive : s.navBtn}
+              onClick={openNotes}
+              aria-label="Notes"
+              title="Notes"
+            >
+              <NotebookPen size={22} strokeWidth={2.25} aria-hidden="true" />
+            </button>
           </nav>
           <div className={s.heroMiddle}>
-            <WizardMascot line={wizardLine} compact />
-            {weakness && (
-              <button type="button" className={s.heroSpark} onClick={goChallenge}>
-                <img className={s.heroSparkIcon} src={conceptIconUrl(weakness.conceptId)} alt="" draggable={false} />
-                <span className={s.sparkText}>
-                  <span className={s.sparkEyebrow}>today’s spark</span>
-                  <span className={s.sparkName}>{weaknessLabel}</span>
-                </span>
-                <span className={s.sparkGo}>play</span>
-              </button>
-            )}
+            <WizardMascot
+              line={wizardLine}
+              spriteSrc={mascot.src}
+              onSpriteClick={viewingAs || preview ? undefined : () => setStickersOpen(true)}
+              compact
+            />
           </div>
           <div className={s.canvasUser}>
-            {displayName && <span>{displayName}</span>}
-            <button type="button" className={s.signOut} onClick={() => void handleSignOut()}>
-              {viewingAs ? 'back' : 'sign out'}
+            {displayName && <span className={s.canvasUserName}>{displayName}</span>}
+            <button
+              type="button"
+              className={s.signOut}
+              onClick={() => void handleSignOut()}
+              aria-label={viewingAs ? 'Back' : 'Sign out'}
+              title={viewingAs ? 'Back' : 'Sign out'}
+            >
+              <LogOut size={18} strokeWidth={2.25} aria-hidden="true" />
             </button>
           </div>
         </header>
@@ -653,86 +810,116 @@ export default function Dashboard({
                 <div className={s.homeTop}>
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>
+                    <ul className={s.ringLegend} aria-label="Status color guide">
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.mastered }} /> Mastered (✓)</li>
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.in_progress }} /> In progress</li>
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.struggling }} /> Needs work</li>
+                      <li><span className={s.ringSwatch} style={{ ['--swatch' as string]: STATUS_COLOR.untouched }} /> Not started</li>
+                    </ul>
                   </div>
                   <div className={s.homeTopActions}>
+                    {nextTopic && !recLoading && (
+                      <button
+                        type="button"
+                        className={s.nextTopicCard}
+                        onClick={() => openChapter(nextTopic.conceptId)}
+                        title={`Open ${nextTopic.label} and tackle questions`}
+                      >
+                        <Sparkles size={20} aria-hidden="true" />
+                        <div>
+                          <span className={s.weeklyCardEyebrow}>
+                            {weakness ? 'Suggested next' : 'Learn next'}
+                          </span>
+                          <span className={s.weeklyCardTitle}>{nextTopic.label}</span>
+                        </div>
+                      </button>
+                    )}
                     {showWeeklyCta && (
                       paperLocked ? (
-                        <div className={s.paperCtaLocked} aria-live="off">
-                          <span className={s.paperCtaLockIcon} aria-hidden="true">🔒</span>
-                          <span className={s.paperCtaLockedText}>
-                            <span className={s.paperCtaEyebrow}>this week’s paper</span>
-                            <span className={s.paperCtaUnlockLabel}>Done! {paperUnlockLabel}</span>
-                          </span>
+                        <div className={s.weeklyCardLocked} aria-live="off">
+                          <Lock size={18} aria-hidden="true" />
+                          <div>
+                            <span className={s.weeklyCardEyebrow}>This week</span>
+                            <span className={s.weeklyCardTitle}>Done · {paperUnlockLabel}</span>
+                          </div>
                         </div>
                       ) : (
-                        // Reuses .bookSessionLink verbatim (Akshat: label
-                        // should read "Weekly Review" and look "just like a
-                        // find a tutor button", same pill, no arrow, no new
-                        // CSS invented for it). Opens the topic picker.
-                        <button type="button" className={s.bookSessionLink} onClick={openWeeklyReview}>Weekly Review</button>
+                        <button type="button" className={s.weeklyCard} onClick={openWeeklyReview}>
+                          <CalendarCheck size={22} aria-hidden="true" />
+                          <div>
+                            <span className={s.weeklyCardEyebrow}>This week</span>
+                            <span className={s.weeklyCardTitle}>Weekly Review</span>
+                          </div>
+                        </button>
                       )
                     )}
                     {data.tutorId && data.parents.length > 0 ? (
-                      <select
-                        className={s.bookSessionLink}
-                        defaultValue=""
-                        onChange={e => {
-                          if (e.target.value) navigate(`/chat/${e.target.value}`)
-                          e.target.value = ''
-                        }}
-                      >
-                        <option value="" disabled>Message…</option>
-                        <option value={data.tutorId}>Message Tutor</option>
-                        {data.parents.map(p => (
-                          <option key={p.id} value={p.id}>Message {p.name}</option>
-                        ))}
-                      </select>
+                      <div className={s.iconSelectWrap}>
+                        <MessageCircle size={14} className={s.iconSelectIcon} aria-hidden="true" />
+                        <select
+                          className={`${s.bookSessionLink} ${s.iconSelect}`}
+                          defaultValue=""
+                          aria-label="Message tutor or parent"
+                          onChange={e => {
+                            if (e.target.value) navigate(`/chat/${e.target.value}`)
+                            e.target.value = ''
+                          }}
+                        >
+                          <option value="" disabled>Message…</option>
+                          <option value={data.tutorId}>Message Tutor</option>
+                          {data.parents.map(p => (
+                            <option key={p.id} value={p.id}>Message {p.name}</option>
+                          ))}
+                        </select>
+                      </div>
                     ) : data.tutorId ? (
                       <button
                         type="button"
                         className={s.bookSessionLink}
                         onClick={() => navigate(`/chat/${data.tutorId}`)}
                       >
-                        Message Tutor
+                        <MessageCircle size={14} aria-hidden="true" />
+                        <span>Message Tutor</span>
                       </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className={s.bookSessionLink}
-                        onClick={() => navigate('/find-a-tutor')}
-                      >
-                        Find a Tutor
-                      </button>
-                    )}
+                    ) : null}
                   </div>
                 </div>
 
                 <div className={s.horizontalToc}>
-                  {ACT_TOC_SECTIONS.map(section => (
+                  {ACT_TOC_SECTIONS.map(section => {
+                    const layout = TOC_LANE_LAYOUTS[section.id]
+                    return (
                     <section
                       key={section.id}
                       className={s.tocLane}
+                      data-lane={section.id}
                       style={{
                         background: section.wash,
                         ['--lane-accent' as string]: section.accent,
                         ['--lane-ink' as string]: section.ink,
+                        ['--lane-span' as string]: String(layout.laneSpan),
                       }}
                     >
                       <header className={s.tocLaneHead}>
                         <TocSectionMark id={section.id} accent={section.accent} />
-                        <div className={s.tocLaneCopy}>
-                          <h2 className={s.tocLaneTitle}>{section.title}</h2>
-                          <p className={s.tocLaneBlurb}>{section.blurb}</p>
-                        </div>
+                        <h2 className={s.tocLaneTitle}>{section.title}</h2>
                       </header>
-                      <div className={s.tocTrack}>
-                        {section.conceptIds.map(id => {
+                      <div
+                        className={s.tocTrack}
+                        style={{ ['--lane-columns' as string]: String(layout.columns) }}
+                      >
+                        {section.conceptIds.map((id, index) => {
                           const progress = conceptProgress[id]
                           const mastery = Math.max(0, Math.min(1, progress?.mastery ?? 0))
                           const status = progress?.status ?? 'untouched'
                           const dotState = tocDotState(status)
                           const dotColor = STATUS_COLOR[status] ?? STATUS_COLOR.untouched
-                          const clipId = `toc-dot-clip-${id}`
+                          // Trailing-row cells (computed above, off the lane's real
+                          // concept count) get a computed column span so the last
+                          // row always fills edge-to-edge instead of leaving dead
+                          // cells beside an arbitrarily-sized leftover box.
+                          const trailingIndex = layout.lastRowStart === null ? -1 : index - layout.lastRowStart
+                          const colSpan = trailingIndex >= 0 ? layout.trailingSpans[trailingIndex] : 1
                           return (
                             <button
                               key={id}
@@ -741,59 +928,24 @@ export default function Dashboard({
                               data-state={dotState}
                               style={{
                                 ['--node-color' as string]: dotColor,
+                                ['--mastery' as string]: String(mastery),
+                                ...(colSpan > 1 ? { gridColumn: `span ${colSpan}` } : null),
                               }}
                               title={`${actConceptLabel(id)}: ${Math.round(mastery * 100)}% mastery`}
                               onClick={() => openChapter(id)}
                             >
-                              <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
-                              {/* Icon badge + mastery progress ring  -  same
-                                  treatment as the Map's concept nodes
-                                  (ConstellationGpsExplorer): the real concept
-                                  icon clipped to a circle, a solid status ring,
-                                  and a stroke-dasharray arc that fills
-                                  proportional to mastery, starting at 12
-                                  o'clock. Reads full/solid + glowing once
-                                  mastery is high and status is mastered. */}
-                              <span className={s.tocNodeDot} aria-hidden="true">
-                                <svg className={s.tocNodeDotSvg} viewBox="0 0 44 44">
-                                  <defs>
-                                    <clipPath id={clipId}>
-                                      <circle cx="22" cy="22" r="14" />
-                                    </clipPath>
-                                  </defs>
-                                  <image
-                                    href={conceptIconUrl(id)}
-                                    x="8" y="8" width="28" height="28"
-                                    clipPath={`url(#${clipId})`}
-                                  />
-                                  <circle
-                                    cx="22" cy="22" r="14"
-                                    fill="none"
-                                    stroke={dotColor}
-                                    strokeWidth="2"
-                                  />
-                                  {mastery > 0.05 && (
-                                    <circle
-                                      cx="22" cy="22" r="18"
-                                      fill="none"
-                                      stroke={dotColor}
-                                      strokeWidth="2.2"
-                                      strokeOpacity="0.9"
-                                      strokeDasharray={`${mastery * 2 * Math.PI * 18} ${2 * Math.PI * 18}`}
-                                      strokeLinecap="round"
-                                      transform="rotate(-90 22 22)"
-                                    />
-                                  )}
-                                </svg>
+                              <span className={s.tocNodeIcon} aria-hidden="true">
+                                <img src={storyArtFor(id)} alt="" />
                                 {dotState === 'complete' && <span className={s.tocNodeCheck}>✓</span>}
                               </span>
-                              <span className={s.tocNodeBlurb}>{actConceptBlurb(id)}</span>
+                              <span className={s.tocNodeName}>{actConceptLabel(id)}</span>
                             </button>
                           )
                         })}
                       </div>
                     </section>
-                  ))}
+                    )
+                  })}
                 </div>
 
                 {/* Map/Work/Notes pills retired here  -  they duplicated the
@@ -812,9 +964,9 @@ export default function Dashboard({
 
             {view === 'map' && (
               <div className={s.mapCanvas}>
-                <ConstellationGpsExplorer
-                  embedded
-                  autoPlotConceptId={searchParams.get('concept') || sparkId}
+                <ActEmojiMap
+                  sparkId={searchParams.get('concept') || sparkId}
+                  onOpenLesson={openChapter}
                 />
               </div>
             )}
@@ -892,7 +1044,20 @@ export default function Dashboard({
           learn={learn}
           reviewConceptIds={weeklyReviewIds}
           onClose={() => setShowWeeklyPicker(false)}
-          onStart={startWeeklyPaper}
+          onPlayThrough={startWeeklyPlaythrough}
+        />
+      )}
+
+      {stickersOpen && (
+        <StickersShelf
+          plan={stickerPlan}
+          activeId={mascotId}
+          onClose={() => setStickersOpen(false)}
+          onPickMascot={id => {
+            setMascotId(id)
+            saveMascotStickerId(id)
+            setStickersOpen(false)
+          }}
         />
       )}
     </>

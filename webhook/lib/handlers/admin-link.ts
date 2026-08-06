@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { FieldValue } from 'firebase-admin/firestore'
+import { FieldValue, type DocumentSnapshot } from 'firebase-admin/firestore'
 import { db, auth } from '../firebase'
 import { setCors } from '../cors'
 
@@ -25,15 +25,20 @@ import { setCors } from '../cors'
  * read from. Nothing that reads the old scalar fields breaks.
  *
  * Body (all fields optional — send only the ones you're changing):
- *   studentId: string (required for every action below)
+ *   studentId: string (required for link/program actions; optional when
+ *     setting stickerPlan with userId alone)
  *   tutorId?: string        — link this tutor to the student
  *   unlinkTutorId?: string  — remove this tutor from the student
  *   parentId?: string       — link this parent to the student
  *   unlinkParentId?: string — remove this student from the parent
  *   program?: string        — dash/curriculum track ('ACT' today; 'SAT'/
  *     'PIANO' reserved placeholders for future tracks, see PROGRAM_IDS below)
+ *   stickerPlan?: string    — cover sticker shelf: testing | standard | premium
+ *   userId?: string         — write stickerPlan to this user (student or parent);
+ *     defaults to studentId when omitted
  */
 const PROGRAM_IDS = new Set(['ACT', 'SAT', 'PIANO'])
+const STICKER_PLANS = new Set(['testing', 'standard', 'premium'])
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
@@ -51,12 +56,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const body = req.body ?? {}
     const studentId = typeof body.studentId === 'string' ? body.studentId.trim() : ''
-    if (!studentId) return res.status(400).json({ error: 'Missing studentId' })
+    const userId = typeof body.userId === 'string' ? body.userId.trim() : ''
+    const stickerPlanRaw = typeof body.stickerPlan === 'string' ? body.stickerPlan.trim().toLowerCase() : ''
+    const stickerOnly = Boolean(stickerPlanRaw && userId && !studentId)
 
-    const studentSnap = await db.collection('users').doc(studentId).get()
-    if (!studentSnap.exists) return res.status(404).json({ error: 'Student not found' })
+    if (!studentId && !stickerOnly) return res.status(400).json({ error: 'Missing studentId' })
+
+    let studentSnap: DocumentSnapshot | null = null
+    if (studentId) {
+      studentSnap = await db.collection('users').doc(studentId).get()
+      if (!studentSnap.exists) return res.status(404).json({ error: 'Student not found' })
+    }
 
     if (typeof body.tutorId === 'string' && body.tutorId.trim()) {
+      if (!studentId) return res.status(400).json({ error: 'Missing studentId' })
       const tutorId = body.tutorId.trim()
       const tutorSnap = await db.collection('users').doc(tutorId).get()
       if (!tutorSnap.exists) return res.status(404).json({ error: 'Tutor not found' })
@@ -69,6 +82,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (typeof body.unlinkTutorId === 'string' && body.unlinkTutorId.trim()) {
+      if (!studentId || !studentSnap) return res.status(400).json({ error: 'Missing studentId' })
       const unlinkTutorId = body.unlinkTutorId.trim()
       const current = studentSnap.data() ?? {}
       const updates: Record<string, unknown> = { assignedTutorIds: FieldValue.arrayRemove(unlinkTutorId) }
@@ -80,6 +94,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (typeof body.parentId === 'string' && body.parentId.trim()) {
+      if (!studentId) return res.status(400).json({ error: 'Missing studentId' })
       const parentId = body.parentId.trim()
       const parentSnap = await db.collection('users').doc(parentId).get()
       if (!parentSnap.exists) return res.status(404).json({ error: 'Parent not found' })
@@ -91,12 +106,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (typeof body.program === 'string' && body.program.trim()) {
+      if (!studentId) return res.status(400).json({ error: 'Missing studentId' })
       const program = body.program.trim().toUpperCase()
       if (!PROGRAM_IDS.has(program)) return res.status(400).json({ error: 'Unknown program' })
       await db.collection('users').doc(studentId).set({ program }, { merge: true })
     }
 
+    if (stickerPlanRaw) {
+      if (!STICKER_PLANS.has(stickerPlanRaw)) {
+        return res.status(400).json({ error: 'Unknown stickerPlan' })
+      }
+      const targetId = userId || studentId
+      if (!targetId) return res.status(400).json({ error: 'Missing userId' })
+      const targetSnap = await db.collection('users').doc(targetId).get()
+      if (!targetSnap.exists) return res.status(404).json({ error: 'User not found' })
+      await db.collection('users').doc(targetId).set({ stickerPlan: stickerPlanRaw }, { merge: true })
+    }
+
     if (typeof body.unlinkParentId === 'string' && body.unlinkParentId.trim()) {
+      if (!studentId) return res.status(400).json({ error: 'Missing studentId' })
       const unlinkParentId = body.unlinkParentId.trim()
       const parentSnap = await db.collection('users').doc(unlinkParentId).get()
       const current = parentSnap.data() ?? {}

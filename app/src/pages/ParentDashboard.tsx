@@ -21,6 +21,7 @@ import {
 } from 'firebase/firestore'
 import { useUser } from '../App'
 import { MARKETING_BASE } from '../lib/siteUrls'
+import LiveJoinBanner from '../components/LiveJoinBanner'
 import Dashboard from './Dashboard'
 import s from './ParentDashboard.module.css'
 
@@ -153,6 +154,8 @@ export default function ParentDashboard() {
           </button>
         </div>
       </header>
+
+      <LiveJoinBanner role="parent" linkedId={user.uid} studentNames={childNames} />
 
       {loading && (
         <div className={s.centerNote}>Loading…</div>

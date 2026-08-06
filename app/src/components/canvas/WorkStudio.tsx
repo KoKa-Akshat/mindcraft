@@ -15,7 +15,7 @@ import s from './WorkStudio.module.css'
 const ACCEPT = 'application/pdf,image/jpeg,image/png,image/webp'
 const SOLVER_MAX = 1200
 
-type Stage = 'idle' | 'reading' | 'error'
+type Stage = 'idle' | 'reading' | 'choosing' | 'error'
 
 export default function WorkStudio({
   solverText,
@@ -35,6 +35,13 @@ export default function WorkStudio({
   const [dragging, setDragging] = useState(false)
   const [past, setPast] = useState<HomeworkSessionDoc[]>([])
 
+  // Rasterized pages waiting on the "extract questions" vs "write on it"
+  // choice (WorkStudio.tsx build note: both paths must stay reachable from
+  // the same upload — this holds the shared rasterization result between
+  // the drop and whichever path the student picks).
+  const [pendingPages, setPendingPages] = useState<string[] | null>(null)
+  const [pendingFileName, setPendingFileName] = useState('')
+
   useEffect(() => {
     if (!user?.uid) return
     let cancelled = false
@@ -43,6 +50,13 @@ export default function WorkStudio({
     })
     return () => { cancelled = true }
   }, [user?.uid])
+
+  function resetUpload() {
+    setPendingPages(null)
+    setPendingFileName('')
+    setStage('idle')
+    setError('')
+  }
 
   async function handleFile(file: File) {
     if (!user?.uid) return
@@ -56,26 +70,58 @@ export default function WorkStudio({
         setStage('error')
         return
       }
-      const { questions, unavailable } = await parseHomeworkPages(pages)
-      if (unavailable || questions.length === 0) {
-        setError('Couldn’t find questions. Try another page.')
-        setStage('error')
-        return
-      }
-      const homeworkId = await createHomeworkSession(user.uid, file.name, pages.length, questions)
-      navigate(`/homework/${homeworkId}`)
+      setPendingPages(pages)
+      setPendingFileName(file.name)
+      setStage('choosing')
     } catch {
       setError('Something went wrong reading that upload.')
       setStage('error')
     }
   }
 
+  async function extractQuestions() {
+    if (!user?.uid || !pendingPages) return
+    setStage('reading')
+    setStatusText('Reading your questions…')
+    try {
+      const { questions, unavailable } = await parseHomeworkPages(pendingPages)
+      if (unavailable) {
+        // Both the primary and fallback reading providers failed (not "no
+        // questions on this page" — the readers themselves are down). Say so
+        // distinctly so a real outage doesn't look like a bad photo.
+        setError('Reading is temporarily unavailable. Try again in a bit.')
+        setStage('error')
+        setPendingPages(null)
+        return
+      }
+      if (questions.length === 0) {
+        setError('Couldn’t find questions on that page. Try another page.')
+        setStage('error')
+        setPendingPages(null)
+        return
+      }
+      const homeworkId = await createHomeworkSession(user.uid, pendingFileName, pendingPages.length, questions)
+      navigate(`/homework/${homeworkId}`)
+    } catch {
+      setError('Something went wrong reading that upload.')
+      setStage('error')
+      setPendingPages(null)
+    }
+  }
+
+  function writeOnIt() {
+    if (!pendingPages) return
+    navigate('/worksheet', { state: { pages: pendingPages, fileName: pendingFileName } })
+  }
+
   const hasText = solverText.trim().length > 0
   const tip = stage === 'reading'
     ? 'Hang tight, I’m laying your pages on the canvas…'
-    : hasText
-      ? 'Nice. Hit Get hints and I’ll walk you through it.'
-      : 'Drop a worksheet PDF, or paste a stuck problem below.'
+    : stage === 'choosing'
+      ? 'Want your questions pulled out one by one, or write straight on the page?'
+      : hasText
+        ? 'Nice. Hit Get hints and I’ll walk you through it.'
+        : 'Drop a worksheet PDF, or paste a stuck problem below.'
 
   return (
     <div className={s.root}>
@@ -108,29 +154,48 @@ export default function WorkStudio({
             if (f) void handleFile(f)
           }}
         />
-        <button type="button" className={s.dropBtn} onClick={() => fileRef.current?.click()} disabled={stage === 'reading'}>
-          {stage === 'reading' ? statusText : 'Drop PDF / photo here'}
-        </button>
-        <span className={s.or}>or paste a problem</span>
-        <textarea
-          className={s.input}
-          placeholder="e.g. Solve 2x + 5 = 13…"
-          value={solverText}
-          maxLength={SOLVER_MAX}
-          rows={5}
-          onChange={e => onSolverText(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && hasText) onSolve()
-          }}
-        />
-        <button
-          type="button"
-          className={s.go}
-          disabled={!hasText || stage === 'reading'}
-          onClick={onSolve}
-        >
-          Get hints →
-        </button>
+        {stage === 'choosing' ? (
+          <div className={s.choiceWrap}>
+            <p className={s.choicePrompt}>Got it — {pendingFileName || 'your file'} is on the canvas. What next?</p>
+            <div className={s.choiceRow}>
+              <button type="button" className={s.choiceBtn} onClick={() => void extractQuestions()}>
+                Extract questions
+                <span className={s.choiceHint}>one at a time, own scratchpad</span>
+              </button>
+              <button type="button" className={s.choiceBtn} onClick={writeOnIt}>
+                Write on it
+                <span className={s.choiceHint}>mark up the page itself</span>
+              </button>
+            </div>
+            <button type="button" className={s.choiceCancel} onClick={resetUpload}>choose a different file</button>
+          </div>
+        ) : (
+          <>
+            <button type="button" className={s.dropBtn} onClick={() => fileRef.current?.click()} disabled={stage === 'reading'}>
+              {stage === 'reading' ? statusText : 'Drop PDF / photo here'}
+            </button>
+            <span className={s.or}>or paste a problem</span>
+            <textarea
+              className={s.input}
+              placeholder="e.g. Solve 2x + 5 = 13…"
+              value={solverText}
+              maxLength={SOLVER_MAX}
+              rows={5}
+              onChange={e => onSolverText(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && hasText) onSolve()
+              }}
+            />
+            <button
+              type="button"
+              className={s.go}
+              disabled={!hasText || stage === 'reading'}
+              onClick={onSolve}
+            >
+              Get hints →
+            </button>
+          </>
+        )}
         {error && <p className={s.err}>{error}</p>}
       </div>
 

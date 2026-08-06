@@ -1,0 +1,100 @@
+/* ── LiveJoinBanner — slim top-pinned "a call is live" strip ─────────────────
+   Deliberately simpler than SessionCallCard's bottom-right incoming-call
+   treatment (no rings, no avatar, no timer): a thin bar across the top of
+   the viewport with one pulsing dot, readable at a glance while scanning
+   the dashboard. Self-contained, same dark-forest/lime palette as the rest
+   of the live-call UI so it reads as part of the same feature family. */
+
+.banner {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(520px, calc(100vw - 32px));
+  padding: 10px 14px 10px 16px;
+  border-radius: 999px;
+  background: rgba(13, 31, 23, 0.94);
+  border: 1px solid rgba(196, 245, 71, 0.25);
+  box-shadow: 0 8px 28px rgba(13, 31, 23, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fffdf7;
+  font-family: var(--tok-font-sans);
+  animation: bannerDropIn 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+}
+
+@keyframes bannerDropIn {
+  from { transform: translateX(-50%) translateY(-14px); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c4f547;
+  box-shadow: 0 0 0 0 rgba(196, 245, 71, 0.6);
+  animation: dotPulse 1.8s ease-out infinite;
+}
+
+@keyframes dotPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(196, 245, 71, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(196, 245, 71, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(196, 245, 71, 0); }
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 253, 247, 0.88);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.name {
+  color: #fffdf7;
+  font-weight: 800;
+}
+
+.joinBtn {
+  flex-shrink: 0;
+  height: 30px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2ea866, #247a4d);
+  color: #ffffff;
+  font-family: var(--tok-font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.joinBtn:hover { transform: scale(1.05); }
+.joinBtn:active { transform: scale(0.96); }
+
+@media (prefers-reduced-motion: reduce) {
+  .banner, .dot { animation: none; }
+}
+
+@media (max-width: 520px) {
+  .banner {
+    left: 12px;
+    right: 12px;
+    top: 10px;
+    transform: none;
+    max-width: none;
+  }
+  @keyframes bannerDropIn {
+    from { transform: translateY(-14px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+}

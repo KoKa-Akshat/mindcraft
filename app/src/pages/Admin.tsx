@@ -63,10 +63,19 @@ interface AdminStudent {
    * and 'PIANO' are placeholders so the Links table already has room to
    * grow into new programs without another schema change. */
   program?:          string
+  /** Cover sticker shelf: testing (free) | standard ($100 priced) | premium ($240 included). */
+  stickerPlan?:      string
 }
 
 const PROGRAM_IDS = ['ACT', 'SAT', 'PIANO'] as const
 const PROGRAM_LABELS: Record<string, string> = { ACT: 'ACT', SAT: 'SAT (soon)', PIANO: 'Piano (soon)' }
+
+const STICKER_PLAN_IDS = ['testing', 'standard', 'premium'] as const
+const STICKER_PLAN_LABELS: Record<string, string> = {
+  testing: 'Testing (free)',
+  standard: '$100 (priced)',
+  premium: '$240 (included)',
+}
 
 interface AdminParent {
   id:          string
@@ -74,6 +83,7 @@ interface AdminParent {
   email:       string
   childId:     string | null
   childIds?:   string[]
+  stickerPlan?: string
 }
 
 interface AdminTutor {
@@ -323,6 +333,7 @@ export default function Admin() {
           assignedTutorId: d.data().assignedTutorId ?? null,
           assignedTutorIds: Array.isArray(d.data().assignedTutorIds) ? d.data().assignedTutorIds : [],
           program: d.data().program ?? 'ACT',
+          stickerPlan: d.data().stickerPlan ?? 'testing',
         }))
       ))
       .catch(() => {})
@@ -337,6 +348,7 @@ export default function Admin() {
         email: d.data().email ?? '',
         childId: d.data().childId ?? null,
         childIds: Array.isArray(d.data().childIds) ? d.data().childIds : [],
+        stickerPlan: d.data().stickerPlan ?? 'testing',
       }))))
       .catch(() => {})
     getDocs(query(collection(db, 'users'), where('role', '==', 'tutor')))
@@ -843,6 +855,22 @@ export default function Admin() {
     showToast(`Program set to ${PROGRAM_LABELS[program] ?? program}.`)
   }
 
+  async function setUserStickerPlan(userId: string, stickerPlan: string, kind: 'student' | 'parent') {
+    setLinkBusy(userId)
+    // Parents: sticker-only write (no studentId). Students: studentId + stickerPlan.
+    const ok = kind === 'parent'
+      ? await callAdminLink({ userId, stickerPlan })
+      : await callAdminLink({ studentId: userId, stickerPlan })
+    setLinkBusy(null)
+    if (!ok) return
+    if (kind === 'student') {
+      setStudents(prev => prev.map(x => x.id === userId ? { ...x, stickerPlan } : x))
+    } else {
+      setParents(prev => prev.map(x => x.id === userId ? { ...x, stickerPlan } : x))
+    }
+    showToast(`Stickers set to ${STICKER_PLAN_LABELS[stickerPlan] ?? stickerPlan}.`)
+  }
+
   async function unlinkParentFromStudent(studentId: string, parentId: string) {
     setLinkBusy(studentId)
     const ok = await callAdminLink({ studentId, unlinkParentId: parentId })
@@ -1184,6 +1212,7 @@ export default function Admin() {
                     <tr>
                       <th>Student</th>
                       <th>Program</th>
+                      <th>Stickers</th>
                       <th>Tutor</th>
                       <th>Parent</th>
                     </tr>
@@ -1218,6 +1247,18 @@ export default function Admin() {
                                 <option key={p} value={p} disabled={p !== 'ACT'}>
                                   {PROGRAM_LABELS[p]}
                                 </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td>
+                            <select
+                              className={s.linkSelect}
+                              value={st.stickerPlan ?? 'testing'}
+                              disabled={busy}
+                              onChange={e => setUserStickerPlan(st.id, e.target.value, 'student')}
+                            >
+                              {STICKER_PLAN_IDS.map(p => (
+                                <option key={p} value={p}>{STICKER_PLAN_LABELS[p]}</option>
                               ))}
                             </select>
                           </td>
@@ -1441,6 +1482,17 @@ export default function Admin() {
                         <span className={s.rowStatNum} style={{ fontSize: 13 }}>{childName ?? '—'}</span>
                         <span className={s.rowStatLabel}>Child</span>
                       </div>
+                      <select
+                        className={s.linkSelect}
+                        value={p.stickerPlan ?? 'testing'}
+                        disabled={linkBusy === p.id}
+                        onChange={e => setUserStickerPlan(p.id, e.target.value, 'parent')}
+                        title="Cover stickers plan"
+                      >
+                        {STICKER_PLAN_IDS.map(plan => (
+                          <option key={plan} value={plan}>{STICKER_PLAN_LABELS[plan]}</option>
+                        ))}
+                      </select>
                       <span className={`${s.statusBadge} ${p.childId ? s.badgeActive : s.badgeInactive}`}>
                         {p.childId ? 'Linked' : 'Not linked'}
                       </span>

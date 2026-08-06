@@ -1,0 +1,21 @@
+.stage {
+  display: inline-block;
+  touch-action: none;
+  cursor: grab;
+  transform-style: preserve-3d;
+  transition: transform 80ms linear;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.stage:active { cursor: grabbing; }
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage { transition: none; }
+}

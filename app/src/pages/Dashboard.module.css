@@ -376,10 +376,10 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 10px 12px;
-  border: 2.5px solid #3a2f55;
+  border: 2.5px solid #143a2e;
   background: none;
   text-align: left;
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+  box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.16);
   transition: transform 160ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 160ms;
 }
 
@@ -387,7 +387,7 @@
   transform: scale(1.05) rotate(-0.5deg);
   box-shadow:
     0 0 0 3px rgba(125, 255, 179, 0.35),
-    4px 8px 0 rgba(58, 47, 85, 0.14);
+    4px 8px 0 rgba(20, 58, 46, 0.14);
 }
 
 .exploreCard:focus-visible {
@@ -696,7 +696,7 @@
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(58, 47, 85, 0.45);
+  color: rgba(20, 58, 46, 0.45);
 }
 .actTocTitle {
   margin: 0;
@@ -721,7 +721,7 @@
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(58, 47, 85, 0.4);
+  color: rgba(20, 58, 46, 0.4);
   margin-bottom: 6px;
 }
 .actTocList {
@@ -768,7 +768,7 @@
   font-family: var(--tok-font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: rgba(58, 47, 85, 0.35);
+  color: rgba(20, 58, 46, 0.35);
   cursor: pointer;
   align-self: flex-start;
 }
@@ -781,11 +781,11 @@
   gap: 4px;
   width: 100%;
   text-align: left;
-  border: 2.5px solid #3a2f55;
+  border: 2.5px solid #143a2e;
   border-radius: 16px 20px 14px 18px;
   padding: 14px 16px;
   background: linear-gradient(145deg, #fff8c8, #ffe566);
-  box-shadow: 3px 4px 0 rgba(58, 47, 85, 0.16);
+  box-shadow: 3px 4px 0 rgba(20, 58, 46, 0.16);
   cursor: pointer;
   margin-bottom: 16px;
   transition: transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -826,17 +826,18 @@
    dashboard desk, the chapter canvas, and Practice's matte all read as
    one continuous surface instead of three separately-tuned UIs. */
 .canvasDesk {
+  /* Marketing palette (index.html / CoverLanding): ink, leaf, mint, cream. */
   --desk-radius-sm: 12px;
   --desk-radius-md: 16px;
   --desk-radius-lg: 22px;
-  --desk-ink: #2a2430;
-  --desk-ink-soft: #3a2f55;
-  --desk-shadow-soft: 0 6px 20px rgba(90, 70, 140, 0.1);
-  --desk-shadow-raised: 0 10px 30px rgba(90, 70, 140, 0.13);
-  --desk-shadow-stage: 0 16px 48px rgba(90, 70, 140, 0.16);
-  --desk-shadow-sticker: 3px 4px 0 rgba(58, 47, 85, 0.16);
-  --desk-shadow-sticker-hover: 0 0 0 3px rgba(125, 255, 179, 0.35), 5px 9px 0 rgba(58, 47, 85, 0.16);
-  --desk-border-sticker: 2px solid rgba(58, 47, 85, 0.85);
+  --desk-ink: #143a2e;
+  --desk-ink-soft: #2a5244;
+  --desk-shadow-soft: 0 6px 20px rgba(29, 84, 54, 0.08);
+  --desk-shadow-raised: 0 10px 30px rgba(29, 84, 54, 0.11);
+  --desk-shadow-stage: 0 16px 48px rgba(29, 84, 54, 0.14);
+  --desk-shadow-sticker: 3px 4px 0 rgba(20, 58, 46, 0.14);
+  --desk-shadow-sticker-hover: 0 0 0 3px rgba(185, 232, 111, 0.35), 5px 9px 0 rgba(20, 58, 46, 0.14);
+  --desk-border-sticker: 2px solid rgba(20, 58, 46, 0.85);
   --desk-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --desk-ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
 
@@ -846,11 +847,16 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  /* Same Deep Field frame as CoverLanding — fills the outer chrome so
+     Contents never sits in empty white. The paper stage stays cream. */
   background:
-    radial-gradient(ellipse 80% 55% at 15% 10%, rgba(255, 190, 220, 0.4), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 90% 80%, rgba(180, 210, 255, 0.45), transparent 50%),
-    linear-gradient(165deg, #efe6fb 0%, #e4dcf5 50%, #d9d0ef 100%);
-  padding: 4px 8px 8px;
+    linear-gradient(rgba(245, 245, 245, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 245, 245, 0.035) 1px, transparent 1px),
+    radial-gradient(ellipse 50% 52% at 50% 42%, rgba(29, 58, 138, 0.28), transparent 68%),
+    radial-gradient(ellipse 38% 40% at 72% 18%, rgba(196, 245, 71, 0.1), transparent 70%),
+    #080e14;
+  background-size: 56px 56px, 56px 56px, 100% 100%, 100% 100%, 100% 100%;
+  padding: 10px 14px 12px;
   box-sizing: border-box;
 }
 .canvasDeskFrameEmbed {
@@ -858,7 +864,7 @@
   height: min(78vh, 860px);
   max-height: min(78vh, 860px);
   border-radius: 18px;
-  border: 1px solid rgba(58, 47, 85, 0.12);
+  border: 1px solid rgba(20, 58, 46, 0.12);
 }
 
 /* ── merged hero bar ──────────────────────────────────────────────────────
@@ -876,9 +882,18 @@
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  gap: 14px;
+  gap: 16px;
   flex-shrink: 0;
-  padding: 8px 12px;
+  padding: 10px 14px;
+  margin: 0 2px 6px;
+  border-radius: 16px;
+  /* Chalkboard rail — matches the desk stage instead of cream paper. */
+  background:
+    linear-gradient(180deg, rgba(36, 58, 46, 0.92), rgba(18, 34, 26, 0.96));
+  border: 1px solid rgba(185, 232, 111, 0.22);
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(244, 239, 226, 0.06);
 }
 
 .heroMiddle {
@@ -887,138 +902,145 @@
   gap: 10px;
   flex: 1 1 auto;
   min-width: 0;
+  position: relative;
+  z-index: 5;
+  overflow: visible;
 }
 
-/* The wizard's speech-bubble box ("Weekly Review") removed from next to the
-   mascot (Akshat, 2026-07-25 fix pass) — WizardMascot itself lives in
-   components/canvas/, outside this lane's scope, so its bubble is hidden
-   structurally instead of edited at the source: the mascot's markup is
-   always <aside><img class="sprite"/><div class="bubble">...</div></aside>,
-   so the lone <div> direct child of that <aside> IS the bubble, no class
-   name from the other module needed. Sprite stays; hiding the div also
-   collapses .wrap's own 12px gap, so today's spark now sits right up
-   against the sprite using only .heroMiddle's existing 10px gap  -  no
-   leftover dead space, no separate "tighten the gap" rule needed. */
-.heroMiddle > aside > div { display: none; }
+/* Wizard sticker + quote bubble fill .heroMiddle (tap sprite → Stickers). */
 
-.heroSpark {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-align: left;
-  border: var(--desk-border-sticker);
-  border-radius: var(--desk-radius-sm) 16px 12px 14px;
-  padding: 8px 14px;
-  background: linear-gradient(145deg, #fff8c8, #ffe566);
-  box-shadow: var(--desk-shadow-sticker);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: transform 160ms var(--desk-ease-bounce), box-shadow 160ms var(--desk-ease-bounce);
-}
-.heroSpark:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--desk-shadow-sticker-hover); }
-.heroSpark:active { transform: translateY(0) scale(0.99); }
-.heroSparkIcon { width: 24px; height: 24px; flex-shrink: 0; }
-
-/* Two-tone wordmark to match the real brand mark (MindCraftLogo.module.css):
-   "Mind" in the same legible dark ink the rest of the hero bar's primary
-   text already uses on this light lavender background (--desk-ink, same as
-   .homeTitle/.navActive), "Craft" in the established brand green (#54b948 -
-   used as-is elsewhere across the app: HeroBar, AppTabBar, MindCraftLogo,
-   Practice; there is no --desk-* green token to reuse instead). The plain
-   white-on-dark version from MindCraftLogo would be invisible here. */
+/* Marketing / brand palette (index.html): ink #143a2e, leaf #247a4d,
+   leaf-2 #5fb779, sprout #b9e86f, gold #f5d348 / Craft #d3a900, paper #fffdf7. */
 .canvasWordmark {
   font-family: var(--tok-font-sans);
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 700;
-  color: var(--desk-ink);
-  letter-spacing: -0.01em;
+  color: #f4efe2;
+  letter-spacing: -0.015em;
   flex-shrink: 0;
   white-space: nowrap;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 160ms var(--desk-ease), transform 160ms var(--desk-ease-bounce);
 }
+.canvasWordmark:hover { opacity: 0.88; transform: translateY(-1px); }
+.canvasWordmark:active { transform: translateY(0); opacity: 1; }
 .canvasWordmarkCraft {
-  color: #54b948;
+  color: #f5d348;
 }
 
 .canvasNav {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   flex-wrap: wrap;
   flex-shrink: 0;
+  align-items: center;
 }
 
-/* Enlarged 2026-07-25 (Akshat: "visibly bigger, not a subtle tweak") — was
-   18px/6px 13px. */
 .navBtn, .navActive {
   border: none;
   background: transparent;
-  font-family: var(--tok-font-sans);
-  font-size: 24px;
-  font-weight: 700;
-  padding: 10px 22px;
-  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 14px;
   cursor: pointer;
-  color: rgba(58, 47, 85, 0.5);
-  white-space: nowrap;
+  color: rgba(244, 239, 226, 0.55);
   transition: background 160ms var(--desk-ease), color 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), transform 160ms var(--desk-ease-bounce);
 }
 .navActive {
-  background: rgba(255, 253, 248, 0.94);
-  color: var(--desk-ink);
-  box-shadow: var(--desk-shadow-soft);
+  background: rgba(185, 232, 111, 0.22);
+  color: #b9e86f;
+  box-shadow: 0 0 0 1px rgba(185, 232, 111, 0.35), 0 0 14px rgba(185, 232, 111, 0.2);
 }
-.navBtn:hover { color: var(--desk-ink); background: rgba(255, 253, 248, 0.55); transform: translateY(-1px); }
+.navBtn:hover {
+  color: #f4efe2;
+  background: rgba(244, 239, 226, 0.1);
+  transform: translateY(-1px);
+}
 .navBtn:active { transform: translateY(0); }
+.navActive:hover {
+  color: #e8f7b8;
+  background: rgba(185, 232, 111, 0.3);
+}
 
 .canvasUser {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
-  font-family: var(--tok-font-mono);
-  font-size: 11px;
-  color: rgba(58, 47, 85, 0.55);
+}
+.canvasUserName {
+  font-family: var(--tok-font-serif, Georgia, serif);
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #fffdf7;
+  text-shadow: 0 0 18px rgba(185, 232, 111, 0.28);
+  white-space: nowrap;
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .signOut {
-  background: none;
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1.5px solid rgba(185, 232, 111, 0.28);
+  border-radius: 12px;
+  background: rgba(244, 239, 226, 0.06);
   cursor: pointer;
-  font: inherit;
-  color: rgba(58, 47, 85, 0.45);
+  color: rgba(244, 239, 226, 0.72);
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
 }
-.signOut:hover { color: #2a2430; }
+.signOut:hover {
+  color: #b9e86f;
+  border-color: rgba(185, 232, 111, 0.55);
+  background: rgba(185, 232, 111, 0.14);
+}
 
 .canvasStage {
-  /* Design tokens for anything still speaking the older BookShell
-     vocabulary (DashboardPanels.module.css / DashboardNotesPanel)  -  that
-     shell (components/book/Book.module.css .shell) no longer wraps this
-     view, so those var() calls were resolving to nothing and silently
-     dropping styles (the Notes panel's search line and empty-state text
-     were nearly invisible before this fix). Values tuned to match this
-     canvas desk's own ink/paper palette rather than the book's. */
-  --rule: rgba(58, 47, 85, 0.14);
-  --ink-katha: #3a2f55;
-  --ink-pencil: rgba(58, 47, 85, 0.62);
-  --ink-depth: #6b5cff;
-  --ink-faded: rgba(58, 47, 85, 0.4);
-  --paper-edge: #ece6f7;
-  --paper-raised: #fffdf8;
-  --paper-recessed: #f3eefc;
-  --shadow-card: 0 3px 10px rgba(58, 47, 85, 0.1);
+  /* Chalkboard stage — blends from Cover Deep Field into a board you write on. */
+  --rule: rgba(244, 239, 226, 0.12);
+  --ink-katha: #f4efe2;
+  --ink-pencil: rgba(244, 239, 226, 0.72);
+  --ink-depth: #b9e86f;
+  --ink-faded: rgba(244, 239, 226, 0.45);
+  --paper-edge: rgba(185, 232, 111, 0.18);
+  --paper-raised: #1a2e24;
+  --paper-recessed: #14261c;
+  --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.35);
   --font-katha: var(--tok-font-serif);
   --font-script: var(--tok-font-hand);
   --font-stamp: var(--tok-font-mono);
+  --desk-ink: #f4efe2;
 
   flex: 1;
   min-height: 0;
-  background: rgba(255, 253, 248, 0.96);
-  border: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 85% 8%, rgba(185, 232, 111, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 15% 90%, rgba(29, 58, 138, 0.22), transparent 55%),
+    linear-gradient(165deg, #1c3228 0%, #14261c 48%, #0f1f18 100%);
+  border: 1px solid rgba(185, 232, 111, 0.16);
   border-radius: var(--desk-radius-lg);
-  box-shadow: var(--desk-shadow-stage);
-  /* Extra left gutter (was 24px) makes room for .deskSpine's ring column
-     without it overlapping stage content. */
-  padding: 20px 24px 22px 38px;
+  box-shadow:
+    0 0 0 1px rgba(185, 232, 111, 0.08),
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(244, 239, 226, 0.06);
+  padding: 22px 28px 24px 42px;
   overflow: hidden;
   position: relative;
+  color: #f4efe2;
 }
 
 /* ── spiral/binding-ring spine ── a left-edge gutter with small ring
@@ -1050,17 +1072,19 @@
   transform: translateX(-50%);
   border-radius: 999px;
   background: linear-gradient(180deg,
-    rgba(58, 47, 85, 0.05),
-    rgba(58, 47, 85, 0.16) 50%,
-    rgba(58, 47, 85, 0.05));
+    rgba(20, 58, 46, 0.05),
+    rgba(20, 58, 46, 0.16) 50%,
+    rgba(20, 58, 46, 0.05));
 }
 .deskRing {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fffdf8, #cfc3e8 55%, #8a7ab0 100%);
-  border: 1.5px solid rgba(58, 47, 85, 0.8);
-  box-shadow: 0 1px 0 rgba(58, 47, 85, 0.18);
+  background: radial-gradient(circle at 35% 30%, #fffdf7, #b9e86f 50%, #247a4d 100%);
+  border: 1.5px solid rgba(185, 232, 111, 0.85);
+  box-shadow:
+    0 0 8px rgba(185, 232, 111, 0.75),
+    0 0 16px rgba(185, 232, 111, 0.35);
   flex-shrink: 0;
 }
 
@@ -1113,7 +1137,7 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: rgba(58, 47, 85, 0.22);
+  color: rgba(20, 58, 46, 0.22);
   pointer-events: none;
   user-select: none;
 }
@@ -1152,29 +1176,28 @@
 }
 
 .homeTop {
-  /* Was a WizardMascot side-by-side row, then a plain eyebrow+title stack
-     (the mascot now lives in the merged .heroBar, shared across every
-     view). Now: title+lead on the left, "this week's paper" + "Book a
-     Session" on the right  -  the two things Akshat wants living next to
-     Contents instead of buried at the bottom of the page. */
+  /* Contents + color index on the left; Weekly Review stays on the right. */
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px;
+  overflow: visible;
 }
 .homeTopMain {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
   min-width: 0;
 }
 .homeTopActions {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
   flex-shrink: 0;
+  overflow: visible;
 }
 
 /* .paperCta / .paperCtaGo are retired (Akshat, 2026-07-25 fix pass) — the
@@ -1196,10 +1219,10 @@
   background: linear-gradient(145deg, #8dffc0, #6aefab);
   padding: 7px 14px;
   cursor: pointer;
-  box-shadow: 0 3px 12px rgba(58, 47, 85, 0.08);
+  box-shadow: 0 3px 12px rgba(20, 58, 46, 0.08);
   transition: transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 140ms ease;
 }
-.paperCta:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(58, 47, 85, 0.14); }
+.paperCta:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(20, 58, 46, 0.14); }
 .paperCta:active { transform: translateY(0); }
 .paperCtaEyebrow {
   font-family: var(--tok-font-mono);
@@ -1224,16 +1247,15 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1.5px solid rgba(58, 47, 85, 0.14);
+  border: 1.5px solid rgba(20, 58, 46, 0.14);
   border-radius: 12px 16px 12px 14px;
-  background: rgba(58, 47, 85, 0.05);
+  background: rgba(20, 58, 46, 0.05);
   padding: 7px 14px;
   cursor: default;
 }
 .paperCtaLockIcon {
-  font-size: 15px;
-  line-height: 1;
-  filter: grayscale(1) opacity(0.7);
+  flex-shrink: 0;
+  color: rgba(20, 58, 46, 0.55);
 }
 .paperCtaLockedText {
   display: flex;
@@ -1241,12 +1263,12 @@
   align-items: flex-start;
   gap: 1px;
 }
-.paperCtaLockedText .paperCtaEyebrow { color: rgba(58, 47, 85, 0.55); }
+.paperCtaLockedText .paperCtaEyebrow { color: rgba(20, 58, 46, 0.55); }
 .paperCtaUnlockLabel {
   font-family: var(--tok-font-sans);
   font-size: 14px;
   font-weight: 600;
-  color: rgba(58, 47, 85, 0.6);
+  color: rgba(20, 58, 46, 0.6);
 }
 
 /* "Find a Tutor", new on this view  -  same destination as Sidebar.tsx's
@@ -1261,42 +1283,204 @@
    to each other as a matched pair of pills, per Akshat's brief  -  neither
    carries a trailing arrow. */
 .bookSessionLink {
-  border: 1.5px solid rgba(58, 47, 85, 0.22);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid rgba(185, 232, 111, 0.28);
   border-radius: 12px 16px 12px 14px;
-  background: rgba(255, 253, 248, 0.5);
+  background: rgba(244, 239, 226, 0.08);
   cursor: pointer;
   font-family: var(--tok-font-sans);
   font-size: 13px;
   font-weight: 600;
-  color: rgba(58, 47, 85, 0.7);
+  color: rgba(244, 239, 226, 0.82);
   padding: 7px 14px;
   white-space: nowrap;
   transition: color 140ms ease, border-color 140ms ease, background 140ms ease, transform 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 .bookSessionLink:hover {
-  color: var(--desk-ink);
-  border-color: rgba(58, 47, 85, 0.4);
-  background: rgba(255, 253, 248, 0.85);
+  color: #fffdf7;
+  border-color: rgba(185, 232, 111, 0.55);
+  background: rgba(185, 232, 111, 0.16);
   transform: translateY(-1px);
 }
 .bookSessionLink:active { transform: translateY(0); }
+.bookSessionLink svg { flex-shrink: 0; }
+
+/* Icon wrapper for the native "Message…" <select> — can't put an icon
+   inside individual <option> text cross-browser, so the leading
+   MessageCircle glyph sits on the wrapper instead, absolutely positioned
+   over the select's own left padding (.iconSelect below reserves the
+   space). Same .bookSessionLink pill underneath, just with room carved out
+   on the left for the icon instead of the flex `gap` a real <button> gets. */
+.iconSelectWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.iconSelectIcon {
+  position: absolute;
+  left: 14px;
+  color: rgba(244, 239, 226, 0.75);
+  pointer-events: none;
+}
+.iconSelect {
+  padding-left: 34px;
+}
 
 .homeTitle {
   margin: 0;
   font-family: var(--tok-font-display);
-  font-size: clamp(38px, 5vw, 50px);
+  font-size: clamp(44px, 5.5vw, 58px);
   font-weight: 700;
-  color: var(--desk-ink);
+  color: #f4efe2;
   line-height: 1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 .homeLead {
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   max-width: 46ch;
   font-family: var(--tok-font-sans);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.45;
-  color: rgba(42, 36, 48, 0.62);
+  color: rgba(244, 239, 226, 0.65);
+}
+
+.ringLegend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.ringLegend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(244, 239, 226, 0.78);
+}
+/* Border-sample swatch (matches tile outer borders), not a status circle. */
+.ringSwatch {
+  --swatch: #A8B4C0;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 2.5px solid var(--swatch);
+  background: color-mix(in srgb, var(--swatch) 18%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--swatch) 45%, transparent);
+  flex-shrink: 0;
+}
+
+.nextTopicCard,
+.weeklyCard,
+.weeklyCardLocked {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  flex: 0 0 auto;
+  padding: 12px 16px;
+  border-radius: 16px;
+  text-align: left;
+  border: 1.5px solid rgba(185, 232, 111, 0.45);
+  background:
+    radial-gradient(ellipse 80% 120% at 0% 50%, rgba(185, 232, 111, 0.28), transparent 55%),
+    linear-gradient(135deg, rgba(36, 122, 77, 0.55), rgba(20, 58, 46, 0.85));
+  color: #f4efe2;
+  box-shadow:
+    0 0 0 1px rgba(185, 232, 111, 0.12),
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 0 24px rgba(185, 232, 111, 0.18);
+  cursor: pointer;
+  font: inherit;
+  /* No scale/translate — stage + scrollport clip any growth past the edge. */
+  transition: border-color 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), background 160ms var(--desk-ease);
+}
+
+/* Gold “suggested next” sits just before Weekly Review. */
+.nextTopicCard {
+  border-color: rgba(245, 211, 72, 0.65);
+  background:
+    radial-gradient(ellipse 80% 120% at 0% 50%, rgba(245, 211, 72, 0.28), transparent 55%),
+    linear-gradient(135deg, rgba(80, 60, 12, 0.75), rgba(20, 40, 24, 0.9));
+  box-shadow:
+    0 0 0 1px rgba(245, 211, 72, 0.2),
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 0 22px rgba(245, 211, 72, 0.22);
+}
+.nextTopicCard:hover,
+.nextTopicCard:focus-visible {
+  border-color: rgba(245, 211, 72, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(245, 211, 72, 0.45),
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 28px rgba(245, 211, 72, 0.35);
+}
+.nextTopicCard:focus-visible {
+  outline: 2px solid rgba(245, 211, 72, 0.75);
+  outline-offset: 2px;
+}
+.nextTopicCard .weeklyCardEyebrow {
+  color: rgba(245, 211, 72, 0.95);
+}
+.nextTopicCard .weeklyCardTitle {
+  max-width: 16ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.weeklyCard:hover,
+.weeklyCard:focus-visible {
+  border-color: rgba(245, 211, 72, 0.85);
+  background:
+    radial-gradient(ellipse 80% 120% at 0% 50%, rgba(245, 211, 72, 0.32), transparent 55%),
+    linear-gradient(135deg, rgba(42, 140, 90, 0.65), rgba(20, 58, 46, 0.9));
+  box-shadow:
+    0 0 0 1px rgba(245, 211, 72, 0.4),
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    0 0 28px rgba(245, 211, 72, 0.28);
+}
+.weeklyCard:focus-visible {
+  outline: 2px solid rgba(245, 211, 72, 0.75);
+  outline-offset: 2px;
+}
+.weeklyCardLocked {
+  cursor: default;
+  opacity: 0.78;
+  border-color: rgba(244, 239, 226, 0.2);
+  background: rgba(20, 40, 32, 0.65);
+  box-shadow: none;
+}
+.weeklyCardEyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(185, 232, 111, 0.9);
+}
+.weeklyCardTitle {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--tok-font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fffdf7;
+}
+.weeklyCardSub {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(244, 239, 226, 0.65);
 }
 
 /* .sparkBanner (the old standalone yellow Home-only band) and its .sparkEmoji
@@ -1320,7 +1504,7 @@
   font-family: var(--tok-font-sans);
   font-size: 20px;
   font-weight: 700;
-  color: #1f6b45;
+  color: #b9e86f;
 }
 
 /* ── Contents roadmap (2026-07-24) ──────────────────────────────────────
@@ -1337,97 +1521,145 @@
    GET /knowledge-graph/{uid} (learningPathGraph.ts STATUS_COLOR  -  the same
    values the Map page already uses), not an invented metric. */
 .horizontalToc {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+.tocLane {
+  --lane-accent: #b9e86f;
+  --lane-ink: #f4efe2;
+  /* --lane-span is set inline per section, computed from that lane's real
+     conceptIds.length in Dashboard.tsx (tocLaneSpanPair) — see the "Contents
+     lane grid math" comment above the helper functions in Dashboard.tsx.
+     The fallback here only applies before the first paint's inline style
+     lands (never in practice, since it's set synchronously with the DOM node). */
+  --lane-span: 6;
+  grid-column: span var(--lane-span);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  flex: 1;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--lane-accent) 35%, transparent);
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 16px 32px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(244, 239, 226, 0.06);
   min-height: 0;
+  /* Visible so tile hover glow isn’t clipped by the lane chrome. */
+  overflow: visible;
+  position: relative;
 }
-.tocLane {
-  --lane-accent: #6b5cff;
-  --lane-ink: #2a2430;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 16px 14px 12px;
-  border: 1.5px solid color-mix(in srgb, var(--lane-accent) 28%, transparent);
-  border-radius: var(--desk-radius-md);
-  box-shadow: var(--desk-shadow-raised);
-  min-height: 0;
+.tocLane::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% -45% 38%;
+  height: 72%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--lane-accent) 14%, transparent), transparent 68%);
+  pointer-events: none;
 }
 .tocLaneHead {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-.tocLaneCopy {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  position: relative;
+  z-index: 1;
 }
 .tocLaneTitle {
   margin: 0;
   font-family: var(--tok-font-display);
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
   color: var(--lane-ink);
-}
-.tocLaneBlurb {
-  margin: 0;
-  font-family: var(--tok-font-sans);
-  font-size: 12px;
-  line-height: 1.35;
-  color: color-mix(in srgb, var(--lane-ink) 72%, transparent);
 }
 
 /* Horizontal-scroll track: the responsive strategy for narrow widths is a
    dedicated scroll region PER LANE (not page-level wrapping), so a lane with
-   11 concepts (Algebra) scrolls sideways on a phone while the lane header
-   and neighboring lanes stay put and readable. */
+   many concepts (Algebra) scrolls sideways on a phone while the lane header
+   and neighboring lanes stay put and readable.
+
+   --lane-columns is set inline per lane, computed from that lane's real
+   conceptIds.length (Dashboard.tsx, tocColumnsFor — see the "Contents lane
+   grid math" comment there). Individual .tocNode cells that fall in an
+   incomplete trailing row get their own inline `grid-column: span N`
+   (tocTrailingSpans), computed so that row always fills edge-to-edge with no
+   dead cells, instead of a per-lane-name nth-child guess. */
 .tocTrack {
-  display: flex;
-  align-items: flex-start;
-  gap: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 6px 6px 12px;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-}
-.tocTrack::-webkit-scrollbar { height: 6px; }
-.tocTrack::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--lane-accent) 40%, transparent);
-  border-radius: 999px;
+  --lane-columns: 4;
+  display: grid;
+  grid-template-columns: repeat(var(--lane-columns), minmax(0, 1fr));
+  /* auto, not 1fr — 1fr here fights the outer .horizontalToc's auto-sized
+     row track and creates a runaway feedback loop (measured: rows ballooning
+     to 550-780px instead of the ~140px this content actually needs). */
+  grid-auto-rows: auto;
+  align-items: start;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow: visible;
 }
 
 .tocNode {
-  --node-w: 128px;
-  --dot-size: 26px;
-  --node-color: #8B9BA8;
-  flex: 0 0 var(--node-w);
-  width: var(--node-w);
-  scroll-snap-align: start;
+  --node-color: #A8B4C0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 8px 2px;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 10px;
+  min-height: 0;
+  padding: 12px 12px 14px;
   text-align: center;
-  background: none;
-  border: none;
+  background: rgba(8, 18, 14, 0.45);
+  /* Status lives on the tile’s outer border (no circular mastery ring). */
+  border: 2.5px solid color-mix(in srgb, var(--node-color) calc(40% + var(--mastery) * 50%), transparent);
+  border-radius: 14px;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--node-color) calc(18% + var(--mastery) * 35%), transparent);
   cursor: pointer;
   font: inherit;
   color: inherit;
   position: relative;
-  transition: opacity 200ms var(--desk-ease), transform 160ms var(--desk-ease-bounce);
+  z-index: 1;
+  /* Glow/brighten only — no translateY/scale (scrollport + lane clip tops). */
+  transition: opacity 200ms var(--desk-ease), background 160ms var(--desk-ease), box-shadow 160ms var(--desk-ease), border-color 160ms var(--desk-ease);
 }
-.tocNode:hover { transform: translateY(-2px); }
-.tocNode:active { transform: translateY(0); }
+.tocNode:hover {
+  z-index: 3;
+  background: rgba(12, 28, 20, 0.72);
+  border-color: var(--node-color);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--node-color) 35%, transparent),
+    0 0 18px color-mix(in srgb, var(--node-color) 45%, transparent),
+    0 10px 22px rgba(0, 0, 0, 0.28);
+}
+.tocNode:active { background: rgba(10, 24, 18, 0.8); }
 .tocNode[data-state='locked'] { opacity: 0.62; }
+.tocNode[data-state='complete'] {
+  border-color: var(--node-color);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--node-color) 40%, transparent),
+    0 0 18px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNode[data-state='needs'] {
+  border-style: solid;
+  border-color: var(--node-color);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--node-color) 55%, transparent);
+}
+.tocNode[data-state='progress'] {
+  border-color: var(--node-color);
+}
 
 /* Fixed height (2 lines' worth, not just a 2-line clamp) is load-bearing:
    the dot below sits at whatever flow position follows this block, so a
@@ -1440,121 +1672,82 @@
    don't connect" bug. Reserving the full 2-line height here keeps every
    dot in a lane on the same horizontal row regardless of name length. */
 .tocNodeName {
-  height: 2.5em;
   font-family: var(--tok-font-sans);
   font-weight: 700;
-  font-size: 12.5px;
-  line-height: 1.25;
-  letter-spacing: -0.005em;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--lane-ink);
+  min-height: calc(1.3em * 2);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* The dot itself: same icon-badge + mastery-ring treatment as the Map's
-   concept nodes (ConstellationGpsExplorer)  -  the real concept icon, clipped
-   to a circle, with an inline SVG progress ring that fills clockwise by raw
-   mastery percentage (the "slowly fills" ask) starting hollow/gray at 0%,
-   and a glowing halo once status crosses into a mastered tier (the "lights
-   up" ask, data-state='complete' below). The connecting line to the
-   previous/next dot is drawn from the dot itself (not the whole column) via
-   ::before/::after, so it always passes through the dot's own vertical
-   center no matter how tall the name/blurb text above/below it is. */
-.tocNodeDot {
+.tocNodeIcon {
   position: relative;
-  width: var(--dot-size);
-  height: var(--dot-size);
-  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  /* Squish art shorter; more breathing room around the board tile. */
+  aspect-ratio: 16 / 10;
+  padding: 5px;
+  border-radius: 12px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 253, 248, 0.95);
-  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), inset 0 0 0 1.5px rgba(58, 47, 85, 0.16);
-  transition: box-shadow 220ms var(--desk-ease), transform 200ms var(--desk-ease-bounce);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1.5px solid color-mix(in srgb, var(--lane-accent) 32%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(244, 239, 226, 0.06);
+  transition: box-shadow 220ms var(--desk-ease), border-color 200ms var(--desk-ease);
   z-index: 1;
+  overflow: hidden;
 }
-.tocNode:hover .tocNodeDot { transform: scale(1.12); }
-
-/* viewBox coordinates scale to whatever --dot-size resolves to (26px desktop,
-   20px mobile per the 720px override below), so the icon + rings stay crisp
-   and correctly proportioned at both sizes without any extra media-query
-   work here. */
-.tocNodeDotSvg {
+.tocNodeIcon img {
+  display: block;
   width: 100%;
   height: 100%;
-  overflow: visible;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 7px;
+  filter: saturate(1.05) contrast(1.05) brightness(0.92);
+}
+.tocNode:hover .tocNodeIcon {
+  border-color: color-mix(in srgb, var(--node-color) 55%, var(--lane-accent));
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 239, 226, 0.1),
+    0 0 14px color-mix(in srgb, var(--node-color) 35%, transparent);
+}
+
+.tocNodeCheck {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  background: var(--node-color);
+  color: #14261c;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 17px;
+  text-align: center;
+  box-shadow: 0 0 0 2px rgba(20, 40, 32, 0.9);
   display: block;
 }
 
-.tocNodeDot::before,
-.tocNodeDot::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  height: 3px;
-  width: calc((var(--node-w) - var(--dot-size)) / 2);
-  transform: translateY(-50%);
-  background: color-mix(in srgb, var(--node-color) 50%, rgba(58, 47, 85, 0.14));
-  z-index: -1;
+.tocNodeSpark {
+  background: rgba(80, 60, 12, 0.55);
+  border-color: #f5d348;
+  box-shadow: 0 0 0 1px rgba(245, 211, 72, 0.25), 0 0 18px rgba(245, 211, 72, 0.4), 0 12px 28px rgba(0, 0, 0, 0.35);
+  animation: tocSuggestedGlow 2.6s ease-in-out infinite;
 }
-.tocNodeDot::before { right: 100%; }
-.tocNodeDot::after  { left: 100%; }
-.tocNode:first-child .tocNodeDot::before { visibility: hidden; }
-.tocNode:last-child  .tocNodeDot::after  { visibility: hidden; }
+.tocNodeSpark .tocNodeName { color: #f5d348; }
 
-/* Complete state: the icon stays visible (the mastery ring is already a full
-   solid circle at this point, see the SVG's dasharray logic), and this glow
-   halo is the extra "lights up" signal layered on top  -  same read as the
-   Map's full-green stable nodes. */
-.tocNode[data-state='complete'] .tocNodeDot {
-  box-shadow:
-    0 0 0 3px rgba(255, 253, 248, 0.95),
-    0 0 0 5px color-mix(in srgb, var(--node-color) 35%, transparent),
-    0 0 10px color-mix(in srgb, var(--node-color) 55%, transparent);
-}
-/* Small corner badge rather than a centered overlay  -  a centered checkmark
-   would sit on top of the concept icon now that the icon is always visible.
-   Keeps an explicit "done" signal that doesn't rely on the viewer reading
-   ring color/fullness alone. */
-.tocNodeCheck {
-  position: absolute;
-  right: -2px;
-  bottom: -2px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--node-color);
-  color: #fffdf8;
-  font-size: 9px;
-  font-weight: 800;
-  line-height: 14px;
-  text-align: center;
-  box-shadow: 0 0 0 2px rgba(255, 253, 248, 0.95);
-  z-index: 2;
-}
-.tocNode[data-state='needs'] .tocNodeDot {
-  box-shadow: 0 0 0 3px rgba(255, 253, 248, 0.92), 0 0 8px color-mix(in srgb, var(--node-color) 55%, transparent);
-}
-.tocNodeSpark .tocNodeDot {
-  box-shadow:
-    0 0 0 3px rgba(255, 253, 248, 0.95),
-    0 0 0 5px rgba(255, 200, 40, 0.55),
-    0 0 12px rgba(255, 190, 20, 0.65);
-}
-.tocNodeSpark .tocNodeName { color: #a15c00; }
-
-.tocNodeBlurb {
-  font-family: var(--tok-font-sans);
-  font-size: 10.5px;
-  line-height: 1.32;
-  color: rgba(42, 36, 48, 0.58);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+@keyframes tocSuggestedGlow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(245, 211, 72, 0.2), 0 10px 22px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 0 4px rgba(245, 211, 72, 0.45), 0 14px 30px rgba(245, 211, 72, 0.2); }
 }
 
 .mapCanvas {
@@ -1623,9 +1816,24 @@
      scroll track (built into .tocTrack at any width), just with smaller
      dots/columns so more of the path is visible before the student has to
      swipe, and tighter lane padding to leave more room for the track. */
+  .horizontalToc { display: flex; flex-direction: column; }
+  .tocLane:nth-child(n) { grid-column: auto; }
   .tocLane { padding: 12px 10px 10px; }
-  .tocLaneTitle { font-size: 24px; }
-  .tocNode { --node-w: 100px; --dot-size: 20px; }
+  .tocLaneTitle { font-size: 15px; }
+  .tocTrack,
+  .tocLane[data-lane='algebra'] .tocTrack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Same 1fr-vs-outer-auto-track fix as the desktop .tocTrack above. */
+    grid-auto-rows: minmax(108px, auto);
+  }
+  .tocLane[data-lane='data'] .tocTrack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tocLane[data-lane='warmups'] .tocNode:first-child,
+  .tocLane[data-lane='geometry'] .tocNode:first-child,
+  .tocLane[data-lane='algebra'] .tocNode:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .tocNode { min-height: 108px; }
   .tocNodeName { font-size: 11px; }
   .tocNodeBlurb { font-size: 9.5px; -webkit-line-clamp: 2; }
 }

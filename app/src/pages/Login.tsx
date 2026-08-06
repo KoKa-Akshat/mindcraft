@@ -461,7 +461,7 @@ export default function Login() {
         <a href="https://open.spotify.com/episode/45XrqEkt9evZVhl7ONdYu3?si=y2trJtZfRrexbEJnaQbnRg" target="_blank" rel="noreferrer" aria-label="Spotify">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.31a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 0 1-.33-1.46c4.57-1.04 8.5-.58 11.66 1.35.36.22.47.68.25 1.02Zm1.46-3.25a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.96-1.4a.94.94 0 1 1-.54-1.8c4.36-1.32 9.78-.68 13.48 1.59.44.27.58.85.31 1.3Zm.13-3.39C15.22 8.37 8.83 8.16 5.15 9.28a1.12 1.12 0 1 1-.65-2.14c4.23-1.28 11.28-1.03 15.74 1.62a1.12 1.12 0 0 1-1.15 1.91Z" /></svg>
         </a>
-        <a href="https://www.linkedin.com/in/mind-craft-64354641a/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/company/joinmindcraft" target="_blank" rel="noreferrer" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.53V9H7.1v11.45ZM22.23 0H1.76C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.76 24h20.47c.97 0 1.77-.77 1.77-1.73V1.73C24 .77 23.2 0 22.23 0Z" /></svg>
         </a>
       </div>

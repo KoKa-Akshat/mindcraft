@@ -1,16 +1,40 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { doc, getDoc } from 'firebase/firestore'
+import { ArrowRight, Search, X } from 'lucide-react'
+import { useUser } from '../../App'
+import { db } from '../../firebase'
+import wizardSparkIcon from '../../assets/canvas/generated/dashboard-stickers-3d/wizard-spark-3d.png'
+import {
+  COVER_STICKER_EQUIP_CAP,
+  canEquipCoverSticker,
+  coverStickerById,
+  loadEquippedCoverStickers,
+  parseStickerPlan,
+  saveEquippedCoverStickers,
+  type StickerPlan,
+} from '../../lib/coverStickers'
+import RotatableSticker from './RotatableSticker'
+import StickersShelf from './StickersShelf'
 import s from './CoverLanding.module.css'
 
 const SEEN_KEY = 'mc-cover-seen-session'
 const NAME_KEY = 'mc-student-display-name'
+const HIDDEN_SUBJECTS_KEY = 'mc-cover-hidden-subjects'
 
 /** Has the student already opened the cover once this browser session? */
 export function coverAlreadySeen(): boolean {
-  try { return sessionStorage.getItem(SEEN_KEY) === '1' } catch { return true }
+  // Fail open: storage errors should still show the cover, not skip it.
+  try { return sessionStorage.getItem(SEEN_KEY) === '1' } catch { return false }
 }
 
 function markCoverSeen() {
   try { sessionStorage.setItem(SEEN_KEY, '1') } catch { /* ignore */ }
+}
+
+/** Clear so the next dashboard visit (e.g. after login) shows the cover again. */
+export function clearCoverSeen() {
+  try { sessionStorage.removeItem(SEEN_KEY) } catch { /* ignore */ }
 }
 
 /** Whatever name the student last typed on the cover, if any. Read by
@@ -24,48 +48,90 @@ function saveCoverName(name: string) {
   try { localStorage.setItem(NAME_KEY, name) } catch { /* ignore */ }
 }
 
+function loadHiddenSubjects(): string[] {
+  try {
+    const raw = localStorage.getItem(HIDDEN_SUBJECTS_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw) as unknown
+    return Array.isArray(parsed) ? parsed.filter((x): x is string => typeof x === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+function saveHiddenSubjects(labels: string[]) {
+  try { localStorage.setItem(HIDDEN_SUBJECTS_KEY, JSON.stringify(labels)) } catch { /* ignore */ }
+}
+
+type SubjectChip = {
+  label: string
+  tone: string
+  slot: string
+  live?: boolean
+}
+
+/** Atmospheric subject orbit. ACT stays; others can be dismissed. */
+const SUBJECT_CHIPS: ReadonlyArray<SubjectChip> = [
+  { label: 'ACT Math', tone: s.toneMint, slot: s.slot0, live: true },
+  { label: 'Writing', tone: s.toneSand, slot: s.slot1 },
+  { label: 'Fashion', tone: s.tonePeach, slot: s.slot2 },
+  { label: 'Violin', tone: s.toneGold, slot: s.slot3 },
+  { label: 'Law', tone: s.toneBlue, slot: s.slot4 },
+  { label: 'Coding', tone: s.toneMint, slot: s.slot5 },
+  { label: 'Spanish', tone: s.tonePeach, slot: s.slot6 },
+  { label: 'Photography', tone: s.toneBlue, slot: s.slot7 },
+]
+
+const EQUIP_SLOTS = [s.equip0, s.equip1, s.equip2, s.equip3] as const
+
 /**
- * Cover, redesigned 2026-07-23: no background photo (the old
- * mindcraft-cover-hero.jpg was a portrait-shot image forced into this
- * full-bleed landscape box via object-fit: cover, which is what produced the
- * "blending artifact bleeding on the right edge" Akshat flagged, the photo's
- * bright window content got cropped/stretched toward the right edge and
- * washed out against the dark vignette scrim sitting on top of it), calmer
- * lighter colors (dropped the saturated hot-pink ribbon + heavy dark scrim
- * in favor of the same soft parchment/violet desk palette everything else
- * uses), and a name input so the cover greets the student by name.
- * Sizing is unchanged from the 2026-07-23 full-bleed fix (still exactly
- * matches Dashboard.module.css's .canvasDesk padding formula).
+ * Cover entry: floating worlds + Stickers shelf; center is name + arrow.
  */
 export default function CoverLanding({
-  entryLabel,
   accountName,
   onOpen,
 }: {
-  entryLabel: string
-  /** The student's real signed-in display name (Firestore users/{uid}.displayName,
-   * falling back to the Firebase Auth profile name, see useStudentData.ts).
-   * Used to greet a returning student by their actual name on first render,
-   * instead of making them re-type it every session. A locally-typed override
-   * (saved via saveCoverName) still always wins if one exists. */
+  /** Kept for call-site compat; caption removed from the cover. */
+  entryLabel?: string
   accountName?: string
   onOpen: () => void
 }) {
+  const user = useUser()
+  const navigate = useNavigate()
   const [closing, setClosing] = useState(false)
   const [name, setName] = useState(() => loadCoverName() || accountName?.trim() || '')
+  const [hiddenSubjects, setHiddenSubjects] = useState<string[]>(() => loadHiddenSubjects())
+  const [equipped, setEquipped] = useState<string[]>(() => loadEquippedCoverStickers())
+  const [storeOpen, setStoreOpen] = useState(false)
+  const [stickerPlan, setStickerPlan] = useState<StickerPlan>('testing')
 
-  // accountName resolves async (Firestore read in useStudentData), so it can
-  // still be empty on this component's first render. Fill it in the moment it
-  // arrives, but never clobber a name the student already typed themselves
-  // (this render or a prior session's saved override).
   useEffect(() => {
     if (loadCoverName()) return
     const trimmedAccount = accountName?.trim()
     if (trimmedAccount) setName(prev => prev || trimmedAccount)
   }, [accountName])
 
+  useEffect(() => {
+    const uid = user?.uid
+    if (!uid) {
+      setStickerPlan('testing')
+      return
+    }
+    let cancelled = false
+    void getDoc(doc(db, 'users', uid))
+      .then(snap => {
+        if (cancelled) return
+        setStickerPlan(parseStickerPlan(snap.data()?.stickerPlan))
+      })
+      .catch(() => {
+        if (!cancelled) setStickerPlan('testing')
+      })
+    return () => { cancelled = true }
+  }, [user?.uid])
+
   function open() {
     if (closing) return
+    setStoreOpen(false)
     setClosing(true)
     markCoverSeen()
     window.setTimeout(onOpen, 480)
@@ -73,9 +139,11 @@ export default function CoverLanding({
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      // Enter while typing a name should submit the name field, not blow
-      // past it and open the notebook out from under the student.
-      if ((e.key === 'Enter' || e.key === ' ') && !(e.target instanceof HTMLInputElement)) {
+      if (e.key === 'Escape' && storeOpen) {
+        setStoreOpen(false)
+        return
+      }
+      if ((e.key === 'Enter' || e.key === ' ') && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLButtonElement)) {
         e.preventDefault()
         open()
       }
@@ -83,58 +151,173 @@ export default function CoverLanding({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [closing])
+  }, [closing, storeOpen])
 
   function onNameChange(value: string) {
     setName(value)
     saveCoverName(value.trim())
   }
 
-  const trimmed = name.trim()
+  function dismissSubject(label: string) {
+    setHiddenSubjects(prev => {
+      if (prev.includes(label)) return prev
+      const next = [...prev, label]
+      saveHiddenSubjects(next)
+      return next
+    })
+  }
+
+  function toggleSticker(id: string) {
+    if (!canEquipCoverSticker(stickerPlan) && !equipped.includes(id)) return
+    setEquipped(prev => {
+      const next = prev.includes(id)
+        ? prev.filter(x => x !== id)
+        : prev.length >= COVER_STICKER_EQUIP_CAP
+          ? prev
+          : [...prev, id]
+      saveEquippedCoverStickers(next)
+      return next
+    })
+  }
+
+  function goFindTutor() {
+    markCoverSeen()
+    navigate('/find-a-tutor')
+  }
+
+  const visibleChips = SUBJECT_CHIPS.filter(
+    chip => chip.live || !hiddenSubjects.includes(chip.label),
+  )
 
   return (
     <div className={`${s.desk} ${closing ? s.deskClosing : ''}`}>
       <div className={s.cover}>
-        <div className={s.decor} aria-hidden="true">
-          <svg viewBox="0 0 64 64" className={s.doodleStar}><path d="M32 6 L37 26 L57 26 L41 38 L47 58 L32 46 L17 58 L23 38 L7 26 L27 26 Z" /></svg>
-          <svg viewBox="0 0 80 40" className={s.doodleWave}><path d="M2 30 Q20 4 40 20 T78 12" fill="none" /></svg>
-          <svg viewBox="0 0 48 48" className={s.doodleTri}><path d="M24 6 L44 40 L4 40 Z" fill="none" /><path d="M24 6 L24 40 M4 40 L44 40" /></svg>
+        <div className={s.wash} aria-hidden="true" />
+
+        <div className={s.topActions}>
+          <button
+            type="button"
+            className={s.stickerStoreBtn}
+            onClick={() => setStoreOpen(true)}
+          >
+            <img src={wizardSparkIcon} alt="" className={s.stickerBtnIcon} draggable={false} />
+            <span>Stickers</span>
+          </button>
+          <button
+            type="button"
+            className={s.findTutorBtn}
+            onClick={goFindTutor}
+          >
+            <Search size={15} strokeWidth={2.6} aria-hidden="true" />
+            <span>Find a Tutor</span>
+          </button>
         </div>
 
+        <ul className={s.subjectField} aria-label="Subjects on the shelf">
+          {visibleChips.map((chip, i) => (
+            <li
+              key={chip.label}
+              className={`${s.subjectChipWrap} ${chip.slot}`}
+              style={{ ['--chip-i' as string]: String(i) }}
+            >
+              {chip.live ? (
+                <span className={`${s.subjectChip} ${chip.tone} ${s.subjectChipLive}`}>
+                  <span className={s.actLiveDot} aria-hidden="true" />
+                  {chip.label}
+                </span>
+              ) : (
+                <span className={`${s.subjectChip} ${chip.tone} ${s.subjectChipRemovable}`}>
+                  {chip.label}
+                  <button
+                    type="button"
+                    className={s.chipDismiss}
+                    onClick={() => dismissSubject(chip.label)}
+                    aria-label={`Remove ${chip.label}`}
+                    title="Remove"
+                  >
+                    <X size={11} strokeWidth={3} aria-hidden="true" />
+                  </button>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        <ul className={s.equipField} aria-label="Stickers on your cover">
+          {equipped.map((id, i) => {
+            const sticker = coverStickerById(id)
+            if (!sticker) return null
+            const slot = EQUIP_SLOTS[i] ?? EQUIP_SLOTS[0]
+            return (
+              <li key={id} className={`${s.equipWrap} ${slot}`}>
+                <div className={s.equipSticker}>
+                  <RotatableSticker src={sticker.src} alt={sticker.name} className={s.equipSpin} />
+                  <button
+                    type="button"
+                    className={s.equipDismiss}
+                    onClick={() => toggleSticker(id)}
+                    title={`Remove ${sticker.name}`}
+                    aria-label={`Remove ${sticker.name}`}
+                  >
+                    <X size={12} strokeWidth={3} aria-hidden="true" />
+                  </button>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+
         <div className={s.coverFace}>
-          <span className={s.eyebrow}>ACT Math</span>
-          <span className={s.wordmark}>MindCraft</span>
-          <span className={s.wordmarkSub}>your cozy study notebook</span>
+          <span className={s.eyebrow}>study · create · explore</span>
+          <button
+            type="button"
+            className={s.wordmark}
+            onClick={open}
+            aria-label="Open MindCraft"
+          >
+            Mind<span className={s.wordmarkCraft}>Craft</span>
+          </button>
 
           <div className={s.nameField}>
             <label className={s.nameLabel} htmlFor="cover-name">What should we call you?</label>
-            <input
-              id="cover-name"
-              type="text"
-              className={s.nameInput}
-              value={name}
-              onChange={e => onNameChange(e.target.value)}
-              placeholder="Type your name"
-              maxLength={40}
-              autoComplete="given-name"
-            />
+            <div className={s.nameRow}>
+              <input
+                id="cover-name"
+                type="text"
+                className={s.nameInput}
+                value={name}
+                onChange={e => onNameChange(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    open()
+                  }
+                }}
+                placeholder="Your name"
+                maxLength={40}
+                autoComplete="given-name"
+              />
+              <button
+                type="button"
+                className={s.openArrow}
+                onClick={open}
+                aria-label={name.trim() ? `Open notebook as ${name.trim()}` : 'Open your notebook'}
+              >
+                <ArrowRight size={20} strokeWidth={2.4} aria-hidden="true" />
+              </button>
+            </div>
           </div>
-
-          <button
-            type="button"
-            className={s.openBtn}
-            onClick={open}
-          >
-            {/* No separate aria-label: the visible text IS the accessible
-             * name here, so a screen reader announces the personalized
-             * "Let's go, {name}" too, not a generic label frozen at "Open
-             * your notebook" while the sighted text changes underneath it. */}
-            {trimmed ? `Let's go, ${trimmed} →` : 'Tap to open →'}
-          </button>
         </div>
-      </div>
 
-      <p className={s.caption}>{entryLabel}</p>
+        {storeOpen && (
+          <StickersShelf
+            plan={stickerPlan}
+            onClose={() => setStoreOpen(false)}
+            equippedIds={equipped}
+            onToggleEquip={toggleSticker}
+          />
+        )}
+      </div>
     </div>
   )
 }

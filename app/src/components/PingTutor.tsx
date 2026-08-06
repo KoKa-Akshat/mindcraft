@@ -3,6 +3,7 @@
  * Writes to the same chats/{chatId}/messages path as Chat.tsx.
  */
 import { useEffect, useState } from 'react'
+import { GraduationCap } from 'lucide-react'
 import {
   addDoc, collection, doc, getDoc, serverTimestamp, setDoc,
 } from 'firebase/firestore'
@@ -139,7 +140,14 @@ export default function PingTutor({ context = {}, className, embedded = false, c
       aria-expanded={open}
       title="Message your tutor"
     >
-      {compact ? <>✉ Tutor</> : <>✉ Ping tutor</>}
+      {compact ? (
+        <>
+          <GraduationCap size={18} strokeWidth={2.2} aria-hidden="true" />
+          <span>Tutor</span>
+        </>
+      ) : (
+        <>✉ Ping tutor</>
+      )}
     </button>
   )
 

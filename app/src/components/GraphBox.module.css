@@ -97,7 +97,8 @@
 .svg {
   width: 100%;
   height: auto;
-  aspect-ratio: 300 / 186;
+  /* Slightly taller plot area (was 300/186). */
+  aspect-ratio: 300 / 210;
   border-radius: 10px;
   background: rgba(29, 58, 138, 0.035);
 }
@@ -142,5 +143,5 @@
 }
 
 @media (max-width: 700px) {
-  .svg { aspect-ratio: 320 / 170; }
+  .svg { aspect-ratio: 320 / 190; }
 }
