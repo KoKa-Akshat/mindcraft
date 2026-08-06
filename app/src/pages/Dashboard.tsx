@@ -790,31 +790,34 @@ export default function Dashboard({
                 <div className={s.homeTop}>
                   <div className={s.homeTopMain}>
                     <h1 className={s.homeTitle}>Contents</h1>
+                    <ul className={s.ringLegend} aria-label="Ring color guide">
+                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.mastered }} /> Mastered</li>
+                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.in_progress }} /> In progress</li>
+                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.struggling }} /> Needs work</li>
+                      <li><span className={s.ringSwatch} style={{ background: STATUS_COLOR.untouched }} /> Not started</li>
+                    </ul>
                   </div>
                   <div className={s.homeTopActions}>
                     {showWeeklyCta && (
                       paperLocked ? (
-                        <div className={s.paperCtaLocked} aria-live="off">
-                          <Lock size={14} className={s.paperCtaLockIcon} aria-hidden="true" />
-                          <span className={s.paperCtaLockedText}>
-                            <span className={s.paperCtaEyebrow}>this week’s paper</span>
-                            <span className={s.paperCtaUnlockLabel}>Done! {paperUnlockLabel}</span>
-                          </span>
+                        <div className={s.weeklyCardLocked} aria-live="off">
+                          <Lock size={18} aria-hidden="true" />
+                          <div>
+                            <span className={s.weeklyCardEyebrow}>This week</span>
+                            <span className={s.weeklyCardTitle}>Done · {paperUnlockLabel}</span>
+                          </div>
                         </div>
                       ) : (
-                        // Reuses .bookSessionLink verbatim (Akshat: label
-                        // should read "Weekly Review" and look "just like a
-                        // find a tutor button", same pill, no arrow, no new
-                        // CSS invented for it). Opens the topic picker.
-                        <button type="button" className={s.bookSessionLink} onClick={openWeeklyReview}>
-                          <CalendarCheck size={14} aria-hidden="true" />
-                          <span>Weekly Review</span>
+                        <button type="button" className={s.weeklyCard} onClick={openWeeklyReview}>
+                          <CalendarCheck size={22} aria-hidden="true" />
+                          <div>
+                            <span className={s.weeklyCardEyebrow}>This week</span>
+                            <span className={s.weeklyCardTitle}>Weekly Review</span>
+                            <span className={s.weeklyCardSub}>Open your paper · write on the board</span>
+                          </div>
                         </button>
                       )
                     )}
-                    {/* Find a Tutor lives on CoverLanding now (session cover).
-                        Students who already have a tutor still message from here;
-                        Sidebar keeps /find-a-tutor for later sessions. */}
                     {data.tutorId && data.parents.length > 0 ? (
                       <div className={s.iconSelectWrap}>
                         <MessageCircle size={14} className={s.iconSelectIcon} aria-hidden="true" />

@@ -7,16 +7,16 @@ const VPAD_T = 24, VPAD_B = 42
 const MAX_PREREQ_DEPTH = 3, MAX_PER_LEVEL = 5
 
 export const STATUS_COLOR: Record<string, string> = {
-  mastered:            '#A8E063',
-  stable:              '#A8E063',
-  comeback_built:      '#A8E063',
-  ready_for_challenge: '#A8E063',
-  in_progress:         '#5B9BD5',
-  repairing:           '#5B9BD5',
-  struggling:          '#FF6B6B',
-  open_gap:            '#FF6B6B',
-  untouched:           '#8B9BA8',
-  unexplored:          '#8B9BA8',
+  mastered:            '#B9E86F',
+  stable:              '#B9E86F',
+  comeback_built:      '#B9E86F',
+  ready_for_challenge: '#B9E86F',
+  in_progress:         '#6EB6FF',
+  repairing:           '#6EB6FF',
+  struggling:          '#FF7A7A',
+  open_gap:            '#FF7A7A',
+  untouched:           '#A8B4C0',
+  unexplored:          '#A8B4C0',
 }
 
 export const STATUS_LABEL: Record<string, string> = {

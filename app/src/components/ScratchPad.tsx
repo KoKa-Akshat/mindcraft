@@ -344,12 +344,13 @@ function drawStrokes(
   width: number,
   height: number,
   transparentBg = false,
+  chalkInk = false,
 ) {
   if (!transparentBg) {
-    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = chalkInk ? '#14261c' : '#ffffff'
     ctx.fillRect(0, 0, width, height)
   }
-  ctx.fillStyle = '#1a2234'
+  ctx.fillStyle = chalkInk ? '#f4efe2' : '#1a2234'
   for (const pts of strokes) {
     const outline = getStroke(pts, { size: 2.6, thinning: 0.55, smoothing: 0.72, streamline: 0.55 })
     if (outline.length) ctx.fill(new Path2D(pathFromStroke(outline)))
@@ -387,6 +388,8 @@ interface Props {
   lineOverlays?: LineOverlay[]
   /** Transparent canvas over ruled paper — chapter pages. */
   paperMode?: boolean
+  /** White chalk strokes on a dark board (Contents / chapter / weekly desk). */
+  chalkInk?: boolean
   /**
    * Grow to fill 100% of a flex-column parent's available height instead of
    * capping at `height` — `height` becomes a floor, not a fixed box. Needs a
@@ -427,6 +430,7 @@ export default function ScratchPad({
   height = 320,
   lineOverlays,
   paperMode = false,
+  chalkInk = false,
   fillHeight = false,
   evalLines,
   questionId,
@@ -462,8 +466,8 @@ export default function ScratchPad({
     ctx.scale(dpr, dpr)
 
     const all = combineStrokesForPaint(strokesRef.current, pointsRef.current, remoteStrokes ?? [])
-    drawStrokes(ctx, all, w, h, paperMode)
-  }, [paperMode, remoteStrokes])
+    drawStrokes(ctx, all, w, h, paperMode, chalkInk)
+  }, [paperMode, chalkInk, remoteStrokes])
 
   // Remote ink (other participant's strokes in a live session) arrives via
   // props, not a user gesture — nothing else would trigger a repaint when a

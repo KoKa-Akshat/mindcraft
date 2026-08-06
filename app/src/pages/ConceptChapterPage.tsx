@@ -145,17 +145,17 @@ const CLUSTER_MAP: Record<string, Cluster> = {
 
 const JOURNAL_PAPER = {
   bg: '#080e14',
-  paper: '#f7f3ee',
-  ink: '#1c1a17',
-  dim: '#6f6a61',
-  lineBg: 'rgba(29, 58, 138, 0.09)',
+  paper: '#14261c',
+  ink: '#f4efe2',
+  dim: 'rgba(244, 239, 226, 0.62)',
+  lineBg: 'rgba(185, 232, 111, 0.12)',
 }
 
 const CLUSTER_THEME = {
-  algebra:   { ...JOURNAL_PAPER, accent: '#1d3a8a', chip: '#1d3a8a' },
-  geometry:  { ...JOURNAL_PAPER, accent: '#1e5f8a', chip: '#1e5f8a' },
-  functions: { ...JOURNAL_PAPER, accent: '#247a4d', chip: '#247a4d' },
-  data:      { ...JOURNAL_PAPER, accent: '#7a2e26', chip: '#7a2e26' },
+  algebra:   { ...JOURNAL_PAPER, accent: '#7ec8e3', chip: '#7ec8e3' },
+  geometry:  { ...JOURNAL_PAPER, accent: '#6eb6ff', chip: '#6eb6ff' },
+  functions: { ...JOURNAL_PAPER, accent: '#b9e86f', chip: '#b9e86f' },
+  data:      { ...JOURNAL_PAPER, accent: '#f5d348', chip: '#f5d348' },
 }
 
 // ── Horizontal canvas panels (story + questions blend on one sheet) ─────────
@@ -959,6 +959,7 @@ export default function ConceptChapterPage() {
             <ScratchPad
               key={`${qIdx}-${scratchRev[qIdx] ?? 0}`}
               paperMode
+              chalkInk
               questionId={`${conceptId}-q${qIdx}`}
               evalLines={scratchInk[qIdx]?.workLines?.map(l => ({ bbox: l.bbox, text: l.text, latex: l.latex }))}
               lineOverlays={(() => {

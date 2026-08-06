@@ -321,6 +321,7 @@ export default function WeeklyPracticePaperPage() {
                             questionId={`weekly-${paper.weekKey}-${q.id}`}
                             height={150}
                             paperMode
+                            chalkInk
                             onChange={(_canvas, data) => {
                               const hasInk = (data.strokes?.length ?? 0) > 0
                               setInked(prev => {

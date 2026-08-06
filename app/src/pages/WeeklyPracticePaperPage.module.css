@@ -1,10 +1,13 @@
 .shell {
   min-height: 100dvh;
   background:
-    radial-gradient(ellipse 70% 50% at 78% 12%, rgba(185, 232, 111, 0.34), transparent 58%),
-    radial-gradient(ellipse 55% 45% at 12% 88%, rgba(245, 211, 72, 0.14), transparent 55%),
-    linear-gradient(155deg, #fff8e9 0%, #fffdf7 48%, #e4f7dc 100%);
-  color: #143a2e;
+    linear-gradient(rgba(245, 245, 245, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 245, 245, 0.03) 1px, transparent 1px),
+    radial-gradient(ellipse 50% 52% at 50% 42%, rgba(29, 58, 138, 0.22), transparent 68%),
+    radial-gradient(ellipse 38% 40% at 72% 18%, rgba(196, 245, 71, 0.08), transparent 70%),
+    #080e14;
+  background-size: 56px 56px, 56px 56px, 100% 100%, 100% 100%, 100% 100%;
+  color: #f4efe2;
 }
 
 .toolbar {
@@ -18,8 +21,8 @@
   gap: 10px;
   padding: 10px 20px;
   margin: 0;
-  background: rgba(255, 253, 247, 0.92);
-  border-bottom: 1px solid rgba(20, 58, 46, 0.1);
+  background: rgba(14, 28, 22, 0.92);
+  border-bottom: 1px solid rgba(185, 232, 111, 0.14);
   backdrop-filter: blur(8px);
 }
 
@@ -35,7 +38,7 @@
   font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(20, 58, 46, 0.45);
+  color: rgba(185, 232, 111, 0.7);
 }
 
 .progress {
@@ -59,15 +62,15 @@
 }
 
 .ghost {
-  border: 1px solid rgba(20, 58, 46, 0.16);
-  background: #fffdf7;
-  color: #143a2e;
+  border: 1px solid rgba(185, 232, 111, 0.28);
+  background: rgba(244, 239, 226, 0.06);
+  color: #f4efe2;
 }
 
 .primary {
   border: none;
-  background: #143a2e;
-  color: #f4efe2;
+  background: #b9e86f;
+  color: #143a2e;
 }
 
 .primary:disabled {
@@ -105,14 +108,14 @@
   font-size: clamp(32px, 4vw, 44px);
   font-weight: 700;
   letter-spacing: -0.025em;
-  color: #143a2e;
+  color: #fffdf7;
 }
 
 .sub {
   margin: 0;
   font-size: 16px;
   line-height: 1.45;
-  color: rgba(20, 58, 46, 0.68);
+  color: rgba(244, 239, 226, 0.68);
   max-width: 60ch;
 }
 
@@ -133,7 +136,7 @@
   font-family: var(--tok-font-serif, Georgia, serif);
   font-size: clamp(22px, 2.4vw, 28px);
   font-weight: 600;
-  color: #143a2e;
+  color: #fffdf7;
 }
 
 .topicCount {
@@ -158,19 +161,19 @@
   margin-bottom: 14px;
   padding: 16px 18px;
   border-radius: 16px;
-  background: rgba(36, 122, 77, 0.08);
-  border: 1px solid rgba(36, 122, 77, 0.18);
+  background: rgba(20, 40, 32, 0.72);
+  border: 1px solid rgba(185, 232, 111, 0.22);
 }
 
 .formulaBanner {
   margin: 0 0 10px;
   padding: 12px 14px;
   border-radius: 12px;
-  background: rgba(255, 253, 247, 0.95);
+  background: rgba(185, 232, 111, 0.12);
   font-family: var(--tok-font-serif, Georgia, serif);
   font-size: clamp(16px, 1.8vw, 20px);
   font-weight: 600;
-  color: #143a2e;
+  color: #b9e86f;
   text-align: center;
 }
 
@@ -178,7 +181,7 @@
   margin: 0 0 12px;
   font-size: 15px;
   line-height: 1.4;
-  color: rgba(20, 58, 46, 0.72);
+  color: rgba(244, 239, 226, 0.72);
 }
 
 .notesGrid {
@@ -193,7 +196,7 @@
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #247a4d;
+  color: #b9e86f;
 }
 
 .notesGrid ul {
@@ -201,7 +204,7 @@
   padding-left: 18px;
   font-size: 14px;
   line-height: 1.45;
-  color: rgba(20, 58, 46, 0.82);
+  color: rgba(244, 239, 226, 0.82);
 }
 
 /* 2×2 pages: 3 questions + tools */
@@ -215,9 +218,9 @@
 .item {
   padding: 16px;
   border-radius: 16px;
-  background: rgba(255, 253, 247, 0.9);
-  border: 1px solid rgba(20, 58, 46, 0.1);
-  box-shadow: 0 10px 24px rgba(20, 58, 46, 0.06);
+  background: rgba(20, 40, 32, 0.72);
+  border: 1px solid rgba(185, 232, 111, 0.16);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -254,15 +257,15 @@
 .stem {
   font-size: 16px;
   line-height: 1.5;
-  color: #143a2e;
+  color: #f4efe2;
   flex: 0 0 auto;
 }
 
 .work {
   border-radius: 12px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px dashed rgba(20, 58, 46, 0.16);
+  background: rgba(8, 18, 14, 0.55);
+  border: 1px dashed rgba(185, 232, 111, 0.22);
   min-height: 130px;
   flex: 1 1 auto;
 }
@@ -270,9 +273,9 @@
 .emptyTile {
   border-radius: 16px;
   background:
-    radial-gradient(ellipse 80% 70% at 30% 30%, rgba(185, 232, 111, 0.35), transparent 60%),
-    rgba(36, 122, 77, 0.08);
-  border: 1px dashed rgba(36, 122, 77, 0.22);
+    radial-gradient(ellipse 80% 70% at 30% 30%, rgba(185, 232, 111, 0.2), transparent 60%),
+    rgba(20, 40, 32, 0.45);
+  border: 1px dashed rgba(185, 232, 111, 0.22);
   min-height: 240px;
 }
 
@@ -280,10 +283,10 @@
   border-radius: 16px;
   padding: 12px;
   background:
-    radial-gradient(ellipse 70% 60% at 70% 20%, rgba(185, 232, 111, 0.28), transparent 55%),
-    rgba(255, 253, 247, 0.92);
-  border: 1.5px solid rgba(20, 58, 46, 0.14);
-  box-shadow: 0 10px 24px rgba(20, 58, 46, 0.08);
+    radial-gradient(ellipse 70% 60% at 70% 20%, rgba(185, 232, 111, 0.2), transparent 55%),
+    rgba(20, 40, 32, 0.85);
+  border: 1.5px solid rgba(185, 232, 111, 0.28);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   gap: 10px;
