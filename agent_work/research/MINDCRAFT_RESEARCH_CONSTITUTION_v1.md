@@ -4,7 +4,7 @@
 **Edition:** v1.11 (Synthesizer consolidation of Parts LXXV–LXXXIII into surviving doctrine)  
 **Research question:** How do humans become *confident mathematical thinkers*?  
 **Product thesis under audit:** The product is identity transformation, not mathematics delivery.  
-**Last updated:** 2026-08-06 (Researcher — Part LXXXVIII SAFE-FADE provisional after v1.11)
+**Last updated:** 2026-08-06 (Researcher — Part LXXXIX SAFE-HELP provisional after v1.11)
 **Growth model:** Core OS (this file) + `chapters/*.md` via `CHAPTER_MANIFEST.txt` → PDF  
 **Scale intent:** Multi-month densification toward 150–300 pages of *evidenced* material — never fluff  
 **Epistemic rule:** Every claim is labeled FACT / HYPOTHESIS / FOUNDER BELIEF / SPECULATION.
@@ -78,8 +78,9 @@
 | LXXXVI | `chapters/86_competence_evidence_social_proof.md` | Competence evidence as social proof; SAFE-PROOF (provisional); witnessable solo MoC |
 | LXXXVII | `chapters/87_bank_coverage_honesty_marketing.md` | Bank coverage honesty in marketing; SAFE-COVER (provisional); matrix > item-count |
 | LXXXVIII | `chapters/88_worked_example_fading_solver_ux.md` | Worked-example fading in Solver UX; SAFE-FADE (provisional); completion → solo |
+| LXXXIX | `chapters/89_help_seeking_vs_help_abuse.md` | Help-seeking vs help abuse; SAFE-HELP (provisional); instrumental > executive |
 
-Queued next: see `NEXT_LAB.md` (Part LXXXIX help-seeking vs help abuse, then 90).
+Queued next: see `NEXT_LAB.md` (Part XC product analytics for FEI North Stars, then 91).
 
 **Synthesizer note (v1.11):** Nine researcher chapters (LXXV–LXXXIII) landed after v1.10 as provisional I.4 appends — tutor workforce fidelity, forgetting honesty, adaptive spacing bands, durable vs cram GTM, feedback timing, bridge-gap narrative, cold-start humility, format-axis diagnosis, and parent dashboard honesty. This edition promotes each stack to company law (removes provisional tags), formalizes Red Team kills #29–#37, confirms WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH experiment families in Part IX, and refreshes metrics/glossary/competitive implication. Deep-dive files remain authoritative for citations; the OS keeps only *surviving* product rules.
 
@@ -160,8 +161,9 @@ Explanations alone rarely produce (1)–(3). Fluent AI explanations can *acceler
 | User-count / star-wall / vague praise ≡ learning proof | **KILLED** *(provisional)* | SAFE-PROOF (LXXXVI); dated solo competence artifacts |
 | Item-count / complete-ACT / unsynced GENQ ≡ coverage | **KILLED** *(provisional)* | SAFE-COVER (LXXXVII); matrix + gaps + use-tier |
 | Always-full-worked / never-fade / solution-first ≡ learning | **KILLED** *(provisional)* | SAFE-FADE (LXXXVIII); completion ladder + solo proof |
+| Unlimited-hints / help-NPS / avoidance-as-grit ≡ learning | **KILLED** *(provisional)* | SAFE-HELP (LXXXIX); instrumental contingent help + solo |
 
-**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, or always-full-worked / unlimited-solutions Solver theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, and guidance that fades as the student proves the join.
+**Implication:** Do not bet on “better explanations,” graph-file cosplay, warm-tutor theater, emotion cameras, page-count science, Ivy hire theater, unverified AI banks, FERPA-badge GTM, expanding-SRS mystique, headcount vanity, mastery fireworks, FSRS brand, cram packages, instant-feedback theater, bridge-count ads, day-one greens, format-count cosplay, parent surveillance portals, Talk Ratio theater, immersive lore-as-pedagogy, star-wall / user-count learning proof, item-count / complete-ACT coverage theater, always-full-worked / unlimited-solutions Solver theater, or unlimited-hints / never-stuck answer-dump theater. Bet on **FEI + pedagogy wrap + SAFE-* stack**: fear→evidence→identity, with inspectable diagnosis, Map-briefed humans, privacy-bound affect, verified keys, blueprint-honest coverage matrices, district trust packets, honest spaced returns, fidelity-over-tenure ops, time-honest MoC, dual-rail durable GTM, load-honest story wrap, witnessable dated solo competence artifacts, guidance that fades as the student proves the join, and instrumental help that still demands construction.
 
 ## I.3 What to optimize (North Star debate)
 
@@ -238,14 +240,15 @@ Duplicate frameworks collapsed. Deep dives own citations; this table is **compan
 | **SAFE-PROOF** *(provisional)* | Competence > crowd; enactive dated solo artifacts; provincial similarity; student-owned thin portfolio; two-sided honesty | LXXXVI | Ban user-count/star-wall learning proof / vague praise / Identity Score™ splash / +points case studies / forced public portfolio NS |
 | **SAFE-COVER** *(provisional)* | Matrix > total; gaps as features; use-tier labels; examTag honesty; GENQ never counted unverified; prior substantiation via audit | LXXXVII | Ban item-count hero / complete-ACT puffery / GCSE-as-ACT / unsynced GENQ counts / ontology-nodes≡bank |
 | **SAFE-FADE** *(provisional)* | Stage not costume; completion bridge; backward fade first; expertise-aware up/down; attempt grain; proof = solo transfer | LXXXVIII | Ban always-full-worked / never-fade / solution-first / view≡mastery / Fade Score™ / unlimited-solutions hero |
+| **SAFE-HELP** *(provisional)* | Instrumental > executive; abuse∪avoidance fail; contingent stage; SE before bottom-out; metacognition≠score; dignity telemetry | LXXXIX | Ban unlimited-hints / help-NPS NS / avoidance-as-grit / Help Score™ / parent hint-stalk / never-stuck dump |
 | **Block → near-miss interleave → spaced mix** | Blocking = acquisition scaffold; delayed mixed accuracy = readiness signal | XXIX, XXXIX, LXXIV | Ban “shuffle = science”; ban blocked-accuracy vanity |
 | **Student-generated why** | Faded examples + structured principle/misconception prompts *before* AI wrap | XXVI, XL | Ban AI-monologue≡SE; ban explain-own-wrong-first default |
 | **Competitive wedge** | Do not out-content Khan, out-streak Duo, out-delight Brilliant, or out-fluency ChatGPT | XXXV, XX | Sell recoverable struggle + competence evidence + solo transfer |
 | **Equity of worlds** | Story wrap is identity technology; tokenism and stereotype-cueing copy are kills | XXXVI, XXVIII | HIST-EQ; belonging without “even you can” |
 
-**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” and “always-full-worked / unlimited solutions / never-fade Solver” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
+**Merged / demoted (do not treat as separate products):** “AI tutor,” “mastery path,” “growth mindset,” “engagement,” “grit,” “habit streak,” “celebrate mistakes,” “community of practice,” “deliberate practice brand,” “film study,” “recital,” “grandmaster review,” “exposure therapy,” “girl STEM brand,” “WTP survey,” “Identity Score™,” “8-week math person,” “character equity,” “knowledge-graph moat,” “emotion AI empathy,” “science-backed page count,” “Ivy tutor SKU,” “AI wrote N questions,” “FERPA-compliant badge,” “perfect-interval SRS,” “tutor headcount / retention-%,” “mastery fireworks / personal Ebbinghaus,” “FSRS/Anki brain optimizer,” “cram/bootcamp/+points packages,” “instant feedback AI / always-delay science,” “bridge-count / we connect everything,” “day-one personalized mastery / placement belt,” “every format / visual learning / Format Personality™,” “parent fireworks portal / Family Leaderboard / live wrong-answer stalk,” “immersive story world / lore engagement / Story Engagement Score™,” “user-count / star-wall / vague confidence testimonials as learning proof,” “item-count / complete ACT bank / AI fills all holes coverage theater,” “always-full-worked / unlimited solutions / never-fade Solver,” and “unlimited hints / never stuck / Help Score™” are *not* independent North Stars — they are subordinate UX under FEI + the rows above (borrow *method*, never *costume*).
 
-**Next research bottleneck:** Part LXXXIX **Help-seeking vs help abuse**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE gate claims above L1. Researcher count since v1.11 synthesizer = **5**.
+**Next research bottleneck:** Part XC **Product analytics for FEI North Stars**. Experiment families CAL/DP/CoP/RIT/AAR/FILM/MUSIC/ANNOT/EXP-O/WTP/REPAIR/IDM/LONG/EXAM/ELL/GEND/STRUCT/ONTO/HITL/PRIV/LABMETA/GRAIN/GENQ/PROCURE/SCHED/WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH/TALK/STORYLOAD/PROOF/COVER/FADE/HELP gate claims above L1. Researcher count since v1.11 synthesizer = **6**.
 
 ---
 
@@ -579,6 +582,7 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 | PROOF-* | Competence-card vs star-wall landing / provincial case / two-sided MoC vs +points / opt-in share / parent CBC dated solo | LXXXVI |
 | COVER-* | Honest matrix vs item-count hero / parent CBC holes+seal / district audit packet / in-app gap callout / audit cadence | LXXXVII |
 | FADE-* | Backward completion ladder vs always-full / forward vs backward / fade-up after solos / SE-on-blank / parent CBC fade story | LXXXVIII |
+| HELP-* | Contingent instrumental vs unlimited bottom-out / SE-before-hint / help-invite vs freeze / meta-msg vs gate / parent CBC next-step help | LXXXIX |
 
 ---
 
@@ -791,6 +795,10 @@ Core A–D remain. Chapter ticks densified them into families — prefer the den
 ### Kill #42 (provisional, LXXXVIII): “Always-full-worked / never-fade / solution-first ≡ learning”
 **Destroyed:** Always-full-worked or solution-first Solver as learning North Star / brand; never-fade step scaffolding; viewing steps ≡ mastery; expertise-blind full dumps for near-fluent learners; unlimited perfect solutions as differentiator vs ChatGPT; Fade Score™ or guidance-% vanity NS; forward-only fade dogma without local test.  
 **Surviving (provisional):** SAFE-FADE — stage not costume; completion bridge; backward fade first; expertise-aware up/down; attempt grain before reveal; proof = solo transfer; instrument FADE-* before unlimited-solutions / always-show-every-step campaigns (LXXXVIII).
+
+### Kill #43 (provisional, LXXXIX): “Unlimited-hints / help-NPS / avoidance-as-grit ≡ learning”
+**Destroyed:** Unlimited hints / always-open bottom-out as learning North Star; hint volume or help NPS as pedagogy proof; help avoidance as grit; Help Tutor metacognition as guaranteed domain/ACT gains; gaming detectors as parent shame dashboards; “AI always knows when you need help” black-box brand; Help Score™ vanity NS; permanent tutor dependency as “support.”  
+**Surviving (provisional):** SAFE-HELP — instrumental > executive; abuse and avoidance both fail; contingent stage not unlimited menu; SE/attempt before bottom-out; metacognition ≠ score magic; dignity telemetry; proof = solo transfer; instrument HELP-* before never-stuck / unlimited-hints campaigns (LXXXIX).
 
 ---
 
@@ -1069,7 +1077,7 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | ChatGPT tutors | Instant explanation | Low unless wrapped | Trust / hallucination; Bastani Base harm |
 | MindCraft (target) | FEI conversion + tutor witness + gap diagnosis + solo transfer | **Intended high** | Must prove, not assert |
 
-**Strategic implication (v1.11 densified):** Do not out-Khan Khan on content breadth or item-count theater (SAFE-COVER provisional). Do not out-ChatGPT on always-full-worked / unlimited-solutions Solver (SAFE-FADE provisional). Do not out-Duo Duo on streaks/leagues/XP or expanding-SRS mystique. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency or graph-file cosplay. Do not out-Anki/FSRS on black-box interval theater. Do not out-Kaplan/bootcamp on massed cram or +points packages (SAFE-DURABLE). Do not out-instant-feedback AI or always-delay cosplay (SAFE-FBTIME). Do not out-node-weakness theater when the failure is a join (SAFE-BRIDGE). Do not out-day-one mastery fireworks or placement-belt cold starts (SAFE-COLD). Do not out-format-count / every-format / visual-learning-style quizzes (SAFE-FORMAT). Do not out-parent fireworks portals, Family Leaderboards, or live wrong-answer stalk (SAFE-PDASH). Do not out-Talk Ratio Score / silence theater / Socratic-by-talk-% ads (SAFE-TALK provisional). Do not out-immersive lore / Story Engagement Score / franchise trivia-as-pedagogy (SAFE-STORYLOAD provisional). Do not out-user-count / star-wall / vague-confidence testimonials as learning proof (SAFE-PROOF provisional). Do not out-tutor-headcount vanity or wellness-theater fidelity (SAFE-WORKFORCE). Do not out-grit character apps, therapy Calm Score™, sports academies, conservatories, grandmaster cosplay, pink STEM SKUs, survey-priced ACT guarantees, Ivy-tutor theater, emotion cameras, or FERPA-badge GTM. Out-compete on the **session + ops + honesty stack**: inspectable diagnosis (SAFE-ONTOLOGY), honest cold-start mapping (SAFE-COLD), format-gap conversion evidence (SAFE-FORMAT), parent MoC proof-age surfaces (SAFE-PDASH), witnessable dated solo competence artifacts (SAFE-PROOF), blueprint-honest coverage matrices with gaps named (SAFE-COVER), faded guidance that earns solo carry (SAFE-FADE provisional), connection-first Map when endpoints are green (SAFE-BRIDGE), Map-briefed prompt>pour humans (SAFE-HITL / TUTORGRAIN / WORKFORCE), verify-before-ship banks (SAFE-GENQ), privacy-bound affect + district trust packets (SAFE-PRIVACY / PROCURE), horizon-matched returns (SAFE-SCHED), calendar-first banded adaptivity (SAFE-ADAPT), time-honest aged evidence (SAFE-FORGET), dual-rail durable GTM (SAFE-DURABLE), mode-conditional feedback clocks (SAFE-FBTIME), SAFE-DP spine under SAFE-DD, productive-error + calibration (SAFE-MISCON / CALIB), recoverable AI truth (SAFE-REPAIR), validated identity on long clocks (SAFE-IDMEASURE / LONGID), structure honesty (SAFE-ELL / GENDER / STRUCTURE), parent CBC (SAFE-WTP), and transfer when help is gone — then *say that* in marketing (CSA-2). Lab process itself obeys SAFE-LABMETA (falsify before “science-backed”).
+**Strategic implication (v1.11 densified):** Do not out-Khan Khan on content breadth or item-count theater (SAFE-COVER provisional). Do not out-ChatGPT on always-full-worked / unlimited-solutions Solver (SAFE-FADE provisional). Do not out-Duo Duo on streaks/leagues/XP or expanding-SRS mystique. Do not out-Brilliant Brilliant on puzzle delight. Do not out-ChatGPT on fluency or graph-file cosplay. Do not out-Anki/FSRS on black-box interval theater. Do not out-Kaplan/bootcamp on massed cram or +points packages (SAFE-DURABLE). Do not out-instant-feedback AI or always-delay cosplay (SAFE-FBTIME). Do not out-node-weakness theater when the failure is a join (SAFE-BRIDGE). Do not out-day-one mastery fireworks or placement-belt cold starts (SAFE-COLD). Do not out-format-count / every-format / visual-learning-style quizzes (SAFE-FORMAT). Do not out-parent fireworks portals, Family Leaderboards, or live wrong-answer stalk (SAFE-PDASH). Do not out-Talk Ratio Score / silence theater / Socratic-by-talk-% ads (SAFE-TALK provisional). Do not out-immersive lore / Story Engagement Score / franchise trivia-as-pedagogy (SAFE-STORYLOAD provisional). Do not out-user-count / star-wall / vague-confidence testimonials as learning proof (SAFE-PROOF provisional). Do not out-tutor-headcount vanity or wellness-theater fidelity (SAFE-WORKFORCE). Do not out-grit character apps, therapy Calm Score™, sports academies, conservatories, grandmaster cosplay, pink STEM SKUs, survey-priced ACT guarantees, Ivy-tutor theater, emotion cameras, or FERPA-badge GTM. Out-compete on the **session + ops + honesty stack**: inspectable diagnosis (SAFE-ONTOLOGY), honest cold-start mapping (SAFE-COLD), format-gap conversion evidence (SAFE-FORMAT), parent MoC proof-age surfaces (SAFE-PDASH), witnessable dated solo competence artifacts (SAFE-PROOF), blueprint-honest coverage matrices with gaps named (SAFE-COVER), faded guidance that earns solo carry (SAFE-FADE provisional), instrumental contingent help not unlimited-hint dumps (SAFE-HELP provisional), connection-first Map when endpoints are green (SAFE-BRIDGE), Map-briefed prompt>pour humans (SAFE-HITL / TUTORGRAIN / WORKFORCE), verify-before-ship banks (SAFE-GENQ), privacy-bound affect + district trust packets (SAFE-PRIVACY / PROCURE), horizon-matched returns (SAFE-SCHED), calendar-first banded adaptivity (SAFE-ADAPT), time-honest aged evidence (SAFE-FORGET), dual-rail durable GTM (SAFE-DURABLE), mode-conditional feedback clocks (SAFE-FBTIME), SAFE-DP spine under SAFE-DD, productive-error + calibration (SAFE-MISCON / CALIB), recoverable AI truth (SAFE-REPAIR), validated identity on long clocks (SAFE-IDMEASURE / LONGID), structure honesty (SAFE-ELL / GENDER / STRUCTURE), parent CBC (SAFE-WTP), and transfer when help is gone — then *say that* in marketing (CSA-2). Lab process itself obeys SAFE-LABMETA (falsify before “science-backed”).
 
 ---
 
@@ -1173,6 +1181,8 @@ Principles that repeatedly change human behavior outside classrooms — filtered
 | `coverage_claim_mismatch` | Marketed coverage vs playable audit disagree (ops incident) | SAFE-COVER substantiation (LXXXVII) |
 | `fade_stage` | Solver/help guidance stage E0–E3 at attempt start | SAFE-FADE ladder (LXXXVIII) |
 | `fade_step_attempt` | Student-generated completion/SE before next worked unlock | SAFE-FADE attempt grain (LXXXVIII) |
+| `help_deliberate_ms` | Time on non-bottom hint level before next action | SAFE-HELP deliberate help (LXXXIX) |
+| `help_executive_race` | ≥2 hint-level advances under short dwell before bottom-out | SAFE-HELP abuse detect (LXXXIX) |
 
 ## XXI.3 Lagging indicators
 
@@ -1259,6 +1269,7 @@ Ship changes that raise `retry_120s` and mastery-motive `challenge_accept` witho
 | SAFE-PROOF *(provisional)* | Competence > crowd; dated solo artifacts; provincial similarity; thin portfolio; no star-wall / +points proof (Part LXXXVI) |
 | SAFE-COVER *(provisional)* | Matrix > total; gaps as features; use-tier labels; examTag honesty; no item-count / complete-ACT / unsynced GENQ (Part LXXXVII) |
 | SAFE-FADE *(provisional)* | Stage not costume; completion bridge; backward fade; expertise-aware; attempt grain; no unlimited-solutions / never-fade hero (Part LXXXVIII) |
+| SAFE-HELP *(provisional)* | Instrumental > executive; abuse∪avoidance fail; contingent stage; SE before bottom-out; no unlimited-hints / Help Score™ (Part LXXXIX) |
 
 ## Appendix B — Maya interview protocol (qual)
 
@@ -1351,8 +1362,11 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 3ab. Competence evidence as social proof — **DONE** Part LXXXVI / SAFE-PROOF  
 3ac. Bank coverage honesty in marketing — **DONE** Part LXXXVII / SAFE-COVER  
 3ad. Worked-example fading in Solver UX — **DONE** Part LXXXVIII / SAFE-FADE  
-3ae. Help-seeking vs help abuse — **NEXT** id 89  
-3af. Product analytics for FEI North Stars — queued id 90  
+3ae. Help-seeking vs help abuse — **DONE** Part LXXXIX / SAFE-HELP  
+3af. Product analytics for FEI North Stars — **NEXT** id 90  
+3ag. Hint economy & contingent scaffolding — queued id 91  
+3ah. Explanation length vs germane load — queued id 92  
+3ai. Retrieval failure modes in practice UX — queued id 93  
 4. Equity audit of story worlds — **DONE** (Part XXXVI)  
 5. Competitive teardown — **DONE** session audits (Part XXXV); usage telemetry still open  
 6. Formal Bayesian update process for Constitution claims — **DONE** Part LXX / SAFE-LABMETA  
@@ -1409,7 +1423,8 @@ challenge-seeking → harder practice → skill ↑  (reinforcing)
 57. **DONE (2026-08-05):** Competence evidence as social proof (Part LXXXVI / id 86) — SAFE-PROOF stack (provisional)  
 58. **DONE (2026-08-05):** Bank coverage honesty in marketing (Part LXXXVII / id 87) — SAFE-COVER stack (provisional)  
 59. **DONE (2026-08-06):** Worked-example fading in Solver UX (Part LXXXVIII / id 88) — SAFE-FADE stack (provisional)  
-60. **NEXT:** Help-seeking vs help abuse (Part LXXXIX / id 89)
+60. **DONE (2026-08-06):** Help-seeking vs help abuse (Part LXXXIX / id 89) — SAFE-HELP stack (provisional)  
+61. **NEXT:** Product analytics for FEI North Stars (Part XC / id 90)
 
 ---
 
@@ -1443,4 +1458,4 @@ MindCraft’s deepest risk is not technical failure. It is **winning the wrong g
 
 This Constitution exists so the company notices that risk early, and runs experiments that can kill beloved ideas.
 
-**v1.11 synthesizer pass folded Parts LXXV–LXXXIII into surviving commercial doctrine (I.4 rows SAFE-WORKFORCE through SAFE-PDASH; Red Team kills #29–#37 promoted from provisional). Experiment families WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH confirmed mounted. Researcher ticks 2026-08-05 added Part LXXXIV SAFE-TALK (provisional) + TALK-* + kill #38 provisional, Part LXXXV SAFE-STORYLOAD (provisional) + STORYLOAD-* + kill #39 provisional, Part LXXXVI SAFE-PROOF (provisional) + PROOF-* + kill #40 provisional, then Part LXXXVII SAFE-COVER (provisional) + COVER-* + kill #41 provisional. Researcher tick 2026-08-06 added Part LXXXVIII SAFE-FADE (provisional) + FADE-* + kill #42 provisional. Next researcher id: LXXXIX help-seeking vs help abuse. Researcher count since v1.11 = 5. Page count is not the finish line — falsifiable truth is.**
+**v1.11 synthesizer pass folded Parts LXXV–LXXXIII into surviving commercial doctrine (I.4 rows SAFE-WORKFORCE through SAFE-PDASH; Red Team kills #29–#37 promoted from provisional). Experiment families WORK/FORGET/ADAPT/CRAM/FB/BRIDGE/COLD/FORMAT/PDASH confirmed mounted. Researcher ticks 2026-08-05 added Part LXXXIV SAFE-TALK (provisional) + TALK-* + kill #38 provisional, Part LXXXV SAFE-STORYLOAD (provisional) + STORYLOAD-* + kill #39 provisional, Part LXXXVI SAFE-PROOF (provisional) + PROOF-* + kill #40 provisional, then Part LXXXVII SAFE-COVER (provisional) + COVER-* + kill #41 provisional. Researcher ticks 2026-08-06 added Part LXXXVIII SAFE-FADE (provisional) + FADE-* + kill #42 provisional, then Part LXXXIX SAFE-HELP (provisional) + HELP-* + kill #43 provisional. Next researcher id: XC product analytics for FEI North Stars. Researcher count since v1.11 = 6. Page count is not the finish line — falsifiable truth is.**

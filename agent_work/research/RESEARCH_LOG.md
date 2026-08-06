@@ -4,6 +4,26 @@ Append-only. Newest entries at top.
 
 ---
 
+## 2026-08-06 — Researcher tick: Part LXXXIX Help-seeking vs help abuse (SAFE-HELP)
+
+**Tick type:** Researcher (UTC hour 06 ≡ Red Team slot, but ch89 never written → prefer Researcher per rotation; researcher count since synthesizer v1.11 = 5 → Researcher)  
+**Chapter written:** `chapters/89_help_seeking_vs_help_abuse.md` (Part LXXXIX)  
+**Claim examined:** When help use is adaptive instrumental self-regulation vs executive help abuse (or help avoidance), and what Solver/Practice/HITL rules follow.
+
+**Doctrine proposed (provisional until next synthesizer):** **SAFE-HELP** — instrumental > executive; abuse and avoidance both fail; contingent stage not unlimited menu; SE/attempt before bottom-out; metacognition ≠ score magic; dignity telemetry; proof = solo transfer; no Help Score™ / unlimited-hints hero; HELP-* before never-stuck campaigns.
+
+**Evidence spine:** Nelson-Le Gall (1981) / Karabenick & Knapp (1991) instrumental vs executive; Aleven & Koedinger early Cognitive Tutor help misuse; Aleven et al. (2004/2006) help-seeking model (abuse/avoidance/try-step); Baker gaming-the-system; Wood & Wood (1999) contingent tutoring; Roll et al. (2006/2011) Help Tutor behavior↑ domain↔; Aleven et al. (2016) “help helps, but only so much” + Shih et al. (2008) bottom-out-as-example caveat.
+
+**Claim killed (this tick):** Unlimited-hints / help-NPS / avoidance-as-grit / Help Score™ / parent hint-stalk / metacognition≡ACT / never-stuck answer-dump as learning brand — demoted under help-seeking + gaming + contingent-tutoring literature; instrumental contingent help + solo transfer survive behind HELP-*.
+
+**Experiments mounted:** HELP-1…5 + HELP-QUAL.
+
+**Next researcher id:** **90** (product analytics for FEI North Stars). Researcher count since v1.11 synthesizer: **6**.
+
+**PDF:** Regenerate after this tick.
+
+---
+
 ## 2026-08-06 — Researcher tick: Part LXXXVIII Worked-example fading in Solver UX (SAFE-FADE)
 
 **Tick type:** Researcher (UTC hour 03; hour%6≠0; researcher count since synthesizer v1.11 = 4 → Researcher)  
