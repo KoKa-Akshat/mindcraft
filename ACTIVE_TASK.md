@@ -4,6 +4,84 @@
 
 ---
 
+## Worksheet "write on it" mode + live Call — COMPLETE (Fable 5, 2026-08-06)
+
+Second way to work an uploaded PDF/photo, alongside the existing
+"extract questions" path (`HomeworkSession.tsx`, unchanged). Full build,
+verified, committed (not pushed).
+
+**What was built:**
+1. `ScratchPad.tsx` — new optional `backgroundImage?: string` prop. Renders an
+   `<img>` behind the canvas (`.bgImage`, absolute, z-index 0); ink canvas
+   draws transparently over it (`.canvasBgImage`, same mechanism `paperMode`
+   already used). Purely additive — every existing call site (11 of them)
+   passes nothing and is byte-for-byte unaffected.
+2. `app/src/pages/WorksheetSession.tsx` (+ `.module.css`, route `/worksheet`
+   in `App.tsx`) — new page. Pages arrive via router state from
+   `WorkStudio.tsx` (`pagesFromFile()`'s in-memory rasterized pages, not a new
+   Firestore collection — see size rationale below). Prev/next remounts
+   `ScratchPad` by page index (`key={fileName-index}`), same reset convention
+   `HomeworkSession.tsx` already uses between questions — not a new pattern.
+   No server-side persistence of worksheet ink (documented limitation, see
+   WorksheetSession.tsx's file doc comment — parallels "Designed, not built").
+3. `WorkStudio.tsx` — upload now pauses after rasterization with a choice:
+   "Extract questions" (existing path, unchanged) vs "Write on it" (new,
+   `navigate('/worksheet', { state: { pages, fileName } })`). Both reachable.
+4. `liveSession.ts` — `LiveSessionContextType` gains `'worksheet'`.
+   `LiveSessionDoc`/`CreateLiveSessionInput` gain `pageImage`/`pageIndex`/
+   `pageCount`. **Size decision**: `pagesFromFile()`'s normal output (1400px,
+   q=0.8) is too large to risk in a Firestore doc (~1MiB cap) — rather than
+   route through Firebase Storage (precedented elsewhere — stickers, tutor
+   profiles, chat — but adds an upload round-trip + new storage.rules path),
+   added `homework.ts#downscaleForLiveSession` — a separate 900px/q=0.5
+   re-encode just for this field. Keeps live-session creation a single
+   Firestore write, matching question/weekly_paper exactly. A worksheet call
+   is scoped to the one page it started on (no in-call page nav) — same
+   shape as a question-context call having no in-call navigation either.
+5. `CallButton.tsx` context type + `LiveSessionPage.tsx` — renders
+   `backgroundImage` on worksheet-context sessions; "page X of Y" header line;
+   student end/leave routes to `/dashboard?view=worksheet` instead of
+   `/practice` for this context only.
+6. `firebase/firestore.rules` — **NOT changed**. The `liveSessions` create/
+   update rules never allowlisted specific field names (only studentId/
+   tutorId immutability), so the schema addition needed no rule edit — but
+   this was verified empirically, not assumed: `liveSessionsRulesCheck.mjs`
+   got 6 new worksheet-context cases (create/read/update/stroke-write,
+   authorized + denied). **25/25 passed** (19 pre-existing + 6 new), via the
+   Firestore emulator (`firebase emulators:exec`, JDK 21 required —
+   `/opt/homebrew/opt/openjdk@21`, not the system JDK 17).
+
+**Verification:** `tsc --noEmit` clean. `vitest run` — 211 passed / 1 skipped
+/ 15 files, unchanged from baseline (includes `ScratchPad.test.ts`,
+`liveSession.test.ts`, `LiveSessionPage.test.ts` — the exact existing-context
+tests, all still green). `npm run build` succeeds. Emulator rules-check
+25/25. Real Playwright screenshots (no chromium-cli in this environment;
+used `playwright` directly, resolved via repo-root `node_modules` +
+`NODE_PATH`) in `agent_work/product/screenshots_2026-08-06/`:
+`worksheet_01_work_tab.png`, `worksheet_02_choice_ui.png` (real upload
+through the demo dashboard's actual file input, choice UI appears),
+`worksheet_03_write_on_it_page.png`, `worksheet_04_background_image.png`,
+`worksheet_05_ink_drawn.png` (real mouse-drag ink stroke drawn on top of the
+background image — visibly on top of the worksheet text). Screenshots
+`04`/`05` used a temporary, fully-reverted `App.tsx` route swap (demo
+UserContext instead of AuthGuard, plus a seeded `/dev/worksheet-harness`
+redirect carrying router state) since this environment has no real Firebase
+Auth credentials — reverted immediately after, confirmed via `git diff` and
+a second clean `tsc`/`vitest`/`build` pass. Call button code path is
+unchanged (only additive optional context fields) and not visually present
+in the demo screenshots because the demo user has no linked tutor
+(`CallButton`'s existing null-safe `tutorId` guard — expected, not a bug;
+same guard already proven live in `weekly_paper_toolbar_call_button.png`
+from the prior session).
+
+**Regression check on existing question/weekly_paper contexts**: unchanged
+by inspection (`contextLabel`/render branches are additive `if`s, not
+replacements) and by the full existing test suite staying green
+(`ScratchPad.test.ts`, `liveSession.test.ts`, `LiveSessionPage.test.ts`) plus
+19/19 pre-existing emulator rules-check cases still passing unmodified.
+
+---
+
 ## Live "Call" co-working sessions — COMPLETE (8/8) (Fable 5, 2026-08-05)
 
 Plan: `/Users/akoirala/.claude/plans/snuggly-wandering-candle.md`. This session

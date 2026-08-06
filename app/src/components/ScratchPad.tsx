@@ -423,6 +423,18 @@ interface Props {
    * list — see `combineStrokesForPaint`'s doc comment.
    */
   remoteStrokes?: ScratchStrokePoint[][]
+  /**
+   * Renders behind the drawing canvas as a real page to write on top of —
+   * "mark up a photocopy" mode (worksheet upload write-on-it flow, live
+   * worksheet calls). A data-URL or remote URL. Purely additive: when unset
+   * every existing call site (HomeworkSession, GradeOnboard, SessionWork,
+   * ConceptChapterPage, Practice, WeeklyPracticePaperPage, LiveSessionPage's
+   * question/weekly_paper contexts) renders exactly as before — the ink
+   * canvas keeps its normal opaque white/chalk fill. When set, the ink
+   * canvas draws transparently (same mechanism as `paperMode`) so the image
+   * shows through underneath.
+   */
+  backgroundImage?: string
 }
 
 export default function ScratchPad({
@@ -438,6 +450,7 @@ export default function ScratchPad({
   authorId,
   authorRole,
   remoteStrokes,
+  backgroundImage,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const strokesRef = useRef<Point[][]>([])
@@ -466,8 +479,10 @@ export default function ScratchPad({
     ctx.scale(dpr, dpr)
 
     const all = combineStrokesForPaint(strokesRef.current, pointsRef.current, remoteStrokes ?? [])
-    drawStrokes(ctx, all, w, h, paperMode, chalkInk)
-  }, [paperMode, chalkInk, remoteStrokes])
+    // backgroundImage needs the same transparent-ink treatment as paperMode
+    // (an opaque white/chalk fill would hide the page image underneath).
+    drawStrokes(ctx, all, w, h, paperMode || Boolean(backgroundImage), chalkInk)
+  }, [paperMode, chalkInk, remoteStrokes, backgroundImage])
 
   // Remote ink (other participant's strokes in a live session) arrives via
   // props, not a user gesture — nothing else would trigger a repaint when a
@@ -621,6 +636,12 @@ export default function ScratchPad({
     <div className={`${s.wrap} ${paperMode ? s.wrapPaper : ''} ${fillHeight ? s.wrapFill : ''}`}>
       <div className={`${s.canvasWrap} ${paperMode ? s.canvasWrapPaper : ''} ${fillHeight ? s.canvasWrapFill : ''}`}>
 
+        {/* The page being written on — sits behind the ink canvas, which
+            draws transparently over it (see redraw() above). */}
+        {backgroundImage && (
+          <img src={backgroundImage} className={s.bgImage} alt="" aria-hidden />
+        )}
+
         {/* Eraser + Logs toolbar (top-right corner) */}
         <div className={s.toolbar} onClick={e => e.stopPropagation()}>
           {confirmClear ? (
@@ -674,7 +695,7 @@ export default function ScratchPad({
 
         <canvas
           ref={canvasRef}
-          className={`${s.canvas} ${paperMode ? s.canvasPaper : ''} ${fading ? s.canvasFading : ''}`}
+          className={`${s.canvas} ${paperMode ? s.canvasPaper : ''} ${backgroundImage ? s.canvasBgImage : ''} ${fading ? s.canvasFading : ''}`}
           style={
             paperMode
               ? { flex: 1, minHeight: height ?? 0, height: height ? undefined : '100%' }

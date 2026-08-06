@@ -86,6 +86,49 @@ export async function pagesFromFile(file: File): Promise<string[]> {
   return [await prepareImage(file)]
 }
 
+// ── Live-session snapshot ────────────────────────────────────────────────────
+//
+// Schema/size decision (worksheet live-call context, see liveSession.ts):
+// `pagesFromFile()` output (MAX_PAGE_WIDTH=1400, JPEG q=0.8/0.82 above) is
+// sized for on-screen legibility while writing solo, not for embedding in a
+// Firestore document — Firestore caps a document at ~1MiB, and a busy/noisy
+// photographed page at 1400px can plausibly land in the several-hundred-KB
+// range even before base64's ~1.37x inflation. Rather than route worksheet
+// pages through Firebase Storage (used elsewhere in this app — stickers,
+// tutor profile photos, chat files — but an upload round-trip + new
+// storage.rules path adds latency and surface for a same-request "start a
+// call" action), this re-encodes a SEPARATE, much smaller copy purely for the
+// `liveSessions` doc's `pageImage` snapshot field: capped at 900px wide,
+// JPEG q=0.5. A document-style image (mostly flat/white regions, as any
+// worksheet page is) at that size typically lands in the tens-of-KB range;
+// even a worst-case dense/noisy photo has wide headroom under the ~1MiB cap
+// alongside the doc's other small string fields. This keeps live-session
+// creation a single Firestore write, matching every other context
+// (question/weekly_paper) exactly — no new upload step, no new rules.
+const LIVE_SESSION_SNAPSHOT_MAX_WIDTH = 900
+const LIVE_SESSION_SNAPSHOT_QUALITY = 0.5
+
+/** Re-encode one already-rasterized page (a `pagesFromFile()` data URL) down
+ * to a small snapshot suitable for embedding directly in the `liveSessions`
+ * doc's `pageImage` field. See size-decision note above. */
+export async function downscaleForLiveSession(dataUrl: string): Promise<string> {
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const el = new Image()
+    el.onload = () => resolve(el)
+    el.onerror = reject
+    el.src = dataUrl
+  })
+
+  const scale = img.width > LIVE_SESSION_SNAPSHOT_MAX_WIDTH ? LIVE_SESSION_SNAPSHOT_MAX_WIDTH / img.width : 1
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.max(1, Math.round(img.width * scale))
+  canvas.height = Math.max(1, Math.round(img.height * scale))
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return dataUrl
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+  return canvas.toDataURL('image/jpeg', LIVE_SESSION_SNAPSHOT_QUALITY)
+}
+
 // ── Parsing ───────────────────────────────────────────────────────────────────
 
 interface ParsedPageQuestion {

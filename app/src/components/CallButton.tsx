@@ -20,6 +20,10 @@ export type CallButtonContext = {
   conceptId?: string
   conceptName?: string
   questionText?: string
+  /** Worksheet context only — see `LiveSessionDoc.pageImage` in liveSession.ts. */
+  pageImage?: string
+  pageIndex?: number
+  pageCount?: number
 }
 
 type Props = {
@@ -48,6 +52,9 @@ export default function CallButton({ studentId, tutorId, context, className }: P
       conceptId: context.conceptId ?? null,
       conceptName: context.conceptName ?? null,
       questionText: context.questionText ?? null,
+      pageImage: context.pageImage ?? null,
+      pageIndex: context.pageIndex ?? null,
+      pageCount: context.pageCount ?? null,
     })
     setStarting(false)
     if (sessionId) {

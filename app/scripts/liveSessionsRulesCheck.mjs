@@ -78,6 +78,29 @@ async function main() {
       lastActivityAt: serverTimestamp(),
       endedAt: null,
     })
+
+    // Baseline WORKSHEET-context session (write-on-it live calls, added
+    // alongside question/weekly_paper — see liveSession.ts). Same shape plus
+    // pageImage/pageIndex/pageCount; the rules block itself was NOT changed
+    // for this addition (create/update never allowlist specific field names,
+    // only studentId/tutorId immutability) — these cases exist to verify
+    // that empirically rather than by inspection alone.
+    await setDoc(doc(db, 'liveSessions', 'session2'), {
+      studentId: 'student1',
+      tutorId: 'tutorA',
+      contextType: 'worksheet',
+      questionId: null,
+      conceptId: null,
+      conceptName: null,
+      questionText: null,
+      pageImage: 'data:image/jpeg;base64,/9j/tiny',
+      pageIndex: 0,
+      pageCount: 3,
+      status: 'active',
+      createdAt: serverTimestamp(),
+      lastActivityAt: serverTimestamp(),
+      endedAt: null,
+    })
   })
 
   const studentDb = testEnv.authenticatedContext('student1').firestore()
@@ -140,6 +163,46 @@ async function main() {
 
   // ── 7. Unrelated parent DENIED read ─────────────────────────────────────
   await check('unrelated parent denied session read', assertFails(getDoc(doc(otherParentDb, 'liveSessions', 'session1'))))
+
+  // ── Worksheet-context cases (write-on-it live calls) ────────────────────
+  // Mirrors cases 1/3/4/6 above but for contextType:'worksheet' with the new
+  // pageImage/pageIndex/pageCount fields, plus an update case — confirming
+  // the schema addition works under the UNCHANGED rules, not assumed.
+  await check(
+    'student creates own worksheet session with pageImage/pageIndex/pageCount',
+    assertSucceeds(addDoc(collection(studentDb, 'liveSessions'), {
+      studentId: 'student1',
+      tutorId: 'tutorA',
+      contextType: 'worksheet',
+      questionId: null,
+      conceptId: null,
+      conceptName: null,
+      questionText: null,
+      pageImage: 'data:image/jpeg;base64,/9j/tiny2',
+      pageIndex: 1,
+      pageCount: 4,
+      status: 'active',
+      createdAt: serverTimestamp(),
+      lastActivityAt: serverTimestamp(),
+      endedAt: null,
+    })),
+  )
+  await check('student reads own worksheet session', assertSucceeds(getDoc(doc(studentDb, 'liveSessions', 'session2'))))
+  await check('linked tutor reads worksheet session', assertSucceeds(getDoc(doc(tutorDb, 'liveSessions', 'session2'))))
+  await check('unrelated tutor denied worksheet session read', assertFails(getDoc(doc(otherTutorDb, 'liveSessions', 'session2'))))
+  await check(
+    'student updates lifecycle field on worksheet session (status)',
+    assertSucceeds(setDoc(doc(studentDb, 'liveSessions', 'session2'), { status: 'ended', endedAt: serverTimestamp() }, { merge: true })),
+  )
+  await check(
+    'student writes stroke into own worksheet session',
+    assertSucceeds(addDoc(collection(studentDb, 'liveSessions', 'session2', 'strokes'), {
+      authorId: 'student1',
+      authorRole: 'student',
+      points: [{ x: 5, y: 5, p: 0.5 }],
+      createdAt: serverTimestamp(),
+    })),
+  )
 
   // ── 8. Student can write a stroke into their own session ───────────────
   await check(

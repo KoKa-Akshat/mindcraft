@@ -1,0 +1,35 @@
+/* WorksheetSession — extras on top of HomeworkSession.module.css, which this
+   page reuses for its shell/nav/page/card/progress/navRow/prevBtn/submitBtn/
+   loadWrap/spinner (same paper visual language, not a new system). */
+
+.callRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pageLabel {
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--paper-ink-dim);
+  border: 1px solid var(--paper-edge);
+  border-radius: 2px;
+  padding: 4px 8px;
+  align-self: flex-start;
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.emptyTitle {
+  font: 700 20px/1.2 var(--font-hand);
+  color: var(--paper-ink-katha);
+  margin: 0 0 8px;
+}
+
+.emptySub {
+  font: 500 13px/1.55 var(--font-serif);
+  color: var(--paper-ink-dim);
+  margin: 0 0 20px;
+}

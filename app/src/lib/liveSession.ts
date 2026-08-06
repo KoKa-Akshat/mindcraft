@@ -35,7 +35,7 @@ const STROKES_SUBCOLLECTION = 'strokes'
  * for v1, per the plan. */
 const STALE_MS = 20 * 60 * 1000
 
-export type LiveSessionContextType = 'question' | 'weekly_paper'
+export type LiveSessionContextType = 'question' | 'weekly_paper' | 'worksheet'
 export type LiveSessionAuthorRole = 'student' | 'tutor' | 'parent'
 export type LiveSessionStatus = 'active' | 'ended'
 
@@ -47,6 +47,23 @@ export interface LiveSessionDoc {
   conceptId: string | null
   conceptName: string | null
   questionText: string | null
+  /**
+   * Worksheet context only ('write on it' live calls): a small snapshot of
+   * the page being worked on, pre-downscaled by
+   * `homework.ts#downscaleForLiveSession` specifically to stay well under
+   * Firestore's document size cap (see that function's doc comment for the
+   * sizing rationale) — never the full-resolution `pagesFromFile()` output.
+   * Fixed for the lifetime of the call, same as `questionText` for a
+   * question-context call: a worksheet call is scoped to the one page it
+   * was started on, it does not follow the student flipping pages
+   * afterward (there is no in-call page navigation, mirroring how a
+   * question-context call has none either). null for question/weekly_paper.
+   */
+  pageImage: string | null
+  /** 0-based index of the snapshotted page, for the "page X of Y" header. */
+  pageIndex: number | null
+  /** Total page count of the source upload, for the "page X of Y" header. */
+  pageCount: number | null
   status: LiveSessionStatus
   createdAt: Timestamp | null
   lastActivityAt: Timestamp | null
@@ -120,6 +137,10 @@ export interface CreateLiveSessionInput {
   conceptId?: string | null
   conceptName?: string | null
   questionText?: string | null
+  /** Worksheet context only — see `LiveSessionDoc.pageImage`. */
+  pageImage?: string | null
+  pageIndex?: number | null
+  pageCount?: number | null
 }
 
 /** Creates a new live session and returns its id, or null on failure
@@ -136,6 +157,9 @@ export async function createLiveSession(input: CreateLiveSessionInput): Promise<
       conceptId: input.conceptId ?? null,
       conceptName: input.conceptName ?? null,
       questionText: input.questionText ?? null,
+      pageImage: input.pageImage ?? null,
+      pageIndex: input.pageIndex ?? null,
+      pageCount: input.pageCount ?? null,
       status: 'active',
       createdAt: serverTimestamp(),
       lastActivityAt: serverTimestamp(),

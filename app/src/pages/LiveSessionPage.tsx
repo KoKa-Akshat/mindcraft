@@ -57,7 +57,9 @@ async function resolveRole(
 
 function contextLabel(session: LiveSessionEntry | null): string {
   if (!session) return ''
-  return session.contextType === 'weekly_paper' ? 'Weekly paper' : 'Practice question'
+  if (session.contextType === 'weekly_paper') return 'Weekly paper'
+  if (session.contextType === 'worksheet') return 'Worksheet'
+  return 'Practice question'
 }
 
 /** Mirrors `SessionCallCard`'s own "is this booked session happening right
@@ -267,15 +269,20 @@ export default function LiveSessionPage() {
     if (url) window.open(url, '_blank', 'noopener')
   }
 
+  // Worksheet calls started from the Work tab, not Practice — send the
+  // student back there instead of the /practice default the other two
+  // contexts use (same destination HomeworkSession's own back-link uses).
+  const studentHomePath = session?.contextType === 'worksheet' ? '/dashboard?view=worksheet' : '/practice'
+
   async function handleEnd() {
     if (!sessionId || ending) return
     setEnding(true)
     await endLiveSession(sessionId)
-    navigate('/practice')
+    navigate(studentHomePath)
   }
 
   function handleLeave() {
-    navigate(role === 'parent' ? '/parent' : role === 'tutor' ? '/tutor' : '/practice')
+    navigate(role === 'parent' ? '/parent' : role === 'tutor' ? '/tutor' : studentHomePath)
   }
 
   if (access === 'checking') {
@@ -346,11 +353,15 @@ export default function LiveSessionPage() {
         {session?.questionText && (
           <p className={s.sub}>{session.questionText}</p>
         )}
+        {session?.contextType === 'worksheet' && typeof session.pageCount === 'number' && session.pageCount > 0 && (
+          <p className={s.sub}>Page {(session.pageIndex ?? 0) + 1} of {session.pageCount}</p>
+        )}
 
         <div className={s.card}>
           <ScratchPad
             height={380}
             fillHeight
+            backgroundImage={session?.contextType === 'worksheet' ? (session.pageImage ?? undefined) : undefined}
             liveSessionId={sessionId}
             authorId={user?.uid}
             authorRole={role ?? 'student'}
